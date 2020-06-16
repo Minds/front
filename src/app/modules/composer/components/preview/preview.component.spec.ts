@@ -60,8 +60,14 @@ describe('Composer Preview', () => {
   it('should remove an attachment', () => {
     spyOn(window, 'confirm').and.returnValue(true);
     fixture.detectChanges();
-    comp.remove();
+    comp.removeAttachment();
     expect(window.confirm).toHaveBeenCalled();
     expect(composerServiceMock.removeAttachment).toHaveBeenCalled();
+  });
+
+  it('should remove a rich embed', () => {
+    fixture.detectChanges();
+    comp.removeRichEmbed();
+    expect(composerServiceMock.removeRichEmbed).toHaveBeenCalled();
   });
 });

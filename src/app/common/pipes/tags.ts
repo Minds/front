@@ -39,7 +39,7 @@ export class TagsPipe implements PipeTransform {
         } else if (this.featureService.has('navigation')) {
           return `${
             m.match[1]
-          }<a href="/discovery/search?f=top&q=%23${m.match[2].toLowerCase()}">#${
+          }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}">#${
             m.match[2]
           }</a>`; // TODO: make these link locally
         }

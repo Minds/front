@@ -6,7 +6,6 @@ import {
   EventEmitter,
   Input,
   Output,
-  Renderer,
   OnInit,
   OnDestroy,
 } from '@angular/core';
@@ -23,6 +22,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
+import { ActivityService } from '../../newsfeed/activity/activity.service';
 
 @Component({
   selector: 'm-comments__entityOutlet',
@@ -60,7 +60,8 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     public sockets: SocketsService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    public legacyActivityService: ActivityServiceCommentsLegacySupport
+    public legacyActivityService: ActivityServiceCommentsLegacySupport,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit() {
@@ -109,6 +110,13 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
       this.redirectToSinglePage();
     }
     this.showOnlyPoster = false;
+    this.activityService.displayOptions.showOnlyCommentsInput = false;
+    this.detectChanges();
+  }
+
+  closeFullComments(): void {
+    this.showOnlyPoster = true;
+    this.activityService.displayOptions.showOnlyCommentsInput = true;
     this.detectChanges();
   }
 

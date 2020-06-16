@@ -1,14 +1,12 @@
 <div class="mdl-grid m-admin-tagcloud" style="max-width:600px">
   <div class="mdl-cell mdl-cell--12-col">
     <p>
-      <ng-container i18n="@@MINDS__ADMIN__TAGCLOUD__HELP_LABEL"
+      <ng-container
         >This is a list of currently trending hashtags. Click the hashtag to see
         the search results for it. Click on the X next to the tag to hide it.
         Hidden hashtags won't appear again.</ng-container
       >
-      <span
-        *ngIf="age !== false"
-        i18n="@@MINDS__ADMIN__TAGCLOUD__GENERATION_TIMESTAMP_LABEL"
+      <span *ngIf="age !== false"
         >This list was generated {{ age }} minute(s) ago.</span
       >
       <i
@@ -35,12 +33,7 @@
 
     <hr />
 
-    <p
-      *ngIf="hidden.length > 0"
-      i18n="@@MINDS__ADMIN__TAGCLOUD__LAST_HIDDEN_LABEL"
-    >
-      Last {{ hidden.length }} hidden tags:
-    </p>
+    <p *ngIf="hidden.length > 0">Last {{ hidden.length }} hidden tags:</p>
 
     <div
       class="m-admin-tagcloud-hidden-tag"

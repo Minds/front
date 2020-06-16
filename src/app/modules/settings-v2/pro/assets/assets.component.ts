@@ -24,10 +24,10 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 })
 export class SettingsV2ProAssetsComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
-  @ViewChild('logoField', { static: false })
+  @ViewChild('logoField')
   protected logoField: ElementRef<HTMLInputElement>;
 
-  @ViewChild('backgroundField', { static: false })
+  @ViewChild('backgroundField')
   protected backgroundField: ElementRef<HTMLInputElement>;
 
   init: boolean = false;

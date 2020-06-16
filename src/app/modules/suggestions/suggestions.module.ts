@@ -8,7 +8,6 @@ import { CommonModule } from '../../common/common.module';
 import { SuggestionsSidebar } from './channel/sidebar.component';
 import { GroupSuggestionsSidebarComponent } from './groups/sidebar.component';
 import { AutocompleteSuggestionsService } from './services/autocomplete-suggestions.service';
-import { ChannelSuggestionsService } from './channel/channel-suggestions.service';
 
 @NgModule({
   imports: [
@@ -21,6 +20,6 @@ import { ChannelSuggestionsService } from './channel/channel-suggestions.service
   ],
   declarations: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
   exports: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
-  providers: [AutocompleteSuggestionsService, ChannelSuggestionsService],
+  providers: [AutocompleteSuggestionsService],
 })
 export class SuggestionsModule {}

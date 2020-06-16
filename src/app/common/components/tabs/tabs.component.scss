@@ -9,8 +9,8 @@
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
   @media screen and (max-width: $min-tablet) {
-    margin-left: 24px;
-    margin-right: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   @media screen and (max-width: $layoutMin3ColWidth) {
     padding: 0 20px;
@@ -18,7 +18,6 @@
   @media screen and (max-width: $max-mobile) {
     margin-left: 0;
     margin-right: 0;
-    padding: 0;
   }
 }
 .m-tabs__tab > a {
@@ -51,10 +50,10 @@
     }
   }
   @media screen and (max-width: $max-mobile) {
-    padding: 10px 9px;
-    margin: 0px 3px;
-    &:first-child {
-      margin-left: 16px;
-    }
+    padding: 10px 0;
+    // margin: 0 10px;
+    // &:first-child {
+    //   margin-left: 16px;
+    // }
   }
 }

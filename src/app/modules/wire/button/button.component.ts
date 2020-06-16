@@ -5,6 +5,7 @@ import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
 import { WireModalService } from '../wire-modal.service';
 import { WireEventType } from '../v2/wire-v2.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-wire-button',
@@ -13,8 +14,18 @@ import { WireEventType } from '../v2/wire-v2.service';
       class="m-btn m-btn--action m-btn--slim m-wire-button"
       (click)="wire()"
     >
-      <i class="ion-icon ion-flash"></i>
-      <span>Wire</span>
+      <ng-container *ngIf="!features.has('pay'); else payButton">
+        <i class="ion-icon ion-flash"></i>
+        <span>Wire</span>
+      </ng-container>
+      <ng-template #payButton>
+        <m-icon
+          from="assets-file"
+          iconId="assets/icons/wire.svg"
+          [sizeFactor]="25"
+        ></m-icon>
+        <span>Pay</span>
+      </ng-template>
     </button>
   `,
 })
@@ -26,7 +37,8 @@ export class WireButtonComponent {
     public session: Session,
     private overlayModal: OverlayModalService,
     private modal: SignupModalService,
-    private wireModal: WireModalService
+    private wireModal: WireModalService,
+    public features: FeaturesService
   ) {}
 
   async wire() {

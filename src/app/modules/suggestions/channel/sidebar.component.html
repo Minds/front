@@ -20,33 +20,59 @@
     *ngIf="(suggestions$ | async).length"
   >
     <li
-      *ngFor="let suggestion of suggestions$ | async"
-      class="m-suggestionsSidebarList__item"
+      *ngFor="let suggestion of suggestions$ | async | slice: 0:displayLimit"
+      class="m-suggestionsSidebarList__item m-suggestionsSidebarList__item--{{
+        suggestion.entity.type
+      }}"
     >
-      <a [routerLink]="['/', suggestion.entity.username]">
-        <div
-          class="m-suggestionsSidebarListItem__avatar"
-          [style.background-image]="
-            'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
-          "
-        ></div>
-        <div class="m-suggestionsSidebarListItem__body">
-          <div [title]="suggestion.entity.briefdescription">
-            <h4>{{ suggestion.entity.username }}</h4>
-            <span>{{ suggestion.entity.briefdescription }}</span>
-          </div>
-          <div class="m-layout__spacer"></div>
-          <i
-            class="material-icons m-suggestionsSidebarListItem__passBtn"
-            (click)="pass(suggestion, $event)"
-            >close</i
-          >
-          <minds-button-subscribe
-            [user]="suggestion.entity"
-            (subscribed)="remove(suggestion)"
-          ></minds-button-subscribe>
-        </div>
-      </a>
+      <ng-container [ngSwitch]="suggestion.entity.type">
+        <ng-template ngSwitchCase="user">
+          <a [routerLink]="['/', suggestion.entity.username]">
+            <div
+              class="m-suggestionsSidebarListItem__avatar"
+              [style.background-image]="
+                'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
+              "
+            ></div>
+            <div class="m-suggestionsSidebarListItem__body">
+              <div [title]="suggestion.entity.briefdescription">
+                <h4>{{ suggestion.entity.username }}</h4>
+                <span>{{ suggestion.entity.briefdescription }}</span>
+              </div>
+              <div class="m-layout__spacer"></div>
+              <i
+                class="material-icons m-suggestionsSidebarListItem__passBtn"
+                (click)="pass(suggestion, $event)"
+                >close</i
+              >
+              <minds-button-subscribe
+                [user]="suggestion.entity"
+                (subscribed)="remove(suggestion)"
+              ></minds-button-subscribe>
+            </div>
+          </a>
+        </ng-template>
+        <ng-template ngSwitchCase="group">
+          <a [routerLink]="['/groups/profile', suggestion.entity.guid]">
+            <div
+              class="m-suggestionsSidebarListItem__avatar"
+              [style.background-image]="
+                'url(' +
+                cdnUrl +
+                'fs/v1/avatars/' +
+                suggestion.entity.guid +
+                ')'
+              "
+            ></div>
+            <div class="m-suggestionsSidebarListItem__body">
+              <div [title]="suggestion.entity.briefdescription">
+                <h4>{{ suggestion.entity.name }}</h4>
+                <span>{{ suggestion.entity['members:count'] }} members</span>
+              </div>
+            </div>
+          </a>
+        </ng-template>
+      </ng-container>
     </li>
   </ul>
   <div
@@ -58,17 +84,24 @@
 
 <!-- Outlets -->
 
-<ng-container *mIfFeature="'navigation'; else legacyNavigation">
-  <m-sidebarWidget title="Suggested Channels">
-    <div class="m-sidebarWidget__body">
-      <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
-    </div>
-  </m-sidebarWidget>
-</ng-container>
-
-<ng-template #legacyNavigation>
-  <div class="m-suggestions__sidebar">
-    <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
+<m-sidebarWidget [title]="title" *ngIf="(suggestions$ | async).length">
+  <div class="m-sidebarWidget__body">
     <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
   </div>
-</ng-template>
+  <a
+    class="m-sidebarWidget__seeMore"
+    (click)="seeMore()"
+    *ngIf="!(inProgress$ | async)"
+    >See more</a
+  >
+</m-sidebarWidget>
+
+<!-- The below is hack because angular does not extract $localize strings-->
+<ng-container *ngIf="false">
+  <ng-container i18n="@@SUGGESTIONS__CHANNEL__TITLE">
+    Suggested Channels
+  </ng-container>
+  <ng-container i18n="@@SUGGESTIONS__GROUP__TITLE">
+    Suggested Groups
+  </ng-container>
+</ng-container>

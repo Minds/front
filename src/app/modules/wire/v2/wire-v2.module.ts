@@ -10,6 +10,7 @@ import { WireCreatorOwnerBlock } from './creator/owner-block/owner-block.compone
 import { WireCreatorFormComponent } from './creator/form/form.component';
 import { WireCreatorToolbarComponent } from './creator/toolbar/toolbar.component';
 import { WireCreatorShopComponent } from './creator/shop/shop.component';
+import { WireCreatorMarketingBlockComponent } from './creator/marketing-block/marketing-block.component';
 
 const COMPONENTS = [WireCreatorComponent];
 
@@ -18,6 +19,7 @@ const INTERNAL_COMPONENTS = [
   WireCreatorFormComponent,
   WireCreatorToolbarComponent,
   WireCreatorShopComponent,
+  WireCreatorMarketingBlockComponent,
 ];
 
 const PROVIDERS = [
@@ -34,7 +36,6 @@ const PROVIDERS = [
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
-  entryComponents: COMPONENTS,
   providers: PROVIDERS,
 })
 export class WireV2Module {}

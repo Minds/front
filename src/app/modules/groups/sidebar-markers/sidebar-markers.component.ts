@@ -10,6 +10,8 @@ import {
   OnInit,
   PLATFORM_ID,
   ViewChild,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { interval } from 'rxjs';
 import { map, startWith, throttle } from 'rxjs/operators';
@@ -20,6 +22,7 @@ import { Session } from '../../../services/session';
 import { isPlatformBrowser } from '@angular/common';
 import { GroupsService } from '../groups.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-group--sidebar-markers',
@@ -28,6 +31,10 @@ import { FeaturesService } from '../../../services/features.service';
 export class GroupsSidebarMarkersComponent
   implements OnInit, DoCheck, OnDestroy {
   @Input() showLabels: boolean = false;
+  @Output('onGroupSelected') onGroupSelected: EventEmitter<
+    boolean
+  > = new EventEmitter<boolean>();
+
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
@@ -37,6 +44,7 @@ export class GroupsSidebarMarkersComponent
   moreData: boolean = true;
   tooltipsAnchor: string = 'right';
   readonly hasNewNavigation: boolean;
+  readonly cdnUrl: string;
 
   @ViewChild('list', { static: true }) list;
 
@@ -50,9 +58,11 @@ export class GroupsSidebarMarkersComponent
     @Inject(PLATFORM_ID) private platformId: Object,
     private groupsService: GroupsService,
     private cd: ChangeDetectorRef,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private configs: ConfigsService
   ) {
     this.hasNewNavigation = featuresService.has('navigation');
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   async ngOnInit() {
@@ -180,5 +190,12 @@ export class GroupsSidebarMarkersComponent
     } else {
       this.layoutMode = 'phone';
     }
+  }
+
+  /**
+   * Emits on group click.
+   */
+  onGroupClick(): void {
+    this.onGroupSelected.emit(true);
   }
 }

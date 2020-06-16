@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../services/api';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +20,8 @@ export class SettingsDisableChannelComponent {
   constructor(
     public client: Client,
     public router: Router,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    protected toasterService: FormToastService
   ) {}
 
   disable() {
@@ -29,7 +31,7 @@ export class SettingsDisableChannelComponent {
         this.router.navigate(['/logout']);
       })
       .catch((e: any) => {
-        alert('Sorry, we could not disable your account');
+        this.toasterService.error('Sorry, we could not disable your account');
       });
   }
 
@@ -53,7 +55,9 @@ export class SettingsDisableChannelComponent {
               this.router.navigate(['/logout']);
             })
             .catch((e: any) => {
-              alert('Sorry, we could not delete your account');
+              this.toasterService.error(
+                'Sorry, we could not delete your account'
+              );
             });
         },
       }

@@ -1,26 +1,34 @@
-<div class="m-settingsV2__desc">
-  Contact info@minds.com to customize your site domain.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__DOMAIN__LABEL">
+    Domain
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__DOMAIN__DESCRIPTION">
+    Contact info@minds.com to customize your site domain.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
 
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField hasValidationRow">
       <div class="m-form__row--label">
-        <label for="domain" i18n>Domain</label>
+        <label for="domain" i18n="@@DOMAIN_SETTINGS__DOMAIN">Domain</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
-            ><ng-container i18n *ngIf="isActive; else previewModeDomainNote">
-              Currently only subdomains are supported. Custom domains are coming
-              soon. If you wish to use a custom domain please email
-              info@minds.com.
-            </ng-container>
-            <ng-template #previewModeDomainNote i18n
-              >You can control your domain once you purchase Pro.</ng-template
-            ></ng-container
+          <ng-container
+            i18n="@@DOMAIN_SETTINGS__CURRENT_SUPPORT_NOTICE"
+            *ngIf="isActive; else previewModeDomainNote"
+          >
+            Currently only subdomains are supported. Custom domains are coming
+            soon. If you wish to use a custom domain please email
+            info@minds.com.
+          </ng-container>
+          <ng-template
+            #previewModeDomainNote
+            i18n="@@DOMAIN_SETTINGS__CONTROL_DOMAIN_ONCE_PURCHASED"
+            >You can control your domain once you purchase Pro.</ng-template
           >
         </m-tooltip>
       </div>
@@ -34,20 +42,27 @@
         />
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="domain.hasError('invalidDomain')">
+        <p
+          *ngIf="domain.hasError('invalidDomain')"
+          i18n="@@DOMAIN_SETTINGS__DOMAIN_NOT_AVAILABLE"
+        >
           Domain not available
         </p>
-        <p *ngIf="domain.hasError('required')">
+        <p
+          *ngIf="domain.hasError('required')"
+          i18n="@@DOMAIN_SETTINGS__DOMAIN_REQUIRED"
+        >
           Domain is required
         </p>
       </div>
     </div>
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="custom_head" i18n>Custom &lt;head&gt; Code</label
+        <label for="custom_head" i18n="@@DOMAIN_SETTINGS__CUSTOM_HEAD_CODE"
+          >Custom &lt;head&gt; Code</label
         ><m-tooltip
           ><span m-tooltip--anchor>𝒊</span
-          ><ng-container i18n
+          ><ng-container i18n="@@DOMAIN_SETTINGS__AD_BLOCKS_JS_HEAD_CODES"
             >Ad blocks or other JS head codes can go here. Please contact a
             Minds admin or email info@minds.com to customize this
             field.</ng-container
@@ -71,6 +86,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@DOMAIN_SETTINGS__SAVE_DOMAIN"
     >
       Save Domain
     </m-shadowboxSubmitButton>

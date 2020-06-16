@@ -1,7 +1,7 @@
 <div
   class="m-commentsEntityOutlet__expand--hide"
   *ngIf="count > 0 && !showOnlyPoster"
-  (click)="showOnlyPoster = true"
+  (click)="closeFullComments()"
 >
   Hide comments
 </div>
@@ -22,18 +22,6 @@
     View {{ count }} comment{{ count > 1 ? 's' : '' }}
   </div>
 
-  <m-comment__poster
-    *ngIf="legacyActivityService.allowComment$ | async"
-    [guid]="guid"
-    [parent]="entity"
-    [entity]="entity"
-    [currentIndex]="0"
-    [level]="0"
-    (posted)="onPosted($event)"
-    (optimisticPost)="onOptimisticPost($event)"
-  >
-  </m-comment__poster>
-
   <div
     class="m-commentsEntityOutlet__optimisticList"
     *ngIf="optimisticList.length > 0"
@@ -53,4 +41,16 @@
       ></m-comment>
     </ng-container>
   </div>
+
+  <m-comment__poster
+    *ngIf="legacyActivityService.allowComment$ | async"
+    [guid]="guid"
+    [parent]="entity"
+    [entity]="entity"
+    [currentIndex]="0"
+    [level]="0"
+    (posted)="onPosted($event)"
+    (optimisticPost)="onOptimisticPost($event)"
+  >
+  </m-comment__poster>
 </ng-container>

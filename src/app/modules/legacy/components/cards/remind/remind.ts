@@ -59,7 +59,7 @@ export class Remind {
     any
   > = new EventEmitter<any>();
 
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('batchImage') batchImage: ElementRef;
 
   constructor(
     public session: Session,

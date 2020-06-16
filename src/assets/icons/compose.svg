@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 46 43" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<rect id="c" x="-9.2371e-14" y="3.1974e-14" width="35.2" height="34.543" rx="10"/>
+<filter id="f" x="-5.7%" y="-2.9%" width="111.4%" height="111.6%">
+<feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+<feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="0.5"/>
+<feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0"/>
+</filter>
+<rect id="b" x="8.8" y="4.4571" width="35.2" height="34.543" rx="10"/>
+<filter id="e" x="-5.7%" y="-2.9%" width="111.4%" height="111.6%">
+<feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+<feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="0.5"/>
+<feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0"/>
+</filter>
+<rect id="a" x="4.4" y="2.2286" width="34.1" height="34.543" rx="10"/>
+<filter id="d" x="-19.1%" y="-15.9%" width="138.1%" height="137.6%">
+<feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+<feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+<feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0"/>
+</filter>
+</defs>
+<g fill="none" fill-rule="evenodd">
+<g transform="translate(-184 -832)">
+<g transform="translate(185 833)">
+<use fill="black" filter="url(#f)" xlink:href="#c"/>
+<use fill="#FED12F" fill-rule="evenodd" xlink:href="#c"/>
+<use fill="black" filter="url(#e)" xlink:href="#b"/>
+<use fill="#555555" fill-rule="evenodd" xlink:href="#b"/>
+<use fill="black" filter="url(#d)" xlink:href="#a"/>
+<use fill="#DFDCDC" fill-rule="evenodd" xlink:href="#a"/>
+<g transform="translate(12.1 10.029)" fill="#333" fill-rule="nonzero">
+<path d="m17.364 8.1184h-6.6786v-6.7653c0-0.74689-0.5984-1.3531-1.3357-1.3531-0.73731 0-1.3357 0.60617-1.3357 1.3531v6.7653h-6.6786c-0.73731 0-1.3357 0.60617-1.3357 1.3531 0 0.74689 0.5984 1.3531 1.3357 1.3531h6.6786v6.7653c0 0.74689 0.5984 1.3531 1.3357 1.3531 0.73731 0 1.3357-0.60617 1.3357-1.3531v-6.7653h6.6786c0.73731 0 1.3357-0.60617 1.3357-1.3531 0-0.74689-0.5984-1.3531-1.3357-1.3531z"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

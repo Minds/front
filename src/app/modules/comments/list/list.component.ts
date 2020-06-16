@@ -5,7 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  Renderer,
+  Renderer2,
   ViewChild,
   OnInit,
   OnDestroy,
@@ -19,6 +19,7 @@ import { Textarea } from '../../../common/components/editors/textarea.component'
 import { SocketsService } from '../../../services/sockets';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -46,7 +47,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
 
   focusOnInit: boolean = false;
   scrollable: boolean = false;
-  @ViewChild('message', { static: false }) textareaControl: Textarea;
+  @ViewChild('message') textareaControl: Textarea;
   @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
 
   editing: boolean = false;
@@ -86,10 +87,11 @@ export class CommentsListComponent implements OnInit, OnDestroy {
     public client: Client,
     public attachment: AttachmentService,
     public sockets: SocketsService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {}
 
   set _object(value: any) {
@@ -220,6 +222,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
           this.ascendingInProgress = false;
         }
         this.error = (e && e.message) || 'There was an error';
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }

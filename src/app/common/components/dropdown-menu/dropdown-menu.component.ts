@@ -16,6 +16,13 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 
+export interface AnchorPosition {
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
+}
+
 @Component({
   selector: 'm-dropdownMenu',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,11 +35,14 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
 
   @Input() menuClass: string = '';
 
-  @ViewChild('triggerElement', { static: false }) triggerElement: ElementRef<
-    HTMLSpanElement
-  >;
+  @Input() anchorPosition: AnchorPosition = {
+    top: '100%',
+    left: '0',
+  };
 
-  @ViewChild('menuWrapperElement', { static: false })
+  @ViewChild('triggerElement') triggerElement: ElementRef<HTMLSpanElement>;
+
+  @ViewChild('menuWrapperElement')
   menuWrapperElement: ElementRef<HTMLDivElement>;
 
   isOpen: boolean = false;

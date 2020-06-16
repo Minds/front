@@ -1,9 +1,9 @@
 <div class="m-token-join m-border">
-  <h2 i18n="@@WALLET__TOKENS__JOIN__WELCOME_TO_REWARDS_TITLE">
+  <h2>
     Welcome to Rewards
   </h2>
 
-  <p class="m-token-join--overview" i18n="@@WALLET__TOKENS__JOIN__DESC">
+  <p class="m-token-join--overview">
     Rewards Tokens enable creators to earn from interactions on their content.
     You earn tokens based on a daily contributions pool. At the end of each day,
     your contributions score will be calculated and you will receive a share of
@@ -15,9 +15,7 @@
   <div class="m-token-join--form" *ngIf="!confirming">
     <div class="m-token-join--form--input-wrapper">
       <m-phone-input [(ngModel)]="number"></m-phone-input>
-      <m-tooltip
-        icon="help"
-        i18n="@@WALLET__TOKENS__JOIN__ENTER_PHONE_NUMBER_TOOLTIP"
+      <m-tooltip icon="help"
         >Please enter your phone number in order to join the rewards
         program</m-tooltip
       >
@@ -26,7 +24,6 @@
       class="m-btn m-btn--action"
       (click)="verify()"
       [disabled]="inProgress"
-      i18n="@@WALLET__TOKENS__JOIN__JOIN_ACTION"
     >
       Join
     </button>
@@ -36,14 +33,10 @@
       class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active"
       [mdl]
     ></div>
-
-    <p class="m-token-join--form--error" *ngIf="error">
-      {{ error }}
-    </p>
   </div>
 
   <div class="m-token-join--form" *ngIf="plusPrompt">
-    <p i18n="@@WALLET__TOKENS__JOIN__ONE_MORE_STEP">
+    <p>
       One more step! To qualify for our crypto rewards program, you will need to
       sign up for Minds Plus. This will cost $1 for the first month and $5 for
       every following month with the option for cancellation. Cancellation will
@@ -60,27 +53,21 @@
         type="number"
         [(ngModel)]="code"
         placeholder="eg. 198349"
-        i18n-placeholder="@@WALLET__TOKENS__JOIN__CODE_EXAMPLE_PH"
         class="m-token-join--form--input-input m-border"
       />
-      <m-tooltip icon="help" i18n="@@WALLET__TOKENS__JOIN__ENTER_CODE_TOOLTIP"
+      <m-tooltip icon="help"
         >Please enter the code we just sent you, to verify that your number is
         correct</m-tooltip
       >
     </div>
 
-    <button
-      class="m-btn"
-      (click)="cancel()"
-      i18n="@@WALLET__TOKENS__JOIN__GO_BACK_ACTION"
-    >
+    <button class="m-btn" (click)="cancel()">
       Go Back
     </button>
     <button
       class="m-btn m-btn--action"
       (click)="confirm()"
       [disabled]="inProgress"
-      i18n="@@WALLET__TOKENS__JOIN__CONFIRM_ACTION"
     >
       Confirm
     </button>

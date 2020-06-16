@@ -1,7 +1,7 @@
 <div *ngIf="inProgress" class="m-wallet__spinner">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<div class="m-walletCashBankForm">
+<div class="m-walletCashBankForm" *ngIf="form">
   <!-- -------------------------------------------- -->
   <!--- FORM - BANK ACCOUNT IS NOT YET SET UP -------->
   <!--- OR IS BEING UPDATED-------- ------------------>
@@ -12,7 +12,10 @@
     class="m-walletButtonLayout--buttonOffsetRight"
     *ngIf="!hasBank || editing"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2__CASH_BANK_FORM__FINISH_ADDING_RECEIVE_CASH"
+    >
       Finish adding your bank details to start receiving cash payouts.
     </p>
     <div class="m-walletForm__fieldsContainer">
@@ -21,7 +24,12 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="country" i18n>Country</label>
+          <label
+            for="country"
+            i18n="@@CASH_BANK_FORM__COUNTRY"
+            i18n="@@COMMON__COUNTRY"
+            >Country</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <minds-country-input
@@ -32,7 +40,7 @@
             data-minds="country"
             [allowed]="allowedCountries"
             [country]="country.value"
-            (countryChange)="country.setValue($event)"
+            (countryChange)="countryChange($event)"
           ></minds-country-input>
         </div>
       </div>
@@ -41,7 +49,9 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="accountNumber" i18n>Bank Account Number / IBAN</label>
+          <label for="accountNumber" i18n="@@CASH_BANK_FORM__BANK_IBAN_NUMBER"
+            >Bank Account Number / IBAN</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <input
@@ -59,7 +69,9 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="routingNumber" i18n>Routing Number / Sort Code</label>
+          <label for="routingNumber" i18n="@@CASH_BANK_FORM__ROUTING_SORT_CODE"
+            >Routing Number / Sort Code</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <input
@@ -75,7 +87,7 @@
       <!-- -------------------------------------------- -->
       <!--- ERROR ---------------------------------------->
       <!-- -------------------------------------------- -->
-      <p class="m-walletTertiaryText--error">
+      <p class="m-walletSecondaryText--error">
         {{ error }}
       </p>
     </div>
@@ -87,12 +99,14 @@
         (click)="cancelEdits()"
         [disabled]="inProgress"
         color="grey"
+        i18n="@@CASH_BANK_FORM__CANCEL"
         >Cancel</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton
         (click)="addBank()"
         [disabled]="inProgress || form.invalid"
         [saving]="inProgress"
+        i18n="@@CASH_BANK_FORM__ADD_BANK_ACCOUNT"
         >Add Bank Account</m-shadowboxSubmitButton
       >
     </div>
@@ -102,7 +116,10 @@
   <!-- -------------------------------------------- -->
   <ng-container *ngIf="hasBank && !editing">
     <div class="m-walletSettingsView--hasAccount__accountSummary">
-      <p class="m-walletTertiaryText--desc">
+      <p
+        class="m-walletSecondaryText--desc"
+        i18n="@@CASH_BANK_FORM__YOUR_BANK_CASH_REWARDS_DEPOSITED"
+      >
         Your bank account where cash rewards are deposited.
       </p>
       <div class="m-walletSettingsView--hasAccount__detailsWrapper">
@@ -114,11 +131,11 @@
         </div>
         <div class="m-walletSettingsView--hasAccount__linksContainer">
           <a><span (click)="enterEditMode()">Update</span></a>
-          <a
+          <!-- <a
             ><span (click)="showModal = true; modalContent = 'removeBank'"
               >Remove</span
             ></a
-          >
+          > -->
         </div>
       </div>
     </div>
@@ -146,13 +163,19 @@
     [showModal]="showModal && modalContent === 'leaveEditMode'"
     (closeModal)="showModal = false"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@CASH_BANK_FORM__ARE_YOU_SURE_STOP"
+    >
       Are you sure you want to stop? Any bank information you've entered will be
       lost.
     </p>
 
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+      <m-shadowboxSubmitButton
+        color="grey"
+        (click)="showModal = false"
+        i18n="@@COMMON__GO_BACK"
         >Go back</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton
@@ -160,6 +183,7 @@
         (click)="leaveEditMode()"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@COMMON__IM_SURE"
         >I'm sure</m-shadowboxSubmitButton
       >
     </div>
@@ -167,12 +191,12 @@
   <!-- -------------------------------------------- -->
   <!--- CONFIRMATION MODAL: REMOVE BANK -------------->
   <!-- -------------------------------------------- -->
-  <m-walletModal
+  <!-- <m-walletModal
     class="m-walletModal--confirmation"
     [showModal]="showModal && modalContent === 'removeBank'"
     (closeModal)="showModal = false"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Are you sure you want to remove your bank account information? You won't
       be able to receive payments until you add another one.
     </p>
@@ -188,7 +212,7 @@
         >I'm sure</m-shadowboxSubmitButton
       >
     </div>
-  </m-walletModal>
+  </m-walletModal> -->
   <!-- -------------------------------------------- -->
   <!--- CONFIRMATION MODAL: LEAVE MONETIZATION ---------->
   <!-- -------------------------------------------- -->
@@ -197,7 +221,7 @@
       [showModal]="showModal && modalContent === 'leaveMonetization'"
       (closeModal)="showModal = false"
     >
-      <p class="m-walletTertiaryText--desc">
+      <p class="m-walletSecondaryText--desc">
         Are you sure you want to leave the monetization program? You won't be
         able to rejoin again.
       </p>
@@ -216,7 +240,7 @@
     </m-walletModal> -->
   <!-- </ng-container>
   <ng-container *ngIf="leftMonetization">
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       You have left the monetization program.
     </p>
   </ng-container> -->

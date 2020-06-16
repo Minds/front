@@ -63,4 +63,4 @@ interface Window {
   sale?: boolean | string;
   _inMemoryStorageAdapterDb?: any;
 }
-declare var window: Window;
+declare var window: Window & typeof globalThis;

@@ -11,6 +11,7 @@ m-onboarding {
 
   &.m-onboarding--newNavigation {
     margin-top: -75px;
+
     .m-grid {
       margin-top: -75px;
       padding-top: 75px;
@@ -505,9 +506,35 @@ m-onboarding {
             }
 
             &.disabled {
+              cursor: not-allowed;
               @include m-theme() {
                 color: themed($m-grey-100);
               }
+            }
+          }
+
+          .m-onboardingInput__smallButton {
+            height: 36px !important;
+            font-size: 18px !important;
+            padding: 4px 8px;
+            margin-left: 8px;
+            cursor: pointer;
+            width: auto !important;
+            flex-shrink: 2;
+
+            @include m-theme() {
+              color: themed($m-aqua);
+            }
+
+            &.disabled {
+              cursor: not-allowed;
+              @include m-theme() {
+                color: themed($m-grey-100);
+              }
+            }
+
+            & > i.material-icons {
+              opacity: 1;
             }
           }
         }

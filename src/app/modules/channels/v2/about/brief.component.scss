@@ -1,0 +1,115 @@
+m-channelAbout__brief {
+  display: block;
+}
+
+.m-channelAbout__brief {
+  .m-channelAboutBrief__spacer {
+    height: 20px;
+  }
+  .m-channelAboutBrief__stats {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .m-channelAboutBriefStatsItem__label {
+    display: block;
+    font-size: 13px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelAboutBriefStatsItem__value {
+    display: block;
+    font-size: 18px;
+    line-height: 30px;
+    text-decoration: none;
+    font-weight: inherit;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  @media screen and (max-width: $layoutMin3ColWidth) {
+    .m-channelAboutBrief__stats {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .m-channelAboutBriefStats__item {
+      &::after {
+        content: ' \00b7\ ';
+        white-space: pre;
+      }
+
+      &:last-child::after {
+        content: '';
+      }
+
+      > * + * {
+        margin-left: 0.35em;
+      }
+    }
+
+    .m-channelAboutBriefStatsItem__label,
+    .m-channelAboutBriefStatsItem__value {
+      display: inline-block;
+      // font-size: 14px;
+      // line-height: 19px;
+    }
+  }
+
+  .m-channelAboutBrief__location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    > * + * {
+      margin-left: 10px;
+    }
+  }
+
+  .m-channelAboutBrief__bio {
+    font-size: 14px;
+    line-height: 19px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelAboutBriefBio__content {
+    white-space: pre-line;
+    word-break: break-word;
+    max-width: 100%;
+    max-height: 70vh;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .m-channelAboutBriefBio__readMore {
+    @include m-theme() {
+      @include m-readMoreButton(themed($m-bgColor--primary)) {
+        font-size: 15px;
+        height: 70px;
+        justify-content: flex-start;
+      }
+    }
+  }
+}

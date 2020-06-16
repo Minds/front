@@ -1,0 +1,21 @@
+<div class="m-channel__actions">
+  <ng-container *ngIf="service.isOwner$ | async; else nonOwner">
+    <m-channelActions__boost></m-channelActions__boost>
+    <m-channelActions__edit></m-channelActions__edit>
+  </ng-container>
+  <ng-template #nonOwner>
+    <m-channelActions__menuButton></m-channelActions__menuButton>
+
+    <ng-container *ngIf="service.canInteract$ | async">
+      <m-channelActions__wire></m-channelActions__wire>
+
+      <m-channelActions__message
+        *ngIf="service.isSubscribed$ | async"
+      ></m-channelActions__message>
+
+      <m-channelActions__subscribe
+        *ngIf="!(service.isSubscribed$ | async)"
+      ></m-channelActions__subscribe>
+    </ng-container>
+  </ng-template>
+</div>

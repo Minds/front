@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { DiscoveryFeedsService } from '../feeds/feeds.service';
+import {
+  DiscoveryFeedsService,
+  DiscoveryFeedsContentType,
+  DiscoveryFeedsContentFilter,
+} from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 
 import { combineLatest, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'm-discovery__search',
@@ -14,7 +18,8 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class DiscoverySearchComponent {
   q: string;
-  filter: 'top' | 'latest';
+  filter: DiscoveryFeedsContentFilter;
+  type$ = this.service.type$;
   entities$ = this.service.entities$;
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
@@ -24,6 +29,7 @@ export class DiscoverySearchComponent {
   constructor(
     private route: ActivatedRoute,
     private service: DiscoveryFeedsService,
+    private router: Router,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -31,20 +37,35 @@ export class DiscoverySearchComponent {
 
   ngOnInit() {
     this.subscriptions = [
-      this.route.queryParamMap.subscribe((params: ParamMap) => {
-        this.q = params.get('q');
-        this.filter = <'top' | 'latest'>params.get('f');
-        this.service.setFilter(this.filter);
-        this.service.search(this.q);
-      }),
+      this.route.queryParamMap
+        .pipe(distinctUntilChanged())
+        .subscribe((params: ParamMap) => {
+          this.q = params.get('q');
+          this.filter = <DiscoveryFeedsContentFilter>params.get('f');
+          this.service.setFilter(this.filter);
+          this.service.setType(
+            <DiscoveryFeedsContentType>params.get('t') || 'all'
+          );
+          this.service.search(this.q);
+        }),
       combineLatest(
         this.service.nsfw$,
+        this.service.period$,
         this.service.type$,
-        this.service.period$
+        this.service.filter$,
+        this.route.paramMap
       )
-        .pipe(debounceTime(300))
-        .subscribe(() => {
+        .pipe(distinctUntilChanged(), debounceTime(300))
+        .subscribe(([nsfw, period, type, filter, paramMap]) => {
+          // if (filter !== paramMap.get('f') || type !== paramMap.get('t')) {
+          //   this.router.navigate([], {
+          //     relativeTo: this.route,
+          //     queryParams: { q: this.q, f: filter, t: type },
+          //     queryParamsHandling: 'merge',
+          //   });
+          // } else {
           this.service.search(this.q);
+          // }
         }),
     ];
   }

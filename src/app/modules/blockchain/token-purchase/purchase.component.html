@@ -1,4 +1,4 @@
-<h4 *ngIf="hasTitle" i18n>Purchase Tokens</h4>
+<h4 *ngIf="hasTitle" i18n="@@COMMON__PURCHASE_TOKENS">Purchase Tokens</h4>
 
 <div class="m-blockchainTokenPurchase">
   <div class="m-blockchainTokenPurchase__amount">
@@ -12,7 +12,9 @@
       #amountInput
     />
 
-    <label for="m-blockchainTokenPurchase__amountInput" i18n>Tokens</label>
+    <label for="m-blockchainTokenPurchase__amountInput" i18n="@@COMMON__TOKENS"
+      >Tokens</label
+    >
   </div>
 
   <div class="m-blockchainTokenPurchase__ethTotal" ngPreserveWhitespaces>
@@ -25,26 +27,24 @@
       class="mf-button"
       [disabled]="!tokens"
       (click)="purchase(); $event.preventDefault()"
-      i18n
+      i18n="verb|@@COMMON__BUY"
     >
       Buy
     </button>
   </div>
 </div>
 
-<div class="m-purchase-sendWyre__errorContainer">
-  <span class="m-purchase-sendWyre__errorText">{{ sendWyreError }}</span>
-</div>
-
 <div class="m-blockchainTokenPurchase__ethRate" ngPreserveWhitespaces>
-  <span i18n>
+  <span>
     {tokens, plural, =1 {{{tokens | number}} token} other
     {{{tokens | number}} tokens}} = {calculatedViews, plural, =1
     {{{calculatedViews | number}} view} other
     {{{calculatedViews | number}} views}}
   </span>
   |
-  <a (click)="purchaseEth(); $event.preventDefault()" i18n>Buy Eth</a>
+  <a (click)="purchaseEth(); $event.preventDefault()" i18n="@@COMMON__BUY_ETH"
+    >Buy Eth</a
+  >
 </div>
 
 <m-modal-signup-on-action
@@ -166,8 +166,6 @@
       >
         Completed
       </button>
-
-      <span class="m-error--text">{{ error }}</span>
     </div>
   </div>
 </m-modal>

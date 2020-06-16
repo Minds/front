@@ -20,6 +20,7 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 import { TopbarService } from '../../common/layout/topbar.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 describe('RegisterComponent', () => {
   let comp: RegisterComponent;
@@ -45,6 +46,7 @@ describe('RegisterComponent', () => {
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: TopbarService, useValue: MockService(TopbarService) },
+        PageLayoutService,
       ],
     }).compileComponents();
   }));

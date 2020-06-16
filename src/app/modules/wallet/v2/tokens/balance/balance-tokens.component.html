@@ -2,7 +2,12 @@
   <div class="m-walletBalance--tokens__equationWrapper">
     <div class="m-walletBalance--tokens__equationLeft">
       <div class="m-walletBalance--tokens__balanceWrapper--total">
-        <div class="m-walletBalance--tokens__balanceTitle">Token Balance</div>
+        <div
+          class="m-walletBalance--tokens__balanceTitle"
+          i18n="@@WALLET_V2_TOKENS_BALANCE__TOKEN_BALANCE"
+        >
+          Token Balance
+        </div>
         <div class="m-walletBalance--tokens__balanceValWrapper">
           <span class="m-walletBalance--tokens__balanceVal--int">{{
             tokenBalance.int | number: '1.0-0'
@@ -15,13 +20,18 @@
         </div>
       </div>
       <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
-        ><m-shadowboxSubmitButton>Buy tokens</m-shadowboxSubmitButton></a
+        ><m-shadowboxSubmitButton i18n="@@COMMON__BUY_TOKENS"
+          >Buy tokens</m-shadowboxSubmitButton
+        ></a
       >
     </div>
     <div class="m-walletBalance--tokens__equationSymbol">=</div>
 
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
-      <div class="m-walletBalance--tokens__balanceTitle">
+      <div
+        class="m-walletBalance--tokens__balanceTitle"
+        i18n="@@WALLET_V2_TOKENS_BALANCE__STORE_TOKENS_INFO"
+      >
         On-Chain<m-tooltip icon="help"
           >Store tokens on your device instead of our servers for more control
           and portability</m-tooltip
@@ -41,7 +51,10 @@
     </div>
     <div class="m-walletBalance--tokens__equationSymbol">+</div>
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
-      <div class="m-walletBalance--tokens__balanceTitle">
+      <div
+        class="m-walletBalance--tokens__balanceTitle"
+        i18n="@@WALLET_V2_TOKENS_BALANCE__OFFCHAIN_TOOLTIP"
+      >
         Off-Chain<m-tooltip icon="help"
           >Store tokens on our servers for quicker transaction times and no
           fees</m-tooltip
@@ -64,35 +77,104 @@
           wallet.offchain.balance > 0 &&
           (wallet.onchain.address || wallet.receiver.address)
         "
-        (click)="showModal = true"
+        (click)="showTransferModal = true"
         >Transfer to On-Chain</a
       > -->
-      <a (click)="showModal = true">Transfer to On-Chain</a>
+      <a
+        (click)="showTransferModal = true"
+        i18n="@@WALLET_V2_TOKENS_BALANCE__TRANSFER_TO_ONCHAIN"
+        >Transfer to On-Chain</a
+      >
     </div>
   </div>
 
   <div class="m-walletBalance--tokens__payout">
-    <div>
+    <div i18n="@@WALLET_V2_TOKENS_BALANCE__TODAYS_ESTIMATED_PAYOUT">
       Today's estimated payout
       <span class="m-walletBalance--tokens__payoutEstimate">{{
         estimatedTokenPayout | token: 18 | number: '1.0-3'
       }}</span>
       tokens.
     </div>
-    <div>
+    <div i18n="@@WALLET_V2_TOKENS_BALANCE__NEXT_PAYOUT_INFO">
       Next payout in <span>{{ nextPayoutDate | timediff: true }}</span> (Daily
       at {{ localPayoutTime }})
     </div>
   </div>
   <div class="m-walletBalance--tokens__learnMore">
-    Learn more about <a routerLink="/tokens">Minds Tokens</a> and our
-    <a routerLink="/rewards">Rewards System</a>.
+    <a
+      (click)="showTokenModal = true"
+      i18n="@@WALLET_V2_TOKENS_BALANCE__LEARN_MORE_ABOUT_TOKENS"
+      >Learn more</a
+    >
+    about Minds Tokens and our Rewards System.
   </div>
-  <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
+  <m-walletModal
+    [showModal]="showTransferModal"
+    (closeModal)="showTransferModal = false"
+  >
     <m-walletOnchainTransfer
-      *ngIf="wallet && showModal"
+      *ngIf="wallet && showTransferModal"
       (transferComplete)="transferComplete()"
     ></m-walletOnchainTransfer>
+  </m-walletModal>
+  <m-walletModal
+    [showModal]="showTokenModal"
+    (closeModal)="showTokenModal = false"
+  >
+    <h2 i18n="@@WALLET_V2_TOKENS_BALANCE__LEARN_ABOUT_TOKENS">
+      Learn About Tokens
+    </h2>
+    <h4>How the new rewards system works</h4>
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2_TOKENS_BALANCE__MINDS_REWARDS_YOU_WITH_CRYPTO_INFO"
+    >
+      Minds rewards you with crypto for contributing to the network. The first
+      step in joining our rewards program is to provide your mobile number. We
+      convert your number into a hash ID using SHA-256 encryption and a salt key
+      to create a unique identifier for your account. We do not store your
+      number on our servers.
+    </p>
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2_TOKENS_BALANCE__RATHER_THAN_REWARDING_INFO"
+    >
+      Rather than rewarding you with Points in real-time, we are now
+      distributing our crypto rewards as a “Daily Reward Pool”. During the test
+      network, we will be experimenting with how the Daily Reward Pool is
+      calculated, but it will ideally be automated based on user participation
+      once we move into the Main Ethereum network.
+    </p>
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2_TOKENS_BALANCE__EVERY_DAY_WE_MEASURE_INFO"
+    >
+      Every day, we measure your contributions to the network and you receive a
+      “Contribution Score” which can be found in the Contributions section of
+      your wallet. We then calculate how much you contributed to the network
+      relative to the entire community, which determines the percentage of the
+      Daily Reward Pool that you earn.
+    </p>
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2_TOKENS_BALANCE__ONLY_RECEIVE_UNIQUE_INFO"
+    >
+      It is important to note that with the new system, you will only receive
+      credit for unique interaction, and you can only earn credit from another
+      unique user once per metric per day. (If a friend votes on my content 100
+      times in a day, I will only get credit for 1 vote). This is critical in
+      preventing gaming and abuse of the system as we move into more valuable
+      token rewards. We are essentially measuring how many unique users you
+      reached in a given day.
+    </p>
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2_TOKENS_BALANCE__DAILY_REWARDS_INFO"
+    >
+      Daily rewards will be distributed at 02:00 am GMT everyday into your
+      off-chain address.
+    </p>
   </m-walletModal>
 </ng-container>
 <ng-template #loading>

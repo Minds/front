@@ -1,67 +1,71 @@
 <div class="m-modalV2__inner">
   <div class="m-modalV2__header">
-    <h2 class="m-modalV2Header__title">Manage Tags</h2>
+    <h2 class="m-modalV2Header__title" i18n="@@DISCOVERY_SETTINGS__MANAGE_TAGS">
+      Manage Tags
+    </h2>
   </div>
 
   <div class="m-modalV2__body">
     <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
-    <section class="m-discoveryTagSettings__section">
-      <h3>Add Custom Tag</h3>
-      <input
-        class="m-discoveryTagSettings__input"
-        #value
-        placeholder="Enter a tag here..."
-        (keypress)="onKeypress(value, $event)"
-        data-cy="discovery-settings-input"
-      />
-    </section>
+    <ng-container *ngIf="!(inProgress$ | async)">
+      <section class="m-discoveryTagSettings__section">
+        <h3 i18n="@@DISCOVERY__SETTINGS_ADD_CUSTOM_TAGS">Add Custom Tag</h3>
+        <input
+          class="m-discoveryTagSettings__input"
+          #value
+          placeholder="Enter a tag here..."
+          (keypress)="onKeypress(value, $event)"
+          data-cy="discovery-settings-input"
+        />
+      </section>
 
-    <section
-      class="m-discoveryTagSettings__section"
-      data-cy="discovery-settings-section--selected"
-    >
-      <h3>Your Tags</h3>
-      <ul class="m-discoveryTagSettings__list">
-        <li
-          class="m-discoveryTagSettingsList__item"
-          *ngFor="let tag of tags$ | async"
-        >
-          <div>
-            <span>#{{ tag.value }}</span>
-          </div>
-          <i
-            class="material-icons"
-            (click)="removeTag(tag)"
-            data-cy="discovery-settings-remove-button"
-            >remove_circle_outline</i
+      <section
+        class="m-discoveryTagSettings__section"
+        data-cy="discovery-settings-section--selected"
+      >
+        <h3 i18n="@@DISCOVERY__TAGS__YOUR_TAGS">Your Tags</h3>
+        <ul class="m-discoveryTagSettings__list">
+          <li
+            class="m-discoveryTagSettingsList__item"
+            *ngFor="let tag of tags$ | async"
           >
-        </li>
-      </ul>
-    </section>
+            <div>
+              <span>#{{ tag.value }}</span>
+            </div>
+            <i
+              class="material-icons"
+              (click)="removeTag(tag)"
+              data-cy="discovery-settings-remove-button"
+              >remove_circle_outline</i
+            >
+          </li>
+        </ul>
+      </section>
 
-    <section
-      class="m-discoveryTagSettings__section"
-      data-cy="discovery-settings-section--other"
-    >
-      <h3>Other Tags</h3>
-      <ul class="m-discoveryTagSettings__list">
-        <li
-          class="m-discoveryTagSettingsList__item"
-          *ngFor="let tag of other$ | async"
-        >
-          <div>
-            <span>#{{ tag.value }}</span>
-          </div>
-          <i
-            class="material-icons"
-            (click)="addTag(tag)"
-            data-cy="discovery-settings-add-button"
-            >add_circle_outline</i
+      <section
+        class="m-discoveryTagSettings__section"
+        data-cy="discovery-settings-section--other"
+      >
+        <h3 i18n="@@DISCOVERY__TAGS__OTHER_TAGS">Other Tags</h3>
+        <ul class="m-discoveryTagSettings__list">
+          <li
+            class="m-discoveryTagSettingsList__item"
+            *ngFor="let tag of defaults$ | async"
           >
-        </li>
-      </ul>
-    </section>
+            <div>
+              <span>#{{ tag.value }}</span>
+            </div>
+            <i
+              class="material-icons"
+              (click)="addTag(tag)"
+              data-cy="discovery-settings-add-button"
+              >add_circle_outline</i
+            >
+          </li>
+        </ul>
+      </section>
+    </ng-container>
   </div>
   <div class="m-modalV2__toolbar">
     <div class="m-layout__spacer"></div>
@@ -71,7 +75,9 @@
       (click)="onSave($event)"
       data-cy="discovery-settings-save-button"
     >
-      <ng-container i18n>Save Tags</ng-container>
+      <ng-container i18n="@@DISCOVERY_SETTINGS__SAVE_TAGS"
+        >Save Tags</ng-container
+      >
     </m-shadowboxSubmitButton>
   </div>
 </div>

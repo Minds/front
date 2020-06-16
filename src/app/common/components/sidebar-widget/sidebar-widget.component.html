@@ -1,6 +1,14 @@
 <div class="m-sidebarWidget">
   <h2 class="m-sidebarWidget__title">{{ title }}</h2>
 
+  <div
+    class="m-sidebarWidget__dismiss"
+    *ngIf="dismissibleId"
+    (click)="onDismissClick($event)"
+  >
+    <i class="material-icons">close</i>
+  </div>
+
   <ng-content selector=".m-sidebarWidget__body"></ng-content>
 
   <ng-content selector=".m-sidebarWidget__seeMore"></ng-content>

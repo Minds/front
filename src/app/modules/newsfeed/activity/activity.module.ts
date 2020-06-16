@@ -54,6 +54,5 @@ import { ActivityPaywallComponent } from './paywall/paywall.component';
   ],
   providers: [],
   exports: [ActivityComponent],
-  entryComponents: [ActivityComponent],
 })
 export class ActivityModule {}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-helpdesk--category-creator',
@@ -19,7 +20,8 @@ export class CategoryCreatorComponent implements OnInit {
   constructor(
     public client: Client,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -92,7 +94,8 @@ export class CategoryCreatorComponent implements OnInit {
   async load(uuid: string) {
     try {
       const response: any = await this.client.get(
-        `api/v2/helpdesk/categories/category/${uuid}`
+        `api/v2/helpdesk/categories/category/${uuid}`,
+        { translate: 'no' }
       );
 
       this.category = response.category;
@@ -106,6 +109,7 @@ export class CategoryCreatorComponent implements OnInit {
 
     if (!this.category.title) {
       this.error = 'You must provide a title';
+      this.toasterService.error(this.error);
     }
 
     if (this.error) {
@@ -129,6 +133,7 @@ export class CategoryCreatorComponent implements OnInit {
     } catch (e) {
       console.error(e);
       this.error = e;
+      this.toasterService.error(this.error);
     }
   }
 }

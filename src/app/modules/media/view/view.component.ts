@@ -3,8 +3,9 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ViewChild,
+  Optional,
   SkipSelf,
-  Injector,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,10 +19,12 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { AnalyticsService } from '../../../services/analytics';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-media--view',
@@ -33,7 +36,6 @@ import { FeaturesService } from '../../../services/features.service';
       deps: [Client],
     },
     ActivityService,
-    ClientMetaService,
   ],
 })
 export class MediaViewComponent implements OnInit, OnDestroy {
@@ -77,16 +79,13 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     public context: ContextService,
     private cd: ChangeDetectorRef,
     protected activityService: ActivityService,
-    private clientMetaService: ClientMetaService,
     private metaService: MetaService,
-    configs: ConfigsService,
-    @SkipSelf() injector: Injector,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    protected toasterService: FormToastService,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService,
+    configs: ConfigsService
   ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('single');
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -151,7 +150,10 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           this.updateMeta();
         }
 
-        this.clientMetaService.recordView(this.entity);
+        this.clientMetaService.recordView(this.entity, this.parentClientMeta, {
+          source: 'single',
+          medium: 'single',
+        });
 
         this.detectChanges();
       })
@@ -170,7 +172,7 @@ export class MediaViewComponent implements OnInit, OnDestroy {
         this.router.navigate([`/media/${type}/my`]);
       })
       .catch(e => {
-        alert((e && e.message) || 'Server error');
+        this.toasterService.error((e && e.message) || 'Server error');
       });
   }
 
@@ -260,6 +262,6 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           `@${this.entity.ownerObj.username}'s ${this.entity.subtype}`
       )
       .setDescription(this.entity.description)
-      .setOgImage(this.entity.thumbnail);
+      .setOgImage(this.entity.thumbnail_src);
   }
 }

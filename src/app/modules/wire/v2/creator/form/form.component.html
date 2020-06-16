@@ -1,10 +1,16 @@
 <div class="m-wireCreator__form m-formWrapper">
-  <div class="m-wireCreatorForm__tabs m-tabs__container">
+  <!-- ---------------------------------- -->
+  <!-- CURRENCY TABS (NON-UPGRADES) -->
+  <!-- ---------------------------------- -->
+  <div
+    class="m-wireCreatorForm__tabs m-tabs__container"
+    *ngIf="!(service.isUpgrade$ | async)"
+  >
     <div class="m-tabs__tab">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'tokens'"
         (click)="service.setType('tokens')"
-        i18n
+        i18n="currency|@@COMMON__TOKENS"
         >Tokens</a
       >
     </div>
@@ -13,7 +19,7 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'usd'"
         (click)="service.setType('usd')"
-        i18n
+        i18n="currency|@@COMMON__USD"
         >USD</a
       >
     </div>
@@ -22,7 +28,7 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'eth'"
         (click)="service.setType('eth')"
-        i18n
+        i18n="currency|@@COMMON__ETH"
         >ETH</a
       >
     </div>
@@ -31,24 +37,136 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'btc'"
         (click)="service.setType('btc')"
-        i18n
+        i18ni18n="currency|@@COMMON__BTC"
         >BTC</a
       >
     </div>
   </div>
 
+  <!-- ---------------------------------- -->
+  <!-- FORM FIELDSET -->
+  <!-- ---------------------------------- -->
   <div class="m-wireCreatorForm__fieldset">
-    <div class="m-wireCreatorForm__fields">
+    <!-- ---------------------------------- -->
+    <!-- CURRENCY TOGGLE (UPGRADES) -->
+    <!-- ---------------------------------- -->
+    <div class="m-wireCreatorForm__fields" *ngIf="service.isUpgrade$ | async">
+      <div class="m-wireCreatorForm__field">
+        <div class="m-wireCreatorForm__field">
+          <div class="m-wireCreatorForm__toggleContainer">
+            <span
+              class="m-wireCreatorForm__toggleLabel"
+              i18n="currency|@@COMMON__USD"
+              >USD</span
+            >
+
+            <span class="m-wireCreatorForm__toggle"
+              ><m-toggle
+                leftValue="usd"
+                rightValue="tokens"
+                [mModel]="service.type$ | async"
+                (mModelChange)="service.setType($event)"
+              ></m-toggle
+            ></span>
+
+            <span
+              class="m-wireCreatorForm__toggleLabel"
+              i18n="currency|@@COMMON__TOKENS"
+              >Tokens</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ---------------------------------- -->
+    <!-- TOGGLE: UPGRADE INTERVAL -->
+    <!-- ---------------------------------- -->
+    <div class="m-wireCreatorForm__fields" *ngIf="service.isUpgrade$ | async">
+      <div class="m-wireCreatorForm__field">
+        <div class="m-wireCreatorForm__intervalToggleContainer">
+          <div
+            class="m-wireCreatorForm__intervalOption"
+            [class.m-wireCreatorForm__intervalOption--selected]="
+              (service.upgradeInterval$ | async) === 'yearly'
+            "
+            (click)="service.setUpgradeInterval('yearly')"
+          >
+            <div i18n="@@COMMON__ANNUALLY">Annually</div>
+            <div>
+              <ng-container *ngIf="(service.type$ | async) === 'usd'"
+                >$</ng-container
+              ><span>{{
+                (service.upgradePricingOptions$ | async)?.yearly / 12
+              }}</span>
+              <span
+                ><ng-container
+                  *ngIf="(service.type$ | async) === 'tokens'"
+                  i18n="currency|@@COMMON__TOKENS"
+                >
+                  tokens</ng-container
+                >
+                /
+                <ng-container i18n="@@COMMON__MONTH">month</ng-container></span
+              >
+            </div>
+          </div>
+          <div
+            class="m-wireCreatorForm__intervalOption"
+            (click)="service.setUpgradeInterval('monthly')"
+            [class.m-wireCreatorForm__intervalOption--selected]="
+              (service.upgradeInterval$ | async) === 'monthly'
+            "
+          >
+            <div i18n="@@COMMON__MONTHLY">Monthly</div>
+            <div>
+              <ng-container *ngIf="(service.type$ | async) === 'usd'"
+                >$</ng-container
+              >
+              <span>{{
+                (service.upgradePricingOptions$ | async)?.monthly
+              }}</span
+              ><span
+                ><ng-container
+                  *ngIf="(service.type$ | async) === 'tokens'"
+                  i18n="currency|@@COMMON__TOKENS"
+                >
+                  tokens</ng-container
+                >
+                /
+                <ng-container i18n="@@COMMON__MONTH">month</ng-container></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ---------------------------------- -->
+    <!-- INPUT: AMOUNT -->
+    <!-- ---------------------------------- -->
+    <div
+      class="m-wireCreatorForm__fields"
+      *ngIf="!(service.isUpgrade$ | async)"
+    >
       <div class="m-wireCreatorForm__field">
         <label
           for="m-wireCreatorForm__amount"
           class="m-wireCreatorForm__label"
           [ngSwitch]="service.type$ | async"
         >
-          <ng-container *ngSwitchCase="'tokens'" i18n>Tokens</ng-container>
-          <ng-container *ngSwitchCase="'usd'" i18n>USD</ng-container>
-          <ng-container *ngSwitchCase="'eth'" i18n>Ether</ng-container>
-          <ng-container *ngSwitchCase="'btc'" i18n>Bitcoin</ng-container>
+          <ng-container
+            *ngSwitchCase="'tokens'"
+            i18n="currency|@@COMMON__TOKENS"
+            >Tokens</ng-container
+          >
+          <ng-container *ngSwitchCase="'usd'" i18n="currency|@@COMMON__USD"
+            >USD</ng-container
+          >
+          <ng-container *ngSwitchCase="'eth'" i18n="currency|@@COMMON__ETHER"
+            >Ether</ng-container
+          >
+          <ng-container *ngSwitchCase="'btc'" i18n="currency|@@COMMON__Bitcoin"
+            >Bitcoin</ng-container
+          >
         </label>
 
         <input
@@ -61,33 +179,58 @@
         />
       </div>
     </div>
-
     <div class="m-wireCreatorForm__fields">
-      <!-- Type === tokens -->
+      <!--------------------------->
+      <!--IF CURRENCY : TOKENS-->
+      <!--------------------------->
       <ng-container *ngIf="(service.type$ | async) === 'tokens'">
-        <!-- Token wallet toggle -->
-        <div class="m-wireCreatorForm__field">
-          <div class="m-wireCreatorForm__label" i18n>Wallet Type</div>
+        <!--------------------------->
+        <!--TOGGLE : OFFCHAIN/ONCHAIN -->
+        <!--------------------------->
+        <ng-container *ngIf="!(service.isUpgrade$ | async)">
+          <div class="m-wireCreatorForm__field">
+            <div
+              class="m-wireCreatorForm__label"
+              i18n="@@WIRE_CREATOR_FORM__WALLET_TYPE"
+            >
+              Wallet Type
+            </div>
 
-          <div class="m-wireCreatorForm__toggleContainer">
-            <span class="m-wireCreatorForm__toggleLabel" i18n>On-chain</span>
+            <div class="m-wireCreatorForm__toggleContainer">
+              <span
+                class="m-wireCreatorForm__toggleLabel"
+                i18n="@@COMMON__ONCHAIN"
+                >On-chain</span
+              >
 
-            <span class="m-wireCreatorForm__toggle"
-              ><m-toggle
-                leftValue="onchain"
-                rightValue="offchain"
-                [mModel]="service.tokenType$ | async"
-                (mModelChange)="service.setTokenType($event)"
-              ></m-toggle
-            ></span>
+              <span class="m-wireCreatorForm__toggle"
+                ><m-toggle
+                  leftValue="onchain"
+                  rightValue="offchain"
+                  [mModel]="service.tokenType$ | async"
+                  (mModelChange)="service.setTokenType($event)"
+                ></m-toggle
+              ></span>
 
-            <span class="m-wireCreatorForm__toggleLabel" i18n>Off-chain</span>
+              <span
+                class="m-wireCreatorForm__toggleLabel"
+                i18n="@@COMMON__OFFCHAIN"
+                >Off-chain</span
+              >
+            </div>
           </div>
-        </div>
+        </ng-container>
 
-        <!-- Token wallet balance -->
+        <!--------------------------->
+        <!--TOKEN WALLET BALANCE-->
+        <!--------------------------->
         <div class="m-wireCreatorForm__field">
-          <div class="m-wireCreatorForm__label" i18n>Wallet Balance</div>
+          <div
+            class="m-wireCreatorForm__label"
+            i18n="@@WIRE_CREATOR_FORM__WALLET_BALANCE"
+          >
+            Wallet Balance
+          </div>
 
           <span
             class="m-wireCreatorForm__value"
@@ -109,17 +252,32 @@
               <ng-container *ngIf="(service.tokenType$ | async) === 'onchain'">
                 {{ wallet.value.onchain.balance | number: '1.0-3' }}
               </ng-container>
+              <a
+                class="m-wireCreatorForm__topUpLink"
+                *ngIf="service.isUpgrade$ | async"
+                routerLink="/token"
+                i18n="@@WIRE_CREATOR_FORM__TOP_UP_WALLET"
+                >Top-up wallet</a
+              >
             </ng-template>
           </span>
         </div>
       </ng-container>
       <!--  End of type === tokens -->
-
-      <!-- Type === usd -->
+      <!--------------------------->
+      <!-- IF CURRENCY: USD -->
+      <!--------------------------->
       <ng-container *ngIf="(service.type$ | async) === 'usd'">
-        <!-- Card selector -->
+        <!--------------------------->
+        <!--SELECT BANK ACCOUNT/CARD-->
+        <!--------------------------->
         <div class="m-wireCreatorForm__field">
-          <div class="m-wireCreatorForm__label" i18n>Payment Method</div>
+          <div
+            class="m-wireCreatorForm__label"
+            i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
+          >
+            Payment Method
+          </div>
 
           <m-payments__selectCard
             (selected)="service.setUsdPaymentMethodId($event)"
@@ -127,18 +285,20 @@
         </div>
       </ng-container>
       <!--  End of type === usd -->
-
-      <!-- Recurring checkbox -->
+      <!--------------------------->
+      <!--CHECKBOX : RECURRING PAYMENTS-->
+      <!--------------------------->
       <div
         *ngIf="
-          service.canRecur(service.type$ | async, service.tokenType$ | async)
+          service.canRecur(service.type$ | async, service.tokenType$ | async) &&
+          !(service.isUpgrade$ | async)
         "
-        class="m-wireCreatorForm__field"
+        class="m-wireCreatorForm__field m-wireCreatorForm__field--recurring"
       >
         <label
           for="m-wireCreatorForm__recurring"
           class="m-wireCreatorForm__label"
-          i18n
+          i18n="@@WIRE_CREATOR_FORM__REPEAT_MONTHLY_PAYMENT"
           >Repeat Payment Monthly</label
         >
         <label
@@ -157,10 +317,10 @@
           />
           <span class="m-form__customInput__checkbox"></span>
 
-          <span>Repeat</span>
+          <span i18n="action|@@WIRE_CREATOR_FORM__REPEAT">Repeat</span>
           <m-tooltip class="m-wireCreatorFormRecurring__tooltip">
             <span m-tooltip--anchor>?</span>
-            <ng-container i18n>
+            <ng-container i18n="@@WIRE_CREATOR_FORM__MONTHLY_PAYMENT_INFO">
               Monthly recurrent payments may be cancelled at any point within in
               your wallet.
             </ng-container>

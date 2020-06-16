@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 import { Session } from '../../../../../services/session';
 import { Client } from '../../../../../services/api';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 @Component({
   selector: 'm-wireV2__subscriptionTiers',
   templateUrl: 'tiers.component.html',
@@ -22,7 +23,11 @@ export class WireV2SubscriptionTiersComponent {
     },
   };
 
-  constructor(public session: Session, private client: Client) {}
+  constructor(
+    public session: Session,
+    private client: Client,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     if (this.user && this.user.wire_rewards) {
@@ -49,7 +54,7 @@ export class WireV2SubscriptionTiersComponent {
       this.session.getLoggedInUser().wire_rewards = this.rewards;
       this.isSaved.next(true);
     } catch (e) {
-      alert((e && e.message) || 'Server error');
+      this.toasterService.error((e && e.message) || 'Server error');
     } finally {
       this.isSaving.next(false);
     }

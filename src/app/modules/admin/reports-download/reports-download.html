@@ -4,9 +4,7 @@
       <div
         class="mdl-grid mdl-card mdl-shadow--4dp m-admin--reports-download-selector"
       >
-        <span i18n="@@M__ADMIN__REPORTS_DOWNLOAD__SELECT_REPORT"
-          >Select Report:</span
-        >
+        <span>Select Report:</span>
         <select [ngModel]="selectedReport" (ngModelChange)="setReport($event)">
           <option *ngFor="let report of reports; let i = index" [value]="i"
             >{{ report.name }}</option
@@ -24,14 +22,9 @@
             [fields]="reports[selectedReport].params"
             #reportform
           ></m-dynamic-form>
-          <span class="m-admin--reports-download-error" *ngIf="error"
-            >{{error}}</span
-          >
           <input type="checkbox" name="with_titles" [(ngModel)]="with_titles" />
           <label for="flag_mature">
-            <ng-container i18n="@@M__ADMIN__REPORTS_DOWNLOAD__WITH_TITLES"
-              >Include columns titles</ng-container
-            >
+            <ng-container>Include columns titles</ng-container>
           </label>
         </div>
         <div class="mdl-card__actions mdl-card--border">

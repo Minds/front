@@ -1,7 +1,9 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, Inject, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../../services/api';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HashtagDefaultsService } from '../../hashtags/service/defaults.service';
+import { isPlatformServer } from '@angular/common';
 
 export type DiscoveryTag = any;
 
@@ -24,16 +26,42 @@ export class DiscoveryTagsService {
       return other;
     })
   );
+
+  /**
+   * Default tags without user ones
+   */
+  defaults$: Observable<DiscoveryTag[]> = combineLatest([
+    this.tags$,
+    this.hashtagDefaults.tags$,
+  ]).pipe(
+    map(([tags, defaults]) => {
+      const rawTags = tags.map(tag => tag.value);
+
+      return defaults
+        .filter(item => !rawTags.includes(item))
+        .map(item => ({
+          value: item,
+        }));
+    })
+  );
+
   // Add/Remove tracker
   remove$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
 
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private client: Client) {}
+  constructor(
+    private client: Client,
+    private hashtagDefaults: HashtagDefaultsService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   async loadTags(refresh = false) {
     this.inProgress$.next(true);
+
+    if (isPlatformServer(this.platformId)) return;
+
     if (refresh) {
       this.tags$.next([]);
       this.trending$.next(null);

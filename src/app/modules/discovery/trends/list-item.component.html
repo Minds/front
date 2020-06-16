@@ -2,7 +2,10 @@
   [routerLink]="
     trend.guid ? '/discovery/trend/' + trend.guid : '/discovery/search'
   "
-  [queryParams]="{ q: !trend.guid ? '#' + trend.hashtag : null, f: 'top' }"
+  [queryParams]="{
+    q: !trend.guid ? '#' + trend.hashtag : null,
+    f: trend.period <= 24 ? 'top' : 'latest'
+  }"
 >
   <ng-container *ngIf="trend.title">
     <div>
@@ -23,7 +26,12 @@
   <ng-container *ngIf="!trend.title">
     <div>
       <div class="m-discoveryTrendListItem__supportingText--above">
-        <span>Trending {{ trend.period }}h</span>
+        <span>
+          <ng-container i18n="@@COMMON__TRENDING">Trending</ng-container>
+          <ng-container *ngIf="trend.period <= 24">
+            {{ trend.period }}h
+          </ng-container>
+        </span>
         <span>{{ trend.volume }} posts</span>
       </div>
       <h4>#{{ trend.hashtag }}</h4>

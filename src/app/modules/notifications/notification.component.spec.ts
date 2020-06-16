@@ -402,7 +402,7 @@ describe('NotificationComponent', () => {
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
     expect(notification.nativeElement.innerHTML).toContain(
-      '<!---->Your payment request for $10.00 was approved.'
+      'Your payment request for $10.00 was approved.'
     );
   });
 
@@ -427,7 +427,7 @@ describe('NotificationComponent', () => {
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
     expect(notification.nativeElement.innerHTML).toContain(
-      '<!---->Your payment request for $10.00 was declined.'
+      'Your payment request for $10.00 was declined.'
     );
   });
 

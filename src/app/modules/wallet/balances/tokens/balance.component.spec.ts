@@ -74,6 +74,11 @@ describe('WalletBalanceTokensComponent', () => {
     this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
       return 0;
     });
+    this.EthJS = {
+      fromWei: function(x, y) {
+        return 1;
+      },
+    };
   })();
 
   const Web3WalletLocalServiceMock = new (function() {

@@ -1,6 +1,9 @@
 import generateRandomId from '../support/utilities';
 
 context('Newsfeed', () => {
+
+  const postText = generateRandomId();
+
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
       if (!sessionCookie) {
@@ -10,6 +13,8 @@ context('Newsfeed', () => {
   });
 
   beforeEach(() => {
+    // This test makes use of cy.post()
+    cy.overrideFeatureFlags({ 'activity-composer': true });
     cy.preserveCookies();
     cy.server();
     cy.route('POST', '**/api/v1/newsfeed').as('newsfeedPOST');
@@ -20,15 +25,18 @@ context('Newsfeed', () => {
   });
 
   const deleteActivityFromNewsfeed = () => {
-    cy.get(
-      '.minds-list > minds-activity:first m-post-menu .minds-more'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first m-post-menu m-modal-confirm .mdl-button--colored'
-    ).click();
+    cy.contains(postText)
+      .parentsUntil('m-activity')
+      .parent()
+      .within($list => {
+        // get share link
+        cy.get('.m-postMenu__button')
+          .click();
+      });
+      cy.contains('Delete Post')
+        .click();
+      
+      cy.on('window:confirm', () => true);
   };
 
   const newActivityContent = content => {
@@ -36,18 +44,17 @@ context('Newsfeed', () => {
     cy.get('minds-newsfeed-poster textarea').type(content);
   };
 
-  const attachRichEmbed = (embedUrl) => {
+  const attachRichEmbed = embedUrl => {
     cy.get('minds-newsfeed-poster').should('be.visible');
-    cy.get('minds-newsfeed-poster textarea')
-      .type(embedUrl);
-      
-    cy.route('GET',  `**/api/v1/newsfeed/preview?url=${embedUrl}**`)
+    cy.get('minds-newsfeed-poster textarea').type(embedUrl);
+
+    cy.route('GET', `**/api/v1/newsfeed/preview?url=${embedUrl}**`)
       .as('previewGET')
       .wait('@previewGET')
       .then(xhr => {
         expect(xhr.status).to.equal(200);
       });
-  }
+  };
 
   const attachImageToActivity = () => {
     cy.uploadFile(
@@ -87,7 +94,9 @@ context('Newsfeed', () => {
     ).click();
     cy.get('.minds-list > minds-activity:first textarea').clear();
     cy.get('.minds-list > minds-activity:first textarea').type(newContent);
-    cy.get('.minds-list > minds-activity:first .minds-editable-container .mdl-button--colored').click();
+    cy.get(
+      '.minds-list > minds-activity:first .minds-editable-container .mdl-button--colored'
+    ).click();
     cy.wait('@newsfeedEDIT').then(xhr => {
       expect(xhr.status).to.equal(200);
     });
@@ -99,10 +108,10 @@ context('Newsfeed', () => {
     );
     cy.get('.minds-list > minds-activity:first  .item-image img').click();
 
-    cy.get('m-overlay-modal').then(($modalOverlay) => {
+    cy.get('m-overlay-modal').then($modalOverlay => {
       if ($modalOverlay.find('.m-mediaModal__stage').length) {
         cy.get('.m-mediaModal__stage').trigger('mouseenter');
-        cy.get('.m-mediaModal__overlayContainer', {timeout: 10000}).click();
+        cy.get('.m-mediaModal__overlayContainer', { timeout: 10000 }).click();
       }
     });
 
@@ -110,7 +119,7 @@ context('Newsfeed', () => {
   };
 
   it('should post an activity', () => {
-    cy.post('this is a post');
+    cy.post(postText);
     deleteActivityFromNewsfeed();
   });
 
@@ -135,16 +144,15 @@ context('Newsfeed', () => {
       .click();
 
     // click away on arbitrary area.
-    cy.get('minds-newsfeed-poster m-hashtags-selector .minds-bg-overlay').click(
-      { force: true }
-    );
+    cy.get(
+      'minds-newsfeed-poster m-hashtags-selector .minds-bg-overlay'
+    ).click({ force: true });
 
     postActivityAndAwaitResponse(200);
-    
-    cy.get('.minds-list')
-      .within(($list) => {
-        cy.contains('This is a post #art #hashtag');
-      });
+
+    cy.get('.minds-list').within($list => {
+      cy.contains('This is a post #art #hashtag');
+    });
 
     deleteActivityFromNewsfeed();
   });
@@ -153,20 +161,23 @@ context('Newsfeed', () => {
    * Commenting out until scheduling is enabled properly on sandboxes
    */
   it.skip('should be able to post an activity picking a scheduled date and the edit it', () => {
-    cy.get('minds-newsfeed-poster').then((poster) => {
+    cy.get('minds-newsfeed-poster').then(poster => {
       if (poster.find('.m-poster-date-selector__input').length > 0) {
         cy.get('minds-newsfeed-poster textarea').type('This is a post');
 
         // set scheduled date
         cy.get('.m-poster-date-selector__input').click();
         cy.get('button.c-datepicker__next').click();
-        cy.get('tr.c-datepicker__days-row:nth-child(2) td.c-datepicker__day-body:first-child').click();
+        cy.get(
+          'tr.c-datepicker__days-row:nth-child(2) td.c-datepicker__day-body:first-child'
+        ).click();
         cy.get('a.c-btn.c-btn--flat.js-ok').click();
 
         // get setted date to compare
         let scheduledDate;
         cy.get('div.m-poster-date-selector__input div.m-tooltip--bubble')
-          .invoke('text').then((text) => {
+          .invoke('text')
+          .then(text => {
             scheduledDate = text;
           });
 
@@ -175,8 +186,11 @@ context('Newsfeed', () => {
         cy.wait(100);
 
         // compare setted date with time_created
-        cy.get('.minds-list > minds-activity:first-child div.mdl-card__supporting-text > div.body > a.permalink > span')
-          .invoke('text').then((text) => {
+        cy.get(
+          '.minds-list > minds-activity:first-child div.mdl-card__supporting-text > div.body > a.permalink > span'
+        )
+          .invoke('text')
+          .then(text => {
             const time_created = new Date(text).getTime();
             scheduledDate = new Date(scheduledDate).getTime();
             expect(scheduledDate).to.equal(time_created);
@@ -184,65 +198,100 @@ context('Newsfeed', () => {
 
         // prepare to listen
         cy.server();
-        cy.route("POST", '**/api/v1/newsfeed/**').as("saveEdited");
+        cy.route('POST', '**/api/v1/newsfeed/**').as('saveEdited');
 
         // edit the activity
-        cy.get('.minds-list > minds-activity:first-child m-post-menu > button.minds-more').click();
-        cy.get('.minds-list > minds-activity:first-child li.mdl-menu__item:first-child').click();
-        cy.get('.minds-list > minds-activity:first-child .m-poster-date-selector__input').click();
+        cy.get(
+          '.minds-list > minds-activity:first-child m-post-menu > button.minds-more'
+        ).click();
+        cy.get(
+          '.minds-list > minds-activity:first-child li.mdl-menu__item:first-child'
+        ).click();
+        cy.get(
+          '.minds-list > minds-activity:first-child .m-poster-date-selector__input'
+        ).click();
         cy.get('button.c-datepicker__next').click();
-        cy.get('tr.c-datepicker__days-row:nth-child(3) td.c-datepicker__day-body:first-child').click();
+        cy.get(
+          'tr.c-datepicker__days-row:nth-child(3) td.c-datepicker__day-body:first-child'
+        ).click();
         cy.get('a.c-btn.c-btn--flat.js-ok').click();
 
         // get setted date to compare
-        cy.get('.minds-list > minds-activity:first-child div.m-poster-date-selector__input div.m-tooltip--bubble')
-          .invoke('text').then((text) => {
+        cy.get(
+          '.minds-list > minds-activity:first-child div.m-poster-date-selector__input div.m-tooltip--bubble'
+        )
+          .invoke('text')
+          .then(text => {
             scheduledDate = text;
           });
 
         // compare setted date with time_created
-        cy.get('.minds-list > minds-activity:first-child div.mdl-card__supporting-text > div.body > a.permalink > span')
-          .invoke('text').then((text) => {
+        cy.get(
+          '.minds-list > minds-activity:first-child div.mdl-card__supporting-text > div.body > a.permalink > span'
+        )
+          .invoke('text')
+          .then(text => {
             const time_created = new Date(text).getTime();
             scheduledDate = new Date(scheduledDate).getTime();
             expect(scheduledDate).to.equal(time_created);
           });
 
         // Save
-        cy.get('.minds-list > minds-activity:first-child button.mdl-button.mdl-button--colored').click();
-        cy.wait('@saveEdited', { requestTimeout: 5000 }).then((xhr) => {
-          expect(xhr.status).to.equal(200, '**/api/v1/newsfeed/** request status');
+        cy.get(
+          '.minds-list > minds-activity:first-child button.mdl-button.mdl-button--colored'
+        ).click();
+        cy.wait('@saveEdited', { requestTimeout: 5000 }).then(xhr => {
+          expect(xhr.status).to.equal(
+            200,
+            '**/api/v1/newsfeed/** request status'
+          );
         });
 
         // cleanup
-        cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-more').click();
-        cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)').click();
-        cy.get('.minds-list > minds-activity:first-child m-post-menu m-modal-confirm .mdl-button--colored').click();
+        cy.get(
+          '.minds-list > minds-activity:first-child m-post-menu .minds-more'
+        ).click();
+        cy.get(
+          '.minds-list > minds-activity:first-child m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)'
+        ).click();
+        cy.get(
+          '.minds-list > minds-activity:first-child m-post-menu m-modal-confirm .mdl-button--colored'
+        ).click();
       }
-    });    
-  })
+    });
+  });
 
   it.skip('should list scheduled activies', () => {
-    cy.get('minds-newsfeed-poster').then((poster) => {
+    cy.get('minds-newsfeed-poster').then(poster => {
       if (poster.find('.m-poster-date-selector__input').length > 0) {
         cy.server();
-        cy.route("GET", '**/api/v2/feeds/scheduled/**/count?').as("scheduledCount");
-        cy.route("GET", '**/api/v2/feeds/scheduled/**/activities?**').as("scheduledActivities");
+        cy.route('GET', '**/api/v2/feeds/scheduled/**/count?').as(
+          'scheduledCount'
+        );
+        cy.route('GET', '**/api/v2/feeds/scheduled/**/activities?**').as(
+          'scheduledActivities'
+        );
 
         cy.visit(`/${Cypress.env().username}`);
 
-        cy.wait('@scheduledCount', { requestTimeout: 2000 }).then((xhr) => {
-          expect(xhr.status).to.equal(200, 'feeds/scheduled/**/count request status');
+        cy.wait('@scheduledCount', { requestTimeout: 2000 }).then(xhr => {
+          expect(xhr.status).to.equal(
+            200,
+            'feeds/scheduled/**/count request status'
+          );
         });
 
         cy.get('div.m-mindsListTools__scheduled').click();
 
-        cy.wait('@scheduledActivities', { requestTimeout: 2000 }).then((xhr) => {
-          expect(xhr.status).to.equal(200, 'feeds/scheduled/**/activities request status');
+        cy.wait('@scheduledActivities', { requestTimeout: 2000 }).then(xhr => {
+          expect(xhr.status).to.equal(
+            200,
+            'feeds/scheduled/**/activities request status'
+          );
         });
       }
     });
-  })
+  });
 
   it.skip('should post an activity with an image attachment', () => {
     navigateToNewsfeed();
@@ -252,9 +301,9 @@ context('Newsfeed', () => {
     attachImageToActivity();
     postActivityAndAwaitResponse(200);
 
-    cy.get('.minds-list > minds-activity:first .message', {timeout: 20000 }).contains(
-      content
-    );
+    cy.get('.minds-list > minds-activity:first .message', {
+      timeout: 20000,
+    }).contains(content);
     cy.get('.minds-list > minds-activity:first  .item-image img').should(
       'be.visible'
     );
@@ -309,80 +358,54 @@ context('Newsfeed', () => {
   });
 
   it('should vote an activity', () => {
-    cy.post('This is an upvoted post');
+    cy.post(postText);
+    cy.contains(postText)
+      .parentsUntil('m-activity')
+      .parent()
+      .within($list => {
+      // upvote
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).should('not.have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).should('have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-up span'
+        ).contains('1');
 
-    // upvote
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).should('not.have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).should('have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up span'
-    ).contains('1');
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).should('not.have.class', 'selected');
 
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).should('not.have.class', 'selected');
+        // downvote
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).should('not.have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).should('have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-down span'
+        ).contains('1');
 
-    // downvote
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).should('not.have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).should('have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down span'
-    ).contains('1');
-
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).should('not.have.class', 'selected');
-
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).should('not.have.class', 'selected');
+      });
     deleteActivityFromNewsfeed();
-  });
-
-  it('should have an "Upgrade to Plus" button and it should redirect to /plus', () => {
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:nth-child(2) span'
-    ).contains('Upgrade to Plus');
-
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:nth-child(2)'
-    )
-      .should('have.attr', 'href', '/plus')
-      .click();
-
-    cy.location('pathname').should('eq', '/plus');
-  });
-
-  it('should have a "Buy Tokens" button and it should redirect to /token', () => {
-    cy.visit('/');
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:last-child span'
-    ).contains('Buy Tokens');
-
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:last-child'
-    )
-      .should('have.attr', 'href', '/tokens')
-      .click();
-
-    cy.location('pathname').should('eq', '/token');
   });
 
   it.skip('"create blog" button in poster should redirect to /blog/edit/new', () => {
@@ -419,21 +442,17 @@ context('Newsfeed', () => {
   });
 
   it('should record a view when the user scrolls and an activity is visible', () => {
-    cy.visit('/');
+    // cy.visit('/');
 
     cy.server();
     cy.route('POST', '**/api/v2/analytics/views/activity/*').as('view');
 
-    cy.post('This is a post that will record a view');
+    cy.scrollTo('0', '100%', { duration: 100 });
 
-    cy.scrollTo(0, '20px');
-
-    cy.wait('@view').then(xhr => {
+    cy.wait('@view', { timeout: 10000 }).then(xhr => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body).to.deep.equal({ status: 'success' });
     });
-
-    deleteActivityFromNewsfeed();
   });
 
   it('clicking on the plus button on the sidebar should redirect the user to  /groups/create', () => {
@@ -446,11 +465,11 @@ context('Newsfeed', () => {
     cy.location('pathname').should('eq', '/groups/create');
   });
 
-
   /**
    * Skipping until sandbox behaves consistently as currently when posting,
    * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
-   */ 
+   */
+
   it.skip('editing media post propagates to activity', () => {
     const identifier = Math.floor(Math.random() * 100);
     const content = 'This is a post with an image ' + identifier;
@@ -485,7 +504,8 @@ context('Newsfeed', () => {
   /**
    * Skipping until sandbox behaves consistently as currently when posting,
    * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
-   */ 
+   */
+
   it.skip('editing a media activity propagates to media post', () => {
     const identifier = Math.floor(Math.random() * 100);
     const content = 'This is a post with an image ' + identifier;
@@ -506,14 +526,16 @@ context('Newsfeed', () => {
 
     navigateToMediaPageFromNewsfeed();
 
-    cy.get('.m-media-content--heading', { timeout: 10000 }).contains(newContent);
+    cy.get('.m-media-content--heading', { timeout: 10000 }).contains(
+      newContent
+    );
 
     navigateToNewsfeed();
     deleteActivityFromNewsfeed();
   });
 
   it.skip('should show a rich embed post from youtube in a modal', () => {
-    const content = generateRandomId() + " ",
+    const content = generateRandomId() + ' ',
       url = 'https://www.youtube.com/watch?v=jNQXAC9IVRw';
 
     // set up post.
@@ -523,27 +545,27 @@ context('Newsfeed', () => {
     // post and await.
     cy.get('.m-posterActionBar__PostButton')
       .click()
-      .wait('@newsfeedPOST').then(xhr => {
+      .wait('@newsfeedPOST')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
 
         //get activity, click it.
-        cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
-          .click();
+        cy.get(
+          `[minds-data-activity-guid='${xhr.response.body.guid}']`
+        ).click();
 
         //check modal is open.
-        cy.get('[data-cy=data-minds-media-modal]')
-          .contains(content);
-        
+        cy.get('[data-cy=data-minds-media-modal]').contains(content);
+
         // close modal and tidy.
-        cy.get('.m-overlay-modal--backdrop')
-          .click({force: true});
+        cy.get('.m-overlay-modal--backdrop').click({ force: true });
 
         deleteActivityFromNewsfeed();
       });
   });
 
   it.skip('should not open vimeo in a modal', () => {
-    const content = generateRandomId() + " ",
+    const content = generateRandomId() + ' ',
       url = 'https://vimeo.com/8733915';
 
     // set up post.
@@ -553,25 +575,25 @@ context('Newsfeed', () => {
     // post and await.
     cy.get('.m-posterActionBar__PostButton')
       .click()
-      .wait('@newsfeedPOST').then(xhr => {
+      .wait('@newsfeedPOST')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
 
         //get activity, make assertions tht would not be true for modals.
         cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
           .should('be.visible')
-          .get('iframe')          
+          .get('iframe')
           .should('be.visible')
           .get('.minds-more')
           .should('be.visible');
-        
-          // tidy.
+
+        // tidy.
         deleteActivityFromNewsfeed();
       });
   });
 
-
   it.skip('should not open soundcloud in a modal', () => {
-    const content = generateRandomId() + " ",
+    const content = generateRandomId() + ' ',
       url = 'https://soundcloud.com/richarddjames/piano-un10-it-happened';
 
     // set up post.
@@ -581,13 +603,14 @@ context('Newsfeed', () => {
     // post and await.
     cy.get('.m-posterActionBar__PostButton')
       .click()
-      .wait('@newsfeedPOST').then(xhr => {
+      .wait('@newsfeedPOST')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
 
         //get activity, make assertions tht would not be true for modals.
         cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
           .should('be.visible')
-          .get('.m-rich-embed-action-overlay')          
+          .get('.m-rich-embed-action-overlay')
           .should('be.visible')
           .get('.minds-more')
           .should('be.visible');
@@ -597,8 +620,9 @@ context('Newsfeed', () => {
   });
 
   it.skip('should not open spotify in a modal', () => {
-    const content = generateRandomId() + " ",
-      url = 'https://open.spotify.com/track/2MZSXhq4XDJWu6coGoXX1V?si=nvja0EfwR3q6GMQmYg6gPQ';
+    const content = generateRandomId() + ' ',
+      url =
+        'https://open.spotify.com/track/2MZSXhq4XDJWu6coGoXX1V?si=nvja0EfwR3q6GMQmYg6gPQ';
 
     // set up post.
     newActivityContent(content);
@@ -607,13 +631,14 @@ context('Newsfeed', () => {
     // post and await.
     cy.get('.m-posterActionBar__PostButton')
       .click()
-      .wait('@newsfeedPOST').then(xhr => {
+      .wait('@newsfeedPOST')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
 
         //get activity, make assertions tht would not be true for modals.
         cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
           .should('be.visible')
-          .get('.m-rich-embed-action-overlay')          
+          .get('.m-rich-embed-action-overlay')
           .should('be.visible')
           .get('.minds-more')
           .should('be.visible');
@@ -623,7 +648,7 @@ context('Newsfeed', () => {
   });
 
   it.skip('should not open giphy in a modal', () => {
-    const content = generateRandomId() + " ",
+    const content = generateRandomId() + ' ',
       url = 'https://giphy.com/gifs/test-gw3IWyGkC0rsazTi';
 
     // set up post.
@@ -633,13 +658,14 @@ context('Newsfeed', () => {
     // post and await.
     cy.get('.m-posterActionBar__PostButton')
       .click()
-      .wait('@newsfeedPOST').then(xhr => {
+      .wait('@newsfeedPOST')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
 
         //get activity, make assertions tht would not be true for modals.
         cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
           .should('be.visible')
-          .get('.m-rich-embed-action-overlay')          
+          .get('.m-rich-embed-action-overlay')
           .should('be.visible')
           .get('.minds-more')
           .should('be.visible');
@@ -650,7 +676,6 @@ context('Newsfeed', () => {
 
   // enable once failing tests are fixed
   it.skip('should post an nsfw activity when value is held by the selector (is blue) but it has not been clicked yet', () => {
-
     // click on nsfw dropdown
     cy.get(
       'minds-newsfeed-poster m-nsfw-selector .m-dropdown--label-container'
@@ -665,8 +690,12 @@ context('Newsfeed', () => {
     cy.get('minds-newsfeed-poster m-nsfw-selector .minds-bg-overlay').click();
 
     // navigate away from newsfeed and back.
-    cy.get('[data-cy=data-minds-nav-wallet-button]').first().click(); // bottom bar exists, so take first child 
-    cy.get('[data-cy=data-minds-nav-newsfeed-button]').first().click(); 
+    cy.get('[data-cy=data-minds-nav-wallet-button]')
+      .first()
+      .click(); // bottom bar exists, so take first child
+    cy.get('[data-cy=data-minds-nav-newsfeed-button]')
+      .first()
+      .click();
 
     newActivityContent('This is a nsfw post');
 
@@ -699,5 +728,4 @@ context('Newsfeed', () => {
 
     deleteActivityFromNewsfeed();
   });
-
 });

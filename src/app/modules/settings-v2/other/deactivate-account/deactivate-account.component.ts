@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-settingsV2__deactivateAccount',
@@ -21,7 +22,8 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
   constructor(
     protected cd: ChangeDetectorRef,
     public client: Client,
-    public router: Router
+    public router: Router,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
         this.router.navigate(['/logout']);
       })
       .catch((e: any) => {
-        alert('Sorry, we could not disable your account');
+        this.toasterService.error('Sorry, we could not disable your account');
         this.detectChanges();
       });
   }
@@ -66,7 +68,7 @@ export class SettingsV2DeactivateAccountComponent implements OnInit {
   //             this.router.navigate(['/logout']);
   //           })
   //           .catch((e: any) => {
-  //             alert('Sorry, we could not delete your account');
+  //             this.toasterService.error('Sorry, we could not delete your account');
   //           });
   //       },
   //     }

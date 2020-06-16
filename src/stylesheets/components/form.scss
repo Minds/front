@@ -444,7 +444,7 @@
     }
   }
 
-  input:not(.m-phoneInput__input):not(.m-draggableList__cell),
+  input:not(.m-phoneInput__input):not(.m-draggableList__cell):not(.m-copyableLink),
   .m-phoneInput__wrapper,
   textarea,
   select {
@@ -510,6 +510,7 @@
   ////////////////////////////////////////////
   [class*='m-form__customInputWrapper'] {
     display: block;
+    box-sizing: border-box;
     position: relative;
     padding-left: 35px;
     -webkit-user-select: none;

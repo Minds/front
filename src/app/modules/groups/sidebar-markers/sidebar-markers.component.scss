@@ -111,6 +111,20 @@ m-group--sidebar-markers {
           transform: rotate(0) !important;
           text-align: left;
         }
+        &.hasNewNavigation {
+          margin-bottom: 40px;
+          display: block;
+          .m-infinite-scroll-manual {
+            i {
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+            }
+          }
+          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMin2ColWidth) {
+            display: flex;
+          }
+        }
       }
     }
   }

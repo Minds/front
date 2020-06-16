@@ -27,28 +27,16 @@
   <table class="mdl-data-table mdl-js-data-table m-border" [mdl]>
     <thead>
       <tr class="m-token-contributions--ledger-header">
-        <th
-          class="mdl-data-table__cell--non-numeric m-data-title"
-          i18n="@@WALLET__TOKENS__CONTRIBUTIONS__DATE"
-        >
+        <th class="mdl-data-table__cell--non-numeric m-data-title">
           Date
         </th>
-        <th
-          class="mdl-data-table__cell--numeric m-data-title"
-          i18n="@@WALLET__TOKENS__CONTRIBUTIONS__AMOUNT"
-        >
+        <th class="mdl-data-table__cell--numeric m-data-title">
           Amount
         </th>
-        <th
-          class="mdl-data-table__cell--numeric m-data-title"
-          i18n="@@WALLET__TOKENS__CONTRIBUTIONS__SCORE"
-        >
+        <th class="mdl-data-table__cell--numeric m-data-title">
           Score
         </th>
-        <th
-          class="mdl-data-table__cell--numeric m-data-title"
-          i18n="@@WALLET__TOKENS__CONTRIBUTIONS__SHARE"
-        >
+        <th class="mdl-data-table__cell--numeric m-data-title">
           Share
         </th>
       </tr>
@@ -121,11 +109,7 @@
             [mdl]
             [hidden]="!inProgress"
           ></div>
-          <span
-            *ngIf="!inProgress"
-            i18n="@@WALLET__TOKENS__CONTRIBUTIONS__NO_CONTRIB_LEGEND"
-            >No contributions to show.</span
-          >
+          <span *ngIf="!inProgress">No contributions to show.</span>
         </td>
       </tr>
     </tbody>

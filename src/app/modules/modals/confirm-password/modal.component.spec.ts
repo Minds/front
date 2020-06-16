@@ -34,6 +34,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { sessionMock } from '../../../../tests/session-mock.spec';
+import { FormToastService } from '../../../common/services/form-toast.service';
+import { MockService } from '../../../utils/mock';
 /* tslint:disable */
 
 describe('ConfirmPasswordCreatorComponent', () => {
@@ -54,6 +56,10 @@ describe('ConfirmPasswordCreatorComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));

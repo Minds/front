@@ -14,7 +14,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 export class UpgradesComponent {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild('upgradeOptionsAnchor', { static: false })
+  @ViewChild('upgradeOptionsAnchor')
   readonly upgradeOptionsAnchor: ElementRef;
 
   constructor(configs: ConfigsService) {

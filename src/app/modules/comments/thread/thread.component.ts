@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  Renderer,
+  Renderer2,
   ViewChild,
   OnInit,
   OnDestroy,
@@ -69,7 +69,7 @@ export class CommentsThreadComponent implements OnInit {
     public session: Session,
     private commentsService: CommentsService,
     public sockets: SocketsService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     protected blockListService: BlockListService,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService
@@ -125,19 +125,26 @@ export class CommentsThreadComponent implements OnInit {
       return;
     }
 
-    let comments = response.comments;
+    // if it's the first time we load, update loadPrevious and loadNext
+    if (this.comments.length === 0) {
+      this.loadPrevious = response['load-previous'];
+      this.loadNext = response['load-next'];
+    } else if (descending && this.morePrevious) {
+      this.loadPrevious = response['load-previous']; // if we're loading previous comments, then only update loadPrevious
+    } else if (this.moreNext) {
+      this.loadNext = response['load-next']; // if we're loading next comments, then only update loadNext
+    }
+
+    this.moreNext = !!this.loadNext;
+    this.morePrevious = !!this.loadPrevious;
+
+    const comments = response.comments;
 
     if (descending) {
       this.comments = comments.concat(this.comments);
     } else {
       this.comments = this.comments.concat(comments);
     }
-
-    if (this.moreNext) this.loadNext = response['load-next'];
-    if (this.morePrevious) this.loadPrevious = response['load-previous'];
-
-    this.moreNext = !!this.loadNext;
-    this.morePrevious = !!this.loadPrevious;
 
     if (!this.socketRoomName && response.socketRoomName) {
       this.socketRoomName = response.socketRoomName;

@@ -4,7 +4,7 @@
  */
 import generateRandomId from '../../support/utilities';
 
-context('Blocked', () => {
+context.skip('Blocked', () => {
 
   const testUsername = generateRandomId(); 
   const testPassword = generateRandomId()+'X#';
@@ -26,6 +26,9 @@ context('Blocked', () => {
 
   beforeEach(() => {
     cy.preserveCookies();
+    cy.overrideFeatureFlags({
+      channels: false,
+    });
     cy.server();
     cy.route('PUT', '**/api/v1/block/**').as('putBlock');
     cy.route('GET', '**/api/v1/block/**').as('getBlock');

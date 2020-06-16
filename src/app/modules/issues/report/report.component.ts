@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Router } from '@angular/router';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'app-report',
@@ -44,7 +45,11 @@ export class ReportComponent implements OnInit {
     },
   };
 
-  constructor(private client: Client, private router: Router) {}
+  constructor(
+    private client: Client,
+    private router: Router,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {}
 
@@ -71,11 +76,11 @@ export class ReportComponent implements OnInit {
 
     try {
       const result: any = await this.client.post('api/v2/issues/front', body);
-      alert(`Issue #${result.iid} submitted successfully.`);
+      this.toasterService.error(`Issue #${result.iid} submitted successfully.`);
       this.router.navigate(['/help']);
     } catch (err) {
       console.log(err);
-      this.error = 'Oops! Something went wrong. Please try again';
+      this.toasterService.error('Oops! Something went wrong. Please try again');
     } finally {
       this.submiting = false;
     }

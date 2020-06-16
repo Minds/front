@@ -13,9 +13,10 @@ import { Session } from '../../../../services/session';
 import { SortedService } from './sorted.service';
 import { Client } from '../../../../services/api/client';
 import { GroupsService } from '../../groups.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-group-profile-feed__sorted',
@@ -64,11 +65,13 @@ export class GroupProfileFeedSortedComponent implements OnInit {
 
   viewScheduled: boolean = false;
 
-  @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+  @ViewChild('poster') protected poster: PosterComponent;
 
-  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+  @ViewChild('composer') private composer: ComposerComponent;
 
   scheduledCount: number = 0;
+
+  feed$: Observable<BehaviorSubject<Object>[]>;
 
   constructor(
     protected service: GroupsService,
@@ -106,6 +109,21 @@ export class GroupProfileFeedSortedComponent implements OnInit {
         .setEndpoint(`${endpoint}/${this.group.guid}/${this.type}`)
         .setLimit(12)
         .fetch();
+
+      this.feed$ = this.feedsService.feed.pipe(
+        map(feed => {
+          const entities = [];
+
+          for (let i = 0; i < feed.length; i++) {
+            const entity: any = feed[i].getValue();
+            entity.dontPin = !(
+              this.group['is:moderator'] || this.group['is:owner']
+            );
+            entities.push(new BehaviorSubject<Object>(entity));
+          }
+          return entities;
+        })
+      );
 
       this.getScheduledCount();
     } catch (e) {

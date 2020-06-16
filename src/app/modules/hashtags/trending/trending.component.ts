@@ -8,6 +8,7 @@ import {
 import { TrendingService } from '../service/trending.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-hashtags__trending',
@@ -21,13 +22,25 @@ export class TrendingComponent {
     string
   >();
 
-  constructor(protected service: TrendingService) {}
+  /**
+   * Trending list
+   */
+  readonly trending$: Observable<string[]> = this.service.tags$.pipe(
+    map(tags => tags.slice(0, 10))
+  );
 
   /**
-   * Getter for service's trending hashtags list
+   * CDN assets URL
    */
-  get trending$(): Observable<string[]> {
-    return this.service.tags$.pipe(map(tags => tags.slice(0, 5)));
+  readonly cdnAssetsUrl: string;
+
+  /**
+   * Constructor
+   * @param service
+   * @param configs
+   */
+  constructor(protected service: TrendingService, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   /**

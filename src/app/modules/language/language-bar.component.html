@@ -1,0 +1,19 @@
+<div class="m-languageBar__wrapper">
+  <div class="m-languageBar__currentLanguage">
+    <i class="material-icons">language</i>
+    <span [innerHTML]="service.currentLanguageName$ | async"></span>
+  </div>
+  <div class="m-languageBar__languageOptions">
+    <span
+      *ngFor="let language of (service.languages$ | async).slice(0, 8)"
+      class="m-languageBar__languageOption"
+      [innerHTML]="language.name"
+      (click)="onLanguageSelect(language.code)"
+    ></span>
+  </div>
+  <div class="m-languageBar__squareButtonWrapper">
+    <button (click)="openLanguageModal()" class="m-languageBar__squareButton">
+      +
+    </button>
+  </div>
+</div>

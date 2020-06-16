@@ -1178,12 +1178,11 @@
     >
       <p>
         <ng-container
-          i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_COMPLETED__VIEWS_FOR"
           >{{ notification.params.impressions }}/{{
             notification.params.impressions
           }}
-          views <span *ngIf="notification.entityObj">for </span></ng-container
-        >
+          views </ng-container
+        ><span *ngIf="notification.entityObj">for </span>
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
           *ngIf="notification.entityObj && notification.entityObj.title"

@@ -6,11 +6,24 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
     <div class="m-dateDropdowns__selectWrapper">
       <select
         class="m-dateDropdowns__select"
+        data-minds="yearDropdown"
+        [ngModel]="selectedYear"
+        (ngModelChange)="selectYear($event)"
+        [disabled]="disabled"
+      >
+        <option selected value="">YEAR</option>
+        <option *ngFor="let year of years">{{ year }}</option>
+      </select>
+    </div>
+    <div class="m-dateDropdowns__selectWrapper">
+      <select
+        class="m-dateDropdowns__select"
         data-minds="monthDropdown"
         [ngModel]="selectedMonth"
         (ngModelChange)="selectMonth($event)"
         [disabled]="disabled"
       >
+        <option selected value="">MONTH</option>
         <option *ngFor="let month of monthNames">{{ month }}</option>
       </select>
     </div>
@@ -22,27 +35,35 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
         (ngModelChange)="selectDay($event)"
         [disabled]="disabled"
       >
+        <option selected value="">DAY</option>
         <option *ngFor="let day of days">{{ day }}</option>
-      </select>
-    </div>
-    <div class="m-dateDropdowns__selectWrapper">
-      <select
-        class="m-dateDropdowns__select"
-        data-minds="yearDropdown"
-        [ngModel]="selectedYear"
-        (ngModelChange)="selectYear($event)"
-        [disabled]="disabled"
-      >
-        <option *ngFor="let year of years">{{ year }}</option>
       </select>
     </div>
   `,
 })
 export class DateDropdownsComponent implements OnInit {
   @Input() disabled: boolean = false;
-  @Output() selectedDateChange: EventEmitter<string> = new EventEmitter<
-    string
-  >();
+
+  @Input() set selectedDate(date: string) {
+    if (!date) {
+      return;
+    }
+
+    const parts = date.split('-').map(part => parseInt(part, 10));
+
+    if (!parts[0] || !parts[1] || parts[2]) {
+      return;
+    }
+
+    this.selectYear(parts[0], false);
+    this.selectMonth(parts[1].toString(), false);
+    this.selectDay(parts[2].toString(), false);
+    this.emitChanges();
+  }
+
+  @Output()
+  selectedDateChange: EventEmitter<string> = new EventEmitter<string>();
+
   monthNames = [
     'January',
     'February',
@@ -60,16 +81,14 @@ export class DateDropdownsComponent implements OnInit {
   days = [1];
   years = [];
 
-  selectedMonth = 'January';
-  selectedDay = '1';
-  selectedYear = new Date().getFullYear();
+  selectedMonth = '';
+  selectedDay = '';
+  selectedYear = '';
 
   constructor() {}
 
   ngOnInit() {
-    this.years = this.range(100, this.selectedYear, false);
-    this.selectedYear = this.years[0];
-    this.selectMonth('January', false);
+    this.years = this.range(100, new Date().getFullYear(), false);
   }
 
   selectMonth(month: string, emit: boolean = true) {
@@ -105,7 +124,15 @@ export class DateDropdownsComponent implements OnInit {
   }
 
   emitChanges() {
-    this.selectedDateChange.emit(this.buildDate());
+    if (
+      this.selectedYear === '' ||
+      this.selectedMonth === '' ||
+      this.selectedDay === ''
+    ) {
+      this.selectedDateChange.emit('');
+    } else {
+      this.selectedDateChange.emit(this.buildDate());
+    }
   }
 
   buildDate() {

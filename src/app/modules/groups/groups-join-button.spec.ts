@@ -16,6 +16,7 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
+import { MockService } from '../../utils/mock';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -61,7 +62,7 @@ describe('GroupsJoinButton', () => {
       imports: [RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: GroupsService, deps: [clientMock, uploadMock] },
+        { provide: GroupsService, useValue: MockService(GroupsService) },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
       ],
     }).compileComponents();

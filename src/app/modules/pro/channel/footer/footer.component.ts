@@ -8,7 +8,7 @@ import { MessengerConversationBuilderService } from '../../../messenger/dockpane
 import {
   getSocialProfileMeta,
   socialProfileMeta,
-} from '../../../channels/social-profiles/meta';
+} from '../../../channels/social-profiles-meta';
 import { Router } from '@angular/router';
 
 export type FooterLink = { title: string; href: string };

@@ -59,7 +59,11 @@
     <span>{{ error }}</span>
   </p>
 
-  <p class="m-commentsThread__blockedComment" *ngIf="isThreadBlocked()" i18n>
+  <p
+    class="m-commentsThread__blockedComment"
+    *ngIf="isThreadBlocked()"
+    i18n="@@MINDS__COMMENTS__CONTAINS_BLOCKED_REPLIES"
+  >
     This thread contains replies from blocked channels.
   </p>
 
@@ -113,12 +117,11 @@
   </div>
 </div>
 
-<span
-  *ngIf="sockets.error$ | async"
-  class="m-commentsThread__connectionLost"
-  i18n="@@MINDS__COMMENTS__SOCKET_DISCONNECTED"
->
-  Could not load live comments<br />
+<span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
+  <ng-container i18n="@@MINDS__COMMENTS__NO_LIVE_COMMENTS"
+    >Could not load live comments</ng-container
+  >
+  <br />
   <a
     *ngIf="!inProgress"
     (click)="retry()"

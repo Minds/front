@@ -60,9 +60,9 @@ export class OverlayModalService {
     return this;
   }
 
-  _didDismiss() {
+  _didDismiss(data?: any) {
     if (this._onDidDismissFn) {
-      this._onDidDismissFn();
+      this._onDidDismissFn(data);
     }
   }
 
@@ -75,12 +75,12 @@ export class OverlayModalService {
     return this;
   }
 
-  dismiss() {
+  dismiss(data?: any) {
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
 
-    this.container.dismiss();
+    this.container.dismiss(data);
     this._onDidDismissFn = void 0;
 
     return this;

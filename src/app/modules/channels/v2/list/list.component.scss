@@ -1,0 +1,44 @@
+.m-theme__2020 .m-channel__list {
+  [class*='m-pageLayout__pane'] {
+    padding: 20px 40px;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      padding: 20px;
+    }
+  }
+
+  .m-channelList__list {
+    padding: 0;
+  }
+}
+
+.m-channel__list {
+  .m-channelListList__searchBox {
+    border-bottom: 1px solid;
+
+    @include m-theme() {
+      border-color: themed($m-borderColor--primary);
+    }
+
+    > input {
+      appearance: none;
+      padding: 20px 40px;
+      width: 100%;
+      background: transparent;
+      border: none;
+      box-sizing: border-box;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        padding: 20px;
+      }
+    }
+  }
+
+  m-discovery__feedItem {
+    display: block;
+  }
+}

@@ -65,7 +65,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   newNavigation: boolean = false;
 
-  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+  @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
     public session: Session,

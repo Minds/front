@@ -1,11 +1,9 @@
 import {
   Component,
   Inject,
-  Injector,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
-  SkipSelf,
   ViewChild,
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -27,13 +25,12 @@ import { PosterComponent } from '../poster/poster.component';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [ClientMetaService, FeedsService],
+  providers: [FeedsService],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
@@ -61,9 +58,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
 
-  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+  @ViewChild('poster') private poster: PosterComponent;
 
-  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+  @ViewChild('composer') private composer: ComposerComponent;
 
   constructor(
     public client: Client,
@@ -76,15 +73,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
-    protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('feed/subscribed')
-      .setMedium('feed');
-  }
+  ) {}
 
   ngOnInit() {
     this.routerSubscription = this.router.events

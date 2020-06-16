@@ -8,6 +8,7 @@ import { TokenDistributionEventService } from '../contracts/token-distribution-e
 import { Client } from '../../../services/api/client';
 import { Web3WalletService } from '../web3-wallet.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -37,7 +38,8 @@ export class BlockchainTdeBuyComponent implements OnInit {
     protected tokenDistributionEvent: TokenDistributionEventService,
     protected client: Client,
     protected web3Wallet: Web3WalletService,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -97,6 +99,7 @@ export class BlockchainTdeBuyComponent implements OnInit {
 
     if (this.metamaskError !== metamaskError) {
       this.metamaskError = metamaskError;
+      this.toasterService.error(this.metamaskError);
     }
 
     this.detectChanges();
@@ -129,9 +132,11 @@ export class BlockchainTdeBuyComponent implements OnInit {
         }
       } else {
         this.error = 'There was an issue buying tokens';
+        this.toasterService.error(this.error);
       }
     } catch (e) {
       this.error = (e && e.message) || 'There was an issue buying tokens';
+      this.toasterService.error(this.error);
     } finally {
       this.inProgress = false;
 

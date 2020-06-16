@@ -1,0 +1,33 @@
+<div class="m-channelHeader" *ngIf="service.channel$ | async as channel">
+  <div class="m-channelHeader__banner">
+    <div
+      class="m-channelHeaderBanner__background"
+      [ngStyle]="bannerBackgroundImageCss(channel)"
+    ></div>
+
+    <minds-avatar
+      class="m-channelHeaderBanner__avatar"
+      [object]="channel"
+      [editMode]="false"
+    ></minds-avatar>
+
+    <ng-content></ng-content>
+  </div>
+
+  <div class="m-channelHeader__info">
+    <h1 class="m-channelHeaderInfo__name">
+      <span>
+        {{ channel.name }}
+      </span>
+
+      <m-channel--badges
+        *ngIf="channel.guid"
+        class="m-channelHeaderInfoName__badges"
+        [user]="channel"
+        [badges]="['admin', 'verified']"
+      ></m-channel--badges>
+    </h1>
+
+    <h2 class="m-channelHeaderInfo__username">@{{ channel.username }}</h2>
+  </div>
+</div>

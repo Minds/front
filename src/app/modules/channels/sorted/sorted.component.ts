@@ -7,8 +7,6 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  SkipSelf,
-  Injector,
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
@@ -17,13 +15,12 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { Session } from '../../../services/session';
 import { PosterComponent } from '../../newsfeed/poster/poster.component';
 import { SortedService } from './sorted.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { Client } from '../../../services/api';
 import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   selector: 'm-channel--sorted',
-  providers: [SortedService, ClientMetaService, FeedsService],
+  providers: [SortedService, FeedsService],
   templateUrl: 'sorted.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -67,9 +64,9 @@ export class ChannelSortedComponent implements OnInit {
 
   viewScheduled: boolean = false;
 
-  @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+  @ViewChild('poster') protected poster: PosterComponent;
 
-  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+  @ViewChild('composer') private composer: ComposerComponent;
 
   scheduledCount: number = 0;
 
@@ -77,17 +74,10 @@ export class ChannelSortedComponent implements OnInit {
     public feedsService: FeedsService,
     protected service: SortedService,
     protected session: Session,
-    protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     public client: Client
-  ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('feed/channel')
-      .setMedium('feed');
-  }
+  ) {}
 
   ngOnInit() {
     this.initialized = true;

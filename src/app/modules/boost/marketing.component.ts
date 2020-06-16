@@ -17,7 +17,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 export class BoostMarketingComponent {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild('topAnchor', { static: false })
+  @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
   constructor(

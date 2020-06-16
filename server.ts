@@ -1,209 +1,215 @@
 import 'zone.js/dist/zone-node';
-import 'reflect-metadata';
 
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import * as _url from 'url';
+
+import './server-polyfills';
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
-import { enableProdMode } from '@angular/core';
+import {
+  enableProdMode,
+  TRANSLATIONS,
+  TRANSLATIONS_FORMAT,
+  LOCALE_ID,
+} from '@angular/core';
 import { XhrFactory } from '@angular/common/http';
-import { NgxRequest, NgxResponce } from '@gorniv/ngx-universal';
+import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
+import { AppServerModule } from './src/main.server';
 
 import * as express from 'express';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
-const domino = require('domino');
-
-// Faster server renders w/ Prod mode (dev mode never needed)
-enableProdMode();
-
-// Express server
-const app = express();
-
-// gzip
-app.use(compression());
-// cokies
-app.use(cookieparser());
-
 const PORT = process.env.PORT || 4200;
-const DIST_FOLDER = join(process.cwd(), 'dist/en');
-const template = readFileSync(join(DIST_FOLDER, 'index.html')).toString();
-const win = domino.createWindow(template);
+// Dist folder
+const distFolder = join(process.cwd(), 'dist', 'browser');
 
-global['window'] = win;
-global['Node'] = win.Node;
-global['navigator'] = win.navigator;
-global['screen'] = { width: 0, height: 0 };
-global['Event'] = win.Event;
-global['Event']['prototype'] = win.Event.prototype;
-global['KeyboardEvent'] = global['Event'];
-global['document'] = win.document;
-global['window']['Promise'] = global.Promise;
+export function app() {
+  // Express server
+  const server = express();
 
-global['window']['localStorage'] = {
-  getItem: () => null,
-  setItem: () => {},
-  removeItem: () => {},
-};
-global['localStorage'] = global['window']['localStorage'];
-global['window']['scrollTo'] = pos => {};
+  // gzip
+  server.use(compression());
+  // cokies
+  server.use(cookieparser());
 
-Object.defineProperty(window.document, 'cookie', {
-  writable: true,
-  value: 'myCookie=omnomnom',
-});
-
-Object.defineProperty(window.document, 'referrer', {
-  writable: true,
-  value: '',
-});
-
-Object.defineProperty(window.document, 'localStorage', {
-  writable: true,
-  value: global['window']['localStorage'],
-});
-
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const {
-  AppServerModuleNgFactory,
-  LAZY_MODULE_MAP,
-} = require('./dist/server/main');
-
-const {
-  provideModuleMap,
-} = require('@nguniversal/module-map-ngfactory-loader');
-
-app.engine(
-  'html',
-  ngExpressEngine({
-    bootstrap: AppServerModuleNgFactory,
-    providers: [provideModuleMap(LAZY_MODULE_MAP)],
-  })
-);
-
-app.set('view engine', 'html');
-app.set('views', DIST_FOLDER);
-
-// Server static files from dist folder
-app.get('*.*', express.static(DIST_FOLDER));
-
-// Socket.io hitting wrong endpoint (dev?)
-app.get('/socket.io', (req, res) => {
-  res.send('You are using the wrong domain.');
-});
-
-// /undefined is an issue with angular
-app.get('/undefined', (req, res) => {
-  res.send('There was problem');
-});
-
-// cache
-const NodeCache = require('node-cache');
-const myCache = new NodeCache({
-  stdTTL: 2 * 60, // 2 minute cache
-  checkperiod: 60, // Check every minute
-});
-
-const cache = () => {
-  return (req, res, next) => {
-    const sessKey =
-      Object.entries(req.cookies)
-        .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
-        .join(':') || 'loggedout';
-    const key =
-      `__express__/${req.headers.host}/${sessKey}/` +
-      (req.originalUrl || req.url) +
-      (isMobileOrTablet() ? '/mobile' : '/desktop');
-    const exists = myCache.has(key);
-    if (exists) {
-      const cachedBody = myCache.get(key);
-      res.send(cachedBody);
-      return;
-    } else {
-      res.sendResponse = res.send;
-      res.send = body => {
-        if (res.finished) return;
-        myCache.set(key, body);
-        res.sendResponse(body);
-      };
-      next();
-    }
-  };
-};
-
-app.get('/node-cache-stats', (req, res) => {
-  res.send(myCache.getStats());
-});
-
-// All regular routes use the Universal engine
-app.get('*', cache(), (req, res) => {
-  const http =
-    req.headers['x-forwarded-proto'] === undefined
-      ? 'http'
-      : req.headers['x-forwarded-proto'];
-
-  const url = req.originalUrl;
-  // tslint:disable-next-line:no-console
-  console.time(`GET: ${url}`);
-  res.render(
-    'index',
-    {
-      req: req,
-      res: res,
-      // provers from server
-      providers: [
-        // for http and cookies
-        {
-          provide: REQUEST,
-          useValue: req,
-        },
-        {
-          provide: RESPONSE,
-          useValue: res,
-        },
-        // for cookie
-        {
-          provide: NgxRequest,
-          useValue: req,
-        },
-        {
-          provide: NgxResponce,
-          useValue: res,
-        },
-        // for absolute path
-        {
-          provide: 'ORIGIN_URL',
-          useValue: `${http}://${req.headers.host}`,
-        },
-        // for initial query params before router loads
-        {
-          provide: 'QUERY_STRING',
-          useFactory: () => {
-            return _url.parse(req.url, true).search || '';
-          },
-          deps: [],
-        },
-      ],
-    },
-    (err, html) => {
-      if (!!err) {
-        throw err;
-      }
-
-      // tslint:disable-next-line:no-console
-      console.timeEnd(`GET: ${url}`);
-      res.send(html);
-    }
+  server.engine(
+    'html',
+    ngExpressEngine({
+      bootstrap: AppServerModule,
+    })
   );
-});
 
-// Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
-});
+  server.set('view engine', 'html');
+  server.set('views', distFolder);
 
-app.keepAliveTimeout = 65000;
+  // Server static files from dist folder
+  server.get('*.*', express.static(distFolder));
+
+  // Socket.io hitting wrong endpoint (dev?)
+  server.get('/socket.io', (req, res) => {
+    res.send('You are using the wrong domain.');
+  });
+
+  // /undefined is an issue with angular
+  server.get('/undefined', (req, res) => {
+    res.send('There was problem');
+  });
+
+  // cache
+  const NodeCache = require('node-cache');
+  const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
+
+  const cache = () => {
+    return (req, res, next) => {
+      const sessKey =
+        Object.entries(req.cookies)
+          .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
+          .join(':') || 'loggedout';
+      const key =
+        `__express__/${sessKey}/` +
+        (req.originalUrl || req.url) +
+        req.headers['x-minds-locale'] +
+        (isMobileOrTablet() ? '/mobile' : '/desktop');
+      const exists = myCache.has(key);
+      if (exists) {
+        console.log(`from cache: ${key}`);
+        const cachedBody = myCache.get(key);
+        res.send(cachedBody);
+        return;
+      } else {
+        res.sendResponse = res.send;
+        res.send = body => {
+          myCache.set(key, body);
+          res.sendResponse(body);
+        };
+        next();
+      }
+    };
+  };
+
+  // All regular routes use the Universal engine
+  server.get('*', cache(), (req, res) => {
+    const http =
+      req.headers['x-forwarded-proto'] === undefined
+        ? 'http'
+        : req.headers['x-forwarded-proto'];
+
+    const url = req.originalUrl;
+    const locale = getLocale(req);
+
+    // tslint:disable-next-line:no-console
+    console.time(`GET: ${url}`);
+    res.render(
+      `${locale}/index`,
+      {
+        req: req,
+        res: res,
+        // provers from server
+        providers: [
+          // for http and cookies
+          {
+            provide: REQUEST,
+            useValue: req,
+          },
+          {
+            provide: RESPONSE,
+            useValue: res,
+          },
+          // for cookie
+          {
+            provide: NgxRequest,
+            useValue: req,
+          },
+          {
+            provide: NgxResponse,
+            useValue: res,
+          },
+          // for absolute path
+          {
+            provide: 'ORIGIN_URL',
+            useValue: `${http}://${req.headers.host}`,
+          },
+          // for initial query params before router loads
+          {
+            provide: 'QUERY_STRING',
+            useFactory: () => {
+              return _url.parse(req.url, true).search || '';
+            },
+            deps: [],
+          },
+          {
+            provide: TRANSLATIONS,
+            useValue: getLocaleTranslations(locale),
+          },
+          { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+          // { provide: LOCALE_ID, useValue: locale },
+        ],
+      },
+      (err, html) => {
+        if (!!err) {
+          throw err;
+        }
+
+        // tslint:disable-next-line:no-console
+        console.timeEnd(`GET: ${url}`);
+        res.send(html);
+      }
+    );
+  });
+
+  return server;
+}
+
+/**
+ * Return a valid i18n locale
+ */
+function getLocale(req): string {
+  const defaultLocale = 'en';
+
+  // Nginx should pass through Minds-Locale Header
+  const hostLanguage = req.headers['x-minds-locale'] || defaultLocale;
+
+  if (hostLanguage && hostLanguage.length === 2) {
+    const path = join(distFolder, hostLanguage);
+    if (existsSync(path)) {
+      return hostLanguage;
+    }
+  }
+
+  return defaultLocale;
+}
+
+function getLocaleTranslations(locale: string): string {
+  let fileName: string;
+  if (locale === 'en') {
+    fileName = 'Base.xliff';
+  } else {
+    fileName = `Minds.${locale}.xliff`;
+  }
+  return require(`raw-loader!./src/locale/${fileName}`);
+}
+
+function run() {
+  // Start up the Node server
+  const server = app();
+
+  server.listen(PORT, () => {
+    console.log(`Node Express server listening on http://localhost:${PORT}`);
+  });
+}
+
+// Webpack will replace 'require' with '__webpack_require__'
+// '__non_webpack_require__' is a proxy to Node 'require'
+// The below code is to ensure that the server is run only when not requiring the bundle.
+declare const __non_webpack_require__: NodeRequire;
+const mainModule = __non_webpack_require__.main;
+const moduleFilename = (mainModule && mainModule.filename) || '';
+if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+  run();
+}
+
+export * from './src/main.server';

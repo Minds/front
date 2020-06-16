@@ -17,6 +17,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-register',
@@ -32,10 +33,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   referrer: string;
 
   @HostBinding('class.m-register--newDesign')
-  newDesign: boolean = false;
+  newDesign: boolean = true;
 
   @HostBinding('class.m-register--newNavigation')
-  newNavigation: boolean = false;
+  newNavigation: boolean = true;
 
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
@@ -63,24 +64,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
-    }
-
-    this.newDesign = this.featuresService.has('ux-2020');
-    this.newNavigation = this.featuresService.has('navigation');
-
-    if (this.newDesign) {
-      this.topbarService.toggleVisibility(false);
-      this.iosFallback = iOSVersion() !== null;
-
-      if (this.featuresService.has('navigation')) {
-        this.navigationService.setVisible(false);
-      }
     }
   }
 
@@ -89,6 +79,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.loginReferrer.register('/newsfeed');
       this.loginReferrer.navigate();
     }
+
+    this.topbarService.toggleVisibility(false);
+    this.iosFallback = iOSVersion() !== null;
+
+    this.navigationService.setVisible(false);
+    this.pageLayoutService.useFullWidth();
 
     this.redirectTo = localStorage.getItem('redirect');
 

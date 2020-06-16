@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +19,11 @@ export class AdminMonetization {
   moreData: boolean = true;
   offset: string = '';
 
-  constructor(public client: Client, private route: ActivatedRoute) {}
+  constructor(
+    public client: Client,
+    private route: ActivatedRoute,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -64,7 +69,7 @@ export class AdminMonetization {
       .post(`api/v1/admin/paywall/${entity.guid}/demonetize`, {})
       .then((response: any) => {
         if (response.status !== 'success') {
-          alert(
+          this.toasterService.error(
             'There was a problem demonetizing this content. Please try again.'
           );
           return;
@@ -72,7 +77,7 @@ export class AdminMonetization {
         this.removeFromList(index);
       })
       .catch(e => {
-        alert(
+        this.toasterService.error(
           'There was a problem demonetizing this content. Please try again.'
         );
       });

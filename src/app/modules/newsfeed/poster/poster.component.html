@@ -50,7 +50,7 @@
           class="attachment-button m-posterActionBar__Attach"
           [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
         >
-          <i class="material-icons m-posterActionBar__Icon">attachment</i>
+          <i class="material-icons m-posterActionBar__Icon">insert_photo</i>
           <span class="m-posterActionBar__Label">Attach</span>
           <input
             type="file"
@@ -72,12 +72,15 @@
         <ng-template #oldNSFW>
           <a
             class="m-mature-button m-posterActionBar__MatureButton"
-            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
             (click)="attachment.toggleMature()"
             title="Rating"
-            i18n-title
+            i18n-title="@@COMMON__RATING"
           >
-            <i class="material-icons m-posterActionBar__Icon">explicit</i>
+            <i
+              class="material-icons m-posterActionBar__Icon"
+              [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+              >explicit</i
+            >
             <span class="m-posterActionBar__Label">Rating</span>
           </a>
         </ng-template>
@@ -127,15 +130,6 @@
         </button>
       </div>
     </form>
-  </div>
-  <div
-    class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp"
-    style="min-height:0;"
-    *ngIf="errorMessage"
-  >
-    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-      {{ errorMessage }}
-    </div>
   </div>
   <!-- Rich embed preview -->
   <div class="post-preview" *ngIf="attachment.isRich()">

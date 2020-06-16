@@ -7,10 +7,12 @@ import {
 } from '../../../../common/services/entities.service';
 import { last, first } from 'rxjs/operators';
 import { Observable, of, BehaviorSubject } from 'rxjs';
+import { FastFadeAnimation } from '../../../../animations';
 
 @Component({
   selector: 'm-discovery__trend',
   templateUrl: './trend.component.html',
+  animations: [FastFadeAnimation],
 })
 export class DiscoveryTrendComponent {
   entity$: Observable<Object> = of(null);

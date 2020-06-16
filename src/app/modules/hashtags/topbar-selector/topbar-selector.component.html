@@ -1,10 +1,9 @@
 <m-dropdown *ngIf="showMenu" #dropdown>
   <label>
-    <span
-      class="m-topbar--navigation--item m-topbar--hashtags--hashtag"
-      i18n="@@MINDS__HASHTAGS__TOPBAR__ALL"
-    >
-      #hashtags
+    <span class="m-topbar--navigation--item m-topbar--hashtags--hashtag">
+      <ng-container i18n="@@MINDS__HASHTAGS__TOPBAR__HASHTAGS_TITLE"
+        >#hashtags</ng-container
+      >
       <i class="material-icons">arrow_drop_down</i>
     </span>
   </label>
@@ -37,10 +36,9 @@
     <li class="m-dropdown--list--item">
       <span
         class="m-topbar--navigation--item m-topbar--hashtags--select-more"
-        i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
         (click)="openModal()"
       >
-        MORE
+        <ng-container i18n="@@MINDS__HASHTAGS__TOPBAR__MORE">MORE</ng-container>
         <m-tooltip
           icon="help"
           i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP"
@@ -78,10 +76,9 @@
 
   <span
     class="m-topbar--navigation--item m-topbar--hashtags--select-more"
-    i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
     (click)="openModal()"
   >
-    MORE
+    <ng-container i18n="@@MINDS__HASHTAGS__TOPBAR__MORE">MORE</ng-container>
     <m-tooltip
       icon="help"
       i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP"

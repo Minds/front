@@ -28,6 +28,5 @@ const routes: Routes = [
   ],
   declarations: [CanaryPageComponent],
   exports: [CanaryPageComponent],
-  entryComponents: [CanaryPageComponent],
 })
 export class CanaryModule {}

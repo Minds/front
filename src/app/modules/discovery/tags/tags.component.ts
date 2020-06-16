@@ -22,20 +22,4 @@ export class DiscoveryTagsComponent {
   ngOnInit() {
     this.service.loadTags();
   }
-
-  openTagSettings() {
-    this.overlayModal
-      .create(DiscoveryTagSettingsComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
-        injector: this.injector,
-        onSave: tags => this.service.tags$.next(tags),
-        onDismissIntent: () => {
-          this.overlayModal.dismiss();
-        },
-      })
-      .onDidDismiss(() => {
-        console.log('closed tag settings');
-      })
-      .present();
-  }
 }

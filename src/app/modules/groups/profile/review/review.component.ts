@@ -10,6 +10,7 @@ import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-groups-profile__review',
@@ -36,7 +37,8 @@ export class GroupsProfileReviewComponent implements OnInit {
     protected session: Session,
     protected router: Router,
     protected client: Client,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -136,7 +138,7 @@ export class GroupsProfileReviewComponent implements OnInit {
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
     } catch (e) {
-      alert((e && e.message) || 'Internal server error');
+      this.toasterService.error((e && e.message) || 'Internal server error');
     }
   }
 
@@ -154,7 +156,7 @@ export class GroupsProfileReviewComponent implements OnInit {
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
     } catch (e) {
-      alert((e && e.message) || 'Internal server error');
+      this.toasterService.error((e && e.message) || 'Internal server error');
     }
   }
 

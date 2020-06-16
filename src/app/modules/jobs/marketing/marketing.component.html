@@ -12,7 +12,10 @@
           <span>@</span>{{ user.username }}, want to join the team?
         </h2>
 
-        <h1 i18n="@@M__JOBS__MKT__MINDS_MARKETING_TITLE" *ngIf="!user">
+        <h1
+          i18n="@@M__JOBS__MKT__MINDS_MARKETING_TITLE__LOGGED__OUT"
+          *ngIf="!user"
+        >
           Hello there, want to join the team?
         </h1>
       </div>

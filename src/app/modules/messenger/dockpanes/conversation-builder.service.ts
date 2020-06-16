@@ -3,7 +3,9 @@
  */
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class MessengerConversationBuilderService {
   constructor(public session: Session) {}
 

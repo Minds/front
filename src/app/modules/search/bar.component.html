@@ -18,8 +18,9 @@
     class="mdl-textfield__input"
     type="text"
     id="search"
-    autocomplete="off"
+    autocomplete="chrome-off"
     [placeholder]="placeholder"
+    i18n-placeholder="@@COMMON__SEARCH"
     #searchInput
   />
   <label class="mdl-textfield__label" for="search"></label>
@@ -38,3 +39,9 @@
     [disabled]="suggestionsDisabled"
   ></m-search--bar-suggestions>
 </div>
+
+<!-- Hack because $localize doesn't work in ts files -->
+<ng-container *ngIf="false">
+  <ng-container i18n="@@COMMON__SEARCH">Search Minds</ng-container>
+  <ng-container i18n="@@COMMON__SEARCH__SHORT">Search</ng-container>
+</ng-container>

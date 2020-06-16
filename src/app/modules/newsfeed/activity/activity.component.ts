@@ -12,8 +12,7 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
-  SkipSelf,
-  Injector,
+  ViewChild,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -22,11 +21,13 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
 } from './activity.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { map } from 'rxjs/operators';
+import { TranslationService } from '../../../services/translation';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-activity',
@@ -36,7 +37,6 @@ import { NewsfeedService } from '../services/newsfeed.service';
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
-    ClientMetaService,
     ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
   ],
   host: {
@@ -45,6 +45,10 @@ import { NewsfeedService } from '../services/newsfeed.service';
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   entity$: Observable<ActivityEntity> = this.service.entity$;
+
+  @Input('canDelete') set _canDelete(value: boolean) {
+    this.service.canDeleteOverride$.next(value);
+  }
 
   @Input() set entity(entity) {
     this.service.setEntity(entity);
@@ -88,14 +92,15 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
 
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
   constructor(
     public service: ActivityService,
     private el: ElementRef,
     private cd: ChangeDetectorRef,
-    @SkipSelf() private injector: Injector,
-    private clientMetaService: ClientMetaService,
     private elementVisibilityService: ElementVisibilityService,
-    private newsfeedService: NewsfeedService
+    private newsfeedService: NewsfeedService,
+    private translationService: TranslationService
   ) {}
 
   ngOnInit() {
@@ -128,7 +133,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
             entity,
             true,
             null,
-            this.clientMetaService.inherit(this.injector).build({
+            this.clientMeta.build({
               campaign: entity.boosted_guid ? entity.urn : '',
               position: this.slot,
             })
@@ -153,5 +158,10 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete() {
     this.deleted.emit(this.service.entity$.value);
+  }
+
+  translate() {
+    console.log('translate selected');
+    // this.showTranslation
   }
 }

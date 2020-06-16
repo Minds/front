@@ -47,11 +47,6 @@
     <b>&rdquo;</b>
   </p>
 </div>
-
-<div class="mdl-color-text--red mdl-card__supporting-text" *ngIf="error">
-  <p>{{ error }}</p>
-</div>
-
 <div
   [hidden]="!inProgress"
   style="width:100%; text-align:center;"
@@ -92,7 +87,7 @@
     "
   />
 
-  <!--<p class="mdl-color-text--white" i18n>Access this exclusive content by becoming a paid monthly subscriber of <b>{{entity.ownerObj?.name}}</b>.</p>-->
+  <!--<p class="mdl-color-text--white" i18n="@@PAYWALL__ACCESS_EXCLUSIVE_CONTENT">Access this exclusive content by becoming a paid monthly subscriber of <b>{{entity.ownerObj?.name}}</b>.</p>-->
 </div>
 
 <m-modal-signup-on-action

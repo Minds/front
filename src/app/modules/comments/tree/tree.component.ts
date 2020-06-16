@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  Renderer,
+  Renderer2,
   OnInit,
   OnDestroy,
 } from '@angular/core';
@@ -65,7 +65,7 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
     public client: Client,
     public attachment: AttachmentService,
     public sockets: SocketsService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     private router: Router
   ) {}

@@ -78,6 +78,24 @@ describe('TagPipe', () => {
     );
   });
 
+  it('should transform accents', () => {
+    const string = 'textString #CrèmeBrûlée';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('>#CrèmeBrûlée</a>');
+  });
+
+  it('should transform Thai words', () => {
+    const string = 'textString #ไทย';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('>#ไทย</a>');
+  });
+
+  it('should transform Japanense words', () => {
+    const string = 'textString #日本';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('>#日本</a>');
+  });
+
   it('should transform when @ preceded by () ', () => {
     const string = 'textstring (@name';
     const transformedString = pipe.transform(<any>string);
@@ -101,6 +119,12 @@ describe('TagPipe', () => {
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain('<a class="tag"');
     expect(transformedString).toContain('@name.com');
+  });
+
+  it('should not transform when # preceded by by `&`', () => {
+    const string = '&#243;';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('&#243;');
   });
 
   it('should transform two adjacent tags', () => {

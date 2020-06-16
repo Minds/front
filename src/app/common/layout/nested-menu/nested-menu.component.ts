@@ -1,16 +1,20 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Session } from '../../../services/session';
+import { MindsUser } from '../../../interfaces/entities';
 
 export interface NestedMenuItem {
   label: string;
   id: string;
   route?: string;
   pathSegments?: number;
+  shouldShow?: () => boolean;
 }
 
 export interface NestedMenu {
   header: NestedMenuItem;
   items: NestedMenuItem[];
+  shouldShow?: () => boolean;
 }
 
 /**
@@ -30,7 +34,7 @@ export class NestedMenuComponent {
   @Output() itemSelected: EventEmitter<any> = new EventEmitter();
   @Output() clickedBack: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor() {}
 
   itemClicked(menuHeaderId, itemId): void {
     const item = { menuHeaderId: menuHeaderId, itemId: itemId };

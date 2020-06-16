@@ -4,126 +4,95 @@ import { Router } from '@angular/router';
 import { GroupsService } from '../groups.service';
 
 import { Session } from '../../../services/session';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-create',
-  host: {
-    '(keydown)': 'keyDown($event)',
-  },
   templateUrl: 'create.html',
 })
 export class GroupsCreator {
-  banner: any = false;
-  avatar: any = false;
-  group: any = {
-    name: '',
-    description: '',
-    membership: 2,
-    tags: '',
-    invitees: '',
-    moderated: 0,
-    default_view: 0,
-  };
-  invitees: Array<any> = [];
-  editing: boolean = true;
-  editDone: boolean = false;
+  banner: File;
+  avatar: File;
+
   inProgress: boolean = false;
+
+  form: FormGroup;
+  bannerAssetCssUrl: string;
+  avatarAssetCssUrl: string;
 
   constructor(
     public session: Session,
     public service: GroupsService,
     public router: Router,
-    private groupsService: GroupsService
+    private toasterService: FormToastService
   ) {}
 
-  addBanner(banner: any) {
-    this.banner = banner.file;
-    this.group.banner_position = banner.top;
+  ngOnInit() {
+    this.form = new FormGroup({
+      name: new FormControl('', {
+        validators: [Validators.required],
+      }),
+      description: new FormControl(''),
+      membership: new FormControl('2', {
+        validators: [Validators.required],
+      }),
+    });
   }
 
-  addAvatar(avatar: any) {
-    this.avatar = avatar;
-  }
+  addBanner(fileInput: HTMLInputElement) {
+    const file = fileInput.files.item(0);
 
-  membershipChange(value) {
-    this.group.membership = value;
-  }
-
-  invite(user: any) {
-    for (let i of this.invitees) {
-      if (i.guid === user.guid) return;
-    }
-    this.invitees.push(user);
-  }
-
-  removeInvitee(i) {
-    this.invitees.splice(i, 1);
-  }
-
-  keyDown(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      return false;
-    }
-  }
-
-  save(e) {
-    if (!this.group.name) {
+    if (!file) {
       return;
     }
 
-    this.editing = false;
-    this.editDone = true;
+    this.banner = file;
+    this.bannerAssetCssUrl = `url(${URL.createObjectURL(this.banner)})`;
+  }
+
+  addAvatar(fileInput: HTMLInputElement) {
+    const file = fileInput.files.item(0);
+
+    if (!file) {
+      return;
+    }
+
+    this.avatar = file;
+    this.avatarAssetCssUrl = `url(${URL.createObjectURL(this.avatar)})`;
+  }
+
+  async onSubmit(e) {
+    const values = this.form.value;
+    if (!values.name) {
+      this.toasterService.error('Your group must have a name');
+      return;
+    }
+
+    values.briefdescription = values.description;
+
     this.inProgress = true;
 
-    this.group.invitees = this.invitees.map(user => {
-      return user.guid;
-    });
+    try {
+      const guid = await this.service.save(values);
 
-    this.service
-      .save(this.group)
-      .then((guid: any) => {
-        this.service
-          .upload(
-            {
-              guid,
-              banner_position: this.group.banner_position,
-            },
-            {
-              banner: this.banner,
-              avatar: this.avatar,
-            }
-          )
-          .then(() => {
-            this.groupsService.updateMembership(true, guid);
-            this.router.navigate(['/groups/profile', guid]);
-          });
-      })
-      .catch(e => {
-        this.editing = true;
-        this.inProgress = false;
-      });
-  }
-
-  onTagsChange(tags) {}
-
-  onTagsAdded(tags) {
-    if (!this.group.tags) this.group.tags = [];
-
-    for (let tag of tags) {
-      this.group.tags.push(tag.value);
-    }
-  }
-
-  onTagsRemoved(tags) {
-    for (let tag of tags) {
-      for (let i in this.group.tags) {
-        console.log(this.group.tags[i]);
-        if (this.group.tags[i] == tag.value) {
-          this.group.tags.splice(i, 1);
+      await this.service.upload(
+        {
+          guid,
+          banner_position: 0,
+        },
+        {
+          banner: this.banner,
+          avatar: this.avatar,
         }
-      }
+      );
+
+      this.service.updateMembership(true, guid);
+      this.router.navigate(['/groups/profile', guid]);
+    } catch (e) {
+      this.inProgress = false;
+      this.toasterService.error(e.message);
     }
   }
 }

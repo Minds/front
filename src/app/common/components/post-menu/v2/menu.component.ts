@@ -45,6 +45,7 @@ type Option =
 export class PostMenuV2Component implements OnInit {
   @Input() entity: any;
   @Input() options: Array<Option>;
+  @Input() mediaModal: boolean = false;
   @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
   @Input() canDelete: boolean = false;
   @Input() canEdit: boolean = false;
@@ -63,6 +64,30 @@ export class PostMenuV2Component implements OnInit {
   ngOnInit() {
     this.service.setEntity(this.entity);
     this.service.setEntityOwner(this.user);
+  }
+
+  shouldShowEdit(): boolean {
+    if (this.mediaModal) {
+      return false;
+    }
+    return (
+      (this.options.indexOf('edit') !== -1 &&
+        this.entity.owner_guid == this.session.getLoggedInUser().guid) ||
+      this.session.isAdmin()
+    );
+  }
+
+  shouldShowDelete(): boolean {
+    if (this.mediaModal) {
+      return false;
+    }
+
+    return (
+      (this.options.indexOf('delete') !== -1 &&
+        this.entity.owner_guid == this.session.getLoggedInUser().guid) ||
+      this.session.isAdmin() ||
+      this.canDelete
+    );
   }
 
   onButtonClick(e: MouseEvent): void {

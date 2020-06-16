@@ -12,7 +12,12 @@ m-walletDashboard {
       border-right: 1px solid themed($m-borderColor--primary);
     }
     .m-tabs__container {
+      padding: 0 50px;
+      margin: 0 !important;
       @media screen and (max-width: $min-tablet) {
+        padding: 0 40px;
+      }
+      @media screen and (max-width: $max-mobile) {
         padding: 0 24px;
       }
     }
@@ -38,12 +43,13 @@ m-walletDashboard {
       > i {
         font-size: 11px;
         @include m-theme() {
-          color: rgba(themed($m-textColor--tertiary), 0.6);
+          color: rgba(themed($m-textColor--secondary), 0.9);
         }
       }
       .m-tooltip--bubble {
-        z-index: 99;
+        // z-index: 9999;
         font-size: 12px;
+        line-height: 16px;
         @include m-theme() {
           color: themed($m-white);
           background-color: themed($m-blue);
@@ -56,6 +62,7 @@ m-walletDashboard {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    min-height: 150px;
   }
 
   m-shadowboxSubmitButton {
@@ -79,6 +86,9 @@ m-walletDashboard {
     & > p {
       margin-top: none;
     }
+    .m-walletForm__buttonsContainer {
+      justify-content: center;
+    }
   }
   ////////////////////////////////////////////
   // TEXT ////////////////////////////////////
@@ -93,6 +103,16 @@ m-walletDashboard {
       color: themed($m-textColor--primary);
     }
   }
+  h4 {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 20px 0 20px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
   [class*='m-walletPrimaryText'] {
     font-size: 15px;
     line-height: 20px;
@@ -102,12 +122,12 @@ m-walletDashboard {
     }
   }
 
-  [class*='m-walletTertiaryText'] {
+  [class*='m-walletSecondaryText'] {
     font-size: 14px;
     line-height: 19px;
 
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
     &[class*='--15'] {
       font-size: 15px;
@@ -147,7 +167,7 @@ m-walletDashboard {
       text-decoration: none !important;
 
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
       &:hover {
         span {
@@ -214,7 +234,7 @@ m-walletDashboard {
         font-size: 14px;
         line-height: 19px;
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--secondary);
         }
       }
     }
@@ -222,7 +242,7 @@ m-walletDashboard {
       font-weight: 300;
       font-size: 16px;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
       @media screen and (max-width: $max-mobile) {
         font-size: 17px;
@@ -238,9 +258,9 @@ m-walletDashboard {
   // BALANCES  ///////////////////////////////
   ////////////////////////////////////////////
   .m-walletDashboardBalance__wrapper {
-    margin: 50px 53px 34px 53px;
+    margin: 50px 50px 34px 50px;
     @media screen and (max-width: $min-tablet) {
-      margin: 50px 36px 34px 36px;
+      margin: 50px 40px 34px 40px;
     }
     @media screen and (max-width: $max-mobile) {
       margin: 22px 24px 25px 24px;
@@ -257,7 +277,10 @@ m-walletDashboard {
   ////////////////////////////////////////////
   .m-walletDashboardViews__viewsContainer {
     min-height: 100px;
-    padding: 40px;
+    padding: 40px 50px 60px 50px;
+    @media screen and (max-width: $min-tablet) {
+      padding: 30px 40px 30px 40px;
+    }
     @media screen and (max-width: $max-mobile) {
       min-height: 0px;
       padding: 24px;
@@ -362,7 +385,7 @@ m-walletDashboard {
       }
     }
 
-    & ~ .m-walletTertiaryText--backButton {
+    & ~ .m-walletSecondaryText--backButton {
       margin-top: 20px;
     }
   }
@@ -456,7 +479,7 @@ m-walletDashboard {
       position: relative;
       font-weight: 300;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
     &[class*='--validation'] {

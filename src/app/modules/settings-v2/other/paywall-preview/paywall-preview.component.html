@@ -1,3 +1,20 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__OTHER__PAIDCONTENT__PAYWALL__LABEL"
+  >
+    Paywall Preview
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__OTHER__PAIDCONTENT__PAYWALL__DESCRIPTION"
+  >
+    Customize the appearance of your paywalled posts. The below description and
+    preview image is what your subscribers will see on your exclusive posts
+    until they become a supporter.
+  </div>
+</m-settingsV2__header>
+
 <div class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField">
@@ -67,6 +84,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="save()"
+      i18n="@@MINDS__SETTINGS__WIRE__SAVE_SETTINGS"
     >
       Save Settings
     </m-shadowboxSubmitButton>

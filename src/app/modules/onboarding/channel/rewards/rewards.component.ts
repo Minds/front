@@ -9,6 +9,7 @@ import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-channel--onboarding--rewards',
@@ -35,7 +36,6 @@ import { ActivatedRoute } from '@angular/router';
           class="m-btn m-btn--slim m-btn--action"
           (click)="verify()"
           [disabled]="inProgress"
-          i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION"
         >
           Join
         </button>
@@ -50,7 +50,6 @@ import { ActivatedRoute } from '@angular/router';
         <div class="m-channelOnboardingSlideRewards__input">
           <p
             class="m-channelOnboardingSlide__subtext m-channelOnboardingSlide__prompt"
-            i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC"
           >
             Please enter the code we just sent to <b>+{{ number }}</b
             >, to verify your number.
@@ -60,13 +59,9 @@ import { ActivatedRoute } from '@angular/router';
               type="number"
               [(ngModel)]="code"
               placeholder="eg. 198349"
-              i18n-placeholder="@@WALLET__TOKENS__REWARDS__CODE_EXAMPLE_PH"
               class="m-border"
             />
-            <m-tooltip
-              icon="help"
-              i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_TOOLTIP"
-            >
+            <m-tooltip icon="help">
               Please enter the code we just sent you, to verify that your number
               is correct
             </m-tooltip>
@@ -77,15 +72,10 @@ import { ActivatedRoute } from '@angular/router';
               class="m-btn m-btn--slim m-btn--action"
               (click)="confirm()"
               [disabled]="inProgress"
-              i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION"
             >
               Confirm
             </button>
-            <button
-              class="m-btn m-btn--slim"
-              (click)="cancel()"
-              i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION"
-            >
+            <button class="m-btn m-btn--slim" (click)="cancel()">
               Go Back
             </button>
           </div>
@@ -96,10 +86,6 @@ import { ActivatedRoute } from '@angular/router';
           ></div>
         </div>
       </ng-template>
-
-      <p class="m-channelOnboardingSlideRewards__error" *ngIf="error">
-        {{ error }}
-      </p>
 
       <p class="m-channelOnboardingSlide__info">
         <i class="material-icons">info</i>
@@ -129,7 +115,8 @@ export class TokenRewardsOnboardingComponent {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    protected toasterService: FormToastService
   ) {}
 
   async verify() {
@@ -146,6 +133,7 @@ export class TokenRewardsOnboardingComponent {
       this.confirming = true;
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
     this.inProgress = false;
   }
@@ -175,6 +163,7 @@ export class TokenRewardsOnboardingComponent {
       this.join();
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
 
     this.inProgress = false;

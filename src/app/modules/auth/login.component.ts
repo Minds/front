@@ -13,6 +13,7 @@ import { FeaturesService } from '../../services/features.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-login',
@@ -27,10 +28,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   private redirectTo: string;
 
   @HostBinding('class.m-login--newDesign')
-  newDesign: boolean = false;
+  newDesign: boolean = true;
 
   @HostBinding('class.m-login--newNavigation')
-  newNavigation: boolean = false;
+  newNavigation: boolean = true;
 
   @HostBinding('class.m-login__iosFallback')
   iosFallback: boolean = false;
@@ -52,12 +53,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     private onboarding: OnboardingService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
-    private navigationService: SidebarNavigationService
+    private navigationService: SidebarNavigationService,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
     if (this.session.isLoggedIn()) {
-      this.loginReferrer.register('/newsfeed');
+      this.loginReferrer.register('/newsfeed/subscriptions');
       this.loginReferrer.navigate();
     }
 
@@ -73,26 +75,18 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.flags.canPlayInlineVideos = false;
     }
 
-    this.newDesign = this.featuresService.has('ux-2020');
-    this.newNavigation = this.featuresService.has('navigation');
+    this.topbarService.toggleVisibility(false);
+    this.iosFallback = iOSVersion() !== null;
 
-    if (this.newDesign) {
-      this.topbarService.toggleVisibility(false);
-      this.iosFallback = iOSVersion() !== null;
-
-      if (this.featuresService.has('navigation')) {
-        this.navigationService.setVisible(false);
-      }
-    }
+    this.navigationService.setVisible(false);
+    this.pageLayoutService.useFullWidth();
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
     this.topbarService.toggleVisibility(true);
 
-    if (this.featuresService.has('navigation')) {
-      this.navigationService.setVisible(true);
-    }
+    this.navigationService.setVisible(true);
   }
 
   loggedin() {

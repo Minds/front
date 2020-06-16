@@ -36,6 +36,5 @@ const routes: Routes = [
     MindsFormsModule,
   ],
   declarations: [BrandingComponent],
-  entryComponents: [BrandingComponent],
 })
 export class BrandingModule {}

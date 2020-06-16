@@ -1,44 +1,14 @@
-// import 'cypress-file-upload';
-
 context('Settings', () => {
-
-  const closeButton = '[data-cy=data-minds-conversation-close]';
-
   before(() => {
-    cy.getCookie('minds_sess')
-      .then((sessionCookie) => {
-        if (sessionCookie === null) {
-          return cy.login(true);
-        }
-      });
-
-    // ensure no messenger windows are open.
-    cy.get('body').then(($body) => {
-      if ($body.find(closeButton).length) {
-        cy.get(closeButton)
-          .click({ multiple: true });
+    cy.getCookie('minds_sess').then(sessionCookie => {
+      if (sessionCookie === null) {
+        return cy.login(true);
       }
     });
   });
 
-  beforeEach(() => {
-    cy.preserveCookies();
-    cy.server();
-    cy.route('POST', '**/api/v1/blog/new').as('postBlog');
-    cy.route('POST', '**/api/v1/media**').as('postMedia');
-    cy.route('GET', '**/api/v1/settings/?').as('getSettings');
-    cy.route('POST', '**/api/v1/settings**').as('postSettings');
-    cy.route('GET', '**/api/v1/blog/**').as('getBlog');
-    cy.route('DELETE', '**/api/v1/blog/**').as('deleteBlog');
-
-    cy.visit('/settings/general');
-      // .wait('@getSettings')
-      // .then(xhr => {
-      //   expect(xhr.status).to.equal(200);
-      //   expect(xhr.response.body.status).to.equal('success');
-      // });
-      // // .location('pathname')
-      // // .should('eq', '/settings/general');
+  it('should load settings', () => {
+    cy.visit('/settings');
   });
 
   const uploadAvatar = () => {
@@ -220,6 +190,7 @@ context('Settings', () => {
 
     cy.get('m-social-icons').should('not.exist');
     deleteBlogPost();
+  it('should load settings canary', () => {
+    cy.visit('/settings/canary');
   });
-
 });

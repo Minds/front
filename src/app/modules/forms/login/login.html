@@ -82,7 +82,7 @@
 >
   <div class="mdl-card__supporting-text mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
-      <label for="username" *ngIf="showLabels" i18n>
+      <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
         Username
       </label>
       <input
@@ -111,7 +111,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
-      <label for="password" *ngIf="showLabels" i18n>
+      <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
         Password
       </label>
       <input
@@ -129,9 +129,9 @@
     class="m-login__joinTheConversation"
     [routerLink]="['/register']"
     *ngIf="showTitle"
-    i18n
+    i18n="@@LOGIN__JOIN_MINDS_NOW"
   >
-    Join the conversation
+    Join Minds Now
   </a>
 
   <div class="mdl-card__actions">

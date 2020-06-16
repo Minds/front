@@ -5,7 +5,7 @@ import {
   getSocialProfileMeta,
   SocialProfileMeta,
   socialProfileMeta,
-} from './meta';
+} from '../social-profiles-meta';
 
 @Component({
   moduleId: module.id,

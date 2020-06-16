@@ -3,6 +3,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { Client } from '../../../../../services/api';
 import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -32,7 +33,8 @@ export class GroupsProfileMembersInvite {
   constructor(
     public client: Client,
     public service: GroupsService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -43,7 +45,9 @@ export class GroupsProfileMembersInvite {
 
   invite(user) {
     if (!user.subscriber) {
-      return alert('You can only invite users who are subscribed to you');
+      return this.toasterService.error(
+        'You can only invite users who are subscribed to you'
+      );
     }
 
     this.invited.next(user);

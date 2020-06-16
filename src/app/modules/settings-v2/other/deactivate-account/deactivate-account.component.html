@@ -1,3 +1,20 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__OTHER__LEAVE__DEACTIVATE__LABEL"
+  >
+    Deactivate Account
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__OTHER__LEAVE__DEACTIVATE__DESCRIPTION"
+  >
+    Deactivating your account will make your profile invisible. You will also
+    not receive emails or notifications. Your username will be reserved in case
+    you return to Minds.
+  </div>
+</m-settingsV2__header>
+
 <form [formGroup]="form" class="m-formLayout--buttonLeft">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--checkbox stretchedField">
@@ -5,6 +22,7 @@
         <m-formInput__checkbox
           formControlName="understood"
           class="form-control"
+          i18n="@@SETTINGS_V2_DEACTIVATE_ACCOUNT__I_UNDERSTAND"
         >
           I understand and wish to continue.
         </m-formInput__checkbox>
@@ -17,6 +35,7 @@
       [saving]="inProgress"
       color="red"
       (click)="submit()"
+      i18n="@@SETTINGS_V2_DEACTIVATE_ACCOUNT__DEACTIVATE_ACCOUNT"
     >
       Deactivate Account
     </m-shadowboxSubmitButton>

@@ -38,6 +38,7 @@ import { ActivityModule } from './activity/activity.module';
 import { FeedGridComponent } from './feed-grid/feed-grid.component';
 import { ComposerModule } from '../composer/composer.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
+import { LanguageModule } from '../language/language.module';
 
 const routes: Routes = [
   {
@@ -95,6 +96,7 @@ const routes: Routes = [
     ActivityModule,
     ComposerModule,
     DiscoverySharedModule,
+    LanguageModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
@@ -123,6 +125,5 @@ const routes: Routes = [
     NewsfeedComponent,
     FeedGridComponent,
   ],
-  entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })
 export class NewsfeedModule {}

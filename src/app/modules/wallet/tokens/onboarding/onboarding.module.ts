@@ -38,13 +38,6 @@ import { TokenOnboardingService } from './onboarding.service';
     TokenRewardsOnboardingComponent,
     TokenOnChainOnboardingComponent,
   ],
-  entryComponents: [
-    TokenIntroductionOnboardingComponent,
-    TokenIntroductionOnboardingComponent,
-    TokenRewardsOnboardingComponent,
-    TokenOnChainOnboardingComponent,
-    TokenOnboardingComponent,
-  ],
   providers: [
     {
       provide: TokenOnboardingService,

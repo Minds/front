@@ -1,13 +1,14 @@
 <div class="m-border m-groupMemberInvite">
-  <h2
-    class="m-groupMemberInvite__title m-layout--row"
-    i18n="@@GROUPS__PROFILE__MEMBERS__INVITE__NAME_TITLE"
-  >
-    <ng-container *ngIf="group">Invite to {{ group.name }}</ng-container>
-    <ng-container *ngIf="!group">Invite</ng-container>
+  <h2 class="m-groupMemberInvite__title m-layout--row">
+    <ng-container *ngIf="group" i18n="@@GROUPS__PROFILE__INVITE_TO"
+      >Invite to {{ group.name }}</ng-container
+    >
+    <ng-container *ngIf="!group" i18n="@@GROUPS__PROFILE__INVITE"
+      >Invite</ng-container
+    >
     <span class="m-layout--spacer"></span>
     <a routerLink="../requests" class="selected">
-      Requests
+      <ng-container i18n="@@GROUPS__PROFILE__REQUESTS">Requests</ng-container>
       <ng-container *ngIf="group['requests:count']"
         >({{group['requests:count']}})</ng-container
       >

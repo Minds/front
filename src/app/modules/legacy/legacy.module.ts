@@ -108,16 +108,5 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     HovercardPopup,
     CarouselComponent,
   ],
-  entryComponents: [
-    Activity,
-    ActivityPreview,
-    AlbumCard,
-    ImageCard,
-    VideoCard,
-    Remind,
-    UserCard,
-    BoostButton,
-    CommentComponentV2,
-  ],
 })
 export class LegacyModule {}

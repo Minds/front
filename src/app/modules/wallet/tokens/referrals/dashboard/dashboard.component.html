@@ -1,43 +1,33 @@
 <div class="m-referrals-dashboard">
   <div class="m-referrals-dashboard__supportingText">
-    <h3 i18n="@@M_REFERRALS_DASHBOARD__TITLE">My Referrals</h3>
+    <h3>My Referrals</h3>
   </div>
   <div class="m-referrals-dashboard__flexTable">
     <div class="m-referrals-dashboard__row m-referrals-dashboard__headerRow">
       <div class="m-referrals-dashboard__cell m-referrals-dashboard__userCol">
-        <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_USER">User</span>
+        <span>User</span>
       </div>
       <div
         class="m-referrals-dashboard__cell m-referrals-dashboard__statusCol m-referrals-dashboard__statusHeader"
       >
-        <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_STATUS">Status</span>
-        <m-tooltip icon="help" i18n="@@M_REFERRALS_DASHBOARD__STATUS_TOOLTIP">
+        <span>Status</span>
+        <m-tooltip icon="help">
           Referrals are pending until they've set up their wallet
         </m-tooltip>
       </div>
       <div
         class="m-referrals-dashboard__cell m-referrals-dashboard__registerCol"
       >
-        <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_MINDS_SIGNUP"
-          >Minds Signup</span
-        >
-        <m-tooltip
-          icon="help"
-          i18n="@@M_REFERRALS_DASHBOARD__MINDS_SIGNUP_TOOLTIP"
-        >
+        <span>Minds Signup</span>
+        <m-tooltip icon="help">
           The day the referral created an account with Minds
         </m-tooltip>
       </div>
       <div
         class="m-referrals-dashboard__cell m-referrals-dashboard__rewardsCol"
       >
-        <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_REWARDS_SIGNUP"
-          >Rewards Signup</span
-        >
-        <m-tooltip
-          icon="help"
-          i18n="@@M_REFERRALS_DASHBOARD__REWARDS_SIGNUP_TOOLTIP"
-        >
+        <span>Rewards Signup</span>
+        <m-tooltip icon="help">
           The day the referral sets up their wallet (and you are rewarded with
           tokens). Click PING to send a pending referral a notification to let
           them know they ought to join the rewards program.
@@ -119,23 +109,12 @@
                       class="m-referrals-dashboard__pingIcon material-icons"
                       >notifications</i
                     >
-                    <span
-                      *ngIf="referral.pingable"
-                      i18n="@@M_REFERRALS_DASHBOARD__PING_BUTTON"
-                      >ping</span
-                    >
-                    <span
-                      *ngIf="!referral.pingable"
-                      i18n="@@M_REFERRALS_DASHBOARD__PING_STATE"
-                      >pinged</span
-                    >
+                    <span *ngIf="referral.pingable">ping</span>
+                    <span *ngIf="!referral.pingable">pinged</span>
                   </button>
                 </div>
               </div>
-              <ng-container
-                *ngIf="referral.pingable && !isMobileOrTablet()"
-                i18n="@@M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__ENABLED"
-              >
+              <ng-container *ngIf="referral.pingable && !isMobileOrTablet()">
                 Send {{ referral.prospect.username }} a notification to let them
                 know they ought to join the rewards program
               </ng-container>
@@ -145,13 +124,11 @@
                   (!referral.pingable && referral.pingRecentlySent) ||
                   (referral.pingable && isMobileOrTablet())
                 "
-                i18n="@@M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__SENT"
               >
                 Ping sent!
               </ng-container>
               <ng-container
                 *ngIf="!referral.pingable && !referral.pingRecentlySent"
-                i18n="@@M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__DISABLED"
               >
                 You can only ping once every 7 days
               </ng-container>
@@ -165,10 +142,7 @@
       *ngIf="noInitResults"
       class="m-referrals-dashboard__row m-referrals-dashboard__footer m-referrals-dashboard__notice"
     >
-      <div
-        class="m-referrals-dashboard__cell"
-        i18n="@@M_REFERRALS_DASHBOARD__NOTICE__NO_REFERRALS"
-      >
+      <div class="m-referrals-dashboard__cell">
         You don't have any referrals yet.
       </div>
     </div>

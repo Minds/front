@@ -54,6 +54,9 @@ export class ComposerCoverPhotoSelectorComponent {
 
     // Emit the changed attachment
     this.service.videoPoster$.next(videoPoster);
+
+    // Un-expand itself
+    this.isExpanded = false;
   }
 
   onRemoveFileClick(e: MouseEvent): void {

@@ -36,9 +36,13 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   selectedTransactionType: string = 'all';
   filterApplied: boolean = false;
   typeFilter: string = '';
+  typeLabel: string = '';
 
   showRewardsPopup: boolean = false;
-  startOfToday = moment().startOf('day');
+  startOfToday = moment()
+    .startOf('day')
+    .add(1, 'day')
+    .unix();
 
   // For admins viewing a remote user's transactions
   remote: boolean = false;
@@ -216,8 +220,10 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
           if (i !== 0 || !refresh) {
             this.runningTotal -= this.previousTxAmount;
-            this.previousTxAmount = isWithdrawal ? 0 : txAmount;
           }
+
+          this.previousTxAmount = isWithdrawal ? 0 : txAmount;
+
           formattedTx.runningTotal = this.formatAmount(this.runningTotal);
 
           formattedTx.delta = this.getDelta(tx);
@@ -253,6 +259,8 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   filterSelected($event) {
     this.typeFilter = $event.option.id;
+
+    this.typeLabel = this.typeFilter === 'all' ? 'token' : $event.option.label;
     if (this.typeFilter !== this.selectedTransactionType) {
       this.filterApplied = this.typeFilter === 'all' ? false : true;
       this.selectedTransactionType = this.typeFilter;

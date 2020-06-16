@@ -1,6 +1,7 @@
 import { argv } from 'yargs';
 import { execSync, StdioOptions } from 'child_process';
 import { join } from 'path';
+import { create, convert } from 'xmlbuilder2';
 
 import { readFileSync, statSync, unlinkSync, writeFileSync } from 'fs';
 
@@ -41,34 +42,66 @@ function transform(source, output) {
 
   let fileContent = readFileSync(source).toString();
 
-  fileContent = fileContent
-    .replace(/\&#10;/g, '\n')
-    .replace(/\&#13;/g, '\n')
-    .replace(/<x\s+(.*?)\s*\/>/g, '{{$1}}')
-    .replace(/{{id="INTERPOLATION" equiv-text="[^"]+"}}/g, '%1$s')
-    .replace(
-      /{{id="INTERPOLATION_([0-9]+)" equiv-text="[^"]+"}}/g,
-      (substring, match_1) => {
-        const idx = parseInt(match_1) + 1;
+  const doc: any = convert(
+    {
+      encoding: 'UTF-8',
+    },
+    fileContent.trim(),
+    { format: 'object', wellFormed: true, noDoubleEncoding: true }
+  );
 
-        if (idx < 2) {
-          process.exit(1);
-        }
+  doc.xliff.file.body['trans-unit'] = doc.xliff.file.body['trans-unit'].map(
+    transUnit => {
+      const output = JSON.parse(JSON.stringify(transUnit));
 
-        return `%${idx}$s`;
+      const note = {
+        '@priority': '1',
+        '@from': 'meaning',
+        '#': 'ng2.template',
+      };
+
+      if (!output['note']) {
+        output['note'] = note;
+      } else if (typeof output['note'].length === 'undefined') {
+        output['note'] = [output['note'], note];
+      } else {
+        output['note'].push(note);
       }
-    );
 
-  writeFileSync(output, fileContent);
+      if (typeof output.source === 'object') {
+        const nodeStr = convert(
+          { root: output.source },
+          { noDoubleEncoding: true }
+        ).replace(/<x id="([^"]+)" [^>]+\/>/g, '{$$$1}');
+        const node = convert(nodeStr, {
+          format: 'object',
+          noDoubleEncoding: true,
+        });
+        output.source = node['root'];
+      }
+
+      output.source = `${output.source}`
+        .replace(/[\r\n]+/g, ' ')
+        .replace(/[ ]{2,}/g, ' ')
+        .trim();
+
+      return output;
+    }
+  );
+
+  writeFileSync(
+    output,
+    create(doc).end({ noDoubleEncoding: true, prettyPrint: true })
+  );
 }
 
 // MAIN
 
 export = () => cb => {
-  run(`node_modules/.bin/ng xi18n --i18nFormat xlf`, {}, false);
+  run(`npx ng xi18n --out-file=messages.xlf --format=xlf`, {}, false);
   transform(
     join(APP_SRC, 'messages.xlf'),
-    join(APP_SRC, 'locale', argv.output || 'Default.xliff')
+    join(APP_SRC, 'locale', argv.output || 'Base.xliff')
   );
   unlinkSync(join(APP_SRC, 'messages.xlf'));
 

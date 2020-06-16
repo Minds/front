@@ -1,17 +1,27 @@
-<div class="m-settingsV2__desc">
-  Set up your site's color theme.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__THEME__LABEL">
+    Theme
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__THEME__DESCRIPTION">
+    Set up your site's color theme.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--color hasValidationRow">
       <div class="m-form__row--label">
-        <label for="text_color" i18n>Text Color</label>
+        <label for="text_color" i18n="@@PRO_THEME__TEXT_COLOR"
+          >Text Color</label
+        >
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n>The color of text on your Pro site</ng-container>
+          <ng-container i18n="@@PRO_THEME__COLOR_OF_PRO_SITE_INFO"
+            >The color of text on your Pro site</ng-container
+          >
         </m-tooltip>
       </div>
       <div
@@ -51,10 +61,16 @@
         /></label>
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="text_color.hasError('pattern')">
+        <p
+          *ngIf="text_color.hasError('pattern')"
+          i18n="@@PRO_THEME__INVALID_HEX_CODE"
+        >
           Invalid hex code
         </p>
-        <p *ngIf="text_color.hasError('required')">
+        <p
+          *ngIf="text_color.hasError('required')"
+          i18n="@@PRO_THEME__TEXT_COLOR_REQUIRED"
+        >
           Text color is required
         </p>
       </div>
@@ -62,10 +78,11 @@
 
     <div class="m-form__field--color hasValidationRow">
       <div class="m-form__row--label">
-        <label for="primary_color" i18n>Accent Color</label
+        <label for="primary_color" i18n="@@PRO_THEME__ACCENT_COLOR"
+          >Accent Color</label
         ><m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
+          <ng-container i18n="@@PRO_THEME__ACCENT_COLOR_INFO"
             >Links will become this color when you hover over them</ng-container
           >
         </m-tooltip>
@@ -110,10 +127,16 @@
         /></label>
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="primary_color.hasError('pattern')">
+        <p
+          *ngIf="primary_color.hasError('pattern')"
+          i18n="@@PRO_THEME__INVALID_HEX_CODE"
+        >
           Invalid hex code
         </p>
-        <p *ngIf="primary_color.hasError('required')">
+        <p
+          *ngIf="primary_color.hasError('required')"
+          i18n="@@PRO_THEME__LINK_COLOR_REQUIRED"
+        >
           Link color is required
         </p>
       </div>
@@ -121,10 +144,14 @@
 
     <div class="m-form__field--color hasValidationRow">
       <div class="m-form__row--label">
-        <label for="plain_background_color" i18n> Background Color </label
+        <label
+          for="plain_background_color"
+          i18n="@@PRO_THEME__BACKGROUND_COLOR"
+        >
+          Background Color </label
         ><m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
+          <ng-container i18n="@@PRO_THEME__BACKGROUND_COLOR_INFO"
             >The background color of some elements on your site</ng-container
           >
         </m-tooltip>
@@ -173,10 +200,16 @@
         /></label>
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="plain_background_color.hasError('pattern')">
+        <p
+          *ngIf="plain_background_color.hasError('pattern')"
+          i18n="@@PRO_THEME__INVALID_HEX_CODE"
+        >
           Invalid hex code
         </p>
-        <p *ngIf="plain_background_color.hasError('required')">
+        <p
+          *ngIf="plain_background_color.hasError('required')"
+          i18n="@@PRO_THEME__BACKGROUND_COLOR_REQUIRED"
+        >
           Background color is required
         </p>
       </div>
@@ -184,15 +217,15 @@
 
     <div class="m-form__field--radio">
       <div class="m-form__row--label">
-        <label i18n> Color Schema </label>
+        <label i18n="@@PRO_THEME__COLOR_SCHEMA"> Color Schema </label>
       </div>
       <div class="m-form__row--input">
         <label
           for="scheme_light"
           class="m-form__customInputWrapper__radio"
-          i18n
           data-minds="schemeLight"
-          >Light
+        >
+          <ng-container i18n="@@COMMON__LIGHT">Light</ng-container>
           <input
             type="radio"
             id="scheme_light"
@@ -206,9 +239,9 @@
         <label
           for="scheme_dark"
           class="m-form__customInputWrapper__radio"
-          i18n
           data-minds="schemeDark"
-          >Dark
+        >
+          <ng-container i18n="@@COMMON__DARK">Dark</ng-container>
           <input
             type="radio"
             id="scheme_dark"
@@ -224,11 +257,13 @@
 
     <div class="m-form__field--radio">
       <div class="m-form__row--label">
-        <label i18n
-          >Tiles Aspect Ratio
+        <label>
+          <ng-container i18n="@@PRO_THEME__TILE_ASPECT_RATIOS"
+            >Tiles Aspect Ratio</ng-container
+          >
           <m-tooltip
             ><span m-tooltip--anchor>𝒊</span>
-            <ng-container i18n
+            <ng-container i18n="@@PRO_THEME__TILE_ASPECT_RATIOS_INFO"
               >The width-to-height ratio of tiles on your site</ng-container
             >
           </m-tooltip></label
@@ -260,6 +295,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@PRO_THEME__SAVE_THEME"
     >
       Save Theme
     </m-shadowboxSubmitButton>

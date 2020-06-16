@@ -30,6 +30,7 @@ import { Upload } from '../../../services/api/upload';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-wire--lock-screen',
@@ -96,6 +97,10 @@ describe('SettingsWireComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
     }).compileComponents();
   }));

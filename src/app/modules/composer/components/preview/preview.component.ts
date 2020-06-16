@@ -3,7 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { ComposerService } from '../../services/composer.service';
+import {
+  ComposerService,
+  DEFAULT_RICH_EMBED_VALUE,
+} from '../../services/composer.service';
 
 /**
  * Composer preview container. Renders a user-friendly preview of
@@ -26,6 +29,14 @@ export class PreviewComponent {
    */
   richEmbedPreview$ = this.service.richEmbedPreview$;
 
+  /**
+   * The extracted URL from the message
+   */
+  messageUrl$ = this.service.messageUrl$;
+
+  /**
+   * Are we posting?
+   */
   isPosting$ = this.service.isPosting$;
 
   /**
@@ -56,11 +67,18 @@ export class PreviewComponent {
   /**
    * Removes the attachment using the service
    */
-  remove() {
+  removeAttachment() {
     // TODO: Implement a nice themed modal confirmation
     if (confirm("Are you sure? There's no UNDO.")) {
       this.service.removeAttachment();
     }
+  }
+
+  /**
+   * Removes the rich embed using the service
+   */
+  removeRichEmbed() {
+    this.service.removeRichEmbed();
   }
 
   /**

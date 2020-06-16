@@ -14,12 +14,20 @@ const chartPalette = {
       themeMap: ['#fafafa', '#252e31'],
     },
     {
-      id: 'm-white',
-      themeMap: ['#fff', '#232323'],
+      id: 'm-borderColor--primary',
+      themeMap: ['#dce2e4', '#404a4e'],
     },
     {
-      id: 'm-grey-50',
-      themeMap: ['rgba(232,232,232,1)', 'rgba(47,47,47,1)'], // 222
+      id: 'm-borderColor--secondary',
+      themeMap: ['#979797', '#404a4e'],
+    },
+    {
+      id: 'm-textColor--tertiary',
+      themeMap: ['#9b9b9b', '#797b82'],
+    },
+    {
+      id: 'm-white',
+      themeMap: ['#fff', '#232323'],
     },
     {
       id: 'm-grey-70',

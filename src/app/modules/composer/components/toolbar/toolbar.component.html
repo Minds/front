@@ -17,10 +17,12 @@
   >
     <m-icon
       class="m-composerToolbarItem__icon"
-      from="ion"
-      iconId="image"
+      from="md"
+      iconId="cloud_upload"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n>Upload</span>
+    <span class="m-composerToolbarItem__label" i18n="@@COMMON__UPLOAD"
+      >Upload</span
+    >
   </m-file-upload>
 
   <a
@@ -31,7 +33,7 @@
     data-cy="nsfw-button"
   >
     <m-icon class="m-composerToolbarItem__icon" iconId="explicit"></m-icon>
-    <span class="m-composerToolbarItem__label" i18n>NSFW</span>
+    <span class="m-composerToolbarItem__label" i18n="@@COMMON__NSFW">NSFW</span>
   </a>
 
   <a
@@ -47,7 +49,9 @@
       iconId="assets/icons/wire.svg"
       [sizeFactor]="25"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n>Monetize</span>
+    <span class="m-composerToolbarItem__label" i18n="@@COMMON__MONETIZE"
+      >Monetize</span
+    >
   </a>
 
   <a
@@ -63,7 +67,7 @@
       iconId="#"
       [sizeFactor]="25"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n>Tags</span>
+    <span class="m-composerToolbarItem__label" i18n="@@COMMON__TAGS">Tags</span>
   </a>
 
   <span class="m-composerToolbar__itemSpacer"></span>
@@ -74,14 +78,17 @@
       (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
     "
     [dropdown]="postButtonDropdown"
+    [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
     (onAction)="onPost($event)"
     data-cy="post-button"
   >
-    <ng-container *ngIf="!(isEditing$ | async); else isEditingButtonText" i18n
+    <ng-container
+      *ngIf="!(isEditing$ | async); else isEditingButtonText"
+      i18n="verb|@@COMMON__POST"
       >Post</ng-container
     >
     <ng-template #isEditingButtonText
-      ><ng-container i18n>Save</ng-container></ng-template
+      ><ng-container i18n="@@COMMON__SAVE">Save</ng-container></ng-template
     >
   </m-button>
 </div>
@@ -91,7 +98,7 @@
     <li (click)="onSchedulerClick()">
       <span class="m-dropdownMenu__item">
         <m-icon iconId="alarm"></m-icon>
-        <span i18n>Schedule Post</span>
+        <span i18n="@@COMPOSER__SCHEDULE_POST">Schedule Post</span>
       </span>
     </li>
   </ul>

@@ -29,6 +29,8 @@ import { InMemoryStorageService } from '../../../services/in-memory-storage.serv
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
+import { CaptchaModule } from '../../captcha/captcha.module';
 
 @Component({
   selector: 'minds-banner',
@@ -166,7 +168,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
 class InlineEditorComponentMock {
   @Input() options: any;
   @Input() placeholder: string;
-  @ViewChild('host', { static: false }) host: HTMLDivElement;
+  @ViewChild('host') host: HTMLDivElement;
 
   @Input()
   reset() {
@@ -254,6 +256,9 @@ describe('BlogEdit', () => {
           outputs: ['selectedChanged'],
           inputs: ['selected'],
         }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
         MockDirective({
           selector: '[mIfFeature]',
           inputs: ['mIfFeature'],
@@ -261,7 +266,12 @@ describe('BlogEdit', () => {
         BlogEdit,
         MDLMock,
       ], // declare the test component
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
+      imports: [
+        RouterTestingModule,
+        NgCommonModule,
+        FormsModule,
+        CaptchaModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
@@ -276,6 +286,7 @@ describe('BlogEdit', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        FormToastService,
       ],
     }).compileComponents(); // compile template and css
   }));

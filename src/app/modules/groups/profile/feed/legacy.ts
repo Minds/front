@@ -44,9 +44,9 @@ export class GroupsProfileLegacyFeed {
   kicking: any;
   paramsSubscription: Subscription;
 
-  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+  @ViewChild('poster') private poster: PosterComponent;
 
-  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+  @ViewChild('composer') private composer: ComposerComponent;
 
   constructor(
     public session: Session,

@@ -23,13 +23,12 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
   templateUrl: 'homepage-v2.component.html',
 })
 export class HomepageV2Component implements OnInit {
-  @ViewChild('registerForm', { static: false }) registerForm: RegisterForm;
+  @ViewChild('registerForm') registerForm: RegisterForm;
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
-  readonly headline = 'Take back control of your social media';
-  readonly description =
-    'A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.';
+  readonly headline = $localize`:@@HOMEPAGE_V2__TAKE_BACK_CONTROL:Take back control of your social media`;
+  readonly description = $localize`::@@HOMEPAGE__V2__SUBHEADER:A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.`;
 
   constructor(
     public client: Client,
@@ -57,12 +56,15 @@ export class HomepageV2Component implements OnInit {
       .setTitle(`Minds - ${this.headline}`, false)
       .setDescription(this.description)
       .setCanonicalUrl('/')
-      .setOgUrl('/');
+      .setOgUrl('/')
+      .setOgImage('/assets/logos/placeholder.jpg');
 
     this.navigationService.setVisible(false);
     this.topbarService.toggleMarketingPages(true, false, false);
+    this.topbarService.toggleSearchBar(false);
 
     this.pageLayoutService.removeTopbarBackground();
+    this.pageLayoutService.removeTopbarBorder();
     this.pageLayoutService.removeTopbarBorder();
   }
 

@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { DiscoveryComponent } from './discovery.component';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { CommonModule } from '../../common/common.module';
-import { DiscoveryTagsService } from './tags/tags.service';
 import { DiscoveryTrendsComponent } from './trends/trends.component';
 import { DiscoveryTrendsListItemComponent } from './trends/list-item.component';
 import { DiscoveryTrendComponent } from './trends/trend/trend.component';
@@ -13,11 +12,15 @@ import { DiscoverySearchComponent } from './search/search.component';
 import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoveryTrendsService } from './trends/trends.service';
 import { LegacyModule } from '../legacy/legacy.module';
-import { GroupsModule } from '../groups/groups.module';
 import { DiscoverySharedModule } from './discovery-shared.module';
 import { DiscoveryFeedsComponent } from './feeds/feeds.component';
-import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
-import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.component';
+import { DiscoverySettingsButtonComponent } from './settings-button/settings-button.component';
+import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component';
+import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
+import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
+import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
+import { HashtagsModule } from '../hashtags/hashtags.module';
+import { LanguageModule } from '../language/language.module';
 
 @NgModule({
   imports: [
@@ -57,6 +60,20 @@ import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.c
               },
             ],
           },
+          {
+            path: 'suggestions',
+            children: [
+              { path: '', redirectTo: 'user' },
+              {
+                path: 'user',
+                component: DiscoverySuggestionsComponent,
+              },
+              {
+                path: 'group',
+                component: DiscoverySuggestionsComponent,
+              },
+            ],
+          },
         ],
       },
     ]),
@@ -67,6 +84,8 @@ import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.c
     LegacyModule, // For subscribe button
     // GroupsModule,
     DiscoverySharedModule,
+    HashtagsModule,
+    LanguageModule,
   ],
   providers: [DiscoveryTrendsService],
   declarations: [
@@ -77,10 +96,12 @@ import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.c
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
     DiscoveryFeedsComponent,
-    DiscoveryFeedItemComponent,
-    DiscoveryFeedsSettingsButtonComponent,
+    DiscoveryFeedsListComponent,
+    DiscoverySettingsButtonComponent,
+    DiscoveryDisclaimerComponent,
+    DiscoverySuggestionsComponent,
+    DiscoveryNoTagsPromptComponent,
   ],
   exports: [DiscoveryComponent],
-  entryComponents: [DiscoveryComponent],
 })
 export class DiscoveryModule {}

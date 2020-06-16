@@ -23,6 +23,7 @@ import * as BN from 'bn.js';
 import { SendWyreConfig } from '../sendwyre/sendwyre.interface';
 import { SiteService } from '../../../common/services/site.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-blockchain__eth-modal',
@@ -44,7 +45,8 @@ export class BlockchainEthModalComponent implements OnInit {
     private sendWyreService: SendWyreService,
     public session: Session,
     public site: SiteService,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -76,15 +78,29 @@ export class BlockchainEthModalComponent implements OnInit {
     this.error = '';
     this.detectChanges();
 
+    if (!this.session.isLoggedIn()) {
+      this.toasterService.error('You must be signed up to buy ETH.');
+      this.detectChanges();
+      return;
+    }
+
+    if (!this.session.getLoggedInUser().rewards) {
+      this.toasterService.error(
+        'You must be signed up for a wallet to buy ETH.'
+      );
+      this.detectChanges();
+      return;
+    }
+
     if (!this.hasMetamask) {
-      this.error = 'You need to install metamask';
+      this.toasterService.error('You need to install metamask');
       this.detectChanges();
       return;
     }
 
     if (this.usd > 40) {
       this.usd = 40;
-      this.error = 'You can not purchase more than $40';
+      this.toasterService.error('You can not purchase more than $40');
       this.detectChanges();
       return;
     }

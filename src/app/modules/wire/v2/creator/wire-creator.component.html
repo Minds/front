@@ -1,8 +1,16 @@
 <div class="m-wireCreator m-modalV2__inner">
-  <m-wireCreator__ownerBlock></m-wireCreator__ownerBlock>
+  <m-wireCreator__marketingBlock
+    *ngIf="service.isUpgrade$ | async"
+  ></m-wireCreator__marketingBlock>
+  <m-wireCreator__ownerBlock
+    *ngIf="!(service.isUpgrade$ | async)"
+  ></m-wireCreator__ownerBlock>
   <m-wireCreator__form></m-wireCreator__form>
   <m-wireCreator__shop
-    *ngIf="(service.wireRewards$ | async)?.count"
+    *ngIf="
+      (supportTiers.list$ | async)?.length && !(service.isUpgrade$ | async)
+    "
+    (onDismissIntent)="onDismissIntent()"
   ></m-wireCreator__shop>
   <m-wireCreator__toolbar (onSubmit)="onSubmit()"></m-wireCreator__toolbar>
 </div>

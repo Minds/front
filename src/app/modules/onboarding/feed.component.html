@@ -1,20 +1,21 @@
 <div class="m-onboarding-feed">
   <m-onboarding-card
     text="Design Your Channel"
-    i18n-text="@@MINDS__ONBOARDING__CHANNEL_TEXT"
     subtext="Setup your avatar, banner, personal bio and more"
-    i18n-subtext="@@MINDS__ONBOARDING__CHANNEL_SUBTEXT"
     icon="mode_edit"
-    [route]="['/', session.getLoggedInUser().username, { editToggle: true }]"
+    [route]="[
+      '/',
+      session.getLoggedInUser().username,
+      'feed',
+      { editToggle: true }
+    ]"
     class="mdl-color--blue-grey-800 mdl-color-text--white"
     id="channel"
   ></m-onboarding-card>
 
   <m-onboarding-card
     text="Subscribe to channels"
-    i18n-text="@@MINDS__ONBOARDING__SUBSCRIBE_TEXT"
     subtext="Click here to find the content you love to fill your newsfeed"
-    i18n-subtext="@@MINDS__ONBOARDING__SUBSCRIBE_SUBTEXT"
     icon="person_add"
     [route]="['/channels/top']"
     id="subscribe"
@@ -22,9 +23,7 @@
 
   <m-onboarding-card
     text="Set up your ethereum wallet"
-    i18n-text="@@MINDS__ONBOARDING__WALLET_SETUP_TEXT"
     subtext="Click here to set up your ethereum wallet"
-    i18n-subtext="@@MINDS__ONBOARDING__WALLET_SETUP_SUBTEXT"
     icon="person_add"
     [route]="['/wallet']"
     class="mdl-color--blue-grey-800 mdl-color-text--white"

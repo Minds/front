@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { ActivatedRoute } from '@angular/router';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +17,11 @@ export class AdminWithdrawals {
 
   user: string = '';
 
-  constructor(protected client: Client, protected route: ActivatedRoute) {}
+  constructor(
+    protected client: Client,
+    protected route: ActivatedRoute,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -97,7 +102,7 @@ export class AdminWithdrawals {
 
       withdrawal.status = 'approved';
     } catch (e) {
-      alert(
+      this.toasterService.error(
         `There was an issue while approving withdrawal: ${(e && e.message) ||
           'Unknown server error'}`
       );
@@ -124,7 +129,7 @@ export class AdminWithdrawals {
 
       withdrawal.status = 'rejected';
     } catch (e) {
-      alert(
+      this.toasterService.error(
         `There was an issue while rejecting withdrawal: ${(e && e.message) ||
           'Unknown server error'}`
       );

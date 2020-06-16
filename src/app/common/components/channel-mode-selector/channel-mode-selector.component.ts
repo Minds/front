@@ -8,7 +8,7 @@ import { Client } from '../../../services/api';
   templateUrl: './channel-mode-selector.component.html',
 })
 export class ChannelModeSelectorComponent implements AfterViewInit {
-  @ViewChild('channelModeDropdown', { static: false })
+  @ViewChild('channelModeDropdown')
   channelModeDropdown: DropdownComponent;
   @Input() public enabled = true;
   @Input() public user: MindsUser;

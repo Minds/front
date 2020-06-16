@@ -44,7 +44,6 @@ m-activity__content {
 
 .m-activityContent__message {
   font-size: 15px;
-  padding: 0px $activity-padding-lr 16px;
   white-space: pre-line;
 
   &.m-activityContent__message--isTextOnly {
@@ -55,7 +54,11 @@ m-activity__content {
       font-size: 28px;
     }
   }
+  .m-activityContent__messageWrapper {
+    padding: 0px $activity-padding-lr 16px;
+  }
 }
+
 .m-activity--noOwnerBlock .m-activityContent__message {
   padding-top: 16px;
 }
@@ -82,9 +85,11 @@ m-activity__content {
 }
 
 .m-activityContent__mediaDescription {
-  padding: 16px $activity-padding-lr;
   font-size: 16px;
   margin: 0;
+  .m-activityContent__descriptionWrapper {
+    padding: 16px $activity-padding-lr;
+  }
   p {
     margin: 0;
     padding: 0;
@@ -121,8 +126,9 @@ m-activity__content {
 .m-activityContent__media--richEmbed {
   img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    display: block;
+    height: auto;
+    max-height: 400px;
   }
   .meta {
     padding: 20px $activity-padding-lr;

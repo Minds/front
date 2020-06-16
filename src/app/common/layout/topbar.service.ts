@@ -1,23 +1,31 @@
-import { V2TopbarComponent } from './v2-topbar/v2-topbar.component';
 import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
 import { FeaturesService } from '../../services/features.service';
 import { Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
+type TopbarComponentT = V3TopbarComponent;
 
 @Injectable()
 export class TopbarService {
-  private container: V2TopbarComponent;
+  private container: TopbarComponentT;
 
-  private useV3Topbar: boolean;
+  routerSubscription: Subscription;
 
-  static _(featuresService: FeaturesService) {
-    return new TopbarService(featuresService);
+  constructor(
+    private featuresService: FeaturesService,
+    private router: Router
+  ) {
+    this.routerSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(data => {
+        this.toggleVisibility(true);
+        this.toggleSearchBar(true);
+      });
   }
 
-  constructor(private featuresService: FeaturesService) {
-    this.useV3Topbar = this.featuresService.has('navigation');
-  }
-
-  setContainer(container: V2TopbarComponent) {
+  setContainer(container: TopbarComponentT) {
     this.container = container;
 
     return this;
@@ -27,26 +35,17 @@ export class TopbarService {
     value: boolean,
     showBottombar: boolean = true,
     forceBackground: boolean = true
-  ): void {
-    if (this.container) {
-      if (this.useV3Topbar) {
-      } else {
-        this.container.toggleMarketingPages(
-          value,
-          showBottombar,
-          forceBackground
-        );
-      }
-    }
-  }
+  ): void {}
 
   toggleVisibility(visible: boolean): void {
     if (this.container) {
-      if (this.useV3Topbar) {
-        this.container.toggleVisibility(visible);
-      } else {
-        this.container.toggleVisibility(visible);
-      }
+      this.container.toggleVisibility(visible);
+    }
+  }
+
+  toggleSearchBar(visible: boolean): void {
+    if (this.container) {
+      (<V3TopbarComponent>this.container).toggleSearchBar(visible);
     }
   }
 }

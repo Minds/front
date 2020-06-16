@@ -1,3 +1,18 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__BILLING__RECURRING__LABEL"
+  >
+    Recurring Payments
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__BILLING__RECURRING__DESCRIPTION"
+  >
+    Track recurring payments you make to support other channels.
+  </div>
+</m-settingsV2__header>
+
 <div *ngIf="!init" style="width:100%; text-align:center;">
   <div
     class="mdl-spinner mdl-js-spinner is-active"
@@ -89,6 +104,7 @@
   <div
     *ngIf="!subscriptions.length"
     class="m-settingsV2__desc m-settingsV2__notice"
+    i18n="@@SETTINGS_V2_RECURRING_PAYMENTS__YOU_HAVENT_SETUP_ANY"
   >
     <span>You haven't set up any recurring payments.</span>
   </div>

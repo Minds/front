@@ -1,0 +1,58 @@
+m-channelAbout__extraInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .m-channelAbout__field {
+    width: 100%;
+    margin: 0 0 20px;
+
+    // &.m-channelAbout__field--fullWidth {
+    //   width: 100%;
+    // }
+  }
+
+  .m-channelAboutField__label {
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0 0 2px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelAboutField__content {
+    font-size: 15px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &.m-channelAboutField__content--preserveBlanks {
+      white-space: pre-line;
+      word-break: break-word;
+    }
+
+    a {
+      font: inherit !important;
+      color: inherit !important;
+      text-decoration: inherit !important;
+    }
+  }
+
+  .m-channel--badges {
+    i.material-icons {
+      padding: 0 10px 0 0;
+      font-size: 15px;
+      line-height: 20px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary) !important;
+      }
+    }
+  }
+}

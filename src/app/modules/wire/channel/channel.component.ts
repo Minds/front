@@ -9,6 +9,7 @@ import {
 import { WireTypeLabels } from '../wire';
 import { SignupModalService } from '../../modals/signup/service';
 import { WireModalService } from '../wire-modal.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -44,7 +45,8 @@ export class WireChannelComponent implements OnInit {
     public session: Session,
     private wireModal: WireModalService,
     private client: Client,
-    private signupModal: SignupModalService
+    private signupModal: SignupModalService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -104,7 +106,7 @@ export class WireChannelComponent implements OnInit {
       this.session.getLoggedInUser().wire_rewards = this.rewards;
     } catch (e) {
       this.editing = true;
-      alert((e && e.message) || 'Server error');
+      this.toasterService.error((e && e.message) || 'Server error');
     }
   }
 

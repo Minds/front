@@ -15,6 +15,7 @@ import { ConfirmPasswordModalComponent } from './confirm-password/modal.componen
 import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
+import { RemindComposerModalComponent } from './remind-composer-v2/reminder-composer.component';
 
 @NgModule({
   imports: [
@@ -35,8 +36,8 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
     SignupModal,
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
+    RemindComposerModalComponent,
   ],
-  entryComponents: [ConfirmPasswordModalComponent],
   exports: [
     ConfirmModal,
     RemindComposerModal,
@@ -45,6 +46,7 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
     SignupOnScrollModal,
     SignupModal,
     TOSUpdatedModal,
+    RemindComposerModalComponent,
   ],
 })
 export class ModalsModule {}

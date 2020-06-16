@@ -28,6 +28,42 @@
       background: none rgba(themed($m-white), 0.95);
     }
 
+    &.m-overlayModal--remind {
+      width: 520px;
+      max-width: 90%;
+      min-width: 0;
+      padding: 0;
+      border-radius: 0;
+
+      @include m-theme() {
+        color: themed($m-blue-grey-700) !important;
+        box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.07),
+          0 3px 1px -2px rgba(themed($m-black), 0.1),
+          0 1px 5px 0 rgba(themed($m-black), 0.07);
+      }
+
+      .m-overlay-modal--close {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        padding: 0;
+        background-color: transparent;
+
+        i.material-icons {
+          font-size: 24px;
+          @include m-theme() {
+            color: themed($m-blue-grey-300) !important;
+          }
+
+          &:hover {
+            @include m-theme() {
+              color: themed($m-blue-grey-500) !important;
+            }
+          }
+        }
+      }
+    }
+
     &.m-overlay-modal--large {
       max-width: 990px;
     }
@@ -59,6 +95,7 @@
     &:not(.m-overlay-modal--top):not(.m-overlayModal--media) {
       transform: translateY(-50%);
     }
+
     &.m-overlay-modal--top {
       top: 150px;
     }
@@ -80,6 +117,7 @@
     }
   }
 }
+
 .m-overlay-modal--overflow {
   overflow: visible;
 }

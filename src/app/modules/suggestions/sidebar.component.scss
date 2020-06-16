@@ -111,6 +111,21 @@
   }
 }
 
+.m-suggestionsSidebarList__item--group {
+  .m-suggestionsSidebarListItem__avatar {
+    vertical-align: top;
+  }
+  .m-suggestionsSidebarListItem__body {
+    display: inline-block;
+    flex-direction: unset;
+
+    > div {
+      width: 100%;
+      max-width: unset;
+    }
+  }
+}
+
 m-sidebarWidget {
   .m-suggestionsSidebar__list {
     @include m-theme() {

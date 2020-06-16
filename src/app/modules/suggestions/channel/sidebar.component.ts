@@ -1,25 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { ChannelSuggestionsService } from './channel-suggestions.service';
+import { SuggestionsService } from './channel-suggestions.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+
+type SuggestionEntityTypes = 'user' | 'group';
 
 @Component({
   selector: 'm-suggestions__sidebar',
   templateUrl: 'sidebar.component.html',
+  providers: [SuggestionsService],
 })
 export class SuggestionsSidebar {
   readonly cdnUrl: string;
+
+  @Input() type: SuggestionEntityTypes = 'user';
+
   suggestions$: BehaviorSubject<Array<any>> = this.service.suggestions$;
-  limit = 5;
+  limit = 12;
+  displayLimit = 3;
   inProgress$: Observable<boolean> = this.service.inProgress$;
   error$: Observable<string> = this.service.error$;
 
   constructor(
     private client: Client,
     private storage: Storage,
-    private service: ChannelSuggestionsService,
+    private service: SuggestionsService,
+    private router: Router,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -30,6 +39,7 @@ export class SuggestionsSidebar {
       this.service.load({
         limit: this.limit,
         refresh: true,
+        type: this.type,
       });
     }
   }
@@ -41,13 +51,13 @@ export class SuggestionsSidebar {
     suggestions.splice(suggestions.indexOf(suggestion), 1);
     this.suggestions$.next(suggestions);
     this.storage.set(
-      `user:suggestion:${suggestion.entity_guid}:removed`,
+      `suggestion:${suggestion.entity_guid}:removed`,
       suggestion.entity_guid
     );
     await this.client.put(`api/v2/suggestions/pass/${suggestion.entity_guid}`);
 
     // load more
-    this.service.load({ limit: 1, refresh: false });
+    this.service.load({ limit: 1, refresh: false, type: this.type });
   }
 
   remove(suggestion) {
@@ -55,10 +65,30 @@ export class SuggestionsSidebar {
     suggestions.splice(suggestions.indexOf(suggestion), 1);
     this.suggestions$.next(suggestions);
     this.storage.set(
-      `user:suggestion:${suggestion.entity_guid}:removed`,
+      `suggestion:${suggestion.entity_guid}:removed`,
       suggestion.entity_guid
     );
     // load more
-    this.service.load({ limit: 1, refresh: false });
+    this.service.load({ limit: 1, refresh: false, type: this.type });
+  }
+
+  seeMore() {
+    if (this.displayLimit === this.limit) {
+      // Already tapped once, so go to full view page
+      this.router.navigate([`/discovery/suggestions/${this.type}`]);
+    }
+
+    this.displayLimit = this.limit;
+  }
+
+  get title(): string {
+    switch (this.type) {
+      case 'user':
+        return $localize`:@@SUGGESTIONS__CHANNEL__TITLE:Suggested Channels`;
+        break;
+      case 'group':
+        return $localize`:@@SUGGESTIONS__GROUP__TITLE:Suggested Groups`;
+        break;
+    }
   }
 }

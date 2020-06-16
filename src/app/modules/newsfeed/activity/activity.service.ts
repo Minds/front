@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable, combineLatest, Subject } from 'rxjs';
-import { MindsUser, MindsGroup } from '../../../interfaces/entities';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { MindsGroup, MindsUser } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -13,6 +13,7 @@ export type ActivityDisplayOptions = {
   showBoostMenuOptions: boolean;
   showEditedTag: boolean;
   showVisibiltyState: boolean;
+  showTranslation: boolean;
   fixedHeight: boolean;
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
 };
@@ -55,6 +56,7 @@ export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
+
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
 @Injectable()
@@ -74,9 +76,27 @@ export class ActivityService {
   );
 
   /**
-   * TODO
+   * Subject for Activity's canDelete property, w
    */
-  canDelete$: Observable<boolean> = this.entity$.pipe();
+  canDeleteOverride$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
+   * Returns whether or not the user can edit an activity
+   */
+  canDelete$: Observable<boolean> = combineLatest([
+    this.entity$,
+    this.canDeleteOverride$,
+    this.session.user$,
+  ]).pipe(
+    map(
+      ([entity, override, user]) =>
+        entity &&
+        user &&
+        (entity.owner_guid === user.guid || user.is_admin || override)
+    )
+  );
 
   /**
    * Allows for components to give nsfw consent
@@ -122,6 +142,28 @@ export class ActivityService {
   );
 
   /**
+   * Only allow translation menu item if there is content to translate
+   */
+  isTranslatable$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      if (typeof entity.message !== 'undefined' && entity.message) {
+        return true;
+      } else if (
+        entity.custom_type &&
+        ((typeof entity.title !== 'undefined' && entity.title) ||
+          (typeof entity.blurb !== 'undefined' && entity.blurb))
+      ) {
+        return true;
+      }
+      return false;
+    })
+  );
+
+  isLoggedIn$: Observable<boolean> = this.session.user$.pipe(
+    map(user => user !== null)
+  );
+
+  /**
    * TODO
    */
   isBoost$: Observable<boolean> = this.entity$.pipe();
@@ -164,6 +206,7 @@ export class ActivityService {
     showBoostMenuOptions: false,
     showEditedTag: false,
     showVisibiltyState: false,
+    showTranslation: false,
     fixedHeight: false,
     fixedHeightContainer: false,
   };

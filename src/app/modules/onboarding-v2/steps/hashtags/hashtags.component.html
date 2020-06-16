@@ -1,5 +1,8 @@
 <div class="m-onboarding__controls">
-  <div class="m-onboarding__description" i18n>
+  <div
+    class="m-onboarding__description"
+    i18n="@@ONBOARDING_HASHTAGS__SELECT_SOME_HASHTAGS"
+  >
     Select some hashtags that are of interest to you.
   </div>
 
@@ -24,7 +27,9 @@
 
   <div class="m-onboarding__error">
     <ng-container *ngIf="error == 'not:enough:hashtags'; else errorBlock">
-      <span i18n>You must select at least 3 hashtags</span>
+      <span i18n="@@ONBOARDING_HASHTAGS__YOU_MUST_SELECT_ATLEAST_3"
+        >You must select at least 3 hashtags</span
+      >
     </ng-container>
     <ng-template #errorBlock>
       {{ error }}
@@ -32,10 +37,18 @@
   </div>
 
   <div class="m-onboarding__actionButtons">
-    <button class="mf-button mf-button--hollow" (click)="skip()" i18n>
+    <button
+      class="mf-button mf-button--hollow"
+      (click)="skip()"
+      i18n="@@COMMON__SKIP"
+    >
       Skip
     </button>
-    <button class="mf-button mf-button--alt" (click)="continue()" i18n>
+    <button
+      class="mf-button mf-button--alt"
+      (click)="continue()"
+      i18n="@@COMMON_CONTINUE"
+    >
       Continue
     </button>
   </div>

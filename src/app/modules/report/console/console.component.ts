@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-report-console',
@@ -17,7 +18,11 @@ export class ReportConsoleComponent implements OnInit {
   offset: string = '';
   moreData: boolean = true;
 
-  constructor(private client: Client, public service: JurySessionService) {}
+  constructor(
+    private client: Client,
+    public service: JurySessionService,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     this.load(true);
@@ -83,7 +88,7 @@ export class ReportConsoleComponent implements OnInit {
 
       this.appeals.splice(i, 1);
     } catch (e) {
-      alert((e && e.message) || 'Error sending appeal');
+      this.toasterService.error((e && e.message) || 'Error sending appeal');
     }
   }
 

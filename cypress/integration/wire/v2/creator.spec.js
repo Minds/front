@@ -76,6 +76,7 @@ context('v2 Wire', () => {
 
     // Override feature flags
     cy.overrideFeatureFlags({
+      channels: false,
       pay: true,
     });
 
@@ -90,6 +91,7 @@ context('v2 Wire', () => {
 
     // Override feature flags
     cy.overrideFeatureFlags({
+      channels: false,
       pay: true,
     });
 

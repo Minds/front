@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Storage } from '../../../services/storage';
 import { OnboardingV2Service } from '../service/onboarding.service';
 import { SidebarMarkersService } from '../../../common/layout/sidebar/markers.service';
@@ -9,6 +9,8 @@ import { TopbarService } from '../../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'm-onboarding',
@@ -27,6 +29,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   loadingSubscription: Subscription;
   slideChangedSubscription: Subscription;
   closeSubscription: Subscription;
+  routerSubscription: Subscription;
 
   constructor(
     private session: Session,
@@ -37,8 +40,23 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
     private sidebarMarkersService: SidebarMarkersService,
-    private featuresService: FeaturesService
-  ) {}
+    private featuresService: FeaturesService,
+    private pageLayoutService: PageLayoutService
+  ) {
+    this.newNavigation = this.featuresService.has('navigation');
+    this.routerSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(data => {
+        this.topbarService.toggleVisibility(false);
+
+        if (this.newNavigation) {
+          this.navigationService.setVisible(false);
+          this.pageLayoutService.useFullWidth();
+        } else {
+          this.sidebarMarkersService.toggleVisibility(false);
+        }
+      });
+  }
 
   async ngOnInit() {
     if (!this.session.isLoggedIn()) {
@@ -61,7 +79,11 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     );
 
     this.closeSubscription = this.onboardingService.close.subscribe(() => {
-      this.router.navigate(['/newsfeed/global/top']);
+      if (this.featuresService.has('navigation')) {
+        this.router.navigate(['/newsfeed']);
+      } else {
+        this.router.navigate(['/newsfeed/global/top']);
+      }
     });
 
     this.route.url.subscribe(() => {
@@ -81,16 +103,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
         this.onboardingService.steps = this.onboardingService.steps.slice(0);
       }
     });
-
-    this.newNavigation = this.featuresService.has('navigation');
-
-    this.topbarService.toggleVisibility(false);
-
-    if (this.newNavigation) {
-      this.navigationService.setVisible(false);
-    } else {
-      this.sidebarMarkersService.toggleVisibility(false);
-    }
   }
 
   ngOnDestroy() {
@@ -103,6 +115,10 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     if (this.closeSubscription) {
       this.closeSubscription.unsubscribe();
     }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+
     this.topbarService.toggleVisibility(true);
 
     if (this.newNavigation) {

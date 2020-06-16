@@ -34,8 +34,10 @@
         <div class="m-layout__row">
           <div class="m-layout__cell">
             <m-dropdown #dropdown>
-              <label i18n="@@HELPDESK__EDIT__CATEGORIES__TITLE">
-                Select a Category
+              <label>
+                <ng-container i18n="@@HELPDESK__EDIT__SELECT_A_CATEGORY"
+                  >Select a Category</ng-container
+                >
                 <i
                   class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive"
                   >keyboard_arrow_down</i
@@ -88,7 +90,6 @@
       >
         Save
       </button>
-      <div class="m-helpdesk--question-creator--error">{{ error }}</div>
     </div>
   </form>
 </div>

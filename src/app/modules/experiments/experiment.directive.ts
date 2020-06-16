@@ -33,11 +33,9 @@ export class ExperimentDirective {
         bucketId: this.mExperimentBucket,
       })
     ) {
-      console.log('clearing');
       this._viewContainer.clear();
       this._viewContainer.createEmbeddedView(this._templateRef);
     } else {
-      console.log('clearing');
       this._viewContainer.clear();
     }
   }

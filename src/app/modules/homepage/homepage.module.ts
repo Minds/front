@@ -11,7 +11,6 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
-import { HomepageComponent } from './homepage.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { HomepageV2Module } from '../homepage-v2/homepage.module';
@@ -33,7 +32,6 @@ const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
     ExperimentsModule,
     HomepageV2Module,
   ],
-  declarations: [HomepageComponent, HomepageContainerComponent],
-  entryComponents: [HomepageComponent],
+  declarations: [HomepageContainerComponent],
 })
 export class HomepageModule {}

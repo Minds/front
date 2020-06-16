@@ -4,7 +4,7 @@
   </div>
   <div class="m-walletRewardsPopup__metricsContainer">
     <div class="m-walletRewardsPopup__row" *ngFor="let metric of metrics">
-      <span>{{ metric.amount }} {{ metric.id }}</span>
+      <span>{{ metric.amount }} {{ metric.label | titlecase }}</span>
       <span>{{ metric.score }}</span>
     </div>
   </div>
@@ -13,13 +13,14 @@
     *ngIf="metrics && metrics.length"
   >
     <div class="m-walletRewardsPopup__row">
-      <span>Total Score</span>
+      <span i18n="@@WALLETV2_REWARDS_POPUP__TOTAL_SCORE">Total Score</span>
       <span>{{ totalScore }}</span>
     </div>
   </div>
   <div
     *ngIf="!inProgress && (!metrics || !totalScore)"
     class="m-walletRewardsPopup__notice"
+    i18n="@@WALLETV2_REWARDS_POPUP__HAVEN'T_YET_RECEIVED"
   >
     You haven't earned any daily rewards yet.
   </div>

@@ -6,10 +6,11 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../services/activity.service';
 import { MindsUser } from '../../../interfaces/entities';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
+import { FormToastService } from '../../services/form-toast.service';
 
 @Injectable()
 export class PostMenuService {
@@ -20,9 +21,13 @@ export class PostMenuService {
   isFollowing$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   isLoadingBlock = false;
   isBlocked$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  isBanned$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  isExplicit$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  email$: BehaviorSubject<string> = new BehaviorSubject(null);
   showSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   showUnSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isPinned$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  canPin$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     public session: Session,
@@ -31,13 +36,18 @@ export class PostMenuService {
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    protected formToastService: FormToastService
   ) {}
 
   setEntity(entity): PostMenuService {
     this.entity = entity;
 
     this.isPinned$.next(this.entity.pinned);
+    this.canPin$.next(
+      this.entity.owner_guid == this.session.getLoggedInUser().guid &&
+        !this.entity.dontPin
+    );
     return this;
   }
 
@@ -69,7 +79,7 @@ export class PostMenuService {
       this.entityOwner.subscribed = true;
     } catch (e) {
       this.entityOwner.subscribed = false;
-      alert("You can't subscribe to this user.");
+      this.formToastService.error("You can't subscribe to this user.");
     }
   }
 
@@ -166,6 +176,65 @@ export class PostMenuService {
     }
   }
 
+  async unBan(): Promise<void> {
+    this.isBanned$.next(false);
+    try {
+      await this.client.delete(
+        'api/v1/admin/ban/' + this.entity.ownerObj.guid,
+        {}
+      );
+    } catch (e) {
+      this.isBanned$.next(true);
+    }
+  }
+
+  async getEmail(): Promise<string> {
+    try {
+      const response: any = await this.client.get(
+        `api/v2/admin/user/${this.entity.ownerObj.username}/email`
+      );
+      this.email$.next(response.email);
+      return response.email;
+    } catch (e) {
+      console.error('viewEmail', e);
+      this.email$.next(null);
+    }
+  }
+
+  async setExplicit(explicit: boolean) {
+    this.isExplicit$.next(explicit);
+    try {
+      await this.client.post(
+        `api/v1/entities/explicit/${this.entity.ownerObj.guid}`,
+        {
+          value: explicit ? '1' : '0',
+        }
+      );
+    } catch (e) {
+      this.isExplicit$.next(!explicit);
+    }
+  }
+
+  async reIndex(): Promise<void> {
+    try {
+      this.client.post('api/v2/admin/reindex', {
+        guid: this.entity.ownerObj.guid,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async setRating(rating: number): Promise<void> {
+    try {
+      await this.client.post(
+        `api/v1/admin/rating/${this.entity.ownerObj.guid}/${rating}`
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async block(): Promise<void> {
     this.isBlocked$.next(true);
     try {
@@ -198,7 +267,9 @@ export class PostMenuService {
   }
 
   async setNsfw(nsfw) {
-    await this.client.post(`api/v2/admin/nsfw/${this.entity.guid}`, { nsfw });
+    await this.client.post(`api/v2/admin/nsfw/${this.entity.ownerObj.guid}`, {
+      nsfw,
+    });
     this.entity.nsfw = nsfw;
   }
 

@@ -1,0 +1,37 @@
+m-languageModal {
+  .m-modalV2__body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-bottom: 32px;
+  }
+
+  .m-modalV2__header {
+    padding: 24px 32px;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--tertiary);
+    }
+  }
+
+  .m-languageModal__languageOption {
+    width: 33.33%;
+    padding: 10px;
+    text-decoration: underline;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-link);
+    }
+
+    &:hover {
+      text-decoration: none;
+
+      @include m-theme() {
+        text-shadow: 0px 0px 1px themed($m-textColor--secondary);
+      }
+    }
+  }
+}

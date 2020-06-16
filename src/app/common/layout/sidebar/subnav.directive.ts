@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
+const MAX_SLIDER_WIDTH = 480;
 const MIN_FULL_NAV_WIDTH = 1172; // TODO make this a constant
 
 @Directive({
@@ -18,13 +19,15 @@ export class SidebarNavigationSubnavDirective {
   parentEl: Element;
   parentMouseEnterListener;
   parentMouseLeaveListener;
+  parentMouseUpListener;
 
   @HostBinding('class.m-sidebarNavigation__subnav--popover')
   get shouldShowPopover() {
     return (
       this.isHovering &&
       (!this.parentEl.classList.contains('m-sidebarNavigation__item--active') ||
-        window.innerWidth <= MIN_FULL_NAV_WIDTH)
+        window.innerWidth <= MIN_FULL_NAV_WIDTH) &&
+      window.innerWidth > MAX_SLIDER_WIDTH
     );
   }
 
@@ -63,17 +66,29 @@ export class SidebarNavigationSubnavDirective {
       this.parentEl,
       'mouseleave',
       event => {
-        this.isHovering = false;
-        this.renderer.setStyle(this.el.nativeElement, 'left', null);
-        this.renderer.setStyle(this.el.nativeElement, 'top', null);
-        this.detectChanges();
+        this.onMouseExit(event);
       }
     );
+    this.parentMouseUpListener = this.renderer.listen(
+      this.parentEl,
+      'mouseup',
+      event => {
+        this.onMouseExit(event);
+      }
+    );
+  }
+
+  onMouseExit(e: MouseEvent): void {
+    this.isHovering = false;
+    this.renderer.setStyle(this.el.nativeElement, 'left', null);
+    this.renderer.setStyle(this.el.nativeElement, 'top', null);
+    this.detectChanges();
   }
 
   ngOnDestroy() {
     if (this.parentMouseEnterListener) this.parentMouseEnterListener.unlisten();
     if (this.parentMouseLeaveListener) this.parentMouseLeaveListener.unlisten();
+    if (this.parentMouseUpListener) this.parentMouseUpListener.unlisten();
   }
 
   detectChanges() {

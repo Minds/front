@@ -156,29 +156,31 @@
     m-pageLayout__pane="right"
     *ngIf="showRightSidebar || newNavigation"
   >
-    <m-suggestions__sidebar></m-suggestions__sidebar>
+    <div class="m-pageLayoutPane__inner">
+      <div class="m-pageLayoutPane__sticky" m-stickySidebar>
+        <m-language__sidebarPrompt></m-language__sidebarPrompt>
+        <m-suggestions__sidebar type="user"></m-suggestions__sidebar>
 
-    <ng-container *mIfFeature="'navigation'">
-      <div class="m-spacer"></div>
-      <m-discovery__sidebarTags></m-discovery__sidebarTags>
-    </ng-container>
+        <ng-container *mIfFeature="'navigation'">
+          <m-suggestions__sidebar type="group"></m-suggestions__sidebar>
 
-    <div class="m-spacer"></div>
+          <m-discovery__sidebarTags></m-discovery__sidebarTags>
+        </ng-container>
 
-    <m-notices__sidebar></m-notices__sidebar>
+        <div class="m-spacer"></div>
 
-    <div class="m-spacer"></div>
-
-    <m-ads-boost
-      limit="8"
-      *ngIf="
-        !(
-          session.getLoggedInUser().plus &&
-          session.getLoggedInUser().disabled_boost
-        )
-      "
-    ></m-ads-boost>
-    <div class="m-spacer"></div>
+        <m-ads-boost
+          limit="8"
+          *ngIf="
+            !(
+              session.getLoggedInUser().plus &&
+              session.getLoggedInUser().disabled_boost
+            )
+          "
+        ></m-ads-boost>
+        <div class="m-spacer"></div>
+      </div>
+    </div>
   </div>
 </div>
 

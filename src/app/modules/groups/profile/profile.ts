@@ -31,6 +31,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -62,8 +63,8 @@ export class GroupsProfile {
   socketRoomName: string;
   newConversationMessages: boolean = false;
 
-  @ViewChild('feed', { static: false }) private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector', { static: false })
+  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
+  @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
 
   private reviewCountInterval: any;
@@ -92,7 +93,8 @@ export class GroupsProfile {
     private cookieService: CookieService,
     featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    protected toasterService: FormToastService
   ) {
     this.hasNewNavigation = featuresService.has('navigation');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -209,6 +211,14 @@ export class GroupsProfile {
       this.group = await this.service.load(this.guid);
     } catch (e) {
       this.error = e.message;
+      if (this.group) {
+        const errorMessage =
+          e.message !== 'banned'
+            ? e.message
+            : "You've been banned from this group";
+        this.toasterService.error(errorMessage);
+      }
+
       return;
     }
 

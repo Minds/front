@@ -19,6 +19,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 /* tslint:disable */
 
@@ -51,6 +52,7 @@ describe('SearchBarSuggestionsComponent', () => {
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: ConfigsService, useValue: { get: key => null } },
       ],
     }).compileComponents();
   }));
@@ -60,12 +62,13 @@ describe('SearchBarSuggestionsComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
+    featuresServiceMock.mock('top-feeds', false);
+    featuresServiceMock.mock('navigation', false);
+
     fixture = TestBed.createComponent(SearchBarSuggestionsComponent);
     comp = fixture.componentInstance;
 
     spyOn(comp.session, 'getLoggedInUser').and.returnValue({ guid: 1234 });
-
-    featuresServiceMock.mock('top-feeds', false);
 
     fixture.detectChanges();
 

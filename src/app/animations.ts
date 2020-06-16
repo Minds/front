@@ -56,3 +56,12 @@ export const animations: any[] = [
     ]),
   ]),
 ];
+
+export const FastFadeAnimation = trigger('fastFade', [
+  transition(':enter', [
+    animate('200ms', keyframes([style({ opacity: 0 }), style({ opacity: 1 })])),
+  ]),
+  transition(':leave', [
+    animate('100ms', keyframes([style({ opacity: 1 }), style({ opacity: 0 })])),
+  ]),
+]);

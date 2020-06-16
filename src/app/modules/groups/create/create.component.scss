@@ -1,0 +1,22 @@
+minds-groups-create {
+  padding: 20px 40px;
+  display: block;
+  position: relative;
+
+  .m-groups__create {
+    width: 100%;
+    max-width: 100%;
+
+    .m-modalV2__body {
+      max-height: unset;
+
+      .m-channelEdit__imagery {
+        margin: 0 -40px;
+      }
+
+      .m-groupsCreate__buttonsContainer {
+        margin: 0 !important;
+      }
+    }
+  }
+}

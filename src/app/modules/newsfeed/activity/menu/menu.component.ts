@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Injector,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -14,6 +15,7 @@ import { Client } from '../../../../services/api/client';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { TranslationService } from '../../../../services/translation';
 
 @Component({
   selector: 'm-activity__menu',
@@ -21,6 +23,7 @@ import { FeaturesService } from '../../../../services/features.service';
 })
 export class ActivityMenuComponent implements OnInit, OnDestroy {
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+  @Output() translate: EventEmitter<any> = new EventEmitter<any>();
   private entitySubscription: Subscription;
 
   entity: ActivityEntity;
@@ -32,7 +35,8 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private features: FeaturesService,
     private composer: ComposerService,
     private composerModal: ModalService,
-    private injector: Injector
+    private injector: Injector,
+    public translationService: TranslationService
   ) {}
 
   ngOnInit() {
@@ -68,7 +72,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         return [
           'edit',
           'pin',
-          //'translate',
+          'translate',
           'share',
           'follow',
           'feature',
@@ -125,6 +129,9 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         } catch (e) {
           console.error(e);
         }
+        break;
+      case 'translate':
+        this.service.displayOptions.showTranslation = true;
         break;
     }
   }

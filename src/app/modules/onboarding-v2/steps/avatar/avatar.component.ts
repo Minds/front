@@ -23,7 +23,7 @@ export class AvatarStepComponent {
 
   pendingItems: string[];
 
-  @ViewChild('file', { static: false }) fileInput: ElementRef;
+  @ViewChild('file') fileInput: ElementRef;
 
   constructor(
     protected onboardingService: OnboardingV2Service,

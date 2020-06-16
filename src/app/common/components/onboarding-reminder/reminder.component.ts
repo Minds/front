@@ -24,7 +24,7 @@ import { OnboardingWrapperService } from '../../../modules/channels/service/onbo
 export class OnboardingReminderComponent implements OnInit, OnDestroy {
   shouldShow: boolean = false;
 
-  @ViewChild('announcement', { static: false })
+  @ViewChild('announcement')
   announcement: AnnouncementComponent;
 
   protected userEmitter$: Subscription;

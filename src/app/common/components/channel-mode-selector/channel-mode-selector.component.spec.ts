@@ -32,6 +32,7 @@ describe('ChannelModeSelector', () => {
     comp = fixture.componentInstance;
 
     comp.user = {
+      type: 'user',
       guid: 'guidguid',
       name: 'name',
       username: 'username',
@@ -40,6 +41,7 @@ describe('ChannelModeSelector', () => {
       impressions: 18200,
       mode: ChannelMode.PUBLIC,
       nsfw: [],
+      time_created: 11111,
     };
 
     clientMock.response['api/v1/channel/info'] = { status: 'success' };

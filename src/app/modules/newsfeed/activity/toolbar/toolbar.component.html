@@ -22,9 +22,10 @@
   <div class="m-layout__spacer"></div>
 
   <button
-    class="m-btn m-btn--action m-btn--slim m-boostButton"
+    class="m-btn m-btn--slim m-boostButton"
     (click)="openBoostModal($event)"
   >
+    <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
     <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
   </button>
 </ng-container>

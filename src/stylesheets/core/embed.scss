@@ -30,7 +30,7 @@
   textarea {
     display: block;
     width: 100%;
-    height: calc(2.5em + ($minds-padding * 2));
+    height: calc(2.5em + 16px);
     box-sizing: border-box;
     appearance: none;
     resize: none;

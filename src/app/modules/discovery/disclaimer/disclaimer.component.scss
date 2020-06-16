@@ -1,0 +1,36 @@
+.m-discoveryDisclaimer__text {
+  margin-bottom: 0;
+  line-height: 20px;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+
+  // TODO: Make this global for links
+  a {
+    text-decoration: underline;
+    font-weight: initial;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+}
+
+.m-discovery__disclaimer--popover m-sidebarWidget {
+  display: none;
+
+  @media screen and (max-width: $layoutMin3ColWidth) {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    left: 20vw;
+    right: 20vw;
+    z-index: 9999;
+    box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
+  }
+
+  @media screen and (max-width: $layoutMax2ColFixedWidth) {
+    left: 20px;
+    right: 20px;
+  }
+}

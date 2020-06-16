@@ -1,19 +1,19 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { FormToast, FormToastService } from '../../services/form-toast.service';
 import { Subscription } from 'rxjs';
 import {
   animate,
+  keyframes,
   state,
   style,
   transition,
   trigger,
-  keyframes,
 } from '@angular/animations';
 
 @Component({
@@ -71,47 +71,71 @@ import {
   ],
 })
 export class FormToastComponent implements OnInit, OnDestroy {
-  toasts: FormToast[] = [];
-  timeoutIds: number[] = [];
   subscription: Subscription;
+
+  get toasts() {
+    return this.service.toasts;
+  }
+
+  get visibleToasts(): boolean {
+    return this.service.toasts.findIndex(item => !item.dismissed) !== -1;
+  }
 
   constructor(
     private service: FormToastService,
     protected cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.service.onToast().subscribe(toast => {
       // clear toasts when an empty toast is received
       if (!toast.message) {
-        this.toasts = [];
+        this.service.toasts = [];
         return;
       }
 
-      const toastIndex = this.toasts.push(toast) - 1;
+      // if all saved toasts have already been dismissed, then clean the array to prevent leaks
+      if (this.service.toasts.findIndex(value => !value.dismissed) === -1) {
+        this.service.timeoutIds = [];
+        this.service.toasts = [];
+      }
+
+      const toastIndex = this.service.toasts.push(toast) - 1;
       this.detectChanges();
 
-      const toastTimeout = setTimeout(() => {
-        this.dismiss(toastIndex);
-
-        this.detectChanges();
-      }, 3400);
-
-      this.timeoutIds.push(setTimeout(() => toastTimeout));
+      this.setToastTimeout(toastIndex);
     });
   }
 
-  dismiss(toastIndex: number) {
-    this.toasts[toastIndex]['dismissed'] = true;
+  pauseTimeout(toastIndex: number): void {
+    clearTimeout(this.service.timeoutIds[toastIndex]);
   }
 
-  detectChanges() {
+  resumeTimeout(toastIndex: number): void {
+    this.setToastTimeout(toastIndex);
+  }
+
+  dismiss(toastIndex: number): void {
+    this.service.toasts[toastIndex].dismissed = true;
+  }
+
+  private setToastTimeout(toastIndex: number): void {
+    const toastTimeout: number = window.setTimeout(() => {
+      this.dismiss(toastIndex);
+
+      this.detectChanges();
+    }, 3400);
+
+    this.service.timeoutIds[toastIndex] = toastTimeout;
+  }
+
+  detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
 
-  ngOnDestroy() {
-    this.timeoutIds.forEach(id => clearTimeout(id));
+  ngOnDestroy(): void {
+    this.service.timeoutIds.forEach(id => clearTimeout(id));
     this.subscription.unsubscribe();
   }
 }

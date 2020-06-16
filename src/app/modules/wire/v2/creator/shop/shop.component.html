@@ -1,6 +1,6 @@
 <div class="m-wireCreator__shop m-formWrapper">
   <div class="m-wireCreatorShop__heading">
-    <div class="m-wireCreatorShopHeading__title" i18n>
+    <div class="m-wireCreatorShopHeading__title" i18n="noun|@@COMMON__SHOP">
       Shop
     </div>
 
@@ -8,46 +8,53 @@
       class="m-wireCreatorShopHeading__description"
       *ngIf="service.owner$ | async as owner"
     >
-      <ng-container i18n
+      <ng-container i18n="@@CREATOR_SHOP__HAS_SUPPORT_TIERS_OFFERS"
         >@{{ owner?.username }} has support tiers exclusive offers</ng-container
       >
       &middot;
-      <a [routerLink]="['/', owner.username]">Explore Shop</a>
+      <a (click)="dismiss()" [routerLink]="['/', owner.username, 'shop']"
+        >Explore Shop</a
+      >
     </div>
   </div>
 
   <div
-    *ngIf="service.wireRewards$ | async as wireRewards"
+    *ngIf="shop.supportTiers.groupedList$ | async as groupedSupportTiers"
     class="m-wireCreatorShop__select m-form__field--select"
-    [class.m-wireCreatorShopSelect__placeholder]="!(shop.selectedId$ | async)"
+    [class.m-wireCreatorShopSelect__placeholder]="!(shop.selected$ | async)"
   >
     <div class="m-form__row--input">
       <select
-        [ngModel]="shop.selectedId$ | async"
+        [compareWith]="byUrn"
+        [ngModel]="shop.selected$ | async"
         (ngModelChange)="shop.select($event)"
       >
-        <option value="" disabled i18n>Select Support Tier</option>
+        <option value="" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
+          >Select Support Tier</option
+        >
 
-        <optgroup label="Tokens" i18n-label>
+        <optgroup label="Tokens" i18n-label="@@CREATOR_SHOP__TOKENS">
           <option
-            *ngFor="let entry of wireRewards.tokens"
-            [value]="'tokens:' + entry.amount"
+            *ngFor="let supportTier of groupedSupportTiers.tokens"
+            [ngValue]="supportTier"
           >
-            <ng-container i18n
-              >{entry.amount, plural, =1 {{{entry.amount | number}} token} other
-              {{{entry.amount | number}} tokens}}</ng-container
+            <ng-container i18n="@@CREATOR_SHOP__OTHER"
+              >{supportTier.amount, plural, =1
+              {{{supportTier.amount | number}} token} other
+              {{{supportTier.amount | number}} tokens}}</ng-container
             >
-            - {{ entry.description }}
+            - {{ supportTier.name }}
           </option>
         </optgroup>
 
-        <optgroup label="USD" i18n-label>
+        <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">
           <option
-            *ngFor="let entry of wireRewards.usd"
-            [value]="'usd:' + entry.amount"
+            *ngFor="let supportTier of groupedSupportTiers.usd"
+            [ngValue]="supportTier"
           >
-            <ng-container i18n>${{ entry.amount | number }}</ng-container> -
-            {{ entry.description }}
+            ${{ supportTier.amount | number }}
+            -
+            {{ supportTier.description }}
           </option>
         </optgroup>
       </select>

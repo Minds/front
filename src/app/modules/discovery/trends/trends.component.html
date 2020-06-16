@@ -4,6 +4,7 @@
       routerLink="./"
       routerLinkActive="m-tabs__tab--selected"
       data-cy="discovery-tab-link-overview"
+      i18n="@@DISCOVERY__TRENDS__JUST_FOR_YOU"
       >Just for you</a
     >
   </div>
@@ -12,14 +13,23 @@
       routerLink="../tags"
       routerLinkActive="m-tabs__tab--selected"
       data-cy="discovery-tab-link-tags"
+      i18n="@@DISCOVERY_TAGS__DISCOVERY_BY_TAGS"
       >Discover by tags</a
     >
   </div>
+  <div class="m-layout__spacer"></div>
+  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
 </div>
 
-<ul class="m-discovery__trends">
-  <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
+<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
+<m-discovery__noTagsPrompt
+  *ngIf="showNoTagsPrompt$ | async"
+  (completed)="refresh()"
+  @fastFade
+></m-discovery__noTagsPrompt>
+
+<ul class="m-discovery__trends" @fastFade *ngIf="(trends$ | async).length > 0">
   <li
     class="m-discoveryTrends__trend m-discoveryTrends__trend--hero"
     *ngIf="hero$ | async"
@@ -33,3 +43,5 @@
     <m-discoveryTrends__listItem [trend]="trend"></m-discoveryTrends__listItem>
   </li>
 </ul>
+
+<m-discovery__feedsList *ngIf="showPreferredFeed"></m-discovery__feedsList>

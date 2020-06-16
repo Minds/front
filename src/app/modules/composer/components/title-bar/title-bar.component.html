@@ -1,6 +1,6 @@
 <div class="m-composer__titleBar">
   <div class="m-composerTitleBar__title">
-    <label [for]="inputId" i18n>Compose</label>
+    <label [for]="inputId" i18n="@@COMPOSER__COMPOSE">Compose</label>
   </div>
 
   <div
@@ -9,12 +9,13 @@
     [hidden]="isPosting$ | async"
     (click)="onCreateBlogClick()"
   >
-    <ng-container i18n>Create Blog</ng-container>
+    <ng-container i18n="@@COMPOSER__CREATE_BLOG">Create Blog</ng-container>
   </div>
 
   <m-dropdownMenu
     triggerClass="m-composerTitleBar__menuButton"
     menuClass="m-composerTitleBar__menu"
+    [anchorPosition]="{ top: '0', left: '0' }"
     [menu]="menu"
     [hidden]="isPosting$ | async"
     data-cy="meatball-menu-trigger"
@@ -29,6 +30,7 @@
       <m-dropdownMenu
         *ngIf="canChangeVisibility"
         [menu]="visibilityMenu"
+        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-visibility"
       >
@@ -40,6 +42,7 @@
     <li>
       <m-dropdownMenu
         [menu]="licenseMenu"
+        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-license"
       >

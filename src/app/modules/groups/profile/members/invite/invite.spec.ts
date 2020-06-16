@@ -17,6 +17,7 @@ import { Client } from '../../../../../services/api/client';
 import { MockDirective, MockService } from '../../../../../utils/mock';
 import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 const user = {
   guid: '1000',
@@ -61,6 +62,7 @@ describe('GroupsProfileMembersInvite', () => {
             configs: { cdnUrl: 'http://dev.minds.io/' },
           }),
         },
+        { provide: FormToastService, useValue: MockService(FormToastService) },
       ],
     }).compileComponents();
   }));

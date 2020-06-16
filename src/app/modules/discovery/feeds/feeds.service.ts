@@ -1,7 +1,8 @@
-import { Injectable, Self } from '@angular/core';
+import { Injectable, Self, PLATFORM_ID, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
+import { isPlatformServer } from '@angular/common';
 
 export type DiscoveryFeedsPeriod =
   | '12h'
@@ -12,6 +13,13 @@ export type DiscoveryFeedsPeriod =
   | 'relevant';
 
 export type DiscoveryFeedsContentType = 'all' | 'images' | 'videos' | 'blogs';
+export type DiscoveryFeedsContentFilter =
+  | 'top'
+  | 'latest'
+  | 'channels'
+  | 'groups'
+  | 'trending'
+  | 'preferred';
 export type DiscoveryFeedsNsfw = number[];
 
 @Injectable()
@@ -23,18 +31,22 @@ export class DiscoveryFeedsService {
   filter$: BehaviorSubject<string> = new BehaviorSubject('preferred');
   nsfw$: BehaviorSubject<any[]>;
   period$: BehaviorSubject<string> = new BehaviorSubject('relevant');
-  type$: BehaviorSubject<string> = new BehaviorSubject('all');
+  type$: BehaviorSubject<DiscoveryFeedsContentType> = new BehaviorSubject(
+    'all'
+  );
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     @Self() private feedsService: FeedsService,
-    public nsfwService: NSFWSelectorConsumerService
+    public nsfwService: NSFWSelectorConsumerService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.nsfwService.build();
     this.nsfw$ = new BehaviorSubject(this.nsfwService.reasons);
   }
 
   async load(): Promise<void> {
+    if (isPlatformServer(this.platformId)) return;
     const algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
     const type = this.type$.value;
     this.feedsService.clear();
@@ -50,6 +62,7 @@ export class DiscoveryFeedsService {
   }
 
   async search(q: string): Promise<void> {
+    if (isPlatformServer(this.platformId)) return;
     this.feedsService.clear();
     this.feedsService
       .setEndpoint('api/v3/discovery/search')
@@ -58,6 +71,7 @@ export class DiscoveryFeedsService {
         period: this.period$.value,
         algorithm: this.filter$.value,
         nsfw: this.getNsfwString(),
+        type: this.type$.value,
       })
       .fetch();
   }
@@ -66,7 +80,7 @@ export class DiscoveryFeedsService {
     this.feedsService.loadMore();
   }
 
-  setFilter(filter: string): DiscoveryFeedsService {
+  setFilter(filter: DiscoveryFeedsContentFilter): DiscoveryFeedsService {
     this.filter$.next(filter);
     return this;
   }

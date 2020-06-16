@@ -20,22 +20,23 @@ m-activity__toolbar {
 
       i.material-icons {
         font-size: 18px;
+      }
+
+      i.material-icons,
+      .minds-counter {
+        vertical-align: middle;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
       }
 
       &.selected {
-        i.material-icons {
+        i.material-icons,
+        .minds-counter {
           @include m-theme() {
             color: themed($m-blue);
           }
         }
-      }
-
-      i.material-icons,
-      .minds-counter {
-        vertical-align: middle;
       }
     }
   }
@@ -45,7 +46,7 @@ m-activity__toolbar {
     .selected i.material-icons,
     .selected .minds-counter {
       @include m-theme() {
-        color: themed($m-grey-500);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -58,13 +59,23 @@ m-activity__toolbar {
     .m-wire-button {
       border: 0 !important;
       padding: 0;
+      height: auto;
       > .ion-icon {
         @include m-theme() {
-          color: themed($m-grey-500);
+          color: themed($m-textColor--secondary);
         }
       }
+      > * {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-icon__assetsFile {
+        margin-right: 5px;
+      }
       span {
-        display: none;
+        margin-left: 0;
+        font-weight: 500;
       }
     }
   }
@@ -73,6 +84,7 @@ m-activity__toolbar {
     width: auto;
     height: auto;
     min-width: unset;
+    border-radius: 0;
 
     font-weight: 500;
     padding: 0;
@@ -82,6 +94,11 @@ m-activity__toolbar {
       @include m-theme() {
         border: 0;
       }
+    }
+
+    > m-icon {
+      margin-right: 5px;
+      vertical-align: middle;
     }
   }
 

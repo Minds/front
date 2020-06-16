@@ -12,6 +12,9 @@ import {
 import { ComposerService } from './services/composer.service';
 import { ModalService } from './components/modal/modal.service';
 import { BaseComponent } from './components/base/base.component';
+import { TagsPipe } from '../../common/pipes/tags';
+import { FormToastService } from '../../common/services/form-toast.service';
+import { Subscription } from 'rxjs';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -71,13 +74,13 @@ export class ComposerComponent implements OnDestroy {
   /**
    * Embedded composer ref
    */
-  @ViewChild('embeddedBaseComposer', { static: false })
+  @ViewChild('embeddedBaseComposer')
   protected embeddedBaseComposer: BaseComponent;
 
   /**
    * Popup placeholder composer ref
    */
-  @ViewChild('popOutBaseComposer', { static: false })
+  @ViewChild('popOutBaseComposer')
   protected popOutBaseComposer: BaseComponent;
 
   /**
@@ -85,25 +88,42 @@ export class ComposerComponent implements OnDestroy {
    */
   protected destroyed: boolean = false;
 
+  protected tooManyTagsSubscription: Subscription;
+
   /**
    * Constructor
    * @param modalService
+   * @param formToast
    * @param service
    * @param cd
    * @param injector
    */
   constructor(
     protected modalService: ModalService,
+    protected formToast: FormToastService,
     protected service: ComposerService /* NOTE: Used for DI. DO NOT REMOVE OR CHANGE !!! */,
     protected cd: ChangeDetectorRef,
     protected injector: Injector
-  ) {}
+  ) {
+    this.tooManyTagsSubscription = this.service.tooManyTags$.subscribe(
+      value => {
+        if (value) {
+          const message = 'You may include up to 5 hashtags';
+
+          if (!this.formToast.isToastActive(message)) {
+            this.formToast.error(message);
+          }
+        }
+      }
+    );
+  }
 
   /**
    * Component destroy hook
    */
   ngOnDestroy(): void {
     this.destroyed = true;
+    this.tooManyTagsSubscription.unsubscribe();
     this.modalService.dismiss();
   }
 

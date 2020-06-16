@@ -7,7 +7,7 @@ m-messenger {
   position: fixed;
   bottom: 0;
   right: 52px;
-  z-index: 1000;
+  z-index: 999999;
 
   .m-messenger--conversations-wrappers {
     position: absolute;

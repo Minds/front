@@ -8,7 +8,10 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
+import {
+  AnchorPosition,
+  DropdownMenuComponent,
+} from '../dropdown-menu/dropdown-menu.component';
 
 /**
  * Interface for action emitter
@@ -55,6 +58,14 @@ export class ButtonComponent {
   @Input() dropdown: TemplateRef<any>;
 
   /**
+   * Dropdown positioning
+   */
+  @Input() dropdownAnchorPosition: AnchorPosition = {
+    top: '100%',
+    right: '0',
+  };
+
+  /**
    * Event emitter when actioning the button
    */
   @Output() onAction: EventEmitter<ButtonComponentAction> = new EventEmitter<
@@ -64,7 +75,7 @@ export class ButtonComponent {
   /**
    * Dropdown menu reference
    */
-  @ViewChild('dropdownMenuComponent', { static: false })
+  @ViewChild('dropdownMenuComponent')
   dropdownMenuComponent: DropdownMenuComponent;
 
   /**

@@ -80,4 +80,22 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
       ? this.entity.containerObj
       : null;
   }
+
+  /**
+   * determines whether the post is scheduled.
+   * @returns true if post is scheduled.
+   */
+  isScheduled(): boolean {
+    return (
+      this.entity.time_created && this.entity.time_created * 1000 > Date.now()
+    );
+  }
+
+  /**
+   * Converts a date to a human readable datetime e.g. 29/05/2020, 10:32:46.
+   * @returns - human readable datetime.
+   */
+  toReadableDate(seconds: string): string {
+    return new Date(parseInt(seconds) * 1000).toLocaleString();
+  }
 }

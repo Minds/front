@@ -57,14 +57,6 @@
     Start the conversation!
   </p>
 
-  <p
-    class="m-comments--load-error-label"
-    *ngIf="!descendingInProgress && !ascendingInProgress && !!error"
-  >
-    <i class="material-icons">warning</i>
-    <span>{{ error }}</span>
-  </p>
-
   <div class="m-layout--spacer"></div>
   <minds-card-comment
     *ngFor="let comment of comments; let i = index"
@@ -153,7 +145,7 @@
           class="attachment-button"
           [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
         >
-          <i class="material-icons">attachment</i>
+          <i class="material-icons">insert_photo</i>
           <input
             type="file"
             id="file"
@@ -165,12 +157,15 @@
 
         <a
           class="m-mature-button"
-          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
           (click)="attachment.toggleMature()"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
         >
-          <i class="material-icons">explicit</i>
+          <i
+            class="material-icons"
+            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+            >explicit</i
+          >
         </a>
 
         <a

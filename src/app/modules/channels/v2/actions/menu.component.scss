@@ -1,0 +1,26 @@
+m-channelActions__menu {
+  .m-dropdownMenu__menu {
+    @media screen and (min-width: $max-mobile + 1) {
+      top: calc(
+        100% + 10px
+      ); // TODO: Remove when smart anchoring is implemented
+      right: 10px; // TODO: Remove when smart anchoring is implemented
+    }
+  }
+
+  m-nsfw-selector {
+    border: 0;
+    width: 100%;
+    padding: 0;
+
+    .m-nsfwSelector__label {
+      m-tooltip {
+        display: none;
+      }
+    }
+  }
+
+  m-modal .mdl-card__supporting-text {
+    user-select: text;
+  }
+}

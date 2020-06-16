@@ -54,7 +54,6 @@ export class WalletSettingsTokensComponent
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
   form;
-  init;
 
   readonly cdnAssetsUrl: string;
 
@@ -88,11 +87,16 @@ export class WalletSettingsTokensComponent
     this.walletSubscription = this.walletService.wallet$.subscribe(
       (wallet: Wallet) => {
         this.wallet = wallet;
+        this.currentAddress = this.walletService.wallet.receiver.address;
+
+        if (this.currentAddress) {
+          this.display = Views.CurrentAddress;
+          this.detectChanges();
+        }
       }
     );
 
     this.load();
-    this.init = true;
   }
 
   ngAfterViewInit() {
@@ -104,25 +108,12 @@ export class WalletSettingsTokensComponent
   async load() {
     // Check if already has an address
     this.currentAddress = this.walletService.wallet.receiver.address;
+
     if (this.currentAddress) {
       this.display = Views.CurrentAddress;
+      this.detectChanges();
     }
 
-    this.checkExternal();
-    this.detectChanges();
-  }
-
-  ngOnDestroy() {
-    if (this._downloadTimer) {
-      clearTimeout(this._downloadTimer);
-    }
-    if (this._externalTimer) {
-      clearInterval(this._externalTimer);
-    }
-    this.walletSubscription.unsubscribe();
-  }
-
-  async checkExternal() {
     this.hasExternal = !(await this.web3Wallet.isLocal());
     this.detectChanges();
   }
@@ -211,14 +202,15 @@ export class WalletSettingsTokensComponent
 
       await this.blockchain.setWallet({ address: this.addressInput.value });
       this.walletService.onOnchainAddressChange();
+
+      this.currentAddress = this.addressInput.value;
+      this.display = Views.CurrentAddress;
     } catch (e) {
       console.error(e);
       this.error = e.message;
     } finally {
       this.inProgress = false;
       this.linkingMetamask = false;
-      this.currentAddress = this.addressInput.value;
-      this.display = Views.CurrentAddress;
       this.detectChanges();
     }
   }
@@ -243,11 +235,18 @@ export class WalletSettingsTokensComponent
   }
 
   async useExternal() {
+    if (this.inProgress || this.linkingMetamask) {
+      return;
+    }
     this.error = '';
     this.linkingMetamask = true;
     this.inProgress = true;
+    this.detectChanges();
+
     await this.web3Wallet.ready();
     this.detectExternal();
+
+    // keep checking for metamask if it's not detected right away
     if (isPlatformBrowser(this.platformId)) {
       this._externalTimer = setInterval(() => {
         if (!(this.cd as ViewRef).destroyed) {
@@ -266,14 +265,15 @@ export class WalletSettingsTokensComponent
     if (this.providedAddress !== address) {
       this.providedAddress = address;
       this.currentAddress = address;
-      if (isPlatformBrowser(this.platformId)) {
-        if (address) {
-          clearInterval(this._externalTimer);
-          this.provideMetamaskAddress(address);
-          this.detectChanges();
-        }
-      }
       this.detectChanges();
+    }
+    // stop checking for metamask and set address
+    if (isPlatformBrowser(this.platformId)) {
+      if (address) {
+        clearInterval(this._externalTimer);
+        this.provideMetamaskAddress(address);
+        this.detectChanges();
+      }
     }
   }
 
@@ -284,6 +284,7 @@ export class WalletSettingsTokensComponent
       this.detectChanges();
 
       await this.blockchain.setWallet({ address: address });
+
       this.currentAddress = address;
       this.display = Views.CurrentAddress;
       this.walletService.onOnchainAddressChange();
@@ -297,9 +298,31 @@ export class WalletSettingsTokensComponent
     }
   }
 
+  backToCurrentAddress(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      clearInterval(this._externalTimer);
+      this.detectChanges();
+    }
+    this.inProgress = false;
+    this.linkingMetamask = false;
+
+    this.display = this.Views.CurrentAddress;
+    this.detectChanges();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    if (this._downloadTimer) {
+      clearTimeout(this._downloadTimer);
+    }
+    if (this._externalTimer) {
+      clearInterval(this._externalTimer);
+    }
+    this.walletSubscription.unsubscribe();
   }
 
   get addressInput() {

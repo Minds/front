@@ -1,4 +1,4 @@
-import { Pipe, Renderer } from '@angular/core';
+import { Pipe } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({

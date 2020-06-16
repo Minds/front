@@ -13,22 +13,34 @@
 
 <div class="m-tabs__container">
   <li class="m-tabs__tab">
-    <a routerLink="overview" routerLinkActive="selected">
+    <a
+      routerLink="overview"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__TOKENS__OVERVIEW"
+    >
       Overview
     </a>
   </li>
   <li class="m-tabs__tab">
-    <a routerLink="transactions" routerLinkActive="selected">
+    <a
+      routerLink="transactions"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__TOKENS__TRANSACTIONS"
+    >
       Transactions
     </a>
   </li>
   <li class="m-tabs__tab">
-    <a routerLink="settings" routerLinkActive="selected">
+    <a
+      routerLink="settings"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__TOKENS__SETTINGS"
+    >
       Settings
     </a>
   </li>
 </div>
 
-<div class="m-walletDashboardViews__viewsContainer">
+<div class="m-walletDashboardViews__viewsContainer" #dashboardViews>
   <router-outlet></router-outlet>
 </div>

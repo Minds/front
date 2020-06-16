@@ -1,13 +1,13 @@
 <div class="m-blockchain--options m-border">
   <div class="m-blockchain--options-wallet">
-    <h3 i18n="@@BLOCKCHAIN__OPTIONS__WALLET_TITLE">Token Configuration</h3>
+    <h3>Token Configuration</h3>
 
     <div class="m-blockchain--options-wallet--loader" [hidden]="!inProgress">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
 
     <div class="m-blockchain--options-wallet--setup" *ngIf="!inProgress">
-      <p i18n="@@BLOCKCHAIN__OPTIONS__WALLET_DESC">
+      <p>
         Enter your Ethereum wallet address below. If you installed and unlocked
         MetaMask, or have a web3-enabled browser your local wallets will be
         listed below. You can click on them to auto-fill the address field.
@@ -20,16 +20,8 @@
         class="m-form"
       >
         <div class="mdl-grid mdl-grid--no-spacing">
-          <div class="mdl-cell mdl-cell--12-col" *ngIf="error">
-            <div class="m-error mdl-color--red mdl-color-text--white">
-              {{ error }}
-            </div>
-          </div>
-
           <div class="mdl-cell mdl-cell--12-col m-blockchain--options--section">
-            <label i18n="@@BLOCKCHAIN__OPTIONS__WALLET_LABEL"
-              >Ethereum Wallet Address</label
-            >
+            <label>Ethereum Wallet Address</label>
             <input
               formControlName="address"
               type="text"
@@ -38,7 +30,7 @@
           </div>
 
           <div class="mdl-cell mdl-cell--12-col m-blockchain--options--section">
-            <label i18n="@@BLOCKCHAIN__OPTIONS__LOCAL_WALLETS_LABEL">
+            <label>
               Local Wallets
             </label>
 

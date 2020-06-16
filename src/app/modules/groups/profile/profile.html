@@ -16,7 +16,7 @@
 <m-explicit-overlay
   [entity]="group"
   message="This group contains content that is NSFW"
-  i18n-message
+  i18n-message="@@GROUPS__THIS_GROUP_CONTAINS_NSFW"
 ></m-explicit-overlay>
 
 <div
@@ -371,21 +371,6 @@
 
     <div class="m-group-info-name mdl-color-text--blue-grey-800">
       <h1>{{group.name}}</h1>
-    </div>
-
-    <div class="m-groupSplash__error" [ngSwitch]="error">
-      <ng-container
-        i18n="@@GROUPS__YOU_HAVE_BEEN_BANNED__NOTICE"
-        *ngSwitchCase="'banned'"
-      >
-        You've been banned from this group
-      </ng-container>
-      <ng-container
-        i18n="@@GROUPS__YOU_HAVE_BEEN_BANNED__NOTICE"
-        *ngSwitchDefault
-      >
-        {{error}}
-      </ng-container>
     </div>
 
     <minds-groups-join-button

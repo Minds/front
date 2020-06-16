@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockchainModule } from '../blockchain.module';
 import { BlockchainMarketingTokenComponent } from './token.component';
 import { BlockchainMarketingRewardsComponent } from './rewards.component';
+import { MarketingModule } from '../../marketing/marketing.module';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     BlockchainModule,
+    MarketingModule,
   ],
   declarations: [
     BlockchainMarketingTokenComponent,

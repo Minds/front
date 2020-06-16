@@ -1,123 +1,147 @@
-<div class="m-group-saving-overlay" [hidden]="!inProgress">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+<!-- This will be in a modal after groups redesign. -->
+<div class="m-modalV2__inner m-groups__create m-border">
+  <div class="m-modalV2__header m-groupsCreate__header">
+    <h2 class="m-modalV2Header__title" i18n="@@CREATE_GROUP__CREATE_GROUP">
+      Create Group
+    </h2>
+  </div>
+
+  <div class="m-modalV2__body m-formWrapper">
+    <form
+      [formGroup]="form"
+      class="m-groupsCreate__form m-formWrapper m-formLayout--buttonRight"
+      (keydown.enter)="$event.preventDefault()"
+    >
+      <div class="m-form__fieldsContainer">
+        <div class="m-form__field--text stretchedField">
+          <div class="m-form__row--label">
+            <label i18n="@@CREATE_GROUP__NAME">Name</label>
+          </div>
+
+          <div class="m-form__row--input">
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              formControlName="name"
+              data-cy="minds-groups-create-name-input"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="m-form__fieldsContainer">
+        <div class="m-form__field--text">
+          <div class="m-form__row--label">
+            <label i18n="@@CREATE_GROUP__AVATAR_AND_BANNER"
+              >Avatar and Banner</label
+            >
+          </div>
+          <div
+            class="m-channelEdit__imagery"
+            [ngStyle]="{ backgroundImage: bannerAssetCssUrl }"
+          >
+            <label
+              for="channel-v2-edit-banner"
+              class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadBanner"
+            >
+              <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+              <input
+                data-cy="minds-groups-create-banner"
+                id="channel-v2-edit-banner"
+                type="file"
+                accept="image/*"
+                (change)="addBanner(bannerFile)"
+                #bannerFile
+              />
+            </label>
+
+            <div
+              class="m-channelEditImagery__avatar"
+              [ngStyle]="{ backgroundImage: avatarAssetCssUrl }"
+            >
+              <label
+                for="channel-v2-edit-avatar"
+                class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadAvatar"
+              >
+                <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+                <input
+                  data-cy="minds-groups-create-avatar"
+                  id="channel-v2-edit-avatar"
+                  type="file"
+                  accept="image/*"
+                  (change)="addAvatar(avatarFile)"
+                  #avatarFile
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-form__fieldsContainer">
+        <div class="m-form__field--text stretchedField">
+          <div class="m-form__row--label">
+            <label i18n="@@CREATE_GROUP__DESCRIPTION">Description</label>
+          </div>
+
+          <div class="m-form__row--input">
+            <textarea
+              class="form-control"
+              name="description"
+              formControlName="description"
+              data-cy="minds-groups-create-description-input"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-form__fieldsContainer">
+        <div class="m-form__field--radio">
+          <div class="m-form__row--label">
+            <label i18n="@@CREATE_GROUP__GROUP_TYPE">Group Type</label>
+          </div>
+
+          <div class="m-form__row--input">
+            <label for="type_closed" class="m-form__customInputWrapper__radio">
+              <ng-container i18n="@@CREATE_GROUP__CLOSED">Closed</ng-container>
+              <input
+                type="radio"
+                value="0"
+                id="type_closed"
+                name="membership"
+                formControlName="membership"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+            <label for="type_open" class="m-form__customInputWrapper__radio">
+              <ng-container i18n="@@CREATE_GROUP__OPEN">Open</ng-container>
+              <input
+                type="radio"
+                value="2"
+                name="membership"
+                id="type_open"
+                formControlName="membership"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-form__buttonsContainer m-groupsCreate__buttonsContainer">
+        <m-shadowboxSubmitButton
+          type="button"
+          [saving]="inProgress"
+          [disabled]="!form.valid"
+          (click)="onSubmit($event)"
+          data-cy="minds-groups-create-submit"
+        >
+          Create Group
+        </m-shadowboxSubmitButton>
+      </div>
+    </form>
+  </div>
 </div>
-
-<header>
-  <minds-banner
-    [editMode]="editing"
-    [done]="editDone"
-    (added)="addBanner($event)"
-  ></minds-banner>
-  <div class="avatar-wrapper">
-    <minds-avatar
-      [editMode]="editing"
-      (added)="addAvatar($event)"
-    ></minds-avatar>
-  </div>
-</header>
-
-<form
-  (submit)="save($event)"
-  class="mdl-grid groups-grid"
-  style="max-width:900px"
->
-  <div class="mdl-cell mdl-cell--8-col m-group-info">
-    <div class="mdl-card mdl-shadow--2dp" style="overflow: visible">
-      <div class="m-group-info-name mdl-color-text--blue-grey-300">
-        <input
-          type="text"
-          class="h1"
-          name="name"
-          [(ngModel)]="group.name"
-          placeholder="Enter a name"
-          i18n-placeholder="@@GROUPS__NAME_PLACEHOLDER"
-        />
-      </div>
-
-      <div class="m-group-info-brief-description mdl-color-text--blue-grey-300">
-        <textarea
-          name="briefdescription"
-          [(ngModel)]="group.briefdescription"
-          placeholder="Enter a brief description"
-          i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
-        ></textarea>
-      </div>
-
-      <div class="m-group-info-tags mdl-color-text--blue-grey-300">
-        <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
-        <m-hashtags-selector
-          #hashtagsSelector
-          [alignLeft]="true"
-          (tagsChange)="onTagsChange($event)"
-          (tagsAdded)="onTagsAdded($event)"
-          (tagsRemoved)="onTagsRemoved($event)"
-          *ngIf="editing"
-        ></m-hashtags-selector>
-      </div>
-
-      <div class="m-group-info-membership mdl-color-text--blue-grey-300">
-        <i class="material-icons mdl-color-text--blue-grey-300"
-          >{{ group.membership == 2 ? 'public' : 'lock' }}</i
-        >
-        <select
-          class="icon-prefix"
-          name="membership"
-          [ngModel]="group.membership"
-          (change)="group.membership = $event.target.value"
-        >
-          <option value="2" i18n="@@GROUPS__OPEN_GROUP">Open Group</option>
-          <option value="0" i18n="@@GROUPS__CLOSED_GROUP">Closed Group</option>
-        </select>
-      </div>
-
-      <div class="m-group-info-moderated mdl-color-text--blue-grey-300">
-        <i class="material-icons mdl-color-text--blue-grey-300">rate_review</i>
-        <select
-          class="icon-prefix"
-          name="moderated"
-          [ngModel]="group.moderated"
-          (change)="group.moderated = $event.target.value"
-        >
-          <option value="0" i18n="@@GROUPS__ANYONE_CAN_POST"
-            >Anyone can post</option
-          >
-          <option value="1" i18n="@@GROUPS__POSTS_ARE_MODERATED"
-            >Posts are moderated</option
-          >
-        </select>
-      </div>
-
-      <div class="m-group-info-default-view mdl-color-text--blue-grey-300">
-        <i
-          class="material-icons mdl-color-text--blue-grey-300"
-          title="Default view"
-          i18n="@@GROUPS__DEFAULT_VIEW_TOOLTIP"
-          >pageview</i
-        >
-        <select
-          class="icon-prefix"
-          name="default_view"
-          [ngModel]="group.default_view"
-          (change)="group.default_view = $event.target.value"
-        >
-          <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED"
-            >Default view: Feed</option
-          >
-          <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS"
-            >Default view: Conversations</option
-          >
-        </select>
-      </div>
-
-      <div class="m-groups-save">
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored"
-          [disabled]="!group.name"
-          i18n="@@M__ACTION__CREATE"
-        >
-          Create
-        </button>
-      </div>
-    </div>
-  </div>
-</form>

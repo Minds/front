@@ -15,6 +15,8 @@ import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
 import { SiteService } from '../../common/services/site.service';
 import { FeaturesService } from '../../services/features.service';
+import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.component';
+import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
 
 @Component({
   selector: 'm-channel-container',
@@ -32,10 +34,13 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   protected param$: Subscription;
 
-  @ViewChild('channelComponent', { static: false })
-  channelComponent: ChannelComponent;
+  @ViewChild('v1ChannelComponent')
+  v1ChannelComponent: ChannelComponent;
 
-  @ViewChild('proChannelComponent', { static: false })
+  @ViewChild('v2ChannelComponent')
+  v2ChannelComponent: ChannelV2Component;
+
+  @ViewChild('proChannelComponent')
   proChannelComponent: ProChannelComponent;
 
   constructor(
@@ -64,8 +69,12 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): boolean | Observable<boolean> {
-    if (this.channelComponent) {
-      return this.channelComponent.canDeactivate();
+    if (this.v1ChannelComponent) {
+      return this.v1ChannelComponent.canDeactivate();
+    }
+
+    if (this.v2ChannelComponent) {
+      return this.v2ChannelComponent.canDeactivate();
     }
 
     return true;
@@ -104,8 +113,31 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
         });
       }
     } catch (e) {
-      this.error = e.message;
-      console.error(e);
+      this.channel = {
+        type: 'user',
+        guid: '',
+        name: '',
+        username: this.username,
+        time_created: 0,
+        icontime: 0,
+        mode: 1,
+        nsfw: [],
+      };
+
+      switch (e.type) {
+        case TRIGGER_EXCEPTION.BANNED:
+          this.channel.banned = 'yes';
+          break;
+        case TRIGGER_EXCEPTION.DISABLED:
+          this.channel.enabled = 'no';
+          break;
+        case TRIGGER_EXCEPTION.NOT_FOUND:
+          this.channel.not_found = true;
+          break;
+        default:
+          this.error = e.message;
+          console.error(e);
+      }
     }
 
     this.inProgress = false;

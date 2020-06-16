@@ -1,0 +1,77 @@
+.m-theme__2020 .m-channel__about {
+  [class*='m-pageLayout__pane'] {
+    padding: 20px 40px;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      padding: 20px;
+    }
+  }
+}
+
+.m-channel__about {
+  .m-channelAbout__narrowExtraInfo m-channelAbout__extraInfo {
+    display: none;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      display: flex;
+    }
+  }
+
+  .m-channelAbout__container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    .m-channelAbout__field {
+      width: 100%;
+      margin: 0 0 20px;
+
+      // &.m-channelAbout__field--fullWidth {
+      //   width: 100%;
+      // }
+    }
+
+    .m-channelAboutField__label {
+      font-size: 15px;
+      line-height: 20px;
+      margin: 0 0 2px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-channelAboutField__content {
+      font-size: 15px;
+      line-height: 20px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      &.m-channelAboutField__content--preserveBlanks {
+        white-space: pre-line;
+        word-break: break-word;
+      }
+
+      a {
+        font: inherit !important;
+        color: inherit !important;
+        text-decoration: inherit !important;
+      }
+    }
+
+    .m-channelAboutFieldContent__hashtag {
+      margin-right: 10px;
+    }
+
+    .m-channel--badges {
+      i.material-icons {
+        padding: 0 15px 0 0;
+        font-size: 15px;
+      }
+    }
+  }
+}

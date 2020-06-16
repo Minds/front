@@ -4,8 +4,9 @@ import {
   Input,
   ChangeDetectorRef,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, isPlatformServer } from '@angular/common';
 import { Session } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
@@ -14,6 +15,7 @@ import {
   ContextServiceResponse,
 } from '../../../services/context.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-search--bar-suggestions',
@@ -24,6 +26,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
   recent: any[];
   q: string = '';
   currentContext: ContextServiceResponse;
+  readonly cdnUrl: string;
   @Input() active: boolean;
   @Input() disabled: boolean = false;
 
@@ -38,9 +41,12 @@ export class SearchBarSuggestionsComponent implements OnInit {
     public recentService: RecentService,
     private featuresService: FeaturesService,
     private context: ContextService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private configs: ConfigsService
   ) {
     this.newNavigation = this.featuresService.has('navigation');
+    this.cdnUrl = this.configs.get('cdn_url');
   }
 
   @Input('q') set _q(value: string) {
@@ -49,6 +55,8 @@ export class SearchBarSuggestionsComponent implements OnInit {
     }
 
     this.q = value || '';
+
+    if (isPlatformServer(this.platformId)) return;
 
     if (!value || this.location.path().indexOf('/search') === 0) {
       this.loadRecent();

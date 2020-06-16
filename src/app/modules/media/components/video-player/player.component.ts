@@ -51,6 +51,10 @@ export class MindsVideoPlayerComponent
    * Setting this to true makes the video autoplay
    */
   @Input() autoplay: boolean = false;
+  /**
+   * It's used to detect if the video has been clicked when it's autoplaying
+   */
+  clicked: boolean = false;
 
   @Input('allowAutoplayOnScroll') set _allowAutoplayOnScroll(value: boolean) {
     this.allowAutoplayOnScroll = value;
@@ -60,10 +64,11 @@ export class MindsVideoPlayerComponent
      */
     this.useEmptySource = value;
 
-    if (value) {
-      this.autoplayService.registerPlayer(this);
-    } else {
-      this.autoplayService.unregisterPlayer(this);
+    /* this only gets called if we happen to change the value after the
+     * component has already been initialised
+     */
+    if (this.init) {
+      this.togglePlayerRegistration();
     }
   }
 
@@ -93,9 +98,7 @@ export class MindsVideoPlayerComponent
     src: '',
   };
 
-  @ViewChild(PlyrComponent, { static: false }) set _player(
-    player: PlyrComponent
-  ) {
+  @ViewChild(PlyrComponent) set _player(player: PlyrComponent) {
     this.player = player;
   }
 
@@ -116,6 +119,11 @@ export class MindsVideoPlayerComponent
       'fullscreen',
     ],
   };
+
+  /**
+   * Flag that gets set to true in ngAfterViewInit
+   */
+  protected init: boolean = false;
 
   onReadySubscription: Subscription = this.service.onReady$.subscribe(() => {
     this.cd.markForCheck();
@@ -192,6 +200,8 @@ export class MindsVideoPlayerComponent
   }
 
   ngAfterViewInit() {
+    this.togglePlayerRegistration();
+
     this.setAutoplay(this.autoplay);
   }
 
@@ -333,7 +343,12 @@ export class MindsVideoPlayerComponent
   }
 
   onClick(): void {
-    if ((this.autoplay || this.autoplaying) && this.isMuted()) {
+    if (
+      !this.clicked &&
+      (this.autoplay || this.autoplaying) &&
+      this.isMuted()
+    ) {
+      this.clicked = true;
       this.autoplayService.muted = false;
       this.unmute();
       this.play();
@@ -364,6 +379,14 @@ export class MindsVideoPlayerComponent
   onPlay(): void {
     if (!this.autoplaying) {
       this.autoplayService.userPlay(this);
+    }
+  }
+
+  private togglePlayerRegistration() {
+    if (this.allowAutoplayOnScroll) {
+      this.autoplayService.registerPlayer(this);
+    } else {
+      this.autoplayService.unregisterPlayer(this);
     }
   }
 }

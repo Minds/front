@@ -6,7 +6,7 @@
 
 <m-loadingSpinner [inProgress]="!(entity$ | async)"> </m-loadingSpinner>
 
-<div class="m-discoverySearchFeed__item" *ngIf="entity$ | async">
+<div class="m-discoverySearchFeed__item" *ngIf="entity$ | async" @fastFade>
   <m-discovery__feedItem
     [entity]="entity$ | async"
     [openComments]="true"

@@ -75,7 +75,7 @@ m-walletBalance--cash {
       p {
         margin: 4px 0 0 0;
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--secondary);
         }
       }
       p:first-child {

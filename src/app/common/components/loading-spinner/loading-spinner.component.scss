@@ -1,17 +1,21 @@
 m-loadingSpinner {
-  position: absolute;
-  top: 20px;
   margin: auto;
   width: 100%;
   text-align: center;
 }
+.m-loadingSpinner__wrapper {
+  position: relative;
+  display: block;
+  padding: 20px;
+  box-sizing: border-box;
+}
 .m-loadingSpinner__container {
-  padding: 6px;
+  // padding: 6px;
   border-radius: 50%;
   width: 28px;
   height: 28px;
   margin: auto;
-  box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.3);
+  box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
   @include m-theme() {
     background-color: themed($m-bgColor--secondary);
   }
@@ -21,11 +25,11 @@ m-loadingSpinner {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  animation: spin 1s linear infinite;
+  animation: spin 0.75s linear infinite;
 
   @include m-theme() {
-    border: 6px solid themed($m-borderColor--primary);
-    border-top: 6px solid themed($m-blue);
+    border: 4px solid themed($m-borderColor--primary);
+    border-top: 4px solid themed($m-blue);
   }
 }
 

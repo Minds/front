@@ -1,0 +1,148 @@
+<m-dropdownMenu
+  [menu]="actionsDropdown"
+  [anchorPosition]="{ top: '100%', right: '0' }"
+>
+  <ng-content></ng-content>
+</m-dropdownMenu>
+
+<ng-template #actionsDropdown>
+  <ul>
+    <li
+      *ngIf="service.isSubscribed$ | async; else subscribeOption"
+      (click)="unsubscribe()"
+    >
+      <span class="m-dropdownMenu__item">
+        <span i18n="@@COMMON__UNSUBSCRIBE">Unsubscribe</span>
+      </span>
+    </li>
+    <ng-template #subscribeOption>
+      <li (click)="subscribe()">
+        <span class="m-dropdownMenu__item">
+          <span i18n="@@COMMON__SUBSCRIBE">Subscribe</span>
+        </span>
+      </li>
+    </ng-template>
+
+    <!-- ******** admin block ******** -->
+    <ng-container *ngIf="service.isAdmin$ | async">
+      <li *ngIf="service.isBanned$ | async" (click)="unBan()">
+        <span class="m-dropdownMenu__item">
+          <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBAN_GLOBALLY"
+            >Un-ban globally</span
+          >
+        </span>
+      </li>
+      <li (click)="viewLedger()">
+        <span
+          class="m-dropdownMenu__item"
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
+        >
+          View Ledger
+        </span>
+      </li>
+      <li (click)="viewWithdrawals()">
+        <span
+          class="m-dropdownMenu__item"
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
+        >
+          View Withdrawals
+        </span>
+      </li>
+      <li (click)="viewEmail()">
+        <span
+          class="m-dropdownMenu__item"
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
+        >
+          E-mail Address
+        </span>
+      </li>
+
+      <li (click)="proAdminToggle()">
+        <span class="m-dropdownMenu__item">
+          {{ !(service.channel$ | async)?.pro ? 'Make Pro' : 'Remove Pro' }}
+        </span>
+      </li>
+
+      <ng-container *ngIf="service.isExplicit$ | async">
+        <li (click)="setExplicit(false)">
+          <span
+            class="m-dropdownMenu__item"
+            i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
+          >
+            Remove explicit
+          </span>
+        </li>
+      </ng-container>
+
+      <li (click)="$event.preventDefault(); $event.stopPropagation()">
+        <m-nsfw-selector
+          service="editing"
+          [selected]="service.nsfw$ | async"
+          (selectedChange)="setNSFWLock($event)"
+        >
+        </m-nsfw-selector>
+      </li>
+
+      <li (click)="reIndex()">
+        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__REINDEX">
+          Reindex
+        </span>
+      </li>
+
+      <li
+        *ngIf="(service.rating$ | async) === 2; else markAsOpenOption"
+        (click)="setRating(1)"
+      >
+        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MARK_AS_SAFE">
+          Mark as Safe
+        </span>
+      </li>
+      <ng-template #markAsOpenOption>
+        <li (click)="setRating(2)">
+          <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MARK_AS_OPEN">
+            Mark as Open
+          </span>
+        </li>
+      </ng-template>
+    </ng-container>
+
+    <li
+      *ngIf="service.isBlocked$ | async; else blockOption"
+      (click)="unblock()"
+    >
+      <span class="m-dropdownMenu__item">
+        <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBLOCK">Unblock</span>
+      </span>
+    </li>
+    <ng-template #blockOption>
+      <li (click)="block()">
+        <span class="m-dropdownMenu__item">
+          <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__BLOCK">Block</span>
+        </span>
+      </li>
+    </ng-template>
+
+    <li (click)="report()">
+      <span class="m-dropdownMenu__item">
+        <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REPORT">Report</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>
+
+<m-modal
+  *ngIf="service.email$ | async as email"
+  [open]="true"
+  (closed)="service.email$.next(null)"
+>
+  <div
+    class="mdl-card__supporting-text"
+    style="padding: 64px; font-size: 20px; text-align: center;"
+  >
+    @{{ service.username$ | async }}'s email:
+    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none;">
+      {{ email }}
+    </a>
+    <ng-container *ngIf="!email">...</ng-container>
+  </div>
+</m-modal>

@@ -7,6 +7,7 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { BlockchainService } from '../blockchain.service';
 import { Web3WalletService } from '../web3-wallet.service';
 import { By } from '@angular/platform-browser';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 describe('BlockchainConsoleComponent', () => {
   let comp: BlockchainConsoleComponent;
@@ -32,6 +33,10 @@ describe('BlockchainConsoleComponent', () => {
         {
           provide: Web3WalletService,
           useValue: MockService(Web3WalletService),
+        },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
         },
       ],
     }).compileComponents();

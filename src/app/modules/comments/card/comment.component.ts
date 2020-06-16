@@ -28,6 +28,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-card-comment',
@@ -78,7 +79,7 @@ export class CommentComponent implements OnChanges {
   commentAge$: Observable<number>;
 
   videoDimensions: Array<any> = null;
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('batchImage') batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
   @Input() canReply = true;
@@ -95,6 +96,7 @@ export class CommentComponent implements OnChanges {
     private router: Router,
     private timeDiffService: TimeDiffService,
     protected featuresService: FeaturesService,
+    protected toasterService: FormToastService,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -307,6 +309,7 @@ export class CommentComponent implements OnChanges {
     this.changesDetected = false;
     if (this.comment.error != this.error) {
       this.error = this.comment.error;
+      this.toasterService.error(this.error);
       this.changesDetected = true;
     }
 

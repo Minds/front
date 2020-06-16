@@ -40,10 +40,10 @@ export class InfoStepComponent implements OnInit, OnDestroy {
 
   cities: Array<any> = [];
 
-  @ViewChild('phoneVerification', { static: false })
+  @ViewChild('phoneVerification')
   phoneVerification: PhoneVerificationComponent;
 
-  @ViewChild('dateDropdowns', { static: false })
+  @ViewChild('dateDropdowns')
   dateDropdowns: DateDropdownsComponent;
 
   phoneInputDisabled: boolean = false;
@@ -172,7 +172,7 @@ export class InfoStepComponent implements OnInit, OnDestroy {
 
   selectedDateChange(date: string) {
     this.date = date;
-    this.dateOfBirthChanged = true;
+    this.dateOfBirthChanged = date !== '';
 
     this.validate();
   }

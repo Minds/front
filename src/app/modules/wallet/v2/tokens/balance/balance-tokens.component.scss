@@ -6,7 +6,7 @@ m-walletBalance--tokens {
     font-size: 15px;
     line-height: 20px;
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
   }
   .m-walletBalance--tokens__equationWrapper {
@@ -151,7 +151,7 @@ m-walletBalance--tokens {
     button.m-shadowboxSubmitButton {
       height: 35px;
       max-height: 35px;
-      min-width: 0;
+      min-width: 105px;
       min-height: 0;
     }
     .m-shadowboxSubmitButton__status--unsaved {

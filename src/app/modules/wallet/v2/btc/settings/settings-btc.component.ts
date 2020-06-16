@@ -30,7 +30,7 @@ export class WalletSettingsBTCComponent implements OnInit {
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    private formToastService: FormToastService,
+    private toasterService: FormToastService,
     protected walletService: WalletV2Service
   ) {}
 
@@ -85,7 +85,7 @@ export class WalletSettingsBTCComponent implements OnInit {
       this.currentAddress = this.addressInput.value;
       this.showForm = false;
     } catch (e) {
-      this.formToastService.error(e);
+      this.toasterService.error(e);
       console.error(e);
     } finally {
       this.inProgress = false;

@@ -23,7 +23,9 @@
         <div class="m-groupListItem__body">
           <div [title]="entity.name">
             <h4>{{ entity.name }}</h4>
-            <span i18n>{{ entity['members:count'] | abbr }} members</span>
+            <span i18n="@@ONBOARDING_GROUPS_LIST__MEMBERS"
+              >{{ entity['members:count'] | abbr }} members</span
+            >
           </div>
         </div>
         <div class="m-layout__spacer"></div>

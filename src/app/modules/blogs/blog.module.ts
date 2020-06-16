@@ -24,6 +24,7 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { BlogEditorComponent } from './ckeditor/editor/editor.component';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
+import { CaptchaModule } from '../captcha/captcha.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -58,6 +59,7 @@ const routes: Routes = [
     ModalsModule,
     CKEditorModule,
     CodeHighlightModule,
+    CaptchaModule,
   ],
   declarations: [
     BlogView,
@@ -77,6 +79,5 @@ const routes: Routes = [
     BlogTileComponent,
     BlogEditorComponent,
   ],
-  entryComponents: [BlogCard],
 })
 export class BlogModule {}

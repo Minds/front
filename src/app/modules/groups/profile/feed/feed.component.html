@@ -1,5 +1,7 @@
-<m-group-profile-feed__sorted
-  *ngIf="group"
-  [group]="group"
-  [type]="type"
-></m-group-profile-feed__sorted>
+<ng-container [m-clientMeta]="{ source: 'feed/group', medium: 'feed' }">
+  <m-group-profile-feed__sorted
+    *ngIf="group"
+    [group]="group"
+    [type]="type"
+  ></m-group-profile-feed__sorted>
+</ng-container>

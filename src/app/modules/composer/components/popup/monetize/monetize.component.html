@@ -1,14 +1,16 @@
 <div class="m-composerPopup__body m-composer__monetize">
-  <div class="m-composerPopup__content">
-    <h3 class="m-composerPopup__title" i18n>Monetize</h3>
+  <div class="m-composerPopup__content m-formWrapper">
+    <h3 class="m-composerPopup__title" i18n="@@COMMON__MONETIZE">Monetize</h3>
 
-    <p class="m-composerPopup__text" i18n>
+    <p class="m-composerPopup__text" i18n="@@COMPOSER__MONETIZE_POST">
       Monetize post by making it available to your users who support your
       channel.
     </p>
 
-    <div class="m-composerPopup__field m-composerPopupField--1">
-      <span class="m-composerPopup__label" i18n>Paywall status</span>
+    <div class="m-composerPopup__field">
+      <span class="m-composerPopup__label" i18n="@@COMPOSER__PAYWALL_SETTINGS"
+        >Paywall status</span
+      >
 
       <label
         class="m-composerPopup__trigger"
@@ -20,27 +22,121 @@
           [(ngModel)]="state.enabled"
           data-cy="monetize-enable-paywall"
         />
-        <span i18n>Enable Paywall</span>
+        <span i18n="@@COMPOSER__ENABLE_PAYWALL">Enable Paywall</span>
       </label>
     </div>
 
-    <div
-      *ngIf="state.enabled"
-      class="m-composerPopup__field m-composerPopupField--2"
-    >
-      <label [for]="inputId + '-amount'">
-        <ng-container i18n>Min Tokens per month</ng-container>
-        <m-tooltip icon="info" i18n>
-          TBD
-        </m-tooltip>
-      </label>
+    <div [style.visibility]="state.enabled ? 'visible' : 'hidden'">
+      <div *mIfFeature="'channels-shop'" class="m-form__field--select">
+        <div class="m-form__row--input">
+          <select
+            *ngIf="supportTiers.groupedList$ | async as groupedSupportTiers"
+            [compareWith]="byUrn"
+            [ngModel]="state.supportTier"
+            (ngModelChange)="selectSupportTier($event)"
+          >
+            <option [ngValue]="null" i18n="@@COMMON__CUSTOM">Custom</option>
 
-      <input
-        [id]="inputId + '-amount'"
-        type="number"
-        [(ngModel)]="state.amount"
-        data-cy="monetize-paywall-amount"
-      />
+            <optgroup label="Tokens" i18n-label="@@COMMON__TOKENS">
+              <option
+                *ngFor="let supportTier of groupedSupportTiers.tokens"
+                [ngValue]="supportTier"
+              >
+                <ng-container i18n="@@CHANNEL__MONETIZE__OTHER"
+                  >{supportTier.amount, plural, =1
+                  {{{supportTier.amount | number}} token} other
+                  {{{supportTier.amount | number}} tokens}}</ng-container
+                >
+                - {{ supportTier.name }}
+              </option>
+            </optgroup>
+
+            <optgroup label="USD" i18n-label="@@SUPPORT_TIER__LABEL">
+              <option
+                *ngFor="let supportTier of groupedSupportTiers.usd"
+                [ngValue]="supportTier"
+              >
+                <ng-container>${{ supportTier.amount | number }}</ng-container>
+                -
+                {{ supportTier.description }}
+              </option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <ng-container
+        *ngIf="!state.supportTier || !features.has('channels-shop')"
+      >
+        <div
+          class="m-form__fieldsContainer m-composerPopup__field m-composerMonetize__typeField"
+        >
+          <div class="m-form__field--radio">
+            <div class="m-form__row--input">
+              <label
+                for="composer-v2-monetize-type-tokens"
+                class="m-form__customInputWrapper__radio"
+              >
+                <ng-container i18n="@@COMMON__TOKENS">Tokens</ng-container>
+                <input
+                  type="radio"
+                  id="composer-v2-monetize-type-tokens"
+                  class="form-control"
+                  [(ngModel)]="state.type"
+                  [value]="'tokens'"
+                />
+                <span class="m-form__customInput__radio"></span>
+              </label>
+
+              <label
+                for="composer-v2-monetize-type-usd"
+                class="m-form__customInputWrapper__radio"
+              >
+                <ng-container i18n="@@COMPOSER__USD">USD</ng-container>
+                <input
+                  type="radio"
+                  id="composer-v2-monetize-type-usd"
+                  class="form-control"
+                  [(ngModel)]="state.type"
+                  [value]="'money'"
+                />
+                <span class="m-form__customInput__radio"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-composerPopup__field">
+          <label [for]="inputId + '-amount'">
+            <ng-container [ngSwitch]="state.type">
+              <ng-container
+                *ngSwitchCase="'tokens'"
+                i18n="@@CHANNELS__MONETIZE__MIN_TOKENS_PER_MONTH"
+                >Minimum Tokens/Month</ng-container
+              >
+              <ng-container
+                *ngSwitchCase="'money'"
+                i18n="@@CHANNELS__MONETIZE__MAX_TOKENS_PER_MONTH"
+                >Minimum USD/Month</ng-container
+              >
+            </ng-container>
+
+            <m-tooltip
+              icon="info"
+              i18n="@@COMPOSER__AMOUNT_REQUIRED_REQUIRED_ACCESS"
+            >
+              Amount required to access membership tier
+            </m-tooltip>
+          </label>
+
+          <input
+            [id]="inputId + '-amount'"
+            type="number"
+            [(ngModel)]="state.amount"
+            data-cy="monetize-paywall-amount"
+          />
+        </div>
+      </ng-container>
     </div>
   </div>
 
@@ -50,7 +146,7 @@
       [disabled]="state.enabled && state.amount <= 0"
       (onAction)="save()"
       data-cy="monetize-save-button"
-      i18n
+      i18n="@@COMMON__SAVE"
     >
       Save
     </m-button>

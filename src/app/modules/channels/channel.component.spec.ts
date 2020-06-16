@@ -35,17 +35,20 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelMode } from '../../interfaces/entities';
-import { ClientMetaService } from '../../common/services/client-meta.service';
-import { clientMetaServiceMock } from '../../../tests/client-meta-service-mock.spec';
-import { MetaService } from '../../common/services/meta.service';
 import { SiteService } from '../../common/services/site.service';
 import { ConfigsService } from '../../common/services/configs.service';
+import { SeoService } from './v2/seo.service';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
   let fixture: ComponentFixture<ChannelComponent>;
 
   beforeEach(async(() => {
+    TestBed.overrideProvider(SeoService, {
+      useValue: MockService(SeoService),
+    });
+
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
@@ -101,7 +104,7 @@ describe('ChannelComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-        MetaService,
+        { provide: SeoService, useValue: MockService(SeoService) },
         SiteService,
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: RecentService, useValue: recentServiceMock },
@@ -114,8 +117,11 @@ describe('ChannelComponent', () => {
         },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
-        { provide: ClientMetaService, useValue: clientMetaServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -136,6 +142,7 @@ describe('ChannelComponent', () => {
     comp = fixture.componentInstance;
     comp.username = 'username';
     comp.user = {
+      type: 'user',
       guid: 'guidguid',
       name: 'name',
       username: 'username',
@@ -151,6 +158,7 @@ describe('ChannelComponent', () => {
         master: 'thumbs',
       },
       nsfw: [],
+      time_created: 11111,
     };
     comp.editing = false;
     fixture.detectChanges();

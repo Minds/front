@@ -37,3 +37,21 @@
     font-family: 'Roboto', Helvetica, sans-serif;
   }
 }
+
+@mixin m-readMoreButton($backgroundColor) {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: pointer;
+  background: linear-gradient(
+    to bottom,
+    rgba($backgroundColor, 0) 0%,
+    rgba($backgroundColor, 1) 50%
+  );
+  transform: translateZ(0) translateY(1px);
+  @content;
+}

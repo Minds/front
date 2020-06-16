@@ -1,4 +1,4 @@
-import { Component, Injector, SkipSelf, EventEmitter } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -9,7 +9,6 @@ import { ContextService } from '../../../services/context.service';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
 import { FeaturesService } from '../../../services/features.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import {
   MetaService,
   MIN_METRIC_FOR_ROBOTS,
@@ -18,7 +17,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-newsfeed--single',
-  providers: [ClientMetaService],
   templateUrl: 'single.component.html',
 })
 export class NewsfeedSingleComponent {
@@ -41,15 +39,9 @@ export class NewsfeedSingleComponent {
     public entitiesService: EntitiesService,
     protected client: Client,
     protected featuresService: FeaturesService,
-    protected clientMetaService: ClientMetaService,
     private metaService: MetaService,
-    @SkipSelf() injector: Injector,
     configs: ConfigsService
   ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('single');
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

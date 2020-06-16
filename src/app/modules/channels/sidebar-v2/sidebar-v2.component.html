@@ -1,12 +1,12 @@
 <div class="m-channelSidebar__buttons">
-  <button class="m-channelSidebar__messageButton" i18n>
+  <button class="m-channelSidebar__messageButton">
     <img [src]="cdnAssetsUrl + 'assets/icons/wire.svg'" />
-    <span>Message</span>
+    <span i18n="@@COMMON__MESSAGE">Message</span>
   </button>
 
-  <button class="m-channelSidebar__payButton" i18n>
+  <button class="m-channelSidebar__payButton">
     <img [src]="cdnAssetsUrl + 'assets/icons/wire.svg'" />
-    <span>Pay</span>
+    <span i18n="@@COMMON__PAY">Pay</span>
   </button>
 </div>
 
@@ -16,7 +16,7 @@
 
 <m-channels--sorted-module
   title="Images"
-  i18n-title
+  i18n-title="@@COMMON__IMAGES"
   type="images"
   [channel]="user"
   [linksTo]="['/', user.username, 'images']"
@@ -26,7 +26,7 @@
 
 <m-channels--sorted-module
   title="Videos"
-  i18n-title
+  i18n-title="@@COMMON__VIDEOS"
   type="videos"
   [channel]="user"
   [linksTo]="['/', user.username, 'videos']"

@@ -18,6 +18,10 @@
   }
 }
 
+.m-walletTransactionsTable__row--hasIcon {
+  margin-top: 5px;
+}
+
 @media screen and (max-width: $min-tablet) {
   .m-walletTransactions {
     // margin: 34px 0px;
@@ -36,6 +40,9 @@ m-walletTransactionsTable {
   table {
     width: 100%;
   }
+  tr {
+    vertical-align: top;
+  }
   .m-walletTransactionsTable__row--spacer {
     height: 36px;
   }
@@ -51,7 +58,7 @@ m-walletTransactionsTable {
   }
   .m-walletTransactionsTable__time {
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
     @media screen and (max-width: $max-mobile) {
       display: none;
@@ -72,9 +79,10 @@ m-walletTransactionsTable {
   [class*='m-walletTransactionsTable__typeWrapper'] {
     position: relative;
     cursor: default;
-    vertical-align: middle;
+    display: flex;
+    flex-direction: row;
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
 
     > * {
@@ -82,10 +90,11 @@ m-walletTransactionsTable {
     }
     > *:first-child {
       margin-right: $minds-margin;
+      margin-top: -5px;
     }
     > span {
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
     a {
@@ -108,6 +117,7 @@ m-walletTransactionsTable {
   }
 
   .m-walletTransactionsTable__amountWrapper {
+    min-width: 70px;
     > * {
       vertical-align: middle;
     }
@@ -136,7 +146,7 @@ m-walletTransactionsTable {
       font-size: 14px;
       line-height: 19px;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -156,7 +166,7 @@ m-walletTransactionsTable {
     font-size: 12px;
     line-height: 16px;
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
   }
 
@@ -170,7 +180,7 @@ m-walletTransactionsTable {
   margin-top: 48px;
   p {
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
   }
 }

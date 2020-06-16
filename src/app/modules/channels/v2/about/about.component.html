@@ -1,0 +1,67 @@
+<div
+  *ngIf="service.channel$ | async as channel"
+  class="m-pageLayout__container m-channel__about"
+>
+  <div m-pageLayout__pane="main">
+    <div class="m-channelAbout__container">
+      <div
+        *ngIf="channel.briefdescription"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__BIO">
+          Bio
+        </div>
+        <div
+          class="m-channelAboutField__content m-channelAboutField__content--preserveBlanks"
+          [innerHtml]="channel.briefdescription | tags"
+        ></div>
+      </div>
+
+      <div
+        *ngIf="channel?.tags?.length"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div class="m-channelAboutField__label" i18n="@@COMMON__HASHTAGS">
+          Hashtags
+        </div>
+        <div class="m-channelAboutField__content" ngPreserveWhitespaces>
+          <ng-container *ngFor="let tag of channel.tags">
+            <span
+              [innerHTML]="'#' + tag | tags"
+              class="m-channelAboutFieldContent__hashtag"
+            ></span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div
+        *ngIf="channel?.social_profiles?.length"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div
+          class="m-channelAboutField__label"
+          i18n="@@CHANNEL_ABOUT__SOCIAL_LINKS"
+        >
+          Social Links
+        </div>
+        <div class="m-channelAboutField__content">
+          <m-channel__socialLinks
+            [socialLinks]="channel.social_profiles"
+          ></m-channel__socialLinks>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-channelAbout__narrowExtraInfo">
+      <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
+    </div>
+  </div>
+
+  <div m-pageLayout__pane="right">
+    <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
+  </div>
+
+  <ng-template #extraInfo>
+    <m-channelAbout__extraInfo></m-channelAbout__extraInfo>
+  </ng-template>
+</div>

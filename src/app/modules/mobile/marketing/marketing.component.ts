@@ -6,6 +6,7 @@ import {
 import { Session } from '../../../services/session';
 import { MobileService } from '../mobile.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-mobile--marketing',
@@ -27,7 +28,8 @@ export class MobileMarketingComponent {
     protected session: Session,
     protected service: MobileService,
     protected cd: ChangeDetectorRef,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -52,6 +54,9 @@ export class MobileMarketingComponent {
     } catch (e) {
       console.error(e);
       this.error = e.message || 'Unknown error';
+      this.toasterService.error(
+        'Oops! There was an issue retrieving mobile releases: ' + this.error
+      );
     }
 
     this.inProgress = false;

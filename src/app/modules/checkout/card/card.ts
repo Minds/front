@@ -15,7 +15,6 @@ export class CardInput {
   card: CreditCard = <CreditCard>{ month: 'mm', year: 'yyyy' };
   inProgress: boolean = false;
   confirmation: boolean = false; // @todo: ??
-  error: string = ''; // @todo: ??
 
   @Input('useMDLStyling') useMDLStyling: boolean = true;
 

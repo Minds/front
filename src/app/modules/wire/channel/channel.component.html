@@ -16,7 +16,7 @@
   (click)="sendWire()"
   *ngIf="channelV2Design && session.getLoggedInUser().guid != channel.guid"
 >
-  <span i18n>Support {{ channel.username }}</span>
+  <span i18n="@@COMMON__SUPPORT_USERNAME">Support {{ channel.username }}</span>
 </div>
 
 <m-wire-channel--overview

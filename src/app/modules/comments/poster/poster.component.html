@@ -4,7 +4,7 @@
 >
   <div class="minds-avatar">
     <a [routerLink]="['/', session.getLoggedInUser().username]">
-      <img [src]="getAvatar()" class="m-border" />
+      <img [src]="getAvatar() | async" class="m-border" />
     </a>
   </div>
 
@@ -57,12 +57,12 @@
       <div class="mdl-card__actions">
         <!-- Overflow -->
         <div class="m-comments-composer--overflow"></div>
-        <!-- Attachements -->
+        <!-- Attachments -->
         <div
           class="attachment-button"
           [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
         >
-          <i class="material-icons">image</i>
+          <i class="material-icons">insert_photo</i>
           <input
             type="file"
             id="file"
@@ -74,13 +74,16 @@
 
         <a
           class="m-mature-button"
-          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
           (click)="attachment.toggleMature()"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
           *ngIf="content.length || attachment.hasFile()"
         >
-          <i class="material-icons">explicit</i>
+          <i
+            class="material-icons"
+            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+            >explicit</i
+          >
         </a>
 
         <a
@@ -159,12 +162,17 @@
   *ngIf="!isLoggedIn && level < 1"
 >
   <a (click)="showLoginModal(); $event.preventDefault()">
-    <ng-container *ngIf="!conversation; else loggedOutConversationMessage" i18n>
+    <ng-container
+      *ngIf="!conversation; else loggedOutConversationMessage"
+      i18n="@@MINDS__COMMENTS__LOGIN_TO_COMMENT"
+    >
       <b>Log in</b> to comment
     </ng-container>
 
     <ng-template #loggedOutConversationMessage>
-      <ng-container i18n> <b>Log in</b> to send a message </ng-container>
+      <ng-container i18n="@@COMMENT_POSTER__LOGIN_SEND_MESSAGE">
+        <b>Log in</b> to send a message
+      </ng-container>
     </ng-template>
   </a>
 </div>

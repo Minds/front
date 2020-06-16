@@ -17,6 +17,5 @@ import { BanModalComponent } from './modal/modal.component';
   ],
   declarations: [BanModalComponent],
   exports: [BanModalComponent],
-  entryComponents: [BanModalComponent],
 })
 export class BanModule {}

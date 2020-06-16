@@ -1,0 +1,52 @@
+<div
+  class="m-channelEdit__imagery"
+  [ngStyle]="{ backgroundImage: bannerAssetCssUrl$ | async }"
+>
+  <label
+    for="channel-v2-edit-banner"
+    class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadBanner"
+  >
+    <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+    <input
+      id="channel-v2-edit-banner"
+      type="file"
+      accept="image/*"
+      (change)="uploadBanner(bannerFile)"
+      #bannerFile
+    />
+  </label>
+
+  <div
+    class="m-channelEditImagery__avatar"
+    [ngStyle]="{ backgroundImage: avatarAssetCssUrl$ | async }"
+  >
+    <label
+      for="channel-v2-edit-avatar"
+      class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadAvatar"
+    >
+      <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+      <input
+        id="channel-v2-edit-avatar"
+        type="file"
+        accept="image/*"
+        (change)="uploadAvatar(avatarFile)"
+        #avatarFile
+      />
+    </label>
+  </div>
+</div>
+
+<div class="m-form__fieldsContainer">
+  <div class="m-form__row--label">
+    <label i18n="@@CHANNEL_EDIT__BIO">Bio</label>
+  </div>
+
+  <div class="m-form__row--input m-channelEdit__bioInput">
+    <textarea
+      class="form-control"
+      name="bio"
+      [ngModel]="service.bio$ | async"
+      (ngModelChange)="service.bio$.next($event)"
+    ></textarea>
+  </div>
+</div>

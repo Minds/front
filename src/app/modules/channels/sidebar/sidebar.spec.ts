@@ -185,6 +185,7 @@ describe('ChannelSidebar', () => {
     uploadMock.response = {};
     comp = fixture.componentInstance;
     comp.user = {
+      type: 'user',
       guid: 'guidguid',
       name: 'name',
       username: 'username',
@@ -194,6 +195,7 @@ describe('ChannelSidebar', () => {
       impressions: 18200,
       mode: ChannelMode.PUBLIC,
       nsfw: [],
+      time_created: 11111,
     };
     comp.editing = false;
     uploadMock.response[`api/v1/channel/avatar`] = {

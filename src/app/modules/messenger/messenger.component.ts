@@ -18,7 +18,7 @@ import { MessengerSetupChat } from './setup/setup.component';
 })
 export class Messenger {
   @ViewChild('userList', { static: true }) userList: MessengerUserlist;
-  @ViewChild('setupChat', { static: false }) setupChat: MessengerSetupChat;
+  @ViewChild('setupChat') setupChat: MessengerSetupChat;
 
   constructor(
     public session: Session,

@@ -1,3 +1,4 @@
+@import '../../foundation/grid-values';
 .m-ad-block {
   display: block;
   width: 100%;
@@ -8,6 +9,24 @@
 
     .m-ad-boost-entity {
       padding: 0 0 16px 0;
+
+      minds-card-user {
+        > a {
+          margin-top: -60px;
+          .avatar {
+            img {
+              height: 84px;
+              width: 84px;
+            }
+          }
+          .body {
+            margin: 0 16px 16px 16px;
+          }
+        }
+        minds-button-subscribe {
+          margin: -35px 0 0 115px;
+        }
+      }
     }
   }
 

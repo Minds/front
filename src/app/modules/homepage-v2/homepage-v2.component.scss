@@ -17,6 +17,11 @@ m-homepage__v2 {
     z-index: 0;
     transform: rotate(0deg);
 
+    .m-theme__2020 & {
+      margin-top: -75px;
+      padding-top: 75px;
+    }
+
     .m-marketing__wrapper,
     .m-marketing__extras > * > * {
       max-width: 1100px !important;

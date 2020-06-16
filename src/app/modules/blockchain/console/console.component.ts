@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { BlockchainService } from '../blockchain.service';
 import { Web3WalletService } from '../web3-wallet.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +20,8 @@ export class BlockchainConsoleComponent implements OnInit {
     private fb: FormBuilder,
     private blockchain: BlockchainService,
     private route: ActivatedRoute,
-    private web3Wallet: Web3WalletService
+    private web3Wallet: Web3WalletService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class BlockchainConsoleComponent implements OnInit {
     } catch (e) {
       this.error =
         (e && e.message) || 'There was an issue getting your saved wallet info';
+      this.toasterService.error(this.error);
     } finally {
       this.inProgress = false;
     }
@@ -65,6 +68,7 @@ export class BlockchainConsoleComponent implements OnInit {
     } catch (e) {
       this.error =
         (e && e.message) || 'There was an issue saving the wallet info';
+      this.toasterService.error(this.error);
     } finally {
       this.inProgress = false;
     }

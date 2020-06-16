@@ -1,21 +1,15 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column m-token--onboarding-setup-options">
-    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SETUP_TITLE">
+    <h2>
       Setup your OnChain address
     </h2>
 
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ONCHAIN_DESC"
-    >
+    <p class="m-token--onboarding--subtext">
       To receive OnChain payments from other channels (eg, from a Wire or a
       Boost), you will need to let us know which address to direct these tokens
       to.
     </p>
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ADDRESS_DESC"
-    >
+    <p class="m-token--onboarding--subtext">
       This address will be listed in your wallet as your Receiver Address and
       can be changed at any time.
     </p>
@@ -26,10 +20,10 @@
           class="metamask"
           [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
         />
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">
+        <h4>
           MetaMask
         </h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_DESC">
+        <p>
           Minds recommends using MetaMask for the most seamless user experience.
         </p>
 
@@ -37,7 +31,6 @@
           <button
             class="m-btn m-btn--slim m-btn--action"
             (click)="display = Views.UseExternal; useExternal()"
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__USE_METAMASK_ACTION"
           >
             Use MetaMask
           </button>
@@ -46,12 +39,10 @@
 
       <li>
         <i class="material-icons">vpn_key</i>
-        <h4
-          i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DONT_WANT_METAMASK_TITLE"
-        >
+        <h4>
           Don't want to use MetaMask?
         </h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__NON_METAMASK_DESC">
+        <p>
           You can either create a new address here or let us know your existing
           address.
         </p>
@@ -60,17 +51,13 @@
           <button
             class="m-btn m-btn--slim m-btn--action"
             (click)="display = Views.CreateAddress; createAddress()"
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__CREATE_ADDRESS_ACTION"
           >
             Create Address
           </button>
-          <span i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__OR_PARTIAL"
-            >or</span
-          >
+          <span>or</span>
           <button
             class="m-btn m-btn--slim m-btn--action"
             (click)="display = Views.ProvideAddress"
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_ACTION"
           >
             Provide Address
           </button>
@@ -82,25 +69,17 @@
       <li>
         <ng-container *ngIf="display === Views.CreateAddress">
           <i class="material-icons">vpn_key</i>
-          <h4
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__CREATE_ADDRESS_ACTION"
-          >
+          <h4>
             Create Address
           </h4>
 
-          <p
-            *ngIf="!generatedAccount"
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATING_DESC"
-          >
+          <p *ngIf="!generatedAccount">
             We're generating a new wallet address and its private key. Ensure
             you download and safely store the private key file. The address will
             be set as your Receiver Address.
           </p>
 
-          <p
-            *ngIf="generatedAccount"
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATED_DESC"
-          >
+          <p *ngIf="generatedAccount">
             The address <b>{{ generatedAccount.address }}</b> was successfully
             saved as your Receiver Address. Clicking the button below will
             download its private key. Ensure you safely store the private key
@@ -113,7 +92,6 @@
               *ngIf="generatedAccount"
               [disabled]="inProgress"
               (click)="downloadPrivateKey()"
-              i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_ACTION"
             >
               Download
             </button>
@@ -128,12 +106,10 @@
 
         <ng-container *ngIf="display === Views.ProvideAddress">
           <i class="material-icons">vpn_key</i>
-          <h4
-            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_TITLE"
-          >
+          <h4>
             Provide Address
           </h4>
-          <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_DESC">
+          <p>
             Enter your wallet address below to be stored as your Receiver
             Wallet. Remember that in order to do transactions you will need to
             have the private key for it.
@@ -151,7 +127,6 @@
               class="m-btn m-btn--slim m-btn--action"
               [disabled]="inProgress || !canProvideAddress()"
               (click)="provideAddress()"
-              i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SAVE_ACTION"
             >
               Save
             </button>
@@ -169,22 +144,16 @@
             class="metamask"
             [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
           />
-          <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">
+          <h4>
             MetaMask
           </h4>
           <p>
-            <ng-container
-              i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ENSURE_RINKEBY"
-            >
+            <ng-container>
               Please ensure you select the <b>Main Ethereum Network</b>.
             </ng-container>
 
             <ng-container *ngIf="downloadingMetamask">
-              <b
-                i18n="
-                   @@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_NOTE_RELOAD
-                "
-              >
+              <b>
                 Note: After installing and setting up MetaMask you might need to
                 reload Minds.
               </b>
@@ -198,10 +167,6 @@
             <button
               class="m-btn m-btn--slim m-btn--action"
               (click)="downloadMetamask()"
-              i18n="
-                 @@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_METAMASK_ACTION
-
-              "
             >
               Download MetaMask
             </button>
@@ -218,13 +183,7 @@
                 {{ providedAddress }}
               </ng-container>
 
-              <ng-template
-                #noProvidedAddress
-                i18n="
-                   @@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_LOCKED_LEGEND
-
-                "
-              >
+              <ng-template #noProvidedAddress>
                 MetaMask is either locked or connected to another network.
               </ng-template>
             </span>
@@ -257,7 +216,6 @@
         *ngIf="!display && skippable === true"
         class="m-btn m-btn--slim"
         (click)="next.next()"
-        i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SKIP_ACTION"
       >
         Skip. I'm not interested
       </button>
@@ -267,7 +225,6 @@
         [disabled]="inProgress"
         class="m-btn m-btn--slim"
         (click)="display = null"
-        i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__BACK_ACTION"
       >
         Back
       </button>

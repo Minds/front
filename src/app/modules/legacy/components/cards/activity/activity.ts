@@ -8,7 +8,6 @@ import {
   Input,
   OnInit,
   Output,
-  SkipSelf,
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -24,7 +23,6 @@ import { Router } from '@angular/router';
 import { BlockListService } from '../../../../../common/services/block-list.service';
 import { ElementVisibilityService } from '../../../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
-import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
@@ -36,6 +34,7 @@ import { ComposerService } from '../../../../composer/services/composer.service'
 import { ModalService } from '../../../../composer/components/modal/modal.service';
 import { WireModalService } from '../../../../wire/wire-modal.service';
 import { WireEventType } from '../../../../wire/v2/wire-v2.service';
+import { ClientMetaDirective } from '../../../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'minds-activity',
@@ -51,7 +50,6 @@ import { WireEventType } from '../../../../wire/v2/wire-v2.service';
     'showRatingToggle',
   ],
   providers: [
-    ClientMetaService,
     ElementVisibilityService,
     ActivityService,
     ComposerService,
@@ -179,13 +177,13 @@ export class Activity implements OnInit {
 
   player: MindsVideoPlayerComponent;
 
-  @ViewChild('player', { static: false }) set _player(
-    player: MindsVideoPlayerComponent
-  ) {
+  @ViewChild('player') set _player(player: MindsVideoPlayerComponent) {
     this.player = player;
   }
 
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('batchImage') batchImage: ElementRef;
+
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
   protected time_created: any;
 
@@ -201,29 +199,36 @@ export class Activity implements OnInit {
     protected blockListService: BlockListService,
     protected activityAnalyticsOnViewService: ElementVisibilityService,
     protected newsfeedService: NewsfeedService,
-    protected clientMetaService: ClientMetaService,
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
-    @SkipSelf() injector: Injector,
     private elementRef: ElementRef,
     private configs: ConfigsService,
     private redirectService: RedirectService,
     protected composer: ComposerService,
     protected composerModal: ModalService,
     protected payModal: WireModalService,
-    protected selfInjector: Injector
+    protected injector: Injector
   ) {
-    this.clientMetaService.inherit(injector);
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
+  }
 
+  ngOnInit() {
+    this.loadBlockedUsers();
+  }
+
+  ngAfterViewInit() {
     this.activityAnalyticsOnViewService
-      .setElementRef(elementRef)
+      .setElementRef(this.elementRef)
+      .setEnabled(this.visibilityEvents)
       .onView(activity => {
         this.newsfeedService.recordView(
           activity,
           true,
           null,
-          this.clientMetaService.build({
+          this.clientMeta.build({
             campaign: activity.boosted_guid ? activity.urn : '',
             position: this.slot,
           })
@@ -231,16 +236,6 @@ export class Activity implements OnInit {
 
         this.onViewed.emit({ activity: activity, visible: true });
       });
-
-    this.cdnUrl = configs.get('cdn_url');
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.siteUrl = configs.get('site_url');
-  }
-
-  ngOnInit() {
-    this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
-
-    this.loadBlockedUsers();
   }
 
   ngOnDestroy() {
@@ -462,7 +457,7 @@ export class Activity implements OnInit {
           this.composer.load(this.activity);
 
           this.composerModal
-            .setInjector(this.selfInjector)
+            .setInjector(this.injector)
             .present()
             .toPromise()
             .then(activity => {

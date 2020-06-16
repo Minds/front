@@ -16,6 +16,7 @@ import { PopupComponent } from '../popup/popup.component';
 import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -68,7 +69,8 @@ export class BaseComponent implements AfterViewInit {
     protected router: Router,
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
-    protected injector: Injector
+    protected injector: Injector,
+    protected toasterService: FormToastService
   ) {}
 
   /**
@@ -110,6 +112,9 @@ export class BaseComponent implements AfterViewInit {
    * Attachment error subject in service
    */
   get attachmentError$() {
+    if (this.service.attachmentError$.value) {
+      this.toasterService.error(this.service.attachmentError$.value);
+    }
     return this.service.attachmentError$;
   }
 
@@ -157,6 +162,7 @@ export class BaseComponent implements AfterViewInit {
       this.onPostEmitter.next(activity);
     } catch (e) {
       this.error = (e && e.message) || 'Internal error';
+      this.toasterService.error(this.error);
     }
 
     this.detectChanges();

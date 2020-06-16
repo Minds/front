@@ -20,6 +20,7 @@ import { InMemoryStorageService } from '../../../services/in-memory-storage.serv
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { NSFWSelectorComponent } from '../../../common/components/nsfw-selector/nsfw-selector.component';
 import { TagsService } from '../../../common/services/tags.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -46,10 +47,10 @@ export class PosterComponent {
 
   errorMessage: string = null;
 
-  @ViewChild('hashtagsSelector', { static: false })
+  @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
 
-  @ViewChild('nsfwSelector', { static: false })
+  @ViewChild('nsfwSelector')
   nsfwSelector: NSFWSelectorComponent;
 
   showActionBarLabels: boolean = false;
@@ -69,7 +70,8 @@ export class PosterComponent {
     protected elementRef: ElementRef,
     protected router: Router,
     protected inMemoryStorageService: InMemoryStorageService,
-    protected tagsService: TagsService
+    protected tagsService: TagsService,
+    protected toasterService: FormToastService
   ) {}
 
   @HostListener('window:resize') _widthDetection() {
@@ -108,7 +110,7 @@ export class PosterComponent {
     if (width && width !== this.lastWidth) {
       this.lastWidth = width;
 
-      this.showActionBarLabels = width >= 580;
+      this.showActionBarLabels = width >= 620;
     }
   }
 
@@ -163,6 +165,7 @@ export class PosterComponent {
   onTagsChange(tags: string[]) {
     if (this.hashtagsSelector.tags.length > 5) {
       this.errorMessage = 'You can only select up to 5 hashtags';
+      this.toasterService.error(this.errorMessage);
       this.tooManyTags = true;
     } else {
       this.tooManyTags = false;
@@ -175,6 +178,7 @@ export class PosterComponent {
   showTagsError() {
     if (this.tags.length > 5) {
       this.errorMessage = 'You can only select up to 5 hashtags';
+      this.toasterService.error(this.errorMessage);
       this.tooManyTags = true;
     } else {
       this.tooManyTags = false;
@@ -227,7 +231,7 @@ export class PosterComponent {
       .catch(e => {
         this.inProgress = false;
         if (!e.must_verify) {
-          alert(e.message);
+          this.toasterService.error(e.message);
         }
       });
   }
@@ -347,6 +351,7 @@ export class PosterComponent {
 
   posterDateSelectorError(msg) {
     this.errorMessage = msg;
+    this.toasterService.error(this.errorMessage);
   }
 
   /**

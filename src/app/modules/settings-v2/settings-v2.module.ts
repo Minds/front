@@ -10,6 +10,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
+import { YoutubeMigrationModule } from '../media/youtube-migration/youtube-migration.module';
 
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 
@@ -18,7 +19,7 @@ import { SettingsV2DisplayNameComponent } from './account/display-name/display-n
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
-import { SettingsV2DisplayLanguageComponent } from './account/display-language/display-language.component';
+import { SettingsV2LanguageComponent } from './account/language/language.component';
 import { SettingsV2PasswordComponent } from './account/password/password.component';
 import { SettingsV2EmailNotificationsComponent } from './account/email-notifications/email-notifications.component';
 import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-content.component';
@@ -47,6 +48,18 @@ import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 import { StrikesComponent } from '../report/strikes/strikes.component';
 import { SettingsV2AutoplayVideosComponent } from './account/autoplay-videos/autoplay-videos.component';
+import { YoutubeMigrationService } from '../media/youtube-migration/youtube-migration.service';
+import { YoutubeMigrationConnectComponent } from '../media/youtube-migration/connect/connect.component';
+import { YoutubeMigrationDashboardComponent } from '../media/youtube-migration/dashboard/dashboard.component';
+import { YoutubeMigrationUnmigratedVideosComponent } from '../media/youtube-migration/unmigrated-videos/unmigrated-videos.component';
+import { YoutubeMigrationMigratedVideosComponent } from '../media/youtube-migration/migrated-videos/migrated-videos.component';
+import { YoutubeMigrationConfigComponent } from '../media/youtube-migration/config/config.component';
+import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-migration.component';
+import { ReferralsV2Module } from './other/referrals/referrals.module';
+import { SettingsV2ReferralsComponent } from './other/referrals/referrals.component';
+import { LanguageModule } from '../language/language.module';
+import { SettingsV2I18nHack } from './settings-i18n-hack.component';
+import { SettingsV2HeaderComponent } from './settings-header.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -73,6 +86,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Display Name',
               description: 'Customize your display name.',
+              id: 'display-name',
             },
           },
           {
@@ -83,14 +97,17 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Email Address',
               description:
                 'Change the email address where notifications are sent.',
+              id: 'email-address',
             },
           },
           {
-            path: 'display-language',
-            component: SettingsV2DisplayLanguageComponent,
+            path: 'language',
+            component: SettingsV2LanguageComponent,
             data: {
-              title: 'Display Language Settings',
-              description: 'Change the web interface language.',
+              title: 'Language Settings',
+              description:
+                'Change your preferred language and, if available, the web interface display.',
+              id: 'language',
             },
           },
           {
@@ -100,9 +117,9 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Password',
               description: 'Change account password.',
+              id: 'password',
             },
           },
-
           {
             path: 'nsfw-content',
             component: SettingsV2NsfwContentComponent,
@@ -110,6 +127,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'NSFW Content',
               description:
                 'Control how NSFW content is displayed in your newsfeed.',
+              id: 'nsfw-content',
             },
           },
           {
@@ -118,6 +136,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Share Buttons',
               description: 'Control whether you see the share button overlay.',
+              id: 'share-buttons',
             },
           },
           {
@@ -125,6 +144,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             component: SettingsV2AutoplayVideosComponent,
             data: {
               title: 'Autoplay Videos',
+              id: 'autoplay-videos',
             },
           },
           {
@@ -135,6 +155,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Email Notifications',
               description:
                 'Control what email notifications you receive, and when.',
+              id: 'email-notifications',
             },
           },
           {
@@ -143,6 +164,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Notification Popovers',
               description: 'Control whether you receive notification popovers.',
+              id: 'toaster-notifications',
             },
           },
           { path: '**', redirectTo: 'account' },
@@ -242,6 +264,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Two-factor Authentication',
               description:
                 'Add an extra layer of security to your account by enabling 2FA.',
+              id: 'two-factor',
             },
           },
           {
@@ -250,6 +273,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Sessions',
               description: 'Close all sessions with a single click.',
+              id: 'sessions',
             },
           },
         ],
@@ -271,6 +295,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Payment Methods',
               description:
                 'Manage credit cards associated with your Minds account.',
+              id: 'payment-methods',
             },
           },
           {
@@ -280,6 +305,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Recurring Payments',
               description:
                 'Track recurring payments you make to support other channels.',
+              id: 'recurring-payments',
             },
           },
         ],
@@ -293,6 +319,16 @@ const SETTINGS_V2_ROUTES: Routes = [
           description: 'Additional settings.',
         },
         children: [
+          {
+            path: 'referrals',
+            component: SettingsV2ReferralsComponent,
+            data: {
+              title: 'Referrals',
+              description:
+                'If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!',
+              id: 'referrals',
+            },
+          },
           {
             path: 'reported-content/strikes',
             component: StrikesComponent,
@@ -309,6 +345,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Reported Content',
               description:
                 'Oversee disciplinary measures taken on your posts and channel.',
+              id: 'reported-content',
             },
           },
           {
@@ -317,6 +354,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Blocked Channels',
               description: 'Block channels from appearing in your feed.',
+              id: 'blocked-channels',
             },
           },
           {
@@ -327,6 +365,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Subscription Tiers',
               description:
                 "Define incentives for users to support your channel. These tiers will be displayed on your channel's sidebar and wire screen.",
+              id: 'subscription-tiers',
             },
           },
           {
@@ -337,7 +376,38 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Paywall Preview',
               description:
                 'Customize the appearance of your paywalled posts. The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.',
+              id: 'paywall-preview',
             },
+          },
+          {
+            path: 'youtube-migration',
+            component: YoutubeMigrationComponent,
+            data: {
+              title: 'Youtube Migration',
+              standardHeader: false,
+            },
+            children: [
+              { path: 'connect', component: YoutubeMigrationConnectComponent },
+              {
+                path: 'dashboard',
+                component: YoutubeMigrationDashboardComponent,
+                children: [
+                  { path: '', redirectTo: 'available', pathMatch: 'full' },
+                  {
+                    path: 'available',
+                    component: YoutubeMigrationUnmigratedVideosComponent,
+                  },
+                  {
+                    path: 'transferred',
+                    component: YoutubeMigrationMigratedVideosComponent,
+                  },
+                  {
+                    path: 'config',
+                    component: YoutubeMigrationConfigComponent,
+                  },
+                ],
+              },
+            ],
           },
           {
             path: 'deactivate-account',
@@ -346,6 +416,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Deactivate Account',
               description:
                 'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.',
+              id: 'deactivate-account',
             },
           },
           {
@@ -355,6 +426,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Delete Account',
               description:
                 'Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.',
+              id: 'delete-account',
             },
           },
         ],
@@ -385,6 +457,9 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsModule,
     WalletV2Module,
     ProModule,
+    YoutubeMigrationModule,
+    ReferralsV2Module,
+    LanguageModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -392,7 +467,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
     SettingsV2EmailAddressComponent,
-    SettingsV2DisplayLanguageComponent,
+    SettingsV2LanguageComponent,
     SettingsV2PasswordComponent,
     SettingsV2EmailNotificationsComponent,
     SettingsV2NsfwContentComponent,
@@ -415,6 +490,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ProPayoutsComponent,
     SettingsV2ProCancelComponent,
     SettingsV2AutoplayVideosComponent,
+    SettingsV2I18nHack,
+    SettingsV2HeaderComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],

@@ -43,13 +43,13 @@ export class ActivityContentComponent
    */
   @Input() autoplayVideo: boolean = false;
 
-  @ViewChild('mediaEl', { static: false, read: ElementRef })
+  @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
 
-  @ViewChild('messageEl', { static: false, read: ElementRef })
+  @ViewChild('messageEl', { read: ElementRef })
   messageEl: ElementRef;
 
-  @ViewChild('mediaDesciptionEl', { static: false, read: ElementRef })
+  @ViewChild('mediaDescriptionEl', { read: ElementRef })
   mediaDescriptionEl: ElementRef;
 
   maxFixedHeightContent: number = 750 * ACTIVITY_FIXED_HEIGHT_RATIO;

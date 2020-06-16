@@ -88,6 +88,7 @@ describe('ChannelFeed', () => {
     clientMock.response = {};
     comp = fixture.componentInstance;
     comp.user = {
+      type: 'user',
       guid: 'guidguid',
       name: 'name',
       username: 'username',
@@ -97,6 +98,7 @@ describe('ChannelFeed', () => {
       pinned_posts: ['a', 'b', 'c'],
       mode: ChannelMode.PUBLIC,
       nsfw: [],
+      time_created: 11111,
     };
     comp.feed = [
       { guid: 'aaaa' },

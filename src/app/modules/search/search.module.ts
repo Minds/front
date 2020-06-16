@@ -35,6 +35,5 @@ const searchRoutes: Routes = [{ path: 'search', component: SearchComponent }];
     SearchBarSuggestionsComponent,
     SearchBarComponent,
   ],
-  entryComponents: [SearchComponent],
 })
 export class SearchModule {}

@@ -11,6 +11,7 @@ import { Session } from '../../../../services/session';
 import { WalletService } from '../../../../services/wallet';
 import { Storage } from '../../../../services/storage';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-wire-console-settings',
@@ -38,7 +39,8 @@ export class WireConsoleSettingsComponent {
     public client: Client,
     public upload: Upload,
     private cd: ChangeDetectorRef,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -122,7 +124,7 @@ export class WireConsoleSettingsComponent {
         return true;
       })
       .catch(e => {
-        alert('Sorry, there was a problem. Try again.');
+        this.toasterService.error('Sorry, there was a problem. Try again.');
         input.value = null;
         this.detectChanges();
 
