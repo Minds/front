@@ -8,6 +8,7 @@ import {
   Optional,
   SkipSelf,
   ViewChild,
+  Injector,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -23,11 +24,7 @@ import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
-<<<<<<< HEAD
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
-=======
->>>>>>> 9e279c5aa777d517c5b1e7e63e075c283a1a8f68
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
@@ -110,14 +107,10 @@ export class BlogView implements OnInit, OnDestroy {
     protected activityService: ActivityService,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-<<<<<<< HEAD
     private clientMetaService: ClientMetaService,
     public featuresService: FeaturesService,
     @SkipSelf() injector: Injector,
-=======
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
-    protected clientMetaService: ClientMetaService,
->>>>>>> 9e279c5aa777d517c5b1e7e63e075c283a1a8f68
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');

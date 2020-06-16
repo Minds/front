@@ -14,11 +14,8 @@ import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-<<<<<<< HEAD
 import { FeaturesService } from '../../../services/features.service';
-=======
 import { FormToastService } from '../../../common/services/form-toast.service';
->>>>>>> 9e279c5aa777d517c5b1e7e63e075c283a1a8f68
 
 @Component({
   selector: 'minds-blog-edit',
@@ -86,14 +83,10 @@ export class BlogEdit implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     protected inMemoryStorageService: InMemoryStorageService,
     private dialogService: DialogService,
-<<<<<<< HEAD
     public featuresService: FeaturesService,
-    configs: ConfigsService
-=======
     configs: ConfigsService,
     private location: Location,
     private toasterService: FormToastService
->>>>>>> 9e279c5aa777d517c5b1e7e63e075c283a1a8f68
   ) {
     this.cdnUrl = configs.get('cdn_url');
 
@@ -295,12 +288,16 @@ export class BlogEdit implements OnInit, OnDestroy {
     blog.monetized = blog.monetized ? 1 : 0;
     blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
     blog.editor_version = this.getEditorVersion();
+    blog.captcha = this.captcha;
 
     this.editing = false;
     this.inProgress = true;
     this.canSave = false;
+
+    console.log('checking for banner');
     this.check_for_banner()
       .then(() => {
+        console.log('uploading');
         this.upload
           .post('api/v1/blog/' + this.guid, [this.banner], blog)
           .then((response: any) => {
@@ -309,9 +306,11 @@ export class BlogEdit implements OnInit, OnDestroy {
             this.blog.time_created = null;
 
             if (response.status !== 'success') {
+              this.toasterService.error(response.message);
               this.error = response.message;
               return;
             }
+
             this.router.navigate(
               response.route
                 ? ['/' + response.route]
@@ -327,6 +326,9 @@ export class BlogEdit implements OnInit, OnDestroy {
       })
       .catch(e => {
         console.error(e);
+        this.toasterService.error(
+          'An unknown error has occured.\nBe sure you have a banner  set.'
+        );
         this.error = 'error:no-banner';
         this.inProgress = false;
         this.canSave = true;
