@@ -9,7 +9,7 @@ export class OverlayModalService {
 
   private _onDidDismissFn: Function;
 
-  private stackable: boolean = false;
+  protected stackable: boolean = false;
 
   static _() {
     return new OverlayModalService();
@@ -17,26 +17,22 @@ export class OverlayModalService {
 
   setContainer(container: OverlayModalComponent) {
     this.container = container;
-    console.log('___SVC setcontainer()');
     return this;
   }
 
   setRoot(root: HTMLElement) {
-    console.log('___SVC setRoot');
     this.container.setRoot(root);
 
     return this;
   }
 
   create(component, data?, opts?, injector?: Injector) {
-    console.log('___SVC create()');
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
 
     if (opts && opts.stackable) {
       this.stackable = true;
-      console.log('this is stackable');
     }
 
     this._onDidDismissFn = void 0;
@@ -52,7 +48,6 @@ export class OverlayModalService {
   }
 
   setData(data?) {
-    console.log('___SVC setData()');
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
@@ -62,7 +57,6 @@ export class OverlayModalService {
   }
 
   onDidDismiss(fn?: Function) {
-    console.log('___SVC onDidDismiss()');
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
@@ -72,14 +66,12 @@ export class OverlayModalService {
   }
 
   _didDismiss(data?: any) {
-    console.log('___SVC _didDismiss()');
     if (this._onDidDismissFn) {
       this._onDidDismissFn(data);
     }
   }
 
   present() {
-    console.log('___SVC present()');
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
@@ -89,7 +81,6 @@ export class OverlayModalService {
   }
 
   dismiss(data?: any) {
-    console.log('___SVC dismiss()');
     if (!this.container) {
       throw new Error('Missing overlay container');
     }

@@ -56,9 +56,6 @@ export class OverlayModalComponent implements AfterViewInit {
       this.root = document.body;
     }
 
-    // TODOOJM remove all of these console logs
-    console.log('CMP ngAfterViewInit()');
-
     /**
      * Connect this component with its corresponding service instance
      */
@@ -66,8 +63,6 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   create(componentClass, opts?, injector?: Injector) {
-    console.log('CMP create()');
-
     /**
      * Remove possible existing modal component refs, etc. before creating a new one
      */
@@ -122,12 +117,10 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   setRoot(root: HTMLElement) {
-    console.log('CMP setRoot()');
     this.root = root;
   }
 
   setData(data) {
-    console.log('CMP setData()');
     if (!this.componentInstance) {
       return;
     }
@@ -137,7 +130,6 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   setOpts(opts) {
-    console.log('CMP setOpts()');
     if (!this.componentInstance) {
       return;
     }
@@ -146,7 +138,6 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   present() {
-    console.log('CMP present()');
     if (!this.componentInstance) {
       return;
     }
@@ -156,10 +147,6 @@ export class OverlayModalComponent implements AfterViewInit {
     if (this.root) {
       this.root.classList.add('m-overlay-modal--shown');
       document.body.classList.add('m-overlay-modal--shown--no-scroll');
-
-      if (this.stackable) {
-        // TODOOJM handle height issue here?
-      }
     }
   }
 
@@ -169,11 +156,14 @@ export class OverlayModalComponent implements AfterViewInit {
     }
   }
 
-  dismiss(data?: any) {
-    console.log('CMP dismiss()');
-    this.hidden = true;
+  clickToDismiss($event) {
+    $event.stopPropagation();
+    this.dismiss();
+  }
 
-    if (this.root) {
+  dismiss(data?: any) {
+    this.hidden = true;
+    if (this.root && !this.stackable) {
       this.root.classList.remove('m-overlay-modal--shown');
       document.body.classList.remove('m-overlay-modal--shown--no-scroll');
     }

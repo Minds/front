@@ -31,11 +31,15 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
 import { ShareModalComponent } from '../../modals/share/share';
 import { AttachmentService } from '../../../services/attachment';
-import { DynamicModalSettings } from '../../../common/components/stackable-modal/stackable-modal.component';
+import {
+  StackableModalState,
+  StackableModalEvent,
+} from '../../../common/components/stackable-modal/stackable-modal.component';
 import { TranslationService } from '../../../services/translation';
 import { Client } from '../../../services/api/client';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { StackableModalService } from '../../../services/ux/stackable-modal.service';
 
 export type MediaModalParams = {
   entity: any;
@@ -119,8 +123,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   pagerVisible: boolean = false;
   pagerTimeout: any = null;
 
-  stackableModalSettings: DynamicModalSettings;
-
   routerSubscription: Subscription;
 
   modalPager = {
@@ -186,6 +188,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     public analyticsService: AnalyticsService,
     public translationService: TranslationService,
     private overlayModal: OverlayModalService,
+    private stackableModal: StackableModalService,
     private router: Router,
     private location: Location,
     private site: SiteService,
@@ -907,18 +910,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  openShareModal(): void {
-    const componentClass = ShareModalComponent,
-      data = this.site.baseUrl + this.pageUrl.substr(1),
-      opts = {
-        class: 'm-overlayModal__share',
-      };
-
-    this.stackableModalSettings = {
-      componentClass: componentClass,
-      data: data,
-      opts: opts,
+  async openShareModal(): Promise<void> {
+    const data = this.site.baseUrl + this.pageUrl.substr(1);
+    const opts = {
+      class: 'm-overlayModal__share m-overlay-modal--medium',
     };
+
+    const stackableModalEvent: StackableModalEvent = await this.stackableModal
+      .present(ShareModalComponent, data, opts)
+      .toPromise();
   }
 
   toggleMatureVisibility() {
