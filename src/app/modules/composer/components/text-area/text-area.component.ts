@@ -40,13 +40,13 @@ export class TextAreaComponent {
   /**
    * Title input DOM element
    */
-  @ViewChild('titleInput', { static: false })
+  @ViewChild('titleInput')
   titleInput: ElementRef<HTMLInputElement>;
 
   /**
    * Message textarea DOM element
    */
-  @ViewChild('messageInput', { static: false })
+  @ViewChild('messageInput')
   messageInput: ElementRef<HTMLTextAreaElement>;
 
   /**

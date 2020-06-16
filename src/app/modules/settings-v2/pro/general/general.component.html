@@ -1,17 +1,23 @@
-<div class="m-settingsV2__desc">
-  Customize your title and headline.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__GENERAL__LABEL">
+    General Settings
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__GENERAL__DESCRIPTION">
+    Customize your title and headline.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="title" i18n>Page Title</label>
+        <label for="title" i18n="@@PRO_GENERAL__PAGE_TITLE">Page Title</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
+          <ng-container i18n="@@PRO_GENERAL__NAME_OF_SITE_INFO"
             >The name of your pro site. This will be used in browser tab titles
             and your SEO tags.</ng-container
           >
@@ -32,10 +38,10 @@
 
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="headline" i18n>Headline</label>
+        <label for="headline" i18n="@@PRO_GENERAL__HEADLINE">Headline</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
+          <ng-container i18n="@@PRO_GENERAL__HEADLINE_INFO"
             >A short description about your site. This will be used in your SEO
             tags as well.</ng-container
           >
@@ -58,12 +64,14 @@
         <label
           for="publish"
           class="m-form__customInputWrapper__checkbox"
-          i18n
           (click)="onEnableProThemeClick($event)"
-          >Enable Pro theme
+        >
+          <ng-container i18n="@@PRO_GENERAL__ENABLE_PRO_THEME"
+            >Enable Pro theme</ng-container
+          >
           <m-tooltip>
             <span m-tooltip--anchor>𝒊</span>
-            <ng-container i18n
+            <ng-container i18n="@@PRO_GENERAL__ENABLE_PRO_THEME_INFO"
               >When enabled, your channel on minds.com will have your Pro site
               theme applied</ng-container
             >
@@ -87,6 +95,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@PRO_GENERAL__SAVE_PERSONAL_DETAILS"
     >
       Save Personal Details
     </m-shadowboxSubmitButton>

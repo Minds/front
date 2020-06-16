@@ -15,7 +15,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 export class ProMarketingComponent {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild('topAnchor', { static: false })
+  @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
   constructor(protected router: Router, configs: ConfigsService) {

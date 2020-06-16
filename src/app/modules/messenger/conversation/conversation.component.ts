@@ -2,9 +2,9 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  OnDestroy,
+  Renderer2,
   OnInit,
-  Renderer,
+  OnDestroy,
 } from '@angular/core';
 
 import { Client } from '../../../services/api';
@@ -73,7 +73,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
     public client: Client,
     public sockets: SocketsService,
     public cd: ChangeDetectorRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,

@@ -263,12 +263,12 @@ class JSONP {
       timeout = options.timeout || 10; // sec
 
     var timeout_trigger = window.setTimeout(function() {
-      window[callback_name] = function() {};
+      (window as any)[callback_name] = function() {};
       on_timeout();
       document.getElementsByTagName('head')[0].removeChild(script);
     }, timeout * 1000);
 
-    window[callback_name] = function(data) {
+    (window as any)[callback_name] = function(data) {
       window.clearTimeout(timeout_trigger);
       on_success(data);
       document.getElementsByTagName('head')[0].removeChild(script);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { EmailConfirmationComponent } from './email-confirmation.component';
+import { FormToastService } from '../../services/form-toast.service';
 
 /**
  * API implementation service for Email Confirmation component
@@ -14,10 +15,14 @@ export class EmailConfirmationService {
     this.container = container;
   }
 
-  constructor(protected client: Client) {}
+  constructor(
+    protected client: Client,
+    private toasterService: FormToastService
+  ) {}
 
   show() {
     this.container.show();
+    this.toasterService.error('You must confirm your email address.');
   }
 
   /**

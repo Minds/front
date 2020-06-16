@@ -3,7 +3,7 @@
     <input
       type="text"
       placeholder="Title"
-      i18n-placeholder
+      i18n-placeholder="@@COMMON__TITLE"
       [ngModel]="(title$ | async) || ''"
       [hidden]="(title$ | async) === null"
       [disabled]="isPosting$ | async"
@@ -26,14 +26,14 @@
         "
         sizeFactor="20"
       ></m-icon>
-      <span i18n>Title</span>
+      <span i18n="@@COMMON__TITLE">Title</span>
     </div>
   </div>
 
   <textarea
     class="m-composerTextarea__message"
     placeholder="Speak your mind..."
-    i18n-placeholder
+    i18n-placeholder="@@COMPOSER_POPUP__SPEAK_YOUR_MINDS_ELLIPSIS"
     [id]="inputId"
     [ngModel]="message$ | async"
     [disabled]="isPosting$ | async"

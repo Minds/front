@@ -1,4 +1,4 @@
-<m-sidebarWidget title="Trending Tags">
+<m-sidebarWidget title="Trending Tags" i18n-title="@@TRENDING__TAGS">
   <div class="m-sidebarWidget__body">
     <ul>
       <li
@@ -12,7 +12,9 @@
           <div>
             <h4>#{{ tag.value }}</h4>
             <div class="m-discoveryTrendListItem__supportingText--below">
-              <span>{{ tag.posts_count }} posts</span>
+              <span i18n="@@DISCOVERY_SIDEBAR_TAGS__X_POSTS"
+                >{{ tag.posts_count }} posts</span
+              >
             </div>
           </div>
         </a>
@@ -23,6 +25,7 @@
     class="m-sidebarWidget__seeMore"
     (click)="seeMore()"
     *ngIf="limit === 5 && !(inProgress$ | async)"
+    i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
     >See more</a
   >
 </m-sidebarWidget>

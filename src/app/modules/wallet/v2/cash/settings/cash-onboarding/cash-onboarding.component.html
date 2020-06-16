@@ -1,9 +1,14 @@
 <div class="m-walletCashOnboarding">
   <div class="m-walletCashOnboardingView--addDetails" *ngIf="!editing">
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_ACCOUNT_INFO"
+    >
       Add your bank account details where cash rewards will be deposited.
     </p>
-    <m-shadowboxSubmitButton (click)="enterEditMode()"
+    <m-shadowboxSubmitButton
+      (click)="enterEditMode()"
+      i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_DETAILS"
       >Add your bank details</m-shadowboxSubmitButton
     >
   </div>
@@ -12,7 +17,10 @@
   <!-- -------------------------------------------- -->
   <div class="m-walletCashOnboardingView--form" *ngIf="editing">
     <form [formGroup]="form" class="m-walletButtonLayout--buttonOffsetRight">
-      <p class="m-walletSecondaryText--desc">
+      <p
+        class="m-walletSecondaryText--desc"
+        i18n="@@WALLET_V2__CASH_ONBOARD__START_RECEIVING_CASH_PAYOUTS"
+      >
         Start receiving cash payouts by adding your bank details.
       </p>
 
@@ -23,7 +31,9 @@
           <!-- -------------------------------------------- -->
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
-              <label for="country" i18n>Country</label>
+              <label for="country" i18n="@@CASH_ONBOARDING__COUNTRY"
+                >Country</label
+              >
             </div>
             <div class="m-walletForm__row--input">
               <minds-country-input
@@ -47,7 +57,9 @@
             <!-- -------------------------------------------- -->
             <div class="m-walletForm__field--text stretchedField">
               <div class="m-walletForm__row--label">
-                <label for="firstName" i18n>First Name</label>
+                <label for="firstName" i18n="@@CASH_ONBOARDING__FIRST_NAME"
+                  >First Name</label
+                >
               </div>
               <div class="m-walletForm__row--input">
                 <input
@@ -65,7 +77,9 @@
             <!-- -------------------------------------------- -->
             <div class="m-walletForm__field--text stretchedField">
               <div class="m-walletForm__row--label">
-                <label for="lastName" i18n>Last Name</label>
+                <label for="lastName" i18n="@@CASH_ONBOARDING__LAST_NAME"
+                  >Last Name</label
+                >
               </div>
               <div class="m-walletForm__row--input">
                 <input
@@ -84,7 +98,9 @@
           <!-- -------------------------------------------- -->
           <div class="m-walletForm__field--text">
             <div class="m-walletForm__row--label">
-              <label for="dob" i18n>Date of Birth</label>
+              <label for="dob" i18n="@@COMMON__DATE_OF_BIRTH"
+                >Date of Birth</label
+              >
             </div>
             <div class="m-walletForm__row--input">
               <m-date__dropdowns
@@ -100,7 +116,9 @@
           <!-- -------------------------------------------- -->
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
-              <label for="phoneNumber" i18n>Phone Number</label>
+              <label for="phoneNumber" i18n="@@CASH_ONBOARDING__PHONE_NUMBER"
+                >Phone Number</label
+              >
             </div>
             <div class="m-walletForm__row--input">
               <m-phoneInput
@@ -124,10 +142,16 @@
             *ngIf="isCountry(['HK', 'SG'])"
           >
             <div class="m-walletForm__row--label">
-              <label for="personalIdNumber" i18n *ngIf="isCountry(['HK'])"
+              <label
+                for="personalIdNumber"
+                *ngIf="isCountry(['HK'])"
+                i18n="@@CASH_ONBOARDING__HK_ID_CARD"
                 >Hong Kong Identity Card (HKID)</label
               >
-              <label for="personalIdNumber" i18n *ngIf="isCountry(['SG'])"
+              <label
+                for="personalIdNumber"
+                *ngIf="isCountry(['SG'])"
+                i18n="@@CASH_ONBOARDING__SG_ID_CARD"
                 >National Registration Identity Card (NRIC)</label
               >
             </div>
@@ -150,7 +174,9 @@
             *ngIf="isCountry(['US'])"
           >
             <div class="m-walletForm__row--label">
-              <label for="ssn" i18n>SSN (last 4 digits)</label>
+              <label for="ssn" i18n="@@CASH_ONBOARDING__SSN_LAST_4_DIGITS"
+                >SSN (last 4 digits)</label
+              >
             </div>
             <div class="m-walletForm__row--input">
               <input
@@ -172,7 +198,9 @@
           <!-- -------------------------------------------- -->
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
-              <label for="street" i18n>Address</label>
+              <label for="street" i18n="@@CASH_ONBOARDING__ADDRESS"
+                >Address</label
+              >
             </div>
             <div class="m-walletForm__row--input">
               <input
@@ -193,7 +221,7 @@
             *ngIf="!isCountry(['SG'])"
           >
             <div class="m-walletForm__row--label">
-              <label for="city" i18n>City</label>
+              <label for="city" i18n="@@CASH_ONBOARDING__CITY">City</label>
             </div>
             <div class="m-walletForm__row--input">
               <input
@@ -215,7 +243,7 @@
             *ngIf="isCountry(['US'])"
           >
             <div class="m-walletForm__row--label">
-              <label for="state" i18n>State</label>
+              <label for="state" i18n="@@CASH_ONBOARDING__STATE">State</label>
             </div>
             <div class="m-walletForm__row--input">
               <input
@@ -233,7 +261,9 @@
             *ngIf="isCountry(['AU', 'CA', 'IE'])"
           >
             <div class="m-walletForm__row--label">
-              <label for="state" i18n>State / Province</label>
+              <label for="state" i18n="@@CASH_ONBOARDING__STATE_PROVINCE"
+                >State / Province</label
+              >
             </div>
             <div class="m-walletForm__row--input">
               <input
@@ -255,10 +285,16 @@
             *ngIf="!isCountry(['HK'])"
           >
             <div class="m-walletForm__row--label">
-              <label for="postCode" i18n *ngIf="isCountry(['US'])"
+              <label
+                for="postCode"
+                *ngIf="isCountry(['US'])"
+                i18n="@@CASH_ONBOARDING__ZIP_CODE"
                 >Zip Code</label
               >
-              <label for="postCode" i18n *ngIf="!isCountry(['US'])"
+              <label
+                for="postCode"
+                *ngIf="!isCountry(['US'])"
+                i18n="@@CASH_ONBOARDING__POSTAL_CODE"
                 >Postal Code</label
               >
             </div>
@@ -280,7 +316,7 @@
         <div class="m-walletForm__field--checkbox">
           <div class="m-walletSettings__row--input">
             <m-formInput__checkbox formControlName="stripeAgree">
-              <span
+              <span i18n="@@CASH_ONBOARDING__READ_AND_AGREED_STRIPE"
                 >I have read and agree to the
                 <a href="https://stripe.com/legal" target="_blank">
                   Stripe Services Agreement
@@ -305,12 +341,14 @@
           (click)="cancelForm()"
           [disabled]="inProgress"
           color="grey"
+          i18n="@@COMMON__CANCEL"
           >Cancel</m-shadowboxSubmitButton
         >
         <m-shadowboxSubmitButton
           (click)="createAccount()"
           [disabled]="inProgress || form.invalid"
           [saving]="inProgress"
+          i18n="@@COMMON__UPDATE_PERSONAL_INFORMATION"
           >Update Personal Information</m-shadowboxSubmitButton
         >
       </div>
@@ -324,16 +362,25 @@
     (closeModal)="showModal = false"
     class="m-walletModal--confirmation"
   >
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@CASH_ONBOARDING__ARE_YOU_SURE_STOP"
+    >
       Are you sure you want to stop? Any personal information you've entered
       will be lost.
     </p>
 
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+      <m-shadowboxSubmitButton
+        color="grey"
+        (click)="showModal = false"
+        i18n="@@COMMON__GO_BACK"
         >Go back</m-shadowboxSubmitButton
       >
-      <m-shadowboxSubmitButton color="red" (click)="leaveEditMode()"
+      <m-shadowboxSubmitButton
+        color="red"
+        (click)="leaveEditMode()"
+        i18n="@@COMMON__IM_SURE"
         >I'm sure</m-shadowboxSubmitButton
       >
     </div>

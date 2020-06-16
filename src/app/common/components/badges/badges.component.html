@@ -13,7 +13,11 @@
   </li>
 
   <li *ngIf="user.pro && badges.indexOf('plus') > -1" routerLink="/pro">
-    <m-tooltip icon="business_center" iconClass="selected" i18n>
+    <m-tooltip
+      icon="business_center"
+      iconClass="selected"
+      i18n="@@COMMON__BADGES__PRO"
+    >
       Pro
     </m-tooltip>
   </li>
@@ -68,9 +72,8 @@
     <m-tooltip
       icon="link"
       [iconClass]="{ selected: true }"
-      i18n="Boosted OnChain in the last 7 days"
+      i18n="@@BADGES__BOOSTER"
+      >Boosted OnChain in the last 7 days</m-tooltip
     >
-      Boosted OnChain in the last 7 days
-    </m-tooltip>
   </li>
 </ul>

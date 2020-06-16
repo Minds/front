@@ -46,7 +46,7 @@ describe('ChannelSetupOnboardingComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -56,6 +56,14 @@ describe('ChannelSetupOnboardingComponent', () => {
 
     comp = fixture.componentInstance;
     fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        done();
+      });
+    }
   });
 
   afterEach(() => {
@@ -76,9 +84,15 @@ describe('ChannelSetupOnboardingComponent', () => {
       status: 'success',
     };
 
+    jasmine.clock().tick(10);
+    fixture.detectChanges();
+
     input.nativeElement.dispatchEvent(new Event('keyup'));
 
     jasmine.clock().tick(1010);
+    fixture.detectChanges();
+
+    console.log(clientMock.post.calls.mostRecent().args[1]);
 
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({

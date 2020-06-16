@@ -63,8 +63,8 @@ export class GroupsProfile {
   socketRoomName: string;
   newConversationMessages: boolean = false;
 
-  @ViewChild('feed', { static: false }) private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector', { static: false })
+  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
+  @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
 
   private reviewCountInterval: any;

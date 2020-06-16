@@ -1,18 +1,28 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing class="m-plus__marketing" pageTitle="Minds Plus" i18n-pageTitle>
+<m-marketing
+  class="m-plus__marketing"
+  pageTitle="Minds Plus"
+  i18n-pageTitle="@@COMMON__MINDS_PLUS"
+>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
-        <h1 i18n>
+        <h1 i18n="@@MARKETING_PLUS__MINDS_PLUS">
           Minds Plus
         </h1>
 
-        <h2 ngPreserveWhitespaces i18n>
+        <h2
+          ngPreserveWhitespaces
+          i18n="@@MARKETING_PLUS__UPGRADE_CHANNEL_PREMIUM_FEATURES"
+        >
           Upgrade your channel and <em>unlock premium features</em>
         </h2>
 
-        <p class="m-marketing__description" i18n>
+        <p
+          class="m-marketing__description"
+          i18n="@@MARKETING_PLUS__SUPPORT_MINDS_UNLOCK_FEATURES"
+        >
           Support Minds and unlock features such as hiding ads, accessing
           exclusive content, receiving a badge and verifying your channel.
         </p>
@@ -33,13 +43,17 @@
           >
 
           <ng-container *ngIf="!isVerified; else alreadyVerifiedView">
-            <a (click)="openVerifyModal()" i18n
+            <a
+              (click)="openVerifyModal()"
+              i18n="@@MARKETING_PLUS__CLICK_TO_REQUEST_VERIFICATION"
               >Click here to request to be verified</a
             >
           </ng-container>
 
           <ng-template #alreadyVerifiedView>
-            <span i18n>You are verified!</span>
+            <span i18n="@@MARKETING_PLUS__YOU_ARE_VERIFIED"
+              >You are verified!</span
+            >
           </ng-template>
         </div>
       </div>
@@ -64,9 +78,14 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Hide boosted content</h2>
+          <h2 i18n="@@MARKETING_PLUS__HIDE_BOOSTED_CONTENT">
+            Hide boosted content
+          </h2>
 
-          <p class="m-marketing__description" i18n>
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__TIRED_SEEING_ADS_SECTION"
+          >
             Tired of seeing ads? All Plus users have the option of hiding all
             boosted content from their feeds. Just click on the settings icon on
             the Boost rotator in your newsfeed and select “Hide Boosts” to turn
@@ -98,9 +117,14 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Access exclusive content</h2>
+          <h2 i18n="@@MARKETING_PLUS__ACCESS_EXCLUSIVE_CONTENT">
+            Access exclusive content
+          </h2>
 
-          <p class="m-marketing__description" i18n>
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__VIEW_LATEST_BEHIND_SCENES_SECTION"
+          >
             View the latest behind-the-scenes content from the Minds team. Plus
             members will also gain access to exclusive content from MindsTV
             (coming soon).
@@ -131,9 +155,14 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Verify your channel</h2>
+          <h2 i18n="@@MARKETING_PLUS__VERIFY_YOUR_CHANNEL">
+            Verify your channel
+          </h2>
 
-          <p class="m-marketing__description" i18n>
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__MEMBERS_REQUEST_TO_VERIFY_SECTION"
+          >
             Plus members are able to request to
             <a (click)="scrollToTop(); $event.preventDefault()"
               >verify their channel</a
@@ -141,7 +170,10 @@
             and receive a verified badge.
           </p>
 
-          <p class="m-marketing__description" i18n>
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__JUST_POST_URL_SECTION"
+          >
             Just post your Minds channel URL to two other social networks where
             you have the same identify and provide us with the proof.
           </p>
@@ -171,7 +203,9 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Other Plus features</h2>
+          <h2 i18n="@@MARKETING_PLUS__OTHER_PLUS_FEATURES">
+            Other Plus features
+          </h2>
         </div>
       </div>
 
@@ -179,9 +213,12 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h3 i18n>Receive a badge</h3>
+          <h3 i18n="@@MARKETING_PLUS__RECIEVE_A_BADGE">Receive a badge</h3>
 
-          <p class="m-marketing__description" i18n>
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__MEMBERS_RECEIVE_BADGE_SECTION"
+          >
             Plus members receive a badge for their channel to indicate they are
             part of the community.
           </p>
@@ -190,9 +227,12 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h3 i18n>Support Minds</h3>
+          <h3 i18n="@@MARKETING_PLUS__SUPPORT_MINDS">Support Minds</h3>
 
-          <p class="m-marketing__description" i18n>
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__BUYING_PLUS_SECTION"
+          >
             Buying Plus is a great way to keep Minds independent and show your
             support for Internet freedom.
           </p>
@@ -203,7 +243,11 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+          <button
+            class="mf-button mf-button--alt"
+            (click)="scrollToTop()"
+            i18n="@@MARKETING_PLUS__UPGRADE_TO_PLUS"
+          >
             Upgrade to Plus
           </button>
         </div>

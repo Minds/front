@@ -2,7 +2,7 @@
   <div>
     <div class="m-proSubscriptionPlan__toggleContainer">
       <div class="m-proSubscriptionPlan__toggle">
-        <span i18n>Yearly</span>
+        <span i18n="@@PRO_SUBSCRIPTION__YEARLY">Yearly</span>
         <span
           ><m-toggle
             [(mModel)]="interval"
@@ -10,11 +10,11 @@
             rightValue="monthly"
           ></m-toggle
         ></span>
-        <span i18n>Monthly</span>
+        <span i18n="@@PRO_SUBSCRIPTION__MONTHLY">Monthly</span>
       </div>
 
       <div class="m-proSubscriptionPlan__toggle">
-        <span i18n>USD</span>
+        <span i18n="@@PRO_SUBSCRIPTION__USD">USD</span>
         <span
           ><m-toggle
             [(mModel)]="currency"
@@ -22,21 +22,24 @@
             rightValue="tokens"
           ></m-toggle
         ></span>
-        <span i18n>Tokens</span>
+        <span i18n="@@PRO_SUBSCRIPTION__TOKENS">Tokens</span>
       </div>
     </div>
 
     <div class="m-proSubscriptionPlan__pricing">
-      <span class="m-proSubscriptionPlanPricing__amount" i18n>
+      <span
+        class="m-proSubscriptionPlanPricing__amount"
+        i18n="@@PRO_SUBSCRIPTION__PER_MONTH"
+      >
         <span>{{ pricing.amount }}</span> per month
       </span>
 
       <span
         class="m-proSubscriptionPlanPricing__offer"
         *ngIf="pricing.offerFrom"
-        i18n
+        i18n="@@PRO_SUBSCRIPTION__PER_MONTH"
       >
-        {{ pricing.offerFrom }} per month
+        <span>{{ pricing.offerFrom }}</span> per month
       </span>
     </div>
 
@@ -47,12 +50,14 @@
             class="mf-button mf-button--alt"
             [disabled]="active || inProgress || criticalError"
             (click)="enable()"
-            i18n
+            i18n="@@PRO_SUBSCRIPTION__UPGRADE_TO_PRO"
           >
             Upgrade to Pro
           </button>
           <div class="m-proSubscription__alreadyAMemberNotice" *ngIf="active">
-            <span>You're already a Pro member.</span>
+            <span i18n="@@PRO_SUBSCRIPTION__ALREADY_PRO_MEMBER"
+              >You're already a Pro member.</span
+            >
             <a
               [routerLink]="[
                 '/pro',
@@ -60,6 +65,7 @@
                 'settings',
                 'subscription'
               ]"
+              i18n="@@PRO_SUBSCRIPTION__MANAGE_MEMBERSHIP"
             >
               Manage membership.
             </a>
@@ -71,17 +77,20 @@
           [routerLink]="[
             '/pro/' + session.getLoggedInUser().username + '/settings'
           ]"
-          i18n
+          i18n="@@PRO_SUBSCRIPTION__TRY_PRO"
         >
           Try Pro
         </button>
       </ng-container>
       <ng-template #comingSoon>
-        <button class="mf-button mf-button--alt" i18n>
+        <button class="mf-button mf-button--alt" i18n="@@COMMON__COMING_SOON">
           Coming soon
         </button>
       </ng-template>
-      <p class="m-marketing__subText">
+      <p
+        class="m-marketing__subText"
+        i18n="@@PRO_SUBSCRIPTION__BY_PURCHASING_PRO_AGREE"
+      >
         By purchasing Pro you agree to
         <a
           href="https://cdn-assets.minds.com/pro-terms-27-11-2019.pdf"

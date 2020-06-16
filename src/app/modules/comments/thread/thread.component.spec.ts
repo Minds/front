@@ -107,6 +107,7 @@ describe('CommentsThreadComponent', () => {
     };
     comp.level = 1;
 
+    comp.activityService.allowComment$ = new BehaviorSubject<boolean>(true);
     comp.sockets.error$ = new BehaviorSubject<boolean>(false);
 
     fixture.detectChanges();

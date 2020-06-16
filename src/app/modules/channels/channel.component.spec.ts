@@ -35,11 +35,10 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelMode } from '../../interfaces/entities';
-import { ClientMetaService } from '../../common/services/client-meta.service';
-import { clientMetaServiceMock } from '../../../tests/client-meta-service-mock.spec';
 import { SiteService } from '../../common/services/site.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { SeoService } from './v2/seo.service';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
@@ -118,8 +117,11 @@ describe('ChannelComponent', () => {
         },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
-        { provide: ClientMetaService, useValue: clientMetaServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));

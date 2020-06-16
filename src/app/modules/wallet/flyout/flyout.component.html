@@ -4,7 +4,7 @@
     *ngIf="address && showAnnouncement"
     (click)="setUpCryptoWallet()"
   >
-    <span i18n="@@WALLET__FLYOUT__SETUP_WALLET_NOTICE"
+    <span
       >Hey, do you want to setup your Token wallet using <b>{{ address }}</b
       >?</span
     >
@@ -12,12 +12,7 @@
       <i class="material-icons">close</i>
     </div>
   </div>
-  <!--<m-announcement [id]="'blockchain:wallet-address-notice:' + address">  &lt;!&ndash;*ngIf="address"&ndash;&gt;
-    <span class="m-blockchain&#45;&#45;wallet-address-notice&#45;&#45;action"
-      (click)="navigate()"
-      i18n="@@BLOCKCHAIN__WALLET_ADDRESS_NOTICE"
-    >Hey, do you want to setup your Tokens wallet using <b>{{ address }}</b>?</span>
-  </m-announcement>-->
+
   <div class="m-wallet--flyout-grid">
     <!--<div class="m-wallet--flyout-volume mdl-cell mdl-cell--4-col">
       <span *ngIf="balance.points > -1">{{ balance.points | abbr }}</span>
@@ -37,8 +32,8 @@
       }}</span>
       <span *ngIf="balance.tokens < 0">...</span>
       <div class="m-wallet--flyout-label">
-        <label i18n="@@WALLET__FLYOUT_COIN__TOKENS_LABEL">Tokens</label>
-        <m-tooltip icon="help" i18n="@@WALLET__FLYOUT_COIN__TOKENS_TOOLTIP">
+        <label>Tokens</label>
+        <m-tooltip icon="help">
           Your Tokens balance
         </m-tooltip>
       </div>
@@ -59,11 +54,7 @@
   <div
     class="m-wallet--flyout--bottom-container mdl-color--blue-grey-50 mdl-color-text--blue-grey-200"
   >
-    <a
-      [routerLink]="['/wallet']"
-      (click)="close()"
-      i18n="@@WALLET__FLYOUT__GO_TO_WALLET"
-    >
+    <a [routerLink]="['/wallet']" (click)="close()">
       Go to Wallet
     </a>
   </div>

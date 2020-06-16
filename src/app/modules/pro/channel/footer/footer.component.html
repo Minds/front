@@ -4,7 +4,7 @@
       *ngIf="showMessageButton()"
       (click)="onMessageClicked()"
       class="m-proChannelFooter__link"
-      i18n-title
+      i18n-title="@@COMMON__MESSAGE"
     >
       Message
     </a>
@@ -23,12 +23,15 @@
           class="m-proChannelFooter__link"
           [href]="viewProfileHref"
           target="_blank"
-          i18n
         >
           @{{ currentUsername }}
         </a>
 
-        <a class="m-proChannelFooter__link" (click)="logout()" i18n>
+        <a
+          class="m-proChannelFooter__link"
+          (click)="logout()"
+          i18n="@@COMMON__LOGOUT"
+        >
           Logout
         </a>
       </ng-container>

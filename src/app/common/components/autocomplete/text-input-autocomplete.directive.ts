@@ -171,7 +171,10 @@ export class TextInputAutocompleteDirective implements OnDestroy {
     ) {
       return this.elm.nativeElement.selectionStart;
     } else {
-      return getContentEditableCaretCoordinates(element).start;
+      const coordinates = getContentEditableCaretCoordinates(element);
+      if (coordinates && coordinates.start) {
+        return coordinates.start;
+      }
     }
   }
 

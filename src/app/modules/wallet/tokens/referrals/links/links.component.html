@@ -1,15 +1,9 @@
 <div class="m-referralsLinks">
   <div class="m-referralsLinks__copyableLinks">
-    <h3
-      class="m-referralsLinks__modalShow"
-      i18n="@@M_REFERRALS__LINKS_MODAL_HEADER"
-    >
+    <h3 class="m-referralsLinks__modalShow">
       Earn tokens for referring your friends
     </h3>
-    <p
-      class="m-referralsLinks__modalHide"
-      i18n="@@M_REFERRALS__LINKS_REGISTER_URL_DESC"
-    >
+    <p class="m-referralsLinks__modalHide">
       Send this link to your friends to earn tokens for referrals
     </p>
 
@@ -32,22 +26,16 @@
         (click)="copyToClipboard(registerUrlEl, 'registerUrl')"
         class="m-referralsLinks__copyableLinkButton"
       >
-        <div
-          *ngIf="!registerUrlRecentlyCopied"
-          i18n="@@M_REFERRALS__LINKS_COPY_ACTION"
-        >
+        <div *ngIf="!registerUrlRecentlyCopied">
           Copy
         </div>
-        <div
-          *ngIf="registerUrlRecentlyCopied"
-          i18n="@@M_REFERRALS__LINKS_COPY_STATE"
-        >
+        <div *ngIf="registerUrlRecentlyCopied">
           Copied
         </div>
       </div>
     </div>
 
-    <p i18n="@@M_REFERRALS__LINKS_REFERRER_PARAM_DESC">
+    <p>
       You can also get referrals by adding this code to the end of any Minds
       link you share
     </p>
@@ -70,16 +58,10 @@
         (click)="copyToClipboard(referrerParamEl, 'referrerParam')"
         class="m-referralsLinks__copyableLinkButton"
       >
-        <div
-          i18n="@@M_REFERRALS__LINKS_COPY_ACTION"
-          *ngIf="!referrerParamRecentlyCopied"
-        >
+        <div *ngIf="!referrerParamRecentlyCopied">
           Copy
         </div>
-        <div
-          i18n="@@M_REFERRALS__LINKS_COPY_STATE"
-          *ngIf="referrerParamRecentlyCopied"
-        >
+        <div *ngIf="referrerParamRecentlyCopied">
           Copied
         </div>
       </div>
@@ -87,7 +69,7 @@
   </div>
 
   <div class="m-referralsLinks__share">
-    <h4 i18n="@@M_REFERRALS__SHARE_HEADER">More ways to share</h4>
+    <h4>More ways to share</h4>
     <div class="m-referralsLinks__shareButtons">
       <button
         i18n-title="@@M_REFERRALS__SHARE_BUTTON_TWITTER"

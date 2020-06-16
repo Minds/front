@@ -41,7 +41,7 @@ export class PhoneInputCountryV2Component
     CountrySelectedEvent
   > = new EventEmitter<CountrySelectedEvent>();
 
-  @ViewChild('input', { static: false }) input: ElementRef;
+  @ViewChild('input') input: ElementRef;
   @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
   @ViewChildren('countryEl') countryElsList: QueryList<ElementRef>;
 

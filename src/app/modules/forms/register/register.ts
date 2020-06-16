@@ -54,7 +54,7 @@ export class RegisterForm {
   form: FormGroup;
   fbForm: FormGroup;
 
-  @ViewChild('popover', { static: false }) popover: PopoverComponent;
+  @ViewChild('popover') popover: PopoverComponent;
 
   constructor(
     public session: Session,

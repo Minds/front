@@ -9,7 +9,9 @@
     ></m-youtubeMigration__videoList>
   </ng-container>
   <div *ngIf="noInitResults" class="m-youtubeMigration__notice">
-    <p i18n>No transferred videos</p>
+    <p i18n="@@YT_MIGRATED_VIDEOS__NO_TRANSFERED_VIDEOS">
+      No transferred videos
+    </p>
   </div>
   <infinite-scroll
     *ngIf="!fewerResultsThanLimit"

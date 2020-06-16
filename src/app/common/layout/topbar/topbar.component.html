@@ -35,12 +35,9 @@
         *ngIf="session.isLoggedIn()"
         (click)="menu.value = false"
       >
-        <a
-          [routerLink]="['/', session.getLoggedInUser().username]"
-          i18n="@@MINDS__TOPBAR__VIEW_CHANNEL"
-        >
+        <a [routerLink]="['/', session.getLoggedInUser().username]">
           <i class="material-icons">people</i>
-          <span>View Channel</span>
+          <span i18n="verb|@@M__ACTION__VIEW_CHANNEL">View Channel</span>
         </a>
       </li>
       <li
@@ -48,9 +45,9 @@
         *ngIf="session.isLoggedIn() && session.isAdmin()"
         (click)="menu.value = false"
       >
-        <a [routerLink]="['/admin/analytics']" i18n="@@MINDS__TOPBAR__ADMIN">
+        <a [routerLink]="['/admin/analytics']">
           <i class="material-icons">build</i>
-          <span>Admin</span>
+          <span i18n="@@COMMON__ADMIN">Admin</span>
         </a>
       </li>
       <li
@@ -58,37 +55,31 @@
         *ngIf="session.isLoggedIn()"
         (click)="menu.value = false"
       >
-        <a
-          [routerLink]="['/settings/general']"
-          i18n="@@MINDS__TOPBAR__SETTINGS"
-        >
+        <a [routerLink]="['/settings/general']">
           <i class="material-icons">settings</i>
-          <span>Settings</span>
+          <span i18n="@@COMMON_SETTINGS">Settings</span>
         </a>
       </li>
       <ng-container *mIfFeature="'helpdesk'; else faq"> </ng-container>
       <ng-template #faq>
         <li class="m-dropdownList__item" (click)="menu.value = false">
-          <a [routerLink]="['/faq']" i18n="@@MINDS__TOPBAR__FAQ">
+          <a [routerLink]="['/faq']">
             <i class="material-icons">help_outline</i>
-            <span>FAQ</span>
+            <span i18n="@@COMMON_FAQ">FAQ</span>
           </a>
         </li>
       </ng-template>
       <li class="m-dropdownList__item" (click)="menu.value = false">
         <ng-container *mIfFeature="'helpdesk'; else helpAndSupport">
-          <a routerLink="/help" i18n="@@MINDS__TOPBAR__HELPDESK">
+          <a routerLink="/help">
             <i class="material-icons">help_outline</i>
-            <span>Help Desk</span>
+            <span i18n="@@COMMON__HELP DESK">Help Desk</span>
           </a>
         </ng-container>
         <ng-template #helpAndSupport>
-          <a
-            [routerLink]="['/groups/profile/', '100000000000000681']"
-            i18n="@@MINDS__TOPBAR__HS_GROUP"
-          >
+          <a [routerLink]="['/groups/profile/', '100000000000000681']">
             <i class="material-icons">help_outline</i>
-            <span>Help & Support</span>
+            <span i18n="@@COMMON__HELP_AND_SUPPORT">Help & Support</span>
           </a>
         </ng-template>
       </li>
@@ -98,7 +89,7 @@
           [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
         >
           <i class="material-icons">description</i>
-          <span>Whitepaper</span>
+          <span i18n="@@COMMON__WHITEPAPER">Whitepaper</span>
         </a>
       </li>
       <li
@@ -106,12 +97,16 @@
         *ngIf="session.isLoggedIn()"
         (click)="menu.value = false"
       >
-        <a [routerLink]="['/canary']" i18n="@@MINDS__TOPBAR__MENU__EXPERIMENTS">
+        <a [routerLink]="['/canary']">
           <i class="material-icons">new_releases</i>
-          <span *ngIf="!session.getLoggedInUser().canary"
+          <span
+            *ngIf="!session.getLoggedInUser().canary"
+            i18n="@@COMMON__OPT_INTO_EXPERIMENTS"
             >Opt-in to Experiments</span
           >
-          <span *ngIf="session.getLoggedInUser().canary">Canary</span>
+          <span *ngIf="session.getLoggedInUser().canary" i18n="@@COMMON__CANARY"
+            >Canary</span
+          >
         </a>
       </li>
       <li
@@ -119,9 +114,9 @@
         *ngIf="session.isLoggedIn()"
         (click)="menu.value = false"
       >
-        <a [routerLink]="['/logout']" i18n="@@MINDS__TOPBAR__LOGOUT">
+        <a [routerLink]="['/logout']">
           <i class="material-icons">exit_to_app</i>
-          <span>Logout</span>
+          <span i18n="@@COMMON_LOGOUT">Logout</span>
         </a>
       </li>
     </ul>

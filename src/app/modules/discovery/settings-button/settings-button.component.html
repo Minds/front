@@ -11,7 +11,15 @@
   (click)="openSettingsModal($event)"
 >
   <ng-container [ngSwitch]="modalType">
-    <ng-template ngSwitchCase="feed">Manage Results</ng-template>
-    <ng-template ngSwitchCase="tags">Manage tags</ng-template>
+    <ng-template
+      ngSwitchCase="feed"
+      i18n="@@DISCOVERY_SETTINGS_BUTTON__MANAGE_RESULTS"
+      >Manage Results</ng-template
+    >
+    <ng-template
+      ngSwitchCase="tags"
+      i18n="@@DISCOVERY_SETTINGS_BUTTON__MANAGE_TAGS"
+      >Manage tags</ng-template
+    >
   </ng-container>
 </m-tooltip>

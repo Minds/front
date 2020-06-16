@@ -12,7 +12,7 @@ type NavigateOptions = {
 
 @Injectable()
 export class LoginReferrerService {
-  private static DEFAULT_URL = '/newsfeed';
+  private static DEFAULT_URL = '/newsfeed/subscriptions';
   private url: string;
   private exceptions: string[] = [];
 

@@ -22,7 +22,7 @@ import { FeaturesService } from '../../../services/features.service';
 })
 export class NewsfeedEntityComponent {
   @Output() deleted = new EventEmitter<any>();
-  @ViewChild(DynamicHostDirective, { static: false })
+  @ViewChild(DynamicHostDirective)
   host: DynamicHostDirective;
   entity;
   @Input() displayOptions = { v2: false };

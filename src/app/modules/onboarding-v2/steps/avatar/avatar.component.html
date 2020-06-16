@@ -1,6 +1,6 @@
 <div class="m-onboarding__controls">
   <ng-container *ngIf="cropping">
-    <h3 i18n>Position your photo</h3>
+    <h3 i18n="@@ONBOARDING_AVATAR__POSITION_YOUR_PHOTO">Position your photo</h3>
 
     <image-cropper
       [imageChangedEvent]="imageChangedEvent"
@@ -38,7 +38,7 @@
       class="mf-button mf-button--hollow"
       (click)="cancel()"
       *ngIf="cropping"
-      i18n
+      i18n="@@COMMON_CANCEL"
     >
       Cancel
     </button>
@@ -46,7 +46,7 @@
       class="mf-button mf-button--hollow"
       (click)="skip()"
       *ngIf="!cropping"
-      i18n
+      i18n="@@COMMON__SKIP"
     >
       Skip
     </button>
@@ -54,7 +54,7 @@
       class="mf-button mf-button--alt"
       (click)="uploadPhoto()"
       *ngIf="!cropping"
-      i18n
+      i18n="@@COMMON__UPLOAD_A_PHOTO"
     >
       Upload a Photo
     </button>
@@ -62,7 +62,7 @@
       class="mf-button mf-button--alt"
       (click)="continue()"
       *ngIf="cropping"
-      i18n
+      i18n="@@COMMON__FINISH"
     >
       Finish
     </button>

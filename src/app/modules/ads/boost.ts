@@ -21,7 +21,7 @@ import { isPlatformServer } from '@angular/common';
       <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
-      <minds-card [object]="entity" hostClass="mdl-card m-border"></minds-card>
+      <minds-card [object]="entity" class="mdl-card m-border"></minds-card>
     </div>
   `,
   host: {

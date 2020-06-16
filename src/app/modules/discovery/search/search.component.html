@@ -1,57 +1,66 @@
-<div class="m-tabs__container">
-  <div class="m-tabs__tab">
-    <a
-      routerLink="./"
-      routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'top', t: type$.value }"
-      >Top</a
-    >
+<ng-container
+  [m-clientMeta]="{ source: 'feed/discovery/search', medium: 'feed' }"
+>
+  <div class="m-tabs__container">
+    <div class="m-tabs__tab">
+      <a
+        routerLink="./"
+        routerLinkActive="m-tabs__tab--selected"
+        [queryParams]="{ q: q, f: 'top', t: type$.value }"
+        i18n="@@DISCOVERY_SEARCH__TOP"
+        >Top</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="./"
+        routerLinkActive="m-tabs__tab--selected"
+        [queryParams]="{ q: q, f: 'latest', t: type$.value }"
+        i18n="@@DISCOVERY_SEARCH__LATEST"
+        >Latest</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="./"
+        routerLinkActive="m-tabs__tab--selected"
+        [queryParams]="{ q: q, f: 'channels', t: type$.value }"
+        i18n="@@DISCOVERY__SEARCH__CHANNELS"
+        >Channels</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="./"
+        routerLinkActive="m-tabs__tab--selected"
+        [queryParams]="{ q: q, f: 'groups', t: type$.value }"
+        i18n="@@DISCOVERY_SEARCH__GROUPS"
+        >Groups</a
+      >
+    </div>
+    <div class="m-layout__spacer"></div>
+    <m-discovery__settingsButton modalType="feed"></m-discovery__settingsButton>
   </div>
-  <div class="m-tabs__tab">
-    <a
-      routerLink="./"
-      routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'latest', t: type$.value }"
-      >Latest</a
-    >
-  </div>
-  <div class="m-tabs__tab">
-    <a
-      routerLink="./"
-      routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'channels', t: type$.value }"
-      >Channels</a
-    >
-  </div>
-  <div class="m-tabs__tab">
-    <a
-      routerLink="./"
-      routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'groups', t: type$.value }"
-      >Groups</a
-    >
-  </div>
-  <div class="m-layout__spacer"></div>
-  <m-discovery__settingsButton modalType="feed"></m-discovery__settingsButton>
-</div>
 
-<div class="m-goBack">
-  <a routerLink="../" [queryParams]="{ reload: false }">
-    <i class="material-icons">arrow_back</i><span>Back</span>
-  </a>
-</div>
+  <div class="m-goBack">
+    <a routerLink="../" [queryParams]="{ reload: false }">
+      <i class="material-icons">arrow_back</i
+      ><span i18n="@@DISCOVERY_SEARCH__BACK">Back</span>
+    </a>
+  </div>
 
-<div class="m-discoveryFeeds__feed">
-  <m-discovery__feedItem
-    *ngFor="let entity$ of entities$ | async"
-    [entity]="entity$ | async"
-    [allowAutoplayOnScroll]="true"
-  ></m-discovery__feedItem>
-  <infinite-scroll
-    distance="25%"
-    (load)="loadMore()"
-    [moreData]="hasMoreData$ | async"
-    [inProgress]="inProgress$ | async"
-  >
-  </infinite-scroll>
-</div>
+  <div class="m-discoveryFeeds__feed">
+    <m-discovery__feedItem
+      *ngFor="let entity$ of entities$ | async"
+      [entity]="entity$ | async"
+      [allowAutoplayOnScroll]="true"
+    ></m-discovery__feedItem>
+    <infinite-scroll
+      distance="25%"
+      (load)="loadMore()"
+      [moreData]="hasMoreData$ | async"
+      [inProgress]="inProgress$ | async"
+    >
+    </infinite-scroll>
+  </div>
+</ng-container>

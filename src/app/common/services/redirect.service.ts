@@ -5,12 +5,14 @@ export class RedirectService {
   public redirect(url: string): void {}
 }
 
+@Injectable()
 export class BrowserRedirectService extends RedirectService {
   redirect(url: string): void {
     window.location.href = url;
   }
 }
 
+@Injectable()
 export class ServerRedirectService extends RedirectService {
   constructor(@Inject(RESPONSE) private res) {
     super();

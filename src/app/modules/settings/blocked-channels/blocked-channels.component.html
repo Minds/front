@@ -2,7 +2,7 @@
   class="m-settings--section m-border m-settings__blockedChannels"
   data-cy="data-minds-blocked-channels"
 >
-  <h4 i18n>Blocked Channels</h4>
+  <h4 i18n="@@BLOCKED_CHANNELS__BLOCKED_CHANNELS">Blocked Channels</h4>
 
   <div class="m-settingsBlockedChannels__List">
     <div
@@ -26,7 +26,7 @@
           (click)="unblock(channel)"
         >
           <i class="material-icons">person_add</i>
-          <span i18n>Unblock</span>
+          <span i18n="@@BLOCKED_CHANNELS__UNBLOCK">Unblock</span>
         </button>
 
         <ng-template #blockButtonTemplate>
@@ -35,7 +35,7 @@
             (click)="block(channel)"
           >
             <i class="material-icons">block</i>
-            <span i18n>Block</span>
+            <span i18n="@@BLOCKED_CHANNELS__BLOCK">Block</span>
           </button>
         </ng-template>
       </div>

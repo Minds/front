@@ -36,7 +36,6 @@ import { FormToastService } from '../../../../common/services/form-toast.service
           class="m-btn m-btn--slim m-btn--action"
           (click)="verify()"
           [disabled]="inProgress"
-          i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION"
         >
           Join
         </button>
@@ -51,7 +50,6 @@ import { FormToastService } from '../../../../common/services/form-toast.service
         <div class="m-channelOnboardingSlideRewards__input">
           <p
             class="m-channelOnboardingSlide__subtext m-channelOnboardingSlide__prompt"
-            i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC"
           >
             Please enter the code we just sent to <b>+{{ number }}</b
             >, to verify your number.
@@ -61,13 +59,9 @@ import { FormToastService } from '../../../../common/services/form-toast.service
               type="number"
               [(ngModel)]="code"
               placeholder="eg. 198349"
-              i18n-placeholder="@@WALLET__TOKENS__REWARDS__CODE_EXAMPLE_PH"
               class="m-border"
             />
-            <m-tooltip
-              icon="help"
-              i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_TOOLTIP"
-            >
+            <m-tooltip icon="help">
               Please enter the code we just sent you, to verify that your number
               is correct
             </m-tooltip>
@@ -78,15 +72,10 @@ import { FormToastService } from '../../../../common/services/form-toast.service
               class="m-btn m-btn--slim m-btn--action"
               (click)="confirm()"
               [disabled]="inProgress"
-              i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION"
             >
               Confirm
             </button>
-            <button
-              class="m-btn m-btn--slim"
-              (click)="cancel()"
-              i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION"
-            >
+            <button class="m-btn m-btn--slim" (click)="cancel()">
               Go Back
             </button>
           </div>

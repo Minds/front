@@ -14,7 +14,7 @@ export class DiscoverySettingsButtonComponent {
   constructor(
     private service: DiscoveryTagsService,
     private overlayModal: OverlayModalService,
-    @SkipSelf() private injector: Injector
+    private injector: Injector
   ) {}
 
   openSettingsModal(e: MouseEvent): void {

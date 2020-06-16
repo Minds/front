@@ -56,6 +56,5 @@ import { TrendingComponent } from './trending/trending.component';
     SuggestedService,
     MruService,
   ],
-  entryComponents: [HashtagsSelectorModalComponent],
 })
 export class HashtagsModule {}

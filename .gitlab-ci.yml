@@ -91,7 +91,6 @@ qa:production:
 #   only:
 #     refs:
 #       - master
-#       - epic/SSR
 #       - production
 #       - test/gitlab-ci
 #   allow_failure: false
@@ -107,10 +106,8 @@ build:review:
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - gulp build.sass --deploy-url=/en && gulp build.sass --deploy-url=/en ##weird build needs to be run twice for now
-    - sh build/base-locale.sh dist
-    - ng run minds:server:production
-    - npm run compile:server
+    - sh build/ng9-bundles.sh
+    - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -118,57 +115,32 @@ build:review:
   except:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
+      - epic/angular-9
   tags:
     - angular
 
-build:production:en:
+build:production:bundles:
   stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
-    - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
-    - ng run minds:server:production
-    - npm run compile:server
+    - sh build/ng9-bundles.sh
+    - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
-      - dist/en
-      - dist/server.js
+      - dist/browser
       - dist/server
   only:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
-  tags:
-    - angular
-
-build:production:i18n:
-  stage: test and build
-  before_script:
-    - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
-  script:
-    - npm ci && npm install -g gulp-cli
-    - npm run postinstall
-    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
-    - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
-  artifacts:
-    name: '$CI_COMMIT_REF_SLUG'
-    paths:
-      - dist/vi
-  only:
-    refs:
-      - master
-      - epic/SSR
-      - production
-      - test/gitlab-ci
+      - epic/angular-9
   tags:
     - angular
 
@@ -183,7 +155,7 @@ build:production:i18n:
     - echo "Create a new release $CI_PIPELINE_ID"
     - sentry-cli releases new $CI_PIPELINE_ID
     - sentry-cli releases set-commits --auto $CI_PIPELINE_ID
-    - sentry-cli releases files $CI_PIPELINE_ID upload-sourcemaps $CI_PROJECT_DIR/dist/en -x .js -x .map --validate --url-prefix $SOURCEMAP_PREFIX
+    - sentry-cli releases files $CI_PIPELINE_ID upload-sourcemaps $CI_PROJECT_DIR/dist/browser -x .js -x .map --validate --url-prefix $SOURCEMAP_PREFIX
     - sentry-cli releases finalize $CI_PIPELINE_ID
     - echo "Finalized release for $CI_PIPELINE_ID"
 
@@ -201,20 +173,20 @@ prepare:review:
   except:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 prepare:review:sentry:
   <<: *sentry_prepare
   variables:
-    SOURCEMAP_PREFIX: '~/en'
+    SOURCEMAP_PREFIX: '~/browser'
   except:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
+      - epic/angular-9
   dependencies:
     - build:review
 
@@ -232,26 +204,24 @@ prepare:production:
   only:
     refs:
       - master
-      - epic/SSR
       - production
+      - epic/angular-9
       - test/gitlab-ci
   dependencies:
-    - build:production:en
-    - build:production:i18n
+    - build:production:bundles
 
 prepare:production:sentry:
   <<: *sentry_prepare
   variables:
-    SOURCEMAP_PREFIX: '~/front/dist/en'
+    SOURCEMAP_PREFIX: '~/front/dist/browser'
   only:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
+      - epic/angular-9
   dependencies:
-    - build:production:en
-    - build:production:i18n
+    - build:production:bundles
 
 ################
 # Review Stage #
@@ -271,9 +241,9 @@ prepare:production:sentry:
   except:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 review:start:
   stage: review
@@ -300,9 +270,9 @@ review:start:
   except:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 review:stop:
   <<: *cleanup_review
@@ -331,8 +301,7 @@ review:stop:
     ## Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e $IMAGE_LABEL
   dependencies:
-    - build:production:en
-    - build:production:i18n
+    - build:production:bundles
 
 staging:fpm:
   <<: *deploy
@@ -346,7 +315,6 @@ staging:fpm:
   only:
     refs:
       - master
-      - epic/SSR
       - test/gitlab-ci
 
 review:preprod:
@@ -360,11 +328,9 @@ review:preprod:
   environment:
     name: preprod
     url: https://www.minds.com # requires preprod cookie
-  # dependencies:
-  #   - build:review
-  # except:
-  #   refs:
-  #     - master
+  only:
+    refs:
+      - epic/angular-9
 
 deploy:canary:
   <<: *deploy
@@ -380,8 +346,8 @@ deploy:canary:
   only:
     refs:
       - master
-      - epic/SSR
       - test/gitlab-ci
+      - epic/angular-9
 
 deploy:production:
   <<: *deploy
@@ -397,7 +363,6 @@ deploy:production:
   only:
     refs:
       - master
-      - epic/SSR
       - test/gitlab-ci
 
 #################
@@ -411,6 +376,5 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
-      - epic/SSR
       - production
       - test/gitlab-ci

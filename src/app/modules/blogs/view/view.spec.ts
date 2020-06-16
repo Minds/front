@@ -33,10 +33,9 @@ import { MetaService } from '../../../common/services/meta.service';
 import { metaServiceMock } from '../../notifications/notification.service.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { clientMetaServiceMock } from '../../../../tests/client-meta-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 describe('Blog view component', () => {
   let comp: BlogView;
@@ -65,8 +64,11 @@ describe('Blog view component', () => {
         { provide: Session, useValue: sessionMock },
         { provide: MetaService, useValue: metaServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ClientMetaService, useValue: clientMetaServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

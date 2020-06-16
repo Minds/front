@@ -16,16 +16,12 @@
           (click)="newPage()"
           [ngClass]="{'is-active': !page.path && page.subtype !== 'link' }"
         >
-          <ng-container i18n="@@MINDS__ADMIN__PAGES__ADD_PAGE"
-            >Add a new page</ng-container
-          >
+          <ng-container>Add a new page</ng-container>
         </a>
       </li>
       <li class="m-content-sidebar-nav-item">
         <a (click)="newLink()">
-          <ng-container i18n="@@MINDS__ADMIN__PAGES__ADD_LINK"
-            >Add a new link</ng-container
-          >
+          <ng-container>Add a new link</ng-container>
         </a>
       </li>
       <li class="m-content-sidebar-nav-item" *ngFor="let p of pages">
@@ -65,7 +61,6 @@
       name="description"
       [(ngModel)]="page.body"
       placeholder="Go ahead and write some content!"
-      i18n-placeholder="@@ADMIN__PAGES__INLINE_EDITOR_PH"
       #inlineEditor
     ></m-inline-editor>
 
@@ -74,7 +69,6 @@
         class="m-button m-button--submit"
         (click)="save(page)"
         [hidden]="status == 'saving'"
-        i18n="@@MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION"
       >
         Save &amp; Publish
       </button>
@@ -82,16 +76,11 @@
         class="m-button m-button--submit"
         (click)="false"
         [hidden]="status != 'saving'"
-        i18n="@@MINDS__ADMIN__PAGES__SAVING"
       >
         Saving
       </button>
 
-      <button
-        class="m-button m-button--delete"
-        (click)="delete(page)"
-        i18n="@@M__ACTION__DELETE"
-      >
+      <button class="m-button m-button--delete" (click)="delete(page)">
         Delete
       </button>
     </div>
@@ -109,9 +98,7 @@
     />
 
     <div class="m-admin-pages-link-path">
-      <label for="" i18n="@@MINDS__ADMIN__PAGES__LINK_URL_LABEL"
-        >URL (relative or absolute):</label
-      >
+      <label for="">URL (relative or absolute):</label>
       <input
         type="text"
         class="m-form-input"
@@ -125,7 +112,6 @@
         class="mdl-button mdl-button--colored mdl-button--raised"
         (click)="save(page, false)"
         [hidden]="status == 'saving'"
-        i18n="@@MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION"
       >
         Save & Publish
       </button>
@@ -133,7 +119,6 @@
         class="mdl-button mdl-button--colored mdl-button--raised"
         (click)="false"
         [hidden]="status != 'saving'"
-        i18n="@@MINDS__ADMIN__PAGES__SAVING"
       >
         Saving
       </button>
@@ -141,7 +126,6 @@
       <button
         class="mdl-button mdl-button--colored m-button--delete"
         (click)="delete(page)"
-        i18n="@@M__ACTION__DELETE"
       >
         Delete
       </button>

@@ -15,6 +15,7 @@ import { LoginComponent } from './login.component';
 import { LogoutComponent } from './logout.component';
 import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
     LegacyModule,
     ModalsModule,
     MindsFormsModule,
+    MarketingModule,
   ],
   declarations: [
     LoginComponent,
@@ -60,11 +62,5 @@ const routes: Routes = [
     ForgotPasswordComponent,
   ],
   exports: [ForgotPasswordComponent],
-  entryComponents: [
-    LoginComponent,
-    LogoutComponent,
-    RegisterComponent,
-    ForgotPasswordComponent,
-  ],
 })
 export class AuthModule {}

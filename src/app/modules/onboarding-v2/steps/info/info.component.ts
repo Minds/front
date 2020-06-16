@@ -40,10 +40,10 @@ export class InfoStepComponent implements OnInit, OnDestroy {
 
   cities: Array<any> = [];
 
-  @ViewChild('phoneVerification', { static: false })
+  @ViewChild('phoneVerification')
   phoneVerification: PhoneVerificationComponent;
 
-  @ViewChild('dateDropdowns', { static: false })
+  @ViewChild('dateDropdowns')
   dateDropdowns: DateDropdownsComponent;
 
   phoneInputDisabled: boolean = false;

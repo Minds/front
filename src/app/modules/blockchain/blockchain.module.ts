@@ -95,6 +95,5 @@ const cryptoRoutes: Routes = [
     BlockchainEthModalComponent,
     BlockchainPurchaseComponent,
   ],
-  entryComponents: [BlockchainTdeBuyComponent],
 })
 export class BlockchainModule {}

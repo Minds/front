@@ -77,7 +77,9 @@ export class SidebarNavigationComponent
   }
 
   ngAfterViewInit() {
-    this.createGroupsSideBar();
+    if (isPlatformBrowser(this.platformId)) {
+      this.createGroupsSideBar();
+    }
   }
 
   ngOnDestroy(): void {
@@ -123,7 +125,9 @@ export class SidebarNavigationComponent
     this.hidden = !value;
 
     if (value) {
-      this.createGroupsSideBar();
+      if (isPlatformBrowser(this.platformId)) {
+        this.createGroupsSideBar();
+      }
     } else {
       this.host.viewContainerRef.clear();
     }

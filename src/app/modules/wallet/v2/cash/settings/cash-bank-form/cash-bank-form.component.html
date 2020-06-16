@@ -12,7 +12,10 @@
     class="m-walletButtonLayout--buttonOffsetRight"
     *ngIf="!hasBank || editing"
   >
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2__CASH_BANK_FORM__FINISH_ADDING_RECEIVE_CASH"
+    >
       Finish adding your bank details to start receiving cash payouts.
     </p>
     <div class="m-walletForm__fieldsContainer">
@@ -21,7 +24,12 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="country" i18n>Country</label>
+          <label
+            for="country"
+            i18n="@@CASH_BANK_FORM__COUNTRY"
+            i18n="@@COMMON__COUNTRY"
+            >Country</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <minds-country-input
@@ -41,7 +49,9 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="accountNumber" i18n>Bank Account Number / IBAN</label>
+          <label for="accountNumber" i18n="@@CASH_BANK_FORM__BANK_IBAN_NUMBER"
+            >Bank Account Number / IBAN</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <input
@@ -59,7 +69,9 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="routingNumber" i18n>Routing Number / Sort Code</label>
+          <label for="routingNumber" i18n="@@CASH_BANK_FORM__ROUTING_SORT_CODE"
+            >Routing Number / Sort Code</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <input
@@ -87,12 +99,14 @@
         (click)="cancelEdits()"
         [disabled]="inProgress"
         color="grey"
+        i18n="@@CASH_BANK_FORM__CANCEL"
         >Cancel</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton
         (click)="addBank()"
         [disabled]="inProgress || form.invalid"
         [saving]="inProgress"
+        i18n="@@CASH_BANK_FORM__ADD_BANK_ACCOUNT"
         >Add Bank Account</m-shadowboxSubmitButton
       >
     </div>
@@ -102,7 +116,10 @@
   <!-- -------------------------------------------- -->
   <ng-container *ngIf="hasBank && !editing">
     <div class="m-walletSettingsView--hasAccount__accountSummary">
-      <p class="m-walletSecondaryText--desc">
+      <p
+        class="m-walletSecondaryText--desc"
+        i18n="@@CASH_BANK_FORM__YOUR_BANK_CASH_REWARDS_DEPOSITED"
+      >
         Your bank account where cash rewards are deposited.
       </p>
       <div class="m-walletSettingsView--hasAccount__detailsWrapper">
@@ -146,13 +163,19 @@
     [showModal]="showModal && modalContent === 'leaveEditMode'"
     (closeModal)="showModal = false"
   >
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@CASH_BANK_FORM__ARE_YOU_SURE_STOP"
+    >
       Are you sure you want to stop? Any bank information you've entered will be
       lost.
     </p>
 
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+      <m-shadowboxSubmitButton
+        color="grey"
+        (click)="showModal = false"
+        i18n="@@COMMON__GO_BACK"
         >Go back</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton
@@ -160,6 +183,7 @@
         (click)="leaveEditMode()"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@COMMON__IM_SURE"
         >I'm sure</m-shadowboxSubmitButton
       >
     </div>

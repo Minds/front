@@ -5,9 +5,9 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
-  Injector,
+  Optional,
   SkipSelf,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -23,9 +23,10 @@ import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-blog-view',
@@ -33,7 +34,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
     class: 'm-blog',
   },
   templateUrl: 'view.html',
-  providers: [ActivityService, ClientMetaService],
+  providers: [ActivityService],
 })
 export class BlogView implements OnInit, OnDestroy {
   readonly cdnUrl: string;
@@ -88,7 +89,7 @@ export class BlogView implements OnInit, OnDestroy {
     this.blog = value;
   }
 
-  @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
+  @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
   constructor(
     public session: Session,
@@ -104,15 +105,10 @@ export class BlogView implements OnInit, OnDestroy {
     protected activityService: ActivityService,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService,
     configs: ConfigsService
   ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('single');
-
     this.cdnUrl = configs.get('cdn_url');
     this.siteUrl = configs.get('site_url');
     this.element = _element.nativeElement;
@@ -122,7 +118,10 @@ export class BlogView implements OnInit, OnDestroy {
   ngOnInit() {
     this.isVisible();
     this.context.set('object:blog');
-    this.clientMetaService.recordView(this.blog);
+    this.clientMetaService.recordView(this.blog, this.parentClientMeta, {
+      source: 'single',
+      medium: 'single',
+    });
   }
 
   isVisible() {

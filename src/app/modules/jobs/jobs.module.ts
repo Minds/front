@@ -28,6 +28,5 @@ const routes: Routes = [
   ],
   declarations: [JobsMarketingComponent],
   exports: [JobsMarketingComponent],
-  entryComponents: [JobsMarketingComponent],
 })
 export class JobsMarketingModule {}

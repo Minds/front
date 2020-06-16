@@ -1,17 +1,23 @@
-<div class="m-settingsV2__desc">
-  Upload custom logo and background images.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__ASSETS__LABEL">
+    Assets
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__ASSETS__DESCRIPTION">
+    Upload custom logo and background images.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <div *ngIf="init" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--asset">
       <div class="m-form__row--label">
-        <label for="logo" i18n>Logo</label>
+        <label for="logo" i18n="@@COMMON__LOGO">Logo</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span
-          ><ng-container i18n
+          ><ng-container i18n="@@SETTINGS__PRO__ASSETS__LOGO_TOOLTIP"
             >This will be displayed on the top left of your site</ng-container
           ></m-tooltip
         >
@@ -50,10 +56,12 @@
 
     <div class="m-form__field--asset">
       <div class="m-form__row--label">
-        <label for="background" i18n>Background Image</label>
+        <label for="background" i18n="@@COMMON__BACKGROUND_IMAGE"
+          >Background Image</label
+        >
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span
-          ><ng-container i18n
+          ><ng-container i18n="@@SETTINGS__PRO__ASSETS__BACKGROUND_TOOLTIP"
             >This will be displayed as the background of your site</ng-container
           ></m-tooltip
         >
@@ -92,6 +100,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@SETTINGS__PRO__ASSETS__SAVE_ASSETS"
     >
       Save Assets
     </m-shadowboxSubmitButton>

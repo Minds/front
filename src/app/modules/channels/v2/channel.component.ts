@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Injector,
   Input,
   OnDestroy,
   OnInit,
+  Optional,
   SkipSelf,
 } from '@angular/core';
 import { ChannelsV2Service } from './channels-v2.service';
@@ -14,9 +14,10 @@ import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { ChannelEditIntentService } from './services/edit-intent.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { SeoService } from './seo.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { Session } from '../../../services/session';
 import { RecentService } from '../../../services/ux/recent';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 /**
  * Views
@@ -39,12 +40,7 @@ type ChannelView =
   selector: 'm-channel-v2',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'channel.component.html',
-  providers: [
-    ChannelsV2Service,
-    ClientMetaService,
-    ChannelEditIntentService,
-    SeoService,
-  ],
+  providers: [ChannelsV2Service, ChannelEditIntentService, SeoService],
 })
 export class ChannelComponent implements OnInit, OnDestroy {
   /**
@@ -84,30 +80,25 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * @param router
    * @param route
    * @param session
-   * @param clientMeta
    * @param seo
    * @param channelEditIntent
    * @param wireModal
    * @param recent
-   * @param injector
+   * @param parentClientMeta
+   * @param clientMetaService
    */
   constructor(
     public service: ChannelsV2Service,
     protected router: Router,
     protected route: ActivatedRoute,
     protected session: Session,
-    protected clientMeta: ClientMetaService,
     protected seo: SeoService,
     protected channelEditIntent: ChannelEditIntentService,
     protected wireModal: WireModalService,
     protected recent: RecentService,
-    @SkipSelf() injector: Injector
-  ) {
-    this.clientMeta
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('single');
-  }
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService
+  ) {}
 
   /**
    * Component initialization
@@ -156,7 +147,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
     if (user && user.guid && this.lastChannel !== user.guid) {
       this.lastChannel = user.guid;
-      this.clientMeta.recordView(user);
+      this.clientMetaService.recordView(user, this.parentClientMeta, {
+        source: 'single',
+        medium: 'single',
+      });
 
       if (currentUser && currentUser.guid !== user.guid) {
         this.recent

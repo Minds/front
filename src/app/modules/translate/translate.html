@@ -46,7 +46,7 @@
           >Translating</ng-container
         ><span
           *ngIf="translation.target"
-          i18n="Translation target@@TRANSLATE__TRANSLATING_TO_PART"
+          i18n="@@TRANSLATE_TO_TRANSLATION_TARGET"
         >
           to {{ translation.target }}</span
         >&hellip;
@@ -64,10 +64,7 @@
         >
         <ng-container i18n="@@TRANSLATE__TRANSLATED_LABEL"
           >Translated</ng-container
-        ><span
-          *ngIf="translation.source"
-          i18n="Translation source@@TRANSLATE__TRANSLATED_FROM_PART"
-        >
+        ><span *ngIf="translation.source" i18n="Translation source">
           from {{ translation.source }}</span
         ><span> - </span>
         <ng-container *ngIf="!hasNav2020">

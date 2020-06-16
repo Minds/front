@@ -12,13 +12,13 @@
       (click)="unsubscribe()"
     >
       <span class="m-dropdownMenu__item">
-        <span i18n>Unsubscribe</span>
+        <span i18n="@@COMMON__UNSUBSCRIBE">Unsubscribe</span>
       </span>
     </li>
     <ng-template #subscribeOption>
       <li (click)="subscribe()">
         <span class="m-dropdownMenu__item">
-          <span i18n>Subscribe</span>
+          <span i18n="@@COMMON__SUBSCRIBE">Subscribe</span>
         </span>
       </li>
     </ng-template>
@@ -27,7 +27,9 @@
     <ng-container *ngIf="service.isAdmin$ | async">
       <li *ngIf="service.isBanned$ | async" (click)="unBan()">
         <span class="m-dropdownMenu__item">
-          <span i18n>Un-ban globally</span>
+          <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBAN_GLOBALLY"
+            >Un-ban globally</span
+          >
         </span>
       </li>
       <li (click)="viewLedger()">
@@ -52,6 +54,12 @@
           i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
         >
           E-mail Address
+        </span>
+      </li>
+
+      <li (click)="proAdminToggle()">
+        <span class="m-dropdownMenu__item">
+          {{ !(service.channel$ | async)?.pro ? 'Make Pro' : 'Remove Pro' }}
         </span>
       </li>
 
@@ -103,20 +111,20 @@
       (click)="unblock()"
     >
       <span class="m-dropdownMenu__item">
-        <span i18n>Unblock</span>
+        <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__UNBLOCK">Unblock</span>
       </span>
     </li>
     <ng-template #blockOption>
       <li (click)="block()">
         <span class="m-dropdownMenu__item">
-          <span i18n>Block</span>
+          <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__BLOCK">Block</span>
         </span>
       </li>
     </ng-template>
 
     <li (click)="report()">
       <span class="m-dropdownMenu__item">
-        <span i18n>Report</span>
+        <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REPORT">Report</span>
       </span>
     </li>
   </ul>

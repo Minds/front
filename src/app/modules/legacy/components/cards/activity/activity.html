@@ -1,544 +1,557 @@
-<!-- Owner block -->
-<div
-  class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block"
-  [class.m-owner-block--remind]="activity.remind_object"
-  *ngIf="activity.ownerObj && activity.ownerObj.username"
->
-  <i class="material-icons selected" *ngIf="activity.remind_object">repeat</i>
-
-  <div class="avatar" [hovercard]="activity.ownerObj.guid">
-    <a [routerLink]="['/', activity.ownerObj.username]">
-      <img
-        [src]="cdnUrl + 'icon/' + activity.ownerObj.guid + '/medium/' + getOwnerIconTime()"
-        class="mdl-shadow--2dp"
-      />
-    </a>
-  </div>
-
-  <div class="body">
-    <a [routerLink]="['/', activity.ownerObj.username]">
-      <strong title="{{activity.ownerObj.name}}"
-        >{{activity.ownerObj.name}}</strong
-      >
-      <m-channel--badges
-        data-nosnippet
-        class="m-channel--badges-activity"
-        [user]="activity.ownerObj"
-        badges="[ 'admin', 'verified' ]"
-      ></m-channel--badges>
-    </a>
-    <a
-      *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
-      [routerLink]="['/groups/profile', activity.containerObj.guid]"
-      class="mdl-color-text--blue-grey-300"
-    >
-      <strong>({{activity.containerObj.name}})</strong>
-    </a>
-    <a
-      [routerLink]="['/newsfeed', activity.guid]"
-      class="permalink"
-      *ngIf="activity.guid && !activity.remind_object"
-    >
-      <span>{{activity.time_created * 1000 | date:'medium'}}</span>
-      <span
-        *ngIf="activity.edited"
-        class="m-edited-text"
-        i18n="@@M__COMMON__EDITED"
-        >edited</span
-      >
-      <div
-        class="mdl-card__supporting-text is-boosted"
-        *ngIf="boosted"
-        [class.is-onchain]="activity.boosted_onchain"
-      >
-        <i class="material-icons">trending_up</i>
-        <a
-          i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL"
-          [hidden]="activity.boosted_onchain"
-          >Boosted</a
-        >
-        <a
-          i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN"
-          [hidden]="!activity.boosted_onchain"
-          [routerLink]="['/token']"
-          >Boosted Onchain</a
-        >
-      </div>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
-        <i class="material-icons unlisted">visibility_off</i>
-        <a i18n>Unlisted</a>
-      </div>
-    </a>
-    <a
-      [routerLink]="['/newsfeed/', activity.entity_guid]"
-      class="permalink"
-      *ngIf="!activity.guid && activity.entity_guid && !activity.remind_object"
-    >
-      <span>{{activity.time_created * 1000 | date:'medium'}}</span>
-      <span
-        *ngIf="activity.edited"
-        class="m-edited-text"
-        i18n="@@M__COMMON__EDITED"
-        >edited</span
-      >
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
-        <i class="material-icons">trending_up</i>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
-      </div>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
-        <i class="material-icons unlisted">visibility_off</i>
-        <a i18n>Unlisted</a>
-      </div>
-    </a>
-  </div>
-</div>
-
-<m-wire--lock-screen
-  [(entity)]="activity"
-  *ngIf="activity.paywall && !editing"
-></m-wire--lock-screen>
-
-<ng-container *ngIf="!activity.paywall || editing">
-  <!-- Title -->
+<ng-container m-clientMeta>
+  <!-- Owner block -->
   <div
-    class="mdl-card__supporting-text message"
-    [hidden]="!activity.title || activity.perma_url || editing"
+    class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block"
+    [class.m-owner-block--remind]="activity.remind_object"
+    *ngIf="activity.ownerObj && activity.ownerObj.username"
   >
-    <a
-      class="m-mature-text-toggle"
-      (click)="toggleMatureVisibility()"
-      *ngIf="!activity.message && (attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity))"
-      [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
-    >
-      <i class="material-icons m-material-icons-inline">explicit</i>
-    </a>
+    <i class="material-icons selected" *ngIf="activity.remind_object">repeat</i>
 
-    <span
-      class="m-mature-message-content"
-      [innerHtml]="activity.title | tags"
-      [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-      (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
-    >
-    </span>
-  </div>
-
-  <!-- Messages -->
-
-  <div
-    m-read-more
-    class="mdl-card__supporting-text message m-mature-message"
-    [class.m-activity--message-remind]="activity.remind_object"
-    [hidden]="!activity.message || editing"
-  >
-    <a
-      class="m-mature-text-toggle"
-      (click)="toggleMatureVisibility()"
-      *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
-      [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
-    >
-      <i class="material-icons m-material-icons-inline">explicit</i>
-    </a>
-
-    <span
-      class="m-mature-message-content"
-      [innerHtml]="activity.message | tags"
-      [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-      (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
-    >
-    </span>
-    <m-read-more--button></m-read-more--button>
-  </div>
-
-  <m-translate
-    *mIfBrowser
-    [open]="translateToggle"
-    [entity]="activity"
-    [translateEvent]="translateEvent"
-    (onTranslateInit)="propagateTranslation($event)"
-    (onTranslate)="translateToggle = false"
-    (onTranslateError)="translateToggle = false"
-    #translate
-  ></m-translate>
-
-  <div
-    class="minds-editable-container"
-    *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))"
-  >
-    <ng-template
-      #itemTemplate
-      let-choice="choice"
-      let-selectChoice="selectChoice"
-    >
-      <m-post-autocomplete-item-renderer
-        [choice]="choice"
-        [selectChoice]="selectChoice"
-      ></m-post-autocomplete-item-renderer>
-    </ng-template>
-
-    <m-text-input--autocomplete-container>
-      <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-      <textarea
-        class="mdl-card__supporting-text message"
-        name="message"
-        [ngModel]="activity.message"
-        #messageEdit
-        [autoGrow]
-        mTextInputAutocomplete
-        [findChoices]="suggestions.findSuggestions"
-        [getChoiceLabel]="suggestions.getChoiceLabel"
-        [itemTemplate]="itemTemplate"
-        [triggerCharacters]="['#', '@']"
-      ></textarea>
-    </m-text-input--autocomplete-container>
-
-    <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
-      <m-nsfw-selector
-        service="editing"
-        [selected]="activity.nsfw"
-        [locked]="activity.ownerObj.nsfw_lock"
-        (selectedChange)="onNSWFSelections($event)"
-      >
-      </m-nsfw-selector>
-    </ng-container>
-
-    <m-wire-threshold-input
-      [(threshold)]="activity.wire_threshold"
-      [(enabled)]="activity.paywall"
-    ></m-wire-threshold-input>
-    <m-poster-date-selector
-      *ngIf="checkCreated()"
-      [date]="getTimeCreated()"
-      (dateChange)="onTimeCreatedChange($event)"
-      (onError)="posterDateSelectorError($event)"
-    ></m-poster-date-selector>
-    <button
-      class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
-      (click)="messageEdit.value = activity.message; editing=false;"
-      i18n="@@M__ACTION__CANCEL"
-    >
-      Cancel
-    </button>
-    <button
-      class="mdl-button mdl-button--colored mdl-button--raised"
-      (click)="activity.message = messageEdit.value; save();"
-      i18n="@@M__ACTION__SAVE"
-    >
-      Save
-    </button>
-  </div>
-
-  <!-- Rich content -->
-  <div
-    class="m-rich-embed"
-    *ngIf="activity.perma_url && activity.title"
-    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
+    <div class="avatar" [hovercard]="activity.ownerObj.guid">
+      <a [routerLink]="['/', activity.ownerObj.username]">
+        <img
+          [src]="cdnUrl + 'icon/' + activity.ownerObj.guid + '/medium/' + getOwnerIconTime()"
+          class="mdl-shadow--2dp"
+        />
+      </a>
     </div>
-    <minds-rich-embed
-      (mediaModalRequested)="onRichEmbedClick($event)"
-      [src]="activity"
-      [maxheight]="480"
-    >
-    </minds-rich-embed>
+
+    <div class="body">
+      <a [routerLink]="['/', activity.ownerObj.username]">
+        <strong title="{{activity.ownerObj.name}}"
+          >{{activity.ownerObj.name}}</strong
+        >
+        <m-channel--badges
+          data-nosnippet
+          class="m-channel--badges-activity"
+          [user]="activity.ownerObj"
+          badges="[ 'admin', 'verified' ]"
+        ></m-channel--badges>
+      </a>
+      <a
+        *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
+        [routerLink]="['/groups/profile', activity.containerObj.guid]"
+        class="mdl-color-text--blue-grey-300"
+      >
+        <strong>({{activity.containerObj.name}})</strong>
+      </a>
+      <a
+        [routerLink]="['/newsfeed', activity.guid]"
+        class="permalink"
+        *ngIf="activity.guid && !activity.remind_object"
+      >
+        <span>{{activity.time_created * 1000 | date:'medium'}}</span>
+        <span
+          *ngIf="activity.edited"
+          class="m-edited-text"
+          i18n="@@M__COMMON__EDITED"
+          >edited</span
+        >
+        <div
+          class="mdl-card__supporting-text is-boosted"
+          *ngIf="boosted"
+          [class.is-onchain]="activity.boosted_onchain"
+        >
+          <i class="material-icons">trending_up</i>
+          <a
+            i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL"
+            [hidden]="activity.boosted_onchain"
+            >Boosted</a
+          >
+          <a
+            i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN"
+            [hidden]="!activity.boosted_onchain"
+            [routerLink]="['/token']"
+            >Boosted Onchain</a
+          >
+        </div>
+        <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+          <i class="material-icons unlisted">visibility_off</i>
+          <a i18n="@@COMMON__UNLISTED">Unlisted</a>
+        </div>
+      </a>
+      <a
+        [routerLink]="['/newsfeed/', activity.entity_guid]"
+        class="permalink"
+        *ngIf="!activity.guid && activity.entity_guid && !activity.remind_object"
+      >
+        <span>{{activity.time_created * 1000 | date:'medium'}}</span>
+        <span
+          *ngIf="activity.edited"
+          class="m-edited-text"
+          i18n="@@M__COMMON__EDITED"
+          >edited</span
+        >
+        <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
+          <i class="material-icons">trending_up</i>
+          <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+        </div>
+        <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+          <i class="material-icons unlisted">visibility_off</i>
+          <a i18n="@@COMMON__UNLISTED">Unlisted</a>
+        </div>
+      </a>
+    </div>
   </div>
 
-  <!-- Translation -->
-  <div
-    *ngIf="translate && translate.translation && translate.translation.translated && translate.translation.title"
-    class="m-translation-wrapper"
-  >
+  <m-wire--lock-screen
+    [(entity)]="activity"
+    *ngIf="activity.paywall && !editing"
+  ></m-wire--lock-screen>
+
+  <ng-container *ngIf="!activity.paywall || editing">
+    <!-- Title -->
     <div
       class="mdl-card__supporting-text message"
-      [hidden]="!translate.translation.title"
+      [hidden]="!activity.title || activity.perma_url || editing"
     >
-      <span [innerHtml]="translate.translation.title | tags"></span>
-    </div>
-  </div>
-  <!-- End translation -->
-
-  <div
-    class="minds-editable-container"
-    *ngIf="editing && activity.custom_type && activity.title"
-  >
-    <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-    <textarea
-      class="mdl-card__supporting-text message"
-      name="title"
-      [ngModel]="activity.title"
-      #titleEdit
-      [autoGrow]
-    ></textarea>
-    <m-wire-threshold-input
-      [(threshold)]="activity.wire_threshold"
-      [(enabled)]="activity.paywall"
-    ></m-wire-threshold-input>
-    <button
-      class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
-      (click)="titleEdit.value = activity.title; editing=false;"
-      i18n="@@M__ACTION__CANCEL"
-    >
-      Cancel
-    </button>
-    <button
-      class="mdl-button mdl-button--colored mdl-button--raised"
-      (click)="activity.title = titleEdit.value; save();"
-      i18n="@@M__ACTION__SAVE"
-    >
-      Save
-    </button>
-  </div>
-
-  <!-- Video -->
-  <div
-    class="item item-image item-image-video m-activity--video"
-    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-    *ngIf="activity.custom_type == 'video'"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
-    </div>
-
-    <m-videoPlayer
-      [guid]="activity.entity_guid"
-      [shouldPlayInModal]="true"
-      [autoplay]="autoplayVideo"
-      [allowAutoplayOnScroll]="allowAutoplayOnScroll"
-      (mediaModalRequested)="openModal()"
-      #player
-    ></m-videoPlayer>
-  </div>
-
-  <!-- Images -->
-  <div
-    class="item item-image allow-select m-activity--image"
-    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-    *ngIf="activity.thumbnail_src && !activity.perma_url && activity.custom_type !== 'batch'"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
-    </div>
-
-    <a class="m-activity--image-link">
-      <img
-        [src]="activity.thumbnail_src"
-        (error)="activity.thumbnail_src = null"
-      />
-    </a>
-  </div>
-
-  <!-- Custom type:: batch -->
-  <div
-    class="item item-image allow-select"
-    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-    *ngIf="activity.custom_type == 'batch'"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
-    </div>
-    <a class="m-activity--image-link">
-      <img
-        [src]="activity.custom_data[0].src"
-        style="width:100%"
-        (error)="activity.custom_data[0].src = cdnAssetsUrl + 'assets/logos/placeholder-bulb.jpg'"
-        *ngIf="activity.custom_data"
-        (click)="clickedImage()"
-        #batchImage
-      />
-    </a>
-  </div>
-  <!-- Reminds -->
-  <div *ngIf="activity.remind_object">
-    <ng-container
-      *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate"
-    >
-      <minds-remind
-        [object]="activity.remind_object"
-        [events]="childEventsEmitter"
-        [boosted]="activity.boosted"
-        (matureVisibilityChange)="onRemindMatureVisibilityChange()"
-        (videoMetadataLoaded)="setVideoDimensions($event)"
-        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
-        [autoplayVideo]="autoplayVideo"
-      ></minds-remind>
-    </ng-container>
-    <ng-template #blockedRemindTemplate>
-      <div class="m-activity__blockedRemind">
-        <div class="m-activityBlockedRemind__description" i18n>
-          This remind is not available because you blocked
-          <a
-            target="_blank"
-            [routerLink]="['/', activity.remind_object.ownerObj.username]"
-            >@{{activity.remind_object.ownerObj.username}}</a
-          >.
-        </div>
-      </div>
-    </ng-template>
-  </div>
-</ng-container>
-
-<ng-content select="[bottom-content]"></ng-content>
-
-<!-- Action buttons -->
-<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">
-  <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
-  <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
-  <m-wire-button
-    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
-    [object]="activity"
-    (done)="wireSubmitted($event)"
-  ></m-wire-button>
-  <button
-    class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="showBoostButton()"
-    id="boost-actions"
-    (click)="showBoost()"
-  >
-    <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
-  </button>
-  <minds-button-comment
-    [object]="activity"
-    (click)="openComments()"
-  ></minds-button-comment>
-  <minds-button-remind
-    *ngIf="showRemindButton()"
-    [object]="activity"
-  ></minds-button-remind>
-</div>
-
-<!-- Activity metrics -->
-<div
-  class="impressions-tag m-activity--metrics m-activity--metrics-wire"
-  *ngIf="!activity.hide_impressions && !hideTabs"
->
-  <div class="m-activity--metrics-inner m-border">
-    <div class="m-activity--metrics-metric" (click)="showWire()">
-      <i class="ion-icon ion-flash"></i>
-      <span *ngIf="activity.wire_totals"
-        >{{ activity.wire_totals.tokens | token:18 | abbr }}</span
+      <a
+        class="m-mature-text-toggle"
+        (click)="toggleMatureVisibility()"
+        *ngIf="!activity.message && (attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity))"
+        [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
       >
+        <i class="material-icons m-material-icons-inline">explicit</i>
+      </a>
+
+      <span
+        class="m-mature-message-content"
+        [innerHtml]="activity.title | tags"
+        [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+        (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
+      >
+      </span>
     </div>
-    <div class="m-activity--metrics-metric">
-      <i class="material-icons">remove_red_eye</i>
-      <span>{{ activity.impressions | number }}</span>
+
+    <!-- Messages -->
+
+    <div
+      m-read-more
+      class="mdl-card__supporting-text message m-mature-message"
+      [class.m-activity--message-remind]="activity.remind_object"
+      [hidden]="!activity.message || editing"
+    >
+      <a
+        class="m-mature-text-toggle"
+        (click)="toggleMatureVisibility()"
+        *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
+        [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
+      >
+        <i class="material-icons m-material-icons-inline">explicit</i>
+      </a>
+
+      <span
+        class="m-mature-message-content"
+        [innerHtml]="activity.message | tags"
+        [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+        (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
+      >
+      </span>
+      <m-read-more--button></m-read-more--button>
+    </div>
+
+    <m-translate
+      *mIfBrowser
+      [open]="translateToggle"
+      [entity]="activity"
+      [translateEvent]="translateEvent"
+      (onTranslateInit)="propagateTranslation($event)"
+      (onTranslate)="translateToggle = false"
+      (onTranslateError)="translateToggle = false"
+      #translate
+    ></m-translate>
+
+    <div
+      class="minds-editable-container"
+      *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))"
+    >
+      <ng-template
+        #itemTemplate
+        let-choice="choice"
+        let-selectChoice="selectChoice"
+      >
+        <m-post-autocomplete-item-renderer
+          [choice]="choice"
+          [selectChoice]="selectChoice"
+        ></m-post-autocomplete-item-renderer>
+      </ng-template>
+
+      <m-text-input--autocomplete-container>
+        <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+        <textarea
+          class="mdl-card__supporting-text message"
+          name="message"
+          [ngModel]="activity.message"
+          #messageEdit
+          [autoGrow]
+          mTextInputAutocomplete
+          [findChoices]="suggestions.findSuggestions"
+          [getChoiceLabel]="suggestions.getChoiceLabel"
+          [itemTemplate]="itemTemplate"
+          [triggerCharacters]="['#', '@']"
+        ></textarea>
+      </m-text-input--autocomplete-container>
+
+      <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
+        <m-nsfw-selector
+          service="editing"
+          [selected]="activity.nsfw"
+          [locked]="activity.ownerObj.nsfw_lock"
+          (selectedChange)="onNSWFSelections($event)"
+        >
+        </m-nsfw-selector>
+      </ng-container>
+
+      <m-wire-threshold-input
+        [(threshold)]="activity.wire_threshold"
+        [(enabled)]="activity.paywall"
+      ></m-wire-threshold-input>
+      <m-poster-date-selector
+        *ngIf="checkCreated()"
+        [date]="getTimeCreated()"
+        (dateChange)="onTimeCreatedChange($event)"
+        (onError)="posterDateSelectorError($event)"
+      ></m-poster-date-selector>
+      <button
+        class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
+        (click)="messageEdit.value = activity.message; editing=false;"
+        i18n="@@M__ACTION__CANCEL"
+      >
+        Cancel
+      </button>
+      <button
+        class="mdl-button mdl-button--colored mdl-button--raised"
+        (click)="activity.message = messageEdit.value; save();"
+        i18n="@@M__ACTION__SAVE"
+      >
+        Save
+      </button>
+    </div>
+
+    <!-- Rich content -->
+    <div
+      class="m-rich-embed"
+      *ngIf="activity.perma_url && activity.title"
+      [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+    >
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+            >explicit</i
+          >
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+      <minds-rich-embed
+        (mediaModalRequested)="onRichEmbedClick($event)"
+        [src]="activity"
+        [maxheight]="480"
+      >
+      </minds-rich-embed>
+    </div>
+
+    <!-- Translation -->
+    <div
+      *ngIf="translate && translate.translation && translate.translation.translated && translate.translation.title"
+      class="m-translation-wrapper"
+    >
+      <div
+        class="mdl-card__supporting-text message"
+        [hidden]="!translate.translation.title"
+      >
+        <span [innerHtml]="translate.translation.title | tags"></span>
+      </div>
+    </div>
+    <!-- End translation -->
+
+    <div
+      class="minds-editable-container"
+      *ngIf="editing && activity.custom_type && activity.title"
+    >
+      <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+      <textarea
+        class="mdl-card__supporting-text message"
+        name="title"
+        [ngModel]="activity.title"
+        #titleEdit
+        [autoGrow]
+      ></textarea>
+      <m-wire-threshold-input
+        [(threshold)]="activity.wire_threshold"
+        [(enabled)]="activity.paywall"
+      ></m-wire-threshold-input>
+      <button
+        class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
+        (click)="titleEdit.value = activity.title; editing=false;"
+        i18n="@@M__ACTION__CANCEL"
+      >
+        Cancel
+      </button>
+      <button
+        class="mdl-button mdl-button--colored mdl-button--raised"
+        (click)="activity.title = titleEdit.value; save();"
+        i18n="@@M__ACTION__SAVE"
+      >
+        Save
+      </button>
+    </div>
+
+    <!-- Video -->
+    <div
+      class="item item-image item-image-video m-activity--video"
+      [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+      *ngIf="activity.custom_type == 'video'"
+    >
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+            >explicit</i
+          >
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+
+      <m-videoPlayer
+        [guid]="activity.entity_guid"
+        [shouldPlayInModal]="true"
+        [autoplay]="autoplayVideo"
+        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+        (mediaModalRequested)="openModal()"
+        #player
+      ></m-videoPlayer>
+    </div>
+
+    <!-- Images -->
+    <div
+      class="item item-image allow-select m-activity--image"
+      [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+      *ngIf="activity.thumbnail_src && !activity.perma_url && activity.custom_type !== 'batch'"
+    >
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+            >explicit</i
+          >
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+
+      <a class="m-activity--image-link">
+        <img
+          [src]="activity.thumbnail_src"
+          (error)="activity.thumbnail_src = null"
+        />
+      </a>
+    </div>
+
+    <!-- Custom type:: batch -->
+    <div
+      class="item item-image allow-select"
+      [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+      *ngIf="activity.custom_type == 'batch'"
+    >
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+            >explicit</i
+          >
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+      <a class="m-activity--image-link">
+        <img
+          [src]="activity.custom_data[0].src"
+          style="width:100%"
+          (error)="activity.custom_data[0].src = cdnAssetsUrl + 'assets/logos/placeholder-bulb.jpg'"
+          *ngIf="activity.custom_data"
+          (click)="clickedImage()"
+          #batchImage
+        />
+      </a>
+    </div>
+    <!-- Reminds -->
+    <div *ngIf="activity.remind_object">
+      <ng-container
+        *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate"
+      >
+        <minds-remind
+          [object]="activity.remind_object"
+          [events]="childEventsEmitter"
+          [boosted]="activity.boosted"
+          (matureVisibilityChange)="onRemindMatureVisibilityChange()"
+          (videoMetadataLoaded)="setVideoDimensions($event)"
+          [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+          [autoplayVideo]="autoplayVideo"
+        ></minds-remind>
+      </ng-container>
+      <ng-template #blockedRemindTemplate>
+        <div class="m-activity__blockedRemind">
+          <div
+            class="m-activityBlockedRemind__description"
+            i18n="@@ACTIVITY__REMIND_NOT_AVAILABLE"
+          >
+            This remind is not available because you blocked
+            <a
+              target="_blank"
+              [routerLink]="['/', activity.remind_object.ownerObj.username]"
+              >@{{activity.remind_object.ownerObj.username}}</a
+            >.
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <ng-content select="[bottom-content]"></ng-content>
+
+  <!-- Action buttons -->
+  <div class="tabs" *ngIf="!hideTabs && !isPending(activity)">
+    <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
+    <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
+    <m-wire-button
+      *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
+      [object]="activity"
+      (done)="wireSubmitted($event)"
+    ></m-wire-button>
+    <button
+      class="m-btn m-btn--action m-btn--slim minds-boost-button"
+      *ngIf="showBoostButton()"
+      id="boost-actions"
+      (click)="showBoost()"
+    >
+      <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
+    </button>
+    <minds-button-comment
+      [object]="activity"
+      (click)="openComments()"
+    ></minds-button-comment>
+    <minds-button-remind
+      *ngIf="showRemindButton()"
+      [object]="activity"
+    ></minds-button-remind>
+  </div>
+
+  <!-- Activity metrics -->
+  <div
+    class="impressions-tag m-activity--metrics m-activity--metrics-wire"
+    *ngIf="!activity.hide_impressions && !hideTabs"
+  >
+    <div class="m-activity--metrics-inner m-border">
+      <div class="m-activity--metrics-metric" (click)="showWire()">
+        <i class="ion-icon ion-flash"></i>
+        <span *ngIf="activity.wire_totals"
+          >{{ activity.wire_totals.tokens | token:18 | abbr }}</span
+        >
+      </div>
+      <div class="m-activity--metrics-metric">
+        <i class="material-icons">remove_red_eye</i>
+        <span>{{ activity.impressions | number }}</span>
+      </div>
     </div>
   </div>
-</div>
 
-<ng-container *mIfBrowser>
-  <m-comments__tree
-    *ngIf="commentsToggle"
-    [entity]="activity"
-    [canDelete]="canDelete"
+  <ng-container *mIfBrowser>
+    <m-comments__tree
+      *ngIf="commentsToggle"
+      [entity]="activity"
+      [canDelete]="canDelete"
+    >
+    </m-comments__tree>
+  </ng-container>
+
+  <div
+    class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50"
+    *ngIf="showBoostOptions"
+    i18n="@@MINDS__CARDS__ACTIVITY__BOOST_NOTICE"
   >
-  </m-comments__tree>
+    Boost this post to reach more people!
+  </div>
+
+  <div
+    class="mdl-card__menu mdl-color-text--blue-grey-300"
+    #toggle
+    *ngIf="!hideTabs"
+  >
+    <button
+      class="mdl-button m-pin-button mdl-button--icon mdl-color-text--blue-grey-300"
+      (click)="togglePin()"
+      [disabled]="session.getLoggedInUser().guid != activity.owner_guid || activity.dontPin"
+      *ngIf="!activity?.ephemeral"
+    >
+      <m-tooltip
+        icon="turned_in"
+        *ngIf="activity.pinned"
+        i18n="@@MINDS__CARDS__ACTIVITY__PINNED_POST"
+      >
+        This post is pinned
+      </m-tooltip>
+      <m-tooltip
+        icon="turned_in_not"
+        *ngIf="session.getLoggedInUser().guid == activity.owner_guid && !activity.pinned && !activity.dontPin"
+        i18n="@@MINDS__CARDS__ACTIVITY__CLICK_TO_PIN"
+      >
+        Click to pin this post to the top of your channel feed
+      </m-tooltip>
+    </button>
+    <m-safe-toggle
+      *ngIf="showRatingToggle && session.isAdmin()"
+      [(entity)]="activity"
+    ></m-safe-toggle>
+    <button
+      class="mdl-button m-translate-button mdl-button--icon mdl-color-text--blue-grey-300"
+      *ngIf="isTranslatable"
+      (click)="translateToggle = true;"
+    >
+      <i class="material-icons">public</i>
+    </button>
+    <m-post-menu
+      [entity]="activity"
+      [canDelete]="canDelete"
+      [isTranslatable]="isTranslatable"
+      [options]="menuOptions"
+      (optionSelected)="menuOptionSelected($event)"
+    >
+      <ng-container post-menu
+        ><ng-content select="[post-menu]"></ng-content
+      ></ng-container>
+    </m-post-menu>
+  </div>
+
+  <!-- Pending block -->
+  <div
+    class="mdl-card__supporting-text m-activity--pending"
+    *ngIf="isPending(activity)"
+    i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION"
+  >
+    This post is awaiting moderation.
+  </div>
+
+  <!-- Pending block -->
+  <div
+    class="mdl-card__supporting-text m-activity--pending"
+    *ngIf="isScheduled(activity.time_created, 30000)"
+  >
+    This activity is scheduled to be shown on {{activity.time_created * 1000 |
+    date:'medium'}}.
+  </div>
 </ng-container>
-
-<div
-  class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50"
-  *ngIf="showBoostOptions"
-  i18n="@@MINDS__CARDS__ACTIVITY__BOOST_NOTICE"
->
-  Boost this post to reach more people!
-</div>
-
-<div
-  class="mdl-card__menu mdl-color-text--blue-grey-300"
-  #toggle
-  *ngIf="!hideTabs"
->
-  <button
-    class="mdl-button m-pin-button mdl-button--icon mdl-color-text--blue-grey-300"
-    (click)="togglePin()"
-    [disabled]="session.getLoggedInUser().guid != activity.owner_guid || activity.dontPin"
-    *ngIf="!activity?.ephemeral"
-  >
-    <m-tooltip
-      icon="turned_in"
-      *ngIf="activity.pinned"
-      i18n="@@MINDS__CARDS__ACTIVITY__PINNED_POST"
-    >
-      This post is pinned
-    </m-tooltip>
-    <m-tooltip
-      icon="turned_in_not"
-      *ngIf="session.getLoggedInUser().guid == activity.owner_guid && !activity.pinned && !activity.dontPin"
-      i18n="@@MINDS__CARDS__ACTIVITY__CLICK_TO_PIN"
-    >
-      Click to pin this post to the top of your channel feed
-    </m-tooltip>
-  </button>
-  <m-safe-toggle
-    *ngIf="showRatingToggle && session.isAdmin()"
-    [(entity)]="activity"
-  ></m-safe-toggle>
-  <button
-    class="mdl-button m-translate-button mdl-button--icon mdl-color-text--blue-grey-300"
-    *ngIf="isTranslatable"
-    (click)="translateToggle = true;"
-  >
-    <i class="material-icons">public</i>
-  </button>
-  <m-post-menu
-    [entity]="activity"
-    [canDelete]="canDelete"
-    [isTranslatable]="isTranslatable"
-    [options]="menuOptions"
-    (optionSelected)="menuOptionSelected($event)"
-  >
-    <ng-container post-menu
-      ><ng-content select="[post-menu]"></ng-content
-    ></ng-container>
-  </m-post-menu>
-</div>
-
-<!-- Pending block -->
-<div
-  class="mdl-card__supporting-text m-activity--pending"
-  *ngIf="isPending(activity)"
-  i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION"
->
-  This post is awaiting moderation.
-</div>
-
-<!-- Pending block -->
-<div
-  class="mdl-card__supporting-text m-activity--pending"
-  *ngIf="isScheduled(activity.time_created, 30000)"
->
-  This activity is scheduled to be shown on {{activity.time_created * 1000 |
-  date:'medium'}}.
-</div>

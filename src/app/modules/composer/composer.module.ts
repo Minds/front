@@ -68,7 +68,6 @@ const PROVIDERS = [
   imports: [NgCommonModule, FormsModule, CommonModule, HashtagsModule],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
-  entryComponents: COMPONENTS,
   providers: PROVIDERS,
 })
 export class ComposerModule {}

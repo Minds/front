@@ -1,8 +1,25 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__ACCOUNT__DISPLAYNAME__LABEL"
+  >
+    Display Name
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__ACCOUNT__DISPLAYNAME__DESCRIPTION"
+  >
+    Customize your display name.
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="name" i18n>Display Name</label>
+        <label for="name" i18n="@@ACCOUNT_DISPLAY_NAME__DISPLAY_NAME"
+          >Display Name</label
+        >
       </div>
       <div class="m-form__row--input">
         <input
@@ -21,6 +38,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@ACCOUNT_DISPLAY_NAME__SAVE_DISPLAY_NAME"
     >
       Save Display Name
     </m-shadowboxSubmitButton>

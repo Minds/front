@@ -1,140 +1,93 @@
 import { argv } from 'yargs';
 import { join } from 'path';
-import { readFileSync, statSync, writeFileSync } from 'fs';
-const https = require('https');
-const querystring = require('querystring');
-const url = require('url');
+import { create, convert } from 'xmlbuilder2';
 
-const APP_SRC = join(__dirname, '..', 'src');
+import { readFileSync, statSync, existsSync, writeFileSync } from 'fs';
 
-// HTTP
-
-function req(uri, method = 'get', data = null, extraOptions = {}): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const isPost = method.toUpperCase() === 'POST';
-
-    const options = {
-      method: method.toUpperCase(),
-      headers: {},
-      ...url.parse(uri),
-      ...extraOptions,
-    };
-
-    let body = '';
-
-    if (data) {
-      body = querystring.stringify(data);
-    }
-
-    if (isPost && data && !options.headers['Content-Type']) {
-      options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      options.headers['Content-Length'] = body.length;
-    }
-
-    const req = https.request(options, res => {
-      const { statusCode } = res;
-
-      if (statusCode !== 200) {
-        res.resume();
-        return reject(new Error(`HTTP ${statusCode}`));
-      }
-
-      res.setEncoding('utf8');
-
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        try {
-          resolve(body);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }).on('error', e => {
-      reject(e);
-    });
-
-    if (body) {
-      req.write(body);
-    }
-
-    req.end();
-  });
-}
+const APP_ROOT = join(__dirname, '..');
+const APP_SRC = join(APP_ROOT, 'src');
 
 // TRANSFORMER
 
-function transform(fileContent, destination) {
-  fileContent = fileContent
-    .replace(/%([0-9]+)\$s/g, (substring, match_1) => {
-      let idx = parseInt(match_1) - 1;
+function addXTag(source) {
+  if (typeof source !== 'string') {
+    console.warn(source);
+    throw new Error('Invalid translation string');
+  }
 
-      if (idx < 1) {
-        return `{{id="INTERPOLATION"}}`;
+  const nodeStr = `<root>${source.replace(
+    /{\$([^}]+)}/g,
+    `<x id="$1" />`
+  )}</root>`;
+
+  const node = convert(nodeStr, {
+    format: 'object',
+    noDoubleEncoding: true,
+  });
+
+  return node['root'];
+}
+
+function transform(source, outputTemplate) {
+  statSync(source); // check if exists
+
+  let fileContent = readFileSync(source).toString();
+
+  const doc: any = convert(
+    {
+      encoding: 'UTF-8',
+    },
+    fileContent.trim(),
+    { format: 'object', wellFormed: true, noDoubleEncoding: true }
+  );
+
+  if (!doc.xliff.file['@target-language']) {
+    throw new Error('Missing target-language attribute');
+  }
+
+  doc.xliff.file.body['trans-unit'] = doc.xliff.file.body['trans-unit'].map(
+    transUnit => {
+      const output = JSON.parse(JSON.stringify(transUnit));
+
+      if (typeof output.source === 'string') {
+        output.source = addXTag(output.source);
+      } else {
+        output.source['#'] = addXTag(output.source['#']);
       }
 
-      return `{{id="INTERPOLATION_${idx}"}}`;
-    })
-    .replace(/{{([^}]+)}}/g, `<x $1 />`);
+      if (typeof output.target === 'string') {
+        output.target = addXTag(output.target);
+      } else {
+        output.target['#'] = addXTag(output.target['#']);
+      }
 
-  writeFileSync(destination, fileContent);
+      return output;
+    }
+  );
+
+  const language = doc.xliff.file['@target-language'].slice(0, 2);
+  const output = outputTemplate.replace(/\*/, language);
+
+  writeFileSync(
+    output,
+    create(doc).end({ noDoubleEncoding: true, prettyPrint: true })
+  );
 }
 
 // MAIN
 
-export = () => async cb => {
-  if (
-    (!argv.file && !argv['poeditor-key']) ||
-    (argv.file && argv['poeditor-key'])
-  ) {
-    cb('Please specify either an local file (--file) or a poeditor.com API key (--poeditor-key)');
+export = () => cb => {
+  if (!argv.input) {
+    return cb(`Missing --input argument`);
   }
 
-  if (!argv.locale) {
-    cb('Please specify a locale');
+  const inputFile = join(APP_ROOT, argv.input);
+
+  if (!existsSync(inputFile)) {
+    return cb(`"${inputFile}" does not exist`);
   }
 
-  let fileContent;
-
-  if (argv.file) {
-    const file = join(__dirname, '..', argv.file);
-
-    console.log(`* Using ${file}…`);
-
-    statSync(file); // check if exists
-    fileContent = readFileSync(file).toString();
-  } else if (argv['poeditor-key']) {
-    if (!argv['poeditor-id']) {
-      throw new Error('Please specify a poeditor.com Project ID (--poeditor-id');
-    }
-
-    const locale = argv['poeditor-locale'] || argv.locale;
-    console.log(`* Requesting '${locale}' (as '${argv['locale']}') from Project #${argv['poeditor-id']}`);
-
-    const { response, result } = JSON.parse(await req('https://api.poeditor.com/v2/projects/export', 'post', {
-      api_token: argv['poeditor-key'],
-      id: argv['poeditor-id'],
-      language: locale,
-      type: 'xliff',
-    }));
-
-    if (response.status !== 'success' || !result.url) {
-      throw new Error(response.message || JSON.stringify(response));
-    }
-
-    console.log(`* Downloading ${result.url}…`);
-
-    fileContent = await req(result.url);
-
-    if (!fileContent) {
-      throw new Error('Invalid file');
-    }
-  }
-
-  const dest = join(APP_SRC, 'locale', `Minds.${argv.locale}.xliff`);
-  transform(fileContent, dest);
-
-  console.log(`* Parsed and saved to ${dest}…`);
+  transform(inputFile, join(APP_SRC, 'locale', 'Minds.*.xliff'));
 
   cb();
 };

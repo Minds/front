@@ -1,6 +1,8 @@
 <div class="m-composerPopup__body m-composer__schedule">
   <div class="m-composerPopup__content">
-    <h3 class="m-composerPopup__title" i18n>Schedule Post</h3>
+    <h3 class="m-composerPopup__title" i18n="@@COMMON__SCHEDULE_POST">
+      Schedule Post
+    </h3>
 
     <div class="m-composerSchedule__layout">
       <m-calendar
@@ -13,7 +15,7 @@
 
       <div class="m-composerSchedule__form">
         <div class="m-composerPopup__field">
-          <label i18n>Date</label>
+          <label i18n="@@COMMON__DATE">Date</label>
           <input
             type="text"
             [ngModel]="state.date | date: 'mediumDate'"
@@ -22,7 +24,7 @@
         </div>
 
         <div class="m-composerPopup__field">
-          <label i18n>Time</label>
+          <label i18n="@@COMMON__TIME">Time</label>
           <input
             type="text"
             [ngModel]="state.time"
@@ -31,7 +33,7 @@
         </div>
 
         <div class="m-composerPopup__field">
-          <label i18n>Timezone</label>
+          <label i18n="@@COMMON__TIMEZONE">Timezone</label>
           <input type="text" [ngModel]="currentTimezone" readonly />
         </div>
       </div>
@@ -44,7 +46,7 @@
       [disabled]="!canSave()"
       (onAction)="save()"
       data-cy="schedule-save-button"
-      i18n
+      i18n="@@COMMON__SAVE"
     >
       Save
     </m-button>

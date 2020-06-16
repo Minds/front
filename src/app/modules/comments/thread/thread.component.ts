@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  Renderer,
+  Renderer2,
   ViewChild,
   OnInit,
   OnDestroy,
@@ -69,7 +69,7 @@ export class CommentsThreadComponent implements OnInit {
     public session: Session,
     private commentsService: CommentsService,
     public sockets: SocketsService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     protected blockListService: BlockListService,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService

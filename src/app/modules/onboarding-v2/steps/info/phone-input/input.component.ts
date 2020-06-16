@@ -24,7 +24,7 @@ export class PhoneVerificationComponent {
   confirming: boolean = false;
   confirmed: boolean = false;
 
-  @ViewChild('input', { static: false }) input: PhoneInputV2Component;
+  @ViewChild('input') input: PhoneInputV2Component;
 
   protected resendButtonDisabled: boolean = false;
 

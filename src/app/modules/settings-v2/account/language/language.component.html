@@ -1,0 +1,61 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__ACCOUNT__LANGUAGE__LABEL"
+  >
+    Language Settings
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__ACCOUNT__LANGUAGE__DESCRIPTION"
+  >
+    Change your preferred language and, if available, the web interface display.
+  </div>
+</m-settingsV2__header>
+
+<div class="m-formWrapper">
+  <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--select stretchedField">
+        <div class="m-form__row--label">
+          <label for="language" i18n="@@COMMON__LANGUAGE">Language</label>
+        </div>
+        <div class="m-form__row--input">
+          <select
+            name="language"
+            id="language"
+            formControlName="language"
+            class="form-control"
+          >
+            <option
+              *ngFor="let language of service.languages$ | async"
+              [value]="language.code"
+              [innerHTML]="language.name"
+            ></option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="m-form__buttonsContainer">
+      <m-shadowboxSubmitButton
+        [disabled]="!canSubmit()"
+        [saving]="inProgress"
+        (click)="submit()"
+        i18n="@@LANGUAGE__UPDATE_LANGUAGE"
+      >
+        Update Language
+      </m-shadowboxSubmitButton>
+    </div>
+  </form>
+
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@LANGUAGE__HELP_US_TRANSLATE__WITH__LINK"
+  >
+    Bring Minds to the world! If you speak another language, help the community
+    with translations on
+    <a target="_blank" href="https://translate.minds.com/"
+      >translate.minds.com</a
+    >.
+  </div>
+</div>

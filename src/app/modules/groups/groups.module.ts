@@ -28,7 +28,6 @@ import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
 import { GroupsSidebarMarkersComponent } from './sidebar-markers/sidebar-markers.component';
 import { CommentsModule } from '../comments/comments.module';
-import { PosterModule } from '../newsfeed/poster/poster.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
 import { CanDeactivateGroupService } from './profile/can-deactivate/can-deactivate-group.service';
@@ -78,7 +77,6 @@ const routes: Routes = [
     LegacyModule,
     ChannelsModule,
     ModalsModule,
-    PosterModule,
     HashtagsModule,
     TextInputAutocompleteModule,
     VideoChatModule,
@@ -126,7 +124,6 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,
   ],
-  entryComponents: [GroupsCard, GroupsSidebarMarkersComponent],
   providers: [CanDeactivateGroupService],
 })
 export class GroupsModule {}

@@ -8,7 +8,9 @@
         *ngIf="channel.briefdescription"
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
-        <div class="m-channelAboutField__label" i18n>Bio</div>
+        <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__BIO">
+          Bio
+        </div>
         <div
           class="m-channelAboutField__content m-channelAboutField__content--preserveBlanks"
           [innerHtml]="channel.briefdescription | tags"
@@ -19,7 +21,9 @@
         *ngIf="channel?.tags?.length"
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
-        <div class="m-channelAboutField__label" i18n>Hashtags</div>
+        <div class="m-channelAboutField__label" i18n="@@COMMON__HASHTAGS">
+          Hashtags
+        </div>
         <div class="m-channelAboutField__content" ngPreserveWhitespaces>
           <ng-container *ngFor="let tag of channel.tags">
             <span
@@ -34,7 +38,12 @@
         *ngIf="channel?.social_profiles?.length"
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
-        <div class="m-channelAboutField__label" i18n>Social Links</div>
+        <div
+          class="m-channelAboutField__label"
+          i18n="@@CHANNEL_ABOUT__SOCIAL_LINKS"
+        >
+          Social Links
+        </div>
         <div class="m-channelAboutField__content">
           <m-channel__socialLinks
             [socialLinks]="channel.social_profiles"

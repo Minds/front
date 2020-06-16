@@ -12,7 +12,7 @@ import { FeaturesService } from '../../services/features.service';
 })
 export class NotificationsTopbarToggleComponent {
   toggled: boolean = false;
-  @ViewChild('notificationsFlyout', { static: false }) flyout: any;
+  @ViewChild('notificationsFlyout') flyout: any;
 
   @HostBinding('class.m-notificationsTopbarToggle--newNav')
   newNavigation: boolean = false;

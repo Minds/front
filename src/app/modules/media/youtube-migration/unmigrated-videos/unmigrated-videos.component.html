@@ -10,7 +10,9 @@
     ></m-youtubeMigration__videoList>
   </ng-container>
   <div *ngIf="noInitResults" class="m-youtubeMigration__notice">
-    <p i18n>No available YouTube videos</p>
+    <p i18="@@YT_UNMIGRATED_VIDEOS__NO_AVAILABLE_YT_VIDEOS">
+      No available YouTube videos
+    </p>
   </div>
   <infinite-scroll
     *ngIf="moreData"

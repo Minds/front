@@ -9,7 +9,7 @@ import { WireV2Service } from '../wire-v2.service';
 import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
 import { SupportTiersService } from '../support-tiers.service';
 import { Subscription } from 'rxjs';
-
+import { ConfigsService } from '../../../../common/services/configs.service';
 @Component({
   selector: 'm-wireCreator',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,6 +24,11 @@ export class WireCreatorComponent implements OnDestroy {
   @Input('object') set data(object) {
     this.service.setEntity(object);
   }
+
+  /**
+   * Prices for yearly/monthly upgrades to pro/plus
+   */
+  readonly upgrades: any;
 
   /**
    * Completion intent
@@ -63,8 +68,14 @@ export class WireCreatorComponent implements OnDestroy {
           break;
       }
 
-      this.service.setAmount(parseFloat(defaultValues.min || '0'));
       this.service.setRecurring(true);
+      if (defaultValues.upgradeType) {
+        this.service.setIsUpgrade(true);
+        this.service.setUpgradeType(defaultValues.upgradeType);
+        this.service.setUpgradeInterval('yearly');
+        return;
+      }
+      this.service.setAmount(parseFloat(defaultValues.min || '0'));
     }
   }
 
@@ -75,11 +86,13 @@ export class WireCreatorComponent implements OnDestroy {
    */
   constructor(
     public service: WireV2Service,
-    public supportTiers: SupportTiersService
+    public supportTiers: SupportTiersService,
+    configs: ConfigsService
   ) {
     this.ownerSubscription = this.service.owner$.subscribe(owner =>
       this.supportTiers.setEntityGuid(owner && owner.guid)
     );
+    this.upgrades = configs.get('upgrades');
   }
 
   /**

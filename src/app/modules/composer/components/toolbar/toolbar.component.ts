@@ -53,7 +53,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Upload component ref
    */
-  @ViewChild('fileUploadComponent', { static: false })
+  @ViewChild('fileUploadComponent')
   fileUploadComponent: FileUploadComponent;
 
   /**

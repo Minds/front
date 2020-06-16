@@ -22,6 +22,9 @@ import currency from '../../../helpers/currency';
 import { Location } from '@angular/common';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { WireModalService } from '../../wire/wire-modal.service';
+import { WireEventType } from '../../wire/v2/wire-v2.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-plus--subscription',
@@ -61,7 +64,9 @@ export class PlusSubscriptionComponent implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private wireModal: WireModalService,
+    private features: FeaturesService
   ) {
     this.upgrades = configs.get('upgrades');
   }
@@ -127,11 +132,7 @@ export class PlusSubscriptionComponent implements OnInit {
             currency: this.currency,
             amount: this.upgrades.plus[this.interval][this.currency],
             onComplete: () => {
-              this.active = true;
-              this.session.getLoggedInUser().plus = true;
-              this.onEnable.emit(Date.now());
-              this.inProgress = false;
-              this.detectChanges();
+              this.paymentComplete();
             },
           }
         )
@@ -148,6 +149,14 @@ export class PlusSubscriptionComponent implements OnInit {
       this.inProgress = false;
     }
 
+    this.detectChanges();
+  }
+
+  paymentComplete() {
+    this.active = true;
+    this.session.getLoggedInUser().plus = true;
+    this.onEnable.emit(Date.now());
+    this.inProgress = false;
     this.detectChanges();
   }
 

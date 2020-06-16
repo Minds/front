@@ -35,7 +35,9 @@ export class PageComponent implements OnInit {
       ? !this.navigationService.container.hidden
       : true;
     this.navigationService.visibleChange.subscribe((visible: boolean) => {
-      this.isSidebarVisible = visible;
+      setTimeout(() => {
+        this.isSidebarVisible = visible;
+      });
     });
 
     this.session.isLoggedIn(async is => {

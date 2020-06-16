@@ -1,4 +1,3 @@
-import { V2TopbarComponent } from './v2-topbar/v2-topbar.component';
 import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
 import { FeaturesService } from '../../services/features.service';
 import { Injectable } from '@angular/core';
@@ -6,13 +5,11 @@ import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
-type TopbarComponentT = V2TopbarComponent | V3TopbarComponent;
+type TopbarComponentT = V3TopbarComponent;
 
 @Injectable()
 export class TopbarService {
   private container: TopbarComponentT;
-
-  private useV3Topbar: boolean;
 
   routerSubscription: Subscription;
 
@@ -20,7 +17,6 @@ export class TopbarService {
     private featuresService: FeaturesService,
     private router: Router
   ) {
-    this.useV3Topbar = this.featuresService.has('navigation');
     this.routerSubscription = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(data => {
@@ -39,34 +35,17 @@ export class TopbarService {
     value: boolean,
     showBottombar: boolean = true,
     forceBackground: boolean = true
-  ): void {
-    if (this.container) {
-      if (this.useV3Topbar) {
-      } else {
-        this.container.toggleMarketingPages(
-          value,
-          showBottombar,
-          forceBackground
-        );
-      }
-    }
-  }
+  ): void {}
 
   toggleVisibility(visible: boolean): void {
     if (this.container) {
-      if (this.useV3Topbar) {
-        this.container.toggleVisibility(visible);
-      } else {
-        this.container.toggleVisibility(visible);
-      }
+      this.container.toggleVisibility(visible);
     }
   }
 
   toggleSearchBar(visible: boolean): void {
     if (this.container) {
-      if (this.useV3Topbar) {
-        (<V3TopbarComponent>this.container).toggleSearchBar(visible);
-      }
+      (<V3TopbarComponent>this.container).toggleSearchBar(visible);
     }
   }
 }

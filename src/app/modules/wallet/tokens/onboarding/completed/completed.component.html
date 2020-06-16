@@ -1,43 +1,24 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column">
-    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__ALL_SETUP_TITLE">
+    <h2>
       You’re all setup and ready to go!
     </h2>
 
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__DESC_SUCCESS"
-    >
+    <p class="m-token--onboarding--subtext">
       Great, you have successfully configured your wallet to receive rewards and
       OnChain & OffChain payments.
     </p>
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__DESC__LEARN_MORE"
-    >
+    <p class="m-token--onboarding--subtext">
       To learn more about tokens and crypto, visit the <b>Tokens 101</b> section
       below at any time where you can find tutorials, videos and an FAQ.
     </p>
 
     <div class="m-token--onboarding--completed-buttons">
-      <a
-        class="m-btn m-btn--slim"
-        routerLink="/wallet/tokens/101"
-        i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__MORE_ON_REWARDS"
+      <a class="m-btn m-btn--slim" routerLink="/wallet/tokens/101"
         >More on Rewards</a
       >
-      <a
-        class="m-btn m-btn--slim"
-        routerLink="/wire"
-        i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__LEARN_WIRE"
-        >Learn Wire</a
-      >
-      <a
-        class="m-btn m-btn--slim"
-        routerLink="/boost"
-        i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__LEARN_BOOST"
-        >Learn Boost</a
-      >
+      <a class="m-btn m-btn--slim" routerLink="/wire">Learn Wire</a>
+      <a class="m-btn m-btn--slim" routerLink="/boost">Learn Boost</a>
     </div>
   </div>
 
@@ -49,11 +30,7 @@
 
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
-      <button
-        class="m-btn m-btn--slim m-btn--action"
-        (click)="complete()"
-        i18n="@@WALLET__TOKENS__ONBOARDING__COMPLETE__COMPLETE_ACTION"
-      >
+      <button class="m-btn m-btn--slim m-btn--action" (click)="complete()">
         Complete
       </button>
     </div>

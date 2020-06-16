@@ -1,6 +1,8 @@
 <div class="m-modalV2__inner">
   <div class="m-modalV2__header">
-    <h2 class="m-modalV2Header__title">Manage Tags</h2>
+    <h2 class="m-modalV2Header__title" i18n="@@DISCOVERY_SETTINGS__MANAGE_TAGS">
+      Manage Tags
+    </h2>
   </div>
 
   <div class="m-modalV2__body">
@@ -8,7 +10,7 @@
 
     <ng-container *ngIf="!(inProgress$ | async)">
       <section class="m-discoveryTagSettings__section">
-        <h3>Add Custom Tag</h3>
+        <h3 i18n="@@DISCOVERY__SETTINGS_ADD_CUSTOM_TAGS">Add Custom Tag</h3>
         <input
           class="m-discoveryTagSettings__input"
           #value
@@ -22,7 +24,7 @@
         class="m-discoveryTagSettings__section"
         data-cy="discovery-settings-section--selected"
       >
-        <h3>Your Tags</h3>
+        <h3 i18n="@@DISCOVERY__TAGS__YOUR_TAGS">Your Tags</h3>
         <ul class="m-discoveryTagSettings__list">
           <li
             class="m-discoveryTagSettingsList__item"
@@ -45,7 +47,7 @@
         class="m-discoveryTagSettings__section"
         data-cy="discovery-settings-section--other"
       >
-        <h3>Other Tags</h3>
+        <h3 i18n="@@DISCOVERY__TAGS__OTHER_TAGS">Other Tags</h3>
         <ul class="m-discoveryTagSettings__list">
           <li
             class="m-discoveryTagSettingsList__item"
@@ -73,7 +75,9 @@
       (click)="onSave($event)"
       data-cy="discovery-settings-save-button"
     >
-      <ng-container i18n>Save Tags</ng-container>
+      <ng-container i18n="@@DISCOVERY_SETTINGS__SAVE_TAGS"
+        >Save Tags</ng-container
+      >
     </m-shadowboxSubmitButton>
   </div>
 </div>

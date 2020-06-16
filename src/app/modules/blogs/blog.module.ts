@@ -72,6 +72,5 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
   ],
-  entryComponents: [BlogCard],
 })
 export class BlogModule {}

@@ -1,3 +1,18 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__BILLING__METHOD__LABEL"
+  >
+    Payment Methods
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__BILLING__METHOD__DESCRIPTION"
+  >
+    Manage credit cards associated with your Minds account.
+  </div>
+</m-settingsV2__header>
+
 <div *ngIf="!init" style="width:100%; text-align:center;">
   <div
     class="mdl-spinner mdl-js-spinner is-active"
@@ -13,9 +28,14 @@
         *ngIf="cards.length"
       >
         <div class="m-settingsV2__paymentMethods__card__col--left">
-          <span>Your Cards</span>
+          <span i18n="@@SETTINGS_V2_PAYMENT_METHODS__YOUR_CARDS"
+            >Your Cards</span
+          >
         </div>
-        <div class="m-settingsV2__paymentMethods__card__col--right">
+        <div
+          class="m-settingsV2__paymentMethods__card__col--right"
+          i18n="@@SETTINGS_V2_PAYMENT_METHODS__EXPIRES"
+        >
           <span>Expires</span
           ><span class="m-settingsV2__paymentMethods__card__remove"></span>
         </div>
@@ -47,13 +67,15 @@
       <li
         class="m-settingsV2__paymentMethods__card m-settingsV2__paymentMethods__card__add"
       >
-        <a
-          i18n="@@SETTINGS__BILLING__SAVED_CARDS__ADD_NEW_CARD_LABEL"
-          (click)="addNewCard()"
-          ><ng-container *ngIf="!cards.length"
+        <a (click)="addNewCard()"
+          ><ng-container
+            *ngIf="!cards.length"
+            i18n="@@SETTINGS_V2_PAYMENT_METHODS__ADD_FIRST_CARD"
             >Add your first credit card</ng-container
           >
-          <ng-container *ngIf="cards.length"
+          <ng-container
+            *ngIf="cards.length"
+            i18n="@@SETTINGS_V2_PAYMENT_METHODS__ADD_NEW_CARD"
             ><span>Add a new card</span></ng-container
           ></a
         >

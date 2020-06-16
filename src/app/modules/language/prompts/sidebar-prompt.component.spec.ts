@@ -1,0 +1,75 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
+import { By } from '@angular/platform-browser';
+import { SidebarWidgetComponent } from '../../../common/components/sidebar-widget/sidebar-widget.component';
+import { MockService } from '../../../utils/mock';
+import { clientMock } from '../../../../tests/client-mock.spec';
+import { Client } from '../../../services/api';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { LanguageSidebarPromptComponent } from './sidebar-prompt.component';
+import { CookieService } from '../../../common/services/cookie.service';
+import { LanguageService } from '../language.service';
+import {
+  CookieOptionsProvider,
+  COOKIE_OPTIONS,
+  CookieModule,
+} from '@gorniv/ngx-universal';
+import { ApiService } from '../../../common/api/api.service';
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+
+describe('LanguageSidebarPromptComponent', () => {
+  let component: LanguageSidebarPromptComponent;
+  let fixture: ComponentFixture<LanguageSidebarPromptComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [LanguageSidebarPromptComponent, SidebarWidgetComponent],
+      imports: [RouterTestingModule, CookieModule],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: Client, useValue: clientMock },
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+        LanguageService,
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: ApiService,
+          useValue: MockService(ApiService, {}),
+        },
+      ],
+    }).compileComponents();
+  }));
+
+  beforeEach(() => {
+    featuresServiceMock.mock('language-prompts', true);
+
+    fixture = TestBed.createComponent(LanguageSidebarPromptComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  xit('should be visible by default', () => {
+    const widget = fixture.debugElement.query(By.css('m-sidebarWidget'));
+    expect(widget.properties.hidden).toBeFalsy();
+  });
+
+  xit('should be hidden if dimissed', () => {
+    sessionMock.user.dismissed_widgets = ['language-sidebar-2020'];
+
+    fixture = TestBed.createComponent(LanguageSidebarPromptComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const widget = fixture.debugElement.query(By.css('m-sidebarWidget'));
+
+    expect(widget.properties.hidden).toBeTruthy();
+  });
+});

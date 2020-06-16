@@ -10,7 +10,7 @@
   <a
     *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid"
   >
-    <span class="m-channelStats__title" i18n>
+    <span class="m-channelStats__title" i18n="@@CHANNEL_STATS__FOLLOWERS">
       Followers
     </span>
     <span class="m-channelStats__count">{{
@@ -21,7 +21,7 @@
     [routerLink]="['/', user.username, 'supporters']"
     *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid"
   >
-    <span class="m-channelStats__title" i18n>
+    <span class="m-channelStats__title" i18n="@@CHANNEL_STATS__FOLLOWERS">
       Followers
     </span>
     <span class="m-channelStats__count">{{
@@ -29,7 +29,7 @@
     }}</span>
   </a>
   <a [routerLink]="['/', user.username, 'subscribers']">
-    <span class="m-channelStats__title" i18n>
+    <span class="m-channelStats__title" i18n="@@CHANNEL_STATS__FOLLOWING">
       Following
     </span>
     <span class="m-channelStats__count">{{
@@ -37,7 +37,7 @@
     }}</span>
   </a>
   <a>
-    <span class="m-channelStats__title" i18n>
+    <span class="m-channelStats__title" i18n="@@CHANNEL_STATS__VIEWS">
       Views
     </span>
     <span class="m-channelStats__count">{{ user.impressions | abbr }}</span>

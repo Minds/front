@@ -1,3 +1,18 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__NOTIFICATIONS__POPOVERS__LABEL"
+  >
+    Notification Popovers
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__NOTIFICATIONS__POPOVERS__DESCRIPTION"
+  >
+    Control whether you receive notification popovers.
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--checkbox stretchedField">
@@ -5,8 +20,10 @@
         <label
           for="toasterNotifications"
           class="m-form__customInputWrapper__checkbox"
-          i18n
-          >Enable notification popovers
+        >
+          <ng-container i18n="@@TOASTER_NOTIFICATION_SETTINGS__ENABLE_POPOVERS"
+            >Enable notification popovers</ng-container
+          >
           <input
             type="checkbox"
             id="toasterNotifications"
@@ -26,6 +43,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@TOASTER_NOTIFICATION_SETTINGS__UPDATE_PREFERENCE"
     >
       Update Popover Preference
     </m-shadowboxSubmitButton>

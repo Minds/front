@@ -65,9 +65,9 @@ export class GroupProfileFeedSortedComponent implements OnInit {
 
   viewScheduled: boolean = false;
 
-  @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+  @ViewChild('poster') protected poster: PosterComponent;
 
-  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+  @ViewChild('composer') private composer: ComposerComponent;
 
   scheduledCount: number = 0;
 

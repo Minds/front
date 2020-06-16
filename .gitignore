@@ -10,6 +10,7 @@ coverage
 src/main.css
 !.gitlab-ci.yml
 tsd_typings
+src/assets/locale
 
 /.htaccess
 .htaccess
@@ -40,3 +41,4 @@ cypress/videos
 !/.githooks
 !/.prettierrc
 !.gitattributes
+!.gitkeep

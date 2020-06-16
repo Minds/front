@@ -15,6 +15,7 @@ import {
   ContextServiceResponse,
 } from '../../../services/context.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-search--bar-suggestions',
@@ -25,6 +26,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
   recent: any[];
   q: string = '';
   currentContext: ContextServiceResponse;
+  readonly cdnUrl: string;
   @Input() active: boolean;
   @Input() disabled: boolean = false;
 
@@ -40,9 +42,11 @@ export class SearchBarSuggestionsComponent implements OnInit {
     private featuresService: FeaturesService,
     private context: ContextService,
     private cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private configs: ConfigsService
   ) {
     this.newNavigation = this.featuresService.has('navigation');
+    this.cdnUrl = this.configs.get('cdn_url');
   }
 
   @Input('q') set _q(value: string) {

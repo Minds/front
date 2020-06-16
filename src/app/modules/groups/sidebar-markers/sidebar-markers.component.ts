@@ -22,6 +22,7 @@ import { Session } from '../../../services/session';
 import { isPlatformBrowser } from '@angular/common';
 import { GroupsService } from '../groups.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-group--sidebar-markers',
@@ -43,6 +44,7 @@ export class GroupsSidebarMarkersComponent
   moreData: boolean = true;
   tooltipsAnchor: string = 'right';
   readonly hasNewNavigation: boolean;
+  readonly cdnUrl: string;
 
   @ViewChild('list', { static: true }) list;
 
@@ -56,9 +58,11 @@ export class GroupsSidebarMarkersComponent
     @Inject(PLATFORM_ID) private platformId: Object,
     private groupsService: GroupsService,
     private cd: ChangeDetectorRef,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private configs: ConfigsService
   ) {
     this.hasNewNavigation = featuresService.has('navigation');
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   async ngOnInit() {

@@ -25,7 +25,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes), NgCommonModule, CommonModule],
   declarations: [MobileMarketingComponent],
   exports: [MobileMarketingComponent],
-  entryComponents: [MobileMarketingComponent],
   providers: [
     {
       provide: MobileService,

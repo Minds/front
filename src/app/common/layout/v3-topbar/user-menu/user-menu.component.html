@@ -30,7 +30,7 @@
       *ngIf="getCurrentUser() && !getCurrentUser().pro"
       (click)="closeMenu()"
     >
-      <a routerLink="/upgrades" i18n>
+      <a routerLink="/upgrades" i18n="@@COMMON__UPGRADE">
         Upgrade
       </a>
     </li>
@@ -40,7 +40,7 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/token" i18n>
+      <a routerLink="/token" i18n="verb|@@COMMON__BUY_TOKENS">
         Buy tokens
       </a>
     </li>
@@ -55,7 +55,7 @@
       (click)="closeMenu()"
     >
       <a routerLink="/login">
-        <span i18n>Login</span>
+        <span i18n="@@COMMON__LOGIN">Login</span>
       </a>
     </li>
 
@@ -65,7 +65,7 @@
       (click)="closeMenu()"
     >
       <a routerLink="/admin/interactions">
-        <span i18n>Admin</span>
+        <span i18n="@@COMMON__ADMIN">Admin</span>
       </a>
     </li>
 
@@ -75,8 +75,8 @@
         *ngIf="getCurrentUser()"
         (click)="toggleTheme()"
       >
-        <span i18n *ngIf="isDark">Enter Light Mode</span>
-        <span i18n *ngIf="!isDark">Enter Dark Mode</span>
+        <span i18n="@@COMMON__LIGHT_MODE" *ngIf="isDark">Enter Light Mode</span>
+        <span i18n="@@COMMON__DARK_MODE" *ngIf="!isDark">Enter Dark Mode</span>
       </li>
     </ng-container>
 
@@ -85,7 +85,7 @@
       (click)="closeMenu()"
     >
       <a routerLink="/boost/console">
-        <span i18n>Boost Console</span>
+        <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
       </a>
     </li>
 
@@ -95,7 +95,7 @@
         (click)="closeMenu()"
       >
         <a routerLink="/help">
-          <span i18n>Help</span>
+          <span i18n="@@COMMON__HELP">Help</span>
         </a>
       </li>
     </ng-container>
@@ -105,7 +105,7 @@
         (click)="closeMenu()"
       >
         <a routerLink="/faq">
-          <span i18n>FAQ</span>
+          <span i18n="@@COMMON__FAQ">FAQ</span>
         </a>
       </li>
 
@@ -114,7 +114,7 @@
         (click)="closeMenu()"
       >
         <a routerLink="/groups/profile/100000000000000681">
-          <span i18n>Help &amp; Support</span>
+          <span i18n="@@COMMON__HELP_AND_SUPPORT">Help &amp; Support</span>
         </a>
       </li>
     </ng-template>
@@ -125,7 +125,7 @@
       (click)="closeMenu()"
     >
       <a routerLink="/logout">
-        <span i18n>Logout</span>
+        <span i18n="@@COMMON__LOGOUT">Logout</span>
       </a>
     </li>
 
@@ -148,8 +148,15 @@
         </a>
         <span> · </span>
       </ng-container>
-      <a (click)="toggleFooterLinks()" i18n>
-        {{ maxFooterLinks === 5 ? 'More' : 'Less' }}
+      <a (click)="toggleFooterLinks()">
+        <ng-container
+          *ngIf="maxFooterLinks === 5; else lessView"
+          i18n="@@COMMON__MORE"
+          >More</ng-container
+        >
+        <ng-template #lessView>
+          <ng-container i18n="@@COMMON__LESS">Less</ng-container>
+        </ng-template>
       </a>
     </li>
   </ul>

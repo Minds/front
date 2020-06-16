@@ -7,10 +7,13 @@
   <!-- -------------------------------------------- -->
 
   <div *ngIf="!currentAddress && !showForm">
-    <h2>
+    <h2 18n="@@WALLET_V2__SETTINGS_BTC__SETUP_YOUR_ADDRESS">
       Setup your Bitcoin Address
     </h2>
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      18n="@@WALLET_V2__SETTINGS_BTC__YOU_CAN_RECEIVE_BY_INFO"
+    >
       You can receive Bitcoin payments by linking your Bitcoin receiver address
       below.
     </p>
@@ -24,10 +27,13 @@
   <!-- -------------------------------------------- -->
 
   <div *ngIf="showForm">
-    <h2>
+    <h2 18n="@@WALLET_V2__SETTINGS_BTC__UPDATED_BITCOIN_ADDRESS">
       Update Bitcoin Address
     </h2>
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      18n="@@WALLET_V2__SETTINGS_BTC__NOTE_ROTATE_FREQUENTLY_INFO"
+    >
       Note: You may want to rotate this address frequently to avoid third party
       tracking.
     </p>
@@ -40,9 +46,11 @@
       <div class="m-walletForm__fieldsContainer">
         <div class="m-walletForm__field--text stretchedField">
           <div class="m-walletForm__row--label m-walletSecondaryText--label">
-            <label for="addressInput" i18n>Bitcoin Address</label>
+            <label for="addressInput" i18n="@@SETTINGS_BTC__BITCOIN__ADDRESS"
+              >Bitcoin Address</label
+            >
             <m-tooltip icon="help">
-              <ng-container i18n
+              <ng-container i18n="@@SETTINGS_BTC__BITCOIN_ADDRESS_INFO"
                 >Enter the public address from your own Bitcoin wallet which
                 will be used to receive Bitcoin payments on Minds. Minds does
                 not store your Bitcoin.</ng-container
@@ -71,6 +79,7 @@
               *ngIf="
                 (form.dirty || form.touched) && addressInput.hasError('format')
               "
+              i18n="@@SETTINGS_BTC__INVALID_ADDRESS_FORMAT"
             >
               Invalid address format
             </p>
@@ -85,6 +94,7 @@
           "
           [saving]="inProgress"
           (click)="provideAddress()"
+          i18n="@@SETTINGS_BTC__UPDATE_BITCOIN_ADDRESS"
         >
           Update Bitcoin Address
         </m-shadowboxSubmitButton>
@@ -94,7 +104,10 @@
       class="m-walletSecondaryText--backButton"
       *ngIf="currentAddress"
       (click)="showForm = false"
-      ><i class="material-icons">❮</i><span>Back to current address</span></a
+      ><i class="material-icons">❮</i
+      ><span i18n="@@SETTINGS_BTC__BACK_TO_CURRENT_ADDRESS"
+        >Back to current address</span
+      ></a
     >
   </div>
 
@@ -103,17 +116,24 @@
   <!-- -------------------------------------------- -->
 
   <div *ngIf="currentAddress && !showForm">
-    <h2>
+    <h2 i18n="@@SETTINGS_BTC__BITCOIN_ADDRESS">
       Bitcoin Address
     </h2>
     <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
-    <p class="m-walletSecondaryText--label">
+    <p
+      class="m-walletSecondaryText--label"
+      i18n="@@SETTINGS_BTC__CURRENT_BITCOIN_ADDRESS"
+    >
       Current bitcoin address
     </p>
     <div class="m-walletSettings__currentAddressContainer">
       <div class="m-walletPrimaryText">{{ currentAddress }}</div>
-      <a (click)="addressInput.value = ''; showForm = true">Change Address</a>
+      <a
+        (click)="addressInput.value = ''; showForm = true"
+        i18n="@@SETTINGS_BTC__CHANGE_ADDRESS"
+        >Change Address</a
+      >
     </div>
   </div>
 </div>

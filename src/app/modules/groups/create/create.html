@@ -1,7 +1,9 @@
 <!-- This will be in a modal after groups redesign. -->
 <div class="m-modalV2__inner m-groups__create m-border">
   <div class="m-modalV2__header m-groupsCreate__header">
-    <h2 class="m-modalV2Header__title" i18n>Create Group</h2>
+    <h2 class="m-modalV2Header__title" i18n="@@CREATE_GROUP__CREATE_GROUP">
+      Create Group
+    </h2>
   </div>
 
   <div class="m-modalV2__body m-formWrapper">
@@ -13,7 +15,7 @@
       <div class="m-form__fieldsContainer">
         <div class="m-form__field--text stretchedField">
           <div class="m-form__row--label">
-            <label i18n>Name</label>
+            <label i18n="@@CREATE_GROUP__NAME">Name</label>
           </div>
 
           <div class="m-form__row--input">
@@ -31,7 +33,9 @@
       <div class="m-form__fieldsContainer">
         <div class="m-form__field--text">
           <div class="m-form__row--label">
-            <label i18n>Avatar and Banner</label>
+            <label i18n="@@CREATE_GROUP__AVATAR_AND_BANNER"
+              >Avatar and Banner</label
+            >
           </div>
           <div
             class="m-channelEdit__imagery"
@@ -78,7 +82,7 @@
       <div class="m-form__fieldsContainer">
         <div class="m-form__field--text stretchedField">
           <div class="m-form__row--label">
-            <label i18n>Description</label>
+            <label i18n="@@CREATE_GROUP__DESCRIPTION">Description</label>
           </div>
 
           <div class="m-form__row--input">
@@ -95,15 +99,12 @@
       <div class="m-form__fieldsContainer">
         <div class="m-form__field--radio">
           <div class="m-form__row--label">
-            <label i18n>Group Type</label>
+            <label i18n="@@CREATE_GROUP__GROUP_TYPE">Group Type</label>
           </div>
 
           <div class="m-form__row--input">
-            <label
-              for="type_closed"
-              class="m-form__customInputWrapper__radio"
-              i18n
-              >Closed
+            <label for="type_closed" class="m-form__customInputWrapper__radio">
+              <ng-container i18n="@@CREATE_GROUP__CLOSED">Closed</ng-container>
               <input
                 type="radio"
                 value="0"
@@ -114,11 +115,8 @@
               />
               <span class="m-form__customInput__radio"></span>
             </label>
-            <label
-              for="type_open"
-              class="m-form__customInputWrapper__radio"
-              i18n
-              >Open
+            <label for="type_open" class="m-form__customInputWrapper__radio">
+              <ng-container i18n="@@CREATE_GROUP__OPEN">Open</ng-container>
               <input
                 type="radio"
                 value="2"

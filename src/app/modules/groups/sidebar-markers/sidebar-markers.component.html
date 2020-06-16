@@ -1,4 +1,8 @@
-<h5 i18n *ngIf="leftSidebar" class="m-groupSidebarMarkers__header">
+<h5
+  i18n="@@SIDEBAR_MARKERS__GROUPS"
+  *ngIf="leftSidebar"
+  class="m-groupSidebarMarkers__header"
+>
   Groups
 </h5>
 
@@ -47,6 +51,7 @@
         class="m-groupSidebarMarkersListItem__label"
         i18n="@@M__COMMON__DISCOVER_GROUPS"
         *ngIf="showLabels"
+        i18n="@@M__COMMON__DISCOVER_GROUPS"
       >
         Discover Groups
       </span>
@@ -65,7 +70,7 @@
           [class.m-pulsating--small]="
             !hasNewNavigation && (group.hasGathering$ | async)
           "
-          [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime"
+          [src]="cdnUrl + 'fs/v1/avatars/' + group.guid + '/' + group.icontime"
           m-tooltip--anchor
         />
         <span>{{ group.name }}</span>

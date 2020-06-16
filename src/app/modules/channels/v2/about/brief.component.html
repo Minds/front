@@ -6,7 +6,10 @@
         [innerHtml]="channel.briefdescription | tags"
       ></div>
 
-      <m-read-more--button wrapperClass="m-channelAboutBriefBio__readMore" i18n>
+      <m-read-more--button
+        wrapperClass="m-channelAboutBriefBio__readMore"
+        i18n="@@COMMON__READ_MORE"
+      >
         Read More
       </m-read-more--button>
     </div>
@@ -23,7 +26,11 @@
 
   <div class="m-channelAboutBrief__stats">
     <div class="m-channelAboutBriefStats__item">
-      <span class="m-channelAboutBriefStatsItem__label" i18n>Subscribers</span>
+      <span
+        class="m-channelAboutBriefStatsItem__label"
+        i18n="@@COMMON__SUBSCRIBERS"
+        >Subscribers</span
+      >
       <a
         [routerLink]="['/', this.service.username$ | async, 'subscribers']"
         class="m-channelAboutBriefStatsItem__value"
@@ -32,7 +39,9 @@
     </div>
 
     <div class="m-channelAboutBriefStats__item">
-      <span class="m-channelAboutBriefStatsItem__label" i18n
+      <span
+        class="m-channelAboutBriefStatsItem__label"
+        i18n="@@COMMON__SUBSCRIPTIONS"
         >Subscriptions</span
       >
       <a
@@ -43,7 +52,9 @@
     </div>
 
     <div class="m-channelAboutBriefStats__item">
-      <span class="m-channelAboutBriefStatsItem__label" i18n>Views</span>
+      <span class="m-channelAboutBriefStatsItem__label" i18n="@@COMMON__VIEWS"
+        >Views</span
+      >
       <span class="m-channelAboutBriefStatsItem__value">{{
         channel.impressions | abbr: 2
       }}</span>

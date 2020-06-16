@@ -34,9 +34,5 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryFeedItemComponent,
   ],
   providers: [DiscoveryTagsService],
-  entryComponents: [
-    DiscoveryTagSettingsComponent,
-    DiscoveryFeedsSettingsComponent,
-  ],
 })
 export class DiscoverySharedModule {}

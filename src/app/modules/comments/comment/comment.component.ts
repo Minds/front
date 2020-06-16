@@ -91,7 +91,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   canReply = true;
   videoDimensions: Array<any> = null;
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('batchImage') batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;

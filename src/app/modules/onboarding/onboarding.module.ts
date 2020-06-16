@@ -59,15 +59,5 @@ import { FeaturesService } from '../../services/features.service';
     OnboardingFeedComponent,
     ChannelOnboardingComponent,
   ],
-  entryComponents: [
-    OnboardingModalComponent,
-    TopicsOnboardingComponent,
-    SubscriptionsOnboardingComponent,
-    ChannelsTileComponent,
-    GroupsTileComponent,
-    GroupsOnboardingComponent,
-    ChannelSetupOnboardingComponent,
-    TokenRewardsOnboardingComponent,
-  ],
 })
 export class OnboardingModule {}

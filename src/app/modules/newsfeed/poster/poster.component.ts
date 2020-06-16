@@ -47,10 +47,10 @@ export class PosterComponent {
 
   errorMessage: string = null;
 
-  @ViewChild('hashtagsSelector', { static: false })
+  @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
 
-  @ViewChild('nsfwSelector', { static: false })
+  @ViewChild('nsfwSelector')
   nsfwSelector: NSFWSelectorComponent;
 
   showActionBarLabels: boolean = false;

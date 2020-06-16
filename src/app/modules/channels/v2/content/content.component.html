@@ -12,7 +12,10 @@
   <ng-template [ngSwitchCase]="'not-found'">
     <div class="m-channelContent__wrapper">
       <i class="m-channelContent__icon material-icons">error_outline</i>
-      <h3 class="m-channelContent__primaryText" i18n>
+      <h3
+        class="m-channelContent__primaryText"
+        i18n="@@CHANNEL_CONTENT__SORRY_CHANNEL_DOES_NOT_EXIST"
+      >
         Sorry, this channel doesn't appear to exist
       </h3>
     </div>
@@ -23,8 +26,16 @@
       <div class="m-channelContent__wrapper">
         <i class="m-channelContent__icon material-icons">not_interested</i>
 
-        <h3 class="m-channelContent__primaryText" i18n>Account banned</h3>
-        <span class="m-channelContent__secondaryText" i18n>
+        <h3
+          class="m-channelContent__primaryText"
+          i18n="@@CHANNEL_CONTENT__ACCOUNT_BANNED"
+        >
+          Account banned
+        </h3>
+        <span
+          class="m-channelContent__secondaryText"
+          i18n="@@CHANNEL_CONTENT__ACCOUNT_BANNED"
+        >
           This account has been banned for violating the
           <a routerLink="/content-policy">Minds content policy</a>
         </span>
@@ -35,7 +46,10 @@
   <ng-template [ngSwitchCase]="'disabled'">
     <div class="m-channelContent__wrapper">
       <i class="m-channelContent__icon material-icons">not_interested</i>
-      <h3 class="m-channelContent__primaryText" i18n>
+      <h3
+        class="m-channelContent__primaryText"
+        i18n="@@CHANNEL_CONTENT__ACCOUNT_DISABLED"
+      >
         This channel has been disabled
       </h3>
     </div>
@@ -44,7 +58,10 @@
   <ng-template [ngSwitchCase]="'blocked'">
     <div class="m-channelContent__wrapper">
       <i class="m-channelContent__icon material-icons">block</i>
-      <h3 class="m-channelContent__primaryText" i18n>
+      <h3
+        class="m-channelContent__primaryText"
+        i18n="@@CHANNEL_CONTENT__BLOCKED_CHANNEL"
+      >
         You have blocked this channel
       </h3>
     </div>
@@ -53,11 +70,16 @@
   <ng-template [ngSwitchCase]="'nsfw'">
     <div class="m-channelContent__wrapper">
       <i class="m-channelContent__icon material-icons">error_outline</i>
-      <h3 class="m-channelContent__primaryText" i18n>This channel is NSFW</h3>
+      <h3
+        class="m-channelContent__primaryText"
+        i18n="@@CHANNEL_CONTENT__CHANNEL_NSFW"
+      >
+        This channel is NSFW
+      </h3>
       <button
         class="m-channelContent__confirmButton"
         (click)="content.forceNsfwContent$.next(true)"
-        i18n
+        i18n="@@CHANNEL_CONTENT__I_AM_OVER_18"
       >
         I am 18 or over
       </button>

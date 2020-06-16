@@ -1,17 +1,21 @@
 <ng-container *ngIf="!confirming; else confirmBlock">
   <div class="m-onboardingControl__label">
-    <label i18n>Mobile Phone Number</label>
+    <label i18n="@@ONBOARDING_PHONE__MOBILE_PHONE_NUMBER"
+      >Mobile Phone Number</label
+    >
 
     <m-tooltip [anchor]="tooltipAnchor">
       <span m-tooltip--anchor>𝒊</span>
-      <ng-container i18n>
+      <ng-container
+        i18n="@@ONBOARDING_PHONE__YOUR_PHONE_USED_ADDITIONAL_SECURITY"
+      >
         Your mobile number may be used for additional account security, unique
         identification and to help your friends find you. This data is private
         and encrypted.
       </ng-container>
     </m-tooltip>
 
-    <span i18n>Optional</span>
+    <span i18n="@@COMMON__OPTIONAL">Optional</span>
   </div>
   <div class="m-onboarding__phoneInput">
     <div class="m-onboarding__input">
@@ -33,7 +37,7 @@
         [class.disabled]="disabled || !number || number.length < 13"
         (click)="savePhoneNumber()"
         *ngIf="!inProgress"
-        i18n
+        i18n="@@ONBOARDING_PHONE__VERIFY"
       >
         Verify
       </button>
@@ -48,14 +52,18 @@
 </ng-container>
 
 <ng-template #confirmBlock>
-  <p *ngIf="confirmed" i18n>Your phone number has been verified.</p>
+  <p *ngIf="confirmed" i18n="@@ONBOARDING_PHONE__YOUR_NUMBER_HAS_BEEN_VERIFIED">
+    Your phone number has been verified.
+  </p>
   <ng-container *ngIf="!confirmed">
     <div class="m-onboardingControl__label">
-      <label i18n>Verification Code</label>
+      <label i18n="@@ONBOARDING_PHONE__VERIFICATION_CODE"
+        >Verification Code</label
+      >
 
       <m-tooltip [anchor]="tooltipAnchor">
         <span m-tooltip--anchor>𝒊</span>
-        <ng-container i18n>
+        <ng-container i18n="@@ONBOARDING_PHONE__PLEASE_ENTER_CODE">
           Please enter the code we just sent to +{{ number }}, to verify your
           number.
         </ng-container>
@@ -68,7 +76,7 @@
         [ngModel]="code"
         (ngModelChange)="codeChange($event)"
         placeholder="eg. 198349"
-        i18n-placeholder
+        i18n-placeholder="@@ONBOARDING_PHONE__EXAMPLE_INPUT_CODE"
       />
 
       <button
@@ -77,7 +85,7 @@
         (click)="reSendCode()"
         *ngIf="!inProgress"
         title="Re-send verification code"
-        i18n-title
+        i18n-title="@@ONBOARDING_PHONE__RESEND_VERIFICATION_CODE"
       >
         <i class="material-icons">refresh</i>
       </button>
@@ -87,7 +95,7 @@
         (click)="reset()"
         *ngIf="!inProgress"
         title="Go back"
-        i18n-title
+        i18n-title="@@ONBOARDING_PHONE__GO_BACK"
       >
         <i class="material-icons">keyboard_backspace</i>
       </button>
@@ -107,5 +115,7 @@
     error && error === 'verify:phonenumber' ? 'visible' : 'hidden'
   "
 >
-  <span i18n>You must verify your phone number</span>
+  <span i18n="@@ONBOARDING_PHONE__YOU_MUST_VERIFY"
+    >You must verify your phone number</span
+  >
 </div>

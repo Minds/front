@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
-import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { XhrFactory } from '@angular/common/http';
 import * as xhr2 from 'xhr2';
@@ -15,6 +14,7 @@ import {
 } from './common/services/redirect.service';
 
 PlotlyModule.plotlyjs = {
+  react: () => {},
   plot: () => {
     // This simply satisfies the isValid() error
   },
@@ -29,13 +29,7 @@ export class ServerXhr implements XhrFactory {
 }
 
 @NgModule({
-  imports: [
-    MindsModule,
-    ServerModule,
-    ModuleMapLoaderModule,
-    ServerTransferStateModule,
-    PlotlyModule,
-  ],
+  imports: [MindsModule, ServerModule, ServerTransferStateModule, PlotlyModule],
   providers: [
     { provide: XhrFactory, useClass: ServerXhr },
     {

@@ -14,7 +14,7 @@ export class ChannelEditHashtagsComponent {
   /**
    * Typeahead component
    */
-  @ViewChild('hashtagsTypeaheadInput', { static: false })
+  @ViewChild('hashtagsTypeaheadInput')
   protected hashtagsTypeaheadInput: TypeaheadInputComponent;
 
   /**

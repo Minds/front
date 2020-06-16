@@ -9,9 +9,7 @@
       class="mdl-card__supporting-text m-no-reports"
       [hidden]="inProgress || moreData || entities.length > 0"
     >
-      <ng-container i18n="@@MINDS__ADMIN__MONETIZATION__EMPTY"
-        >Nothing is monetized.</ng-container
-      >
+      <ng-container>Nothing is monetized.</ng-container>
     </div>
 
     <div
@@ -49,7 +47,6 @@
         <button
           class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
           (click)="deMonetize(entity, i)"
-          i18n="@@MINDS__ADMIN__MONETIZATION__DEMONETIZE"
         >
           De-Monetize
         </button>

@@ -16,6 +16,7 @@ import { YoutubeMigrationSetupModalComponent } from './setup-modal/setup-modal.c
 import { YoutubeMigrationMarketingComponent } from './marketing/marketing.component';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { MarketingModule } from '../../marketing/marketing.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { Session } from '../../../services/session';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    MarketingModule,
   ],
   exports: [
     YoutubeMigrationComponent,
@@ -44,10 +46,6 @@ import { Session } from '../../../services/session';
     YoutubeMigrationMigratedVideosComponent,
     YoutubeMigrationUnmigratedVideosComponent,
     YoutubeMigrationConfigComponent,
-  ],
-  entryComponents: [
-    YoutubeMigrationComponent,
-    YoutubeMigrationSetupModalComponent,
   ],
   providers: [
     {
