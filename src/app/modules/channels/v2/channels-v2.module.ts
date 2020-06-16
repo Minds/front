@@ -36,6 +36,7 @@ import { ChannelListGroupsComponent } from './list/groups.component';
 import { ModalsModule } from '../../modals/modals.module';
 import { DiscoverySharedModule } from '../../discovery/discovery-shared.module';
 import { ChannelActionsBoostComponent } from './actions/boost.component';
+import { ChannelShopBriefWireRewardsComponent } from './shop/brief-wire-rewards.component';
 
 /**
  * Generally available components
@@ -71,6 +72,7 @@ const INTERNAL_COMPONENTS = [
   ChannelListComponent,
   ChannelListConnectionsComponent,
   ChannelListGroupsComponent,
+  ChannelShopBriefWireRewardsComponent,
 ];
 
 /**
