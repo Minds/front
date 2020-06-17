@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Currency } from '../../../../../helpers/currency';
 import { ChannelsV2Service } from '../../channels-v2.service';
 import {
   SupportTier,
   SupportTiersService,
 } from '../../../../wire/v2/support-tiers.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-channelShop__memberships',
@@ -20,6 +21,25 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
   readonly currencyFilter$: BehaviorSubject<Currency> = new BehaviorSubject<
     Currency
   >('usd');
+
+  readonly supportTiers$: Observable<Array<SupportTier>> = combineLatest([
+    this.currencyFilter$,
+    this.supportTiers.list$,
+  ]).pipe(
+    map(
+      ([currencyFilter, supportTiers]): Array<SupportTier> =>
+        supportTiers.filter(supportTier => {
+          switch (currencyFilter) {
+            case 'usd':
+              return supportTier.has_usd;
+            case 'tokens':
+              return supportTier.has_tokens;
+          }
+
+          return true;
+        })
+    )
+  );
 
   /**
    * Subscription to channel's GUID
