@@ -1,0 +1,42 @@
+<div class="m-channelShopMemberships__supportTier">
+  <div class="m-channelShopMembershipsSupportTier__title">
+    {{ supportTier.name }}
+  </div>
+
+  <div
+    class="m-channelShopMembershipsSupportTier__amount"
+    [ngSwitch]="displayFilteredCurrency"
+  >
+    <ng-container
+      *ngSwitchCase="'tokens'"
+      i18n="@@MINDS_SUPPORT_TIER_TOKENS_PER_MONTH_AMOUNT"
+    >
+      <span
+        >{supportTier.tokens, plural, =1 {{{supportTier.tokens | number}} token}
+        other {{{supportTier.tokens | number}} tokens}}</span
+      >
+      per month
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'usd'"
+      i18n="@@MINDS_SUPPORT_TIER_USD_PER_MONTH_AMOUNT"
+    >
+      <span>${{ supportTier.usd | number }}</span> per month
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="null"
+      i18n="@@MINDS_SUPPORT_TIER_TOKENS_AND_USD_PER_MONTH_AMOUNT"
+    >
+      <span
+        >${{ supportTier.usd | number }} - {supportTier.tokens, plural, =1
+        {{{supportTier.tokens | number}} token} other
+        {{{supportTier.tokens | number}} tokens}}</span
+      >
+      per month
+    </ng-container>
+  </div>
+
+  <div class="m-channelShopMembershipsSupportTier__description">
+    {{ supportTier.description }}
+  </div>
+</div>

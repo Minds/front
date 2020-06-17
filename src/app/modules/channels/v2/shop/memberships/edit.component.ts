@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'm-channel__shop',
+  selector: 'm-channelShopMemberships__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'shop.component.html',
+  templateUrl: 'edit.component.html',
 })
-export class ChannelShopComponent {}
+export class ChannelShopMembershipsEditComponent {}
