@@ -33,16 +33,6 @@ import { RedirectService } from '../../../../common/services/redirect.service';
 })
 export class ActivityContentComponent
   implements OnInit, AfterViewInit, OnDestroy {
-  /**
-   * Whether or not we allow autoplay on scroll
-   */
-  @Input() allowAutoplayOnScroll: boolean = false;
-
-  /**
-   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
-   */
-  @Input() autoplayVideo: boolean = false;
-
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
 

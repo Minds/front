@@ -52,6 +52,8 @@ export class VideoPlayerService implements OnDestroy {
    */
   isModal = false;
 
+  playable = false;
+
   /**
    * Force playable
    */
@@ -127,15 +129,16 @@ export class VideoPlayerService implements OnDestroy {
    * @return boolean
    */
   isPlayable(): boolean {
-    const user = this.session.getLoggedInUser();
+    return this.playable;
+    // const user = this.session.getLoggedInUser();
 
-    return (
-      (user.plus && !user.disable_autoplay_videos) ||
-      this.isModal || // Always playable in modal
-      !this.shouldPlayInModal || // Equivalent of asking to play inline
-      (this.overlayModalService.canOpenInModal() && !this.isModal) ||
-      this.forcePlayable
-    ); // We can play in the modal and this isn't a modal
+    // return (
+    //   (user.plus && !user.disable_autoplay_videos) ||
+    //   this.isModal || // Always playable in modal
+    //   !this.shouldPlayInModal || // Equivalent of asking to play inline
+    //   (this.overlayModalService.canOpenInModal() && !this.isModal) ||
+    //   this.forcePlayable
+    // ); // We can play in the modal and this isn't a modal
   }
 
   /**

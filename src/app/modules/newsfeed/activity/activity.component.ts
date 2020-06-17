@@ -62,14 +62,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() slot: number = -1;
 
   /**
-   * Whether or not we allow autoplay on scroll
-   */
-  @Input() allowAutoplayOnScroll: boolean = false;
-
-  /**
    * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
    */
-  @Input() autoplayVideo: boolean = false;
+  @Input() set autoplayVideo(autoplay: boolean) {
+    this.service.displayOptions.autoplayVideo = autoplay;
+  }
 
   @Input() canRecordAnalytics: boolean = true;
 

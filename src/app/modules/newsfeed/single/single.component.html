@@ -37,38 +37,15 @@
         </ng-container>
       </div>
 
-      <div class="minds-list" *ngIf="showLegacyActivity">
-        <minds-activity
-          *ngIf="activity"
-          [editing]="editing"
-          [object]="activity"
-          [commentsToggle]="true"
-          [focusedCommentGuid]="focusedCommentGuid"
-          (deleted)="delete($event)"
-          [showRatingToggle]="true"
-          [slot]="1"
-          class="mdl-card mdl-shadow--2dp item"
-          [attr.data-minds-activity-guid]="activity.guid"
-          [allowAutoplayOnScroll]="false"
-          [autoplayVideo]="true"
-        >
-        </minds-activity>
-      </div>
-
-      <div
-        class="minds-list"
-        style="padding: 20px 40px;"
-        *ngIf="activity && !showLegacyActivity"
-      >
+      <div class="minds-list" style="padding: 20px 40px;" *ngIf="activity">
         <m-activity
           [entity]="activity"
           [displayOptions]="{
             fixedHeight: fixedHeight,
             showOnlyCommentsInput: false,
-            showComments: !fixedHeight
+            showComments: !fixedHeight,
+            autoplayVideo: false
           }"
-          [allowAutoplayOnScroll]="false"
-          [autoplayVideo]="true"
           [slot]="1"
           (deleted)="delete($event)"
         ></m-activity>

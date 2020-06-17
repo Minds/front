@@ -42,7 +42,6 @@ describe('NewsfeedTagsComponent', () => {
             'showRatingToggle',
             'boost',
             'showBoostMenuOptions',
-            'allowAutoplayOnScroll',
           ],
           outputs: ['delete'],
         }),
