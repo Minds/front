@@ -1,6 +1,26 @@
 <div class="m-channelShopMemberships__supportTier">
   <div class="m-channelShopMembershipsSupportTier__title">
-    {{ supportTier.name }}
+    <div class="m-channelShopMembershipsSupportTierTitle__text">
+      {{ supportTier.name }}
+    </div>
+    <div *ngIf="isOwner" class="m-channelShopMembershipsSupportTierTitle__menu">
+      <m-dropdownMenu
+        [menu]="dropdown"
+        [anchorPosition]="{ top: '100%', right: '0' }"
+      >
+        <m-icon iconId="more_vert"></m-icon>
+      </m-dropdownMenu>
+
+      <ng-template #dropdown>
+        <ul>
+          <li (click)="onDeleteIntent.emit(supportTier)">
+            <span class="m-dropdownMenu__item">
+              <span i18n="@@SUPPORT_TIER_DELETE">Delete Tier</span>
+            </span>
+          </li>
+        </ul>
+      </ng-template>
+    </div>
   </div>
 
   <div
@@ -9,7 +29,7 @@
   >
     <ng-container
       *ngSwitchCase="'tokens'"
-      i18n="@@MINDS_SUPPORT_TIER_TOKENS_PER_MONTH_AMOUNT"
+      i18n="@@SUPPORT_TIER_TOKENS_PER_MONTH_AMOUNT"
     >
       <span
         >{supportTier.tokens, plural, =1 {{{supportTier.tokens | number}} token}
@@ -17,15 +37,17 @@
       >
       per month
     </ng-container>
+
     <ng-container
       *ngSwitchCase="'usd'"
-      i18n="@@MINDS_SUPPORT_TIER_USD_PER_MONTH_AMOUNT"
+      i18n="@@SUPPORT_TIER_USD_PER_MONTH_AMOUNT"
     >
       <span>${{ supportTier.usd | number }}</span> per month
     </ng-container>
+
     <ng-container
       *ngSwitchCase="null"
-      i18n="@@MINDS_SUPPORT_TIER_TOKENS_AND_USD_PER_MONTH_AMOUNT"
+      i18n="@@SUPPORT_TIER_TOKENS_AND_USD_PER_MONTH_AMOUNT"
     >
       <span
         >${{ supportTier.usd | number }} - {supportTier.tokens, plural, =1
@@ -36,7 +58,40 @@
     </ng-container>
   </div>
 
+  <div class="m-channelShopMembershipsSupportTier__stats">
+    <div class="m-channelShopMembershipsSupportTierStats__entry">
+      <m-icon iconId="lock"></m-icon>
+      <span i18n="@@SUPPORT_TIER_POSTS_AMOUNT"
+        >{supportTier.posts, plural, =1 {{{supportTier.posts | number}} post}
+        other {{{supportTier.posts | number}} posts}}</span
+      >
+    </div>
+
+    <div class="m-channelShopMembershipsSupportTierStats__entry">
+      <m-icon iconId="people_outline"></m-icon>
+      <span>{{ supportTier.supporters | number }}</span>
+    </div>
+  </div>
+
   <div class="m-channelShopMembershipsSupportTier__description">
     {{ supportTier.description }}
+  </div>
+
+  <div class="m-channelShopMembershipsSupportTier__actions">
+    <a
+      *ngIf="isOwner"
+      class="m-cardButton-v2"
+      (click)="onEditIntent.emit(supportTier)"
+    >
+      Edit
+    </a>
+
+    <a
+      *ngIf="!isOwner"
+      class="m-cardButton-v2"
+      (click)="onSelectIntent.emit(supportTier)"
+    >
+      Select
+    </a>
   </div>
 </div>

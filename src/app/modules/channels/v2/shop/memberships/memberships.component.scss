@@ -68,6 +68,17 @@
   }
 
   .m-channelShopMemberships__supportTiers {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap; /* TODO: Remove this when carousel is implemented */
+
+    > * {
+      margin: 20px 40px 0 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }

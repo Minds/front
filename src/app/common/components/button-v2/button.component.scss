@@ -173,3 +173,28 @@ m-button {
     cursor: initial;
   }
 }
+
+.m-cardButton-v2 {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 0;
+  cursor: pointer;
+  font-weight: normal;
+
+  position: relative;
+  appearance: none;
+  box-sizing: border-box;
+  background: transparent;
+  border-radius: 2px;
+  font-size: inherit;
+  line-height: inherit;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    background: themed($m-borderColor--primary);
+  }
+
+  &[disabled] {
+    cursor: initial;
+  }
+}

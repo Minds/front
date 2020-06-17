@@ -1,0 +1,86 @@
+.m-channelShopMemberships__supportTier {
+  width: 265px;
+  height: 205px;
+
+  .m-channelShopMembershipsSupportTier__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0 7px;
+
+    .m-channelShopMembershipsSupportTierTitle__text {
+      flex-grow: 1;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 24px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-channelShopMembershipsSupportTier__amount {
+    margin: 0 0 11px;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 20px;
+
+    > span {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelShopMembershipsSupportTier__stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0 16px;
+    font-size: 15px;
+
+    .m-channelShopMembershipsSupportTierStats__entry {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+
+      > * + * {
+        margin-left: 10px;
+      }
+    }
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    > * + * {
+      margin-left: 20px;
+    }
+  }
+
+  .m-channelShopMembershipsSupportTier__description {
+    margin: 0 0 18px;
+    font-size: 15px;
+    line-height: 19px;
+    height: 57px;
+    white-space: pre-line;
+    overflow: hidden;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    & {
+      /*! autoprefixer: off */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
+  }
+}

@@ -22,21 +22,37 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
     Currency
   >('usd');
 
+  /**
+   * Is the current view a draft?
+   * @todo Implement
+   */
+  readonly isDraft$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
+   * Support Tiers filtered list
+   */
   readonly supportTiers$: Observable<Array<SupportTier>> = combineLatest([
     this.currencyFilter$,
+    this.channel.isOwner$,
     this.supportTiers.list$,
   ]).pipe(
     map(
-      ([currencyFilter, supportTiers]): Array<SupportTier> =>
+      ([currencyFilter, isOwner, supportTiers]): Array<SupportTier> =>
         supportTiers.filter(supportTier => {
+          if (isOwner) {
+            return true;
+          }
+
           switch (currencyFilter) {
             case 'usd':
               return supportTier.has_usd;
             case 'tokens':
               return supportTier.has_tokens;
+            default:
+              return true;
           }
-
-          return true;
         })
     )
   );
@@ -60,15 +76,35 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
     );
   }
 
+  /**
+   * Destroy lifecycle hook
+   */
   ngOnDestroy() {
     if (this.channelGuidSubscription) {
       this.channelGuidSubscription.unsubscribe();
     }
   }
 
+  /**
+   * Create a new Support Tier using Edit modal
+   */
+  create(): void {}
+
+  /**
+   * Select a Support Tier using Pay modal
+   * @param supportTier
+   */
   select(supportTier: SupportTier): void {}
 
+  /**
+   * Edit a Support Tier using Edit modal
+   * @param supportTier
+   */
   edit(supportTier: SupportTier): void {}
 
+  /**
+   * Delete a Support Tier
+   * @param supportTier
+   */
   delete(supportTier: SupportTier): void {}
 }

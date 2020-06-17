@@ -7,6 +7,7 @@
         *ngIf="channel.isOwner$ | async; else consumerTitleHeadline"
       >
         <div
+          *ngIf="isDraft$ | async"
           class="m-channelShopMembershipsTitle__headline m-channelShopMembershipsTitle__headline--small"
           ngPreserveWhitespaces
         >
@@ -33,6 +34,7 @@
 
     <ng-container *ngIf="channel.isOwner$ | async; else consumerHeader">
       <a
+        (click)="create()"
         class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"
       >
         <m-icon iconId="add" [sizeFactor]="0"></m-icon>

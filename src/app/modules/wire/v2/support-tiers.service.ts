@@ -22,6 +22,8 @@ export interface SupportTier {
   has_usd: boolean;
   tokens?: number;
   has_tokens: boolean;
+  posts?: number;
+  supporters?: number;
 }
 
 /**
