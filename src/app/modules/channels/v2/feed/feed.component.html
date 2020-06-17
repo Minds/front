@@ -22,7 +22,6 @@
         *ngFor="let entity of feed.service.feed | async; let i = index"
         [entity]="entity | async"
         [slot]="i + 1"
-        [allowAutoplayOnScroll]="true"
         (deleted)="feed.onDelete($event)"
       ></m-newsfeed__entity>
 

@@ -21,7 +21,6 @@ import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { VideoAutoplayService } from '../video/services/video-autoplay.service';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -30,7 +29,7 @@ import { VideoAutoplayService } from '../video/services/video-autoplay.service';
   providers: [VideoPlayerService, Session],
 })
 export class MindsVideoPlayerComponent
-  implements OnChanges, OnDestroy, AfterViewInit, OnChanges {
+  implements OnChanges, OnDestroy, OnChanges {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -48,42 +47,15 @@ export class MindsVideoPlayerComponent
   @Output() dimensions: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * Setting this to true makes the video autoplay
+   * Autoplay (if set to false, then placeholder will be displayed)
+   * calling .play() will override this
    */
-  @Input() autoplay: boolean = false;
-  /**
-   * It's used to detect if the video has been clicked when it's autoplaying
-   */
-  clicked: boolean = false;
-
-  @Input('allowAutoplayOnScroll') set _allowAutoplayOnScroll(value: boolean) {
-    this.allowAutoplayOnScroll = value;
-
-    /* if autoplay on scroll is allowed, since it's not yet autoplaying,
-     * we should set the video to use an empty src attribute
-     */
-    this.useEmptySource = value;
-
-    /* this only gets called if we happen to change the value after the
-     * component has already been initialised
-     */
-    if (this.init) {
-      this.togglePlayerRegistration();
+  @Input() set autoplay(autoplay: boolean) {
+    if (autoplay) {
+      this.service.playable = true;
     }
   }
 
-  allowAutoplayOnScroll: boolean = false;
-
-  /**
-   * See setAutoplay method
-   */
-  autoplayChanged: boolean = false;
-  newAutoplayValue: boolean = false;
-
-  /**
-   * This is set by VideoAutoplayService
-   */
-  autoplaying: boolean = false;
   /**
    * This is the video player component
    */
@@ -118,6 +90,10 @@ export class MindsVideoPlayerComponent
       'airplay',
       'fullscreen',
     ],
+    autoplay: true,
+    muted: false,
+    hideControls: true,
+    storage: { enabled: false },
   };
 
   /**
@@ -130,61 +106,10 @@ export class MindsVideoPlayerComponent
     this.cd.detectChanges();
   });
 
-  setAutoplaying(value: boolean): void {
-    this.autoplaying = value;
-
-    // if we're not autoplaying, we need to set the src attribute to ''
-    this.useEmptySource = !value;
-
-    // if we stop autoplaying, we need to free resources manually, otherwise they will eventually stop loading
-    if (!value) {
-      const sources = this.elementRef.nativeElement.getElementsByTagName(
-        'source'
-      );
-
-      // remove <source> from the DOM
-      for (const source of sources) {
-        source.remove();
-      }
-
-      // reload video so it frees up resources
-      const video: HTMLVideoElement = this.elementRef.nativeElement.getElementsByTagName(
-        'video'
-      )[0];
-      if (video) {
-        video.load();
-      }
-    }
-
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-  }
-
-  setAutoplay(value: boolean): void {
-    // if the player doesn't exist yet, make it so this is called again by onReady()
-    if (!this.player || !this.player.player) {
-      this.newAutoplayValue = value;
-      this.autoplayChanged = true;
-    } else {
-      this.autoplayChanged = false;
-
-      // if we're about to autoplay, first mute so we avoid errors
-      if (value) {
-        this.mute();
-      }
-      // change the actual option in the next cycle, after the video has been muted
-      setTimeout(() => {
-        this.options = { ...this.options, autoplay: value };
-      });
-    }
-  }
-
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
     private session: Session,
-    @Inject(forwardRef(() => VideoAutoplayService))
-    private autoplayService: VideoAutoplayService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -194,20 +119,14 @@ export class MindsVideoPlayerComponent
       this.service.load();
     }
 
-    if (changes.autoplay) {
-      this.setAutoplay(changes.autoplay.currentValue);
-    }
-  }
-
-  ngAfterViewInit() {
-    this.togglePlayerRegistration();
-
-    this.setAutoplay(this.autoplay);
+    // if (changes.autoplay) {
+    //   this.setAutoplay(changes.autoplay.currentValue);
+    // }
   }
 
   ngOnDestroy(): void {
     this.onReadySubscription.unsubscribe();
-    this.autoplayService.unregisterPlayer(this);
+    //this.autoplayService.unregisterPlayer(this);
   }
 
   @Input('guid')
@@ -247,10 +166,7 @@ export class MindsVideoPlayerComponent
    * @return boolean
    */
   isPlayable(): boolean {
-    return (
-      (isPlatformBrowser(this.platformId) && this.autoplay) ||
-      (this.service.isPlayable() && this.autoplaying) // autoplaying comes from the scroll, and autoplay is for single entity views
-    );
+    return isPlatformBrowser(this.platformId) && this.service.isPlayable();
   }
 
   /**
@@ -260,53 +176,49 @@ export class MindsVideoPlayerComponent
    */
   onPlaceholderClick(e: MouseEvent): void {
     // If we have a player, then play
-    if (this.player) {
-      this.play();
+    if (this.player && this.isPlayable) {
+      this.play({ muted: false, hideControls: false });
       return;
     }
+
     // Play in modal if required
     if (this.service.shouldPlayInModal) {
       return this.mediaModalRequested.next();
     }
 
-    // This is very hacky. A wrapper component needs to be made for autoplay logic.
-    this.autoplaying = true;
-    this.service.forcePlayable = true;
-
-    //console.error('Placeholder was clicked but we have no action to take');
+    this.service.playable = true;
   }
 
   unmute(): void {
-    if (this.player) {
-      this.player.player.muted = false;
-    }
+    this.options.muted = false;
+    // if (this.player) {
+    //   this.player.player.muted = false;
+    // }
   }
 
   mute(): void {
-    if (this.player) {
-      this.player.player.muted = true;
-    }
+    this.options.muted = true;
+    // if (this.player) {
+    //   this.player.player.muted = true;
+    // }
   }
 
   isMuted(): boolean {
     return this.player ? this.player.player.muted : false;
   }
 
-  async play() {
+  async play(opts: { muted: boolean; hideControls?: boolean }) {
+    this.options.muted = opts.muted;
+    this.options.hideControls = opts.hideControls;
+
+    this.service.playable = true;
+
     if (this.player) {
       try {
+        this.player.player.muted = this.options.muted;
+
         await this.player.player.play();
       } catch (e) {}
-    }
-  }
-
-  isPlaying(): boolean {
-    return this.player ? this.player.player.playing : false;
-  }
-
-  stop(): void {
-    if (this.player) {
-      this.player.player.stop();
     }
   }
 
@@ -317,6 +229,19 @@ export class MindsVideoPlayerComponent
   pause(): void {
     if (this.player) {
       this.player.player.pause();
+    }
+
+    // Clean up sources
+    this.removeSources();
+  }
+
+  isPlaying(): boolean {
+    return this.player ? this.player.player.playing : false;
+  }
+
+  stop(): void {
+    if (this.player) {
+      this.player.player.stop();
     }
   }
 
@@ -342,51 +267,33 @@ export class MindsVideoPlayerComponent
     }
   }
 
-  onClick(): void {
-    if (
-      !this.clicked &&
-      (this.autoplay || this.autoplaying) &&
-      this.isMuted()
-    ) {
-      this.clicked = true;
-      this.autoplayService.muted = false;
-      this.unmute();
-      this.play();
-    }
-  }
+  onReady() {}
 
-  onReady() {
-    // if autoplay changed, the player probably wasn't defined yet, so we need to call this method again
-    if (this.autoplayChanged) {
-      this.setAutoplay(this.newAutoplayValue);
-    }
-    if (this.autoplaying) {
-      if (this.autoplayService.muted) {
-        this.mute();
-      } else {
-        this.unmute();
-      }
-      this.play();
-    }
-  }
+  onVolumeChange(): void {}
 
-  onVolumeChange() {
-    if (this.autoplay || this.autoplaying) {
-      this.autoplayService.muted = this.player.player.muted;
-    }
-  }
+  onPlay(): void {}
 
-  onPlay(): void {
-    if (!this.autoplaying) {
-      this.autoplayService.userPlay(this);
-    }
-  }
+  removeSources() {
+    // if we're not autoplaying, we need to set the src attribute to ''
+    this.service.playable = false;
 
-  private togglePlayerRegistration() {
-    if (this.allowAutoplayOnScroll) {
-      this.autoplayService.registerPlayer(this);
-    } else {
-      this.autoplayService.unregisterPlayer(this);
+    const sources = this.elementRef.nativeElement.getElementsByTagName(
+      'source'
+    );
+
+    // remove <source> from the DOM
+    for (const source of sources) {
+      source.remove();
+    }
+
+    // reload video so it frees up resources
+    const video: HTMLVideoElement = this.elementRef.nativeElement.getElementsByTagName(
+      'video'
+    )[0];
+    if (video) {
+      try {
+        video.load();
+      } catch (err) {}
     }
   }
 }

@@ -41,7 +41,6 @@ class MindsActivityMock {
   @Input() commentsToggle: boolean;
   @Input() showRatingToggle: boolean;
   @Input() editing: boolean;
-  @Input() allowAutoplayOnScroll: boolean;
   @Input() autoplayVideo: boolean;
 }
 
@@ -65,12 +64,7 @@ describe('NewsfeedSingleComponent', () => {
         }),
         MockComponent({
           selector: 'm-activity',
-          inputs: [
-            'entity',
-            'displayOptions',
-            'allowAutoplayOnScroll',
-            'autoplayVideo',
-          ],
+          inputs: ['entity', 'displayOptions', 'autoplayVideo'],
         }),
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],

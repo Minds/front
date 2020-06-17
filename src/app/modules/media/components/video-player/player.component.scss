@@ -1,6 +1,9 @@
 .plyr video {
   height: 100%;
 }
+.plyr--video.plyr--stopped .plyr__controls {
+  display: none;
+}
 
 [class*='m-videoPlayer__notice'] {
   display: block;
@@ -24,7 +27,8 @@
   }
 }
 
-m-videoPlayer {
+m-videoPlayer,
+m-videoPlayer--scrollaware {
   display: block;
   position: relative;
   width: 100%;

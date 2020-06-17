@@ -11,7 +11,6 @@ import { MetaService } from '../../../common/services/meta.service';
 export class DiscoveryFeedItemComponent implements OnInit {
   @Input() entity; // TODO add type
   @Input() openComments: boolean = false;
-  @Input() allowAutoplayOnScroll: boolean;
   readonly cdnUrl: string;
 
   constructor(

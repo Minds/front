@@ -6,6 +6,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 
 export type ActivityDisplayOptions = {
+  autoplayVideo: boolean;
   showOwnerBlock: boolean;
   showComments: boolean;
   showOnlyCommentsInput: boolean;
@@ -199,6 +200,7 @@ export class ActivityService {
   );
 
   displayOptions: ActivityDisplayOptions = {
+    autoplayVideo: true,
     showOwnerBlock: true,
     showComments: true,
     showOnlyCommentsInput: true,

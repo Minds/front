@@ -43,14 +43,15 @@
 
 <div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
   <div class="m-activityContent__fixedHeightSpacer"></div>
-  <m-videoPlayer
+
+  <m-videoPlayer--scrollaware
     [guid]="videoGuid"
     [shouldPlayInModal]="true"
-    [autoplay]="autoplayVideo"
-    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
     (mediaModalRequested)="onModalRequested($event)"
+    [autoplay]="service.displayOptions.autoplayVideo"
     [style.height]="videoHeight"
-  ></m-videoPlayer>
+  ></m-videoPlayer--scrollaware>
+
   <div class="m-activityContent__fixedHeightSpacer"></div>
 </div>
 
@@ -126,8 +127,6 @@
     [style.width]="remindWidth"
     [style.height]="remindHeight"
     [style.max-height]="remindHeight"
-    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
-    [autoplayVideo]="autoplayVideo"
   >
   </m-activity__remind>
 </div>

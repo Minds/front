@@ -325,7 +325,6 @@
         [guid]="activity.entity_guid"
         [shouldPlayInModal]="true"
         [autoplay]="autoplayVideo"
-        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
         (mediaModalRequested)="openModal()"
         #player
       ></m-videoPlayer>
@@ -400,7 +399,6 @@
           [boosted]="activity.boosted"
           (matureVisibilityChange)="onRemindMatureVisibilityChange()"
           (videoMetadataLoaded)="setVideoDimensions($event)"
-          [allowAutoplayOnScroll]="allowAutoplayOnScroll"
           [autoplayVideo]="autoplayVideo"
         ></minds-remind>
       </ng-container>
