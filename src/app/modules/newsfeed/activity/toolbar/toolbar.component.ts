@@ -40,6 +40,7 @@ export class ActivityToolbarComponent {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
     }
+
     this.service.displayOptions.showOnlyCommentsInput = !this.service
       .displayOptions.showOnlyCommentsInput;
   }
