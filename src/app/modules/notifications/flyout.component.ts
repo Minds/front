@@ -6,10 +6,13 @@ import {
   ViewChild,
   HostBinding,
   OnDestroy,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { FeaturesService } from '../../services/features.service';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   moduleId: module.id,
@@ -28,12 +31,17 @@ export class NotificationsFlyoutComponent implements OnDestroy {
 
   constructor(
     private featuresService: FeaturesService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.newNavigation = this.featuresService.has('navigation');
     this.routerSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart && this.visible) {
-        this.close(); // close flyout on route change.
+      if (isPlatformBrowser(this.platformId)) {
+        if (window.innerWidth < 1028) {
+          if (event instanceof NavigationStart && this.visible) {
+            this.close(); // close flyout on route change.
+          }
+        }
       }
     });
   }
