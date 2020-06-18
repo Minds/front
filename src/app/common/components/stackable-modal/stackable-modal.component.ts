@@ -8,22 +8,11 @@ import {
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { OverlayModalComponent } from '../overlay-modal/overlay-modal.component';
-import { StackableModalService } from '../../../services/ux/stackable-modal.service';
-
-/**
- * Stackable modal state
- */
-export enum StackableModalState {
-  Open = 1,
-  Dismissed,
-}
-
-/**
- * Stackable modal event
- */
-export interface StackableModalEvent {
-  state: StackableModalState;
-}
+import {
+  StackableModalService,
+  StackableModalEvent,
+  StackableModalState,
+} from '../../../services/ux/stackable-modal.service';
 
 /**
  * When you need to stack a modal

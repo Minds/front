@@ -31,15 +31,15 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
 import { ShareModalComponent } from '../../modals/share/share';
 import { AttachmentService } from '../../../services/attachment';
-import {
-  StackableModalState,
-  StackableModalEvent,
-} from '../../../common/components/stackable-modal/stackable-modal.component';
 import { TranslationService } from '../../../services/translation';
 import { Client } from '../../../services/api/client';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { StackableModalService } from '../../../services/ux/stackable-modal.service';
+import {
+  StackableModalService,
+  StackableModalState,
+  StackableModalEvent,
+} from '../../../services/ux/stackable-modal.service';
 
 export type MediaModalParams = {
   entity: any;

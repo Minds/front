@@ -1,11 +1,21 @@
 import { Injectable, Injector, Inject } from '@angular/core';
-
-import {
-  StackableModalEvent,
-  StackableModalState,
-} from '../../common/components/stackable-modal/stackable-modal.component';
 import { Observable } from 'rxjs';
 import { OverlayModalService } from './overlay-modal';
+
+/**
+ * Stackable modal state
+ */
+export enum StackableModalState {
+  Open = 1,
+  Dismissed,
+}
+
+/**
+ * Stackable modal event
+ */
+export interface StackableModalEvent {
+  state: StackableModalState;
+}
 
 @Injectable()
 export class StackableModalService {
