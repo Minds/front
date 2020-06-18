@@ -24,7 +24,7 @@ import { ScheduleComponent } from './components/popup/schedule/schedule.componen
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
 import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
-
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete/text-input-autocomplete.module';
 /**
  * Exported components
  */
@@ -65,7 +65,13 @@ const PROVIDERS = [
  * Module definition
  */
 @NgModule({
-  imports: [NgCommonModule, FormsModule, CommonModule, HashtagsModule],
+  imports: [
+    NgCommonModule,
+    FormsModule,
+    CommonModule,
+    HashtagsModule,
+    TextInputAutocompleteModule,
+  ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
   providers: PROVIDERS,
