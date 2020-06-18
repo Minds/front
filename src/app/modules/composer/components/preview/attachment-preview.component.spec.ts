@@ -9,6 +9,7 @@ import { AttachmentService } from '../../services/attachment.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { RichEmbedService } from '../../services/rich-embed.service';
 import { PreviewService } from '../../services/preview.service';
+import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 
 describe('Composer Attachment Preview', () => {
   let comp: AttachmentPreviewComponent;
@@ -26,6 +27,7 @@ describe('Composer Attachment Preview', () => {
         AttachmentService,
         RichEmbedService,
         PreviewService,
+        FeedsUpdateService,
         {
           provide: ApiService,
           useValue: MockService(ApiService, {}),

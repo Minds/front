@@ -1,10 +1,5 @@
-.m-overlayModal--stackable {
-  &.m-overlay-modal {
-    width: 600px;
-    max-width: 94vw;
-    @include m-theme() {
-      background: themed($m-white);
-      box-shadow: 0 2px 8px 0 rgba(themed($m-black-always), 0.25);
-    }
+m-stackableModal {
+  m-overlay-modal {
+    z-index: 10000000 !important;
   }
 }
