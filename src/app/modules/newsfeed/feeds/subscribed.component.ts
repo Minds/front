@@ -5,6 +5,8 @@ import {
   OnInit,
   PLATFORM_ID,
   ViewChild,
+  Injector,
+  SkipSelf,
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -27,6 +29,8 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
+import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -58,6 +62,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
 
+  /**
+   * Listening for new posts.
+   */
+  private feedsUpdatedSubscription: Subscription;
+
   @ViewChild('poster') private poster: PosterComponent;
 
   @ViewChild('composer') private composer: ComposerComponent;
@@ -73,6 +82,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
+    protected clientMetaService: ClientMetaService,
+    public feedsUpdate: FeedsUpdateService,
+    @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -103,6 +115,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.newUserPromo = !!params['newUser'];
     });
 
+    this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
+      newPost => {
+        this.prepend(newPost);
+      }
+    );
+
     this.context.set('activity');
   }
 
@@ -110,6 +128,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.paramsSubscription.unsubscribe();
     this.reloadFeedSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
+    this.feedsUpdatedSubscription.unsubscribe();
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
