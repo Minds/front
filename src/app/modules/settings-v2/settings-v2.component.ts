@@ -357,7 +357,7 @@ export class SettingsV2Component implements OnInit {
 
   setProRoutes() {
     const proMainMenuItem = this.mainMenus[0].items.find(
-      item => item.label === 'Pro'
+      item => item.label === $localize`:@@SETTINGS__PRO__LABEL:Pro`
     );
 
     proMainMenuItem.id = `pro_canary/${this.user}`;
