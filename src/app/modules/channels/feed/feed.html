@@ -31,7 +31,6 @@
       (deleted)="delete($event)"
       [slot]="i + 1"
       [attr.data-minds-activity-guid]="activity.guid"
-      [allowAutoplayOnScroll]="true"
     ></minds-activity>
     <minds-activity
       *ngFor="let activity of feed; let i = index"
@@ -41,7 +40,6 @@
       (deleted)="delete($event)"
       [slot]="i + (pinned?.length || 0) + 1"
       [attr.data-minds-activity-guid]="activity.guid"
-      [allowAutoplayOnScroll]="true"
     ></minds-activity>
     <infinite-scroll
       distance="25%"

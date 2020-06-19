@@ -1,9 +1,15 @@
-<div class="m-settingsV2__desc" i18n="@@PRO_GENERAL__CUSTOMIZE_TITLE_HEADLINE">
-  Customize your title and headline.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__GENERAL__LABEL">
+    General Settings
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__GENERAL__DESCRIPTION">
+    Customize your title and headline.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField">

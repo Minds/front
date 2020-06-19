@@ -23,22 +23,11 @@
     <ng-container *ngIf="!secondaryPaneIsMenu">
       <div class="m-settingsV2__settingsView">
         <div class="m-settingsV2__viewWrapper">
-          <ng-container *ngIf="standardHeader">
-            <div class="m-settingsV2__headerWrapper">
-              <div class="m-settingsV2__backButton">
-                <a (click)="goBack()">
-                  <i class="material-icons">arrow_back</i
-                  ><span i18n="@@COMMON__ACTIONS__BACK">Back</span>
-                </a>
-              </div>
-              <div class="m-settingsV2__headerLabel">{{ routeData.title }}</div>
-            </div>
-            <div class="m-settingsV2__desc" *ngIf="routeData?.description">
-              {{ routeData?.description }}
-            </div>
-          </ng-container>
           <div class="m-formWrapper" [hidden]="!init">
             <router-outlet (activate)="onActivate($event)"></router-outlet>
+          </div>
+          <div class="m-formWrapper" [hidden]="init">
+            <m-loadingSpinner [inProgress]="!init"></m-loadingSpinner>
           </div>
         </div>
       </div>

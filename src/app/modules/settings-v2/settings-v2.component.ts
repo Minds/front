@@ -38,15 +38,24 @@ export class SettingsV2Component implements OnInit {
   mainMenus: NestedMenu[] = [
     {
       header: {
-        label: 'Settings',
+        label: $localize`:@@SETTINGS__HEADER__LABEL:Settings`,
         id: 'settings',
       },
       items: [
-        { label: 'Account', id: 'account' },
-        { label: 'Pro', id: 'pro_canary' }, // :user param added later
-        { label: 'Security', id: 'security' },
-        { label: 'Billing', id: 'billing' },
-        { label: 'Other', id: 'other' },
+        {
+          label: $localize`:@@SETTINGS__ACCOUNT__LABEL:Account`,
+          id: 'account',
+        },
+        { label: $localize`:@@SETTINGS__PRO__LABEL:Pro`, id: 'pro_canary' }, // :user param added later
+        {
+          label: $localize`:@@SETTINGS__SECURITY__LABEL:Security`,
+          id: 'security',
+        },
+        {
+          label: $localize`:@@SETTINGS__BILLING__LABEL:Billing`,
+          id: 'billing',
+        },
+        { label: $localize`:@@SETTINGS__OTHER__LABEL:Other`, id: 'other' },
       ],
     },
   ];
@@ -54,44 +63,71 @@ export class SettingsV2Component implements OnInit {
     account: [
       {
         header: {
-          label: 'General Account Settings',
+          label: $localize`:@@SETTINGS__ACCOUNT__HEADER__LABEL:General Account Settings`,
           id: 'account',
         },
         items: [
-          { label: 'Display Name', id: 'display-name' },
-          { label: 'Email Address', id: 'email-address' },
-          { label: 'Language', id: 'language' },
-          { label: 'Password', id: 'password' },
-          { label: 'NSFW Content', id: 'nsfw-content' },
-          { label: 'Share Buttons', id: 'share-buttons' },
-          { label: 'Autoplay Videos', id: 'autoplay-videos' },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__DISPLAYNAME__LABEL:Display Name`,
+            id: 'display-name',
+          },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__EMAIL__LABEL:Email Address`,
+            id: 'email-address',
+          },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__LANGUAGE__LABEL:Language`,
+            id: 'language',
+          },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__PASSWORD__LABEL:Password`,
+            id: 'password',
+          },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__NSFW__LABEL:NSFW Content`,
+            id: 'nsfw-content',
+          },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__SHAREBUTTONS__LABEL:Share Buttons`,
+            id: 'share-buttons',
+          },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__AUTOPLAY__LABEL:Autoplay Videos`,
+            id: 'autoplay-videos',
+          },
         ],
       },
       {
         header: {
-          label: 'Notifications',
+          label: $localize`:@@SETTINGS__NOTIFICATIONS__HEADER__LABEL:Notifications`,
           id: 'notifications',
         },
         items: [
-          { label: 'Email', id: 'email-notifications' },
-          { label: 'Popovers', id: 'toaster-notifications' },
+          {
+            label: $localize`:@@SETTINGS__NOTIFICATIONS__EMAIL__LABEL:Email`,
+            id: 'email-notifications',
+          },
+          {
+            label: $localize`:@@SETTINGS__NOTIFICATIONS__POPOVERS__LABEL:Popovers`,
+            id: 'toaster-notifications',
+          },
         ],
       },
       {
         header: {
-          label: 'Account Upgrade',
+          label: $localize`:@@SETTINGS__ACCOUNTUPGRADE__HEADER__LABEL:Account Upgrade`,
           id: 'account-upgrade',
         },
         shouldShow: this.shouldShowUpgradesMenu.bind(this),
         items: [
           {
-            label: 'Upgrade to Pro',
+            label: $localize`:@@SETTINGS__ACCOUNTUPGRADE__PRO__LABEL:Upgrade to Pro`,
             id: 'upgrade-to-pro',
             route: '/pro',
             shouldShow: this.shouldShowProMenuItem.bind(this),
           },
           {
-            label: 'Upgrade to Plus',
+            label: $localize`:@@SETTINGS__ACCOUNTUPGRADE__PLUS__LABEL:Upgrade to Plus`,
             id: 'upgrade-to-plus',
             route: '/plus',
             shouldShow: this.shouldShowPlusMenuItem.bind(this),
@@ -102,24 +138,36 @@ export class SettingsV2Component implements OnInit {
     security: [
       {
         header: {
-          label: 'Security',
+          label: $localize`:@@SETTINGS__SECURITY__HEADER__LABEL:Security`,
           id: 'security',
         },
         items: [
-          { label: 'Two-factor Authentication', id: 'two-factor' },
-          { label: 'Sessions', id: 'sessions' },
+          {
+            label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
+            id: 'two-factor',
+          },
+          {
+            label: $localize`:@@SETTINGS__SECURITY__SESSIONS__LABEL:Sessions`,
+            id: 'sessions',
+          },
         ],
       },
     ],
     billing: [
       {
         header: {
-          label: 'Billing',
+          label: $localize`:@@SETTINGS__BILLING__HEADER__LABEL:Billing`,
           id: 'billing',
         },
         items: [
-          { label: 'Payment Methods', id: 'payment-methods' },
-          { label: 'Recurring Payments', id: 'recurring-payments' },
+          {
+            label: $localize`:@@SETTINGS__BILLING__METHOD__LABEL:Payment Methods`,
+            id: 'payment-methods',
+          },
+          {
+            label: $localize`:@@SETTINGS__BILLING__RECURRING__LABEL:Recurring Payments`,
+            id: 'recurring-payments',
+          },
         ],
       },
     ],
@@ -127,28 +175,52 @@ export class SettingsV2Component implements OnInit {
     pro_canary: [
       {
         header: {
-          label: 'Pro Settings',
+          label: $localize`:@@SETTINGS__PRO__HEADER__LABEL:Pro Settings`,
           id: 'pro_canary',
         },
         items: [
-          { label: 'General', id: 'general' },
-          { label: 'Theme', id: 'theme' },
-          { label: 'Assets', id: 'assets' },
-          { label: 'Hashtags', id: 'hashtags' },
-          { label: 'Footer', id: 'footer' },
-          { label: 'Domain', id: 'domain' },
-          { label: 'Payouts', id: 'payouts' },
+          {
+            label: $localize`:@@SETTINGS__PRO__GENERAL__LABEL:General`,
+            id: 'general',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__THEME__LABEL:Theme`,
+            id: 'theme',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__ASSETS__LABEL:Assets`,
+            id: 'assets',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__HASHTAGS__LABEL:Hashtags`,
+            id: 'hashtags',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__FOOTER__LABEL:Footer`,
+            id: 'footer',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__DOMAIN__LABEL:Domain`,
+            id: 'domain',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__PAYOUTS__LABEL:Payouts`,
+            id: 'payouts',
+          },
         ],
       },
       {
         header: {
-          label: 'Pro Subscription Management',
+          label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL:Pro Subscription Management`,
           id: 'pro-subscription',
         },
         items: [
-          { label: 'Cancel Pro Subscription', id: 'cancel' },
           {
-            label: 'View Pro Channel',
+            label: $localize`:@@SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL:Cancel Pro Subscription`,
+            id: 'cancel',
+          },
+          {
+            label: $localize`:@@SETTINGS__PRO__VIEW__CHANNEL__LABEL:View Pro Channel`,
             id: 'view-pro-channel',
             route: '',
           },
@@ -158,32 +230,50 @@ export class SettingsV2Component implements OnInit {
     other: [
       {
         header: {
-          label: 'Content Admin',
+          label: $localize`:@@SETTINGS__OTHER__CONTENTADMIN__HEADER__LABEL:Content Admin`,
           id: 'content-admin',
         },
         items: [
-          { label: 'Reported Content', id: 'reported-content' },
-          { label: 'Blocked Channels', id: 'blocked-channels' },
+          {
+            label: $localize`:@@SETTINGS__OTHER__CONTENTADMIN__REPORTED__LABEL:Reported Content`,
+            id: 'reported-content',
+          },
+          {
+            label: $localize`:@@SETTINGS__OTHER__CONTENTADMIN__BLOCKED__LABEL:Blocked Channels`,
+            id: 'blocked-channels',
+          },
         ],
       },
       {
         header: {
-          label: 'Paid Content',
+          label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__HEADER__LABEL:Paid Content`,
           id: 'paid-content',
         },
         items: [
-          { label: 'Subscription Tier Management', id: 'subscription-tiers' },
-          { label: 'Paywall Preview', id: 'paywall-preview' },
+          {
+            label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__SUBSCRIPTIONS__LABEL:Subscription Tier Management`,
+            id: 'subscription-tiers',
+          },
+          {
+            label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__PAYWALL:Paywall Preview`,
+            id: 'paywall-preview',
+          },
         ],
       },
       {
         header: {
-          label: 'Deactivate and Delete Account',
+          label: $localize`:@@SETTINGS__OTHER__LEAVE__HEADER__LABEL:Deactivate and Delete Account`,
           id: 'deactivate-account',
         },
         items: [
-          { label: 'Deactivate Account', id: 'deactivate-account' },
-          { label: 'Delete Account', id: 'delete-account' },
+          {
+            label: $localize`:@@SETTINGS__OTHER__LEAVE__DEACTIVATE__LABEL:Deactivate Account`,
+            id: 'deactivate-account',
+          },
+          {
+            label: $localize`:@@SETTINGS__OTHER__LEAVE__DELETE__LABEL:Delete Account`,
+            id: 'delete-account',
+          },
         ],
       },
     ],
@@ -267,7 +357,7 @@ export class SettingsV2Component implements OnInit {
 
   setProRoutes() {
     const proMainMenuItem = this.mainMenus[0].items.find(
-      item => item.label === 'Pro'
+      item => item.label === $localize`:@@SETTINGS__PRO__LABEL:Pro`
     );
 
     proMainMenuItem.id = `pro_canary/${this.user}`;

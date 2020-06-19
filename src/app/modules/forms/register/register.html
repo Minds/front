@@ -12,8 +12,14 @@
   {{ errorMessage }}
 </ng-template>
 
-<h3 *ngIf="showTitle">Join the Minds Revolution</h3>
-<span class="m-register__alreadyAUser" *ngIf="showTitle">
+<h3 *ngIf="showTitle" i18n="@@REGISTER__JOIN__TITLE">
+  Join the Minds Revolution
+</h3>
+<span
+  class="m-register__alreadyAUser"
+  *ngIf="showTitle"
+  i18n="@@REGISTER__ALREADY__HAVE__ACOUNT__LINK"
+>
   Already have an account? <a [routerLink]="'/login'">Login</a>
 </span>
 

@@ -26,7 +26,6 @@ export class NewsfeedEntityComponent {
   host: DynamicHostDirective;
   entity;
   @Input() displayOptions = { v2: false };
-  @Input() allowAutoplayOnScroll: boolean = false;
 
   constructor(
     protected componentFactoryResolver: ComponentFactoryResolver,

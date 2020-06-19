@@ -1,12 +1,15 @@
-<div
-  class="m-settingsV2__desc"
-  i18n="@@SETTINGSV2__FOOTER__SETUP_SITES_FOOTER_LINKS"
->
-  Set up your site's footer links.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__FOOTER__LABEL">
+    Footer
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__FOOTER___DESCRIPTION">
+    Set up your site's footer links.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer containsDragDrop">
     <div class="m-form__field--grid" formArrayName="footer_links">

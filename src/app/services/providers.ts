@@ -50,6 +50,7 @@ import { TransferHttpInterceptorService } from './transfer-http-interceptor.serv
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 import { CookieService } from '../common/services/cookie.service';
 import { RedirectService } from '../common/services/redirect.service';
+import { StackableModalService } from './ux/stackable-modal.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -211,6 +212,10 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: InMemoryStorageService,
     useFactory: InMemoryStorageService._,
+  },
+  {
+    provide: StackableModalService,
+    useFactory: StackableModalService._,
   },
   ThemeService,
   DiagnosticsService,

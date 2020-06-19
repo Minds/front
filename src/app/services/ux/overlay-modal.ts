@@ -9,13 +9,14 @@ export class OverlayModalService {
 
   private _onDidDismissFn: Function;
 
+  protected stackable: boolean = false;
+
   static _() {
     return new OverlayModalService();
   }
 
   setContainer(container: OverlayModalComponent) {
     this.container = container;
-
     return this;
   }
 
@@ -28,6 +29,10 @@ export class OverlayModalService {
   create(component, data?, opts?, injector?: Injector) {
     if (!this.container) {
       throw new Error('Missing overlay container');
+    }
+
+    if (opts && opts.stackable) {
+      this.stackable = true;
     }
 
     this._onDidDismissFn = void 0;

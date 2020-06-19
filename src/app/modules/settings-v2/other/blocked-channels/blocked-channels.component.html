@@ -1,3 +1,18 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__OTHER__CONTENTADMIN__BLOCKED__LABEL"
+  >
+    Blocked Channels
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__OTHER__CONTENTADMIN__BLOCKED__DESCRIPTION"
+  >
+    Block channels from appearing in your feed.
+  </div>
+</m-settingsV2__header>
+
 <ng-container *ngIf="hasList">
   <div
     *ngFor="let channel of channels | async"

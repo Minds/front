@@ -1,15 +1,17 @@
-<div
-  class="m-settingsV2__desc"
-  i18n="@@SETTINGSV2_HASHTAGS__SELECT_CURRENCY_WISH_PAID_OUT_INFO"
->
-  Select the currency type you wish you be paid out in. Please note payouts only
-  occur after your
-  <a routerLink="/analytics/dashboard/earnings">earnings</a> are equivalent to
-  $100 or greater.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__PAYOUTS__LABEL">
+    Payouts
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__PAYOUTS__DESCRIPTION">
+    Select the currency type you wish you be paid out in. Please note payouts
+    only occur after your
+    <a routerLink="/analytics/dashboard/earnings">earnings</a> are equivalent to
+    $100 or greater.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
 
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
