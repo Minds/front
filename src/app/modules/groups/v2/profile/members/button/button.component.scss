@@ -11,39 +11,38 @@ m-groupMember__button {
     }
   }
 
-  ul.m-dropdown__list {
-    position: absolute;
-    // width: 304px;
-    list-style: none;
-    // margin: 34px 0 0;
-    // top: 15px;
-    // right: -20px;
-
-    @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
-      color: themed($m-textColor--primary);
-      box-shadow: none;
-    }
-
-    li.m-dropdownList__item {
-      padding: 0;
-      font-size: 15px;
-      line-height: 20px;
-      border: 0 !important;
+  .m-dropdown {
+    ul.m-dropdown__list {
+      position: absolute;
+      list-style: none;
+      width: 195px;
 
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--primary);
+        box-shadow: none;
       }
 
-      &:not(.m-userMenuDropdown__footer) {
-        > * {
-          padding: 8px 21px;
-        }
-      }
+      li.m-dropdownList__item {
+        padding: 0;
+        font-size: 15px;
+        line-height: 20px;
+        border: 0 !important;
 
-      span {
         @include m-theme() {
-          color: themed($m-grey-700);
+          color: themed($m-textColor--secondary);
+        }
+
+        &:not(.m-userMenuDropdown__footer) {
+          > * {
+            padding: 8px 21px;
+          }
+        }
+
+        span {
+          @include m-theme() {
+            color: themed($m-grey-700);
+          }
         }
       }
     }

@@ -9,136 +9,138 @@
   <i class="material-icons">more_vert</i>
 </div>
 
-<ul class="m-dropdown__list" [hidden]="!showMenu">
-  <ng-container *ngIf="!request; else requestBlock">
-    <li
-      class="m-dropdownList__item"
-      *ngIf="
-        (group['is:owner'] || group['is:moderator']) &&
-        !(user['is:owner'] || user['is:moderator']) &&
-        user['is:member']
-      "
-      (click)="removePrompt()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP"
+<div class="m-dropdown">
+  <ul class="m-dropdown__list" [hidden]="!showMenu">
+    <ng-container *ngIf="!request; else requestBlock">
+      <li
+        class="m-dropdownList__item"
+        *ngIf="
+          (group['is:owner'] || group['is:moderator']) &&
+          !(user['is:owner'] || user['is:moderator']) &&
+          user['is:member']
+        "
+        (click)="removePrompt()"
       >
-        Remove from Group
-      </span>
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="
-        (group['is:owner'] || group['is:moderator']) &&
-        !user['is:member'] &&
-        !wasReInvited
-      "
-      (click)="reInvite()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REINVITE"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP"
+        >
+          Remove from Group
+        </span>
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="
+          (group['is:owner'] || group['is:moderator']) &&
+          !user['is:member'] &&
+          !wasReInvited
+        "
+        (click)="reInvite()"
       >
-        Re-invite to Group
-      </span>
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="(group['is:owner'] || group['is:moderator']) && wasReInvited"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__INVITED"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REINVITE"
+        >
+          Re-invite to Group
+        </span>
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(group['is:owner'] || group['is:moderator']) && wasReInvited"
       >
-        Invited
-      </span>
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="
-        group['is:owner'] &&
-        !(user['is:owner'] || user['is:moderator']) &&
-        user['is:member']
-      "
-      (click)="grantOwnership()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__INVITED"
+        >
+          Invited
+        </span>
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="
+          group['is:owner'] &&
+          !(user['is:owner'] || user['is:moderator']) &&
+          user['is:member']
+        "
+        (click)="grantOwnership()"
       >
-        Make Admin
-      </span>
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && user['is:owner'] && user['is:member']"
-      (click)="revokeOwnership()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN"
+        >
+          Make Admin
+        </span>
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="group['is:owner'] && user['is:owner'] && user['is:member']"
+        (click)="revokeOwnership()"
       >
-        Remove as Admin
-      </span>
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="
-        group['is:owner'] &&
-        !(user['is:owner'] || user['is:moderator']) &&
-        user['is:member']
-      "
-      (click)="grantModerator()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_MODERATOR"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN"
+        >
+          Remove as Admin
+        </span>
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="
+          group['is:owner'] &&
+          !(user['is:owner'] || user['is:moderator']) &&
+          user['is:member']
+        "
+        (click)="grantModerator()"
       >
-        Make Moderator
-      </span>
-    </li>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner'] && user['is:moderator'] && user['is:member']"
-      (click)="revokeModerator()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_MODERATOR"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_MODERATOR"
+        >
+          Make Moderator
+        </span>
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="group['is:owner'] && user['is:moderator'] && user['is:member']"
+        (click)="revokeModerator()"
       >
-        Remove as Moderator
-      </span>
-    </li>
-  </ng-container>
-  <ng-template #requestBlock>
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner']"
-      (click)="acceptRequest()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUP__PROFILE__CARD_USER_ACTIONS__ACCEPT_REQUEST"
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_MODERATOR"
+        >
+          Remove as Moderator
+        </span>
+      </li>
+    </ng-container>
+    <ng-template #requestBlock>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="group['is:owner']"
+        (click)="acceptRequest()"
       >
-        Accept Request
-      </span>
-    </li>
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUP__PROFILE__CARD_USER_ACTIONS__ACCEPT_REQUEST"
+        >
+          Accept Request
+        </span>
+      </li>
 
-    <li
-      class="m-dropdownList__item"
-      *ngIf="group['is:owner']"
-      (click)="rejectRequest()"
-    >
-      <span
-        class="minds-menu-info-item"
-        i18n="@@GROUP__PROFILE__CARD_USER_ACTIONS__REJECT_REQUEST"
+      <li
+        class="m-dropdownList__item"
+        *ngIf="group['is:owner']"
+        (click)="rejectRequest()"
       >
-        Reject Request
-      </span>
-    </li>
-  </ng-template>
-</ul>
+        <span
+          class="minds-menu-info-item"
+          i18n="@@GROUP__PROFILE__CARD_USER_ACTIONS__REJECT_REQUEST"
+        >
+          Reject Request
+        </span>
+      </li>
+    </ng-template>
+  </ul>
+</div>
 <div
   class="minds-bg-overlay"
   (click)="toggleMenu($event)"
