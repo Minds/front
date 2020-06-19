@@ -7,12 +7,19 @@ import {
   SupportTiersService,
 } from '../../../../wire/v2/support-tiers.service';
 import { map } from 'rxjs/operators';
+import { ChannelShopMembershipsService } from './memberships.service';
+import { ChannelShopMembershipsEditModalService } from './edit-modal.service';
+import { WireModalService } from '../../../../wire/wire-modal.service';
 
 @Component({
   selector: 'm-channelShop__memberships',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'memberships.component.html',
-  providers: [SupportTiersService],
+  providers: [
+    SupportTiersService,
+    ChannelShopMembershipsService,
+    ChannelShopMembershipsEditModalService,
+  ],
 })
 export class ChannelShopMembershipsComponent implements OnDestroy {
   /**
@@ -66,10 +73,16 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * Constructor
    * @param channel
    * @param supportTiers
+   * @param service
+   * @param editModal
+   * @param wireModal
    */
   constructor(
     public channel: ChannelsV2Service,
-    public supportTiers: SupportTiersService
+    public supportTiers: SupportTiersService,
+    protected service: ChannelShopMembershipsService,
+    protected editModal: ChannelShopMembershipsEditModalService,
+    protected wireModal: WireModalService
   ) {
     this.channelGuidSubscription = this.channel.guid$.subscribe(guid =>
       this.supportTiers.setEntityGuid(guid)
@@ -87,24 +100,62 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
 
   /**
    * Create a new Support Tier using Edit modal
+   * @todo Use an observable subscription to allow modal auto-close when navigating away
    */
-  create(): void {}
+  async create(): Promise<void> {
+    await this.editModal.present().toPromise();
+    this.supportTiers.refresh();
+  }
 
   /**
    * Select a Support Tier using Pay modal
    * @param supportTier
    */
-  select(supportTier: SupportTier): void {}
+  async select(supportTier: SupportTier): Promise<void> {
+    const type = this.currencyFilter$.getValue();
+    let min;
+
+    switch (type) {
+      case 'tokens':
+        min = supportTier.tokens;
+        break;
+      case 'usd':
+        min = supportTier.usd;
+        break;
+    }
+
+    await this.wireModal
+      .present(this.channel.channel$.getValue(), {
+        default: {
+          min,
+          type: type !== 'usd' ? type : 'money',
+        },
+      })
+      .toPromise();
+
+    this.supportTiers.refresh();
+  }
 
   /**
    * Edit a Support Tier using Edit modal
    * @param supportTier
+   * @todo Use an observable subscription to allow modal auto-close when navigating away
    */
-  edit(supportTier: SupportTier): void {}
+  async edit(supportTier: SupportTier): Promise<void> {
+    await this.editModal.present(supportTier).toPromise();
+    this.supportTiers.refresh();
+  }
 
   /**
    * Delete a Support Tier
    * @param supportTier
    */
-  delete(supportTier: SupportTier): void {}
+  async delete(supportTier: SupportTier): Promise<void> {
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
+    await this.service.delete(supportTier).toPromise();
+    this.supportTiers.refresh();
+  }
 }

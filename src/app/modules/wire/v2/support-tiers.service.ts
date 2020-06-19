@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import {
   distinctUntilChanged,
   map,
@@ -7,6 +7,7 @@ import {
   switchAll,
 } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
+import { deepDiff } from '../../../helpers/deep-diff';
 
 /**
  * Support Tier entity
@@ -62,15 +63,22 @@ export class SupportTiersService {
   readonly groupedList$: Observable<GroupedSupportTiers>;
 
   /**
+   * Cache buster
+   */
+  readonly refresh$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    Date.now()
+  );
+
+  /**
    * Constructor. Set observables.
    * @param api
    */
   constructor(protected api: ApiService) {
     // Fetch Support Tiers list
-    this.list$ = this.entityGuid$.pipe(
-      distinctUntilChanged(),
+    this.list$ = combineLatest([this.entityGuid$, this.refresh$]).pipe(
+      distinctUntilChanged(deepDiff),
       map(
-        (entityGuid: string): Observable<ApiResponse> =>
+        ([entityGuid, refresh]): Observable<ApiResponse> =>
           entityGuid
             ? this.api.get(`api/v3/wire/supporttiers/all/${entityGuid}`)
             : of(null)
@@ -90,11 +98,18 @@ export class SupportTiersService {
   }
 
   /**
-   *
+   * Sets the entity GUID
    * @param entityGuid
    */
   setEntityGuid(entityGuid: string) {
     this.entityGuid$.next(entityGuid);
+  }
+
+  /**
+   * Busts cache
+   */
+  refresh() {
+    this.refresh$.next(Date.now());
   }
 
   /**
