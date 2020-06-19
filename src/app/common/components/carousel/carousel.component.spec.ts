@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockService } from '../../../utils/mock';
+import { MockService, MockComponent } from '../../../utils/mock';
 import { CarouselComponent } from './carousel.component';
 import { CarouselEntitiesService } from './carousel-entities.service';
 import { FormsModule } from '@angular/forms';
@@ -122,7 +122,20 @@ describe('CarouselComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
-      declarations: [CarouselComponent],
+      declarations: [
+        CarouselComponent,
+        MockComponent({
+          selector: 'm-carousel__card',
+          inputs: [
+            'imageStyle',
+            'contentLink',
+            'title',
+            'buttonText',
+            'cardDimensions',
+          ],
+          outputs: ['buttonClick'],
+        }),
+      ],
       providers: [
         {
           provide: CarouselEntitiesService,
@@ -161,26 +174,23 @@ describe('CarouselComponent', () => {
     expect(comp.entities$).toBe(channels$);
   });
 
-  // skipped because the expected values vary between browser width
-  xit('should get position of elements in the carousel', () => {
-    carouselEntitiesService.entities$ = channels$;
-    (comp as any).getCarouselPositions();
-
-    // DOM does not render as expected in our runner
-    expect((comp as any).carouselPositions).toEqual([
-      [8, 777],
-      [8, 777],
-      [8, 777],
-      [8, 777],
-    ]);
-    expect((comp as any).halfContainerWidth).toBe(384.5);
+  it('should check left boundary on load', () => {
+    comp.onLoad();
+    expect((comp as any).childWidth).toBeTruthy();
+    expect((comp as any).atBoundary).toBeTruthy();
   });
 
-  it('should go to next index on carousel', () => {
-    carouselEntitiesService.entities$ = channels$;
-    expect((comp as any).currentItemIndex).toBe(0);
-    comp.goCarousel('next');
+  it('should detect when at left boundary', () => {
+    (comp as any).atBoundary = '';
+    (comp as any).container.scrollLeft = 0;
+    comp.checkBoundaries('left');
+    expect((comp as any).atBoundary).toBe('left');
+  });
 
-    expect((comp as any).currentItemIndex).toBe(1);
+  it('should detect when at right boundary', () => {
+    (comp as any).atBoundary = '';
+    (comp as any).container.scrollLeft = 9999;
+    comp.checkBoundaries('right');
+    expect((comp as any).atBoundary).toBe('right');
   });
 });

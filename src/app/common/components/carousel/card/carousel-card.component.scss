@@ -6,10 +6,14 @@ m-carousel__card {
     flex-direction: column;
     height: 166px;
     width: 130px;
-    margin: 16px;
+    margin: 16px 0;
     border-radius: 4px;
+
     @include m-theme() {
       border: solid 1px themed($m-borderColor--primary);
+      &:hover {
+        box-shadow: 0px 0px 1px 0px themed($m-grey-400);
+      }
     }
 
     * + * {
@@ -45,6 +49,10 @@ m-carousel__card {
       @include m-theme() {
         border: solid 1px themed($m-borderColor--primary);
         color: themed($m-textColor--primary);
+
+        &:hover {
+          box-shadow: 0px 0px 1px 0px themed($m-grey-400);
+        }
       }
     }
   }
