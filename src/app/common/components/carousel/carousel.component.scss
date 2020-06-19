@@ -4,7 +4,6 @@
   .m-carousel__carousel {
     display: flex;
     overflow-x: scroll;
-    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
@@ -13,6 +12,25 @@
 
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  .m-carousel__previousButton {
+    position: absolute;
+    z-index: 1000000; /* unfortunately necessary */
+    border-radius: 50%;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    top: calc(50% - 24px); /* offset for button padding */
+    left: -15px;
+    @media screen and (max-width: $max-mobile) {
+      right: 0;
+    }
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      background-color: themed($m-bgColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 

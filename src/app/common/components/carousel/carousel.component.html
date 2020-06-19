@@ -1,20 +1,29 @@
 <div class="m-carousel__wrapper">
-  <div class="m-carousel__carousel" #carousel>
+  <div class="m-carousel__carousel" #carousel (scroll)="onScroll()">
     <div class="m-carousel__item" *ngFor="let entity of entities$ | async">
       <m-carousel__card
         [imageStyle]="service.getAvatarStyle(entity.entity)"
         [contentLink]="service.getLink(entity.entity)"
         [title]="service.getName(entity.entity)"
         [buttonText]="service.getButtonText(entity.entity)"
+        [cardDimensions]="cardDimensions"
         (buttonClick)="service.onButtonClick(entity.entity)"
       >
       </m-carousel__card>
     </div>
   </div>
-  <button class="m-carousel__nextButton" (click)="goCarousel('next')">
+  <button
+    *ngIf="isOverflown && atBoundary !== 'right'"
+    class="m-carousel__nextButton"
+    (click)="slide('right')"
+  >
     <i class="material-icons">chevron_right</i>
   </button>
-  <!-- <button class="m-carousel__previousButton" (click)="goCarousel('previous')">
+  <button
+    *ngIf="atBoundary !== 'left'"
+    class="m-carousel__previousButton"
+    (click)="slide('left')"
+  >
     <i class="material-icons">chevron_left</i>
-  </button> -->
+  </button>
 </div>

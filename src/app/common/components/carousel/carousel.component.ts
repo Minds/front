@@ -16,30 +16,33 @@ import {
   AfterViewInit,
   HostListener,
   Input,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CarouselEntitiesService } from './carousel-entities.service';
+import { Dimensions } from './card/carousel-card.component';
+import { isPlatformBrowser } from '@angular/common';
+
+export type Direction = 'left' | 'right';
 
 @Component({
   selector: 'm-carousel',
   templateUrl: './carousel.component.html',
 })
 export class CarouselComponent implements AfterViewInit {
-  private carouselPositions: number[][]; // stores positions of elements
-  private halfContainerWidth: number; // half of container width
-  private currentItemIndex: number = 0; // item index
+  private container: Element; // holds nativeElement.
+  private childWidth: number; // actual child width.
+  public atBoundary: Direction; // left, right.
+  public isOverflown: boolean = false; // true if is overflown.
 
   /**
-   * Carousel object.
+   * Set the width of the card
    */
-  @ViewChild('carousel') carousel: ElementRef<any>;
-
-  /**
-   * Recalculate carousel positions on resize.
-   */
-  @HostListener('window:resize') onWindowResize() {
-    this.getCarouselPositions();
-  }
+  @Input() cardDimensions: Dimensions = {
+    width: 130,
+    height: 166,
+  };
 
   /**
    * Set value in service to entities$
@@ -50,73 +53,116 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   /**
+   * Carousel ViewChild.
+   */
+  @ViewChild('carousel') containerEl: ElementRef;
+
+  /**
+   * Reload on resize.
+   */
+  @HostListener('window:resize')
+  onResize() {
+    this.onLoad();
+  }
+
+  /**
    * Gets BehaviorSubject observables.
    */
   get entities$(): BehaviorSubject<any[]> {
     return this.service.entities$;
   }
 
-  constructor(public service: CarouselEntitiesService) {}
+  constructor(
+    public service: CarouselEntitiesService,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
-  async ngAfterViewInit(): Promise<void> {
-    await this.getCarouselPositions();
-  }
-
-  /**
-   * Populates array of [x, y] coordinates of the carousel elements.
-   * And sets half container width.
-   * @returns { Promise<void> }
-   */
-  private async getCarouselPositions(): Promise<void> {
-    this.carouselPositions = [];
-    for (const div of [...this.carousel.nativeElement.children]) {
-      this.carouselPositions.push([
-        div.offsetLeft,
-        div.offsetLeft + div.offsetWidth,
-      ]);
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.onLoad();
+      }, 50);
     }
-    this.halfContainerWidth = this.carousel.nativeElement.offsetWidth / 2;
   }
 
   /**
-   * Moves carousel either left or right
-   * @param { string } direction - 'left' or 'right'.
-   * @returns { Promise<void> }
-   * Adapted from @sebastienbarbier 's solution here.
-   * https://stackoverflow.com/a/57533033/7396007
+   * Reload on scroll.
+   * @param $event
    */
-  public async goCarousel(direction: string): Promise<void> {
-    const { nativeElement } = this.carousel;
-    const currentScrollLeft = nativeElement.scrollLeft;
-    const currentScrollRight = currentScrollLeft + nativeElement.offsetWidth;
+  onScroll() {
+    this.atBoundary = null;
+    this.checkBoundaries('left');
+    this.checkBoundaries('right');
+  }
 
-    if (currentScrollLeft === 0 && direction === 'next') {
-      this.currentItemIndex = 1;
-    } else if (
-      currentScrollRight === nativeElement.scrollWidth &&
-      direction === 'previous'
-    ) {
-      this.currentItemIndex = this.carouselPositions.length - 2;
+  /**
+   * Re-init dynamic variables.
+   */
+  onLoad() {
+    this.container = this.containerEl.nativeElement;
+
+    // assumes all metrics are equal width
+    if (!this.container) {
+      return;
+    }
+
+    const firstElement = <HTMLElement>(
+      document.querySelector('.m-carousel__item')
+    );
+
+    if (!firstElement) {
+      return;
+    }
+
+    this.childWidth = firstElement.clientWidth;
+
+    this.isOverflown =
+      this.container.scrollWidth - this.container.clientWidth > 0;
+
+    this.checkBoundaries('left');
+  }
+
+  /**
+   * Slides the carousel left or right.
+   * @param { string } direction - left or right
+   */
+  async slide(direction: Direction) {
+    const scrollAmount =
+      this.container.clientWidth -
+      (this.container.clientWidth % this.childWidth);
+
+    this.atBoundary = null;
+    this.checkBoundaries(direction, scrollAmount);
+
+    if (direction === 'right') {
+      this.container.scrollLeft += scrollAmount;
     } else {
-      const currentMiddlePosition = currentScrollLeft + this.halfContainerWidth;
-      for (let i = 0; i < this.carouselPositions.length; i++) {
-        if (
-          currentMiddlePosition > this.carouselPositions[i][0] &&
-          currentMiddlePosition < this.carouselPositions[i][1]
-        ) {
-          this.currentItemIndex = i;
-          if (direction === 'next') {
-            this.currentItemIndex++;
-          } else if (direction === 'previous') {
-            this.currentItemIndex--;
-          }
-        }
-      }
+      this.container.scrollLeft -= scrollAmount;
+    }
+  }
+
+  /**
+   * Checks whether the carousels scroll is against a boundary.
+   * @param { Direction } direction - check left or right boundary.
+   * @param scrollAmount - check after applying the scrollAmount.
+   */
+  async checkBoundaries(
+    direction: Direction,
+    scrollAmount: number = 0
+  ): Promise<void> {
+    if (
+      direction === 'left' &&
+      this.container.scrollLeft - Math.floor(scrollAmount) <= 0
+    ) {
+      this.atBoundary = 'left';
     }
 
-    nativeElement.scrollTo({
-      left: this.carouselPositions[this.currentItemIndex][0],
-      behavior: 'smooth',
-    });
+    if (
+      direction === 'right' &&
+      this.container.scrollLeft + scrollAmount >=
+        this.container.scrollWidth - this.container.clientWidth
+    ) {
+      this.atBoundary = 'right';
+    }
   }
 }

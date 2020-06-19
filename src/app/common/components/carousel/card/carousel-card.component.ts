@@ -6,10 +6,15 @@
  */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+export interface Dimensions {
+  height: string | number;
+  width: string | number;
+}
+
 @Component({
   selector: 'm-carousel__card',
   template: `
-    <div class="m-carousel-card__wrapper">
+    <div class="m-carousel-card__wrapper" [ngStyle]="cardDimensionsStyle">
       <div
         class="m-carousel-card__avatar"
         [ngStyle]="imageStyle"
@@ -29,5 +34,10 @@ export class CarouselCardComponent {
   @Input() contentLink; // where content clicks should like.
   @Input() title; // the title of the card.
   @Input() buttonText; // text for the button (handled in service).
+  @Input() set cardDimensions(value: Dimensions) {
+    this.cardDimensionsStyle = value;
+  }
   @Output() buttonClick = new EventEmitter<boolean>(); // emits on button click.
+
+  public cardDimensionsStyle: Dimensions;
 }
