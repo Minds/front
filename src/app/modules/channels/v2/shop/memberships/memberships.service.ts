@@ -15,7 +15,9 @@ export class ChannelShopMembershipsService {
    * Deletes a Support Tier
    * @param supportTier
    */
-  delete(supportTier: SupportTier): Observable<void> {
-    return of();
+  delete(supportTier: SupportTier): Observable<any> {
+    return this.api.delete(
+      `api/v3/wire/supporttiers/${encodeURIComponent(supportTier.urn)}`
+    );
   }
 }
