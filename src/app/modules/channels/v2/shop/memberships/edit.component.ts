@@ -59,6 +59,27 @@ export class ChannelShopMembershipsEditComponent {
   }
 
   /**
+   * Sets the USD amount subject based on a numeric value
+   * @param amount
+   */
+  setUsd(amount: string) {
+    amount = amount.trim();
+
+    if (amount.slice(-1) === '.') {
+      // If we're in the middle of writing a decimal value, don't process it
+      return;
+    }
+
+    const numericAmount = parseFloat(amount.replace(/,/g, '') || '0');
+
+    if (isNaN(numericAmount)) {
+      return;
+    }
+
+    this.service.usd$.next(numericAmount);
+  }
+
+  /**
    * Saves a Support Tier
    */
   async save(): Promise<void> {

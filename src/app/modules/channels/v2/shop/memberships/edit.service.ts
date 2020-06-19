@@ -105,6 +105,7 @@ export class ChannelShopMembershipsEditService {
           const payload: Partial<SupportTier> = {
             ...(original || {}),
             name: name,
+            has_usd: true,
             usd: usd,
             has_tokens: hasTokens,
             description: description,

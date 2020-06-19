@@ -18,3 +18,46 @@ m-channelShopMemberships__edit {
     border-radius: 0;
   }
 }
+
+.m-channelShopMemberships__edit {
+  padding: 40px 20px 0;
+
+  .m-channelShopMembershipsEdit__header {
+    margin: 0 0 40px 0;
+  }
+
+  .m-channelShopMembershipsEditHeader__title {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-channelShopMembershipsEdit__labelOnly {
+    margin-bottom: 0 !important;
+  }
+
+  .m-channelShopMembershipsEdit__fieldDisabled {
+    opacity: 0.65;
+    cursor: initial !important;
+    pointer-events: none;
+  }
+
+  .m-channelShopMembershipsEdit__inlineFields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    > :first-child {
+      width: 50%;
+      margin-right: 20px;
+    }
+
+    input[type='text'] {
+      width: 100%;
+    }
+  }
+}
