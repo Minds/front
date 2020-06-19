@@ -107,6 +107,10 @@ m-groupProfile {
         width: 100%;
       }
 
+      m-group__chat {
+        width: 100%;
+      }
+
       @media screen and(min-width: $m-grid-max-mobile) {
         margin: 34px 40px 0;
       }
