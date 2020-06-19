@@ -99,8 +99,13 @@ m-groupProfile {
       }
     }
 
+    // m-groupTab__content does not show the sidebar below 900px wide
     .m-groupTabContent__columns {
       display: flex;
+
+      m-group__feed {
+        width: 100%;
+      }
 
       @media screen and(min-width: $m-grid-max-mobile) {
         margin: 34px 40px 0;
