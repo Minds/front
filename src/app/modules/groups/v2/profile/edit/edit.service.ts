@@ -61,9 +61,9 @@ export class GroupEditService {
   readonly moderated$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   /**
-   * Video Chat Disabled subject
+   * Video Chat Enabled subject
    */
-  readonly videoChatDisabled$: BehaviorSubject<boolean> = new BehaviorSubject<
+  readonly videoChatEnabled: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
 
@@ -85,7 +85,7 @@ export class GroupEditService {
     this.description$.next(group.briefdescription);
     this.name$.next(group.name);
     this.moderated$.next(group.moderated);
-    this.videoChatDisabled$.next(group.videoChatDisabled);
+    this.videoChatEnabled.next(!(<boolean>group.videoChatDisabled));
     this.defaultView$.next(group.default_view);
     this.membership$.next(group.membership);
     this.hashtags$.next(group.tags);
@@ -121,12 +121,14 @@ export class GroupEditService {
       endpoint += `/${this.group$.getValue().guid}`;
     }
 
+    const videoChat = this.videoChatEnabled.getValue();
+
     const data: Partial<any> = {
       briefdescription: this.description$.getValue(),
       name: this.name$.getValue(),
       tags: this.hashtags$.getValue(),
       moderated: this.moderated$.getValue(),
-      videoChatDisabled: this.videoChatDisabled$.getValue(),
+      videoChatDisabled: !videoChat,
       default_view: this.defaultView$.getValue(),
       membership: this.membership$.getValue(),
     };

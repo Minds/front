@@ -46,7 +46,10 @@
 
       <div class="m-tabs__spacer"></div>
 
-      <div class="m-tabs__tab m-tab__gathering">
+      <div
+        class="m-tabs__tab m-tab__gathering"
+        *ngIf="!group.videoChatDisabled"
+      >
         <a (click)="toggleGathering()">
           <i class="material-icons">videocam</i>
           <span i18n="@@COMMON__JOIN_GATHERING">

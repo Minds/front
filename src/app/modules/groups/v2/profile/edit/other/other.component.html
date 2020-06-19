@@ -93,8 +93,8 @@
       id="gathering-enabled"
       name="group-gathering"
       [value]="true"
-      [ngModel]="service.videoChatDisabled$ | async"
-      (ngModelChange)="service.videoChatDisabled$.next($event)"
+      [ngModel]="service.videoChatEnabled | async"
+      (ngModelChange)="service.videoChatEnabled.next($event)"
     />
     <label for="gathering-enabled">Enabled</label>
 
@@ -104,8 +104,8 @@
       id="gathering-disabled"
       name="group-gathering"
       [value]="false"
-      [ngModel]="service.videoChatDisabled$ | async"
-      (ngModelChange)="service.videoChatDisabled$.next($event)"
+      [ngModel]="service.videoChatEnabled | async"
+      (ngModelChange)="service.videoChatEnabled.next($event)"
     />
     <label for="gathering-disabled">Disabled</label>
   </div>
