@@ -37,7 +37,7 @@
     top: calc(50% - 24px); /* offset for button padding */
     left: -15px;
     @media screen and (max-width: $max-mobile) {
-      right: 0;
+      left: 0;
     }
     @include m-theme() {
       color: themed($m-textColor--primary);
