@@ -28,6 +28,15 @@ export class GroupActionEditComponent implements OnDestroy {
 
   isGoingToBeDeleted: boolean = false;
 
+  /**
+   * Constructor
+   * @param service
+   * @param client
+   * @param session
+   * @param toasterService
+   * @param overlayService
+   * @param router
+   */
   constructor(
     public service: GroupV2Service,
     public client: Client,
@@ -42,16 +51,25 @@ export class GroupActionEditComponent implements OnDestroy {
     });
   }
 
+  /**
+   * Mutes notifications for a group
+   */
   async mute() {
     this.group['is:muted'] = await this.service.muteNotifications(this.group);
     this.showMenu = false;
   }
 
+  /**
+   * Unmutes notifications for a group
+   */
   async unmute() {
     this.group['is:muted'] = await this.service.unmuteNotifications(this.group);
     this.showMenu = false;
   }
 
+  /**
+   * Features a group (admin only)
+   */
   async feature() {
     this.featured = true;
     this.group.featured = true;
@@ -67,6 +85,9 @@ export class GroupActionEditComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Un-features a group (admin only)
+   */
   async unfeature() {
     this.featured = false;
     this.group.featured = false;
@@ -82,15 +103,25 @@ export class GroupActionEditComponent implements OnDestroy {
     this.featureModalOpen = false;
   }
 
+  /**
+   * Opens report modal
+   */
   report() {
     this.overlayService.create(ReportCreatorComponent, this.group).present();
   }
 
+  /**
+   * Opens the edit modal
+   */
   openEditModal() {
     this.service.openEditModal();
     this.showMenu = false;
   }
 
+  /**
+   * Enables or disables the gatherings
+   * @param enabled
+   */
   toggleVideoChat(enabled: boolean) {
     this.group.videoChatDisabled = enabled ? 0 : 1;
     this.client.post(`api/v1/groups/group/${this.group.guid}`, {
@@ -99,6 +130,10 @@ export class GroupActionEditComponent implements OnDestroy {
     this.service.group$.next(this.group);
   }
 
+  /**
+   * Enables or disables the group chats
+   * @param enabled
+   */
   async toggleConversation(enabled: boolean) {
     try {
       this.group.conversationDisabled = !enabled;
@@ -124,6 +159,10 @@ export class GroupActionEditComponent implements OnDestroy {
     this.isGoingToBeDeleted = false;
   }
 
+  /**
+   * Marks the group as explicit
+   * @param value
+   */
   async setExplicit(value) {
     const result = await this.service.setExplicit(this.group.guid, value);
     if (result) {
@@ -131,6 +170,9 @@ export class GroupActionEditComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Deletes a group
+   */
   async delete() {
     if (!this.isGoingToBeDeleted) {
       return;
@@ -149,6 +191,10 @@ export class GroupActionEditComponent implements OnDestroy {
     this.isGoingToBeDeleted = false;
   }
 
+  /**
+   * Opens/Closes the menu
+   * @param e
+   */
   toggleMenu(e) {
     e.stopPropagation();
     if (this.showMenu) {
@@ -159,6 +205,10 @@ export class GroupActionEditComponent implements OnDestroy {
     this.showMenu = true;
   }
 
+  /**
+   * Changes nsfw tags in the group
+   * @param reasons
+   */
   onNSFWSelected(reasons: Array<{ label; value; selected }>) {
     const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.group.guid}`, { nsfw });

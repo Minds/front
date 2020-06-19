@@ -36,6 +36,10 @@ export class GroupEditModalComponent {
    */
   onDismissIntent: () => void = () => {};
 
+  /**
+   * Constructor
+   * @param service
+   */
   constructor(public service: GroupEditService) {}
 
   /**

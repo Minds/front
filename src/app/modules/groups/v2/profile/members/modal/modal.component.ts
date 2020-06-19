@@ -44,6 +44,10 @@ export class GroupsMemberInviteModalComponent implements OnInit {
     this.loadRequests(true);
   }
 
+  /**
+   * Invites a user to join the group
+   * @param user
+   */
   invite(user) {
     if (!user.subscriber) {
       return this.toasterService.error(
@@ -65,6 +69,10 @@ export class GroupsMemberInviteModalComponent implements OnInit {
     });
   }
 
+  /**
+   * Search for users
+   * @param q
+   */
   search(q: string) {
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -99,6 +107,10 @@ export class GroupsMemberInviteModalComponent implements OnInit {
     }, 600);
   }
 
+  /**
+   * Loads the list of join requests
+   * @param refresh
+   */
   loadRequests(refresh: boolean = false) {
     if (this.inProgress) {
       return;
@@ -135,21 +147,35 @@ export class GroupsMemberInviteModalComponent implements OnInit {
       });
   }
 
-  accept(user: any, index: number) {
-    this.service.acceptRequest(user.guid);
+  /**
+   * Accept a join request
+   * @param user
+   * @param index
+   */
+  async accept(user: any, index: number) {
+    await this.service.acceptRequest(user.guid);
 
     this.requests.splice(index, 1);
     this.changeCounter('members:count', +1);
     this.changeCounter('requests:count', -1);
   }
 
-  reject(user: any, index: number) {
-    this.service.rejectRequest(user.guid);
+  /**
+   * Reject a join request
+   * @param user
+   * @param index
+   */
+  async reject(user: any, index: number) {
+    await this.service.rejectRequest(user.guid);
 
     this.requests.splice(index, 1);
     this.changeCounter('requests:count', -1);
   }
 
+  /**
+   * Called when the invitation is changed (either by accepting or rejecting it)
+   * @param guid
+   */
   invitationUpdated(guid: string) {
     const index = this.requests.findIndex(item => item.guid === guid);
     this.requests.splice(index, 1);

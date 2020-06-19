@@ -69,10 +69,6 @@ export class GroupV2Service {
    */
   setGroup(group: any): GroupV2Service {
     this.group$.next(group);
-    //this.username$.next(channel ? channel.username : '');
-    //this.email$.next(channel ? channel.email : null);
-    //this.nsfw$.next(channel ? channel.nsfw : []);
-    //this.rating$.next(channel ? channel.rating : 1);
     return this;
   }
 
@@ -108,38 +104,47 @@ export class GroupV2Service {
     });
   }
 
-  join(target: string = null): Subscription {
+  async join(target: string = null) {
     let endpoint = `api/v1/groups/membership/${this.guid$.getValue()}`;
 
     if (target) {
       endpoint += `/${target}`;
     }
 
-    return this.api.put(endpoint).subscribe((response: any) => {
+    try {
+      const response: any = await this.api.put(endpoint).toPromise();
+
       if (response.done) {
         this.updateMembership(true);
         return true;
       }
 
       throw response.error ? response.error : 'Internal error';
-    });
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 
-  leave(target: string = null) {
+  async leave(target: string = null) {
     let endpoint = `api/v1/groups/membership/${this.guid$.getValue()}`;
 
     if (target) {
       endpoint += `/${target}`;
     }
 
-    return this.api.delete(endpoint).subscribe((response: any) => {
+    try {
+      const response: any = await this.api.delete(endpoint).toPromise();
       if (response.done) {
         this.updateMembership(false);
         return true;
       }
 
       throw response.error ? response.error : 'Internal error';
-    });
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 
   cancelRequest(group: any) {
@@ -183,13 +188,13 @@ export class GroupV2Service {
     return this.api.delete(`api/v1/groups/management/${group.guid}/${user}`);
   }
 
-  acceptRequest(target: string) {
-    return this.join(target);
+  async acceptRequest(target: string) {
+    return await this.join(target);
   }
 
-  rejectRequest(target: string) {
+  async rejectRequest(target: string) {
     // Same endpoint as leave
-    return this.leave(target);
+    return await this.leave(target);
   }
 
   // Moderation

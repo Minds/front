@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupV2Service } from '../../services/group-v2.service';
 
@@ -6,11 +6,14 @@ import { GroupV2Service } from '../../services/group-v2.service';
   selector: 'm-group__feed',
   templateUrl: 'feed.component.html',
 })
-export class GroupFeedComponent implements OnInit {
+export class GroupFeedComponent {
+  /**
+   * Constructor
+   * @param service
+   * @param route
+   */
   constructor(
     public service: GroupV2Service,
     protected route: ActivatedRoute
   ) {}
-
-  ngOnInit() {}
 }

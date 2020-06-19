@@ -7,6 +7,4 @@ import { Component, Input } from '@angular/core';
 export class GroupInfoComponent {
   @Input() group: any;
   @Input() editing: boolean = false;
-
-  constructor() {}
 }

@@ -29,6 +29,10 @@ export class GroupMemberButton {
 
   constructor(public service: GroupV2Service) {}
 
+  /**
+   * Opens/Closes the menu
+   * @param e
+   */
   toggleMenu(e) {
     e.stopPropagation();
     if (this.showMenu) {
@@ -51,6 +55,10 @@ export class GroupMemberButton {
     this.kickPrompt = false;
   }
 
+  /**
+   * Kicks (and optionally bans) a user from the group
+   * @param ban
+   */
   kick(ban: boolean = false) {
     let action;
 
@@ -73,6 +81,9 @@ export class GroupMemberButton {
     this.showMenu = false;
   }
 
+  /**
+   * Re-send group invite
+   */
   reInvite() {
     this.service.invite(this.group, this.user.username).subscribe(response => {
       if (response.done) {
@@ -86,6 +97,9 @@ export class GroupMemberButton {
     this.showMenu = false;
   }
 
+  /**
+   * Makes a given user an owner of the group
+   */
   grantOwnership() {
     this.user['is:owner'] = true;
 
@@ -98,6 +112,9 @@ export class GroupMemberButton {
     this.showMenu = false;
   }
 
+  /**
+   * Revokes ownership of a group to a given user
+   */
   revokeOwnership() {
     this.user['is:owner'] = false;
 
@@ -140,11 +157,17 @@ export class GroupMemberButton {
     this.showMenu = false;
   }
 
+  /**
+   * Accept join request
+   */
   acceptRequest() {
     this.service.acceptRequest(this.user.guid);
     this.invitationUpdated.emit(this.user.guid);
   }
 
+  /**
+   * Reject join request
+   */
   rejectRequest() {
     this.service.rejectRequest(this.user.guid);
     this.invitationUpdated.emit(this.user.guid);

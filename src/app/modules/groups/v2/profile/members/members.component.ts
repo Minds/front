@@ -22,6 +22,13 @@ export class GroupMembersComponent implements OnInit {
   inputFocused: boolean = false;
   private searchDelayTimer;
 
+  /**
+   * Constructor
+   * @param service
+   * @param overlayModalService
+   * @param client
+   * @param session
+   */
   constructor(
     public service: GroupV2Service,
     public overlayModalService: OverlayModalService,
@@ -33,6 +40,10 @@ export class GroupMembersComponent implements OnInit {
     this.load();
   }
 
+  /**
+   * Loads the list of members
+   * @param refresh
+   */
   async load(refresh: boolean = false) {
     this.inProgress = true;
 
@@ -77,6 +88,10 @@ export class GroupMembersComponent implements OnInit {
     }
   }
 
+  /**
+   * Filters the list of members
+   * @param query
+   */
   async search(query: string) {
     if (this.searchDelayTimer) {
       clearTimeout(this.searchDelayTimer);

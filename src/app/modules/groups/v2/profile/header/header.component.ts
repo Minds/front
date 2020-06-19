@@ -13,6 +13,11 @@ export class GroupHeaderComponent {
    */
   readonly cdnUrl: string;
 
+  /**
+   * Constructor
+   * @param service
+   * @param configs
+   */
   constructor(public service: GroupV2Service, configs: ConfigsService) {
     this.cdnUrl = configs.get('cdn_url');
   }

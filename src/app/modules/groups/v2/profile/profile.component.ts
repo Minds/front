@@ -39,6 +39,15 @@ export class GroupProfileComponent implements OnInit, OnDestroy {
     'feed'
   );
 
+  /**
+   * Constructor
+   * @param service
+   * @param videoChatService
+   * @param router
+   * @param route
+   * @param context
+   * @param location
+   */
   constructor(
     public service: GroupV2Service,
     protected videoChatService: VideoChatService,
@@ -50,9 +59,6 @@ export class GroupProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.context.set('activity');
-    // this.listenForNewMessages();
-    // this.detectWidth(true);
-    // this.detectConversationsState();
     this.shouldShowProfileSidebar();
 
     this.routerEvent$ = this.router.events
@@ -67,10 +73,7 @@ export class GroupProfileComponent implements OnInit, OnDestroy {
       if (params['guid']) {
         const changed = params['guid'] !== this.service.guid$.getValue();
 
-        // this.postMeta.container_guid = this.guid;
-
         if (changed) {
-          // this.group = void 0;
           this.service.load(params['guid']);
           this.groupSubscription = this.service.group$.subscribe(
             async group => {
@@ -93,6 +96,9 @@ export class GroupProfileComponent implements OnInit, OnDestroy {
     this.routerEvent$.unsubscribe();
   }
 
+  /**
+   * Opens/Closes the gathering
+   */
   toggleGathering() {
     this.isGatheringActive = !this.isGatheringActive;
 
