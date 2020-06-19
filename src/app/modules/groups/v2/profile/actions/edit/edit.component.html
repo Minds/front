@@ -2,119 +2,110 @@
   <m-icon from="md" [iconId]="'more_horiz'"></m-icon>
 </a>
 
-<ul class="minds-dropdown-menu" [hidden]="!showMenu">
-  <!-- owner functions -->
-  <li
-    class="mdl-menu__item"
-    *ngIf="group['is:owner']"
-    (click)="openEditModal()"
-    i18n="@@MINDS__COMMON__EDIT"
-  >
-    Edit
-  </li>
-
-  <li
-    class="mdl-menu__item"
-    *ngIf="group['is:owner'] && group.videoChatDisabled"
-    (click)="toggleVideoChat(true)"
-  >
-    Enable Gathering
-  </li>
-  <li
-    class="mdl-menu__item"
-    *ngIf="group['is:owner'] && !group.videoChatDisabled"
-    (click)="toggleVideoChat(false)"
-  >
-    Disable Gathering
-  </li>
-
-  <li
-    class="mdl-menu__item"
-    *ngIf="
-      (group['is:owner'] || group['is:moderator']) && group.conversationDisabled
-    "
-    (click)="toggleConversation(true); showMenu = false"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_CONVERSATION"
-  >
-    Enable Conversation
-  </li>
-  <li
-    class="mdl-menu__item"
-    *ngIf="
-      (group['is:owner'] || group['is:moderator']) &&
-      !group.conversationDisabled
-    "
-    (click)="toggleConversation(false); showMenu = false"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_CONVERSATION"
-  >
-    Disable Conversation
-  </li>
-
-  <!-- Member functions -->
-  <li
-    class="mdl-menu__item"
-    [hidden]="group['is:muted']"
-    (click)="mute()"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
-  >
-    Disable Notifications
-  </li>
-  <li
-    class="mdl-menu__item"
-    [hidden]="!group['is:muted']"
-    (click)="unmute()"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
-  >
-    Enable Notifications
-  </li>
-
-  <!-- admin functions -->
-  <li
-    class="mdl-menu__item"
-    *ngIf="session.isAdmin() && !group.mature"
-    (click)="setExplicit(true)"
-    i18n="@@M__ACTION__SET_EXPLICIT"
-  >
-    Set Explicit
-  </li>
-  <li
-    class="mdl-menu__item"
-    *ngIf="session.isAdmin() && group.mature"
-    (click)="setExplicit(false)"
-    i18n="@@M__ACTION__REMOVE_EXPLICIT"
-  >
-    Remove Explicit
-  </li>
-  <li
-    class="mdl-menu__item"
-    (click)="report(); showMenu = false"
-    i18n="@@M__ACTION__REPORT"
-  >
-    Report
-  </li>
-  <li
-    class="mdl-menu__item"
-    *ngIf="group['is:creator']"
-    [hidden]="group.deleted"
-    (click)="deletePrompt()"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
-    data-cy="data-minds-group-dropdown-delete"
-  >
-    Delete Group
-  </li>
-
-  <li
-    class="mdl-menu__item m-groups-settings-dropdown__item--nsfw"
-    *ngIf="session.isAdmin()"
-  >
-    <m-nsfw-selector
-      service="editing"
-      [selected]="group.nsfw"
-      (selectedChange)="onNSFWSelected($event)"
+<div class="m-dropdown">
+  <ul class="m-dropdown__list" [hidden]="!showMenu">
+    <!-- owner functions -->
+    <li
+      class="m-dropdownList__item"
+      *ngIf="group['is:owner']"
+      (click)="openEditModal()"
+      i18n="@@MINDS__COMMON__EDIT"
     >
-    </m-nsfw-selector>
-  </li>
-</ul>
+      Edit
+    </li>
+
+    <li
+      class="m-dropdownList__item"
+      *ngIf="group['is:owner'] && group.videoChatDisabled"
+      (click)="toggleVideoChat(true)"
+    >
+      Enable Gathering
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="group['is:owner'] && !group.videoChatDisabled"
+      (click)="toggleVideoChat(false)"
+    >
+      Disable Gathering
+    </li>
+
+    <li
+      class="m-dropdownList__item"
+      *ngIf="
+        (group['is:owner'] || group['is:moderator']) &&
+        group.conversationDisabled
+      "
+      (click)="toggleConversation(true); showMenu = false"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_CONVERSATION"
+    >
+      Enable Conversation
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="
+        (group['is:owner'] || group['is:moderator']) &&
+        !group.conversationDisabled
+      "
+      (click)="toggleConversation(false); showMenu = false"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_CONVERSATION"
+    >
+      Disable Conversation
+    </li>
+
+    <!-- Member functions -->
+    <li
+      class="m-dropdownList__item"
+      [hidden]="group['is:muted']"
+      (click)="mute()"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
+    >
+      Disable Notifications
+    </li>
+    <li
+      class="m-dropdownList__item"
+      [hidden]="!group['is:muted']"
+      (click)="unmute()"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
+    >
+      Enable Notifications
+    </li>
+
+    <!-- admin functions -->
+    <li
+      class="m-dropdownList__item"
+      *ngIf="session.isAdmin() && !group.mature"
+      (click)="setExplicit(true)"
+      i18n="@@M__ACTION__SET_EXPLICIT"
+    >
+      Set Explicit
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="session.isAdmin() && group.mature"
+      (click)="setExplicit(false)"
+      i18n="@@M__ACTION__REMOVE_EXPLICIT"
+    >
+      Remove Explicit
+    </li>
+    <li
+      class="m-dropdownList__item"
+      (click)="report(); showMenu = false"
+      i18n="@@M__ACTION__REPORT"
+    >
+      Report
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="group['is:creator']"
+      [hidden]="group.deleted"
+      (click)="deletePrompt()"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
+      data-cy="data-minds-group-dropdown-delete"
+    >
+      Delete Group
+    </li>
+  </ul>
+</div>
 <div
   class="minds-bg-overlay"
   (click)="toggleMenu($event)"
