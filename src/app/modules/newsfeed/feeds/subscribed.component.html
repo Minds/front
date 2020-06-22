@@ -11,7 +11,6 @@
 
   <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
     <m-composer
-      (onPost)="prepend($event)"
       [activity]="message ? { message: message } : undefined"
       #composer
     ></m-composer>
