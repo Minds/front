@@ -1,8 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockService } from '../../../../utils/mock';
+import {
+  MockComponent,
+  MockService,
+  MockDirective,
+} from '../../../../utils/mock';
 import { TextAreaComponent } from './text-area.component';
 import { ComposerService } from '../../services/composer.service';
 import { FormsModule } from '@angular/forms';
+import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
 
 describe('Composer Text Area', () => {
   let comp: TextAreaComponent;
@@ -31,6 +36,16 @@ describe('Composer Text Area', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
       declarations: [
+        MockDirective({
+          selector: 'mTextInputAutocomplete',
+          inputs: [
+            'triggerCharacters',
+            'findChoices',
+            'getChoiceLabel',
+            'itemTemplate',
+            'adjustForScrollOffset',
+          ],
+        }),
         TextAreaComponent,
         MockComponent({
           selector: 'm-icon',
@@ -41,6 +56,10 @@ describe('Composer Text Area', () => {
         {
           provide: ComposerService,
           useValue: composerServiceMock,
+        },
+        {
+          provide: AutocompleteSuggestionsService,
+          useValue: MockService(AutocompleteSuggestionsService),
         },
       ],
     }).compileComponents();

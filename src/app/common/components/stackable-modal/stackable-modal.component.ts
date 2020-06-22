@@ -1,89 +1,77 @@
 import {
   Component,
-  Injector,
-  Input,
   ComponentFactoryResolver,
   ComponentRef,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-
-export interface DynamicModalSettings {
-  componentClass: any;
-  data?: any;
-  opts?: any;
-  injector?: Injector;
-}
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { OverlayModalComponent } from '../overlay-modal/overlay-modal.component';
+import {
+  StackableModalService,
+  StackableModalEvent,
+  StackableModalState,
+} from '../../../services/ux/stackable-modal.service';
 
 /**
- * Only use for modals that need to be stacked on top of the standard
- * overlay modal component. (Don't use this as a standalone modal)
+ * When you need to stack a modal
+ * on top of the overlay modal
  */
-
 @Component({
   selector: 'm-stackableModal',
   templateUrl: './stackable-modal.component.html',
+  providers: [OverlayModalService],
 })
-export class StackableModalComponent {
-  private _settings: DynamicModalSettings;
-  @Input() set settings(value: DynamicModalSettings) {
-    this._settings = value;
-    if (value && this.hidden === true) {
-      this.create(value);
-    }
-  }
-  get settings(): DynamicModalSettings {
-    return this._settings;
-  }
-
+export class StackableModalComponent implements AfterViewInit {
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
+  public hidden: boolean = true;
 
   private compRef: ComponentRef<{}>;
   private compInstance;
 
-  class: string = '';
-  hidden: boolean = true;
+  constructor(
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    public overlayModalService: OverlayModalService,
+    private stackableModalService: StackableModalService
+  ) {}
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
-
-  create(m: DynamicModalSettings): void {
-    this.dismiss();
-
-    if (!m.componentClass) {
-      throw new Error('Unknown component class');
-    }
-
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-      m.componentClass
-    );
-
-    this.compRef = this.host.viewContainerRef.createComponent(
-      componentFactory,
-      void 0,
-      m.injector
-    );
-    this.compInstance = this.compRef.instance;
-
-    const opts = {
-      ...{
-        class: this.class,
-      },
-      ...m.opts,
-    };
-
-    this.class = opts.class;
-
-    if (this.compInstance) {
-      this.compInstance.opts = opts;
-      if (m.data) {
-        this.compInstance.data = m.data;
-        this.compRef.changeDetectorRef.detectChanges();
-      }
-      this.hidden = false;
-    }
+  ngAfterViewInit() {
+    /**
+     * Dynamically create another overlay modal for stacking
+     */
+    this.stackableModalService.setContainer(this);
   }
 
+  createDynamicOverlayModal(): OverlayModalComponent {
+    if (this.compInstance) {
+      this.dismiss();
+    }
+
+    /**
+     * Create a factory for the dynamic overlay modal
+     */
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+      OverlayModalComponent
+    );
+
+    /**
+     * Use the factory to create a new overlay modal component
+     */
+    this.compRef = this.host.viewContainerRef.createComponent(
+      componentFactory,
+      void 0
+    );
+
+    this.compInstance = this.compRef.instance;
+
+    return this.compInstance;
+  }
+
+  /**
+   * Dismiss the stackable modal
+   */
   dismiss(): void {
     this.hidden = true;
 

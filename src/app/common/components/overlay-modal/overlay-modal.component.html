@@ -1,11 +1,14 @@
 <div
   class="m-overlay-modal--backdrop"
   [hidden]="hidden"
-  (click)="dismiss()"
+  (click)="clickToDismiss($event)"
 ></div>
 <div class="m-overlay-modal {{ class }}" [hidden]="hidden" #modalElement>
   <a class="m-overlay-modal--close"
-    ><i class="material-icons" (click)="dismiss()" (keyup.esc)="onEscKeyup()"
+    ><i
+      class="material-icons"
+      (click)="clickToDismiss($event)"
+      (keyup.esc)="onEscKeyup()"
       >close</i
     >
     <div

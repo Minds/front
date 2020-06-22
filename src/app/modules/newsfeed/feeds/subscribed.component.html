@@ -32,7 +32,6 @@
           [displayOptions]="{
             showOnlyCommentsInput: true
           }"
-          [allowAutoplayOnScroll]="true"
         ></m-activity>
       </ng-container>
       <ng-template #legacyActivity>
@@ -41,7 +40,6 @@
           [boostToggle]="preActivity.boostToggle"
           (deleted)="delete(preActivity)"
           [showRatingToggle]="true"
-          [allowAutoplayOnScroll]="true"
           class="mdl-card m-border item"
           [attr.minds-data-activity-guid]="preActivity.guid"
         ></minds-activity>
@@ -71,7 +69,6 @@
           [displayOptions]="{
             showOnlyCommentsInput: true
           }"
-          [allowAutoplayOnScroll]="true"
           [slot]="i + 1"
         ></m-activity>
       </ng-container>
@@ -85,7 +82,6 @@
           [showRatingToggle]="true"
           [slot]="i + 1"
           [attr.data-minds-activity-guid]="activity.guid"
-          [allowAutoplayOnScroll]="true"
         ></minds-activity>
       </ng-template>
     </ng-container>

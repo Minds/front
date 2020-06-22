@@ -251,6 +251,9 @@ export class BlogView implements OnInit, OnDestroy {
       .setDescription(description)
       //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
       .setOgUrl(this.blog.perma_url)
-      .setOgImage(this.blog.thumbnail);
+      .setOgImage(this.blog.thumbnail, {
+        width: 2000,
+        height: 1000,
+      });
   }
 }

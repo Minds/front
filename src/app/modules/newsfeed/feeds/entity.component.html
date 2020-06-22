@@ -10,7 +10,6 @@
     <m-activity
       [entity]="entity"
       [displayOptions]="displayOptions"
-      [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       (deleted)="delete($event)"
       [slot]="slot"
       *ngIf="
@@ -28,7 +27,6 @@
         [slot]="slot"
         class="mdl-card m-border item"
         [attr.data-minds-activity-guid]="entity.guid"
-        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       ></minds-activity>
     </ng-template>
   </ng-container>

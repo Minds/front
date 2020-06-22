@@ -413,6 +413,9 @@ m-comments__entityOutlet,
         max-height: $mcc-height - ($minds-padding * 2) - 50px;
       }
     }
+    .m-comment-attachment .image-video {
+      height: $mcc-height;
+    }
   }
 }
 
