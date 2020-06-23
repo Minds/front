@@ -88,6 +88,9 @@ m-activity__toolbar {
 
     font-weight: 500;
     padding: 0;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
 
     &,
     &:hover {

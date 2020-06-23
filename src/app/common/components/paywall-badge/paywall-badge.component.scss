@@ -1,0 +1,38 @@
+m-paywallBadge {
+  z-index: 3;
+}
+.m-paywallBadge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 12px;
+  right: 24px;
+  border-radius: 3px;
+  padding: 4px 5px;
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 500;
+  z-index: 3;
+  @include m-theme() {
+    color: themed($m-white);
+    background-color: themed($m-textColor--secondary);
+    box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
+  }
+  &.isPlus {
+    @include m-theme() {
+      background-color: themed($m-alert);
+    }
+  }
+  &.isCustom {
+    padding: 4px 4px;
+    i {
+      margin: 0 -1 0 0;
+    }
+  }
+  i {
+    font-size: 11px;
+    line-height: 12px;
+    margin-right: 3px;
+    margin-left: -2px;
+  }
+}

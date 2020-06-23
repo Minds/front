@@ -1,7 +1,0 @@
-m-wire--lock-screen {
-  .m-wire--lock-screen--button {
-    @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
-    }
-  }
-}
