@@ -1,0 +1,135 @@
+<!-- Reuusable dropdown -->
+<ng-template #optionsDropdownContainer>
+  <m-blogEditor__dropdown></m-blogEditor__dropdown>
+</ng-template>
+
+<!-- Main Editor Container -->
+<div class="m-blogEditor">
+  <div
+    *ngIf="service.banner$ | async"
+    class="m-blogEditor__bannerImageContainer"
+  >
+    <div class="m-blogEditor__bannerToolbar">
+      <i class="material-icons" (click)="service.banner$.next('')">delete</i>
+      <ng-template [ngTemplateOutlet]="optionsDropdownContainer"></ng-template>
+    </div>
+    <img [src]="service.banner$ | async" />
+  </div>
+  <div class="m-blogEditor__container">
+    <div class="m-blogEditor__bannerContainer">
+      <div
+        class="m-blogEditor__bannerUploader"
+        *ngIf="!(service.banner$ | async)"
+      >
+        <span
+          class="m-blogEditor__bannerText"
+          i18n="@@BLOGS_EDITOR__UPLOAD_BANNER_IMAGE"
+        >
+          <button
+            class="m-blogEditor__bannerUploadButton"
+            (click)="bannerUpload.click()"
+          >
+            <i class="material-icons">publish</i>
+            Upload Banner Image
+          </button>
+          <input
+            hidden
+            id="channel-v2-edit-avatar"
+            type="file"
+            accept="image/*"
+            (change)="uploadBanner(bannerUpload)"
+            #bannerUpload
+          />
+        </span>
+        <span
+          class="m-blogEditor__bannerSizeText"
+          i18n="@@BLOGS_EDITOR__RECOMMENDED_BANNER_SIZE_INFO"
+        >
+          <em>
+            recommended minimum size 200px x 1125 (Ratio 16:9)
+          </em>
+        </span>
+      </div>
+      <div class="m-blogEditor__ellipsis" *ngIf="!(service.banner$ | async)">
+        <ng-template
+          [ngTemplateOutlet]="optionsDropdownContainer"
+        ></ng-template>
+      </div>
+    </div>
+    <div class="m-blogEditor__titleContainer">
+      <input
+        class="m-blogEditor__titleInput"
+        type="text"
+        placeholder="Blog Title"
+        i18n-placeholder="@@BLOG_EDITOR__TITLE"
+        (change)="onTitleChange($event.target.value)"
+      />
+    </div>
+    <div class="m-blogEditor__bodyContainer">
+      <m-blog__editor
+        (contentChanged)="onContentChange($event)"
+        [content]="service.content$ | async"
+      ></m-blog__editor>
+    </div>
+  </div>
+  <div class="m-blogEditor__bottomBar">
+    <div class="m-blogEditor__options">
+      <div (click)="toggleMeta()" class="m-blogEditor__blogToggle">
+        <m-icon iconId="expand_more" *ngIf="!(showMeta$ | async)"></m-icon>
+        <m-icon iconId="expand_less" *ngIf="(showMeta$ | async)"></m-icon>
+        Meta
+      </div>
+
+      <!-- <m-hashtags-selector
+          #hashtagsSelector
+          [tags]="(service.tags$ | async).slice(0)"
+          (tagsChange)="onTagsChange($event)"
+        ></m-hashtags-selector>
+
+
+        <!-- <m-wire-threshold-input
+          [(threshold)]="(service.monetization$ | async).min"
+          [(enabled)]="(service.monetization$ | async).paywall"
+          (validThreshold)="validThreshold = $event"
+          #thresholdInput
+        ></m-wire-threshold-input> -->
+      <!-- 
+        <ng-container *mIfFeature="'post-scheduler'">
+          <m-poster-date-selector
+            *ngIf="checkTimePublished()"
+            [date]="getTimeCreated()"
+            (dateChange)="onTimeCreatedChange($event)"
+            (onError)="posterDateSelectorError($event)"
+          ></m-poster-date-selector>
+        </ng-container>  -->
+    </div>
+    <div class="m-blogEditor__saveButtons">
+      <span
+        class="m-blogEditor__draftSaved"
+        *ngIf="service.draftSaved$ | async"
+      >
+        Draft Saved
+      </span>
+      <m-shadowboxSubmitButton
+        class="m-blogEditor__saveDraftButton"
+        [disabled]="!(service.canPost$ | async)"
+        [saving]="service.inProgress$ | async"
+        (click)="save(true)"
+        i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
+      >
+        Save Draft
+      </m-shadowboxSubmitButton>
+      <m-shadowboxSubmitButton
+        [disabled]="!(service.canPost$ | async)"
+        [saving]="service.inProgress$ | async"
+        (click)="save()"
+        i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
+      >
+        Publish Blog
+      </m-shadowboxSubmitButton>
+    </div>
+  </div>
+  <div class="m-blogEditor__metaContainer" *ngIf="showMeta$ | async">
+    <m-blogEditor__metadata></m-blogEditor__metadata>
+  </div>
+</div>

@@ -25,6 +25,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { BlogEditorComponent } from './ckeditor/editor/editor.component';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { CaptchaModule } from '../captcha/captcha.module';
+import { BlogEditorV2Component } from './edit-v2/edit';
+import { BlogsEditService } from './edit-v2/blog-edit.service';
+import { BlogEditorDropdownComponent } from './edit-v2/dropdown/dropdown.component';
+import { BlogEditorMetaComponent } from './edit-v2/meta/meta.component';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -32,6 +36,14 @@ const routes: Routes = [
   {
     path: 'blog/edit/:guid',
     component: BlogEdit,
+    canDeactivate: [CanDeactivateGuardService],
+    data: {
+      title: 'Edit Blog',
+    },
+  },
+  {
+    path: 'blog/v2/edit/:guid',
+    component: BlogEditorV2Component,
     canDeactivate: [CanDeactivateGuardService],
     data: {
       title: 'Edit Blog',
@@ -69,6 +81,9 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
     BlogEditorComponent,
+    BlogEditorV2Component,
+    BlogEditorDropdownComponent,
+    BlogEditorMetaComponent,
   ],
   exports: [
     BlogView,
@@ -79,5 +94,6 @@ const routes: Routes = [
     BlogTileComponent,
     BlogEditorComponent,
   ],
+  providers: [BlogsEditService],
 })
 export class BlogModule {}

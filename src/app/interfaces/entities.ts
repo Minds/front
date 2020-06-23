@@ -2,6 +2,7 @@
  * Activity Object
  */
 import { WireRewardsStruc } from '../modules/wire/interfaces/wire.interfaces';
+import { Captcha } from '../modules/captcha/captcha.component';
 
 export type BitBoolean = 0 | 1;
 
@@ -15,7 +16,7 @@ export interface MindsBlogEntity {
   guid: string;
   title: string;
   description: string;
-  ownerObj: any;
+  ownerObj?: any;
   spam?: boolean;
   deleted?: boolean;
   paywall?: boolean;
@@ -30,15 +31,21 @@ export interface MindsBlogEntity {
   time_published?: number;
   access_id?: number;
   license?: string;
-  allow_comments: boolean;
+  allow_comments?: boolean;
   custom_meta?: {
     title: string;
     description: string;
     author: string;
   };
-  perma_url: string;
-  thumbnail: string;
+  perma_url?: string;
+  thumbnail?: string;
   editor_version?: number;
+  published?: number;
+  nsfw?: number[];
+  tags?: string[];
+  file?: any;
+  fileKey?: string;
+  captcha?: Captcha;
 }
 
 export interface Message {}

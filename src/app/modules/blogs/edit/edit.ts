@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { ACCESS, LICENSES } from '../../../services/list-options';
+import {
+  ACCESS,
+  LICENSES,
+  LicensesEntry,
+} from '../../../services/list-options';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
@@ -26,7 +30,6 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 })
 export class BlogEdit implements OnInit, OnDestroy {
   readonly cdnUrl: string;
-
   guid: string;
   blog: any = {
     guid: 'new',
@@ -64,6 +67,15 @@ export class BlogEdit implements OnInit, OnDestroy {
   licenses = LICENSES;
   access = ACCESS;
   existingBanner: boolean;
+
+  /**
+   * License items list
+   */
+  licenseItems: Array<LicensesEntry> = LICENSES.filter(
+    license => license.selectable
+  );
+
+  accessItems = ACCESS;
 
   paramsSubscription: Subscription;
   @ViewChild('inlineEditor')
@@ -436,5 +448,13 @@ export class BlogEdit implements OnInit, OnDestroy {
    */
   getEditorVersion(): number {
     return this.shouldUseCKEditor() ? 2 : 1;
+  }
+
+  setLicense(value: string): void {
+    this.blog.license = value;
+  }
+
+  setAccessId(value): void {
+    this.blog.access_id = value;
   }
 }
