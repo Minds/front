@@ -91,6 +91,20 @@ export type MonetizationSubjectValue = {
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
 
 /**
+ * Monetization vw value type
+ */
+export type MonetizationV2SubjectValue = {
+  type: 'plus' | 'membership' | 'custom';
+  // min: number;
+  // support_tier?: SupportTier;
+} | null;
+
+/**
+ * Default monetization value
+ */
+export const DEFAULT_MONETIZATION_V2_VALUE: MonetizationV2SubjectValue = null;
+
+/**
  * Tags value type
  */
 export type TagsSubjectValue = Array<string>;
