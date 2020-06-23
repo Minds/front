@@ -24,6 +24,11 @@ import { ScheduleComponent } from './components/popup/schedule/schedule.componen
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
 import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
+import { ComposerMonetizeV2PlusComponent } from './components/popup/monetize/v2/components/plus/plus.component';
+import { ComposerMonetizeV2MembershipsComponent } from './components/popup/monetize/v2/components/memberships/memberships.component';
+import { ComposerMonetizeV2CustomComponent } from './components/popup/monetize/v2/components/custom/custom.component';
+import { ComposerMonetizeV2Component } from './components/popup/monetize/v2/components/monetize.component';
+
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete/text-input-autocomplete.module';
 /**
  * Exported components
@@ -36,6 +41,10 @@ const COMPONENTS = [
   TagsComponent,
   ScheduleComponent,
   ComposerTopbarButtonComponent,
+  ComposerMonetizeV2Component,
+  ComposerMonetizeV2PlusComponent,
+  ComposerMonetizeV2MembershipsComponent,
+  ComposerMonetizeV2CustomComponent,
 ];
 
 /**

@@ -20,40 +20,43 @@
     margin-right: 0;
   }
 }
-.m-tabs__tab > a {
-  cursor: pointer;
-  padding: 13px 0;
-  margin-right: 20px;
-  box-sizing: border-box;
-  display: block;
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 20px;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  list-style: none;
-  text-decoration: none;
+div.m-tabs__tab,
+.m-tabs__tab {
+  > a {
+    cursor: pointer;
+    padding: 13px 0;
+    margin-right: 20px;
+    box-sizing: border-box;
+    display: block;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 20px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    list-style: none;
+    text-decoration: none;
 
-  @include m-theme() {
-    color: themed($m-textColor--tertiary);
-    border-bottom: 3px solid transparent;
-  }
-  &.selected,
-  &.m-tabs__tab--selected {
     @include m-theme() {
-      color: themed($m-textColor--primary);
-      border-bottom: 3px solid themed($m-blue);
+      color: themed($m-textColor--tertiary);
+      border-bottom: 3px solid transparent;
     }
-  }
-  &:hover {
-    @include m-theme() {
-      color: themed($m-textColor--primary);
+    &.selected,
+    &.m-tabs__tab--selected {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border-bottom: 3px solid themed($m-blue);
+      }
     }
-  }
-  @media screen and (max-width: $max-mobile) {
-    padding: 10px 0;
-    // margin: 0 10px;
-    // &:first-child {
-    //   margin-left: 16px;
-    // }
+    &:hover {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 10px 0;
+      // margin: 0 10px;
+      // &:first-child {
+      //   margin-left: 16px;
+      // }
+    }
   }
 }
