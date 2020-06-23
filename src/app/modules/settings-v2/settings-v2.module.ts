@@ -32,7 +32,6 @@ import { SettingsV2RecurringPaymentsComponent } from './billing/recurring-paymen
 import { SettingsV2ReportedContentComponent } from './other/reported-content/reported-content.component';
 import { SettingsV2BlockedChannelsComponent } from './other/blocked-channels/blocked-channels.component';
 import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers/subscription-tiers.component';
-import { SettingsV2PaywallPreviewComponent } from './other/paywall-preview/paywall-preview.component';
 import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
 import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
@@ -48,7 +47,6 @@ import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 import { StrikesComponent } from '../report/strikes/strikes.component';
 import { SettingsV2AutoplayVideosComponent } from './account/autoplay-videos/autoplay-videos.component';
-import { YoutubeMigrationService } from '../media/youtube-migration/youtube-migration.service';
 import { YoutubeMigrationConnectComponent } from '../media/youtube-migration/connect/connect.component';
 import { YoutubeMigrationDashboardComponent } from '../media/youtube-migration/dashboard/dashboard.component';
 import { YoutubeMigrationUnmigratedVideosComponent } from '../media/youtube-migration/unmigrated-videos/unmigrated-videos.component';
@@ -369,17 +367,6 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
-            path: 'paywall-preview',
-            component: SettingsV2PaywallPreviewComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Paywall Preview',
-              description:
-                'Customize the appearance of your paywalled posts. The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.',
-              id: 'paywall-preview',
-            },
-          },
-          {
             path: 'youtube-migration',
             component: YoutubeMigrationComponent,
             data: {
@@ -477,7 +464,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ReportedContentComponent,
     SettingsV2BlockedChannelsComponent,
     SettingsV2SubscriptionTiersComponent,
-    SettingsV2PaywallPreviewComponent,
     SettingsV2DeactivateAccountComponent,
     SettingsV2DeleteAccountComponent,
     SettingsV2ToasterNotificationsComponent,
