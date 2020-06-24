@@ -410,5 +410,6 @@ export class MessengerConversation implements OnInit, OnDestroy {
       this.ribbonOpened = false;
     }
     this.dockpanes.toggle(this.conversation);
+    this.conversation.unread = false;
   }
 }
