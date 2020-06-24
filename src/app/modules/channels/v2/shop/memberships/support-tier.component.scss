@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 0 7px;
+    margin: 0 0 10px;
 
     .m-channelShopMembershipsSupportTierTitle__text {
       flex-grow: 1;
@@ -21,7 +21,7 @@
   }
 
   .m-channelShopMembershipsSupportTier__amount {
-    margin: 0 0 11px;
+    margin: 0 0 10px;
     font-size: 15px;
     font-weight: bold;
     line-height: 20px;
@@ -41,8 +41,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 0 16px;
+    margin: 0 0 20px;
     font-size: 15px;
+    display: none;
 
     .m-channelShopMembershipsSupportTierStats__entry {
       display: inline-flex;
@@ -64,9 +65,9 @@
   }
 
   .m-channelShopMembershipsSupportTier__description {
-    margin: 0 0 18px;
+    margin: 0 0 20px;
     font-size: 15px;
-    line-height: 19px;
+    line-height: 20px;
     height: 57px;
     white-space: pre-line;
     overflow: hidden;
