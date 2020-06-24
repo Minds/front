@@ -33,7 +33,8 @@ export class ChannelShopMembershipsSupportTierComponent {
     }
 
     // Only filter currency if non-owner
-    const displayCurrency = this.isOwner ? null : this.displayCurrency;
+    //const displayCurrency = this.isOwner ? null : this.displayCurrency;
+    const displayCurrency = null;
 
     // Depending on filter and availability return a specific one or the generic
     switch (displayCurrency) {

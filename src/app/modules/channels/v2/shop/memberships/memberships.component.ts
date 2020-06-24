@@ -48,18 +48,19 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
     map(
       ([currencyFilter, isOwner, supportTiers]): Array<SupportTier> =>
         supportTiers.filter(supportTier => {
-          if (isOwner) {
-            return true;
-          }
+          return true;
+          // if (isOwner) {
+          //   return true;
+          // }
 
-          switch (currencyFilter) {
-            case 'usd':
-              return supportTier.has_usd;
-            case 'tokens':
-              return supportTier.has_tokens;
-            default:
-              return true;
-          }
+          // switch (currencyFilter) {
+          //   case 'usd':
+          //     return supportTier.has_usd;
+          //   case 'tokens':
+          //     return supportTier.has_tokens;
+          //   default:
+          //     return true;
+          // }
         })
     )
   );
