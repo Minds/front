@@ -1,0 +1,134 @@
+m-carousel {
+  min-height: 116px;
+  display: block;
+  a {
+    font-weight: 400;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+}
+
+.m-carousel__wrapper {
+  position: relative;
+  z-index: 1;
+  height: 124px;
+  @include m-theme() {
+    box-shadow: none;
+  }
+}
+
+.m-carousel__container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &.disable-scrollbars {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    &::-webkit-scrollbar {
+      width: 0px;
+      background: transparent; /* Chrome/Safari/Webkit */
+    }
+  }
+
+  .m-tooltip--bubble {
+    top: 50px;
+    width: 100px;
+    margin-left: 4px;
+  }
+}
+[class*='m-carousel__overflowFade--'] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease, width 0.4s ease;
+
+  &.m-carousel__overflowFade--right {
+    @include m-theme() {
+      right: 0;
+      background: linear-gradient(
+        to right,
+        rgba(themed($m-bgColor--primary), 0) 0,
+        themed($m-bgColor--primary) 50%
+      );
+    }
+  }
+  &.m-carousel__overflowFade--left {
+    @include m-theme() {
+      left: 0;
+      background: linear-gradient(
+        to left,
+        rgba(themed($m-bgColor--primary), 0) 0,
+        themed($m-bgColor--primary) 50%
+      );
+    }
+    &.visible {
+      width: 36px;
+    }
+  }
+  &.visible {
+    opacity: 1;
+    width: 24px;
+    cursor: pointer;
+  }
+}
+
+[class*='m-carousel__overflowScrollButton--'] {
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  box-sizing: border-box;
+  z-index: 2;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  &.showButton {
+    opacity: 1;
+  }
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+    box-shadow: 0px 0px 10px -3px rgba(themed($m-black), 0.3);
+    border: 1px solid themed($m-bgColor--primary);
+  }
+  &:hover {
+    @include m-theme() {
+      border: 1px solid themed($m-link);
+    }
+  }
+  &.m-carousel__overflowScrollButton--right {
+    right: -12;
+  }
+  &.m-carousel__overflowScrollButton--left {
+    left: 12;
+  }
+  i {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  [class*='m-carousel__overflowScrollButton--'] {
+    display: none;
+  }
+  .m-carousel__container {
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    .m-carousel__item {
+      scroll-snap-align: start;
+      &:first-child {
+        margin-left: 16px;
+      }
+      &:last-child {
+        margin-right: 16px;
+      }
+    }
+  }
+}

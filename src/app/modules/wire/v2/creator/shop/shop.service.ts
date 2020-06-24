@@ -76,16 +76,16 @@ export class ShopService implements OnDestroy {
 
     this.selected$.next(
       supportTiers
-        .filter(supportTier => supportTier.currency === type)
+        .filter(supportTier => supportTier[`has_${type}`])
         .reverse()
-        .find(supportTier => supportTier.amount <= amount) || null
+        .find(supportTier => supportTier[type] <= amount) || null
     );
 
     return this;
   }
 
   /**
-   * Sets the selected reward values based on the ID (type:amount)
+   * Sets the selected reward values based on the Support Tier
    * @param supportTier
    */
   select(supportTier: SupportTier): void {
@@ -96,27 +96,15 @@ export class ShopService implements OnDestroy {
       return;
     }
 
-    if (isNaN(supportTier.amount)) {
-      return;
+    if (supportTier.has_usd) {
+      this.wire.setType('usd');
+      this.wire.setAmount(supportTier.usd);
+    } else if (supportTier.has_tokens) {
+      this.wire.setType('tokens');
+      this.wire.setTokenType('offchain');
+      this.wire.setAmount(supportTier.tokens);
     }
 
-    switch (supportTier.currency) {
-      case 'tokens':
-        this.wire.setType('tokens');
-        this.wire.setTokenType('offchain');
-        break;
-
-      case 'usd':
-        this.wire.setType('usd');
-        break;
-
-      default:
-        throw new Error(
-          `Invalid type (cannot recur): ${JSON.stringify(supportTier)}`
-        );
-    }
-
-    this.wire.setAmount(supportTier.amount);
     this.wire.setRecurring(true);
   }
 }

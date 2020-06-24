@@ -6,6 +6,7 @@
   <div class="m-channelShopBrief__title">
     <span class="m-channelShopBriefTitle__text">Shop</span>
     <a
+      *ngIf="false"
       class="m-channelShopBriefTitle__seeAll"
       [routerLink]="['/', service.username$ | async, 'shop']"
       i18n="@@COMMON__CHANNEL__BRIEF__SEE_ALL"
@@ -17,26 +18,24 @@
     <div
       *ngFor="let supportTier of supportTiers"
       class="m-channelShopBrief__row"
+      [title]="supportTier.description"
       (click)="onEntryClick(channel, supportTier)"
     >
       <span class="m-channelShopBriefRow__description">{{
         supportTier.name
       }}</span>
-      <span
-        class="m-channelShopBriefRow__amount"
-        [ngSwitch]="supportTier.currency"
-      >
+      <span class="m-channelShopBriefRow__amount">
         <ng-container
-          *ngSwitchCase="'tokens'"
-          i18n="@@COMMON__CHANNEL__BRIEF__OTHER"
-          >{supportTier.amount, plural, =1
-          {{{supportTier.amount | number}} token/month} other
-          {{{supportTier.amount | number}} tokens/month}}</ng-container
+          *ngIf="supportTier.has_usd"
+          i18n="@@COMMON__CHANNEL__SHOP__BRIEF__USD_MONTH"
+          >${{ supportTier.usd | number }}/month</ng-container
         >
         <ng-container
-          *ngSwitchCase="'usd'"
-          i18n="@@COMMON__CHANNEL__BRIEF__PER_MONTH"
-          >${{ supportTier.amount | number }}/month</ng-container
+          *ngIf="!supportTier.has_usd && supportTier.has_tokens"
+          i18n="@@COMMON__CHANNEL__SHOP__BRIEF__TOKENS_MONTH"
+          >{supportTier.tokens, plural, =1
+          {{{supportTier.tokens | number}} token/month} other
+          {{{supportTier.tokens | number}} tokens/month}}</ng-container
         >
       </span>
     </div>

@@ -1,0 +1,77 @@
+<div class="m-channelShop__memberships">
+  <div class="m-channelShopMemberships__header">
+    <div class="m-channelShopMemberships__title">
+      <h2 i18n="@@CHANNELS_SHOP_MEMBERSHIPS_TITLE">Memberships</h2>
+
+      <ng-container
+        *ngIf="channel.isOwner$ | async; else consumerTitleHeadline"
+      >
+        <div
+          *ngIf="isDraft$ | async"
+          class="m-channelShopMembershipsTitle__headline m-channelShopMembershipsTitle__headline--small"
+          ngPreserveWhitespaces
+        >
+          <a i18n="@@CHANNELS_SHOP_MEMBERSHIPS_PUBLISH_TIERS">Publish Tiers</a>
+          <span i18n="@@CHANNELS_SHOP_MEMBERSHIPS_PUBLISH_TIERS_DRAFT"
+            >(Draft)</span
+          >
+        </div>
+      </ng-container>
+
+      <ng-template #consumerTitleHeadline>
+        <div
+          class="m-channelShopMembershipsTitle__headline"
+          ngPreserveWhitespaces
+        >
+          &mdash;
+          <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_TITLE_HEADLINE"
+            >Access exclusive content through a monthly
+            contribution</ng-container
+          >
+        </div>
+      </ng-template>
+    </div>
+
+    <ng-container *ngIf="channel.isOwner$ | async; else consumerHeader">
+      <a
+        (click)="create()"
+        class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"
+      >
+        <m-icon iconId="add" [sizeFactor]="0"></m-icon>
+        <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_NEW_TIER"
+          >Create New</ng-container
+        >
+      </a>
+    </ng-container>
+
+    <ng-template #consumerHeader>
+      <div class="m-channelShopMemberships__headerAction" *ngIf="false">
+        <span i18n="@@COMMON_USD">USD</span>
+        <span
+          ><m-toggle
+            [mModel]="currencyFilter$ | async"
+            (mModelChange)="currencyFilter$.next($event)"
+            leftValue="usd"
+            rightValue="tokens"
+          ></m-toggle
+        ></span>
+        <span i18n="@@COMMON_TOKENS">Tokens</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <m-carousel>
+    <div class="m-channelShopMemberships__supportTiers">
+      <m-channelShopMemberships__supportTier
+        *ngFor="let supportTier of supportTiers$ | async"
+        class="m-channelShopMemberships__supportTier m-carousel__item"
+        [supportTier]="supportTier"
+        [isOwner]="channel.isOwner$ | async"
+        [displayCurrency]="currencyFilter$ | async"
+        (onSelectIntent)="select($event)"
+        (onEditIntent)="edit($event)"
+        (onDeleteIntent)="delete($event)"
+      ></m-channelShopMemberships__supportTier>
+    </div>
+  </m-carousel>
+</div>
