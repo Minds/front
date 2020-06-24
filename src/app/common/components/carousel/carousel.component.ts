@@ -64,8 +64,8 @@ export class CarouselComponent implements AfterViewInit {
     } else if (targetMetric.className === 'm-carousel__overflowFade--right') {
       this.slide('right');
     } else {
-      this.slideToActiveMetric(this.container, targetMetric);
-      this.checkOverflow();
+      //this.slideToActiveMetric(this.container, targetMetric);
+      //this.checkOverflow();
     }
   }
 
