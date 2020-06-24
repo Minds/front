@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BlogsEditService } from '../blog-edit.service';
-import { SiteService } from '../../../../common/services/site.service';
-import { Session } from '../../../../services/session';
+import { BlogsEditService } from '../../blog-edit.service';
+import { SiteService } from '../../../../../common/services/site.service';
+import { Session } from '../../../../../services/session';
 
 @Component({
   selector: 'm-blogEditor__metadata',
@@ -39,8 +39,8 @@ import { Session } from '../../../../services/session';
         <input
           class="m-blogMeta__input"
           type="text"
-          [ngModel]="editService.title$ | async"
-          (ngModelChange)="editService.title$.next($event)"
+          [ngModel]="editService.metaTitle$ | async"
+          (ngModelChange)="editService.metaTitle$.next($event)"
         />
       </div>
 

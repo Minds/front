@@ -90,7 +90,9 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
           <span>{{ accessItem.text }}</span>
           <m-icon
             iconId="check"
-            *ngIf="(getAccessId() | async) === accessItem.value"
+            *ngIf="
+              (getAccessId() | async).toString() === accessItem.value.toString()
+            "
           ></m-icon>
         </li>
       </ul>
@@ -98,7 +100,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
 
     <ng-template #nsfwMenu>
       <ul data-cy="meatball-menu-license-menu">
-        <li *ngFor="let reason of reasons" (click)="setNSFW(reason.value)">
+        <li *ngFor="let reason of reasons" (click)="toggleNSFW(reason.value)">
           <span>{{ reason.label }}</span>
           <m-icon
             iconId="check"
@@ -129,14 +131,26 @@ export class BlogEditorDropdownComponent {
   getLicense() {
     return this.editService.license$;
   }
-  setLicense(value) {
+
+  setLicense(value: string): void {
+    const current = this.editService.license$.getValue();
+    if (current === value) {
+      this.editService.license$.next('');
+      return;
+    }
     this.editService.license$.next(value);
   }
 
   getAccessId() {
     return this.editService.accessId$;
   }
-  setAccessId(value) {
+
+  setAccessId(value: string): void {
+    const current: string = this.editService.accessId$.getValue();
+    if (current === value) {
+      this.editService.accessId$.next('');
+      return;
+    }
     this.editService.accessId$.next(value);
   }
 
@@ -151,15 +165,8 @@ export class BlogEditorDropdownComponent {
     return this.editService.nsfw$;
   }
 
-  setNSFW(value: number): void {
-    let current: number[] = this.editService.nsfw$.getValue();
-    if (current.indexOf(value) > -1) {
-      current = current.splice(current.indexOf(value), 1);
-      this.editService.nsfw$.next(current);
-      return;
-    }
-    current.push(value);
-    this.editService.nsfw$.next(current);
+  toggleNSFW(value: number): void {
+    this.editService.toggleNSFW(value);
   }
 
   openPaywallModal() {

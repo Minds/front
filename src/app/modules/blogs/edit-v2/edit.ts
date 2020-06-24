@@ -37,7 +37,6 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
   banner_top: number = 0;
   banner_prompt: boolean = false;
   editing: boolean = true;
-  canSave: boolean = true;
   inProgress: boolean = false;
   validThreshold: boolean = true;
   error: string = '';
@@ -57,10 +56,6 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
   @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
 
-  public readonly showMeta$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-
   protected time_created: any;
 
   constructor(
@@ -75,8 +70,7 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
     configs: ConfigsService,
     private location: Location,
     private toasterService: FormToastService,
-    public service: BlogsEditService,
-    private overlayModal: OverlayModalService
+    public service: BlogsEditService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -99,11 +93,9 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
       return;
     }
 
-    //TODO: Verify this works
     this.paramsSubscription = this.route.params
       .pipe(take(1))
       .subscribe(params => {
-        console.log('params', params);
         if (params['guid'] && params['guid'] !== 'new') {
           this.service.load(params['guid']);
         }
@@ -143,54 +135,6 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
     }
   }
 
-  validate() {
-    this.error = '';
-    if (!this.service.content$.getValue()) {
-      this.showToastError('error:no-description');
-      return false;
-    }
-    if (!this.service.title$.getValue()) {
-      this.showToastError('error:no-title');
-      return false;
-    }
-    return true;
-  }
-
-  posterDateSelectorError(msg) {
-    this.showToastError(msg);
-  }
-
-  async save(draft: boolean = false): Promise<void> {
-    if (!this.canSave || !this.validate()) {
-      return;
-    }
-
-    this.error = '';
-    const modal = this.overlayModal.create(
-      CaptchaModalComponent,
-      {},
-      {
-        class: 'm-captcha--modal-wrapper',
-        onComplete: (captcha: Captcha): void => {
-          this.service.captcha$.next(captcha);
-          this.service.save(draft);
-        },
-      }
-    );
-    modal.present();
-  }
-
-  showToastError(error: string): void {
-    this.error = error;
-    const errorDisplays: any = {
-      'error:no-title': 'You must provide a title',
-      'error:no-description': 'You must provide a description',
-      'error:no-banner': 'You must upload a banner',
-      'error:gateway-timeout': 'Gateway Time-out',
-    };
-    this.toasterService.error(errorDisplays[error] || error);
-  }
-
   uploadBanner(banner) {
     console.log('uploading banner');
     this.service.addBanner(banner.files[0]);
@@ -206,9 +150,5 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
    */
   onNSFWSelections(nsfw) {
     this.service.nsfw$.next(nsfw.map(reason => reason.value));
-  }
-
-  toggleMeta() {
-    this.showMeta$.next(!this.showMeta$.getValue());
   }
 }

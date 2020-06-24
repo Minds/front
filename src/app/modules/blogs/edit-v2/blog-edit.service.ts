@@ -11,18 +11,24 @@
  * [x] Sort buttons
  * [x] Saving Draft - does guid in url need to change?
  * [x] NSFW
- * [] Load blogs.
+ * [x] Bottom drawer
+ * [x] Hashtags - confer with Michael.
+ * [x] Load blogs. - ALL LOADING EXCEPT TITLE AND VISIBILITY
+ * [] CanDeactivate changes for routing after save.
  * [] Routing.
  * [] Placeholder - maybe make a package level default.
- * [] Hashtags - confer with Michael.
  * [] Monetization - later iteration.
  * [] Scheduling.
- * [] Validation
+ * [] Mobile responsiveness.
+ * [] Housekeeping.
+ * [] Validation - meta / captcha / title.
  * [] Spec Test.
  * [] E2E test.
  * [] Regression test.
+ * [] Revert changes to old blogs.
+ * [] Feat flag test.
  * [] Doc.
- * s
+ * [] Footer positioning.
  */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription, timer } from 'rxjs';
@@ -56,6 +62,9 @@ export class BlogsEditService {
   readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >('');
+  readonly metaTitle$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly author$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -128,13 +137,9 @@ export class BlogsEditService {
    * Adds response to local state.
    * @param activity - activity
    */
-  public async load(activity: any): Promise<void> {
+  public async load(guid: string): Promise<void> {
     this.inProgress$.next(true);
     this.canPost$.next(false);
-
-    const guid: string = activity.entity_guid
-      ? activity.entity_guid
-      : activity.guid;
 
     const response: any = await this.client.get('api/v1/blog/' + guid, {});
 
@@ -149,11 +154,7 @@ export class BlogsEditService {
       this.nsfw$.next(blog.nsfw);
       this.error$.next('');
       this.banner$.next(
-        this.site.baseUrl +
-          'fs/v1/banners/' +
-          guid +
-          '/' +
-          activity.time_updated
+        this.site.baseUrl + 'fs/v1/banners/' + guid + '/' + blog.time_updated
       );
       this.bannerFile$.next('');
       this.canPost$.next(true);
@@ -166,6 +167,7 @@ export class BlogsEditService {
       this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
       this.tags$.next(blog.tags);
       this.metaDescription$.next(blog.custom_meta.description);
+      this.metaTitle$.next(blog.custom_meta.title);
     }
 
     this.inProgress$.next(false);
@@ -213,6 +215,7 @@ export class BlogsEditService {
     this.tags$.next([]);
     this.nsfw$.next([]);
     this.metaDescription$.next('');
+    this.metaTitle$.next('');
   }
 
   /**
@@ -315,7 +318,6 @@ export class BlogsEditService {
       access_id: Number(this.accessId$.getValue()),
       license: this.license$.getValue(),
       fileKey: 'header',
-      mature: this.nsfw$.getValue().length > 0,
       nsfw: this.nsfw$.getValue(),
       paywall: Boolean(this.monetization$.getValue()),
       wire_threshold: this.monetization$.getValue()
@@ -323,7 +325,7 @@ export class BlogsEditService {
         : 0,
       published: this.published$.getValue(),
       custom_meta: {
-        title: this.title$.getValue(),
+        title: this.metaTitle$.getValue(),
         description: this.metaDescription$.getValue(),
         author: this.author$.getValue(),
       },
@@ -365,5 +367,35 @@ export class BlogsEditService {
    */
   public hasContent(): boolean {
     return this.content$.getValue() !== this.savedContent$.getValue();
+  }
+
+  public pushTag(tag: string): void {
+    const current: string[] = this.tags$.getValue();
+    if (current.indexOf(tag) < 0 && current.length < 5 && tag.length < 50) {
+      // strip non-alphanumeric characters
+      tag = tag.replace(/\W/g, '');
+      if (tag.length > 0) {
+        current.push(tag);
+        this.tags$.next(current);
+      }
+    }
+  }
+
+  public removeTag(tag: string): void {
+    this.tags$.next(this.tags$.getValue().filter(t => t !== tag));
+  }
+
+  toggleNSFW(value: number): void {
+    let current: number[] = this.nsfw$.getValue();
+    console.log('current', current);
+    console.log('value', value);
+    console.log('current.indexOf(value) > -1', current.indexOf(value) > -1);
+    if (current.indexOf(value) > -1) {
+      current = current.filter(t => t !== value);
+      this.nsfw$.next(current);
+      return;
+    }
+    current.push(value);
+    this.nsfw$.next(current);
   }
 }

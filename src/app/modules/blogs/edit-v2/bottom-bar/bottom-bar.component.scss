@@ -1,0 +1,104 @@
+.m-blogEditor__bottomBarTabContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 100px;
+  @media screen and (max-width: $max-mobile) {
+    padding: 30px 50px;
+  }
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-blogEditor__bottomBarTabHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    m-icon {
+      cursor: pointer;
+
+      i {
+        font-size: 24pt !important;
+      }
+    }
+
+    h4 {
+      font-size: 20px;
+      margin: 0;
+      margin-bottom: 24px;
+    }
+  }
+}
+.m-blogEditor__bottomBar {
+  display: flex;
+  position: relative;
+  align-items: center;
+  bottom: 0px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media screen and (max-width: $min-tablet) {
+    justify-content: space-evenly;
+  }
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+    background-color: themed($m-bgColor--primary);
+  }
+
+  padding: 16px 100px 46px 100px;
+  @media screen and (max-width: $max-mobile) {
+    padding: 16px 50px 46px 50px;
+  }
+
+  .m-blogEditor__options {
+    display: flex;
+    align-items: center;
+    // width: 50%;
+
+    .m-blogEditor__tabToggle {
+      font-size: 12pt;
+      display: flex;
+      align-items: center;
+      margin-right: 24px;
+      cursor: pointer;
+
+      i {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .m-blogEditor__saveButtons {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .m-blogEditor__draftSaved {
+      margin-right: 16px;
+    }
+
+    .m-blogEditor__saveDraftButton {
+      button {
+        margin-right: 8px;
+        background-color: unset;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+
+          &:active,
+          &:hover {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+      }
+
+      .m-blogEditor__saveButton {
+        min-width: max-content;
+      }
+    }
+  }
+}

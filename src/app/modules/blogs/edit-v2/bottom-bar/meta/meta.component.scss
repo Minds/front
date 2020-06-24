@@ -1,9 +1,9 @@
 .m-blogMeta__container {
   display: flex;
   flex-direction: column;
-  padding: 0 100px;
-  @media screen and (max-width: $max-mobile) {
-    padding: 0 50px;
+  width: 50%;
+  @media screen and (max-width: $min-desktop) {
+    width: 100%;
   }
 
   .m-blogMeta__field {
@@ -14,8 +14,13 @@
     .m-blogMeta__labelContainer {
       display: flex;
       flex-direction: row;
-      font-size: 12pt;
+      font-size: 11pt;
       padding-bottom: 4px;
+      flex-wrap: wrap;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
 
       .m-blogMeta__label {
         margin-right: 16px;
@@ -30,7 +35,7 @@
 
     .m-blogMeta__input {
       background-color: unset;
-      border-radius: 10px;
+      border-radius: 2px;
       padding: 8px;
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
@@ -40,8 +45,8 @@
 
     .m-blogMeta__textArea {
       background-color: unset;
-      border-radius: 10px;
-      padding: 8px;
+      border-radius: 2px;
+      padding: 2px;
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
         color: themed($m-textColor--primary);

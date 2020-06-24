@@ -28,7 +28,9 @@ import { CaptchaModule } from '../captcha/captcha.module';
 import { BlogEditorV2Component } from './edit-v2/edit';
 import { BlogsEditService } from './edit-v2/blog-edit.service';
 import { BlogEditorDropdownComponent } from './edit-v2/dropdown/dropdown.component';
-import { BlogEditorMetaComponent } from './edit-v2/meta/meta.component';
+import { BlogEditorMetaComponent } from './edit-v2/bottom-bar/meta/meta.component';
+import { BlogEditorBottomBarComponent } from './edit-v2/bottom-bar/bottom-bar.component';
+import { BlogEditorTagsComponent } from './edit-v2/bottom-bar/tags/tags.component';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -84,6 +86,8 @@ const routes: Routes = [
     BlogEditorV2Component,
     BlogEditorDropdownComponent,
     BlogEditorMetaComponent,
+    BlogEditorBottomBarComponent,
+    BlogEditorTagsComponent,
   ],
   exports: [
     BlogView,
