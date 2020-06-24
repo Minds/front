@@ -29,7 +29,7 @@
         [ngModel]="shop.selected$ | async"
         (ngModelChange)="shop.select($event)"
       >
-        <option value="" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
+        <option value="null" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
           >Select Support Tier</option
         >
 
@@ -40,7 +40,10 @@
           >
             ${{ supportTier.usd | number }}
             -
-            {{ supportTier.description }}
+            {{ supportTier.name }}
+            <ng-container *ngIf="supportTier.description">
+              - {{ supportTier.description }}
+            </ng-container>
           </option>
         </optgroup>
 
@@ -55,6 +58,9 @@
               {{{supportTier.tokens | number}} tokens}}</ng-container
             >
             - {{ supportTier.name }}
+            <ng-container *ngIf="supportTier.description">
+              - {{ supportTier.description }}
+            </ng-container>
           </option>
         </optgroup>
       </select>
