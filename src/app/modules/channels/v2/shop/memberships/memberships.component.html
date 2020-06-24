@@ -60,16 +60,18 @@
     </ng-template>
   </div>
 
-  <div class="m-channelShopMemberships__supportTiers">
-    <m-channelShopMemberships__supportTier
-      *ngFor="let supportTier of supportTiers$ | async"
-      class="m-channelShopMemberships__supportTier"
-      [supportTier]="supportTier"
-      [isOwner]="channel.isOwner$ | async"
-      [displayCurrency]="currencyFilter$ | async"
-      (onSelectIntent)="select($event)"
-      (onEditIntent)="edit($event)"
-      (onDeleteIntent)="delete($event)"
-    ></m-channelShopMemberships__supportTier>
-  </div>
+  <m-carousel>
+    <div class="m-channelShopMemberships__supportTiers">
+      <m-channelShopMemberships__supportTier
+        *ngFor="let supportTier of supportTiers$ | async"
+        class="m-channelShopMemberships__supportTier m-carousel__item"
+        [supportTier]="supportTier"
+        [isOwner]="channel.isOwner$ | async"
+        [displayCurrency]="currencyFilter$ | async"
+        (onSelectIntent)="select($event)"
+        (onEditIntent)="edit($event)"
+        (onDeleteIntent)="delete($event)"
+      ></m-channelShopMemberships__supportTier>
+    </div>
+  </m-carousel>
 </div>

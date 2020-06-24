@@ -174,6 +174,7 @@ import { RemindComposerModalComponent } from '../modules/modals/remind-composer-
 import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 const routes: Routes = [
   {
@@ -321,6 +322,7 @@ const routes: Routes = [
     AccordionPaneComponent,
     StickySidebarDirective,
     ClientMetaDirective,
+    CarouselComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -446,6 +448,7 @@ const routes: Routes = [
     AccordionPaneComponent,
     StickySidebarDirective,
     ClientMetaDirective,
+    CarouselComponent,
   ],
   providers: [
     SiteService,
