@@ -122,7 +122,7 @@ export class ApiService {
   ): Observable<ApiResponse> {
     return this.request(
       ApiRequestMethod.DELETE,
-      this._buildQueryString(this.baseUrl + endpoint, queryParams),
+      this._buildQueryString(endpoint, queryParams),
       {},
       options
     );
