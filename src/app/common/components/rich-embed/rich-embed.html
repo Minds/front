@@ -1,3 +1,4 @@
+<!-- TYPE: SRC ------------------------------->
 <div
   class="m-rich-embed-src"
   *ngIf="src && type == 'src'"
@@ -56,7 +57,7 @@
     target="_blank"
     rel="noopener noreferrer"
     class="meta"
-    [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded() }"
+    [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded(), 'm-richEmbed--paywalled' : isPaywalled && mediaSource === 'minds' }"
   >
     <h2
       class="m-rich-embed--title mdl-card__title-text mdl-typography--font-medium"
@@ -68,8 +69,11 @@
     <p class="m-url">
       {{src.perma_url | domain}}
     </p>
+    <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
   </a>
 </div>
+<!-- TYPE: PREVIEW ------------------------------->
+<!-- (Currently used in comments) ---------------->
 <div class="m-rich-embed-preview" *ngIf="preview && type == 'preview'">
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img src="{{preview.thumbnail}}" />

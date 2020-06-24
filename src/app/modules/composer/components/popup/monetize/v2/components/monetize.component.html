@@ -1,0 +1,53 @@
+<div class="m-composerPopup__body m-composer__monetize">
+  <div class="m-composerPopup__content m-formWrapper">
+    <h3 class="m-composerPopup__title" i18n="@@COMMON__MONETIZE">Monetize</h3>
+
+    <div class="m-tabs__container">
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': state.type === 'plus' }"
+          (click)="state.type = 'plus'"
+          >Plus</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': state.type === 'membership' }"
+          (click)="state.type = 'membership'"
+          >Memberships</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': state.type === 'custom' }"
+          (click)="state.type = 'custom'"
+          >Custom</a
+        >
+      </div>
+    </div>
+
+    <m-composer__monetizeV2__plus
+      *ngIf="state.type === 'plus'"
+    ></m-composer__monetizeV2__plus>
+    <m-composer__monetizeV2__memberships
+      *ngIf="state.type === 'membership'"
+    ></m-composer__monetizeV2__memberships>
+    <m-composer__monetizeV2__custom
+      *ngIf="state.type === 'custom'"
+    ></m-composer__monetizeV2__custom>
+
+    <!-- </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      [disabled]="state.enabled && state.amount <= 0"
+      (onAction)="save()"
+      data-cy="monetize-save-button"
+      i18n="@@COMMON__SAVE"
+    >
+      Save
+    </m-button>
+  </div> -->
+  </div>
+</div>

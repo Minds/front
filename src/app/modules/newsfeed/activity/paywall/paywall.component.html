@@ -20,4 +20,6 @@
   *ngIf="service.entity$ | async as entity"
   [entity]="entity"
   (entityChange)="onEntityUpdated($event)"
+  [mediaHeight]="mediaHeight"
+  [showLegacyPaywall]="false"
 ></m-wire--lock-screen>

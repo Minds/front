@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
@@ -10,8 +10,11 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
   templateUrl: 'nsfw-consent.component.html',
 })
 export class ActivityNsfwConsentComponent {
+  entity: any;
+
   reasonsLabel$: Observable<string> = this.service.entity$.pipe(
     map((entity: ActivityEntity) => {
+      this.entity = entity;
       const reasons = NSFW_REASONS.filter(
         reason => entity.nsfw.indexOf(reason.value) > -1
       );

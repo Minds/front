@@ -21,6 +21,8 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 import { WireModalService } from '../wire-modal.service';
 import { of } from 'rxjs';
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 
 describe('WireLockScreenComponent', () => {
   let comp: WireLockScreenComponent;
@@ -55,12 +57,15 @@ describe('WireLockScreenComponent', () => {
         },
         { provide: SignupModalService, useValue: signupModalServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
   beforeEach(() => {
+    featuresServiceMock.mock('paywall-2020', false);
+
     fixture = TestBed.createComponent(WireLockScreenComponent);
 
     comp = fixture.componentInstance; // LoginForm test instance
