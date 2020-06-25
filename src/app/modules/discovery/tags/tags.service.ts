@@ -57,6 +57,7 @@ export class DiscoveryTagsService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  // TODOPLUS add optional 'plus' bool input
   async loadTags(refresh = false) {
     this.inProgress$.next(true);
 

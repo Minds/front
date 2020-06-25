@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { Subscription, combineLatest } from 'rxjs';
+import { Subscription, combineLatest, Observable } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
+import { DiscoveryService } from '../discovery.service';
 
 @Component({
   selector: 'm-discovery__suggestions',
@@ -20,9 +21,13 @@ export class DiscoverySuggestionsComponent implements OnInit, OnDestroy {
   hasMoreData$ = this.service.hasMoreData$;
   urlSubscription: Subscription;
 
+  parentPathSubscription: Subscription;
+  parentPath: string = '';
+
   constructor(
     private route: ActivatedRoute,
-    private service: SuggestionsService
+    private service: SuggestionsService,
+    private discoveryService: DiscoveryService
   ) {}
 
   ngOnInit() {
@@ -36,10 +41,17 @@ export class DiscoverySuggestionsComponent implements OnInit, OnDestroy {
         });
       }
     );
+
+    this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
+      parentPath => {
+        this.parentPath = parentPath;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.urlSubscription.unsubscribe();
+    this.parentPathSubscription.unsubscribe();
   }
 
   loadMore(): void {

@@ -2,11 +2,8 @@ m-paywallBadge {
   z-index: 3;
 }
 .m-paywallBadge {
-  position: absolute;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  top: 12px;
-  right: 24px;
   border-radius: 3px;
   padding: 4px 5px;
   font-size: 12px;
@@ -18,9 +15,17 @@ m-paywallBadge {
     background-color: themed($m-textColor--secondary);
     box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
   }
+  &.topRightPosition {
+    position: absolute;
+    top: 12px;
+    right: 24px;
+    display: flex;
+  }
   &.isPlus {
-    @include m-theme() {
-      background-color: themed($m-alert);
+    &.accentColor {
+      @include m-theme() {
+        background-color: themed($m-alert);
+      }
     }
   }
   &.isCustom {
