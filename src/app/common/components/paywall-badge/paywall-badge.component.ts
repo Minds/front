@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PaywallType } from '../../../modules/wire/lock-screen/wire-lock-screen.component';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-paywallBadge',
@@ -20,9 +21,14 @@ export class PaywallBadgeComponent implements OnInit {
 
   hasPaywall: boolean = false;
   paywallType: PaywallType = 'custom';
+  tierName: string;
   init: boolean = false;
 
-  constructor() {}
+  readonly plusSupportTierUrn: string;
+
+  constructor(private config: ConfigsService) {
+    this.plusSupportTierUrn = config.get('plus').support_tier_urn;
+  }
 
   ngOnInit(): void {
     if (!this.entity) {
@@ -37,6 +43,21 @@ export class PaywallBadgeComponent implements OnInit {
 
     if (this.hasPaywall) {
       // TODO determine the paywall type here
+
+      if (
+        this.entity.wire_threshold &&
+        this.entity.wire_threshold.support_tier
+      ) {
+        this.paywallType = 'tier';
+        if (
+          this.entity.wire_threshold.support_tier.urn == this.plusSupportTierUrn
+        ) {
+          this.paywallType = 'plus';
+        } else {
+          this.paywallType = 'tier';
+          this.tierName = this.entity.wire_threshold.support_tier.name;
+        }
+      }
     }
 
     this.init = true;

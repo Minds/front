@@ -11,7 +11,7 @@
     >
       <i *ngIf="paywallType !== 'plus'" class="material-icons">lock</i>
       <span *ngIf="paywallType === 'plus'">Minds+</span>
-      <span *ngIf="paywallType === 'tier'">Members Only</span>
+      <span *ngIf="paywallType === 'tier'">{{ tierName }} Members Only</span>
     </div>
   </ng-container>
 </ng-container>
