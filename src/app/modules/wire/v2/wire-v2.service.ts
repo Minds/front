@@ -326,6 +326,9 @@ export class WireV2Service implements OnDestroy {
    */
   readonly upgrades: any;
 
+  isPlus: boolean;
+  isPro: boolean;
+
   /**
    * Constructor. Initializes data payload observable subscription.
    * @param wallet
@@ -455,6 +458,14 @@ export class WireV2Service implements OnDestroy {
 
     // Sync balances
     this.wallet.getTokenAccounts();
+
+    this.getIsPlus().then(isPlus => {
+      this.isPlus = isPlus;
+    });
+
+    this.getIsPlus().then(isPro => {
+      this.isPro = isPro;
+    });
   }
 
   /**
@@ -677,13 +688,10 @@ export class WireV2Service implements OnDestroy {
     }
 
     if (this.isUpgrade$.value) {
-      const isPlus = this.getIsPlus(),
-        isPro = this.getIsPro();
-
-      if (this.upgradeType$.value === 'pro' && isPro) {
+      if (this.upgradeType$.value === 'pro' && this.isPro) {
         return invalid('You are already a Pro member', true);
       }
-      if (this.upgradeType$.value === 'plus' && isPlus) {
+      if (this.upgradeType$.value === 'plus' && this.isPlus) {
         return invalid('You are already a Minds+ member', true);
       }
     }
