@@ -1,5 +1,8 @@
 m-discovery__settingsButton {
   display: contents;
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
 }
 
 .m-discovery__settingsButton {

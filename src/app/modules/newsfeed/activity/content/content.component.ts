@@ -285,7 +285,7 @@ export class ActivityContentComponent
 
   get mediaHeight(): number | null {
     if (this.isImage) {
-      const imageHeight = this.imageHeight || '410';
+      const imageHeight = this.imageHeight || '410px';
       return parseInt(imageHeight.slice(0, -2), 10);
     }
     if (this.isVideo) {
