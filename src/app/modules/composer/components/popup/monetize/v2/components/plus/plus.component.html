@@ -5,8 +5,23 @@
 <ng-container *ngIf="isPro"
   ><p class="m-composerPopup__text" i18n="@@COMPOSER__MONETIZE_PLUS_PRO_DESC">
     Submit this post to the Minds Plus pool and earn potential revenue.
-  </p></ng-container
->
+  </p>
+
+  <div class="m-composerPopup__checkbox">
+    <m-formInput__checkbox
+      [ngModel]="termsAccepted"
+      (ngModelChange)="onTermsChange($event)"
+    >
+      <span i18n="@@COMPOSER__PLUS__TERMS__CHECKBOX"
+        >I agree to the
+        <a routerLink="/p/terms" target="_blank">
+          T&C's
+        </a></span
+      >
+    </m-formInput__checkbox>
+  </div>
+</ng-container>
+
 <ng-container *ngIf="!isPro"
   ><p
     class="m-composerPopup__text"

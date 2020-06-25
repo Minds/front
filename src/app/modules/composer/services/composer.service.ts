@@ -80,9 +80,9 @@ export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
  * Monetization value type
  */
 export type MonetizationSubjectValue = {
-  type: 'tokens' | 'money';
-  min: number;
-  support_tier?: SupportTier;
+  type?: 'tokens' | 'money';
+  min?: number;
+  support_tier?: { urn: string; expires?: number };
 } | null;
 
 /**
