@@ -17,6 +17,7 @@ import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -70,7 +71,8 @@ export class BaseComponent implements AfterViewInit {
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    protected featuresService: FeaturesService
   ) {}
 
   /**
@@ -138,6 +140,10 @@ export class BaseComponent implements AfterViewInit {
       this.popup.close();
     }
 
+    if (this.featuresService.has('ckeditor5')) {
+      this.router.navigate(['/blog/v2/edit/new']);
+      return;
+    }
     this.router.navigate(['/blog/edit/new']);
   }
 

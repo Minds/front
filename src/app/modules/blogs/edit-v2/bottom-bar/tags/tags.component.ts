@@ -15,13 +15,16 @@ import { BlogsEditService } from '../../blog-edit.service';
           <i class="material-icons">close</i>
         </span>
       </div>
-      <label class="m-blogTags__inputLabel">Tag</label>
+      <label class="m-blogTags__inputLabel" i18n="noun|@@BLOG_EDITOR_TAGS__TAG"
+        >Tag</label
+      >
       <input
         #input
         (keydown)="onKeydown($event)"
         class="m-blogTags__input"
         type="text"
         placeholder="#hashtag"
+        i18n-placeholder="@@BLOG_EDITOR_TAGS__HASHTAG"
       />
     </div>
   `,

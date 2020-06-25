@@ -6,13 +6,13 @@ import {
 } from '../../../../services/list-options';
 import { BlogsEditService } from '../blog-edit.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { CaptchaModalComponent } from '../../../captcha/captcha-modal/captcha-modal.component';
 import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-selector.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-blogEditor__dropdown',
   host: {
-    class: 'm-blog',
+    class: 'm-blogEditor__dropdown',
   },
   template: `
     <m-dropdownMenu
@@ -31,9 +31,9 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
             [menu]="licenseMenu"
             [anchorPosition]="{ top: '0' }"
             triggerClass="m-dropdownMenu__item"
-            data-cy="meatball-menu-visibility"
+            data-cy="meatball-menu-license"
           >
-            <span>License</span>
+            <span i18n="noun|@@BLOG_EDITOR_DROPDOWN__LICENSE">License</span>
             <m-icon iconId="chevron_right"></m-icon>
           </m-dropdownMenu>
         </li>
@@ -45,7 +45,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
             triggerClass="m-dropdownMenu__item"
             data-cy="meatball-menu-visibility"
           >
-            <span>Visibility</span>
+            <span i18n="@@BLOG_EDITOR_DROPDOWN__VISIBILITY">Visibility</span>
             <m-icon iconId="chevron_right"></m-icon>
           </m-dropdownMenu>
         </li>
@@ -57,7 +57,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
             triggerClass="m-dropdownMenu__item"
             data-cy="meatball-menu-nsfw"
           >
-            <span>NSFW</span>
+            <span i18n="@@COMMON__NSFW">NSFW</span>
             <m-icon iconId="chevron_right"></m-icon>
           </m-dropdownMenu>
         </li>
@@ -82,7 +82,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
     </ng-template>
 
     <ng-template #visibilityMenu>
-      <ul data-cy="meatball-menu-license-menu">
+      <ul data-cy="meatball-menu-visibility-menu">
         <li
           *ngFor="let accessItem of accessItems"
           (click)="setAccessId(accessItem.value)"
@@ -90,16 +90,14 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
           <span>{{ accessItem.text }}</span>
           <m-icon
             iconId="check"
-            *ngIf="
-              (getAccessId() | async).toString() === accessItem.value.toString()
-            "
+            *ngIf="(getAccessId() | async) == accessItem.value"
           ></m-icon>
         </li>
       </ul>
     </ng-template>
 
     <ng-template #nsfwMenu>
-      <ul data-cy="meatball-menu-license-menu">
+      <ul data-cy="meatball-menu-nsfw-menu">
         <li *ngFor="let reason of reasons" (click)="toggleNSFW(reason.value)">
           <span>{{ reason.label }}</span>
           <m-icon
@@ -112,7 +110,7 @@ import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-s
   `,
 })
 export class BlogEditorDropdownComponent {
-  reasons: typeof NSFW_REASONS = NSFW_REASONS;
+  public reasons: typeof NSFW_REASONS = NSFW_REASONS;
 
   /**
    * License items list
@@ -128,7 +126,7 @@ export class BlogEditorDropdownComponent {
     private overlayModal: OverlayModalService
   ) {}
 
-  getLicense() {
+  getLicense(): BehaviorSubject<string> {
     return this.editService.license$;
   }
 
@@ -145,20 +143,13 @@ export class BlogEditorDropdownComponent {
     return this.editService.accessId$;
   }
 
-  setAccessId(value: string): void {
-    const current: string = this.editService.accessId$.getValue();
+  setAccessId(value: number): void {
+    const current: number = this.editService.accessId$.getValue();
     if (current === value) {
-      this.editService.accessId$.next('');
+      this.editService.accessId$.next(null);
       return;
     }
     this.editService.accessId$.next(value);
-  }
-
-  getPaywall() {
-    return this.editService.monetization$;
-  }
-  setPaywall(value) {
-    this.editService.monetization$.next(value);
   }
 
   getNSFW() {
@@ -167,20 +158,5 @@ export class BlogEditorDropdownComponent {
 
   toggleNSFW(value: number): void {
     this.editService.toggleNSFW(value);
-  }
-
-  openPaywallModal() {
-    const modal = this.overlayModal.create(
-      CaptchaModalComponent,
-      {},
-      {
-        class: 'm-captcha--modal-wrapper',
-        onComplete: (captcha): void => {
-          // this.service.captcha$.next(captcha);
-          // this.service.save();
-        },
-      }
-    );
-    modal.present();
   }
 }

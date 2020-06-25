@@ -45,7 +45,7 @@
 
   .m-blogEditor__container {
     padding: 50px 100px;
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $min-desktop) {
       padding: 30px 50px;
     }
 
@@ -60,6 +60,10 @@
         display: flex;
         align-items: center;
 
+        @media screen and (max-width: $min-desktop) {
+          display: block;
+        }
+
         .m-blogEditor__bannerText {
           font-weight: bold;
           font-size: 12pt;
@@ -69,6 +73,10 @@
 
           i {
             margin-right: 4px;
+          }
+
+          @media screen and (max-width: $min-desktop) {
+            margin-bottom: 4px;
           }
 
           .m-blogEditor__bannerUploadButton {
@@ -95,7 +103,7 @@
         position: absolute;
         right: 100px;
         @media screen and (max-width: $min-desktop) {
-          right: 10px;
+          right: 50px;
         }
         m-blogEditor__dropdown {
           i {

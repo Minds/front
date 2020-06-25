@@ -30,7 +30,7 @@
             (click)="bannerUpload.click()"
           >
             <i class="material-icons">publish</i>
-            Upload Banner Image
+            Upload Banner
           </button>
           <input
             hidden
@@ -46,7 +46,7 @@
           i18n="@@BLOGS_EDITOR__RECOMMENDED_BANNER_SIZE_INFO"
         >
           <em>
-            recommended minimum size 200px x 1125 (Ratio 16:9)
+            Recommended minimum size 200px x 1125 (Ratio 16:9)
           </em>
         </span>
       </div>
@@ -60,7 +60,7 @@
       <input
         class="m-blogEditor__titleInput"
         type="text"
-        placeholder="Blog Title"
+        placeholder="Title"
         i18n-placeholder="@@BLOG_EDITOR__TITLE"
         [ngModel]="service.title$ | async"
         (ngModelChange)="onTitleChange($event)"

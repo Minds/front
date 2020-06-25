@@ -14,13 +14,11 @@
  * [x] Bottom drawer
  * [x] Hashtags - confer with Michael.
  * [x] Load blogs. - ALL LOADING EXCEPT TITLE AND VISIBILITY
- * [] CanDeactivate changes for routing after save.
- * [] Routing.
+ * [x] CanDeactivate changes for routing after save.
+ * [x] Routing.
  * [] Placeholder - maybe make a package level default.
- * [] Monetization - later iteration.
- * [] Scheduling.
- * [] Mobile responsiveness.
- * [] Housekeeping.
+ * [X] Mobile responsiveness.
+ * [X] Housekeeping.
  * [] Validation - meta / captcha / title.
  * [] Spec Test.
  * [] E2E test.
@@ -29,6 +27,9 @@
  * [] Feat flag test.
  * [] Doc.
  * [] Footer positioning.
+ * [] Scheduling - next version.
+ * [] Monetization - later iteration.
+
  */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription, timer } from 'rxjs';
@@ -58,13 +59,6 @@ export interface BlogResponse {
   providedIn: 'root',
 })
 export class BlogsEditService {
-  readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
-  readonly metaTitle$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    ''
-  );
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly author$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -73,9 +67,21 @@ export class BlogsEditService {
   readonly published$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly accessId$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly accessId$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    null
+  );
   readonly nsfw$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   readonly tags$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
+    string
+  >('');
+
+  readonly metaTitle$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
+
   readonly captcha$: BehaviorSubject<Captcha> = new BehaviorSubject<Captcha>(
     null
   );
@@ -108,9 +114,9 @@ export class BlogsEditService {
     string
   >('');
 
-  readonly monetization$: BehaviorSubject<
-    MonetizationSubjectValue
-  > = new BehaviorSubject<MonetizationSubjectValue>(null);
+  // readonly monetization$: BehaviorSubject<
+  //   MonetizationSubjectValue
+  // > = new BehaviorSubject<MonetizationSubjectValue>(null);
 
   private contentSubscription: Subscription;
   private timerSubscription: Subscription;
@@ -164,7 +170,7 @@ export class BlogsEditService {
       this.accessId$.next(blog.access_id);
       this.schedule$.next(blog.time_created);
       this.savedContent$.next(blog.description);
-      this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
+      // this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
       this.tags$.next(blog.tags);
       this.metaDescription$.next(blog.custom_meta.description);
       this.metaTitle$.next(blog.custom_meta.title);
@@ -182,13 +188,15 @@ export class BlogsEditService {
     if (this.contentSubscription) {
       this.contentSubscription.unsubscribe();
     }
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   /**
    * Destroys the service and its state
    */
   tearDown(): void {
-    // Reset state and free resources
     this.reset();
   }
 
@@ -211,7 +219,7 @@ export class BlogsEditService {
     this.accessId$.next(null);
     this.schedule$.next(null);
     this.savedContent$.next('');
-    this.monetization$.next(null);
+    // this.monetization$.next(null);
     this.tags$.next([]);
     this.nsfw$.next([]);
     this.metaDescription$.next('');
@@ -247,9 +255,6 @@ export class BlogsEditService {
         blog
       );
 
-      this.canPost$.next(true);
-      this.inProgress$.next(false);
-
       if (response.status !== 'success') {
         if (response.message) {
           this.error$.next('An unknown error has occured');
@@ -261,12 +266,15 @@ export class BlogsEditService {
 
       if (!draft) {
         this.tearDown();
-        this.router.navigate(
+        await this.router.navigate(
           response.route
             ? ['/' + response.route]
             : ['/blog/view', response.guid]
         );
       }
+
+      this.canPost$.next(true);
+      this.inProgress$.next(false);
       // else
       this.emitDraftSaved();
       this.savedContent$.next(this.content$.getValue());
@@ -319,10 +327,10 @@ export class BlogsEditService {
       license: this.license$.getValue(),
       fileKey: 'header',
       nsfw: this.nsfw$.getValue(),
-      paywall: Boolean(this.monetization$.getValue()),
-      wire_threshold: this.monetization$.getValue()
-        ? this.monetization$.getValue().min
-        : 0,
+      // paywall: Boolean(this.monetization$.getValue()),
+      // wire_threshold: this.monetization$.getValue()
+      //   ? this.monetization$.getValue().min
+      //   : 0,
       published: this.published$.getValue(),
       custom_meta: {
         title: this.metaTitle$.getValue(),
@@ -352,7 +360,6 @@ export class BlogsEditService {
     }
 
     this.canPost$.next(true);
-
     this.bannerFile$.next(banner);
     const reader = new FileReader();
     reader.readAsDataURL(banner);
@@ -387,9 +394,6 @@ export class BlogsEditService {
 
   toggleNSFW(value: number): void {
     let current: number[] = this.nsfw$.getValue();
-    console.log('current', current);
-    console.log('value', value);
-    console.log('current.indexOf(value) > -1', current.indexOf(value) > -1);
     if (current.indexOf(value) > -1) {
       current = current.filter(t => t !== value);
       this.nsfw$.next(current);

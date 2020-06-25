@@ -41,8 +41,10 @@
     border-radius: 2px;
     padding: 8px;
     max-width: 50%;
+    background-color: unset;
+
     @media screen and (max-width: $min-desktop) {
-      width: 100%;
+      max-width: 100%;
     }
 
     @include m-theme() {

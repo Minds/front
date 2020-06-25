@@ -11,7 +11,6 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
 @Component({
   selector: 'm-blogEditor__bottomBar',
   template: `
-    <!-- <div class="m-blogEditor__tab"> -->
     <div class="m-blogEditor__bottomBarTabContainer" *ngIf="activeTab$ | async">
       <div class="m-blogEditor__bottomBarTabHeader">
         <ng-container [ngSwitch]="activeTab$ | async">
@@ -36,35 +35,14 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
         </div>
       </ng-container>
     </div>
-    <!-- </div> -->
     <div class="m-blogEditor__bottomBar">
       <div class="m-blogEditor__options">
-        <div (click)="activeTab$.next('tags')" class="m-blogEditor__tabToggle">
-          <!-- <m-icon iconId="expand_more" *ngIf="!(showTags$ | async)"></m-icon>
-            <m-icon iconId="expand_less" *ngIf="(showTags$ | async)"></m-icon> -->
+        <div (click)="toggleActiveTab('tags')" class="m-blogEditor__tabToggle">
           Tags
         </div>
-        <div (click)="activeTab$.next('meta')" class="m-blogEditor__tabToggle">
-          <!-- <m-icon iconId="expand_more" *ngIf="!(showMeta$ | async)"></m-icon>
-            <m-icon iconId="expand_less" *ngIf="(showMeta$ | async)"></m-icon> -->
-          META
+        <div (click)="toggleActiveTab('meta')" class="m-blogEditor__tabToggle">
+          Meta
         </div>
-
-        <!-- <m-wire-threshold-input
-              [(threshold)]="(service.monetization$ | async).min"
-              [(enabled)]="(service.monetization$ | async).paywall"
-              (validThreshold)="validThreshold = $event"
-              #thresholdInput
-            ></m-wire-threshold-input> -->
-        <!-- 
-            <ng-container *mIfFeature="'post-scheduler'">
-              <m-poster-date-selector
-                *ngIf="checkTimePublished()"
-                [date]="getTimeCreated()"
-                (dateChange)="onTimeCreatedChange($event)"
-                (onError)="posterDateSelectorError($event)"
-              ></m-poster-date-selector>
-            </ng-container>  -->
       </div>
       <div class="m-blogEditor__saveButtons">
         <span
@@ -145,5 +123,15 @@ export class BlogEditorBottomBarComponent {
       'error:gateway-timeout': 'Gateway Time-out',
     };
     this.toast.error(errorDisplays[error] || error);
+  }
+
+  toggleActiveTab(tab: BlogsBottomBarContainerType = '') {
+    const current: BlogsBottomBarContainerType = this.activeTab$.getValue();
+
+    if (tab === current) {
+      this.activeTab$.next('');
+      return;
+    }
+    this.activeTab$.next(tab);
   }
 }

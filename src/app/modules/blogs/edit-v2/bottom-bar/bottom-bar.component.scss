@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: 50px 100px;
-  @media screen and (max-width: $max-mobile) {
+
+  @media screen and (max-width: $min-desktop) {
     padding: 30px 50px;
   }
 
@@ -38,8 +39,10 @@
   bottom: 0px;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 16px 100px 46px 100px;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: $min-desktop) {
+    padding: unset;
     justify-content: space-evenly;
   }
 
@@ -48,15 +51,18 @@
     background-color: themed($m-bgColor--primary);
   }
 
-  padding: 16px 100px 46px 100px;
-  @media screen and (max-width: $max-mobile) {
-    padding: 16px 50px 46px 50px;
-  }
-
   .m-blogEditor__options {
     display: flex;
     align-items: center;
-    // width: 50%;
+
+    @media screen and (max-width: $min-desktop) {
+      width: 100%;
+      padding: 16px 50px 16px 50px;
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
 
     .m-blogEditor__tabToggle {
       font-size: 12pt;
@@ -72,10 +78,16 @@
   }
 
   .m-blogEditor__saveButtons {
-    width: 50%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+
+    @media screen and (max-width: $min-desktop) {
+      justify-content: flex-end;
+      align-items: flex-end;
+      width: 100%;
+      margin: 16px 50px;
+    }
 
     .m-blogEditor__draftSaved {
       margin-right: 16px;
@@ -95,10 +107,12 @@
           }
         }
       }
+    }
 
-      .m-blogEditor__saveButton {
-        min-width: max-content;
-      }
+    .m-blogEditor__saveButton {
+      white-space: nowrap;
+      overflow: hidden;
+      min-width: min-content;
     }
   }
 }

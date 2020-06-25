@@ -1,7 +1,31 @@
-.ck-editor__editable p {
-  font-size: 21px;
+.ck-editor__editable * {
+  font-size: 18px;
 }
 
 .ck-content {
   // max-height: 50vh;
+  padding: 0 !important;
+  border: unset !important;
+}
+
+.ck-balloon-panel {
+  // show over nav
+  z-index: 1000000 !important;
+}
+
+.ck-toolbar__items {
+  // override to make toolbar buttons mobile responsive.
+  flex-wrap: wrap !important;
+}
+
+.ck-button.ck-block-toolbar-button {
+  // show over nav.
+  z-index: 1000000 !important;
+
+  // overrides ck-hidden for this element.
+  // display: flex !important;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
 }

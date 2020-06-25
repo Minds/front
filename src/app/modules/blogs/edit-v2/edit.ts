@@ -1,25 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-
+import { Subscription, Observable } from 'rxjs';
 import { ACCESS, LICENSES } from '../../../services/list-options';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 import { WireThresholdInputComponent } from '../../wire/threshold-input/threshold-input.component';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
-import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { BlogsEditService } from './blog-edit.service';
-import { CaptchaModalComponent } from '../../captcha/captcha-modal/captcha-modal.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { Captcha } from '../../captcha/captcha.component';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -117,12 +111,11 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
   canDeactivate(): Observable<boolean> | boolean {
     if (
       !this.canCreateBlog() ||
-      !this.editing ||
-      !this.session.getLoggedInUser()
+      !this.session.getLoggedInUser() ||
+      this.service.inProgress$.getValue()
     ) {
       return true;
     }
-
     return this.dialogService.confirm('Discard changes?');
   }
 
@@ -136,7 +129,6 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
   }
 
   uploadBanner(banner) {
-    console.log('uploading banner');
     this.service.addBanner(banner.files[0]);
   }
 
