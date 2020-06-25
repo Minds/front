@@ -162,6 +162,11 @@ export class BaseComponent implements AfterViewInit {
       this.onPostEmitter.next(activity);
     } catch (e) {
       this.error = (e && e.message) || 'Internal error';
+
+      if (e.error && e.error.message) {
+        this.error = e.error.message;
+      }
+
       this.toasterService.error(this.error);
     }
 
