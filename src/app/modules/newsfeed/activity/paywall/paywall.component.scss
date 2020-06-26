@@ -1,6 +1,7 @@
 m-activity__paywall {
   display: block;
   width: 100%;
+  min-height: 100px;
   &.isPaywall2020 {
     height: 100%;
     position: absolute;

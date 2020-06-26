@@ -56,7 +56,16 @@ describe('WireLockScreenComponent', () => {
           }),
         },
         { provide: SignupModalService, useValue: signupModalServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService, {
+            get: () => {
+              return {
+                support_tier_urn: 'plus_support_tier',
+              };
+            },
+          }),
+        },
         { provide: FeaturesService, useValue: featuresServiceMock },
       ],
     }).compileComponents(); // compile template and css

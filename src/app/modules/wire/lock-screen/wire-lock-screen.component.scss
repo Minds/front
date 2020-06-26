@@ -1,6 +1,4 @@
 m-wire--lock-screen.m-wire--lock-screen-2020 {
-  display: flex;
-  flex-flow: column nowrap;
   position: absolute;
   top: 0;
   left: 0;
@@ -8,9 +6,11 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
   height: 100%;
   z-index: 2;
 
-  .m-wire--lock-screen {
+  .m-wire__lockScreen {
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    align-items: center;
     height: 100%;
     width: 100%;
     position: relative;
@@ -32,21 +32,21 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
         border-top: 1px solid themed($m-borderColor--tertiary);
         background-color: themed($m-white);
       }
-      .m-wire--lock-screen--message {
+      .m-wireLockScreen__message {
         @include m-theme() {
           text-shadow: 0 0 0 rgba(themed($m-black-always), 0);
         }
       }
     }
     &.isMedia {
-      .m-wire--lock-screen--message {
+      .m-wireLockScreen__message {
         position: absolute;
         transform: translateY(-50%);
       }
     }
   }
 
-  .m-wire--lock-screen-overlay {
+  .m-wireLockScreen__overlay {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -55,8 +55,13 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
     }
   }
 
-  .m-wire--lock-screen--message {
-    margin: 0;
+  .m-wireLockScreen__inner {
+    width: 100%;
+    text-align: center;
+  }
+
+  .m-wireLockScreen__message {
+    margin: 20px auto;
     text-align: center;
     max-width: 60%;
     font-weight: 400;
@@ -68,6 +73,7 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
     }
   }
 }
+
 // ******************************************************
 // ** LEGACY
 // ******************************************************
