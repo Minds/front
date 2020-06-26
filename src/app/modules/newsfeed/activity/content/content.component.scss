@@ -1,11 +1,15 @@
 m-activity__content {
   display: block;
   width: 100%;
+  position: relative;
+  &.m-activityContent--paywalledStatus {
+    min-height: 120px;
+    padding-top: 50px;
+  }
 }
 .m-activity--fixedHeight {
   m-activity__content {
     flex: 1;
-    // overflow: hidden;
     display: flex;
     flex-direction: column;
     height: auto;
@@ -67,6 +71,7 @@ m-activity__content {
 .m-activityContent__mediaDescription {
   white-space: pre-line;
   word-break: break-word;
+  position: relative;
   @include m-theme() {
     color: themed($m-textColor--primary);
   }
@@ -114,12 +119,35 @@ m-activity__content {
 .m-activityContent__media--image {
   a {
     height: 100%;
-    widows: 100%;
+    width: 100%;
   }
   img {
     object-fit: contain;
     width: 100%;
     max-height: 800px;
+  }
+  &.isPaywalledGif {
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+.m-activityContent__teaserFadeout {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% - 40px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  @include m-theme() {
+    background: linear-gradient(
+      to bottom,
+      rgba(themed($m-bgColor--secondary), 0.3) 0%,
+      rgba(themed($m-bgColor--secondary), 0.8) 30%,
+      rgba(themed($m-bgColor--secondary), 1) 70%
+    );
   }
 }
 
@@ -155,6 +183,34 @@ m-activity__content {
     margin: 0;
     @include m-theme() {
       color: themed($m-textColor--tertiary) !important;
+    }
+  }
+
+  a.m-richEmbed--paywalled {
+    position: relative;
+    cursor: default;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+    .m-rich-embed--title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      @include m-theme() {
+        color: themed($m-textColor--primary) !important;
+      }
+    }
+    .m-blurb {
+      display: block;
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 0;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    .m-url {
+      display: none;
     }
   }
 

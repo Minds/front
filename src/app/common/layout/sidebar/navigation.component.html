@@ -57,6 +57,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        [routerLinkActiveOptions]="{ exact: plusPageActive }"
       >
         <a routerLink="/discovery" (click)="toggle()">
           <m-tooltip
@@ -73,6 +74,28 @@
             i18n="@@COMMON__DISCOVERY"
           >
             Discovery
+          </span>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        routerLinkActiveOptions="{ exact: true }"
+        *mIfFeature="'plus-2020'"
+      >
+        <a routerLink="/discovery/plus" (click)="toggle()">
+          <m-tooltip
+            [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <i class="material-icons" m-tooltip--anchor>add_to_queue</i>
+            <ng-container i18n="@@COMMON__MINDS+">Minds+</ng-container>
+          </m-tooltip>
+
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+">
+            Minds+
           </span>
         </a>
       </li>

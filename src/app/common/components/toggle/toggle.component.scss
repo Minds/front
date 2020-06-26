@@ -5,6 +5,7 @@ m-toggle {
   height: 19px;
   margin: 0 0.35em;
   cursor: pointer;
+  user-select: none;
 
   &.disabled {
     .m-toggle__switch {

@@ -171,9 +171,12 @@ import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
 import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
+import { LanguageModule } from '../modules/language/language.module';
+import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
 import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 const routes: Routes = [
   {
@@ -320,7 +323,9 @@ const routes: Routes = [
     AccordionComponent,
     AccordionPaneComponent,
     StickySidebarDirective,
+    PaywallBadgeComponent,
     ClientMetaDirective,
+    CarouselComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -445,7 +450,9 @@ const routes: Routes = [
     AccordionComponent,
     AccordionPaneComponent,
     StickySidebarDirective,
+    PaywallBadgeComponent,
     ClientMetaDirective,
+    CarouselComponent,
   ],
   providers: [
     SiteService,

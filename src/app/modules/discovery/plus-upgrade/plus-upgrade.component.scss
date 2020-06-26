@@ -1,0 +1,24 @@
+m-discovery__plusUpgrade {
+  > div {
+    padding: 20px;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    font-weight: 300;
+    margin-bottom: 10px;
+    @include m-theme() {
+      background-color: themed($m-bgColor--tertiary);
+    }
+  }
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 300;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

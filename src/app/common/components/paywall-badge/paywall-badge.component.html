@@ -1,0 +1,17 @@
+<ng-container *mIfFeature="'paywall-2020'">
+  <ng-container *ngIf="init && hasPaywall">
+    <div
+      class="m-paywallBadge"
+      [ngClass]="{
+        isPlus: paywallType === 'plus',
+        isCustom: paywallType === 'custom',
+        accentColor: accentColor,
+        topRightPosition: topRightPosition
+      }"
+    >
+      <i *ngIf="paywallType !== 'plus'" class="material-icons">lock</i>
+      <span *ngIf="paywallType === 'plus'">Minds+</span>
+      <span *ngIf="paywallType === 'tier'">{{ tierName }} Members Only</span>
+    </div>
+  </ng-container>
+</ng-container>

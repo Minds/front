@@ -95,6 +95,13 @@ export class ScrollAwareVideoPlayerComponent
     }
   }
 
+  forcePlay(): void {
+    this.player.play({
+      muted: true,
+      hideControls: true,
+    });
+  }
+
   @HostListener('mouseenter')
   onMouseOver(e: MouseEvent) {
     if (this.hasMousedOver) return;

@@ -254,10 +254,6 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__SUBSCRIPTIONS__LABEL:Subscription Tier Management`,
             id: 'subscription-tiers',
           },
-          {
-            label: $localize`:@@SETTINGS__OTHER__PAIDCONTENT__PAYWALL:Paywall Preview`,
-            id: 'paywall-preview',
-          },
         ],
       },
       {

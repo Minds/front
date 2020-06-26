@@ -4,9 +4,10 @@ import {
   DiscoveryFeedsService,
   DiscoveryFeedsContentFilter,
 } from './feeds.service';
-import { Subscription, combineLatest } from 'rxjs';
+import { Subscription, combineLatest, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { DiscoveryService } from '../discovery.service';
 
 @Component({
   selector: 'm-discovery__feeds',
@@ -17,9 +18,13 @@ export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
   filter: DiscoveryFeedsContentFilter;
   urlSubscription: Subscription;
 
+  parentPathSubscription: Subscription;
+  parentPath: string = '';
+
   constructor(
     private route: ActivatedRoute,
-    private service: DiscoveryFeedsService
+    private service: DiscoveryFeedsService,
+    private discoveryService: DiscoveryService
   ) {}
 
   ngOnInit() {
@@ -32,9 +37,16 @@ export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
+      parentPath => {
+        this.parentPath = parentPath;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.urlSubscription.unsubscribe();
+    this.parentPathSubscription.unsubscribe();
   }
 }

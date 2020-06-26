@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  HostBinding,
 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 
@@ -26,13 +27,50 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { RedirectService } from '../../../../common/services/redirect.service';
+import * as moment from 'moment';
+import { Session } from '../../../../services/session';
+import {
+  animate,
+  keyframes,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video-player/scrollaware-player.component';
 
 @Component({
   selector: 'm-activity__content',
   templateUrl: 'content.component.html',
+  animations: [
+    trigger('fader', [
+      state('active', style({})),
+      state('dismissed', style({})),
+      transition(':leave', [
+        style({ opacity: '1' }),
+        animate(
+          '500ms cubic-bezier(0.23, 1, 0.32, 1)',
+          style({ opacity: '0', height: '0px' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ActivityContentComponent
   implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Whether or not we allow autoplay on scroll
+   */
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
+   */
+  @Input() autoplayVideo: boolean = false;
+
+  @Input() showPaywall: boolean = false;
+  @Input() showPaywallBadge: boolean = false;
+
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
 
@@ -41,6 +79,8 @@ export class ActivityContentComponent
 
   @ViewChild('mediaDescriptionEl', { read: ElementRef })
   mediaDescriptionEl: ElementRef;
+
+  @ViewChild(ScrollAwareVideoPlayerComponent) videoPlayer;
 
   maxFixedHeightContent: number = 750 * ACTIVITY_FIXED_HEIGHT_RATIO;
   get maxMessageHeight(): number {
@@ -51,12 +91,19 @@ export class ActivityContentComponent
   remindWidth: number;
   remindHeight: number;
 
+  paywallUnlocked: boolean = false;
+
   private entitySubscription: Subscription;
   private activityHeightSubscription: Subscription;
+  private paywallUnlockedSubscription: Subscription;
 
   readonly siteUrl: string;
+  readonly cdnAssetsUrl: string;
 
   entity: ActivityEntity;
+
+  @HostBinding('class.m-activityContent--paywalledStatus')
+  isPaywalledStatusPost: boolean;
 
   constructor(
     public service: ActivityService,
@@ -64,9 +111,11 @@ export class ActivityContentComponent
     private router: Router,
     private el: ElementRef,
     private redirectService: RedirectService,
+    private session: Session,
     configs: ConfigsService
   ) {
     this.siteUrl = configs.get('site_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
@@ -74,12 +123,33 @@ export class ActivityContentComponent
       (entity: ActivityEntity) => {
         this.entity = entity;
         this.calculateFixedContentHeight();
+        this.isPaywalledStatusPost =
+          this.showPaywallBadge && entity.content_type === 'status';
+        if (
+          this.entity.paywall_unlocked ||
+          this.entity.ownerObj.guid === this.session.getLoggedInUser().guid
+        ) {
+          this.paywallUnlocked = true;
+        }
       }
     );
     this.activityHeightSubscription = this.service.height$.subscribe(
       (height: number) => {
         this.activityHeight = height;
         this.calculateRemindHeight();
+      }
+    );
+    this.paywallUnlockedSubscription = this.service.paywallUnlockedEmitter.subscribe(
+      (unlocked: boolean) => {
+        if (!unlocked) {
+          return;
+        }
+        if (this.isVideo) {
+          this.videoPlayer.forcePlay();
+        }
+        if (this.isRichEmbed && this.entity.entity_guid) {
+          this.redirectService.redirect(this.entity.perma_url);
+        }
       }
     );
   }
@@ -94,6 +164,7 @@ export class ActivityContentComponent
   ngOnDestroy() {
     this.entitySubscription.unsubscribe();
     this.activityHeightSubscription.unsubscribe();
+    this.paywallUnlockedSubscription.unsubscribe();
   }
 
   get message(): string {
@@ -142,16 +213,41 @@ export class ActivityContentComponent
     );
   }
 
+  get isPaywalledGif(): boolean {
+    return (
+      this.isImage &&
+      this.entity.custom_data[0].gif &&
+      this.showPaywallBadge &&
+      !this.paywallUnlocked
+    );
+  }
+
   get imageUrl(): string {
-    if (this.entity.custom_type == 'batch') {
-      return this.entity.custom_data[0].src;
+    if (this.entity.custom_type === 'batch') {
+      if (this.isPaywalledGif) {
+        return `${this.cdnAssetsUrl}assets/photos/andromeda-galaxy-blur.jpg`;
+      }
+
+      let thumbUrl = this.entity.custom_data[0].src;
+      if (this.showPaywallBadge) {
+        /**
+         * Check whether we need to add 'unlock_paywall' query as the only
+         * query param OR append to an existing one
+         */
+        const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
+
+        const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
+
+        thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
+      }
+      return thumbUrl;
     }
 
     if (this.entity.thumbnail_src && this.entity.custom_type !== 'video') {
       return this.entity.thumbnail_src;
     }
 
-    return ''; // TODO: placehol;der
+    return ''; // TODO: placeholder
   }
 
   get imageHeight(): string {
@@ -185,6 +281,20 @@ export class ActivityContentComponent
     if (!this.mediaEl) return '';
     const height = this.mediaEl.nativeElement.clientWidth / (16 / 9);
     return `${height}px`;
+  }
+
+  get mediaHeight(): number | null {
+    if (this.isImage) {
+      const imageHeight = this.imageHeight || '410px';
+      return parseInt(imageHeight.slice(0, -2), 10);
+    }
+    if (this.isVideo) {
+      return parseInt(this.videoHeight.slice(0, -2), 10);
+    }
+    if (this.isRichEmbed) {
+      return 220;
+    }
+    return null;
   }
 
   calculateFixedContentHeight(): void {

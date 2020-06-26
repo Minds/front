@@ -1,4 +1,7 @@
-<m-sidebarWidget title="Trending Tags" i18n-title="@@TRENDING__TAGS">
+<m-sidebarWidget
+  [title]="isPlusPage ? 'Trending Minds+ Tags' : 'Trending Tags'"
+  i18n-title="isPlusPage ? '@@TRENDING__PLUS_TAGS' : '@@TRENDING__TAGS'"
+>
   <div class="m-sidebarWidget__body">
     <ul>
       <li
@@ -6,7 +9,7 @@
         class="m-discoveryTrends__trend"
       >
         <a
-          routerLink="/discovery/search"
+          [routerLink]="parentPath + '/search'"
           [queryParams]="{ q: '#' + tag.value, f: 'top' }"
         >
           <div>
