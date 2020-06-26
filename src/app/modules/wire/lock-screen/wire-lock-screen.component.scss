@@ -30,6 +30,7 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
       @include m-theme() {
         color: themed($m-textColor--secondary);
         border-top: 1px solid themed($m-borderColor--tertiary);
+        border-bottom: 1px solid themed($m-borderColor--tertiary);
         background-color: themed($m-white);
       }
       .m-wireLockScreen__message {
@@ -38,12 +39,12 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
         }
       }
     }
-    &.isMedia {
-      .m-wireLockScreen__message {
-        position: absolute;
-        transform: translateY(-50%);
-      }
-    }
+    // &.isMedia {
+    //   .m-wireLockScreen__message {
+    //     position: absolute;
+    //     transform: translateY(-50%);
+    //   }
+    // }
   }
 
   .m-wireLockScreen__overlay {

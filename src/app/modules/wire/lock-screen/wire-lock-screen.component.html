@@ -21,7 +21,7 @@
     <!-- ------------------------------ -->
 
     <div class="m-wireLockScreen__inner">
-      <h5 class="m-wireLockScreen__message" [style.top]="messageTopOffset">
+      <h5 class="m-wireLockScreen__message">
         <ng-container *ngIf="!showSubmittedInfo && !hasTeaser">
           <ng-container
             *ngIf="entity?.wire_threshold?.type; else supportTierText"
