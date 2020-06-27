@@ -26,11 +26,14 @@ interface MonetizationState {
 
 @Component({
   selector: 'm-composer__monetizeV2',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'monetize.component.html',
   providers: [SupportTiersService],
 })
 export class ComposerMonetizeV2Component implements OnInit {
+  canEdit: boolean = false;
+  /**
+   * Signal event emitter to parent's popup service
+   */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
 
   /**
@@ -66,6 +69,12 @@ export class ComposerMonetizeV2Component implements OnInit {
    * Component initialization. Set initial state.
    */
   ngOnInit(): void {
+    /**
+     * You can't edit monetization after you've saved
+     */
+    this.canEdit = !this.service.isEditing$.getValue();
+
+    this.service.monetization$.getValue();
     // TODO - when paywall tiers are ready
     // const monetization = this.service.monetization$.getValue();
     // this.state = {

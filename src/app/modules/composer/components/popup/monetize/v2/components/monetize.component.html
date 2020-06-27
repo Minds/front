@@ -1,5 +1,5 @@
 <div class="m-composerPopup__body m-composer__monetize">
-  <div class="m-composerPopup__content m-formWrapper">
+  <div class="m-composerPopup__content">
     <h3 class="m-composerPopup__title" i18n="@@COMMON__MONETIZE">Monetize</h3>
 
     <div class="m-tabs__container">
@@ -25,29 +25,18 @@
         >
       </div>
     </div>
-
-    <m-composer__monetizeV2__plus
-      *ngIf="state.type === 'plus'"
-    ></m-composer__monetizeV2__plus>
-    <m-composer__monetizeV2__memberships
-      *ngIf="state.type === 'membership'"
-    ></m-composer__monetizeV2__memberships>
-    <m-composer__monetizeV2__custom
-      *ngIf="state.type === 'custom'"
-    ></m-composer__monetizeV2__custom>
-
-    <!-- </div>
-
-  <div class="m-composerPopup__action">
-    <m-button
-      class="m-composerPopup__save"
-      [disabled]="state.enabled && state.amount <= 0"
-      (onAction)="save()"
-      data-cy="monetize-save-button"
-      i18n="@@COMMON__SAVE"
-    >
-      Save
-    </m-button>
-  </div> -->
   </div>
+
+  <m-composer__monetizeV2__plus
+    (dismissIntent)="dismissIntent()"
+    *ngIf="state.type === 'plus'"
+  ></m-composer__monetizeV2__plus>
+  <m-composer__monetizeV2__memberships
+    (dismissIntent)="dismissIntent()"
+    *ngIf="state.type === 'membership'"
+  ></m-composer__monetizeV2__memberships>
+  <m-composer__monetizeV2__custom
+    (dismissIntent)="dismissIntent()"
+    *ngIf="state.type === 'custom'"
+  ></m-composer__monetizeV2__custom>
 </div>

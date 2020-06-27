@@ -91,12 +91,12 @@ export type MonetizationSubjectValue = {
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
 
 /**
- * Monetization vw value type
+ * Monetization v2 value type
  */
 export type MonetizationV2SubjectValue = {
   type: 'plus' | 'membership' | 'custom';
   // min: number;
-  // support_tier?: SupportTier;
+  support_tier?: SupportTier;
 } | null;
 
 /**

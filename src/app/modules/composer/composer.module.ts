@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -30,6 +30,7 @@ import { ComposerMonetizeV2CustomComponent } from './components/popup/monetize/v
 import { ComposerMonetizeV2Component } from './components/popup/monetize/v2/components/monetize.component';
 
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete/text-input-autocomplete.module';
+import { RouterModule } from '@angular/router';
 /**
  * Exported components
  */
@@ -77,9 +78,11 @@ const PROVIDERS = [
   imports: [
     NgCommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     HashtagsModule,
     TextInputAutocompleteModule,
+    RouterModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

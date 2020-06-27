@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { ProService } from '../../../../../../../pro/pro.service';
 import { WirePaymentHandlersService } from '../../../../../../../wire/wire-payment-handlers.service';
 import { WireModalService } from '../../../../../../../wire/wire-modal.service';
@@ -21,6 +27,11 @@ import { ConfigsService } from '../../../../../../../../common/services/configs.
 export class ComposerMonetizeV2PlusComponent implements OnInit {
   readonly plusSupportTierUrn: string;
   isPro;
+
+  /**
+   * Signal event emitter to parent
+   */
+  @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private service: ComposerService,
@@ -86,4 +97,12 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
       this.service.monetization$.next(null);
     }
   }
+
+  /**
+   * Emits the internal state to the composer service and attempts to dismiss the modal
+   */
+  // save() {
+  //   this.service.monetization$.next(this.state.sort());
+  //   this.dismissIntent.emit();
+  // }
 }
