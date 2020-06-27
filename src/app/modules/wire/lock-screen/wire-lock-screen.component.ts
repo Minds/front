@@ -43,6 +43,7 @@ export class WireLockScreenComponent implements OnInit {
 
   @HostBinding('class.m-wire--lock-screen-2020')
   isPaywall2020: boolean = false;
+  readonly plusSupportTierUrn: string;
 
   constructor(
     public session: Session,
@@ -52,7 +53,9 @@ export class WireLockScreenComponent implements OnInit {
     private signupModal: SignupModalService,
     private configs: ConfigsService,
     private featuresService: FeaturesService
-  ) {}
+  ) {
+    this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
+  }
 
   ngOnInit() {
     if (!this.entity) {
@@ -178,6 +181,12 @@ export class WireLockScreenComponent implements OnInit {
       this.entity.ownerObj.merchant.exclusive.background;
 
     return `url(${image})`;
+  }
+
+  get isPlus(): boolean {
+    return (
+      this.entity.wire_threshold.support_tier.urn === this.plusSupportTierUrn
+    );
   }
 
   private detectChanges() {
