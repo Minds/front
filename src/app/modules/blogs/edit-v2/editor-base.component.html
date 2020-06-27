@@ -64,6 +64,7 @@
         i18n-placeholder="@@BLOG_EDITOR__TITLE"
         [ngModel]="service.title$ | async"
         (ngModelChange)="onTitleChange($event)"
+        maxlength="128"
       />
     </div>
     <div class="m-blogEditor__bodyContainer">

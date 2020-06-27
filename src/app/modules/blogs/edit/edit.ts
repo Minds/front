@@ -4,11 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import {
-  ACCESS,
-  LICENSES,
-  LicensesEntry,
-} from '../../../services/list-options';
+import { ACCESS, LICENSES } from '../../../services/list-options';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
@@ -18,7 +14,6 @@ import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
@@ -30,6 +25,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 })
 export class BlogEdit implements OnInit, OnDestroy {
   readonly cdnUrl: string;
+
   guid: string;
   blog: any = {
     guid: 'new',
@@ -68,15 +64,6 @@ export class BlogEdit implements OnInit, OnDestroy {
   access = ACCESS;
   existingBanner: boolean;
 
-  /**
-   * License items list
-   */
-  licenseItems: Array<LicensesEntry> = LICENSES.filter(
-    license => license.selectable
-  );
-
-  accessItems = ACCESS;
-
   paramsSubscription: Subscription;
   @ViewChild('inlineEditor')
   inlineEditor: InlineEditorComponent;
@@ -95,7 +82,6 @@ export class BlogEdit implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     protected inMemoryStorageService: InMemoryStorageService,
     private dialogService: DialogService,
-    public featuresService: FeaturesService,
     configs: ConfigsService,
     private location: Location,
     private toasterService: FormToastService
@@ -196,10 +182,6 @@ export class BlogEdit implements OnInit, OnDestroy {
     });
   }
 
-  onContentChange(val) {
-    this.blog.description = val;
-  }
-
   canDeactivate(): Observable<boolean> | boolean {
     if (
       !this.canCreateBlog() ||
@@ -273,78 +255,60 @@ export class BlogEdit implements OnInit, OnDestroy {
     this.showToastError(msg);
   }
 
-  async save(): Promise<void> {
-    if (!this.canSave || !this.validate()) {
-      return;
-    }
+  save() {
+    if (!this.canSave) return;
+
+    if (!this.validate()) return;
 
     this.error = '';
 
-    if (!this.shouldUseCKEditor()) {
-      await this.inlineEditor.prepareForSave();
-    }
+    this.inlineEditor.prepareForSave().then(() => {
+      const blog = Object.assign({}, this.blog);
 
-    this.dispatchSave();
-  }
+      // only allowed props
+      blog.nsfw = this.blog.nsfw;
+      blog.mature = blog.mature ? 1 : 0;
+      blog.monetization = blog.monetization ? 1 : 0;
+      blog.monetized = blog.monetized ? 1 : 0;
+      blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
+      blog.captcha = this.captcha;
 
-  /**
-   * Prepares and dispatches blog save.
-   */
-  dispatchSave(): void {
-    const blog = Object.assign({}, this.blog);
+      this.editing = false;
+      this.inProgress = true;
+      this.canSave = false;
+      this.check_for_banner()
+        .then(() => {
+          this.upload
+            .post('api/v1/blog/' + this.guid, [this.banner], blog)
+            .then((response: any) => {
+              this.inProgress = false;
+              this.canSave = true;
+              this.blog.time_created = null;
 
-    // only allowed props
-    blog.nsfw = this.blog.nsfw;
-    blog.mature = blog.mature ? 1 : 0;
-    blog.monetization = blog.monetization ? 1 : 0;
-    blog.monetized = blog.monetized ? 1 : 0;
-    blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
-    blog.editor_version = this.getEditorVersion();
-    blog.captcha = this.captcha;
-
-    this.editing = false;
-    this.inProgress = true;
-    this.canSave = false;
-
-    console.log('checking for banner');
-    this.check_for_banner()
-      .then(() => {
-        console.log('uploading');
-        this.upload
-          .post('api/v1/blog/' + this.guid, [this.banner], blog)
-          .then((response: any) => {
-            this.inProgress = false;
-            this.canSave = true;
-            this.blog.time_created = null;
-
-            if (response.status !== 'success') {
-              this.toasterService.error(response.message);
-              this.error = response.message;
-              return;
-            }
-
-            this.router.navigate(
-              response.route
-                ? ['/' + response.route]
-                : ['/blog/view', response.guid]
-            );
-          })
-          .catch(e => {
-            console.error(e);
-            this.error = e;
-            this.canSave = true;
-            this.inProgress = false;
-          });
-      })
-      .catch(e => {
-        console.error(e);
-        this.toasterService.error(
-          'An unknown error has occured.\nBe sure you have a banner  set.'
-        );
-        this.error = 'error:no-banner';
-        this.inProgress = false;
-        this.canSave = true;
-      });
+              if (response.status !== 'success') {
+                this.showToastError(response.message);
+                return;
+              }
+              this.router.navigate(
+                response.route
+                  ? ['/' + response.route]
+                  : ['/blog/view', response.guid]
+              );
+            })
+            .catch(e => {
+              if (!e.must_verify) {
+                this.showToastError(e.message);
+              }
+              this.canSave = true;
+              this.inProgress = false;
+            });
+        })
+        .catch(() => {
+          this.showToastError('error:no-banner');
+          this.inProgress = false;
+          this.canSave = true;
+        });
+    });
   }
 
   add_banner(banner: any) {
@@ -428,33 +392,5 @@ export class BlogEdit implements OnInit, OnDestroy {
    */
   onNSFWSelections(nsfw) {
     this.blog.nsfw = nsfw.map(reason => reason.value);
-  }
-
-  /**
-   * True if new editor should be shown to user.
-   * (new blogs, or already v2 blogs only, when feat flag is enabled)
-   * @returns { number } - true if ckeditor should be shown.
-   */
-  shouldUseCKEditor(): boolean {
-    return (
-      this.featuresService.has('ckeditor5') &&
-      (!this.blog.time_created || Number(this.blog.editor_version) === 2)
-    );
-  }
-
-  /**
-   * Determines what editor version should be used.
-   * @returns { number } - version number.
-   */
-  getEditorVersion(): number {
-    return this.shouldUseCKEditor() ? 2 : 1;
-  }
-
-  setLicense(value: string): void {
-    this.blog.license = value;
-  }
-
-  setAccessId(value): void {
-    this.blog.access_id = value;
   }
 }

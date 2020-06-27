@@ -17,6 +17,7 @@
       font-size: 11pt;
       padding-bottom: 4px;
       flex-wrap: wrap;
+      word-break: break-word;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);

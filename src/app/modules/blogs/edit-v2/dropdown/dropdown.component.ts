@@ -1,3 +1,6 @@
+/**
+ * Dropdown menu for blogs v2
+ */
 import { Component } from '@angular/core';
 import {
   ACCESS,
@@ -5,7 +8,6 @@ import {
   LicensesEntry,
 } from '../../../../services/list-options';
 import { BlogsEditService } from '../blog-edit.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-selector.service';
 import { BehaviorSubject } from 'rxjs';
 
@@ -110,6 +112,9 @@ import { BehaviorSubject } from 'rxjs';
   `,
 })
 export class BlogEditorDropdownComponent {
+  /**
+   * nsfw reasons
+   */
   public reasons: typeof NSFW_REASONS = NSFW_REASONS;
 
   /**
@@ -119,17 +124,25 @@ export class BlogEditorDropdownComponent {
     license => license.selectable
   );
 
-  accessItems = ACCESS;
+  /**
+   * Access items list
+   */
+  accessItems: typeof ACCESS = ACCESS;
 
-  constructor(
-    private editService: BlogsEditService,
-    private overlayModal: OverlayModalService
-  ) {}
+  constructor(private editService: BlogsEditService) {}
 
+  /**
+   * Gets license subject
+   * @returns { BehaviorSubject<string> } - subject.
+   */
   getLicense(): BehaviorSubject<string> {
     return this.editService.license$;
   }
 
+  /**
+   * Sets license in service- if value is already sets, sets to null.
+   * @param { string } - string value of license.
+   */
   setLicense(value: string): void {
     const current = this.editService.license$.getValue();
     if (current === value) {
@@ -139,10 +152,17 @@ export class BlogEditorDropdownComponent {
     this.editService.license$.next(value);
   }
 
+  /**
+   * Gets accessId from service.
+   */
   getAccessId() {
     return this.editService.accessId$;
   }
 
+  /**
+   * Sets access id in service. If value is null, sets to null.
+   * @param { number } value -
+   */
   setAccessId(value: number): void {
     const current: number = this.editService.accessId$.getValue();
     if (current === value) {
@@ -152,10 +172,17 @@ export class BlogEditorDropdownComponent {
     this.editService.accessId$.next(value);
   }
 
+  /**
+   * Gets nsfw value from service.
+   */
   getNSFW() {
     return this.editService.nsfw$;
   }
 
+  /**
+   * Calls service to toggle NSFW.
+   * @param { number } - number to toggle
+   */
   toggleNSFW(value: number): void {
     this.editService.toggleNSFW(value);
   }

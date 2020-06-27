@@ -15,7 +15,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { AttachmentService } from '../../../../services/attachment';
 import { SiteService } from '../../../../common/services/site.service';
 import { ThemeService } from '../../../../common/services/theme.service';
-import { BehaviorSubject } from 'rxjs';
 
 declare var require: any;
 

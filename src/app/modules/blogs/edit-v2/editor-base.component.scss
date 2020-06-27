@@ -1,13 +1,17 @@
 .m-blogEditor {
   @include m-theme() {
     border-right: 1px solid themed($m-borderColor--primary);
+    color: 1px solid themed($m-bgColor--primary);
   }
 
   .m-blogEditor__bannerImageContainer {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */
+    overflow: hidden;
+
     img {
       width: 100%;
-      height: calc((70vw) * 0.5625);
-      max-height: 523px;
+      position: absolute;
     }
 
     .m-blogEditor__bannerToolbar {
@@ -16,6 +20,7 @@
       top: 50px;
       display: flex;
       flex-direction: row;
+      z-index: 1; // above banner
 
       @media screen and (max-width: $min-desktop) {
         right: 50px;

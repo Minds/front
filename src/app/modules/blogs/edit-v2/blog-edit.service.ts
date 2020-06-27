@@ -1,42 +1,19 @@
 /**
  * Service for managing blog state in Composer.
  * @author Ben Hayward
- */
-
-/**
  * TODO:
- * [x] Captcha modal
- * [x] Saving
- * [x] Meta
- * [x] Sort buttons
- * [x] Saving Draft - does guid in url need to change?
- * [x] NSFW
- * [x] Bottom drawer
- * [x] Hashtags - confer with Michael.
- * [x] Load blogs. - ALL LOADING EXCEPT TITLE AND VISIBILITY
- * [x] CanDeactivate changes for routing after save.
- * [x] Routing.
- * [] Placeholder - maybe make a package level default.
- * [X] Mobile responsiveness.
- * [X] Housekeeping.
- * [] Validation - meta / captcha / title.
- * [] Spec Test.
- * [] E2E test.
- * [] Regression test.
- * [] Revert changes to old blogs.
- * [] Feat flag test.
- * [] Doc.
  * [] Footer positioning.
  * [] Scheduling - next version.
  * [] Monetization - later iteration.
-
+ *
  */
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription, timer } from 'rxjs';
 import { MonetizationSubjectValue } from '../../composer/services/composer.service';
 import { Upload, Client } from '../../../services/api';
 import { Router } from '@angular/router';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { distinctUntilChanged, tap, map } from 'rxjs/operators';
 import { SiteService } from '../../../common/services/site.service';
 import { MindsBlogEntity } from '../../../interfaces/entities';
 import { Captcha } from '../../captcha/captcha.component';
@@ -156,7 +133,6 @@ export class BlogsEditService {
       this.title$.next(blog.title);
       this.content$.next(blog.description);
       this.author$.next(blog.custom_meta.author);
-      this.content$.next(blog.description);
       this.nsfw$.next(blog.nsfw);
       this.error$.next('');
       this.banner$.next(
@@ -348,6 +324,7 @@ export class BlogsEditService {
   /**
    * Validates a banner is an image,
    * adds it as a file and a preview.
+   * @param banner - banner for upload.
    */
   addBanner(banner: any): void {
     if (banner.length === 0) {
@@ -358,27 +335,35 @@ export class BlogsEditService {
       this.error$.next('Banners must be an image');
       return;
     }
-
-    this.canPost$.next(true);
-    this.bannerFile$.next(banner);
-    const reader = new FileReader();
-    reader.readAsDataURL(banner);
-    reader.onload = _event => {
-      this.banner$.next(reader.result.toString());
-    };
+    try {
+      this.canPost$.next(true);
+      this.bannerFile$.next(banner);
+      const reader = new FileReader();
+      reader.readAsDataURL(banner);
+      reader.onload = _event => {
+        this.banner$.next(reader.result.toString());
+      };
+    } catch (e) {
+      this.error$.next('Error uploading banner');
+    }
   }
 
   /**
    * Returns whether or not there is unsaved content.
-   * @returns - true if composer contains content.
+   * @returns { boolean }- true if composer contains content.
    */
   public hasContent(): boolean {
     return this.content$.getValue() !== this.savedContent$.getValue();
   }
 
+  /**
+   * pushes a tag to tags unless it already is in the tags
+   * or there is more than 5. Removes non alphanumeric characters.
+   * @param { string } - tag to be pushed.
+   */
   public pushTag(tag: string): void {
     const current: string[] = this.tags$.getValue();
-    if (current.indexOf(tag) < 0 && current.length < 5 && tag.length < 50) {
+    if (current.indexOf(tag) < 0 && current.length < 5) {
       // strip non-alphanumeric characters
       tag = tag.replace(/\W/g, '');
       if (tag.length > 0) {
@@ -388,10 +373,18 @@ export class BlogsEditService {
     }
   }
 
+  /**
+   * Tag to be removed.
+   * @param { string } tag - the tag to remove.
+   */
   public removeTag(tag: string): void {
     this.tags$.next(this.tags$.getValue().filter(t => t !== tag));
   }
 
+  /**
+   * It should toggle NSFW.
+   * @param { number } - the number of nsfw value to toggle on.
+   */
   toggleNSFW(value: number): void {
     let current: number[] = this.nsfw$.getValue();
     if (current.indexOf(value) > -1) {

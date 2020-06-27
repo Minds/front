@@ -25,6 +25,7 @@ import { BlogsEditService } from '../../blog-edit.service';
         type="text"
         placeholder="#hashtag"
         i18n-placeholder="@@BLOG_EDITOR_TAGS__HASHTAG"
+        maxlength="64"
       />
     </div>
   `,

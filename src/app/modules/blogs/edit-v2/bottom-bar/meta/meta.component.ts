@@ -1,3 +1,6 @@
+/**
+ * Meta sub-component for v2 blogs
+ */
 import { Component } from '@angular/core';
 import { BlogsEditService } from '../../blog-edit.service';
 import { SiteService } from '../../../../../common/services/site.service';
@@ -12,7 +15,7 @@ import { Session } from '../../../../../services/session';
           <label i18n="@@BLOGS__EDIT__URL_SLUG" class="m-blogMeta__label"
             >URL Slug</label
           >
-          <span>
+          <span data-cy="data-minds-meta-example">
             <em
               >{{ site.baseUrl
               }}{{ session.getLoggedInUser().username }}/blog/<strong>{{
@@ -23,10 +26,12 @@ import { Session } from '../../../../../services/session';
           </span>
         </div>
         <input
-          class="m-blogMeta__input"
+          class="m-blogMeta__input m-blogMeta__slugInput"
           type="text"
           [ngModel]="editService.urlSlug$ | async"
           (ngModelChange)="editService.urlSlug$.next($event)"
+          maxlength="64"
+          data-cy="data-minds-meta-slug-input"
         />
       </div>
 
@@ -41,6 +46,8 @@ import { Session } from '../../../../../services/session';
           type="text"
           [ngModel]="editService.metaTitle$ | async"
           (ngModelChange)="editService.metaTitle$.next($event)"
+          maxlength="64"
+          data-cy="data-minds-meta-title-input"
         />
       </div>
 
@@ -55,6 +62,8 @@ import { Session } from '../../../../../services/session';
           type="text"
           [ngModel]="editService.author$ | async"
           (ngModelChange)="editService.author$.next($event)"
+          maxlength="64"
+          data-cy="data-minds-meta-author-input"
         />
       </div>
 
@@ -70,6 +79,8 @@ import { Session } from '../../../../../services/session';
           class="m-blogMeta__textArea"
           [ngModel]="editService.metaDescription$ | async"
           (ngModelChange)="editService.metaDescription$.next($event)"
+          maxlength="256"
+          data-cy="data-minds-meta-description-textarea"
         ></textarea>
       </div>
     </div>

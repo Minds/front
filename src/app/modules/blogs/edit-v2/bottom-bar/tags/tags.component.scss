@@ -17,6 +17,8 @@
       padding: 4px 12px;
       margin: 4px;
       cursor: pointer;
+      max-width: 100%;
+      word-break: break-word;
 
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);

@@ -8,10 +8,17 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 
 export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
 
+/**
+ * Base bottom bar component for blogs v2
+ * Includes the popup drawer and logic.
+ */
 @Component({
   selector: 'm-blogEditor__bottomBar',
   template: `
-    <div class="m-blogEditor__bottomBarTabContainer" *ngIf="activeTab$ | async">
+    <div
+      class="m-blogEditor__bottomBarTabContainer blogEditor__dropShadowTop"
+      *ngIf="activeTab$ | async"
+    >
       <div class="m-blogEditor__bottomBarTabHeader">
         <ng-container [ngSwitch]="activeTab$ | async">
           <h4 *ngSwitchCase="'meta'">META</h4>
@@ -35,13 +42,21 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
         </div>
       </ng-container>
     </div>
-    <div class="m-blogEditor__bottomBar">
+    <div
+      class="m-blogEditor__bottomBar"
+      [ngClass]="{
+        blogEditor__dropShadowTop: !(activeTab$ | async),
+        blogEditor__backgroundSecondary: activeTab$ | async
+      }"
+    >
       <div class="m-blogEditor__options">
         <div (click)="toggleActiveTab('tags')" class="m-blogEditor__tabToggle">
-          Tags
+          <span>#</span>
+          <span> Tags </span>
         </div>
         <div (click)="toggleActiveTab('meta')" class="m-blogEditor__tabToggle">
-          Meta
+          <i class="material-icons">description</i>
+          <span> Meta </span>
         </div>
       </div>
       <div class="m-blogEditor__saveButtons">
@@ -74,6 +89,9 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
   `,
 })
 export class BlogEditorBottomBarComponent {
+  /**
+   * Currently active drawer tab.
+   */
   public readonly activeTab$: BehaviorSubject<
     BlogsBottomBarContainerType
   > = new BehaviorSubject<BlogsBottomBarContainerType>('');
@@ -84,11 +102,15 @@ export class BlogEditorBottomBarComponent {
     private overlay: OverlayModalService
   ) {}
 
+  /**
+   * Validate, show captcha modal and save on completion.
+   * @param { boolean } draft - if true, will save draft (stays in editor)
+   * @returns { Promise<void> } - awaitable
+   */
   async save(draft: boolean = false): Promise<void> {
-    if (!this.validate() && this.service.canPost$) {
+    if (!(await this.validate())) {
       return;
     }
-
     const modal = this.overlay.create(
       CaptchaModalComponent,
       {},
@@ -103,7 +125,11 @@ export class BlogEditorBottomBarComponent {
     modal.present();
   }
 
-  validate() {
+  /**
+   * Pre-save validation.
+   * @returns { Promise<boolean> } - true if pass.
+   */
+  private async validate(): Promise<boolean> {
     if (!this.service.content$.getValue()) {
       this.showToastError('error:no-description');
       return false;
@@ -112,20 +138,32 @@ export class BlogEditorBottomBarComponent {
       this.showToastError('error:no-title');
       return false;
     }
+    if (!this.service.banner$.getValue()) {
+      this.showToastError('error:no-banner');
+      return false;
+    }
     return true;
   }
 
+  /**
+   * Show toast error using either error code or feeding in a string
+   * @param { string } - user validated string.
+   */
   showToastError(error: string): void {
     const errorDisplays: any = {
       'error:no-title': 'You must provide a title',
-      'error:no-description': 'You must provide a description',
+      'error:no-description': 'Your blog must have content',
       'error:no-banner': 'You must upload a banner',
       'error:gateway-timeout': 'Gateway Time-out',
     };
     this.toast.error(errorDisplays[error] || error);
   }
 
-  toggleActiveTab(tab: BlogsBottomBarContainerType = '') {
+  /**
+   * Toggles active tab. If value is the current value, sets to null.
+   * @param { BlogsBottomBarContainerType } - 'tags', 'meta' etc...
+   */
+  toggleActiveTab(tab: BlogsBottomBarContainerType = ''): void {
     const current: BlogsBottomBarContainerType = this.activeTab$.getValue();
 
     if (tab === current) {

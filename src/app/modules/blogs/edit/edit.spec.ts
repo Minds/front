@@ -28,7 +28,6 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { CaptchaModule } from '../../captcha/captcha.module';
 
@@ -237,11 +236,6 @@ describe('BlogEdit', () => {
           outputs: ['change', 'tagsChange'],
         }),
         MockComponent({
-          selector: 'm-blog__editor',
-          inputs: ['content'],
-          outputs: [],
-        }),
-        MockComponent({
           selector: 'm-hashtags-selector',
           inputs: ['tags', 'alignLeft'],
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
@@ -277,7 +271,6 @@ describe('BlogEdit', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: HovercardService, useValue: hovercardServiceMock },
-        { provide: FeaturesService, useValue: MockService(FeaturesService) },
         {
           provide: InMemoryStorageService,
           useValue: inMemoryStorageServiceMock,

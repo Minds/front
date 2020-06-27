@@ -1,48 +1,33 @@
+/**
+ * Base for blogs v2
+ * Houses banner, content and title.
+ */
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { ACCESS, LICENSES } from '../../../services/list-options';
-import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 import { WireThresholdInputComponent } from '../../wire/threshold-input/threshold-input.component';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
-import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { BlogsEditService } from './blog-edit.service';
 import { take } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'm-blogEditor--v2',
   host: {
     class: 'm-blog',
   },
-  templateUrl: 'edit.html',
+  templateUrl: 'editor-base.component.html',
 })
 export class BlogEditorV2Component implements OnInit, OnDestroy {
   readonly cdnUrl: string;
 
-  captcha: string;
-  banner: any;
-  banner_top: number = 0;
-  banner_prompt: boolean = false;
-  editing: boolean = true;
-  inProgress: boolean = false;
-  validThreshold: boolean = true;
-  error: string = '';
-  pendingUploads: string[] = [];
-  categories: { id; label; selected }[];
-
-  licenses = LICENSES;
-  access = ACCESS;
-  existingBanner: boolean;
-
-  paramsSubscription: Subscription;
-  errorSubscription: Subscription;
+  private paramsSubscription: Subscription;
+  private errorSubscription: Subscription;
   @ViewChild('inlineEditor')
   inlineEditor: InlineEditorComponent;
   @ViewChild('thresholdInput')
@@ -54,23 +39,15 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
 
   constructor(
     public session: Session,
-    public client: Client,
-    public upload: Upload,
     public router: Router,
     public route: ActivatedRoute,
-    protected inMemoryStorageService: InMemoryStorageService,
     private dialogService: DialogService,
-    public featuresService: FeaturesService,
     configs: ConfigsService,
-    private location: Location,
+    protected location: Location,
     private toasterService: FormToastService,
     public service: BlogsEditService
   ) {
     this.cdnUrl = configs.get('cdn_url');
-  }
-
-  canCreateBlog(): boolean {
-    return this.session.getLoggedInUser().email_confirmed;
   }
 
   ngOnInit() {
@@ -87,6 +64,7 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
       return;
     }
 
+    // grab current emission from params to get user GUID
     this.paramsSubscription = this.route.params
       .pipe(take(1))
       .subscribe(params => {
@@ -95,28 +73,10 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
         }
       });
 
+    // on error change, fire toaster box.
     this.errorSubscription = this.service.error$.subscribe(val => {
       this.toasterService.error(val);
     });
-  }
-
-  onContentChange(val: string): void {
-    this.service.content$.next(val);
-  }
-
-  onTitleChange(val: string): void {
-    this.service.title$.next(val);
-  }
-
-  canDeactivate(): Observable<boolean> | boolean {
-    if (
-      !this.canCreateBlog() ||
-      !this.session.getLoggedInUser() ||
-      this.service.inProgress$.getValue()
-    ) {
-      return true;
-    }
-    return this.dialogService.confirm('Discard changes?');
   }
 
   ngOnDestroy() {
@@ -128,19 +88,50 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
     }
   }
 
-  uploadBanner(banner) {
-    this.service.addBanner(banner.files[0]);
-  }
-
-  onTagsChange(tags: string[]) {
-    this.service.tags$.next(tags);
+  /**
+   * Determines whether component can be deactivated
+   * @returns { Observable<boolean> } - true if component can be deactivated.
+   */
+  canDeactivate(): Observable<boolean> | boolean {
+    if (
+      !this.canCreateBlog() ||
+      !this.session.getLoggedInUser() ||
+      this.service.inProgress$.getValue()
+    ) {
+      return true;
+    }
+    return this.dialogService.confirm('Discard changes?');
   }
 
   /**
-   * Sets this blog NSFW
-   * @param { array } nsfw - Numerical indexes for reasons in an array e.g. [1, 2].
+   * Checks whether a users email is confirmed.
+   * @returns { boolean } - true if confirmed.
    */
-  onNSFWSelections(nsfw) {
-    this.service.nsfw$.next(nsfw.map(reason => reason.value));
+  canCreateBlog(): boolean {
+    return this.session.getLoggedInUser().email_confirmed;
+  }
+
+  /**
+   * Upload a banner.
+   * @param banner - banner to be uploaded.
+   */
+  uploadBanner(banner: any): void {
+    this.service.addBanner(banner.files[0]);
+  }
+
+  /**
+   * Called on content change
+   * @param { string } val - changed content.
+   */
+  onContentChange(val: string): void {
+    this.service.content$.next(val);
+  }
+
+  /**
+   * Called on title change
+   * @param { string } - Changed title.
+   */
+  onTitleChange(val: string): void {
+    this.service.title$.next(val);
   }
 }

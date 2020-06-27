@@ -1,118 +1,138 @@
-.m-blogEditor__bottomBarTabContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 50px 100px;
-
-  @media screen and (max-width: $min-desktop) {
-    padding: 30px 50px;
-  }
-
+.blogEditor__dropShadowTop {
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
-    border: 1px solid themed($m-borderColor--primary);
-  }
-
-  .m-blogEditor__bottomBarTabHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    m-icon {
-      cursor: pointer;
-
-      i {
-        font-size: 24pt !important;
-      }
-    }
-
-    h4 {
-      font-size: 20px;
-      margin: 0;
-      margin-bottom: 24px;
-    }
+    box-shadow: -2px -3px 8px 0px themed($m-borderColor--tertiary);
+    -webkit-box-shadow: -2px -3px 8px 0px themed($m-borderColor--tertiary);
+    -moz-box-shadow: -2px -3px 8px 0px themed($m-borderColor--tertiary);
   }
 }
-.m-blogEditor__bottomBar {
-  display: flex;
-  position: relative;
-  align-items: center;
-  bottom: 0px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 16px 100px 46px 100px;
 
-  @media screen and (max-width: $min-desktop) {
-    padding: unset;
-    justify-content: space-evenly;
-  }
-
+.blogEditor__backgroundSecondary {
   @include m-theme() {
-    border-top: 1px solid themed($m-borderColor--primary);
-    background-color: themed($m-bgColor--primary);
+    background-color: themed($m-bgColor--secondary) !important;
   }
+}
 
-  .m-blogEditor__options {
+m-blogeditor__bottombar {
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+  .m-blogEditor__bottomBarTabContainer {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    padding: 50px 100px;
 
     @media screen and (max-width: $min-desktop) {
-      width: 100%;
-      padding: 16px 50px 16px 50px;
-
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
+      padding: 30px 50px;
     }
 
-    .m-blogEditor__tabToggle {
-      font-size: 12pt;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-blogEditor__bottomBarTabHeader {
       display: flex;
       align-items: center;
-      margin-right: 24px;
-      cursor: pointer;
+      justify-content: space-between;
 
-      i {
-        margin-right: 4px;
+      m-icon {
+        cursor: pointer;
+
+        i {
+          font-size: 24pt !important;
+        }
+      }
+
+      h4 {
+        font-size: 20px;
+        margin: 0;
+        margin-bottom: 24px;
       }
     }
   }
-
-  .m-blogEditor__saveButtons {
+  .m-blogEditor__bottomBar {
     display: flex;
-    justify-content: flex-end;
+    position: relative;
     align-items: center;
-
+    bottom: 0px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px 100px 46px 100px;
     @media screen and (max-width: $min-desktop) {
-      justify-content: flex-end;
-      align-items: flex-end;
-      width: 100%;
-      margin: 16px 50px;
+      padding: unset;
+      justify-content: space-evenly;
     }
 
-    .m-blogEditor__draftSaved {
-      margin-right: 16px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
     }
 
-    .m-blogEditor__saveDraftButton {
-      button {
-        margin-right: 8px;
-        background-color: unset;
+    .m-blogEditor__options {
+      display: flex;
+      align-items: center;
+
+      @media screen and (max-width: $min-desktop) {
+        width: 100%;
+        padding: 16px 50px 16px 50px;
 
         @include m-theme() {
-          border: 1px solid themed($m-borderColor--primary);
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+      }
 
-          &:active,
-          &:hover {
-            background-color: themed($m-bgColor--secondary);
-          }
+      .m-blogEditor__tabToggle {
+        font-size: 12pt;
+        display: flex;
+        align-items: center;
+        margin-right: 24px;
+        cursor: pointer;
+
+        i,
+        span {
+          font-size: 12pt;
+          margin-right: 4px;
         }
       }
     }
 
-    .m-blogEditor__saveButton {
-      white-space: nowrap;
-      overflow: hidden;
-      min-width: min-content;
+    .m-blogEditor__saveButtons {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      @media screen and (max-width: $min-desktop) {
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 100%;
+        margin: 16px 50px;
+      }
+
+      .m-blogEditor__draftSaved {
+        margin-right: 16px;
+      }
+
+      .m-blogEditor__saveDraftButton {
+        button {
+          margin-right: 8px;
+          background-color: unset;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+            border: 1px solid themed($m-borderColor--primary);
+
+            &:active,
+            &:hover {
+              background-color: themed($m-bgColor--secondary);
+            }
+          }
+        }
+      }
+
+      .m-blogEditor__saveButton {
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: min-content;
+      }
     }
   }
 }
