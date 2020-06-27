@@ -71,7 +71,7 @@ export function app() {
           .join(':') || 'loggedout';
       const key =
         `__express__/${sessKey}/` +
-        `${req.get('host')}` +
+        `${req.headers.host}` +
         (req.originalUrl || req.url) +
         `/${req.headers['x-minds-locale']}` +
         (isMobileOrTablet() ? '/mobile' : '/desktop');
