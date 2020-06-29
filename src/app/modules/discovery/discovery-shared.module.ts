@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { DiscoveryService } from './discovery.service';
 
 @NgModule({
   imports: [
@@ -33,6 +34,6 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryTagSettingsComponent,
     DiscoveryFeedItemComponent,
   ],
-  providers: [DiscoveryTagsService],
+  providers: [DiscoveryTagsService, DiscoveryService],
 })
 export class DiscoverySharedModule {}
