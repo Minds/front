@@ -52,6 +52,7 @@ const routes: Routes = [
           title: 'Minds Pro',
           description: 'The ultimate platform for creators and brands',
           ogImage: '/assets/product-pages/pro/pro-1.jpg',
+          canonicalUrl: '/pro',
         },
       },
       {
