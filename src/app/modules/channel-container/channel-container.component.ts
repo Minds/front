@@ -17,6 +17,7 @@ import { SiteService } from '../../common/services/site.service';
 import { FeaturesService } from '../../services/features.service';
 import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.component';
 import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
+import { HeadersService } from '../../common/services/headers.service';
 
 @Component({
   selector: 'm-channel-container',
@@ -49,7 +50,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected client: Client,
     protected session: Session,
     protected site: SiteService,
-    protected features: FeaturesService
+    protected features: FeaturesService,
+    protected headersService: HeadersService
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +125,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
         mode: 1,
         nsfw: [],
       };
+
+      this.headersService.setCode(404);
 
       switch (e.type) {
         case TRIGGER_EXCEPTION.BANNED:

@@ -12,6 +12,10 @@ import {
   ServerRedirectService,
   RedirectService,
 } from './common/services/redirect.service';
+import {
+  HeadersService,
+  ServerHeadersService,
+} from './common/services/headers.service';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -39,6 +43,10 @@ export class ServerXhr implements XhrFactory {
     {
       provide: RedirectService,
       useClass: ServerRedirectService,
+    },
+    {
+      provide: HeadersService,
+      useClass: ServerHeadersService,
     },
   ],
   bootstrap: [Minds],
