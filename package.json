@@ -37,7 +37,7 @@
     "@angular/platform-browser-dynamic": "~9.1.7",
     "@angular/platform-server": "~9.1.7",
     "@angular/router": "~9.1.7",
-    "@bhayward93/ckeditor5-build-minds": "^1.1.4",
+    "@bhayward93/ckeditor5-build-minds": "^1.1.5",
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@danielmoncada/angular-datetime-picker": "^9.3.1",
     "@gorniv/ngx-universal": "^2.2.2",
