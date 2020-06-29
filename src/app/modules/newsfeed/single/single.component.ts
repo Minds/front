@@ -14,6 +14,7 @@ import {
   MIN_METRIC_FOR_ROBOTS,
 } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { HeadersService } from '../../../common/services/headers.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -40,7 +41,8 @@ export class NewsfeedSingleComponent {
     protected client: Client,
     protected featuresService: FeaturesService,
     private metaService: MetaService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private headersService: HeadersService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -142,6 +144,7 @@ export class NewsfeedSingleComponent {
           this.error = 'Sorry, there was a timeout error.';
         } else {
           this.error = "Sorry, we couldn't load the activity";
+          this.headersService.setCode(404);
         }
       }
     );
