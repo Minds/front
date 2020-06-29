@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 import { isPlatformServer } from '@angular/common';
+import { DiscoveryService } from '../discovery.service';
 
 export type DiscoveryFeedsPeriod =
   | '12h'
@@ -39,7 +40,8 @@ export class DiscoveryFeedsService {
   constructor(
     @Self() private feedsService: FeedsService,
     public nsfwService: NSFWSelectorConsumerService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private discoveryService: DiscoveryService
   ) {
     this.nsfwService.build();
     this.nsfw$ = new BehaviorSubject(this.nsfwService.reasons);
@@ -57,6 +59,7 @@ export class DiscoveryFeedsService {
         period: this.period$.value,
         nsfw: this.getNsfwString(),
         period_fallback: 0,
+        plus: this.discoveryService.isPlusPage$.value,
       })
       .fetch();
   }
@@ -72,6 +75,7 @@ export class DiscoveryFeedsService {
         algorithm: this.filter$.value,
         nsfw: this.getNsfwString(),
         type: this.type$.value,
+        plus: this.discoveryService.isPlusPage$.value,
       })
       .fetch();
   }

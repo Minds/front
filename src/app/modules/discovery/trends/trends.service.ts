@@ -2,6 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../../services/api';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformServer } from '@angular/common';
+import { DiscoveryService } from '../discovery.service';
 
 export type DiscoveryTrend = any;
 
@@ -14,7 +15,8 @@ export class DiscoveryTrendsService {
 
   constructor(
     private client: Client,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private discoveryService: DiscoveryService
   ) {}
 
   async loadTrends(): Promise<void> {
@@ -26,7 +28,9 @@ export class DiscoveryTrendsService {
     this.hero$.next(null);
     this.error$.next('');
     try {
-      const response: any = await this.client.get('api/v3/discovery/trends');
+      const response: any = await this.client.get('api/v3/discovery/trends', {
+        plus: this.discoveryService.isPlusPage$.value,
+      });
       this.trends$.next(response.trends);
       this.hero$.next(response.hero);
     } catch (err) {
