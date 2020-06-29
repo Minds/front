@@ -21,6 +21,7 @@ const routes: Routes = [
       title: 'Token',
       description: 'The fuel of the Minds network',
       ogImage: '/assets/product-pages/token/token-1.jpg',
+      canonicalUrl: '/token',
     },
   },
   {

@@ -3,6 +3,7 @@ import { PlusService } from '../../plus/plus.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__plusUpgrade',
@@ -14,7 +15,8 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
   constructor(
     private plusService: PlusService,
     private wireModal: WireModalService,
-    private wirePaymentHandlers: WirePaymentHandlersService
+    private wirePaymentHandlers: WirePaymentHandlersService,
+    private session: Session
   ) {}
 
   ngOnInit(): void {
@@ -22,6 +24,7 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
   }
 
   async setup(): Promise<void> {
+    this.isPlus = this.session.getLoggedInUser().plus;
     this.isPlus = await this.plusService.isActive();
   }
 

@@ -63,7 +63,10 @@
     [guid]="videoGuid"
     [shouldPlayInModal]="true"
     (mediaModalRequested)="onModalRequested($event)"
-    [autoplay]="service.displayOptions.autoplayVideo"
+    [autoplay]="
+      service.displayOptions.autoplayVideo &&
+      !(service.shouldShowPaywall$ | async)
+    "
     [style.height]="videoHeight"
   ></m-videoPlayer--scrollaware>
 

@@ -171,6 +171,7 @@ export class MetaService {
       ogUrl?: string;
       ogImage?: string;
       robots?: string;
+      canonicalUrl?: string;
     } = {}
   ): void {
     this.setTitle(data.title || '')
@@ -178,7 +179,7 @@ export class MetaService {
       .setOgType('website')
       .setOgUrl(data.ogUrl || this.location.path())
       .setOgImage(data.ogImage || null, { width: 0, height: 0 })
-      .setCanonicalUrl('') // Only user canonical when required
+      .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false);
   }
