@@ -61,6 +61,10 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
     text-align: center;
   }
 
+  .isVideo .m-wireLockScreen__inner {
+    padding-top: 80px;
+  }
+
   .m-wireLockScreen__message {
     margin: 20px auto;
     text-align: center;
