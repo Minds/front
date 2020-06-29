@@ -232,11 +232,9 @@ export class BlogsEditService {
       );
 
       if (response.status !== 'success') {
-        if (response.message) {
-          this.error$.next('An unknown error has occured');
-          return response;
-        }
-        this.error$.next(response.message);
+        this.canPost$.next(true);
+        this.inProgress$.next(false);
+        this.error$.next(response.message || 'An unknown error has occurred');
         return response;
       }
 
@@ -251,7 +249,6 @@ export class BlogsEditService {
 
       this.canPost$.next(true);
       this.inProgress$.next(false);
-      // else
       this.emitDraftSaved();
       this.savedContent$.next(this.content$.getValue());
       this.guid$.next(response.guid);
@@ -259,8 +256,9 @@ export class BlogsEditService {
       return response;
     } catch (e) {
       console.error(e);
-      this.attachmentError$.next(e);
+      this.error$.next(e);
       this.canPost$.next(true);
+      this.inProgress$.next(false);
 
       return {
         status: '500',

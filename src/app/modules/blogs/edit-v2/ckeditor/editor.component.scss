@@ -7,11 +7,6 @@
   padding: 0 !important;
   border: unset !important;
 
-  table {
-    display: flex;
-    justify-content: center;
-  }
-
   .ck-editor__nested-editable_focused {
     @include m-theme() {
       background: themed($m-bgColor--secondary) !important;
