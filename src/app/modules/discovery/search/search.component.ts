@@ -46,7 +46,7 @@ export class DiscoverySearchComponent {
           this.service.setType(
             <DiscoveryFeedsContentType>params.get('t') || 'all'
           );
-          this.service.search(this.q);
+          //this.service.search(this.q);
         }),
       combineLatest(
         this.service.nsfw$,

@@ -37,7 +37,7 @@ m-paywallBadge {
     > .m-paywallBadge__tierName {
       font-weight: 500;
       @include m-theme() {
-        color: themed($m-white);
+        color: themed($m-white-always);
       }
       margin-right: 0;
     }

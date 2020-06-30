@@ -70,6 +70,7 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event']) // for window scroll events
   onScroll(event) {
+    if (!this.trends$.value || !this.trends$.value.length) return;
     const element = event.target.activeElement;
     if (
       !this.showPreferredFeed &&
