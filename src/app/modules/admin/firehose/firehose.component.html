@@ -15,12 +15,11 @@
         (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
       ></m-sort-selector>
     </div>
-    <minds-activity
+    <m-activity
       *ngIf="entity"
-      [object]="entity"
-      class="mdl-card m-border item"
+      [entity]="entity"
       [attr.data-minds-activity-guid]="entity.guid"
-    ></minds-activity>
+    ></m-activity>
   </div>
   <div
     class="m-firehose__moderatorAction m-firehose__moderatorAction--rightButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
