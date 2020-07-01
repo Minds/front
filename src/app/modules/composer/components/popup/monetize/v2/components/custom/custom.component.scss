@@ -1,0 +1,11 @@
+m-composer__monetizeV2__custom {
+  .m-composerPopup__inlineFormFieldsContainer {
+    input[type='number'] {
+      min-width: 200px;
+    }
+  }
+
+  .m-composerPopup__checkbox--allowTokens {
+    margin-left: 20px;
+  }
+}

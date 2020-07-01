@@ -1,0 +1,45 @@
+m-composer__monetizeV2__memberships {
+  .m-form__row--label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    a {
+      display: inline-block;
+      margin-left: 10px;
+      font-weight: 400;
+    }
+  }
+  .m-form__customInputWrapper__radio {
+    width: 100%;
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+  }
+  .m-composerPopup__memberships__radioLabel {
+    font-size: 16px;
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    span {
+      display: inline-block;
+    }
+    > span {
+      &:first-child {
+        flex-basis: 65%;
+        @media screen and (max-width: 585px) {
+          flex-basis: 100%;
+        }
+        > span:first-child {
+          margin-right: 4px;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+}

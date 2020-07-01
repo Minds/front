@@ -82,27 +82,18 @@ export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export type MonetizationSubjectValue = {
   type?: 'tokens' | 'money';
   min?: number;
-  support_tier?: { urn: string; expires?: number };
+  support_tier?: {
+    urn: string;
+    expires?: number;
+    usd?: number;
+    has_tokens?: boolean;
+  };
 } | null;
 
 /**
  * Default monetization value
  */
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
-
-/**
- * Monetization vw value type
- */
-export type MonetizationV2SubjectValue = {
-  type: 'plus' | 'membership' | 'custom';
-  // min: number;
-  // support_tier?: SupportTier;
-} | null;
-
-/**
- * Default monetization value
- */
-export const DEFAULT_MONETIZATION_V2_VALUE: MonetizationV2SubjectValue = null;
 
 /**
  * Tags value type
@@ -338,7 +329,7 @@ export class ComposerService implements OnDestroy {
   /**
    * If we're editing, this holds a clone of the original activity
    */
-  protected entity: any = null;
+  public entity: any = null;
 
   /**
    * Current payload to be consumed by DTO builder

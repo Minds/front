@@ -11,7 +11,7 @@ m-paywallBadge {
     font-weight: 500;
     z-index: 3;
     @include m-theme() {
-      color: themed($m-white);
+      color: themed($m-white-always);
       background-color: themed($m-textColor--secondary);
       box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
     }

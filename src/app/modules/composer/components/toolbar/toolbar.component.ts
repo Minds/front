@@ -83,6 +83,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   protected attachmentSubscription: Subscription;
 
+  public legacyPaywallEnabled: boolean = false;
+
   /**
    * Constructor
    * @param service
@@ -111,6 +113,18 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         this.fileUploadComponent.reset();
       }
     });
+
+    /**
+     * Don't show the monetize button if a post has a
+     * legacy paywall because of potential
+     * multi-currency complications.
+     */
+    if (this.service.monetization$.getValue()) {
+      const paywall = this.service.monetization$.getValue();
+      if (paywall && !paywall.support_tier) {
+        this.legacyPaywallEnabled = true;
+      }
+    }
   }
 
   /**
