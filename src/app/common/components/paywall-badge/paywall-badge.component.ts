@@ -42,8 +42,6 @@ export class PaywallBadgeComponent implements OnInit {
     this.hasPaywall = !!this.entity.paywall || this.entity.paywall_unlocked;
 
     if (this.hasPaywall) {
-      // TODO determine the paywall type here
-
       if (
         this.entity.wire_threshold &&
         this.entity.wire_threshold.support_tier

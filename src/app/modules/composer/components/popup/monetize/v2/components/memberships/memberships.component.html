@@ -1,112 +1,125 @@
 <m-loadingSpinner [inProgress]="!init"></m-loadingSpinner>
-<div class="m-composerPopup__content m-formWrapper" *ngIf="init">
-  <p
-    class="m-composerPopup__text m-composerPopup__monetizeTitle"
-    i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__DESC"
-  >
-    Make this post available exclusively to one of your membership tiers.
-  </p>
-  <ng-container *ngIf="!hasSupportTiers">
+<ng-container *ngIf="init">
+  <div class="m-composerPopup__content m-formWrapper">
     <p
-      class="m-composerPopup__subtitle"
-      i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__NOTICE"
+      class="m-composerPopup__text m-composerPopup__monetizeTitle"
+      i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__DESC"
     >
-      You don't have any Membership Tiers
+      Make this post available exclusively to one of your membership tiers.
     </p>
-    <p
-      class="m-composerPopup__text"
-      i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__SETUP_DESC"
-    >
-      Setting up your tiers is quick and easy. Start earning extra revenue for
-      your content today.
-    </p>
-    <p class="m-composerPopup__text">
-      <a
-        i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__SETUP_TIERS"
-        routerLink="/settings/canary/other/subscription-tiers"
-        target="_blank"
-        >Setup membership tiers</a
+    <ng-container *ngIf="!hasSupportTiers">
+      <p
+        class="m-composerPopup__subtitle"
+        i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__NOTICE"
       >
-    </p>
-  </ng-container>
-
-  <ng-container *ngIf="hasSupportTiers">
-    <form *ngIf="form" [formGroup]="form">
-      <div class="m-form__field--radio">
-        <div class="m-form__row--label">
-          <span i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__RADIO_FIELD_LABEL">
-            Membership Tiers</span
-          >
-          <a
-            i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__MANAGE_TIERS"
-            routerLink="/settings/canary/other/subscription-tiers"
-            target="_blank"
-            >Manage</a
-          >
-        </div>
-        <!-- RADIO INPUT ---------------------------- -->
-        <ng-container
-          *ngFor="let tier of supportTiers; let i = i; let first = first"
+        You don't have any Membership Tiers
+      </p>
+      <p
+        class="m-composerPopup__text"
+        i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__SETUP_DESC"
+      >
+        Setting up your tiers is quick and easy. Start earning extra revenue for
+        your content today.
+      </p>
+      <p class="m-composerPopup__text">
+        <a
+          i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__SETUP_TIERS"
+          routerLink="/settings/canary/other/subscription-tiers"
+          target="_blank"
+          >Setup membership tiers</a
         >
+      </p>
+    </ng-container>
+
+    <ng-container *ngIf="hasSupportTiers">
+      <form *ngIf="form" [formGroup]="form">
+        <div class="m-form__field--radio">
+          <div class="m-form__row--label">
+            <span i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__RADIO_FIELD_LABEL">
+              Membership Tiers</span
+            >
+            <a
+              i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__MANAGE_TIERS"
+              routerLink="/settings/canary/other/subscription-tiers"
+              target="_blank"
+              >Manage</a
+            >
+          </div>
+          <!-- RADIO INPUT ---------------------------- -->
+          <ng-container
+            *ngFor="let tier of supportTiers; let i = index; let first = first"
+          >
+            <div class="m-form__row--input">
+              <label
+                class="m-form__customInputWrapper__radio"
+                [title]="tier.description"
+              >
+                <div class="m-composerPopup__memberships__radioLabel">
+                  <span
+                    ><span
+                      >{{ tier.name
+                      }}<ng-container
+                        i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__TIER_MEMBERS"
+                      >
+                        Tier Members</ng-container
+                      ></span
+                    ><span
+                      *ngIf="!first"
+                      i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__AND_ABOVE"
+                      >and above</span
+                    ></span
+                  ><span
+                    >${{ tier.usd }}+<ng-container
+                      i18n="
+                         @@COMPOSER__MONETIZE_MEMBERSHIPS__SUBSCRIPTION_INTERVAL
+
+                      "
+                    >
+                      per month</ng-container
+                    ></span
+                  >
+                </div>
+                <input
+                  type="radio"
+                  [value]="tier.urn"
+                  name="urn"
+                  [id]="'tier-' + i"
+                  formControlName="urn"
+                  class="form-control"
+                />
+                <span class="m-form__customInput__radio"></span>
+              </label>
+            </div>
+          </ng-container>
+          <!-- DISABLE MEMBERSHIP TIERS ------------------- -->
           <div class="m-form__row--input">
             <label class="m-form__customInputWrapper__radio">
               <div class="m-composerPopup__memberships__radioLabel">
-                <span
-                  >{{ tier.name
-                  }}<ng-container
-                    i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__TIER_MEMBERS"
-                  >
-                    Tier Members</ng-container
-                  ></span
-                ><span
-                  *ngIf="!first"
-                  i18n="@@COMPOSER__MONETIZE_MEMBERSHIPS__AND_ABOVE"
-                  >and above</span
-                ><span
-                  >${{ tier.usd }}+<ng-container
-                    i18n="
-                       @@COMPOSER__MONETIZE_MEMBERSHIPS__SUBSCRIPTION_INTERVAL
-                    "
-                  >
-                    per month</ng-container
-                  ></span
-                >
+                <span><span i18n="@@COMMON__NONE">None</span></span>
               </div>
               <input
                 type="radio"
-                [value]="tier.urn"
+                value="null"
                 name="urn"
-                [id]="'tier-' + i"
+                id="'tier-none'"
                 formControlName="urn"
                 class="form-control"
-                [readonly]="isEditing$ || saved"
               />
               <span class="m-form__customInput__radio"></span>
             </label>
           </div>
-        </ng-container>
-      </div>
-      <!-- HACKY FIX FOR FORM NOT LOADING BEFORE CONTROLS EXIST -->
-      <input
-        hidden
-        type="radio"
-        value=""
-        name="urn"
-        formControlName="urn"
-        class="form-control"
-        [readonly]="true"
-      />
-    </form>
-  </ng-container>
-</div>
-<div class="m-composerPopup__action">
-  <m-shadowboxSubmitButton
-    *ngIf="hasSupportTiers"
-    type="button"
-    [disabled]="isEditing$ || saved"
-    (click)="save()"
-    i18n="@@COMMON__SAVE"
-  >
-    Save
-  </m-shadowboxSubmitButton>
-</div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <div class="m-composerPopup__action">
+    <m-shadowboxSubmitButton
+      *ngIf="hasSupportTiers"
+      type="button"
+      (click)="save()"
+      i18n="@@COMMON__SAVE"
+    >
+      Save
+    </m-shadowboxSubmitButton>
+  </div>
+</ng-container>

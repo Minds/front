@@ -5,23 +5,22 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  ComposerService,
-  MonetizationSubjectValue,
-} from '../../../../../services/composer.service';
-import { UniqueId } from '../../../../../../../helpers/unique-id.helper';
+import { ComposerService } from '../../../../../services/composer.service';
 import {
   SupportTier,
   SupportTiersService,
 } from '../../../../../../wire/v2/support-tiers.service';
 import { Session } from '../../../../../../../services/session';
 import { FeaturesService } from '../../../../../../../services/features.service';
+import { ConfigsService } from '../../../../../../../common/services/configs.service';
 
+export type MonetizationTabType = 'plus' | 'membership' | 'custom';
 interface MonetizationState {
-  enabled: boolean;
-  type: 'plus' | 'membership' | 'custom';
-  // amount: number;
-  // supportTier: SupportTier;
+  type: MonetizationTabType;
+  urn?: string;
+  has_tokens?: boolean;
+  usd?: number;
+  expires?: number;
 }
 
 @Component({
@@ -30,22 +29,20 @@ interface MonetizationState {
   providers: [SupportTiersService],
 })
 export class ComposerMonetizeV2Component implements OnInit {
-  canEdit: boolean = false;
+  isEditing: boolean = false;
+  isEditingPlus: boolean = false;
+
+  plusTierUrn: string = '';
+
   /**
    * Signal event emitter to parent's popup service
    */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * ID for input/label relationships
-   */
-  // readonly inputId: string = UniqueId.generate('m-composer__tags');
-
-  /**
    * Monetization popup state object
    */
   state: MonetizationState = {
-    enabled: false,
     type: 'plus',
   };
 
@@ -58,77 +55,39 @@ export class ComposerMonetizeV2Component implements OnInit {
    */
   constructor(
     public service: ComposerService,
-    public supportTiers: SupportTiersService,
     public features: FeaturesService,
-    protected session: Session
+    protected session: Session,
+    configs: ConfigsService
   ) {
-    this.supportTiers.setEntityGuid(this.session.getLoggedInUser().guid);
+    this.plusTierUrn = configs.get('plus').support_tier_urn;
   }
 
   /**
    * Component initialization. Set initial state.
    */
   ngOnInit(): void {
-    /**
-     * You can't edit monetization after you've saved
-     */
-    this.canEdit = !this.service.isEditing$.getValue();
+    this.isEditing = this.service.isEditing$.getValue();
+    const monetization = this.service.monetization$.getValue();
 
-    this.service.monetization$.getValue();
-    // TODO - when paywall tiers are ready
-    // const monetization = this.service.monetization$.getValue();
-    // this.state = {
-    //   enabled: Boolean(monetization),
-    //   type: (monetization && monetization.type) || 'tokens',
-    //   amount: (monetization && monetization.min) || 0,
-    //   supportTier: (monetization && monetization.support_tier) || null,
-    // };
+    /**
+     * Go to the tab of current monetization
+     */
+    if (this.isEditing && monetization) {
+      const tier = this.service.entity.wire_threshold;
+      if (tier) {
+        this.setType(tier);
+      }
+    }
   }
 
-  /**
-   * Selects a support tier and fills state values
-   * @param supportTier
-   */
-  // selectSupportTier(supportTier: SupportTier): void {
-  //   this.state.supportTier = supportTier;
-
-  //   if (supportTier) {
-  //     this.state.type = this.supportTiers.toMonetizationType(
-  //       supportTier.currency
-  //     );
-  //     this.state.amount = supportTier.amount;
-  //   }
-  // }
-
-  /**
-   * Compares two variables that can be a Support Tier or null.
-   * Used by <select>.
-   * @param a
-   * @param b
-   */
-  // byUrn(a: SupportTier, b: SupportTier) {
-  //   return (!a && !b) || (a && b && a.urn === b.urn);
-  // }
-
-  /**
-   * Emit to subject
-   */
-  // save() {
-  //   let payload: MonetizationSubjectValue = null;
-
-  //   if (this.state.enabled) {
-  //     payload = {
-  //       type: this.state.type,
-  //       min: this.state.amount,
-  //     };
-
-  //     if (this.features.has('channels-shop')) {
-  //       payload.support_tier = this.state.supportTier || null;
-  //     }
-  //   }
-
-  //   this.service.monetization$.next(payload);
-
-  //   this.dismissIntent.emit();
-  // }
+  setType(tier: SupportTier) {
+    if (!tier.public) {
+      this.state.type = 'custom';
+    } else if (tier.urn === this.plusTierUrn) {
+      this.isEditingPlus = true;
+      this.state.type = 'plus';
+    } else {
+      this.state.type = 'membership';
+    }
+  }
 }

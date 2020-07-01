@@ -7,13 +7,17 @@
   </p>
 
   <ng-container *ngIf="isPro"
-    ><p class="m-composerPopup__text" i18n="@@COMPOSER__MONETIZE_PLUS_PRO_DESC">
+    ><p
+      class="m-form__row--label m-composerPopup__text"
+      i18n="@@COMPOSER__MONETIZE_PLUS__POOL_DESC"
+    >
       Submit this post to the Minds Plus pool and earn potential revenue.
     </p>
 
     <div class="m-composerPopup__checkbox">
       <m-formInput__checkbox
         [ngModel]="termsAccepted"
+        [disabled]="isEditingPlus"
         (ngModelChange)="onTermsChange($event)"
       >
         <span i18n="@@COMPOSER__PLUS__TERMS__CHECKBOX"
@@ -24,12 +28,36 @@
         >
       </m-formInput__checkbox>
     </div>
+    <div class="m-form__field--textboxToggle">
+      <div
+        class="m-form__row--label m-composerPopup__text"
+        i18n="@@COMPOSER__MONETIZE_PLUS__EXCLUSIVITY_PERIOD"
+      >
+        Exclusivity Period
+      </div>
+      <div class="m-form__row--input">
+        <div class="m-formInput__textboxToggle">
+          <div
+            (click)="setExpires(twoDays)"
+            [ngClass]="{ optionActive: expires === twoDays }"
+          >
+            48 hours
+          </div>
+          <div
+            (click)="setExpires(null)"
+            [ngClass]="{ optionActive: !expires }"
+          >
+            Always
+          </div>
+        </div>
+      </div>
+    </div>
   </ng-container>
 
   <ng-container *ngIf="!isPro"
     ><p
       class="m-composerPopup__text"
-      i18n="@@COMPOSER__MONETIZE_PLUS_NOT_PRO_DESC"
+      i18n="@@COMPOSER__MONETIZE_PLUS__NOT_PRO_DESC"
     >
       You’ll need to upgrade to Minds Pro in order to submit your post to the
       Minds Plus content pool. You will earn revenue based on the performance of
@@ -44,13 +72,22 @@
   </ng-container>
 </div>
 <div class="m-composerPopup__action">
-  <m-button
+  <p
+    class="m-composerPopup__error"
+    *ngIf="isEditingPlus"
+    i18n="@@COMPOSER__MONETIZE_PLUS__NO_EDITING_PLUS"
+  >
+    Posts in the Plus pool cannot be removed
+  </p>
+
+  <m-shadowboxSubmitButton
     *ngIf="isPro"
-    class="m-composerPopup__save"
-    (onAction)="save()"
-    data-cy="plus-save-button"
+    type="button"
+    (click)="save()"
+    [disabled]="!canSave"
     i18n="@@COMMON__SAVE"
+    data-cy="plus-save-button"
   >
     Save
-  </m-button>
+  </m-shadowboxSubmitButton>
 </div>

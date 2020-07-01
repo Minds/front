@@ -15,18 +15,21 @@ m-composer__monetizeV2 {
     cursor: pointer;
   }
   .m-composerPopup__action {
-    min-height: 585px;
+    min-height: 63px;
   }
   .m-composerPopup__content.m-formWrapper {
     padding-bottom: 60px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: 585px) {
+      padding-bottom: 0;
+    }
   }
-  .m-form__row--label {
-    span {
-      font-size: 15px;
-      font-weight: 400;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
+  .m-form__row--label,
+  .m-form__row--label > span {
+    font-size: 16px;
+    font-weight: 400;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
     }
   }
 }

@@ -5,19 +5,36 @@ m-composer__monetizeV2__memberships {
     a {
       display: inline-block;
       margin-left: 10px;
+      font-weight: 400;
+    }
+  }
+  .m-form__customInputWrapper__radio {
+    width: 100%;
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
     }
   }
   .m-composerPopup__memberships__radioLabel {
     font-size: 16px;
+    display: flex;
+    flex-flow: row wrap;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+    span {
+      display: inline-block;
+    }
     > span {
-      display: inline-flex;
-      justify-content: space-between;
       &:first-child {
-        @include m-theme() {
-          color: themed($m-textColor--primary);
+        flex-basis: 65%;
+        @media screen and (max-width: 585px) {
+          flex-basis: 100%;
+        }
+        > span:first-child {
+          margin-right: 4px;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
         }
       }
     }

@@ -6,7 +6,6 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  Input,
 } from '@angular/core';
 import {
   SupportTier,
@@ -14,7 +13,6 @@ import {
 } from '../../../../../../../wire/v2/support-tiers.service';
 import { Session } from '../../../../../../../../services/session';
 import { ApiService } from '../../../../../../../../common/api/api.service';
-import { ConfigsService } from '../../../../../../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
 import { ComposerService } from '../../../../../../services/composer.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -32,7 +30,6 @@ export class ComposerMonetizeV2MembershipsComponent
   userGuid;
   form;
   init: boolean = false;
-  saved: boolean = false;
 
   supportTiersSubscription: Subscription;
 
@@ -46,18 +43,17 @@ export class ComposerMonetizeV2MembershipsComponent
     protected api: ApiService,
     private service: ComposerService,
     private supportTiersService: SupportTiersService,
-    configs: ConfigsService,
     protected cd: ChangeDetectorRef
-  ) {
-    this.plusTierUrn = configs.get('plus').support_tier_urn;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      urn: new FormControl('1'),
+      urn: new FormControl(''),
     });
 
     this.userGuid = this.session.getLoggedInUser().guid;
+    this.supportTiersService.setEntityGuid(this.userGuid);
+
     this.supportTiersSubscription = this.supportTiersService.list$.subscribe(
       tiers => {
         if (tiers) {
@@ -71,6 +67,31 @@ export class ComposerMonetizeV2MembershipsComponent
         }
       }
     );
+    if (this.service.isEditing$.getValue()) {
+      this.setInitialState();
+    }
+  }
+
+  /**
+   * When editing a monetized post,
+   * make form display current selection
+   */
+  setInitialState(): void {
+    const monetization = this.service.monetization$.getValue();
+    if (!monetization) {
+      return;
+    }
+    if (monetization.support_tier && monetization.support_tier.urn) {
+      const savedTier = this.supportTiers.find(
+        tier => tier.urn === monetization.support_tier.urn
+      );
+
+      if (savedTier) {
+        this.urn.setValue(savedTier.urn);
+      } else {
+        this.urn.setValue(null);
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -101,16 +122,18 @@ export class ComposerMonetizeV2MembershipsComponent
    * Save selected tier
    */
   save(): void {
-    // todoojm make confirmation dialog to inform that it can't change
-
-    this.service.monetization$.next({
-      support_tier: {
-        urn: this.urn.value,
-      },
-    });
-    this.saved = true;
+    if (!this.urn.value) {
+      this.service.monetization$.next({
+        support_tier: null,
+      });
+    } else {
+      this.service.monetization$.next({
+        support_tier: {
+          urn: this.urn.value,
+        },
+      });
+    }
     this.detectChanges();
-
     this.dismissIntent.emit();
   }
 
@@ -119,13 +142,6 @@ export class ComposerMonetizeV2MembershipsComponent
    */
   get urn() {
     return this.form.get('urn');
-  }
-
-  /**
-   * Is editing? subject value from service
-   */
-  get isEditing$() {
-    return this.service.isEditing$;
   }
 
   /**

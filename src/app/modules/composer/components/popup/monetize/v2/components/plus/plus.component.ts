@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import { ProService } from '../../../../../../../pro/pro.service';
 import { WirePaymentHandlersService } from '../../../../../../../wire/wire-payment-handlers.service';
@@ -19,6 +20,9 @@ import {
 } from '../../../../../../../../services/ux/stackable-modal.service';
 import { ComposerService } from '../../../../../../services/composer.service';
 import { ConfigsService } from '../../../../../../../../common/services/configs.service';
+import { DialogService } from '../../../../../../../../common/services/confirm-leave-dialog.service';
+
+export type PlusPostExpiry = 172800 | null;
 
 @Component({
   selector: 'm-composer__monetizeV2__plus',
@@ -26,7 +30,28 @@ import { ConfigsService } from '../../../../../../../../common/services/configs.
 })
 export class ComposerMonetizeV2PlusComponent implements OnInit {
   readonly plusSupportTierUrn: string;
+
+  readonly twoDays = 172800; // in seconds
+  /**
+   * If the user is Pro
+   */
   isPro;
+
+  /**
+   * Terms & Conditions accepted state
+   */
+  termsAccepted: boolean = false;
+
+  /**
+   * Seconds after which paywall is disabled
+   */
+  expires: PlusPostExpiry = this.twoDays;
+
+  /**
+   * Whether an existing post with a
+   * plus paywall is being edited
+   */
+  @Input() isEditingPlus: boolean = false;
 
   /**
    * Signal event emitter to parent
@@ -36,37 +61,51 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   constructor(
     private service: ComposerService,
     private configs: ConfigsService,
-    private proService: ProService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private cd: ChangeDetectorRef,
     private stackableModal: StackableModalService,
-    private session: Session
+    private session: Session,
+    private dialogService: DialogService
   ) {
     this.plusSupportTierUrn =
       configs.get('plus').support_tier_urn || 'urn:support-tier:plus';
   }
 
   ngOnInit(): void {
+    if (this.isEditingPlus) {
+      this.termsAccepted = true;
+      const expires = this.service.entity.wire_threshold.expires;
+      if (expires !== this.twoDays) {
+        this.expires = null;
+      }
+    }
     this.setup();
   }
 
-  async setup(): Promise<void> {
+  setup(): void {
     this.isPro = this.session.getLoggedInUser().pro;
-    this.isPro = await this.proService.isActive();
+
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
 
+  setExpires(expires: PlusPostExpiry): void {
+    if (this.isEditingPlus) {
+      return;
+    }
+    this.expires = expires;
+  }
+
   async openProUpgradeModal(): Promise<void> {
-    const plusGuid = await this.wirePaymentHandlers.get('pro');
+    const proGuid = await this.wirePaymentHandlers.get('pro');
     let completed = false;
 
     const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(WireCreatorComponent, plusGuid, {
+      .present(WireCreatorComponent, proGuid, {
         wrapperClass: 'm-modalV2__wrapper',
         default: {
           type: 'money',
-          upgradeType: 'plus',
+          upgradeType: 'pro',
         },
         onComplete: wire => {
           completed = true;
@@ -79,30 +118,45 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
     }
   }
 
-  get termsAccepted(): boolean {
-    const monetization = this.service.monetization$.value;
-    return (
-      monetization && monetization.support_tier.urn === this.plusSupportTierUrn
-    );
-  }
-
   onTermsChange(value): void {
     if (value) {
-      this.service.monetization$.next({
-        support_tier: {
-          urn: this.plusSupportTierUrn,
-        },
-      });
+      this.termsAccepted = true;
     } else {
-      this.service.monetization$.next(null);
+      this.termsAccepted = false;
     }
   }
 
   /**
    * Emits the internal state to the composer service and attempts to dismiss the modal
    */
-  // save() {
-  //   this.service.monetization$.next(this.state.sort());
-  //   this.dismissIntent.emit();
-  // }
+  save() {
+    if (!this.canSave) {
+      return;
+    }
+
+    if (
+      !this.dialogService.confirm(
+        "Are you sure? Once a post enters the Plus pool, you can't edit its monetization settings."
+      )
+    ) {
+      return;
+    }
+
+    const support_tier: any = {
+      urn: this.plusSupportTierUrn,
+    };
+
+    if (this.expires) {
+      support_tier['expires'] = this.expires;
+    }
+
+    this.service.monetization$.next({
+      support_tier: support_tier,
+    });
+    this.dismissIntent.emit();
+  }
+
+  get canSave(): boolean {
+    return !this.isEditingPlus && this.termsAccepted;
+  }
 }

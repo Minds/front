@@ -1,8 +1,7 @@
 <div class="m-composerPopup__body m-composer__monetize">
   <div class="m-composerPopup__content">
     <h3 class="m-composerPopup__title" i18n="@@COMMON__MONETIZE">Monetize</h3>
-
-    <div class="m-tabs__container">
+    <div class="m-tabs__container" *ngIf="!isEditingPlus">
       <div class="m-tabs__tab">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': state.type === 'plus' }"
@@ -26,17 +25,17 @@
       </div>
     </div>
   </div>
-
   <m-composer__monetizeV2__plus
-    (dismissIntent)="dismissIntent()"
+    (dismissIntent)="dismissIntent.emit()"
     *ngIf="state.type === 'plus'"
+    [isEditingPlus]="isEditingPlus"
   ></m-composer__monetizeV2__plus>
   <m-composer__monetizeV2__memberships
-    (dismissIntent)="dismissIntent()"
+    (dismissIntent)="dismissIntent.emit()"
     *ngIf="state.type === 'membership'"
   ></m-composer__monetizeV2__memberships>
   <m-composer__monetizeV2__custom
-    (dismissIntent)="dismissIntent()"
+    (dismissIntent)="dismissIntent.emit()"
     *ngIf="state.type === 'custom'"
   ></m-composer__monetizeV2__custom>
 </div>
