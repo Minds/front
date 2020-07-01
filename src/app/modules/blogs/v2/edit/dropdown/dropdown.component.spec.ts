@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockService } from '../../../../../utils/mock';
-import { BlogsEditService } from '../../blog-edit.service';
+import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';

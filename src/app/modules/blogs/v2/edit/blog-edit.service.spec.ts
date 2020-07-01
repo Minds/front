@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { BlogEditorDropdownComponent } from './edit/dropdown/dropdown.component';
+import { BlogEditorDropdownComponent } from './dropdown/dropdown.component';
 import { BlogsEditService } from './blog-edit.service';
-import { uploadMock } from '../../../../tests/upload-mock.spec';
-import { clientMock } from '../../../../tests/client-mock.spec';
-import { siteServiceMock } from '../../notifications/notification.service.spec';
+import { uploadMock } from '../../../../../tests/upload-mock.spec';
+import { clientMock } from '../../../../../tests/client-mock.spec';
+import { siteServiceMock } from '../../../notifications/notification.service.spec';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
@@ -115,7 +115,7 @@ describe('BlogsEditService', () => {
     service.content$.next('123123');
 
     await service.save();
-    expect(service.error$.getValue()).toBe('');
+    expect(service.error$.getValue()).toBe(null);
     expect(uploadMock.post).toHaveBeenCalled();
   });
 
@@ -144,7 +144,7 @@ describe('BlogsEditService', () => {
     service.content$.next('123123');
 
     await service.save(true);
-    expect(service.error$.getValue()).toBe('');
+    expect(service.error$.getValue()).toBe(null);
     expect(uploadMock.post).toHaveBeenCalled();
     expect(service.draftSaved$.getValue).toBeTruthy();
   });

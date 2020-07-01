@@ -1,12 +1,12 @@
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Session } from '../../../services/session';
-import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
-import { ConfigsService } from '../../../common/services/configs.service';
-import { FormToastService } from '../../../common/services/form-toast.service';
+import { Session } from '../../../../services/session';
+import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 import { BlogsEditService } from './blog-edit.service';
-import { MockService } from '../../../utils/mock';
+import { MockService } from '../../../../utils/mock';
 import { BlogEditorV2Component } from './editor-base.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
