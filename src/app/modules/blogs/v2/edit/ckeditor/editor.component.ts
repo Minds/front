@@ -12,9 +12,9 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { AttachmentService } from '../../../../services/attachment';
-import { SiteService } from '../../../../common/services/site.service';
-import { ThemeService } from '../../../../common/services/theme.service';
+import { AttachmentService } from '../../../../../services/attachment';
+import { SiteService } from '../../../../../common/services/site.service';
+import { ThemeService } from '../../../../../common/services/theme.service';
 
 declare var require: any;
 

@@ -5,18 +5,19 @@
  * [] Footer positioning.
  * [] Scheduling - next version.
  * [] Monetization - later iteration.
- *
+ * [] check 1 blog after the other
+ * [] captcha light theme button off
  */
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription, timer } from 'rxjs';
-import { MonetizationSubjectValue } from '../../composer/services/composer.service';
-import { Upload, Client } from '../../../services/api';
+import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
+import { Upload, Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, tap, map } from 'rxjs/operators';
-import { SiteService } from '../../../common/services/site.service';
-import { MindsBlogEntity } from '../../../interfaces/entities';
-import { Captcha } from '../../captcha/captcha.component';
+import { SiteService } from '../../../../common/services/site.service';
+import { MindsBlogEntity } from '../../../../interfaces/entities';
+import { Captcha } from '../../../captcha/captcha.component';
 
 export interface MetaData {
   title: string;

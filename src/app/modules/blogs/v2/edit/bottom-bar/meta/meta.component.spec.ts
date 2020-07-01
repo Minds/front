@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlogEditorMetaComponent } from './meta.component';
 import { FormsModule } from '@angular/forms';
-import { clientMock } from '../../../../../../tests/client-mock.spec';
+import { clientMock } from '../../../../../../../tests/client-mock.spec';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockService } from '../../../../../utils/mock';
-import { BlogsEditService } from '../../blog-edit.service';
-import { SiteService } from '../../../../../common/services/site.service';
-import { Session } from '../../../../../services/session';
+import { MockService } from '../../../../../../utils/mock';
+import { BlogsEditService } from '../../../blog-edit.service';
+import { SiteService } from '../../../../../../common/services/site.service';
+import { Session } from '../../../../../../services/session';
 import { By } from '@angular/platform-browser';
 
 describe('BlogEditorMetaComponent', () => {

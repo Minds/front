@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { BlogsEditService } from '../blog-edit.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { CaptchaModalComponent } from '../../../captcha/captcha-modal/captcha-modal.component';
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { CaptchaModalComponent } from '../../../../captcha/captcha-modal/captcha-modal.component';
 import { BehaviorSubject } from 'rxjs';
-import { Captcha } from '../../../captcha/captcha.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { Captcha } from '../../../../captcha/captcha.component';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
 

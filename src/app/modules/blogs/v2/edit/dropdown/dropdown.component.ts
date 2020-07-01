@@ -6,9 +6,9 @@ import {
   ACCESS,
   LICENSES,
   LicensesEntry,
-} from '../../../../services/list-options';
+} from '../../../../../services/list-options';
 import { BlogsEditService } from '../blog-edit.service';
-import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-selector.service';
+import { NSFW_REASONS } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

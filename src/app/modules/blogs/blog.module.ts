@@ -22,15 +22,18 @@ import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { BlogEditorComponent } from './edit-v2/ckeditor/editor.component';
+import { BlogEditorComponent } from './v2/edit/ckeditor/editor.component';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { CaptchaModule } from '../captcha/captcha.module';
-import { BlogEditorV2Component } from './edit-v2/editor-base.component';
-import { BlogsEditService } from './edit-v2/blog-edit.service';
-import { BlogEditorDropdownComponent } from './edit-v2/dropdown/dropdown.component';
-import { BlogEditorMetaComponent } from './edit-v2/bottom-bar/meta/meta.component';
-import { BlogEditorBottomBarComponent } from './edit-v2/bottom-bar/bottom-bar.component';
-import { BlogEditorTagsComponent } from './edit-v2/bottom-bar/tags/tags.component';
+import { BlogEditorV2Component } from './v2/edit/editor-base.component';
+import { BlogsEditService } from './v2/edit/blog-edit.service';
+import { BlogEditorDropdownComponent } from './v2/edit/dropdown/dropdown.component';
+import { BlogEditorMetaComponent } from './v2/edit/bottom-bar/meta/meta.component';
+import { BlogEditorBottomBarComponent } from './v2/edit/bottom-bar/bottom-bar.component';
+import { BlogEditorTagsComponent } from './v2/edit/bottom-bar/tags/tags.component';
+import { BlogViewV2Component } from './v2/view/view.component';
+import { BlogsViewService } from './v2/view/blog-view.service';
+import { BlogViewDropdownComponent } from './v2/view/dropdown/dropdown.component';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -43,6 +46,9 @@ const routes: Routes = [
       title: 'Edit Blog',
     },
   },
+  { path: 'blog/:filter', component: BlogListComponent },
+  { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
+  { path: ':username/blog/:slugid', component: BlogViewInfinite },
   {
     path: 'blog/v2/edit/:guid',
     component: BlogEditorV2Component,
@@ -51,9 +57,9 @@ const routes: Routes = [
       title: 'Edit Blog',
     },
   },
-  { path: 'blog/:filter', component: BlogListComponent },
-  { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
-  { path: ':username/blog/:slugid', component: BlogViewInfinite },
+  // { path: 'blog/v2/view/:guid/:title', component: BlogViewV2Component },
+  // { path: 'blog/v2/view/:guid', component: BlogViewV2Component },
+  // { path: ':username/blog/v2/:slugid', component: BlogViewV2Component },
 ];
 
 @NgModule({
@@ -88,6 +94,8 @@ const routes: Routes = [
     BlogEditorMetaComponent,
     BlogEditorBottomBarComponent,
     BlogEditorTagsComponent,
+    // BlogViewV2Component,
+    // BlogViewDropdownComponent,
   ],
   exports: [
     BlogView,
@@ -97,7 +105,8 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
     BlogEditorComponent,
+    // BlogViewV2Component,
   ],
-  providers: [BlogsEditService],
+  providers: [BlogsEditService], //, BlogsViewService],
 })
 export class BlogModule {}

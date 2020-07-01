@@ -25,15 +25,53 @@
     color: themed($m-green-light);
   }
 }
-
-table {
-  display: inline-flex;
-
-  td {
-    padding: 8px 16px;
+.minds-blog-body {
+  figcaption {
+    word-break: break-word;
+    padding: 0.6em;
+    max-width: 100%;
+    text-align: center;
 
     @include m-theme() {
-      border: 1px solid themed($m-black);
+      background-color: themed($m-white);
+      color: themed($m-black);
+
+      &:focus {
+        background-color: themed($m-bgColor--tertiary);
+      }
+    }
+  }
+
+  table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-spacing: 0;
+
+    tbody {
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    td,
+    th {
+      padding: 8px 16px;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    th {
+      font-weight: 900;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    td {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
 }

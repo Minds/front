@@ -137,6 +137,7 @@ export interface MindsUser {
   enabled?: string | boolean;
   not_found?: boolean;
   email?: string;
+  verified?: boolean;
 }
 
 export interface MindsGroup {

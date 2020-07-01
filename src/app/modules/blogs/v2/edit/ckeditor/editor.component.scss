@@ -7,11 +7,20 @@
   padding: 0 !important;
   border: unset !important;
 
-  .ck-editor__nested-editable_focused {
+  figcaption {
     @include m-theme() {
-      background: themed($m-bgColor--secondary) !important;
+      background-color: themed($m-white);
+      color: themed($m-black);
+
+      &:focus {
+        background-color: themed($m-bgColor--tertiary);
+      }
     }
   }
+}
+
+.ck-balloon-panel button {
+  box-shadow: unset !important;
 }
 
 .ck-balloon-panel {
@@ -31,7 +40,12 @@
   // overrides ck-hidden for this element.
   // display: flex !important;
 
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
+  // @include m-theme() {
+  //   background-color: themed($m-bgColor--primary);
+  // }
+}
+
+.ck-tooltip__text {
+  // show over block toolbar and nav.
+  z-index: 1000002 !important;
 }

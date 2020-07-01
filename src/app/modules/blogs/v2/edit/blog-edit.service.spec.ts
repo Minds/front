@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { BlogEditorDropdownComponent } from './dropdown/dropdown.component';
+import { BlogEditorDropdownComponent } from './edit/dropdown/dropdown.component';
 import { BlogsEditService } from './blog-edit.service';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { clientMock } from '../../../../tests/client-mock.spec';

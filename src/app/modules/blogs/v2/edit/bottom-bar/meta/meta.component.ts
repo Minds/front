@@ -3,8 +3,8 @@
  */
 import { Component } from '@angular/core';
 import { BlogsEditService } from '../../blog-edit.service';
-import { SiteService } from '../../../../../common/services/site.service';
-import { Session } from '../../../../../services/session';
+import { SiteService } from '../../../../../../common/services/site.service';
+import { Session } from '../../../../../../services/session';
 
 @Component({
   selector: 'm-blogEditor__metadata',
