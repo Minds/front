@@ -9,12 +9,12 @@
     </p>
     <form *ngIf="form" [formGroup]="form">
       <!-- ENABLE PAYWALL CHECKBOX ---------------------------- -->
+      <div class="m-form__row--label">
+        <span i18n="@@COMPOSER__MONETIZE_CUSTOM__PAYWALL_STATUS">
+          Paywall status</span
+        >
+      </div>
       <div class="m-form__field--checkbox">
-        <div class="m-form__row--label">
-          <span i18n="@@COMPOSER__MONETIZE_CUSTOM__PAYWALL_STATUS">
-            Paywall status</span
-          >
-        </div>
         <div class="m-composerPopup__checkbox">
           <m-formInput__checkbox formControlName="enabled">
             <span i18n="@@COMPOSER__MONETIZE_CUSTOM__ENABLE_PAYWALL"
@@ -23,7 +23,10 @@
           </m-formInput__checkbox>
         </div>
       </div>
-      <div class="m-composerPopup__inlineFormFieldsContainer">
+      <div
+        class="m-composerPopup__inlineFormFieldsContainer"
+        *ngIf="enabled.value"
+      >
         <!-- MIN USD INPUT ---------------------------- -->
         <div class="m-form__field--text">
           <div class="m-form__row--label">
@@ -42,7 +45,9 @@
         </div>
         <!--ALLOW TOKENS CHECKBOX ---------------------------- -->
         <div class="m-form__field--checkbox">
-          <div class="m-composerPopup__checkbox">
+          <div
+            class="m-composerPopup__checkbox m-composerPopup__checkbox--allowTokens"
+          >
             <m-formInput__checkbox formControlName="has_tokens">
               <span i18n="@@COMPOSER__MONETIZE_CUSTOM__ALLOW_TOKENS"
                 >Allow tokens</span

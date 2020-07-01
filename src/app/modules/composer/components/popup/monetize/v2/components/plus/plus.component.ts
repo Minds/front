@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ProService } from '../../../../../../../pro/pro.service';
 import { WirePaymentHandlersService } from '../../../../../../../wire/wire-payment-handlers.service';
@@ -27,15 +28,17 @@ export type PlusPostExpiry = 172800 | null;
 @Component({
   selector: 'm-composer__monetizeV2__plus',
   templateUrl: './plus.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComposerMonetizeV2PlusComponent implements OnInit {
   readonly plusSupportTierUrn: string;
 
   readonly twoDays = 172800; // in seconds
+
   /**
    * If the user is Pro
    */
-  isPro;
+  isPro: boolean;
 
   /**
    * Terms & Conditions accepted state
@@ -72,9 +75,12 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.isEditingPlus) {
-      this.termsAccepted = true;
-      const expires = this.service.entity.wire_threshold.expires;
+    const monetization = this.service.monetization$.value;
+
+    if (monetization && monetization.support_tier) {
+      this.termsAccepted =
+        monetization.support_tier.urn === this.plusSupportTierUrn;
+      const expires = monetization.support_tier.expires;
       if (expires !== this.twoDays) {
         this.expires = null;
       }
@@ -85,8 +91,8 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   setup(): void {
     this.isPro = this.session.getLoggedInUser().pro;
 
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    this.detectChanges();
+    setTimeout(() => this.detectChanges(), 1);
   }
 
   setExpires(expires: PlusPostExpiry): void {
@@ -129,7 +135,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   /**
    * Emits the internal state to the composer service and attempts to dismiss the modal
    */
-  save() {
+  save(): void {
     if (!this.canSave) {
       return;
     }
@@ -158,5 +164,10 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
 
   get canSave(): boolean {
     return !this.isEditingPlus && this.termsAccepted;
+  }
+
+  detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

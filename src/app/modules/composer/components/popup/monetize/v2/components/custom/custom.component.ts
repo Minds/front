@@ -18,8 +18,8 @@ import { FormToastService } from '../../../../../../../../common/services/form-t
   templateUrl: './custom.component.html',
 })
 export class ComposerMonetizeV2CustomComponent implements OnInit {
-  userGuid;
-  form;
+  userGuid: string;
+  form: FormGroup;
   init: boolean = false;
   inProgress: boolean = false;
 
@@ -35,6 +35,7 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
     private client: Client,
     private toasterService: FormToastService
   ) {}
+
   ngOnInit(): void {
     this.form = new FormGroup({
       enabled: new FormControl(false),
@@ -43,10 +44,7 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
       }),
       has_tokens: new FormControl(false),
     });
-
-    if (this.service.isEditing$.getValue()) {
-      this.setInitialState();
-    }
+    this.setInitialState();
     this.init = true;
   }
 
@@ -59,7 +57,7 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
     if (!monetization) {
       return;
     }
-    const savedEntityData = this.service.entity.wire_threshold;
+    const savedEntityData = monetization.support_tier;
     if (savedEntityData) {
       this.enabled.setValue(true);
       this.usd.setValue(savedEntityData.usd);
@@ -109,6 +107,8 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
         this.service.monetization$.next({
           support_tier: {
             urn: urn,
+            usd: this.usd.value,
+            has_tokens: this.has_tokens.value,
           },
         });
       }
@@ -128,15 +128,18 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
      */
     return this.form.valid || !this.enabled.value;
   }
+
   /**
    * Shorthand access to Form Controls
    */
   get enabled() {
     return this.form.get('enabled');
   }
+
   get usd() {
     return this.form.get('usd');
   }
+
   get has_tokens() {
     return this.form.get('has_tokens');
   }

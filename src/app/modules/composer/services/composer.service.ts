@@ -82,7 +82,12 @@ export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export type MonetizationSubjectValue = {
   type?: 'tokens' | 'money';
   min?: number;
-  support_tier?: { urn: string; expires?: number };
+  support_tier?: {
+    urn: string;
+    expires?: number;
+    usd?: number;
+    has_tokens?: boolean;
+  };
 } | null;
 
 /**

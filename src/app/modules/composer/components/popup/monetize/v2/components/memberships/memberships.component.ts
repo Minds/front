@@ -65,11 +65,10 @@ export class ComposerMonetizeV2MembershipsComponent
           this.init = true;
           this.detectChanges();
         }
+
+        this.setInitialState();
       }
     );
-    if (this.service.isEditing$.getValue()) {
-      this.setInitialState();
-    }
   }
 
   /**
@@ -85,13 +84,13 @@ export class ComposerMonetizeV2MembershipsComponent
       const savedTier = this.supportTiers.find(
         tier => tier.urn === monetization.support_tier.urn
       );
-
       if (savedTier) {
         this.urn.setValue(savedTier.urn);
       } else {
         this.urn.setValue(null);
       }
     }
+    this.detectChanges();
   }
 
   ngOnDestroy(): void {

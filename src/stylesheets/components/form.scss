@@ -545,7 +545,7 @@
     display: block;
     box-sizing: border-box;
     position: relative;
-    padding-left: 35px;
+    padding-left: 40px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -556,8 +556,8 @@
     }
 
     &[class*='__radio'] {
-      margin: 0 24px 12px 0;
-      padding-left: 30px;
+      margin: 0 20px 10px 0;
+      padding-left: 40px;
     }
 
     input {
