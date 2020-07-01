@@ -1,0 +1,198 @@
+$flex-wrap-margin: 10px;
+
+.m-blogView__container {
+  text-rendering: optimizeLegibility;
+
+  .m-blogView__banner {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */
+    overflow: hidden;
+
+    > img {
+      width: 100%;
+      position: absolute;
+    }
+  }
+  .m-blogView__header {
+    padding: 50px 100px;
+    @media screen and (max-width: $min-desktop) {
+      padding: 30px 50px;
+    }
+
+    > * + * {
+      margin-top: 30px;
+    }
+
+    .m-blogView__topBar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .m-blogView__subscriptionContainer {
+        .m-blogView__badge {
+          font-weight: bold;
+          font-size: 15px;
+
+          div {
+            display: inline-flex;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 4px;
+            @include m-theme() {
+              background-color: themed($m-red);
+            }
+          }
+        }
+        .m-blogView__plusBadge {
+        }
+        .m-blogView_proBadge {
+        }
+      }
+    }
+    .m-blogView__subscribeButton {
+      background-color: unset;
+      border-radius: 30px;
+      padding: 8px 16px;
+      cursor: pointer;
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+      }
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+    .m-blogView__titleContainer {
+      width: 100%;
+      background: unset;
+      border: unset;
+      font-weight: 500;
+      outline: none;
+      font-family: 'Roboto';
+      font-size: 42px;
+      font-weight: bold;
+      line-height: 42px;
+    }
+  }
+  .m-blogView__socialBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .m-blogView__authorContainer {
+      display: flex;
+      align-items: center;
+      margin-bottom: $flex-wrap-margin;
+
+      > * + * {
+        margin-left: 8px;
+      }
+
+      .m-blogView__authorAvatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
+      .m-blogView__authorName {
+        font-size: 17px;
+        font-weight: bold;
+      }
+      .m-blogView__userBadge {
+        font-size: 20px;
+      }
+      .m-blogView__adminColor {
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+      .m-blogView__verifiedColor {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+      .m-blogView__timeCreatedSpan {
+        display: inline-flex;
+        margin-left: 32px;
+      }
+    }
+    .m-blogView__interactionsContainer {
+      display: flex;
+      margin-bottom: $flex-wrap-margin;
+      flex-wrap: wrap;
+      // @media screen and (max-width: $min-tablet) {
+      //   width: 100%;
+      // }
+
+      > * + * {
+        margin-left: 24px;
+        @media screen and (max-width: $min-desktop) {
+          margin-left: 12px;
+        }
+        @media screen and (max-width: $max-mobile) {
+          margin-left: 4px;
+        }
+      }
+
+      m-blogView__dropdown {
+        @media screen and (max-width: $min-tablet) {
+          position: absolute;
+          right: 50px;
+        }
+
+        .m-postMenu__button {
+          font-size: 16px;
+          background-color: unset;
+
+          i {
+            font-size: 20px;
+          }
+        }
+      }
+
+      minds-button-thumbs-up a,
+      minds-button-thumbs-down a,
+      minds-button-remind a {
+        display: flex;
+        align-items: flex-end;
+
+        i {
+          font-size: 22px;
+        }
+      }
+
+      .m-blogView__wireButton {
+        button {
+          border: 0 !important;
+          padding: 0;
+          height: auto;
+          display: flex;
+          align-items: flex-end;
+
+          m-icon span {
+            font-size: 14px;
+          }
+          > * {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+
+          span {
+            margin-left: 8px;
+            margin-right: unset !important;
+          }
+        }
+      }
+    }
+  }
+  .m-blogView__body {
+    padding: 0px 100px;
+    @media screen and (max-width: $min-desktop) {
+      padding: 0px 50px;
+    }
+  }
+}

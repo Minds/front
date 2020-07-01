@@ -57,9 +57,9 @@ const routes: Routes = [
       title: 'Edit Blog',
     },
   },
-  // { path: 'blog/v2/view/:guid/:title', component: BlogViewV2Component },
-  // { path: 'blog/v2/view/:guid', component: BlogViewV2Component },
-  // { path: ':username/blog/v2/:slugid', component: BlogViewV2Component },
+  { path: 'blog/v2/view/:guid/:title', component: BlogViewV2Component },
+  { path: 'blog/v2/view/:guid', component: BlogViewV2Component },
+  { path: ':username/blog/v2/:slugid', component: BlogViewV2Component },
 ];
 
 @NgModule({
@@ -94,8 +94,8 @@ const routes: Routes = [
     BlogEditorMetaComponent,
     BlogEditorBottomBarComponent,
     BlogEditorTagsComponent,
-    // BlogViewV2Component,
-    // BlogViewDropdownComponent,
+    BlogViewV2Component,
+    BlogViewDropdownComponent,
   ],
   exports: [
     BlogView,
@@ -105,8 +105,8 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
     BlogEditorComponent,
-    // BlogViewV2Component,
+    BlogViewV2Component,
   ],
-  providers: [BlogsEditService], //, BlogsViewService],
+  providers: [BlogsEditService, BlogsViewService],
 })
 export class BlogModule {}

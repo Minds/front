@@ -1,0 +1,118 @@
+<div class="m-blogView__container">
+  <div class="m-blogView__banner">
+    <img [src]="(service.blog$ | async)?.banner" />
+  </div>
+  <div class="m-blogView__header">
+    <div class="m-blogView__topBar">
+      <div class="m-blogView__subscriptionContainer">
+        <!-- TODO: Swap for monetized badge -->
+        <!-- <m-paywallBadge [entity]="service.ownerObj$ | async"></m-paywallBadge> -->
+        <div class="m-blogView__badge m-blogView__plusBadge">
+          MINDS
+          <div>PLUS</div>
+        </div>
+      </div>
+      <button
+        (click)="service.subscribe()"
+        *ngIf="!(service.blog$ | async)?.ownerObj.subscribed"
+        class="m-blogView__subscribeButton"
+      >
+        + Subscribe
+      </button>
+      <button
+        (click)="service.unsubscribe()"
+        *ngIf="(service.blog$ | async)?.ownerObj.subscribed"
+        class="m-blogView__subscribeButton"
+      >
+        - Subscribed
+      </button>
+    </div>
+    <div class="m-blogView__titleContainer">
+      {{ (service.blog$ | async)?.title }}
+    </div>
+    <div class="m-blogView__socialBar">
+      <div class="m-blogView__authorContainer">
+        <div class="m-blogView__authorAvatarContainer">
+          <img
+            src="{{ avatarSrc$ | async }}"
+            class="m-blogView__authorAvatar"
+          />
+        </div>
+        <span class="m-blogView__authorName">{{ author$ | async }}</span>
+        <i
+          *ngIf="
+            (service.blog$ | async)?.ownerObj.is_admin ||
+            (service.blog$ | async)?.ownerObj.verified
+          "
+          [ngClass]="{
+            'm-blogView__adminColor': (service.blog$ | async)?.ownerObj
+              .is_admin,
+            'm-blogView__verifiedColor': (service.blog$ | async)?.ownerObj
+              .verified
+          }"
+          class="material-icons m-blogView__userBadge"
+        >
+          verified_user
+        </i>
+        <span class="m-blogView__timeCreatedSpan">{{
+          (service.blog$ | async)?.time_created * 1000 | friendlydatediff
+        }}</span>
+      </div>
+      <div
+        class="m-blogView__interactionsContainer"
+        *ngIf="service.blog$ | async"
+      >
+        <minds-button-thumbs-up
+          [object]="service.blog$ | async"
+        ></minds-button-thumbs-up>
+        <minds-button-thumbs-down
+          [object]="service.blog$ | async"
+        ></minds-button-thumbs-down>
+        <minds-button-remind
+          [object]="service.blog$ | async"
+        ></minds-button-remind>
+
+        <!-- Show wire if not own post -->
+        <m-wire-button
+          class="m-blogView__wireButton"
+          *ngIf="
+            session.getLoggedInUser().guid !=
+            (service.blog$ | async)?.ownerObj.guid
+          "
+          [object]="service.blog$ | async"
+        ></m-wire-button>
+
+        <!-- Show boost if own post -->
+        <!-- <ng-container *ngIf="session.getLoggedInUser().guid == (service.blog$ | async)?.ownerObj.guid">
+          <div class="m-layout__spacer"></div>
+
+          <button
+            class="m-btn m-btn--slim m-boostButton"
+            (click)="openBoostModal($event)"
+          >
+            <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
+            <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
+          </button>
+        </ng-container> -->
+
+        <m-blogView__dropdown
+          [blog]="service.blog$ | async"
+          (optionSelected)="onDropdownOptionSelected($event)"
+        ></m-blogView__dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-blogView__body">
+    <div
+      m-code-highlight
+      class="mdl-cell mdl-cell--12-col minds-blog-body"
+      [innerHtml]="(service.blog$ | async)?.description | safe"
+    ></div>
+    <!--^^ 
+      [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(blog) }"
+      [hidden]="!blog.description"
+    -->
+  </div>
+  <!-- TODO: Comments -->
+</div>
