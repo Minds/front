@@ -37,6 +37,7 @@
   </a>
 
   <a
+    *ngIf="!legacyPaywallEnabled"
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"

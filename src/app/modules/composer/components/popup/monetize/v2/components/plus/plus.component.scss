@@ -1,11 +1,30 @@
 m-composer__monetizeV2__plus {
-  m-shadowboxSubmitButton {
-    margin-top: 30px;
-  }
-
   .m-composerPopup__checkbox {
     @include m-theme() {
       color: themed($m-white);
+    }
+    .m-formInput__checkbox {
+      .m-formInputCheckbox__customLabel > span {
+        font-size: 16px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+  .m-composerPopup__subtitle {
+    margin: 0 0 40px 0 !important;
+  }
+
+  .m-form__field--textboxToggle {
+    margin-top: 36px;
+  }
+  .m-form__row--label.m-composerPopup__text {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 12px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
     }
   }
 }

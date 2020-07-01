@@ -20,14 +20,22 @@ describe('Composer Toolbar', () => {
 
   const isEditing$ = jasmine.createSpyObj('isEditing$', {
     next: () => {},
+    getValue: () => false,
+    subscribe: { unsubscribe: () => {} },
+  });
+
+  const monetization$ = jasmine.createSpyObj('monetization$', {
+    next: () => {},
+    getValue: () => null,
     subscribe: { unsubscribe: () => {} },
   });
 
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['attachment$', 'isEditing$'],
+    has: ['attachment$', 'isEditing$', 'monetization$'],
     props: {
       attachment$: { get: () => attachment$ },
       isEditing$: { get: () => isEditing$ },
+      monetization$: { get: () => monetization$ },
     },
   });
 
