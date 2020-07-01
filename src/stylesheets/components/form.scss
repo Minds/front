@@ -301,6 +301,39 @@
     }
   }
   ////////////////////////////////////////////
+  // FIELD -- TEXTBOX TOGGLE  ////////////////
+  ////////////////////////////////////////////
+  .m-form__field--textboxToggle {
+    .m-formInput__textboxToggle {
+      border-radius: 2px;
+      display: flex;
+      cursor: pointer;
+      transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background-color: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+      > div {
+        padding: 10px 15px;
+        font-size: 15px;
+        transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+        &:hover {
+          @include m-theme() {
+            background-color: rgba(themed($m-borderColor--primary), 0.9);
+          }
+        }
+        &.optionActive {
+          @include m-theme() {
+            background-color: themed($m-borderColor--primary);
+          }
+        }
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
   // FIELD -- GRID  //////////////////////////
   ////////////////////////////////////////////
   .m-form__field--grid {
@@ -512,7 +545,7 @@
     display: block;
     box-sizing: border-box;
     position: relative;
-    padding-left: 35px;
+    padding-left: 40px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -523,8 +556,8 @@
     }
 
     &[class*='__radio'] {
-      margin: 0 24px 12px 0;
-      padding-left: 30px;
+      margin: 0 20px 10px 0;
+      padding-left: 40px;
     }
 
     input {

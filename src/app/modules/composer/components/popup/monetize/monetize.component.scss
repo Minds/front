@@ -29,4 +29,23 @@
   .m-form__field--select select {
     width: 100%;
   }
+
+  .m-composerPopup__inlineFormFieldsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+  }
+
+  .m-form__field--checkbox {
+    display: block;
+  }
+  .m-form__field--text input {
+    min-width: 200px;
+  }
+  .m-form__row--label {
+    font-size: 16px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
 }

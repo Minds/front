@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit,
   ViewChild,
+  Input,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
@@ -24,6 +25,8 @@ export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
 export class FormInputCheckboxComponent implements ControlValueAccessor {
   readonly id: string;
   value: boolean = false;
+
+  @Input() disabled: boolean = false;
 
   @ViewChild('input', { static: true }) input: ElementRef;
 

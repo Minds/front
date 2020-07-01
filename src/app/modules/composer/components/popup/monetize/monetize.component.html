@@ -1,5 +1,7 @@
 <ng-container *mIfFeature="'plus-2020'; else v1">
-  <m-composer__monetizeV2></m-composer__monetizeV2>
+  <m-composer__monetizeV2
+    (dismissIntent)="dismissIntent.emit()"
+  ></m-composer__monetizeV2>
 </ng-container>
 <ng-template #v1>
   <div class="m-composerPopup__body m-composer__monetize">
