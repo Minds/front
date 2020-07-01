@@ -84,7 +84,9 @@ export function app() {
       } else {
         res.sendResponse = res.send;
         res.send = body => {
-          myCache.set(key, body);
+          if (res.status === 200) {
+            myCache.set(key, body);
+          }
           res.sendResponse(body);
         };
         next();

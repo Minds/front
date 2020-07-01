@@ -3,7 +3,8 @@
     class="m-wire__lockScreen"
     [ngClass]="{
       isTextOnly: contentType === 'status',
-      isMedia: contentType !== 'status'
+      isMedia: contentType !== 'status',
+      isVideo: contentType === 'video'
     }"
     (click)="$event.stopPropagation(); unlock()"
     *ngIf="entity.wire_threshold && init"

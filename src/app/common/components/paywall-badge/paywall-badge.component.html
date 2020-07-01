@@ -10,8 +10,12 @@
       }"
     >
       <i *ngIf="paywallType !== 'plus'" class="material-icons">lock</i>
-      <span *ngIf="paywallType === 'plus'">Minds+</span>
-      <span *ngIf="paywallType === 'tier'">{{ tierName }} Members Only</span>
+      <span class="m-paywallBadge__tierName" *ngIf="paywallType === 'plus'"
+        >MINDS+</span
+      >
+      <span class="m-paywallBadge__tierName" *ngIf="paywallType === 'tier'"
+        >{{ tierName }} Members Only</span
+      >
     </div>
   </ng-container>
 </ng-container>
