@@ -31,10 +31,6 @@ import { BlogEditorDropdownComponent } from './v2/edit/dropdown/dropdown.compone
 import { BlogEditorMetaComponent } from './v2/edit/bottom-bar/meta/meta.component';
 import { BlogEditorBottomBarComponent } from './v2/edit/bottom-bar/bottom-bar.component';
 import { BlogEditorTagsComponent } from './v2/edit/bottom-bar/tags/tags.component';
-import { BlogViewV2Component } from './v2/view/view.component';
-import { BlogsViewService } from './v2/view/blog-view.service';
-import { BlogViewDropdownComponent } from './v2/view/dropdown/dropdown.component';
-
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
@@ -57,9 +53,6 @@ const routes: Routes = [
       title: 'Edit Blog',
     },
   },
-  // { path: 'blog/v2/view/:guid/:title', component: BlogViewV2Component },
-  // { path: 'blog/v2/view/:guid', component: BlogViewV2Component },
-  // { path: ':username/blog/v2/:slugid', component: BlogViewV2Component },
 ];
 
 @NgModule({
@@ -94,8 +87,6 @@ const routes: Routes = [
     BlogEditorMetaComponent,
     BlogEditorBottomBarComponent,
     BlogEditorTagsComponent,
-    // BlogViewV2Component,
-    // BlogViewDropdownComponent,
   ],
   exports: [
     BlogView,
@@ -105,8 +96,7 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
     BlogEditorComponent,
-    // BlogViewV2Component,
   ],
-  providers: [BlogsEditService], //, BlogsViewService],
+  providers: [BlogsEditService],
 })
 export class BlogModule {}
