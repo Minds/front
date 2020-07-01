@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import hljs from 'highlight.js';
+import * as hljs from 'highlight.js';
 
 /**
  * Relevant output from Highlight.js methods
@@ -59,7 +59,7 @@ export class CodeHighlightService {
    *
    * @param {Element} codeNode HTML element to highlight code blocks
    */
-  highlightBlock(codeNode: Element) {
+  highlightBlock(codeNode: HTMLElement) {
     if (hljs) {
       hljs.highlightBlock(codeNode);
     }
