@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="pt-PT">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="pt-BR">
     <body>
       <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html">
         <source>Groups</source>
@@ -3995,13 +3995,13 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          This is 
+        <target state="translated">
+          Isto é 
           <x id="START_TAG_SPAN"/>
           @
           <x id="CLOSE_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
-          's total volume (gross) of all Token wires received in the last 30 days
+           o volume total (bruto) de todos os Tokens recebidos nos últimos 30 dias
         </target>
       </trans-unit>
       <trans-unit id="WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK" datatype="html">
@@ -5729,7 +5729,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Junte-se à Revolução das Mentes</target>
+        <target state="translated">Junte-se à Revolução Minds</target>
       </trans-unit>
       <trans-unit id="REGISTER__ALREADY__HAVE__ACOUNT__LINK" datatype="html">
         <source>
@@ -5743,12 +5743,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          Já tem uma conta? 
-          <x id="START_LINK"/>
-          Acessar
-          <x id="CLOSE_LINK"/>
-        </target>
+        <target state="translated">Já possui uma conta? Login</target>
       </trans-unit>
       <trans-unit id="M__COMMON__USERNAME" datatype="html">
         <source>Username</source>
@@ -8695,7 +8690,7 @@
           <context context-type="linenumber">177</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Não há UNDO!</target>
+        <target state="translated">Não há DESFAZER!</target>
       </trans-unit>
       <trans-unit id="BLOGS__VIEW__DELETION_CONFIRMATION" datatype="html">
         <source>The blog has been deleted.</source>
@@ -9377,7 +9372,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Pesquisar Mentes</target>
+        <target state="translated">Busca Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__SEARCH__SHORT" datatype="html">
         <source>Search</source>
@@ -9386,7 +9381,7 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Pesquisa</target>
+        <target state="translated">Busca</target>
       </trans-unit>
       <trans-unit id="MESSENGER__ENCRYPTION__ENTER_CHAT_PWD_DESC" datatype="html">
         <source>
@@ -9809,7 +9804,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Ao selecionar o modo explícito, você reconhece que tem mais de 18 anos de idade e está disposto a ver conteúdo gráfico.</target>
+        <target state="translated">Por selecionar o modo explícito, você reconhece que tem mais de 18 anos de idade e está disposto a ver conteúdo gráfico.</target>
       </trans-unit>
       <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM" datatype="html">
         <source>Auto-rotate</source>
@@ -10897,7 +10892,7 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Carreira</target>
+        <target state="translated">Carreiras</target>
       </trans-unit>
       <trans-unit id="COMMON_FOOTER__INVESTORS" datatype="html">
         <source>Investors</source>
@@ -11371,7 +11366,7 @@
           <context context-type="linenumber">156</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Suporte personalizado da equipe de Mentes</target>
+        <target state="translated">Suporte personalizado da equipe do Minds</target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__REGAIN_CONTROL_BUSINESS" datatype="html">
         <source>Regain control of your business online</source>
@@ -12159,13 +12154,7 @@
           <context context-type="linenumber">93</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          By purchasing Pro you agree to 
-          <x id="START_LINK"/>
-          Terms &amp; Conditions
-          <x id="CLOSE_LINK"/>
-          .
-        </target>
+        <target state="translated">Ao comprar uma conta Pro, você concorda com os Termos e Condições.</target>
       </trans-unit>
       <trans-unit id="PRO_CHANNEL_LIST__ALL" datatype="html">
         <source>All</source>
@@ -12387,7 +12376,7 @@
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Grupos sugeridos</target>
+        <target state="translated">Grupos Sugeridos</target>
       </trans-unit>
       <trans-unit id="COMMON__JOIN" datatype="html">
         <source>Join</source>
@@ -12942,7 +12931,7 @@
           <context context-type="linenumber">147</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">As informações do seu cartão de crédito são seguras, seguras e compatíveis com o PCI.</target>
+        <target state="translated">As informações de seu cartão de crédito estão guardadas, seguras e compatíveis com o PCI.</target>
       </trans-unit>
       <trans-unit id="M__COMMON__COMPLETE" datatype="html">
         <source>Complete</source>
@@ -12952,7 +12941,7 @@
         </context-group>
         <note priority="1" from="description">Completed</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Complete</target>
+        <target state="translated">Completo</target>
       </trans-unit>
       <trans-unit id="CHECKOUT__WAITING_LABEL" datatype="html">
         <source>One moment please...</source>
@@ -12961,7 +12950,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Um momento por favor...</target>
+        <target state="translated">Um momento, por favor...</target>
       </trans-unit>
       <trans-unit id="CHECKOUT__SAVED_CARDS_TITLE" datatype="html">
         <source>Select a card to use</source>
@@ -14592,7 +14581,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Um lugar para ter conversas abertas e reunir pessoas. Cuidado com sua mente e seja pago por criar conteúdo, dirigir tráfego e amigos indicados.</target>
+        <target state="translated">Um lugar para ter conversas abertas e reunir as pessoas. Liberte a sua mente e seja pago para criar conteúdo, conduzindo o tráfego e indicar amigos.</target>
       </trans-unit>
       <trans-unit id="f2db5016fda75ab3753982d5299d96e0c5f4a7d9" datatype="html">
         <source>Join Minds Now</source>
@@ -16065,7 +16054,7 @@
           <context context-type="linenumber">276</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Comprar tokens é uma das melhores maneiras de manter as Mentes independentes e apoiar a liberdade da Internet.</target>
+        <target state="translated">Comprar tokens é uma das melhores maneiras de manter o Minds independente e apoiar a liberdade da Internet.</target>
       </trans-unit>
       <trans-unit id="COMMON__MINDS_REWARDS" datatype="html">
         <source>Minds Rewards</source>
@@ -16078,7 +16067,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Recompensas de Mente</target>
+        <target state="translated">Recompensas do Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__EARN_TOKENS_FOR_CONTRIBUTIONS" datatype="html">
         <source>
@@ -18550,7 +18539,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Adicione uma camada extra de segurança à sua conta, ativando o 2FA.</target>
+        <target state="translated">Adicione uma camada extra de segurança à sua conta, ativando a autenticação 2FA.</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__EMAIL__LABEL" datatype="html">
         <source>Email Address</source>
@@ -18841,7 +18830,7 @@
           <context context-type="linenumber">198</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Notícias sobre novos produtos e recursos de novas Mentes</target>
+        <target state="translated">Notícias sobre novos produtos e recursos do Minds</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__MINDS_USAGE_TIPS" datatype="html">
         <source>Tips on how to use Minds</source>
@@ -18850,7 +18839,7 @@
           <context context-type="linenumber">218</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Dicas de como usar Mentes</target>
+        <target state="translated">Dicas de como usar o Minds</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__EXCLUSIVE_PROMOTIONS" datatype="html">
         <source>Exclusive promotions</source>
@@ -19329,7 +19318,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Uma breve descrição sobre o seu site. Isso será usado em suas etiquetas SEO também.</target>
+        <target state="translated">Uma breve descrição do seu site. Também será usada em suas etiquetas SEO.</target>
       </trans-unit>
       <trans-unit id="PRO_GENERAL__ENABLE_PRO_THEME" datatype="html">
         <source>Enable Pro theme</source>
@@ -19845,7 +19834,7 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Blocos de anúncios ou outros códigos head JS podem ir aqui. Por favor, entre em contato com um administrador de Mentes ou envie um e-mail para info@minds.com para personalizar este campo.</target>
+        <target state="translated">Blocos de anúncios ou outros códigos head JS podem vir aqui. Favor entrar em contato com um administrador do Minds ou enviar um e-mail para info@minds.com para personalizar este campo.</target>
       </trans-unit>
       <trans-unit id="DOMAIN_SETTINGS__SAVE_DOMAIN" datatype="html">
         <source>Save Domain</source>
@@ -20155,7 +20144,7 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Pro Settings</target>
+        <target state="translated">Configurações Pro</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL" datatype="html">
         <source>Pro Subscription Management</source>
@@ -20807,7 +20796,7 @@
         </context-group>
         <note priority="1" from="description">CHANNEL_V2__BRIEF_WIRE_REWARD__SHOP</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Comprar</target>
+        <target state="translated">Loja</target>
       </trans-unit>
       <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__TOKENS_PER_MONTH" datatype="html">
         <source>
@@ -20825,7 +20814,7 @@
         <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           token/month} other {
+           token/mês} other {
           <x id="INTERPOLATION"/>
            tokens/mês} }
         </target>
@@ -20841,11 +20830,7 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          $
-          <x id="INTERPOLATION"/>
-          /mês
-        </target>
+        <target state="translated">/mês</target>
       </trans-unit>
     </body>
   </file>
