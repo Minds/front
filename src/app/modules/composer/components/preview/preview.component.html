@@ -11,7 +11,7 @@
     (onPortraitOrientation)="setPortrait($event)"
   >
     <div
-      class="m-composerPreview__removeAttachment m-composerPreview__close"
+      class="m-composerPreview__close"
       [hidden]="(isPosting$ | async) || (isEditing$ | async)"
       (click)="removeAttachment()"
     >
