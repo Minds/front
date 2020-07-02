@@ -5730,7 +5730,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Unisciti alla Rivoluzione Mente</target>
+        <target state="translated">Unisciti alla Rivoluzione di Mind</target>
       </trans-unit>
       <trans-unit id="REGISTER__ALREADY__HAVE__ACOUNT__LINK" datatype="html">
         <source>
@@ -9374,7 +9374,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Cerca Menti</target>
+        <target state="translated">Cerca Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__SEARCH__SHORT" datatype="html">
         <source>Search</source>
@@ -14591,7 +14591,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Un posto per avere conversazioni aperte e portare le persone insieme. Libera la tua mente e ottenere pagato per la creazione di contenuti, guida traffico e gli amici di riferimento.</target>
+        <target state="translated">Un posto per avere conversazioni aperte e riunire assieme le persone. Libera la tua mente e ottieni il pagamento per la creazione di contenuti, guidare il traffico e referenziare amici.</target>
       </trans-unit>
       <trans-unit id="f2db5016fda75ab3753982d5299d96e0c5f4a7d9" datatype="html">
         <source>Join Minds Now</source>

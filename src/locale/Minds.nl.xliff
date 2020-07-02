@@ -3997,13 +3997,13 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          This is 
+        <target state="translated">
+          Dit is 
           <x id="START_TAG_SPAN"/>
-          @
+           @ 
           <x id="CLOSE_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
-          's total volume (gross) of all Token wires received in the last 30 days
+           's totale volume (bruto) van alle Token-draden die in de afgelopen 30 dagen zijn ontvangen
         </target>
       </trans-unit>
       <trans-unit id="WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK" datatype="html">
@@ -12166,10 +12166,10 @@
           <context context-type="linenumber">93</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          By purchasing Pro you agree to 
+        <target state="translated">
+          Door Pro te kopen, gaat u akkoord met de 
           <x id="START_LINK"/>
-          Terms &amp; Conditions
+           Algemene &amp; voorwaarden 
           <x id="CLOSE_LINK"/>
           .
         </target>
@@ -20432,12 +20432,12 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Our 
+        <target state="translated">
+          Onze 
           <x id="START_LINK"/>
-          research-based
+           op onderzoek gebaseerde 
           <x id="CLOSE_LINK"/>
-           approach in handling misinformation and other types of controversial lawful content is to facilitate civil discourse through free speech, which is the only way to change someone’s mind. It is your choice to engage with someone, keep scrolling, report or block.
+           benadering bij het omgaan met verkeerde informatie en andere soorten controversiële, wettige inhoud is het bevorderen van burgerlijke discours door middel van vrije meningsuiting, wat de enige manier is om van gedachten te veranderen. Het is jouw keuze om met iemand in contact te blijven, te blijven scrollen, rapporteren of blokkeren.
         </target>
       </trans-unit>
       <trans-unit id="DISCOVERY_SUGGESTIONS__CHANNELS" datatype="html">

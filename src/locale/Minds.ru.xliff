@@ -43,7 +43,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Найти группы</target>
+        <target state="translated">Группы</target>
       </trans-unit>
       <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
         <source>Join some groups to populate this sidebar</source>
@@ -56,7 +56,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Присоединиться к некоторым группам для заполнения этой боковой панели</target>
+        <target state="translated">Здесь будут отображаться группы, в которые ты вступишь. Присоединяйся</target>
       </trans-unit>
       <trans-unit id="COMMON__HOME" datatype="html">
         <source>Home</source>
@@ -69,7 +69,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Домашний</target>
+        <target state="translated">Домой</target>
       </trans-unit>
       <trans-unit id="COMMON__NEWSFEED" datatype="html">
         <source>Newsfeed</source>
@@ -95,7 +95,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Обнаружение</target>
+        <target state="translated">Исследуй</target>
       </trans-unit>
       <trans-unit id="COMMON__WALLET" datatype="html">
         <source>Wallet</source>
@@ -165,7 +165,7 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Популярные</target>
+        <target state="translated">Популярное</target>
       </trans-unit>
       <trans-unit id="COMMON__SETTINGS" datatype="html">
         <source>Settings</source>
@@ -10581,11 +10581,11 @@
           <context context-type="linenumber">173</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_BOLD_TEXT"/>
-          Log in
+          Войдите
           <x id="CLOSE_BOLD_TEXT"/>
-           to send a message
+           чтобы отправить сообщение
         </target>
       </trans-unit>
       <trans-unit id="MINDS__COMMENTS__CONTAINS_BLOCKED_REPLIES" datatype="html">
@@ -14294,12 +14294,12 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Loading the next video in 
+        <target state="translated">
+          Следующее видео загрузится через 
           <x id="START_TAG_STRONG"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_TAG_STRONG"/>
-           seconds.
+           секунд.
         </target>
       </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__YOUTUBE_MIGRATION" datatype="html">
@@ -20421,12 +20421,12 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Our 
+        <target state="translated">
+          Наш 
           <x id="START_LINK"/>
-          research-based
+          основанный на исследованиях
           <x id="CLOSE_LINK"/>
-           approach in handling misinformation and other types of controversial lawful content is to facilitate civil discourse through free speech, which is the only way to change someone’s mind. It is your choice to engage with someone, keep scrolling, report or block.
+           подход к обработке дезинформации и других типов спорного законного контента заключается в том, чтобы облегчить гражданский дискурс через свободу слова, которая является единственным способом изменить чье-либо мнение. Это ваш выбор - взаимодействовать с кем-либо, продолжать просматривать, сообщать или блокировать.
         </target>
       </trans-unit>
       <trans-unit id="DISCOVERY_SUGGESTIONS__CHANNELS" datatype="html">
