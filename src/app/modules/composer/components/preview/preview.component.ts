@@ -40,6 +40,11 @@ export class PreviewComponent {
   isPosting$ = this.service.isPosting$;
 
   /**
+   * Are we editing?
+   */
+  isEditing$ = this.service.isEditing$;
+
+  /**
    * Is the media in portrait mode?
    */
   portrait: boolean = false;
