@@ -849,8 +849,8 @@ export class ComposerService implements OnDestroy {
     // New activity
     let endpoint = `api/v2/newsfeed`;
 
-    if (this.entity && this.entity.guid) {
-      // Editing an activity
+    let editing = this.entity && this.entity.guid;
+    if (editing) {
       endpoint = `api/v2/newsfeed/${this.entity.guid}`;
     }
 
@@ -860,7 +860,9 @@ export class ComposerService implements OnDestroy {
         .toPromise();
 
       // Provide an update to subscribing feeds.
-      this.feedsUpdate.postEmitter.emit(activity);
+      if (!editing) {
+        this.feedsUpdate.postEmitter.emit(activity);
+      }
 
       this.reset();
       this.isPosting$.next(false);
