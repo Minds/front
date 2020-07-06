@@ -30,10 +30,7 @@
       *ngIf="service.shouldShowPaywall$ | async"
     ></m-activity__paywall
   ></ng-container>
-  <m-activity__nsfwConsent
-    *ngIf="service.shouldShowNsfwConsent$ | async"
-    [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
-  >
+  <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
   </m-activity__nsfwConsent>
 
   <m-activity__toolbar

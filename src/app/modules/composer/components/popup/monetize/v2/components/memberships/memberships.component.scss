@@ -1,4 +1,8 @@
 m-composer__monetizeV2__memberships {
+  .m-composerPopup__content.m-formWrapper {
+    max-height: 40vh;
+    overflow-y: scroll;
+  }
   .m-form__row--label {
     display: flex;
     justify-content: space-between;

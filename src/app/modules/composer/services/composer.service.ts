@@ -96,6 +96,24 @@ export type MonetizationSubjectValue = {
 export const DEFAULT_MONETIZATION_VALUE: MonetizationSubjectValue = null;
 
 /**
+ * Pending monetization value type
+ */
+export type PendingMonetizationSubjectValue = {
+  type: 'plus' | 'membership' | 'custom';
+  support_tier: {
+    urn: string;
+    expires?: number;
+    usd?: number;
+    has_tokens?: boolean;
+  };
+} | null;
+
+/**
+ * Default pending monetization value
+ */
+export const DEFAULT_PENDING_MONETIZATION_VALUE: PendingMonetizationSubjectValue = null;
+
+/**
  * Tags value type
  */
 export type TagsSubjectValue = Array<string>;
@@ -182,9 +200,18 @@ export class ComposerService implements OnDestroy {
   /**
    * Monetization subject
    */
-  readonly monetization$: BehaviorSubject<
+  monetization$: BehaviorSubject<
     MonetizationSubjectValue
   > = new BehaviorSubject<MonetizationSubjectValue>(DEFAULT_MONETIZATION_VALUE);
+
+  /**
+   * Pending monetization subject
+   */
+  readonly pendingMonetization$: BehaviorSubject<
+    PendingMonetizationSubjectValue
+  > = new BehaviorSubject<PendingMonetizationSubjectValue>(
+    DEFAULT_PENDING_MONETIZATION_VALUE
+  );
 
   /**
    * Tags subject
@@ -315,6 +342,11 @@ export class ComposerService implements OnDestroy {
    * Subscription to data structure observable
    */
   protected readonly dataSubscription: Subscription;
+
+  /**
+   * Subscription to pending monetization observable
+   */
+  protected readonly pendingMonetizationSubscription: Subscription;
 
   /**
    * Subscription to a rich embed extractor observable
@@ -486,6 +518,19 @@ export class ComposerService implements OnDestroy {
       this.buildPayload(data)
     );
 
+    // Subscribe to pending monetization and format monetization$
+    this.pendingMonetizationSubscription = this.pendingMonetization$.subscribe(
+      pendingMonetization => {
+        if (pendingMonetization) {
+          this.monetization$.next({
+            support_tier: pendingMonetization.support_tier,
+          });
+        } else {
+          this.monetization$.next(null);
+        }
+      }
+    );
+
     // Subscribe to message and extract any URL it finds
     this.messageUrl$ = this.message$.pipe(
       map(message => this.richEmbed.extract(message))
@@ -540,6 +585,9 @@ export class ComposerService implements OnDestroy {
 
     // Unsubscribe to data stream
     this.dataSubscription.unsubscribe();
+
+    // Unsubscribe from pending monetization
+    this.pendingMonetizationSubscription.unsubscribe();
 
     // Unsubscribe from rich embed extractor
     this.richEmbedExtractorSubscription.unsubscribe();
@@ -849,8 +897,8 @@ export class ComposerService implements OnDestroy {
     // New activity
     let endpoint = `api/v2/newsfeed`;
 
-    if (this.entity && this.entity.guid) {
-      // Editing an activity
+    let editing = this.entity && this.entity.guid;
+    if (editing) {
       endpoint = `api/v2/newsfeed/${this.entity.guid}`;
     }
 
@@ -860,7 +908,9 @@ export class ComposerService implements OnDestroy {
         .toPromise();
 
       // Provide an update to subscribing feeds.
-      this.feedsUpdate.postEmitter.emit(activity);
+      if (!editing) {
+        this.feedsUpdate.postEmitter.emit(activity);
+      }
 
       this.reset();
       this.isPosting$.next(false);

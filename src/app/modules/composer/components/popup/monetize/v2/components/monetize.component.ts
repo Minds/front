@@ -15,13 +15,6 @@ import { FeaturesService } from '../../../../../../../services/features.service'
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
 
 export type MonetizationTabType = 'plus' | 'membership' | 'custom';
-interface MonetizationState {
-  type: MonetizationTabType;
-  urn?: string;
-  has_tokens?: boolean;
-  usd?: number;
-  expires?: number;
-}
 
 @Component({
   selector: 'm-composer__monetizeV2',
@@ -29,7 +22,8 @@ interface MonetizationState {
   providers: [SupportTiersService],
 })
 export class ComposerMonetizeV2Component implements OnInit {
-  isEditing: boolean = false;
+  type: MonetizationTabType = 'plus';
+
   isEditingPlus: boolean = false;
 
   plusTierUrn: string = '';
@@ -38,13 +32,6 @@ export class ComposerMonetizeV2Component implements OnInit {
    * Signal event emitter to parent's popup service
    */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
-
-  /**
-   * Monetization popup state object
-   */
-  state: MonetizationState = {
-    type: 'plus',
-  };
 
   /**
    * Constructor
@@ -66,28 +53,39 @@ export class ComposerMonetizeV2Component implements OnInit {
    * Component initialization. Set initial state.
    */
   ngOnInit(): void {
-    this.isEditing = this.service.isEditing$.getValue();
     const monetization = this.service.monetization$.getValue();
+    const pendingMonetization = this.service.pendingMonetization$.getValue();
 
     /**
-     * Go to the tab of current monetization
+     * Go to the tab of most recent monetization
      */
-    if (this.isEditing && monetization) {
-      const tier = this.service.entity.wire_threshold;
-      if (tier) {
-        this.setType(tier);
-      }
+
+    if (monetization && monetization.support_tier) {
+      this.setType(monetization.support_tier);
+    }
+    if (pendingMonetization) {
+      this.type = pendingMonetization.type || 'plus';
+      return;
     }
   }
 
-  setType(tier: SupportTier) {
+  setType(tier) {
     if (!tier.public) {
-      this.state.type = 'custom';
+      this.type = 'custom';
     } else if (tier.urn === this.plusTierUrn) {
-      this.isEditingPlus = true;
-      this.state.type = 'plus';
+      this.type = 'plus';
+      const savedState = this.service.entity;
+      if (
+        savedState &&
+        savedState.wire_threshold &&
+        savedState.wire_threshold.support_tier
+      ) {
+        if (savedState.wire_threshold.support_tier.urn === this.plusTierUrn) {
+          this.isEditingPlus = true;
+        }
+      }
     } else {
-      this.state.type = 'membership';
+      this.type = 'membership';
     }
   }
 }
