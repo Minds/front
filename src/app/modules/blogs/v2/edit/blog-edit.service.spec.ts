@@ -76,7 +76,6 @@ describe('BlogsEditService', () => {
     expect(service.author$.getValue()).toBe('author');
     expect(service.nsfw$.getValue()).toEqual([1, 2]);
     expect(service.error$.getValue()).toBe('');
-    expect(service.banner$.getValue()).toBe('undefinedfs/v1/banners/1/0');
     expect(service.bannerFile$.getValue()).toBe('');
     expect(service.canPost$.getValue()).toBe(true);
     expect(service.guid$.getValue()).toBe('1');
