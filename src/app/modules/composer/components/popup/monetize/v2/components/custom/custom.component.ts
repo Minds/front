@@ -40,7 +40,7 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
     this.form = new FormGroup({
       enabled: new FormControl(false),
       usd: new FormControl('', {
-        validators: [Validators.required, Validators.min(0.01)],
+        validators: [Validators.required, Validators.min(1)],
       }),
       has_tokens: new FormControl(false),
     });
@@ -53,16 +53,44 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
    * make form display current selection
    */
   setInitialState(): void {
-    const monetization = this.service.monetization$.getValue();
-    if (!monetization) {
+    if (!this.service.monetization$.getValue()) {
       return;
     }
-    const savedEntityData = monetization.support_tier;
-    if (savedEntityData) {
-      this.enabled.setValue(true);
-      this.usd.setValue(savedEntityData.usd);
-      this.has_tokens.setValue(savedEntityData.has_tokens);
+
+    // if custom on first load of monetization popup,
+    // populate form from saved entity
+    if (this.service.entity && this.service.entity.wire_threshold) {
+      if (
+        this.service.entity.wire_threshold.support_tier &&
+        !this.service.entity.wire_threshold.support_tier.public
+      ) {
+        const customTier = this.service.entity.wire_threshold.support_tier;
+        this.populateForm(true, customTier.usd, customTier.has_tokens);
+      }
     }
+
+    // if changes have been made & saved since first load,
+    // populate form from pendingMonetization
+
+    if (this.service.pendingMonetization$.getValue()) {
+      const pendingMonetization = this.service.pendingMonetization$.getValue();
+      if (pendingMonetization && pendingMonetization.type === 'custom') {
+        const customTier = pendingMonetization.support_tier;
+        this.populateForm(true, customTier.usd, customTier.has_tokens);
+      }
+    }
+  }
+
+  /**
+   * Set form values
+   * @param enabled
+   * @param usd
+   * @param has_tokens
+   */
+  populateForm(enabled: boolean, usd: number, has_tokens: boolean) {
+    this.enabled.setValue(enabled);
+    this.usd.setValue(usd);
+    this.has_tokens.setValue(has_tokens);
   }
 
   /**
@@ -74,9 +102,7 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
     }
 
     if (!this.enabled.value) {
-      this.service.monetization$.next({
-        support_tier: null,
-      });
+      this.service.pendingMonetization$.next(null);
       this.dismissIntent.emit();
       return;
     }
@@ -104,7 +130,8 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
       if (response.support_tier) {
         const urn = response.support_tier.urn;
 
-        this.service.monetization$.next({
+        this.service.pendingMonetization$.next({
+          type: 'custom',
           support_tier: {
             urn: urn,
             usd: this.usd.value,

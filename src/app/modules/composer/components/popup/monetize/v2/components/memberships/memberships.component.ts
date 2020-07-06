@@ -48,7 +48,7 @@ export class ComposerMonetizeV2MembershipsComponent
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      urn: new FormControl(''),
+      urn: new FormControl('none'),
     });
 
     this.userGuid = this.session.getLoggedInUser().guid;
@@ -76,7 +76,10 @@ export class ComposerMonetizeV2MembershipsComponent
    * make form display current selection
    */
   setInitialState(): void {
-    const monetization = this.service.monetization$.getValue();
+    const monetization =
+      this.service.pendingMonetization$.getValue() ||
+      this.service.monetization$.getValue();
+
     if (!monetization) {
       return;
     }
@@ -87,7 +90,7 @@ export class ComposerMonetizeV2MembershipsComponent
       if (savedTier) {
         this.urn.setValue(savedTier.urn);
       } else {
-        this.urn.setValue(null);
+        this.urn.setValue('none');
       }
     }
     this.detectChanges();
@@ -121,12 +124,11 @@ export class ComposerMonetizeV2MembershipsComponent
    * Save selected tier
    */
   save(): void {
-    if (!this.urn.value) {
-      this.service.monetization$.next({
-        support_tier: null,
-      });
+    if (this.urn.value === 'none') {
+      this.service.pendingMonetization$.next(null);
     } else {
-      this.service.monetization$.next({
+      this.service.pendingMonetization$.next({
+        type: 'membership',
         support_tier: {
           urn: this.urn.value,
         },
