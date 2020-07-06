@@ -1903,7 +1903,7 @@
           <context context-type="linenumber">284</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Offchain payments will not be published to the blockchain and are limited to 100 tokens a day.</target>
+        <target state="translated">การชำระเงิน Offchain จะไม่ถูกเผยแพร่ไปที่บล็อกเชนและถูกจำกัด ที่ 100 โทเค็นต่อวัน</target>
       </trans-unit>
       <trans-unit id="M__COMMON__BALANCE" datatype="html">
         <source>Balance</source>
@@ -1959,7 +1959,7 @@
           <context context-type="linenumber">306</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Onchain payments will be published to the public blockchain. You may utilize Metamask or another address. These purchases require a Gas fee.</target>
+        <target state="translated">การชำระเงิน Onchain จะถูกเผยแพร่ไปยังบล็อกเชนสาธารณะ คุณอาจใช้ Metamask หรือที่อยู่อื่น การซื้อเหล่านี้ต้องการค่า Gas</target>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__ACTIVE_ADDRESS_TOOLTIP" datatype="html">
         <source>
@@ -1972,10 +1972,10 @@
           <context context-type="linenumber">328</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          This balance is for the 
+        <target state="translated">
+          ยอดคงเหลือนี้ใช้สำหรับกระเป๋าเงินคือ 
           <x id="INTERPOLATION"/>
-           wallet that is currently active in your Ethereum interface.
+           ซึ่งปัจจุบันสามารถใช้งานได้ในส่วนที่ต่อกับ Ethereum ของคุณ
         </target>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__RECEIVER_ADDRESS_TOOLTIP" datatype="html">
@@ -1989,10 +1989,10 @@
           <context context-type="linenumber">336</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          This balance is for the 
+        <target state="translated">
+          ยอดเงินคงเหลือสำหรับกระเป๋าเงิน 
           <x id="INTERPOLATION"/>
-           wallet that is currently set up as the receiver wallet for your channel.
+           ซึ่งปัจจุบันถูกตั้งค่าให้เป็นกระเป๋าตัวรับเงินจากแชนแนลของคุณ
         </target>
       </trans-unit>
       <trans-unit id="M__WIRE_CREATOR__DONT_HAVE_TOKENS" datatype="html">
@@ -2211,11 +2211,11 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_TAG_SPAN"/>
-           per month
+           ต่อเดือน
         </target>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE_TO_PLUS" datatype="html">
@@ -2378,7 +2378,7 @@
           <context context-type="linenumber">232</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Launch your own white-labeled social network and mobile app.</target>
+        <target state="translated">เปิดตัวโซเชียลมีเดียสีขาวและแอพมือถือของคุณเอง</target>
       </trans-unit>
       <trans-unit id="UPGRADE_OPTIONS__WHITE_LABEL_WEB_MOBILE" datatype="html">
         <source>White-labeled web + mobile app</source>
@@ -3997,13 +3997,13 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          This is 
+        <target state="translated">
+          นี่คือ 
           <x id="START_TAG_SPAN"/>
           @
           <x id="CLOSE_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
-          's total volume (gross) of all Token wires received in the last 30 days
+           ของปริมาณทั้งหมดต่อเดือนขอโทเค็นทั้งหมดที่ได้รับในช่วง 30 วันที่ผ่านมา
         </target>
       </trans-unit>
       <trans-unit id="WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK" datatype="html">
@@ -5449,12 +5449,12 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          We've recently updated our 
+        <target state="translated">
+          เมื่อเร็วๆนี้เราได้อัปเดต 
           <x id="START_LINK"/>
-          Terms of Service
+          ข้อกำหนดในการให้บริการ
           <x id="CLOSE_LINK"/>
-           to reflect the changes to our network with the launch of the Jury System. These changes are being implemented to ensure a balance of power between Minds, Inc. and the community. The following is a brief summary of what has changed:
+           เพื่อสะท้อนการเปลี่ยนแปลงในเครือข่ายของเราด้วยการเปิดตัว Jury System การเปลี่ยนแปลงเหล่านี้กำลังถูกนำไปใช้เพื่อสร้างสมดุลระหว่าง Minds, Inc. และชุมชน ข้างล่างนี้เป็นบทสรุปโดยย่อของสิ่งที่เปลี่ยนแปลง:
         </target>
       </trans-unit>
       <trans-unit id="MODALS__TOS-UPDATED__NOTICE_PARAGRAPH" datatype="html">
@@ -6209,6 +6209,27 @@
            สมัครรับข้อมูลคุณ
         </target>
       </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REFERRAL_PING" datatype="html">
+        <source>
+          Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and 
+          <x id="START_TAG_SPAN"/>
+          <x id="INTERPOLATION"/>
+          <x id="CLOSE_TAG_SPAN"/>
+           will earn tokens for your referral
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/notifications/notification.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">
+          Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and 
+          <x id="START_TAG_SPAN"/>
+          <x id="INTERPOLATION"/>
+          <x id="CLOSE_TAG_SPAN"/>
+           will earn tokens for your referral
+        </target>
+      </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__REFERRAL_PENDING" datatype="html">
         <source>
           You have a pending referral! 
@@ -6390,11 +6411,11 @@
           <context context-type="linenumber">188</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="INTERPOLATION"/>
-           commented on 
+           คอมเมนท์บน 
           <x id="START_TAG_SPAN"/>
-          your activity
+          กิจกรรมของคุณ
           <x id="CLOSE_TAG_SPAN"/>
         </target>
       </trans-unit>
@@ -7455,10 +7476,10 @@
           <context context-type="linenumber">1452</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Your application for 
+        <target state="translated">
+          การสมัครเข้าโปรแกรม 
           <x id="INTERPOLATION"/>
-           program was approved. Congratulations!
+           ของคุณได้รับอนุมัติแล้ว ยินดีด้วย!
         </target>
       </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__PROGRAM_DECLINED" datatype="html">
@@ -7599,11 +7620,11 @@
           <context context-type="linenumber">1564</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_TAG_SPAN"/>
-          Tap here
+          แตะตรงนี้
           <x id="CLOSE_TAG_SPAN"/>
-           to discover new channels and media.
+           เพื่อค้นหาแชนแนลและสื่อใหม่ๆ
         </target>
       </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__VIDEO_IS_READY" datatype="html">
@@ -7619,12 +7640,11 @@
           <context context-type="linenumber">1575</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Your 
-          <x id="START_LINK"/>
-          video
+        <target state="translated">
+          วิดิโอของคุณ 
           <x id="CLOSE_LINK"/>
-           is ready to be viewed!
+          <x id="START_LINK"/>
+           พร้อมที่จะได้รับชมแล้ว!
         </target>
       </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__MESSENGER_INVITE" datatype="html">
@@ -7639,11 +7659,11 @@
           <context context-type="linenumber">1592</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_TAG_SPAN"/>
-           wants to chat with you!
+           ต้องการคุยกับคุณ!
         </target>
       </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__TO_ONETIME" datatype="html">
@@ -9429,12 +9449,12 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Hey 
+        <target state="translated">
+          เฮ้ 
           <x id="START_BOLD_TEXT"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_BOLD_TEXT"/>
-          ! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.
+          ! ดูเหมือนว่าคุณยังไม่ได้ตั้งค่ารหัสผ่านการเข้าสนทนา เราขอแนะนำให้ใช้รหัสผ่านที่แตกต่างจากรหัสผ่านของบัญชีผู้ใช้ เพื่อความปลอดภัย
         </target>
       </trans-unit>
       <trans-unit id="MESSENGER__ENCRYPTION__CONFIRM_PWD_PH" datatype="html">
@@ -10131,7 +10151,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">There are no local wallets available, the wallet manager is locked, or you're connected to a different network.</target>
+        <target state="translated">ไม่มีกระเป๋าเงินบนอยู่บนเครื่องที่ใช้อยู่ ตัวจัดการประเป๋าถูกล็อคหรือคุณเชื่อมต่อกับเครือข่ายอื่น</target>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__WALLET_ADDRESS_NOTICE" datatype="html">
         <source>Hey, do you want to setup your Tokens wallet?</source>
@@ -10563,11 +10583,11 @@
           <context context-type="linenumber">173</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_BOLD_TEXT"/>
-          Log in
+          ลงชื่อเข้าใช้
           <x id="CLOSE_BOLD_TEXT"/>
-           to send a message
+          เพื่อส่งข้อความ
         </target>
       </trans-unit>
       <trans-unit id="MINDS__COMMENTS__CONTAINS_BLOCKED_REPLIES" datatype="html">
@@ -10577,7 +10597,7 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This thread contains replies from blocked channels.</target>
+        <target state="translated">กระทู้นี้มีการตอบกลับจากแชนแนลที่ถูกบล็อก</target>
       </trans-unit>
       <trans-unit id="MINDS__COMMENTS__NO_LIVE_COMMENTS" datatype="html">
         <source>Could not load live comments</source>
@@ -10619,12 +10639,12 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_TAG_SPAN"/>
           @
           <x id="CLOSE_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
-          , want to join the team?
+          , อยากเข้าร่วมทีมมั้ย?
         </target>
       </trans-unit>
       <trans-unit id="M__JOBS__MKT__MINDS_MARKETING_TITLE__LOGGED__OUT" datatype="html">
@@ -10722,8 +10742,8 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          You have blocked @
+        <target state="translated">
+          คุณได้บล็อก @
           <x id="INTERPOLATION"/>
         </target>
       </trans-unit>
@@ -11186,8 +11206,8 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
           รูปแบบรายได้ใหม่สำหรับครีเอเตอร์ 
-          <x id=" START_EMPHASISED_TEXT"/>
-          <x id=" CLOSE_EMPHASISED_TEXT"/>
+          <x id="START_EMPHASISED_TEXT"/>
+          <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__GET_PAID_TRAFFIC" datatype="html">
@@ -11306,7 +11326,7 @@
           <context context-type="linenumber">134</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Morph your channel into a full blown website with your own subdomain or custom domain, newsfeed, logo, theme, categories and footer.</target>
+        <target state="translated">ปรับเปลี่ยนแชนแนลของคุณให้เป็นเว็บไซต์ที่อัดแน่นไปด้วย โดเมนย่อยหรือโดเมน ฟีดข่าว โลโก้ ธีม หมวดหมู่หรือส่วนท้ายที่คุณสามารถกำหนดได้เองทั้งหมด</target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__UPLOAD_VIDEOS_AND_PHOTOS" datatype="html">
         <source>Upload videos and photos</source>
@@ -11324,7 +11344,7 @@
           <context context-type="linenumber">144</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Publish blogs in an easy-to-use editor</target>
+        <target state="translated">เผยแพร่บล็อกในโปรแกรมสร้างสรรค์ที่ใช้งานง่าย</target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__CREATE_OWN_GROUPS" datatype="html">
         <source>Create your own groups</source>
@@ -12214,8 +12234,8 @@
           <context context-type="linenumber">10</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Subscribers: 
+        <target state="translated">
+          สมาชิก: 
           <x id="START_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_TAG_SPAN"/>
@@ -12427,12 +12447,12 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          See 
+        <target state="translated">
+          ดู
           <x id="START_LINK"/>
-          guidelines
+          แนวทาง
           <x id="CLOSE_LINK"/>
-           for further information.
+          สำหรับข้อมูลเพิ่มเติม
         </target>
       </trans-unit>
       <trans-unit id="COMMON__SAVE" datatype="html">
@@ -12492,7 +12512,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Monetize post by making it available to your users who support your channel.</target>
+        <target state="translated">สามารถสร้างรายได้โดยการสนับสนุนจากผู้ใช้งานที่ติดตามแชนแนลของคุณ</target>
       </trans-unit>
       <trans-unit id="COMPOSER__PAYWALL_SETTINGS" datatype="html">
         <source>Paywall status</source>
@@ -12501,7 +12521,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Paywall status</target>
+        <target state="translated">สถานะ Paywall</target>
       </trans-unit>
       <trans-unit id="COMPOSER__ENABLE_PAYWALL" datatype="html">
         <source>Enable Paywall</source>
@@ -12510,7 +12530,7 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enable Paywall</target>
+        <target state="translated">เปิดใช้งาน Paywall</target>
       </trans-unit>
       <trans-unit id="COMMON__CUSTOM" datatype="html">
         <source>Custom</source>
@@ -13310,7 +13330,7 @@
           <context context-type="linenumber">158</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Credit cards may be used to boost, though we recommend first purchasing tokens in order to access a discount.</target>
+        <target state="translated">บัตรเครดิตสามารถใช้ในการบูสต์ แต่ว่าเราก็ขอแนะนำให้ซื้อโทเค็นก่อนเพื่อเข้าถึงส่วนลด</target>
       </trans-unit>
       <trans-unit id="M__COMMON__SELECT_MONEY" datatype="html">
         <source>Don&apos;t have tokens? No problem.</source>
@@ -13402,7 +13422,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">How many boosts you have shown in total</target>
+        <target state="translated">บูสต์ทั้งหมดที่คุณได้เห็น</target>
       </trans-unit>
       <trans-unit id="BOOST__PUBLISHER__EARNINGS__EARNINGS" datatype="html">
         <source>Earnings</source>
@@ -13420,7 +13440,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">How much you've earned (in tokens) in total from all the boosts you have shown</target>
+        <target state="translated">จำนวนเงินทั้งหมด (ในรูปแบบโทเค็น) ที่คุณได้รับจากการเห็นบูสต์</target>
       </trans-unit>
       <trans-unit id="BOOST__PUBLISHER__PAYOUTS__REQUEST" datatype="html">
         <source>Request a payout</source>
@@ -13429,7 +13449,7 @@
           <context context-type="linenumber">16</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Request a payout</target>
+        <target state="translated">ขอการจ่ายเงิน</target>
       </trans-unit>
       <trans-unit id="BOOST__PUBLISHER__PAYOUTS__REQUESTING" datatype="html">
         <source>Requesting a payout</source>
@@ -13438,7 +13458,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Requesting a payout</target>
+        <target state="translated">การขอการจ่ายเงิน</target>
       </trans-unit>
       <trans-unit id="BOOST_CONSOLE_PUBLISHER__SETTINGS__TITLE" datatype="html">
         <source>Publisher Settings</source>
@@ -13532,7 +13552,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Minimum payment from supporters to receive the reward.</target>
+        <target state="translated">จำนวนเงินขั้นต่ำจากผู้สนับสนุนเพื่อที่จะรับรางวัล</target>
       </trans-unit>
       <trans-unit id="WIRE__CHANNEL__TABLE__AMOUNT_OR_OVER_LABEL" datatype="html">
         <source>
@@ -13661,7 +13681,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Manage your accounts and keep track of all of your transactions in your Minds Wallet.</target>
+        <target state="translated">จัดการบัญชีของคุณและติดตามธุรกรรมทั้งหมดของคุณได้ใน Minds Wallet</target>
       </trans-unit>
       <trans-unit id="MARKETING_WIRE__SUBSCRIPTION_TIERS" datatype="html">
         <source>Subscription Tiers</source>
@@ -13737,10 +13757,9 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Minimum 
+        <target state="translated">
+          การชำระเงินขั้นต่ำ 
           <x id="INTERPOLATION"/>
-           Payment
         </target>
       </trans-unit>
       <trans-unit id="COMMON__DESCRIPTION" datatype="html">
@@ -13759,7 +13778,7 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">About your offerings. Describe what your supporters will receive.</target>
+        <target state="translated">บอกข้อเสนอของคุณ อาทิเช่น อธิบายว่าสิ่งที่ผู้สนับสนุนของคุณจะได้รับนั้นมีอะไรบ้าง...</target>
       </trans-unit>
       <trans-unit id="COMMON__ETH" datatype="html">
         <source>ETH</source>
@@ -13906,7 +13925,7 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">{VAR_PLURAL, plural, =1 {token} other {tokens} }</target>
+        <target state="translated">{VAR_PLURAL, plural, =1 {โทเค็น} other {โทเค็น} }</target>
       </trans-unit>
       <trans-unit id="COMMON_USD" datatype="html">
         <source>USD</source>
@@ -14059,12 +14078,12 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           token} other {
+           โทเค็น} other {
           <x id="INTERPOLATION"/>
-           tokens} }
+           โทเค็น} }
         </target>
       </trans-unit>
       <trans-unit id="CREATOR_SHOP__TOKENS" datatype="html">
@@ -14180,7 +14199,7 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Select one from the list or</target>
+        <target state="translated">เลือกจากรายการหรือ</target>
       </trans-unit>
       <trans-unit id="MEDIA__THUMBNAIL_SELECTOR__UPLOAD_A_NEW_ONE" datatype="html">
         <source>upload a new one</source>
@@ -14189,7 +14208,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">upload a new one</target>
+        <target state="translated">อัปโหลดไฟล์ใหม่</target>
       </trans-unit>
       <trans-unit id="MINDS__MEDIA__TITLE_INPUT_PLACEHOLDER" datatype="html">
         <source>Title...</source>
@@ -14243,7 +14262,7 @@
           <context context-type="linenumber">349</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Are you sure you want to delete this?</target>
+        <target state="translated">คุณแน่ใจว่าต้องการลบสิ่งนี้หรือไม่?</target>
       </trans-unit>
       <trans-unit id="MINDS__MEDIA__THERES_NO_UNDO" datatype="html">
         <source>There&apos;s no UNDO!</source>
@@ -14276,12 +14295,12 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Loading the next video in 
+        <target state="translated">
+          กำลังโหลดวิดิโออันต่อไปใน 
           <x id="START_TAG_STRONG"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_TAG_STRONG"/>
-           seconds.
+           วินาที
         </target>
       </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__YOUTUBE_MIGRATION" datatype="html">
@@ -14291,7 +14310,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">YouTube Migration</target>
+        <target state="translated">โอนวิดีโอกับ YouTube</target>
       </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__BREAK_FREE_FROM_GOOGLE_MACHINE" datatype="html">
         <source>
@@ -14440,7 +14459,7 @@
           <context context-type="linenumber">134</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Regain your freedom</target>
+        <target state="translated">ทวงคืนอิสรภาพของคุณ</target>
       </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__TIRED_UNFAIR_TREATMENT" datatype="html">
         <source>Tired of the unfair treatment from traditional social networks?</source>
@@ -14458,7 +14477,7 @@
           <context context-type="linenumber">147</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Minds offers a fully transparent, privacy-focused platform built for creators.</target>
+        <target state="translated">Minds เสนอแพลตฟอร์มที่เน้นความเป็นส่วนตัวอย่างโปร่งใสอย่างเต็มที่สำหรับครีเอเตอร์</target>
       </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__TAKE_BACK_CONTROL_YOUR_MEDIA" datatype="html">
         <source>Take back control of your social media</source>
@@ -14467,7 +14486,7 @@
           <context context-type="linenumber">188</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Take back control of your social media</target>
+        <target state="translated">ถึงเวลาทวงคืนความควบคุมที่คุณควรมีในโซเชียลมีเดียแล้ว</target>
       </trans-unit>
       <trans-unit id="YOUTUBE_MIGRATION__YOUTUBE_MIGRATION" datatype="html">
         <source>YouTube Migration</source>
@@ -14476,7 +14495,7 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">YouTube Migration</target>
+        <target state="translated">โอนวิดีโอกับ YouTube</target>
       </trans-unit>
       <trans-unit id="COMPOSER_POPUP__UPLOADED_IMAGE" datatype="html">
         <source>Uploaded image</source>
@@ -14567,7 +14586,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Show NSFW content in results</target>
+        <target state="translated">แสดงข้อมูล NSFW ในผลลัพธ์</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE__V2__SUBHEADER" datatype="html">
         <source>A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.</source>
@@ -14594,7 +14613,7 @@
           <context context-type="linenumber">90</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">How does it work?</target>
+        <target state="translated">มันทำงานอย่างไร?</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE_V2__POST_TYPES_SECURELY" datatype="html">
         <source>Post videos, blogs, images and statuses. Message and video chat securely with groups or directly with friends. Discover great content through trending feeds and hashtags.</source>
@@ -14612,7 +14631,7 @@
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Earn tokens for your daily contributions and use them to upgrade your channel, boost your content for more reach and support other creators.</target>
+        <target state="translated">รับโทเค็นสำหรับการมีส่วนร่วมรายวันของคุณและใช้เพื่ออัปเกรดแชนแนลของคุณ หรือบูสต์คอนเทนท์ของคุณเพื่อการเข้าถึงที่มากขึ้นและสนับสนุนครีเอเตอร์รายอื่น</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE_V2__RECEIVE_DIRECT_PAYMENTS" datatype="html">
         <source>
@@ -14642,7 +14661,7 @@
           <context context-type="linenumber">125</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Download Whitepaper</target>
+        <target state="translated">ดาวน์โหลด Whitepaper</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE_V2__OUR_PRINCIPLES" datatype="html">
         <source>Our principles</source>
@@ -14651,7 +14670,7 @@
           <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Our principles</target>
+        <target state="translated">หลักการของเรา</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE_V2__TAKE_BACK_CONTROL" datatype="html">
         <source>Take back control of your social media</source>
@@ -14705,7 +14724,7 @@
           <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Let's Get Setup</target>
+        <target state="translated">มาเริ่มกันเถอะ</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_NOTICE__NO_THANKS_LATER" datatype="html">
         <source>No thanks, I&apos;ll do it later</source>
@@ -14714,7 +14733,7 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">No thanks, I'll do it later</target>
+        <target state="translated">ไม่ ขอบคุณ, ฉันจะทำภายหลัง</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_HASHTAGS__SELECT_SOME_HASHTAGS" datatype="html">
         <source>Select some hashtags that are of interest to you.</source>
@@ -14732,7 +14751,7 @@
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You must select at least 3 hashtags</target>
+        <target state="translated">คุณต้องเลือกอย่างน้อยสามแฮชแท็ก</target>
       </trans-unit>
       <trans-unit id="COMMON__SKIP" datatype="html">
         <source>Skip</source>
@@ -14810,7 +14829,7 @@
           <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Verify</target>
+        <target state="translated">ยืนยัน</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_PHONE__YOUR_NUMBER_HAS_BEEN_VERIFIED" datatype="html">
         <source>Your phone number has been verified.</source>
@@ -14819,7 +14838,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your phone number has been verified.</target>
+        <target state="translated">เบอร์โทรของคุณได้รับการยืนยันแล้ว</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_PHONE__VERIFICATION_CODE" datatype="html">
         <source>Verification Code</source>
@@ -14828,7 +14847,7 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Verification Code</target>
+        <target state="translated">รหัสยืนยัน</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_PHONE__PLEASE_ENTER_CODE" datatype="html">
         <source>
@@ -14841,10 +14860,10 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Please enter the code we just sent to +
+        <target state="translated">
+          กรุณาใส่รหัสที่เราเพิ่งส่งไปให้ +
           <x id="INTERPOLATION"/>
-          , to verify your number.
+           เพื่อยืนยันเบอร์โทรศัพท์ของคุณ
         </target>
       </trans-unit>
       <trans-unit id="ONBOARDING_PHONE__EXAMPLE_INPUT_CODE" datatype="html">
@@ -14854,7 +14873,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">eg. 198349</target>
+        <target state="translated">ตัวอย่าง 198349</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_PHONE__RESEND_VERIFICATION_CODE" datatype="html">
         <source>Re-send verification code</source>
@@ -14863,7 +14882,7 @@
           <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Re-send verification code</target>
+        <target state="translated">ส่งอีเมลยืนยันอีกครั้ง</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_PHONE__GO_BACK" datatype="html">
         <source>Go back</source>
@@ -14881,7 +14900,7 @@
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You must verify your phone number</target>
+        <target state="translated">คุณต้องระบุหมายเลขโทรศัพท์</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_INFO__LOCATION" datatype="html">
         <source>Location</source>
@@ -14908,7 +14927,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Optional</target>
+        <target state="translated">* ไม่จำเป็น</target>
       </trans-unit>
       <trans-unit id="COMMON__DATE_OF_BIRTH" datatype="html">
         <source>Date of Birth</source>
@@ -14943,7 +14962,7 @@
           <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You must be at least 13 years old</target>
+        <target state="translated">คุณต้องมีอายุอย่างน้อย 13 ปีบริบูรณ์</target>
       </trans-unit>
       <trans-unit id="COMMON__CONTINUE" datatype="html">
         <source>Continue</source>
@@ -14965,7 +14984,7 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Finish</target>
+        <target state="translated">เสร็จสิ้น</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_CHANNELS_LIST__SUBSCRIBERS" datatype="html">
         <source>
@@ -14977,9 +14996,9 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="INTERPOLATION"/>
-           subscribers
+           จำนวนสมาชิก
         </target>
       </trans-unit>
       <trans-unit id="ONBOARDING_AVATAR__POSITION_YOUR_PHOTO" datatype="html">
@@ -15045,10 +15064,10 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Upgrade your channel and 
+        <target state="translated">
+          อัปเกรดแชนแนลของคุณและ 
           <x id="START_EMPHASISED_TEXT"/>
-          unlock premium features
+          ปลดล็อคพรีเมี่ยมฟีเจอร์
           <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
@@ -15104,7 +15123,7 @@
           <context context-type="linenumber">120</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Access exclusive content</target>
+        <target state="translated">เข้าใช้คอนเทนต์เอ๊กซ์คลูซีฟ</target>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__VIEW_LATEST_BEHIND_SCENES_SECTION" datatype="html">
         <source>View the latest behind-the-scenes content from the Minds team. Plus members will also gain access to exclusive content from MindsTV (coming soon).</source>
@@ -15170,7 +15189,7 @@
           <context context-type="linenumber">216</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Receive a badge</target>
+        <target state="translated">รับเข็มกลัด</target>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__MEMBERS_RECEIVE_BADGE_SECTION" datatype="html">
         <source>Plus members receive a badge for their channel to indicate they are part of the community.</source>
@@ -15362,7 +15381,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Contribute</target>
+        <target state="translated">ร่วมให้ข้อมูล</target>
       </trans-unit>
       <trans-unit id="SETTINGS__NAVIGATION__GENERAL_NAV" datatype="html">
         <source>General</source>
@@ -15411,7 +15430,7 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Subscription Tiers</target>
+        <target state="translated">การสมัครเป็นสมาชิก</target>
       </trans-unit>
       <trans-unit id="SETTINGS__NAVIGATION__BILLINGS_NAV" datatype="html">
         <source>Billing</source>
@@ -15546,7 +15565,7 @@
           <context context-type="linenumber">152</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enable toaster notifications</target>
+        <target state="translated">เปิดใช้งานการแจ้งเตือน</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__AUTOPLAY_TITLE" datatype="html">
         <source>Autoplay Videos in Feeds</source>
@@ -15564,7 +15583,7 @@
           <context context-type="linenumber">174</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enable Video Autoplay</target>
+        <target state="translated">เปิดใช้เล่นวิดีโออัตโนมัติ</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__LANGUAGE_SETTINGS_TITLE" datatype="html">
         <source>Language Settings</source>
@@ -15591,7 +15610,7 @@
           <context context-type="linenumber">205</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Share Buttons</target>
+        <target state="translated">ปุ่ม Share</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SHOW_SHARE_BUTTONS_LABEL" datatype="html">
         <source>Show share buttons</source>
@@ -15600,7 +15619,7 @@
           <context context-type="linenumber">215</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Show share buttons</target>
+        <target state="translated">แสดงปุ่มแชร์</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SESSIONS" datatype="html">
         <source>Sessions</source>
@@ -15622,10 +15641,10 @@
           <context context-type="linenumber">228</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          You currently have 
+        <target state="translated">
+          คุณมี 
           <x id="INTERPOLATION"/>
-           session(s) open.
+           เซสชั่นที่กำลังเปิดอยู่
         </target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__CLOSE_ALL_SESSIONS" datatype="html">
@@ -15635,7 +15654,7 @@
           <context context-type="linenumber">236</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Close All Sessions</target>
+        <target state="translated">ปิดทุกเซสชั่น</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__DISABLE_CHANNEL" datatype="html">
         <source>Disable Channel</source>
@@ -15698,7 +15717,7 @@
           <context context-type="linenumber">59</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Email me when</target>
+        <target state="translated">ส่งอีเมลหาฉันเวลา</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__UNREAD_NOTIFICATIONS_LABEL" datatype="html">
         <source>I have unread notifications</source>
@@ -15716,7 +15735,7 @@
           <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I receive a wire</target>
+        <target state="translated">ฉันได้รับเงิน</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__BOOST_COMPLETED_LABEL" datatype="html">
         <source>My boost has been completed</source>
@@ -15725,7 +15744,7 @@
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">My boost has been completed</target>
+        <target state="translated">บูสต์ของฉันเสร็จสมบูรณ์</target>
       </trans-unit>
       <trans-unit id="SETTINGS__EMAIL__EMAIL_ME_WITH" datatype="html">
         <source>Email me with</source>
@@ -15734,7 +15753,7 @@
           <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Email me with</target>
+        <target state="translated">ส่งอีเมลด้วย</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__TOP_POSTS_LABEL" datatype="html">
         <source>Top posts from my network</source>
@@ -15743,7 +15762,7 @@
           <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Top posts from my network</target>
+        <target state="translated">โพสต์ดังจากเครื่องของฉัน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__EMAIL__PERIODICALLY_OPTION" datatype="html">
         <source>Periodically</source>
@@ -15752,7 +15771,7 @@
           <context context-type="linenumber">142</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Periodically</target>
+        <target state="translated">ชั่วครั้งคราว</target>
       </trans-unit>
       <trans-unit id="SETTINGS__EMAIL__DAILY_OPTION" datatype="html">
         <source>Daily</source>
@@ -15770,7 +15789,7 @@
           <context context-type="linenumber">148</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Weekly</target>
+        <target state="translated">รายสัปดาห์</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__TIPS_IMPROVE_CHANNEL_LABEL" datatype="html">
         <source>Tips on how to improve my channel</source>
@@ -15779,7 +15798,7 @@
           <context context-type="linenumber">162</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Tips on how to improve my channel</target>
+        <target state="translated">เคล็ดลับในการพัฒนาแชนแนลของฉัน</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SINCE_MISSED_SINCE_LAST_LOGIN_LABEL" datatype="html">
         <source>Things I&apos;ve missed since my last login</source>
@@ -15788,7 +15807,7 @@
           <context context-type="linenumber">179</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Things I've missed since my last login</target>
+        <target state="translated">สิ่งที่ฉันพลาดไปตั้งแต่การล็อกอินครั้งล่าสุด</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__NEW_CHANNELS_LABEL" datatype="html">
         <source>New channels to subscribe to</source>
@@ -15797,7 +15816,7 @@
           <context context-type="linenumber">194</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">New channels to subscribe to</target>
+        <target state="translated">แชนแนลใหม่ๆที่น่ากดติดตาม</target>
       </trans-unit>
       <trans-unit id="SETTINGS__EMAIL__KEEP_ME_UPDATED_WITH_TITLE" datatype="html">
         <source>Keep me updated with</source>
@@ -15806,7 +15825,7 @@
           <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Keep me updated with</target>
+        <target state="translated">แจ้งให้ฉันทราบเกี่ยวกับ</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__MINDS_NEWS_LABEL" datatype="html">
         <source>News about new Minds products and features</source>
@@ -15815,7 +15834,7 @@
           <context context-type="linenumber">221</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">News about new Minds products and features</target>
+        <target state="translated">ข่าวเกี่ยวกับผลิตภัณฑ์และฟีเจอร์ใหม่ๆของ Minds</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__TIPS_ON_HOW_TO_USE_MINDS_LABEL" datatype="html">
         <source>Tips on how to use Minds</source>
@@ -15824,7 +15843,7 @@
           <context context-type="linenumber">236</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Tips on how to use Minds</target>
+        <target state="translated">เคล็ดลับเกี่ยวกับการใช้ Minds</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__EXCLUSIVE_PROMOTIONS_LABEL" datatype="html">
         <source>Exclusive promotions</source>
@@ -15833,7 +15852,7 @@
           <context context-type="linenumber">251</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Exclusive promotions</target>
+        <target state="translated">โปรโมชั่นพิเศษ</target>
       </trans-unit>
       <trans-unit id="MARKETING__FUEL_OF_NETWORK" datatype="html">
         <source>
@@ -15848,12 +15867,11 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          The 
+        <target state="translated">
           <x id="START_EMPHASISED_TEXT"/>
-          fuel
+          ขับเคลื่อน
           <x id="CLOSE_EMPHASISED_TEXT"/>
-           of the Minds network
+           เครือข่าย Minds
         </target>
       </trans-unit>
       <trans-unit id="MARKETING__BUY_TOKENS_SUPPORT_MINDS" datatype="html">
@@ -15863,7 +15881,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buy tokens to support Minds and your favorite channels. Unlock premium features and launch advertising campaigns to expand your reach.</target>
+        <target state="translated">ซื้อโทเค็นเพื่อสนับสนุน Minds และแชนแนลโปรดของคุณ ปลดล็อกคุณสมบัติพิเศษและเปิดใช้แคมเปญโฆษณาเพื่อขยายขอบเขตการเข้าถึงของคุณ</target>
       </trans-unit>
       <trans-unit id="MARKETING__EXPAND_YOUR_REACH" datatype="html">
         <source>Expand your reach</source>
@@ -15872,7 +15890,7 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Expand your reach</target>
+        <target state="translated">ขยายการเข้าถึงของคุณ</target>
       </trans-unit>
       <trans-unit id="MARKETING__TOKEN_VIEWS_EXPLANATION" datatype="html">
         <source>1 token = 1,000 views from the network. Launch advertising campaigns, send offers to other channels for more exposure and grow your audience to new levels.</source>
@@ -15881,7 +15899,7 @@
           <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">1 token = 1,000 views from the network. Launch advertising campaigns, send offers to other channels for more exposure and grow your audience to new levels.</target>
+        <target state="translated">1 โทเค็น = 1,000 การดูจากเครือข่าย เปิดตัวแคมเปญโฆษณาส่งข้อเสนอไปยังช่องทางอื่นๆ เพื่อให้มีคนเห็นมากขึ้นและขยายกลุ่มเป้าหมายของคุณไปสู่อีกระดับ</target>
       </trans-unit>
       <trans-unit id="COMMON__DOWNLOAD_WHITEPAPER" datatype="html">
         <source>Download Whitepaper</source>
@@ -15890,7 +15908,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Download Whitepaper</target>
+        <target state="translated">ดาวน์โหลด Whitepaper</target>
       </trans-unit>
       <trans-unit id="COMMON__SETUP_WALLET" datatype="html">
         <source>Setup Wallet</source>
@@ -15899,7 +15917,7 @@
           <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Setup Wallet</target>
+        <target state="translated">สร้างกระเป๋าสตางค์</target>
       </trans-unit>
       <trans-unit id="COMMON__LEARN_ABOUT_BOOST" datatype="html">
         <source>Learn About Boost</source>
@@ -15908,7 +15926,7 @@
           <context context-type="linenumber">97</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Learn About Boost</target>
+        <target state="translated">เรียนรู้เกี่ยวกับบูสต์</target>
       </trans-unit>
       <trans-unit id="COMMON__BUY_PREMIUM_SUBSCRIPTIONS" datatype="html">
         <source>Buy premium subscriptions</source>
@@ -15917,7 +15935,7 @@
           <context context-type="linenumber">129</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buy premium subscriptions</target>
+        <target state="translated">ซื้อการติดตามแบบพรีเมี่ยม</target>
       </trans-unit>
       <trans-unit id="MARKETING__SPEND_TOKENS_TO_UPGRADE" datatype="html">
         <source>Spend tokens to upgrade your channel to Pro or Plus. Access exclusive content and other custom offerings from your favorite creators.</source>
@@ -15926,7 +15944,7 @@
           <context context-type="linenumber">136</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Spend tokens to upgrade your channel to Pro or Plus. Access exclusive content and other custom offerings from your favorite creators.</target>
+        <target state="translated">ใช้โทเค็นเพื่ออัปเกรดแชนแนลของคุณเป็น Pro หรือ Plus เข้าถึงเนื้อหาพิเศษและข้อเสนอที่กำหนดเองอื่นๆ จากครีเอเตอร์ที่คุณชื่นชอบ</target>
       </trans-unit>
       <trans-unit id="COMMON__LEARN_ABOUT_PRO" datatype="html">
         <source>Learn About Pro</source>
@@ -15935,7 +15953,7 @@
           <context context-type="linenumber">151</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Learn About Pro</target>
+        <target state="translated">เรียนรู้เกี่ยวกับ Pro</target>
       </trans-unit>
       <trans-unit id="COMMON__LEARN_ABOUT_PLUS" datatype="html">
         <source>Learn About Plus</source>
@@ -15944,7 +15962,7 @@
           <context context-type="linenumber">160</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Learn About Plus</target>
+        <target state="translated">เรียนรู้เกี่ยวกับ Plus</target>
       </trans-unit>
       <trans-unit id="COMMON__SEND_TIPS_SUPPORT_CHANNELS" datatype="html">
         <source>Send tips and support other channels</source>
@@ -15953,7 +15971,7 @@
           <context context-type="linenumber">192</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Send tips and support other channels</target>
+        <target state="translated">ส่งทิปและสนับสนุนแชนแนลอื่นๆ</target>
       </trans-unit>
       <trans-unit id="MARKETING_ENJOY_POST_OTHER_CHANNELS" datatype="html">
         <source>Enjoy a post from another channel? Send them tokens to show your support. Tokens help other creators promote their content and build their network.</source>
@@ -15962,7 +15980,7 @@
           <context context-type="linenumber">199</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enjoy a post from another channel? Send them tokens to show your support. Tokens help other creators promote their content and build their network.</target>
+        <target state="translated">สนุกกับโพสต์จากแชนแนลอื่นใช่มั้ย? ส่งโทเค็นให้คนเหล่านั้นเพื่อแสดงการสนับสนุนของคุณ โทเค็นช่วยให้ครีเอเตอร์รายอื่นโปรโมตเนื้อหาและสร้างเครือข่ายของพวกเขา</target>
       </trans-unit>
       <trans-unit id="COMMON__OTHER_FEATURES" datatype="html">
         <source>Other features</source>
@@ -15971,7 +15989,7 @@
           <context context-type="linenumber">230</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Other features</target>
+        <target state="translated">ฟีเจอร์อื่นๆ</target>
       </trans-unit>
       <trans-unit id="COMMON__DECENTRALIZED" datatype="html">
         <source>Decentralized</source>
@@ -15980,7 +15998,7 @@
           <context context-type="linenumber">238</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Decentralized</target>
+        <target state="translated">กระจาย</target>
       </trans-unit>
       <trans-unit id="COMMON__ERC20_HARNESSING_BLOCKCHAIN" datatype="html">
         <source>
@@ -16010,7 +16028,7 @@
           <context context-type="linenumber">256</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Earn daily rewards</target>
+        <target state="translated">รับรางวัลประจำวัน</target>
       </trans-unit>
       <trans-unit id="COMMON__DONT_HAVE_FUNDS_EARN_TOKENS" datatype="html">
         <source>
@@ -16040,7 +16058,7 @@
           <context context-type="linenumber">271</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Support Minds</target>
+        <target state="translated">สนับสนุน Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__BUYING_TOKENS_KEEP_MINDS_INDEPENDANT" datatype="html">
         <source>Buying tokens is one of the best ways to keep Minds independent and support Internet freedom.</source>
@@ -16090,7 +16108,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Each day you will receive a contribution score for your activity on the network.</target>
+        <target state="translated">ในแต่ละวันคุณจะได้รับคะแนนสนับสนุนสำหรับกิจกรรมของคุณบนเครือข่าย</target>
       </trans-unit>
       <trans-unit id="COMMON__SCORE_DETERMINES SHARE" datatype="html">
         <source>This score determines your share of the daily rewards pool and results in a payout of Minds Tokens, which can be used to support other channels or boost your content for more reach.</source>
@@ -16112,7 +16130,7 @@
           <context context-type="linenumber">323</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Join Rewards</target>
+        <target state="translated">เข้าร่วม Rewards</target>
       </trans-unit>
       <trans-unit id="COMMON__REWARD_FOR_UNIQUE_ENGAGEMENT" datatype="html">
         <source>We reward you for the amount of unique engagement received on your content. In order to prevent fraud, you can only receive credit once per engagement type per day from verified channels.</source>
@@ -16135,8 +16153,8 @@
           <context context-type="linenumber">80</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Votes = 
+        <target state="translated">
+          โหวต = 
           <x id="START_EMPHASISED_TEXT"/>
           <x id="ICU"/>
           <x id="CLOSE_EMPHASISED_TEXT"/>
@@ -16155,12 +16173,12 @@
           <context context-type="linenumber">83</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__MARKETING__COMMENTS__EQUALS" datatype="html">
@@ -16175,8 +16193,8 @@
           <context context-type="linenumber">89</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Comments = 
+        <target state="translated">
+          คอมเมนต์ = 
           <x id="START_EMPHASISED_TEXT"/>
           <x id="ICU"/>
           <x id="CLOSE_EMPHASISED_TEXT"/>
@@ -16195,12 +16213,12 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__MARKETING__SUBSCRIBERS__EQUALS" datatype="html">
@@ -16215,8 +16233,8 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Subscribers = 
+        <target state="translated">
+          สมาชิก = 
           <x id="START_EMPHASISED_TEXT"/>
           <x id="ICU"/>
           <x id="CLOSE_EMPHASISED_TEXT"/>
@@ -16235,12 +16253,12 @@
           <context context-type="linenumber">101</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__MARKETING__REMINDS__EQUALS" datatype="html">
@@ -16255,8 +16273,8 @@
           <context context-type="linenumber">107</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Reminds = 
+        <target state="translated">
+          เตือน = 
           <x id="START_EMPHASISED_TEXT"/>
           <x id="ICU"/>
           <x id="CLOSE_EMPHASISED_TEXT"/>
@@ -16275,12 +16293,12 @@
           <context context-type="linenumber">110</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="COMMON__REFERRALS" datatype="html">
@@ -16318,12 +16336,12 @@
           <context context-type="linenumber">161</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="COMMON__DEVELOPMENT" datatype="html">
@@ -16333,7 +16351,7 @@
           <context context-type="linenumber">197</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Development</target>
+        <target state="translated">การพัฒนา</target>
       </trans-unit>
       <trans-unit id="COMMON__OUR_DEVELOPMENT_IS_PUBLIC" datatype="html">
         <source>All of our development is publicly available on Gitlab. Any contribution you make to the code will be manually reviewed in order to determine appropriate payouts in Minds Tokens, Bitcoin, Ether or USD.</source>
@@ -16351,7 +16369,7 @@
           <context context-type="linenumber">215</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">View Sourcecode</target>
+        <target state="translated">ดู Sorucecode</target>
       </trans-unit>
       <trans-unit id="COMMON__OTHER_REWARDS" datatype="html">
         <source>Other Rewards</source>
@@ -16360,7 +16378,7 @@
           <context context-type="linenumber">249</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Other Rewards</target>
+        <target state="translated">รางวัลอื่นๆ</target>
       </trans-unit>
       <trans-unit id="COMMON__ONCHAIN_TRANSACTIONS" datatype="html">
         <source>OnChain Transactions</source>
@@ -16405,12 +16423,12 @@
           <context context-type="linenumber">265</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="COMMON__JURY_DUTY" datatype="html">
@@ -16420,7 +16438,7 @@
           <context context-type="linenumber">277</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Jury Duty</target>
+        <target state="translated">Jury Duty</target>
       </trans-unit>
       <trans-unit id="COMMON__EARN_EVERY_TIME_DECISIONS" datatype="html">
         <source>
@@ -16456,12 +16474,12 @@
           <context context-type="linenumber">285</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="COMMON__HOURLY_CHECK_INS" datatype="html">
@@ -16507,12 +16525,12 @@
           <context context-type="linenumber">305</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           point} other {
+           คะแนน} other {
           <x id="INTERPOLATION"/>
-           points} }
+           คะแนน} }
         </target>
       </trans-unit>
       <trans-unit id="BRANDING__TITLE" datatype="html">
@@ -16522,7 +16540,7 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Branding</target>
+        <target state="translated">การสร้างแบรนด์</target>
       </trans-unit>
       <trans-unit id="BRANDING__SUBTITLE" datatype="html">
         <source>Logos, assets and styling guides</source>
@@ -16531,7 +16549,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Logos, assets and styling guides</target>
+        <target state="translated">โลโก้ สินทรัพย์และคู่มือการจัดแต่ง</target>
       </trans-unit>
       <trans-unit id="BRANDING__FULL_LOGO_LABEL" datatype="html">
         <source>Full Logo</source>
@@ -16540,7 +16558,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Full Logo</target>
+        <target state="translated">โลโก้แบบเต็ม</target>
       </trans-unit>
       <trans-unit id="BRANDING__BULB_LABEL" datatype="html">
         <source>Bulb</source>
@@ -16549,7 +16567,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Bulb</target>
+        <target state="translated">หลอดไฟ</target>
       </trans-unit>
       <trans-unit id="HELPDESK__DASHBOARD_NO_RESULTS" datatype="html">
         <source>No Results Found</source>
@@ -16558,7 +16576,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">No Results Found</target>
+        <target state="translated">ไม่พบผลลัพธ์</target>
       </trans-unit>
       <trans-unit id="HELPDESK__DASHBOARD__NEW_CATEGORY" datatype="html">
         <source>New Category</source>
@@ -16571,7 +16589,7 @@
           <context context-type="linenumber">56</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">New Category</target>
+        <target state="translated">หมวดหมู่ใหม่</target>
       </trans-unit>
       <trans-unit id="HELPDESK__EDIT__TITLE_PLACEHOLDER" datatype="html">
         <source>Your title</source>
@@ -16631,7 +16649,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your answer</target>
+        <target state="translated">คำตอบของคุณ</target>
       </trans-unit>
       <trans-unit id="HELPDESK__EDIT__SELECT_A_CATEGORY" datatype="html">
         <source>Select a Category</source>
@@ -16640,7 +16658,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Select a Category</target>
+        <target state="translated">เลือกหมวดหมู่</target>
       </trans-unit>
       <trans-unit id="UPGRADES__UPGRADE_MINDS_EXPERIENCE" datatype="html">
         <source>Upgrade your Minds experience</source>
@@ -16653,7 +16671,7 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade your Minds experience</target>
+        <target state="translated">ทำให้ประสบการณ์บน Minds ของคุณดีขึ้น</target>
       </trans-unit>
       <trans-unit id="UPGRADES__UNLOCK_POWERFUL_FEATURES" datatype="html">
         <source>Unlock powerful features to supercharge your channel.</source>
@@ -16689,7 +16707,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buy Minds Tokens to boost content and support creators</target>
+        <target state="translated">ซื้อโทเค็น Minds เพื่อบูสต์คอนเทนท์และช่วยเหลือครีเอเตอร์</target>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE_NOW" datatype="html">
         <source>Upgrade now</source>
@@ -16698,7 +16716,7 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade now</target>
+        <target state="translated">อัปเกรดตอนนี้</target>
       </trans-unit>
       <trans-unit id="COMMON__ADMIN__NO_DATA" datatype="html">
         <source>No data</source>
@@ -16707,7 +16725,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">No data</target>
+        <target state="translated">ไม่​มี​ข้อมูล</target>
       </trans-unit>
       <trans-unit id="WALLET_V2__TOKENS__YOUR_WALLETS" datatype="html">
         <source>Your Wallet</source>
@@ -16716,7 +16734,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your Wallet</target>
+        <target state="translated">กระเป๋าสตางค์ของคุณ</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__PHONE_VERIFICATION" datatype="html">
         <source>Phone Verification</source>
@@ -16725,7 +16743,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Phone Verification</target>
+        <target state="translated">การยืนยันทางโทรศัพท์</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_EARN_TEXT" datatype="html">
         <source>You can earn tokens for your contributions to the Minds network. The more interactions on your content, the greater your share of the daily token reward pool to your off-chain address.</source>
@@ -16734,7 +16752,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You can earn tokens for your contributions to the Minds network. The more interactions on your content, the greater your share of the daily token reward pool to your off-chain address.</target>
+        <target state="translated">คุณสามารถรับโทเค็นสำหรับการมีส่วนร่วมในเครือข่ายของ Minds ยิ่งคุณมีปฏิสัมพันธ์กับเนื้อหาของคุณมากเท่าใดคุณก็ยิ่งมีส่วนแบ่งของรางวัลจากโทเค็นรายวันไปยังส่วนที่อยู่นอกเครือข่ายมากขึ้น</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__START_EARNING_PHONE_TEXT" datatype="html">
         <source>To start earning rewards, you will need to enter a unique phone number.</source>
@@ -16770,7 +16788,7 @@
           <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Invalid phone number</target>
+        <target state="translated">เบอร์โทรไม่ถูกต้อง</target>
       </trans-unit>
       <trans-unit id="PHONE_VERIFICATION__VERIFICATION_CODE" datatype="html">
         <source>Verification Code</source>
@@ -16779,7 +16797,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Verification Code</target>
+        <target state="translated">รหัสยืนยัน</target>
       </trans-unit>
       <trans-unit id="PHONE_VERIFICATION__PLEASE_ENTER_CODE_TO_NUMBER" datatype="html">
         <source>
@@ -16805,7 +16823,7 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Invalid verification code</target>
+        <target state="translated">รหัสยืนยันไม่ถูกต้อง</target>
       </trans-unit>
       <trans-unit id="PHONE_VERIFICATION__CODE_SENT_TO" datatype="html">
         <source>
@@ -16817,8 +16835,8 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Verification code sent to +
+        <target state="translated">
+          รหัสยืนยันส่งไปที่ +
           <x id="INTERPOLATION"/>
         </target>
       </trans-unit>
@@ -16838,14 +16856,14 @@
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Didn't receive it? 
+        <target state="translated">
+          ยังไม่ได้ใช่มั้ย? 
           <x id="START_LINK"/>
-          Send it again
+          ส่งอีกครั้ง
           <x id="CLOSE_LINK"/>
-           or 
+           หรือ 
           <x id="START_LINK_1"/>
-          change phone number
+          เปลี่ยนเบอร์โทรศัพท์
           <x id="CLOSE_LINK"/>
         </target>
       </trans-unit>
@@ -16865,7 +16883,7 @@
           <context context-type="linenumber">16</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Total Score</target>
+        <target state="translated">คะแนนรวมทั้งหมด</target>
       </trans-unit>
       <trans-unit id="WALLETV2_REWARDS_POPUP__HAVEN'T_YET_RECEIVED" datatype="html">
         <source>You haven&apos;t earned any daily rewards yet.</source>
@@ -16874,7 +16892,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You haven't earned any daily rewards yet.</target>
+        <target state="translated">คุณยังไม่ได้รับรางวัลประจำวันเลย</target>
       </trans-unit>
       <trans-unit id="WALLETV2_TX_TABLE__MINDS_REWARD" datatype="html">
         <source>Minds Reward</source>
@@ -16883,7 +16901,7 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Minds Reward</target>
+        <target state="translated">รางวัล Minds</target>
       </trans-unit>
       <trans-unit id="WALLETV2_TX_TABLE__PURCHASE" datatype="html">
         <source>Purchase</source>
@@ -16892,7 +16910,7 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Purchase</target>
+        <target state="translated">ซื้อ</target>
       </trans-unit>
       <trans-unit id="WALLETV2_TX_TABLE__PAYOUT" datatype="html">
         <source>Payout</source>
@@ -16901,7 +16919,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Payout</target>
+        <target state="translated">การรับเงิน</target>
       </trans-unit>
       <trans-unit id="WALLETV2_TX_TABLE__PRO_EARNINGS" datatype="html">
         <source>Pro Earnings</source>
@@ -16919,7 +16937,7 @@
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Transaction</target>
+        <target state="translated">ธุรกรรม</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__ONCHAIN_ADDRESS" datatype="html">
         <source>On-Chain Address</source>
@@ -16928,7 +16946,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">On-Chain Address</target>
+        <target state="translated">ที่อยู่ On-chain</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__RECOMMENDED" datatype="html">
         <source>RECOMMENDED</source>
@@ -16937,7 +16955,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">RECOMMENDED</target>
+        <target state="translated">แนะนำ</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__INSTALL_METAMASK" datatype="html">
         <source>Install MetaMask</source>
@@ -16946,7 +16964,7 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Install MetaMask</target>
+        <target state="translated">ติดตั้ง MetaMask</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_METAMASK_INFO" datatype="html">
         <source>Minds recommends using MetaMask for the most seamless user experience.</source>
@@ -16955,7 +16973,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Minds recommends using MetaMask for the most seamless user experience.</target>
+        <target state="translated">Minds แนะนำให้ใช้ MetaMask เพื่อประสบการณ์แบบไร้รอยต่อ</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__LINK_METAMASK" datatype="html">
         <source>Link MetaMask</source>
@@ -16964,7 +16982,7 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Link MetaMask</target>
+        <target state="translated">เชื่อม MetaMask</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__RELOAD_INFO" datatype="html">
         <source>Note: You might need to reload Minds after installing and setting up MetaMask.</source>
@@ -16973,7 +16991,7 @@
           <context context-type="linenumber">58</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Note: You might need to reload Minds after installing and setting up MetaMask.</target>
+        <target state="translated">หมายเหตุ: คุณอาจต้องโหลด Minds ใหม่หลังจากติดตั้งและตั้งค่า MetaMask</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__CUSTOM" datatype="html">
         <source>Custom</source>
@@ -16982,7 +17000,7 @@
           <context context-type="linenumber">65</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Custom</target>
+        <target state="translated">ปรับแต่งเอง</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__METAMASK_ALT_INFO" datatype="html">
         <source>You don’t need to use MetaMask. You can alternatively manage your own address.</source>
@@ -16991,7 +17009,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You don’t need to use MetaMask. You can alternatively manage your own address.</target>
+        <target state="translated">คุณไม่จำเป็นต้องใช้ MetaMask คุณสามารถจัดการที่อยู่ของคุณเองได้แทน</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__BACK_TO_CURRENT" datatype="html">
         <source>Back to current address</source>
@@ -17000,7 +17018,7 @@
           <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back to current address</target>
+        <target state="translated">กลับไปที่อยู่เดิม</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS" datatype="html">
         <source>Create Address</source>
@@ -17013,7 +17031,7 @@
           <context context-type="linenumber">115</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Create Address</target>
+        <target state="translated">สร้างที่อยู่</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__GENERATE_CUSTOM_ADDRESS_INFO" datatype="html">
         <source>Generate a custom address to use instead of MetaMask. Once the address is generated, you will be provided with a link to download the address and private key.</source>
@@ -17052,7 +17070,7 @@
           <context context-type="linenumber">138</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Download Private Key</target>
+        <target state="translated">โหลด Private Key</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__BACK_TO_SETTINGS" datatype="html">
         <source>Back to settings</source>
@@ -17061,7 +17079,7 @@
           <context context-type="linenumber">144</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back to settings</target>
+        <target state="translated">กลับไปยังการตั้งค่า</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__PROVIDE_ADDRESS" datatype="html">
         <source>Provide Address</source>
@@ -17070,7 +17088,7 @@
           <context context-type="linenumber">152</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Provide Address</target>
+        <target state="translated">ให้ที่อยู่</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_SETTINGS_TOKENS__ENTER_ADDRESS_AS_WALLET_INFO" datatype="html">
         <source>Enter the address that will be stored as your wallet for Minds on-chain tokens and Ether payments. To conduct transactions you will need your wallet&apos;s private key and MetaMask cannot be installed in your browser.</source>
@@ -17092,7 +17110,7 @@
           <context context-type="linenumber">240</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">On-chain Address</target>
+        <target state="translated">ที่อยู่ On-chain</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__ONCHAIN_ADDRESS_INFO" datatype="html">
         <source>This address is where you will receive on-chain Minds tokens and Ether payments</source>
@@ -17101,7 +17119,7 @@
           <context context-type="linenumber">179</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This address is where you will receive on-chain Minds tokens and Ether payments</target>
+        <target state="translated">ที่อยู่นี้จะเป็นที่ที่คุณจะได้รับโทเค็น on-chain จาก Minds และการจ่ายเงินแบบ Ether ประเภทต่างๆ</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__INVALID_ADDRESS_FORMAT" datatype="html">
         <source>Invalid address format</source>
@@ -17110,7 +17128,7 @@
           <context context-type="linenumber">208</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Invalid address format</target>
+        <target state="translated">รูปแบบที่อยู่ไม่ถูกต้อง</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__UPDATE_ONCHAIN_ADDRESS" datatype="html">
         <source>Update on-chain address</source>
@@ -17119,7 +17137,7 @@
           <context context-type="linenumber">223</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update on-chain address</target>
+        <target state="translated">อัพเดตที่อยู่ on-chain</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__BACK_TO_SETTINGS" datatype="html">
         <source>Back to settings</source>
@@ -17128,7 +17146,7 @@
           <context context-type="linenumber">231</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back to settings</target>
+        <target state="translated">กลับไปยังการตั้งค่า</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__CURRENT_ADDRESS" datatype="html">
         <source>Current address</source>
@@ -17137,7 +17155,7 @@
           <context context-type="linenumber">248</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Current address</target>
+        <target state="translated">ที่อยู่ปัจจุบัน</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__CHANGE_ADDRESS" datatype="html">
         <source>Change Address</source>
@@ -17146,7 +17164,7 @@
           <context context-type="linenumber">254</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Change Address</target>
+        <target state="translated">เปลี่ยนที่อยู่</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__TO_RECEIVE_INFO" datatype="html">
         <source>
@@ -17229,12 +17247,11 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          To view or change your address, go to 
+        <target state="translated">
+          หากต้องการเรียกดูหรือแก้ไขที่อยู่ ไปที่ 
           <x id="START_LINK"/>
-          token settings
+          ตั้งค่าโทเค็น
           <x id="CLOSE_LINK"/>
-          .
         </target>
       </trans-unit>
       <trans-unit id="WALLETV2_SETTINGS_ETH__ETHER_TOTAL" datatype="html">
@@ -17244,7 +17261,7 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Ether total</target>
+        <target state="translated">Ether ทั้งหมด</target>
       </trans-unit>
       <trans-unit id="WALLETV2_SETTINGS_ETH__BUY_ETHER" datatype="html">
         <source>Buy Ether</source>
@@ -17253,7 +17270,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buy Ether</target>
+        <target state="translated">ซื้อ Ether</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__BITCOIN__ADDRESS" datatype="html">
         <source>Bitcoin Address</source>
@@ -17262,7 +17279,7 @@
           <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Bitcoin Address</target>
+        <target state="translated">บัญชี Bitcoin</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__BITCOIN_ADDRESS_INFO" datatype="html">
         <source>Enter the public address from your own Bitcoin wallet which will be used to receive Bitcoin payments on Minds. Minds does not store your Bitcoin.</source>
@@ -17280,7 +17297,7 @@
           <context context-type="linenumber">83</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Invalid address format</target>
+        <target state="translated">รูปแบบที่อยู่ไม่ถูกต้อง</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__UPDATE_BITCOIN_ADDRESS" datatype="html">
         <source>Update Bitcoin Address</source>
@@ -17289,7 +17306,7 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Bitcoin Address</target>
+        <target state="translated">อัพเดตที่อยู่ Bitcoin</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__BACK_TO_CURRENT_ADDRESS" datatype="html">
         <source>Back to current address</source>
@@ -17298,7 +17315,7 @@
           <context context-type="linenumber">109</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back to current address</target>
+        <target state="translated">กลับไปที่อยู่เดิม</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__BITCOIN_ADDRESS" datatype="html">
         <source>Bitcoin Address</source>
@@ -17307,7 +17324,7 @@
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Bitcoin Address</target>
+        <target state="translated">บัญชี Bitcoin</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__CURRENT_BITCOIN_ADDRESS" datatype="html">
         <source>Current bitcoin address</source>
@@ -17316,7 +17333,7 @@
           <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Current bitcoin address</target>
+        <target state="translated">ที่อยู่ bitcoin ปัจจุบัน</target>
       </trans-unit>
       <trans-unit id="SETTINGS_BTC__CHANGE_ADDRESS" datatype="html">
         <source>Change Address</source>
@@ -17325,7 +17342,7 @@
           <context context-type="linenumber">135</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Change Address</target>
+        <target state="translated">เปลี่ยนที่อยู่</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKEN_ONBOARDING__1" datatype="html">
         <source>1.</source>
@@ -17334,7 +17351,7 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">1.</target>
+        <target state="translated">1.</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKEN__ONBOARDING__VERIFY_PHONE_NUMBER" datatype="html">
         <source>Verify your phone number</source>
@@ -17343,7 +17360,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Verify your phone number</target>
+        <target state="translated">ยืนยันเบอร์โทร</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_ONBOARDING__USED_SIMPLY_TO_VERIFY" datatype="html">
         <source>Used simply to verify your uniqueness.</source>
@@ -17361,7 +17378,7 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Add your on-chain address</target>
+        <target state="translated">เพิ่มที่อยู่ on-chain</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKEN_ONBOARDING__YOUR_ETH_ADDRESS_INFO" datatype="html">
         <source>Your Ethereum address allows you to start receiving payments on the blockchain.</source>
@@ -17379,7 +17396,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">On-Chain Transfer</target>
+        <target state="translated">โอน On-chain</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_REQUEST_UP_TO_X" datatype="html">
         <source>
@@ -17394,12 +17411,12 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          You can request to transfer up to 
-          <x id="START_TAG_SPAN"/>
+        <target state="translated">
+          คุณสามารถขอโอนได้ถึง 
           <x id="ICU"/>
           <x id="CLOSE_TAG_SPAN"/>
-           from your rewards to your on-chain wallet below. You may only transfer once per day.
+          <x id="START_TAG_SPAN"/>
+           จากรางวัลของคุณไปยังกระเป๋าสตางค์ออนไลน์ด้านล่าง และคุณสามารถโอนได้หนึ่งครั้งต่อวัน
         </target>
       </trans-unit>
       <trans-unit id="6b66c653f542499f8bb0f5927aafbcd452251039" datatype="html">
@@ -17415,12 +17432,12 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           token} other {
+           โทเค็น} other {
           <x id="INTERPOLATION"/>
-           tokens} }
+           โทเค็น} }
         </target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE" datatype="html">
@@ -17430,7 +17447,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Note: a small amount of ETH will be charged to cover the transaction fee. Transfers go through an approval process and may take up to 72 hours to complete.</target>
+        <target state="translated">หมายเหตุ: ETH จะถูกหักเป็นค่าธรรมเนียมการทำธุรกรรม โดยจะใช้ระยะเวลาในการดำเนินการจนเสร็จสิ้นภายใน 72 ชั่วโมง</target>
       </trans-unit>
       <trans-unit id="COMMON__AMOUNT" datatype="html">
         <source>Amount</source>
@@ -17448,7 +17465,7 @@
           <context context-type="linenumber">59</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Transfer amount required</target>
+        <target state="translated">ระบุจำนวนเงินที่ต้องการโอน</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__TRANSFER_MUST_BE_GREATER" datatype="html">
         <source>Transfer amount must be greater than zero</source>
@@ -17457,7 +17474,7 @@
           <context context-type="linenumber">65</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Transfer amount must be greater than zero</target>
+        <target state="translated">จำนวนเงินที่โอนจะต้องมากกว่า 0</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__NOT_ENOUGH_FUNDS" datatype="html">
         <source>You don&apos;t have enough tokens to make this transfer</source>
@@ -17466,7 +17483,7 @@
           <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You don't have enough tokens to make this transfer</target>
+        <target state="translated">คุณมียอดโทเค็นนคงเหลือไม่เพียงพอสำหรับการโอน</target>
       </trans-unit>
       <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__ONLY_ONCE_PER_DAY" datatype="html">
         <source>You may only transfer once per day</source>
@@ -17475,7 +17492,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You may only transfer once per day</target>
+        <target state="translated">คุณสามารถโอนได้เพียงหนึ่งครั้งต่อวัน</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_BALANCE__TOKEN_BALANCE" datatype="html">
         <source>Token Balance</source>
@@ -17484,7 +17501,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Token Balance</target>
+        <target state="translated">ยอดโทเค็นที่มีอยู่</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_BALANCE__STORE_TOKENS_INFO" datatype="html">
         <source>
@@ -17531,7 +17548,7 @@
           <context context-type="linenumber">86</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Transfer to On-Chain</target>
+        <target state="translated">โอนให้ On-Chain</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_BALANCE__TODAYS_ESTIMATED_PAYOUT" datatype="html">
         <source>
@@ -17586,7 +17603,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Learn more</target>
+        <target state="translated">เรียนรู้เพิ่มเติม</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_BALANCE__LEARN_ABOUT_TOKENS" datatype="html">
         <source>Learn About Tokens</source>
@@ -17595,7 +17612,7 @@
           <context context-type="linenumber">125</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Learn About Tokens</target>
+        <target state="translated">เรียนรู้เกี่ยวกับโทเค็น</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_BALANCE__MINDS_REWARDS_YOU_WITH_CRYPTO_INFO" datatype="html">
         <source>Minds rewards you with crypto for contributing to the network. The first step in joining our rewards program is to provide your mobile number. We convert your number into a hash ID using SHA-256 encryption and a salt key to create a unique identifier for your account. We do not store your number on our servers.</source>
@@ -17640,7 +17657,7 @@
           <context context-type="linenumber">174</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Daily rewards will be distributed at 02:00 am GMT everyday into your off-chain address.</target>
+        <target state="translated">รางวัลรายวันจะถูกแจกจ่ายเวลา 02:00 น. GMT ทุกวันไปยังที่อยู่ OffChain ของคุณ</target>
       </trans-unit>
       <trans-unit id="WALLET_V2__BALANCE_CASH__ADD_BANK_INFO" datatype="html">
         <source>Add your bank information</source>
@@ -17750,7 +17767,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upcoming</target>
+        <target state="translated">เร็วๆ นี้</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TXS_TOKENS__TODAYS_DAILY_REWARDS" datatype="html">
         <source>Today&apos;s Daily Rewards</source>
@@ -17759,7 +17776,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Today's Daily Rewards</target>
+        <target state="translated">รางวัลประจำวันนี้</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TXS_TOKENS__NO_TOKEN_TX_YET" datatype="html">
         <source>You don&apos;t have any token transactions yet.</source>
@@ -17768,7 +17785,7 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You don't have any token transactions yet.</target>
+        <target state="translated">คุณยังไม่มีธุรกรรมการโอนโทเค็นเลย</target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TXS_TOKENS__NO_X_TX_YET" datatype="html">
         <source>
@@ -17910,7 +17927,7 @@
           <context context-type="linenumber">224</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">City</target>
+        <target state="translated">เมือง</target>
       </trans-unit>
       <trans-unit id="CASH_ONBOARDING__STATE" datatype="html">
         <source>State</source>
@@ -17974,7 +17991,7 @@
           <context context-type="linenumber">352</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Personal Information</target>
+        <target state="translated">อัปเดตข้อมูลส่วนบุคคล</target>
       </trans-unit>
       <trans-unit id="CASH_ONBOARDING__ARE_YOU_SURE_STOP" datatype="html">
         <source>Are you sure you want to stop? Any personal information you&apos;ve entered will be lost.</source>
@@ -18009,7 +18026,7 @@
           <context context-type="linenumber">187</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I'm sure</target>
+        <target state="translated">ฉันแน่ใจ</target>
       </trans-unit>
       <trans-unit id="CASH_ONBOARD_EXTRAS__WE_NEED_ADDITIONAL_INFO_TEXT" datatype="html">
         <source>We need some additional information before we can verify your account.</source>
@@ -18027,7 +18044,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upload Photo ID</target>
+        <target state="translated">อัปโหลดภาพถ่าย</target>
       </trans-unit>
       <trans-unit id="CASH_ONBOARD_EXTRAS__UPLOAD_PROOF_OF_ADDRESS" datatype="html">
         <source>Upload Proof of Address</source>
@@ -18036,7 +18053,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upload Proof of Address</target>
+        <target state="translated">อัปโหลดหลักฐานที่อยู่</target>
       </trans-unit>
       <trans-unit id="COMMON__PHONE_NUMBER" datatype="html">
         <source>Phone Number</source>
@@ -18136,7 +18153,7 @@
           <context context-type="linenumber">110</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Add Bank Account</target>
+        <target state="translated">เพิ่มบัญชีธนาคาร</target>
       </trans-unit>
       <trans-unit id="CASH_BANK_FORM__YOUR_BANK_CASH_REWARDS_DEPOSITED" datatype="html">
         <source>Your bank account where cash rewards are deposited.</source>
@@ -18145,7 +18162,7 @@
           <context context-type="linenumber">122</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your bank account where cash rewards are deposited.</target>
+        <target state="translated">บัญชีธนาคารของคุณที่สามารถเบิกรางวัลเงินสดได้</target>
       </trans-unit>
       <trans-unit id="CASH_BANK_FORM__ARE_YOU_SURE_STOP" datatype="html">
         <source>Are you sure you want to stop? Any bank information you&apos;ve entered will be lost.</source>
@@ -18163,7 +18180,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Overview</target>
+        <target state="translated">ภาพรวม</target>
       </trans-unit>
       <trans-unit id="WALLET_V2__TOKENS__TRANSACTIONS" datatype="html">
         <source>Transactions</source>
@@ -18212,7 +18229,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back</target>
+        <target state="translated">ย้อนกลับ</target>
       </trans-unit>
       <trans-unit id="SETTINGS__OTHER__REFERRALS__LABEL" datatype="html">
         <source>Referrals</source>
@@ -18221,7 +18238,7 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Referrals</target>
+        <target state="translated">แนะนำ</target>
       </trans-unit>
       <trans-unit id="SETTINGS__OTHER__REFERRALS__DESCRIPTION" datatype="html">
         <source>If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!</source>
@@ -18239,7 +18256,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">My Referrals</target>
+        <target state="translated">แนะนำ</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_USER" datatype="html">
         <source>User</source>
@@ -18248,7 +18265,7 @@
           <context context-type="linenumber">13</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">User</target>
+        <target state="translated">ผู้ใช้</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_STATUS" datatype="html">
         <source>Status</source>
@@ -18257,7 +18274,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Status</target>
+        <target state="translated">สถานะ</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__STATUS_TOOLTIP" datatype="html">
         <source>Referrals are pending until they&apos;ve set up their wallet</source>
@@ -18275,7 +18292,7 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Minds Signup</target>
+        <target state="translated">สมัคร Minds</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__MINDS_SIGNUP_TOOLTIP" datatype="html">
         <source>The day the referral created an account with Minds</source>
@@ -18293,7 +18310,7 @@
           <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Rewards Signup</target>
+        <target state="translated">สมัคร Rewards</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__REWARDS_SIGNUP_TOOLTIP" datatype="html">
         <source>The day the referral sets up their wallet (and you are rewarded with tokens). Click PING to send a pending referral a notification to let them know they ought to join the rewards program.</source>
@@ -18311,7 +18328,7 @@
           <context context-type="linenumber">137</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">ping</target>
+        <target state="translated">ปิง</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__PING_STATE" datatype="html">
         <source>pinged</source>
@@ -18320,7 +18337,7 @@
           <context context-type="linenumber">142</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">pinged</target>
+        <target state="translated">ปิงแล้ว</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__ENABLED" datatype="html">
         <source>
@@ -18346,7 +18363,7 @@
           <context context-type="linenumber">161</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Ping sent!</target>
+        <target state="translated">ปิงถูกส่งแล้ว!</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__DISABLED" datatype="html">
         <source>You can only ping once every 7 days</source>
@@ -18364,7 +18381,7 @@
           <context context-type="linenumber">183</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You don't have any referrals yet.</target>
+        <target state="translated">คุณยังไม่ได้แนะนำให้เครือข่ายเพื่อนเลย</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS__LINKS_MODAL_HEADER" datatype="html">
         <source>Earn tokens for referring your friends</source>
@@ -18373,7 +18390,7 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Earn tokens for referring your friends</target>
+        <target state="translated">รับโทเค็นจากการแนะนำเพื่อนของคุณ</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS__LINKS_REGISTER_URL_DESC" datatype="html">
         <source>Send this link to your friends to earn tokens for referrals</source>
@@ -18382,7 +18399,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Send this link to your friends to earn tokens for referrals</target>
+        <target state="translated">ส่งลิงค์นี้ให้เพื่อนของคุณเพื่อรับโทเค็นสำหรับการแนะนำ</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS__LINKS_COPY_ACTION" datatype="html">
         <source>Copy</source>
@@ -18426,7 +18443,7 @@
           <context context-type="linenumber">90</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">More ways to share</target>
+        <target state="translated">วิธีอื่นๆในการแชร์</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__DISPLAYNAME__LABEL" datatype="html">
         <source>Display Name</source>
@@ -18444,7 +18461,7 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Customize your display name.</target>
+        <target state="translated">เลือกชื่อที่ใช้แสดง</target>
       </trans-unit>
       <trans-unit id="ACCOUNT_DISPLAY_NAME__DISPLAY_NAME" datatype="html">
         <source>Display Name</source>
@@ -18462,7 +18479,7 @@
           <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Display Name</target>
+        <target state="translated">บันทึกชื่อที่ใช้แสดง</target>
       </trans-unit>
       <trans-unit id="SETTINGS__SECURITY__SESSIONS__LABEL" datatype="html">
         <source>Sessions</source>
@@ -18480,7 +18497,7 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Close all sessions with a single click.</target>
+        <target state="translated">ปิดทุกเซสชั่นด้วยการกดเพียงปุ่มเดียว</target>
       </trans-unit>
       <trans-unit id="SETTINGS__SESSIONS__YOU_CURRENTLY_HAVE_X_OPEN" datatype="html">
         <source>
@@ -18495,12 +18512,11 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          You currently have 
+        <target state="translated">
+          คุณมี 
           <x id="INTERPOLATION"/>
-           open 
+           เซสชั่นที่กำลังเปิดอยู่ 
           <x id="ICU"/>
-          .
         </target>
       </trans-unit>
       <trans-unit id="43467536e46887902d3f30454b425cd931e00d5f" datatype="html">
@@ -18510,7 +18526,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">{VAR_PLURAL, plural, =1 {session} other {sessions} }</target>
+        <target state="translated">{VAR_PLURAL, plural, =1 {เซสชั่น} other {เซสชั่น} }</target>
       </trans-unit>
       <trans-unit id="SETTINGSV2_SESSIONS__CLOSE_ALL_SESSIONS" datatype="html">
         <source>Close all sessions</source>
@@ -18519,7 +18535,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Close all sessions</target>
+        <target state="translated">ปิดทุกเซสชั่น</target>
       </trans-unit>
       <trans-unit id="SETTINGS__SECURITY__2FA__LABEL" datatype="html">
         <source>Two-factor Authentication</source>
@@ -18528,7 +18544,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Two-factor Authentication</target>
+        <target state="translated">การเข้ารหัสสองชั้น</target>
       </trans-unit>
       <trans-unit id="SETTINGS__SECURITY__2FA__DESCRIPTION" datatype="html">
         <source>Add an extra layer of security to your account by enabling 2FA.</source>
@@ -18573,7 +18589,7 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Invalid email address format.</target>
+        <target state="translated">รูปแบบที่อยู่อีเมลไม่ถูกต้อง</target>
       </trans-unit>
       <trans-unit id="ACCOUNT_EMAIL_ADDRESS__SAVE_EMAIL_ADDRESS" datatype="html">
         <source>Save Email Address</source>
@@ -18582,7 +18598,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Email Address</target>
+        <target state="translated">บันทึกอีเมล์</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__LANGUAGE__LABEL" datatype="html">
         <source>Language Settings</source>
@@ -18618,7 +18634,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Language</target>
+        <target state="translated">ปรับปรุงภาษา</target>
       </trans-unit>
       <trans-unit id="LANGUAGE__HELP_US_TRANSLATE__WITH__LINK" datatype="html">
         <source>
@@ -18657,7 +18673,7 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Change account password.</target>
+        <target state="translated">เปลี่ยนรหัสผ่าน</target>
       </trans-unit>
       <trans-unit id="PASSWORD_SETTINGS__EXISTING_PASSWORD" datatype="html">
         <source>Existing Password</source>
@@ -18666,7 +18682,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Existing Password</target>
+        <target state="translated">รหัสผ่านเดิม</target>
       </trans-unit>
       <trans-unit id="COMMON__INCORRECT_PASSWORD" datatype="html">
         <source>Incorrect password.</source>
@@ -18702,7 +18718,7 @@
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Passwords must match.</target>
+        <target state="translated">รหัสผ่านต้องตรงกัน</target>
       </trans-unit>
       <trans-unit id="PASSWORD_SETTINGS__UPDATE_PASSWORD" datatype="html">
         <source>Update Password</source>
@@ -18711,7 +18727,7 @@
           <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Password</target>
+        <target state="translated">เปลี่ยนรหัสผ่าน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__NOTIFICATIONS__EMAIL__LABEL" datatype="html">
         <source>Email Notifications</source>
@@ -18738,7 +18754,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Email me when</target>
+        <target state="translated">ส่งอีเมลหาฉันเวลา</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__HAVE_UNREAD_NOTIFICATIONS" datatype="html">
         <source>I have unread notifications</source>
@@ -18747,7 +18763,7 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I have unread notifications</target>
+        <target state="translated">คุณมีการแจ้งเตือนที่ยังไม่ได้อ่าน</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__RECEIVED_WIRE" datatype="html">
         <source>I receive a wire</source>
@@ -18756,7 +18772,7 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I receive a wire</target>
+        <target state="translated">ฉันได้รับเงิน</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__BOOST_BEEN_COMPLETED" datatype="html">
         <source>My boost has been completed</source>
@@ -18765,7 +18781,7 @@
           <context context-type="linenumber">77</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">My boost has been completed</target>
+        <target state="translated">บูสต์ของฉันเสร็จสมบูรณ์</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__EMAIL_ME_WITH" datatype="html">
         <source>Email me with</source>
@@ -18774,7 +18790,7 @@
           <context context-type="linenumber">96</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Email me with</target>
+        <target state="translated">ส่งอีเมลหาฉันด้วย</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__TOP_POSTS_FROM_NETWORK" datatype="html">
         <source>Top posts from my network</source>
@@ -18783,7 +18799,7 @@
           <context context-type="linenumber">103</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Top posts from my network</target>
+        <target state="translated">โพสต์ดังจากเครือข่ายของฉัน</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__IMPROVE_CHANNEL_TIPS" datatype="html">
         <source>Tips on how to improve my channel</source>
@@ -18792,7 +18808,7 @@
           <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Tips on how to improve my channel</target>
+        <target state="translated">เคล็ดลับในการพัฒนาแชนแนลของฉัน</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__MISSED_SINCE_LAST_LOGIN" datatype="html">
         <source>Things I&apos;ve missed since my last login</source>
@@ -18801,7 +18817,7 @@
           <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Things I've missed since my last login</target>
+        <target state="translated">สิ่งที่ฉันพลาดไปตั้งแต่การล็อกอินครั้งล่าสุด</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__NEW_CHANNELS_SUB_TO" datatype="html">
         <source>New channels to subscribe to</source>
@@ -18810,7 +18826,7 @@
           <context context-type="linenumber">170</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">New channels to subscribe to</target>
+        <target state="translated">แชนแนลใหม่ๆที่น่ากดติดตาม</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__KEEP_ME_UPDATED_WITH" datatype="html">
         <source>Keep me updated with</source>
@@ -18819,7 +18835,7 @@
           <context context-type="linenumber">190</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Keep me updated with</target>
+        <target state="translated">แจ้งให้ฉันทราบเกี่ยวกับ</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__NEWS_ABOUT_NEW_MINDS_PRODUCTS" datatype="html">
         <source>News about new Minds products and features</source>
@@ -18828,7 +18844,7 @@
           <context context-type="linenumber">198</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">News about new Minds products and features</target>
+        <target state="translated">ข่าวเกี่ยวกับผลิตภัณฑ์และฟีเจอร์ใหม่ๆของ Minds</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__MINDS_USAGE_TIPS" datatype="html">
         <source>Tips on how to use Minds</source>
@@ -18837,7 +18853,7 @@
           <context context-type="linenumber">218</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Tips on how to use Minds</target>
+        <target state="translated">เคล็ดลับเกี่ยวกับการใช้ Minds</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__EXCLUSIVE_PROMOTIONS" datatype="html">
         <source>Exclusive promotions</source>
@@ -18846,7 +18862,7 @@
           <context context-type="linenumber">241</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Exclusive promotions</target>
+        <target state="translated">โปรโมชั่นพิเศษ</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__UPDATE_PREFERENCES" datatype="html">
         <source>Update Preferences</source>
@@ -18855,7 +18871,7 @@
           <context context-type="linenumber">265</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Preferences</target>
+        <target state="translated">ปรับปรุงการตั้งค่า</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__NSFW__LABEL" datatype="html">
         <source>NSFW Content</source>
@@ -18882,7 +18898,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Always show NSFW content (18+)</target>
+        <target state="translated">แสดงเนื้อหาสำหรับผู้ใหญ่เสมอ (18+)</target>
       </trans-unit>
       <trans-unit id="NSFW_CONTENT_SETTINGS__UPDATE_PREFERENCES" datatype="html">
         <source>Update NSFW Preference</source>
@@ -18891,7 +18907,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update NSFW Preference</target>
+        <target state="translated">ปรับปรุงการตั้งค่า NSFW</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__SHAREBUTTONS__LABEL" datatype="html">
         <source>Share Buttons</source>
@@ -18900,7 +18916,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Share Buttons</target>
+        <target state="translated">ปุ่มแชร์</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__SHAREBUTTONS__DESCRIPTION" datatype="html">
         <source>Control whether you see the share button overlay.</source>
@@ -18918,7 +18934,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Show share buttons</target>
+        <target state="translated">แสดงปุ่มแชร์</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_SHARE_BUTTONS__UPDATE_PREFERENCES" datatype="html">
         <source>Update Preference</source>
@@ -18927,7 +18943,7 @@
           <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Preference</target>
+        <target state="translated">ปรับปรุงการตั้งค่า</target>
       </trans-unit>
       <trans-unit id="SETTINGS__BILLING__METHOD__LABEL" datatype="html">
         <source>Payment Methods</source>
@@ -18954,7 +18970,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your Cards</target>
+        <target state="translated">บัตรของคุณ</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__EXPIRES" datatype="html">
         <source>
@@ -18969,9 +18985,9 @@
           <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_TAG_SPAN"/>
-          Expires
+          หมดอายุ
           <x id="CLOSE_TAG_SPAN"/>
           <x id="START_TAG_SPAN_1"/>
           <x id="CLOSE_TAG_SPAN"/>
@@ -18984,7 +19000,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Add your first credit card</target>
+        <target state="translated">เพิ่มบัตรเครดิตแรกของคุณ</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__ADD_NEW_CARD" datatype="html">
         <source>
@@ -18997,9 +19013,9 @@
           <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="START_TAG_SPAN"/>
-          Add a new card
+          เพิ่มการ์ดใหม่
           <x id="CLOSE_TAG_SPAN"/>
         </target>
       </trans-unit>
@@ -19081,7 +19097,7 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Unblock</target>
+        <target state="translated">ยกเลิกบล็อค</target>
       </trans-unit>
       <trans-unit id="BLOCKED_CHANNELS__YOU_HAVENT_BLOCKED_ANY_CHANNELS" datatype="html">
         <source>You haven&apos;t blocked any channels.</source>
@@ -19090,7 +19106,7 @@
           <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You haven't blocked any channels.</target>
+        <target state="translated">คุณยังไม่ได้บล็อกแชนแนลใดๆ</target>
       </trans-unit>
       <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__SUBSCRIPTIONS__LABEL" datatype="html">
         <source>Subscription Tier Management</source>
@@ -19117,7 +19133,7 @@
           <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Subscription Tiers</target>
+        <target state="translated">การสมัครเป็นสมาชิก</target>
       </trans-unit>
       <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__PAYWALL__LABEL" datatype="html">
         <source>Paywall Preview</source>
@@ -19126,7 +19142,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Paywall Preview</target>
+        <target state="translated">ตัวอย่าง Paywall</target>
       </trans-unit>
       <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__PAYWALL__DESCRIPTION" datatype="html">
         <source>Customize the appearance of your paywalled posts. The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.</source>
@@ -19144,7 +19160,7 @@
           <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Settings</target>
+        <target state="translated">บันทึกการตั้งค่า</target>
       </trans-unit>
       <trans-unit id="SETTINGS__OTHER__LEAVE__DEACTIVATE__LABEL" datatype="html">
         <source>Deactivate Account</source>
@@ -19171,7 +19187,7 @@
           <context context-type="linenumber">26</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I understand and wish to continue.</target>
+        <target state="translated">ฉันเข้าใจและต้องการดำเนินการต่อ</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_DEACTIVATE_ACCOUNT__DEACTIVATE_ACCOUNT" datatype="html">
         <source>Deactivate Account</source>
@@ -19207,7 +19223,7 @@
           <context context-type="linenumber">26</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I understand and wish to continue.</target>
+        <target state="translated">ฉันเข้าใจและต้องการดำเนินการต่อ</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_DELETE_ACCOUNT__DELETE_ACCOUNT" datatype="html">
         <source>Delete Account</source>
@@ -19225,7 +19241,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Notification Popovers</target>
+        <target state="translated">การแจ้งเตือน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__NOTIFICATIONS__POPOVERS__DESCRIPTION" datatype="html">
         <source>Control whether you receive notification popovers.</source>
@@ -19243,7 +19259,7 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enable notification popovers</target>
+        <target state="translated">เปิดการแจ้งเตือน</target>
       </trans-unit>
       <trans-unit id="TOASTER_NOTIFICATION_SETTINGS__UPDATE_PREFERENCE" datatype="html">
         <source>Update Popover Preference</source>
@@ -19252,7 +19268,7 @@
           <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Popover Preference</target>
+        <target state="translated">ปรับปรุงการตั้งค่าการแจ้งเตือน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__GENERAL__LABEL" datatype="html">
         <source>General Settings</source>
@@ -19261,7 +19277,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">General Settings</target>
+        <target state="translated">การตั้งค่าทั่วไป</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__GENERAL__DESCRIPTION" datatype="html">
         <source>
@@ -19289,7 +19305,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Page Title</target>
+        <target state="translated">ชื่อเรื่องของหน้า</target>
       </trans-unit>
       <trans-unit id="PRO_GENERAL__NAME_OF_SITE_INFO" datatype="html">
         <source>The name of your pro site. This will be used in browser tab titles and your SEO tags.</source>
@@ -19307,7 +19323,7 @@
           <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Headline</target>
+        <target state="translated">หัวเรื่อง</target>
       </trans-unit>
       <trans-unit id="PRO_GENERAL__HEADLINE_INFO" datatype="html">
         <source>A short description about your site. This will be used in your SEO tags as well.</source>
@@ -19325,7 +19341,7 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enable Pro theme</target>
+        <target state="translated">เปิดใช้ธีม Pro</target>
       </trans-unit>
       <trans-unit id="PRO_GENERAL__ENABLE_PRO_THEME_INFO" datatype="html">
         <source>When enabled, your channel on minds.com will have your Pro site theme applied</source>
@@ -19343,7 +19359,7 @@
           <context context-type="linenumber">99</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Personal Details</target>
+        <target state="translated">บันทึกรายละเอียดข้อมูลส่วนตัว</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__THEME__LABEL" datatype="html">
         <source>Theme</source>
@@ -19352,7 +19368,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Theme</target>
+        <target state="translated">ธีม</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__THEME__DESCRIPTION" datatype="html">
         <source>
@@ -19380,7 +19396,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Text Color</target>
+        <target state="translated">สีตัวอักษร</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__COLOR_OF_PRO_SITE_INFO" datatype="html">
         <source>The color of text on your Pro site</source>
@@ -19389,7 +19405,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">The color of text on your Pro site</target>
+        <target state="translated">สีของตัวอักษรบนเว็บ Pro ของคุณ</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__INVALID_HEX_CODE" datatype="html">
         <source>Invalid hex code</source>
@@ -19406,7 +19422,7 @@
           <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Invalid hex code</target>
+        <target state="translated">รหัสไม่ถูกต้อง</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__TEXT_COLOR_REQUIRED" datatype="html">
         <source>Text color is required</source>
@@ -19415,7 +19431,7 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Text color is required</target>
+        <target state="translated">ต้องระบุสี</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__ACCENT_COLOR" datatype="html">
         <source>Accent Color</source>
@@ -19424,7 +19440,7 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Accent Color</target>
+        <target state="translated">สีหลัก</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__ACCENT_COLOR_INFO" datatype="html">
         <source>Links will become this color when you hover over them</source>
@@ -19442,7 +19458,7 @@
           <context context-type="linenumber">139</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Link color is required</target>
+        <target state="translated">ต้องระบุสี</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__BACKGROUND_COLOR" datatype="html">
         <source>Background Color</source>
@@ -19451,7 +19467,7 @@
           <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Background Color</target>
+        <target state="translated">สีพื้นหลัง</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__BACKGROUND_COLOR_INFO" datatype="html">
         <source>The background color of some elements on your site</source>
@@ -19469,7 +19485,7 @@
           <context context-type="linenumber">212</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Background color is required</target>
+        <target state="translated">ต้องมีสีพื้นหลัง</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__COLOR_SCHEMA" datatype="html">
         <source>Color Schema</source>
@@ -19478,7 +19494,7 @@
           <context context-type="linenumber">220</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Color Schema</target>
+        <target state="translated">แบบชุดสี</target>
       </trans-unit>
       <trans-unit id="COMMON__LIGHT" datatype="html">
         <source>Light</source>
@@ -19487,7 +19503,7 @@
           <context context-type="linenumber">228</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Light</target>
+        <target state="translated">สว่าง</target>
       </trans-unit>
       <trans-unit id="COMMON__DARK" datatype="html">
         <source>Dark</source>
@@ -19496,7 +19512,7 @@
           <context context-type="linenumber">244</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Dark</target>
+        <target state="translated">มืด</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__TILE_ASPECT_RATIOS" datatype="html">
         <source>Tiles Aspect Ratio</source>
@@ -19505,7 +19521,7 @@
           <context context-type="linenumber">262</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Tiles Aspect Ratio</target>
+        <target state="translated">อัตราส่วนกว้างยาว</target>
       </trans-unit>
       <trans-unit id="PRO_THEME__TILE_ASPECT_RATIOS_INFO" datatype="html">
         <source>The width-to-height ratio of tiles on your site</source>
@@ -19523,7 +19539,7 @@
           <context context-type="linenumber">299</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Theme</target>
+        <target state="translated">บันทึกธีม</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__ASSETS__LABEL" datatype="html">
         <source>Assets</source>
@@ -19532,7 +19548,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Assets</target>
+        <target state="translated">สินทรัพย์</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__ASSETS__DESCRIPTION" datatype="html">
         <source>
@@ -19560,7 +19576,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Logo</target>
+        <target state="translated">โลโก้</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__ASSETS__LOGO_TOOLTIP" datatype="html">
         <source>This will be displayed on the top left of your site</source>
@@ -19569,7 +19585,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This will be displayed on the top left of your site</target>
+        <target state="translated">สิ่งนี้จะถูกแสดงที่บนซ้ายของหน้าเพจคุณ</target>
       </trans-unit>
       <trans-unit id="COMMON__BACKGROUND_IMAGE" datatype="html">
         <source>Background Image</source>
@@ -19578,7 +19594,7 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Background Image</target>
+        <target state="translated">ภาพพื้นหลัง</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__ASSETS__BACKGROUND_TOOLTIP" datatype="html">
         <source>This will be displayed as the background of your site</source>
@@ -19587,7 +19603,7 @@
           <context context-type="linenumber">65</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This will be displayed as the background of your site</target>
+        <target state="translated">สิ่งนี้จะถูกแสดงที่อยู่บนพื้นหลังของหน้าคุณ</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__ASSETS__SAVE_ASSETS" datatype="html">
         <source>Save Assets</source>
@@ -19596,7 +19612,7 @@
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Assets</target>
+        <target state="translated">บันทึกสินทรัพย์</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__HASHTAGS__LABEL" datatype="html">
         <source>Theme</source>
@@ -19605,7 +19621,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Theme</target>
+        <target state="translated">ธีม</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__HASHTAGS__DESCRIPTION" datatype="html">
         <source>
@@ -19659,7 +19675,7 @@
           <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Hashtags</target>
+        <target state="translated">บันทึกแฮชแท็ก</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__FOOTER__LABEL" datatype="html">
         <source>Footer</source>
@@ -19668,7 +19684,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Footer</target>
+        <target state="translated">ส่วนท้าย</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__FOOTER___DESCRIPTION" datatype="html">
         <source>
@@ -19696,7 +19712,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Links</target>
+        <target state="translated">ลิงก์</target>
       </trans-unit>
       <trans-unit id="FOOTER__CAN_POST_EXTERNAL_BELOW" datatype="html">
         <source>You can post external links below</source>
@@ -19705,7 +19721,7 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You can post external links below</target>
+        <target state="translated">คุณสามารถโพสต์ลิงก์นอกด้านล่างนี้</target>
       </trans-unit>
       <trans-unit id="FOOTER__ADD" datatype="html">
         <source>Add</source>
@@ -19714,7 +19730,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Add</target>
+        <target state="translated">เพิ่ม</target>
       </trans-unit>
       <trans-unit id="COMMON__TEXT" datatype="html">
         <source>Text</source>
@@ -19732,7 +19748,7 @@
           <context context-type="linenumber">80</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This text will be displayed at the bottom of the page</target>
+        <target state="translated">ข้อความนี้จะถูกแสดงข้างล่างของหน้า</target>
       </trans-unit>
       <trans-unit id="FOOTER__SAVE_FOOTER" datatype="html">
         <source>Save Footer</source>
@@ -19741,7 +19757,7 @@
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Footer</target>
+        <target state="translated">บันทึกส่วนท้าย</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__DOMAIN__LABEL" datatype="html">
         <source>Domain</source>
@@ -19750,7 +19766,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Domain</target>
+        <target state="translated">โดเมน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__DOMAIN__DESCRIPTION" datatype="html">
         <source>
@@ -19778,7 +19794,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Domain</target>
+        <target state="translated">โดเมน</target>
       </trans-unit>
       <trans-unit id="DOMAIN_SETTINGS__CURRENT_SUPPORT_NOTICE" datatype="html">
         <source>Currently only subdomains are supported. Custom domains are coming soon. If you wish to use a custom domain please email info@minds.com.</source>
@@ -19805,7 +19821,7 @@
           <context context-type="linenumber">48</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Domain not available</target>
+        <target state="translated">ใช้โดเมนนี้ไม่ได้</target>
       </trans-unit>
       <trans-unit id="DOMAIN_SETTINGS__DOMAIN_REQUIRED" datatype="html">
         <source>Domain is required</source>
@@ -19814,7 +19830,7 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Domain is required</target>
+        <target state="translated">ต้องมีโดเมน</target>
       </trans-unit>
       <trans-unit id="DOMAIN_SETTINGS__CUSTOM_HEAD_CODE" datatype="html">
         <source>Custom &lt;head&gt; Code</source>
@@ -19823,7 +19839,7 @@
           <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Custom &lt;head&gt; Code</target>
+        <target state="translated">โค้ด &lt;head&gt; สร้างเอง</target>
       </trans-unit>
       <trans-unit id="DOMAIN_SETTINGS__AD_BLOCKS_JS_HEAD_CODES" datatype="html">
         <source>Ad blocks or other JS head codes can go here. Please contact a Minds admin or email info@minds.com to customize this field.</source>
@@ -19841,7 +19857,7 @@
           <context context-type="linenumber">90</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Domain</target>
+        <target state="translated">บันทึกโดเมน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__PAYOUTS__LABEL" datatype="html">
         <source>Payouts</source>
@@ -19868,14 +19884,14 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Select the currency type you wish you be paid out in. Please note payouts only occur after your 
+        <target state="translated">
+          เลือกประเภทสกุลเงินที่คุณต้องการจ่ายออก โปรดทราบว่าการจ่ายเงินจะเกิดขึ้นหลังจาก 
           <x id="START_LINK"/>
-          earnings
+          รายได้
           <x id="CLOSE_LINK"/>
-           are equivalent to $100 or greater. 
+           เทียบเท่ากับ $100 หรือมากกว่าเท่านั้น 
           <x id="START_LINK_1"/>
-          Upgrade to Pro
+          อัปเกรดเป็น Pro
           <x id="CLOSE_LINK"/>
         </target>
       </trans-unit>
@@ -19886,7 +19902,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Payout Currency</target>
+        <target state="translated">สกุลเงินการจ่ายเงิน</target>
       </trans-unit>
       <trans-unit id="COMMON__MINDS_TOKENS" datatype="html">
         <source>Minds Tokens</source>
@@ -19896,7 +19912,7 @@
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Minds Tokens</target>
+        <target state="translated">โทเค็น Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__BITCOIN" datatype="html">
         <source>Bitcoin</source>
@@ -19906,7 +19922,7 @@
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Bitcoin</target>
+        <target state="translated">Bitcoin</target>
       </trans-unit>
       <trans-unit id="PAYOUT_SETTINGS__SAVE_PAYOUT_CURRENCY" datatype="html">
         <source>Save Payout Currency</source>
@@ -19915,7 +19931,7 @@
           <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Save Payout Currency</target>
+        <target state="translated">บันทึกสกุลเงินการจ่ายเงิน</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL" datatype="html">
         <source>Cancel Pro Subscription</source>
@@ -19924,7 +19940,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Cancel Pro Subscription</target>
+        <target state="translated">ยกเลิกการสมัคร Pro</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__CANCEL__DESCRIPTION" datatype="html">
         <source>
@@ -19999,7 +20015,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enable video autoplay</target>
+        <target state="translated">เปิดใช้เล่นวิดีโออัตโนมัติ</target>
       </trans-unit>
       <trans-unit id="AUTOPLAY_VIDEOS__UPDATE_PREFERENCE" datatype="html">
         <source>Update Preference</source>
@@ -20008,7 +20024,7 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Update Preference</target>
+        <target state="translated">ปรับปรุงการตั้งค่า</target>
       </trans-unit>
       <trans-unit id="SETTINGS__HEADER__LABEL" datatype="html">
         <source>Settings</source>
@@ -20071,7 +20087,7 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">General Account Settings</target>
+        <target state="translated">การตั้งต่าบัญชี</target>
       </trans-unit>
       <trans-unit id="SETTINGS__SECURITY__HEADER__LABEL" datatype="html">
         <source>Security</source>
@@ -20098,7 +20114,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Account Upgrade</target>
+        <target state="translated">อัปเกรดบัญชี</target>
       </trans-unit>
       <trans-unit id="SETTINGS__BILLING__HEADER__LABEL" datatype="html">
         <source>Billing</source>
@@ -20143,7 +20159,7 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Pro Settings</target>
+        <target state="translated">ตั้งค่า Pro</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL" datatype="html">
         <source>Pro Subscription Management</source>
@@ -20161,7 +20177,7 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade to Pro</target>
+        <target state="translated">อัปเกรดเป็น Pro</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNTUPGRADE__PLUS__LABEL" datatype="html">
         <source>Upgrade to Plus</source>
@@ -20170,7 +20186,7 @@
           <context context-type="linenumber">49</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade to Plus</target>
+        <target state="translated">อัปเกรดเป็น Plus</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__VIEW__CHANNEL__LABEL" datatype="html">
         <source>View Pro Channel</source>
@@ -20179,7 +20195,7 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">View Pro Channel</target>
+        <target state="translated">ดูแชนแนล Pro</target>
       </trans-unit>
       <trans-unit id="CHANNEL_EDIT__EDIT_PROFILE" datatype="html">
         <source>Edit Profile</source>
@@ -20188,7 +20204,7 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Edit Profile</target>
+        <target state="translated">แก้ไขโปร์ไฟล์</target>
       </trans-unit>
       <trans-unit id="CHANNEL_EDIT__PRO_SETTINGS" datatype="html">
         <source>Pro Settings</source>
@@ -20197,7 +20213,7 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Pro Settings</target>
+        <target state="translated">ตั้งค่า Pro</target>
       </trans-unit>
       <trans-unit id="CHANNEL_EDIT__BIO_AND_IMAGERY" datatype="html">
         <source>Bio &amp; Imagery</source>
@@ -20242,7 +20258,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Just for you</target>
+        <target state="translated">สำหรับคุณเท่านั้น</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__DISCOVERY_BY_TAGS" datatype="html">
         <source>Discover by tags</source>
@@ -20300,7 +20316,7 @@
           <context context-type="linenumber">48</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back</target>
+        <target state="translated">ย้อนกลับ</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__JUST_FOR_YOU" datatype="html">
         <source>Just for you</source>
@@ -20309,7 +20325,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Just for you</target>
+        <target state="translated">สำหรับคุณเท่านั้น</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__YOUR_TAGS" datatype="html">
         <source>Your Tags</source>
@@ -20318,7 +20334,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your Tags</target>
+        <target state="translated">แท็กของคุณ</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__SEE_YOUR_FEED" datatype="html">
         <source>See your feed</source>
@@ -20327,7 +20343,7 @@
           <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">See your feed</target>
+        <target state="translated">ดูฟีดของคุณ</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__TRENDING_TAGS" datatype="html">
         <source>Trending Tags</source>
@@ -20336,7 +20352,7 @@
           <context context-type="linenumber">65</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Trending Tags</target>
+        <target state="translated">แท็กยอดนิยม</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__SEE_TRENDING_FEED" datatype="html">
         <source>See trending feed</source>
@@ -20354,7 +20370,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your Feed</target>
+        <target state="translated">ฟีดของคุณ</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_FEEDS__TRENDING_FEED" datatype="html">
         <source>Trending Feed</source>
@@ -20372,7 +20388,7 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back</target>
+        <target state="translated">ย้อนกลับ</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_SETTINGS_BUTTON__MANAGE_RESULTS" datatype="html">
         <source>Manage Results</source>
@@ -20381,7 +20397,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Manage Results</target>
+        <target state="translated">จัดการผลลัพธ์</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_SETTINGS_BUTTON__MANAGE_TAGS" datatype="html">
         <source>Manage tags</source>
@@ -20390,7 +20406,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Manage tags</target>
+        <target state="translated">จัดการแท็ก</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_DISCLAIMER__OUR_APPROACH_INFORMATION" datatype="html">
         <source>
@@ -20438,7 +20454,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Back</target>
+        <target state="translated">ย้อนกลับ</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__SELECT_TAGS" datatype="html">
         <source>Select tags</source>
@@ -20447,7 +20463,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Select tags</target>
+        <target state="translated">เลือกแท็ก</target>
       </trans-unit>
       <trans-unit id="COMMON__CHANNEL__BRIEF__SEE_ALL" datatype="html">
         <source>See All</source>
@@ -20456,7 +20472,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">See All</target>
+        <target state="translated">ดูทั้งหมด</target>
       </trans-unit>
       <trans-unit id="COMMON__CHANNEL__BRIEF__OTHER" datatype="html">
         <source>
@@ -20471,12 +20487,12 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           token/month} other {
+           โทเค็นต่อเดือน} other {
           <x id="INTERPOLATION"/>
-           tokens/month} }
+           โทเค็นต่อเดือน} }
         </target>
       </trans-unit>
       <trans-unit id="COMMON__CHANNEL__BRIEF__PER_MONTH" datatype="html">
@@ -20490,10 +20506,10 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           $
           <x id="INTERPOLATION"/>
-          /month
+           ต่อเดือน
         </target>
       </trans-unit>
       <trans-unit id="CHANNEL_ABOUT__BIO" datatype="html">
@@ -20583,7 +20599,7 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Joined</target>
+        <target state="translated">เข้าร่วมแล้ว</target>
       </trans-unit>
       <trans-unit id="CHANNEL_EXTRA__VIEWS" datatype="html">
         <source>Channel Views</source>
@@ -20592,7 +20608,7 @@
           <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Channel Views</target>
+        <target state="translated">ยอดวิวแชนแนล</target>
       </trans-unit>
       <trans-unit id="COMMON_SUBSCRIBERS" datatype="html">
         <source>Subscribers</source>
@@ -20628,7 +20644,7 @@
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Un-ban globally</target>
+        <target state="translated">ยกเลิกการแบนทั้งหมด</target>
       </trans-unit>
       <trans-unit id="M__ACTION__MARK_AS_OPEN" datatype="html">
         <source>Mark as Open</source>
@@ -20637,7 +20653,7 @@
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Mark as Open</target>
+        <target state="translated">ทำเครื่องหมายว่าเปิด</target>
       </trans-unit>
       <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__UNBLOCK" datatype="html">
         <source>Unblock</source>
@@ -20646,7 +20662,7 @@
           <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Unblock</target>
+        <target state="translated">ยกเลิกบล็อค</target>
       </trans-unit>
       <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__BLOCK" datatype="html">
         <source>Block</source>
@@ -20682,7 +20698,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Select city</target>
+        <target state="translated">เลือกเมือง</target>
       </trans-unit>
       <trans-unit id="CHANNEL_EDIT_INFO__DISPLAY_NAME" datatype="html">
         <source>Display Name</source>
@@ -20709,7 +20725,7 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Make my date of birth public</target>
+        <target state="translated">ทำให้วันเกิดของฉันเป็นแบบสาธารณะ</target>
       </trans-unit>
       <trans-unit id="COMMON__SOCIAL_LINKS__ENTER_URL" datatype="html">
         <source>Enter URL</source>
@@ -20718,7 +20734,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter URL</target>
+        <target state="translated">ใส่ URL</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__SORRY_CHANNEL_DOES_NOT_EXIST" datatype="html">
         <source>Sorry, this channel doesn&apos;t appear to exist</source>
@@ -20727,7 +20743,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Sorry, this channel doesn't appear to exist</target>
+        <target state="translated">ขออภัย ไม่มีช่องนี้อยู่</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__ACCOUNT_BANNED" datatype="html">
         <source>Account banned</source>
@@ -20740,7 +20756,7 @@
           <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Account banned</target>
+        <target state="translated">บัญชีถูกแบน</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__ACCOUNT_DISABLED" datatype="html">
         <source>This channel has been disabled</source>
@@ -20749,7 +20765,7 @@
           <context context-type="linenumber">52</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This channel has been disabled</target>
+        <target state="translated">แชนแนลนี้ถูกปิดใช้งาน</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__BLOCKED_CHANNEL" datatype="html">
         <source>You have blocked this channel</source>
@@ -20758,7 +20774,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">You have blocked this channel</target>
+        <target state="translated">คุณได้บล็อกแชนแนลนี้แล้ว</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__CHANNEL_NSFW" datatype="html">
         <source>This channel is NSFW</source>
@@ -20767,7 +20783,7 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This channel is NSFW</target>
+        <target state="translated">แชนแนลนี้เป็น NSFW</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__I_AM_OVER_18" datatype="html">
         <source>I am 18 or over</source>
@@ -20776,7 +20792,7 @@
           <context context-type="linenumber">83</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I am 18 or over</target>
+        <target state="translated">ฉันมีอายุ 18 ปีขึ้นไป</target>
       </trans-unit>
       <trans-unit id="COMMON__CHANNEL_LIST__FILTER_ELLIPSIS" datatype="html">
         <source>Filter...</source>
@@ -20785,7 +20801,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Filter...</target>
+        <target state="translated">ตัวกรอง...</target>
       </trans-unit>
       <trans-unit id="72f34b3ac267bb423e47c3bed43123f99239d1da" datatype="html">
         <source>Shop</source>
@@ -20795,7 +20811,7 @@
         </context-group>
         <note priority="1" from="description">CHANNEL_V2__BRIEF_WIRE_REWARD__SHOP</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Shop</target>
+        <target state="translated">ร้านค้า</target>
       </trans-unit>
       <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__TOKENS_PER_MONTH" datatype="html">
         <source>
@@ -20810,12 +20826,12 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           token/month} other {
+           โทเค็นต่อเดือน} other {
           <x id="INTERPOLATION"/>
-           tokens/month} }
+           โทเค็นต่อเดือน} }
         </target>
       </trans-unit>
       <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__USD_PER_MONTH" datatype="html">
@@ -20829,10 +20845,10 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           $
           <x id="INTERPOLATION"/>
-          /month
+           ต่อเดือน
         </target>
       </trans-unit>
     </body>
