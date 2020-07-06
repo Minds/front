@@ -102,6 +102,8 @@ export class PostMenuV2Component implements OnInit {
    * @param option
    */
   async onSelectedOption(option: Option): Promise<void> {
+    let actionCancelled = false;
+
     switch (option) {
       case 'edit':
         break;
@@ -135,14 +137,17 @@ export class PostMenuV2Component implements OnInit {
 
       // Destructive options
       case 'delete':
-        await this.service.confirmDelete();
+        actionCancelled = !(await this.service.confirmDelete());
         break;
       case 'report':
         this.service.openReportModal();
         break;
     }
 
-    this.optionSelected.emit(option);
+    if (!actionCancelled) {
+      this.optionSelected.emit(option);
+    }
+
     this.isOpened$.next(false);
     this.detectChanges();
   }
