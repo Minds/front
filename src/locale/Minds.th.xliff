@@ -6209,21 +6209,6 @@
            สมัครรับข้อมูลคุณ
         </target>
       </trans-unit>
-      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REFERRAL_PING" datatype="html">
-        <source>
-          Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and 
-          <x id="START_TAG_SPAN"/>
-          <x id="INTERPOLATION"/>
-          <x id="CLOSE_TAG_SPAN"/>
-           will earn tokens for your referral
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/notifications/notification.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">โทเคนฟรีกำลังรอคุณอยู่! เข้าร่วมโปรแกรมการรับรางวัลโดยตั้งค่า Minds Wallet ของคุณ ทั้งคุณและ&amp;{ผู้ใช้}&amp; จะได้รับโทเคนฟรีสำหรับการแนะนำใช้งาน</target>
-      </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__REFERRAL_PENDING" datatype="html">
         <source>
           You have a pending referral! 
