@@ -21,6 +21,8 @@
     }
   }
   .m-languageBar__languageOptions {
+    display: flex;
+    align-self: normal;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
