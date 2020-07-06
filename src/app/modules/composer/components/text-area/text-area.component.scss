@@ -6,6 +6,7 @@ m-composer__textArea {
     flex-direction: column;
     flex: 1;
     overflow-y: visible; // do not cut off auto-complete container.
+    min-height: 0; // prevents firefox issues
 
     m-composer__modal & {
       @media screen and (max-width: $max-mobile) {

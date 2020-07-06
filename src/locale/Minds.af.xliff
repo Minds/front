@@ -9,7 +9,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Groups</target>
+        <target state="translated">Groepe</target>
       </trans-unit>
       <trans-unit id="M__COMMON__NEW_GROUP" datatype="html">
         <source>New group</source>
@@ -26,7 +26,7 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">New group</target>
+        <target state="translated">Nuwe groepe</target>
       </trans-unit>
       <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html">
         <source>Discover Groups</source>
@@ -43,7 +43,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Discover Groups</target>
+        <target state="translated">Ondek Groepe</target>
       </trans-unit>
       <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
         <source>Join some groups to populate this sidebar</source>
@@ -56,7 +56,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Join some groups to populate this sidebar</target>
+        <target state="translated">Sluit aan by ander groepe om die sidebar aantevul</target>
       </trans-unit>
       <trans-unit id="COMMON__HOME" datatype="html">
         <source>Home</source>
@@ -69,7 +69,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Home</target>
+        <target state="translated">Tuiste</target>
       </trans-unit>
       <trans-unit id="COMMON__NEWSFEED" datatype="html">
         <source>Newsfeed</source>
@@ -82,7 +82,7 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Newsfeed</target>
+        <target state="translated">Nuusvoer</target>
       </trans-unit>
       <trans-unit id="COMMON__DISCOVERY" datatype="html">
         <source>Discovery</source>
@@ -95,7 +95,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Discovery</target>
+        <target state="translated">Ondekking</target>
       </trans-unit>
       <trans-unit id="COMMON__WALLET" datatype="html">
         <source>Wallet</source>
@@ -108,7 +108,7 @@
           <context context-type="linenumber">94</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Wallet</target>
+        <target state="translated">Beursie</target>
       </trans-unit>
       <trans-unit id="COMMON__ANALYTICS" datatype="html">
         <source>Analytics</source>
@@ -121,7 +121,7 @@
           <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Analytics</target>
+        <target state="translated">Analitiese</target>
       </trans-unit>
       <trans-unit id="COMMON__TRAFFIC" datatype="html">
         <source>Traffic</source>
@@ -130,7 +130,7 @@
           <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Traffic</target>
+        <target state="translated">Verkeer</target>
       </trans-unit>
       <trans-unit id="COMMON__ENGAGEMENT" datatype="html">
         <source>Engagement</source>
@@ -143,7 +143,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Engagement</target>
+        <target state="translated">Betrokkenheid</target>
       </trans-unit>
       <trans-unit id="COMMON__EARNINGS" datatype="html">
         <source>Earnings</source>
@@ -152,7 +152,7 @@
           <context context-type="linenumber">153</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Earnings</target>
+        <target state="translated">Verdienste</target>
       </trans-unit>
       <trans-unit id="COMMON__TRENDING" datatype="html">
         <source>Trending</source>
@@ -165,7 +165,7 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Trending</target>
+        <target state="translated">Gewild</target>
       </trans-unit>
       <trans-unit id="COMMON__SETTINGS" datatype="html">
         <source>Settings</source>
@@ -190,7 +190,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Settings</target>
+        <target state="translated">Verstellings</target>
       </trans-unit>
       <trans-unit id="CHANNEL__ONBOARDING__CHOOSE_DISPLAY_NAME" datatype="html">
         <source>Choose your display name</source>
@@ -199,7 +199,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Choose your display name</target>
+        <target state="translated">Kies jou vertoning naam</target>
       </trans-unit>
       <trans-unit id="CHANNEL__ONBOARDING__BRIEFLY_DESCRIBE_YOUR_CHANNEL" datatype="html">
         <source>Briefly describe your channel</source>
@@ -208,7 +208,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Briefly describe your channel</target>
+        <target state="translated">Kortliks beskryf jou kanaal</target>
       </trans-unit>
       <trans-unit id="MINDS_FESTIVAL_TICKET_SALE" datatype="html">
         <source>BREAKING: Tickets on sale for &quot;MINDS: FESTIVAL OF IDEAS&quot; @ Radio City on 6/13/2020. HELP US SELL OUT FAST!</source>
@@ -251,7 +251,7 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost</target>
+        <target state="translated">Gemaksimeer</target>
       </trans-unit>
       <trans-unit id="M__ACTION__VIEW_CHANNEL" datatype="html">
         <source>View Channel</source>
@@ -261,7 +261,7 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">View Channel</target>
+        <target state="translated">Sien Kanaal</target>
       </trans-unit>
       <trans-unit id="COMMON__ADMIN" datatype="html">
         <source>Admin</source>
@@ -274,7 +274,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Admin</target>
+        <target state="translated">Administrateur</target>
       </trans-unit>
       <trans-unit id="COMMON_SETTINGS" datatype="html">
         <source>Settings</source>
@@ -283,7 +283,7 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Settings</target>
+        <target state="translated">Verstellings</target>
       </trans-unit>
       <trans-unit id="COMMON_FAQ" datatype="html">
         <source>FAQ</source>
@@ -292,7 +292,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">FAQ</target>
+        <target state="translated">Kwelvrae</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP DESK" datatype="html">
         <source>Help Desk</source>
@@ -301,7 +301,7 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Help Desk</target>
+        <target state="translated">Bystandbank</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP_AND_SUPPORT" datatype="html">
         <source>Help &amp; Support</source>
@@ -314,7 +314,7 @@
           <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Help &amp; Support</target>
+        <target state="translated">Wenke en steundiens</target>
       </trans-unit>
       <trans-unit id="COMMON__WHITEPAPER" datatype="html">
         <source>Whitepaper</source>
@@ -323,7 +323,7 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Whitepaper</target>
+        <target state="translated">Witpapier</target>
       </trans-unit>
       <trans-unit id="COMMON__OPT_INTO_EXPERIMENTS" datatype="html">
         <source>Opt-in to Experiments</source>
@@ -332,7 +332,7 @@
           <context context-type="linenumber">105</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Opt-in to Experiments</target>
+        <target state="translated">Inkoop na Eksperiment</target>
       </trans-unit>
       <trans-unit id="COMMON__CANARY" datatype="html">
         <source>Canary</source>
@@ -341,7 +341,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Canary</target>
+        <target state="translated">Canary</target>
       </trans-unit>
       <trans-unit id="COMMON_LOGOUT" datatype="html">
         <source>Logout</source>
@@ -350,7 +350,7 @@
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Logout</target>
+        <target state="translated">Teken Uit</target>
       </trans-unit>
       <trans-unit id="M__ACTION__LOGIN" datatype="html">
         <source>Login</source>
@@ -371,7 +371,7 @@
           <context context-type="linenumber">207</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Login</target>
+        <target state="translated">Inteken</target>
       </trans-unit>
       <trans-unit id="MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP" datatype="html">
         <source>Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</source>
@@ -384,7 +384,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</target>
+        <target state="translated">Oopmaak mag moontlik sensitiewe meteriaal bevat. Deur Oopmaak te kies, aanvaar jy dat jy bereid is die sensitiewe meteriaal te sien.</target>
       </trans-unit>
       <trans-unit id="COMMON__LOGIN" datatype="html">
         <source>Login</source>
@@ -397,7 +397,7 @@
           <context context-type="linenumber">58</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Login</target>
+        <target state="translated">Inteken</target>
       </trans-unit>
       <trans-unit id="COMMON__JOIN_MINDS_NOW" datatype="html">
         <source>Join Minds Now</source>
@@ -406,7 +406,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Join Minds Now</target>
+        <target state="translated">Sluit nou aan by Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE" datatype="html">
         <source>Upgrade</source>
@@ -415,7 +415,7 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade</target>
+        <target state="translated">Opgradeer</target>
       </trans-unit>
       <trans-unit id="COMMON__BUY_TOKENS" datatype="html">
         <source>Buy tokens</source>
@@ -437,7 +437,7 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buy tokens</target>
+        <target state="translated">Koop tokens</target>
       </trans-unit>
       <trans-unit id="COMMON__LIGHT_MODE" datatype="html">
         <source>Enter Light Mode</source>
@@ -446,7 +446,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter Light Mode</target>
+        <target state="translated">Kies Ligte Tema</target>
       </trans-unit>
       <trans-unit id="COMMON__DARK_MODE" datatype="html">
         <source>Enter Dark Mode</source>
@@ -455,7 +455,7 @@
           <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter Dark Mode</target>
+        <target state="translated">Kies Donker Tema</target>
       </trans-unit>
       <trans-unit id="COMMON__BOOST_CONSOLE" datatype="html">
         <source>Boost Console</source>
@@ -464,7 +464,7 @@
           <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost Console</target>
+        <target state="translated">Hupstoot Konsole</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP" datatype="html">
         <source>Help</source>
@@ -473,7 +473,7 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Help</target>
+        <target state="translated">Hulp</target>
       </trans-unit>
       <trans-unit id="COMMON__FAQ" datatype="html">
         <source>FAQ</source>
@@ -482,7 +482,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">FAQ</target>
+        <target state="translated">Kwelvrae</target>
       </trans-unit>
       <trans-unit id="COMMON__LOGOUT" datatype="html">
         <source>Logout</source>
@@ -495,7 +495,7 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Logout</target>
+        <target state="translated">Teken Uit</target>
       </trans-unit>
       <trans-unit id="COMMON__MORE" datatype="html">
         <source>More</source>
@@ -504,7 +504,7 @@
           <context context-type="linenumber">155</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">More</target>
+        <target state="translated">Meer</target>
       </trans-unit>
       <trans-unit id="COMMON__LESS" datatype="html">
         <source>Less</source>
@@ -1209,7 +1209,7 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Please enter your private key below in order to unlock your account. You can also drag and drop a CSV file into this window.</target>
+        <target state="translated">Voeg asseblief jou privaat sleutel onder in om jou rekening oop te maak. Jy kan ook jou CSV lêer intrek in die venster.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__CREATE_WALLET_AND_LEARN_ABOUT_TOKENS" datatype="html">
         <source>
@@ -1239,7 +1239,7 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Drop key file below to auto-fill the field.</target>
+        <target state="translated">Gooi sleutul lêer onder om die veld automaties vol te maak.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__PRIVATE_KEY" datatype="html">
         <source>Private Key</source>
@@ -1248,7 +1248,7 @@
           <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Private Key</target>
+        <target state="translated">Private Sleutel</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__REMEMBER_PKEY_FOR_1_MIN" datatype="html">
         <source>Remember this private key for 1 minute only.</source>
@@ -1257,7 +1257,7 @@
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Remember this private key for 1 minute only.</target>
+        <target state="translated">Onthou die privaat sleutel vir slegs 1 minuut.</target>
       </trans-unit>
       <trans-unit id="M__ACTION__CANCEL" datatype="html">
         <source>Cancel</source>
@@ -1318,7 +1318,7 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Cancel</target>
+        <target state="translated">Kanselleer</target>
       </trans-unit>
       <trans-unit id="MM__ACTION__COMPLETE" datatype="html">
         <source>Complete</source>
@@ -1327,7 +1327,7 @@
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Complete</target>
+        <target state="translated">Volledig</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__WARNING_REMEMBER_KEY_FOREVER" datatype="html">
         <source>Warning: Remembering the private key for the rest of the session can be insecure and might lead to your ETH being stolen.</source>
@@ -1336,7 +1336,7 @@
           <context context-type="linenumber">128</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Warning: Remembering the private key for the rest of the session can be insecure and might lead to your ETH being stolen.</target>
+        <target state="translated">Waarskuiwing: Om die privaat sleutel te onthou vir die res van die sessie kan gevaarlik wees en kan maak dat jou ETH gesteel word.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE" datatype="html">
         <source>Gas Price</source>
@@ -1345,7 +1345,7 @@
           <context context-type="linenumber">143</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Gas Price</target>
+        <target state="translated">Gas Prys</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS" datatype="html">
         <source>Gas</source>
@@ -1354,7 +1354,7 @@
           <context context-type="linenumber">157</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Gas</target>
+        <target state="translated">Gas</target>
       </trans-unit>
       <trans-unit id="COMMON__CANCEL" datatype="html">
         <source>Cancel</source>
@@ -1367,7 +1367,7 @@
           <context context-type="linenumber">345</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Cancel</target>
+        <target state="translated">Kanselleer</target>
       </trans-unit>
       <trans-unit id="COMMON__APPROVE" datatype="html">
         <source>Approve</source>
@@ -1380,7 +1380,7 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Approve</target>
+        <target state="translated">Goedgekeur</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__BOOST" datatype="html">
         <source>Boost</source>
@@ -1389,7 +1389,7 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost</target>
+        <target state="translated">Hupstoot</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__BOOST_TYPE_TITLE" datatype="html">
         <source>Boost Type</source>
@@ -1398,7 +1398,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost Type</target>
+        <target state="translated">Hupstoot Tiepe</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__NEWSFEED_PLURAL" datatype="html">
         <source>Feeds</source>
@@ -1411,7 +1411,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Feeds</target>
+        <target state="translated">Toevoere</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__NEWSFEEDS_SELECTOR_DESC" datatype="html">
         <source>Your content will appear on newsfeeds across the site.</source>
@@ -1420,7 +1420,7 @@
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your content will appear on newsfeeds across the site.</target>
+        <target state="translated">Jou inhoud sal op al die strome verskyn op die werf.</target>
       </trans-unit>
       <trans-unit id="M__COMMON__SELECTED" datatype="html">
         <source>Selected</source>
@@ -1485,7 +1485,7 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Selected</target>
+        <target state="translated">Gekies</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__OFFER__PLURAL" datatype="html">
         <source>Offers</source>
@@ -1498,7 +1498,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Offers</target>
+        <target state="translated">Aanbod</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__OFFERS_SELECTOR_DESC" datatype="html">
         <source>Your content will be shared to a specific channel in exchange for USD or tokens.</source>

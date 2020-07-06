@@ -273,8 +273,8 @@ export class PostMenuService {
     this.entity.nsfw = nsfw;
   }
 
-  async confirmDelete(): Promise<void> {
-    await this.dialogService
+  async confirmDelete(): Promise<boolean> {
+    return this.dialogService
       .confirm('Are you sure you want to delete this post?')
       .toPromise();
   }

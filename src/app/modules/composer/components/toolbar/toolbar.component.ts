@@ -121,7 +121,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     if (this.service.monetization$.getValue()) {
       const paywall = this.service.monetization$.getValue();
-      if (paywall && !paywall.support_tier) {
+
+      if (paywall && !paywall.hasOwnProperty('support_tier')) {
         this.legacyPaywallEnabled = true;
       }
     }

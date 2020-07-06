@@ -56,6 +56,8 @@ export class ComposerComponent implements OnDestroy {
 
   /**
    * Post event emitter
+   * Consider whether feedsUpdateService
+   * better suits your needs before hooking in.
    */
   @Output('onPost') onPostEmitter: EventEmitter<any> = new EventEmitter<any>();
 

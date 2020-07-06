@@ -4,22 +4,22 @@
     <div class="m-tabs__container" *ngIf="!isEditingPlus">
       <div class="m-tabs__tab">
         <a
-          [ngClass]="{ 'm-tabs__tab--selected': state.type === 'plus' }"
-          (click)="state.type = 'plus'"
-          >Plus</a
+          [ngClass]="{ 'm-tabs__tab--selected': type === 'plus' }"
+          (click)="type = 'plus'"
+          >Minds+</a
         >
       </div>
       <div class="m-tabs__tab">
         <a
-          [ngClass]="{ 'm-tabs__tab--selected': state.type === 'membership' }"
-          (click)="state.type = 'membership'"
+          [ngClass]="{ 'm-tabs__tab--selected': type === 'membership' }"
+          (click)="type = 'membership'"
           >Memberships</a
         >
       </div>
       <div class="m-tabs__tab">
         <a
-          [ngClass]="{ 'm-tabs__tab--selected': state.type === 'custom' }"
-          (click)="state.type = 'custom'"
+          [ngClass]="{ 'm-tabs__tab--selected': type === 'custom' }"
+          (click)="type = 'custom'"
           >Custom</a
         >
       </div>
@@ -27,15 +27,15 @@
   </div>
   <m-composer__monetizeV2__plus
     (dismissIntent)="dismissIntent.emit()"
-    *ngIf="state.type === 'plus'"
+    *ngIf="type === 'plus'"
     [isEditingPlus]="isEditingPlus"
   ></m-composer__monetizeV2__plus>
   <m-composer__monetizeV2__memberships
     (dismissIntent)="dismissIntent.emit()"
-    *ngIf="state.type === 'membership'"
+    *ngIf="type === 'membership'"
   ></m-composer__monetizeV2__memberships>
   <m-composer__monetizeV2__custom
     (dismissIntent)="dismissIntent.emit()"
-    *ngIf="state.type === 'custom'"
+    *ngIf="type === 'custom'"
   ></m-composer__monetizeV2__custom>
 </div>

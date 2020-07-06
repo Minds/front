@@ -9,7 +9,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Groups</target>
+        <target state="translated">קבוצות</target>
       </trans-unit>
       <trans-unit id="M__COMMON__NEW_GROUP" datatype="html">
         <source>New group</source>
@@ -26,7 +26,7 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">New group</target>
+        <target state="translated">קבוצה חדשה</target>
       </trans-unit>
       <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html">
         <source>Discover Groups</source>
@@ -43,7 +43,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Discover Groups</target>
+        <target state="translated">גלה קבוצות</target>
       </trans-unit>
       <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
         <source>Join some groups to populate this sidebar</source>
@@ -56,7 +56,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Join some groups to populate this sidebar</target>
+        <target state="translated">הצטרף לכמה קבוצות כדי למלא את תפריט הצד</target>
       </trans-unit>
       <trans-unit id="COMMON__HOME" datatype="html">
         <source>Home</source>
@@ -69,7 +69,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Home</target>
+        <target state="translated">בית</target>
       </trans-unit>
       <trans-unit id="COMMON__NEWSFEED" datatype="html">
         <source>Newsfeed</source>
@@ -82,7 +82,7 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Newsfeed</target>
+        <target state="translated">רצועת חדשות</target>
       </trans-unit>
       <trans-unit id="COMMON__DISCOVERY" datatype="html">
         <source>Discovery</source>
@@ -95,7 +95,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Discovery</target>
+        <target state="translated">גילוי</target>
       </trans-unit>
       <trans-unit id="COMMON__WALLET" datatype="html">
         <source>Wallet</source>
@@ -108,7 +108,7 @@
           <context context-type="linenumber">94</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Wallet</target>
+        <target state="translated">ארנק</target>
       </trans-unit>
       <trans-unit id="COMMON__ANALYTICS" datatype="html">
         <source>Analytics</source>
@@ -121,7 +121,7 @@
           <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Analytics</target>
+        <target state="translated">אנליטיקה</target>
       </trans-unit>
       <trans-unit id="COMMON__TRAFFIC" datatype="html">
         <source>Traffic</source>
@@ -130,7 +130,7 @@
           <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Traffic</target>
+        <target state="translated">תעבורה</target>
       </trans-unit>
       <trans-unit id="COMMON__ENGAGEMENT" datatype="html">
         <source>Engagement</source>
@@ -143,7 +143,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Engagement</target>
+        <target state="translated">רמת שימוש</target>
       </trans-unit>
       <trans-unit id="COMMON__EARNINGS" datatype="html">
         <source>Earnings</source>
@@ -152,7 +152,7 @@
           <context context-type="linenumber">153</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Earnings</target>
+        <target state="translated">רווחים</target>
       </trans-unit>
       <trans-unit id="COMMON__TRENDING" datatype="html">
         <source>Trending</source>
@@ -165,7 +165,7 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Trending</target>
+        <target state="translated">פופולרי</target>
       </trans-unit>
       <trans-unit id="COMMON__SETTINGS" datatype="html">
         <source>Settings</source>
@@ -190,7 +190,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Settings</target>
+        <target state="translated">הגדרות</target>
       </trans-unit>
       <trans-unit id="CHANNEL__ONBOARDING__CHOOSE_DISPLAY_NAME" datatype="html">
         <source>Choose your display name</source>
@@ -199,7 +199,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Choose your display name</target>
+        <target state="translated">בחר שם תצוגה</target>
       </trans-unit>
       <trans-unit id="CHANNEL__ONBOARDING__BRIEFLY_DESCRIBE_YOUR_CHANNEL" datatype="html">
         <source>Briefly describe your channel</source>
@@ -208,7 +208,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Briefly describe your channel</target>
+        <target state="translated">תאר בקצרה את הערוץ שלך</target>
       </trans-unit>
       <trans-unit id="MINDS_FESTIVAL_TICKET_SALE" datatype="html">
         <source>BREAKING: Tickets on sale for &quot;MINDS: FESTIVAL OF IDEAS&quot; @ Radio City on 6/13/2020. HELP US SELL OUT FAST!</source>
@@ -251,7 +251,7 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost</target>
+        <target state="translated">קדם</target>
       </trans-unit>
       <trans-unit id="M__ACTION__VIEW_CHANNEL" datatype="html">
         <source>View Channel</source>
@@ -261,7 +261,7 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">View Channel</target>
+        <target state="translated">הצג ערוץ</target>
       </trans-unit>
       <trans-unit id="COMMON__ADMIN" datatype="html">
         <source>Admin</source>
@@ -274,7 +274,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Admin</target>
+        <target state="translated">ניהול</target>
       </trans-unit>
       <trans-unit id="COMMON_SETTINGS" datatype="html">
         <source>Settings</source>
@@ -283,7 +283,7 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Settings</target>
+        <target state="translated">הגדרות</target>
       </trans-unit>
       <trans-unit id="COMMON_FAQ" datatype="html">
         <source>FAQ</source>
@@ -292,7 +292,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">FAQ</target>
+        <target state="translated">שאלות נפוצות</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP DESK" datatype="html">
         <source>Help Desk</source>
@@ -301,7 +301,7 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Help Desk</target>
+        <target state="translated">תמיכה טכנית</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP_AND_SUPPORT" datatype="html">
         <source>Help &amp; Support</source>
@@ -314,7 +314,7 @@
           <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Help &amp; Support</target>
+        <target state="translated">עזרה ותמיכה</target>
       </trans-unit>
       <trans-unit id="COMMON__WHITEPAPER" datatype="html">
         <source>Whitepaper</source>
@@ -323,7 +323,7 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Whitepaper</target>
+        <target state="translated">נייר לבן</target>
       </trans-unit>
       <trans-unit id="COMMON__OPT_INTO_EXPERIMENTS" datatype="html">
         <source>Opt-in to Experiments</source>
@@ -332,7 +332,7 @@
           <context context-type="linenumber">105</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Opt-in to Experiments</target>
+        <target state="translated">הירשם לניסויים</target>
       </trans-unit>
       <trans-unit id="COMMON__CANARY" datatype="html">
         <source>Canary</source>
@@ -341,7 +341,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Canary</target>
+        <target state="translated">קנרית</target>
       </trans-unit>
       <trans-unit id="COMMON_LOGOUT" datatype="html">
         <source>Logout</source>
@@ -350,7 +350,7 @@
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Logout</target>
+        <target state="translated">יציאה</target>
       </trans-unit>
       <trans-unit id="M__ACTION__LOGIN" datatype="html">
         <source>Login</source>
@@ -371,7 +371,7 @@
           <context context-type="linenumber">207</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Login</target>
+        <target state="translated">כניסה</target>
       </trans-unit>
       <trans-unit id="MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP" datatype="html">
         <source>Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</source>
@@ -384,7 +384,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</target>
+        <target state="translated">פתיחה עלולה להכיל תוכן שנוי במחלוקת. על-ידי לחיצה על פתיחה, אני מסכים להיחשף למידע שנוי במחלוקת.</target>
       </trans-unit>
       <trans-unit id="COMMON__LOGIN" datatype="html">
         <source>Login</source>
@@ -397,7 +397,7 @@
           <context context-type="linenumber">58</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Login</target>
+        <target state="translated">כניסה</target>
       </trans-unit>
       <trans-unit id="COMMON__JOIN_MINDS_NOW" datatype="html">
         <source>Join Minds Now</source>
@@ -406,7 +406,7 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Join Minds Now</target>
+        <target state="translated">הצטרף ל-Minds עכשיו</target>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE" datatype="html">
         <source>Upgrade</source>
@@ -415,7 +415,7 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade</target>
+        <target state="translated">שדרוג</target>
       </trans-unit>
       <trans-unit id="COMMON__BUY_TOKENS" datatype="html">
         <source>Buy tokens</source>
@@ -437,7 +437,7 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buy tokens</target>
+        <target state="translated">קנה מטבעות</target>
       </trans-unit>
       <trans-unit id="COMMON__LIGHT_MODE" datatype="html">
         <source>Enter Light Mode</source>
@@ -446,7 +446,7 @@
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter Light Mode</target>
+        <target state="translated">עבור לתצוגה בהירה</target>
       </trans-unit>
       <trans-unit id="COMMON__DARK_MODE" datatype="html">
         <source>Enter Dark Mode</source>
@@ -455,7 +455,7 @@
           <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter Dark Mode</target>
+        <target state="translated">עבור לתצוגה כהה</target>
       </trans-unit>
       <trans-unit id="COMMON__BOOST_CONSOLE" datatype="html">
         <source>Boost Console</source>
@@ -464,7 +464,7 @@
           <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost Console</target>
+        <target state="translated">ממשק קידום</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP" datatype="html">
         <source>Help</source>
@@ -473,7 +473,7 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Help</target>
+        <target state="translated">עזרה</target>
       </trans-unit>
       <trans-unit id="COMMON__FAQ" datatype="html">
         <source>FAQ</source>
@@ -482,7 +482,7 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">FAQ</target>
+        <target state="translated">שאלות נפוצות</target>
       </trans-unit>
       <trans-unit id="COMMON__LOGOUT" datatype="html">
         <source>Logout</source>
@@ -495,7 +495,7 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Logout</target>
+        <target state="translated">יציאה</target>
       </trans-unit>
       <trans-unit id="COMMON__MORE" datatype="html">
         <source>More</source>
@@ -504,7 +504,7 @@
           <context context-type="linenumber">155</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">More</target>
+        <target state="translated">עוד</target>
       </trans-unit>
       <trans-unit id="COMMON__LESS" datatype="html">
         <source>Less</source>
@@ -513,7 +513,7 @@
           <context context-type="linenumber">158</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Less</target>
+        <target state="translated">פחות</target>
       </trans-unit>
       <trans-unit id="M__COMMON__COPYRIGHT_YEAR" datatype="html">
         <source>
@@ -529,8 +529,8 @@
           <context context-type="linenumber">124</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          © Minds 
+        <target state="translated">
+          מיינדס 
           <x id="INTERPOLATION"/>
         </target>
       </trans-unit>
@@ -545,7 +545,7 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Click to load more</target>
+        <target state="translated">לחץ על מנת לטעון עוד</target>
       </trans-unit>
       <trans-unit id="COMMON__INFINITE_SCROLL__NOTHING_MORE" datatype="html">
         <source>Nothing more to load</source>
@@ -558,7 +558,7 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Nothing more to load</target>
+        <target state="translated">אין יותר מה להציג</target>
       </trans-unit>
       <trans-unit id="M__COMMON__COUNTRY" datatype="html">
         <source>Country</source>
@@ -567,7 +567,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Country</target>
+        <target state="translated">מדינה</target>
       </trans-unit>
       <trans-unit id="COMMON__DATE_INPUT__MONTH_LABEL" datatype="html">
         <source>Month</source>
@@ -576,7 +576,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Month</target>
+        <target state="translated">חודש</target>
       </trans-unit>
       <trans-unit id="COMMON__DATE_INPUT__DAY_LABEL" datatype="html">
         <source>Day</source>
@@ -585,7 +585,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Day</target>
+        <target state="translated">יום</target>
       </trans-unit>
       <trans-unit id="COMMON__DATE_INPUT__YEAR_LABEL" datatype="html">
         <source>Year</source>
@@ -594,7 +594,7 @@
           <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Year</target>
+        <target state="translated">שנה</target>
       </trans-unit>
       <trans-unit id="M__COMMON__ENTER_CITY" datatype="html">
         <source>Enter your city...</source>
@@ -607,7 +607,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter your city...</target>
+        <target state="translated">הכנס את שם העיר שלך...</target>
       </trans-unit>
       <trans-unit id="M__COMMON__SELECT_CITY" datatype="html">
         <source>Select your city:</source>
@@ -620,7 +620,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Select your city:</target>
+        <target state="translated">בחר את העיר שלך:</target>
       </trans-unit>
       <trans-unit id="M__COMMON__COUNTRY_STATE" datatype="html">
         <source>State</source>
@@ -630,7 +630,7 @@
         </context-group>
         <note priority="1" from="description">State as a country entity</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">State</target>
+        <target state="translated">מצב</target>
       </trans-unit>
       <trans-unit id="COMMON__SEE_MORE__ACTION" datatype="html">
         <source>See More</source>
@@ -639,7 +639,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">See More</target>
+        <target state="translated">לראות עוד</target>
       </trans-unit>
       <trans-unit id="COMMON__READ_MORE__ACTION" datatype="html">
         <source>Read more</source>
@@ -648,7 +648,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Read more</target>
+        <target state="translated">לקרוא עוד</target>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__PLUS" datatype="html">
         <source>Plus</source>
@@ -658,7 +658,7 @@
         </context-group>
         <note priority="1" from="description">Plus as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Plus</target>
+        <target state="translated">פלוס</target>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__PRO" datatype="html">
         <source>Pro</source>
@@ -667,7 +667,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Pro</target>
+        <target state="translated">פרו</target>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__ADMIN" datatype="html">
         <source>Admin</source>
@@ -677,7 +677,7 @@
         </context-group>
         <note priority="1" from="description">Admin as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Admin</target>
+        <target state="translated">מנהל</target>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__VERIFIED" datatype="html">
         <source>Verified</source>
@@ -687,7 +687,7 @@
         </context-group>
         <note priority="1" from="description">Verified as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Verified</target>
+        <target state="translated">מאומת</target>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__FOUNDER" datatype="html">
         <source>Founder</source>
@@ -701,7 +701,7 @@
         </context-group>
         <note priority="1" from="description">Founder as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Founder</target>
+        <target state="translated">מייסד</target>
       </trans-unit>
       <trans-unit id="BADGES__BOOSTER" datatype="html">
         <source>Boosted OnChain in the last 7 days</source>
@@ -710,7 +710,7 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boosted OnChain in the last 7 days</target>
+        <target state="translated">קודם על גבי השרשרת ב-7 הימים האחרונים</target>
       </trans-unit>
       <trans-unit id="MINDS__TAGCLOUD__TITLE" datatype="html">
         <source>Suggested Hashtags</source>
@@ -719,7 +719,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Suggested Hashtags</target>
+        <target state="translated">האשטג מוצעים</target>
       </trans-unit>
       <trans-unit id="MINDS__EMOJI__LABEL" datatype="html">
         <source>Emoji</source>
@@ -728,7 +728,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Emoji</target>
+        <target state="translated">אימוג'י</target>
       </trans-unit>
       <trans-unit id="COMMON__AVATAR__CHANGE" datatype="html">
         <source>Change avatar</source>
@@ -737,7 +737,7 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Change avatar</target>
+        <target state="translated">שינוי תמונה</target>
       </trans-unit>
       <trans-unit id="COMMON__AVATAR__ADD" datatype="html">
         <source>Add an avatar</source>
@@ -746,7 +746,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Add an avatar</target>
+        <target state="translated">הוספת תמונה</target>
       </trans-unit>
       <trans-unit id="M__COMMON__SUBSCRIBERS" datatype="html">
         <source>Subscribers</source>
@@ -755,7 +755,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Subscribers</target>
+        <target state="translated">רשומים</target>
       </trans-unit>
       <trans-unit id="M__COMMON__SUBSCRIPTIONS" datatype="html">
         <source>Subscriptions</source>
@@ -772,7 +772,7 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Subscriptions</target>
+        <target state="translated">מנויים</target>
       </trans-unit>
       <trans-unit id="M__COMMON__VIEWS" datatype="html">
         <source>Views</source>
@@ -781,7 +781,7 @@
           <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Views</target>
+        <target state="translated">תצוגות</target>
       </trans-unit>
       <trans-unit id="M_SHARE__HEADER" datatype="html">
         <source>Share this post</source>
@@ -790,7 +790,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Share this post</target>
+        <target state="translated">שתף פוסט</target>
       </trans-unit>
       <trans-unit id="M_SHARE__LINK_COPY_ACTION" datatype="html">
         <source>Copy</source>
@@ -799,7 +799,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Copy</target>
+        <target state="translated">העתק</target>
       </trans-unit>
       <trans-unit id="M_SHARE__LINK_COPY_STATE" datatype="html">
         <source>Copied</source>
@@ -808,7 +808,7 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Copied</target>
+        <target state="translated">הועתק</target>
       </trans-unit>
       <trans-unit id="M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL" datatype="html">
         <source>Include referral code</source>
@@ -817,7 +817,7 @@
           <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Include referral code</target>
+        <target state="translated">הזן קוד הפניה</target>
       </trans-unit>
       <trans-unit id="M_SHARE__REFERRAL_CODE_EXPLANATION" datatype="html">
         <source>
@@ -831,10 +831,10 @@
           <context context-type="linenumber">49</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Use your referral code to earn tokens for referring new users to Minds. Learn more at the 
+        <target state="translated">
+          השתמש בקוד ההפנייה שלך כדי להרוויח טוקנים על הפנייה של משתמשים חדשים ל-מיינדס. למד עוד ב
           <x id="START_LINK"/>
-          Referrals Console
+          קונסול ההפניות
           <x id="CLOSE_LINK"/>
         </target>
       </trans-unit>
@@ -845,7 +845,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Twitter</target>
+        <target state="translated">טוויטר</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_FACEBOOK" datatype="html">
         <source>Facebook</source>
@@ -854,7 +854,7 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Facebook</target>
+        <target state="translated">פייסבוק</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_MESSENGER" datatype="html">
         <source>Messenger</source>
@@ -863,7 +863,7 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Messenger</target>
+        <target state="translated">מסנג'ר</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_Whatsapp" datatype="html">
         <source>Whatsapp</source>
@@ -872,7 +872,7 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Whatsapp</target>
+        <target state="translated">ווטסאפ</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_SMS" datatype="html">
         <source>SMS</source>
@@ -881,7 +881,7 @@
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">SMS</target>
+        <target state="translated">הודעת טקסט</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_EMAIL" datatype="html">
         <source>Email</source>
@@ -890,7 +890,7 @@
           <context context-type="linenumber">112</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Email</target>
+        <target state="translated">אימייל</target>
       </trans-unit>
       <trans-unit id="M__COMMON__MATURE_CONTENT" datatype="html">
         <source>Mature content</source>
@@ -1007,7 +1007,7 @@
           <context context-type="linenumber">165</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Mature content</target>
+        <target state="translated">תוכן למבוגרים</target>
       </trans-unit>
       <trans-unit id="M__COMMON__CONFIRM_18" datatype="html">
         <source>Click to confirm you are 18+</source>
@@ -1104,7 +1104,7 @@
           <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Click to confirm you are 18+</target>
+        <target state="translated">לחץ כדי לאשר כי הינך 18+</target>
       </trans-unit>
       <trans-unit id="M__COMMON__EDITED" datatype="html">
         <source>edited</source>
@@ -1149,7 +1149,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">edited</target>
+        <target state="translated">נערך</target>
       </trans-unit>
       <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL" datatype="html">
         <source>Boosted</source>
@@ -1158,7 +1158,7 @@
           <context context-type="linenumber">350</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boosted</target>
+        <target state="translated">קודם</target>
       </trans-unit>
       <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html">
         <source>Boosted Onchain</source>
@@ -1167,7 +1167,7 @@
           <context context-type="linenumber">356</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boosted Onchain</target>
+        <target state="translated">קודם על גבי השרשרת</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_YOUR_TX" datatype="html">
         <source>Complete your OnChain transaction</source>
@@ -1176,7 +1176,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Complete your OnChain transaction</target>
+        <target state="translated">השלם את העסקה שלך על גבי הבלוקצ'יין</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_USING_METAMASK" datatype="html">
         <source>Please open your Metamask client to complete the transaction.</source>
@@ -1185,7 +1185,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Please open your Metamask client to complete the transaction.</target>
+        <target state="translated">אנא פתח את תוסף ה-Metamask כדי להשלים את העסקה.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__YOURE_APPROVING_MESSAGE" datatype="html">
         <source>
@@ -1197,8 +1197,8 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          You are approving a 
+        <target state="translated">
+          הינך מאשר 
           <x id="INTERPOLATION"/>
         </target>
       </trans-unit>
@@ -1209,7 +1209,7 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Please enter your private key below in order to unlock your account. You can also drag and drop a CSV file into this window.</target>
+        <target state="translated">אנא הכנס מטה את המפתח הפרטי כדי לפתוח את החשבון שלך. הינך יכול גם לגרור קובץ CSV לתוך חלון זה.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__CREATE_WALLET_AND_LEARN_ABOUT_TOKENS" datatype="html">
         <source>
@@ -1224,12 +1224,12 @@
           <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Don't have an address/private key? Checkout 
+        <target state="translated">
+          אין כתובת\מפתח פרטי? היכנסו ללינק 
           <x id="START_LINK"/>
           minds.com/wallet
           <x id="CLOSE_LINK"/>
-           to create a wallet and learn how to get Minds tokens.
+           בכדי ליצור ארנק וללמוד איך ניתן לקבל טוקנים של מיינדס.
         </target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__DROP_KEYFILE_BELOW" datatype="html">
@@ -1239,7 +1239,7 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Drop key file below to auto-fill the field.</target>
+        <target state="translated">גרור קובץ מפתח מטה בכדי להשלים אוטומטית.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__PRIVATE_KEY" datatype="html">
         <source>Private Key</source>
@@ -1248,7 +1248,7 @@
           <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Private Key</target>
+        <target state="translated">מפתח פרטי</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__REMEMBER_PKEY_FOR_1_MIN" datatype="html">
         <source>Remember this private key for 1 minute only.</source>
@@ -1257,7 +1257,7 @@
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Remember this private key for 1 minute only.</target>
+        <target state="translated">זכור מפתח פרטי זה למשך דקה אחת בלבד.</target>
       </trans-unit>
       <trans-unit id="M__ACTION__CANCEL" datatype="html">
         <source>Cancel</source>
@@ -1318,7 +1318,7 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Cancel</target>
+        <target state="translated">ביטול</target>
       </trans-unit>
       <trans-unit id="MM__ACTION__COMPLETE" datatype="html">
         <source>Complete</source>
@@ -1327,7 +1327,7 @@
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Complete</target>
+        <target state="translated">סיים</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__WARNING_REMEMBER_KEY_FOREVER" datatype="html">
         <source>Warning: Remembering the private key for the rest of the session can be insecure and might lead to your ETH being stolen.</source>
@@ -1336,7 +1336,7 @@
           <context context-type="linenumber">128</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Warning: Remembering the private key for the rest of the session can be insecure and might lead to your ETH being stolen.</target>
+        <target state="translated">אזהרה: שמירת המפתח עד לסיום הסשיין יכול להיות לא מאובטח ולהוביל לגניבה של טוקני ה-ETH שלך.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE" datatype="html">
         <source>Gas Price</source>
@@ -1345,7 +1345,7 @@
           <context context-type="linenumber">143</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Gas Price</target>
+        <target state="translated">מחיר דלק</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS" datatype="html">
         <source>Gas</source>
@@ -1354,7 +1354,7 @@
           <context context-type="linenumber">157</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Gas</target>
+        <target state="translated">דלק</target>
       </trans-unit>
       <trans-unit id="COMMON__CANCEL" datatype="html">
         <source>Cancel</source>
@@ -1367,7 +1367,7 @@
           <context context-type="linenumber">345</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Cancel</target>
+        <target state="translated">ביטול</target>
       </trans-unit>
       <trans-unit id="COMMON__APPROVE" datatype="html">
         <source>Approve</source>
@@ -1380,7 +1380,7 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Approve</target>
+        <target state="translated">אשר</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__BOOST" datatype="html">
         <source>Boost</source>
@@ -1389,7 +1389,7 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost</target>
+        <target state="translated">האץ</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__BOOST_TYPE_TITLE" datatype="html">
         <source>Boost Type</source>
@@ -1398,7 +1398,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Boost Type</target>
+        <target state="translated">סוג האצה</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__NEWSFEED_PLURAL" datatype="html">
         <source>Feeds</source>
@@ -1411,7 +1411,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Feeds</target>
+        <target state="translated">פידים</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__NEWSFEEDS_SELECTOR_DESC" datatype="html">
         <source>Your content will appear on newsfeeds across the site.</source>
@@ -1420,7 +1420,7 @@
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your content will appear on newsfeeds across the site.</target>
+        <target state="translated">התוכן שלך יופיע ברצועות החדשות בכל האתר.</target>
       </trans-unit>
       <trans-unit id="M__COMMON__SELECTED" datatype="html">
         <source>Selected</source>
@@ -1485,7 +1485,7 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Selected</target>
+        <target state="translated">נבחר</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__OFFER__PLURAL" datatype="html">
         <source>Offers</source>
@@ -1498,7 +1498,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Offers</target>
+        <target state="translated">הצעות</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__OFFERS_SELECTOR_DESC" datatype="html">
         <source>Your content will be shared to a specific channel in exchange for USD or tokens.</source>
@@ -1507,7 +1507,7 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your content will be shared to a specific channel in exchange for USD or tokens.</target>
+        <target state="translated">התוכן שלך יופץ לערוץ ספציפי בתמורה לדולר ארה"ב או טוקנים.</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__SIDEBAR_PLURAL" datatype="html">
         <source>Sidebars</source>
@@ -1520,7 +1520,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Sidebars</target>
+        <target state="translated">סרגל צד</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__SIDEBARS_SELECTOR_DESC" datatype="html">
         <source>Your content will display on the sidebars throughout the site.</source>
@@ -1529,7 +1529,7 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Your content will display on the sidebars throughout the site.</target>
+        <target state="translated">התוכן שלך יוצג בסרגלי צד בכל האתר.</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__BID_TITLE" datatype="html">
         <source>How many views do you want?</source>

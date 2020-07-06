@@ -384,7 +384,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Deschideți poate conține conținut controversat. Selectând Open, recunoașteți că sunteți dispus să vedeți un conținut controversat.</target>
+        <target state="translated">Deschide poate conține conținut controversat. Selectând Open, recunoașteți că sunteți dispus să vedeți un conținut controversat.</target>
       </trans-unit>
       <trans-unit id="COMMON__LOGIN" datatype="html">
         <source>Login</source>
@@ -5446,12 +5446,12 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          We've recently updated our 
+        <target state="translated">
+          Am actualizat recent 
           <x id="START_LINK"/>
-          Terms of Service
+          Termenii și condițiile
           <x id="CLOSE_LINK"/>
-           to reflect the changes to our network with the launch of the Jury System. These changes are being implemented to ensure a balance of power between Minds, Inc. and the community. The following is a brief summary of what has changed:
+           pentru a reflecta modificările aduse rețelei noastre odată cu lansarea Sistemului Jury. Aceste modificări sunt implementate pentru a asigura un echilibru de putere între Minds, Inc. și comunitate. Următorul este un scurt rezumat al modificărilor:
         </target>
       </trans-unit>
       <trans-unit id="MODALS__TOS-UPDATED__NOTICE_PARAGRAPH" datatype="html">
@@ -6430,12 +6430,12 @@
           <context context-type="linenumber">202</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
+        <target state="translated">
           <x id="INTERPOLATION"/>
-           commented on 
+           a comentat 
           <x id="START_TAG_SPAN"/>
           <x id="INTERPOLATION_1"/>
-          's activity
+           activitatea
           <x id="CLOSE_TAG_SPAN"/>
         </target>
       </trans-unit>
