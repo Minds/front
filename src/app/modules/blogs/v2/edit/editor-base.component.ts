@@ -96,7 +96,8 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
     if (
       !this.canCreateBlog() ||
       !this.session.getLoggedInUser() ||
-      this.service.inProgress$.getValue()
+      this.service.inProgress$.getValue() ||
+      this.service.isContentSaved()
     ) {
       return true;
     }

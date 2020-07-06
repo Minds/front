@@ -3,21 +3,20 @@
  * @author Ben Hayward
  * TODO:
  * [] Footer positioning.
- * [] Scheduling - next version.
+ * [] Scheduling - later iteration.
  * [] Monetization - later iteration.
- * [] check 1 blog after the other
- * [] captcha light theme button off
  */
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
 import { Upload, Client } from '../../../../services/api';
 import { Router } from '@angular/router';
-import { distinctUntilChanged, tap, map } from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { SiteService } from '../../../../common/services/site.service';
 import { MindsBlogEntity } from '../../../../interfaces/entities';
 import { Captcha } from '../../../captcha/captcha.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 export interface MetaData {
   title: string;
@@ -33,9 +32,7 @@ export interface BlogResponse {
   message?: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BlogsEditService {
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -72,10 +69,6 @@ export class BlogsEditService {
     false
   );
 
-  readonly draftSaved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
   readonly bannerFile$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
@@ -97,13 +90,13 @@ export class BlogsEditService {
   // > = new BehaviorSubject<MonetizationSubjectValue>(null);
 
   private contentSubscription: Subscription;
-  private timerSubscription: Subscription;
 
   constructor(
     protected upload: Upload,
     protected router: Router,
     protected client: Client,
-    protected site: SiteService
+    protected site: SiteService,
+    private toaster: FormToastService
   ) {
     this.contentSubscription = this.content$
       .pipe(
@@ -143,7 +136,6 @@ export class BlogsEditService {
       this.canPost$.next(true);
       this.guid$.next(guid);
       this.published$.next(blog.published);
-      this.draftSaved$.next(false);
       this.accessId$.next(blog.access_id);
       this.schedule$.next(blog.time_created);
       this.savedContent$.next(blog.description);
@@ -164,9 +156,6 @@ export class BlogsEditService {
     this.tearDown();
     if (this.contentSubscription) {
       this.contentSubscription.unsubscribe();
-    }
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
     }
   }
 
@@ -192,7 +181,6 @@ export class BlogsEditService {
     this.canPost$.next(true);
     this.guid$.next('');
     this.published$.next(0);
-    this.draftSaved$.next(false);
     this.accessId$.next(null);
     this.schedule$.next(null);
     this.savedContent$.next('');
@@ -219,7 +207,8 @@ export class BlogsEditService {
       return;
     }
 
-    this.published$.next(draft ? 0 : 1);
+    await this.setNextPublishState(draft);
+
     const blog = await this.buildBlog();
 
     this.canPost$.next(false);
@@ -246,13 +235,14 @@ export class BlogsEditService {
             ? ['/' + response.route]
             : ['/blog/view', response.guid]
         );
+        return;
       }
 
-      this.canPost$.next(true);
-      this.inProgress$.next(false);
-      this.emitDraftSaved();
-      this.savedContent$.next(this.content$.getValue());
       this.guid$.next(response.guid);
+      this.savedContent$.next(this.content$.getValue());
+      this.toaster.success('Your draft has been successfully saved.');
+      this.inProgress$.next(false);
+      this.canPost$.next(true);
 
       return response;
     } catch (e) {
@@ -269,15 +259,30 @@ export class BlogsEditService {
   }
 
   /**
-   * Sets draftSaved to true for 5 seconds.
+   * Override current accessId if a user is publishing to be public.
+   * If draft saved, sets accessId$ to be 0 (no 3rd party access).
+   * @param { boolean } - draft - true if is saving a draft.
+   * @returns { Promise<void> } - Awaitable.
    */
-  private emitDraftSaved(): void {
-    this.draftSaved$.next(true);
-    const observableTimer = timer(5000);
-    this.timerSubscription = observableTimer.subscribe(t => {
-      this.draftSaved$.next(false);
-      this.timerSubscription.unsubscribe();
-    });
+  private async setNextPublishState(draft: boolean): Promise<void> {
+    const currentValue: number = this.accessId$.getValue();
+
+    this.published$.next(draft ? 0 : 1);
+
+    // if saving as draft force id to be 0.
+    if (draft) {
+      this.accessId$.next(0);
+      return;
+    }
+
+    // if not saving as draft and value is 0 set to publicly visible.
+    if (currentValue === 0) {
+      this.accessId$.next(2);
+      return;
+    }
+
+    // if value is already set to 1 or 2 and publishing, keep the existing set access id.
+    return;
   }
 
   /**
@@ -384,7 +389,7 @@ export class BlogsEditService {
    * It should toggle NSFW.
    * @param { number } - the number of nsfw value to toggle on.
    */
-  toggleNSFW(value: number): void {
+  public toggleNSFW(value: number): void {
     let current: number[] = this.nsfw$.getValue();
     if (current.indexOf(value) > -1) {
       current = current.filter(t => t !== value);
@@ -393,5 +398,13 @@ export class BlogsEditService {
     }
     current.push(value);
     this.nsfw$.next(current);
+  }
+
+  /**
+   * Returned whether the content matches that held as already saved content.
+   * @returns { boolean } - true if content matches the saved content.
+   */
+  public isContentSaved(): boolean {
+    return this.savedContent$.getValue() === this.content$.getValue();
   }
 }

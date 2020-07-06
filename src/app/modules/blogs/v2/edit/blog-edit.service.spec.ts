@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { BlogEditorDropdownComponent } from './dropdown/dropdown.component';
 import { BlogsEditService } from './blog-edit.service';
 import { uploadMock } from '../../../../../tests/upload-mock.spec';
 import { clientMock } from '../../../../../tests/client-mock.spec';
@@ -7,6 +6,10 @@ import { siteServiceMock } from '../../../notifications/notification.service.spe
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
+})();
+
+export let toastServiceMock = new (function() {
+  this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
 describe('BlogsEditService', () => {
@@ -26,7 +29,8 @@ describe('BlogsEditService', () => {
       uploadMock,
       routerMock,
       clientMock,
-      siteServiceMock
+      siteServiceMock,
+      toastServiceMock
     );
   });
 
@@ -72,9 +76,7 @@ describe('BlogsEditService', () => {
     expect(service.author$.getValue()).toBe('author');
     expect(service.nsfw$.getValue()).toEqual([1, 2]);
     expect(service.error$.getValue()).toBe('');
-    expect(service.banner$.getValue()).toBe(
-      'https://www.minds.com/fs/v1/banners/1/0'
-    );
+    expect(service.banner$.getValue()).toBe('undefinedfs/v1/banners/1/0');
     expect(service.bannerFile$.getValue()).toBe('');
     expect(service.canPost$.getValue()).toBe(true);
     expect(service.guid$.getValue()).toBe('1');
@@ -133,7 +135,7 @@ describe('BlogsEditService', () => {
         },
         time_updated: 0,
         published: 1,
-        access_id: 0,
+        access_id: 1,
         time_created: 0,
         tags: ['1', '2'],
         nsfw: [1, 2],
@@ -146,7 +148,7 @@ describe('BlogsEditService', () => {
     await service.save(true);
     expect(service.error$.getValue()).toBe(null);
     expect(uploadMock.post).toHaveBeenCalled();
-    expect(service.draftSaved$.getValue).toBeTruthy();
+    expect(service.savedContent$.getValue()).toBe('content');
   });
 
   it('should set a banner', () => {
@@ -183,5 +185,49 @@ describe('BlogsEditService', () => {
     expect(service.nsfw$.getValue()).toEqual([1, 2]);
     service.toggleNSFW(1);
     expect(service.nsfw$.getValue()).toEqual([2]);
+  });
+
+  it('should check if content matches or does not match saved content', () => {
+    service.content$.next('1');
+    expect(service.isContentSaved()).toBe(false);
+
+    service.savedContent$.next('1');
+    service.content$.next('1');
+    expect(service.isContentSaved()).toBe(true);
+  });
+
+  it('should set next published$ state to true if draft, false if not', () => {
+    (service as any).setNextPublishState(true);
+    expect(service.published$.getValue()).toBeFalsy();
+    (service as any).setNextPublishState(false);
+    expect(service.published$.getValue()).toBeTruthy();
+  });
+
+  it('should always set accessId to 0 when saving draft', () => {
+    service.accessId$.next(0);
+    (service as any).setNextPublishState(true);
+    expect(service.accessId$.getValue()).toBe(0);
+
+    service.accessId$.next(1);
+    (service as any).setNextPublishState(true);
+    expect(service.accessId$.getValue()).toBe(0);
+
+    service.accessId$.next(2);
+    (service as any).setNextPublishState(true);
+    expect(service.accessId$.getValue()).toBe(0);
+  });
+
+  it('should override an accessId of 0 when publishing, unless specified as logged in', () => {
+    service.accessId$.next(0);
+    (service as any).setNextPublishState();
+    expect(service.accessId$.getValue()).toBe(2);
+
+    service.accessId$.next(2);
+    (service as any).setNextPublishState();
+    expect(service.accessId$.getValue()).toBe(2);
+
+    service.accessId$.next(1);
+    (service as any).setNextPublishState();
+    expect(service.accessId$.getValue()).toBe(1);
   });
 });

@@ -60,12 +60,6 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
         </div>
       </div>
       <div class="m-blogEditor__saveButtons">
-        <span
-          class="m-blogEditor__draftSaved"
-          *ngIf="service.draftSaved$ | async"
-        >
-          Draft Saved
-        </span>
         <m-shadowboxSubmitButton
           class="m-blogEditor__saveDraftButton m-blogEditor__saveButton"
           [disabled]="!(service.canPost$ | async)"

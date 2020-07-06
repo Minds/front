@@ -70,14 +70,14 @@
         font-size: 24px;
       }
     }
-    .minds-blog-body img {
-      @media screen and (max-width: 891px) {
-        width: 100vw;
+    .minds-blog-body {
+      img {
+        max-width: 100%;
+        height: auto;
       }
-      max-width: initial;
-      height: auto;
-      width: calc(100% + 200px);
-      margin: 0 -100px;
+      figure.image {
+        text-align: center;
+      }
     }
   }
 
