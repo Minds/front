@@ -11,7 +11,7 @@
       class="m-form__row--label m-composerPopup__text"
       i18n="@@COMPOSER__MONETIZE_PLUS__POOL_DESC"
     >
-      Submit this post to the Minds Plus pool and earn potential revenue.
+      Submit this post to the Minds+ pool and earn potential revenue.
     </p>
 
     <div class="m-composerPopup__checkbox">
@@ -21,9 +21,9 @@
         (ngModelChange)="onTermsChange($event)"
       >
         <span i18n="@@COMPOSER__PLUS__TERMS__CHECKBOX"
-          >I agree to the
+          >Post to Minds+ and agree to the
           <a routerLink="/p/terms" target="_blank">
-            T&C's
+            terms
           </a></span
         >
       </m-formInput__checkbox>
@@ -60,8 +60,8 @@
       i18n="@@COMPOSER__MONETIZE_PLUS__NOT_PRO_DESC"
     >
       You’ll need to upgrade to Minds Pro in order to submit your post to the
-      Minds Plus content pool. You will earn revenue based on the performance of
-      the content.
+      Minds+ content pool. You will earn revenue based on the performance of the
+      content.
     </p>
     <m-shadowboxSubmitButton
       (click)="openProUpgradeModal()"
@@ -77,7 +77,7 @@
     *ngIf="isEditingPlus"
     i18n="@@COMPOSER__MONETIZE_PLUS__NO_EDITING_PLUS"
   >
-    Posts in the Plus pool cannot be removed
+    Posts in the Minds+ pool cannot be removed
   </p>
 
   <m-shadowboxSubmitButton

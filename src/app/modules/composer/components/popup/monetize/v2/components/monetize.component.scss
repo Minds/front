@@ -20,8 +20,6 @@ m-composer__monetizeV2 {
   .m-composerPopup__content.m-formWrapper {
     padding-bottom: 60px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    max-height: 40vh;
-    overflow-y: scroll;
 
     @media screen and (max-width: 585px) {
       padding-bottom: 0;

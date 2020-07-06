@@ -7,12 +7,9 @@ import {
   Input,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { ProService } from '../../../../../../../pro/pro.service';
 import { WirePaymentHandlersService } from '../../../../../../../wire/wire-payment-handlers.service';
 import { WireModalService } from '../../../../../../../wire/wire-modal.service';
-import { WireEventType } from '../../../../../../../wire/v2/wire-v2.service';
 import { Session } from '../../../../../../../../services/session';
-import { PopupService } from '../../../../popup.service';
 import { WireCreatorComponent } from '../../../../../../../wire/v2/creator/wire-creator.component';
 import {
   StackableModalService,
@@ -23,7 +20,7 @@ import { ComposerService } from '../../../../../../services/composer.service';
 import { ConfigsService } from '../../../../../../../../common/services/configs.service';
 import { DialogService } from '../../../../../../../../common/services/confirm-leave-dialog.service';
 
-export type PlusPostExpiry = 172800 | null;
+export type PlusPostExpiry = number | null;
 
 @Component({
   selector: 'm-composer__monetizeV2__plus',
@@ -63,25 +60,29 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
 
   constructor(
     private service: ComposerService,
-    private configs: ConfigsService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private cd: ChangeDetectorRef,
     private stackableModal: StackableModalService,
     private session: Session,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    configs: ConfigsService
   ) {
     this.plusSupportTierUrn =
       configs.get('plus').support_tier_urn || 'urn:support-tier:plus';
   }
 
   ngOnInit(): void {
-    const monetization = this.service.monetization$.value;
+    const monetization =
+      this.service.pendingMonetization$.getValue() ||
+      this.service.monetization$.getValue();
 
     if (monetization && monetization.support_tier) {
       this.termsAccepted =
         monetization.support_tier.urn === this.plusSupportTierUrn;
-      const expires = monetization.support_tier.expires;
-      if (expires !== this.twoDays) {
+
+      this.expires = monetization.support_tier.expires;
+
+      if (this.expires && this.expires !== this.twoDays) {
         this.expires = null;
       }
     }
@@ -140,9 +141,15 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
       return;
     }
 
+    if (!this.termsAccepted) {
+      this.service.pendingMonetization$.next(null);
+      this.dismissIntent.emit();
+      return;
+    }
+
     if (
       !this.dialogService.confirm(
-        "Are you sure? Once a post enters the Plus pool, you can't edit its monetization settings."
+        "Are you sure? Once a post enters the Minds+ pool, you can't edit its monetization settings."
       )
     ) {
       return;
@@ -156,14 +163,15 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
       support_tier['expires'] = this.expires;
     }
 
-    this.service.monetization$.next({
+    this.service.pendingMonetization$.next({
+      type: 'plus',
       support_tier: support_tier,
     });
     this.dismissIntent.emit();
   }
 
   get canSave(): boolean {
-    return !this.isEditingPlus && this.termsAccepted;
+    return !this.isEditingPlus;
   }
 
   detectChanges(): void {
