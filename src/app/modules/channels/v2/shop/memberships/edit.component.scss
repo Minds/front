@@ -38,6 +38,10 @@ m-channelShopMemberships__edit {
 
   .m-channelShopMembershipsEdit__labelOnly {
     margin-bottom: 0 !important;
+
+    .m-form__row--label {
+      width: 50%;
+    }
   }
 
   .m-channelShopMembershipsEdit__fieldDisabled {

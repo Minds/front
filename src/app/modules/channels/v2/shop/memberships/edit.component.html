@@ -54,7 +54,10 @@
           >
           <m-tooltip
             ><span m-tooltip--anchor>𝒊</span>
-            <ng-container></ng-container>
+            <ng-container
+              >The amount a member is required to pay per month to access the
+              tier benefits.</ng-container
+            >
           </m-tooltip>
         </div>
       </div>
@@ -64,9 +67,10 @@
           service.isEditing$ | async
         "
       >
-        <div class="m-form__field--text">
-          <div class="m-form__row--input">
-            <input
+        <div class="m-form__field--text stretchedField">
+          <div class="m-form__row--input hasUnitLabel">
+            <span>$</span
+            ><input
               id="channels-v2-shop-memberships-edit-usd"
               type="text"
               class="form-control"
@@ -111,7 +115,10 @@
           >
           <m-tooltip
             ><span m-tooltip--anchor>𝒊</span>
-            <ng-container></ng-container>
+            <ng-container
+              >Add a short description of what your supporters will get for
+              joining this tier.</ng-container
+            >
           </m-tooltip>
         </div>
         <div class="m-form__row--input">
