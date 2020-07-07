@@ -15,6 +15,7 @@ import { InMemoryStorageService } from '../../../services/in-memory-storage.serv
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { CaptchaComponent } from '../../captcha/captcha.component';
 
 @Component({
   selector: 'minds-blog-edit',
@@ -71,6 +72,7 @@ export class BlogEdit implements OnInit, OnDestroy {
   thresholdInput: WireThresholdInputComponent;
   @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
 
   protected time_created: any;
 
@@ -287,6 +289,7 @@ export class BlogEdit implements OnInit, OnDestroy {
 
               if (response.status !== 'success') {
                 this.showToastError(response.message);
+                this.captchaEl.refresh();
                 return;
               }
               this.router.navigate(
@@ -296,6 +299,7 @@ export class BlogEdit implements OnInit, OnDestroy {
               );
             })
             .catch(e => {
+              this.captchaEl.refresh();
               if (!e.must_verify) {
                 this.showToastError(e.message);
               }

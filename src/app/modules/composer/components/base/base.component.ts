@@ -17,6 +17,7 @@ import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -55,6 +56,11 @@ export class BaseComponent implements AfterViewInit {
   error: string;
 
   /**
+   * The urn of the Minds+ support tier
+   */
+  private readonly plusTierUrn: string;
+
+  /**
    * Constructor
    * @param service
    * @param popup
@@ -70,8 +76,11 @@ export class BaseComponent implements AfterViewInit {
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
-    protected toasterService: FormToastService
-  ) {}
+    protected toasterService: FormToastService,
+    configs: ConfigsService
+  ) {
+    this.plusTierUrn = configs.get('plus').support_tier_urn;
+  }
 
   /**
    * Initializes after all components were injected
@@ -150,10 +159,30 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Minds+ posts must have at least one hashtag
+   */
+  meetsPlusHashtagRequirement(): boolean {
+    const mon = this.service.monetization$.getValue();
+
+    const isPlusPost =
+      mon && mon.support_tier && mon.support_tier.urn === this.plusTierUrn;
+    if (isPlusPost && this.service.tagCount$.getValue() < 1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Post intent
    * @param event
    */
   async onPost(event: ButtonComponentAction) {
+    if (!this.meetsPlusHashtagRequirement()) {
+      this.toasterService.error('Minds+ posts must have at least one hashtag');
+      return;
+    }
+
     try {
       this.error = '';
       this.detectChanges();
