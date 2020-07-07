@@ -35,7 +35,7 @@ m-marketing__footer {
     margin: 0 auto;
 
     @media screen and (max-width: $m-grid-min-vp) {
-      padding: 0 32px;
+      padding: 0 32px !important;
     }
 
     .m-marketingFooter__languageBar {
