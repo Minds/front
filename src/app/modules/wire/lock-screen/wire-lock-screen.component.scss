@@ -18,7 +18,7 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
     z-index: 0;
     cursor: pointer;
     @include m-theme() {
-      color: themed($m-white);
+      color: themed($m-white-always);
     }
 
     > * {
@@ -67,6 +67,7 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
 
   .m-wireLockScreen__message {
     margin: 20px auto;
+    min-height: 20px;
     text-align: center;
     max-width: 60%;
     font-weight: 400;

@@ -21,6 +21,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { FeaturesService } from '../../../services/features.service';
+import { CaptchaComponent } from '../../captcha/captcha.component';
 
 @Component({
   moduleId: module.id,
@@ -55,6 +56,7 @@ export class RegisterForm {
   fbForm: FormGroup;
 
   @ViewChild('popover') popover: PopoverComponent;
+  @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
 
   constructor(
     public session: Session,
@@ -138,6 +140,8 @@ export class RegisterForm {
       .catch(e => {
         console.log(e);
         this.inProgress = false;
+
+        this.captchaEl.refresh();
 
         if (e.status === 'failed') {
           // incorrect login details

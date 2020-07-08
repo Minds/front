@@ -329,6 +329,11 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
+   * Tag count subject
+   */
+  readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  /**
    * URL in the message
    */
   readonly messageUrl$: Observable<string>;
@@ -499,7 +504,11 @@ export class ComposerService implements OnDestroy {
           parseHashtagsFromString(values.title)
         );
 
-        const tooManyTags = bodyTags.length + values.tags.length > 5;
+        const tagCount = bodyTags.length + values.tags.length;
+
+        this.tagCount$.next(tagCount);
+
+        const tooManyTags = tagCount > 5;
 
         this.tooManyTags$.next(tooManyTags);
 

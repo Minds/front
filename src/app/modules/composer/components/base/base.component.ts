@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -56,6 +57,11 @@ export class BaseComponent implements AfterViewInit {
   error: string;
 
   /**
+   * The urn of the Minds+ support tier
+   */
+  private readonly plusTierUrn: string;
+
+  /**
    * Constructor
    * @param service
    * @param popup
@@ -72,8 +78,11 @@ export class BaseComponent implements AfterViewInit {
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
     protected toasterService: FormToastService,
-    protected featuresService: FeaturesService
-  ) {}
+    protected featuresService: FeaturesService,
+    configs: ConfigsService
+  ) {
+    this.plusTierUrn = configs.get('plus').support_tier_urn;
+  }
 
   /**
    * Initializes after all components were injected
@@ -156,10 +165,41 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Ensure Minds+ posts follow the rules
+   */
+  meetsPlusPostRequirements(): boolean {
+    const mon = this.service.monetization$.getValue();
+    const isPlusPost =
+      mon && mon.support_tier && mon.support_tier.urn === this.plusTierUrn;
+
+    if (!isPlusPost) {
+      return true;
+    }
+
+    // Cannot be an external link
+    const richEmbed = this.service.richEmbed$.getValue();
+    if (richEmbed && !this.richEmbedPreview$.getValue().entityGuid) {
+      this.toasterService.error('Minds+ posts cannot be external links');
+      return false;
+    }
+
+    // Must have 1+ hashtags
+    if (this.service.tagCount$.getValue() < 1) {
+      this.toasterService.error('Minds+ posts must have at least one hashtag');
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Post intent
    * @param event
    */
   async onPost(event: ButtonComponentAction) {
+    if (!this.meetsPlusPostRequirements()) {
+      return;
+    }
+
     try {
       this.error = '';
       this.detectChanges();
