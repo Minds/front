@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
 import { DiscoveryService } from '../discovery.service';
@@ -13,7 +13,8 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   inProgress$: Observable<boolean> = this.service.inProgress$;
 
   parentPathSubscription: Subscription;
-  parentPath: string = '';
+  parentPath: string = '/discovery';
+
   isPlusPage: boolean = false;
 
   constructor(
@@ -22,19 +23,21 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // TODOPLUS load 'plus' tags when plus
     if (!this.service.trending$.value.length) this.service.loadTags();
 
     this.parentPathSubscription = this.discoveryService.parentPath$.subscribe(
       parentPath => {
-        this.parentPath = parentPath;
-        this.isPlusPage = parentPath === '/discovery/plus' ? true : false;
+        // TODOPLUS uncomment this when we're ready to handle plus tags
+        // this.parentPath = parentPath;
+        // this.isPlusPage = parentPath === '/discovery/plus' ? true : false;
       }
     );
   }
 
   ngOnDestroy() {
-    this.parentPathSubscription.unsubscribe();
+    if (this.parentPathSubscription) {
+      this.parentPathSubscription.unsubscribe();
+    }
   }
 
   seeMore() {
