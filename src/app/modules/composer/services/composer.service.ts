@@ -329,7 +329,7 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
-   * Too many tags subject
+   * Tag count subject
    */
   readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
