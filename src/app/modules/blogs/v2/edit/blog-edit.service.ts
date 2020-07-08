@@ -12,7 +12,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
 import { Upload, Client } from '../../../../services/api';
 import { Router } from '@angular/router';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { distinctUntilChanged, tap, take } from 'rxjs/operators';
 import { SiteService } from '../../../../common/services/site.service';
 import { MindsBlogEntity } from '../../../../interfaces/entities';
 import { Captcha } from '../../../captcha/captcha.component';
@@ -90,6 +90,7 @@ export class BlogsEditService {
   // > = new BehaviorSubject<MonetizationSubjectValue>(null);
 
   private contentSubscription: Subscription;
+  private accessIdSubscription: Subscription;
 
   constructor(
     protected upload: Upload,
@@ -156,6 +157,9 @@ export class BlogsEditService {
     this.tearDown();
     if (this.contentSubscription) {
       this.contentSubscription.unsubscribe();
+    }
+    if (this.accessIdSubscription) {
+      this.accessIdSubscription.unsubscribe();
     }
   }
 
@@ -265,24 +269,34 @@ export class BlogsEditService {
    * @returns { Promise<void> } - Awaitable.
    */
   private async setNextPublishState(draft: boolean): Promise<void> {
-    const currentValue: number = this.accessId$.getValue();
+    this.accessIdSubscription = this.accessId$
+      .pipe(
+        take(1),
+        tap(id => {
+          if (typeof id !== 'number') {
+            id = Number(id);
+          }
 
-    this.published$.next(draft ? 0 : 1);
+          this.published$.next(draft ? 0 : 1);
 
-    // if saving as draft force id to be 0.
-    if (draft) {
-      this.accessId$.next(0);
-      return;
-    }
+          // if saving as draft force id to be 0.
+          if (draft) {
+            this.accessId$.next(0);
+            return;
+          }
 
-    // if not saving as draft and value is 0 set to publicly visible.
-    if (currentValue === 0) {
-      this.accessId$.next(2);
-      return;
-    }
+          // if not saving as draft and value is 0 set to publicly visible.
+          if (id === 0) {
+            console.log('DW ITS ENTERED');
+            this.accessId$.next(2);
+            return;
+          }
 
-    // if value is already set to 1 or 2 and publishing, keep the existing set access id.
-    return;
+          // if value is already set to 1 or 2 and publishing, keep the existing set access id.
+          return;
+        })
+      )
+      .subscribe();
   }
 
   /**
