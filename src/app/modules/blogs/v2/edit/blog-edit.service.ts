@@ -312,7 +312,6 @@ export class BlogsEditService {
 
           // if not saving as draft and value is 0 set to publicly visible.
           if (id === 0) {
-            console.log('DW ITS ENTERED');
             this.accessId$.next(2);
             return;
           }
