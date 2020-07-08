@@ -20,10 +20,11 @@
           *ngIf="!isPlusPage"
         ></m-language__sidebarPrompt>
         <m-discovery__disclaimer *ngIf="!isPlusPage"></m-discovery__disclaimer>
-        <m-suggestions__sidebar
-          type="user"
-          [plus]="isPlusPage"
-        ></m-suggestions__sidebar>
+        <!-- ----------------------------------------- -->
+        <!-- TODO: put this back in <m-suggestions__sidebar> when there are more results -->
+        <!-- [isPlusPage]="isPlusPage" -->
+        <!-- ----------------------------------------- -->
+        <m-suggestions__sidebar type="user"></m-suggestions__sidebar>
         <m-suggestions__sidebar
           *ngIf="!isPlusPage"
           type="group"
