@@ -7,11 +7,15 @@ import {
   HostBinding,
   Injector,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   moduleId: module.id,
@@ -29,13 +33,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class OverlayModalComponent implements AfterViewInit {
+export class OverlayModalComponent implements AfterViewInit, OnDestroy {
   hidden: boolean = true;
   class: string = '';
   wrapperClass: string = '';
   root: HTMLElement;
   isMediaModal: boolean = false;
   stackable: boolean = false;
+
+  private routerSubscription: Subscription;
 
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
@@ -48,7 +54,8 @@ export class OverlayModalComponent implements AfterViewInit {
 
   constructor(
     private service: OverlayModalService,
-    private _componentFactoryResolver: ComponentFactoryResolver
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -60,6 +67,15 @@ export class OverlayModalComponent implements AfterViewInit {
      * Connect this component with its corresponding service instance
      */
     this.service.setContainer(this);
+
+    /**
+     * Close the modal on reroute
+     */
+    this.routerSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(data => {
+        this.dismiss();
+      });
   }
 
   create(componentClass, opts?, injector?: Injector) {
@@ -184,5 +200,11 @@ export class OverlayModalComponent implements AfterViewInit {
 
   @HostBinding('class') get wrapperComponentCssClass() {
     return this.wrapperClass || '';
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }
