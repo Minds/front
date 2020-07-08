@@ -6,6 +6,7 @@
       isMedia: contentType !== 'status',
       isVideo: contentType === 'video'
     }"
+    [style.maxHeight.px]="mediaHeight"
     (click)="$event.stopPropagation(); unlock()"
     *ngIf="entity.wire_threshold && init"
   >
@@ -22,7 +23,10 @@
     <!-- ------------------------------ -->
 
     <div class="m-wireLockScreen__inner">
-      <h5 class="m-wireLockScreen__message">
+      <h5
+        class="m-wireLockScreen__message"
+        [class.m-wireLockScreen__message--hasTeaser]="hasTeaser"
+      >
         <ng-container *ngIf="!showSubmittedInfo && !hasTeaser">
           <ng-container
             *ngIf="entity?.wire_threshold?.type; else supportTierText"
