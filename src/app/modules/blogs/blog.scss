@@ -300,34 +300,39 @@ minds-blog-edit {
     }
   }
 
-  table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-spacing: 0;
-    overflow-x: scroll;
+  figure.table {
+    margin: 0;
 
-    tbody {
-      max-width: 100%;
-    }
+    table {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-spacing: 0;
+      overflow-x: auto;
 
-    td,
-    th {
-      padding: 8px 16px;
-      @include m-theme() {
-        border: 1px solid themed($m-borderColor--primary);
+      tbody {
+        max-width: 100%;
       }
-    }
 
-    th {
-      font-weight: 900;
-      @include m-theme() {
-        color: themed($m-black);
+      td,
+      th {
+        padding: 8px 16px;
+        text-align: left;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
       }
-    }
-    td {
-      @include m-theme() {
-        color: themed($m-black);
+
+      th {
+        font-weight: 900;
+        @include m-theme() {
+          color: themed($m-black);
+        }
+      }
+      td {
+        @include m-theme() {
+          color: themed($m-black);
+        }
       }
     }
   }

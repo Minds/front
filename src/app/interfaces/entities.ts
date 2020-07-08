@@ -48,6 +48,8 @@ export interface MindsBlogEntity {
   captcha?: Captcha;
 }
 
+export interface MindsBlogEditEntity extends MindsBlogEntity {}
+
 export interface Message {}
 
 export interface KeyVal {

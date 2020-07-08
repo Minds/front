@@ -31,6 +31,8 @@ import { BlogEditorDropdownComponent } from './v2/edit/dropdown/dropdown.compone
 import { BlogEditorMetaComponent } from './v2/edit/bottom-bar/meta/meta.component';
 import { BlogEditorBottomBarComponent } from './v2/edit/bottom-bar/bottom-bar.component';
 import { BlogEditorTagsComponent } from './v2/edit/bottom-bar/tags/tags.component';
+import { BlogV2Module } from './v2/blog-v2.module';
+
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
@@ -73,6 +75,7 @@ const routes: Routes = [
     CKEditorModule,
     CodeHighlightModule,
     CaptchaModule,
+    BlogV2Module,
   ],
   declarations: [
     BlogView,
@@ -81,22 +84,7 @@ const routes: Routes = [
     BlogEdit,
     BlogListComponent,
     BlogTileComponent,
-    BlogEditorComponent,
-    BlogEditorV2Component,
-    BlogEditorDropdownComponent,
-    BlogEditorMetaComponent,
-    BlogEditorBottomBarComponent,
-    BlogEditorTagsComponent,
   ],
-  exports: [
-    BlogView,
-    BlogCard,
-    BlogViewInfinite,
-    BlogEdit,
-    BlogListComponent,
-    BlogTileComponent,
-    BlogEditorComponent,
-  ],
-  providers: [BlogsEditService],
+  exports: [BlogEditorComponent],
 })
 export class BlogModule {}

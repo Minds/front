@@ -9,12 +9,11 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
+// import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
 import { Upload, Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, tap, take } from 'rxjs/operators';
 import { SiteService } from '../../../../common/services/site.service';
-import { MindsBlogEntity } from '../../../../interfaces/entities';
 import { Captcha } from '../../../captcha/captcha.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 
@@ -32,6 +31,31 @@ export interface BlogResponse {
   message?: string;
 }
 
+export interface BlogEditEntity {
+  guid: string;
+  title: string;
+  description: string;
+  editor_version: number;
+  published: number;
+  nsfw: number[];
+  tags: string[];
+  file: any;
+  fileKey: string;
+  captcha: Captcha;
+  // paywall?: boolean;
+  // wire_threshold?: any;
+  // monetized?: boolean;
+  time_created: number;
+  access_id: number;
+  custom_meta?: {
+    title: string;
+    description: string;
+    author: string;
+  };
+  slug?: string;
+  license?: string;
+}
+
 @Injectable()
 export class BlogsEditService {
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -42,12 +66,13 @@ export class BlogsEditService {
   readonly published$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly accessId$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    null
-  );
   readonly nsfw$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   readonly tags$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  readonly accessId$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    null
+  );
 
   readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
     string
@@ -311,7 +336,7 @@ export class BlogsEditService {
    * Assembles blog from current values.
    * @returns { Promise<Blog>} the built blog.
    */
-  async buildBlog(): Promise<MindsBlogEntity> {
+  async buildBlog(): Promise<BlogEditEntity> {
     return {
       file: this.bannerFile$.getValue(),
       guid: this.guid$.getValue(),

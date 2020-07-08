@@ -28,6 +28,7 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
 
   private paramsSubscription: Subscription;
   private errorSubscription: Subscription;
+
   @ViewChild('inlineEditor')
   inlineEditor: InlineEditorComponent;
   @ViewChild('thresholdInput')

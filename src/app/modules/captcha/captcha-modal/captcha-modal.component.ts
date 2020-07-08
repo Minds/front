@@ -1,6 +1,28 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+/**
+ * Captcha modal component.
+ * Example of usage using the OverlayModalService:
+ *
+    const modal = this.overlay.create(
+      CaptchaModalComponent,
+      {},
+      {
+        class: 'm-captcha--modal-wrapper',
+        onComplete: (captcha: Captcha): void => {
+          // fire off request with Captcha.
+        },
+      }
+    );
+    modal.present();
+ *
+ * @author Ben Hayward
+ */
+import { Component } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { FormToastService } from '../../../common/services/form-toast.service';
+
+export interface OptType {
+  onComplete: Function;
+}
 
 @Component({
   selector: 'm-captcha__modal',
@@ -22,22 +44,26 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   `,
 })
 export class CaptchaModalComponent {
-  public _opts: {
-    onComplete: Function;
-  };
+  public _opts: OptType;
 
-  public set opts(opts: any) {
+  /**
+   * Pass in OnComplete function to be called when Captcha is submitted.
+   */
+  public set opts(opts: OptType) {
     this._opts = opts;
   }
 
-  public captcha: string;
+  public captcha: string; // bound to [(ngModel)]
 
   constructor(
     public overlayModal: OverlayModalService,
     private toasterService: FormToastService
   ) {}
 
-  public onCaptchaSubmit = () => {
+  /**
+   * Handles on captcha submit
+   */
+  public onCaptchaSubmit() {
     if (!this.captcha) {
       this.toasterService.error('Please fill out the CAPTCHA');
       return;
@@ -46,5 +72,5 @@ export class CaptchaModalComponent {
       this._opts.onComplete(this.captcha);
     }
     this.overlayModal.dismiss();
-  };
+  }
 }

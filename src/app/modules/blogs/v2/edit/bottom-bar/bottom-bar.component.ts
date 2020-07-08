@@ -76,7 +76,7 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
           (click)="save()"
           i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
         >
-          Publish Blog
+          Publish
         </m-shadowboxSubmitButton>
       </div>
     </div>
