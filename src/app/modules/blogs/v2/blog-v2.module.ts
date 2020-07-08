@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     CodeHighlightModule,
     CaptchaModule,
     FormsModule,
+    CodeHighlightModule,
   ],
   declarations: [
     BlogEditorComponent,
