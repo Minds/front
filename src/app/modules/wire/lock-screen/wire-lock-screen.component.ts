@@ -99,6 +99,8 @@ export class WireLockScreenComponent implements OnInit {
       return;
     }
 
+    if (this.inProgress) return;
+
     this.showSubmittedInfo = false;
     this.inProgress = true;
     this.detectChanges();
@@ -121,7 +123,12 @@ export class WireLockScreenComponent implements OnInit {
       .catch(e => {
         this.inProgress = false;
         this.detectChanges();
-        console.error('got error: ', e);
+
+        if (e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid') {
+          this.showWire();
+        } else {
+          console.error('got error: ', e);
+        }
       });
   }
 
