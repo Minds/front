@@ -4,14 +4,18 @@
   [hidden]="supportTiers.length === 0"
 >
   <div class="m-channelShopBrief__title">
-    <span class="m-channelShopBriefTitle__text">Shop</span>
     <a
-      *ngIf="false"
+      class="m-channelShopBriefTitle__text"
+      i18n="CHANNEL_V2__BRIEF_WIRE_REWARD__SHOP"
+      [routerLink]="['/', service.username$ | async, 'shop']"
+      >Shop</a
+    >
+    <!-- <a
       class="m-channelShopBriefTitle__seeAll"
       [routerLink]="['/', service.username$ | async, 'shop']"
       i18n="@@COMMON__CHANNEL__BRIEF__SEE_ALL"
       >See All</a
-    >
+    > -->
   </div>
 
   <ng-container *ngIf="service.channel$ | async as channel">
