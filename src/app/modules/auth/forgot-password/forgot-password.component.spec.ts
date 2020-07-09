@@ -21,7 +21,9 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
-import { MockDirective } from '../../../utils/mock';
+import { MockDirective, MockService } from '../../../utils/mock';
+import { RegexService } from '../../../common/services/regex.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: '',
@@ -76,6 +78,15 @@ describe('ForgotPasswordComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
+        {
+          provide: RegexService,
+          useValue: MockService(RegexService, {
+            getRegex: (string: string) => {
+              return { test: (string: string) => false };
+            },
+          }),
+        },
+        { provide: FormToastService, useValue: MockService(FormToastService) },
       ],
     }).compileComponents();
   }));

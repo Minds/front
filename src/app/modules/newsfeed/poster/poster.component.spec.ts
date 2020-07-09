@@ -35,7 +35,7 @@ import { TextInputAutocompleteModule } from '../../../common/components/autocomp
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { TagsService } from '../../../common/services/tags.service';
+import { RegexService } from '../../../common/services/regex.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
@@ -130,8 +130,8 @@ describe('PosterComponent', () => {
           useValue: MockService(ConfigsService),
         },
         {
-          provide: TagsService,
-          useValue: MockService(TagsService),
+          provide: RegexService,
+          useValue: MockService(RegexService),
         },
         {
           provide: FormToastService,

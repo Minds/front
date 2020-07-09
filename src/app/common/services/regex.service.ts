@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Tags service, contains regex used in hashtag detection.
+ * Contains different common regex expressions for shared quick access.
  */
 @Injectable()
-export class TagsService {
+export class RegexService {
   private regex: Object = {
     url: /(\b(https?|ftp|file):\/\/[^\s\]]+)/gim,
     mail: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gim,
