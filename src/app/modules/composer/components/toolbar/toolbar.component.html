@@ -46,11 +46,15 @@
   >
     <m-icon
       class="m-composerToolbarItem__icon"
+      [class.m-animation__shimmer--icon]="showShimmer"
       from="assets-file"
       iconId="assets/icons/wire.svg"
       [sizeFactor]="25"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n="@@COMMON__MONETIZE"
+    <span
+      class="m-composerToolbarItem__label"
+      [class.m-animation__shimmer--text]="showShimmer"
+      i18n="@@COMMON__MONETIZE"
       >Monetize</span
     >
   </a>

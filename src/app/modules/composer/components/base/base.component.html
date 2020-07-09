@@ -23,7 +23,10 @@
       #textAreaComponent
     ></m-composer__textArea>
 
-    <m-composer__toolbar (onPost)="onPost($event)"></m-composer__toolbar>
+    <m-composer__toolbar
+      (onPost)="onPost($event)"
+      [isModal]="isModal"
+    ></m-composer__toolbar>
 
     <div
       class="m-composerBase__error"

@@ -1,4 +1,5 @@
 @import 'themes';
+@import 'defaults';
 
 .m-pulsating--small {
   box-shadow: 0 0 0 red;
@@ -22,6 +23,8 @@
   }
 }
 
+// ***************************************************
+
 @keyframes pulse--big {
   0% {
     box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4);
@@ -33,6 +36,8 @@
     box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
   }
 }
+
+// ***************************************************
 
 @keyframes blinkingEllipsis {
   0% {
@@ -68,5 +73,102 @@
     &:nth-child(3) {
       animation-delay: 0.4s;
     }
+  }
+}
+
+// ***************************************************
+
+@keyframes shimmer--text {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+span.m-animation__shimmer--text {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.1);
+
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(themed($m-textColor--secondary)),
+      to(themed($m-textColor--secondary)),
+      color-stop(0.3, themed($m-aqua)),
+      color-stop(0.6, #90edf3),
+      color-stop(0.8, themed($m-aqua))
+    );
+    background-color: themed($m-textColor--secondary);
+    background-size: 30px 150%;
+    background-repeat: no-repeat;
+    background-position: -100% 0;
+
+    animation-name: shimmer--text;
+    animation-duration: 1.4s;
+    animation-iteration-count: 1;
+    animation-delay: 0.6s;
+
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+  }
+}
+// ***************************************************
+
+@keyframes shimmer--icon {
+  0% {
+    background-position: 150% 0;
+  }
+
+  100% {
+    background-position: -150% 0;
+  }
+}
+
+@keyframes pulse--icon {
+  0% {
+    transform: scale(1);
+    background-position: 150% 0;
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  100% {
+    background-position: -150% 0;
+  }
+}
+
+.m-animation__shimmer--icon > * {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.1);
+
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(themed($m-textColor--secondary)),
+      to(themed($m-textColor--secondary)),
+      color-stop(0.3, themed($m-aqua)),
+      color-stop(0.6, #90edf3),
+      color-stop(0.8, themed($m-aqua))
+    );
+    background-color: themed($m-textColor--secondary);
+    background-size: 30px 150%;
+    background-repeat: no-repeat;
+    background-position: -200% 0;
+  }
+
+  animation-name: shimmer--icon;
+  animation-duration: 0.6s;
+  animation-iteration-count: 1;
+  animation-delay: 0.7s;
+  @media screen and (max-width: $max-mobile) {
+    background: none;
+    animation-name: pulse--icon;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
   }
 }
