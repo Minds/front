@@ -20,7 +20,7 @@
         <label class="m-wallet--balance--addresses-address-label">
           <span>{{ address.label }} Address</span>
           <m-tooltip icon="help" *ngIf="address.label == 'Receiver'">
-            This is your public address which will receive Boost & Wire
+            This is your public address which will receive Boost & Pay
             transactions via the blockchain. You can change this in Addresses.
           </m-tooltip>
           <m-tooltip icon="help" *ngIf="address.label == 'OffChain'">
@@ -29,12 +29,12 @@
           </m-tooltip>
           <m-tooltip icon="help" *ngIf="address.label == 'OnChain'">
             This is your currently active Web3/Metamask wallet. This address
-            differs from what you have configured to receive Boost & Wires via
-            the blockchain.
+            differs from what you have configured to receive Boost & Payments
+            via the blockchain.
           </m-tooltip>
           <m-tooltip icon="help" *ngIf="address.label == 'OnChain & Receiver'">
             This is your currently active Web3/Metamask wallet and is also
-            configured to receive Boost & Wires via the blockchain.
+            configured to receive Boost & Payments via the blockchain.
           </m-tooltip>
         </label>
         <span class="m-wallet--balance--addresses-address-address">

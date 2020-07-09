@@ -1610,7 +1610,7 @@
         "
         i18n="@@NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__TO_ONETIME"
       >
-        You have successfully wired {{ notification.params.amount }} to
+        You have successfully paid {{ notification.params.amount }} to
         <a
           [routerLink]="['/', notification.params.to_username]"
           class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1625,7 +1625,7 @@
         "
         i18n="@@NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__FROM_ONETIME"
       >
-        You have received a wire of {{ notification.params.amount }} from
+        You have received a payment of {{ notification.params.amount }} from
         <a
           [routerLink]="['/', notification.params.from_username]"
           class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1640,7 +1640,7 @@
         "
         i18n="@@NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__TO_SUBSCRIPTION"
       >
-        You have subscribed to wire {{ notification.params.amount }}/month to
+        You have subscribed to pay {{ notification.params.amount }}/month to
         <a
           [routerLink]="['/', notification.params.to_username]"
           class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1655,7 +1655,7 @@
         "
         i18n="@@NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__FROM_SUBSCRIPTION"
       >
-        You have received a wire subscription of
+        You have received a payment subscription of
         {{ notification.params.amount }}/month from
         <a
           [routerLink]="['/', notification.params.from_username]"
