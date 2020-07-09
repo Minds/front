@@ -7,6 +7,7 @@ import {
   Injector,
   Output,
   ViewChild,
+  Input,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
 import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
@@ -34,6 +35,11 @@ export class BaseComponent implements AfterViewInit {
    * Post event emitter
    */
   @Output('onPost') onPostEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Is the composer in a modal?
+   */
+  @Input() isModal: boolean = false;
 
   /**
    * Popup component ref
