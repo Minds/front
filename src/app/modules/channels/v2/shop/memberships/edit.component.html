@@ -89,8 +89,8 @@
               class="m-form__customInputWrapper__checkbox"
             >
               <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_HAS_TOKENS"
-                >Accept Tokens?</ng-container
-              >
+                >Accept Tokens
+              </ng-container>
               <input
                 type="checkbox"
                 id="channels-v2-shop-memberships-edit-has-tokens"
@@ -102,6 +102,15 @@
               />
               <span class="m-form__customInput__checkbox"></span>
             </label>
+            <m-tooltip>
+              <span m-tooltip--anchor>𝒊</span>
+              <ng-container
+                i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_HAS_TOKENS_TOOLTIP"
+              >
+                Allow users to purchase your membership with Minds Tokens. Token
+                amounts are converted at a rate of $1.25/token.
+              </ng-container>
+            </m-tooltip>
           </div>
         </div>
       </div>

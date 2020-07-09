@@ -64,4 +64,22 @@ m-channelShopMemberships__edit {
       width: 100%;
     }
   }
+  .m-form__field--checkbox {
+    m-tooltip {
+      margin-top: -8px;
+      margin-left: 8px;
+      .m-tooltip--bubble {
+        right: 12px;
+      }
+    }
+    @media screen and (max-width: $max-mobile) {
+      label {
+        padding-left: 32px;
+        font-size: 14px;
+      }
+      m-tooltip {
+        margin-left: 6px;
+      }
+    }
+  }
 }
