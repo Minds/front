@@ -25,6 +25,7 @@ import { BlogEditorComponent } from './v2/edit/ckeditor/editor.component';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { BlogEditorV2Component } from './v2/edit/editor-base.component';
 import { BlogV2Module } from './v2/blog-v2.module';
+import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -67,6 +68,7 @@ const routes: Routes = [
     ModalsModule,
     CaptchaModule,
     BlogV2Module,
+    CodeHighlightModule,
   ],
   declarations: [
     BlogView,
