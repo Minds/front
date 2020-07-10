@@ -157,6 +157,7 @@ m-activity__content {
     display: block;
     height: auto;
     max-height: 400px;
+    object-fit: cover;
   }
   .meta {
     padding: 20px $activity-padding-lr;
