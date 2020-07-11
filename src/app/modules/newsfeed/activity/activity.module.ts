@@ -24,6 +24,7 @@ import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.compon
 import { ActivityMetricsComponent } from './metrics/metrics.component';
 import { ActivityRemindComponent } from './remind/remind.component';
 import { ActivityPaywallComponent } from './paywall/paywall.component';
+import { CodeHighlightModule } from '../../code-highlight/code-highlight.module';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { ActivityPaywallComponent } from './paywall/paywall.component';
     LegacyModule, // For remind button
     PostMenuModule,
     WireModule,
+    CodeHighlightModule,
   ],
   declarations: [
     ActivityComponent,

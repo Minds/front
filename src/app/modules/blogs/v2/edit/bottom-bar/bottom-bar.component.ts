@@ -50,11 +50,19 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
       }"
     >
       <div class="m-blogEditor__options">
-        <div (click)="toggleActiveTab('tags')" class="m-blogEditor__tabToggle">
+        <div
+          (click)="toggleActiveTab('tags')"
+          class="m-blogEditor__tabToggle"
+          data-cy="data-minds-blog-editor-tags-toggle"
+        >
           <span>#</span>
           <span> Tags </span>
         </div>
-        <div (click)="toggleActiveTab('meta')" class="m-blogEditor__tabToggle">
+        <div
+          (click)="toggleActiveTab('meta')"
+          class="m-blogEditor__tabToggle"
+          data-cy="data-minds-blog-editor-meta-toggle"
+        >
           <i class="material-icons">description</i>
           <span> Meta </span>
         </div>
@@ -66,6 +74,7 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
           [saving]="service.inProgress$ | async"
           (click)="save(true)"
           i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
+          data-cy="data-minds-blog-editor-save-draft"
         >
           Save Draft
         </m-shadowboxSubmitButton>
@@ -75,6 +84,7 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
           [saving]="service.inProgress$ | async"
           (click)="save()"
           i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
+          data-cy="data-minds-blog-editor-publish"
         >
           Publish
         </m-shadowboxSubmitButton>

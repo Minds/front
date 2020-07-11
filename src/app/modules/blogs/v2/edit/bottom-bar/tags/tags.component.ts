@@ -5,7 +5,10 @@ import { BlogsEditService } from '../../blog-edit.service';
   selector: 'm-blogEditor__tags',
   template: `
     <div class="m-blogTags__container">
-      <div class="m-blogTags__selectedContainer">
+      <div
+        class="m-blogTags__selectedContainer"
+        data-cy="data-minds-blog-editor-tags-container"
+      >
         <span
           *ngFor="let tag of service.tags$ | async"
           (click)="service.removeTag(tag)"
@@ -26,6 +29,7 @@ import { BlogsEditService } from '../../blog-edit.service';
         placeholder="#hashtag"
         i18n-placeholder="@@BLOG_EDITOR_TAGS__HASHTAG"
         maxlength="64"
+        data-cy="data-minds-blog-editor-tags-input"
       />
     </div>
   `,

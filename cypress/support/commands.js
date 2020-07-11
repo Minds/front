@@ -282,6 +282,22 @@ Cypress.Commands.add('post', message => {
   });
 });
 
+// highlights text. ensure the highlight text is unique to the page.
+// Bkucera - https://github.com/cypress-io/cypress/issues/2839#issuecomment-447012818
+Cypress.Commands.add('highlightText', (text) => {
+  cy.contains(text).trigger('mousedown')
+      .then(($el) => {
+        const el = $el[0]
+        const document = el.ownerDocument
+        const range = document.createRange()
+        range.selectNodeContents(el)
+        document.getSelection().removeAllRanges(range)
+        document.getSelection().addRange(range)
+      }).trigger('mouseup');
+      
+  cy.document().trigger('selectionchange')
+});
+
 /**
  * Sets the feature flag cookie.
  * @param { Object } flags - JSON object containing flags to turn on

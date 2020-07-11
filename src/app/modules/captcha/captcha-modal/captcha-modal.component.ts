@@ -27,14 +27,15 @@ export interface OptType {
 @Component({
   selector: 'm-captcha__modal',
   template: `
-    <div class="m-blogs-captcha__container">
-      <h4 class="m-blogs-captcha__header">Verify CAPTCHA</h4>
-      <div class="m-blogs-captcha__body">
-        <m-captcha name="blog-captcha" [(ngModel)]="captcha"> </m-captcha>
-        <div class="m-blogs-captcha__submitButtonContainer">
+    <div class="m-captcha__container">
+      <h4 class="m-captcha__header">Verify CAPTCHA</h4>
+      <div class="m-captcha__body">
+        <m-captcha name="captcha" [(ngModel)]="captcha"> </m-captcha>
+        <div class="m-captcha__submitButtonContainer">
           <button
-            class="m-blogs-captcha__submitButton"
+            class="m-captcha__submitButton"
             (click)="onCaptchaSubmit()"
+            data-cy="data-minds-captcha-modal-submit"
           >
             Submit
           </button>

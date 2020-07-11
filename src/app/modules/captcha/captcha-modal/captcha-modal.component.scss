@@ -1,10 +1,10 @@
-.m-blogs-captcha__container {
-  .m-blogs-captcha__header {
+.m-captcha__container {
+  .m-captcha__header {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
   }
-  .m-blogs-captcha__body {
+  .m-captcha__body {
     m-captcha {
       input {
         display: block;
@@ -12,12 +12,12 @@
         margin: 20px 0;
       }
     }
-    .m-blogs-captcha__submitButtonContainer {
+    .m-captcha__submitButtonContainer {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
 
-      .m-blogs-captcha__submitButton {
+      .m-captcha__submitButton {
         border-radius: 2em;
         padding: 10px 20px;
         font-size: 15px;
