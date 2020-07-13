@@ -151,17 +151,18 @@
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </button>
-    <button
-      class="mf-button mf-button--alt"
-      (click)="login()"
-      [disabled]="inProgress"
+    <m-shadowboxSubmitButton
       *ngIf="showBigButton"
+      type="button"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      (click)="login()"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">
         Login
       </ng-container>
-    </button>
+    </m-shadowboxSubmitButton>
     <a
       class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link"
       [routerLink]="['/forgot-password']"

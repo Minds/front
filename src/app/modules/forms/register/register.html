@@ -196,16 +196,17 @@
       </ng-container>
     </button>
 
-    <button
-      class="mf-button mf-button--alt"
-      (click)="register($event)"
-      [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
+    <m-shadowboxSubmitButton
       *ngIf="showBigButton"
+      type="button"
+      [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
+      [saving]="inProgress"
+      (click)="register($event)"
     >
       <ng-container i18n="@@FORMS__REGISTER__JOIN_MINDS_NOW_ACTION">
         Join Minds Now
       </ng-container>
-    </button>
+    </m-shadowboxSubmitButton>
   </div>
 </form>
 <!-- END: Register -->
