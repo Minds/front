@@ -24,10 +24,7 @@
       pageLayoutService.isFullWidth$ | async
     "
   >
-    <m-sidebar--navigation
-      m-pageLayout__pane="left"
-      *ngIf="!isProDomain"
-    ></m-sidebar--navigation>
+    <m-sidebar--navigation m-pageLayout__pane="left"></m-sidebar--navigation>
     <div
       [m-pageLayout__pane]="
         (pageLayoutService.isFullWidth$ | async) ? null : 'main'
