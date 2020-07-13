@@ -72,6 +72,13 @@ export class ClientMetaService {
       return; // Browser will record too.
     }
 
+    (window as any).snowplow(
+      'trackSocialInteraction',
+      'view',
+      'minds',
+      `urn:entity:${entity.guid}`
+    );
+
     await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
       client_meta: {
         ...(clientMetaDirective && clientMetaDirective.build()),

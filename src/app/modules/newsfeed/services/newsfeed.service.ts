@@ -32,6 +32,14 @@ export class NewsfeedService {
     //   return;
     // }
 
+    (window as any).snowplow('trackSelfDescribingEvent', {
+      schema: 'iglu:com.minds/view/jsonschema/2-0-0',
+      data: {
+        entityGuid: entity.guid,
+        ...clientMeta,
+      },
+    });
+
     // if it's a boost we record the boost view AND the activity view
     if (entity.boosted_guid) {
       let url = `api/v2/analytics/views/boost/${entity.boosted_guid}`;
