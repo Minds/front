@@ -226,10 +226,6 @@ export class ActivityContentComponent
 
   get imageUrl(): string {
     if (this.entity.custom_type === 'batch') {
-      if (this.isPaywalledGif) {
-        return `${this.cdnAssetsUrl}assets/photos/andromeda-galaxy-blur.jpg`;
-      }
-
       let thumbUrl = this.entity.custom_data[0].src;
       if (this.showPaywallBadge) {
         /**
