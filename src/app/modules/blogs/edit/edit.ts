@@ -274,6 +274,7 @@ export class BlogEdit implements OnInit, OnDestroy {
       blog.monetized = blog.monetized ? 1 : 0;
       blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
       blog.captcha = this.captcha;
+      blog.wire_threshold = blog.wire_threshold ? blog.wire_threshold : null;
 
       this.editing = false;
       this.inProgress = true;
