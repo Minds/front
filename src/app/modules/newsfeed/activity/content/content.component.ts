@@ -213,35 +213,18 @@ export class ActivityContentComponent
     );
   }
 
-  get isPaywalledGif(): boolean {
-    return (
-      this.isImage &&
-      this.entity.custom_type === 'batch' &&
-      this.entity.custom_data &&
-      this.entity.custom_data[0].gif &&
-      this.showPaywallBadge &&
-      !this.paywallUnlocked
-    );
-  }
-
   get imageUrl(): string {
     if (this.entity.custom_type === 'batch') {
-      if (this.isPaywalledGif) {
-        return `${this.cdnAssetsUrl}assets/photos/andromeda-galaxy-blur.jpg`;
-      }
-
       let thumbUrl = this.entity.custom_data[0].src;
-      if (this.showPaywallBadge) {
-        /**
-         * Check whether we need to add 'unlock_paywall' query as the only
-         * query param OR append to an existing one
-         */
-        const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
 
-        const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
+      /**
+       * Check whether we need to add 'unlock_paywall' query as the only
+       * query param OR append to an existing one
+       */
+      const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
+      const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
+      thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
 
-        thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
-      }
       return thumbUrl;
     }
 
