@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import noOp from '../../../../../helpers/no-op';
 import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { ChannelShopMembershipsEditService } from './edit.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-channelShopMemberships__edit',
@@ -10,6 +11,8 @@ import { ChannelShopMembershipsEditService } from './edit.service';
   providers: [ChannelShopMembershipsEditService],
 })
 export class ChannelShopMembershipsEditComponent {
+  public readonly tokenExchangeRate: number;
+
   /**
    * Save intent
    */
@@ -42,7 +45,12 @@ export class ChannelShopMembershipsEditComponent {
    * Constructor
    * @param service
    */
-  constructor(public service: ChannelShopMembershipsEditService) {}
+  constructor(
+    public service: ChannelShopMembershipsEditService,
+    private configs: ConfigsService
+  ) {
+    this.tokenExchangeRate = configs.get('token_exchange_rate') || 1.25;
+  }
 
   /**
    * Loads a Support Tier into the editor
