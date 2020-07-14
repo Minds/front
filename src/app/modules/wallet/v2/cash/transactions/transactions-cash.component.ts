@@ -104,6 +104,7 @@ export class WalletTransactionsCashComponent implements OnInit {
       );
 
       if (response) {
+        console.log(response.transactions);
         if (response.transactions) {
           this.formatResponse(response.transactions, refresh);
         }
@@ -137,18 +138,10 @@ export class WalletTransactionsCashComponent implements OnInit {
 
       formattedTx.amount = tx.net / 100;
 
-      if (tx.type !== 'payout') {
-        if (i !== 0 || !refresh) {
-          if (this.transactions[i - 1].type === 'payout') {
-            this.runningTotal = formattedTx.amount;
-          }
-          this.runningTotal -= this.previousTxAmount;
-        }
-        this.previousTxAmount = formattedTx.amount;
-      } else {
-        this.runningTotal = 0;
-        this.previousTxAmount = 0;
+      if (i !== 0 || !refresh) {
+        this.runningTotal -= this.previousTxAmount;
       }
+      this.previousTxAmount = formattedTx.amount;
 
       formattedTx.runningTotal = this.walletService.splitBalance(
         this.runningTotal
@@ -191,6 +184,10 @@ export class WalletTransactionsCashComponent implements OnInit {
   getOtherUser(tx) {
     const isSender = true,
       user = tx.customer_user;
+
+    if (!user) {
+      return null;
+    }
 
     return {
       avatar: `/icon/${user.guid}/medium/${user.icontime}`,
