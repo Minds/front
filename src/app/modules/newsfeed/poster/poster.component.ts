@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { NSFWSelectorComponent } from '../../../common/components/nsfw-selector/nsfw-selector.component';
-import { TagsService } from '../../../common/services/tags.service';
+import { RegexService } from '../../../common/services/regex.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
@@ -70,7 +70,7 @@ export class PosterComponent {
     protected elementRef: ElementRef,
     protected router: Router,
     protected inMemoryStorageService: InMemoryStorageService,
-    protected tagsService: TagsService,
+    protected regexService: RegexService,
     protected toasterService: FormToastService
   ) {}
 
@@ -139,8 +139,8 @@ export class PosterComponent {
     let words = $event.split(/\s|^/); // split words on space or newline.
     for (let word of words) {
       if (
-        word.match(this.tagsService.getRegex('hash')) &&
-        !word.match(this.tagsService.getRegex('url'))
+        word.match(this.regexService.getRegex('hash')) &&
+        !word.match(this.regexService.getRegex('url'))
       ) {
         let tags = word
           .split(/(?=\#)/) // retain # symbol in split.
