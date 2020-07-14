@@ -6,7 +6,7 @@
     class="m-wireCreatorForm__tabs m-tabs__container"
     *ngIf="!(service.isUpgrade$ | async)"
   >
-    <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).tokens">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'tokens'"
         (click)="service.setType('tokens')"
@@ -15,7 +15,7 @@
       >
     </div>
 
-    <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).usd">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'usd'"
         (click)="service.setType('usd')"
@@ -24,7 +24,7 @@
       >
     </div>
 
-    <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).eth">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'eth'"
         (click)="service.setType('eth')"
@@ -33,7 +33,7 @@
       >
     </div>
 
-    <div class="m-tabs__tab">
+    <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).btc">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'btc'"
         (click)="service.setType('btc')"
