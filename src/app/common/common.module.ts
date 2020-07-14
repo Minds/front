@@ -139,7 +139,7 @@ import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
 import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
-import { TagsService } from './services/tags.service';
+import { RegexService } from './services/regex.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
@@ -519,7 +519,7 @@ const routes: Routes = [
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
-    TagsService,
+    RegexService,
     ApiService,
     AttachmentApiService,
     FeedsUpdateService,

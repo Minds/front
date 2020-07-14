@@ -75,11 +75,7 @@
 <!-- ----------------------------------- -->
 <!-- IMAGE -->
 <!-- ----------------------------------- -->
-<div
-  class="m-activityContent__media--image"
-  *ngIf="isImage"
-  [ngClass]="{ isPaywalledGif: isPaywalledGif }"
->
+<div class="m-activityContent__media--image" *ngIf="isImage">
   <a
     class="m-activityContentMedia__link"
     [routerLink]="['/media', imageGuid]"

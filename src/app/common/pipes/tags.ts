@@ -1,7 +1,7 @@
 import { Pipe, Inject, PipeTransform } from '@angular/core';
 import { FeaturesService } from '../../services/features.service';
 import { SiteService } from '../services/site.service';
-import { TagsService } from '../services/tags.service';
+import { RegexService } from '../services/regex.service';
 
 @Pipe({
   name: 'tags',
@@ -18,19 +18,19 @@ export class TagsPipe implements PipeTransform {
    */
   tags = {
     url: {
-      rule: this.tagsService.getRegex('url'),
+      rule: this.regexService.getRegex('url'),
       replace: m => {
         return `<a href="${m.match[1]}" target="_blank" rel="noopener nofollow ugc">${m.match[1]}</a>`;
       },
     },
     mail: {
-      rule: this.tagsService.getRegex('mail'),
+      rule: this.regexService.getRegex('mail'),
       replace: m => {
         return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener nofollow ugc">${m.match[0]}</a>`;
       },
     },
     hash: {
-      rule: this.tagsService.getRegex('hash'),
+      rule: this.regexService.getRegex('hash'),
       replace: m => {
         if (this.siteService.isProDomain) {
           return `${
@@ -51,7 +51,7 @@ export class TagsPipe implements PipeTransform {
       },
     },
     at: {
-      rule: this.tagsService.getRegex('at'),
+      rule: this.regexService.getRegex('at'),
       replace: m => {
         return `${m.match[1]}<a class="tag" href="/${m.match[2]}" target="_blank">@${m.match[2]}</a>`;
       },
@@ -61,7 +61,7 @@ export class TagsPipe implements PipeTransform {
   constructor(
     private featureService: FeaturesService,
     private siteService: SiteService,
-    public tagsService: TagsService
+    public regexService: RegexService
   ) {}
 
   /**

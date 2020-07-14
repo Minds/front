@@ -18,7 +18,7 @@ export class WalletTransactionsTableComponent {
     'offchain:boost': 'Off-Chain Boost',
     boost: 'On-Chain Boost',
     pro_earning: 'Pro Earnings',
-    payout: 'Payouts',
+    payout: 'Transfer to Bank Account',
   };
 
   constructor() {}
