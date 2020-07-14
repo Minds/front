@@ -101,6 +101,16 @@ export class SettingsV2ProAssetsComponent implements OnInit, OnDestroy {
         settings.has_custom_background = true;
       }
 
+      uploads.push(
+        this.proService.set(
+          {
+            has_custom_logo: settings.has_custom_logo,
+            has_custom_background: settings.has_custom_background,
+          },
+          this.user
+        )
+      );
+
       await Promise.all(uploads);
 
       this.formSubmitted.emit({ formSubmitted: true });
