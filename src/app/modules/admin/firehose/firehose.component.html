@@ -12,7 +12,15 @@
         [algorithm]="algorithm"
         [period]="period"
         [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
-        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
+        showPlusFilter="true"
+        (onChange)="
+          setSort(
+            $event.algorithm,
+            $event.period,
+            $event.customType,
+            $event.plus
+          )
+        "
       ></m-sort-selector>
     </div>
     <m-activity
