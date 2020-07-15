@@ -89,7 +89,7 @@ describe('AdminFirehose', () => {
 
     clientMock.response = {};
     clientMock.response[
-      `api/v2/admin/firehose/latest/activities?hashtags=&period=12h&all=`
+      `api/v2/admin/firehose/latest/activities?hashtags=&period=12h&all=&plus=false`
     ] = {
       status: 'success',
       entities: getMockActivities(),
