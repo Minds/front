@@ -9,18 +9,20 @@ const win = domino.createWindow(template);
 global['window'] = win;
 global['Node'] = win.Node;
 global['navigator'] = win.navigator;
-global['screen'] = { width: 0, height: 0 };
-global['Event'] = {};
+global['screen'] = {
+  width: 0,
+  height: 0,
+  availHeight: 0,
+  availWidth: 0,
+  colorDepth: 0,
+  pixelDepth: 0,
+  orientation: null,
+};
+global['Event'] = win.Event;
 global['Event']['prototype'] = win.Event.prototype;
-global['KeyboardEvent'] = global['Event'];
+global['KeyboardEvent'] = win.KeyboardEvent;
 global['document'] = win.document;
 global['window']['Promise'] = global.Promise;
-
-global['window']['localStorage'] = {
-  getItem: () => null,
-  setItem: () => {},
-  removeItem: () => {},
-};
 global['localStorage'] = global['window']['localStorage'];
 global['window']['scrollTo'] = pos => {};
 
