@@ -36,6 +36,7 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 describe('Blog view component', () => {
   let comp: BlogView;
@@ -65,6 +66,7 @@ describe('Blog view component', () => {
         { provide: MetaService, useValue: metaServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FormToastService, useValue: MockService(FormToastService) },
         {
           provide: ClientMetaService,
           useValue: MockService(ClientMetaService),
