@@ -9,7 +9,7 @@
       *ngIf="service.owner$ | async as owner"
     >
       <ng-container i18n="@@CREATOR_SHOP__HAS_SUPPORT_TIERS_OFFERS"
-        >@{{ owner?.username }} has support tiers exclusive offers</ng-container
+        >@{{ owner?.username }} has membership exclusive offers</ng-container
       >
       &middot;
       <a (click)="dismiss()" [routerLink]="['/', owner.username, 'shop']"
@@ -30,7 +30,7 @@
         (ngModelChange)="shop.select($event)"
       >
         <option value="null" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
-          >Select Support Tier</option
+          >Select Membership</option
         >
 
         <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">

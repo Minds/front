@@ -24,6 +24,7 @@
 
     <div class="m-wireLockScreen__inner">
       <h5
+        *ngIf="contentType !== 'rich-embed'"
         class="m-wireLockScreen__message"
         [class.m-wireLockScreen__message--hasTeaser]="hasTeaser"
       >
@@ -69,9 +70,21 @@
           </ng-container>
 
           <ng-template #supportTierText>
-            <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="!isPlus">
-              Subscribe to {{ entity.wire_threshold.support_tier.name }} Tier to
-              see this post
+            <ng-container *ngIf="!isPlus">
+              <ng-container
+                i18n="@@WIRE__SUPPORT__TIER__TEXT"
+                *ngIf="!isCustom"
+              >
+                Join @{{ entity.ownerObj.username }}'s
+                {{ entity.wire_threshold.support_tier.name }}
+                Membership to see this post
+              </ng-container>
+              <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="isCustom">
+                Join @{{ entity.ownerObj.username }}'s Custom Membership for ${{
+                  entity.wire_threshold.support_tier.usd
+                }}
+                per month to see this post
+              </ng-container>
             </ng-container>
             <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="isPlus">
               Only Minds+ users can see this post

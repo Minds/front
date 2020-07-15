@@ -277,7 +277,7 @@ export class ActivityContentComponent
       return parseInt(this.videoHeight.slice(0, -2), 10);
     }
     if (this.isRichEmbed) {
-      return 220;
+      return 400;
     }
     return null;
   }
