@@ -109,11 +109,14 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() labelClass: string = 'm--sort-selector-label';
 
+  @Input() showPlusFilter: boolean = false;
+
   @Output() onChange: EventEmitter<{
     algorithm;
     period;
     customType;
-  }> = new EventEmitter<{ algorithm; period; customType }>();
+    plus;
+  }> = new EventEmitter<{ algorithm; period; customType; plus }>();
 
   @ViewChild('algorithmDropdown')
   algorithmDropdown: DropdownComponent;
@@ -127,6 +130,8 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
   expandedAlgorithmDropdown: boolean = true;
 
   expandedCustomTypeDropdown: boolean = true;
+
+  plusFilterApplied: boolean = false;
 
   protected lastUsedPeriod: string;
 
@@ -327,11 +332,18 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     return currentAlgorithm[prop];
   }
 
+  setPlus() {
+    this.plusFilterApplied = !this.plusFilterApplied;
+    this.closeDropdowns();
+    this.emit();
+  }
+
   emit() {
     this.onChange.emit({
       algorithm: this.algorithm,
       period: this.hasCurrentAlgorithmPeriod() ? this.period : null,
       customType: this.customType,
+      plus: this.plusFilterApplied,
     });
   }
 

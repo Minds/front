@@ -98,3 +98,31 @@
     </li>
   </ul>
 </m-dropdown>
+
+<m-dropdown
+  expanded="true"
+  *ngIf="showPlusFilter"
+  class="m-sort-selector--plus-filter-dropdown"
+>
+  <label [ngClass]="[labelClass]">
+    <i
+      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+      >add_to_queue</i
+    >
+    <span>Minds+</span>
+    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+  </label>
+  <ul class="m-dropdown--list">
+    <li
+      class="m-dropdown--list--item"
+      [class.m-dropdown--list--item--selected]="plusFilterApplied"
+      (click)="setPlus()"
+    >
+      <i
+        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        >add_to_queue</i
+      >
+      <span [className]="labelClass">Minds+</span>
+    </li>
+  </ul>
+</m-dropdown>

@@ -19,6 +19,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   algorithm = 'latest';
   period = '12h';
   customType = 'activities';
+  plus = false;
   hashtag: string | null = null;
   all = false;
   paramsSubscription: Subscription;
@@ -37,6 +38,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
       this.algorithm = params['algorithm'] || 'latest';
       this.period = params['period'] || '12h';
       this.customType = params['type'] || 'activities';
+      this.plus = params['plus'] || false;
 
       if (typeof params['hashtag'] !== 'undefined') {
         this.hashtag = params['hashtag'] || null;
@@ -80,7 +82,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     const all = this.all ? '1' : '';
 
     try {
-      const url = `api/v2/admin/firehose/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}`;
+      const url = `api/v2/admin/firehose/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&plus=${this.plus}`;
       const response: any = await this.client.get(url);
       this.entities = response.entities;
 
@@ -147,11 +149,13 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   public setSort(
     algorithm: string,
     period: string | null,
-    customType: string | null
+    customType: string | null,
+    plus: boolean | null
   ) {
     this.algorithm = algorithm;
     this.period = period;
     this.customType = customType;
+    this.plus = plus;
 
     this.updateSortRoute();
   }
@@ -172,6 +176,9 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
 
     if (this.hashtag) {
       params.hashtag = this.hashtag;
+    }
+    if (this.plus) {
+      params.plus = this.plus;
     } else if (this.all) {
       params.all = 1;
     }

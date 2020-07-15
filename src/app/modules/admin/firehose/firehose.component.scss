@@ -35,13 +35,35 @@
     padding: 20px;
     margin-bottom: 25px;
     max-width: 270px;
+    cursor: pointer;
+    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
     &.m-firehose__moderatorAction--leftButton {
       justify-content: right;
+      &:hover {
+        @include m-theme() {
+          color: themed($m-red);
+        }
+      }
+      &:active {
+        @include m-theme() {
+          color: themed($m-red-dark);
+        }
+      }
     }
 
     &.m-firehose__moderatorAction--rightButton {
       justify-content: left;
+      &:hover {
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+      &:active {
+        @include m-theme() {
+          color: themed($m-green-dark);
+        }
+      }
     }
   }
 
@@ -57,7 +79,12 @@
     }
 
     m-sort-selector {
+      width: 100%;
+    }
+    .m-sort-selector--custom-type-dropdown,
+    .m-sort-selector--plus-filter-dropdown {
       flex-grow: 1;
+      text-align: end;
     }
   }
 
