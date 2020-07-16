@@ -60,13 +60,12 @@
     <div class="m-walletBalance--cash__col">
       <div
         class="m-walletBalance--cash__colTitle"
-        i18n="@@WALLET_V2__BALANCE_CASH__PENDING_BALANCE_INFO"
+        i18n="@@WALLET_V2__BALANCE_CASH__PENDING_BALANCE_INFO_JULY_2020"
       >
-        Pending Transfers<m-tooltip icon="help"
-          >The total amount of cash you are scheduled to receive from
-          wires<ng-container *ngIf="isPro"> and/or Pro earnings</ng-container>.
-          The transfer date is an estimation and it may take up to 7 days before
-          your cash reaches your bank account.
+        Pending Transfers
+        <m-tooltip icon="help">
+          This is the balance you've been paid out that will be transferred to
+          your bank. Transfers may take up to 7 days.
         </m-tooltip>
       </div>
       <div class="m-walletBalance--cash__colValWrapper" *ngIf="!hasAccount">
