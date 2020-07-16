@@ -7228,30 +7228,6 @@
           <x id=" START_TAG_SPAN"/>
         </target>
       </trans-unit>
-      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REJECTED__REASON" datatype="html">
-        <source>
-          was rejected for 
-          <x id="START_TAG_NG-CONTAINER"/>
-          <x id="START_ITALIC_TEXT"/>
-          <x id="INTERPOLATION"/>
-          <x id="CLOSE_ITALIC_TEXT"/>
-          .
-          <x id="CLOSE_TAG_NG-CONTAINER"/>
-           Your tokens have been credited back to your wallet.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/notifications/notification.component.html</context>
-          <context context-type="linenumber">989</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          <x id=" START_TAG_NG-CONTAINER"/>
-          <x id=" START_ITALIC_TEXT"/>
-          <x id=" INTERPOLATION"/>
-          <x id=" CLOSE_ITALIC_TEXT"/>
-           {$ CLOSE_TAG_NG-CONTAINER: "आपके टोकन को आपके बटुए में वापस जमा कर दिया गया है।
-        </target>
-      </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__BOOST_FOR" datatype="html">
         <source>
           You revoked your boost 
