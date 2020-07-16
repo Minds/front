@@ -278,3 +278,11 @@
     color: themed($m-red);
   }
 }
+
+.minds-editable-container {
+  .m-commentPoster__limit {
+    position: absolute;
+    right: 25px;
+    top: 75px;
+  }
+}
