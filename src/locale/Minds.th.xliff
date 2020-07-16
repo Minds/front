@@ -17182,7 +17182,7 @@
           หากต้องการรับการชำระเงินแบบออนไลน์จากช่องอื่นๆ (เช่นจาก Wire หรือ Boost) คุณจะต้องมีที่อยู่ทางออนไลน์ คุณสามารถเปลี่ยนได้ที่นี่ตลอดเวลา หมายเหตุ: ที่อยู่ในเครือของคุณเหมือนกับที่อยู่ Ether ของคุณ 
           <x id="START_TAG_M-TOOLTIP"/>
            เพราะอะไรน่ะหรือ? โทเค็นลูกโซ่ทำงานบนเครือข่าย Ethereum และต้องใช้ Ether ในการส่ง 
-          <x id="CLOSE_TAG_M-Tooltip"/>
+          <x id="CLOSE_TAG_M-TOOLTIP"/>
         </target>
       </trans-unit>
       <trans-unit id="WALLETV2_SETTINGS_CASH__BANK_INFO" datatype="html">
@@ -17231,7 +17231,7 @@
           ที่อยู่ Ether ของคุณเหมือนกับที่อยู่ในเครือ 
           <x id="START_TAG_M-TOOLTIP"/>
            เพราะเหตุใดน่ะหรือ? โทเค็นลูกโซ่ทำงานบนเครือข่าย Ethereum และต้องใช้ Ether ในการส่ง 
-          <x id="CLOSE_TAG_M-Tooltip"/>
+          <x id="CLOSE_TAG_M-TOOLTIP"/>
         </target>
       </trans-unit>
       <trans-unit id="WALLETV2_SETTINGS_ETH__CHANGE_YOUR_ADDRESS" datatype="html">
