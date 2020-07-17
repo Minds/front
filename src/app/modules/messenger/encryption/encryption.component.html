@@ -87,10 +87,10 @@
   />
   <input
     type="password"
-    placeholder="Confirm your password"
+    placeholder="Confirm password"
     i18n-placeholder="@@MESSENGER__ENCRYPTION__CONFIRM_PWD_PH"
     #password2
-    (keydown.enter)="setup(password1, password2)"
+    (keydown.enter)="rekey(password1, password2)"
   />
   <button
     class="mdl-button mdl-button--colored"
