@@ -37,6 +37,7 @@ import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
+import { maxLength } from '../../../common/components/text-counter/text-counter.component';
 
 @Component({
   selector: 'm-comment',
@@ -200,6 +201,11 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
     if (!this.saveEnabled()) {
       this.triedToPost = true;
+      return;
+    }
+
+    if (control.value.length > maxLength) {
+      this.toasterService.error('Maximum of 1500 characters reached');
       return;
     }
 

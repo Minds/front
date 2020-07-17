@@ -22,6 +22,8 @@ import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { Observable } from 'rxjs';
+import { FormToastService } from '../../../common/services/form-toast.service';
+import { maxLength } from '../../../common/components/text-counter/text-counter.component';
 
 @Component({
   selector: 'm-comment__poster',
@@ -46,7 +48,7 @@ export class CommentPosterComponent {
   comments: Array<any> = []; // TODO: remove this
   canPost: boolean = true;
   inProgress: boolean = false;
-  maxLength: number = 1500;
+  maxLength: number = maxLength;
 
   constructor(
     public session: Session,
@@ -58,7 +60,8 @@ export class CommentPosterComponent {
     private renderer: Renderer2,
     private userAvatar: UserAvatarService,
     private cd: ChangeDetectorRef,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private toaster: FormToastService
   ) {}
 
   keypress(e: KeyboardEvent) {
@@ -72,6 +75,7 @@ export class CommentPosterComponent {
 
     this.attachment.resetPreviewRequests();
     if (this.content.length > this.maxLength) {
+      this.toaster.error(`Maximum of ${this.maxLength} characters reached`);
       return;
     }
 

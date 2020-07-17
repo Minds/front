@@ -1,0 +1,19 @@
+.m-textCounter__limitContainer {
+  position: absolute;
+  right: 25px;
+  top: 75px;
+  font-size: 10px;
+  color: $grey-600;
+  padding: 12px 0;
+  cursor: default;
+}
+
+.m-textCounter--maxed {
+  @include m-theme() {
+    color: themed($m-red) !important;
+  }
+}
+
+.m-textCounter__input {
+  font-weight: 600;
+}

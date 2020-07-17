@@ -94,17 +94,10 @@
         >
           <i class="material-icons">send</i>
         </a>
-
-        <div
-          [class.hidden]="content.length < 140"
-          class="m-commentPoster__limit"
-          [class.m-commentPoster__limit--maxed]="content.length > 1500"
-        >
-          <span class="m-commentPosterLimit__inputed">
-            {{ content.length }}
-          </span>
-          <span> / 1500</span>
-        </div>
+        <m-textCounter
+          [content]="content"
+          [position]="{ top: 20, right: 4 }"
+        ></m-textCounter>
       </div>
 
       <!-- Rich embed preview -->

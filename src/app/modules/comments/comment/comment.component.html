@@ -240,22 +240,12 @@
       <ng-container *ngIf="editing">
         <div class="minds-editable-container">
           <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-          <div
-            [class.hidden]="comment.description.length < 140"
-            class="m-commentPoster__limit"
-            [class.m-commentPoster__limit--maxed]="
-              comment.description.length > 1500
-            "
-          >
-            <span class="m-commentPosterLimit__inputed">
-              {{ comment.description.length }}
-            </span>
-            <span> / 1500</span>
-          </div>
+          <m-textCounter [content]="edit.value"></m-textCounter>
+
           <textarea
             class="mdl-card__supporting-text message"
             name="description"
-            [(ngModel)]="comment.description"
+            [ngModel]="comment.description"
             #edit
             [autoGrow]
             (keydown.enter)="applyAndSave(edit, $event)"
