@@ -9,7 +9,8 @@ context('Forgot Password', () => {
   const submitButton = '[data-cy=data-minds-forgot-password-submit]';
   const password1 = '[data-cy=data-minds-forgot-password-text-input-1]';
   const password2 = '[data-cy=data-minds-forgot-password-text-input-2]';
-  const errorText = '[data-cy=data-minds-forgot-password-error]';
+  const formToaster = '[data-cy=data-minds-toaster-container]';
+
   
   it('should let a user send an email to reset password', () => {
     cy.visit('/login')
@@ -28,7 +29,7 @@ context('Forgot Password', () => {
     cy.contains('We have sent an unlock code to your registered email address.');
   });
 
-  it('should alert a user to an incorrect password, then let them submit a correct one', () => {
+  it('should let the user know if their reset code is invalid', () => {
     
     // prepare POST route to be tested.
     cy.server();
@@ -45,10 +46,9 @@ context('Forgot Password', () => {
       .click()
       .wait('@postReset');
 
-    cy.get(errorText)
-    
-    cy.get(submitButton).click()
-      .wait('@postReset');
+    cy.get(formToaster).contains("reset code is invalid");
   });
+
+  // TODO: Test other user password change fail states 
 
 })

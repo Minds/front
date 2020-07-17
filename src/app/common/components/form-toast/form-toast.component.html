@@ -1,4 +1,8 @@
-<div class="m-formToast__toastsContainer" *ngIf="visibleToasts">
+<div
+  class="m-formToast__toastsContainer"
+  *ngIf="visibleToasts"
+  data-cy="data-minds-toaster-container"
+>
   <ng-container *ngFor="let toast of toasts; let i = index">
     <div
       class="m-formToast__wrapper"
