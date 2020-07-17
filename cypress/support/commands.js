@@ -100,7 +100,6 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
     .type(password);
 
   cy.get(loginForm.submit)
-    .focus()
     .click({ force: true })
     .wait('@postLogin')
     .then(xhr => {

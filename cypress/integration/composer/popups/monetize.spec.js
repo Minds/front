@@ -1,17 +1,14 @@
 context('Composer Monetize Popup', () => {
-  const showComposer = () => {
-    const composerTrigger = 'm-composer .m-composer__trigger';
 
-    cy.overrideFeatureFlags({ 'activity-composer': true });
-
-    cy.visit('/newsfeed/subscriptions');
-
-    cy.get(composerTrigger)
-      .should('be.visible')
-      .click();
-
-    cy.get(composerToolbar).should('be.visible');
-  };
+  // Elements
+  const composer = 'm-composer__modal > m-composer__base';
+  const composerToolbar = `${composer} .m-composer__toolbar`;
+  const monetizeButton = `${composerToolbar} a[data-cy=monetize-button]`;
+  const monetizePopup = `m-composer__popup .m-composer__monetize`;
+  const monetizeEnablePaywall = `[data-cy=monetize-membership-enable-paywall-checkbox]`;
+  const monetizeSaveButton = `[data-cy=monetize-save-button]`;
+  const monetizeCustomTab = `[data-cy=monetize-membership-custom-tab]`;
+  const monetizePaywallAmount = `[data-cy=monetize-membership-paywall-amount-input]`
 
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
@@ -27,24 +24,6 @@ context('Composer Monetize Popup', () => {
     cy.preserveCookies();
   });
 
-  // Elements
-
-  const composer = 'm-composer__modal > m-composer__base';
-
-  const composerToolbar = `${composer} .m-composer__toolbar`;
-
-  const monetizeButton = `${composerToolbar} a[data-cy="monetize-button"]`;
-
-  const monetizePopup = `${composer} m-composer__popup .m-composer__monetize`;
-
-  const monetizeEnablePaywall = `${monetizePopup} [data-cy="monetize-enable-paywall"]`;
-
-  const monetizePaywallAmount = `${monetizePopup} [data-cy="monetize-paywall-amount"]`;
-
-  const monetizeSaveButton = `${monetizePopup} [data-cy="monetize-save-button"]`;
-
-  //
-
   it('should show and be able to interact with the NSFW popup', () => {
     cy.get(monetizeButton).click();
 
@@ -58,6 +37,8 @@ context('Composer Monetize Popup', () => {
 
     cy.get(monetizeSaveButton).should('not.have.class', 'm-button--disabled');
 
+    cy.get(monetizeCustomTab).click();
+
     cy.get(monetizeEnablePaywall).click();
 
     cy.get(monetizePaywallAmount)
@@ -65,17 +46,30 @@ context('Composer Monetize Popup', () => {
       .clear()
       .type('0');
 
-    cy.get(monetizeSaveButton).should('have.class', 'm-button--disabled');
+    cy.contains('Save').should('be.disabled');
 
     cy.get(monetizePaywallAmount)
       .focus()
       .clear()
-      .type('0.1');
+      .type('1');
 
-    cy.get(monetizeSaveButton).should('not.have.class', 'm-button--disabled');
-
-    cy.get(monetizeEnablePaywall).click();
-
-    cy.get(monetizeSaveButton).click();
+    cy.contains('Save')
+      .should('not.be.disabled')
+      .click();
   });
+
+  const showComposer = () => {
+    const composerTrigger = 'm-composer .m-composer__trigger';
+
+    cy.overrideFeatureFlags({ 'activity-composer': true });
+
+    cy.visit('/newsfeed/subscriptions');
+
+    cy.get(composerTrigger)
+      .should('be.visible')
+      .click();
+
+    cy.get(composerToolbar).should('be.visible');
+  };
+
 });
