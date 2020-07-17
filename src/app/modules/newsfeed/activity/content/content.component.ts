@@ -44,8 +44,6 @@ import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video
   templateUrl: 'content.component.html',
   animations: [
     trigger('fader', [
-      state('active', style({})),
-      state('dismissed', style({})),
       transition(':leave', [
         style({ opacity: '1' }),
         animate(
