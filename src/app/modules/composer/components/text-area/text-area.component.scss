@@ -31,6 +31,13 @@ m-composer__textArea {
     font-size: 16px;
     line-height: 21px;
     min-height: 100px;
+    transition: all 0.3s ease 0s !important;
+    padding-bottom: 30px;
+
+    @media screen and (max-width: $max-mobile) {
+      height: auto; // Set dynamically on input event
+      overflow: visible;
+    }
 
     &:focus {
       outline: none;
@@ -46,7 +53,7 @@ m-composer__textArea {
   }
 
   .m-composerTextarea__title {
-    padding: 20px 40px;
+    padding: 0 40px 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -103,5 +110,8 @@ m-composer__textArea {
 
   m-text-input--autocomplete-container {
     height: 100%;
+    @media screen and (max-width: $max-mobile) {
+      flex-grow: 1;
+    }
   }
 }

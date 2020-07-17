@@ -8,6 +8,7 @@ import {
   Output,
   PLATFORM_ID,
   ViewChild,
+  HostListener,
 } from '@angular/core';
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -130,5 +131,17 @@ export class TextAreaComponent {
         setTimeout(() => this.titleInput.nativeElement.focus(), 100);
       }
     }
+  }
+
+  // Re-calculate height/width when window resizes
+  @HostListener('window:resize', ['$resizeEvent'])
+  onResize(resizeEvent) {
+    this.resizeMessageHeight();
+  }
+
+  resizeMessageHeight(): void {
+    const textareaEl = this.messageInput.nativeElement;
+    textareaEl.style.height = 'auto';
+    textareaEl.style.height = `${textareaEl.scrollHeight}px`;
   }
 }
