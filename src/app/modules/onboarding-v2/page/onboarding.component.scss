@@ -417,11 +417,11 @@ m-onboarding {
 
             &:active,
             &:focus {
-              outline: 1px solid #4a90e2;
+              border-color: #4a90e2;
             }
 
             &.m-onboardingInput__error {
-              outline: 1px solid #d0021b;
+              border-color: #d0021b;
             }
           }
 

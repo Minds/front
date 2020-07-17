@@ -15,6 +15,7 @@
     padding: 0;
     box-sizing: border-box;
     @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
       background-color: rgba(themed($m-white), 1);
     }
 
@@ -30,9 +31,15 @@
       vertical-align: middle;
       font-size: 12px;
       line-height: 12px;
-      padding: 0;
+      padding: 0 0 0 8px;
       -webkit-appearance: none;
       outline: none;
+
+      @include m-theme() {
+        border-left: 1px solid themed($m-borderColor--primary);
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--primary);
+      }
     }
   }
 
