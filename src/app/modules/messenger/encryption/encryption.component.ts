@@ -1,16 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Injector,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 
-import { SocketsService } from '../../../services/sockets';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { Storage } from '../../../services/storage';
 
 import { MessengerEncryptionService } from './encryption.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
@@ -27,10 +18,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 export class MessengerEncryption implements OnInit {
   minds: Minds;
   on: EventEmitter<any> = new EventEmitter(true);
-
   inProgress: boolean = false;
-  error: string = '';
-
   username: string = '';
 
   constructor(
@@ -46,7 +34,6 @@ export class MessengerEncryption implements OnInit {
 
   unlock(password) {
     this.inProgress = true;
-    this.error = '';
     this.encryption
       .unlock(password.value)
       .then(() => {
@@ -55,52 +42,50 @@ export class MessengerEncryption implements OnInit {
         this.inProgress = false;
       })
       .catch(() => {
-        this.error = 'Wrong password. Please try again.';
-        this.toasterService.error(this.error);
+        this.toasterService.error('Wrong password. Please try again.');
         this.inProgress = false;
       });
   }
 
   setup(password, password2) {
     if (password.value !== password2.value) {
-      this.error = 'Your passwords must match';
+      this.toasterService.error('Your passwords must match');
       return;
     }
     this.inProgress = true;
-    this.error = '';
     this.encryption
       .doSetup(password.value)
       .then(() => {
         password.value = '';
         password2.value = '';
+        this.toasterService.success('Successfully setup messenger password.');
         this.on.next(true);
         this.inProgress = false;
       })
       .catch(() => {
-        this.error = 'Sorry, there was a problem.';
-        this.toasterService.error(this.error);
+        this.toasterService.error('Sorry, there was a problem.');
         this.inProgress = false;
       });
   }
 
   rekey(password, password2) {
     if (password.value !== password2.value) {
-      this.error = 'Your passwords must match';
+      this.toasterService.error('Your passwords must match');
       return;
     }
-    this.error = '';
     this.inProgress = true;
     this.encryption
       .rekey(password.value)
       .then(() => {
         password.value = '';
         password2.value = '';
+        this.encryption.reKeying = false;
+        this.toasterService.success('Successfully changed messenger password.');
         this.on.next(true);
         this.inProgress = false;
       })
       .catch(() => {
-        this.error = 'Sorry, there was a problem';
-        this.toasterService.error(this.error);
+        this.toasterService.error('Sorry, there was a problem.');
         this.inProgress = false;
       });
   }
