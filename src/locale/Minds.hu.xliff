@@ -9,7 +9,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Groups</target>
+        <target state="translated">Csoportok</target>
       </trans-unit>
       <trans-unit id="M__COMMON__NEW_GROUP" datatype="html">
         <source>New group</source>
@@ -26,7 +26,7 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">New group</target>
+        <target state="translated">Új csoport</target>
       </trans-unit>
       <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html">
         <source>Discover Groups</source>
@@ -43,7 +43,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Discover Groups</target>
+        <target state="translated">Fedezze fel a Csoportokat</target>
       </trans-unit>
       <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
         <source>Join some groups to populate this sidebar</source>

@@ -1,3 +1,17 @@
+<!-- ----------------------------------- -->
+<!-- PAYWALL -->
+<!-- ----------------------------------- -->
+<m-paywallBadge [entity]="entity"></m-paywallBadge>
+<ng-container *mIfFeature="'paywall-2020'">
+  <m-activity__paywall
+    *ngIf="service.shouldShowPaywall$ | async"
+    [mediaHeight]="mediaHeight"
+    class="isPaywall2020"
+  ></m-activity__paywall
+></ng-container>
+<!-- ----------------------------------- -->
+<!-- MESSAGE -->
+<!-- ----------------------------------- -->
 <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
 <div
   #messageEl
@@ -11,22 +25,21 @@
 >
   <div class="m-activityContent__messageWrapper">
     <span [innerHtml]="message | tags"></span>
-    <m-read-more--button [v2]="true"></m-read-more--button>
+    <m-read-more--button
+      *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
+      [v2]="true"
+    ></m-read-more--button>
   </div>
-  <!-- (onTranslateInit)="propagateTranslation($event)" -->
-  <m-translate
-    *mIfBrowser
-    [open]="service.displayOptions.showTranslation"
-    [entity]="entity"
-    [translateEvent]="translateEvent"
-    (onTranslate)="(service.displayOptions.showTranslation === false)"
-    (onTranslateError)="(service.displayOptions.showTranslation === false)"
-    #translate
-  ></m-translate>
+  <!-- ----------------------------------- -->
+  <!-- TRANSLATION (MESSAGE) -->
+  <!-- ----------------------------------- -->
+  <ng-container *ngTemplateOutlet="translation"></ng-container>
 </div>
 <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
 
-<!-- Rich content -->
+<!-- ----------------------------------- -->
+<!-- RICH EMBED / BLOG -->
+<!-- ----------------------------------- -->
 <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
   <div class="m-activityContent__fixedHeightSpacer"></div>
   <minds-rich-embed
@@ -40,20 +53,28 @@
     *ngIf="!mediaDescription"
   ></div>
 </div>
-
+<!-- ----------------------------------- -->
+<!-- VIDEO -->
+<!-- ----------------------------------- -->
 <div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
   <div class="m-activityContent__fixedHeightSpacer"></div>
-  <m-videoPlayer
+
+  <m-videoPlayer--scrollaware
     [guid]="videoGuid"
     [shouldPlayInModal]="true"
-    [autoplay]="autoplayVideo"
-    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
     (mediaModalRequested)="onModalRequested($event)"
+    [autoplay]="
+      service.displayOptions.autoplayVideo &&
+      !(service.shouldShowPaywall$ | async)
+    "
     [style.height]="videoHeight"
-  ></m-videoPlayer>
+  ></m-videoPlayer--scrollaware>
+
   <div class="m-activityContent__fixedHeightSpacer"></div>
 </div>
-
+<!-- ----------------------------------- -->
+<!-- IMAGE -->
+<!-- ----------------------------------- -->
 <div class="m-activityContent__media--image" *ngIf="isImage">
   <a
     class="m-activityContentMedia__link"
@@ -68,7 +89,9 @@
     />
   </a>
 </div>
-
+<!-- ----------------------------------- -->
+<!-- TITLE / DESCRIPTION -->
+<!-- ----------------------------------- -->
 <div
   #mediaDescriptionEl
   class="m-activityContent__mediaDescription"
@@ -83,37 +106,20 @@
       [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
       *ngIf="mediaTitle"
     ></p>
-    <p [innerHtml]="mediaDescription | tags"></p>
-    <m-read-more--button [v2]="true"></m-read-more--button>
+    <p *ngIf="mediaDescription" [innerHtml]="mediaDescription | tags"></p>
+    <m-read-more--button
+      *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
+      [v2]="true"
+    ></m-read-more--button>
   </div>
-  <!-- (onTranslateInit)="propagateTranslation($event)" -->
-  <m-translate
-    *mIfBrowser
-    [open]="service.displayOptions.showTranslation"
-    [entity]="entity"
-    [translateEvent]="translateEvent"
-    (onTranslate)="(service.displayOptions.showTranslation === false)"
-    (onTranslateError)="(service.displayOptions.showTranslation === false)"
-    #translate
-  ></m-translate>
+  <!-- ----------------------------------- -->
+  <!-- TRANSLATION (MEDIA POSTS) -->
+  <!-- ----------------------------------- -->
+  <ng-container *ngTemplateOutlet="translation"></ng-container>
 </div>
-
-<!-- Translation -->
-<!-- <div
-  *ngIf="
-    translate &&
-    translate.translation &&
-    translate.translation.translated &&
-    translate.translation.title
-  "
-  class="m-translation-wrapper"
->
-  <div class="" [hidden]="!translate.translation.title">
-    <span [innerHtml]="translate.translation.title | tags"></span>
-  </div>
-</div> -->
-<!-- End translation -->
-
+<!-- ----------------------------------- -->
+<!-- REMIND -->
+<!-- ----------------------------------- -->
 <div
   class="m-activityContent__remind"
   [class.m-activityContent__remind--hasMessage]="!!message"
@@ -126,8 +132,29 @@
     [style.width]="remindWidth"
     [style.height]="remindHeight"
     [style.max-height]="remindHeight"
-    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
-    [autoplayVideo]="autoplayVideo"
   >
   </m-activity__remind>
 </div>
+
+<!-- ----------------------------------- -->
+<!-- TEMPLATE: TRANSLATION -->
+<!-- ----------------------------------- -->
+<ng-template #translation>
+  <!-- (onTranslateInit)="propagateTranslation($event)" -->
+  <m-translate
+    *mIfBrowser
+    [open]="service.displayOptions.showTranslation"
+    [entity]="entity"
+    [translateEvent]="translateEvent"
+    (onTranslate)="(service.displayOptions.showTranslation === false)"
+    (onTranslateError)="(service.displayOptions.showTranslation === false)"
+    #translate
+  ></m-translate>
+</ng-template>
+
+<!-- ----------------------------------- -->
+<!-- TEMPLATE: TEASER FADEOUT -->
+<!-- ----------------------------------- -->
+<ng-template #teaserFadeout>
+  <div class="m-activityContent__teaserFadeout" @fader></div
+></ng-template>

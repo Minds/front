@@ -17,6 +17,7 @@ export class SuggestionsSidebar {
   readonly cdnUrl: string;
 
   @Input() type: SuggestionEntityTypes = 'user';
+  @Input() isPlusPage: boolean = false;
 
   suggestions$: BehaviorSubject<Array<any>> = this.service.suggestions$;
   limit = 12;
@@ -54,6 +55,8 @@ export class SuggestionsSidebar {
       `suggestion:${suggestion.entity_guid}:removed`,
       suggestion.entity_guid
     );
+
+    // TODOPLUS make it plus-specific when isPlusPage
     await this.client.put(`api/v2/suggestions/pass/${suggestion.entity_guid}`);
 
     // load more
@@ -75,6 +78,7 @@ export class SuggestionsSidebar {
   seeMore() {
     if (this.displayLimit === this.limit) {
       // Already tapped once, so go to full view page
+      // TODOPLUS make it plus-specific when isPlusPage
       this.router.navigate([`/discovery/suggestions/${this.type}`]);
     }
 
@@ -82,6 +86,9 @@ export class SuggestionsSidebar {
   }
 
   get title(): string {
+    if (this.isPlusPage && this.type === 'user') {
+      return $localize`:@@SUGGESTIONS__PLUS_CHANNEL__TITLE:Top Minds+ Channels`;
+    }
     switch (this.type) {
       case 'user':
         return $localize`:@@SUGGESTIONS__CHANNEL__TITLE:Suggested Channels`;

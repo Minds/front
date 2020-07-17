@@ -5,6 +5,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { FastFadeAnimation } from '../../../../animations';
 
 export const PLAYER_ANIMATIONS = [
   trigger('fadeAnimation', [
@@ -24,4 +25,5 @@ export const PLAYER_ANIMATIONS = [
     ),
     transition('in <=> out', [animate('300ms ease-in')]),
   ]),
+  FastFadeAnimation,
 ];

@@ -266,15 +266,31 @@ export class PostMenuService {
     }
   }
 
-  async setNsfw(nsfw) {
-    await this.client.post(`api/v2/admin/nsfw/${this.entity.ownerObj.guid}`, {
-      nsfw,
-    });
-    this.entity.nsfw = nsfw;
+  /**
+   * Set NSFW as admin
+   * @param { number[] } nsfw - NSFW values.
+   * @returns { Promise<void> } - Awaitable.
+   */
+  async setNsfw(nsfw: number[]): Promise<void> {
+    try {
+      const response: any = await this.client.post(
+        `api/v2/admin/nsfw/${this.entity.ownerObj.guid}`,
+        {
+          nsfw,
+        }
+      );
+      this.entity.nsfw = nsfw;
+    } catch (e) {
+      if (e.message) {
+        this.formToastService.error(e.message);
+        return;
+      }
+      this.formToastService.error(e);
+    }
   }
 
-  async confirmDelete(): Promise<void> {
-    await this.dialogService
+  async confirmDelete(): Promise<boolean> {
+    return this.dialogService
       .confirm('Are you sure you want to delete this post?')
       .toPromise();
   }

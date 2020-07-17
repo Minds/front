@@ -13,12 +13,15 @@ context('Onboarding', () => {
   const checkbox = '[data-cy=minds-accept-tos-input] [type=checkbox]';
   const submitButton = 'minds-form-register .mdl-card__actions button';
 
-  before(() => {
-    cy.visit('/register');
-    cy.location('pathname').should('eq', '/register');
+  beforeEach(() => {
     cy.server();
     cy.route("POST", "**/api/v1/register").as("register");
+    cy.route('POST', '**/api/v2/onboarding/onboarding_shown').as('postOnboarding');
 
+    cy.visit('/register')
+      .location('pathname')
+      .should('eq', '/register');
+  
     cy.get(usernameField)
       .focus()
       .type(username);
@@ -30,8 +33,6 @@ context('Onboarding', () => {
     cy.get(passwordField)
       .focus()
       .type(password);
-
-    cy.wait(500);
 
     cy.get(password2Field)
       .focus()
@@ -49,15 +50,11 @@ context('Onboarding', () => {
       .then((xhr) => {
           expect(xhr.status).to.equal(200);
         }
-      );
-
-    cy.wait(500);
-    cy.location('pathname').should('eq', '/onboarding/notice');
+      ).location('pathname').should('eq', '/onboarding/notice');
   });
 
   after(() => {
     cy.deleteUser(username, password);
-    cy.clearCookies();
   });
 
   beforeEach(() => {
@@ -70,9 +67,10 @@ context('Onboarding', () => {
     cy.get('h2.m-onboarding__noticeTitle').contains(username);
 
     // should redirect to /hashtags
-    cy.get('.m-onboarding__form button.mf-button').contains("Let's Get Setup").click();
-    cy.wait(1000);
-
+    cy.get('.m-onboarding__form button.mf-button')
+      .contains("Let's Get Setup")
+      .click()
+      .wait('@postOnboarding')
 
     // should be in the hashtags step
 
@@ -162,8 +160,6 @@ context('Onboarding', () => {
       '../fixtures/international-space-station-1776401_1920.jpg',
       'image/jpg'
     );
-
-    cy.wait(1000);
 
     // should cancel cropping
     cy.get('button.mf-button--hollow').contains('Cancel').click();

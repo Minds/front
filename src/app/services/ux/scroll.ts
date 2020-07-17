@@ -46,4 +46,24 @@ export class ScrollService {
     }
     return this.viewEmitter;
   }
+
+  isVisible(element: HTMLElement, topTolerance = 0): boolean {
+    const vpTop = this.view.scrollTop;
+    const vpBottom = vpTop + this.view.clientHeight;
+    const vpHeight = vpBottom - vpTop;
+
+    const elBounds = element.getBoundingClientRect();
+
+    const elTop = elBounds.top - topTolerance;
+    const elBottom = elTop + elBounds.height;
+
+    // the part of the component (in pixels) that's ON the screen
+    const vpEl = elTop - vpHeight;
+
+    if (elBottom > 0 && vpEl < 0) {
+      return true;
+    }
+
+    return false;
+  }
 }

@@ -18,9 +18,12 @@ const routes: Routes = [
     path: 'token',
     component: BlockchainMarketingTokenComponent,
     data: {
-      title: 'Token',
-      description: 'The fuel of the Minds network',
+      title:
+        'Buy, Support, & Expand Your Audience with Social Media Cryptocurrency',
+      description:
+        'Buy Minds tokens to expand your reach, support your favorite channels, and unlock premium features on Minds.',
       ogImage: '/assets/product-pages/token/token-1.jpg',
+      canonicalUrl: '/token',
     },
   },
   {

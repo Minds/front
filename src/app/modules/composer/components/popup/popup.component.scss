@@ -114,6 +114,16 @@ m-composer__popup {
     margin: 0;
   }
 
+  .m-composerPopup__subtitle {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 500;
+    margin: 24px 0 20px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
   .m-composerPopup__text,
   .m-composerPopup__smallNote {
     font-weight: normal;
@@ -131,6 +141,12 @@ m-composer__popup {
   .m-composerPopup__text {
     font-size: 16px;
     line-height: 21px;
+  }
+  .m-composerPopup__error {
+    margin-right: 10px;
+    @include m-theme() {
+      color: themed($m-alert);
+    }
   }
 
   .m-composerPopup__smallNote {

@@ -29,7 +29,11 @@
   @fastFade
 ></m-discovery__noTagsPrompt>
 
-<ul class="m-discovery__trends" @fastFade *ngIf="(trends$ | async).length > 0">
+<ul
+  class="m-discovery__trends"
+  @fastFade
+  *ngIf="(trends$ | async).length > 0 || (hero$ | async)"
+>
   <li
     class="m-discoveryTrends__trend m-discoveryTrends__trend--hero"
     *ngIf="hero$ | async"

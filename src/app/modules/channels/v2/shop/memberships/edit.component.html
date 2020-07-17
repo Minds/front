@@ -1,0 +1,158 @@
+<div class="m-channelShopMemberships__edit m-formWrapper">
+  <div class="m-channelShopMembershipsEdit__header">
+    <div class="m-channelShopMembershipsEditHeader__title">
+      <ng-container
+        *ngIf="service.isEditing$ | async; else newMembershipTierTitle"
+        i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_MODAL_TITLE_EDITING"
+        >Edit Membership Tier</ng-container
+      >
+      <ng-template #newMembershipTierTitle>
+        <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_MODAL_TITLE_NEW"
+          >New Membership Tier</ng-container
+        >
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="m-formLayout--buttonRight">
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label
+            for="channels-v2-shop-memberships-edit-name"
+            i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_NAME"
+            >Tier Name</label
+          >
+          <m-tooltip
+            ><span m-tooltip--anchor>𝒊</span>
+            <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_NAME_INFO"
+              >Avoid making titles that are too long. Consider creating a title
+              that connects to your brand</ng-container
+            >
+          </m-tooltip>
+        </div>
+        <div class="m-form__row--input">
+          <input
+            id="channels-v2-shop-memberships-edit-name"
+            type="text"
+            class="form-control"
+            [ngModel]="service.name$ | async"
+            [readonly]="service.inProgress$ | async"
+            (ngModelChange)="service.name$.next($event)"
+          />
+        </div>
+      </div>
+
+      <div
+        class="m-form__field--text stretchedField m-channelShopMembershipsEdit__labelOnly"
+      >
+        <div class="m-form__row--label">
+          <label
+            for="channels-v2-shop-memberships-edit-usd"
+            i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_COST"
+            >Tier Cost</label
+          >
+          <m-tooltip
+            ><span m-tooltip--anchor>𝒊</span>
+            <ng-container
+              >The amount a member is required to pay per month to access the
+              tier benefits.</ng-container
+            >
+          </m-tooltip>
+        </div>
+      </div>
+      <div
+        class="m-channelShopMembershipsEdit__inlineFields"
+        [class.m-channelShopMembershipsEdit__fieldDisabled]="
+          service.isEditing$ | async
+        "
+      >
+        <div class="m-form__field--text stretchedField">
+          <div class="m-form__row--input hasUnitLabel">
+            <span>$</span
+            ><input
+              id="channels-v2-shop-memberships-edit-usd"
+              type="text"
+              class="form-control"
+              [ngModel]="service.usd$ | async | number: '1.0'"
+              [disabled]="service.isEditing$ | async"
+              [readonly]="service.inProgress$ | async"
+              (ngModelChange)="setUsd($event)"
+            />
+          </div>
+        </div>
+
+        <div class="m-form__field--checkbox">
+          <div class="m-form__row--input">
+            <label
+              for="channels-v2-shop-memberships-edit-has-tokens"
+              class="m-form__customInputWrapper__checkbox"
+            >
+              <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_HAS_TOKENS"
+                >Accept Tokens
+              </ng-container>
+              <input
+                type="checkbox"
+                id="channels-v2-shop-memberships-edit-has-tokens"
+                class="form-control"
+                [ngModel]="service.hasTokens$ | async"
+                (ngModelChange)="service.hasTokens$.next($event)"
+                [readonly]="service.inProgress$ | async"
+                [disabled]="service.isEditing$ | async"
+              />
+              <span class="m-form__customInput__checkbox"></span>
+            </label>
+            <m-tooltip>
+              <span m-tooltip--anchor>𝒊</span>
+              <ng-container
+                i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_HAS_TOKENS_TOOLTIP"
+              >
+                Allow users to purchase your membership with Minds Tokens. Token
+                amounts are converted at a rate of ${{
+                  tokenExchangeRate
+                }}/token.
+              </ng-container>
+            </m-tooltip>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label
+            for="channels-v2-shop-memberships-edit-description"
+            i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_DESCRIPTION"
+            >Tier Benefits</label
+          >
+          <m-tooltip
+            ><span m-tooltip--anchor>𝒊</span>
+            <ng-container
+              >Add a short description of what your supporters will get for
+              joining this tier.</ng-container
+            >
+          </m-tooltip>
+        </div>
+        <div class="m-form__row--input">
+          <textarea
+            id="channels-v2-shop-memberships-edit-description"
+            class="form-control"
+            [ngModel]="service.description$ | async"
+            [readonly]="service.inProgress$ | async"
+            (ngModelChange)="service.description$.next($event)"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__buttonsContainer">
+      <m-shadowboxSubmitButton
+        [disabled]="!(service.canSave$ | async)"
+        [saving]="service.inProgress$ | async"
+        (click)="save()"
+        i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_SAVE"
+      >
+        Save Tier
+      </m-shadowboxSubmitButton>
+    </div>
+  </div>
+</div>

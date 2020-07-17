@@ -33,7 +33,7 @@
   >
     <li class="m-discoveryTrends__trend" *ngFor="let tag of tags$ | async">
       <a
-        routerLink="/discovery/search"
+        [routerLink]="parentPath + '/search'"
         [queryParams]="{ q: '#' + tag.value, f: 'top' }"
       >
         <div>
@@ -48,7 +48,7 @@
       class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
       *ngIf="(tags$ | async).length"
     >
-      <a routerLink="/discovery/feeds/preferred"
+      <a [routerLink]="parentPath + '/feeds/preferred'"
         ><div>
           <h4 i18n="@@DISCOVERY_TAGS__SEE_YOUR_FEED">See your feed</h4>
         </div>
@@ -67,7 +67,7 @@
   <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
     <li class="m-discoveryTrends__trend" *ngFor="let tag of trending$ | async">
       <a
-        routerLink="/discovery/search"
+        [routerLink]="parentPath + '/search'"
         [queryParams]="{ q: '#' + tag.value, f: 'top' }"
       >
         <div>
@@ -86,7 +86,7 @@
       class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
       *ngIf="(trending$ | async).length"
     >
-      <a routerLink="/discovery/feeds/trending"
+      <a [routerLink]="parentPath + '/feeds/trending'"
         ><div>
           <h4 i18n="@@DISCOVERY_TAGS__SEE_TRENDING_FEED">See trending feed</h4>
         </div>

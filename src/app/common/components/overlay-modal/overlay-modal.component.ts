@@ -7,11 +7,15 @@ import {
   HostBinding,
   Injector,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   moduleId: module.id,
@@ -29,12 +33,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class OverlayModalComponent implements AfterViewInit {
+export class OverlayModalComponent implements AfterViewInit, OnDestroy {
   hidden: boolean = true;
   class: string = '';
   wrapperClass: string = '';
   root: HTMLElement;
   isMediaModal: boolean = false;
+  stackable: boolean = false;
+
+  private routerSubscription: Subscription;
 
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
@@ -47,7 +54,8 @@ export class OverlayModalComponent implements AfterViewInit {
 
   constructor(
     private service: OverlayModalService,
-    private _componentFactoryResolver: ComponentFactoryResolver
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -55,21 +63,39 @@ export class OverlayModalComponent implements AfterViewInit {
       this.root = document.body;
     }
 
+    /**
+     * Connect this component with its corresponding service instance
+     */
     this.service.setContainer(this);
+
+    /**
+     * Close the modal on reroute
+     */
+    this.routerSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(data => {
+        this.dismiss();
+      });
   }
 
   create(componentClass, opts?, injector?: Injector) {
+    /**
+     * Remove possible existing modal component refs, etc. before creating a new one
+     */
     this.dismiss();
 
     opts = {
       class: '',
       wrapperClass: '',
       inputValues: {},
+      stackable: false,
       ...opts,
     };
 
     this.class = opts.class;
     this.wrapperClass = opts.wrapperClass || '';
+
+    this.stackable = opts.stackable;
 
     this.isMediaModal =
       this.class.indexOf('m-overlayModal--media') > -1 ? true : false;
@@ -146,10 +172,14 @@ export class OverlayModalComponent implements AfterViewInit {
     }
   }
 
+  clickToDismiss($event) {
+    $event.stopPropagation();
+    this.dismiss();
+  }
+
   dismiss(data?: any) {
     this.hidden = true;
-
-    if (this.root) {
+    if (this.root && !this.stackable) {
       this.root.classList.remove('m-overlay-modal--shown');
       document.body.classList.remove('m-overlay-modal--shown--no-scroll');
     }
@@ -170,5 +200,11 @@ export class OverlayModalComponent implements AfterViewInit {
 
   @HostBinding('class') get wrapperComponentCssClass() {
     return this.wrapperClass || '';
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

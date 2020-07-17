@@ -28,7 +28,7 @@ export class HomepageV2Component implements OnInit {
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
   readonly headline = $localize`:@@HOMEPAGE_V2__TAKE_BACK_CONTROL:Take back control of your social media`;
-  readonly description = $localize`::@@HOMEPAGE__V2__SUBHEADER:A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.`;
+  readonly description = $localize`:@@HOMEPAGE__V2__SUBHEADER:A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.`;
 
   constructor(
     public client: Client,
@@ -53,8 +53,10 @@ export class HomepageV2Component implements OnInit {
       return;
     }
     this.metaService
-      .setTitle(`Minds - ${this.headline}`, false)
-      .setDescription(this.description)
+      .setTitle(`The Leading Alternative Social Network`, true)
+      .setDescription(
+        'An open source, community-owned social network dedicated to privacy, free speech, monetization and decentralization. Break free from big censorship, algorithms and surveillance and join the leading, unbiased alternative.'
+      )
       .setCanonicalUrl('/')
       .setOgUrl('/')
       .setOgImage('/assets/logos/placeholder.jpg');

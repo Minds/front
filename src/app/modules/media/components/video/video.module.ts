@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '../../../../common/common.module';
 import { MindsVideoPlayerComponent } from '../video-player/player.component';
 import { PlyrModule } from 'ngx-plyr';
-import { VideoAutoplayService } from './services/video-autoplay.service';
+// import { VideoAutoplayService } from './services/video-autoplay.service';
+import { ScrollAwareVideoPlayerComponent } from '../video-player/scrollaware-player.component';
 
 @NgModule({
   imports: [
@@ -16,8 +17,8 @@ import { VideoAutoplayService } from './services/video-autoplay.service';
     RouterModule.forChild([]),
     PlyrModule,
   ],
-  declarations: [MindsVideoPlayerComponent],
-  exports: [MindsVideoPlayerComponent],
-  providers: [VideoAutoplayService],
+  declarations: [MindsVideoPlayerComponent, ScrollAwareVideoPlayerComponent],
+  exports: [MindsVideoPlayerComponent, ScrollAwareVideoPlayerComponent],
+  // providers: [VideoAutoplayService],
 })
 export class VideoModule {}

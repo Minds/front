@@ -51,7 +51,6 @@
           [displayOptions]="{
             showOnlyCommentsInput: true
           }"
-          [allowAutoplayOnScroll]="true"
           [slot]="i + 1"
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (deleted)="delete($event)"
@@ -80,7 +79,6 @@
             [attr.data-minds-activity-guid]="entity.guid"
             [disableBoosting]="group['membership'] === 0"
             [disableReminding]="group['membership'] === 0"
-            [allowAutoplayOnScroll]="true"
           >
             <!-- Menu Actions -->
 

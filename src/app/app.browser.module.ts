@@ -8,6 +8,10 @@ import {
   RedirectService,
   BrowserRedirectService,
 } from './common/services/redirect.service';
+import {
+  HeadersService,
+  BrowserHeadersService,
+} from './common/services/headers.service';
 
 @NgModule({
   imports: [MindsModule, CookieModule],
@@ -18,6 +22,10 @@ import {
     {
       provide: RedirectService,
       useClass: BrowserRedirectService,
+    },
+    {
+      provide: HeadersService,
+      useClass: BrowserHeadersService,
     },
   ],
 })

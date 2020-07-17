@@ -4,20 +4,22 @@ m-channelShop__brief {
 
 .m-channelShop__brief {
   .m-channelShopBrief__title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    // justify-content: space-between;
     margin: 0 0 20px;
 
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-    }
-
-    .m-channelShopBriefTitle__text {
-      flex: 1;
+    a.m-channelShopBriefTitle__text {
+      cursor: pointer;
+      font-weight: 400;
+      text-decoration: none;
       font-size: 18px;
       line-height: 24px;
+      // flex: 1;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
 
     .m-channelShopBriefTitle__seeAll {

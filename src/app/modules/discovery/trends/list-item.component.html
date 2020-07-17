@@ -1,6 +1,6 @@
 <a
   [routerLink]="
-    trend.guid ? '/discovery/trend/' + trend.guid : '/discovery/search'
+    trend.guid ? parentPath + '/trend/' + trend.guid : parentPath + '/search'
   "
   [queryParams]="{
     q: !trend.guid ? '#' + trend.hashtag : null,
@@ -17,6 +17,11 @@
         }}
       </h4>
       <div class="m-discoveryTrendListItem__supportingText--below">
+        <m-paywallBadge
+          [entity]="trend.entity"
+          [accentColor]="false"
+          [topRightPosition]="false"
+        ></m-paywallBadge>
         <span>{{ trend.volume }} channels discussing</span>
         <span>{{ trend.entity.time_created | friendlytime }}</span>
       </div>

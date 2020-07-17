@@ -1,11 +1,14 @@
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
+import getActivityContentType from '../../../helpers/activity-content-type';
+import { FeaturesService } from '../../../services/features.service';
 
 export type ActivityDisplayOptions = {
+  autoplayVideo: boolean;
   showOwnerBlock: boolean;
   showComments: boolean;
   showOnlyCommentsInput: boolean;
@@ -42,6 +45,8 @@ export type ActivityEntity = {
   url?: string;
   urn?: string;
   boosted_guid?: string;
+  content_type?: string;
+  paywall_unlocked?: boolean;
 };
 
 // Constants of blocks
@@ -120,24 +125,41 @@ export class ActivityService {
   );
 
   /**
-   * We do not render the contents if nsfw (and no consent) or
-   * a paywall is in place
+   * If a paywall is required
+   */
+  shouldShowPaywall$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      if (this.featuresService.has('paywall-2020')) {
+        return (
+          !!entity.paywall &&
+          entity.ownerObj.guid !== this.session.getLoggedInUser().guid
+        );
+      }
+      return !!entity.paywall;
+    })
+  );
+
+  /**
+   * We do not render the contents if nsfw (and no consent)
    */
   shouldShowContent$: Observable<boolean> = combineLatest(
     this.entity$,
     this.shouldShowNsfwConsent$
   ).pipe(
-    map(([entity, shouldShowNsfwContsent]: [ActivityEntity, boolean]) => {
-      return !shouldShowNsfwContsent && !entity.paywall;
+    map(([entity, shouldShowNsfwConsent]: [ActivityEntity, boolean]) => {
+      if (this.featuresService.has('paywall-2020')) {
+        return !shouldShowNsfwConsent;
+      }
+      return !shouldShowNsfwConsent && !entity.paywall;
     })
   );
 
   /**
-   * If a paywall is required
+   * Show the paywall badge both before and after the paywall is unlocked
    */
-  shouldShowPaywall$: Observable<boolean> = this.entity$.pipe(
+  shouldShowPaywallBadge$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      return !!entity.paywall;
+      return !!entity.paywall || entity.paywall_unlocked;
     })
   );
 
@@ -199,6 +221,7 @@ export class ActivityService {
   );
 
   displayOptions: ActivityDisplayOptions = {
+    autoplayVideo: true,
     showOwnerBlock: true,
     showComments: true,
     showOnlyCommentsInput: true,
@@ -211,7 +234,13 @@ export class ActivityService {
     fixedHeightContainer: false,
   };
 
-  constructor(private configs: ConfigsService, private session: Session) {
+  paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
+
+  constructor(
+    private configs: ConfigsService,
+    private session: Session,
+    private featuresService: FeaturesService
+  ) {
     this.siteUrl = configs.get('site_url');
   }
 
@@ -222,6 +251,9 @@ export class ActivityService {
    */
   setEntity(entity): ActivityService {
     if (entity.type !== 'activity') entity = this.patchForeignEntity(entity);
+    if (!entity.content_type) {
+      entity.content_type = getActivityContentType(entity);
+    }
     this.entity$.next(entity);
     return this;
   }

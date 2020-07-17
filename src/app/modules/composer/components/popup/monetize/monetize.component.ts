@@ -21,7 +21,7 @@ interface MonetizationState {
   enabled: boolean;
   type: 'tokens' | 'money';
   amount: number;
-  supportTier: SupportTier;
+  supportTier?: SupportTier;
 }
 
 @Component({
@@ -74,7 +74,7 @@ export class MonetizeComponent implements OnInit {
       enabled: Boolean(monetization),
       type: (monetization && monetization.type) || 'tokens',
       amount: (monetization && monetization.min) || 0,
-      supportTier: (monetization && monetization.support_tier) || null,
+      //supportTier: (monetization && monetization.support_tier) || null,
     };
   }
 
@@ -86,10 +86,15 @@ export class MonetizeComponent implements OnInit {
     this.state.supportTier = supportTier;
 
     if (supportTier) {
-      this.state.type = this.supportTiers.toMonetizationType(
-        supportTier.currency
-      );
-      this.state.amount = supportTier.amount;
+      this.state.type = supportTier.has_usd
+        ? 'money'
+        : supportTier.has_tokens
+        ? 'tokens'
+        : null;
+      this.state.amount =
+        supportTier[
+          supportTier.has_usd ? 'usd' : supportTier.has_tokens ? 'tokens' : null
+        ];
     }
   }
 

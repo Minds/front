@@ -29,19 +29,38 @@
       <span i18n="@@COMMON__TITLE">Title</span>
     </div>
   </div>
+  <m-text-input--autocomplete-container>
+    <textarea
+      class="m-composerTextarea__message"
+      placeholder="Speak your mind..."
+      i18n-placeholder="@@COMPOSER_POPUP__SPEAK_YOUR_MINDS_ELLIPSIS"
+      [id]="inputId"
+      [ngModel]="message$ | async"
+      [disabled]="isPosting$ | async"
+      (ngModelChange)="onMessageChange($event)"
+      (filePaste)="filePaste.emit($event)"
+      m-attachment-paste
+      tabindex="0"
+      data-cy="composer-textarea"
+      mTextInputAutocomplete
+      [triggerCharacters]="['#', '@']"
+      [findChoices]="suggestions.findSuggestions"
+      [getChoiceLabel]="suggestions.getChoiceLabel"
+      [itemTemplate]="itemTemplate"
+      [adjustForScrollOffset]="true"
+      #messageInput
+    >
+    </textarea>
+  </m-text-input--autocomplete-container>
 
-  <textarea
-    class="m-composerTextarea__message"
-    placeholder="Speak your mind..."
-    i18n-placeholder="@@COMPOSER_POPUP__SPEAK_YOUR_MINDS_ELLIPSIS"
-    [id]="inputId"
-    [ngModel]="message$ | async"
-    [disabled]="isPosting$ | async"
-    (ngModelChange)="onMessageChange($event)"
-    (filePaste)="filePaste.emit($event)"
-    m-attachment-paste
-    tabindex="0"
-    data-cy="composer-textarea"
-    #messageInput
-  ></textarea>
+  <ng-template
+    #itemTemplate
+    let-choice="choice"
+    let-selectChoice="selectChoice"
+  >
+    <m-post-autocomplete-item-renderer
+      [choice]="choice"
+      [selectChoice]="selectChoice"
+    ></m-post-autocomplete-item-renderer>
+  </ng-template>
 </div>

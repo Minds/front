@@ -5731,7 +5731,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Bli med i Minds Revolution</target>
+        <target state="translated">Bli med i Minds Revolusjonen</target>
       </trans-unit>
       <trans-unit id="REGISTER__ALREADY__HAVE__ACOUNT__LINK" datatype="html">
         <source>
@@ -9380,7 +9380,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Søk i minutter</target>
+        <target state="translated">Søk i Minds</target>
       </trans-unit>
       <trans-unit id="COMMON__SEARCH__SHORT" datatype="html">
         <source>Search</source>
@@ -14599,7 +14599,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Et sted å ha åpne samtaler og bringe folk sammen. Slipp tankene og få betalt for å skape innhold, drive trafikk og henvise venner.</target>
+        <target state="translated">Et sted å ha åpne samtaler og bringe folk sammen. Slipp tankene fri og få betalt for å skape innhold, drive trafikk og henvise venner.</target>
       </trans-unit>
       <trans-unit id="f2db5016fda75ab3753982d5299d96e0c5f4a7d9" datatype="html">
         <source>Join Minds Now</source>
@@ -20817,7 +20817,7 @@
         </context-group>
         <note priority="1" from="description">CHANNEL_V2__BRIEF_WIRE_REWARD__SHOP</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Butikk</target>
+        <target state="translated">Nettbutikk</target>
       </trans-unit>
       <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__TOKENS_PER_MONTH" datatype="html">
         <source>
@@ -20835,9 +20835,9 @@
         <target state="translated">
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
-           token/måneden} other {
+           token/måned} other {
           <x id="INTERPOLATION"/>
-           symboler/måned} }
+           token/måned} }
         </target>
       </trans-unit>
       <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__USD_PER_MONTH" datatype="html">
@@ -20854,7 +20854,7 @@
         <target state="translated">
           $
           <x id="INTERPOLATION"/>
-          per måned
+           per måned
         </target>
       </trans-unit>
     </body>

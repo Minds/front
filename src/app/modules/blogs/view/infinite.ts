@@ -14,6 +14,7 @@ import {
   MetaService,
   MIN_METRIC_FOR_ROBOTS,
 } from '../../../common/services/meta.service';
+import { HeadersService } from '../../../common/services/headers.service';
 
 @Component({
   selector: 'm-blog-view-infinite',
@@ -41,7 +42,8 @@ export class BlogViewInfinite {
     private cd: ChangeDetectorRef,
     private analytics: AnalyticsService,
     configs: ConfigsService,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private headersService: HeadersService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -104,6 +106,7 @@ export class BlogViewInfinite {
           this.updateMeta(response.blog);
         } else if (this.blogs.length === 0) {
           this.error = "Sorry, we couldn't load the blog";
+          this.headersService.setCode(404);
         }
         //hack: ios rerun on low memory
         this.cd.markForCheck();

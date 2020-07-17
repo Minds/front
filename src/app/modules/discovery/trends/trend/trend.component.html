@@ -4,12 +4,18 @@
   </a>
 </div>
 
-<m-loadingSpinner [inProgress]="!(entity$ | async)"> </m-loadingSpinner>
-
-<div class="m-discoverySearchFeed__item" *ngIf="entity$ | async" @fastFade>
+<div
+  class="m-discoverySearchFeed__item"
+  *ngIf="entity$ | async as entity; else loadingSpinner"
+  @fastFade
+>
   <m-discovery__feedItem
-    [entity]="entity$ | async"
+    *ngIf="entity"
+    [entity]="entity"
     [openComments]="true"
-    [allowAutoplayOnScroll]="true"
   ></m-discovery__feedItem>
 </div>
+
+<ng-template #loadingSpinner>
+  <m-loadingSpinner [inProgress]="true"> </m-loadingSpinner>
+</ng-template>

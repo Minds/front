@@ -43,7 +43,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Discover Groups</target>
+        <target state="translated">Khám phá các nhóm</target>
       </trans-unit>
       <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
         <source>Join some groups to populate this sidebar</source>
@@ -69,7 +69,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Home</target>
+        <target state="translated">Trang chủ</target>
       </trans-unit>
       <trans-unit id="COMMON__NEWSFEED" datatype="html">
         <source>Newsfeed</source>

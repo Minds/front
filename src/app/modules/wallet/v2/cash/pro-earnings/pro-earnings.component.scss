@@ -1,0 +1,67 @@
+.m-walletProEarnings__sectionHeader {
+  margin: 20px 0;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  h3 {
+    display: flex;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    margin: 20px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}
+
+.m-walletProEarnings__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.m-walletProEarningsTable__item {
+  font-size: 16px;
+  height: 40px;
+
+  &.isHeader {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    height: 60px;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  &.m-walletProEarningsTable__item--spacer {
+    height: 20px;
+  }
+
+  > td:not(.m-walletProEarningsTableItem__cell--amount) {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}
+
+.m-walletProEarnings__section--earnings .m-walletProEarnings__sectionHeader {
+  @include m-theme() {
+    border-bottom: 0;
+  }
+}
+
+.m-walletProEarningsTableItem__cell--amount {
+  text-align: right;
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
+.m-walletProEarningsTableItem__cell--label {
+  text-transform: capitalize;
+}

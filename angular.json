@@ -229,5 +229,8 @@
     "@schematics/angular:directive": {
       "prefix": "m"
     }
+  },
+  "cli": {
+    "analytics": "438b67fe-f43a-4a32-9ef0-ab03aef9b245"
   }
 }

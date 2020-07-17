@@ -4,6 +4,7 @@
     m-pageLayout__pane="main"
     style="position: relative;"
   >
+    <m-discovery__plusUpgrade *ngIf="isPlusPage"></m-discovery__plusUpgrade>
     <router-outlet></router-outlet>
 
     <!-- We place an additional disclaimer here for popover -->
@@ -14,11 +15,23 @@
   <div class="m-discovery__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <m-language__sidebarPrompt></m-language__sidebarPrompt>
-        <m-discovery__disclaimer></m-discovery__disclaimer>
+        <m-discovery__sidebarTags *ngIf="isPlusPage"></m-discovery__sidebarTags>
+        <m-language__sidebarPrompt
+          *ngIf="!isPlusPage"
+        ></m-language__sidebarPrompt>
+        <m-discovery__disclaimer *ngIf="!isPlusPage"></m-discovery__disclaimer>
+        <!-- ----------------------------------------- -->
+        <!-- TODO: put this back in <m-suggestions__sidebar> when there are more results -->
+        <!-- [isPlusPage]="isPlusPage" -->
+        <!-- ----------------------------------------- -->
         <m-suggestions__sidebar type="user"></m-suggestions__sidebar>
-        <m-suggestions__sidebar type="group"></m-suggestions__sidebar>
-        <m-discovery__sidebarTags></m-discovery__sidebarTags>
+        <m-suggestions__sidebar
+          *ngIf="!isPlusPage"
+          type="group"
+        ></m-suggestions__sidebar>
+        <m-discovery__sidebarTags
+          *ngIf="!isPlusPage"
+        ></m-discovery__sidebarTags>
       </div>
     </div>
   </div>

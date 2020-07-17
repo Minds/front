@@ -27,6 +27,7 @@ import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-blog-view',
@@ -107,7 +108,8 @@ export class BlogView implements OnInit, OnDestroy {
     private overlayModal: OverlayModalService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.siteUrl = configs.get('site_url');
@@ -156,12 +158,27 @@ export class BlogView implements OnInit, OnDestroy {
     );
   }
 
-  delete() {
-    this.client
-      .delete('api/v1/blog/' + this.blog.guid)
-      .then((response: any) => {
-        this.router.navigate(['/blog/owner']);
-      });
+  /**
+   * Call to delete a blog entity
+   * Redirects on success.
+   */
+  async delete(): Promise<void> {
+    try {
+      const response: any = await this.client.delete(
+        `api/v1/blog/${this.blog.guid}`
+      );
+
+      if (response.status === 'success') {
+        this.toasterService.success('You have successfully deleted your blog.');
+        this.router.navigate([`/${this.blog.ownerObj.guid}`]);
+        return;
+      }
+      throw response; // throw any response except a success.
+    } catch (e) {
+      this.toasterService.error(
+        e.message || 'An unknown error has occurred while deleting your blog.'
+      );
+    }
   }
 
   ngOnDestroy() {
@@ -247,6 +264,9 @@ export class BlogView implements OnInit, OnDestroy {
       .setDescription(description)
       //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
       .setOgUrl(this.blog.perma_url)
-      .setOgImage(this.blog.thumbnail);
+      .setOgImage(this.blog.thumbnail, {
+        width: 2000,
+        height: 1000,
+      });
   }
 }

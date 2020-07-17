@@ -4,7 +4,6 @@
   <ng-container *ngIf="transactions">
     <ng-container *ngFor="let tx of transactions">
       <ng-container *ngIf="tx.displayDate">
-        <tr class="m-walletTransactionsTable__row--spacer"></tr>
         <tr class="m-walletTransactionsTable__row--date">
           <td colspan="4">{{ tx.displayDate }}</td>
         </tr>
@@ -61,7 +60,9 @@
               ><div class="m-walletTransactionsTable__typeWrapper--payout">
                 <i class="material-icons m-walletTransactionsTable__icon--arrow"
                   >arrow_forward</i
-                ><span i18n="@@WALLETV2_TX_TABLE__PAYOUT">Payout</span>
+                ><span i18n="@@WALLETV2_TX_TABLE__PAYOUT"
+                  >Transfer to Bank Account</span
+                >
               </div></ng-template
             >
 
@@ -78,7 +79,10 @@
 
             <!-- WIRES -->
             <ng-template ngSwitchCase="wire">
-              <div class="m-walletTransactionsTable__typeWrapper--wire">
+              <div
+                class="m-walletTransactionsTable__typeWrapper--wire"
+                *ngIf="tx.otherUser"
+              >
                 <img
                   class="m-walletTransactionsTable__avatar"
                   [routerLink]="['/', tx.otherUser.username]"
@@ -147,6 +151,7 @@
           >
         </td>
       </tr>
+      <tr class="m-walletTransactionsTable__row--spacer"></tr>
     </ng-container>
   </ng-container>
 </table>

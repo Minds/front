@@ -11,7 +11,7 @@
     [hidden]="!canEditMetadata"
     [disabled]="!!(attachment$ | async) || (isPosting$ | async)"
     (onSelect)="onAttachmentSelect($event)"
-    accept="image/*,video/*"
+    accept="image/*,video/*,video/mp4,video/x-m4v"
     data-cy="upload-button"
     #fileUploadComponent
   >
@@ -37,6 +37,7 @@
   </a>
 
   <a
+    *ngIf="!legacyPaywallEnabled"
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
@@ -45,11 +46,15 @@
   >
     <m-icon
       class="m-composerToolbarItem__icon"
+      [class.m-animation__shimmer--icon]="showShimmer"
       from="assets-file"
       iconId="assets/icons/wire.svg"
       [sizeFactor]="25"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n="@@COMMON__MONETIZE"
+    <span
+      class="m-composerToolbarItem__label"
+      [class.m-animation__shimmer--text]="showShimmer"
+      i18n="@@COMMON__MONETIZE"
       >Monetize</span
     >
   </a>

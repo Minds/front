@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
-
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { RegexService } from '../../../common/services/regex.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -12,19 +12,25 @@ import { Session } from '../../../services/session';
   templateUrl: 'forgot-password.component.html',
 })
 export class ForgotPasswordComponent {
-  error: string = '';
   inProgress: boolean = false;
   step: number = 1;
   username: string = '';
   code: string = '';
-
   paramsSubscription: Subscription;
+
+  private errorTexts: { [key: string]: string } = {
+    'email-detected': 'Enter your username, not your email.',
+    default:
+      'There was a problem trying to reset your password. Please try again.',
+  };
 
   constructor(
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public session: Session
+    public session: Session,
+    public regex: RegexService,
+    public toaster: FormToastService
   ) {}
 
   ngOnInit() {
@@ -43,30 +49,41 @@ export class ForgotPasswordComponent {
     this.paramsSubscription.unsubscribe();
   }
 
-  request(username) {
-    this.error = '';
+  /**
+   * Request password reset for an email.
+   * @param { { value: string } } username - username object to be checked.
+   */
+  async request(username: { value: string }): Promise<void> {
     this.inProgress = true;
-    this.client
-      .post('api/v1/forgotpassword/request', {
+
+    const regex: RegExp = this.regex.getRegex('mail');
+    regex.lastIndex = 0; // reset state because of global modifier
+
+    if (regex.test(username.value)) {
+      this.inProgress = false;
+      this.toaster.error(this.errorTexts['email-detected']);
+      return;
+    }
+
+    try {
+      await this.client.post('api/v1/forgotpassword/request', {
         username: username.value,
-      })
-      .then((data: any) => {
-        username.value = '';
-
-        this.inProgress = false;
-        this.step = 2;
-      })
-      .catch(e => {
-        this.inProgress = false;
-        if (e.status === 'failed') {
-          this.error =
-            'There was a problem trying to reset your password. Please try again.';
-        }
-
-        if (e.status === 'error') {
-          this.error = e.message;
-        }
       });
+
+      username.value = '';
+
+      this.inProgress = false;
+      this.step = 2;
+    } catch (e) {
+      this.inProgress = false;
+      if (e.status === 'failed') {
+        this.toaster.error(this.errorTexts['default']);
+      }
+
+      if (e.status === 'error') {
+        this.toaster.error(e.message);
+      }
+    }
   }
 
   setCode(code: string) {
@@ -90,7 +107,7 @@ export class ForgotPasswordComponent {
         })
         .catch(e => {
           this.inProgress = false;
-          this.error = e.message;
+          this.toaster.error(e.message);
         });
     }
   }

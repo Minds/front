@@ -50,6 +50,11 @@ export class TextInputAutocompleteDirective implements OnDestroy {
   @Input() itemTemplate: any;
 
   /**
+   * Enables adjustments for scroll offset.
+   */
+  @Input() adjustForScrollOffset: boolean = false;
+
+  /**
    * Called when the options menu is shown
    */
   @Output() menuShown = new EventEmitter();
@@ -109,7 +114,9 @@ export class TextInputAutocompleteDirective implements OnDestroy {
 
   @HostListener('input', ['$event'])
   onChange(event: any) {
-    const value: string = event.target.value || event.target.textContent;
+    const value: string =
+      event.target.value || event.target.innerText || event.target.textContent;
+
     if (this.menu) {
       if (
         this.triggerCharacters.indexOf(
@@ -172,7 +179,8 @@ export class TextInputAutocompleteDirective implements OnDestroy {
       return this.elm.nativeElement.selectionStart;
     } else {
       const coordinates = getContentEditableCaretCoordinates(element);
-      if (coordinates && coordinates.start) {
+
+      if (coordinates && (coordinates.start || coordinates.start === 0)) {
         return coordinates.start;
       }
     }
@@ -197,6 +205,8 @@ export class TextInputAutocompleteDirective implements OnDestroy {
         this.elm.nativeElement
       ).lineHeight!.replace(/px$/, '');
 
+      let scrollOffsetTop = this.getScrollTopOffset(this.elm);
+
       const { top, left } =
         this.elm.nativeElement instanceof HTMLTextAreaElement
           ? <any>(
@@ -208,7 +218,7 @@ export class TextInputAutocompleteDirective implements OnDestroy {
           : getContentEditableCaretCoordinates(this.elm.nativeElement);
       this.menu.component.instance.itemTemplate = this.itemTemplate;
       this.menu.component.instance.position = {
-        top: top + lineHeight,
+        top: top + lineHeight - scrollOffsetTop,
         left,
       };
       this.menu.component.changeDetectorRef.detectChanges();
@@ -289,6 +299,21 @@ export class TextInputAutocompleteDirective implements OnDestroy {
       this.menuHidden.emit();
       this.menu = undefined;
     }
+  }
+
+  /**
+   * Gets scroll offset for element if adjustForScrollOffset
+   * is set. Else will return 0. Will prevent element from
+   * being pushed offscreen from scroll.
+   * @param { ElementRef } - DOM element.
+   * @returns { number } - scrollTop offset.
+   */
+  private getScrollTopOffset(element: ElementRef): number {
+    let scrollOffsetTop: number = 0;
+    if (this.adjustForScrollOffset) {
+      scrollOffsetTop = element.nativeElement.scrollTop;
+    }
+    return scrollOffsetTop;
   }
 
   ngOnDestroy() {

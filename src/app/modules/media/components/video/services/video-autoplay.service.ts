@@ -138,7 +138,7 @@ export class VideoAutoplayService implements OnDestroy {
       }
       if (player && !player.isPlaying()) {
         // .play() and .mute() will get called when plyr emits the 'ready' event
-        player.setAutoplaying(true);
+        // player.setAutoplaying(true);
         this.currentlyPlaying = player;
       }
     }
@@ -150,7 +150,7 @@ export class VideoAutoplayService implements OnDestroy {
    */
   stopPlaying(player: MindsVideoPlayerComponent): void {
     if (!this.userPlaying && player) {
-      player.setAutoplaying(false);
+      // player.setAutoplaying(false);
     }
   }
 

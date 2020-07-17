@@ -1,0 +1,26 @@
+m-composer__monetizeV2__custom {
+  .m-composerPopup__inlineFormFieldsContainer {
+    input[type='number'] {
+      min-width: 200px;
+    }
+  }
+
+  .m-form__field--text {
+    margin-right: 20px;
+    > input {
+      box-shadow: none !important;
+    }
+  }
+
+  .m-formInputCheckbox__customLabel {
+    > span {
+      font-size: 15px !important;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+  .m-composerPopup__checkbox--allowTokens {
+    display: flex;
+  }
+}

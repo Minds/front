@@ -19,19 +19,19 @@
       ></m-activity__menu>
     </ng-container>
   </m-activity__ownerBlock>
-
   <m-activity__content
     *ngIf="service.shouldShowContent$ | async"
-    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
-    [autoplayVideo]="autoplayVideo"
+    [showPaywall]="service.shouldShowPaywall$ | async"
+    [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
   ></m-activity__content>
-
+  <ng-container *mIfFeature="'!paywall-2020'">
+    <m-activity__paywall
+      [ngClass]="{ isPaywall2020: isPaywall2020 }"
+      *ngIf="service.shouldShowPaywall$ | async"
+    ></m-activity__paywall
+  ></ng-container>
   <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
   </m-activity__nsfwConsent>
-
-  <m-activity__paywall
-    *ngIf="service.shouldShowPaywall$ | async"
-  ></m-activity__paywall>
 
   <m-activity__toolbar
     *ngIf="service.displayOptions.showToolbar"

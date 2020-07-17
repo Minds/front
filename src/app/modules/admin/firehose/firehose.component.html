@@ -12,15 +12,22 @@
         [algorithm]="algorithm"
         [period]="period"
         [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
-        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
+        showPlusFilter="true"
+        (onChange)="
+          setSort(
+            $event.algorithm,
+            $event.period,
+            $event.customType,
+            $event.plus
+          )
+        "
       ></m-sort-selector>
     </div>
-    <minds-activity
+    <m-activity
       *ngIf="entity"
-      [object]="entity"
-      class="mdl-card m-border item"
+      [entity]="entity"
       [attr.data-minds-activity-guid]="entity.guid"
-    ></minds-activity>
+    ></m-activity>
   </div>
   <div
     class="m-firehose__moderatorAction m-firehose__moderatorAction--rightButton mdl-color--white m-border mdl-cell mdl-cell--1-col"

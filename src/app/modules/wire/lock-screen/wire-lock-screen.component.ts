@@ -5,36 +5,90 @@ import {
   EventEmitter,
   Input,
   Output,
+  OnInit,
+  HostBinding,
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { WireModalService } from '../wire-modal.service';
+import getActivityContentType from '../../../helpers/activity-content-type';
+import { FeaturesService } from '../../../services/features.service';
+import { WireEventType } from '../v2/wire-v2.service';
 
+export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
   moduleId: module.id,
   selector: 'm-wire--lock-screen',
   templateUrl: 'wire-lock-screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WireLockScreenComponent {
+export class WireLockScreenComponent implements OnInit {
   @Input() entity: any;
   @Output('entityChange') update: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() preview: any;
+  @Input() mediaHeight: number | null = null;
+  @Input() showLegacyPaywall: boolean = true;
 
+  init: boolean = false;
   showSubmittedInfo: boolean = false;
   inProgress: boolean = false;
+  contentType: string;
+  hasTeaser: boolean = false;
+  tierName: string | null;
+  messageTopOffset: string = '50px';
+  isCustom: boolean = false;
+
+  @HostBinding('class.m-wire--lock-screen-2020')
+  isPaywall2020: boolean = false;
+  readonly plusSupportTierUrn: string;
 
   constructor(
     public session: Session,
     private client: Client,
     private cd: ChangeDetectorRef,
     private wireModal: WireModalService,
-    private modal: SignupModalService,
-    private configs: ConfigsService
-  ) {}
+    private signupModal: SignupModalService,
+    private configs: ConfigsService,
+    private featuresService: FeaturesService
+  ) {
+    this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
+  }
+
+  ngOnInit() {
+    if (!this.entity) {
+      return;
+    }
+    this.contentType = getActivityContentType(this.entity);
+    if (this.contentType === 'video' || this.contentType === 'rich-embed') {
+      this.hasTeaser = true;
+    }
+
+    if (this.featuresService.has('paywall-2020') && !this.showLegacyPaywall) {
+      this.isPaywall2020 = true;
+
+      if (this.mediaHeight) {
+        if (this.mediaHeight === 0) {
+          this.mediaHeight = 410;
+        }
+        this.messageTopOffset = `${this.mediaHeight / 2}px`;
+      }
+
+      if (
+        this.entity.wire_threshold &&
+        this.entity.wire_threshold.support_tier &&
+        !this.entity.wire_threshold.support_tier.public
+      ) {
+        this.isCustom = true;
+      }
+
+      this.init = true;
+    }
+
+    this.detectChanges();
+  }
 
   unlock() {
     if (this.preview) {
@@ -42,10 +96,12 @@ export class WireLockScreenComponent {
     }
 
     if (!this.session.isLoggedIn()) {
-      this.modal.open();
+      this.signupModal.open();
 
       return;
     }
+
+    if (this.inProgress) return;
 
     this.showSubmittedInfo = false;
     this.inProgress = true;
@@ -69,7 +125,12 @@ export class WireLockScreenComponent {
       .catch(e => {
         this.inProgress = false;
         this.detectChanges();
-        console.error('got error: ', e);
+
+        if (e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid') {
+          this.showWire();
+        } else {
+          console.error('got error: ', e);
+        }
       });
   }
 
@@ -82,9 +143,11 @@ export class WireLockScreenComponent {
       .present(this.entity, {
         default: this.entity.wire_threshold,
       })
-      .toPromise();
-
-    this.wireSubmitted();
+      .subscribe(payEvent => {
+        if (payEvent.type === WireEventType.Completed) {
+          this.wireSubmitted();
+        }
+      });
   }
 
   wireSubmitted() {
@@ -96,6 +159,9 @@ export class WireLockScreenComponent {
     return this.entity.ownerObj.guid === this.session.getLoggedInUser().guid;
   }
 
+  /**
+   * legacy (not paywall-2020)
+   */
   getBackground() {
     if (!this.entity) {
       return;
@@ -122,6 +188,12 @@ export class WireLockScreenComponent {
       this.entity.ownerObj.merchant.exclusive.background;
 
     return `url(${image})`;
+  }
+
+  get isPlus(): boolean {
+    return (
+      this.entity.wire_threshold.support_tier.urn === this.plusSupportTierUrn
+    );
   }
 
   private detectChanges() {

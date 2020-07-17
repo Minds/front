@@ -156,6 +156,9 @@ export class WalletV2Service {
             this.wallet.onchain.balance = toFriendlyCryptoVal(address.balance);
             this.wallet.receiver.balance = toFriendlyCryptoVal(address.balance);
             this.wallet.receiver.address = address.address;
+            this.wallet.eth.balance = toFriendlyCryptoVal(
+              address.ether_balance
+            );
           }
         });
         this.wallet.loaded = true;

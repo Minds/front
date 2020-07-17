@@ -53,6 +53,7 @@ export class CaptchaComponent implements ControlValueAccessor, OnInit {
 
     this.captcha.base64Image = response.base64_image;
     this.captcha.jwtToken = response.jwt_token;
+    this.onValueChange('');
   }
 
   onValueChange(value: string) {

@@ -1157,7 +1157,7 @@
           <context context-type="linenumber">350</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Promovido</target>
+        <target state="translated">Boost</target>
       </trans-unit>
       <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html">
         <source>Boosted Onchain</source>
@@ -5648,7 +5648,7 @@
           <context context-type="linenumber">133</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Únete a la mente ahora</target>
+        <target state="translated">Únete a Minds ahora</target>
       </trans-unit>
       <trans-unit id="FORMS__LOGIN__FORGOT_PASSWORD_LINK" datatype="html">
         <source>Forgot Password?</source>
@@ -5846,7 +5846,7 @@
           <context context-type="linenumber">205</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Únete a la mente ahora</target>
+        <target state="translated">Únete a Minds ahora</target>
       </trans-unit>
       <trans-unit id="FORMS__FB_REGISTER__USERNAME_LABEL" datatype="html">
         <source>Pick a username</source>
@@ -14600,7 +14600,7 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Únete a la mente ahora</target>
+        <target state="translated">Únete a Minds ahora</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE_V2__HOW_DOES_IT_WORK" datatype="html">
         <source>How does it work?</source>
@@ -14684,7 +14684,7 @@
           <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Únete a la mente ahora</target>
+        <target state="translated">Únete a Minds ahora</target>
       </trans-unit>
       <trans-unit id="ONBOARDING_NOTICE__WELCOME" datatype="html">
         <source>Welcome</source>

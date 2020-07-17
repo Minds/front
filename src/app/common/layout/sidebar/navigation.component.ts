@@ -21,6 +21,8 @@ import { ConfigsService } from '../../services/configs.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -50,6 +52,9 @@ export class SidebarNavigationComponent
   hidden: boolean = false;
 
   groupSelectedSubscription: Subscription = null;
+  plusPageActive: boolean = false;
+
+  routerSubscription: Subscription;
 
   constructor(
     public navigation: NavigationService,
@@ -58,12 +63,27 @@ export class SidebarNavigationComponent
     protected configs: ConfigsService,
     private _componentFactoryResolver: ComponentFactoryResolver,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
     this.service.setContainer(this);
     this.getUser();
+
+    /**
+     * Temporarily disable routerLinkActive class for the 'discovery' item so only 'discovery/plus' is highlighted
+     * */
+    this.routerSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((event: Event) => {
+        if (event['url'].slice(0, 15) === '/discovery/plus') {
+          this.plusPageActive = true;
+        } else {
+          this.plusPageActive = false;
+        }
+      });
   }
 
   ngOnInit() {

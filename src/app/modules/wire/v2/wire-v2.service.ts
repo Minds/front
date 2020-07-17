@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
 import { Wallet, WalletV2Service } from '../../wallet/v2/wallet-v2.service';
@@ -65,6 +65,20 @@ export interface WireUpgradePricingOptions {
   monthly: number;
   yearly: number;
 }
+
+export interface WireCurrencyOptions {
+  tokens: boolean;
+  usd: boolean;
+  eth: boolean;
+  btc: boolean;
+}
+
+const DEFAULT_CURRENCY_OPTIONS_VALUE: WireCurrencyOptions = {
+  tokens: true,
+  usd: false,
+  eth: false,
+  btc: false,
+};
 
 /**
  * Wire types
@@ -296,6 +310,10 @@ export class WireV2Service implements OnDestroy {
     false
   );
 
+  protected readonly currencyOptions$: BehaviorSubject<
+    WireCurrencyOptions
+  > = new BehaviorSubject<WireCurrencyOptions>(DEFAULT_CURRENCY_OPTIONS_VALUE);
+
   /**
    * Validate data observable
    */
@@ -326,6 +344,9 @@ export class WireV2Service implements OnDestroy {
    */
   readonly upgrades: any;
 
+  isPlus: boolean;
+  isPro: boolean;
+
   /**
    * Constructor. Initializes data payload observable subscription.
    * @param wallet
@@ -353,7 +374,18 @@ export class WireV2Service implements OnDestroy {
       this.tokenType$,
       this.amount$,
       this.recurring$,
-      this.owner$,
+      this.owner$.pipe(
+        distinctUntilChanged(),
+        tap(owner => {
+          // Reset the currency options when the owner obj changes
+          this.currencyOptions$.next({
+            tokens: true,
+            usd: owner && owner.merchant && owner.merchant.id,
+            eth: owner && !!owner.eth_wallet,
+            btc: owner && !!owner.btc_address,
+          });
+        })
+      ),
       this.usdPaymentMethodId$,
       this.wallet.wallet$,
     ]).pipe(
@@ -455,6 +487,14 @@ export class WireV2Service implements OnDestroy {
 
     // Sync balances
     this.wallet.getTokenAccounts();
+
+    this.getIsPlus().then(isPlus => {
+      this.isPlus = isPlus;
+    });
+
+    this.getIsPlus().then(isPro => {
+      this.isPro = isPro;
+    });
   }
 
   /**
@@ -677,10 +717,10 @@ export class WireV2Service implements OnDestroy {
     }
 
     if (this.isUpgrade$.value) {
-      if (this.upgradeType$.value === 'pro' && this.proService.isActive()) {
+      if (this.upgradeType$.value === 'pro' && this.isPro) {
         return invalid('You are already a Pro member', true);
       }
-      if (this.upgradeType$.value === 'plus' && this.plusService.isActive()) {
+      if (this.upgradeType$.value === 'plus' && this.isPlus) {
         return invalid('You are already a Minds+ member', true);
       }
     }
@@ -820,5 +860,19 @@ export class WireV2Service implements OnDestroy {
       // Re-throw
       throw e;
     }
+  }
+
+  /**
+   * Checks user's plus status
+   */
+  async getIsPlus(): Promise<boolean> {
+    return await this.plusService.isActive();
+  }
+
+  /**
+   * Checks user's plus status
+   */
+  async getIsPro(): Promise<boolean> {
+    return await this.proService.isActive();
   }
 }

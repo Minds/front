@@ -26,6 +26,7 @@ import { BlogModule } from '../blogs/blog.module';
 import { GroupsModule } from '../groups/groups.module';
 import { FormsModule } from '@angular/forms';
 import { CommentsModule } from '../comments/comments.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const routes: Routes = [
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
     BlogModule,
     GroupsModule,
     CommentsModule,
+    ActivityModule,
   ],
   declarations: [
     AdminComponent,

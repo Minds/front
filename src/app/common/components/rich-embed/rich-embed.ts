@@ -14,6 +14,7 @@ import { MediaProxyService } from '../../../common/services/media-proxy.service'
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -33,9 +34,11 @@ export class MindsRichEmbed {
   modalRequestSubscribed: boolean = false;
   @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
   private lastInlineEmbedParsed: string;
+  public isPaywalled: boolean = false;
 
   constructor(
     private sanitizer: DomSanitizer,
+    private session: Session,
     private service: RichEmbedService,
     private cd: ChangeDetectorRef,
     protected featureService: FeaturesService,
@@ -54,6 +57,17 @@ export class MindsRichEmbed {
 
     if (this.src.thumbnail_src) {
       this.src.thumbnail_src = this.mediaProxy.proxy(this.src.thumbnail_src);
+    }
+
+    const isOwner =
+      this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
+
+    if (
+      this.src.paywall &&
+      !isOwner &&
+      this.featureService.has('paywall-2020')
+    ) {
+      this.isPaywalled = true;
     }
 
     this.init();

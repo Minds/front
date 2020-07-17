@@ -65,7 +65,10 @@ export class SettingsV2ProCancelComponent implements OnInit, OnDestroy {
     this.error = null;
     try {
       await this.proService.disable();
-      this.router.navigate(['/', this.session.getLoggedInUser().name]);
+      this.toasterService.success(
+        'You have successfully canceled your Minds Pro subscription.'
+      );
+      this.router.navigate(['/', this.session.getLoggedInUser().username]);
     } catch (e) {
       this.error = e.message;
       this.toasterService.error('Error: ' + this.error);

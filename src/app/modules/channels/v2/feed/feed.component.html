@@ -22,7 +22,6 @@
         *ngFor="let entity of feed.service.feed | async; let i = index"
         [entity]="entity | async"
         [slot]="i + 1"
-        [allowAutoplayOnScroll]="true"
         (deleted)="feed.onDelete($event)"
       ></m-newsfeed__entity>
 
@@ -37,17 +36,15 @@
 
   <div class="m-channelFeed__sidebar" m-pageLayout__pane="right">
     <div class="m-pageLayoutPane__inner">
-      <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <m-channelAbout__brief></m-channelAbout__brief>
-        <ng-container *mIfBrowser>
-          <m-channelShop__brief
-            *mIfFeature="'support-tiers'; else wireRewardsBrief"
-          ></m-channelShop__brief>
-          <ng-template #wireRewardsBrief>
-            <m-channelShop__briefWireRewards></m-channelShop__briefWireRewards>
-          </ng-template>
-        </ng-container>
-      </div>
+      <m-channelAbout__brief></m-channelAbout__brief>
+      <ng-container *mIfBrowser>
+        <m-channelShop__brief
+          *mIfFeature="'support-tiers'; else wireRewardsBrief"
+        ></m-channelShop__brief>
+        <ng-template #wireRewardsBrief>
+          <m-channelShop__briefWireRewards></m-channelShop__briefWireRewards>
+        </ng-template>
+      </ng-container>
     </div>
   </div>
 </div>

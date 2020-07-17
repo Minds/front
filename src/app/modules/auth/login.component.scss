@@ -151,6 +151,7 @@ m-login {
 
       form {
         background: transparent !important;
+        overflow: visible;
 
         .mdl-card__supporting-text {
           overflow: visible;
@@ -172,7 +173,7 @@ m-login {
           &:active,
           &:focus {
             @include m-theme() {
-              outline: 1px solid themed($m-blue);
+              border: 1px solid themed($m-blue);
             }
           }
         }
@@ -187,6 +188,24 @@ m-login {
             button.mf-button {
               width: 132px;
               height: 60px;
+            }
+          }
+        }
+
+        m-shadowboxSubmitButton {
+          min-width: 0 !important;
+          button {
+            width: 132px;
+            height: 60px;
+            border-radius: 2px;
+            > div {
+              font-size: 18px;
+              @include m-theme() {
+                color: themed($m-white) !important;
+              }
+              @media screen and (max-width: $max-mobile) {
+                font-size: 15px;
+              }
             }
           }
         }

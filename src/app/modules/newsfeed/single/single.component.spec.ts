@@ -30,6 +30,7 @@ import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { SocialIcons } from '../../legacy/components/social-icons/social-icons';
 import { ActivityComponent } from '../activity/activity.component';
+import { HeadersService } from '../../../common/services/headers.service';
 
 @Component({
   selector: 'minds-activity',
@@ -41,7 +42,6 @@ class MindsActivityMock {
   @Input() commentsToggle: boolean;
   @Input() showRatingToggle: boolean;
   @Input() editing: boolean;
-  @Input() allowAutoplayOnScroll: boolean;
   @Input() autoplayVideo: boolean;
 }
 
@@ -65,12 +65,7 @@ describe('NewsfeedSingleComponent', () => {
         }),
         MockComponent({
           selector: 'm-activity',
-          inputs: [
-            'entity',
-            'displayOptions',
-            'allowAutoplayOnScroll',
-            'autoplayVideo',
-          ],
+          inputs: ['entity', 'displayOptions', 'autoplayVideo'],
         }),
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -93,6 +88,7 @@ describe('NewsfeedSingleComponent', () => {
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: HeadersService, useValue: MockService(HeadersService) },
       ],
     }).compileComponents();
   }));

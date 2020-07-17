@@ -29,6 +29,7 @@
       flex: 1;
     }
   }
+
   h4 {
     padding: 0;
     margin: 0;
@@ -44,6 +45,9 @@
   }
   .m-discoveryTrendListItem__supportingText--below {
     margin-top: $minds-margin;
+  }
+  m-paywallBadge .m-paywallBadge {
+    margin-right: 10px;
   }
   span {
     margin-right: 4px;
