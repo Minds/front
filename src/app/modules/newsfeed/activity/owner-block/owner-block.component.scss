@@ -54,6 +54,12 @@ m-activity__ownerBlock {
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
+  &:hover {
+    .m-activityOwnerBlock__remindIcon {
+      text-decoration: none;
+    }
+  }
 }
 
 .m-activityOwnerBlock__groupName {
