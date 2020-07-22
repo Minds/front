@@ -114,6 +114,15 @@ m-activity__content {
     padding-top: 56.25%;
     height: 0;
   }
+  &.isPaywall {
+    .m-videoPlayer__placeholder {
+      .minds-video-play-icon {
+        @media screen and (max-width: $max-mobile) {
+          font-size: 70px;
+        }
+      }
+    }
+  }
 }
 
 .m-activityContent__media--image {
