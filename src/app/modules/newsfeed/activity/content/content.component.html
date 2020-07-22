@@ -56,7 +56,12 @@
 <!-- ----------------------------------- -->
 <!-- VIDEO -->
 <!-- ----------------------------------- -->
-<div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
+<div
+  class="m-activityContent__media--video"
+  #mediaEl
+  *ngIf="isVideo"
+  [ngClass]="{ isPaywall: service.shouldShowPaywall$ | async }"
+>
   <div class="m-activityContent__fixedHeightSpacer"></div>
 
   <m-videoPlayer--scrollaware

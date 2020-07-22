@@ -63,6 +63,10 @@ m-wire--lock-screen.m-wire--lock-screen-2020 {
 
   .isVideo .m-wireLockScreen__inner {
     padding-top: 80px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-top: 60px;
+    }
   }
 
   .m-wireLockScreen__message {
