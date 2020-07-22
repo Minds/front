@@ -58,6 +58,7 @@ import { SettingsV2ReferralsComponent } from './other/referrals/referrals.compon
 import { LanguageModule } from '../language/language.module';
 import { SettingsV2I18nHack } from './settings-i18n-hack.component';
 import { SettingsV2HeaderComponent } from './settings-header.component';
+import { SettingsV2MessengerComponent } from './account/messenger/messenger.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -126,6 +127,15 @@ const SETTINGS_V2_ROUTES: Routes = [
               description:
                 'Control how NSFW content is displayed in your newsfeed.',
               id: 'nsfw-content',
+            },
+          },
+          {
+            path: 'messenger',
+            component: SettingsV2MessengerComponent,
+            data: {
+              title: 'Messenger',
+              description: 'Configure messenger settings.',
+              id: 'messenger',
             },
           },
           {
@@ -478,6 +488,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2AutoplayVideosComponent,
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
+    SettingsV2MessengerComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],

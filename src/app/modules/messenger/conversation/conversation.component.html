@@ -177,6 +177,15 @@
       </div>
       <div
         class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        *ngIf="!allowContact"
+      >
+        <span i18n="@@MESSENGER__CONVERSATION__MESSAGE_SUBSCRIBED_USER_ONLY"
+          >This user only allows messages from users that they subscribe
+          to</span
+        >
+      </div>
+      <div
+        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
         *ngIf="!blocked && unavailable"
       >
         <span i18n="@@MESSENGER__CONVERSATION__THIS_CHAT_IS_NO_LONGER_AVAILABLE"
@@ -227,6 +236,7 @@
         !unavailable &&
         !invalid &&
         !invitable &&
+        allowContact &&
         conversation.open &&
         encryption.isOn()
       "

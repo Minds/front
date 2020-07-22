@@ -68,6 +68,8 @@ export class MessengerConversation implements OnInit, OnDestroy {
 
   ribbonOpened: boolean = false;
 
+  allowContact = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -119,6 +121,9 @@ export class MessengerConversation implements OnInit, OnDestroy {
       .get('api/v2/messenger/conversations/' + this.conversation.guid, opts)
       .then((response: any) => {
         this.inProgress = false;
+
+        this.setAllowContact(response.participants);
+
         if (!response.messages) {
           return false;
         }
@@ -410,5 +415,25 @@ export class MessengerConversation implements OnInit, OnDestroy {
       this.ribbonOpened = false;
     }
     this.dockpanes.toggle(this.conversation);
+  }
+
+  /**
+   * Sets the global canContact to true if any single other participant in the conversation
+   * is a subscriber, explicitly allows contact from other users in their settings
+   * or if the conversation already has messages.
+   *
+   * @param { any[] } participants - Array of participants.
+   * @returns void
+   */
+  setAllowContact(participants: any[]): void {
+    participants.map((participant: any) => {
+      const allowed =
+        this.messages.length > 0 ||
+        participant.subscriber ||
+        participant.allow_unsubscribed_contact;
+      if (allowed) {
+        this.allowContact = allowed;
+      }
+    });
   }
 }
