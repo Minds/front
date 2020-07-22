@@ -17,6 +17,7 @@ export interface StripeDetails {
   bankAccount?: any;
   totalBalance?: any;
   pendingBalance?: { amount: number };
+  totalPaidOut?: { amount: number };
   pendingBalanceSplit: SplitBalance;
   totalPaidOutSplit: SplitBalance;
   hasAccount: boolean;
@@ -253,7 +254,7 @@ export class WalletV2Service {
           account.pendingBalance.amount / 100
         );
         this.stripeDetails.totalPaidOutSplit = this.splitBalance(
-          (account.totalBalance.amount - account.pendingBalance.amount) / 100
+          account.totalPaidOut.amount / 100
         );
       } else {
         this.wallet.cash.balance = 0;
