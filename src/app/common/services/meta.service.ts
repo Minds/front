@@ -100,6 +100,35 @@ export class MetaService {
     return this;
   }
 
+  /**
+   * Used for pro domains
+   */
+  setDynamicFavicon(href: string): MetaService {
+    const existingLink = this.dom.head.querySelector('#dynamicFavicon');
+
+    if (existingLink) {
+      existingLink.setAttribute('href', href);
+    } else {
+      let link: HTMLLinkElement;
+      link = this.dom.createElement('link');
+      link.setAttribute('rel', 'icon');
+      link.setAttribute('type', 'image/png');
+      link.setAttribute('href', href);
+      link.setAttribute('id', 'dynamicFavicon');
+      this.dom.head.appendChild(link);
+    }
+    return this;
+  }
+
+  resetDynamicFavicon(): MetaService {
+    const link = this.dom.head.querySelector('#dynamicFavicon');
+
+    if (link) {
+      this.dom.head.removeChild(link);
+    }
+    return this;
+  }
+
   setOgUrl(value: string): MetaService {
     if (value && value.indexOf('/') === 0) {
       // Relative path
@@ -181,7 +210,8 @@ export class MetaService {
       .setOgImage(data.ogImage || null, { width: 0, height: 0 })
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
-      .setNsfw(false);
+      .setNsfw(false)
+      .resetDynamicFavicon();
   }
 
   private applyTitle(): void {
