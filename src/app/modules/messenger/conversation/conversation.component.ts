@@ -122,9 +122,8 @@ export class MessengerConversation implements OnInit, OnDestroy {
       .then((response: any) => {
         this.inProgress = false;
 
-        this.setAllowContact(response.participants);
-
         if (!response.messages) {
+          this.setAllowContact(response.participants);
           return false;
         }
 
@@ -146,6 +145,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
         } else {
           this.messages = response.messages;
           this.offset = response['load-previous'];
+          this.setAllowContact(response.participants);
           this.scrollEmitter.next(true);
         }
 
