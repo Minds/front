@@ -58,7 +58,6 @@ import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
 import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
-import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
@@ -137,7 +136,6 @@ export class SentryErrorHandler implements ErrorHandler {
     HelpdeskModule,
     MobileModule,
     IssuesModule,
-    CanaryModule,
     ChannelsModule,
     UpgradesModule,
     SharedModule,
