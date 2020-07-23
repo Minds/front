@@ -54,7 +54,6 @@ import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
-import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
@@ -70,7 +69,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
-import { YoutubeMigrationModule } from './modules/media/youtube-migration/youtube-migration.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -130,12 +128,10 @@ export class SentryErrorHandler implements ErrorHandler {
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,
-    HelpdeskModule,
     IssuesModule,
     ChannelsModule,
     UpgradesModule,
     SharedModule,
-    YoutubeMigrationModule,
 
     //last due to :username route
     AppRoutingModule,
