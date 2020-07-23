@@ -21,13 +21,7 @@ m-paywallBadge {
       right: 24px;
       display: flex;
     }
-    &.isPlus {
-      &.accentColor {
-        @include m-theme() {
-          background-color: themed($m-alert);
-        }
-      }
-    }
+
     &.isCustom {
       padding: 4px 4px;
       i {

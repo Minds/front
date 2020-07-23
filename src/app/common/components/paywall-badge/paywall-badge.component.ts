@@ -10,11 +10,6 @@ export class PaywallBadgeComponent implements OnInit {
   @Input() entity: any;
 
   /**
-   * Override the red background of the Minds+ badge
-   */
-  @Input() accentColor: boolean = true;
-
-  /**
    * Override the top-right positioning
    */
   @Input() topRightPosition: boolean = true;
