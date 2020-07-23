@@ -218,13 +218,29 @@ export class ActivityContentComponent
       let thumbUrl = this.entity.custom_data[0].src;
 
       /**
-       * Check whether we need to add 'unlock_paywall' query as the only
-       * query param OR append to an existing one
+       * Paywalled image urls might need the 'unlock_paywall'
+       * query param in order to be unblurred
        */
-      const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
-      const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
-      thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
+      if (this.showPaywallBadge) {
+        /**
+         * We don't need to add the 'unlock_paywall' query
+         * if thumbUrl already has it
+         *
+         */
+        const urlParams = new URLSearchParams(thumbUrl);
+        const hasParam = urlParams.get('unlock_paywall');
 
+        if (!hasParam) {
+          /**
+           * Do we add 'unlock_paywall' as the only
+           * query param OR append to an existing one
+           */
+          const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
+          const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
+
+          thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
+        }
+      }
       return thumbUrl;
     }
 
