@@ -56,7 +56,6 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
-import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
@@ -134,7 +133,6 @@ export class SentryErrorHandler implements ErrorHandler {
     CommentsModule,
     JobsMarketingModule,
     HelpdeskModule,
-    MobileModule,
     IssuesModule,
     ChannelsModule,
     UpgradesModule,
