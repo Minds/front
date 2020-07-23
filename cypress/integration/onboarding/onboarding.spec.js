@@ -12,11 +12,14 @@ context('Onboarding', () => {
   const password2Field = 'minds-form-register #password2';
   const checkbox = '[data-cy=minds-accept-tos-input] [type=checkbox]';
   const submitButton = 'minds-form-register .mdl-card__actions button';
+  const letsGetSetupButton = '[data-cy=onboarding-lets-get-setup-button]';
 
   beforeEach(() => {
     cy.server();
     cy.route("POST", "**/api/v1/register").as("register");
     cy.route('POST', '**/api/v2/onboarding/onboarding_shown').as('postOnboarding');
+
+    cy.clearCookies();
 
     cy.visit('/register')
       .location('pathname')
@@ -66,11 +69,11 @@ context('Onboarding', () => {
     cy.get('h1.m-onboarding__noticeTitle').contains('Welcome to the Minds Community');
     cy.get('h2.m-onboarding__noticeTitle').contains(username);
 
+    cy.wait(5000);
+
     // should redirect to /hashtags
-    cy.get('.m-onboarding__form button.mf-button')
-      .contains("Let's Get Setup")
-      .click()
-      .wait('@postOnboarding')
+    cy.get(letsGetSetupButton)
+      .click({force: true});
 
     // should be in the hashtags step
 
