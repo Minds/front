@@ -9,20 +9,20 @@
       [inputId]="textareaId"
       (onCreateBlog)="createBlog()"
     ></m-composer__titleBar>
+    <div class="m-composerBase__scrollableArea">
+      <m-composer__preview></m-composer__preview>
 
-    <m-composer__preview></m-composer__preview>
+      <m-composer__progress
+        [inProgress]="inProgress$ | async"
+        [progress]="progress$ | async"
+      ></m-composer__progress>
 
-    <m-composer__progress
-      [inProgress]="inProgress$ | async"
-      [progress]="progress$ | async"
-    ></m-composer__progress>
-
-    <m-composer__textArea
-      [inputId]="textareaId"
-      (filePaste)="onAttachmentPaste($event)"
-      #textAreaComponent
-    ></m-composer__textArea>
-
+      <m-composer__textArea
+        [inputId]="textareaId"
+        (filePaste)="onAttachmentPaste($event)"
+        #textAreaComponent
+      ></m-composer__textArea>
+    </div>
     <m-composer__toolbar
       (onPost)="onPost($event)"
       [isModal]="isModal"
@@ -38,3 +38,5 @@
 
   <m-composer__popup #popupComponent></m-composer__popup>
 </div>
+
+<ng-template #scrollableArea> </ng-template>
