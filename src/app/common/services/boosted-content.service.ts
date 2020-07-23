@@ -7,10 +7,6 @@ import { EntitiesService } from './entities.service';
 import { BlockListService } from './block-list.service';
 import { SettingsService } from '../../modules/settings/settings.service';
 
-import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
-import browserStorageAdapterFactory from '../../helpers/browser-storage-adapter-factory';
-import BoostedContentSync from '../../lib/minds-sync/services/BoostedContentSync.js';
-
 @Injectable()
 export class BoostedContentService {
   constructor(
