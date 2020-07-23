@@ -36,7 +36,6 @@ import { ModalsModule } from './modules/modals/modals.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { ThirdPartyNetworksModule } from './modules/third-party-networks/third-party-networks.module';
 import { TranslateModule } from './modules/translate/translate.module';
-import { SettingsModule } from './modules/settings/settings.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { NotificationModule } from './modules/notifications/notification.module';
 
@@ -110,7 +109,6 @@ export class SentryErrorHandler implements ErrorHandler {
     ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,
-    SettingsModule,
     ModalsModule,
     PaymentsModule,
     MindsFormsModule,
