@@ -117,7 +117,11 @@ export class WireLockScreenComponent implements OnInit {
           this.update.next(response.entity);
           this.detectChanges();
         } else {
-          this.showWire();
+          if (this.isPlus) {
+            this.showUpgradeModal();
+          } else {
+            this.showWire();
+          }
         }
         this.inProgress = false;
         this.detectChanges();
@@ -148,6 +152,20 @@ export class WireLockScreenComponent implements OnInit {
           this.wireSubmitted();
         }
       });
+  }
+
+  async showUpgradeModal(): Promise<void> {
+    const wireEvent = await this.wireModal
+      .present(this.plusSupportTierUrn, {
+        default: {
+          type: 'money',
+          upgradeType: 'plus',
+        },
+      })
+      .toPromise();
+    if (wireEvent.type === WireEventType.Completed) {
+      this.unlock();
+    }
   }
 
   wireSubmitted() {
