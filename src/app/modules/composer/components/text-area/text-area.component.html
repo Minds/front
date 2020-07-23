@@ -48,6 +48,7 @@
       [getChoiceLabel]="suggestions.getChoiceLabel"
       [itemTemplate]="itemTemplate"
       [adjustForScrollOffset]="true"
+      (input)="resizeMessageHeight()"
       #messageInput
     >
     </textarea>

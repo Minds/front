@@ -36,6 +36,10 @@ m-composer__modal {
       .m-composer__base,
       .m-composer__base.m-composer__base--withPreview {
         height: auto;
+
+        @media screen and (max-width: $max-mobile) {
+          height: inherit;
+        }
       }
     }
   }
