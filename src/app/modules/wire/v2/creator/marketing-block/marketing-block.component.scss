@@ -16,6 +16,14 @@ m-wireCreator__marketingBlock {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
+    &.isPlus {
+      background-image: url('<%=APP_CDN%>/assets/photos/confetti-concert.png');
+    }
+
+    &.isPro {
+      background-image: url('<%=APP_CDN%>/assets/photos/confetti-concert-red.jpg');
+    }
+
     @media screen and (max-width: $max-mobile) {
       height: 250px;
       margin-top: 66px;

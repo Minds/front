@@ -104,11 +104,11 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   }
 
   async openProUpgradeModal(): Promise<void> {
-    const proGuid = await this.wirePaymentHandlers.get('pro');
+    const proEntity = await this.wirePaymentHandlers.get('pro');
     let completed = false;
 
     const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(WireCreatorComponent, proGuid, {
+      .present(WireCreatorComponent, proEntity, {
         wrapperClass: 'm-modalV2__wrapper',
         default: {
           type: 'money',

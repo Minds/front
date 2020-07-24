@@ -344,8 +344,8 @@ export class WireV2Service implements OnDestroy {
    */
   readonly upgrades: any;
 
-  isPlus: boolean;
-  isPro: boolean;
+  userIsPlus: boolean;
+  userIsPro: boolean;
 
   /**
    * Constructor. Initializes data payload observable subscription.
@@ -362,6 +362,10 @@ export class WireV2Service implements OnDestroy {
     configs: ConfigsService
   ) {
     this.upgrades = configs.get('upgrades');
+
+    const user = configs.get('user');
+    this.userIsPlus = user.plus;
+    this.userIsPro = user.pro;
 
     // Combine state
     const wireData$ = combineLatest([
@@ -487,14 +491,6 @@ export class WireV2Service implements OnDestroy {
 
     // Sync balances
     this.wallet.getTokenAccounts();
-
-    this.getIsPlus().then(isPlus => {
-      this.isPlus = isPlus;
-    });
-
-    this.getIsPlus().then(isPro => {
-      this.isPro = isPro;
-    });
   }
 
   /**
@@ -551,7 +547,7 @@ export class WireV2Service implements OnDestroy {
       this.recurring$.next(false);
     }
 
-    this.setUpgradePricingOptions(type, this.upgradeType$.value);
+    this.setUpgradePricingOptions(type, this.upgradeType$.getValue());
 
     return this;
   }
@@ -716,11 +712,11 @@ export class WireV2Service implements OnDestroy {
       return invalid();
     }
 
-    if (this.isUpgrade$.value) {
-      if (this.upgradeType$.value === 'pro' && this.isPro) {
+    if (this.isUpgrade$.getValue()) {
+      if (this.upgradeType$.getValue() === 'pro' && this.userIsPro) {
         return invalid('You are already a Pro member', true);
       }
-      if (this.upgradeType$.value === 'plus' && this.isPlus) {
+      if (this.upgradeType$.getValue() === 'plus' && this.userIsPlus) {
         return invalid('You are already a Minds+ member', true);
       }
     }
@@ -860,19 +856,5 @@ export class WireV2Service implements OnDestroy {
       // Re-throw
       throw e;
     }
-  }
-
-  /**
-   * Checks user's plus status
-   */
-  async getIsPlus(): Promise<boolean> {
-    return await this.plusService.isActive();
-  }
-
-  /**
-   * Checks user's plus status
-   */
-  async getIsPro(): Promise<boolean> {
-    return await this.proService.isActive();
   }
 }
