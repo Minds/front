@@ -88,10 +88,6 @@ export class SettingsV2Component implements OnInit {
             id: 'nsfw-content',
           },
           {
-            label: $localize`:@@SETTINGS__SECURITY__SESSIONS__LABEL:Messenger`,
-            id: 'messenger',
-          },
-          {
             label: $localize`:@@SETTINGS__ACCOUNT__SHAREBUTTONS__LABEL:Share Buttons`,
             id: 'share-buttons',
           },
@@ -348,6 +344,13 @@ export class SettingsV2Component implements OnInit {
         items: [{ label: 'Referrals', id: 'referrals' }],
       };
       this.secondaryMenus.other.splice(0, 0, referralsMenuItem);
+    }
+    if (this.featuresService.has('subscriber-conversations')) {
+      const messengerMenuItem = {
+        label: $localize`Messenger`, // TODO: Add i18n.
+        id: 'messenger',
+      };
+      this.secondaryMenus.account[0].items.splice(5, 0, messengerMenuItem);
     }
 
     this.setProRoutes();

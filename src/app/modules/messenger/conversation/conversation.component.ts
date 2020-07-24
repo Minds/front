@@ -16,6 +16,7 @@ import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-messenger--conversation',
@@ -79,6 +80,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,
+    private features: FeaturesService,
     configs: ConfigsService
   ) {
     this.buildTabId();
@@ -426,6 +428,9 @@ export class MessengerConversation implements OnInit, OnDestroy {
    * @returns void
    */
   setAllowContact(participants: any[]): void {
+    if (!this.features.has('subscriber-conversations')) {
+      this.allowContact = true;
+    }
     participants.map((participant: any) => {
       const allowed =
         this.messages.length > 0 ||
