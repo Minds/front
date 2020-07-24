@@ -26,7 +26,10 @@
   <div class="m-activityContent__messageWrapper">
     <span [innerHtml]="message | tags"></span>
     <m-read-more--button
-      *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
+      *ngIf="
+        !(service.shouldShowPaywall$ | async) || isTextOnly;
+        else teaserFadeout
+      "
       [v2]="true"
     ></m-read-more--button>
   </div>
@@ -56,7 +59,12 @@
 <!-- ----------------------------------- -->
 <!-- VIDEO -->
 <!-- ----------------------------------- -->
-<div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
+<div
+  class="m-activityContent__media--video"
+  #mediaEl
+  *ngIf="isVideo"
+  [ngClass]="{ isPaywall: service.shouldShowPaywall$ | async }"
+>
   <div class="m-activityContent__fixedHeightSpacer"></div>
 
   <m-videoPlayer--scrollaware

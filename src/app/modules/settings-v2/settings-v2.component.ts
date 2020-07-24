@@ -300,7 +300,7 @@ export class SettingsV2Component implements OnInit {
     this.user = this.session.getLoggedInUser().username;
 
     if (this.route.snapshot.url.length === 0) {
-      this.router.navigateByUrl('/settings/canary/account?ref=main', {
+      this.router.navigateByUrl('/settings/account?ref=main', {
         skipLocationChange: true,
       });
     }
@@ -430,7 +430,7 @@ export class SettingsV2Component implements OnInit {
   // brings you back to the top level menu
   secondaryMenuClickedBack(): void {
     this.onMainNav = true;
-    this.router.navigate(['/settings/canary']);
+    this.router.navigate(['/settings']);
   }
 
   // Clicking the back button on a form brings you back

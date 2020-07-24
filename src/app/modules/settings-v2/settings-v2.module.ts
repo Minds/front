@@ -428,6 +428,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
+      { path: 'canary', redirectTo: 'account' },
       { path: '', component: SettingsV2Component },
       {
         path: '**',
@@ -452,7 +453,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     WireModule,
     MindsFormsModule,
     SettingsModule,
-    WalletV2Module,
+    //WalletV2Module,
     ProModule,
     YoutubeMigrationModule,
     ReferralsV2Module,

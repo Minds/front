@@ -13,6 +13,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { AnalyticsService } from '../../../services/analytics';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WireModalService } from '../../wire/wire-modal.service';
+import { MetaService } from '../../../common/services/meta.service';
 
 export type RouterLinkToType =
   | 'home'
@@ -58,7 +59,8 @@ export class ProChannelService implements OnDestroy {
     protected sessionStorage: SessionsStorageService,
     protected router: Router,
     protected site: SiteService,
-    protected analytics: AnalyticsService
+    protected analytics: AnalyticsService,
+    private metaService: MetaService
   ) {
     this.listen();
   }
@@ -92,6 +94,8 @@ export class ProChannelService implements OnDestroy {
       this.onChannelChange.next(this.currentChannel);
 
       this.featuredContent = null;
+
+      this.setFavicon();
 
       return this.currentChannel;
     } catch (e) {
@@ -268,5 +272,14 @@ export class ProChannelService implements OnDestroy {
 
   getMenuNavItems(): Array<NavItems> {
     return this.menuNavItems;
+  }
+
+  setFavicon(): void {
+    if (!this.currentChannel) {
+      return;
+    }
+
+    const href = this.currentChannel.pro_settings.logo_image;
+    this.metaService.setDynamicFavicon(href);
   }
 }
