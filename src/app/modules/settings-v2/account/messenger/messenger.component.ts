@@ -17,7 +17,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { SettingsV2Service } from '../../settings-v2.service';
 
 @Component({
-  selector: 'm-settingsV2__shareButtons',
+  selector: 'm-settingsV2__messenger',
   templateUrl: './messenger.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
