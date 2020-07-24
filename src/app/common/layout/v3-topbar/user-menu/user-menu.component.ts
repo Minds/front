@@ -57,7 +57,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     if (this.featuresService.has('settings-referrals')) {
       const referralsLink = {
         label: 'Referrals',
-        routerLink: ['/settings/canary/other/referrals'],
+        routerLink: ['/settings/other/referrals'],
       };
       this.footerLinks.splice(1, 0, referralsLink);
     }

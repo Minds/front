@@ -38,7 +38,7 @@ describe('SettingsV2Component', () => {
       imports: [
         RouterTestingModule.withRoutes([
           {
-            path: 'settings/canary',
+            path: 'settings',
             children: [
               {
                 path: 'account',
@@ -151,7 +151,7 @@ describe('SettingsV2Component', () => {
 
     component = fixture.componentInstance;
 
-    router.navigateByUrl('/settings/canary/account');
+    router.navigateByUrl('/settings/account');
     fixture.detectChanges();
     fixture.detectChanges();
   });

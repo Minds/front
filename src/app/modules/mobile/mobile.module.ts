@@ -11,7 +11,7 @@ import { Session } from '../../services/session';
 
 const routes: Routes = [
   {
-    path: 'mobile',
+    path: '',
     component: MobileMarketingComponent,
     data: {
       title: 'The Minds Social Network Mobile App',

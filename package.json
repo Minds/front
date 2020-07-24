@@ -49,7 +49,6 @@
     "braintree-web": "3.41.0",
     "cookie-parser": "^1.4.4",
     "core-js": "~2.6.2",
-    "dexie": "^2.0.4",
     "ethjs": "~0.4.0",
     "ethjs-account": "^0.1.4",
     "ethjs-provider-signer": "^0.1.4",
