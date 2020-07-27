@@ -44,6 +44,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
       }),
       headline: new FormControl(''),
+      splash: new FormControl(''),
       published: new FormControl(''),
     });
 
@@ -62,6 +63,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
 
         this.title.setValue(settings.title);
         this.headline.setValue(settings.headline);
+        this.splash.setValue(settings.splash);
         this.published.setValue(settings.published);
         this.detectChanges();
       }
@@ -128,6 +130,10 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
 
   get headline() {
     return this.form.get('headline');
+  }
+
+  get splash() {
+    return this.form.get('splash');
   }
 
   get published() {
