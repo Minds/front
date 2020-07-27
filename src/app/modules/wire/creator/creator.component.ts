@@ -13,7 +13,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
-import { WireService } from '../wire.service';
+import { WireService, PayloadType, WireStruc } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
@@ -21,25 +21,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
 
-export type PayloadType =
-  | 'onchain'
-  | 'offchain'
-  | 'usd'
-  | 'eth'
-  | 'erc20'
-  | 'btc';
-
 export class VisibleWireError extends Error {
   visible: boolean = true;
-}
-
-export interface WireStruc {
-  amount: number | '';
-  payloadType: PayloadType | null;
-  guid: any;
-  recurring: boolean;
-  recurringInterval?: 'once' | 'monthly' | 'yearly' | null;
-  payload: any;
 }
 
 @Component({

@@ -15,6 +15,7 @@ import { SupportTier, SupportTiersService } from '../../support-tiers.service';
   selector: 'm-wireCreator__shop',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'shop.component.html',
+  styleUrls: ['shop.component.ng.scss'],
   providers: [ShopService],
 })
 export class WireCreatorShopComponent {

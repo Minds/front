@@ -1,0 +1,25 @@
+<div class="m-payments__newCardModal m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2
+      class="m-modalV2Header__title"
+      i18n="@@PAYMENTS__ADD__NEW__CARD__MODAL__HEADER"
+    >
+      Add a new card
+    </h2>
+  </div>
+
+  <div class="m-modalV2__body">
+    <m-payments__newCard (completed)="onCardAdded($event)">
+    </m-payments__newCard>
+  </div>
+
+  <div class="m-modalV2__toolbar">
+    <m-shadowboxSubmitButton
+      color="grey"
+      (click)="goBack($event)"
+      i18n="@@COMMON__GO_BACK"
+      >Go back</m-shadowboxSubmitButton
+    >
+    <div class="m-layout__spacer"></div>
+  </div>
+</div>
