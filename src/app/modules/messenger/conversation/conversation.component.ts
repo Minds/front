@@ -433,9 +433,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
     }
     participants.map((participant: any) => {
       const allowed =
-        this.messages.length > 0 ||
-        participant.subscriber ||
-        participant.allow_unsubscribed_contact;
+        participant.subscriber || participant.allow_unsubscribed_contact;
       if (allowed) {
         this.allowContact = allowed;
       }
