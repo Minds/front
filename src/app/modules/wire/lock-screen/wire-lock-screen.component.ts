@@ -141,7 +141,8 @@ export class WireLockScreenComponent implements OnInit {
 
     await this.wireModal
       .present(this.entity, {
-        default: this.entity.wire_threshold,
+        //default: this.entity.wire_threshold,
+        supportTier: this.entity.wire_threshold.support_tier,
       })
       .subscribe(payEvent => {
         if (payEvent.type === WireEventType.Completed) {

@@ -38,7 +38,7 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (!this.featuresService.has('yt-importer')) {
-      this.router.navigate(['settings/canary/other']);
+      this.router.navigate(['settings/other']);
       return;
     }
 

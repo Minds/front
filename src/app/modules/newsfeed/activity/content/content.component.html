@@ -26,7 +26,10 @@
   <div class="m-activityContent__messageWrapper">
     <span [innerHtml]="message | tags"></span>
     <m-read-more--button
-      *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
+      *ngIf="
+        !(service.shouldShowPaywall$ | async) || isTextOnly;
+        else teaserFadeout
+      "
       [v2]="true"
     ></m-read-more--button>
   </div>

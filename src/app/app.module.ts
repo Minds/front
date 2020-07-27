@@ -36,7 +36,6 @@ import { ModalsModule } from './modules/modals/modals.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { ThirdPartyNetworksModule } from './modules/third-party-networks/third-party-networks.module';
 import { TranslateModule } from './modules/translate/translate.module';
-import { SettingsModule } from './modules/settings/settings.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { NotificationModule } from './modules/notifications/notification.module';
 
@@ -55,10 +54,7 @@ import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
-import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
-import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
-import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
@@ -73,7 +69,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
-import { YoutubeMigrationModule } from './modules/media/youtube-migration/youtube-migration.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -112,7 +107,6 @@ export class SentryErrorHandler implements ErrorHandler {
     ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,
-    SettingsModule,
     ModalsModule,
     PaymentsModule,
     MindsFormsModule,
@@ -134,14 +128,10 @@ export class SentryErrorHandler implements ErrorHandler {
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,
-    HelpdeskModule,
-    MobileModule,
     IssuesModule,
-    CanaryModule,
     ChannelsModule,
     UpgradesModule,
     SharedModule,
-    YoutubeMigrationModule,
 
     //last due to :username route
     AppRoutingModule,

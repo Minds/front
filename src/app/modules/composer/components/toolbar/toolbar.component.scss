@@ -11,6 +11,7 @@
 
   @media screen and (max-width: $max-mobile) {
     font-size: 16px;
+    padding: 30px 40px 10px;
   }
 
   @include m-theme() {

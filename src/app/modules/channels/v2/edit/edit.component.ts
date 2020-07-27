@@ -65,7 +65,7 @@ export class ChannelEditComponent {
       return ['/pro', channel.username, 'settings'];
     }
 
-    return ['/settings/canary/pro_canary', channel.username];
+    return ['/settings/pro_canary', channel.username];
   }
 
   /**

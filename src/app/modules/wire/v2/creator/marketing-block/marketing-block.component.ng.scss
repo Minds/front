@@ -1,4 +1,6 @@
-m-wireCreator__marketingBlock {
+@import 'defaults.scss';
+
+:host {
   .m-wireCreator__marketingBlock {
     display: flex;
     align-items: flex-end;

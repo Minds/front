@@ -83,6 +83,9 @@
     background-position: -100% 0;
   }
 
+  21% {
+    background-position: 200% 0;
+  }
   100% {
     background-position: 200% 0;
   }
@@ -108,8 +111,8 @@ span.m-animation__shimmer--text {
     background-position: -100% 0;
 
     animation-name: shimmer--text;
-    animation-duration: 1.4s;
-    animation-iteration-count: 1;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
     animation-delay: 0.6s;
 
     -webkit-background-clip: text;
@@ -122,22 +125,22 @@ span.m-animation__shimmer--text {
   0% {
     background-position: 150% 0;
   }
-
-  100% {
+  12% {
     background-position: -150% 0;
   }
 }
 
-@keyframes pulse--icon {
+@keyframes shimmerPulse--icon {
   0% {
     transform: scale(1);
     background-position: 150% 0;
   }
-  40% {
+  10% {
     transform: scale(1.1);
   }
-  100% {
+  20% {
     background-position: -150% 0;
+    transform: scale(1);
   }
 }
 
@@ -162,13 +165,13 @@ span.m-animation__shimmer--text {
   }
 
   animation-name: shimmer--icon;
-  animation-duration: 0.6s;
-  animation-iteration-count: 1;
-  animation-delay: 0.7s;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.6s;
   @media screen and (max-width: $max-mobile) {
     background: none;
-    animation-name: pulse--icon;
-    animation-duration: 1s;
-    animation-delay: 0.5s;
+    animation-name: shimmerPulse--icon;
+    animation-duration: 5s;
+    animation-delay: 0.6s;
   }
 }

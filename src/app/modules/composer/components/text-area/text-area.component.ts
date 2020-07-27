@@ -8,6 +8,8 @@ import {
   Output,
   PLATFORM_ID,
   ViewChild,
+  HostListener,
+  AfterViewInit,
 } from '@angular/core';
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -21,7 +23,7 @@ import { AutocompleteSuggestionsService } from '../../../suggestions/services/au
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'text-area.component.html',
 })
-export class TextAreaComponent {
+export class TextAreaComponent implements AfterViewInit {
   /**
    * Textarea input ID. Used for external label.
    */
@@ -89,6 +91,12 @@ export class TextAreaComponent {
     return this.service.isPosting$;
   }
 
+  ngAfterViewInit(): void {
+    if (this.message$ && isPlatformBrowser(this.platformId)) {
+      setTimeout(() => this.resizeMessageHeight(), 100);
+    }
+  }
+
   /**
    * Focuses the message input. Due to browser constraints it needs a time. Only on browser.
    */
@@ -130,5 +138,17 @@ export class TextAreaComponent {
         setTimeout(() => this.titleInput.nativeElement.focus(), 100);
       }
     }
+  }
+
+  // Re-calculate height/width when window resizes
+  @HostListener('window:resize', ['$resizeEvent'])
+  onResize(resizeEvent) {
+    this.resizeMessageHeight();
+  }
+
+  resizeMessageHeight(): void {
+    const textareaEl = this.messageInput.nativeElement;
+    textareaEl.style.height = 'auto';
+    textareaEl.style.height = `${textareaEl.scrollHeight}px`;
   }
 }
