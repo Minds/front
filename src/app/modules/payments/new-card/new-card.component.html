@@ -1,7 +1,10 @@
-<div
-  class="mdl-spinner mdl-js-spinner is-active"
-  [mdl]
-  [hidden]="intentKey"
-></div>
+<m-loadingSpinner [inProgress]="!intentKey"></m-loadingSpinner>
 
-<iframe [src]="url" #iframe *ngIf="intentKey"> </iframe>
+<iframe
+  [src]="url"
+  #iframe
+  *ngIf="intentKey"
+  allowtransparency="true"
+  style="height: 120px"
+>
+</iframe>

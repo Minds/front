@@ -21,12 +21,15 @@
     class="m-wireCreatorToolbar__poweredBy"
     *ngIf="!(service.isUpgrade$ | async)"
   >
+    <img
+      class="m-wireCreatorToolbarPoweredBy__bulb"
+      [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+    />
     <span
       class="m-wireCreatorToolbarPoweredBy__text"
-      i18n="@@WIRE_CREATOR_TOOLBAR__POWERED_BY"
-      >Powered by</span
+      i18n="@@WIRE_CREATOR_TOOLBAR__POWERED_BY_MINDS"
+      >Powered by Minds Pay</span
     >
-    <span class="m-wireCreatorToolbarPoweredBy__name" i18n>MindsPay</span>
   </div>
 
   <div class="m-wireCreatorToolbar__message">
@@ -47,7 +50,9 @@
     (click)="onSubmitClick($event)"
     data-cy="wire-v2-send"
   >
-    <ng-container *ngIf="!(service.isUpgrade$ | async)">
+    <ng-container
+      *ngIf="!(service.isUpgrade$ | async) && !(service.supportTier$ | async)"
+    >
       <ng-container
         *ngIf="service.recurring$ | async; else noRecurringLabel"
         i18n="@@WIRE_CREATOR_TOOLBAR__SEND"
@@ -73,6 +78,13 @@
       <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
         Pro</ng-container
       >
+    </ng-container>
+
+    <ng-container
+      *ngIf="service.supportTier$ | async"
+      i18n="@@WIRE_CREATOR_TOOLBAR__SUBMIT_SUPPORT_TIER"
+    >
+      Join Membership
     </ng-container>
   </m-shadowboxSubmitButton>
 </div>

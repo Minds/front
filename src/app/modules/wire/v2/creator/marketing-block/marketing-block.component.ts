@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
   selector: 'm-wireCreator__marketingBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'marketing-block.component.html',
+  styleUrls: ['marketing-block.component.ng.scss'],
 })
 export class WireCreatorMarketingBlockComponent implements OnInit, OnDestroy {
   upgradeTypeSubscription: Subscription;

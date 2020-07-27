@@ -4,12 +4,12 @@ import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
 import { Wallet, WalletV2Service } from '../../wallet/v2/wallet-v2.service';
-import { WireService as WireV1Service } from '../wire.service';
-import { WireStruc } from '../creator/creator.component';
+import { WireService as WireV1Service, WireStruc } from '../wire.service';
 import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { PlusService } from '../../plus/plus.service';
 import { ProService } from '../../pro/pro.service';
+import { SupportTier } from './support-tiers.service';
 
 /**
  * Wire event types
@@ -214,6 +214,10 @@ export class WireV2Service implements OnDestroy {
   readonly type$: BehaviorSubject<WireType> = new BehaviorSubject<WireType>(
     DEFAULT_TYPE_VALUE
   );
+
+  readonly supportTier$: BehaviorSubject<SupportTier> = new BehaviorSubject<
+    SupportTier
+  >(null);
 
   /**
    * Wire upgrade type subject
