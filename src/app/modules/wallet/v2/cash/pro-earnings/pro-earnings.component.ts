@@ -26,6 +26,7 @@ export class WalletProEarningsCashComponent {
   );
   inProgress = false;
   from: number = moment()
+    .utc()
     .startOf('month')
     .unix();
 
