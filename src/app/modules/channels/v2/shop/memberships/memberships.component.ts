@@ -113,24 +113,9 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * @param supportTier
    */
   async select(supportTier: SupportTier): Promise<void> {
-    const type = this.currencyFilter$.getValue();
-    let min;
-
-    switch (type) {
-      case 'tokens':
-        min = supportTier.tokens;
-        break;
-      case 'usd':
-        min = supportTier.usd;
-        break;
-    }
-
     await this.wireModal
       .present(this.channel.channel$.getValue(), {
-        default: {
-          min,
-          type: type !== 'usd' ? type : 'money',
-        },
+        supportTier,
       })
       .toPromise();
 

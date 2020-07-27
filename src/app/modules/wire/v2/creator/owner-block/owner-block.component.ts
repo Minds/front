@@ -8,6 +8,7 @@ import entityToBannerUrl from '../../../../../helpers/entity-to-banner-url';
   selector: 'm-wireCreator__ownerBlock',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'owner-block.component.html',
+  styleUrls: ['owner-block.component.ng.scss'],
 })
 export class WireCreatorOwnerBlock {
   /**

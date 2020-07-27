@@ -24,8 +24,11 @@ const AUTOPREFIXER_BROWSERS = [
 gulp.task('build.sass', done => {
   const app_cdn = argv.deployUrl ? argv.deployUrl : '';
   gulp
-    .src(join(__dirname, 'src', '**', '*.scss'))
-    .pipe(cssGlobbing({ extensions: ['.scss'] }))
+    .src([
+      join(__dirname, 'src', '**', '*.scss'),
+      join('!', __dirname, 'src', '**', '*.ng.scss'),
+    ])
+    .pipe(cssGlobbing({ extensions: ['.scss', '!.ng.scss'] }))
     .pipe(
       sass({
         includePaths: [join(__dirname, 'src', 'stylesheets')],

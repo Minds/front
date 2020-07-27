@@ -1,4 +1,6 @@
-m-wireCreator {
+@import 'defaults.scss';
+
+:host {
   @media screen and (max-width: $min-tablet) {
     display: flex;
     flex-direction: column;

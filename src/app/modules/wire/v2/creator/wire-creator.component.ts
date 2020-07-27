@@ -14,6 +14,7 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   selector: 'm-wireCreator',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'wire-creator.component.html',
+  styleUrls: ['wire-creator.component.ng.scss'],
   providers: [WireService, WireV2Service, WalletV2Service, SupportTiersService],
 })
 export class WireCreatorComponent implements OnDestroy {
@@ -52,9 +53,18 @@ export class WireCreatorComponent implements OnDestroy {
    * @param onDismissIntent
    * @param defaults
    */
-  set opts({ onComplete, onDismissIntent, default: defaultValues }) {
+  set opts({
+    onComplete,
+    onDismissIntent,
+    default: defaultValues,
+    supportTier,
+  }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
+
+    if (supportTier) {
+      this.service.supportTier$.next(supportTier);
+    }
 
     if (defaultValues) {
       switch (defaultValues.type) {
