@@ -10,12 +10,13 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { ChannelShopMembershipsEditService } from './edit.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
+import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
 
 @Component({
   selector: 'm-channelShopMemberships__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'edit.component.html',
-  providers: [ChannelShopMembershipsEditService],
+  providers: [ChannelShopMembershipsEditService, WalletV2Service],
 })
 export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {
   public readonly tokenExchangeRate: number;
