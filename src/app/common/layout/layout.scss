@@ -89,7 +89,7 @@ $layoutMin1ColWidth: 280px;
 }
 
 .m-pageLayout__pane--left {
-  width: $layoutSidebarFullWidth;
+  min-width: $layoutSidebarFullWidth;
   @include m-theme() {
     border-right: 1px solid themed($m-borderColor--primary);
   }
