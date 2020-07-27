@@ -23,6 +23,7 @@ import { WireModalService } from '../wire-modal.service';
 import { of } from 'rxjs';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 
 describe('WireLockScreenComponent', () => {
   let comp: WireLockScreenComponent;
@@ -54,6 +55,10 @@ describe('WireLockScreenComponent', () => {
           useValue: MockService(WireModalService, {
             present: () => of({}),
           }),
+        },
+        {
+          provide: WirePaymentHandlersService,
+          useValue: MockService(WirePaymentHandlersService),
         },
         { provide: SignupModalService, useValue: signupModalServiceMock },
         {
@@ -93,43 +98,25 @@ describe('WireLockScreenComponent', () => {
   it('should have an unlock button', () => {
     fixture.detectChanges();
     expect(
-      fixture.debugElement.query(By.css('button.m-unlock-button'))
+      fixture.debugElement.query(By.css('.m-unlock-button'))
     ).not.toBeNull();
   });
   it('clicking on the unlock button should call unlock function', () => {
     spyOn(comp, 'unlock').and.callThrough();
     fixture.detectChanges();
     const button: DebugElement = fixture.debugElement.query(
-      By.css('button.m-unlock-button')
+      By.css('.m-unlock-button')
     );
     button.nativeElement.click();
 
     expect(comp.unlock).toHaveBeenCalled();
   });
-
-  it('should have wire bolt icon', () => {
-    expect(
-      fixture.debugElement.query(By.css('.ion-icon.ion-flash'))
-    ).toBeDefined();
-  });
-  it('should show monthly threshold', fakeAsync(() => {
-    comp.preview = true;
-    fixture.detectChanges();
-    const monthlyMin: DebugElement = fixture.debugElement.query(By.css('h2'));
-
-    expect(monthlyMin.nativeElement.textContent).toContain('10 Tokens/month');
-  }));
   it('should have message', () => {
     fixture.detectChanges();
     const message: DebugElement = fixture.debugElement.query(
-      By.css('.m-wire--lock-screen--message')
+      By.css('.m-wireLockScreen__message')
     );
     expect(message).toBeDefined();
-    expect(message.nativeElement.textContent).toContain(
-      'This post can only be seen by supporters who wire'
-    );
-    expect(message.nativeElement.textContent).toContain('over 10 Tokens/month');
-    expect(message.nativeElement.textContent).toContain('to @minds');
   });
   it("shouldn't update the entity if wire/threshold doesn't return an activity", fakeAsync(() => {
     comp.preview = true;
