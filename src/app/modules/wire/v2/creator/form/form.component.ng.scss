@@ -1,6 +1,6 @@
 @import 'defaults.scss';
 
-.m-wireCreator__form {
+:host .m-wireCreator__form {
   margin: 11px 0 0;
 
   @media screen and (max-width: $max-mobile) {

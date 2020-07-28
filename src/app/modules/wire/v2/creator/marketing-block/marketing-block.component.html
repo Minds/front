@@ -1,7 +1,7 @@
 <div
   class="m-wireCreator__marketingBlock"
   *ngIf="upgradeType"
-  [ngStyle]="bannerBackgroundImageCss()"
+  [ngClass]="{ isPlus: isPlus, isPro: isPro }"
 >
   <div class="m-wireCreatorMarketingBlock__copy">
     <div

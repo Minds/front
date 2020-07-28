@@ -16,6 +16,7 @@ import { WireModalService } from '../wire-modal.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { WireEventType } from '../v2/wire-v2.service';
+import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
@@ -52,7 +53,8 @@ export class WireLockScreenComponent implements OnInit {
     private wireModal: WireModalService,
     private signupModal: SignupModalService,
     private configs: ConfigsService,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private wirePaymentHandlers: WirePaymentHandlersService
   ) {
     this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
   }
@@ -117,7 +119,7 @@ export class WireLockScreenComponent implements OnInit {
           this.update.next(response.entity);
           this.detectChanges();
         } else {
-          this.showWire();
+          this.showModal();
         }
         this.inProgress = false;
         this.detectChanges();
@@ -127,11 +129,19 @@ export class WireLockScreenComponent implements OnInit {
         this.detectChanges();
 
         if (e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid') {
-          this.showWire();
+          this.showModal();
         } else {
           console.error('got error: ', e);
         }
       });
+  }
+
+  showModal(): void {
+    if (this.isPlus) {
+      this.showUpgradeModal();
+    } else {
+      this.showWire();
+    }
   }
 
   async showWire() {
@@ -149,6 +159,20 @@ export class WireLockScreenComponent implements OnInit {
           this.wireSubmitted();
         }
       });
+  }
+
+  async showUpgradeModal(): Promise<void> {
+    const wireEvent = await this.wireModal
+      .present(await this.wirePaymentHandlers.get('plus'), {
+        default: {
+          type: 'money',
+          upgradeType: 'plus',
+        },
+      })
+      .toPromise();
+    if (wireEvent.type === WireEventType.Completed) {
+      this.unlock();
+    }
   }
 
   wireSubmitted() {

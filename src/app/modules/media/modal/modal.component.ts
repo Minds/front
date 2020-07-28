@@ -135,6 +135,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   translateToggle: boolean = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
 
+  allowReminds: boolean = true;
+
   protected modalPager$: Subscription;
 
   protected asyncEntity$: Subscription;
@@ -337,6 +339,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.entity = entity && JSON.parse(JSON.stringify(entity)); // deep clone
 
     this.isTranslatable = this.translationService.isTranslatable(this.entity);
+
+    const hasPaywall = !!this.entity.paywall || this.entity.paywall_unlocked;
+    this.allowReminds = !hasPaywall;
   }
 
   clearAsyncEntity() {
