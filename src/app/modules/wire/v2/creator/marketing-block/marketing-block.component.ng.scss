@@ -19,11 +19,11 @@
     }
 
     &.isPlus {
-      background-image: url('<%=APP_CDN%>/assets/photos/confetti-concert.png');
+      background-image: url('../../../../../../assets/photos/confetti-concert.png');
     }
 
     &.isPro {
-      background-image: url('<%=APP_CDN%>/assets/photos/confetti-concert-red.jpg');
+      background-image: url('../../../../../../assets/photos/confetti-concert-red.jpg');
     }
 
     @media screen and (max-width: $max-mobile) {
