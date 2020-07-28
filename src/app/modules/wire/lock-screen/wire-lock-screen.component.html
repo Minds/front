@@ -110,6 +110,7 @@
           (click)="unlock()"
           [saving]="inProgress"
           data-cy="wire-lock-screen-unlock-button"
+          class="m-unlock-button"
         >
           <ng-container i18n="@@WIRE__UNLOCK__POST">Unlock Post</ng-container>
         </m-shadowboxSubmitButton>
@@ -259,7 +260,7 @@
       </span>
     </h2>
 
-    <h5 class="m-wire--lock-screen--message">
+    <h5 class="m-wire--lock-screen--message m-wireLockScreen__message">
       <ng-container i18n="@@WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART"
         >This post can only be seen by supporters who wire</ng-container
       >
