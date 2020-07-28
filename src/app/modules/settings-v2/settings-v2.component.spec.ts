@@ -63,6 +63,7 @@ describe('SettingsV2Component', () => {
   beforeEach(() => {
     router = TestBed.get(Router);
     featuresServiceMock.mock('navigation', true);
+    featuresServiceMock.mock('subscriber-conversations', true);
     featuresServiceMock.mock('yt-importer', true);
 
     clientMock.response = [];
