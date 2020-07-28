@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { WireEvent, WireEventType } from './v2/wire-v2.service';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { FeaturesService } from '../../services/features.service';
-import { WireCreatorComponent as WireV1CreatorComponent } from './creator/creator.component';
 import { WireCreatorComponent as WireV2CreatorComponent } from './v2/creator/wire-creator.component';
+import { SupportTier } from './v2/support-tiers.service';
 
 /**
  * WireModal.present() options.default interface
@@ -21,6 +21,7 @@ interface WireModalPresentDefaultOptions {
 interface WireModalPresentOptions {
   default?: WireModalPresentDefaultOptions;
   disableThresholdCheck?: boolean /* UNUSED */;
+  supportTier?: SupportTier;
 }
 
 /**
@@ -47,10 +48,8 @@ export class WireModalService {
     entity,
     options: WireModalPresentOptions = {}
   ): Observable<WireEvent> {
-    const isV2 = this.features.has('pay');
-
-    const component = isV2 ? WireV2CreatorComponent : WireV1CreatorComponent;
-    const wrapperClass = isV2 ? 'm-modalV2__wrapper' : '';
+    const component = WireV2CreatorComponent;
+    const wrapperClass = 'm-modalV2__wrapper';
 
     return new Observable<WireEvent>(subscriber => {
       let completed = false;

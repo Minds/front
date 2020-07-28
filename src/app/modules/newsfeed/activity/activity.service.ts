@@ -159,6 +159,7 @@ export class ActivityService {
    */
   shouldShowPaywallBadge$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
+      // TODO: handle entity.flags.paywall here?
       return !!entity.paywall || entity.paywall_unlocked;
     })
   );

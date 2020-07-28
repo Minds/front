@@ -1,7 +1,10 @@
 <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
 <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
 
-<minds-button-remind [object]="entity"></minds-button-remind>
+<minds-button-remind
+  [object]="entity"
+  *ngIf="allowReminds"
+></minds-button-remind>
 <minds-button-comment
   [object]="entity"
   (click)="toggleComments()"

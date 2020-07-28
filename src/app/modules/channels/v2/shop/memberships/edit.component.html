@@ -55,8 +55,8 @@
           <m-tooltip
             ><span m-tooltip--anchor>𝒊</span>
             <ng-container
-              >The amount a member is required to pay per month to access the
-              tier benefits.</ng-container
+              >The amount a member is required to pay per month to access
+              membership benefits.</ng-container
             >
           </m-tooltip>
         </div>
@@ -87,6 +87,11 @@
             <label
               for="channels-v2-shop-memberships-edit-has-tokens"
               class="m-form__customInputWrapper__checkbox"
+              [ngClass]="{
+                disabled:
+                  (service.isEditing$ | async) ||
+                  !(service.canReceiveTokens$ | async)
+              }"
             >
               <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_HAS_TOKENS"
                 >Accept Tokens
@@ -98,7 +103,10 @@
                 [ngModel]="service.hasTokens$ | async"
                 (ngModelChange)="service.hasTokens$.next($event)"
                 [readonly]="service.inProgress$ | async"
-                [disabled]="service.isEditing$ | async"
+                [disabled]="
+                  (service.isEditing$ | async) ||
+                  !(service.canReceiveTokens$ | async)
+                "
               />
               <span class="m-form__customInput__checkbox"></span>
             </label>
@@ -117,7 +125,9 @@
         </div>
       </div>
 
-      <div class="m-form__field--text stretchedField">
+      <div
+        class="m-form__field--text stretchedField m-channelShopMembershipsEdit__descriptionField"
+      >
         <div class="m-form__row--label">
           <label
             for="channels-v2-shop-memberships-edit-description"
@@ -141,6 +151,30 @@
             (ngModelChange)="service.description$.next($event)"
           ></textarea>
         </div>
+      </div>
+
+      <div
+        class="m-channelShopMembershipsEdit__warning"
+        *ngIf="!(service.canReceiveUsd$ | async)"
+      >
+        <i class="material-icons">warning</i>
+        <span
+          >Important!
+          <a routerLink="/wallet/canary/cash/settings">Connect your bank A/C</a>
+          to receive USD payments</span
+        >
+      </div>
+      <div
+        class="m-channelShopMembershipsEdit__warning"
+        *ngIf="!(service.canReceiveTokens$ | async)"
+      >
+        <i class="material-icons">warning</i>
+        <span
+          ><a routerLink="/wallet/canary/tokens/settings"
+            >Add receiver address</a
+          >
+          to receive tokens payments</span
+        >
       </div>
     </div>
 

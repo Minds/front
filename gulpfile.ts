@@ -1,7 +1,7 @@
 import * as gulp from 'gulp';
 import * as autoprefixer from 'gulp-autoprefixer';
-import * as cssGlobbing from 'gulp-css-globbing';
 import * as sass from 'gulp-sass';
+import * as sassGlob from 'gulp-sass-glob';
 import * as template from 'gulp-template';
 
 import { join } from 'path';
@@ -24,8 +24,12 @@ const AUTOPREFIXER_BROWSERS = [
 gulp.task('build.sass', done => {
   const app_cdn = argv.deployUrl ? argv.deployUrl : '';
   gulp
-    .src(join(__dirname, 'src', '**', '*.scss'))
-    .pipe(cssGlobbing({ extensions: ['.scss'] }))
+    .src(join(__dirname, 'src', 'stylesheets', 'main.scss'))
+    .pipe(
+      sassGlob({
+        ignorePaths: ['**/*.ng.scss'],
+      })
+    )
     .pipe(
       sass({
         includePaths: [join(__dirname, 'src', 'stylesheets')],
@@ -41,7 +45,7 @@ gulp.task('build.sass', done => {
     .pipe(gulp.dest(join(__dirname, '.styles')))
     .on('end', () => {
       gulp
-        .src(join(__dirname, '.styles', 'stylesheets', 'main.css'))
+        .src(join(__dirname, '.styles', 'main.css'))
         .pipe(gulp.dest(join(__dirname, 'src')))
         .on('end', done);
     });

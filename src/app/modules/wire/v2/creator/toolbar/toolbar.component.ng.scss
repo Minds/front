@@ -1,4 +1,6 @@
-.m-wireCreator__toolbar {
+@import 'defaults.scss';
+
+:host .m-wireCreator__toolbar {
   padding: 30px 40px;
   margin: 26px 0 0;
   border-top: 1px solid;
@@ -13,25 +15,21 @@
 
   .m-wireCreatorToolbar__poweredBy {
     .m-wireCreatorToolbarPoweredBy__text,
-    .m-wireCreatorToolbarPoweredBy__name {
-      display: block;
-      line-height: 19px;
+    .m-wireCreatorToolbarPoweredBy__bulb {
+      display: inline-block;
+      line-height: 20px;
+    }
+
+    .m-wireCreatorToolbarPoweredBy__bulb {
+      width: 20px;
+      margin-right: 10px;
     }
 
     .m-wireCreatorToolbarPoweredBy__text {
-      font-size: 14px;
-      font-style: italic;
+      font-size: 15px;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
-      }
-    }
-
-    .m-wireCreatorToolbarPoweredBy__name {
-      font-size: 16px;
-
-      @include m-theme() {
-        color: themed($m-textColor--primary);
       }
     }
   }

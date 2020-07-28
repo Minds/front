@@ -1,4 +1,6 @@
-.m-wireCreator__form {
+@import 'defaults.scss';
+
+:host .m-wireCreator__form {
   margin: 11px 0 0;
 
   @media screen and (max-width: $max-mobile) {
@@ -63,60 +65,62 @@
       color: themed($m-textColor--primary);
     }
 
-    input[type='text'],
-    input[type='number'],
-    input[type='email'],
-    input[type='date'] {
-      appearance: none;
-      width: 6em;
-      padding: 6px 10px;
-      border-radius: 2px;
-      border: 1px solid;
-      font-size: 20px;
-      line-height: 24px;
-      background: none transparent;
+    ::ng-deep {
+      input[type='text'],
+      input[type='number'],
+      input[type='email'],
+      input[type='date'] {
+        appearance: none;
+        width: 6em;
+        padding: 6px 10px;
+        border-radius: 2px;
+        border: 1px solid;
+        font-size: 20px;
+        line-height: 24px;
+        background: none transparent;
 
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-        border-color: themed($m-borderColor--primary);
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          border-color: themed($m-borderColor--primary);
+        }
       }
-    }
 
-    m-payments__selectCard {
-      display: block;
-      width: 100%;
-
-      .m-selector select {
+      m-payments__selectCard {
+        display: block;
         width: 100%;
-      }
 
-      .m-paymentsSelectCard__addNewCard {
-        position: relative;
+        .m-selector select {
+          width: 100%;
+        }
 
-        iframe {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 660px;
-          max-width: calc(100vw - 40px);
-          height: auto;
-          z-index: 1;
+        .m-paymentsSelectCard__addNewCard {
+          position: relative;
 
-          @include m-on-theme(light) {
-            box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
-          }
+          iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 660px;
+            max-width: calc(100vw - 40px);
+            height: auto;
+            z-index: 1;
 
-          @include m-on-theme(dark) {
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+            @include m-on-theme(light) {
+              box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+            }
+
+            @include m-on-theme(dark) {
+              box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+            }
           }
         }
       }
-    }
-    &.m-wireCreatorForm__field--recurring {
-      margin-left: 20px;
+      &.m-wireCreatorForm__field--recurring {
+        margin-left: 20px;
 
-      @media screen and (max-width: $max-mobile) {
-        margin-left: 0;
+        @media screen and (max-width: $max-mobile) {
+          margin-left: 0;
+        }
       }
     }
   }

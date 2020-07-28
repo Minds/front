@@ -3,6 +3,8 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, switchAll, take, tap } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
+import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Injectable()
 export class ChannelShopMembershipsEditService {
@@ -22,6 +24,20 @@ export class ChannelShopMembershipsEditService {
   readonly hasTokens$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+
+  /**
+   * Can receive tokens subject
+   */
+  readonly canReceiveTokens$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * Can receive USD subject
+   */
+  readonly canReceiveUsd$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   /**
    * Description subject
@@ -45,12 +61,17 @@ export class ChannelShopMembershipsEditService {
   );
 
   /**
-   * Can the suport tier be saved?
+   * Can the support tier be saved?
    */
   readonly canSave$: Observable<boolean> = combineLatest([
     this.name$,
     this.usd$,
-  ]).pipe(map(([name, usd]): boolean => Boolean(name && usd && usd > 0)));
+    this.canReceiveUsd$,
+  ]).pipe(
+    map(([name, usd, canReceiveUsd]): boolean =>
+      Boolean(name && usd && usd > 0 && canReceiveUsd)
+    )
+  );
 
   /**
    * Is there an operation in progress?
@@ -63,7 +84,18 @@ export class ChannelShopMembershipsEditService {
    * Constructor
    * @param api
    */
-  constructor(protected api: ApiService) {}
+  constructor(
+    protected api: ApiService,
+    protected walletService: WalletV2Service,
+    configs: ConfigsService
+  ) {
+    const merchant = configs.get('user').merchant;
+    if (merchant && merchant.service === 'stripe') {
+      this.canReceiveUsd$.next(true);
+    }
+
+    this.canReceiveTokens$.next(configs.get('user').rewards);
+  }
 
   /**
    * Resets state
