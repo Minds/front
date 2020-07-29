@@ -1,0 +1,54 @@
+<div class="m-auth__modal m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2 class="m-modalV2Header__title">
+      {{ formDisplay }}
+    </h2>
+  </div>
+
+  <div class="m-modalV2__body">
+    <ng-container *ngIf="formDisplay === 'register'">
+      <minds-form-register
+        [showTitle]="false"
+        [showBigButton]="true"
+        [showPromotions]="false"
+        [showLabels]="true"
+        [showInlineErrors]="true"
+        (done)="onRegisterDone($event)"
+      >
+      </minds-form-register>
+
+      <ng-container *ngTemplateOutlet="orDivider"></ng-container>
+
+      <div class="m-authModal__alt">
+        <span>Already have a Minds account? </span>
+        <a (click)="showLoginForm($event)">Login</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="formDisplay === 'login'">
+      <minds-form-login
+        [showBigButton]="true"
+        [showInlineErrors]="true"
+        [showLabels]="true"
+        [showTitle]="false"
+        (done)="onLoginDone($event)"
+        (doneRegistered)="onRegisterDone($event)"
+      >
+      </minds-form-login>
+
+      <ng-container *ngTemplateOutlet="orDivider"></ng-container>
+
+      <div class="m-authModal__alt">
+        <span>Don't have an account? </span>
+        <a (click)="showRegisterForm($event)">Join now</a>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #orDivider>
+  <div class="m-authModal__orDivider">
+    <span></span>
+    <span class="m-authModalOrDivider__text">OR</span>
+    <span></span>
+  </div>
+</ng-template>

@@ -1,0 +1,93 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    @media screen and (max-width: $max-mobile) {
+      flex: unset;
+    }
+  }
+
+  .m-modalV2__header {
+    position: relative;
+    height: 150px;
+    background-size: cover;
+    background-image: url('../../../../assets/photos/confetti-concert.png');
+    box-sizing: border-box;
+
+    h2 {
+      position: absolute;
+      bottom: 20px;
+      text-transform: capitalize;
+      @include m-theme() {
+        color: themed($m-white-always);
+      }
+    }
+  }
+
+  .m-modalV2__body {
+    max-height: unset;
+    overflow-y: unset;
+  }
+
+  .m-authModal__orDivider {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+
+    span:not(.m-authModalOrDivider__text) {
+      flex: 1;
+      @include m-theme() {
+        border-bottom: 2px solid themed($m-borderColor--primary);
+      }
+    }
+    .m-authModalOrDivider__text {
+      padding: 0 20px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+
+  .m-authModal__alt {
+    text-align: center;
+    font-size: 15px;
+    padding: 10px 0;
+    box-sizing: border-box;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+    > a {
+      text-decoration: underline;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+
+  ::ng-deep {
+    .m-login-box {
+      margin-top: 0;
+
+      .m-layout__row {
+        align-items: center;
+      }
+
+      [class*='m-form__field--'] {
+        margin-bottom: 15px;
+      }
+
+      .m-form__row--label {
+        margin-bottom: 10px;
+      }
+    }
+    .m-register__actions {
+      flex-direction: column;
+    }
+  }
+}

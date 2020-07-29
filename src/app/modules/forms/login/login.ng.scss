@@ -1,6 +1,6 @@
-@import 'defaults';
+@import 'defaults.scss';
 
-m-login {
+:host {
   .m-login__title {
     display: flex;
     align-items: center;
@@ -48,47 +48,25 @@ m-login {
   }
 }
 
-.m-login-box {
-  margin-top: $minds-margin * 2;
-  width: 100% !important;
+// .m-login-box {
+//   margin-top: $minds-margin * 2;
+//   width: 100% !important;
 
-  &:last-child {
-    margin-bottom: 0;
-  }
+//   &:last-child {
+//     margin-bottom: 0;
+//   }
 
-  h3 {
-    margin: 0;
-    font-size: 24px;
-    line-height: 26px;
-  }
+//   h3 {
+//     margin: 0;
+//     font-size: 24px;
+//     line-height: 26px;
+//   }
 
-  .mdl-grid {
-    padding: 0;
-    width: 100%;
-  }
-
-  input:not([type='checkbox']) {
-    padding: $minds-padding * 2;
-    font-size: 16px;
-    width: 100%;
-    -webkit-appearance: none;
-    border-radius: 3px;
-    font-family: 'Roboto', Helvetica, sans-serif;
-    font-weight: 800;
-    @include m-theme() {
-      border: 1px solid themed($m-grey-50);
-    }
-
-    &::placeholder {
-      font-weight: 800;
-    }
-  }
-
-  .m-reset-password-link {
-    padding-left: $minds-padding * 2;
-    text-decoration: none;
-  }
-}
+//   .m-reset-password-link {
+//     padding-left: $minds-padding * 2;
+//     text-decoration: none;
+//   }
+// }
 
 .m-login-mfa-input {
   padding: 20px 0;

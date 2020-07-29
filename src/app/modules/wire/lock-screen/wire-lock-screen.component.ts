@@ -92,7 +92,7 @@ export class WireLockScreenComponent implements OnInit {
     this.detectChanges();
   }
 
-  unlock() {
+  async unlock(): Promise<void> {
     if (this.preview) {
       return;
     }

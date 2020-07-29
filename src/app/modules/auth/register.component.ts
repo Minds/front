@@ -22,6 +22,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 @Component({
   selector: 'm-register',
   templateUrl: 'register.component.html',
+  styleUrls: ['./register.component.ng.scss'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;
