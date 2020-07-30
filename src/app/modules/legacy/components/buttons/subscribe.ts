@@ -8,8 +8,8 @@ import {
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { SignupModalService } from '../../../modals/signup/service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'minds-button-subscribe',
@@ -69,7 +69,6 @@ export class SubscribeButton {
   _inprogress: boolean = false;
   _content: any;
   _listener: Function;
-  showModal: boolean = false;
   @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
 
   @HostBinding('class.m-subscribeButton--iconsOnly')
@@ -79,7 +78,7 @@ export class SubscribeButton {
   constructor(
     public session: Session,
     public client: Client,
-    public modal: SignupModalService,
+    public authModal: AuthModalService,
     protected toasterService: FormToastService
   ) {}
 
@@ -88,15 +87,12 @@ export class SubscribeButton {
     this._user = value;
   }
 
-  subscribe(e) {
+  async subscribe(e): Promise<void> {
     e.preventDefault();
     e.stopPropagation();
 
     if (!this.session.isLoggedIn()) {
-      this.modal
-        .setSubtitle('You need to have a channel in order to subscribe')
-        .open();
-      return false;
+      await this.authModal.open();
     }
 
     this._user.subscribed = true;

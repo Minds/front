@@ -141,7 +141,7 @@
     display: flex;
     flex-flow: column nowrap;
     position: relative;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     font-size: 15px;
     line-height: 20px;
 
@@ -224,6 +224,7 @@
   // Includes textareas as well as inputs ////
   ////////////////////////////////////////////
   input[type='text'],
+  input[type='email'],
   input[type='number'],
   input[type='password'] {
     max-height: 42px;
@@ -516,6 +517,7 @@
   }
 
   input[type='text'],
+  input[type='email'],
   input[type='password'],
   input[type='number'],
   textarea,

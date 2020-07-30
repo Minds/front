@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { SignupModalService } from '../../../modules/modals/signup/service';
 import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../services/activity.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -11,6 +10,7 @@ import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
 import { FormToastService } from '../../services/form-toast.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 
 @Injectable()
 export class PostMenuService {
@@ -33,7 +33,7 @@ export class PostMenuService {
     public session: Session,
     private client: Client,
     private overlayModal: OverlayModalService,
-    public signupModal: SignupModalService,
+    public authModal: AuthModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
     private dialogService: DialogService,
@@ -61,10 +61,7 @@ export class PostMenuService {
    */
   async subscribe(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      this.signupModal
-        .setSubtitle('You need to have a channel in order to subscribe')
-        .open();
-      return;
+      await this.authModal.open();
     }
 
     this.entityOwner.subscribed = true;

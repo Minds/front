@@ -10,6 +10,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { PlusService } from '../../plus/plus.service';
 import { ProService } from '../../pro/pro.service';
 import { SupportTier } from './support-tiers.service';
+import { Session } from '../../../services/session';
 
 /**
  * Wire event types
@@ -363,13 +364,14 @@ export class WireV2Service implements OnDestroy {
     protected v1Wire: WireV1Service,
     private plusService: PlusService,
     private proService: ProService,
+    private session: Session,
     configs: ConfigsService
   ) {
     this.upgrades = configs.get('upgrades');
 
-    const user = configs.get('user');
-    this.userIsPlus = user.plus;
-    this.userIsPro = user.pro;
+    const user = session.getLoggedInUser();
+    this.userIsPlus = user && user.plus;
+    this.userIsPro = user && user.pro;
 
     // Combine state
     const wireData$ = combineLatest([
@@ -494,7 +496,9 @@ export class WireV2Service implements OnDestroy {
     });
 
     // Sync balances
-    this.wallet.getTokenAccounts();
+    if (this.session.isLoggedIn()) {
+      this.wallet.getTokenAccounts();
+    }
   }
 
   /**

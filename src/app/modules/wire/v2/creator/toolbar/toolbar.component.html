@@ -17,20 +17,7 @@
 </ng-template>
 
 <div class="m-wireCreator__toolbar m-modalV2__toolbar">
-  <div
-    class="m-wireCreatorToolbar__poweredBy"
-    *ngIf="!(service.isUpgrade$ | async)"
-  >
-    <img
-      class="m-wireCreatorToolbarPoweredBy__bulb"
-      [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-    />
-    <span
-      class="m-wireCreatorToolbarPoweredBy__text"
-      i18n="@@WIRE_CREATOR_TOOLBAR__POWERED_BY_MINDS"
-      >Powered by Minds Pay</span
-    >
-  </div>
+  <m-poweredBy product="Pay"></m-poweredBy>
 
   <div class="m-wireCreatorToolbar__message">
     <div

@@ -27,26 +27,30 @@
 <form
   (submit)="$event.preventDefault()"
   [formGroup]="form"
-  class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box"
+  class="m-form m-login-box m-formWrapper"
   [hidden]="hideLogin"
   *ngIf="!showFbForm"
 >
-  <div class="mdl-card__supporting-text mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col">
-      <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME">
-        Username
-      </label>
-      <input
-        type="text"
-        id="username"
-        formControlName="username"
-        [placeholder]="showLabels ? '' : 'Username'"
-        i18n-placeholder="@@M__COMMON__USERNAME"
-        readonly
-        onfocus="this.removeAttribute('readonly');"
-        [class.m-input--hide-placeholder]="showLabels"
-        [pattern]="alphanumericPattern"
-      />
+  <div class="m-layout__grid">
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME">
+          Username
+        </label>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          [placeholder]="showLabels ? '' : 'Username'"
+          i18n-placeholder="@@M__COMMON__USERNAME"
+          readonly
+          onfocus="this.removeAttribute('readonly');"
+          [class.m-input--hide-placeholder]="showLabels"
+          [pattern]="alphanumericPattern"
+        />
+      </div>
       <div
         class="m-register__error"
         [style.visibility]="showError('username') ? 'visible' : 'hidden'"
@@ -73,18 +77,22 @@
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col">
-      <label for="email" *ngIf="showLabels" i18n="@@COMMON__EMAIL">
-        Email
-      </label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        [placeholder]="showLabels ? '' : 'Email'"
-        i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
-        [class.m-input--hide-placeholder]="showLabels"
-      />
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="email" *ngIf="showLabels" i18n="@@COMMON__EMAIL">
+          Email
+        </label>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [placeholder]="showLabels ? '' : 'Email'"
+          i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
+          [class.m-input--hide-placeholder]="showLabels"
+        />
+      </div>
       <div
         class="m-register__error"
         [style.visibility]="showError('email') ? 'visible' : 'hidden'"
@@ -97,48 +105,56 @@
         </ng-container>
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--12-col m-registerForm__password">
-      <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
-        Password
-      </label>
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
+          Password
+        </label>
+      </div>
       <m-popover (change)="onPopoverChange($event)" #popover>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          [placeholder]="showLabels ? '' : 'Password'"
-          i18n-placeholder="@@M__COMMON__PASSWORD"
-          readonly
-          onfocus="this.removeAttribute('readonly');"
-          (focus)="onPasswordFocus()"
-          (blur)="onPasswordBlur()"
-          (ngModelChange)="popover.show(); popover.checkRules($event)"
-          [class.m-input--hide-placeholder]="showLabels"
-        />
+        <div class="m-form__row--input">
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            [placeholder]="showLabels ? '' : 'Password'"
+            i18n-placeholder="@@M__COMMON__PASSWORD"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+            (focus)="onPasswordFocus()"
+            (blur)="onPasswordBlur()"
+            (ngModelChange)="popover.show(); popover.checkRules($event)"
+            [class.m-input--hide-placeholder]="showLabels"
+          />
+        </div>
       </m-popover>
     </div>
     <div
-      class="mdl-cell mdl-cell--12-col m-registerForm__confirmPassword"
+      class="m-form__field--text stretchedField m-registerForm__confirmPassword"
       [hidden]="!form.value.password"
     >
-      <label
-        for="password2"
-        *ngIf="showLabels"
-        i18n="@@MINDS_REGISTRATION__CONFIRM_YOUR_PASSWORD"
-      >
-        Confirm your password
-      </label>
-      <input
-        type="password"
-        id="password2"
-        formControlName="password2"
-        [placeholder]="showLabels ? '' : 'Confirm your password'"
-        i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
-        (keydown.enter)="register($event)"
-        readonly
-        onfocus="this.removeAttribute('readonly');"
-        [class.m-input--hide-placeholder]="showLabels"
-      />
+      <div class="m-form__row--label">
+        <label
+          for="password2"
+          *ngIf="showLabels"
+          i18n="@@MINDS_REGISTRATION__CONFIRM_YOUR_PASSWORD"
+        >
+          Confirm your password
+        </label>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="password"
+          id="password2"
+          formControlName="password2"
+          [placeholder]="showLabels ? '' : 'Confirm your password'"
+          i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
+          (keydown.enter)="register($event)"
+          readonly
+          onfocus="this.removeAttribute('readonly');"
+          [class.m-input--hide-placeholder]="showLabels"
+        />
+      </div>
       <div
         class="m-register__error"
         [style.visibility]="this.form.get('password2').touched && this.form.get('password2').dirty ? 'visible' : 'hidden'"
@@ -153,13 +169,18 @@
     </div>
 
     <div
-      *ngIf="form.value.password"
-      class="mdl-cell mdl-cell--12-col m-registerForm__captcha"
+      *ngIf="form.value.password "
+      class="m-form__field--text stretchedField m-registerForm__captcha"
     >
-      <label for="captcha" *ngIf="showLabels" i18n="@@COMMON__CAPTCHA">
-        Captcha
-      </label>
-      <m-captcha formControlName="captcha"></m-captcha>
+      <div class="m-form__row--label">
+        <label for="captcha" *ngIf="showLabels" i18n="@@COMMON__CAPTCHA">
+          Captcha
+        </label>
+      </div>
+
+      <div class="m-form__row--input">
+        <m-captcha formControlName="captcha"></m-captcha>
+      </div>
     </div>
   </div>
 
@@ -170,7 +191,7 @@
     <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
   </div>
 
-  <div class="mdl-card__actions">
+  <div class="m-layout__row m-register__actions">
     <div class="m-register__checkboxes">
       <m-formInput__checkbox formControlName="exclusive_promotions">
         Receive exclusive promotions from Minds
@@ -184,6 +205,8 @@
         <a routerLink="/p/terms" target="_blank"> Terms & Conditions </a>
       </m-formInput__checkbox>
     </div>
+
+    <div class="m-layout__spacer"></div>
 
     <button
       class="m-btn m-btn--action"
@@ -203,8 +226,8 @@
       [saving]="inProgress"
       (click)="register($event)"
     >
-      <ng-container i18n="@@FORMS__REGISTER__JOIN_MINDS_NOW_ACTION">
-        Join Minds Now
+      <ng-container i18n="@@FORMS__REGISTER__JOIN_NOW_ACTION">
+        Join Now
       </ng-container>
     </m-shadowboxSubmitButton>
   </div>

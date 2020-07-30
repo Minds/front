@@ -24,9 +24,9 @@ import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-form-register',
   templateUrl: 'register.html',
+  styleUrls: ['./register.ng.scss'],
 })
 export class RegisterForm {
   @Input() referrer: string;

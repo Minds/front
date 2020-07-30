@@ -1,6 +1,6 @@
-@import 'defaults';
+@import 'defaults.scss';
 
-minds-form-register {
+:host {
   form {
     overflow: visible !important;
   }
@@ -13,14 +13,9 @@ minds-form-register {
     position: relative;
   }
 
-  .mdl-card__actions {
-    display: flex;
-    padding-left: $minds-padding * 2;
-    align-items: center;
-  }
-
   .m-register__checkboxes {
-    width: 100%;
+    // width: 100%;
+    margin-right: 20px;
     m-formInput__checkbox {
       margin-bottom: $minds-margin / 2;
       font-size: 11px;
@@ -30,42 +25,6 @@ minds-form-register {
           color: themed($m-grey-400);
         }
       }
-    }
-  }
-
-  //this is exactly the same as modal.scss
-  .m-fb-register-button {
-    width: 170px;
-    border: 0;
-    cursor: pointer;
-    text-transform: uppercase;
-    text-align: left;
-    padding: 0;
-    margin: 0;
-    margin-left: 8px;
-    @include m-theme() {
-      background-color: themed($m-white);
-      color: themed($m-facebook);
-      border: 1px solid themed($m-facebook);
-    }
-
-    .m-social-icons-icon-inline {
-      vertical-align: middle;
-      display: inline-block;
-      @include m-theme() {
-        fill: themed($m-facebook);
-      }
-    }
-
-    .m-signup-button-text {
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 9px;
-      width: auto;
-      max-width: calc(100% - 60px);
-      letter-spacing: 0.1em;
-      padding-left: 4px;
-      font-weight: 600;
     }
   }
 
@@ -107,5 +66,11 @@ minds-form-register {
 
   input.m-input--hide-placeholder::placeholder {
     color: transparent;
+  }
+
+  ::ng-deep .m-registerForm__captcha {
+    input {
+      width: 100%;
+    }
   }
 }

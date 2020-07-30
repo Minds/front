@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { WireEvent, WireEventType } from './v2/wire-v2.service';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { FeaturesService } from '../../services/features.service';
 import { WireCreatorComponent as WireV2CreatorComponent } from './v2/creator/wire-creator.component';
 import { SupportTier } from './v2/support-tiers.service';
+import { AuthModalService } from '../auth/modal/auth-modal.service';
+import { Session } from '../../services/session';
 
 /**
  * WireModal.present() options.default interface
@@ -36,7 +38,9 @@ export class WireModalService {
    */
   constructor(
     protected features: FeaturesService,
-    protected overlayModal: OverlayModalService
+    protected overlayModal: OverlayModalService,
+    private session: Session,
+    private authModal: AuthModalService
   ) {}
 
   /**
@@ -47,9 +51,15 @@ export class WireModalService {
   present(
     entity,
     options: WireModalPresentOptions = {}
-  ): Observable<WireEvent> {
+  ): Observable<WireEvent | any> {
     const component = WireV2CreatorComponent;
     const wrapperClass = 'm-modalV2__wrapper';
+
+    // if (!this.session.isLoggedIn()) {
+    //   return from(
+    //     this.authModal.open().then(() => this.present(entity, options))
+    //   );
+    // }
 
     return new Observable<WireEvent>(subscriber => {
       let completed = false;
