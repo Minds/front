@@ -16,7 +16,9 @@ export class AuthModalService {
     private stackableModal: StackableModalService
   ) {}
 
-  async open(): Promise<MindsUser> {
+  async open(
+    opts: { formDisplay: string } = { formDisplay: 'register' }
+  ): Promise<MindsUser> {
     const { AuthModalModule } = await import('./auth-modal.module');
 
     const moduleFactory = await this.compiler.compileModuleAsync(
@@ -31,6 +33,7 @@ export class AuthModalService {
     const evt: StackableModalEvent = await this.stackableModal
       .present(AuthModalComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
+        formDisplay: opts.formDisplay,
         onComplete: (user: MindsUser) => {
           onSuccess$.next(user);
           onSuccess$.complete(); // Ensures promise can be called below

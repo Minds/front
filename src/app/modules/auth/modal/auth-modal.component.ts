@@ -27,7 +27,8 @@ export class AuthModalComponent implements OnInit {
    * @param onDismissIntent
    * @param defaults
    */
-  set opts({ onComplete, onDismissIntent }) {
+  set opts({ formDisplay, onComplete, onDismissIntent }) {
+    this.formDisplay = formDisplay;
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
   }

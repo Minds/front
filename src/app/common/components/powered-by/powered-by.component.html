@@ -3,7 +3,7 @@
     class="m-poweredBy__bulb"
     [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
   />
-  <span class="m-poweredBy__text" i18n="@@COMMON__POWERED_BY_MINDS"
-    >Powered by Minds {{ product }}</span
-  >
+  <span class="m-poweredBy__text" i18n="@@COMMON__POWERED_BY_MINDS">
+    Powered by <a [routerLink]="link">Minds {{ product }}</a>
+  </span>
 </div>
