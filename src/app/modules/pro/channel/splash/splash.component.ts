@@ -3,13 +3,20 @@ import { SiteService } from '../../../../common/services/site.service';
 import { SignupModalService } from '../../../modals/signup/service';
 import { ProChannelService } from '../channel.service';
 import { Session } from '../../../../services/session';
-import { SupportTier } from '../../../wire/v2/support-tiers.service';
+import {
+  SupportTier,
+  SupportTiersService,
+} from '../../../wire/v2/support-tiers.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
+import { map, first } from 'rxjs/operators';
+import { WireModalService } from '../../../wire/wire-modal.service';
 
 @Component({
   selector: 'm-proChannel__splash',
   templateUrl: './splash.component.html',
   styleUrls: ['./splash.component.ng.scss'],
+  providers: [SupportTiersService],
 })
 export class ProChannelSplashComponent implements OnInit {
   hidden: boolean = false;
@@ -22,7 +29,11 @@ export class ProChannelSplashComponent implements OnInit {
   userIsMember: boolean = false;
   userIsSubscribed: boolean = false;
 
-  lowestPrice: string;
+  lowestSupportTier$ = this.supportTiersService.list$.pipe(
+    map(supportTiers => {
+      return supportTiers[0];
+    })
+  );
 
   readonly cdnAssetsUrl: string;
 
@@ -32,9 +43,11 @@ export class ProChannelSplashComponent implements OnInit {
     protected channelService: ProChannelService,
     protected modal: SignupModalService,
     protected site: SiteService,
-    private signupModal: SignupModalService,
+    private authModal: AuthModalService,
     configs: ConfigsService,
-    public session: Session
+    public session: Session,
+    private supportTiersService: SupportTiersService,
+    private wireModalService: WireModalService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -43,21 +56,20 @@ export class ProChannelSplashComponent implements OnInit {
     this.channel = this.channelService.currentChannel;
     this.settings = this.channel.pro_settings;
 
-    const moneyRewards = this.channel.wire_rewards.rewards.money;
-    if (moneyRewards[0]) {
-      this.lowestPrice = moneyRewards[0].amount;
-    }
+    this.supportTiersService.setEntityGuid(this.channel.guid);
   }
 
-  showLoginModal(): void {
-    // TODO replace with new modal
-    this.signupModal.open();
+  async showLoginModal(): Promise<void> {
+    await this.authModal.open({ formDisplay: 'login' });
   }
 
-  join(): void {
-    // TODO replace with new modal
-    // and after registration,
-    // display wire creator modal on lowest money membership tier
-    this.signupModal.open();
+  async join(): Promise<void> {
+    const lowestTier = await this.lowestSupportTier$.pipe(first()).toPromise();
+
+    await this.wireModalService
+      .present(this.channel, {
+        supportTier: lowestTier,
+      })
+      .toPromise();
   }
 }

@@ -6,8 +6,12 @@
   </p>
   <div class="m-proChannelSplash__main">
     <img class="m-proChannelSplash__logo" [src]="settings.logo_image" />
-    <div class="m-proChannelSplash__price" *ngIf="lowestPrice">
-      <span i18n="@@M_PRO_SPLASH__STARTING_PRICE">From ${{ lowestPrice }}</span
+    <div
+      class="m-proChannelSplash__price"
+      *ngIf="lowestSupportTier$ | async as lowestSupportTier"
+    >
+      <span i18n="@@M_PRO_SPLASH__STARTING_PRICE"
+        >From ${{ lowestSupportTier.usd }}</span
       ><span i18n="@@M_PRO_SPLASH__PER_MONTH"> per month</span>
     </div>
     <m-shadowboxSubmitButton (click)="join()" i18n="@@M_PRO_SPLASH__JOIN_NOW"
@@ -20,11 +24,9 @@
       >No thanks, just take me to the site.</span
     >
   </div>
+
   <div class="m-proChannelSplash__poweredBy">
-    <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
-    <span i18n="@@M_PRO_SPLASH__POWERED_BY_MINDS_PRO"
-      >Powered by <a href="https://www.minds.com/pro">Minds Pro</a></span
-    >
+    <m-poweredBy product="Pro" link="/pro"></m-poweredBy>
   </div>
 </div>
 <m-modal-signup

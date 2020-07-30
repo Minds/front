@@ -8,6 +8,7 @@ import { ConfigsService } from '../../services/configs.service';
 })
 export class PoweredByComponent {
   @Input() product;
+  @Input() link = '/';
 
   readonly cdnAssetsUrl: string;
 
