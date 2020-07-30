@@ -13,6 +13,7 @@ import { PaymentsSelectCard } from './select-card/select-card.component';
 import { BTCService } from './btc/btc.service';
 import { BTCComponent } from './btc/btc.component';
 import { BTCSettingsComponent } from './btc/settings.component';
+import { NewCardModalComponent } from './new-card-modal/new-card-modal.component';
 
 @NgModule({
   imports: [
@@ -30,8 +31,15 @@ import { BTCSettingsComponent } from './btc/settings.component';
     PaymentsSelectCard,
     BTCComponent,
     BTCSettingsComponent,
+    NewCardModalComponent,
   ],
-  exports: [PayWall, PaywallCancelButton, PaymentsNewCard, PaymentsSelectCard],
+  exports: [
+    PayWall,
+    PaywallCancelButton,
+    PaymentsNewCard,
+    PaymentsSelectCard,
+    NewCardModalComponent,
+  ],
   providers: [BTCService],
 })
 export class PaymentsModule {}

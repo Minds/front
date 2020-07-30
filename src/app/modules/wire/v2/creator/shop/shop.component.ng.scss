@@ -1,4 +1,6 @@
-.m-wireCreator__shop {
+@import 'defaults.scss';
+
+:host .m-wireCreator__shop {
   margin: 14px 0 0;
 
   .m-wireCreatorShop__heading {

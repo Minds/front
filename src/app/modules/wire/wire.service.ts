@@ -3,8 +3,24 @@ import { Client } from '../../services/api/client';
 import { WireContractService } from '../blockchain/contracts/wire-contract.service';
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
-import { WireStruc } from './creator/creator.component';
 import { BTCService } from '../payments/btc/btc.service';
+
+export type PayloadType =
+  | 'onchain'
+  | 'offchain'
+  | 'usd'
+  | 'eth'
+  | 'erc20'
+  | 'btc';
+
+export interface WireStruc {
+  amount: number | '';
+  payloadType: PayloadType | null;
+  guid: any;
+  recurring: boolean;
+  recurringInterval?: 'once' | 'monthly' | 'yearly' | null;
+  payload: any;
+}
 
 @Injectable()
 export class WireService {

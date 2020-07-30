@@ -40,6 +40,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ProRedirectComponent } from './redirect.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { ProChannelSplashComponent } from './channel/splash/splash.component';
 
 const routes: Routes = [
   {
@@ -182,6 +183,7 @@ export const PRO_DOMAIN_ROUTES = [
     ProRedirectComponent,
     SubscribeButtonComponent,
     SearchBoxComponent,
+    ProChannelSplashComponent,
   ],
   exports: [ProChannelComponent],
 })

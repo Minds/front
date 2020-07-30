@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { WireService } from '../../wire.service';
 import { WireV2Service } from '../wire-v2.service';
@@ -10,10 +11,13 @@ import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
 import { SupportTiersService } from '../support-tiers.service';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { Session } from '../../../../services/session';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 @Component({
   selector: 'm-wireCreator',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'wire-creator.component.html',
+  styleUrls: ['wire-creator.component.ng.scss'],
   providers: [WireService, WireV2Service, WalletV2Service, SupportTiersService],
 })
 export class WireCreatorComponent implements OnDestroy {
@@ -29,6 +33,8 @@ export class WireCreatorComponent implements OnDestroy {
    * Prices for yearly/monthly upgrades to pro/plus
    */
   readonly upgrades: any;
+
+  isLoggedIn: boolean = this.session.isLoggedIn();
 
   /**
    * Completion intent
@@ -52,9 +58,18 @@ export class WireCreatorComponent implements OnDestroy {
    * @param onDismissIntent
    * @param defaults
    */
-  set opts({ onComplete, onDismissIntent, default: defaultValues }) {
+  set opts({
+    onComplete,
+    onDismissIntent,
+    default: defaultValues,
+    supportTier,
+  }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
+
+    if (supportTier) {
+      this.service.supportTier$.next(supportTier);
+    }
 
     if (defaultValues) {
       switch (defaultValues.type) {
@@ -87,12 +102,31 @@ export class WireCreatorComponent implements OnDestroy {
   constructor(
     public service: WireV2Service,
     public supportTiers: SupportTiersService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private cd: ChangeDetectorRef,
+    private session: Session,
+    private authModal: AuthModalService
   ) {
     this.ownerSubscription = this.service.owner$.subscribe(owner =>
       this.supportTiers.setEntityGuid(owner && owner.guid)
     );
     this.upgrades = configs.get('upgrades');
+  }
+
+  ngOnInit() {
+    if (!this.session.isLoggedIn()) {
+      this.authModal
+        .open()
+        .then(() => {
+          this.isLoggedIn = this.session.isLoggedIn();
+          this.service.wallet.getTokenAccounts();
+          this.cd.markForCheck();
+          this.cd.detectChanges();
+        })
+        .catch(() => {
+          this.onDismissIntent();
+        });
+    }
   }
 
   /**

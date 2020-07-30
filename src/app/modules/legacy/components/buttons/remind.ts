@@ -6,9 +6,9 @@ import {
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { SignupModalService } from '../../../modals/signup/service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { RemindComposerModalComponent } from '../../../modals/remind-composer-v2/reminder-composer.component';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'minds-button-remind',
@@ -35,7 +35,7 @@ export class RemindButton {
     public overlayModal: OverlayModalService,
     public session: Session,
     public client: Client,
-    private modal: SignupModalService,
+    private authModal: AuthModalService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -45,12 +45,11 @@ export class RemindButton {
     this.reminded = !!this.object.reminded;
   }
 
-  remind() {
+  async remind(): Promise<boolean> {
     if (this.object.reminded) return false;
 
     if (!this.session.isLoggedIn()) {
-      this.modal.open();
-      return false;
+      await this.authModal.open();
     }
 
     this.remindOpen = true;

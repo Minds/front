@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+}
+
+.m-modalV2__toolbar {
+  padding: 20px 40px;
+}
+
+.m-paymentsNewCardModal__goBack {
+  cursor: pointer;
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}

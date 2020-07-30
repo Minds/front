@@ -1,4 +1,6 @@
-m-wireCreator__marketingBlock {
+@import 'defaults.scss';
+
+:host {
   .m-wireCreator__marketingBlock {
     display: flex;
     align-items: flex-end;
@@ -14,6 +16,14 @@ m-wireCreator__marketingBlock {
     @include m-theme() {
       background-color: themed($m-bgColor--tertiary);
       border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    &.isPlus {
+      background-image: url('../../../../../../assets/photos/confetti-concert.png');
+    }
+
+    &.isPro {
+      background-image: url('../../../../../../assets/photos/confetti-concert-red.jpg');
     }
 
     @media screen and (max-width: $max-mobile) {

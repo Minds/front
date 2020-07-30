@@ -9,7 +9,7 @@ import {
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
-import { SignupModalService } from '../../../modules/modals/signup/service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -45,13 +45,12 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     owner_guid: null,
     'thumbs:up:user_guids': [],
   };
-  showModal: boolean = false;
 
   constructor(
     public session: Session,
     public client: Client,
     public wallet: WalletService,
-    private modal: SignupModalService,
+    private authModal: AuthModalService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -62,11 +61,9 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       this.object['thumbs:up:user_guids'] = [];
   }
 
-  thumb() {
+  async thumb(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      this.modal.setSubtitle('You need to have a channel to vote').open();
-      this.showModal = true;
-      return false;
+      await this.authModal.open();
     }
 
     this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
