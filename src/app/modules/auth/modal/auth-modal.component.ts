@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-auth__modal',
@@ -31,7 +32,7 @@ export class AuthModalComponent implements OnInit {
     this.onDismissIntent = onDismissIntent || (() => {});
   }
 
-  constructor() {}
+  constructor(public siteService: SiteService) {}
 
   ngOnInit(): void {}
 

@@ -124,7 +124,6 @@ export class WireCreatorComponent implements OnDestroy {
           this.cd.detectChanges();
         })
         .catch(() => {
-          console.error('auth aborted');
           this.onDismissIntent();
         });
     }

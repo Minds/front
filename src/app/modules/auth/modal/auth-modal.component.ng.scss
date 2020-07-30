@@ -86,8 +86,10 @@
         margin-bottom: 10px;
       }
     }
-    .m-register__actions {
-      flex-direction: column;
+    @media screen and (max-width: $max-mobile) {
+      .m-register__actions {
+        flex-direction: column;
+      }
     }
   }
 }

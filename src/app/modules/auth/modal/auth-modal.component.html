@@ -1,9 +1,15 @@
 <div class="m-auth__modal m-modalV2__inner">
-  <div class="m-modalV2__header">
+  <div class="m-modalV2__header" *ngIf="!siteService.isProDomain">
     <h2 class="m-modalV2Header__title">
       {{ formDisplay }}
     </h2>
   </div>
+
+  <!-- START: PRO Specific -->
+  <m-authModal__proSiteHeader
+    *ngIf="siteService.isProDomain"
+  ></m-authModal__proSiteHeader>
+  <!-- END: PRO Specific -->
 
   <div class="m-modalV2__body">
     <ng-container *ngIf="formDisplay === 'register'">
@@ -43,6 +49,12 @@
       </div>
     </ng-container>
   </div>
+
+  <!-- START: PRO Specific -->
+  <div class="m-modalV2__toolbar" *ngIf="siteService.isProDomain">
+    <m-poweredBy></m-poweredBy>
+  </div>
+  <!-- END: PRO Specific -->
 </div>
 
 <ng-template #orDivider>

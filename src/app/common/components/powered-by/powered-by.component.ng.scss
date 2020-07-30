@@ -1,0 +1,27 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+
+  .m-poweredBy {
+    .m-poweredBy__text,
+    .m-poweredBy__bulb {
+      display: inline-block;
+      line-height: 20px;
+      vertical-align: middle;
+    }
+
+    .m-poweredBy__bulb {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    .m-poweredBy__text {
+      font-size: 15px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}
