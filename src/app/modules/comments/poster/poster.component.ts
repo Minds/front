@@ -22,6 +22,7 @@ import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { Observable } from 'rxjs';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -58,7 +59,8 @@ export class CommentPosterComponent {
     private renderer: Renderer2,
     private userAvatar: UserAvatarService,
     private cd: ChangeDetectorRef,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private authModalService: AuthModalService
   ) {}
 
   keypress(e: KeyboardEvent) {
@@ -220,8 +222,11 @@ export class CommentPosterComponent {
     return this.session.isLoggedIn();
   }
 
-  showLoginModal() {
-    this.signupModal.open();
+  async showLoginModal(): Promise<void> {
+    try {
+      await this.authModalService.open();
+      this.detectChanges();
+    } catch (e) {}
   }
 
   detectChanges() {

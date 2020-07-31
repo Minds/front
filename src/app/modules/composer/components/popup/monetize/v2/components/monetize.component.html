@@ -2,7 +2,7 @@
   <div class="m-composerPopup__content">
     <h3 class="m-composerPopup__title" i18n="@@COMMON__MONETIZE">Monetize</h3>
     <div class="m-tabs__container" *ngIf="!isEditingPlus">
-      <div class="m-tabs__tab">
+      <div class="m-tabs__tab" *mIfFeature="'plus-2020'">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': type === 'plus' }"
           (click)="type = 'plus'"

@@ -118,6 +118,7 @@ export interface MindsUser {
     domain: string;
     has_custom_logo?: boolean;
     has_custom_background?: boolean;
+    splash?: boolean;
   };
   mode: ChannelMode;
   nsfw: Array<number>;

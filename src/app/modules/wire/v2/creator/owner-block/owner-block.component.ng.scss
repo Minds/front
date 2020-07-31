@@ -27,7 +27,7 @@
       }
     }
 
-    .m-wireCreatorOwnerBlockChannelBanner__avatar .minds-avatar {
+    ::ng-deep .m-wireCreatorOwnerBlockChannelBanner__avatar .minds-avatar {
       position: absolute;
       bottom: 0;
       left: 50%;

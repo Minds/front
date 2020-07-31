@@ -18,6 +18,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 @Component({
   selector: 'm-login',
   templateUrl: 'login.component.html',
+  styleUrls: ['./login.component.ng.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   errorMessage: string = '';

@@ -9,6 +9,13 @@
   overflow-x: hidden;
   overflow-y: auto;
 
+  // MH: confirm if this is wrong for stackable modals
+  m-stackableModal & {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
   .m-overlay-modal--backdrop {
     z-index: 0;
   }

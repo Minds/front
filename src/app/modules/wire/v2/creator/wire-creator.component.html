@@ -1,4 +1,5 @@
-<div class="m-wireCreator m-modalV2__inner">
+<m-loadingSpinner [inProgress]="!isLoggedIn"></m-loadingSpinner>
+<div class="m-wireCreator m-modalV2__inner" *ngIf="isLoggedIn">
   <m-wireCreator__marketingBlock
     *ngIf="service.isUpgrade$ | async"
   ></m-wireCreator__marketingBlock>
