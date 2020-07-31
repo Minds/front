@@ -11,7 +11,11 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+
 import { MindsVideoPlayerComponent } from './player.component';
 import { ScrollService } from '../../../../services/ux/scroll';
 import { Subscription } from 'rxjs';
@@ -37,7 +41,8 @@ export class ScrollAwareVideoPlayerComponent
     private el: ElementRef,
     private scrollService: ScrollService,
     private session: Session,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -57,6 +62,8 @@ export class ScrollAwareVideoPlayerComponent
   }
 
   onVisibilityCheck(): void {
+    if (isPlatformServer(this.platformId)) return;
+
     if (this.el.nativeElement) {
       if (this.scrollService.isVisible(this.el.nativeElement, 50)) {
         if (!this.isInViewport) this.onEnterViewport();
