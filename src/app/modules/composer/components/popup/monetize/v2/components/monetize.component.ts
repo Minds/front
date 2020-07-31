@@ -22,7 +22,7 @@ export type MonetizationTabType = 'plus' | 'membership' | 'custom';
   providers: [SupportTiersService],
 })
 export class ComposerMonetizeV2Component implements OnInit {
-  type: MonetizationTabType = 'plus';
+  type: MonetizationTabType = 'membership';
 
   isEditingPlus: boolean = false;
 
