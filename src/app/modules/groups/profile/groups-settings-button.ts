@@ -363,8 +363,7 @@ export class GroupsSettingsButton {
       this.group.deleted = deleted;
 
       if (deleted) {
-        this.toasterService.success('Your group has been successfully deleted');
-        this.router.navigate(['/']);
+        this.router.navigate(['/groups/member']);
       }
     });
 

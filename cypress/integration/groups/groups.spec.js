@@ -305,7 +305,7 @@ context.skip('Groups', () => {
     cy.contains('Confirm')
       .click()
       .location('pathname')
-      .should('eq', '/');
+      .should('eq', '/groups/member');
 
     // assert groupId no longer exists on sidebar.
     //cy.contains(groupId).should('not.exist');
