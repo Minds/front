@@ -86,6 +86,10 @@ export class ChannelsV2Service {
   readonly isBanned$: Observable<boolean>;
 
   /**
+   * True if channel is enabled.
+   */
+  readonly isDisabled$: Observable<boolean>;
+  /**
    * Explicit status
    */
   readonly isExplicit$: Observable<boolean>;
@@ -179,11 +183,24 @@ export class ChannelsV2Service {
       )
     );
 
+    // Set isDisabled$ observable (true if channel is disabled)
+    this.isDisabled$ = combineLatest([this.channel$]).pipe(
+      map(([channel]) => channel && channel.enabled !== 'yes')
+    );
+
     // Set canInteract$ observable
-    this.canInteract$ = combineLatest([this.channel$, this.isBlocked$]).pipe(
+    this.canInteract$ = combineLatest([
+      this.channel$,
+      this.isBlocked$,
+      this.isDisabled$,
+    ]).pipe(
       map(
-        ([channel, isBlocked]) =>
-          !isBlocked && channel && channel.guid && channel.banned !== 'yes'
+        ([channel, isBlocked, isDisabled]) =>
+          !isBlocked &&
+          !isDisabled &&
+          channel &&
+          channel.guid &&
+          channel.banned !== 'yes'
       )
     );
 

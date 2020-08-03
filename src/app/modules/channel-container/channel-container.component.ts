@@ -134,6 +134,9 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
           break;
         case TRIGGER_EXCEPTION.DISABLED:
           this.channel.enabled = 'no';
+          // alows users to interact via blocking.
+          this.channel.guid = e.guid ? e.guid : null;
+          this.channel.blocked = e.blocked;
           break;
         case TRIGGER_EXCEPTION.NOT_FOUND:
           this.channel.not_found = true;
