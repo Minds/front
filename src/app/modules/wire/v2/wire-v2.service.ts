@@ -738,7 +738,6 @@ export class WireV2Service implements OnDestroy {
       this.supportTier$.getValue() &&
       this.supportTier$.getValue().subscription_urn
     ) {
-      console.log(this.supportTier$.getValue().subscription_urn);
       return invalid('You are already a member', true);
     }
 

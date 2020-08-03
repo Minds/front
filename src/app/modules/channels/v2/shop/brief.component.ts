@@ -12,6 +12,7 @@ import { MindsUser } from '../../../../interfaces/entities';
   selector: 'm-channelShop__brief',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'brief.component.html',
+  styleUrls: ['brief.component.ng.scss'],
   providers: [SupportTiersService],
 })
 export class ChannelShopBriefComponent implements OnDestroy {
@@ -29,6 +30,7 @@ export class ChannelShopBriefComponent implements OnDestroy {
   constructor(
     public service: ChannelsV2Service,
     public supportTiers: SupportTiersService,
+    public channelService: ChannelsV2Service,
     protected wireModal: WireModalService
   ) {
     this.channelGuidSubscription = this.service.guid$.subscribe(guid =>
@@ -51,28 +53,9 @@ export class ChannelShopBriefComponent implements OnDestroy {
    * @param supportTier
    */
   async onEntryClick(channel: MindsUser, supportTier: SupportTier) {
-    const type = supportTier.has_usd
-      ? 'usd'
-      : supportTier.has_tokens
-      ? 'tokens'
-      : null;
-    let min: number;
-
-    switch (type) {
-      case 'usd':
-        min = supportTier.usd;
-        break;
-      case 'tokens':
-        min = supportTier.tokens;
-        break;
-    }
-
     await this.wireModal
       .present(channel, {
-        default: {
-          min,
-          type,
-        },
+        supportTier,
       })
       .toPromise();
   }
