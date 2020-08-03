@@ -40,6 +40,8 @@ export class WireCreatorSupportTierConfirmationComponent {
     })
   );
 
+  typeChangeSubscription: Subscription;
+
   /**
    * Constructor
    * @param service
@@ -52,7 +54,7 @@ export class WireCreatorSupportTierConfirmationComponent {
   ) {}
 
   ngOnInit() {
-    combineLatest(
+    this.typeChangeSubscription = combineLatest(
       this.service.type$,
       this.supportTiers$,
       this.service.supportTier$
@@ -62,6 +64,10 @@ export class WireCreatorSupportTierConfirmationComponent {
         if (!supportTier.has_tokens && type === 'tokens')
           this.service.supportTier$.next(supportTiers[0]);
       });
+  }
+
+  ngOnDestroy() {
+    this.typeChangeSubscription.unsubscribe();
   }
 
   /**
