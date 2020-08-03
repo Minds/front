@@ -14,9 +14,7 @@
         >From ${{ lowestSupportTier.usd }}</span
       ><span i18n="@@M_PRO_SPLASH__PER_MONTH"> per month</span>
     </div>
-    <m-shadowboxSubmitButton (click)="join()" i18n="@@M_PRO_SPLASH__JOIN_NOW"
-      >JOIN NOW</m-shadowboxSubmitButton
-    >
+    <m-pro__joinButton></m-pro__joinButton>
     <span
       (click)="closeSplash.emit()"
       class="m-proChannelSplash__skip"

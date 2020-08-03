@@ -25,17 +25,11 @@ export class ProChannelSplashComponent implements OnInit {
   settings: any;
   channelTiers: SupportTier[];
 
-  user;
-  userIsMember: boolean = false;
-  userIsSubscribed: boolean = false;
-
   lowestSupportTier$ = this.supportTiersService.list$.pipe(
     map(supportTiers => {
       return supportTiers[0];
     })
   );
-
-  readonly cdnAssetsUrl: string;
 
   @Output() closeSplash: EventEmitter<any> = new EventEmitter();
 
@@ -44,13 +38,9 @@ export class ProChannelSplashComponent implements OnInit {
     protected modal: SignupModalService,
     protected site: SiteService,
     private authModal: AuthModalService,
-    configs: ConfigsService,
     public session: Session,
-    private supportTiersService: SupportTiersService,
-    private wireModalService: WireModalService
-  ) {
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
+    private supportTiersService: SupportTiersService
+  ) {}
 
   ngOnInit(): void {
     this.channel = this.channelService.currentChannel;
@@ -61,15 +51,5 @@ export class ProChannelSplashComponent implements OnInit {
 
   async showLoginModal(): Promise<void> {
     await this.authModal.open({ formDisplay: 'login' });
-  }
-
-  async join(): Promise<void> {
-    const lowestTier = await this.lowestSupportTier$.pipe(first()).toPromise();
-
-    await this.wireModalService
-      .present(this.channel, {
-        supportTier: lowestTier,
-      })
-      .toPromise();
   }
 }

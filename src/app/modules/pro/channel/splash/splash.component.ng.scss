@@ -6,7 +6,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  z-index: 9999999;
+  z-index: 999999;
   font-weight: 400;
   display: flex;
   min-height: 440px;
@@ -74,24 +74,19 @@
   }
 
   ::ng-deep {
-    m-shadowboxSubmitButton {
-      display: block;
-      margin-bottom: 4vh;
-      button {
-        padding: 10px 30px;
-        min-height: 50px;
-        background-color: var(--m-pro--plain-background-color) !important;
-        border: 2px solid var(--m-pro--primary-color);
-        &:hover,
-        &:active {
-          box-shadow: none !important;
-        }
-        div {
-          font-size: 22px;
-          font-weight: 400;
-          color: var(--m-pro--text-color);
-          @media screen and(max-width: $max-mobile) {
-            font-size: 20px;
+    m-pro__joinButton {
+      m-shadowboxSubmitButton {
+        display: block;
+        margin-bottom: 4vh;
+        button {
+          padding: 10px 30px;
+          min-height: 50px;
+          div {
+            font-size: 22px;
+            font-weight: 400;
+            @media screen and(max-width: $max-mobile) {
+              font-size: 20px;
+            }
           }
         }
       }

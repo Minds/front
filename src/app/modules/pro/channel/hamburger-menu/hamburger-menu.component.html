@@ -26,11 +26,13 @@
       </li>
     </ng-template>
 
-    <li
-      class="m-proHamburgerMenu__subscribe"
-      *ngIf="currentUser?.guid != channel?.guid"
-    >
-      <m-pro__subscribeButton (onAction)="closeMenu()"></m-pro__subscribeButton>
+    <li class="m-proHamburgerMenu__searchBox">
+      <m-pro__searchBox
+        [query]="query"
+        (queryChange)="queryChange.emit($event)"
+        (onSearch)="onSearch.emit($event); closeMenu()"
+        (onClearSearch)="onClearSearch.emit($event); closeMenu()"
+      ></m-pro__searchBox>
     </li>
 
     <li class="m-proHamburgerMenu__linkWrapper">
@@ -87,15 +89,6 @@
       <a (click)="wire(); closeMenu()">
         Wire
       </a>
-    </li>
-
-    <li class="m-proHamburgerMenu__searchBox">
-      <m-pro__searchBox
-        [query]="query"
-        (queryChange)="queryChange.emit($event)"
-        (onSearch)="onSearch.emit($event); closeMenu()"
-        (onClearSearch)="onClearSearch.emit($event); closeMenu()"
-      ></m-pro__searchBox>
     </li>
 
     <li class="m-proHamburgerMenu__spacer"></li>
