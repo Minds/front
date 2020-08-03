@@ -11,6 +11,7 @@ import { Session } from '../../../../services/session';
 @Component({
   selector: 'm-pro__hamburger-menu',
   templateUrl: 'hamburger-menu.component.html',
+  styleUrls: ['hamburger-menu.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProHamburgerMenu {
