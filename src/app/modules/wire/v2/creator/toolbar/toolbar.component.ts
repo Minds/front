@@ -55,7 +55,7 @@ export class WireCreatorToolbarComponent {
    * @param $event
    */
   async onSubmitClick($event?: MouseEvent): Promise<void> {
-    if (await this.disabled.pipe(last()).toPromise) return;
+    if (await this.disabled.pipe(last()).toPromise()) return;
     this.onSubmitEmitter.emit();
   }
 }
