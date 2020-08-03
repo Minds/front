@@ -12,6 +12,7 @@ import { WireCreatorToolbarComponent } from './creator/toolbar/toolbar.component
 import { WireCreatorShopComponent } from './creator/shop/shop.component';
 import { WireCreatorMarketingBlockComponent } from './creator/marketing-block/marketing-block.component';
 import { WireCreatorSupportTierConfirmationComponent } from './creator/support-tier-confirmation/support-tier-confirmation.component';
+import { WireCreatorCurrencyToggleComponent } from './creator/currency-toggle/currency-toggle.component';
 
 const COMPONENTS = [WireCreatorComponent];
 
@@ -22,6 +23,7 @@ const INTERNAL_COMPONENTS = [
   WireCreatorShopComponent,
   WireCreatorMarketingBlockComponent,
   WireCreatorSupportTierConfirmationComponent,
+  WireCreatorCurrencyToggleComponent,
 ];
 
 const PROVIDERS = [

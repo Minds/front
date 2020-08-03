@@ -1,7 +1,11 @@
 <div class="m-wireCreator__supportTierConfirmation m-formWrapper">
-  <h3>Join a membership</h3>
+  <div class="m-wireCreatorSupportTierConfirmation__titleRow m-layout__row">
+    <h3>Join a membership</h3>
+    <div class="m-layout__spacer"></div>
+    <m-wireCreator__currencyToggle></m-wireCreator__currencyToggle>
+  </div>
 
-  <div class="m-form__field--select">
+  <div class="m-form__field--select" *ngIf="!(service.inProgress$ | async)">
     <div class="m-form__row--input">
       <select
         [compareWith]="byUrn"
@@ -9,7 +13,7 @@
         (ngModelChange)="service.supportTier$.next($event)"
       >
         <option
-          *ngFor="let supportTier of supportTiersService.list$ | async"
+          *ngFor="let supportTier of supportTiers$ | async"
           [ngValue]="supportTier"
         >
           {{ supportTier.name }}
@@ -25,9 +29,26 @@
   <div class="m-layout__spacer"></div>
   <div class="m-layout__spacer"></div>
 
-  <div class="m-wireCreatorSupportTierConfirmation__amount">
-    <span class="m-wireCreatorSupportTierConfirmationAmount__amount"
-      ><span>$</span>{{ (service.supportTier$ | async).usd }}
+  <div
+    class="m-wireCreatorSupportTierConfirmation__amount"
+    *ngIf="(service.type$ | async) === 'usd'"
+  >
+    <span class="m-wireCreatorSupportTierConfirmationAmount__amount">
+      <span>$</span>
+      {{ (service.supportTier$ | async).usd }}
+    </span>
+    <span class="m-wireCreatorSupportTierConfirmationAmount__timePeriod"
+      >per month</span
+    >
+  </div>
+
+  <div
+    class="m-wireCreatorSupportTierConfirmation__amount"
+    *ngIf="(service.type$ | async) === 'tokens'"
+  >
+    <span class="m-wireCreatorSupportTierConfirmationAmount__amount">
+      {{ (service.supportTier$ | async).tokens }}
+      <span> tokens </span>
     </span>
     <span class="m-wireCreatorSupportTierConfirmationAmount__timePeriod"
       >per month</span
@@ -36,7 +57,7 @@
 
   <div class="m-layout__spacer"></div>
 
-  <div class="m-form__field--select">
+  <div class="m-form__field--select" *ngIf="(service.type$ | async) === 'usd'">
     <div
       class="m-wireCreatorForm__label m-wireCreatorForm__label--hasCta"
       i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"

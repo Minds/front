@@ -8,12 +8,9 @@ import {
 } from '@angular/core';
 import { WireV2Service } from '../../wire-v2.service';
 import { SupportTier, SupportTiersService } from '../../support-tiers.service';
-import {
-  StackableModalService,
-  StackableModalEvent,
-} from '../../../../../services/ux/stackable-modal.service';
-import { NewCardModalComponent } from '../../../../payments/new-card-modal/new-card-modal.component';
 import { PaymentsSelectCard } from '../../../../payments/select-card/select-card.component';
+import { Observable, combineLatest, Subscription } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
 
 /**
  * Support tier confirmation component
@@ -34,6 +31,15 @@ export class WireCreatorSupportTierConfirmationComponent {
 
   @ViewChild(PaymentsSelectCard) cardSelector: PaymentsSelectCard;
 
+  supportTiers$: Observable<SupportTier[]> = combineLatest(
+    this.supportTiersService.groupedList$,
+    this.service.type$
+  ).pipe(
+    map(([supportTiers, type]) => {
+      return supportTiers[type];
+    })
+  );
+
   /**
    * Constructor
    * @param service
@@ -42,9 +48,21 @@ export class WireCreatorSupportTierConfirmationComponent {
   constructor(
     public service: WireV2Service,
     public supportTiersService: SupportTiersService,
-    private stackableModal: StackableModalService,
     private cd: ChangeDetectorRef
   ) {}
+
+  ngOnInit() {
+    combineLatest(
+      this.service.type$,
+      this.supportTiers$,
+      this.service.supportTier$
+    )
+      .pipe(debounceTime(100))
+      .subscribe(([type, supportTiers, supportTier]) => {
+        if (!supportTier.has_tokens && type === 'tokens')
+          this.service.supportTier$.next(supportTiers[0]);
+      });
+  }
 
   /**
    * Triggers the dismiss modal event
