@@ -6,6 +6,8 @@ import {
 } from '@angular/core';
 import { WireV2Service } from '../../wire-v2.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { Observable, combineLatest } from 'rxjs';
+import { map, last } from 'rxjs/operators';
 
 /**
  * Bottom toolbar for Wire modal
@@ -18,6 +20,20 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 })
 export class WireCreatorToolbarComponent {
   readonly cdnAssetsUrl: string;
+
+  disabled: Observable<boolean> = combineLatest(
+    this.service.validation$,
+    this.service.inProgress$,
+    this.service.supportTier$
+  ).pipe(
+    map(([validation, inProgress, supportTier]) => {
+      return Boolean(
+        !(validation && validation.isValid) ||
+          inProgress ||
+          (supportTier && supportTier.subscription_urn)
+      );
+    })
+  );
 
   /**
    * Constructor
@@ -38,7 +54,8 @@ export class WireCreatorToolbarComponent {
    * Submit button event handler
    * @param $event
    */
-  onSubmitClick($event?: MouseEvent): void {
+  async onSubmitClick($event?: MouseEvent): Promise<void> {
+    if (await this.disabled.pipe(last()).toPromise) return;
     this.onSubmitEmitter.emit();
   }
 }

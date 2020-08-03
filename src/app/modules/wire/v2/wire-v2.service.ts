@@ -157,6 +157,7 @@ const DEFAULT_WIRE_REWARDS_VALUE: WireRewards = {
 interface Data {
   entityGuid: string;
   type: WireType;
+  supportTier: SupportTier;
   upgradeType: WireUpgradeType;
   isUpgrade: boolean;
   upgradeInterval: UpgradeOptionInterval;
@@ -176,6 +177,7 @@ interface Data {
 type DataArray = [
   string,
   WireType,
+  SupportTier,
   WireUpgradeType,
   boolean,
   UpgradeOptionInterval,
@@ -377,6 +379,7 @@ export class WireV2Service implements OnDestroy {
     const wireData$ = combineLatest([
       this.entityGuid$,
       this.type$,
+      this.supportTier$,
       this.upgradeType$,
       this.isUpgrade$,
       this.upgradeInterval$,
@@ -403,6 +406,7 @@ export class WireV2Service implements OnDestroy {
         ([
           entityGuid,
           type,
+          supportTier,
           upgradeType,
           isUpgrade,
           upgradeInterval,
@@ -416,6 +420,7 @@ export class WireV2Service implements OnDestroy {
         ]: DataArray): Data => ({
           entityGuid,
           type,
+          supportTier,
           upgradeType,
           isUpgrade,
           upgradeInterval,
@@ -727,6 +732,14 @@ export class WireV2Service implements OnDestroy {
       if (this.upgradeType$.getValue() === 'plus' && this.userIsPlus) {
         return invalid('You are already a Minds+ member', true);
       }
+    }
+
+    if (
+      this.supportTier$.getValue() &&
+      this.supportTier$.getValue().subscription_urn
+    ) {
+      console.log(this.supportTier$.getValue().subscription_urn);
+      return invalid('You are already a member', true);
     }
 
     if (data.amount <= 0) {

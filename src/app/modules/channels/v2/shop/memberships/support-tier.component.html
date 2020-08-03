@@ -87,11 +87,15 @@
     </a>
 
     <a
-      *ngIf="!isOwner"
+      *ngIf="!isOwner && !supportTier.subscription_urn"
       class="m-cardButton-v2"
       (click)="onSelectIntent.emit(supportTier)"
     >
       Join
+    </a>
+
+    <a *ngIf="!isOwner && supportTier.subscription_urn" class="m-cardButton-v2">
+      Cancel
     </a>
   </div>
 </div>

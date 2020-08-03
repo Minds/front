@@ -30,9 +30,7 @@
 
   <m-shadowboxSubmitButton
     class="m-wireCreatorToolbar__send"
-    [disabled]="
-      !(service.validation$ | async)?.isValid || (service.inProgress$ | async)
-    "
+    [disabled]="disabled | async"
     [saving]="service.inProgress$ | async"
     (click)="onSubmitClick($event)"
     data-cy="wire-v2-send"

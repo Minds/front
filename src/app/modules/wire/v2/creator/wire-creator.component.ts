@@ -69,6 +69,9 @@ export class WireCreatorComponent implements OnDestroy {
 
     if (supportTier) {
       this.service.supportTier$.next(supportTier);
+      this.service.setType('usd');
+      this.service.setRecurring(true);
+      this.service.setAmount(supportTier.usd);
     }
 
     if (defaultValues) {
