@@ -48,7 +48,7 @@ export class WalletCashOnboardingComponent implements OnInit {
       dob: ['', Validators.required],
       phoneNumber: ['', requiredFor(['JP'])],
       ssn: ['', requiredFor(['US'])],
-      personalIdNumber: ['', requiredFor(['CA', 'HK', 'SG'])],
+      personalIdNumber: ['', requiredFor(['HK', 'SG'])],
 
       street: ['', optionalFor(['JP'])],
       city: ['', optionalFor(['JP', 'SG'])],
