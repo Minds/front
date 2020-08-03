@@ -7,7 +7,7 @@ import {
 import { WireV2Service } from '../../wire-v2.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Observable, combineLatest } from 'rxjs';
-import { map, last } from 'rxjs/operators';
+import { map, last, first } from 'rxjs/operators';
 
 /**
  * Bottom toolbar for Wire modal
@@ -55,7 +55,7 @@ export class WireCreatorToolbarComponent {
    * @param $event
    */
   async onSubmitClick($event?: MouseEvent): Promise<void> {
-    if (await this.disabled.pipe(last()).toPromise()) return;
+    if (await this.disabled.pipe(first()).toPromise()) return;
     this.onSubmitEmitter.emit();
   }
 }
