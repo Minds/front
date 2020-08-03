@@ -13,14 +13,9 @@ import {
   PLATFORM_ID,
   Inject,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-  UrlSegment,
-  NavigationEnd,
-} from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Session } from '../../../services/session';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { ProChannelService } from './channel.service';
@@ -33,13 +28,25 @@ import { ScrollService } from '../../../services/ux/scroll';
 import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import {
+  SupportTiersService,
+  SupportTier,
+} from '../../wire/v2/support-tiers.service';
+import { WireModalService } from '../../wire/wire-modal.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
-  providers: [ProChannelService, OverlayModalService, SignupModalService],
+  providers: [
+    ProChannelService,
+    OverlayModalService,
+    SignupModalService,
+    SupportTiersService,
+  ],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
+  styleUrls: ['channel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -58,6 +65,19 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   collapseNavItems: boolean;
 
   showSplash: boolean = false;
+
+  /**
+   * Hide search box for medium width windows
+   */
+  searchBoxOpen: boolean = false;
+
+  lowestSupportTier$: Observable<
+    SupportTier
+  > = this.supportTiersService.list$.pipe(
+    map(supportTiers => {
+      return supportTiers[0];
+    })
+  );
 
   protected params$: Subscription;
 
@@ -136,6 +156,25 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.site.isProDomain;
   }
 
+  get isOwner() {
+    if (this.currentUser) {
+      return this.currentUser?.guid === this.channel.guid;
+    } else return false;
+  }
+
+  get isMember() {
+    // TODO
+    return false;
+  }
+
+  get hideLoginRow() {
+    return this.isMember && !this.isOwner;
+  }
+
+  get showJoin() {
+    return !this.isMember && !this.isOwner;
+  }
+
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
     if (!this.channel || !this.channel.pro_settings.background_image) {
       return 'none';
@@ -176,7 +215,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
     protected pageLayoutService: PageLayoutService,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    protected supportTiersService: SupportTiersService,
+    private authModal: AuthModalService
   ) {}
 
   ngOnInit() {
@@ -227,7 +268,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize') onResize() {
-    this.collapseNavItems = window.innerWidth <= 768;
+    this.collapseNavItems = window.innerWidth <= 480;
   }
 
   ngOnDestroy() {
@@ -248,6 +289,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.load(this.username);
 
+      this.supportTiersService.setEntityGuid(this.channel.guid);
       this.bindCssVariables();
       this.setSplash();
       this.shouldOpenWireModal();
@@ -298,9 +340,27 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.site.isProDomain;
   }
 
+  async showLoginModal(): Promise<void> {
+    await this.authModal.open({ formDisplay: 'login' });
+  }
+
   bindCssVariables() {
     if (isPlatformServer(this.platformId)) return;
-    const styles = this.channel.pro_settings.styles;
+    let styles = this.channel.pro_settings.styles;
+
+    /**
+     * Create secondary text and border colors
+     * from text color w/ reduced opacity
+     */
+    const textColor = styles['text_color'];
+    if (textColor) {
+      const additionalColors = {
+        secondary_text_color: textColor + 'B3',
+        border_color: textColor + '80',
+      };
+
+      styles = { ...styles, ...additionalColors };
+    }
 
     for (const style in styles) {
       if (!styles.hasOwnProperty(style)) {
@@ -315,6 +375,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       const styleAttr = style.replace(/_/g, '-');
+
       this.element.nativeElement.style.setProperty(
         `--m-pro--${styleAttr}`,
         styles[style]
@@ -333,6 +394,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   clearSearch() {
+    this.searchBoxOpen = false;
+    this.detectChanges();
     this.query = '';
     const cleanUrl = this.router.url.split(';')[0];
     this.router.navigate([cleanUrl]);
