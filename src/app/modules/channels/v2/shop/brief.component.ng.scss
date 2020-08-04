@@ -1,4 +1,6 @@
-m-channelShop__brief {
+@import 'defaults.scss';
+
+:host {
   display: block;
 }
 
@@ -34,37 +36,21 @@ m-channelShop__brief {
     }
   }
 
-  .m-channelShopBrief__row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 0 10px;
-    font-size: 15px;
-    line-height: 30px;
-    cursor: pointer;
+  ::ng-deep {
+    .m-channelShopMemberships__supportTier {
+      height: auto;
+      width: 100%;
+      margin-bottom: 40px;
 
-    &:last-child {
-      margin: 0;
-    }
-
-    .m-channelShopBriefRow__description {
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-right: 10px;
-
-      @include m-theme() {
-        color: themed($m-textColor--primary);
+      .m-channelShopMembershipsSupportTier__description {
+        height: auto;
       }
-    }
 
-    .m-channelShopBriefRow__amount {
-      white-space: nowrap;
-
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
+      .m-channelShopMembershipsSupportTier__actions {
+        .edit,
+        .cancel {
+          display: none;
+        }
       }
     }
   }

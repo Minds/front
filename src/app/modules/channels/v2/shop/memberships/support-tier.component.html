@@ -80,18 +80,25 @@
   <div class="m-channelShopMembershipsSupportTier__actions">
     <a
       *ngIf="isOwner"
-      class="m-cardButton-v2"
+      class="m-cardButton-v2 edit"
       (click)="onEditIntent.emit(supportTier)"
     >
       Edit
     </a>
 
     <a
-      *ngIf="!isOwner"
+      *ngIf="!isOwner && !supportTier.subscription_urn"
       class="m-cardButton-v2"
       (click)="onSelectIntent.emit(supportTier)"
     >
       Join
+    </a>
+
+    <a
+      *ngIf="!isOwner && supportTier.subscription_urn"
+      class="m-cardButton-v2 cancel"
+    >
+      Cancel
     </a>
   </div>
 </div>

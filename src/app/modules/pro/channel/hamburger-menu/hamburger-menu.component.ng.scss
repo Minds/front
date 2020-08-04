@@ -1,4 +1,5 @@
-m-pro__hamburger-menu {
+@import 'defaults.scss';
+:host {
   position: relative;
 
   .m-proHamburgerMenu__menu {
@@ -23,14 +24,16 @@ m-pro__hamburger-menu {
 
     .m-proHamburgerMenu__close {
       position: absolute;
-      top: 30px;
-      right: 40px;
+      top: 15px;
+      right: 25px;
       padding: 8px;
       cursor: pointer;
+      i {
+        color: var(--m-pro--text-color);
+      }
     }
 
     > ul {
-      padding: 0 16px;
       list-style: none;
       margin: 0;
       top: 0;
@@ -38,6 +41,7 @@ m-pro__hamburger-menu {
       width: 100%;
       height: auto;
       box-sizing: border-box;
+      padding: 0;
 
       > li {
         margin: 0;
@@ -45,8 +49,7 @@ m-pro__hamburger-menu {
         display: block;
         font-size: 18px;
         line-height: 1.25;
-        text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 400;
         letter-spacing: 1px;
         &.m-proHamburgerMenu__linkWrapper {
           cursor: pointer;
@@ -72,29 +75,31 @@ m-pro__hamburger-menu {
         }
 
         &.m-proHamburgerMenu__searchBox {
+          padding: 0 24px;
           > m-pro__searchbox {
             width: 100%;
             display: block;
             margin: 0 auto 16px;
 
             .mdl-textfield__input {
-              border: 1px solid var(--m-pro--text-color);
-              border-radius: 6px;
+              border: 1px solid var(--m-pro--border-color);
+              border-radius: 21px;
             }
           }
         }
 
         &.m-proHamburgerMenu__spacer {
           height: 0;
-          border-top: 1px solid var(--m-pro--text-color);
+          border-top: 1px solid var(--m-pro--border-color);
           margin: 16px 0;
         }
 
         > a {
           font: inherit;
           text-decoration: none;
-          padding: 12px 0;
+          padding: 12px 40px;
           display: block;
+          color: var(--m-pro--text-color);
 
           &.m-proHamburgerMenu__item--active {
             color: var(--m-pro--primary-color) !important;
@@ -103,21 +108,32 @@ m-pro__hamburger-menu {
       }
     }
   }
-
-  .m-pro--channel-footer {
-    display: block;
-    padding: 0 16px;
-
-    .m-proChannelFooter__socialItems {
-      margin: 16px 0;
+  .m-proHamburgerMenu__trigger {
+    cursor: pointer;
+    i {
+      color: var(--m-pro--text-color);
+      &:hover {
+        color: var(--m-pro--primary-color);
+      }
     }
   }
-}
 
-body.hamburger-menu--open {
-  overflow: hidden;
-}
+  ::ng-deep {
+    m-pro--channel-footer {
+      display: block;
+      padding: 0 40px;
 
-.m-proHamburgerMenu__trigger {
-  cursor: pointer;
+      .m-proChannelFooter__socialItems {
+        margin: 16px 0;
+      }
+      .m-proChannelFooter__link {
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+      .m-proChannelFooter__text {
+        color: var(--m-pro--secondary-text-color);
+      }
+    }
+  }
 }

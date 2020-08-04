@@ -103,24 +103,18 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
   async onOptionSelected(option) {
     switch (option) {
       case 'edit':
-        if (this.features.has('activity-composer')) {
-          this.composer.load(this.entity);
+        this.composer.load(this.entity);
 
-          this.composerModal
-            .setInjector(this.injector)
-            .present()
-            .toPromise()
-            .then(activity => {
-              if (activity) {
-                this.service.setEntity(activity);
-              }
-            });
-        } else {
-          // Load old post in editing mode
-          this.router.navigate([`/newsfeed/${this.entity.guid}`], {
-            queryParams: { editing: 1 },
+        this.composerModal
+          .setInjector(this.injector)
+          .present()
+          .toPromise()
+          .then(activity => {
+            if (activity) {
+              this.service.setEntity(activity);
+            }
           });
-        }
+
         break;
       case 'delete':
         try {
