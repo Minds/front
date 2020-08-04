@@ -9,7 +9,7 @@ import { WireService } from '../../wire.service';
 import { WireV2Service } from '../wire-v2.service';
 import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
 import { SupportTiersService } from '../support-tiers.service';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
@@ -50,6 +50,11 @@ export class WireCreatorComponent implements OnDestroy {
    * Owner subject subscription
    */
   protected ownerSubscription: Subscription;
+
+  /**
+   * Support Tier Subscription
+   */
+  protected supportTierSubscription: Subscription;
 
   /**
    * Modal options
@@ -130,6 +135,12 @@ export class WireCreatorComponent implements OnDestroy {
           this.onDismissIntent();
         });
     }
+    this.supportTierSubscription = combineLatest(
+      this.service.supportTier$,
+      this.service.type$
+    ).subscribe(([supportTier, type]) => {
+      if (supportTier) this.service.setAmount(supportTier[type]);
+    });
   }
 
   /**
@@ -139,6 +150,7 @@ export class WireCreatorComponent implements OnDestroy {
     if (this.ownerSubscription) {
       this.ownerSubscription.unsubscribe();
     }
+    this.supportTierSubscription.unsubscribe();
   }
 
   /**

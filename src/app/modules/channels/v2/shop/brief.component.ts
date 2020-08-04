@@ -58,5 +58,6 @@ export class ChannelShopBriefComponent implements OnDestroy {
         supportTier,
       })
       .toPromise();
+    this.supportTiers.refresh();
   }
 }
