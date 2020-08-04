@@ -44,7 +44,9 @@ export class SendWyreService {
   public async redirect(sendWyreConfig: SendWyreConfig) {
     try {
       const redirectUrl: string = await this.getRedirectUrl(sendWyreConfig);
-      window.location.assign(redirectUrl);
+      // new tab with fallback for popup blockers
+      window.open(redirectUrl, '_blank') ||
+        window.location.replace(redirectUrl);
     } catch (e) {
       console.error(e);
       this.toaster.error('SendWyre baseUrl not configured');
