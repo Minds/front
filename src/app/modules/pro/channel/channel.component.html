@@ -13,15 +13,13 @@
               >Already have an account? </span
             ><a (click)="showLoginModal()" i18n="@@COMMON__LOGIN">Login</a>
           </div>
-          <div
-            class="m-proChannel__joinNow"
-            *ngIf="showJoin && lowestSupportTier$ | async as lowestSupportTier"
-          >
+          <div class="m-proChannel__joinNow" *ngIf="showJoin">
             <m-pro__joinButton></m-pro__joinButton>
             <div class="m-proChannel__lowestPrice">
-              <span i18n="@@M_PRO_CHANNEL__LOWEST_PRICE"
-                >from ${{ lowestSupportTier.usd }}</span
-              ><span i18n="@@M_PRO_CHANNEL__PER_MONTH"> per month</span>
+              <span i18n="@@M_PRO_CHANNEL__LOWEST_PRICE">from </span
+              ><span i18n="@@M_PRO_CHANNEL__PER_MONTH"
+                >${{ lowestSupportTier.usd }} per month</span
+              >
             </div>
           </div>
         </ng-container>
