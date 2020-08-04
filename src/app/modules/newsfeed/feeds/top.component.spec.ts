@@ -110,8 +110,6 @@ describe('NewsfeedTopComponent', () => {
 
     comp = fixture.componentInstance;
 
-    featuresServiceMock.mock('activity-composer', true);
-
     clientMock.response = {};
     clientMock.response['api/v2/entities/suggested/activities'] = {
       status: 'success',

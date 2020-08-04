@@ -448,22 +448,19 @@ export class Activity implements OnInit {
         this.router.navigate(['/newsfeed', this.activity.guid]);
         break;
       case 'edit':
-        if (this.featuresService.has('activity-composer')) {
-          this.composer.load(this.activity);
+        this.composer.load(this.activity);
 
-          this.composerModal
-            .setInjector(this.injector)
-            .present()
-            .toPromise()
-            .then(activity => {
-              if (activity) {
-                this.activity = activity;
-                this.detectChanges();
-              }
-            });
-        } else {
-          this.editing = true;
-        }
+        this.composerModal
+          .setInjector(this.injector)
+          .present()
+          .toPromise()
+          .then(activity => {
+            if (activity) {
+              this.activity = activity;
+              this.detectChanges();
+            }
+          });
+
         break;
       case 'delete':
         this.delete();
