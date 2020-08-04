@@ -67,23 +67,24 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   showSplash: boolean = false;
 
   /**
+   * User is subscribed to a membership
+   */
+  isMember: boolean = false;
+
+  /**
    * Hide search box for medium width windows
    */
   searchBoxOpen: boolean = false;
 
-  lowestSupportTier$: Observable<
-    SupportTier
-  > = this.supportTiersService.list$.pipe(
-    map(supportTiers => {
-      return supportTiers[0];
-    })
-  );
+  public lowestSupportTier: SupportTier | null;
 
   protected params$: Subscription;
 
   protected loggedIn$: Subscription;
 
   protected routerEventsSubscription: Subscription;
+
+  protected supportTiersSubscription: Subscription;
 
   @ViewChild('overlayModal', { static: true })
   protected overlayModal: OverlayModalComponent;
@@ -162,17 +163,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     } else return false;
   }
 
-  get isMember() {
-    // TODO
-    return false;
-  }
-
   get hideLoginRow() {
     return this.isMember && !this.isOwner;
   }
 
   get showJoin() {
-    return !this.isMember && !this.isOwner;
+    return !this.isMember && !this.isOwner && this.lowestSupportTier;
   }
 
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
@@ -265,6 +261,19 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(data => {
         this.pageLayoutService.useFullWidth();
       });
+
+    this.supportTiersSubscription = this.supportTiersService.list$.subscribe(
+      supportTiers => {
+        if (supportTiers[0]) {
+          this.lowestSupportTier = supportTiers[0];
+
+          this.isMember = supportTiers.some(
+            supportTier => supportTier.subscription_urn
+          );
+        }
+        this.detectChanges();
+      }
+    );
   }
 
   @HostListener('window:resize') onResize() {
@@ -274,6 +283,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.params$.unsubscribe();
     this.routerEventsSubscription.unsubscribe();
+    this.supportTiersSubscription.unsubscribe();
   }
 
   async load() {
