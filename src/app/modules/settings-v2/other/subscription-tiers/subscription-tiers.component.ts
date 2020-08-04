@@ -23,7 +23,7 @@ export class SettingsV2SubscriptionTiersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.features.has('channels-shop')) {
+    if (this.features.has('paywall-2020')) {
       // Reroute to the user's shop page
       const username = this.session.getLoggedInUser().username;
       this.router.navigate([`/${username}/shop`], { skipLocationChange: true });
