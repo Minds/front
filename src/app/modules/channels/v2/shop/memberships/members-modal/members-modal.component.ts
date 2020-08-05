@@ -5,7 +5,7 @@ import { Filter, Option } from '../../../../../../interfaces/dashboard';
 import { SupportTiersService } from '../../../../../wire/v2/support-tiers.service';
 import { MessengerConversationDockpanesService } from '../../../../../messenger/dockpanes/dockpanes.service';
 import { MessengerConversationBuilderService } from '../../../../../messenger/dockpanes/conversation-builder.service';
-import { MindsUser } from 'src/app/interfaces/entities';
+import { MindsUser } from '../../../../../../interfaces/entities';
 
 const ALL_TIERS: Option = { label: 'All tiers', id: '' };
 
