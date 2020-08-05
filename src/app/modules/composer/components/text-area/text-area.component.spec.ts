@@ -8,6 +8,7 @@ import { TextAreaComponent } from './text-area.component';
 import { ComposerService } from '../../services/composer.service';
 import { FormsModule } from '@angular/forms';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
+import { of } from 'rxjs';
 
 describe('Composer Text Area', () => {
   let comp: TextAreaComponent;
@@ -16,6 +17,7 @@ describe('Composer Text Area', () => {
   const message$ = jasmine.createSpyObj('message$', {
     next: () => {},
     subscribe: { unsubscribe: () => {} },
+    pipe: of({}),
   });
 
   const title$ = jasmine.createSpyObj('title$', {
