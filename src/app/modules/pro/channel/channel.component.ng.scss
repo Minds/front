@@ -14,6 +14,9 @@ $min-tablet-pro: 900px;
 
     &.hideLoginRow {
       grid-template-rows: 0 170px 1fr 100px;
+      .m-proChannel__loginRow {
+        display: none;
+      }
     }
     .is-pro-domain & {
       min-height: 100vh;
@@ -100,7 +103,7 @@ $min-tablet-pro: 900px;
 
     .m-proChannel__topbar {
       grid-row: 2 / span 1;
-      padding: 10px 8vw 16px 8vw;
+      padding: 16px 8vw;
 
       minds-avatar {
         width: 90px;
