@@ -171,7 +171,7 @@
               contentType !== 'rich-embed' &&
               !attachment.shouldBeBlurred(entity)
             "
-            @fastFade
+            @mediumFade
           >
             <div
               class="m-mediaModal__overlayTitleWrapper"
@@ -249,7 +249,7 @@
             *ngIf="hasModalPager() && modalPager.hasPrev && pagerVisible"
             class="m-mediaModal__pager m-mediaModal__pager--previous"
             (click)="goToPrev()"
-            @fastFade
+            @mediumFade
           >
             <i class="material-icons">chevron_left</i>
           </a>
@@ -258,7 +258,7 @@
             *ngIf="hasModalPager() && modalPager.hasNext && pagerVisible"
             class="m-mediaModal__pager m-mediaModal__pager--next"
             (click)="goToNext()"
-            @fastFade
+            @mediumFade
           >
             <i class="material-icons">chevron_right</i>
           </a>

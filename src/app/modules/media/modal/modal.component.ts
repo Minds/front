@@ -12,13 +12,6 @@ import {
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -40,6 +33,8 @@ import {
   StackableModalState,
   StackableModalEvent,
 } from '../../../services/ux/stackable-modal.service';
+import { MediumFadeAnimation, SlowFadeAnimation } from '../../../animations';
+import isFullscreen, { toggleFullscreen } from '../../../helpers/fullscreen';
 
 export type MediaModalParams = {
   entity: any;
@@ -49,31 +44,10 @@ export type MediaModalParams = {
   selector: 'm-media--modal',
   templateUrl: 'modal.component.html',
   animations: [
-    // Fade media in after load
-    trigger('slowFade', [
-      state(
-        'in',
-        style({
-          opacity: 1,
-        })
-      ),
-      state(
-        'out',
-        style({
-          opacity: 0,
-        })
-      ),
-      transition('out => in', [animate('600ms')]),
-      transition('in => out', [animate('0ms')]),
-    ]),
     // Fade overlay in/out
-    trigger('fastFade', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
-    ]),
+    MediumFadeAnimation,
+    // Fade media in after load
+    SlowFadeAnimation,
   ],
   providers: [ActivityService],
 })
@@ -706,55 +680,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   @HostListener('document:MSFullscreenChange', ['$event'])
   onFullscreenChange(event) {
     this.calculateDimensions();
-    if (
-      !document.fullscreenElement &&
-      !document['webkitFullscreenElement'] &&
-      !document['mozFullScreenElement'] &&
-      !document['msFullscreenElement']
-    ) {
-      this.isFullscreen = false;
-    } else {
-      this.isFullscreen = true;
-    }
+    this.isFullscreen = isFullscreen();
   }
 
   toggleFullscreen() {
-    const elem = document.querySelector('.m-mediaModal__stageWrapper');
     this.fullscreenHovering = false;
     this.calculateDimensions();
 
-    // If fullscreen is not already enabled
-    if (
-      !document['fullscreenElement'] &&
-      !document['webkitFullscreenElement'] &&
-      !document['mozFullScreenElement'] &&
-      !document['msFullscreenElement']
-    ) {
-      // Request full screen
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem['webkitRequestFullscreen']) {
-        elem['webkitRequestFullscreen']();
-      } else if (elem['mozRequestFullScreen']) {
-        elem['mozRequestFullScreen']();
-      } else if (elem['msRequestFullscreen']) {
-        elem['msRequestFullscreen']();
-      }
-      this.isFullscreen = true;
-      return;
-    }
-
-    // If fullscreen is already enabled, exit it
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document['webkitExitFullscreen']) {
-      document['webkitExitFullscreen']();
-    } else if (document['mozCancelFullScreen']) {
-      document['mozCancelFullScreen']();
-    } else if (document['msExitFullscreen']) {
-      document['msExitFullscreen']();
-    }
-    this.isFullscreen = false;
+    const el = document.querySelector('.m-mediaModal__stageWrapper');
+    this.isFullscreen = toggleFullscreen(el);
   }
 
   // * KEYBOARD SHORTCUTS * --------------------------------------------------------------------------
