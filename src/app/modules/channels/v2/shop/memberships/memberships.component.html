@@ -1,7 +1,7 @@
 <div class="m-channelShop__memberships">
   <div class="m-channelShopMemberships__header">
     <div class="m-channelShopMemberships__title">
-      <h2 i18n="@@CHANNELS_SHOP_MEMBERSHIPS_TITLE">Memberships</h2>
+      <h2 i18n="@@CHANNELS_SHOP_MEMBERSHIPS_TITLE" hidden>Memberships</h2>
 
       <ng-container
         *ngIf="channel.isOwner$ | async; else consumerTitleHeadline"
@@ -23,7 +23,6 @@
           class="m-channelShopMembershipsTitle__headline"
           ngPreserveWhitespaces
         >
-          &mdash;
           <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_TITLE_HEADLINE"
             >Access exclusive content through a monthly
             contribution</ng-container
@@ -33,6 +32,13 @@
     </div>
 
     <ng-container *ngIf="channel.isOwner$ | async; else consumerHeader">
+      <a
+        class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"
+      >
+        <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_VIEW_SUPPORTERS"
+          >View Supporters</ng-container
+        >
+      </a>
       <a
         (click)="create()"
         class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"

@@ -15,6 +15,7 @@ import { WireModalService } from '../../../../wire/wire-modal.service';
   selector: 'm-channelShop__memberships',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'memberships.component.html',
+  styleUrls: ['memberships.component.ng.scss'],
   providers: [
     SupportTiersService,
     ChannelShopMembershipsService,

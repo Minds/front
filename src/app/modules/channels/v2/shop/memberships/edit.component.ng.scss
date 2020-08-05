@@ -1,4 +1,6 @@
-m-channelShopMemberships__edit {
+@import 'defaults.scss';
+
+:host {
   position: relative;
   display: block;
   width: 100%;
@@ -113,7 +115,7 @@ m-channelShopMemberships__edit {
       width: 100%;
     }
   }
-  .m-form__field--checkbox {
+  ::ng-deep .m-form__field--checkbox {
     m-tooltip {
       margin-top: -8px;
       margin-left: 8px;
