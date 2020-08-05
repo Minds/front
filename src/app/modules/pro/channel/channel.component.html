@@ -1,24 +1,33 @@
-<div class="m-pro__channel" [ngClass]="{ hideLoginRow: hideLoginRow }">
+<div class="m-pro__channel" [ngClass]="{ hideLoginRow: !showLoginRow }">
   <ng-container *ngIf="channel">
     <m-proChannel__splash
-      *ngIf="showSplash"
-      (closeSplash)="showSplash = false"
+      *ngIf="channelService.showSplash$ | async"
     ></m-proChannel__splash>
 
-    <ng-container *ngIf="!showSplash">
-      <div class="m-proChannel__loginRow" [hidden]="hideLoginRow">
-        <ng-container *ngIf="!isOwner; else ownerSettings">
+    <ng-container *ngIf="!(channelService.showSplash$ | async)">
+      <div class="m-proChannel__loginRow">
+        <ng-container
+          *ngIf="!(channelService.isOwner | async); else ownerSettings"
+        >
           <div class="m-proChannel__login" *ngIf="!currentUser">
             <span i18n="@@M_PRO_CHANNEL__HAVE_ACCOUNT"
               >Already have an account? </span
             ><a (click)="showLoginModal()" i18n="@@COMMON__LOGIN">Login</a>
           </div>
-          <div class="m-proChannel__joinNow" *ngIf="showJoin">
-            <m-pro__joinButton></m-pro__joinButton>
-            <div class="m-proChannel__lowestPrice">
-              <span i18n="@@M_PRO_CHANNEL__LOWEST_PRICE">from </span
-              ><span i18n="@@M_PRO_CHANNEL__PER_MONTH"
-                >${{ lowestSupportTier.usd }} per month</span
+          <div class="m-proChannel__joinNow">
+            <m-pro__joinButton
+              *ngIf="channelService.showJoinButton$ | async"
+            ></m-pro__joinButton>
+            <div
+              class="m-proChannel__lowestPrice"
+              *ngIf="
+                (channelService.showJoinButton$ | async) &&
+                (channelService.lowestSupportTier$ | async) as tier
+              "
+            >
+              <span i18n="@@M_PRO_CHANNEL__FROM">from </span
+              ><span i18n="@@M_PRO_CHANNEL__PRICE_PER_MONTH"
+                >${{ tier.usd }} per month</span
               >
             </div>
           </div>

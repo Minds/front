@@ -8,15 +8,14 @@
     <img class="m-proChannelSplash__logo" [src]="settings.logo_image" />
     <div
       class="m-proChannelSplash__price"
-      *ngIf="lowestSupportTier$ | async as lowestSupportTier"
+      *ngIf="service.lowestSupportTier$ | async as tier"
     >
-      <span i18n="@@M_PRO_SPLASH__STARTING_PRICE"
-        >From ${{ lowestSupportTier.usd }}</span
+      <span i18n="@@M_PRO_SPLASH__LOWEST_PRICE">From ${{ tier.usd }}</span
       ><span i18n="@@M_PRO_SPLASH__PER_MONTH"> per month</span>
     </div>
     <m-pro__joinButton></m-pro__joinButton>
     <span
-      (click)="closeSplash.emit()"
+      (click)="service.showSplash$.next(false)"
       class="m-proChannelSplash__skip"
       i18n="@@M_PRO_SPLASH__GO_TO_SITE"
       >No thanks, just take me to the site.</span
@@ -27,7 +26,3 @@
     <m-poweredBy product="Pro" link="/pro"></m-poweredBy>
   </div>
 </div>
-<m-modal-signup
-  *ngIf="!session.getLoggedInUser()"
-  [open]="false"
-></m-modal-signup>
