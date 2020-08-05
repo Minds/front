@@ -33,6 +33,7 @@
 
     <ng-container *ngIf="channel.isOwner$ | async; else consumerHeader">
       <a
+        (click)="openMembersModal($event)"
         class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"
       >
         <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_VIEW_SUPPORTERS"

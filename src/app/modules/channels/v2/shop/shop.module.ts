@@ -14,6 +14,7 @@ import { ChannelShopMembershipsEditComponent } from './memberships/edit.componen
 import { ChannelShopMembershipsSupportTierComponent } from './memberships/support-tier.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ChannelShopMembershipsMembersComponent } from './memberships/members-modal/members-modal.component';
 
 const EXPORTS = [ChannelShopComponent, ChannelShopBriefComponent];
 
@@ -26,6 +27,7 @@ const EXPORTS = [ChannelShopComponent, ChannelShopBriefComponent];
     ChannelShopMembershipsSupportTierComponent,
     ChannelShopComponent,
     ChannelShopBriefComponent,
+    ChannelShopMembershipsMembersComponent,
   ],
 })
 export class ChannelsShopModule {
