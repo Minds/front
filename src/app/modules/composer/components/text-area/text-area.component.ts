@@ -14,6 +14,8 @@ import {
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
+import { map } from 'rxjs/operators';
+import htmlDecode from '../../../../helpers/decode-html';
 
 /**
  * Composer message and title components.
@@ -64,10 +66,10 @@ export class TextAreaComponent implements AfterViewInit {
   ) {}
 
   /**
-   * Message subject from service
+   * Message subject from service, html decoded.
    */
   get message$() {
-    return this.service.message$;
+    return this.service.message$.pipe(map(message => htmlDecode(message)));
   }
 
   /**
