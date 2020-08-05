@@ -16,6 +16,7 @@ import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
   selector: 'm-channelShopMemberships__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'edit.component.html',
+  styleUrls: ['edit.component.ng.scss'],
   providers: [ChannelShopMembershipsEditService, WalletV2Service],
 })
 export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {

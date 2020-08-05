@@ -75,7 +75,7 @@ const routes: Routes = [
     CommonModule,
     CommentsModule,
     LegacyModule,
-    ChannelsModule,
+    //ChannelsModule,
     ModalsModule,
     HashtagsModule,
     TextInputAutocompleteModule,

@@ -10,11 +10,14 @@ import { map } from 'rxjs/operators';
 import { ChannelShopMembershipsService } from './memberships.service';
 import { ChannelShopMembershipsEditModalService } from './edit-modal.service';
 import { WireModalService } from '../../../../wire/wire-modal.service';
+import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
+import { ChannelShopMembershipsMembersComponent } from './members-modal/members-modal.component';
 
 @Component({
   selector: 'm-channelShop__memberships',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'memberships.component.html',
+  styleUrls: ['memberships.component.ng.scss'],
   providers: [
     SupportTiersService,
     ChannelShopMembershipsService,
@@ -77,13 +80,15 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * @param service
    * @param editModal
    * @param wireModal
+   * @param StackableModalService
    */
   constructor(
     public channel: ChannelsV2Service,
     public supportTiers: SupportTiersService,
     protected service: ChannelShopMembershipsService,
     protected editModal: ChannelShopMembershipsEditModalService,
-    protected wireModal: WireModalService
+    protected wireModal: WireModalService,
+    protected stackableModal: StackableModalService
   ) {
     this.channelGuidSubscription = this.channel.guid$.subscribe(guid =>
       this.supportTiers.setEntityGuid(guid)
@@ -143,5 +148,20 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
 
     await this.service.delete(supportTier).toPromise();
     this.supportTiers.refresh();
+  }
+
+  async openMembersModal(e: MouseEvent): Promise<void> {
+    await this.stackableModal
+      .present(
+        ChannelShopMembershipsMembersComponent,
+        this.channel.channel$.getValue(),
+        {
+          wrapperClass: 'm-modalV2__wrapper',
+          onDismissIntent: () => {
+            this.stackableModal.dismiss();
+          },
+        }
+      )
+      .toPromise();
   }
 }

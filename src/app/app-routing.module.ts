@@ -31,8 +31,10 @@ const routes: Routes = [
   { path: ':username', redirectTo: ':username/', pathMatch: 'full' },
   {
     path: ':username/:filter',
-    component: ChannelContainerComponent,
-    canDeactivate: [CanDeactivateGuardService],
+    loadChildren: () =>
+      import('./modules/channel-container/channel-container.module').then(
+        m => m.ChannelContainerModule
+      ),
   },
 ];
 

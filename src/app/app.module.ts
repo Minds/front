@@ -29,7 +29,7 @@ import { AdsModule } from './modules/ads/ads.module';
 import { BoostModule } from './modules/boost/boost.module';
 import { WireModule } from './modules/wire/wire.module';
 import { ReportModule } from './modules/report/report.module';
-import { ChannelsModule } from './modules/channels/channels.module';
+//import { ChannelsModule } from './modules/channels/channels.module';
 import { MindsFormsModule } from './modules/forms/forms.module';
 import { LegacyModule } from './modules/legacy/legacy.module';
 import { ModalsModule } from './modules/modals/modals.module';
@@ -57,7 +57,7 @@ import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
-import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
+//import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
 
 import * as Sentry from '@sentry/browser';
@@ -129,13 +129,13 @@ export class SentryErrorHandler implements ErrorHandler {
     CommentsModule,
     JobsMarketingModule,
     IssuesModule,
-    ChannelsModule,
+    //ChannelsModule,
     UpgradesModule,
     SharedModule,
 
     //last due to :username route
     AppRoutingModule,
-    ChannelContainerModule,
+    //ChannelContainerModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },

@@ -1,0 +1,57 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2 class="m-modalV2Header__title">
+      Supporters
+    </h2>
+
+    <div class="m-channelShopMembershipsMembers__supportTiersSelector">
+      <m-dropdownSelector
+        [filter]="supportTiersFilter"
+        [inlineLabel]="true"
+        (selectionMade)="supportTierSelected($event)"
+      >
+      </m-dropdownSelector>
+    </div>
+  </div>
+
+  <div class="m-modalV2__body">
+    <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
+    <table [hidden]="inProgress$ | async">
+      <tr *ngFor="let supportTierMember of supportTierMembers$ | async">
+        <td class="m-channelShopMembershipsMembersMember__avatar">
+          <minds-avatar [object]="supportTierMember.user"></minds-avatar>
+        </td>
+        <td class="m-channelShopMembershipsMembersMember__name">
+          {{ supportTierMember.user.name }}
+        </td>
+
+        <td>{{ supportTierMember.support_tier.name }}</td>
+
+        <td class="m-channelShopMembershipsMembersMember__amount">
+          <ng-container
+            *ngIf="supportTierMember.subscription.payment_method === 'usd'"
+            >$</ng-container
+          >
+          {{
+            supportTierMember.support_tier[
+              supportTierMember.subscription.payment_method
+            ] | number: '1.2-2'
+          }}
+          <ng-container
+            *ngIf="supportTierMember.subscription.payment_method === 'tokens'"
+            >tokens</ng-container
+          >
+        </td>
+
+        <td class="m-channelShopMembershipsMembersMember__message">
+          <a
+            class="m-button-v2 m-button-v2--iconOnly"
+            (click)="onMessageButtonClicked(supportTierMember.user)"
+          >
+            <m-icon iconId="chat_bubble" [sizeFactor]="0"></m-icon>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

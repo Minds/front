@@ -31,8 +31,8 @@
             [routerLink]="['/', username, 'shop']"
             routerLinkActive="m-tabs__tab--selected"
             [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-            i18n="@@COMMON__SHOP"
-            >Shop</a
+            i18n="@@COMMON__SHOP__MEMBERSHIPS"
+            >Memberships</a
           >
         </div>
 
@@ -51,7 +51,11 @@
       </div>
 
       <ng-container [ngSwitch]="view$ | async">
-        <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
+        <ng-container *ngSwitchCase="'shop'">
+          <m-channelShop__lazy
+            component="m-channel__shop"
+          ></m-channelShop__lazy>
+        </ng-container>
         <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
         <m-channelList__connections
           subscribeEndpointParam="subscribers"

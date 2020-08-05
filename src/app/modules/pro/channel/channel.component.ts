@@ -76,6 +76,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   searchBoxOpen: boolean = false;
 
+  showLoginRowSubscription: Subscription;
+  showLoginRow: boolean = true;
+
   public lowestSupportTier: SupportTier | null;
 
   protected params$: Subscription;
@@ -157,20 +160,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.site.isProDomain;
   }
 
-  get isOwner() {
-    if (this.currentUser) {
-      return this.currentUser?.guid === this.channel.guid;
-    } else return false;
-  }
-
-  get hideLoginRow() {
-    return this.isMember && !this.isOwner;
-  }
-
-  get showJoin() {
-    return !this.isMember && !this.isOwner && this.lowestSupportTier;
-  }
-
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
     if (!this.channel || !this.channel.pro_settings.background_image) {
       return 'none';
@@ -199,7 +188,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public session: Session,
     protected element: ElementRef,
-    protected channelService: ProChannelService,
+    public channelService: ProChannelService,
     protected client: Client,
     protected router: Router,
     protected route: ActivatedRoute,
@@ -212,7 +201,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     protected pageLayoutService: PageLayoutService,
     protected toasterService: FormToastService,
-    protected supportTiersService: SupportTiersService,
+    protected supportTiers: SupportTiersService,
     private authModal: AuthModalService
   ) {}
 
@@ -224,6 +213,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.listen();
     this.onResize();
     this.pageLayoutService.useFullWidth();
+
+    this.channelService.isLoggedIn$.next(this.session.isLoggedIn());
   }
 
   ngAfterViewInit() {
@@ -262,15 +253,22 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.pageLayoutService.useFullWidth();
       });
 
-    this.supportTiersSubscription = this.supportTiersService.list$.subscribe(
+    this.supportTiersSubscription = this.supportTiers.list$.subscribe(
       supportTiers => {
         if (supportTiers[0]) {
-          this.lowestSupportTier = supportTiers[0];
+          this.channelService.lowestSupportTier$.next(supportTiers[0]);
 
-          this.isMember = supportTiers.some(
-            supportTier => supportTier.subscription_urn
+          this.channelService.userIsMember$.next(
+            supportTiers.some(supportTier => supportTier.subscription_urn)
           );
         }
+        this.detectChanges();
+      }
+    );
+
+    this.showLoginRowSubscription = this.channelService.showLoginRow$.subscribe(
+      show => {
+        this.showLoginRow = show;
         this.detectChanges();
       }
     );
@@ -284,6 +282,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.params$.unsubscribe();
     this.routerEventsSubscription.unsubscribe();
     this.supportTiersSubscription.unsubscribe();
+    this.showLoginRowSubscription.unsubscribe();
   }
 
   async load() {
@@ -299,7 +298,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.load(this.username);
 
-      this.supportTiersService.setEntityGuid(this.channel.guid);
+      this.supportTiers.setEntityGuid(this.channel.guid);
       this.bindCssVariables();
       this.setSplash();
       this.shouldOpenWireModal();
@@ -344,10 +343,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setSplash(): void {
-    this.showSplash =
+    this.channelService.showSplash$.next(
       !this.currentUser &&
-      this.channel.pro_settings.splash &&
-      this.site.isProDomain;
+        this.channel.pro_settings.splash &&
+        this.site.isProDomain
+    );
   }
 
   async showLoginModal(): Promise<void> {
