@@ -45,7 +45,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   /**
    * Seconds after which paywall is disabled
    */
-  expires: PlusPostExpiry = this.twoDays;
+  expires: PlusPostExpiry = null;
 
   /**
    * Whether an existing post with a
