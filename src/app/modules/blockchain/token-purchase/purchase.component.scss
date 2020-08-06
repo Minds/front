@@ -73,6 +73,9 @@ m-blockchain--purchase {
       width: 5em;
       text-align: right;
 
+      /* style as textfield for firefox **/
+      -moz-appearance: textfield;
+
       @media screen and (max-width: $m-grid-min-vp) {
         width: 4em;
       }
@@ -83,6 +86,7 @@ m-blockchain--purchase {
 
       @include m-theme() {
         color: themed($m-black);
+        background-color: themed($m-white);
         box-shadow: 0 1px 0 rgba(themed($m-black), 0.1);
 
         &:focus {
