@@ -323,15 +323,21 @@ export class YoutubeMigrationService {
    * Need to redirect to response.url, then will be automatically redirected back
    * to previous location after user authorizes
    */
-  async connectAccount(): Promise<{ url: string }> {
+  async connectAccount(youtubeId: string): Promise<boolean> {
     try {
-      const response = <any>await this.client.get(`${this.endpoint}account`);
+      const response = <any>await this.client.post(
+        `${this.endpoint}account/connect`,
+        {
+          channelId: youtubeId,
+        }
+      );
 
-      this.connected$.next(true);
-      return response;
+      this.connected$.next(response.connected);
+      this.selectedChannel$.next(response.yt_channel);
+      return response.connected;
     } catch (e) {
       console.error('connectAccount(): ', e);
-      return e;
+      return false;
     }
   }
 

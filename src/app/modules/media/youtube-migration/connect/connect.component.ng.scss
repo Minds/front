@@ -1,0 +1,48 @@
+@import 'defaults.scss';
+
+:host {
+  .m-youtubeMigrationConnect__instructions {
+    padding-inline-start: 20px;
+    margin-bottom: 40px;
+  }
+
+  .m-youtubeMigrationConnect__link {
+    > m-icon {
+      vertical-align: middle;
+      margin-left: 5px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-youtubeMigrationConnect__copyToClipboard {
+    cursor: copy;
+  }
+
+  .m-youtubeMigrationConnect__channelLink {
+    text-decoration: underline;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-form__field--text {
+    padding-left: 40px;
+    margin-bottom: 40px;
+    @include m-theme() {
+      border-left: 5px solid themed($m-borderColor--primary);
+    }
+
+    h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+    p {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}
