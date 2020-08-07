@@ -11,7 +11,7 @@ context('Onboarding', () => {
   const passwordField = 'minds-form-register #password';
   const password2Field = 'minds-form-register #password2';
   const checkbox = '[data-cy=minds-accept-tos-input] [type=checkbox]';
-  const submitButton = 'minds-form-register .mdl-card__actions button';
+  const submitButton = '.m-shadowboxSubmitButton';
   const letsGetSetupButton = '[data-cy=onboarding-lets-get-setup-button]';
 
   beforeEach(() => {

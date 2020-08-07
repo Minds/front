@@ -1,4 +1,5 @@
-context('Composer Monetize Popup', () => {
+// re-enable when tiers are set up on sandbox
+context.skip('Composer Monetize Popup', () => {
 
   // Elements
   const composer = 'm-composer__modal > m-composer__base';

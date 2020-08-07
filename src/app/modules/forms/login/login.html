@@ -96,6 +96,7 @@
           i18n-placeholder="@@M__COMMON__USERNAME"
           autocomplete="username"
           (keydown.enter)="login(); $event.preventDefault();"
+          data-cy="data-minds-login-username-input"
         />
       </div>
       <div class="m-login__error" *ngIf="!!usernameError">
@@ -129,6 +130,7 @@
           i18n-placeholder="@@M__COMMON__PASSWORD"
           autocomplete="current-password"
           (keydown.enter)="login(); $event.preventDefault();"
+          data-cy="data-minds-login-password-input"
         />
       </div>
     </div>
