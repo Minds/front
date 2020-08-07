@@ -26,6 +26,6 @@ export class YoutubeMigrationVideoListComponent {
     const videoId = video.video_id;
     this.youtubeService.import(videoId);
     // video.status = this.youtubeService.getVideoStatus(videoId);
-    video.status = 'queued';
+    video.status = 'transcoding';
   }
 }
