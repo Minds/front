@@ -10,7 +10,7 @@ context('Subscription', () => {
   const password = `${generateRandomId()}0oA!`;
 
   before(() => {
-    cy.newUser(username, password);
+    cy.newUser(username, password, true);
     cy.logout();
     cy.login(true);
   });
@@ -43,9 +43,9 @@ context('Subscription', () => {
       .contains("Subscribe")
       .click()
       .wait('@subscribe').then((xhr) => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal("success");
-    });
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
     cy.get(messageButton).should('be.visible')
   }
 
