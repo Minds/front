@@ -3,6 +3,9 @@ m-channel__socialLinks {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  overflow: hidden;
+  max-height: 100px;
 
   > * + * {
     margin-left: 8px;
