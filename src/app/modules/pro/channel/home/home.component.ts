@@ -4,6 +4,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  HostListener,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -26,6 +27,8 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
 
   moreData: boolean = true;
 
+  showFeed: boolean = false;
+
   constructor(
     protected router: Router,
     protected channelService: ProChannelService,
@@ -33,6 +36,20 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected metaService: MetaService
   ) {}
+
+  /**
+   * Listen to scroll, show feed when bottom reached.
+   */
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event) {
+    const element = event.target.activeElement;
+    if (
+      !this.showFeed &&
+      element.scrollTop + element.clientHeight / 2 >= element.scrollHeight / 2
+    ) {
+      this.showFeed = true;
+    }
+  }
 
   ngOnInit() {
     this.setMenuNavItems();
