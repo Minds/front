@@ -82,6 +82,10 @@ export class YoutubeMigrationConnectComponent {
     }
   }
 
+  get channelId(): string {
+    return this.form.value.youtubeId;
+  }
+
   detectChanges() {
     if (!(this.cd as ViewRef).destroyed) {
       this.cd.markForCheck();
