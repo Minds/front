@@ -191,6 +191,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
         this.comment.edited = true;
       })
       .catch(e => {
+        this.toasterService.error(
+          e.message || 'An unknown error has occurred saving your comment.'
+        );
         this.inProgress = false;
       });
   }
