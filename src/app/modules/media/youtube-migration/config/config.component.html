@@ -25,6 +25,7 @@
                   class="form-control"
                   data-minds="autoImport"
                   [readonly]="inProgress || !init"
+                  (click)="onAutoImportCheckboxClick($event)"
                 />
                 <span class="m-form__customInput__checkbox"></span>
               </label>
