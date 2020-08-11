@@ -49,9 +49,19 @@ export class DateDropdownsComponent implements OnInit {
       return;
     }
 
-    const parts = date.split('-').map(part => parseInt(part, 10));
+    let parts;
+    try {
+      parts = date.split('-').map(part => parseInt(part, 10));
+    } catch (e) {
+      return;
+    }
 
-    if (!parts[0] || !parts[1] || parts[2]) {
+    if (
+      !parts ||
+      typeof parts[0] !== 'number' ||
+      typeof parts[1] !== 'number' ||
+      typeof parts[2] !== 'number'
+    ) {
       return;
     }
 
