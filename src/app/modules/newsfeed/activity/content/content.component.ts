@@ -342,9 +342,10 @@ export class ActivityContentComponent
       return; // Don't open modal for minds links
     }
     this.entity.modal_source_url = this.router.url;
-    const modalComponent = this.features.has('activity-modal')
-      ? ActivityModalComponent
-      : MediaModalComponent;
+    // const modalComponent = this.features.has('activity-modal')
+    //   ? ActivityModalComponent
+    //   : MediaModalComponent;
+    const modalComponent = ActivityModalComponent;
     this.overlayModal
       .create(
         modalComponent,

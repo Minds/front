@@ -54,13 +54,15 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
     SlowFadeAnimation, // Fade media in after load
   ],
   providers: [
-    ActivityService,
+    //ActivityService,
     ComposerService,
     ActivityServiceCommentsLegacySupport,
   ],
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
   @Input('entity') set data(params: MediaModalParams) {
+    console.log(params);
+    // ojm skipSelf create new activity service and detach from existing
     this.service.setActivityService(this.activityService);
 
     this.service.setSourceUrl(this.router.url);
@@ -135,6 +137,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   // SETUP
   /////////////////////////////////////////////////////////////////
   ngOnInit(): void {
+    console.log('ojm modal ngOnInit was called');
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
@@ -143,6 +146,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         /**
          * Modal doesn't handle reminds or status posts
          */
+
+        console.log('ojm entity subscription', entity);
 
         if (!entity) {
           return;
@@ -160,8 +165,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       }
     );
 
+    // todoojm single subscription of combinedLatest canonical+entity
+
     this.canonicalUrlSubscription = this.activityService.canonicalUrl$.subscribe(
       canonicalUrl => {
+        if (!this.entity) return;
         /**
          * Record pageviews
          */
