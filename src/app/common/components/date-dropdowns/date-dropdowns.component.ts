@@ -66,7 +66,7 @@ export class DateDropdownsComponent implements OnInit {
     }
 
     this.selectYear(parts[0], false);
-    this.selectMonth(parts[1].toString(), false);
+    this.selectMonth(this.monthNames[parts[1] - 1], false);
     this.selectDay(parts[2].toString(), false);
     this.emitChanges();
   }
