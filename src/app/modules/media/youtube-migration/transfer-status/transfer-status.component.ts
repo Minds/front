@@ -56,14 +56,14 @@ export class YoutubeMigrationTransferStatusComponent
     );
 
     // We check every 5 seconds
-    this.statusInterval = timer(0, 5000).subscribe(() => {
-      this.youtubeService.getStatusCounts();
-    });
+    // this.statusInterval = timer(0, 5000).subscribe(() => {
+    //   this.youtubeService.getStatusCounts();
+    // });
   }
 
   ngOnDestroy() {
     this.statusCountsSubscription.unsubscribe();
-    this.statusInterval.unsubscribe();
+    //this.statusInterval.unsubscribe();
   }
 
   async transferAllVideos(): Promise<any> {

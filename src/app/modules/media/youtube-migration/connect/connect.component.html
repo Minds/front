@@ -1,3 +1,64 @@
-<m-shadowboxSubmitButton [saving]="inProgress" (click)="connect()">
-  Connect to your YouTube
-</m-shadowboxSubmitButton>
+<form [formGroup]="form" class="m-formWrapper">
+  <div class="m-form__field--text stretchedField">
+    <h4>Step 1</h4>
+    <p>
+      Navigate to
+      <a
+        href="https://www.youtube.com/account_advanced"
+        target="_blank"
+        class="m-youtubeMigrationConnect__link"
+      >
+        <b class="m-youtubeMigrationConnect__channelLink">
+          youtube.com/account_advanced
+        </b>
+        <m-icon iconId="launch"></m-icon>
+      </a>
+      and copy your channel id
+    </p>
+    <div class="m-form__row--input">
+      <input
+        type="text"
+        id="youtubeId"
+        formControlName="youtubeId"
+        [placeholder]="'Youtube Channel ID'"
+        i18n-placeholder="@@M__COMMON__USERNAME"
+        autocomplete="youtubeId"
+      />
+    </div>
+  </div>
+  <div class="m-form__field--text stretchedField">
+    <h4>Step 2</h4>
+    <p>
+      Enter
+      <span
+        class="m-youtubeMigrationConnect__link m-youtubeMigrationConnect__copyToClipboard"
+        (click)="copyToClipboard(linkToCopy)"
+      >
+        <b class="m-youtubeMigrationConnect__channelLink" #linkToCopy
+          >https://www.minds.com/{{ username }}</b
+        >
+        <m-icon iconId="content_copy"></m-icon>
+      </span>
+      in the description of your youtube channel
+      <ng-container *ngIf="channelId.length === 24">
+        <a
+          [href]="
+            'https://www.youtube.com/channel/' +
+            channelId +
+            '/about?disable_polymer=1'
+          "
+          target="_blank"
+          class="m-youtubeMigrationConnect__link"
+        >
+          <b class="m-youtubeMigrationConnect__channelLink">(click here)</b>
+          <m-icon iconId="launch"></m-icon>
+        </a> </ng-container
+      >. <b>NOTE:</b> Placing in the link section will not be detected, it must
+      be placed in the description.
+    </p>
+
+    <m-shadowboxSubmitButton [saving]="inProgress" (click)="connect()">
+      Connect to your YouTube
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

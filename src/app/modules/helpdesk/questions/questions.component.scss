@@ -64,6 +64,10 @@ m-helpdesk--questions {
     @include m-theme() {
       color: themed($m-grey-800);
     }
+
+    img {
+      max-width: 100%;
+    }
   }
 
   .m-helpdeskQuestions__goBack {
