@@ -13,6 +13,11 @@
     }
   }
 
+  .m-channelFeed__list {
+    @media screen and (max-width: $layoutMax2ColFixedWidth) {
+      min-width: 100%;
+    }
+  }
   .m-pageLayout__pane--right {
     padding-top: 20px * 3;
   }
