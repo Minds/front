@@ -1,4 +1,6 @@
-m-youtubeMigration {
+@import 'defaults.scss';
+
+:host {
   .m-youtubeMigration__notice {
     display: flex;
     justify-content: center;

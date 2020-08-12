@@ -17,6 +17,7 @@ import { FeaturesService } from '../../../services/features.service';
 @Component({
   selector: 'm-youtubeMigration',
   templateUrl: './youtube-migration.component.html',
+  styleUrls: ['youtube-migration.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class YoutubeMigrationComponent implements OnInit, OnDestroy {

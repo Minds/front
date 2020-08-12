@@ -117,6 +117,8 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
         onComplete: wire => {
           completed = true;
           this.isPro = true;
+          this.detectChanges();
+          this.stackableModal.dismiss();
         },
       })
       .toPromise();

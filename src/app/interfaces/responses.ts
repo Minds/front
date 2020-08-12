@@ -13,6 +13,7 @@ export interface MindsChannelResponse extends MindsResponse {
 
 export interface MindsBlogResponse extends MindsResponse {
   blog: any;
+  require_login?: boolean;
 }
 
 export interface MindsBlogListResponse extends MindsResponse {

@@ -1,4 +1,6 @@
-m-youtubeMigration__videoList {
+@import 'defaults.scss';
+
+:host {
   .m-youtubeMigration__video {
     display: flex;
     flex-flow: row nowrap;

@@ -132,6 +132,8 @@ m-phoneInput {
     padding: 10px;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+    overflow-x: hidden;
+
     @include m-theme() {
       background-color: themed($m-white);
       border-left: 1px solid themed($m-grey-50);

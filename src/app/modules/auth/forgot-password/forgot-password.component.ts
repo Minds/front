@@ -65,9 +65,15 @@ export class ForgotPasswordComponent {
       return;
     }
 
+    // strip @ character from start if entered.
+    let usernameValue = username.value;
+    if (usernameValue.charAt(0) === '@') {
+      usernameValue = usernameValue.substr(1);
+    }
+
     try {
       await this.client.post('api/v1/forgotpassword/request', {
-        username: username.value,
+        username: usernameValue,
       });
 
       username.value = '';
