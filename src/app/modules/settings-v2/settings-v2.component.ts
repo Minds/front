@@ -351,7 +351,7 @@ export class SettingsV2Component implements OnInit {
     }
     if (this.featuresService.has('subscriber-conversations')) {
       const messengerMenuItem = {
-        label: $localize`Messenger`, // TODO: Add i18n.
+        label: $localize`@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger Settings`, // TODO: Add i18n.
         id: 'messenger',
       };
       this.secondaryMenus.account[0].items.splice(5, 0, messengerMenuItem);
