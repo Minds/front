@@ -147,9 +147,10 @@ export class MessengerConversation implements OnInit, OnDestroy {
         } else {
           this.messages = response.messages;
           this.offset = response['load-previous'];
-          this.setAllowContact(response.participants);
           this.scrollEmitter.next(true);
         }
+
+        this.setAllowContact(response.participants);
 
         if (this.conversation.open) {
           this.conversation.unread = false;
@@ -430,6 +431,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
   setAllowContact(participants: any[]): void {
     if (!this.features.has('subscriber-conversations')) {
       this.allowContact = true;
+      return;
     }
     participants.map((participant: any) => {
       const allowed =

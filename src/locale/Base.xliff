@@ -7508,11 +7508,19 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="MESSENGER__CONVERSATION__MESSAGE_SUBSCRIBED_USER_ONLY" datatype="html">
+        <source>This user only allows messages from users that they subscribe to</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MESSENGER__CONVERSATION__THIS_CHAT_IS_NO_LONGER_AVAILABLE" datatype="html">
         <source>This chat is no longer available</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">192</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7520,7 +7528,7 @@
         <source>Awaiting other party…</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">200</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7528,7 +7536,7 @@
         <source>Looks like {$START_BOLD_TEXT}@{$INTERPOLATION}{$CLOSE_BOLD_TEXT} isn&apos;t using Minds Messenger yet.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">207</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7536,7 +7544,7 @@
         <source>Invite</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
-          <context context-type="linenumber">211</context>
+          <context context-type="linenumber">220</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7544,7 +7552,7 @@
         <source>Invited</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">225</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7552,7 +7560,7 @@
         <source>Send a message...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/messenger/conversation/conversation.component.html</context>
-          <context context-type="linenumber">235</context>
+          <context context-type="linenumber">245</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -14914,6 +14922,10 @@
           <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/messenger/messenger.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="SETTINGS__BILLING__METHOD__LABEL" datatype="html">
@@ -15878,11 +15890,19 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger Settings" datatype="html">
+        <source>Messenger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNTUPGRADE__PRO__LABEL" datatype="html">
         <source>Upgrade to Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15890,7 +15910,7 @@
         <source>Upgrade to Plus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15898,7 +15918,31 @@
         <source>View Pro Channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__MESSENGER__LABEL" datatype="html">
+        <source>Messenger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/messenger/messenger.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__MESSENGER__DESCRIPTION" datatype="html">
+        <source>Control your messenger settings.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/messenger/messenger.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_MESSENGER__ALLOW_UNSUBSCRIBED_USERS" datatype="html">
+        <source>Allow contact from unsubscribed users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/messenger/messenger.component.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>

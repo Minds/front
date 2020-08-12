@@ -88,6 +88,10 @@ export class SettingsV2Component implements OnInit {
             id: 'nsfw-content',
           },
           {
+            label: $localize`:@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger Settings`,
+            id: 'messenger',
+          },
+          {
             label: $localize`:@@SETTINGS__ACCOUNT__SHAREBUTTONS__LABEL:Share Buttons`,
             id: 'share-buttons',
           },
