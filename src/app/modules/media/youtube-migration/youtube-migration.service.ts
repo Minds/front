@@ -332,6 +332,9 @@ export class YoutubeMigrationService {
         }
       );
 
+      // Updates local session
+      this.session.getLoggedInUser().yt_channels = [response.yt_channel];
+
       this.connected$.next(response.connected);
       this.selectedChannel$.next(response.yt_channel);
       return response.connected;
