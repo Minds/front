@@ -1,0 +1,134 @@
+<div
+  class="m-activityModal__wrapper"
+  data-cy="data-minds-activity-modal"
+  *ngIf="entity && entity.content_type"
+>
+  <div class="m-activityModal__theater" (click)="clickedModal($event)">
+    <div
+      class="m-activityModal m-activityModal__clearFix"
+      [style.width]="modalWidth + 'px'"
+      [style.height]="stageHeight + 'px'"
+    >
+      <!-- -------------------------------------------------- -->
+      <!-- --LEFT SIDE--------------------------------------- -->
+      <!-- -------------------------------------------------- -->
+      <!-- (this is the element that goes into fullscreen) -->
+      <div
+        class="m-activityModal__stageWrapper"
+        [style.width]="stageWidth + 'px'"
+        [style.line-height]="stageHeight + 'px'"
+        (mouseenter)="onMouseEnterStage()"
+        (mouseleave)="onMouseLeaveStage()"
+        (touchend)="showOverlaysOnTablet()"
+      >
+        <!-- LOADING PANEL -->
+        <div
+          class="m-activityModal__loadingPanel"
+          *ngIf="
+            (service.loading$ | async) && entity.content_type !== 'rich-embed'
+          "
+        >
+          <m-loadingSpinner
+            [inProgress]="service.loading$ | async"
+          ></m-loadingSpinner>
+        </div>
+
+        <!-- MEDIA STAGE -->
+        <div class="m-activityModal__stage">
+          <div
+            class="m-mediaModal__mediaWrapper"
+            [style.width]="mediaWidth + 'px'"
+            [style.height]="mediaHeight + 'px'"
+            [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
+          >
+            <m-activity__content
+              *ngIf="activityService.shouldShowContent$ | async"
+              [hideText]="true"
+              [showPaywall]="activityService.shouldShowPaywall$ | async"
+              [showPaywallBadge]="
+                activityService.shouldShowPaywallBadge$ | async
+              "
+            ></m-activity__content>
+          </div>
+          <ng-container *mIfFeature="'!paywall-2020'">
+            <m-activity__paywall
+              [ngClass]="{ isPaywall2020: isPaywall2020 }"
+              *ngIf="activityService.shouldShowPaywall$ | async"
+            ></m-activity__paywall
+          ></ng-container>
+          <m-activity__nsfwConsent
+            *ngIf="activityService.shouldShowNsfwConsent$ | async"
+          >
+          </m-activity__nsfwConsent>
+          <!-- OVERLAY (TITLE & FULLSCREEN CTRLS)-->
+          <m-activity__modalTitleOverlay></m-activity__modalTitleOverlay>
+          <!-- PAGER BUTTONS -->
+          <m-activity__modalPager></m-activity__modalPager>
+        </div>
+      </div>
+
+      <!-- (END LEFT SIDE)-->
+
+      <!-- -------------------------------------------------- -->
+      <!-- ---RIGHT SIDE------------------------------------- -->
+      <!-- -------------------------------------------------- -->
+      <div class="m-activityModal__contentContainer">
+        <div class="m-activityModal__contentBody">
+          <div
+            class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter"
+          >
+            <div class="m-activityModal__scrollableAreaWrapper">
+              <!-- OWNER BLOCK -->
+              <m-activity__ownerBlock>
+                <ng-container class="m-activityOwnerBlock__right">
+                  <m-activity__metrics></m-activity__metrics>
+
+                  <ng-container *ngIf="entity">
+                    <span
+                      *ngIf="entity.pinned"
+                      class="m-activity__flag m-activity__flag--pinned"
+                      data-cy="m-activity__pinnedFlag"
+                    >
+                      <span>Pinned</span>
+                    </span>
+                  </ng-container>
+
+                  <m-activity__menu
+                    (deleted)="delete()"
+                    *ngIf="activityService.isLoggedIn$ | async"
+                  ></m-activity__menu>
+                </ng-container>
+              </m-activity__ownerBlock>
+              <!-- MESSAGE -->
+              <m-activity__content
+                *ngIf="activityService.shouldShowContent$ | async"
+                [hideMedia]="true"
+                [showPaywall]="activityService.shouldShowPaywall$ | async"
+                [showPaywallBadge]="
+                  activityService.shouldShowPaywallBadge$ | async
+                "
+              ></m-activity__content>
+              <!-- TOOLBAR -->
+              <m-activity__toolbar
+                *ngIf="activityService.displayOptions.showToolbar"
+              ></m-activity__toolbar>
+              <!-- COMMENTS -->
+              <div class="m-activityModal__comments" *ngIf="entity.guid">
+                <ng-container *mIfBrowser>
+                  <m-comments__entityOutlet
+                    *ngIf="activityService.displayOptions.showComments"
+                    [entity]="activityService.entity$ | async"
+                    [canDelete]="activityService.canDelete$ | async"
+                    [showOnlyPoster]="false"
+                    [fixedHeight]="false"
+                  >
+                  </m-comments__entityOutlet>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

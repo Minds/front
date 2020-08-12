@@ -103,6 +103,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     hasPrev: false,
     hasNext: false,
   };
+
+  // todoojm make sure this works in modal
   canToggleMatureVideoOverlay: boolean = true;
 
   isTranslatable: boolean = false;

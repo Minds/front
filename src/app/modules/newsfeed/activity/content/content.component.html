@@ -3,147 +3,156 @@
 <!-- ----------------------------------- -->
 <m-paywallBadge [entity]="entity"></m-paywallBadge>
 <ng-container *mIfFeature="'paywall-2020'">
-  <m-activity__paywall
-    *ngIf="service.shouldShowPaywall$ | async"
-    [mediaHeight]="mediaHeight"
-    class="isPaywall2020"
-  ></m-activity__paywall
-></ng-container>
+  <ng-container *ngIf="!hideMedia">
+    <m-activity__paywall
+      *ngIf="service.shouldShowPaywall$ | async"
+      [mediaHeight]="mediaHeight"
+      class="isPaywall2020"
+    ></m-activity__paywall
+  ></ng-container>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- MESSAGE -->
 <!-- ----------------------------------- -->
-<div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
-<div
-  #messageEl
-  m-read-more
-  class="m-activityContent__message"
-  [class.m-activityContent__message--remind]="entity.remind_object"
-  [class.m-activityContent__message--isTextOnly]="isTextOnly"
-  [class.m-activityContent__message--short]="message.length <= 300"
-  [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : maxMessageHeight"
-  *ngIf="message"
->
-  <div class="m-activityContent__messageWrapper">
-    <span [innerHtml]="message | tags"></span>
-    <m-read-more--button
-      *ngIf="
-        !(service.shouldShowPaywall$ | async) || isTextOnly;
-        else teaserFadeout
-      "
-      [v2]="true"
-    ></m-read-more--button>
+<ng-container *ngIf="!hideText">
+  <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
+  <div
+    #messageEl
+    m-read-more
+    class="m-activityContent__message"
+    [class.m-activityContent__message--remind]="entity.remind_object"
+    [class.m-activityContent__message--isTextOnly]="isTextOnly"
+    [class.m-activityContent__message--short]="message.length <= 300"
+    [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : maxMessageHeight"
+    *ngIf="message"
+  >
+    <div class="m-activityContent__messageWrapper">
+      <span [innerHtml]="message | tags"></span>
+      <m-read-more--button
+        *ngIf="
+          !(service.shouldShowPaywall$ | async) || isTextOnly;
+          else teaserFadeout
+        "
+        [v2]="true"
+      ></m-read-more--button>
+    </div>
+    <!-- ----------------------------------- -->
+    <!-- TRANSLATION (MESSAGE) -->
+    <!-- ----------------------------------- -->
+    <ng-container *ngTemplateOutlet="translation"></ng-container>
   </div>
-  <!-- ----------------------------------- -->
-  <!-- TRANSLATION (MESSAGE) -->
-  <!-- ----------------------------------- -->
-  <ng-container *ngTemplateOutlet="translation"></ng-container>
-</div>
-<div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
-
+  <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
-<div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
-  <div class="m-activityContent__fixedHeightSpacer"></div>
-  <minds-rich-embed
-    (mediaModalRequested)="onModalRequested($event)"
-    [src]="entity"
-    [maxheight]="320"
-  >
-  </minds-rich-embed>
+<ng-container *ngIf="!hideMedia">
+  <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
+    <div class="m-activityContent__fixedHeightSpacer"></div>
+    <minds-rich-embed
+      (mediaModalRequested)="onModalRequested($event)"
+      [src]="entity"
+      [maxheight]="320"
+    >
+    </minds-rich-embed>
+    <div
+      class="m-activityContent__fixedHeightSpacer"
+      *ngIf="!mediaDescription"
+    ></div>
+  </div>
+  <!-- ----------------------------------- -->
+  <!-- VIDEO -->
+  <!-- ----------------------------------- -->
+
   <div
-    class="m-activityContent__fixedHeightSpacer"
-    *ngIf="!mediaDescription"
-  ></div>
-</div>
-<!-- ----------------------------------- -->
-<!-- VIDEO -->
-<!-- ----------------------------------- -->
-<div
-  class="m-activityContent__media--video"
-  #mediaEl
-  *ngIf="isVideo"
-  [ngClass]="{ isPaywall: service.shouldShowPaywall$ | async }"
->
-  <div class="m-activityContent__fixedHeightSpacer"></div>
-
-  <m-videoPlayer--scrollaware
-    [guid]="videoGuid"
-    [shouldPlayInModal]="true"
-    (mediaModalRequested)="onModalRequested($event)"
-    [autoplay]="
-      service.displayOptions.autoplayVideo &&
-      !(service.shouldShowPaywall$ | async)
-    "
-    [style.height]="videoHeight"
-  ></m-videoPlayer--scrollaware>
-
-  <div class="m-activityContent__fixedHeightSpacer"></div>
-</div>
-<!-- ----------------------------------- -->
-<!-- IMAGE -->
-<!-- ----------------------------------- -->
-<div class="m-activityContent__media--image" *ngIf="isImage">
-  <a
-    class="m-activityContentMedia__link"
-    [routerLink]="['/media', imageGuid]"
-    (click)="onModalRequested($event)"
+    class="m-activityContent__media--video"
+    #mediaEl
+    *ngIf="isVideo"
+    [ngClass]="{ isPaywall: service.shouldShowPaywall$ | async }"
   >
-    <img
-      [src]="imageUrl"
-      [style.height]="imageHeight"
-      (error)="onImageError($event)"
+    <div class="m-activityContent__fixedHeightSpacer"></div>
+
+    <m-videoPlayer--scrollaware
+      [guid]="videoGuid"
+      [shouldPlayInModal]="true"
+      (mediaModalRequested)="onModalRequested($event)"
+      [autoplay]="
+        service.displayOptions.autoplayVideo &&
+        !(service.shouldShowPaywall$ | async)
+      "
+      [style.height]="videoHeight"
+    ></m-videoPlayer--scrollaware>
+
+    <div class="m-activityContent__fixedHeightSpacer"></div>
+  </div>
+  <!-- ----------------------------------- -->
+  <!-- IMAGE -->
+  <!-- ----------------------------------- -->
+  <div class="m-activityContent__media--image" *ngIf="isImage">
+    <a
+      class="m-activityContentMedia__link"
+      [routerLink]="['/media', imageGuid]"
       (click)="onModalRequested($event)"
-    />
-  </a>
-</div>
+    >
+      <img
+        [src]="imageUrl"
+        [style.height]="imageHeight"
+        (error)="onImageError($event)"
+        (click)="onModalRequested($event)"
+      />
+    </a>
+  </div>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- TITLE / DESCRIPTION -->
 <!-- ----------------------------------- -->
-<div
-  #mediaDescriptionEl
-  class="m-activityContent__mediaDescription"
-  m-read-more
-  [maxHeightAllowed]="service.displayOptions.fixedHeight ? 80 : 320"
-  *ngIf="mediaDescription || mediaTitle"
->
-  <div class="m-activityContent__descriptionWrapper">
-    <p
-      [innerHtml]="mediaTitle | tags"
-      class="m-activityContent__mediaTitle"
-      [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
-      *ngIf="mediaTitle"
-    ></p>
-    <p *ngIf="mediaDescription" [innerHtml]="mediaDescription | tags"></p>
-    <m-read-more--button
-      *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
-      [v2]="true"
-    ></m-read-more--button>
+<ng-container *ngIf="!hideText">
+  <div
+    #mediaDescriptionEl
+    class="m-activityContent__mediaDescription"
+    m-read-more
+    [maxHeightAllowed]="service.displayOptions.fixedHeight ? 80 : 320"
+    *ngIf="mediaDescription || mediaTitle"
+  >
+    <div class="m-activityContent__descriptionWrapper">
+      <p
+        [innerHtml]="mediaTitle | tags"
+        class="m-activityContent__mediaTitle"
+        [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
+        *ngIf="mediaTitle"
+      ></p>
+      <p *ngIf="mediaDescription" [innerHtml]="mediaDescription | tags"></p>
+      <m-read-more--button
+        *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
+        [v2]="true"
+      ></m-read-more--button>
+    </div>
+    <!-- ----------------------------------- -->
+    <!-- TRANSLATION (MEDIA POSTS) -->
+    <!-- ----------------------------------- -->
+    <ng-container *ngTemplateOutlet="translation"></ng-container>
   </div>
-  <!-- ----------------------------------- -->
-  <!-- TRANSLATION (MEDIA POSTS) -->
-  <!-- ----------------------------------- -->
-  <ng-container *ngTemplateOutlet="translation"></ng-container>
-</div>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- REMIND -->
 <!-- ----------------------------------- -->
-<div
-  class="m-activityContent__remind"
-  [class.m-activityContent__remind--hasMessage]="!!message"
-  #remindContainerEl
-  *ngIf="service.isRemind$ | async"
->
-  <m-activity__remind
-    [parentService]="service"
-    [entity]="service.entity$ | async"
-    [style.width]="remindWidth"
-    [style.height]="remindHeight"
-    [style.max-height]="remindHeight"
+<ng-container *ngIf="!hideMedia">
+  <div
+    class="m-activityContent__remind"
+    [class.m-activityContent__remind--hasMessage]="!!message"
+    #remindContainerEl
+    *ngIf="service.isRemind$ | async"
   >
-  </m-activity__remind>
-</div>
-
+    <m-activity__remind
+      [parentService]="service"
+      [entity]="service.entity$ | async"
+      [style.width]="remindWidth"
+      [style.height]="remindHeight"
+      [style.max-height]="remindHeight"
+    >
+    </m-activity__remind>
+  </div>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: TRANSLATION -->
 <!-- ----------------------------------- -->

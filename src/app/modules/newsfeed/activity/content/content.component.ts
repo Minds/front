@@ -38,6 +38,8 @@ import {
   trigger,
 } from '@angular/animations';
 import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video-player/scrollaware-player.component';
+import { ActivityModalComponent } from '../modal/modal.component';
+import { FeaturesService } from '../../../../services/features.service';
 
 @Component({
   selector: 'm-activity__content',
@@ -68,6 +70,12 @@ export class ActivityContentComponent
 
   @Input() showPaywall: boolean = false;
   @Input() showPaywallBadge: boolean = false;
+
+  /**
+   * Used in activity modal
+   */
+  @Input() hideText: boolean = false;
+  @Input() hideMedia: boolean = false;
 
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
@@ -110,7 +118,8 @@ export class ActivityContentComponent
     private el: ElementRef,
     private redirectService: RedirectService,
     private session: Session,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private features: FeaturesService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -315,15 +324,16 @@ export class ActivityContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    if (!this.overlayModal.canOpenInModal()) {
+    if (
+      !this.overlayModal.canOpenInModal() ||
+      this.service.displayOptions.isModal
+    ) {
       return;
     }
-
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
-
     if (
       this.entity.perma_url &&
       this.entity.perma_url.indexOf(this.siteUrl) === 0
@@ -331,12 +341,13 @@ export class ActivityContentComponent
       this.redirectService.redirect(this.entity.perma_url);
       return; // Don't open modal for minds links
     }
-
     this.entity.modal_source_url = this.router.url;
-
+    const modalComponent = this.features.has('activity-modal')
+      ? ActivityModalComponent
+      : MediaModalComponent;
     this.overlayModal
       .create(
-        MediaModalComponent,
+        modalComponent,
         { entity: this.entity },
         {
           class: 'm-overlayModal--media',

@@ -17,8 +17,7 @@ export default function isFullscreen(): boolean {
 /**
  * Toggles fullscreen and returns the new fullscreen enabled state
  *
- * @param el
- * The element you want to go into fullscreen mode
+ * @param el the element you want to go into fullscreen mode
  */
 export function toggleFullscreen(el: Element): boolean {
   // If fullscreen is not already enabled, enable it

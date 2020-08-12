@@ -11,6 +11,12 @@ import { ReportCreatorComponent } from '../../../modules/report/creator/creator.
 import { DialogService } from '../../services/confirm-leave-dialog.service';
 import { FormToastService } from '../../services/form-toast.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { FeaturesService } from '../../../services/features.service';
+import {
+  StackableModalEvent,
+  StackableModalService,
+} from '../../../services/ux/stackable-modal.service';
+import { ActivityService as ActivityV2Service } from '../../../modules/newsfeed/activity/activity.service';
 
 @Injectable()
 export class PostMenuService {
@@ -37,7 +43,10 @@ export class PostMenuService {
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
     private dialogService: DialogService,
-    protected formToastService: FormToastService
+    protected formToastService: FormToastService,
+    private features: FeaturesService,
+    private stackableModal: StackableModalService,
+    private activityV2Service: ActivityV2Service
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -292,16 +301,28 @@ export class PostMenuService {
       .toPromise();
   }
 
-  openShareModal(): void {
-    this.overlayModal
-      .create(ShareModalComponent, this.entity.url, {
-        class: 'm-overlay-modal--medium m-overlayModal__share',
-      })
-      .present();
+  async openShareModal(): Promise<void> {
+    const data = this.entity.url,
+      opts = { class: 'm-overlay-modal--medium m-overlayModal__share' };
+
+    if (this.isViaActivityModal) {
+      await this.stackableModal
+        .present(ShareModalComponent, data, opts)
+        .toPromise();
+    } else {
+      this.overlayModal.create(ShareModalComponent, data, opts).present();
+    }
   }
 
-  openReportModal(): void {
-    this.overlayModal.create(ReportCreatorComponent, this.entity).present();
+  async openReportModal(): Promise<void> {
+    // todo test
+    if (this.isViaActivityModal) {
+      await this.stackableModal
+        .present(ReportCreatorComponent, this.entity)
+        .toPromise();
+    } else {
+      this.overlayModal.create(ReportCreatorComponent, this.entity).present();
+    }
   }
 
   /**
@@ -326,5 +347,12 @@ export class PostMenuService {
       this.entity.pinned = !this.entity.pinned;
       this.isPinned$.next(this.entity.pinned);
     }
+  }
+
+  get isViaActivityModal(): Boolean {
+    return (
+      this.features.has('activity-modal') &&
+      this.activityV2Service.displayOptions.isModal
+    );
   }
 }
