@@ -430,10 +430,17 @@ export class MessengerConversation implements OnInit, OnDestroy {
    */
   setAllowContact(participants: any[]): void {
     if (!this.features.has('subscriber-conversations')) {
+      console.log('no feat flag');
       this.allowContact = true;
       return;
     }
     participants.map((participant: any) => {
+      console.log('participant.subscriber', participant.subscriber);
+      console.log(
+        'participant.allow_unsubscribed_contact',
+        participant.allow_unsubscribed_contact
+      );
+      console.log('this.messages.length', this.messages.length);
       const allowed =
         participant.subscriber ||
         participant.allow_unsubscribed_contact ||
