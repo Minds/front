@@ -150,7 +150,7 @@ export class YoutubeMigrationService {
    *
    * @param youtubeId
    */
-  async getVideoStatus(youtubeId: string): Promise<{ void }> {
+  async getVideoStatus(youtubeId: string): Promise<string> {
     if (!this.connected$.value) {
       return;
     }
