@@ -17,7 +17,8 @@ import { LoginReferrerService } from '../../../../services/login-referrer.servic
 })
 export class YoutubeMigrationMarketingComponent {
   readonly cdnAssetsUrl: string;
-  readonly youtubeSettingsUrl: '/settings/other/youtube-migration';
+  readonly youtubeSettingsUrl: string =
+    '/settings/other/youtube-migration/connect';
 
   constructor(
     protected router: Router,
