@@ -411,6 +411,15 @@ m-walletDashboard {
 
   .m-walletForm__fieldsContainer {
     flex: 1 1 auto;
+
+    .m-walletForm__row--input {
+      input {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
   }
 
   // Used for first/last name inputs
