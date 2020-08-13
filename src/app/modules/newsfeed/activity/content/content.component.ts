@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild,
   HostBinding,
+  Injector,
 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 
@@ -119,7 +120,8 @@ export class ActivityContentComponent
     private redirectService: RedirectService,
     private session: Session,
     configs: ConfigsService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    private injector: Injector
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -342,6 +344,7 @@ export class ActivityContentComponent
       return; // Don't open modal for minds links
     }
     this.entity.modal_source_url = this.router.url;
+    // todoojm uncomment
     // const modalComponent = this.features.has('activity-modal')
     //   ? ActivityModalComponent
     //   : MediaModalComponent;
@@ -353,6 +356,8 @@ export class ActivityContentComponent
         {
           class: 'm-overlayModal--media',
         }
+        // todoojm this didn't work
+        // this.injector
       )
       .present();
   }

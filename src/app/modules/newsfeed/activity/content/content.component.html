@@ -89,18 +89,21 @@
   <!-- IMAGE -->
   <!-- ----------------------------------- -->
   <div class="m-activityContent__media--image" *ngIf="isImage">
-    <a
-      class="m-activityContentMedia__link"
-      [routerLink]="['/media', imageGuid]"
-      (click)="onModalRequested($event)"
-    >
-      <img
+    <ng-container *ngIf="!service.displayOptions.isModal; else image">
+      <a
+        class="m-activityContentMedia__link"
+        [routerLink]="['/media', imageGuid]"
+        (click)="onModalRequested($event)"
+        ><ng-container [ngTemplateOutlet]="image"></ng-container
+      ></a>
+    </ng-container>
+    <ng-template #image
+      ><img
         [src]="imageUrl"
         [style.height]="imageHeight"
         (error)="onImageError($event)"
         (click)="onModalRequested($event)"
-      />
-    </a>
+    /></ng-template>
   </div>
 </ng-container>
 <!-- ----------------------------------- -->

@@ -16,13 +16,6 @@ export class ActivityModalService {
   protected modalPager$: Subscription;
   protected asyncEntity$: Subscription;
 
-  // private readonly allowedContentTypes = [
-  //   'blog',
-  //   'rich-embed',
-  //   'video',
-  //   'image',
-  // ];
-
   activityService: ActivityService;
 
   /**
@@ -33,7 +26,7 @@ export class ActivityModalService {
   /**
    * Where the browser url will return to when user leaves modal
    */
-  sourceUrl: string;
+  // sourceUrl: string;
 
   /**
    * Is the modal loading?
@@ -74,9 +67,9 @@ export class ActivityModalService {
   // UTILITY
   /////////////////////////////////////////////////////////////////
 
-  setSourceUrl(url: string): void {
-    this.sourceUrl = url;
-  }
+  // setSourceUrl(url: string): void {
+  //   this.sourceUrl = url;
+  // }
 
   setActivityService(activityService: ActivityService) {
     if (!this.activityService) {
@@ -90,16 +83,16 @@ export class ActivityModalService {
 
     this.activityService.setEntity(entity);
 
-    // TODO integrate delete with pager/horizontal feed
-    this.activityService.canDeleteOverride$.next(false);
+    // Todoojm integrate delete with pager/horizontal feed
   }
 
-  returnToSourceUrl(): void {
-    this.location.replaceState(this.sourceUrl);
-  }
+  // returnToSourceUrl(): void {
+  // this.location.replaceState(this.sourceUrl);
+  // }
 
   dismiss(): void {
-    this.returnToSourceUrl();
+    // this.returnToSourceUrl();
+    this.activityService.displayOptions.isModal = false;
     this.overlayModal.dismiss();
   }
 

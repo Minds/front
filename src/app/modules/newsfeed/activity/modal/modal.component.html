@@ -3,7 +3,7 @@
   data-cy="data-minds-activity-modal"
   *ngIf="entity && entity.content_type"
 >
-  <div class="m-activityModal__theater" (click)="clickedModal($event)">
+  <div class="m-activityModal__theater">
     <div
       class="m-activityModal m-activityModal__clearFix"
       [style.width]="modalWidth + 'px'"
@@ -107,11 +107,14 @@
                 [showPaywallBadge]="
                   activityService.shouldShowPaywallBadge$ | async
                 "
-              ></m-activity__content>
+              >
+              </m-activity__content>
               <!-- TOOLBAR -->
-              <m-activity__toolbar
-                *ngIf="activityService.displayOptions.showToolbar"
-              ></m-activity__toolbar>
+              <div class="m-activityModal__toolbarWrapper">
+                <m-activity__toolbar
+                  *ngIf="activityService.displayOptions.showToolbar"
+                ></m-activity__toolbar>
+              </div>
               <!-- COMMENTS -->
               <div class="m-activityModal__comments" *ngIf="entity.guid">
                 <ng-container *mIfBrowser>

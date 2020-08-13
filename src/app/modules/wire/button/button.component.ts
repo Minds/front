@@ -6,6 +6,8 @@ import { Session } from '../../../services/session';
 import { WireModalService } from '../wire-modal.service';
 import { WireEventType } from '../v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
+import { StackableModalService } from '../../../services/ux/stackable-modal.service';
+import { WireCreatorComponent } from '../v2/creator/wire-creator.component';
 
 @Component({
   selector: 'm-wire-button',
@@ -38,7 +40,8 @@ export class WireButtonComponent {
     private overlayModal: OverlayModalService,
     private modal: SignupModalService,
     private wireModal: WireModalService,
-    public features: FeaturesService
+    public features: FeaturesService,
+    private stackableModal: StackableModalService
   ) {}
 
   async wire() {
@@ -48,20 +51,24 @@ export class WireButtonComponent {
       return;
     }
 
-    const wireEvent = await this.wireModal
-      .present(this.object, {
+    let wirePayload = null;
+
+    // todoojm figure out if/how we need to get the wireEvent.payload
+    // for wire_totals and doneEmitter
+    await this.stackableModal
+      .present(WireCreatorComponent, this.object, {
+        wrapperClass: 'm-modalV2__wrapper',
         default: this.object && this.object.wire_threshold,
+        onComplete: wire => {
+          console.log('ojm oncomplete wire', wire);
+          wirePayload = wire;
+          if (this.object.wire_totals) {
+            this.object.wire_totals[wire.currency] = wire.amount;
+          }
+          this.stackableModal.dismiss();
+          this.doneEmitter.emit(wirePayload);
+        },
       })
       .toPromise();
-
-    if (wireEvent.type === WireEventType.Completed) {
-      const wire = wireEvent.payload;
-
-      if (this.object.wire_totals) {
-        this.object.wire_totals[wire.currency] = wire.amount;
-      }
-
-      this.doneEmitter.emit(wire);
-    }
   }
 }

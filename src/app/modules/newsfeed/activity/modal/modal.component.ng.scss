@@ -183,8 +183,7 @@
   .m-activityModal__scrollableAreaWrapper {
     margin-left: -100px;
     margin-right: -50px;
-    padding-left: 100px;
-    padding-right: 50px;
+    padding: 10px 50px 20px 110px;
 
     min-height: 320px;
     height: 100%;
@@ -215,11 +214,28 @@
     visibility: hidden;
   }
 
+  .m-activityModal__toolbarWrapper {
+    margin-left: 16px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
   ::ng-deep {
     m-activity__media {
       .m-rich-embed-has-thumbnail {
         text-align: left;
       }
+    }
+    m-activity__toolbar {
+      padding: 20px 0 16px;
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+
+    m-activity__ownerBlock {
+      padding-right: 0;
     }
   }
 }
