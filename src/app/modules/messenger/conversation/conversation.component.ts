@@ -17,6 +17,7 @@ import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.se
 import { BlockListService } from '../../../common/services/block-list.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-messenger--conversation',
@@ -81,6 +82,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,
     private features: FeaturesService,
+    protected toaster: FormToastService,
     configs: ConfigsService
   ) {
     this.buildTabId();
@@ -290,6 +292,9 @@ export class MessengerConversation implements OnInit, OnDestroy {
         setTimeout(() => this.scrollEmitter.next(true), 50);
       })
       .catch(e => {
+        if (e.message) {
+          this.toaster.error(e.message);
+        }
         console.error('Error while reading conversation', e);
       });
 
@@ -430,17 +435,10 @@ export class MessengerConversation implements OnInit, OnDestroy {
    */
   setAllowContact(participants: any[]): void {
     if (!this.features.has('subscriber-conversations')) {
-      console.log('no feat flag');
       this.allowContact = true;
       return;
     }
     participants.map((participant: any) => {
-      console.log('participant.subscriber', participant.subscriber);
-      console.log(
-        'participant.allow_unsubscribed_contact',
-        participant.allow_unsubscribed_contact
-      );
-      console.log('this.messages.length', this.messages.length);
       const allowed =
         participant.subscriber ||
         participant.allow_unsubscribed_contact ||
