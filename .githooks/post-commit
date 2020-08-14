@@ -1,0 +1,2 @@
+#!/bin/sh
+HUSKY_SKIP_HOOKS=1  git commit -m "your commit message" --no-verify src/locale/Base.xliff

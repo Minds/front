@@ -9548,7 +9548,7 @@
         <source>JOIN NOW</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/join-button/join-button.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11451,7 +11451,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">185</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11479,27 +11479,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_YT_MIGRATION__1000_YT_SUBSCRIBER_CLAIM" datatype="html">
-        <source>If you have over 1,000 YouTube subscribers, {$START_LINK}claim a free annual subscription to Minds Plus{$CLOSE_LINK}.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">89</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_YT_MIGRATION__10000_YT_SUBSCRIBER_CLAIM" datatype="html">
-        <source>If you have over 10,000 YouTube subscribers, {$START_LINK}claim a free annual subscription to Minds Pro{$CLOSE_LINK}.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__REGAIN_YOUR_FREEDOM" datatype="html">
         <source>Regain your freedom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11507,7 +11491,7 @@
         <source>Tired of the unfair treatment from traditional social networks?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">125</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11515,7 +11499,7 @@
         <source>Minds offers a fully transparent, privacy-focused platform built for creators.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11523,7 +11507,7 @@
         <source>Take back control of your social media</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">172</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16754,11 +16738,27 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="M__ACTION__MAKE__SEED" datatype="html">
+        <source>Add as Seed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REMOVE__SEED" datatype="html">
+        <source>Remove as Seed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__UNBLOCK" datatype="html">
         <source>Unblock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16766,7 +16766,7 @@
         <source>Block</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16774,7 +16774,7 @@
         <source>Report</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">144</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
