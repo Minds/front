@@ -9556,7 +9556,7 @@
         <source>JOIN NOW</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/join-button/join-button.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15890,11 +15890,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger Settings" datatype="html">
+      <trans-unit id="SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger" datatype="html">
         <source>Messenger</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15902,7 +15902,7 @@
         <source>Upgrade to Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15910,7 +15910,7 @@
         <source>Upgrade to Plus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15918,7 +15918,7 @@
         <source>View Pro Channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16798,11 +16798,27 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="M__ACTION__MAKE__SEED" datatype="html">
+        <source>Add as Seed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REMOVE__SEED" datatype="html">
+        <source>Remove as Seed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__UNBLOCK" datatype="html">
         <source>Unblock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16810,7 +16826,7 @@
         <source>Block</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16818,7 +16834,7 @@
         <source>Report</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">144</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
