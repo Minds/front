@@ -41,6 +41,7 @@ import {
 import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video-player/scrollaware-player.component';
 import { ActivityModalComponent } from '../modal/modal.component';
 import { FeaturesService } from '../../../../services/features.service';
+import { ActivityModalCreatorService } from '../modal/modal-creator.service';
 
 @Component({
   selector: 'm-activity__content',
@@ -121,7 +122,8 @@ export class ActivityContentComponent
     private session: Session,
     configs: ConfigsService,
     private features: FeaturesService,
-    private injector: Injector
+    private injector: Injector,
+    private activityModalCreator: ActivityModalCreatorService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -343,23 +345,8 @@ export class ActivityContentComponent
       this.redirectService.redirect(this.entity.perma_url);
       return; // Don't open modal for minds links
     }
-    this.entity.modal_source_url = this.router.url;
-    // todoojm uncomment
-    // const modalComponent = this.features.has('activity-modal')
-    //   ? ActivityModalComponent
-    //   : MediaModalComponent;
-    const modalComponent = ActivityModalComponent;
-    this.overlayModal
-      .create(
-        modalComponent,
-        { entity: this.entity },
-        {
-          class: 'm-overlayModal--media',
-        }
-        // todoojm this didn't work
-        // this.injector
-      )
-      .present();
+
+    this.activityModalCreator.create(this.entity, this.injector);
   }
 
   onImageError(e: Event): void {}

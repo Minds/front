@@ -27,7 +27,7 @@ import { ActivityPaywallComponent } from './paywall/paywall.component';
 import { ActivityModalComponent } from './modal/modal.component';
 import { ActivityModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
 import { ActivityModalPagerComponent } from './modal/pager/pager.component';
-import { ActivityModalService } from './modal/modal.service';
+import { ActivityModalCreatorService } from './modal/modal-creator.service';
 
 @NgModule({
   imports: [
@@ -59,7 +59,7 @@ import { ActivityModalService } from './modal/modal.service';
     ActivityModalTitleOverlayComponent,
     ActivityModalPagerComponent,
   ],
-  providers: [ActivityModalService],
+  providers: [ActivityModalCreatorService],
   exports: [ActivityComponent],
 })
 export class ActivityModule {}

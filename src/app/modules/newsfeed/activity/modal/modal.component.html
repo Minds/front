@@ -36,11 +36,21 @@
         <!-- MEDIA STAGE -->
         <div class="m-activityModal__stage">
           <div
-            class="m-mediaModal__mediaWrapper"
+            class="m-activityModal__mediaWrapper"
             [style.width]="mediaWidth + 'px'"
-            [style.height]="mediaHeight + 'px'"
-            [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
+            [ngClass]="{
+              'm-activityModal__mediaWrapper--richEmbed':
+                entity.content_type === 'rich-embed',
+              'm-activityModal__mediaWrapper--image':
+                entity.content_type === 'image',
+              'm-activityModal__mediaWrapper--video':
+                entity.content_type === 'video',
+              'm-activityModal__mediaWrapper--blog':
+                entity.content_type === 'blog'
+            }"
           >
+            <!-- todoojm put back? [style.height]="mediaHeight + 'px'" -->
+
             <m-activity__content
               *ngIf="activityService.shouldShowContent$ | async"
               [hideText]="true"
@@ -48,11 +58,12 @@
               [showPaywallBadge]="
                 activityService.shouldShowPaywallBadge$ | async
               "
+              [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
             ></m-activity__content>
           </div>
+          <!-- this shows the old paywall -->
           <ng-container *mIfFeature="'!paywall-2020'">
             <m-activity__paywall
-              [ngClass]="{ isPaywall2020: isPaywall2020 }"
               *ngIf="activityService.shouldShowPaywall$ | async"
             ></m-activity__paywall
           ></ng-container>

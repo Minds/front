@@ -107,6 +107,7 @@
     display: inline-block;
     margin: 0 auto;
     vertical-align: middle;
+    height: auto; // todoojm checkl
 
     .m-activityModal__media--image,
     ::ng-deep m-videoPlayer {
@@ -215,27 +216,23 @@
   }
 
   .m-activityModal__toolbarWrapper {
-    margin-left: 16px;
+    margin: 0 12px 0 4px;
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
     }
   }
 
   ::ng-deep {
-    m-activity__media {
+    m-activity__content {
       .m-rich-embed-has-thumbnail {
         text-align: left;
       }
     }
     m-activity__toolbar {
-      padding: 20px 0 16px;
+      padding: 20px 10px 16px;
       @include m-theme() {
         border-top: none;
       }
-    }
-
-    m-activity__ownerBlock {
-      padding-right: 0;
     }
   }
 }

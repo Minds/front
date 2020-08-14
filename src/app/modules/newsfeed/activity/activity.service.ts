@@ -119,6 +119,7 @@ export class ActivityService {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
+        entity.nsfw &&
         entity.nsfw.length > 0 &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)

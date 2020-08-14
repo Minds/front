@@ -13,7 +13,6 @@ import { FormToastService } from '../../services/form-toast.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { FeaturesService } from '../../../services/features.service';
 import { StackableModalService } from '../../../services/ux/stackable-modal.service';
-import { ActivityService as ActivityV2Service } from '../../../modules/newsfeed/activity/activity.service';
 
 @Injectable()
 export class PostMenuService {
@@ -42,8 +41,7 @@ export class PostMenuService {
     private dialogService: DialogService,
     protected formToastService: FormToastService,
     private features: FeaturesService,
-    private stackableModal: StackableModalService,
-    private activityV2Service: ActivityV2Service
+    private stackableModal: StackableModalService
   ) {}
 
   setEntity(entity): PostMenuService {

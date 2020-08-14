@@ -4,10 +4,7 @@ import { ActivityEntity, ActivityService } from '../activity.service';
 import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { toggleFullscreen } from '../../../../helpers/fullscreen';
 import { SiteService } from '../../../../common/services/site.service';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
-import { ClientMetaService } from '../../../../common/services/client-meta.service';
 import { AnalyticsService } from '../../../../services/analytics';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
@@ -52,14 +49,8 @@ export class ActivityModalService {
   pagerVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
-    // private activityService: ActivityService,
-    // private horizontalFeed: HorizontalFeedService,
     private site: SiteService,
-    // private router: Router,
     private location: Location,
-    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
-    protected clientMetaService: ClientMetaService,
-    private analyticsService: AnalyticsService,
     private overlayModal: OverlayModalService
   ) {}
 

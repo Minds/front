@@ -40,16 +40,16 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
   /**
    * Listen to scroll, show feed when bottom reached.
    */
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event) {
-    const element = event.target.activeElement;
-    if (
-      !this.showFeed &&
-      element.scrollTop + element.clientHeight / 2 >= element.scrollHeight / 2
-    ) {
-      this.showFeed = true;
-    }
-  }
+  // @HostListener('window:scroll', ['$event'])
+  // onScroll(event) {
+  //   const element = event.target.activeElement;
+  //   if (
+  //     !this.showFeed &&
+  //     element.scrollTop + element.clientHeight / 2 >= element.scrollHeight / 2
+  //   ) {
+  //     this.showFeed = true;
+  //   }
+  // }
 
   ngOnInit() {
     this.setMenuNavItems();

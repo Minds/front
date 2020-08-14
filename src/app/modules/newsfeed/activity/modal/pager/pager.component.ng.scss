@@ -1,6 +1,7 @@
 @import 'defaults.scss';
 
 :host {
+  z-index: 2;
   .m-activityModal__pager {
     display: flex;
     justify-content: center;

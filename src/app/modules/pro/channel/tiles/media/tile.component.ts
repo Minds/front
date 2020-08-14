@@ -4,14 +4,15 @@ import {
   ElementRef,
   Input,
   ViewChild,
+  Injector,
 } from '@angular/core';
-import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { FeaturesService } from '../../../../../services/features.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import { ProChannelService } from '../../channel.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { SiteService } from '../../../../../common/services/site.service';
+import { ActivityModalCreatorService } from '../../../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   selector: 'm-pro--channel-tile',
@@ -29,7 +30,9 @@ export class ProTileComponent {
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
     protected router: Router,
-    protected site: SiteService
+    protected site: SiteService,
+    private activityModalCreator: ActivityModalCreatorService,
+    private injector: Injector
   ) {}
 
   getType(entity: any) {
@@ -114,38 +117,22 @@ export class ProTileComponent {
   showMediaModal() {
     const isNotTablet = Math.min(screen.width, screen.height) < 768;
 
-    if (this.featuresService.has('media-modal')) {
-      // Mobile (not tablet) users go to media page instead of modal
-      if (isMobile() && isNotTablet) {
-        this.goToEntityPage(this.entity);
-        return;
-      }
-
-      if (this.getEntityType(this.entity) === 'object:video') {
-        this.entity.dimensions = this.videoDimensions;
-      } else if (this.getEntityType(this.entity) === 'object:image') {
-        // Image
-        // Set image dimensions if they're not already there
-        const img: HTMLImageElement = this.img.nativeElement;
-        this.entity.width = img.naturalWidth;
-        this.entity.height = img.naturalHeight;
-      }
-
-      this.entity.modal_source_url = this.router.url;
-
-      this.modalService
-        .create(
-          MediaModalComponent,
-          {
-            entity: this.entity,
-          },
-          {
-            class: 'm-overlayModal--media',
-          }
-        )
-        .present();
-    } else {
+    // Mobile (not tablet) users go to media page instead of modal
+    if (isMobile() && isNotTablet) {
       this.goToEntityPage(this.entity);
+      return;
     }
+
+    if (this.getEntityType(this.entity) === 'object:video') {
+      this.entity.dimensions = this.videoDimensions;
+    } else if (this.getEntityType(this.entity) === 'object:image') {
+      // Image
+      // Set image dimensions if they're not already there
+      const img: HTMLImageElement = this.img.nativeElement;
+      this.entity.width = img.naturalWidth;
+      this.entity.height = img.naturalHeight;
+    }
+
+    this.activityModalCreator.create(this.entity, this.injector);
   }
 }

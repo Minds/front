@@ -9,6 +9,7 @@ import {
   EventEmitter,
   Optional,
   SkipSelf,
+  Self,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -30,7 +31,6 @@ import { ClientMetaDirective } from '../../../../common/directives/client-meta.d
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
 import { AttachmentService } from '../../../../services/attachment';
 import isFullscreen, { toggleFullscreen } from '../../../../helpers/fullscreen';
-import { isTablet } from '../../../../helpers/is-mobile-or-tablet';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../../common/services/activity.service';
@@ -54,7 +54,8 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
     SlowFadeAnimation, // Fade media in after load
   ],
   providers: [
-    //ActivityService,
+    ActivityService,
+    ActivityModalService,
     ComposerService,
     ActivityServiceCommentsLegacySupport,
   ],
@@ -97,8 +98,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   isOpenTimeout: any = null;
 
   pagerTimeout: any = null;
-  // tabletOverlayTimeout: any = null;
-
   navigatedAway: boolean = false;
 
   /**
@@ -116,8 +115,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   entityWidth: number = 0;
   entityHeight: number = 0;
 
+  isPaywall2020: boolean = false;
+
   constructor(
-    public activityService: ActivityService,
+    @Self() public activityService: ActivityService,
     public client: Client,
     public session: Session,
     public analyticsService: AnalyticsService,
@@ -130,24 +131,24 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     protected clientMetaService: ClientMetaService,
     public attachment: AttachmentService,
     public service: ActivityModalService,
-    private horizontalFeed: HorizontalFeedService
+    private horizontalFeed: HorizontalFeedService,
+    private features: FeaturesService
   ) {}
 
   /////////////////////////////////////////////////////////////////
   // SETUP
   /////////////////////////////////////////////////////////////////
   ngOnInit(): void {
-    console.log('ojm modal ngOnInit was called');
     // Prevent dismissal of modal when it's just been opened
-    this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
+    // this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
+
+    this.isPaywall2020 = this.features.has('paywall-2020');
 
     this.entitySubscription = this.activityService.entity$.subscribe(
       (entity: ActivityEntity) => {
         /**
          * Modal doesn't handle reminds or status posts
          */
-
-        console.log('ojm entity subscription', entity);
 
         if (!entity) {
           return;
@@ -164,10 +165,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         this.calculateDimensions();
       }
     );
-
-    // todoojm single subscription of combineLatest canonical+entity
-    // todoojm ask mark -- but wouldn't that mean that a pageview would be recorded every
-    // time the entity changes?
 
     this.canonicalUrlSubscription = this.activityService.canonicalUrl$.subscribe(
       canonicalUrl => {
@@ -192,7 +189,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
          * Change the url to point to media page so user can easily share link
          * (but don't actually redirect)
          */
-        this.location.replaceState(canonicalUrl);
+        // this.location.replaceState(canonicalUrl);
       }
     );
 
@@ -255,21 +252,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  /**
-   * On tablets, briefly display title overlay and pager when finished loading and/or stage touch
-   */
-  // showOverlaysOnTablet() {
-  //   this.onMouseEnterStage();
-
-  //   if (this.tabletOverlayTimeout) {
-  //     clearTimeout(this.tabletOverlayTimeout);
-  //   }
-
-  //   this.tabletOverlayTimeout = setTimeout(() => {
-  //     this.onMouseLeaveStage();
-  //   }, 3000);
-  // }
-
   /////////////////////////////////////////////////////////////////
   // FULLSCREEN LISTENER
   /////////////////////////////////////////////////////////////////
@@ -302,8 +284,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('ojm ondestory modal comp');
-
     if (this.entitySubscription) {
       this.entitySubscription.unsubscribe();
     }
@@ -319,10 +299,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     if (this.fullscreenSubscription) {
       this.fullscreenSubscription.unsubscribe();
     }
-
-    // if (this.tabletOverlayTimeout) {
-    //   clearTimeout(this.tabletOverlayTimeout);
-    // }
 
     if (this.isOpenTimeout) {
       clearTimeout(this.isOpenTimeout);
