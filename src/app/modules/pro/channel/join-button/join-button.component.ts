@@ -60,8 +60,6 @@ export class JoinButtonComponent {
   }
 
   subscribe(): void {
-    if (this.service.userIsSubscribed$.getValue()) {
-      this.service.subscribe();
-    }
+    this.service.subscribe();
   }
 }

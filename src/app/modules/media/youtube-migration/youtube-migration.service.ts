@@ -150,7 +150,7 @@ export class YoutubeMigrationService {
    *
    * @param youtubeId
    */
-  async getVideoStatus(youtubeId: string): Promise<{ void }> {
+  async getVideoStatus(youtubeId: string): Promise<string> {
     if (!this.connected$.value) {
       return;
     }
@@ -332,11 +332,14 @@ export class YoutubeMigrationService {
         }
       );
 
+      // Updates local session
+      this.session.getLoggedInUser().yt_channels = [response.yt_channel];
+
       this.connected$.next(response.connected);
       this.selectedChannel$.next(response.yt_channel);
       return response.connected;
     } catch (e) {
-      console.error('connectAccount(): ', e);
+      if (e.errorId) throw e;
       return false;
     }
   }

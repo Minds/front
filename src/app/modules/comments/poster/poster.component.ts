@@ -8,6 +8,8 @@ import {
   Output,
   Renderer2,
   ViewChild,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -21,7 +23,7 @@ import { AutocompleteSuggestionsService } from '../../suggestions/services/autoc
 import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
@@ -30,7 +32,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
   providers: [AttachmentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentPosterComponent {
+export class CommentPosterComponent implements OnInit, OnDestroy {
   @Input() guid;
   @Input() entity;
   @Input() parent;
@@ -48,6 +50,7 @@ export class CommentPosterComponent {
   canPost: boolean = true;
   inProgress: boolean = false;
   maxLength: number = 1500;
+  loggedInSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -62,6 +65,20 @@ export class CommentPosterComponent {
     private configs: ConfigsService,
     private authModalService: AuthModalService
   ) {}
+
+  ngOnInit() {
+    this.loggedInSubscription = this.session.loggedinEmitter.subscribe(
+      emitted => {
+        this.detectChanges();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.loggedInSubscription) {
+      this.loggedInSubscription.unsubscribe();
+    }
+  }
 
   keypress(e: KeyboardEvent) {
     if (!e.shiftKey && e.charCode === 13) {

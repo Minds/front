@@ -41,11 +41,14 @@ export class YoutubeMigrationVideoItemComponent {
     this.youtubeService.import(videoId);
     this.video.status = 'queued';
 
-    // Poll every 5 seconds, in 1 seconds time
-    this.statusPolling = timer(1000, 5000).subscribe(async () => {
+    // Poll every 10 seconds, in 5 seconds time
+    this.statusPolling = timer(5000, 10000).subscribe(async () => {
       const status = await this.youtubeService.getVideoStatus(videoId);
 
       if (status) {
+        if (status === 'completed') {
+          this.statusPolling.unsubscribe();
+        }
         this.video.status = status;
         this.detectChange();
       }
