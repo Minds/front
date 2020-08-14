@@ -47,7 +47,8 @@ m-walletDashboard {
         }
       }
       .m-tooltip--bubble {
-        // z-index: 9999;
+        z-index: 9999;
+        min-width: 150px;
         font-size: 12px;
         line-height: 16px;
         @include m-theme() {
