@@ -150,7 +150,7 @@ export class YoutubeMigrationService {
    *
    * @param youtubeId
    */
-  async getVideoStatus(youtubeId: string): Promise<{ void }> {
+  async getVideoStatus(youtubeId: string): Promise<string> {
     if (!this.connected$.value) {
       return;
     }
@@ -339,7 +339,7 @@ export class YoutubeMigrationService {
       this.selectedChannel$.next(response.yt_channel);
       return response.connected;
     } catch (e) {
-      console.error('connectAccount(): ', e);
+      if (e.errorId) throw e;
       return false;
     }
   }

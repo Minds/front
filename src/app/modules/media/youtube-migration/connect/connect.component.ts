@@ -43,19 +43,23 @@ export class YoutubeMigrationConnectComponent {
     this.inProgress = true;
     this.detectChanges();
 
-    const connected = (await this.youtubeService.connectAccount(
-      this.form.value.youtubeId
-    )) as any;
+    try {
+      const connected = (await this.youtubeService.connectAccount(
+        this.form.value.youtubeId
+      )) as any;
 
-    if (!connected) {
-      this.toasterService.error(
-        'We were unable to verify your account. Please check the steps above and try again.'
-      );
+      if (!connected) {
+        this.toasterService.error(
+          'We were unable to verify your account. Please check the steps above and try again.'
+        );
+      }
+    } catch (e) {
+      this.toasterService.error(e.message);
+    } finally {
+      this.inProgress = false;
+
+      this.detectChanges();
     }
-
-    this.inProgress = false;
-
-    this.detectChanges();
   }
 
   /**

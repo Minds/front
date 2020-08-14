@@ -130,6 +130,7 @@ export interface MindsUser {
   enabled?: string | boolean;
   not_found?: boolean;
   email?: string;
+  seed?: boolean;
 }
 
 export interface MindsGroup {

@@ -37,6 +37,7 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
     'AT',
     'AU',
     'BE',
+    'BG',
     'CA',
     'CH',
     'DE',
