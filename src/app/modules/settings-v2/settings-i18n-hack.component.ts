@@ -48,8 +48,7 @@ import { Component } from '@angular/core';
       Pro Subscription Management
     </ng-container>
 
-    <ng-container
-      i18n="@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger Settings"
+    <ng-container i18n="@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger"
       >Messenger</ng-container
     >
     <!-- LINKS (NO COMPONENTS) -->
