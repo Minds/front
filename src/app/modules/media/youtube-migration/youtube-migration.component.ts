@@ -28,8 +28,7 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
   connected: boolean;
   channelTitle: string;
   channelId: string = '';
-  readonly youtubeSettingsUrl: string =
-    '/settings/other/youtube-migration/connect';
+  readonly youtubeSettingsUrl: string = '/settings/other/youtube-migration';
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
