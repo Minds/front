@@ -104,6 +104,23 @@
           </span>
         </li>
       </ng-template>
+
+      <!-- Seed Channels -->
+      <li
+        *ngIf="!(service.seed$ | async); else removeSeed"
+        (click)="setSeed(true)"
+      >
+        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MAKE__SEED">
+          Add as Seed
+        </span>
+      </li>
+      <ng-template #removeSeed>
+        <li (click)="setSeed(false)">
+          <span class="m-dropdownMenu__item" i18n="@@M__ACTION__REMOVE__SEED">
+            Remove as Seed
+          </span>
+        </li>
+      </ng-template>
     </ng-container>
 
     <li

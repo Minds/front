@@ -232,6 +232,26 @@ export class PostMenuService {
     }
   }
 
+  async setSeed(seed: boolean): Promise<void> {
+    try {
+      const uri = `api/v1/admin/seed/${this.entity.ownerObj.guid}/`;
+      if (seed) {
+        await this.client.post(uri);
+        this.formToastService.success(
+          `${this.entity.ownerObj.name} is now a seed.`
+        );
+      } else {
+        await this.client.delete(uri);
+        this.formToastService.success(
+          `${this.entity.ownerObj.name} is no longer a seed.`
+        );
+      }
+    } catch (e) {
+      this.formToastService.error('Unable to make this channel a seed.');
+      throw e;
+    }
+  }
+
   async block(): Promise<void> {
     this.isBlocked$.next(true);
     try {
