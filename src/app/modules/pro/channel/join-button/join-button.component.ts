@@ -5,6 +5,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { WireEventType, WireEvent } from '../../../wire/v2/wire-v2.service';
 import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-pro__joinButton',
@@ -16,7 +17,8 @@ export class JoinButtonComponent {
     private session: Session,
     public service: ProChannelService,
     private authModal: AuthModalService,
-    private wireModal: WireModalService
+    private wireModal: WireModalService,
+    private toaster: FormToastService
   ) {}
 
   onClick() {
@@ -57,6 +59,9 @@ export class JoinButtonComponent {
       }
     } else {
       this.subscribe();
+      this.toaster.success(
+        `You've subscribed to ${this.service.currentChannel.name}`
+      );
     }
   }
 
