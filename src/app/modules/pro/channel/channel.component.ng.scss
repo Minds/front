@@ -71,9 +71,11 @@ $min-tablet-pro: 900px;
           }
         }
       }
-      .m-proChannelTopbar__settingsLink {
-        text-align: right;
+      .m-proChannel__settingsLinkWrapper {
         flex-grow: 1;
+        text-align: right;
+      }
+      .m-proChannelTopbar__settingsLink {
         font-size: 15px;
         font-weight: 400;
         color: var(--m-pro--secondary-text-color) !important;

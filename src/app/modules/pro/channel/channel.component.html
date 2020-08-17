@@ -7,7 +7,11 @@
     <ng-container *ngIf="!(channelService.showSplash$ | async)">
       <div class="m-proChannel__loginRow">
         <ng-container
-          *ngIf="!(channelService.isOwner$ | async); else ownerSettings"
+          *ngIf="
+            !(channelService.isOwner$ | async) &&
+              !(channelService.userIsMember$ | async);
+            else settingsLinks
+          "
         >
           <div class="m-proChannel__login" *ngIf="!currentUser">
             <span i18n="@@M_PRO_CHANNEL__HAVE_ACCOUNT"
@@ -32,25 +36,27 @@
             </div>
           </div>
         </ng-container>
-        <ng-template #ownerSettings>
-          <a
-            *ngIf="isProDomain"
-            class="m-proChannel__settingsLink"
-            [href]="proSettingsHref"
-            target="root_minds"
-            i18n="@@COMMON__SETTINGS"
-          >
-            Settings
-          </a>
+        <ng-template #settingsLinks>
+          <div class="m-proChannel__settingsLinkWrapper">
+            <a
+              *ngIf="isProDomain"
+              class="m-proChannel__settingsLink"
+              [href]="settingsHref"
+              target="root_minds"
+              i18n="@@COMMON__SETTINGS"
+            >
+              Settings
+            </a>
 
-          <a
-            *ngIf="!isProDomain"
-            class="m-proChannelTopbar__settingsLink"
-            [routerLink]="proSettingsLink"
-            i18n="@@COMMON__SETTING"
-          >
-            Settings
-          </a>
+            <a
+              *ngIf="!isProDomain"
+              class="m-proChannelTopbar__settingsLink"
+              [routerLink]="settingsLink"
+              i18n="@@COMMON__SETTING"
+            >
+              Settings
+            </a>
+          </div>
         </ng-template>
       </div>
       <div
