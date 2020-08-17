@@ -14,4 +14,10 @@ m-composer__topbarButton {
     background-size: contain;
     background-position: center;
   }
+
+  .m-tooltip--bubble {
+    @media screen and (min-width: $max-mobile) {
+      width: max-content;
+    }
+  }
 }
