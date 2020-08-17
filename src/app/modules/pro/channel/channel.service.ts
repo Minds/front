@@ -98,11 +98,12 @@ export class ProChannelService implements OnDestroy {
     this.showLoginRow$ = combineLatest([
       this.isLoggedIn$,
       this.isOwner$,
+      this.userIsMember$,
       this.showJoinButton$,
     ]).pipe(
       map(
-        ([isLoggedIn, isOwner, showJoinButton]) =>
-          isOwner || !isLoggedIn || showJoinButton
+        ([isLoggedIn, isOwner, isMember, showJoinButton]) =>
+          isOwner || isMember || !isLoggedIn || showJoinButton
       )
     );
   }
