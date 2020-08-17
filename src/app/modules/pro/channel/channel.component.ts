@@ -148,12 +148,18 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.channelService.getRouterLink('groups');
   }
 
-  get proSettingsLink() {
-    return [`/settings/pro_canary/${this.username}`];
+  get settingsLink() {
+    const path = this.channelService.isOwner$.getValue()
+      ? `/settings/pro_canary/${this.username}`
+      : '/settings/billing/recurring-payments';
+    return [path];
   }
 
-  get proSettingsHref() {
-    return this.site.baseUrl + `settings/pro_canary/${this.username}`;
+  get settingsHref() {
+    const path = this.channelService.isOwner$.getValue()
+      ? `settings/pro_canary/${this.username}`
+      : 'settings/billing/recurring-payments';
+    return this.site.baseUrl + path;
   }
 
   get isProDomain() {
