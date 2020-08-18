@@ -254,7 +254,17 @@ export class ActivityContentComponent
 
   get videoHeight(): string {
     if (!this.mediaEl) return '';
-    const height = this.mediaEl.nativeElement.clientWidth / (16 / 9);
+    let aspectRatio = 16 / 9;
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data.height &&
+      this.entity.custom_data.height !== '0'
+    ) {
+      aspectRatio =
+        parseInt(this.entity.custom_data.width, 10) /
+        parseInt(this.entity.custom_data.height, 10);
+    }
+    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
     return `${height}px`;
   }
 
