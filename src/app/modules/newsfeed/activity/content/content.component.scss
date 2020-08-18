@@ -112,7 +112,8 @@ m-activity__content {
 .m-activityContent__media--video {
   .m-videoPlayer__placeholder {
     padding-top: 56.25%;
-    height: 0;
+    height: 100%;
+    box-sizing: border-box;
   }
   &.isPaywall {
     .m-videoPlayer__placeholder {
