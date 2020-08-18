@@ -105,7 +105,10 @@ m-activity__content {
 
 .m-activityContent__mediaTitle {
   &:not(.m-activityContent__mediaTitle--noDescription) {
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 25px;
+    margin-bottom: 10px;
   }
 }
 
