@@ -26,7 +26,7 @@
         </span>
       </m-formInput__checkbox>
     </div>
-    <div class="m-form__field--textboxToggle">
+    <div class="m-form__field--textboxToggle" hidden>
       <div
         class="m-form__row--label m-composerPopup__text"
         i18n="@@COMPOSER__MONETIZE_PLUS__EXCLUSIVITY_PERIOD"
@@ -84,7 +84,7 @@
     (click)="save()"
     [disabled]="!canSave"
     i18n="@@COMMON__SAVE"
-    data-cy="plus-save-button"
+    data-cy="monetize-save-button"
   >
     Save
   </m-shadowboxSubmitButton>

@@ -37,12 +37,12 @@ const registerForm = {
   password: 'minds-form-register #password',
   password2: 'minds-form-register #password2',
   checkbox: '[data-cy=minds-accept-tos-input] [type=checkbox]',
-  submitButton: 'minds-form-register .mdl-card__actions button',
+  submitButton: 'm-shadowboxsubmitbutton',
 };
 
 const settings = {
   deleteAccountButton:
-    'm-settings--disable-channel > div:nth-child(2) > div > button',
+    'm-shadowboxsubmitbutton',
   deleteSubmitButton:
     'm-confirm-password--modal > div > form > div:nth-child(2) > button',
 };
@@ -58,8 +58,8 @@ const defaults = {
 };
 
 const loginForm = {
-  password: 'minds-form-login .m-login-box .mdl-cell:last-child input',
-  username: 'minds-form-login .m-login-box .mdl-cell:first-child input',
+  password: '[data-cy=data-minds-login-password-input]',
+  username: '[data-cy=data-minds-login-username-input]',
   submit: '[data-cy=data-minds-login-button]',
 };
 
@@ -100,7 +100,6 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
     .type(password);
 
   cy.get(loginForm.submit)
-    .focus()
     .click({ force: true })
     .wait('@postLogin')
     .then(xhr => {
@@ -173,11 +172,12 @@ Cypress.Commands.add(
       .then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.deep.equal('success');
-      });
+      })
+      .location('pathname')
+      .should('eq', '/onboarding/notice');
 
     // skip onboarding
     if (skipOnboarding) {
-      cy.location('pathname').should('eq', '/onboarding/notice');
       cy.contains("No thanks, I'll do it later").click();
     }
   }
@@ -205,29 +205,15 @@ Cypress.Commands.add('preserveCookies', () => {
  */
 Cypress.Commands.add('deleteUser', (username, password) => {
   cy.server();
-  cy.route('POST', '**/api/v2/settings/password/validate').as('validatePost');
-  cy.route('POST', '**/api/v2/settings/delete').as('deletePOST');
+  cy.route('POST', '**/api/v1/channel/**').as('deletePOST');
 
-  cy.visit('/settings/disable');
-  cy.location('pathname', { timeout: 30000 }).should('eq', `/settings/disable`);
+  cy.visit('/settings/other/deactivate-account')
+    .location('pathname', { timeout: 30000 })
+    .should('eq', `/settings/other/deactivate-account`);
 
-  cy.get(settings.deleteAccountButton).click({ force: true });
-  cy.get('#password')
-    .focus()
-    .type(password);
+  cy.get('.m-formInputCheckbox__custom').click();
 
-  cy.get(settings.deleteSubmitButton)
-    .click({ force: true })
-    .wait('@validatePost')
-    .then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.deep.equal('success');
-    })
-    .wait('@deletePOST')
-    .then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.deep.equal('success');
-    });
+  cy.get(settings.deleteAccountButton).click({ force: true })
 });
 
 /**

@@ -114,7 +114,9 @@ export class TextInputAutocompleteDirective implements OnDestroy {
 
   @HostListener('input', ['$event'])
   onChange(event: any) {
-    const value: string = event.target.value || event.target.textContent;
+    const value: string =
+      event.target.value || event.target.innerText || event.target.textContent;
+
     if (this.menu) {
       if (
         this.triggerCharacters.indexOf(
@@ -177,7 +179,8 @@ export class TextInputAutocompleteDirective implements OnDestroy {
       return this.elm.nativeElement.selectionStart;
     } else {
       const coordinates = getContentEditableCaretCoordinates(element);
-      if (coordinates && coordinates.start) {
+
+      if (coordinates && (coordinates.start || coordinates.start === 0)) {
         return coordinates.start;
       }
     }

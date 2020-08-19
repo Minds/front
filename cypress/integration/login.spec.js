@@ -14,11 +14,12 @@ context('Login', () => {
     // cy.get('.m-login__wrapper').should('be.visible');
 
     // type username and password
-    cy.get('minds-form-login .m-login-box .mdl-cell:first-child input')
+    cy.get('[data-cy=data-minds-login-username-input]')
       .type(Cypress.env().username);
     
-    cy.get('minds-form-login .m-login-box .mdl-cell:last-child input')
+    cy.get('[data-cy=data-minds-login-password-input]')
       .type(Cypress.env().password);
+
 
     // click login button
     cy.get('button')
@@ -37,10 +38,11 @@ context('Login', () => {
     // cy.get('.m-login__wrapper').should('be.visible');
 
     // type username and password
-    cy.get('minds-form-login .m-login-box .mdl-cell:first-child input')
+    cy.get('[data-cy=data-minds-login-username-input]')
       .type(Cypress.env().username);
-    cy.get('minds-form-login .m-login-box .mdl-cell:last-child input')
-      .type(Cypress.env().password + '1'); // invalid
+    
+    cy.get('[data-cy=data-minds-login-password-input]')
+      .type(Cypress.env().password + '1');
 
     // click login button
     cy.get('button')

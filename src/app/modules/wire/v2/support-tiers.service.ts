@@ -26,6 +26,7 @@ export interface SupportTier {
   posts?: number;
   supporters?: number;
   expires?: number;
+  subscription_urn?: string;
 }
 
 /**

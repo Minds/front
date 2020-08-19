@@ -159,6 +159,7 @@ export class ActivityService {
    */
   shouldShowPaywallBadge$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
+      // TODO: handle entity.flags.paywall here?
       return !!entity.paywall || entity.paywall_unlocked;
     })
   );
@@ -295,6 +296,10 @@ export class ActivityService {
         entity.custom_data = {
           thumbnail_src: entity.thumbnail_src,
         };
+        if (entity.height || entity.width) {
+          entity.custom_data.height = entity.height;
+          entity.custom_data.width = entity.width;
+        }
         break;
       case 'album':
         // Not supported

@@ -10,6 +10,7 @@ import {
   selector: 'm-pro__searchBox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'search-box.component.html',
+  styleUrls: ['search-box.component.ng.scss'],
 })
 export class SearchBoxComponent {
   @Input() query: string = '';

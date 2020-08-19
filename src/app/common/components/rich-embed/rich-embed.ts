@@ -56,7 +56,10 @@ export class MindsRichEmbed {
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
-      this.src.thumbnail_src = this.mediaProxy.proxy(this.src.thumbnail_src);
+      this.src.thumbnail_src = this.mediaProxy.proxy(
+        this.src.thumbnail_src,
+        800
+      );
     }
 
     const isOwner =
@@ -82,7 +85,10 @@ export class MindsRichEmbed {
     this.type = 'preview';
 
     if (this.preview.thumbnail) {
-      this.preview.thumbnail = this.mediaProxy.proxy(this.preview.thumbnail);
+      this.preview.thumbnail = this.mediaProxy.proxy(
+        this.preview.thumbnail,
+        800
+      );
     }
 
     this.init();

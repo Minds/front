@@ -40,28 +40,40 @@ export class SettingsTwoFactorComponent {
     this.number = number;
   }
 
-  setup() {
-    this.telno = this.number;
-    this.waitingForCheck = true;
-    this.sendingSms = true;
-    this.error = '';
-    this.client
-      .post('api/v1/twofactor/setup', { tel: this.telno })
-      .then((response: any) => {
-        this.secret = response.secret;
-        this.sendingSms = false;
-      })
-      .catch(e => {
-        this.waitingForCheck = false;
-        this.sendingSms = false;
-        this.telno = null;
-        if (e.message == 'voip phones not allowed') {
-          this.error =
-            "We don't allow voip phones. Please, try again with a different number";
-        }
+  /**
+   * Posts phone number to client and handles component state.
+   * @returns { Promise<void> }
+   */
+  async setup(): Promise<void> {
+    try {
+      this.telno = this.number;
+      const request: Promise<unknown> = this.client.post(
+        'api/v1/twofactor/setup',
+        { tel: this.telno }
+      );
+      this.inProgress = true;
+      this.sendingSms = true;
+      this.waitingForCheck = true;
+      this.error = '';
+
+      const response: any = await request;
+      this.sendingSms = false;
+      this.inProgress = false;
+      this.secret = response.secret;
+    } catch (e) {
+      this.inProgress = false;
+      this.sendingSms = false;
+      this.waitingForCheck = false;
+      this.telno = null;
+
+      if (e.message === 'voip phones not allowed') {
         this.error =
-          'The phone number you entered was incorrect. Please, try again.';
-      });
+          "We don't allow VOIP phones. Please, try again with a different number.";
+        return;
+      }
+      this.error =
+        'An error has occurred, please make sure that the phone number is correct.';
+    }
   }
 
   check(code: number) {

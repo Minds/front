@@ -1,0 +1,57 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+}
+
+.m-channelShop__brief {
+  .m-channelShopBrief__title {
+    // display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    // justify-content: space-between;
+    margin: 0 0 20px;
+
+    a.m-channelShopBriefTitle__text {
+      cursor: pointer;
+      font-weight: 400;
+      text-decoration: none;
+      font-size: 18px;
+      line-height: 24px;
+      // flex: 1;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-channelShopBriefTitle__seeAll {
+      font-size: 14px;
+      line-height: 19px;
+      text-decoration: underline;
+      font-weight: normal !important;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary) !important;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .m-channelShopMemberships__supportTier {
+      height: auto;
+      width: 100%;
+      margin-bottom: 40px;
+
+      .m-channelShopMembershipsSupportTier__description {
+        height: auto !important;
+      }
+
+      .m-channelShopMembershipsSupportTier__actions {
+        .edit,
+        .cancel {
+          display: none;
+        }
+      }
+    }
+  }
+}

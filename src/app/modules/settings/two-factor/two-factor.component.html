@@ -17,7 +17,10 @@
   </div>
 
   <!-- SETUP -->
-  <div class="mdl-card__supporting-text" *ngIf="!inProgress && !telno">
+  <div
+    class="mdl-card__supporting-text"
+    *ngIf="(!inProgress && !telno) || sendingSms"
+  >
     <div class="minds-settings-text">
       <ng-container>
         Your SMS number.
@@ -31,9 +34,10 @@
       ></m-phoneInput>
     </div>
     <p class="mdl-color-text--red">{{ error }}</p>
-    <div>
+    <div class="m-twoFactor__sendButtonWrapper">
       <button
-        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+        class="m-twoFactor__sendButton"
+        id="numberSendButton"
         (click)="setup()"
         [disabled]="waitingForCheck"
       >
@@ -51,7 +55,7 @@
   >
     <div class="minds-settings-text" *ngIf="!sendingSms">
       <ng-container i18n="@@MINDS__SETTINGS__SENT_SMS_LABEL">
-        We sent an SMS to <b>{{ telno }}</b
+        We sent an SMS to +<b>{{ telno }}</b
         >. Enter the code below to complete your two factor setup.
       </ng-container>
     </div>
@@ -65,7 +69,7 @@
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
       <input class="mdl-textfield__input" type="text" #code />
       <label
-        class="mdl-textfield__label"
+        class="mdl-textfield__label m-twoFactor__codeInputLabel"
         for="twoFactorAuthentication"
         i18n="@@M__COMMON__ENTER_2FA_CODE"
       >
@@ -74,13 +78,13 @@
     </div>
     <div>
       <button
-        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-twoFactor__confirm"
         (click)="check(code.value)"
       >
         <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
       </button>
       <button
-        class="mdl-button mdl-js-button mdl-button--raised "
+        class="mdl-button mdl-js-button mdl-button--raised m-twoFactor__retry"
         (click)="check(code.value)"
       >
         <ng-container i18n="@@MINDS__SETTINGS__2FA_RETRY_ACTION">

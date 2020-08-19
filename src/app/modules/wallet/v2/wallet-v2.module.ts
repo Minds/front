@@ -35,6 +35,7 @@ import { WalletV2TokensComponent } from './tokens/tokens.component';
 import { WalletV2CashComponent } from './cash/cash.component';
 import { WalletV2EthComponent } from './eth/eth.component';
 import { WalletV2BtcComponent } from './btc/btc.component';
+import { WalletProEarningsCashComponent } from './cash/pro-earnings/pro-earnings.component';
 
 export const WALLET_V2_ROUTES: Routes = [
   {
@@ -73,6 +74,10 @@ export const WALLET_V2_ROUTES: Routes = [
         path: 'cash',
         component: WalletV2CashComponent,
         children: [
+          {
+            path: 'earnings',
+            component: WalletProEarningsCashComponent,
+          },
           {
             path: 'transactions',
             component: WalletTransactionsCashComponent,
@@ -144,6 +149,7 @@ export const WALLET_V2_ROUTES: Routes = [
     WalletOnchainTransferComponent,
     WalletBalanceTokensV2Component,
     WalletBalanceCashComponent,
+    WalletProEarningsCashComponent,
     WalletPendingCashPayoutComponent,
     WalletTransactionsTokensComponent,
     WalletTransactionsCashComponent,

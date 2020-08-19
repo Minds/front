@@ -16,7 +16,10 @@
       </div>
       <div class="m-form__field--checkbox">
         <div class="m-composerPopup__checkbox">
-          <m-formInput__checkbox formControlName="enabled">
+          <m-formInput__checkbox
+            formControlName="enabled"
+            data-cy="monetize-membership-enable-paywall-checkbox"
+          >
             <span i18n="@@COMPOSER__MONETIZE_CUSTOM__ENABLE_PAYWALL"
               >Enable Paywall</span
             >
@@ -41,6 +44,7 @@
             formControlName="usd"
             class="form-control"
             min="0.01"
+            data-cy="monetize-membership-paywall-amount-input"
           />
         </div>
         <!--ALLOW TOKENS CHECKBOX ---------------------------- -->
@@ -59,7 +63,9 @@
                 i18n="@@COMPOSER__MONETIZE_CUSTOM__ALLOW_TOKENS_TOOLTIP"
               >
                 Allow users to purchase your membership with Minds Tokens. Token
-                amounts are converted at a rate of $1.25/token.
+                amounts are converted at a rate of ${{
+                  tokenExchangeRate
+                }}/token.
               </ng-container>
             </m-tooltip>
           </div>

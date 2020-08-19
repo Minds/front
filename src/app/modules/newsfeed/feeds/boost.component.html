@@ -1,10 +1,7 @@
 <div class="minds-list">
-  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+  <ng-container>
     <m-composer></m-composer>
   </ng-container>
-  <ng-template #v1NewsfeedPoster>
-    <minds-newsfeed-poster></minds-newsfeed-poster>
-  </ng-template>
 
   <div class="m-feeds-sorted__query">
     <span>Showing Boosts</span>

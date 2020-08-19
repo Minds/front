@@ -1,18 +1,11 @@
 <ng-container [m-clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
-  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+  <ng-container>
     <m-composer
       *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"
       (onPost)="prepend($event)"
       #composer
     ></m-composer>
   </ng-container>
-  <ng-template #v1NewsfeedPoster>
-    <minds-newsfeed-poster
-      (load)="prepend($event)"
-      *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"
-      #poster
-    ></minds-newsfeed-poster>
-  </ng-template>
 
   <div class="minds-list">
     <m-onboarding-feed

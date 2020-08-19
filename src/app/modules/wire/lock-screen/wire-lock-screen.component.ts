@@ -16,6 +16,8 @@ import { WireModalService } from '../wire-modal.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { WireEventType } from '../v2/wire-v2.service';
+import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
@@ -37,9 +39,9 @@ export class WireLockScreenComponent implements OnInit {
   inProgress: boolean = false;
   contentType: string;
   hasTeaser: boolean = false;
-  paywallType: PaywallType = 'custom';
   tierName: string | null;
   messageTopOffset: string = '50px';
+  isCustom: boolean = false;
 
   @HostBinding('class.m-wire--lock-screen-2020')
   isPaywall2020: boolean = false;
@@ -52,7 +54,9 @@ export class WireLockScreenComponent implements OnInit {
     private wireModal: WireModalService,
     private signupModal: SignupModalService,
     private configs: ConfigsService,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private wirePaymentHandlers: WirePaymentHandlersService,
+    private authModal: AuthModalService
   ) {
     this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
   }
@@ -68,35 +72,35 @@ export class WireLockScreenComponent implements OnInit {
 
     if (this.featuresService.has('paywall-2020') && !this.showLegacyPaywall) {
       this.isPaywall2020 = true;
-      this.getPaywallType();
+
       if (this.mediaHeight) {
         if (this.mediaHeight === 0) {
           this.mediaHeight = 410;
         }
         this.messageTopOffset = `${this.mediaHeight / 2}px`;
       }
+
+      if (
+        this.entity.wire_threshold &&
+        this.entity.wire_threshold.support_tier &&
+        !this.entity.wire_threshold.support_tier.public
+      ) {
+        this.isCustom = true;
+      }
+
       this.init = true;
     }
 
     this.detectChanges();
   }
 
-  // This is temporary until we get this.entity.support_tier. And it should be in the activity service
-  getPaywallType(): void {
-    // this.paywallType = 'plus';
-    // this.paywallType = 'tier';
-    this.paywallType = 'custom';
-  }
-
-  unlock() {
+  async unlock(): Promise<void> {
     if (this.preview) {
       return;
     }
 
     if (!this.session.isLoggedIn()) {
-      this.signupModal.open();
-
-      return;
+      await this.authModal.open();
     }
 
     if (this.inProgress) return;
@@ -115,7 +119,7 @@ export class WireLockScreenComponent implements OnInit {
           this.update.next(response.entity);
           this.detectChanges();
         } else {
-          this.showWire();
+          this.showModal();
         }
         this.inProgress = false;
         this.detectChanges();
@@ -124,12 +128,23 @@ export class WireLockScreenComponent implements OnInit {
         this.inProgress = false;
         this.detectChanges();
 
-        if (e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid') {
-          this.showWire();
+        if (
+          e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid' ||
+          e.errorId === 'Minds::Core::Router::Exceptions::UnauthorizedException'
+        ) {
+          this.showModal();
         } else {
           console.error('got error: ', e);
         }
       });
+  }
+
+  showModal(): void {
+    if (this.isPlus) {
+      this.showUpgradeModal();
+    } else {
+      this.showWire();
+    }
   }
 
   async showWire() {
@@ -139,15 +154,28 @@ export class WireLockScreenComponent implements OnInit {
 
     await this.wireModal
       .present(this.entity, {
-        default: this.entity.wire_threshold,
+        //default: this.entity.wire_threshold,
+        supportTier: this.entity.wire_threshold.support_tier,
       })
       .subscribe(payEvent => {
         if (payEvent.type === WireEventType.Completed) {
           this.wireSubmitted();
         }
       });
-    // .toPromise();
-    // this.wireSubmitted();
+  }
+
+  async showUpgradeModal(): Promise<void> {
+    const wireEvent = await this.wireModal
+      .present(await this.wirePaymentHandlers.get('plus'), {
+        default: {
+          type: 'money',
+          upgradeType: 'plus',
+        },
+      })
+      .toPromise();
+    if (wireEvent.type === WireEventType.Completed) {
+      this.unlock();
+    }
   }
 
   wireSubmitted() {

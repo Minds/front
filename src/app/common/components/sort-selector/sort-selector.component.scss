@@ -67,6 +67,10 @@ m-sort-selector {
     }
   }
 
+  .m-sort-selector--period-dropdown {
+    cursor: pointer;
+  }
+
   .m-sort-selector--custom-type-dropdown {
     .m-dropdown {
       margin-right: 8px;

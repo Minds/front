@@ -5,6 +5,7 @@ import { WireV2Service } from '../../wire-v2.service';
   selector: 'm-wireCreator__form',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'form.component.html',
+  styleUrls: ['form.component.ng.scss'],
 })
 export class WireCreatorFormComponent {
   /**

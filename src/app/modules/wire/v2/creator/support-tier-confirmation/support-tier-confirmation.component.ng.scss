@@ -1,0 +1,99 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: 0 40px;
+
+  h3 {
+    line-height: 30px;
+    font-size: 22px;
+    margin: 20px 0;
+    font-weight: 500;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  ul {
+    padding-inline-start: 20px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .m-wireCreatorSupportTierConfirmation__titleRow {
+    align-items: center;
+  }
+
+  .m-wireCreatorSupportTierConfirmation__tierDescription {
+    margin-bottom: 0;
+    padding-left: 20px;
+    white-space: pre-line;
+    @include m-theme() {
+      border-left: 5px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-layout__spacer {
+    height: 20px;
+  }
+
+  .m-wireCreatorSupportTierConfirmation__amount {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 500;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    .m-wireCreatorSupportTierConfirmationAmount__timePeriod {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-wireCreatorForm__label--hasCta {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row;
+    :not(.m-wireCreatorFormLabel__cta) {
+      flex: 1;
+    }
+    .m-wireCreatorFormLabel__cta {
+      cursor: pointer;
+      @include m-theme() {
+        text-decoration: underline;
+        color: themed($m-link);
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .m-form__field--select {
+    width: 100%;
+    margin-bottom: 20px;
+
+    select {
+      width: 100%;
+    }
+
+    ::ng-deep {
+      m-payments__selectCard {
+        width: 100%;
+        .m-selector::before {
+          display: none;
+        }
+        .m-selector {
+          &::before {
+            content: '';
+          }
+          select {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

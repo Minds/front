@@ -1,0 +1,24 @@
+<div class="m-wireCreatorForm__field">
+  <div class="m-wireCreatorForm__field">
+    <div class="m-wireCreatorForm__toggleContainer">
+      <span class="m-wireCreatorForm__toggleLabel" i18n="currency|@@COMMON__USD"
+        >USD</span
+      >
+
+      <span class="m-wireCreatorForm__toggle">
+        <m-toggle
+          leftValue="usd"
+          rightValue="tokens"
+          [mModel]="service.type$ | async"
+          (mModelChange)="service.setType($event)"
+        ></m-toggle>
+      </span>
+
+      <span
+        class="m-wireCreatorForm__toggleLabel"
+        i18n="currency|@@COMMON__TOKENS"
+        >Tokens</span
+      >
+    </div>
+  </div>
+</div>

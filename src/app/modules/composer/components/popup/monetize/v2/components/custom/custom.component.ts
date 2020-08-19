@@ -11,6 +11,7 @@ import { ComposerService } from '../../../../../../services/composer.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Client } from '../../../../../../../../services/api';
 import { FormToastService } from '../../../../../../../../common/services/form-toast.service';
+import { ConfigsService } from '../../../../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-composer__monetizeV2__custom',
@@ -23,6 +24,8 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
   init: boolean = false;
   inProgress: boolean = false;
 
+  public readonly tokenExchangeRate: number;
+
   /**
    * Signal event emitter to parent
    */
@@ -33,8 +36,11 @@ export class ComposerMonetizeV2CustomComponent implements OnInit {
     private service: ComposerService,
     protected cd: ChangeDetectorRef,
     private client: Client,
-    private toasterService: FormToastService
-  ) {}
+    private toasterService: FormToastService,
+    private configs: ConfigsService
+  ) {
+    this.tokenExchangeRate = configs.get('token_exchange_rate') || 1.25;
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({

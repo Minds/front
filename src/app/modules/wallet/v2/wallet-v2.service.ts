@@ -17,6 +17,7 @@ export interface StripeDetails {
   bankAccount?: any;
   totalBalance?: any;
   pendingBalance?: { amount: number };
+  totalPaidOut?: { amount: number };
   pendingBalanceSplit: SplitBalance;
   totalPaidOutSplit: SplitBalance;
   hasAccount: boolean;
@@ -156,6 +157,9 @@ export class WalletV2Service {
             this.wallet.onchain.balance = toFriendlyCryptoVal(address.balance);
             this.wallet.receiver.balance = toFriendlyCryptoVal(address.balance);
             this.wallet.receiver.address = address.address;
+            this.wallet.eth.balance = toFriendlyCryptoVal(
+              address.ether_balance
+            );
           }
         });
         this.wallet.loaded = true;
@@ -250,7 +254,7 @@ export class WalletV2Service {
           account.pendingBalance.amount / 100
         );
         this.stripeDetails.totalPaidOutSplit = this.splitBalance(
-          (account.totalBalance.amount - account.pendingBalance.amount) / 100
+          account.totalPaidOut.amount / 100
         );
       } else {
         this.wallet.cash.balance = 0;

@@ -7943,7 +7943,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">กลุ่มนี้มีคอนเทนท์ที่เป็น NSFW</target>
+        <target state="translated">กลุ่มนี้มีคอนเทนท์ที่เป็นเนื้อหาไม่เหมาะสม</target>
       </trans-unit>
       <trans-unit id="GROUPS__NAME_PLACEHOLDER" datatype="html">
         <source>Enter a name</source>
@@ -10136,12 +10136,12 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Minds recommends 
+        <target state="translated">
+          Minds แนะนำให้ 
           <x id="START_LINK"/>
-          MetaMask
+           MetaMask 
           <x id="CLOSE_LINK"/>
-          . It's a bridge that allows you to visit the distributed web of tomorrow in your browser today. MetaMask includes a secure identity vault, providing a user interface to manage your identities on different sites and sign blockchain transactions.
+           เป็นสะพานที่ให้คุณเยี่ยมชมเว็บที่มีการแจกจ่ายในวันพรุ่งนี้ในเบราว์เซอร์ของคุณในวันนี้ MetaMask มีห้องนิรภัยที่เป็นเอกลักษณ์ซึ่งมอบส่วนต่อประสานผู้ใช้ในการจัดการข้อมูลประจำตัวของคุณในเว็บไซต์ต่างๆและลงนามในธุรกรรม blockchain
         </target>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__OPTIONS__WEB3_LOCKED_OR_NO_WALLETS" datatype="html">
@@ -10274,7 +10274,7 @@
           <context context-type="linenumber">97</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">I am purchasing the tokens for use on the Minds Platform, and not as an investment.</target>
+        <target state="translated">ฉันกำลังซื้อโทเค็นสำหรับใช้บนแพลตฟอร์ม Minds ไม่ใช่เพื่อการลงทุน</target>
       </trans-unit>
       <trans-unit id="M__PURCHASE_TERMS" datatype="html">
         <source>
@@ -10289,12 +10289,12 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          I have read and accept the 
+        <target state="translated">
+          ฉันได้อ่านและยอมรับ 
           <x id="START_LINK"/>
-          Terms Of Sale
+           ข้อกำหนดในการขาย 
           <x id="CLOSE_LINK"/>
-           for the Minds Token
+           สำหรับ Minds Token
         </target>
       </trans-unit>
       <trans-unit id="M__PURCHASE_COMPLETED_H2" datatype="html">
@@ -10421,7 +10421,7 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Harness all of the features of Minds.com with your own design, brand name, domain and style. Set your own policies, develop your own network and contribute to the greater Minds open source project.</target>
+        <target state="translated">ใช้ประโยชน์จากฟีเจอร์ทั้งหมดของ Minds.com ด้วยการออกแบบชื่อแบรนด์ โดเมน และสไตล์ของคุณเอง กำหนดนโยบายของคุณเอง พัฒนาเครือข่ายของคุณเองและมีส่วนร่วมในโครงการโอเพ่นซอร์ส Minds ที่ยิ่งใหญ่กว่า</target>
       </trans-unit>
       <trans-unit id="MARKETING_NODES__FULL_STACK_FEATURES" datatype="html">
         <source>A full stack of features</source>
@@ -10526,12 +10526,12 @@
           <context context-type="linenumber">221</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          All of your work will contribute to the greater 
+        <target state="translated">
+          งานทั้งหมดของคุณจะมีส่วนช่วยให้ 
           <x id="START_LINK"/>
-          Minds open source project
+           โครงการ Minds โอเพ่นซอร์ส 
           <x id="CLOSE_LINK"/>
-           of building free and open source social networking technology for the world.
+           สร้างเทคโนโลยีเครือข่ายสังคมโซเชียลฟรีและโอเพ่นซอร์สสำหรับโลก
         </target>
       </trans-unit>
       <trans-unit id="MARKETING_NODES__CONTACT_FOR_DETAILS" datatype="html">
@@ -11262,7 +11262,7 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Receive tips and subscription payments in USD, Bitcoin, Ether or Minds Tokens. Earn money for driving pageviews, referring active users and sales.</target>
+        <target state="translated">รับเคล็ดลับในการใช้และสามารถชำระเงินค่าสมัครในสกุลเงิน USD, Bitcoin, Ether หรือโทเค็น Minds หารายได้จากการขับเคลื่อนยอดวิวหน้าเว็บ ชวนเพื่อนมาใช้และเพิ่มยอดขาย</target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__COST_PER_PAGEVIEW_SECTION" datatype="html">
         <source>$1 for every 1,000 pageviews on your content (increases to $5 between 100K and 1M pageviews/month)</source>
@@ -11294,10 +11294,10 @@
           <context context-type="linenumber">89</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          25% commission on all referred sales of Pro or 
+        <target state="translated">
+          ค่าคอมมิชชั่น 25% จากยอดขายที่แนะนำของ Pro หรือ 
           <x id="START_LINK"/>
-          Minds Tokens
+          โทเค็น Minds
           <x id="CLOSE_LINK"/>
         </target>
       </trans-unit>
@@ -11389,7 +11389,7 @@
           <context context-type="linenumber">193</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Tired of demonetization, censorship and unfair treatment from traditional social networks? Minds offers a fully transparent, privacy-focused platform with no bias, hidden algorithms or censorship.</target>
+        <target state="translated">เบื่อกับการถอนเงินสด การเซ็นเซอร์และการปฏิบัติที่ไม่เป็นธรรมจากเครือข่ายสังคมออนไลน์ใช่มั้ย? Minds เสนอแพลตฟอร์มที่เน้นความเป็นส่วนตัวอย่างโปร่งใสด้วยการไม่มีอัลกอริธึมไบแอสที่ซ่อนอยู่หรือการเซ็นเซอร์</target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__LEVERAGE_BLOCKCHAIN_SECTION" datatype="html">
         <source>Leverage the blockchain and crypto payments to eliminate the middleman and maintain autonomy over your revenue streams.</source>
@@ -11443,7 +11443,7 @@
           <context context-type="linenumber">258</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Turn off ads, verify your channel, earn a badge and access exclusive content.</target>
+        <target state="translated">ปิดโฆษณา ตรวจสอบแชนแนลของคุณ หรือรับเข็มกลัด และเข้าถึงเนื้อหาพิเศษ</target>
       </trans-unit>
       <trans-unit id="MARKETING_PRO__LEARN_ABOUT_PLUS" datatype="html">
         <source>Learn About Plus</source>
@@ -11653,7 +11653,7 @@
           <context context-type="linenumber">162</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">When enabled, your channel on minds.com will have your Pro site theme applied</target>
+        <target state="translated">เมื่อเปิดใช้งาน แชนแนลของคุณใน minds.com จะมีการใช้ธีมไซต์ Pro ของคุณ</target>
       </trans-unit>
       <trans-unit id="PRO_SETTINGS__TEXT_COLOR" datatype="html">
         <source>Text Color</source>
@@ -12432,7 +12432,7 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">If this post contains content that is NSFW (Not Safe for Work) it is your responsibility to tag it accordingly. Failing to do so will violate our terms of use.</target>
+        <target state="translated">หากโพสต์นี้มีเนื้อหาที่เป็นไม่ปลอดภัยสำหรับการทำงาน เป็นความรับผิดชอบของคุณที่จะติดแท็กตามนั้น การไม่ทำเช่นนั้นจะเป็นการละเมิดข้อกำหนดการใช้งานของเรา</target>
       </trans-unit>
       <trans-unit id="COMPOSER_NSFW__GUIDELINES_FURTHER_INFORMATION" datatype="html">
         <source>
@@ -13054,7 +13054,7 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds content, and more</target>
+        <target state="translated">ยกเลิกการรับเพิ่มคะแนนสะสมเพื่อรับ 1,000 คะแนนต่อเดือนและเข้าถึงเนื้อหาพิเศษและอื่นๆอีกมากมาย</target>
       </trans-unit>
       <trans-unit id="BOOST__PUBLISHER__EARNINGS" datatype="html">
         <source>Earnings</source>
@@ -13144,7 +13144,7 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Expand your reach and access new audiences. You can exchange one Minds Token for 1,000 boosted views across the network.</target>
+        <target state="translated">ขยายการเข้าถึงและเข้าถึงผู้ชมใหม่ คุณสามารถแลกเปลี่ยนหนึ่งโทเค็น Minds สำหรับทุก 1,000 วิวที่เพิ่มขึ้นในเครือข่าย</target>
       </trans-unit>
       <trans-unit id="BOOST_MARKETING__PROMOTE_YOUR_CONTENT" datatype="html">
         <source>Promote your content, group or channel directly in the newsfeed or sidebar of other active Minds channels.</source>
@@ -13153,7 +13153,7 @@
           <context context-type="linenumber">80</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Promote your content, group or channel directly in the newsfeed or sidebar of other active Minds channels.</target>
+        <target state="translated">โปรโมตเนื้อหา กลุ่ม หรือช่องของคุณโดยตรงในฟีดข่าวหรือแถบด้านข้างของแชนแนล Minds อื่น ๆ</target>
       </trans-unit>
       <trans-unit id="BOOST_MARKETING__BOOST_CAMPAIGNS" datatype="html">
         <source>Boost Campaigns</source>
@@ -13277,10 +13277,10 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          This balance is for the 
+        <target state="translated">
+          ยอดเงินคงเหลือสำหรับกระเป๋าเงิน 
           <x id="INTERPOLATION"/>
-           wallet that is currently set up as the receiver wallet for your channel.
+           ซึ่งปัจจุบันถูกตั้งค่าให้เป็นกระเป๋าตัวรับเงินจากแชนแนลของคุณ
         </target>
       </trans-unit>
       <trans-unit id="M__COMMON__OFFCHAIN_LABEL" datatype="html">
@@ -13308,7 +13308,7 @@
           <context context-type="linenumber">110</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This balance is for your Minds.com OffChain wallet. Transactions made from this address will not appear on the blockchain.</target>
+        <target state="translated">เงินคงเหลือนี้สำหรับกระเป๋าสตางค์ Minds.com รายการต่างๆที่เกิดจากที่อยู่นี้จะไม่ปรากฎใน blockchain</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__CC_SELECTOR" datatype="html">
         <source>Credit Card</source>
@@ -13476,7 +13476,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Being a publisher allows you to earn points and/or money by showing boosts on your channel page.</target>
+        <target state="translated">เป็นผู้เผยแพร่ทำให้คุณสามารถได้รับแต้ม หรือ/และ เงิน โดยแสดงบูสต์ในช่องของคุณ</target>
       </trans-unit>
       <trans-unit id="BOOST_CONSOLE_PUBLISHER__SETTINGS__BECOME_A_PUBLISHER" datatype="html">
         <source>Become a Publisher</source>
@@ -13699,7 +13699,7 @@
           <context context-type="linenumber">111</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Set up different subscription tiers to offer your fans in exchange for recurring monthly payments in USD or Minds Tokens (BTC and ETH not yet supported).</target>
+        <target state="translated">ตั้งค่าระดับการสมัครสมาชิกที่แตกต่างกันเพื่อเสนอให้แฟนๆ ของคุณแลกเปลี่ยนกับการชำระเงินรายเดือนเป็น USD หรือโทเค็น Minds (ขณะนี้ยังไม่รองรับ BTC และ ETH)</target>
       </trans-unit>
       <trans-unit id="MARKETING_WIRE__POST_CONTENT_INFO" datatype="html">
         <source>Post content behind paywalls that is only accessible to the subscription tiers you select.</source>
@@ -13735,7 +13735,7 @@
           <context context-type="linenumber">162</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Every post on Minds has a button to send a tip to the author in Minds Tokens, USD, Bitcoin and Ether. Tipping is a great way to show your support for your favorite channels and allow them to keep creating!</target>
+        <target state="translated">ในทุกโพสต์บน Minds จะมีปุ่มที่สามารถส่งทิปให้กับผู้แต่งในรูปแปบบโทเค็น Minds, USD, Bitcoin และ Ether ซึ่งการให้ทิปเป็นวิธีที่ยอดเยี่ยมในการแสดงการสนับสนุนแชนแนลโปรดของคุณและให้พวกเขาสร้างสรรค์ต่อไป!</target>
       </trans-unit>
       <trans-unit id="PAY__MARKETING__PAGE__TITLE" datatype="html">
         <source>Minds Pay</source>
@@ -14138,7 +14138,7 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Support Minds and unlock features such as earning revenue for your content, hiding ads, accessing exclusive content, receiving a badge and verifying your channel.</target>
+        <target state="translated">สนับสนุน Minds ปลดล็อคคุณสมบัติต่างๆเช่นสร้างรายได้จากเนื้อหาของคุณซ่อนโฆษณาเข้าถึงเนื้อหาพิเศษรับตราและยืนยันช่องของคุณ</target>
       </trans-unit>
       <trans-unit id="WIRE_CREATOR_MARKETING__PRO_DESC" datatype="html">
         <source>Get paid for your traffic and referrals, launch your own website, receive multi-currency tips and subscription payments from fans and much more.</source>
@@ -14375,12 +14375,12 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Everyone earns 
+        <target state="translated">
+          ทุกคนจะได้รับ 
           <x id="START_LINK"/>
-          Minds Tokens
+          โทเค็น Minds
           <x id="CLOSE_LINK"/>
-           based on their daily contribution to the network, which can be used to boost your content and grow your audience.
+           ตามการมีส่วนร่วมในชีวิตประจำวันของพวกเขาต่อเครือข่ายซึ่งสามารถใช้เพื่อเพิ่มเนื้อหาของคุณและขยายกลุ่มเป้าหมายของคุณ
         </target>
       </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__MINDS_PLUS_AND_PRO_FEATURES" datatype="html">
@@ -14586,7 +14586,7 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">แสดงข้อมูล NSFW ในผลลัพธ์</target>
+        <target state="translated">แสดงข้อมูลเนื้อหาไม่เหมาะสมในผลลัพธ์</target>
       </trans-unit>
       <trans-unit id="HOMEPAGE__V2__SUBHEADER" datatype="html">
         <source>A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.</source>
@@ -15078,7 +15078,7 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Support Minds and unlock features such as hiding ads, accessing exclusive content, receiving a badge and verifying your channel.</target>
+        <target state="translated">สนับสนุน Minds ปลดล็อคคุณสมบัติต่างๆเช่นสร้างรายได้จากเนื้อหาของคุณซ่อนโฆษณาเข้าถึงเนื้อหาพิเศษรับตราและยืนยันช่องของคุณ</target>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__CLICK_TO_REQUEST_VERIFICATION" datatype="html">
         <source>Click here to request to be verified</source>
@@ -15156,12 +15156,12 @@
           <context context-type="linenumber">165</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Plus members are able to request to 
+        <target state="translated">
+          สมาชิก Plus จะสามารถขอ 
           <x id="START_LINK"/>
-          verify their channel
+          ยืนยันแชนแนล
           <x id="CLOSE_LINK"/>
-           and receive a verified badge.
+          และรับเข็มกลัดว่ายืนแล้ว
         </target>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__JUST_POST_URL_SECTION" datatype="html">
@@ -15171,7 +15171,7 @@
           <context context-type="linenumber">176</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Just post your Minds channel URL to two other social networks where you have the same identify and provide us with the proof.</target>
+        <target state="translated">เพียงโพสต์ Minds ช่อง URL ของแชนแนลคุณไปยังเครือข่ายสังคมออนไลน์อีกสองแห่งที่คุณมีตัวตนเดียวกันและให้หลักฐานกับเรา</target>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__OTHER_PLUS_FEATURES" datatype="html">
         <source>Other Plus features</source>
@@ -15198,7 +15198,7 @@
           <context context-type="linenumber">221</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Plus members receive a badge for their channel to indicate they are part of the community.</target>
+        <target state="translated">สมาชิก Plus จะได้รับป้ายสำหรับแชนแนลของพวกเขาเพื่อระบุว่าพวกเขาเป็นส่วนหนึ่งของชุมชน</target>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS" datatype="html">
         <source>Support Minds</source>
@@ -16013,12 +16013,12 @@
           <context context-type="linenumber">243</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          An 
+        <target state="translated">
+          โทเค็นจำนวน 
           <x id="START_LINK"/>
           ERC-20
           <x id="CLOSE_LINK"/>
-           token harnessing the Ethereum blockchain to give you full control over your crypto.
+           ที่ควบคุม Ethereum บล็อกเชนสามารถทำให้คุณควบคุม crypto ของคุณได้อย่างเต็มที่
         </target>
       </trans-unit>
       <trans-unit id="COMMON__EARN_DAILY_REWARDS" datatype="html">
@@ -16043,12 +16043,12 @@
           <context context-type="linenumber">261</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Don’t have the funds to buy tokens? You can also earn them as 
+        <target state="translated">
+          ไม่มีงบจะซื้อโทเค็นหรอ? คุณสามารถรับ
           <x id="START_LINK"/>
-          rewards
+          รางวัล
           <x id="CLOSE_LINK"/>
-           for your contribution to the network each day.
+           จากการบริจาคให้กับเครือข่ายในแต่ละวันนะ
         </target>
       </trans-unit>
       <trans-unit id="COMMON__SUPPORT_MINDS" datatype="html">
@@ -16067,7 +16067,7 @@
           <context context-type="linenumber">276</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Buying tokens is one of the best ways to keep Minds independent and support Internet freedom.</target>
+        <target state="translated">การซื้อโทเค็นเป็นหนึ่งในวิธีที่ดีที่สุดในการทำให้ Minds เป็นอิสระเพื่อสนับสนุนอิสรภาพทางอินเทอร์เน็ตต่อไป</target>
       </trans-unit>
       <trans-unit id="COMMON__MINDS_REWARDS" datatype="html">
         <source>Minds Rewards</source>
@@ -16094,10 +16094,10 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Earn tokens for your 
+        <target state="translated">
+          รับโทเค็นจาก 
           <x id="START_EMPHASISED_TEXT"/>
-          contributions to the network
+          ผลงานการช่วยเหลือของคุณกับเครือข่าย
           <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
@@ -16117,7 +16117,7 @@
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">This score determines your share of the daily rewards pool and results in a payout of Minds Tokens, which can be used to support other channels or boost your content for more reach.</target>
+        <target state="translated">คะแนนนี้จะกำหนดจากการที่แชร์างวัลประจำวันและผลลัพธ์ในการจ่ายเงินของโทเค็น Minds ซึ่งสามารถใช้เพื่อสนับสนุนช่องทางอื่นๆ หรือบูสต์เนื้อหาของคุณให้เข้าถึงได้มากขึ้น</target>
       </trans-unit>
       <trans-unit id="COMMON__JOIN_REWARDS" datatype="html">
         <source>Join Rewards</source>
@@ -16139,7 +16139,7 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">We reward you for the amount of unique engagement received on your content. In order to prevent fraud, you can only receive credit once per engagement type per day from verified channels.</target>
+        <target state="translated">เราให้รางวัลคุณสำหรับจำนวนการมีส่วนร่วมที่ไม่ซ้ำใครที่ได้รับบนเนื้อหาของคุณ เพื่อป้องกันการฉ้อโกงคุณสามารถรับเครดิตหนึ่งครั้งต่อประเภทการมีส่วนร่วมต่อวันจากแชนแนลที่ได้รับการยืนยัน</target>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__MARKETING__VOTES__EQUALS" datatype="html">
         <source>
@@ -16360,7 +16360,7 @@
           <context context-type="linenumber">202</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">All of our development is publicly available on Gitlab. Any contribution you make to the code will be manually reviewed in order to determine appropriate payouts in Minds Tokens, Bitcoin, Ether or USD.</target>
+        <target state="translated">การพัฒนาทั้งหมดของเรานั้นจะเปิดเผยต่อสาธารณชนบน Gitlab การบริจาคใดๆที่คุณทำกับรหัสจะได้รับการตรวจสอบด้วยเราเองเพื่อพิจารณาการจ่ายเงินที่เหมาะสมในโทเค็น Minds, Bitcoin, Ether หรือ USD</target>
       </trans-unit>
       <trans-unit id="COMMON__VIEW_SOURCECODE" datatype="html">
         <source>View Sourcecode</source>
@@ -16402,12 +16402,12 @@
           <context context-type="linenumber">262</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Earn 
+        <target state="translated">
+          รับ 
           <x id="START_EMPHASISED_TEXT"/>
           <x id="ICU"/>
           <x id="CLOSE_EMPHASISED_TEXT"/>
-           every time you perform an OnChain transaction with your Minds Tokens.
+           ทุกครั้งเมื่อคุณทำธุรกรรม OnChain โดยใช้โทเค็น Minds ของคุณ
         </target>
       </trans-unit>
       <trans-unit id="15f1a6c8a2047315e69080d4a5f02a09987797d6" datatype="html">
@@ -16680,7 +16680,7 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Unlock powerful features to supercharge your channel.</target>
+        <target state="translated">ปลดล็อคคุณสมบัติอันทรงพลังเพื่อเพิ่มพลังแชนแนลของคุณให้มากขึ้น</target>
       </trans-unit>
       <trans-unit id="UPGRADES__JOIN_PLUS_HIDE_BOOSTS" datatype="html">
         <source>Join Plus to hide boosts, access exclusive content and more</source>
@@ -17097,7 +17097,7 @@
           <context context-type="linenumber">158</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Enter the address that will be stored as your wallet for Minds on-chain tokens and Ether payments. To conduct transactions you will need your wallet's private key and MetaMask cannot be installed in your browser.</target>
+        <target state="translated">ป้อนที่อยู่ที่จะถูกเก็บไว้เป็นกระเป๋าสตางค์ของคุณสำหรับการชำระเงินโทเค็นของ Minds และการชำระเงิน Ether ในการทำธุรกรรม คุณจะต้องใช้รหัสส่วนตัวของกระเป๋าสตางค์และ MetaMask จะไม่สามารถติดตั้งในเบราว์เซอร์ของคุณ</target>
       </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__ONCHAIN_ADDRESS" datatype="html">
         <source>On-chain Address</source>
@@ -17178,10 +17178,10 @@
           <context context-type="linenumber">269</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          To receive on-chain payments from other channels (e.g. from a Wire or a Boost), you will need an on-chain address. You can change it here at any time. Note: your on-chain address is the same as your Ether address. 
+        <target state="translated">
+          หากต้องการรับการชำระเงินแบบออนไลน์จากช่องอื่นๆ (เช่นจาก Wire หรือ Boost) คุณจะต้องมีที่อยู่ทางออนไลน์ คุณสามารถเปลี่ยนได้ที่นี่ตลอดเวลา หมายเหตุ: ที่อยู่ในเครือของคุณเหมือนกับที่อยู่ Ether ของคุณ 
           <x id="START_TAG_M-TOOLTIP"/>
-           Why? On-chain tokens run on the Ethereum network and require Ether to send. 
+           เพราะอะไรน่ะหรือ? โทเค็นลูกโซ่ทำงานบนเครือข่าย Ethereum และต้องใช้ Ether ในการส่ง 
           <x id="CLOSE_TAG_M-TOOLTIP"/>
         </target>
       </trans-unit>
@@ -17207,12 +17207,12 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Sorry, NSFW (not safe for work) channels are unable to onboard to Cash due to 
+        <target state="translated">
+          ขออภัย แชนแนลที่มีเนื้อหาไม่เหมาะสมจะไม่สามารถลงทะเบียนเป็นเงินสดได้เนื่องจาก 
           <x id="START_LINK"/>
-          Stripe's Terms of Service
+           ข้อกำหนดในการให้บริการของ Stripe 
           <x id="CLOSE_LINK"/>
-          . You may still use Tokens, ETH and BTC for payments.
+           คุณยังสามารถใช้โทเค็น ETH และ BTC สำหรับการชำระเงินได้
         </target>
       </trans-unit>
       <trans-unit id="WALLETV2_SETTINGS_ETH__SAME_AS_ONCHAIN_TEXT" datatype="html">
@@ -17227,10 +17227,10 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Your Ether address is the same as your on-chain address.
+        <target state="translated">
+          ที่อยู่ Ether ของคุณเหมือนกับที่อยู่ในเครือ 
           <x id="START_TAG_M-TOOLTIP"/>
-           Why? On-chain tokens run on the Ethereum network and require Ether to send. 
+           เพราะเหตุใดน่ะหรือ? โทเค็นลูกโซ่ทำงานบนเครือข่าย Ethereum และต้องใช้ Ether ในการส่ง 
           <x id="CLOSE_TAG_M-TOOLTIP"/>
         </target>
       </trans-unit>
@@ -17515,10 +17515,10 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          On-Chain
+        <target state="translated">
+          On-Chain 
           <x id="START_TAG_M-TOOLTIP"/>
-          Store tokens on your device instead of our servers for more control and portability
+           เก็บโทเค็นในอุปกรณ์ของคุณแทนเซิร์ฟเวอร์ของเราเพื่อการควบคุมและการพกพาที่มากขึ้น 
           <x id="CLOSE_TAG_M-TOOLTIP"/>
         </target>
       </trans-unit>
@@ -17534,10 +17534,10 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Off-Chain
+        <target state="translated">
+          ออฟไลน์ 
           <x id="START_TAG_M-TOOLTIP"/>
-          Store tokens on our servers for quicker transaction times and no fees
+           เก็บโทเค็นในเซิร์ฟเวอร์ของเราเพื่อทำธุรกรรมได้เร็วขึ้นและไม่มีค่าธรรมเนียม 
           <x id="CLOSE_TAG_M-TOOLTIP"/>
         </target>
       </trans-unit>
@@ -17563,12 +17563,12 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          Today's estimated payout 
+        <target state="translated">
+          การชำระเงินโดยประมาณในวันนี้ 
           <x id="START_TAG_SPAN"/>
           <x id="INTERPOLATION"/>
           <x id="CLOSE_TAG_SPAN"/>
-           tokens.
+           โทเค็น
         </target>
       </trans-unit>
       <trans-unit id="WALLET_V2_TOKENS_BALANCE__NEXT_PAYOUT_INFO" datatype="html">
@@ -18319,7 +18319,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">The day the referral sets up their wallet (and you are rewarded with tokens). Click PING to send a pending referral a notification to let them know they ought to join the rewards program.</target>
+        <target state="translated">วันที่ผู้อ้างอิงตั้งค่ากระเป๋าเงินของพวกเขา (และคุณจะได้รับรางวัลด้วยโทเค็น) คลิก PING เพื่อส่งการแจ้งเตือนผู้อ้างอิงที่รออนุมัติเพื่อให้พวกเขารู้ว่าพวกเขาควรเข้าร่วมโปรแกรมรางวัล</target>
       </trans-unit>
       <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON" datatype="html">
         <source>ping</source>
@@ -18889,7 +18889,7 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Control how NSFW content is displayed in your newsfeed.</target>
+        <target state="translated">ควบคุมวิธีแสดงเนื้อหาไม่เหมาะสมบนฟีดข่าวของคุณ</target>
       </trans-unit>
       <trans-unit id="NSFW_CONTENT_SETTINGS__ALWAYS_SHOW_NSFW" datatype="html">
         <source>Always show NSFW content (18+)</source>
@@ -18907,7 +18907,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ปรับปรุงการตั้งค่า NSFW</target>
+        <target state="translated">ปรับปรุงการตั้งค่าเนื้อหาไม่เหมาะสม</target>
       </trans-unit>
       <trans-unit id="SETTINGS__ACCOUNT__SHAREBUTTONS__LABEL" datatype="html">
         <source>Share Buttons</source>
@@ -20783,7 +20783,7 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">แชนแนลนี้เป็น NSFW</target>
+        <target state="translated">แชนแนลนี้มีเนื้อหาไม่เหมาะสม</target>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__I_AM_OVER_18" datatype="html">
         <source>I am 18 or over</source>

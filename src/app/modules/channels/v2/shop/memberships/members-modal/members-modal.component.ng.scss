@@ -1,0 +1,63 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    max-width: 750px;
+  }
+
+  table {
+    width: 100%;
+
+    tr {
+      height: 50px;
+    }
+
+    td {
+      font-size: 15px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-channelShopMembershipsMembersMember__avatar {
+      width: 50px;
+    }
+
+    .m-channelShopMembershipsMembersMember__name {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-channelShopMembershipsMembersMember__amount {
+      text-transform: capitalize;
+    }
+
+    .m-channelShopMembershipsMembersMember__message {
+      width: 40px;
+    }
+  }
+
+  .m-channelShopMembershipsMembers__supportTiersSelector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    ::ng-deep m-dropdownselector {
+      margin: 0;
+    }
+  }
+
+  ::ng-deep minds-avatar {
+    .minds-avatar {
+      border-radius: 50%;
+      height: 30px;
+      width: 30px;
+      background-size: cover;
+      margin: 0;
+    }
+  }
+}

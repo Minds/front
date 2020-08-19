@@ -141,7 +141,7 @@
     display: flex;
     flex-flow: column nowrap;
     position: relative;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     font-size: 15px;
     line-height: 20px;
 
@@ -167,11 +167,32 @@
 
         &.hasUnitLabel {
           align-items: center;
+          @include m-theme() {
+            box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+          }
           input {
             min-width: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            box-shadow: none !important;
           }
           span {
-            margin-right: 8px;
+            padding: 10px;
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            @include m-theme() {
+              border: 1px solid themed($m-borderColor--primary);
+              border-right-width: 0px;
+            }
+          }
+          &:focus {
+            &:not(:read-only) {
+              span {
+                @include m-theme() {
+                  border-color: themed($m-blue);
+                }
+              }
+            }
           }
         }
       }
@@ -187,7 +208,6 @@
       select:not(.m-dateDropdowns__select) {
         flex: 1 1 100%;
       }
-      // todojm
       @media screen and (max-width: 1000px) {
         label,
         input,
@@ -204,6 +224,7 @@
   // Includes textareas as well as inputs ////
   ////////////////////////////////////////////
   input[type='text'],
+  input[type='email'],
   input[type='number'],
   input[type='password'] {
     max-height: 42px;
@@ -496,6 +517,7 @@
   }
 
   input[type='text'],
+  input[type='email'],
   input[type='password'],
   input[type='number'],
   textarea,

@@ -76,24 +76,29 @@
 <form
   (submit)="$event.preventDefault()"
   [formGroup]="form"
-  class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box"
+  class="m-form m-login-box m-formWrapper"
   [class.m-loginBox__bigButton]="showBigButton"
   [hidden]="hideLogin"
 >
-  <div class="mdl-card__supporting-text mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col">
-      <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
-        Username
-      </label>
-      <input
-        type="text"
-        id="username"
-        formControlName="username"
-        [placeholder]="showLabels ? '' : 'Username'"
-        i18n-placeholder="@@M__COMMON__USERNAME"
-        autocomplete="username"
-        (keydown.enter)="login(); $event.preventDefault();"
-      />
+  <div class="m-layout__grid">
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
+          Username
+        </label>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          [placeholder]="showLabels ? '' : 'Username'"
+          i18n-placeholder="@@M__COMMON__USERNAME"
+          autocomplete="username"
+          (keydown.enter)="login(); $event.preventDefault();"
+          data-cy="data-minds-login-username-input"
+        />
+      </div>
       <div class="m-login__error" *ngIf="!!usernameError">
         <ng-container
           *ngIf="usernameError == 'LoginException::EmailAddress'"
@@ -110,21 +115,27 @@
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col">
-      <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
-        Password
-      </label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        [placeholder]="showLabels ? '' : 'Password'"
-        i18n-placeholder="@@M__COMMON__PASSWORD"
-        autocomplete="current-password"
-        (keydown.enter)="login(); $event.preventDefault();"
-      />
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
+          Password
+        </label>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [placeholder]="showLabels ? '' : 'Password'"
+          i18n-placeholder="@@M__COMMON__PASSWORD"
+          autocomplete="current-password"
+          (keydown.enter)="login(); $event.preventDefault();"
+          data-cy="data-minds-login-password-input"
+        />
+      </div>
     </div>
   </div>
+
   <a
     class="m-login__joinTheConversation"
     [routerLink]="['/register']"
@@ -134,14 +145,28 @@
     Join Minds Now
   </a>
 
-  <div class="mdl-card__actions">
-    <div
-      class="m-login__formError"
-      *ngIf="showInlineErrors && showBigButton && errorMessage"
-    >
-      <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
+  <div class="m-layout__row m-login__actions">
+    <div>
+      <a
+        class="m-reset-password-link"
+        [routerLink]="['/forgot-password']"
+        *ngIf="!showTitle"
+        data-cy="data-minds-forgot-password-button"
+      >
+        <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">
+          Forgot Password?
+        </ng-container>
+      </a>
+      <div
+        class="m-login__formError"
+        *ngIf="showInlineErrors && showBigButton && errorMessage"
+      >
+        <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
+      </div>
     </div>
+
     <div class="m-login__spacer" *ngIf="showBigButton"></div>
+
     <button
       class="m-btn m-btn--action m-btn--login"
       (click)="login()"
@@ -163,22 +188,12 @@
         Login
       </ng-container>
     </m-shadowboxSubmitButton>
-    <a
-      class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link"
-      [routerLink]="['/forgot-password']"
-      *ngIf="!showTitle"
-      data-cy="data-minds-forgot-password-button"
-    >
-      <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">
-        Forgot Password?
-      </ng-container>
-    </a>
   </div>
 </form>
 <!-- END: LOGIN -->
 
 <!-- START: TWOFACTOR -->
-<div class="mdl-card mdl-shadow--2dp minds-login-box" *ngIf="twofactorToken">
+<div class="minds-login-box m-login-box m-login__2fa" *ngIf="twofactorToken">
   <div class="mdl-card__title">
     <h2 class="mdl-card__title-text" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">
       Twofactor Login

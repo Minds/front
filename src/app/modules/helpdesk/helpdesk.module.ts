@@ -15,7 +15,7 @@ import { AllHelpdeskDashboardComponent } from './dashboard/all.component';
 
 const routes: Routes = [
   {
-    path: 'help',
+    path: '',
     component: HelpdeskDashboardComponent,
     data: {
       title: 'Help Desk',
@@ -24,20 +24,20 @@ const routes: Routes = [
     },
   },
   {
-    path: 'help/category/edit/:uuid',
+    path: 'category/edit/:uuid',
     component: CategoryCreatorComponent,
     data: {
       title: 'Help Desk > Edit Category',
     },
   },
   {
-    path: 'help/question/edit/:uuid',
+    path: 'question/edit/:uuid',
     component: QuestionCreatorComponent,
     data: {
       title: 'Help Desk > Edit Question',
     },
   },
-  { path: 'help/question/:uuid', component: QuestionsComponent },
+  { path: 'question/:uuid', component: QuestionsComponent },
 ];
 
 @NgModule({

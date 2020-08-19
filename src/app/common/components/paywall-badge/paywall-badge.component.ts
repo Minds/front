@@ -10,17 +10,12 @@ export class PaywallBadgeComponent implements OnInit {
   @Input() entity: any;
 
   /**
-   * Override the red background of the Minds+ badge
-   */
-  @Input() accentColor: boolean = true;
-
-  /**
    * Override the top-right positioning
    */
   @Input() topRightPosition: boolean = true;
 
   hasPaywall: boolean = false;
-  paywallType: PaywallType = 'tier';
+  paywallType: PaywallType = 'custom';
   tierName: string;
   init: boolean = false;
 
@@ -41,6 +36,10 @@ export class PaywallBadgeComponent implements OnInit {
 
     this.hasPaywall = !!this.entity.paywall || this.entity.paywall_unlocked;
 
+    /**
+     * Determine paywall type
+     * (All legacy paywalls are treated as custom paywalls)
+     */
     if (
       this.hasPaywall &&
       this.entity.wire_threshold &&
@@ -53,6 +52,7 @@ export class PaywallBadgeComponent implements OnInit {
       } else if (!tier.public) {
         this.paywallType = 'custom';
       } else {
+        this.paywallType = 'tier';
         this.tierName = tier.name;
       }
     }

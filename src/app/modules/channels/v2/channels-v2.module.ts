@@ -8,8 +8,6 @@ import { NewsfeedModule } from '../../newsfeed/newsfeed.module';
 import { ChannelComponent } from './channel.component';
 import { ChannelHeaderComponent } from './header/header.component';
 import { ChannelFeedComponent } from './feed/feed.component';
-import { ChannelShopComponent } from './shop/shop.component';
-import { ChannelShopBriefComponent } from './shop/brief.component';
 import { ChannelAboutComponent } from './about/about.component';
 import { ChannelAboutBriefComponent } from './about/brief.component';
 import { ChannelEditComponent } from './edit/edit.component';
@@ -36,10 +34,7 @@ import { ChannelListGroupsComponent } from './list/groups.component';
 import { ModalsModule } from '../../modals/modals.module';
 import { DiscoverySharedModule } from '../../discovery/discovery-shared.module';
 import { ChannelActionsBoostComponent } from './actions/boost.component';
-import { ChannelShopBriefWireRewardsComponent } from './shop/brief-wire-rewards.component';
-import { ChannelShopMembershipsComponent } from './shop/memberships/memberships.component';
-import { ChannelShopMembershipsEditComponent } from './shop/memberships/edit.component';
-import { ChannelShopMembershipsSupportTierComponent } from './shop/memberships/support-tier.component';
+import { ChannelShopLazyComponent } from './shop/shop-lazy.component';
 
 /**
  * Generally available components
@@ -52,8 +47,6 @@ const COMPONENTS = [ChannelComponent, ChannelEditComponent];
 const INTERNAL_COMPONENTS = [
   ChannelHeaderComponent,
   ChannelFeedComponent,
-  ChannelShopComponent,
-  ChannelShopBriefComponent,
   ChannelAboutComponent,
   ChannelAboutBriefComponent,
   ChannelAboutExtraInfoComponent,
@@ -75,10 +68,7 @@ const INTERNAL_COMPONENTS = [
   ChannelListComponent,
   ChannelListConnectionsComponent,
   ChannelListGroupsComponent,
-  ChannelShopBriefWireRewardsComponent,
-  ChannelShopMembershipsComponent,
-  ChannelShopMembershipsEditComponent,
-  ChannelShopMembershipsSupportTierComponent,
+  ChannelShopLazyComponent,
 ];
 
 /**

@@ -61,6 +61,34 @@
 
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
+        <label for="splash" class="m-form__customInputWrapper__checkbox">
+          <ng-container i18n="@@PRO_GENERAL__ENABLE_SPLASH_PAGE"
+            >Enable splash page</ng-container
+          >
+          <m-tooltip>
+            <span m-tooltip--anchor>𝒊</span>
+            <ng-container i18n="@@PRO_GENERAL__ENABLE_SPLASH_PAGE_INFO"
+              >Enable full screen landing page to prompt logged out users to
+              sign up or join your membership when they visit your Pro
+              site</ng-container
+            >
+          </m-tooltip>
+          <input
+            type="checkbox"
+            id="splash"
+            name="splash"
+            formControlName="splash"
+            class="form-control"
+            data-minds="splash"
+            [readonly]="inProgress || !init"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
         <label
           for="publish"
           class="m-form__customInputWrapper__checkbox"

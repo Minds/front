@@ -1,0 +1,79 @@
+<div class="m-wireCreator__supportTierConfirmation m-formWrapper">
+  <div class="m-wireCreatorSupportTierConfirmation__titleRow m-layout__row">
+    <h3>Join a membership</h3>
+    <div class="m-layout__spacer"></div>
+    <m-wireCreator__currencyToggle></m-wireCreator__currencyToggle>
+  </div>
+
+  <div class="m-form__field--select" *ngIf="!(service.inProgress$ | async)">
+    <div class="m-form__row--input">
+      <select
+        [compareWith]="byUrn"
+        [ngModel]="service.supportTier$ | async"
+        (ngModelChange)="service.supportTier$.next($event)"
+      >
+        <option
+          *ngFor="let supportTier of supportTiers$ | async"
+          [ngValue]="supportTier"
+        >
+          {{ supportTier.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <p class="m-wireCreatorSupportTierConfirmation__tierDescription">
+    {{ (service.supportTier$ | async).description }}
+  </p>
+
+  <div class="m-layout__spacer"></div>
+  <div class="m-layout__spacer"></div>
+
+  <div
+    class="m-wireCreatorSupportTierConfirmation__amount"
+    *ngIf="(service.type$ | async) === 'usd'"
+  >
+    <span class="m-wireCreatorSupportTierConfirmationAmount__amount">
+      <span>$</span>
+      {{ (service.supportTier$ | async).usd }}
+    </span>
+    <span class="m-wireCreatorSupportTierConfirmationAmount__timePeriod"
+      >per month</span
+    >
+  </div>
+
+  <div
+    class="m-wireCreatorSupportTierConfirmation__amount"
+    *ngIf="(service.type$ | async) === 'tokens'"
+  >
+    <span class="m-wireCreatorSupportTierConfirmationAmount__amount">
+      {{ (service.supportTier$ | async).tokens }}
+      <span> tokens </span>
+    </span>
+    <span class="m-wireCreatorSupportTierConfirmationAmount__timePeriod"
+      >per month</span
+    >
+  </div>
+
+  <div class="m-layout__spacer"></div>
+
+  <div class="m-form__field--select" *ngIf="(service.type$ | async) === 'usd'">
+    <div
+      class="m-wireCreatorForm__label m-wireCreatorForm__label--hasCta"
+      i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
+    >
+      <h3>Payment Method</h3>
+      <a class="m-wireCreatorFormLabel__cta" (click)="onAddCardClick($event)"
+        >Add a new card</a
+      >
+    </div>
+
+    <div class="m-form__row--input">
+      <m-payments__selectCard
+        (selected)="service.setUsdPaymentMethodId($event)"
+      ></m-payments__selectCard>
+    </div>
+  </div>
+
+  <div class="m-layout__spacer"></div>
+</div>

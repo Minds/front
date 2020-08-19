@@ -1,0 +1,15 @@
+:host {
+  display: content;
+
+  .m-wireCreatorForm__toggleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    user-select: none;
+
+    .m-wireCreatorForm__toggle {
+      margin: 0 12px;
+    }
+  }
+}

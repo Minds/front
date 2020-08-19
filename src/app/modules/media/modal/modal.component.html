@@ -435,7 +435,7 @@
                     (done)="wireSubmitted($event)"
                   ></m-wire-button>
                   <minds-button-remind
-                    *ngIf="originalEntity.type !== 'comment'"
+                    *ngIf="originalEntity.type !== 'comment' && allowReminds"
                     [object]="originalEntity"
                   ></minds-button-remind>
                   <div>

@@ -16,6 +16,13 @@
         [canAutoScroll]="false"
       >
       </m-proChannel__contentList>
+      <m-proChannel__contentList
+        *ngIf="showFeed"
+        type="feed"
+        [limit]="12"
+        [canAutoScroll]="true"
+      >
+      </m-proChannel__contentList>
     </div>
   </div>
 

@@ -1,15 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
 import { Wallet, WalletV2Service } from '../../wallet/v2/wallet-v2.service';
-import { WireService as WireV1Service } from '../wire.service';
-import { WireStruc } from '../creator/creator.component';
+import { WireService as WireV1Service, WireStruc } from '../wire.service';
 import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { PlusService } from '../../plus/plus.service';
 import { ProService } from '../../pro/pro.service';
+import { SupportTier } from './support-tiers.service';
+import { Session } from '../../../services/session';
 
 /**
  * Wire event types
@@ -65,6 +66,20 @@ export interface WireUpgradePricingOptions {
   monthly: number;
   yearly: number;
 }
+
+export interface WireCurrencyOptions {
+  tokens: boolean;
+  usd: boolean;
+  eth: boolean;
+  btc: boolean;
+}
+
+const DEFAULT_CURRENCY_OPTIONS_VALUE: WireCurrencyOptions = {
+  tokens: true,
+  usd: false,
+  eth: false,
+  btc: false,
+};
 
 /**
  * Wire types
@@ -142,6 +157,7 @@ const DEFAULT_WIRE_REWARDS_VALUE: WireRewards = {
 interface Data {
   entityGuid: string;
   type: WireType;
+  supportTier: SupportTier;
   upgradeType: WireUpgradeType;
   isUpgrade: boolean;
   upgradeInterval: UpgradeOptionInterval;
@@ -161,6 +177,7 @@ interface Data {
 type DataArray = [
   string,
   WireType,
+  SupportTier,
   WireUpgradeType,
   boolean,
   UpgradeOptionInterval,
@@ -200,6 +217,10 @@ export class WireV2Service implements OnDestroy {
   readonly type$: BehaviorSubject<WireType> = new BehaviorSubject<WireType>(
     DEFAULT_TYPE_VALUE
   );
+
+  readonly supportTier$: BehaviorSubject<SupportTier> = new BehaviorSubject<
+    SupportTier
+  >(null);
 
   /**
    * Wire upgrade type subject
@@ -296,6 +317,10 @@ export class WireV2Service implements OnDestroy {
     false
   );
 
+  protected readonly currencyOptions$: BehaviorSubject<
+    WireCurrencyOptions
+  > = new BehaviorSubject<WireCurrencyOptions>(DEFAULT_CURRENCY_OPTIONS_VALUE);
+
   /**
    * Validate data observable
    */
@@ -326,8 +351,8 @@ export class WireV2Service implements OnDestroy {
    */
   readonly upgrades: any;
 
-  isPlus: boolean;
-  isPro: boolean;
+  userIsPlus: boolean;
+  userIsPro: boolean;
 
   /**
    * Constructor. Initializes data payload observable subscription.
@@ -341,14 +366,20 @@ export class WireV2Service implements OnDestroy {
     protected v1Wire: WireV1Service,
     private plusService: PlusService,
     private proService: ProService,
+    private session: Session,
     configs: ConfigsService
   ) {
     this.upgrades = configs.get('upgrades');
+
+    const user = session.getLoggedInUser();
+    this.userIsPlus = user && user.plus;
+    this.userIsPro = user && user.pro;
 
     // Combine state
     const wireData$ = combineLatest([
       this.entityGuid$,
       this.type$,
+      this.supportTier$,
       this.upgradeType$,
       this.isUpgrade$,
       this.upgradeInterval$,
@@ -356,7 +387,18 @@ export class WireV2Service implements OnDestroy {
       this.tokenType$,
       this.amount$,
       this.recurring$,
-      this.owner$,
+      this.owner$.pipe(
+        distinctUntilChanged(),
+        tap(owner => {
+          // Reset the currency options when the owner obj changes
+          this.currencyOptions$.next({
+            tokens: true,
+            usd: owner && owner.merchant && owner.merchant.id,
+            eth: owner && !!owner.eth_wallet,
+            btc: owner && !!owner.btc_address,
+          });
+        })
+      ),
       this.usdPaymentMethodId$,
       this.wallet.wallet$,
     ]).pipe(
@@ -364,6 +406,7 @@ export class WireV2Service implements OnDestroy {
         ([
           entityGuid,
           type,
+          supportTier,
           upgradeType,
           isUpgrade,
           upgradeInterval,
@@ -377,6 +420,7 @@ export class WireV2Service implements OnDestroy {
         ]: DataArray): Data => ({
           entityGuid,
           type,
+          supportTier,
           upgradeType,
           isUpgrade,
           upgradeInterval,
@@ -457,15 +501,9 @@ export class WireV2Service implements OnDestroy {
     });
 
     // Sync balances
-    this.wallet.getTokenAccounts();
-
-    this.getIsPlus().then(isPlus => {
-      this.isPlus = isPlus;
-    });
-
-    this.getIsPlus().then(isPro => {
-      this.isPro = isPro;
-    });
+    if (this.session.isLoggedIn()) {
+      this.wallet.getTokenAccounts();
+    }
   }
 
   /**
@@ -522,7 +560,7 @@ export class WireV2Service implements OnDestroy {
       this.recurring$.next(false);
     }
 
-    this.setUpgradePricingOptions(type, this.upgradeType$.value);
+    this.setUpgradePricingOptions(type, this.upgradeType$.getValue());
 
     return this;
   }
@@ -687,13 +725,20 @@ export class WireV2Service implements OnDestroy {
       return invalid();
     }
 
-    if (this.isUpgrade$.value) {
-      if (this.upgradeType$.value === 'pro' && this.isPro) {
+    if (this.isUpgrade$.getValue()) {
+      if (this.upgradeType$.getValue() === 'pro' && this.userIsPro) {
         return invalid('You are already a Pro member', true);
       }
-      if (this.upgradeType$.value === 'plus' && this.isPlus) {
+      if (this.upgradeType$.getValue() === 'plus' && this.userIsPlus) {
         return invalid('You are already a Minds+ member', true);
       }
+    }
+
+    if (
+      this.supportTier$.getValue() &&
+      this.supportTier$.getValue().subscription_urn
+    ) {
+      return invalid('You are already a member', true);
     }
 
     if (data.amount <= 0) {
@@ -831,19 +876,5 @@ export class WireV2Service implements OnDestroy {
       // Re-throw
       throw e;
     }
-  }
-
-  /**
-   * Checks user's plus status
-   */
-  async getIsPlus(): Promise<boolean> {
-    return await this.plusService.isActive();
-  }
-
-  /**
-   * Checks user's plus status
-   */
-  async getIsPro(): Promise<boolean> {
-    return await this.proService.isActive();
   }
 }

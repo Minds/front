@@ -106,13 +106,10 @@ export class BlockchainEthModalComponent implements OnInit {
     }
 
     const sendWyreConfig: SendWyreConfig = {
-      paymentMethod: 'debit-card',
-      accountId: this.configs.get('sendwyre')['accountId'] || '',
       dest: `ethereum:${this.session.getLoggedInUser().eth_wallet}`,
       destCurrency: 'ETH',
-      sourceAmount: this.usd.toString(),
-      redirectUrl: `${this.site.baseUrl}token`,
-      failureRedirectUrl: `${this.site.baseUrl}token?failed=1`,
+      sourceCurrency: 'USD',
+      amount: this.usd.toString(),
     };
 
     this.sendWyreService.redirect(sendWyreConfig);

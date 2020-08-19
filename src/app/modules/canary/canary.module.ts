@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
-    path: 'canary',
+    path: '',
     component: CanaryPageComponent,
     data: {
       title: 'Canary',

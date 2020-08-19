@@ -1157,7 +1157,7 @@
           <context context-type="linenumber">350</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Promovido</target>
+        <target state="translated">Boost</target>
       </trans-unit>
       <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html">
         <source>Boosted Onchain</source>

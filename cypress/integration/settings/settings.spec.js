@@ -10,8 +10,4 @@ context('Settings', () => {
   it('should load settings', () => {
     cy.visit('/settings');
   });
-
-  it('should load settings canary', () => {
-    cy.visit('/settings/canary');
-  });
 });

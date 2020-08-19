@@ -76,7 +76,7 @@ describe('LoginForm', () => {
   }
 
   function getTwoFactorLoginButton() {
-    return fixture.debugElement.query(By.css('.mdl-card > button'));
+    return fixture.debugElement.query(By.css('.m-login__2fa > button'));
   }
 
   beforeEach(async(() => {
