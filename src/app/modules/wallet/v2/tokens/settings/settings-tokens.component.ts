@@ -328,4 +328,34 @@ export class WalletSettingsTokensComponent
   get addressInput() {
     return this.form.get('addressInput');
   }
+
+  /**
+   * On Change Address click.
+   * Sets new screen and deletes existing address.
+   * @returns { void }
+   */
+  public onChangeAddressClick(): void {
+    this.deleteEthAddress();
+    this.display = null;
+  }
+
+  /**
+   * Deletes an ETH address for a user.
+   * @returns { Promise<void> } - Awaitable.
+   */
+  private async deleteEthAddress(): Promise<void> {
+    try {
+      const response: {
+        status?: string;
+        message?: string;
+      } = await this.client.delete('api/v2/blockchain/wallet/eth');
+      if (response.status !== 'success') {
+        throw new Error(response.message);
+      }
+    } catch (e) {
+      console.log(
+        e.message || 'An unknown error occurred removing this ETH address.'
+      );
+    }
+  }
 }
