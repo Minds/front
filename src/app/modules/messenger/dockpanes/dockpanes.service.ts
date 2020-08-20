@@ -4,7 +4,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MindsUser } from '../../../interfaces/entities';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MessengerConversationDockpanesService {
   conversations: Array<any> = [];
 
