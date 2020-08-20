@@ -17,13 +17,15 @@ m-settings--two-factor {
 
     @include m-theme {
       background-color: themed($m-btn--primary);
-      color: themed($m-textColor--primary);
+      color: themed($m-white-always);
     }
   }
 }
 
 .m-twoFactor__codeInputLabel {
-  padding: 8px;
+  padding: 8px 20px;
+  width: unset;
+  max-width: 100%;
 }
 
 .m-twoFactor__confirm {

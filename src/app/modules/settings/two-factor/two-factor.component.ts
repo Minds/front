@@ -89,6 +89,7 @@ export class SettingsTwoFactorComponent {
       .catch((response: any) => {
         this.waitingForCheck = false;
         this.telno = null;
+        this.number = null;
         this.error = 'The code was incorrect. Please, try again.';
       });
   }
