@@ -11,7 +11,7 @@
         class="m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
       >
         <h1 class="m-homepage__title">
-          <ng-container>Minds</ng-container>
+          <!-- <ng-container>Minds</ng-container> -->
           <span class="m-homepage__yellowLine"></span>
         </h1>
 
@@ -20,9 +20,10 @@
         </h2>
 
         <p class="m-marketing__description" i18n="@@HOMEPAGE__V2__SUBHEADER">
-          A place to have open conversations and bring people together. Free
+          <!-- A place to have open conversations and bring people together. Free
           your mind and get paid for creating content, driving traffic and
-          referring friends.
+          referring friends. -->
+          A place to connect and share
         </p>
 
         <button
@@ -31,7 +32,7 @@
           *mExperiment="'Homepage121119'; bucket: 'base'"
           i18n
         >
-          Join Minds Now
+          Join Now
         </button>
 
         <div class="m-homepage__appButtons">
@@ -64,7 +65,7 @@
     </div>
   </div>
 
-  <ng-container slot="2">
+  <ng-container slot="2" *ngIf="false">
     <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
 
     <!-- Section 2 -->
@@ -204,7 +205,7 @@
               (click)="navigate()"
               i18n
             >
-              Join Minds Now
+              Join Now
             </button>
           </div>
         </div>
