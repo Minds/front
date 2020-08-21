@@ -47,8 +47,6 @@ context.only('Comment Threads', () => {
 
     // This test makes use of cy.post()
     cy.overrideFeatureFlags({ 'activity-composer': true });
-
-    cy.visit('/newsfeed/subscriptions');
     cy.location('pathname').should('eq', `/newsfeed/subscriptions`);
 
     cy.post(postText);
@@ -241,9 +239,8 @@ context.only('Comment Threads', () => {
     });
 
   it('should paginate correctly', () => {
-    cy.login();
-    cy.visit('/newsfeed/subscriptions');
-    cy.location('pathname')
+    cy.login()
+      .location('pathname')
       .should('eq', `/newsfeed/subscriptions`);
 
     cy.post('test pagination');

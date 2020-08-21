@@ -24,11 +24,8 @@ context('Boost Console', () => {
     cy.preserveCookies();
     cy.server();
     cy.route('POST', '**/api/v2/boost/**').as('boostPost');
-    cy.visit('/boost/console/newsfeed/history');
-  });
-
-  after(() => {
-    cy.clearCookies();
+    cy.get('.m-dropdown .minds-avatar').click();
+    cy.contains('Boost Console').click();
   });
 
   it('should show a new boost in the console', () => {
@@ -100,9 +97,8 @@ context('Boost Console', () => {
     cy.server();
     cy.route('POST', '**/api/v2/boost/**').as('boostPost');
 
-    cy.overrideFeatureFlags({ 'activity-composer': true });
-    cy.visit('/newsfeed/subscriptions');
-    cy.reload(); // workaround to ensure feature flag set
+    // cy.visit('/newsfeed/subscriptions');
+    // cy.reload(); // workaround to ensure feature flag set
 
     cy.post(text);
 
