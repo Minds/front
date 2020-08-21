@@ -40,11 +40,11 @@ export class AnalyticsService {
 
   initSnowplow() {
     if (isPlatformServer(this.platformId)) return;
-    //const snowplowUrl = '//sp.ma.minds.com';
-    const snowplowUrl = `//localhost:4200/api/sp/ma`;
-    (window as any).snowplow('newTracker', 'ma', '//localhost:8090', {
+    const snowplowUrl = '//sp.minds.com';
+    //const snowplowUrl = `//localhost:8090`;
+    (window as any).snowplow('newTracker', 'ma', snowplowUrl, {
       appId: 'minds',
-      postPath: '/com.minds/a',
+      postPath: '/com.minds/t',
     });
     (window as any).snowplow('enableActivityTracking', 30, 10);
   }

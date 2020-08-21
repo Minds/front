@@ -33,9 +33,10 @@ export class NewsfeedService {
     // }
 
     (window as any).snowplow('trackSelfDescribingEvent', {
-      schema: 'iglu:com.minds/view/jsonschema/2-0-0',
+      schema: 'iglu:com.minds/view/jsonschema/1-0-0',
       data: {
-        entityGuid: entity.guid,
+        entity_guid: entity.guid,
+        entity_owner_guid: entity.owner_guid,
         ...clientMeta,
       },
     });
