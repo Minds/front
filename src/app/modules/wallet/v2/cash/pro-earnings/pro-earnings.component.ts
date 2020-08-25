@@ -26,6 +26,7 @@ export class WalletProEarningsCashComponent {
   );
   inProgress = false;
   from: number = moment()
+    .utc()
     .startOf('month')
     .unix();
 
@@ -97,6 +98,8 @@ export class WalletProEarningsCashComponent {
     switch (id) {
       case 'wire':
         return 'Minds Pay';
+      case 'wire-all':
+        return 'Memberships & Tips';
       case 'partner':
         return 'Minds Pro';
       case 'plus':

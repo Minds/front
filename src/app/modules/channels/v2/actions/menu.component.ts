@@ -212,4 +212,22 @@ export class ChannelActionsMenuComponent {
       console.error(e);
     }
   }
+
+  /**
+   * Set the seed
+   * @param boolean
+   */
+  async setSeed(seed: boolean): Promise<void> {
+    const channel = { ...this.service.channel$.getValue() };
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, seed });
+
+    try {
+      await this.postMenu.setEntity({ ownerObj: channel }).setSeed(seed);
+    } catch (e) {
+      // Reverse action
+      this.service.setChannel({ ...channel, seed: !seed });
+    }
+  }
 }

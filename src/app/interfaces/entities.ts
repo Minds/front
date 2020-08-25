@@ -119,6 +119,7 @@ export interface MindsUser {
     domain: string;
     has_custom_logo?: boolean;
     has_custom_background?: boolean;
+    splash?: boolean;
   };
   mode: ChannelMode;
   nsfw: Array<number>;
@@ -130,6 +131,7 @@ export interface MindsUser {
   enabled?: string | boolean;
   not_found?: boolean;
   email?: string;
+  seed?: boolean;
 }
 
 export interface MindsGroup {

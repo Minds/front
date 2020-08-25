@@ -44,8 +44,6 @@ import { ScrollAwareVideoPlayerComponent } from '../../../media/components/video
   templateUrl: 'content.component.html',
   animations: [
     trigger('fader', [
-      state('active', style({})),
-      state('dismissed', style({})),
       transition(':leave', [
         style({ opacity: '1' }),
         animate(
@@ -217,14 +215,6 @@ export class ActivityContentComponent
     if (this.entity.custom_type === 'batch') {
       let thumbUrl = this.entity.custom_data[0].src;
 
-      /**
-       * Check whether we need to add 'unlock_paywall' query as the only
-       * query param OR append to an existing one
-       */
-      const joiner = thumbUrl.split('?').length > 1 ? '&' : '/?';
-      const thumbTimestamp = this.paywallUnlocked ? moment().unix() : '0';
-      thumbUrl += `${joiner}unlock_paywall=${thumbTimestamp}`;
-
       return thumbUrl;
     }
 
@@ -264,7 +254,17 @@ export class ActivityContentComponent
 
   get videoHeight(): string {
     if (!this.mediaEl) return '';
-    const height = this.mediaEl.nativeElement.clientWidth / (16 / 9);
+    let aspectRatio = 16 / 9;
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data.height &&
+      this.entity.custom_data.height !== '0'
+    ) {
+      aspectRatio =
+        parseInt(this.entity.custom_data.width, 10) /
+        parseInt(this.entity.custom_data.height, 10);
+    }
+    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
     return `${height}px`;
   }
 

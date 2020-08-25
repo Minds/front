@@ -109,13 +109,10 @@ describe('BlockchainEthModalComponent', () => {
     comp.buy();
 
     expect(sendWyreMock.redirect).toHaveBeenCalledWith({
-      paymentMethod: 'debit-card',
-      accountId: 'AC_123',
       dest: 'ethereum:0x00000000000000',
       destCurrency: 'ETH',
-      sourceAmount: '40',
-      redirectUrl: 'https://www.minds.com/token',
-      failureRedirectUrl: 'https://www.minds.com/token?failed=1',
+      amount: '40',
+      sourceCurrency: 'USD',
     });
   });
 });

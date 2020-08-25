@@ -13,14 +13,9 @@ import {
   PLATFORM_ID,
   Inject,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-  UrlSegment,
-  NavigationEnd,
-} from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Session } from '../../../services/session';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { ProChannelService } from './channel.service';
@@ -33,13 +28,25 @@ import { ScrollService } from '../../../services/ux/scroll';
 import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import {
+  SupportTiersService,
+  SupportTier,
+} from '../../wire/v2/support-tiers.service';
+import { WireModalService } from '../../wire/wire-modal.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
-  providers: [ProChannelService, OverlayModalService, SignupModalService],
+  providers: [
+    ProChannelService,
+    OverlayModalService,
+    SignupModalService,
+    SupportTiersService,
+  ],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
+  styleUrls: ['channel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -57,11 +64,30 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   collapseNavItems: boolean;
 
+  showSplash: boolean = false;
+
+  /**
+   * User is subscribed to a membership
+   */
+  isMember: boolean = false;
+
+  /**
+   * Hide search box for medium width windows
+   */
+  searchBoxOpen: boolean = false;
+
+  showLoginRowSubscription: Subscription;
+  showLoginRow: boolean = true;
+
+  public lowestSupportTier: SupportTier | null;
+
   protected params$: Subscription;
 
   protected loggedIn$: Subscription;
 
   protected routerEventsSubscription: Subscription;
+
+  protected supportTiersSubscription: Subscription;
 
   @ViewChild('overlayModal', { static: true })
   protected overlayModal: OverlayModalComponent;
@@ -122,12 +148,18 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.channelService.getRouterLink('groups');
   }
 
-  get proSettingsLink() {
-    return [`/settings/canary/pro_canary/${this.username}`];
+  get settingsLink() {
+    const path = this.channelService.isOwner$.getValue()
+      ? `/settings/pro_canary/${this.username}`
+      : '/settings/billing/recurring-payments';
+    return [path];
   }
 
-  get proSettingsHref() {
-    return this.site.baseUrl + `settings/canary/pro_canary/${this.username}`;
+  get settingsHref() {
+    const path = this.channelService.isOwner$.getValue()
+      ? `settings/pro_canary/${this.username}`
+      : 'settings/billing/recurring-payments';
+    return this.site.baseUrl + path;
   }
 
   get isProDomain() {
@@ -162,7 +194,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public session: Session,
     protected element: ElementRef,
-    protected channelService: ProChannelService,
+    public channelService: ProChannelService,
     protected client: Client,
     protected router: Router,
     protected route: ActivatedRoute,
@@ -174,7 +206,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
     protected pageLayoutService: PageLayoutService,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    protected supportTiers: SupportTiersService,
+    private authModal: AuthModalService
   ) {}
 
   ngOnInit() {
@@ -185,6 +219,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.listen();
     this.onResize();
     this.pageLayoutService.useFullWidth();
+
+    this.channelService.isLoggedIn$.next(this.session.isLoggedIn());
   }
 
   ngAfterViewInit() {
@@ -222,15 +258,37 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(data => {
         this.pageLayoutService.useFullWidth();
       });
+
+    this.supportTiersSubscription = this.supportTiers.list$.subscribe(
+      supportTiers => {
+        if (supportTiers[0]) {
+          this.channelService.lowestSupportTier$.next(supportTiers[0]);
+
+          this.channelService.userIsMember$.next(
+            supportTiers.some(supportTier => supportTier.subscription_urn)
+          );
+        }
+        this.detectChanges();
+      }
+    );
+
+    this.showLoginRowSubscription = this.channelService.showLoginRow$.subscribe(
+      show => {
+        this.showLoginRow = show;
+        this.detectChanges();
+      }
+    );
   }
 
   @HostListener('window:resize') onResize() {
-    this.collapseNavItems = window.innerWidth <= 768;
+    this.collapseNavItems = window.innerWidth <= 480;
   }
 
   ngOnDestroy() {
     this.params$.unsubscribe();
     this.routerEventsSubscription.unsubscribe();
+    this.supportTiersSubscription.unsubscribe();
+    this.showLoginRowSubscription.unsubscribe();
   }
 
   async load() {
@@ -246,7 +304,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.load(this.username);
 
+      this.supportTiers.setEntityGuid(this.channel.guid);
       this.bindCssVariables();
+      if (this.session.getLoggedInUser().guid === this.channel.guid) {
+        this.channelService.isOwner$.next(true);
+      }
+      this.setSplash();
+      this.setSubscribed();
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
@@ -276,6 +340,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.reload(this.username);
 
+      this.supportTiers.refresh();
+      this.setSplash();
+      this.setSubscribed();
       this.shouldOpenWireModal();
     } catch (e) {
       console.error(e);
@@ -287,9 +354,41 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
   }
 
+  setSplash(): void {
+    this.channelService.showSplash$.next(
+      !this.currentUser &&
+        this.channel.pro_settings.splash &&
+        this.site.isProDomain
+    );
+  }
+
+  setSubscribed(): void {
+    this.channelService.userIsSubscribed$.next(
+      this.channel.subscribed || false
+    );
+  }
+
+  async showLoginModal(): Promise<void> {
+    await this.authModal.open({ formDisplay: 'login' });
+  }
+
   bindCssVariables() {
     if (isPlatformServer(this.platformId)) return;
-    const styles = this.channel.pro_settings.styles;
+    let styles = this.channel.pro_settings.styles;
+
+    /**
+     * Create secondary text and border colors
+     * from text color w/ reduced opacity
+     */
+    const textColor = styles['text_color'];
+    if (textColor) {
+      const additionalColors = {
+        secondary_text_color: textColor + 'B3',
+        border_color: textColor + '80',
+      };
+
+      styles = { ...styles, ...additionalColors };
+    }
 
     for (const style in styles) {
       if (!styles.hasOwnProperty(style)) {
@@ -304,6 +403,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       const styleAttr = style.replace(/_/g, '-');
+
       this.element.nativeElement.style.setProperty(
         `--m-pro--${styleAttr}`,
         styles[style]
@@ -322,6 +422,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   clearSearch() {
+    this.searchBoxOpen = false;
+    this.detectChanges();
     this.query = '';
     const cleanUrl = this.router.url.split(';')[0];
     this.router.navigate([cleanUrl]);

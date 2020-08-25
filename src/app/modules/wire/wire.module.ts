@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutModule } from '../checkout/checkout.module';
-import { FaqModule } from '../faq/faq.module';
 import { PaymentsModule } from '../payments/payments.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
@@ -55,7 +54,6 @@ const wireRoutes: Routes = [
     RouterModule.forChild(wireRoutes),
     CommonModule,
     CheckoutModule,
-    FaqModule,
     PaymentsModule,
     WireV2Module,
     MarketingModule,

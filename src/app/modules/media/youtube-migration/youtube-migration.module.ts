@@ -17,6 +17,7 @@ import { YoutubeMigrationMarketingComponent } from './marketing/marketing.compon
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MarketingModule } from '../../marketing/marketing.module';
+import { YoutubeMigrationVideoItemComponent } from './video-item/video-item.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MarketingModule } from '../../marketing/marketing.module';
     YoutubeMigrationUnmigratedVideosComponent,
     YoutubeMigrationMigratedVideosComponent,
     YoutubeMigrationVideoListComponent,
+    YoutubeMigrationVideoItemComponent,
     YoutubeMigrationSetupModalComponent,
     YoutubeMigrationMarketingComponent,
   ],

@@ -92,7 +92,7 @@ export class SidebarNavigationComponent
     }
 
     if (this.featuresService.has('navigation')) {
-      this.settingsLink = '/settings/canary';
+      this.settingsLink = '/settings';
     }
   }
 

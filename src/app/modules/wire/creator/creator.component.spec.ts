@@ -17,11 +17,7 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-  VisibleWireError,
-  WireCreatorComponent,
-  WireStruc,
-} from './creator.component';
+import { VisibleWireError, WireCreatorComponent } from './creator.component';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { AbbrPipe } from '../../../common/pipes/abbr';
@@ -29,7 +25,7 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { WireService } from '../wire.service';
+import { WireService, WireStruc } from '../wire.service';
 import { WireContractService } from '../../blockchain/contracts/wire-contract.service';
 import { wireContractServiceMock } from '../../../../tests/wire-contract-service-mock.spec';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';

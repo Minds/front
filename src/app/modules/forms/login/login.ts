@@ -9,6 +9,7 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
   moduleId: module.id,
   selector: 'minds-form-login',
   templateUrl: 'login.html',
+  styleUrls: ['./login.ng.scss'],
 })
 export class LoginForm {
   @Input() showBigButton: boolean = false;

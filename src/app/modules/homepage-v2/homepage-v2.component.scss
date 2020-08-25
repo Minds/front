@@ -226,6 +226,11 @@ m-homepage__v2 {
 
           clip-path: polygon(0 0, 100% 8px, 99% 95%, 0% 98%);
 
+          @media screen and (max-width: $m-grid-max-mobile) {
+            width: 100%;
+            box-sizing: border-box;
+          }
+
           h3 {
             font-size: 24px;
             line-height: 32px;
@@ -241,170 +246,22 @@ m-homepage__v2 {
             display: none;
           }
 
-          .mdl-cell {
-            margin: 0;
-            padding-bottom: 6px;
-          }
-
           form {
-            margin-top: 21px;
+            margin-top: 20px;
             background: transparent !important;
 
-            .mdl-card__supporting-text {
-              overflow: visible;
-            }
-
             .m-registerForm__confirmPassword {
-              margin-top: 19px;
-            }
-
-            input:not([type='checkbox']) {
-              padding: 10px 15px;
-              height: 37px;
-              font-weight: normal;
-
-              @include m-theme() {
-                color: themed($m-grey-800);
-              }
-
-              &:active,
-              &:focus {
-                outline: none;
-                @include m-theme() {
-                  border: 1px solid themed($m-blue);
-                }
-              }
-
-              &.ng-invalid.ng-touched:not(.ng-pristine) {
-                outline: none;
-                @include m-theme() {
-                  border: 1px solid themed($m-red);
-                }
-              }
+              margin-top: 20px;
             }
           }
 
-          span,
-          label {
-            font-size: 14px;
-            line-height: 19px;
-          }
-
-          label:not(.mdl-checkbox) {
-            display: inline-block;
-            margin-bottom: 10px;
-
-            @include m-theme() {
-              color: themed($m-grey-300);
-            }
-          }
-
-          label.mdl-checkbox {
-            display: flex;
-            align-items: center;
-            padding-top: 0;
-            margin-top: 5px;
-            margin-bottom: 33px;
-          }
-
-          .mdl-card__actions {
+          .m-register__actions {
             flex-direction: column;
             align-items: flex-start;
             padding: 0;
-
-            & > *:not(button) {
-              color: #4a4a4a !important;
-            }
-
-            a,
-            a:hover,
-            a:visited {
-              font-weight: 400;
-              @include m-theme() {
-                color: themed($m-blue);
-              }
-            }
-
-            button {
-              align-self: flex-end;
-              height: 56px;
-              width: 208px;
-              font-size: 20px;
-              line-height: 26px;
-              @include m-theme() {
-                background-color: themed($m-aqua);
-              }
-            }
           }
-
-          .m-register__error,
-          .m-register__formError {
-            font-size: 14px;
-            line-height: 19px;
-            height: 19px;
-
-            @include m-theme() {
-              color: themed($m-red) !important;
-            }
-          }
-
-          .m-register__formError {
-            margin-top: 20px;
-          }
-
-          .m-register__error {
-            margin-top: 3px;
-            text-align: right;
-          }
-
-          .mdl-checkbox {
-            &.is-checked {
-              .mdl-checkbox__tick-outline {
-                @include m-theme() {
-                  background-color: themed($m-blue);
-                }
-              }
-            }
-
-            .mdl-checkbox__box-outline {
-              @include m-theme() {
-                border: 1px solid themed($m-grey-100);
-              }
-            }
-          }
-
-          @media screen and(max-width: 1250px) {
-            label.mdl-checkbox {
-              margin-bottom: 20px;
-            }
-            .mdl-card__actions {
-              flex-direction: column;
-              align-items: flex-start;
-            }
-          }
-        }
-
-        @media screen and (max-width: $m-grid-max-mobile) {
-          margin: 30px 26px 50px;
-          &::before {
-            content: '';
-            display: block;
-            position: absolute;
-            width: 393px;
-            height: 193px;
-            top: -66px;
-            //bottom: 190px;
-            left: -144px;
-            transform: translate(45px, 32px);
-            background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
-              no-repeat;
-            z-index: -1;
-          }
-
-          minds-form-register {
-            padding: 48px 25px;
-            width: 278px;
-            margin: 0 auto;
+          .m-register__checkboxes {
+            margin-bottom: 20px;
           }
         }
 

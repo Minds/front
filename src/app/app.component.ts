@@ -119,9 +119,9 @@ export class Minds implements OnInit, OnDestroy {
       this.diagnostics.setUser(this.configs.get('user'));
       this.diagnostics.listen(); // Listen for user changes
 
-      if (this.sso.isRequired()) {
-        this.sso.connect();
-      }
+      // if (this.sso.isRequired()) {
+      //   this.sso.connect();
+      // }
     } catch (e) {
       console.error('ngOnInit()', e);
     }

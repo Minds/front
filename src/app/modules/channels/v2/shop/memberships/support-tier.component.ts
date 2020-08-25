@@ -12,6 +12,7 @@ import { Currency } from '../../../../../helpers/currency';
   selector: 'm-channelShopMemberships__supportTier',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'support-tier.component.html',
+  styleUrls: ['support-tier.component.ng.scss'],
 })
 export class ChannelShopMembershipsSupportTierComponent {
   @Input() supportTier: SupportTier;

@@ -1,10 +1,24 @@
+import generateRandomId from '../support/utilities';
+
 context('Upgrades page', () => {
+
+  const user = {
+    username: generateRandomId(),
+    password: generateRandomId()+'aA1!'
+  }
+
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
       if (!sessionCookie) {
-        return cy.login(true);
+        return cy.logout();
       }
     });
+    cy.logout();
+    cy.newUser(user.username, user.password);
+  });
+
+  after(()=> {
+    cy.deleteUser(user.username, user.password);
   });
 
   beforeEach(() => {
@@ -25,8 +39,6 @@ context('Upgrades page', () => {
     cy.wait(1500);
     cy.isInViewport(heading);
   });
-
-  // TODO: Toggles tests (make them testable)
 
   it('should have the ability to trigger Buy Tokens modal', () => {
     cy.server();
@@ -77,7 +89,18 @@ context('Upgrades page', () => {
     cy.get(buyEthModal).should('be.visible');
   });
 
-  it('should navigate to Plus and trigger a Wire', () => {
+  it('should navigate to Nodes', () => {
+    const upgradeButton = cy.get(
+      '[data-cy="m-upgradeOptions__contact-us-nodes-button"]'
+    );
+
+    upgradeButton.click();
+
+    cy.location('pathname').should('contain', '/nodes');
+  });
+
+  // TODO: Make new user for tests
+  it('should navigate to Plus and Pro and trigger wires', () => {
     const upgradeButton = cy.get(
       '[data-cy="m-upgradeOptions__upgrade-to-plus-button"]'
     );
@@ -87,6 +110,7 @@ context('Upgrades page', () => {
     cy.location('pathname').should('contain', '/plus');
   });
 
+  // TODO: Make new user for tests
   it('should navigate to Pro and trigger a Wire', () => {
     const upgradeButton = cy.get(
       '[data-cy="m-upgradeOptions__upgrade-to-pro-button"]'
@@ -95,15 +119,5 @@ context('Upgrades page', () => {
     upgradeButton.click();
 
     cy.location('pathname').should('contain', '/pro');
-  });
-
-  it('should navigate to Nodes', () => {
-    const upgradeButton = cy.get(
-      '[data-cy="m-upgradeOptions__contact-us-nodes-button"]'
-    );
-
-    upgradeButton.click();
-
-    cy.location('pathname').should('contain', '/nodes');
   });
 });

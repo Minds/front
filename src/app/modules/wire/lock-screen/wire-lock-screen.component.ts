@@ -16,6 +16,8 @@ import { WireModalService } from '../wire-modal.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
 import { WireEventType } from '../v2/wire-v2.service';
+import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
@@ -52,7 +54,9 @@ export class WireLockScreenComponent implements OnInit {
     private wireModal: WireModalService,
     private signupModal: SignupModalService,
     private configs: ConfigsService,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private wirePaymentHandlers: WirePaymentHandlersService,
+    private authModal: AuthModalService
   ) {
     this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
   }
@@ -90,15 +94,13 @@ export class WireLockScreenComponent implements OnInit {
     this.detectChanges();
   }
 
-  unlock() {
+  async unlock(): Promise<void> {
     if (this.preview) {
       return;
     }
 
     if (!this.session.isLoggedIn()) {
-      this.signupModal.open();
-
-      return;
+      await this.authModal.open();
     }
 
     if (this.inProgress) return;
@@ -117,7 +119,7 @@ export class WireLockScreenComponent implements OnInit {
           this.update.next(response.entity);
           this.detectChanges();
         } else {
-          this.showWire();
+          this.showModal();
         }
         this.inProgress = false;
         this.detectChanges();
@@ -126,12 +128,23 @@ export class WireLockScreenComponent implements OnInit {
         this.inProgress = false;
         this.detectChanges();
 
-        if (e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid') {
-          this.showWire();
+        if (
+          e.errorId === 'Minds::Core::Wire::Paywall::PaywallUserNotPaid' ||
+          e.errorId === 'Minds::Core::Router::Exceptions::UnauthorizedException'
+        ) {
+          this.showModal();
         } else {
           console.error('got error: ', e);
         }
       });
+  }
+
+  showModal(): void {
+    if (this.isPlus) {
+      this.showUpgradeModal();
+    } else {
+      this.showWire();
+    }
   }
 
   async showWire() {
@@ -141,13 +154,28 @@ export class WireLockScreenComponent implements OnInit {
 
     await this.wireModal
       .present(this.entity, {
-        default: this.entity.wire_threshold,
+        //default: this.entity.wire_threshold,
+        supportTier: this.entity.wire_threshold.support_tier,
       })
       .subscribe(payEvent => {
         if (payEvent.type === WireEventType.Completed) {
           this.wireSubmitted();
         }
       });
+  }
+
+  async showUpgradeModal(): Promise<void> {
+    const wireEvent = await this.wireModal
+      .present(await this.wirePaymentHandlers.get('plus'), {
+        default: {
+          type: 'money',
+          upgradeType: 'plus',
+        },
+      })
+      .toPromise();
+    if (wireEvent.type === WireEventType.Completed) {
+      this.unlock();
+    }
   }
 
   wireSubmitted() {

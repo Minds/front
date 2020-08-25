@@ -9,10 +9,12 @@ import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable, combineLatest } from 'rxjs';
 import { AnalyticsService } from '../../../services/analytics';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WireModalService } from '../../wire/wire-modal.service';
+import { MetaService } from '../../../common/services/meta.service';
+import { map } from 'rxjs/operators';
 
 export type RouterLinkToType =
   | 'home'
@@ -43,11 +45,29 @@ export class ProChannelService implements OnDestroy {
 
   readonly onChannelChange: BehaviorSubject<any> = new BehaviorSubject(null);
 
+  readonly isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+  readonly isOwner$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  readonly userIsMember$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+  readonly userIsSubscribed$: BehaviorSubject<boolean> = new BehaviorSubject(
+    true
+  );
+
+  readonly lowestSupportTier$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  readonly showJoinButton$: Observable<boolean>;
+
+  readonly showLoginRow$: Observable<boolean>;
+
+  readonly showSplash$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   protected featuredContent: Array<any> | null;
 
   protected menuNavItems: Array<NavItems> = [];
 
-  protected isLoggedIn$: Subscription;
+  public isLoggedInSubscription: Subscription;
 
   constructor(
     protected client: Client,
@@ -58,21 +78,58 @@ export class ProChannelService implements OnDestroy {
     protected sessionStorage: SessionsStorageService,
     protected router: Router,
     protected site: SiteService,
-    protected analytics: AnalyticsService
+    protected analytics: AnalyticsService,
+    private metaService: MetaService
   ) {
     this.listen();
+
+    this.showJoinButton$ = combineLatest([
+      this.isOwner$,
+      this.userIsMember$,
+      this.userIsSubscribed$,
+      this.lowestSupportTier$,
+    ]).pipe(
+      map(
+        ([isOwner, isMember, isSubscribed, tier]) =>
+          !isOwner && ((tier && !isMember) || (!tier && !isSubscribed))
+      )
+    );
+
+    this.showLoginRow$ = combineLatest([
+      this.isLoggedIn$,
+      this.isOwner$,
+      this.userIsMember$,
+      this.showJoinButton$,
+    ]).pipe(
+      map(
+        ([isLoggedIn, isOwner, isMember, showJoinButton]) =>
+          isOwner || isMember || !isLoggedIn || showJoinButton
+      )
+    );
   }
 
   listen() {
-    this.isLoggedIn$ = this.session.loggedinEmitter.subscribe(is => {
-      if (!is && this.currentChannel) {
-        this.currentChannel.subscribed = false;
+    this.isLoggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
+      if (is) {
+        this.isLoggedIn$.next(true);
+        this.showSplash$.next(false);
+
+        if (this.session.getLoggedInUser().guid === this.currentChannel.guid) {
+          this.isOwner$.next(true);
+        }
+      } else {
+        this.isLoggedIn$.next(false);
+        this.isOwner$.next(false);
+
+        if (this.currentChannel) {
+          this.currentChannel.subscribed = false;
+        }
       }
     });
   }
 
   ngOnDestroy() {
-    this.isLoggedIn$.unsubscribe();
+    this.isLoggedInSubscription.unsubscribe();
   }
 
   async load(id: string): Promise<MindsUser> {
@@ -92,6 +149,8 @@ export class ProChannelService implements OnDestroy {
       this.onChannelChange.next(this.currentChannel);
 
       this.featuredContent = null;
+
+      this.setFavicon();
 
       return this.currentChannel;
     } catch (e) {
@@ -189,6 +248,7 @@ export class ProChannelService implements OnDestroy {
   async subscribe() {
     this.currentChannel.subscribed = true;
     this.currentChannel.subscribers_count += 1;
+    this.userIsSubscribed$.next(true);
 
     try {
       const response = (await this.client.post(
@@ -201,6 +261,7 @@ export class ProChannelService implements OnDestroy {
     } catch (e) {
       this.currentChannel.subscribed = false;
       this.currentChannel.subscribers_count -= 1;
+      this.userIsSubscribed$.next(false);
     }
   }
 
@@ -268,5 +329,14 @@ export class ProChannelService implements OnDestroy {
 
   getMenuNavItems(): Array<NavItems> {
     return this.menuNavItems;
+  }
+
+  setFavicon(): void {
+    if (!this.currentChannel) {
+      return;
+    }
+
+    const href = this.currentChannel.pro_settings.logo_image;
+    this.metaService.setDynamicFavicon(href);
   }
 }

@@ -1,0 +1,25 @@
+@import 'defaults.scss';
+
+:host {
+  .m-sidebarWidget__body {
+    min-height: 50px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .m-discoveryTrends__trend {
+    @include m-theme() {
+      border-bottom: 0;
+    }
+    a {
+      padding: 10px 0;
+      .m-discoveryTrendListItem__supportingText--below {
+        margin-top: 0;
+      }
+    }
+  }
+}

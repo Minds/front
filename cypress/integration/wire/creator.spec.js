@@ -7,7 +7,7 @@
 
 import generateRandomId from "../../support/utilities";
 
-context('v1 Wire', () => {
+context.skip('v1 Wire', () => {
   const receiver = {
     username: generateRandomId(),
     password: generateRandomId()+'F!',

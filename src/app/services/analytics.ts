@@ -23,6 +23,8 @@ export class AnalyticsService {
     @Inject(SiteService) public site: SiteService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    this.initSnowplow();
+
     this.onRouterInit();
 
     this.router.events.subscribe(navigationState => {
@@ -36,10 +38,23 @@ export class AnalyticsService {
     });
   }
 
+  initSnowplow() {
+    if (isPlatformServer(this.platformId)) return;
+    const snowplowUrl = '//sp.minds.com';
+    //const snowplowUrl = `//localhost:8090`;
+    (window as any).snowplow('newTracker', 'ma', snowplowUrl, {
+      appId: 'minds',
+      postPath: '/com.minds/t',
+    });
+    (window as any).snowplow('enableActivityTracking', 30, 10);
+  }
+
   async send(type: string, fields: any = {}, entityGuid: string = null) {
     if (isPlatformServer(this.platformId)) return; // Client side does these. Don't call twice
     if (type === 'pageview') {
       this.client.post('api/v2/mwa/pv', fields);
+
+      (window as any).snowplow('trackPageView');
     } else {
       this.client.post('api/v1/analytics', { type, fields, entityGuid });
     }

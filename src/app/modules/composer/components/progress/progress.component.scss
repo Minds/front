@@ -1,8 +1,9 @@
 .m-composer__progress {
   display: block;
   width: 100%;
-  height: 1px;
+  height: 5px;
   background-color: transparent;
+  margin-bottom: 20px;
 
   &.m-composer__progress--active,
   &.m-composer__progress--indeterminate {

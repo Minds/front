@@ -177,6 +177,7 @@ import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { PoweredByComponent } from './components/powered-by/powered-by.component';
 
 const routes: Routes = [
   {
@@ -326,6 +327,7 @@ const routes: Routes = [
     PaywallBadgeComponent,
     ClientMetaDirective,
     CarouselComponent,
+    PoweredByComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -453,6 +455,7 @@ const routes: Routes = [
     PaywallBadgeComponent,
     ClientMetaDirective,
     CarouselComponent,
+    PoweredByComponent,
   ],
   providers: [
     SiteService,

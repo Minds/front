@@ -1,35 +1,39 @@
 import { SendWyreService } from './sendwyre.service';
 import { SendWyreConfig } from './sendwyre.interface';
-import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockService } from '../../../utils/mock';
 import { SiteService } from '../../../common/services/site.service';
-import { ConfigsService } from '../../../common/services/configs.service';
+import { clientMock } from '../../../../tests/client-mock.spec';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
-describe('BlockchainService', () => {
+describe('SendWyreService', () => {
   let service: SendWyreService;
 
-  const siteServiceMock: any = MockService(SiteService);
-
-  const configsServiceMock: any = MockService(ConfigsService);
+  const toasterMock: any = MockService(FormToastService);
 
   const sendWyreConfigMock: SendWyreConfig = {
-    paymentMethod: 'debit-card',
-    accountId: 'X',
     dest: `0x`,
     destCurrency: 'ETH',
-    sourceAmount: '40',
-    redirectUrl: `https://minds.com/token`,
-    failureRedirectUrl: `https://minds.com/token?purchaseFailed=true`,
+    sourceCurrency: 'USD',
+    amount: '',
   };
+
+  const returnUrl: string =
+    'https://pay.testwyre.com/?paymentMethod' +
+    '=debit-card&accountId=X&dest=0x&destCurrency=ETH&sourceAmount' +
+    '=40&redirectUrl=https://minds.com/token&failureRedirectUrl=' +
+    'https://minds.com/token?purchaseFailed=true';
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new SendWyreService(
-      sessionMock,
-      siteServiceMock,
-      configsServiceMock
-    );
+    service = new SendWyreService(clientMock, toasterMock);
+
+    clientMock.response = [];
+
+    clientMock.response[`api/v2/sendwyre`] = {
+      status: 'success',
+      url: returnUrl,
+    };
   });
 
   afterEach(() => {
@@ -47,15 +51,9 @@ describe('BlockchainService', () => {
     expect(window.location.assign).toHaveBeenCalled();
   });
 
-  it('should build args into querystring', () => {
-    configsServiceMock.get = {
-      baseUrl: 'https://pay.sendwyre.com/',
-    };
-    const expectedString =
-      'https://pay.sendwyre.com/?paymentMethod' +
-      '=debit-card&accountId=X&dest=0x&destCurrency=ETH&sourceAmount' +
-      '=40&redirectUrl=https://minds.com/token&failureRedirectUrl=' +
-      'https://minds.com/token?purchaseFailed=true';
-    expect(service.getUrl(sendWyreConfigMock)).toBe(expectedString);
+  it('should get url from  API', async () => {
+    expect(await (service as any).getRedirectUrl(sendWyreConfigMock)).toBe(
+      returnUrl
+    );
   });
 });

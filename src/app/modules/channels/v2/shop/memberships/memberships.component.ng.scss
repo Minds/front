@@ -1,0 +1,103 @@
+@import 'defaults.scss';
+
+:host {
+  padding: 20px 0;
+
+  .m-channelShopMemberships__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+
+  .m-channelShopMemberships__title {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+
+    h2 {
+      margin: 0 0.35em 0 0;
+      padding: 0;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-channelShopMembershipsTitle__headline {
+      font-size: 16px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      &.m-channelShopMembershipsTitle__headline--small {
+        margin-left: 20px;
+        font-size: 15px;
+      }
+
+      &.m-channelShopMembershipsTitle__headline--no-memberships {
+        padding: 20px;
+        width: 100%;
+        border-radius: 2px;
+        text-align: center;
+        margin: 30px 0;
+
+        @include m-theme() {
+          border: 1px dashed themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      a {
+        font-weight: normal;
+        font-style: italic;
+        text-decoration: underline;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: themed($m-link);
+        }
+      }
+    }
+  }
+
+  .m-channelShopMemberships__headerAction {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: normal;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &.m-channelShopMemberships__headerAction--small {
+      font-size: 15px;
+    }
+  }
+
+  .m-channelShopMemberships__supportTiers {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* TODO: Remove this when carousel is implemented */
+    padding: 0 40px;
+
+    > * {
+      margin: 20px 40px 0 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

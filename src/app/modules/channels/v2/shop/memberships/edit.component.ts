@@ -1,16 +1,25 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import noOp from '../../../../../helpers/no-op';
 import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { ChannelShopMembershipsEditService } from './edit.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { Subscription } from 'rxjs';
+import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
 
 @Component({
   selector: 'm-channelShopMemberships__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'edit.component.html',
-  providers: [ChannelShopMembershipsEditService],
+  styleUrls: ['edit.component.ng.scss'],
+  providers: [ChannelShopMembershipsEditService, WalletV2Service],
 })
-export class ChannelShopMembershipsEditComponent {
+export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {
   public readonly tokenExchangeRate: number;
 
   /**
@@ -41,6 +50,9 @@ export class ChannelShopMembershipsEditComponent {
     this.load(supportTier);
   }
 
+  canSaveSubscription: Subscription;
+  canSave: boolean = false;
+
   /**
    * Constructor
    * @param service
@@ -50,6 +62,16 @@ export class ChannelShopMembershipsEditComponent {
     private configs: ConfigsService
   ) {
     this.tokenExchangeRate = configs.get('token_exchange_rate') || 1.25;
+  }
+
+  ngOnInit(): void {
+    this.canSaveSubscription = this.service.canSave$.subscribe(
+      canSave => (this.canSave = canSave)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.canSaveSubscription.unsubscribe();
   }
 
   /**
@@ -91,6 +113,10 @@ export class ChannelShopMembershipsEditComponent {
    * Saves a Support Tier
    */
   async save(): Promise<void> {
+    if (!this.canSave) {
+      return;
+    }
+
     const supportTier = await this.service.save().toPromise();
 
     if (supportTier) {

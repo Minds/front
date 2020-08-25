@@ -107,7 +107,7 @@ describe('ChannelFeed', () => {
       { guid: 'aaaa' },
     ];
     comp.openWireModal = false;
-    featuresServiceMock.mock('activity-composer', true);
+
     fixture.detectChanges();
 
     clientMock.response[`api/v1/newsfeed/personal/1000`] = {

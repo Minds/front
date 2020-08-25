@@ -1,0 +1,36 @@
+@import 'defaults.scss';
+
+:host .m-wireCreator__toolbar {
+  padding: 30px 40px;
+  margin: 26px 0 0;
+  border-top: 1px solid;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: 30px 20px;
+  }
+
+  @include m-theme() {
+    border-color: themed($m-borderColor--primary);
+  }
+
+  .m-wireCreatorToolbar__message {
+    flex: 1;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: right;
+
+    .m-wireCreatorToolbarMessage__error {
+      padding: 0 20px 0 40px;
+
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+    }
+  }
+
+  m-shadowboxSubmitButton {
+    @media screen and (max-width: $max-mobile) {
+      min-width: initial;
+    }
+  }
+}

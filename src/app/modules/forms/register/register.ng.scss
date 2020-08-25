@@ -1,0 +1,76 @@
+@import 'defaults.scss';
+
+:host {
+  form {
+    overflow: visible !important;
+  }
+
+  .password-help {
+    padding-left: 4px;
+  }
+
+  .m-registerForm__password {
+    position: relative;
+  }
+
+  .m-register__checkboxes {
+    // width: 100%;
+    margin-right: 20px;
+    m-formInput__checkbox {
+      margin-bottom: $minds-margin / 2;
+      font-size: 11px;
+
+      a {
+        @include m-theme() {
+          color: themed($m-grey-400);
+        }
+      }
+    }
+  }
+
+  .m-login-box > div {
+    overflow: visible;
+  }
+
+  .tooltip-wrapper {
+    bottom: 14px;
+    position: absolute;
+    right: 16px;
+
+    .m-tooltip--bubble {
+      width: 280px;
+    }
+  }
+
+  .m-register--username-taken {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+
+  .m-register--username-available {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    @include m-theme() {
+      color: themed($m-green);
+    }
+  }
+
+  .mdl-checkbox {
+    padding-top: 5px;
+  }
+
+  input.m-input--hide-placeholder::placeholder {
+    color: transparent;
+  }
+
+  ::ng-deep .m-registerForm__captcha {
+    input {
+      width: 100%;
+    }
+  }
+}
