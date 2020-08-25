@@ -1,6 +1,6 @@
 @import 'defaults.scss';
 
-.m-channelShop__memberships {
+:host {
   padding: 20px 0;
 
   .m-channelShopMemberships__header {
@@ -39,6 +39,19 @@
       &.m-channelShopMembershipsTitle__headline--small {
         margin-left: 20px;
         font-size: 15px;
+      }
+
+      &.m-channelShopMembershipsTitle__headline--no-memberships {
+        padding: 20px;
+        width: 100%;
+        border-radius: 2px;
+        text-align: center;
+        margin: 30px 0;
+
+        @include m-theme() {
+          border: 1px dashed themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
       }
 
       a {
