@@ -10,6 +10,7 @@ import { DiscoveryService } from '../discovery.service';
 export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   limit = 5;
   trending$: Observable<any> = this.service.trending$;
+  foryou$: Observable<any> = this.service.foryou$;
   inProgress$: Observable<boolean> = this.service.inProgress$;
 
   parentPathSubscription: Subscription;

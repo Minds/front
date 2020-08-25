@@ -11,6 +11,7 @@ export type DiscoveryTag = any;
 export class DiscoveryTagsService {
   tags$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   trending$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+  foryou$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   other$: Observable<DiscoveryTag[]> = combineLatest(
     this.tags$,
     this.trending$
@@ -72,6 +73,14 @@ export class DiscoveryTagsService {
     this.inProgress$.next(false);
     this.tags$.next(response.tags);
     this.trending$.next(response.trending);
+    this.foryou$.next(
+      (response.for_you || []).map(tag => {
+        return {
+          value: tag.hashtag,
+          posts_count: tag.volume,
+        };
+      })
+    );
   }
 
   addTag(tag: DiscoveryTag): void {

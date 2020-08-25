@@ -12,6 +12,7 @@ type SuggestionEntityTypes = 'user' | 'group';
   selector: 'm-suggestions__sidebar',
   templateUrl: 'sidebar.component.html',
   providers: [SuggestionsService],
+  styleUrls: ['../sidebar.component.ng.scss'],
 })
 export class SuggestionsSidebar {
   readonly cdnUrl: string;
@@ -21,7 +22,7 @@ export class SuggestionsSidebar {
 
   suggestions$: BehaviorSubject<Array<any>> = this.service.suggestions$;
   limit = 12;
-  displayLimit = 3;
+  displayLimit = 6;
   inProgress$: Observable<boolean> = this.service.inProgress$;
   error$: Observable<string> = this.service.error$;
 

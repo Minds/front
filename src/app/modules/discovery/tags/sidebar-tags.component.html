@@ -1,11 +1,13 @@
 <m-sidebarWidget
-  [title]="isPlusPage ? 'Trending Minds+ Tags' : 'Trending Tags'"
-  i18n-title="isPlusPage ? '@@TRENDING__PLUS_TAGS' : '@@TRENDING__TAGS'"
+  [title]="isPlusPage ? 'Trending Minds+ Tags' : 'Tags for you'"
+  i18n-title="
+     isPlusPage ? '@@TRENDING__PLUS_TAGS' : '@@TRENDING__TAGS__FOR__YOU'
+  "
 >
   <div class="m-sidebarWidget__body">
     <ul>
       <li
-        *ngFor="let tag of trending$ | async | slice: 0:limit"
+        *ngFor="let tag of foryou$ | async | slice: 0:limit"
         class="m-discoveryTrends__trend"
       >
         <a
