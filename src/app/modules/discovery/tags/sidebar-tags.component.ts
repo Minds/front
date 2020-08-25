@@ -6,6 +6,7 @@ import { DiscoveryService } from '../discovery.service';
 @Component({
   selector: 'm-discovery__sidebarTags',
   templateUrl: './sidebar-tags.component.html',
+  styleUrls: ['./sidebar-tags.component.ng.scss'],
 })
 export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
   limit = 5;

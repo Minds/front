@@ -5,6 +5,7 @@
   "
 >
   <div class="m-sidebarWidget__body">
+    <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
     <ul>
       <li
         *ngFor="let tag of foryou$ | async | slice: 0:limit"
@@ -16,7 +17,10 @@
         >
           <div>
             <h4>#{{ tag.value }}</h4>
-            <div class="m-discoveryTrendListItem__supportingText--below">
+            <div
+              class="m-discoveryTrendListItem__supportingText--below"
+              *ngIf="tag.posts_count"
+            >
               <span i18n="@@DISCOVERY_SIDEBAR_TAGS__X_POSTS"
                 >{{ tag.posts_count }} posts</span
               >
