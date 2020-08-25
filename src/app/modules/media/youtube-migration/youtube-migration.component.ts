@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { FeaturesService } from '../../../services/features.service';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'm-youtubeMigration',
@@ -29,6 +30,15 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
   channelTitle: string;
   channelId: string = '';
   readonly youtubeSettingsUrl: string = '/settings/other/youtube-migration';
+
+  /**
+   * On back button press.
+   */
+  @HostListener('window:popstate', ['$event'])
+  public onPopState(event): void {
+    event.preventDefault();
+    this.goBack();
+  }
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
@@ -60,7 +70,10 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
 
         // Route to diff components based on connected state
         const destination = this.connected ? 'dashboard' : 'connect';
-        this.router.navigate([destination], { relativeTo: this.route });
+        this.router.navigate([destination], {
+          relativeTo: this.route,
+          skipLocationChange: true,
+        });
         this.detectChanges();
       }
     );
