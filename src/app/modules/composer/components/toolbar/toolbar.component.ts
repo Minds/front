@@ -42,6 +42,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'm-composer__toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'toolbar.component.html',
+  styleUrls: ['toolbar.component.ng.scss'],
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**

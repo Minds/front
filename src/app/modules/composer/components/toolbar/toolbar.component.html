@@ -44,13 +44,11 @@
     (click)="onMonetizeClick($event)"
     data-cy="monetize-button"
   >
-    <m-icon
-      class="m-composerToolbarItem__icon"
+    <i
+      class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
       [class.m-animation__shimmer--icon]="showShimmer"
-      from="assets-file"
-      iconId="assets/icons/wire.svg"
-      [sizeFactor]="25"
-    ></m-icon>
+      >attach_money</i
+    >
     <span
       class="m-composerToolbarItem__label"
       [class.m-animation__shimmer--text]="showShimmer"
