@@ -26,7 +26,6 @@
   ></m-activity__content>
   <ng-container *mIfFeature="'!paywall-2020'">
     <m-activity__paywall
-      [ngClass]="{ isPaywall2020: isPaywall2020 }"
       *ngIf="service.shouldShowPaywall$ | async"
     ></m-activity__paywall
   ></ng-container>

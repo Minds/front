@@ -7,6 +7,7 @@ import { ChannelContainerComponent } from './channel-container.component';
 import { CommonModule } from '../../common/common.module';
 import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+import { ActivityService } from '../../common/services/activity.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
       },
     ]),
   ],
+  providers: [ActivityService],
   declarations: [ChannelContainerComponent],
 })
 export class ChannelContainerModule {}

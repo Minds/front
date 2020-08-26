@@ -1,3 +1,22 @@
+m-overlay-modal {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  overflow: overlay;
+  overflow: scroll;
+
+  .m-overlay-modal--backdrop {
+    z-index: 9999995;
+    @include m-theme() {
+      background-color: rgba(themed($m-black-always), 0.8);
+    }
+  }
+}
+
 .m-overlay-modal {
   &:not(.m-overlayModal--media) {
     position: fixed;
@@ -26,6 +45,37 @@
     @include m-theme() {
       color: themed($m-grey-700);
       background: none rgba(themed($m-white), 0.95);
+    }
+
+    &.m-overlayModal--media {
+      position: static;
+      min-height: 100%;
+      display: table;
+      height: 100% !important;
+      table-layout: fixed;
+      width: 100%;
+
+      .m-overlay-modal--close {
+        z-index: 9999998;
+        line-height: normal;
+        opacity: 0.6;
+        position: fixed;
+        right: 8px;
+        top: 8px;
+        transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1);
+        padding: 4px;
+        @include m-theme() {
+          background-color: rgba(themed($m-white-always), 0);
+          color: themed($m-grey-300);
+        }
+        i.material-icons {
+          font-size: 28px;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
 
     &.m-overlayModal--remind {

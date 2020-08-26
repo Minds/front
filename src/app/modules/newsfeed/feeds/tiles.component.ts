@@ -1,10 +1,15 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Injector,
+} from '@angular/core';
 import { AttachmentService } from '../../../services/attachment';
-import { MediaModalComponent } from '../../media/modal/modal.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import isMobile from '../../../helpers/is-mobile';
 import { FeaturesService } from '../../../services/features.service';
+import { ActivityModalCreatorService } from '../activity/modal/modal-creator.service';
 
 @Component({
   selector: 'm-newsfeed__tiles',
@@ -17,7 +22,9 @@ export class NewsfeedTilesComponent {
   constructor(
     public attachment: AttachmentService,
     private router: Router,
-    private overlayModalService: OverlayModalService
+    private overlayModalService: OverlayModalService,
+    private activityModalCreator: ActivityModalCreatorService,
+    private injector: Injector
   ) {}
 
   getThumbnailSrc(entity: any) {
@@ -75,18 +82,6 @@ export class NewsfeedTilesComponent {
   }
 
   openModal(entity) {
-    entity.modal_source_url = this.router.url;
-
-    this.overlayModalService
-      .create(
-        MediaModalComponent,
-        {
-          entity: entity,
-        },
-        {
-          class: 'm-overlayModal--media',
-        }
-      )
-      .present();
+    this.activityModalCreator.create(entity, this.injector);
   }
 }

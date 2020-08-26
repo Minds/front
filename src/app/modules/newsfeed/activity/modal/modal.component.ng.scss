@@ -1,0 +1,296 @@
+@import 'defaults.scss';
+
+:host {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+
+  .m-activityModal__wrapper {
+    position: static;
+    margin: 20px;
+    display: inline-block;
+    text-align: left;
+    overflow: hidden;
+
+    .m-activityModal__theater {
+      position: relative;
+      z-index: 9999996;
+      @include m-theme() {
+        box-shadow: 0 12px 24px rgba(themed($m-black-always), 0.3);
+      }
+    }
+  }
+
+  .m-activityModal__loadingPanel {
+    height: 100%;
+    display: flex;
+  }
+
+  .m-activityModal__stageWrapper {
+    float: left;
+    height: 100%;
+    min-height: 480px;
+    position: relative;
+    text-align: center;
+    z-index: 9999997;
+    @include m-theme() {
+      background-color: rgba(themed($m-black-always), 0.9);
+      box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
+    }
+  }
+
+  .m-activityModal__mediaWrapper {
+    overflow: hidden;
+  }
+
+  .m-activityModal__mediaWrapper--richEmbed {
+    width: 100%;
+
+    .meta {
+      display: none;
+    }
+  }
+
+  // NOTE: modal blog view not implemented
+  // .m-activityModal__mediaWrapper--blog {
+  //   line-height: initial;
+  //   overflow-y: auto;
+  //   text-align: left;
+
+  //   @include m-theme() {
+  //     color: themed($m-black);
+  //   }
+
+  //   h1.m-blog--title {
+  //     font-weight: 600;
+  //     font-size: 42px;
+  //     letter-spacing: 1.5px;
+  //     font-family: 'Roboto', Helvetica, sans-serif;
+  //     text-rendering: optimizeLegibility;
+  //     -webkit-font-smoothing: antialiased;
+  //     text-align: left;
+
+  //     @media only screen and (max-width: $min-tablet) {
+  //       font-size: 24px;
+  //     }
+  //   }
+
+  //   p {
+  //     @include m-theme() {
+  //       color: themed($m-black);
+  //     }
+  //   }
+
+  //   .minds-blog-body img {
+  //     @media screen and (max-width: 891px) {
+  //       width: 100vw;
+  //     }
+  //     max-width: initial;
+  //     height: auto;
+  //     width: 80%;
+  //     margin: 0 -100px;
+  //   }
+
+  //   .m-blog--image--caption {
+  //     @include m-theme() {
+  //       color: themed($m-black);
+  //     }
+  //   }
+  // }
+
+  .m-activityModal__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 402px;
+    position: relative;
+    width: 100%;
+  }
+
+  .m-activityModal__mediaWrapper {
+    display: inline-block;
+    margin: 0 auto;
+    vertical-align: middle;
+    height: auto;
+    position: relative;
+
+    ::ng-deep {
+      m-paywallBadge {
+        display: none;
+      }
+      m-activity__content {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.missingDimensions {
+          .m-activityContent__media--image img {
+            max-height: 520px;
+            min-height: 520px;
+          }
+        }
+
+        .m-activityContent__media--image img {
+          max-height: none;
+        }
+
+        minds-rich-embed {
+          .m-rich-embed-src a:first-child {
+            cursor: default;
+          }
+        }
+      }
+    }
+
+    .m-activityModal__media--image,
+    ::ng-deep m-videoPlayer {
+      display: inline-block;
+      max-height: 100%;
+      max-width: 100%;
+      vertical-align: top;
+    }
+
+    .m-activityModal__media--image {
+      object-fit: contain;
+    }
+
+    // &.m-activityModal__mediaWrapper--blog {
+    //   overflow-x: hidden;
+    //   overflow-y: scroll;
+    //   line-height: 1.58 !important;
+    //   text-align: left;
+
+    //   .m-blog--image > img {
+    //     max-width: 100%;
+    //   }
+    // }
+  }
+
+  .m-activityModal__contentContainer {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    word-wrap: break-word;
+    @include m-theme() {
+      background-color: themed($m-white);
+    }
+  }
+
+  .m-activityModal__contentBody {
+    position: relative;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+    overflow-y: overlay;
+    overflow-x: hidden;
+  }
+
+  .m-activityModal__scrollableAreaContainer {
+    height: auto;
+    margin-left: -100px;
+    margin-right: -20px;
+    padding-left: 100px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    position: relative;
+    width: 100% !important;
+
+    &.m-activityModal__contentBefore {
+      top: 0;
+      @include m-theme() {
+        border-top: 1px solid rgba(themed($m-black-always), 0.1);
+      }
+    }
+
+    &.m-activityModal__contentBefore:before,
+    &.m-activityModal__contentAfter:after {
+      content: '';
+      display: block;
+      height: 2px;
+      position: absolute;
+      width: 100%;
+    }
+  }
+
+  .m-activityModal__scrollableAreaWrapper {
+    margin-left: -100px;
+    margin-right: -50px;
+    padding: 10px 50px 20px 110px;
+
+    min-height: 320px;
+    height: 100%;
+    outline: none;
+    overflow-x: hidden;
+    position: relative;
+    overflow-y: scroll;
+  }
+  .scrollableAreaBody {
+    direction: ltr;
+    position: relative;
+  }
+  .scrollableAreaContent {
+    padding: 0;
+  }
+
+  .minds-avatar-hovercard {
+    z-index: 9999999 !important;
+  }
+
+  .m-activityModal__clearFix:after {
+    clear: both;
+    content: '.';
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+  }
+
+  .m-activityModal__toolbarWrapper {
+    margin: 0 12px 0 4px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  ::ng-deep {
+    m-activity__content {
+      overflow: hidden;
+      .m-rich-embed-has-thumbnail {
+        text-align: left;
+      }
+      m-paywallBadge {
+        display: none;
+      }
+
+      .m-activityContent__media--video,
+      .m-activityContent__media--image {
+        @include m-theme() {
+          background: rgba(themed($m-black), 0);
+        }
+      }
+    }
+
+    m-activity__toolbar {
+      padding: 20px 10px 16px;
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+
+    m-activity__nsfwConsent {
+      position: absolute;
+    }
+
+    m-activity__menu {
+      .m-bgOverlay--v2 {
+        z-index: 999;
+      }
+    }
+  }
+}

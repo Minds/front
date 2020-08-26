@@ -65,13 +65,11 @@ export class MindsRichEmbed {
     const isOwner =
       this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
 
-    if (
+    this.isPaywalled =
       this.src.paywall &&
+      !this.src.paywall_unlocked &&
       !isOwner &&
-      this.featureService.has('paywall-2020')
-    ) {
-      this.isPaywalled = true;
-    }
+      this.featureService.has('paywall-2020');
 
     this.init();
   }

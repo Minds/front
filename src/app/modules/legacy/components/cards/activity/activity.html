@@ -429,7 +429,6 @@
     <m-wire-button
       *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
       [object]="activity"
-      (done)="wireSubmitted($event)"
     ></m-wire-button>
     <button
       class="m-btn m-btn--action m-btn--slim minds-boost-button"
