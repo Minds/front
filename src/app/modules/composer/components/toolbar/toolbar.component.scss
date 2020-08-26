@@ -73,6 +73,11 @@
     }
   }
 
+  .m-composerToolbarItem__icon--monetize {
+    font-size: 20px;
+    margin-right: -5px;
+  }
+
   .m-composerToolbarItem__icon + .m-composerToolbarItem__label {
     display: inline-block;
     margin-left: 10px;

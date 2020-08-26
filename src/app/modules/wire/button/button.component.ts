@@ -9,25 +9,8 @@ import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-wire-button',
-  template: `
-    <button
-      class="m-btn m-btn--action m-btn--slim m-wire-button"
-      (click)="wire()"
-    >
-      <ng-container *ngIf="!features.has('pay'); else payButton">
-        <i class="ion-icon ion-flash"></i>
-        <span>Wire</span>
-      </ng-container>
-      <ng-template #payButton>
-        <m-icon
-          from="assets-file"
-          iconId="assets/icons/wire.svg"
-          [sizeFactor]="25"
-        ></m-icon>
-        <span>Pay</span>
-      </ng-template>
-    </button>
-  `,
+  templateUrl: './button.component.html',
+  styleUrls: ['./button.component.ng.scss'],
 })
 export class WireButtonComponent {
   @Input() object: any;
