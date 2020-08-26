@@ -31,12 +31,44 @@
       type="font/woff2"
       crossorigin
     />
+    <style type="text/css">
+      .m-app__loadingContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        animation: fadein 2s;
+        animation-iteration-count: infinite;
+      }
 
+      .m-app__loadingLogo {
+        max-width: 60px;
+      }
+
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
     <title>Minds</title>
   </head>
   <body class="m-theme__light">
     <!-- The app component created in app.ts -->
-    <m-app></m-app>
+    <m-app>
+      <div class="m-app__loadingContainer">
+        <img
+          class="m-app__loadingLogo"
+          src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
+        />
+      </div>
+    </m-app>
 
     <script>
       function module() {} // Fixes undefined module function in SystemJS bundle
