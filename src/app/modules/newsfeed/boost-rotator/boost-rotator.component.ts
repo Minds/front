@@ -246,16 +246,16 @@ export class NewsfeedBoostRotatorComponent {
     if (this.rotator) window.clearInterval(this.rotator);
 
     this.running = true;
-    this.rotator = setInterval(e => {
-      if (!this.windowFocused) {
-        return;
-      }
-      if (this.paused) {
-        return;
-      }
+    // this.rotator = setInterval(e => {
+    //   if (!this.windowFocused) {
+    //     return;
+    //   }
+    //   if (this.paused) {
+    //     return;
+    //   }
 
-      this.next();
-    }, this.interval * 1000);
+    //   this.next();
+    // }, this.interval * 1000);
   }
 
   get bounds() {

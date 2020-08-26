@@ -191,26 +191,25 @@ export class MessengerUserlist {
   }
 
   autoRefresh() {
-    setInterval(() => {
-      if (!this.userListToggle) return;
-      this.client
-        .get('api/v2/messenger/conversations', { limit: 12 })
-        .then((response: any) => {
-          if (!response.conversations) {
-            return false;
-          }
-
-          for (let j = 0; j < response.conversations.length; j++) {
-            for (let i = 0; i < this.conversations.length; i++) {
-              if (
-                this.conversations[i].guid === response.conversations[j].guid
-              ) {
-                this.conversations[i] = response.conversations[j];
-              }
-            }
-          }
-        });
-    }, 30000); // refresh 30 seconds
+    // setInterval(() => {
+    //   if (!this.userListToggle) return;
+    //   this.client
+    //     .get('api/v2/messenger/conversations', { limit: 12 })
+    //     .then((response: any) => {
+    //       if (!response.conversations) {
+    //         return false;
+    //       }
+    //       for (let j = 0; j < response.conversations.length; j++) {
+    //         for (let i = 0; i < this.conversations.length; i++) {
+    //           if (
+    //             this.conversations[i].guid === response.conversations[j].guid
+    //           ) {
+    //             this.conversations[i] = response.conversations[j];
+    //           }
+    //         }
+    //       }
+    //     });
+    // }, 30000); // refresh 30 seconds
   }
 
   logout() {

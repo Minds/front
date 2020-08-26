@@ -40,8 +40,8 @@ export class WalletTokenContributionsOverviewComponent
 
   ngOnInit() {
     this.load();
-    if (isPlatformBrowser(this.platformId))
-      this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
+    // if (isPlatformBrowser(this.platformId))
+    // this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
   }
 
   ngOnDestroy() {

@@ -19,12 +19,12 @@
       [mdl]
     ></div>
 
-    <img
+    <!-- <img
       *ngIf="!cropImage && (src.thumbnail_src || !inlineEmbed)"
       [hidden]="hasInlineContentLoaded()"
       [src]="src.thumbnail_src"
       (error)="src.thumbnail_src = null"
-    />
+    /> -->
     <div
       class="m-rich-embed-thumbnail-wrapper"
       *ngIf="cropImage && (src.thumbnail_src || !inlineEmbed)"

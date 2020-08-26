@@ -18,9 +18,9 @@ export class MessengerConversationDockpanesService {
     if (isPlatformBrowser(platformId)) {
       this.loadFromCache();
 
-      setInterval(() => {
-        this.syncFromCache();
-      }, 1000);
+      // setInterval(() => {
+      //   this.syncFromCache();
+      // }, 1000);
     }
   }
 

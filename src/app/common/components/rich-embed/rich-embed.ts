@@ -56,10 +56,10 @@ export class MindsRichEmbed {
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
-      this.src.thumbnail_src = this.mediaProxy.proxy(
-        this.src.thumbnail_src,
-        800
-      );
+      // this.src.thumbnail_src = this.mediaProxy.proxy(
+      //   this.src.thumbnail_src,
+      //   800
+      // );
     }
 
     const isOwner =

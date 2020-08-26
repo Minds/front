@@ -28,12 +28,12 @@ export class GoogleChartsLoader {
     return new Promise((resolve, reject) => {
       let _timer;
 
-      _timer = setInterval(() => {
-        if (window.google && window.google.charts) {
-          clearInterval(_timer);
-          resolve(true);
-        }
-      }, 250);
+      // _timer = setInterval(() => {
+      //   if (window.google && window.google.charts) {
+      //     clearInterval(_timer);
+      //     resolve(true);
+      //   }
+      // }, 250);
     });
   }
 

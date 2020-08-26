@@ -28,6 +28,7 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
 import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'm-activity',
@@ -113,6 +114,12 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+  }
+
+  ngAfterViewChecked() {
+    this.entity$.pipe(take(1)).subscribe(entity => {
+      console.log('detected changes in ' + entity.guid);
+    });
   }
 
   ngOnDestroy() {

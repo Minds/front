@@ -24,13 +24,9 @@ export class ProGroupTileComponent {
     this.cdnUrl = configs.get('cdn_url');
   }
 
-  getBanner() {
-    return `${this.cdnUrl}fs/v1/banners/${this.entity.guid}/${this.entity.banner_position}/'${this.entity.banner}`;
-  }
+  getBanner() {}
 
-  getAvatar() {
-    return `${this.cdnUrl}fs/v1/avatars/${this.entity.guid}/large/${this.entity.icontime}`;
-  }
+  getAvatar() {}
 
   @HostListener('click') onClick() {
     this.onOpenEventEmitter.emit(true);

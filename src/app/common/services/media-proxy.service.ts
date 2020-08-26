@@ -14,7 +14,7 @@ export class MediaProxyService {
     }
 
     const encodedUrl = encodeURIComponent(url);
-
-    return `${this.cdnUrl}api/v2/media/proxy?size=${size}&src=${encodedUrl}`;
+    return '';
+    // return `${this.cdnUrl}api/v2/media/proxy?size=${size}&src=${encodedUrl}`;
   }
 }

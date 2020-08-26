@@ -5,7 +5,5 @@ export default function entityToBannerUrl(
   if (!entity) {
     return '';
   }
-
-  return `fs/v1/banners/${entity.guid}/${sizeOrTop}/${entity.banner ||
-    entity.icontime}`;
+  return '';
 }

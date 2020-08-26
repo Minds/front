@@ -210,10 +210,10 @@ export class EmbedImage {
         overlay.parentElement.removeChild(overlay);
         image.classList.remove(imgClass);
 
-        image.setAttribute(
-          'src',
-          this.siteUrl + 'fs/v1/thumbnail/' + event.detail.guid
-        );
+        // image.setAttribute(
+        //   'src',
+        //   this.siteUrl + 'fs/v1/thumbnail/' + event.detail.guid
+        // );
       }
     );
   }

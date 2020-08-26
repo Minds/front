@@ -1,35 +1,11 @@
 <div class="m-channels--tile m-border">
   <div class="m-channels--tile-banner">
-    <div
-      class="m-channels--tile-banner-img"
-      [ngStyle]="{
-        'background-image':
-          'url(' +
-          cdnUrl +
-          'fs/v1/banners/' +
-          entity.guid +
-          '/fat/' +
-          entity.icontime +
-          ')'
-      }"
-    ></div>
+    <div class="m-channels--tile-banner-img"></div>
     <div class="minds-banner-overlay"></div>
   </div>
 
   <a [routerLink]="['/', entity.username]" class="m-channels--tile-block">
-    <div
-      class="avatar"
-      [ngStyle]="{
-        'background-image':
-          'url(' +
-          cdnUrl +
-          'icon/' +
-          entity.guid +
-          '/large/' +
-          entity.icontime +
-          ')'
-      }"
-    ></div>
+    <div class="avatar"></div>
     <div class="body">
       <h3>{{ entity.name }}</h3>
       <span>@{{ entity.username }}</span>

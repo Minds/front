@@ -16,7 +16,7 @@ import { GroupsService } from '../../groups.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'm-group-profile-feed__sorted',
@@ -111,7 +111,9 @@ export class GroupProfileFeedSortedComponent implements OnInit {
         .fetch();
 
       this.feed$ = this.feedsService.feed.pipe(
+        distinctUntilChanged(),
         map(feed => {
+          console.log('map');
           const entities = [];
 
           for (let i = 0; i < feed.length; i++) {
@@ -121,11 +123,13 @@ export class GroupProfileFeedSortedComponent implements OnInit {
             );
             entities.push(new BehaviorSubject<Object>(entity));
           }
+          console.log('map finished');
           return entities;
         })
       );
 
       this.getScheduledCount();
+      console.log('done loading feed');
     } catch (e) {
       console.error('GroupProfileFeedSortedComponent.loadFeed', e);
     }
@@ -143,6 +147,7 @@ export class GroupProfileFeedSortedComponent implements OnInit {
       this.feedsService.fetch(); // load the next 150 in the background
     }
     this.feedsService.loadMore();
+    console.log('loadMore done');
   }
 
   setFilter(type: string) {

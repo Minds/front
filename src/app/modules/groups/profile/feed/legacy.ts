@@ -72,25 +72,25 @@ export class GroupsProfileLegacyFeed {
   setUpPoll() {
     clearInterval(this.pollingTimer);
 
-    this.pollingTimer = setInterval(() => {
-      this.client
-        .get(
-          'api/v1/newsfeed/container/' + this.guid,
-          { offset: this.pollingOffset, count: true },
-          { cache: true }
-        )
-        .then((response: any) => {
-          if (typeof response.count === 'undefined') {
-            return;
-          }
+    // this.pollingTimer = setInterval(() => {
+    //   this.client
+    //     .get(
+    //       'api/v1/newsfeed/container/' + this.guid,
+    //       { offset: this.pollingOffset, count: true },
+    //       { cache: true }
+    //     )
+    //     .then((response: any) => {
+    //       if (typeof response.count === 'undefined') {
+    //         return;
+    //       }
 
-          this.pollingNewPosts = response.count;
-          this.pollingOffset = response['load-previous'];
-        })
-        .catch(e => {
-          console.error('Newsfeed polling', e);
-        });
-    }, 60000);
+    //       this.pollingNewPosts = response.count;
+    //       this.pollingOffset = response['load-previous'];
+    //     })
+    //     .catch(e => {
+    //       console.error('Newsfeed polling', e);
+    //     });
+    // }, 60000);
   }
 
   pollingLoadNew() {

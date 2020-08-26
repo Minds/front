@@ -74,12 +74,12 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     this.getPayout();
 
     this.inProgress = false;
-    if (isPlatformBrowser(this.platformId)) {
-      this.updateTimer$ = setInterval(
-        this.updateNextPayoutDate.bind(this),
-        1000
-      );
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.updateTimer$ = setInterval(
+    //     this.updateNextPayoutDate.bind(this),
+    //     1000
+    //   );
+    // }
 
     this.detectChanges();
   }

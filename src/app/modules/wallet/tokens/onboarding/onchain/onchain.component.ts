@@ -176,9 +176,9 @@ export class TokenOnChainOnboardingComponent {
 
     this.detectExternal();
 
-    this._externalTimer = setInterval(() => {
-      this.detectExternal();
-    }, 1000);
+    // this._externalTimer = setInterval(() => {
+    //   this.detectExternal();
+    // }, 1000);
   }
 
   async detectExternal() {

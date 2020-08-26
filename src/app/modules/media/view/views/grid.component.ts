@@ -13,7 +13,7 @@ import { AttachmentService } from '../../../../services/attachment';
       [routerLink]="['/media', item.guid]"
       [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(item) }"
     >
-      <img src="/fs/v1/thumbnail/{{ item.guid }}/large" />
+      <!-- <img src="/fs/v1/thumbnail/{{ item.guid }}/large" /> -->
       <span class="material-icons" [hidden]="item.subtype != 'video'"
         >play_circle_outline</span
       >

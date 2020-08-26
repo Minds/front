@@ -44,18 +44,22 @@ export class FeedsService implements OnDestroy {
 
     this.feed = this.rawFeed.pipe(
       tap(feed => {
+        console.log('tapping');
         if (feed.length) this.inProgress.next(true);
       }),
       switchMap(async feed => {
+        console.log('switchmap1');
         return feed.slice(0, await this.pageSize.pipe(first()).toPromise());
       }),
-      switchMap(feed =>
-        this.entitiesService
+      switchMap(feed => {
+        console.log('switchmap2');
+        return this.entitiesService
           .setCastToActivities(this.castToActivities)
           .setExportUserCounts(this.exportUserCounts)
-          .getFromFeed(feed)
-      ),
+          .getFromFeed(feed);
+      }),
       tap(feed => {
+        console.log('tapping 2');
         if (feed.length && this.fallbackAt) {
           for (let i = 0; i < feed.length; i++) {
             const entity: any = feed[i].getValue();
@@ -72,6 +76,7 @@ export class FeedsService implements OnDestroy {
         }
       }),
       tap(feed => {
+        console.log('tapping3');
         if (feed.length)
           // We should have skipped but..
           this.inProgress.next(false);

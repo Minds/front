@@ -89,9 +89,9 @@ export class AttachmentPreviewComponent
         if (resource.source === 'local') {
           this.safeResourceUrl = this.sanitizeUrl(resource.payload);
         } else if (resource.source === 'guid') {
-          this.safeResourceUrl =
-            `${this.cdnUrl}fs/v1/thumbnail/${resource.payload}/xlarge/?unlock_paywall=` +
-            Date.now();
+          // this.safeResourceUrl =
+          //   `${this.cdnUrl}fs/v1/thumbnail/${resource.payload}/xlarge/?unlock_paywall=` +
+          //   Date.now();
         }
         break;
       case 'video':

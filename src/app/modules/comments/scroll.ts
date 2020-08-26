@@ -127,11 +127,11 @@ export class CommentsScrollDirective {
     if (this.stickInterval) {
       clearInterval(this.stickInterval);
     }
-    if (isPlatformBrowser(this.platformId))
-      this.stickInterval = setInterval(
-        () => this.stick(),
-        this.STICK_INTERVAL_MS
-      );
+    // if (isPlatformBrowser(this.platformId))
+    // this.stickInterval = setInterval(
+    //   () => this.stick(),
+    //   this.STICK_INTERVAL_MS
+    // );
   }
 
   top(run?: boolean, stick?: boolean) {

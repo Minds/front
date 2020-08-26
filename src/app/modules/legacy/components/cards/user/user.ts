@@ -25,8 +25,5 @@ export class UserCard {
 
   set object(value: any) {
     this.user = value;
-    this.bannerSrc = `${this.configs.get('cdn_url')}fs/v1/banners/${
-      this.user.guid
-    }/fat/${this.user.icontime}`;
   }
 }

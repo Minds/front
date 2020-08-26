@@ -47,13 +47,6 @@ export class MindsFatBanner {
   set _object(value: any) {
     if (!value) return;
     this.object = value;
-    this.src =
-      '/fs/v1/banners/' +
-      this.object.guid +
-      '/' +
-      this.top +
-      '/' +
-      this.object.last_updated;
   }
 
   set _src(value: any) {

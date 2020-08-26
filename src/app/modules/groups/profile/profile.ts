@@ -151,20 +151,20 @@ export class GroupsProfile {
     this.setFilter(this.router.routerState.snapshot.url);
 
     if (isPlatformBrowser(this.platformId))
-      this.reviewCountInterval = setInterval(() => {
-        this.reviewCountLoad();
-      }, 120 * 1000);
+      // this.reviewCountInterval = setInterval(() => {
+      //   this.reviewCountLoad();
+      // }, 120 * 1000);
 
-    this.videoChatActiveSubscription = this.videochat.activate$.subscribe(
-      next => {
-        if (!next) {
-          this.pageLayoutService.cancelFullWidth();
-        } else {
-          this.pageLayoutService.useFullWidth();
+      this.videoChatActiveSubscription = this.videochat.activate$.subscribe(
+        next => {
+          if (!next) {
+            this.pageLayoutService.cancelFullWidth();
+          } else {
+            this.pageLayoutService.useFullWidth();
+          }
+          window.scrollTo(0, 0);
         }
-        window.scrollTo(0, 0);
-      }
-    );
+      );
   }
 
   setFilter(url: string) {
@@ -491,9 +491,7 @@ export class GroupsProfile {
     this.metaService
       .setTitle(this.group.name)
       .setDescription(this.group.briefdescription)
-      .setOgImage(
-        `${this.site.baseUrl}fs/v1/banners/${this.group.guid}/0/${this.group.banner}`
-      );
+      .setOgImage('');
   }
 
   detectChanges() {

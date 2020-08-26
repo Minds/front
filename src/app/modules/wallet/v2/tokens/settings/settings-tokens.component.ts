@@ -247,13 +247,13 @@ export class WalletSettingsTokensComponent
     this.detectExternal();
 
     // keep checking for metamask if it's not detected right away
-    if (isPlatformBrowser(this.platformId)) {
-      this._externalTimer = setInterval(() => {
-        if (!(this.cd as ViewRef).destroyed) {
-          this.detectExternal();
-        }
-      }, 1000);
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this._externalTimer = setInterval(() => {
+    //     if (!(this.cd as ViewRef).destroyed) {
+    //       this.detectExternal();
+    //     }
+    //   }, 1000);
+    // }
     this.detectChanges();
   }
 
