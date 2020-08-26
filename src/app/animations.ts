@@ -4,6 +4,7 @@ import {
   animate,
   transition,
   keyframes,
+  state,
 } from '@angular/animations';
 
 export const animations: any[] = [
@@ -64,4 +65,29 @@ export const FastFadeAnimation = trigger('fastFade', [
   transition(':leave', [
     animate('100ms', keyframes([style({ opacity: 1 }), style({ opacity: 0 })])),
   ]),
+]);
+
+export const MediumFadeAnimation = trigger('mediumFade', [
+  transition(':enter', [
+    style({ opacity: 0 }),
+    animate('300ms', style({ opacity: 1 })),
+  ]),
+  transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
+]);
+
+export const SlowFadeAnimation = trigger('slowFade', [
+  state(
+    'in',
+    style({
+      opacity: 1,
+    })
+  ),
+  state(
+    'out',
+    style({
+      opacity: 0,
+    })
+  ),
+  transition('out => in', [animate('600ms')]),
+  transition('in => out', [animate('0ms')]),
 ]);

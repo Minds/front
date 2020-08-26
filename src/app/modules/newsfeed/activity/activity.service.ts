@@ -15,10 +15,11 @@ export type ActivityDisplayOptions = {
   showToolbar: boolean;
   showBoostMenuOptions: boolean;
   showEditedTag: boolean;
-  showVisibiltyState: boolean;
+  showVisibilityState: boolean;
   showTranslation: boolean;
   fixedHeight: boolean;
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
+  isModal: boolean;
 };
 
 export type ActivityEntity = {
@@ -45,7 +46,8 @@ export type ActivityEntity = {
   url?: string;
   urn?: string;
   boosted_guid?: string;
-  content_type?: string;
+  activity_type?: string; // all blogs are rich-embeds
+  content_type?: string; // blogs and rich-embeds are separate
   paywall_unlocked?: boolean;
 };
 
@@ -81,7 +83,7 @@ export class ActivityService {
   );
 
   /**
-   * Subject for Activity's canDelete property, w
+   * Subject for Activity's canDelete property
    */
   canDeleteOverride$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -117,6 +119,7 @@ export class ActivityService {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
+        entity.nsfw &&
         entity.nsfw.length > 0 &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
@@ -229,10 +232,11 @@ export class ActivityService {
     showToolbar: true,
     showBoostMenuOptions: false,
     showEditedTag: false,
-    showVisibiltyState: false,
+    showVisibilityState: false,
     showTranslation: false,
     fixedHeight: false,
     fixedHeightContainer: false,
+    isModal: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -252,8 +256,12 @@ export class ActivityService {
    */
   setEntity(entity): ActivityService {
     if (entity.type !== 'activity') entity = this.patchForeignEntity(entity);
+
     if (!entity.content_type) {
-      entity.content_type = getActivityContentType(entity);
+      entity.content_type = getActivityContentType(entity, true);
+    }
+    if (!entity.activity_type) {
+      entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
     return this;

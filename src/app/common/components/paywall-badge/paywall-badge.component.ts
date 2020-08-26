@@ -6,8 +6,12 @@ import { ConfigsService } from '../../services/configs.service';
   selector: 'm-paywallBadge',
   templateUrl: './paywall-badge.component.html',
 })
-export class PaywallBadgeComponent implements OnInit {
-  @Input() entity: any;
+export class PaywallBadgeComponent {
+  private _entity: any;
+  @Input() set entity(value: any) {
+    this._entity = value;
+    this.load();
+  }
 
   /**
    * Override the top-right positioning
@@ -25,16 +29,18 @@ export class PaywallBadgeComponent implements OnInit {
     this.plusSupportTierUrn = config.get('plus').support_tier_urn;
   }
 
-  ngOnInit(): void {
-    if (!this.entity) {
+  load(): void {
+    // this.init = false;
+
+    if (!this._entity) {
       return;
     }
 
-    if (this.entity.remind_object) {
-      this.entity = this.entity.remind_object;
+    if (this._entity.remind_object) {
+      this._entity = this._entity.remind_object;
     }
 
-    this.hasPaywall = !!this.entity.paywall || this.entity.paywall_unlocked;
+    this.hasPaywall = !!this._entity.paywall || this._entity.paywall_unlocked;
 
     /**
      * Determine paywall type
@@ -42,10 +48,10 @@ export class PaywallBadgeComponent implements OnInit {
      */
     if (
       this.hasPaywall &&
-      this.entity.wire_threshold &&
-      this.entity.wire_threshold.support_tier
+      this._entity.wire_threshold &&
+      this._entity.wire_threshold.support_tier
     ) {
-      const tier = this.entity.wire_threshold.support_tier;
+      const tier = this._entity.wire_threshold.support_tier;
 
       if (tier.urn === this.plusSupportTierUrn) {
         this.paywallType = 'plus';

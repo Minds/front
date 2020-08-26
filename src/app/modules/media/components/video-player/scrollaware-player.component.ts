@@ -30,6 +30,7 @@ export class ScrollAwareVideoPlayerComponent
   @Input() guid: string;
   @Input() shouldPlayInModal: boolean;
   @Input() autoplay = true;
+  @Input() isModal: boolean = false;
   @Output() mediaModalRequested: EventEmitter<void> = new EventEmitter();
   @ViewChild(MindsVideoPlayerComponent) player: MindsVideoPlayerComponent;
   hasMousedOver = false;

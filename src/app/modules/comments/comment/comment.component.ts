@@ -15,6 +15,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -32,11 +33,11 @@ import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
-import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
+import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   selector: 'm-comment',
@@ -114,7 +115,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     protected featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     configs: ConfigsService,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private activityModalCreator: ActivityModalCreatorService,
+    private injector: Injector
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -392,19 +395,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
 
   openModal() {
-    this.comment.modal_source_url = this.router.url;
-
-    this.overlayModal
-      .create(
-        MediaModalComponent,
-        {
-          entity: this.comment,
-        },
-        {
-          class: 'm-overlayModal--media',
-        }
-      )
-      .present();
+    this.activityModalCreator.create(this.comment, this.injector);
   }
 
   /**

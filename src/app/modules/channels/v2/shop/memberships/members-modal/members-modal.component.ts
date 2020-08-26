@@ -70,7 +70,7 @@ export class ChannelShopMembershipsMembersComponent {
     );
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.supportTiersSubscription.unsubscribe();
   }
 
