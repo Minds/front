@@ -481,8 +481,9 @@ minds-blog-edit {
       font-size: 14px;
       letter-spacing: inherit;
       @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
         border: 1px solid themed($m-grey-50);
-        color: themed($m-grey-900) !important;
       }
     }
   }
