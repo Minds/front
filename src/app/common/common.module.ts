@@ -173,7 +173,6 @@ import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sideb
 import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
-import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
@@ -525,7 +524,6 @@ const routes: Routes = [
     RegexService,
     ApiService,
     AttachmentApiService,
-    FeedsUpdateService,
     ClientMetaService,
   ],
 })
