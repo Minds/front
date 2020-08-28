@@ -3,6 +3,7 @@
     *ngIf="!tokenOnboardingComplete"
     [hasAddress]="hasOnchainAddress"
     [phoneVerified]="phoneVerified"
+    [dashboardView]="dashboardView"
     (onboardingComplete)="onTokenOnboardingCompleted()"
   ></m-walletTokenOnboarding>
 
