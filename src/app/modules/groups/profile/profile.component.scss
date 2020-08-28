@@ -31,6 +31,7 @@
     right: 60px;
     display: block;
     z-index: 99;
+    cursor: pointer;
 
     @media screen and (max-width: $min-desktop) {
       right: 8px;
