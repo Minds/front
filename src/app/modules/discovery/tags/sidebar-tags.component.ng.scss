@@ -1,6 +1,8 @@
-m-discovery__sidebarTags {
+@import 'defaults.scss';
+
+:host {
   .m-sidebarWidget__body {
-    min-height: 260px;
+    min-height: 50px;
   }
 
   ul {

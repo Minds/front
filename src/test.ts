@@ -19,6 +19,8 @@ declare const __karma__: any;
 declare const require: any;
 declare const window: any;
 
+window.snowplow = () => {};
+
 // Prevent Karma from running prematurely.
 __karma__.loaded = function() {};
 

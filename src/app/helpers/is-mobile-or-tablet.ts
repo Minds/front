@@ -18,3 +18,7 @@ export default function isMobileOrTablet() {
   })(navigator.userAgent || navigator.vendor || '');
   return check;
 }
+
+export function isTablet() {
+  return isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
+}

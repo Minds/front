@@ -106,41 +106,43 @@
             Feed
           </a>
 
-          <a
-            class="m-proChannelTopbar__navItem"
-            [routerLink]="videosRouterLink"
-            routerLinkActive="active"
-            i18n="@@COMMON__VIDEOS"
-          >
-            Videos
-          </a>
+          <ng-container *ngIf="channel.guid != '1128946932434083852'">
+            <a
+              class="m-proChannelTopbar__navItem"
+              [routerLink]="videosRouterLink"
+              routerLinkActive="active"
+              i18n="@@COMMON__VIDEOS"
+            >
+              Videos
+            </a>
 
-          <a
-            class="m-proChannelTopbar__navItem"
-            [routerLink]="imagesRouterLink"
-            routerLinkActive="active"
-            i18n="@@COMMON__IMAGES"
-          >
-            Images
-          </a>
+            <a
+              class="m-proChannelTopbar__navItem"
+              [routerLink]="imagesRouterLink"
+              routerLinkActive="active"
+              i18n="@@COMMON__IMAGES"
+            >
+              Images
+            </a>
 
-          <a
-            class="m-proChannelTopbar__navItem"
-            [routerLink]="articlesRouterLink"
-            routerLinkActive="active"
-            i18n="@@COMMON__ARTICLES"
-          >
-            Articles
-          </a>
+            <a
+              class="m-proChannelTopbar__navItem"
+              [routerLink]="articlesRouterLink"
+              routerLinkActive="active"
+              i18n="@@COMMON__ARTICLES"
+            >
+              Articles
+            </a>
 
-          <a
-            class="m-proChannelTopbar__navItem"
-            [routerLink]="groupsRouterLink"
-            routerLinkActive="active"
-            i18n="@@COMMON__GROUPS"
-          >
-            Groups
-          </a>
+            <a
+              class="m-proChannelTopbar__navItem"
+              [routerLink]="groupsRouterLink"
+              routerLinkActive="active"
+              i18n="@@COMMON__GROUPS"
+            >
+              Groups
+            </a>
+          </ng-container>
         </div>
 
         <m-pro__hamburger-menu

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Subscription, timer } from 'rxjs';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-youtubeMigration__videoItem',
@@ -21,7 +22,8 @@ export class YoutubeMigrationVideoItemComponent {
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected toasterSevice: FormToastService
   ) {}
 
   playRequested(): void {
@@ -36,23 +38,34 @@ export class YoutubeMigrationVideoItemComponent {
     if (this.statusPolling) this.statusPolling.unsubscribe();
   }
 
-  import(): void {
+  async import(): Promise<void> {
     const videoId = this.video.video_id;
-    this.youtubeService.import(videoId);
-    this.video.status = 'queued';
+    try {
+      await this.youtubeService.import(videoId);
+      this.video.status = 'queued';
 
-    // Poll every 10 seconds, in 5 seconds time
-    this.statusPolling = timer(5000, 10000).subscribe(async () => {
-      const status = await this.youtubeService.getVideoStatus(videoId);
+      // Poll every 10 seconds, in 5 seconds time
+      this.statusPolling = timer(5000, 10000).subscribe(async () => {
+        const status = await this.youtubeService.getVideoStatus(videoId);
 
-      if (status) {
-        if (status === 'completed') {
-          this.statusPolling.unsubscribe();
+        if (status) {
+          if (status === 'completed') {
+            this.statusPolling.unsubscribe();
+          }
+          this.video.status = status;
+          this.detectChange();
         }
-        this.video.status = status;
-        this.detectChange();
+      });
+    } catch (e) {
+      if (
+        e.errorId ===
+        'Minds::Core::Media::YouTubeImporter::ImportsExceededException'
+      ) {
+        this.toasterSevice.warn(e.message);
+      } else {
+        this.toasterSevice.error(e.message);
       }
-    });
+    }
   }
 
   ngOnDestroy() {

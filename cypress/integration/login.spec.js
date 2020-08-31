@@ -49,7 +49,6 @@ context('Login', () => {
       .contains('Login')
       .click();
 
-    cy.get('minds-form-login .m-error-box .mdl-card__supporting-text')
-      .contains('Incorrect username/password. Please try again.');
+    cy.get('minds-form-login .m-error-box .mdl-card__supporting-text');
   })
 })

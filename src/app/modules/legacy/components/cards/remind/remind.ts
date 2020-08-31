@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
   ElementRef,
+  Injector,
 } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -16,11 +17,11 @@ import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
-import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { RedirectService } from '../../../../../common/services/redirect.service';
+import { ActivityModalCreatorService } from '../../../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   moduleId: module.id,
@@ -69,7 +70,9 @@ export class Remind {
     private router: Router,
     protected featuresService: FeaturesService,
     private configs: ConfigsService,
-    private redirectService: RedirectService
+    private redirectService: RedirectService,
+    private activityModalCreator: ActivityModalCreatorService,
+    private injector: Injector
   ) {
     this.hideTabs = true;
     this.cdnUrl = configs.get('cdn_url');
@@ -226,16 +229,6 @@ export class Remind {
   }
 
   openModal() {
-    this.activity.modal_source_url = this.router.url;
-
-    this.overlayModal
-      .create(
-        MediaModalComponent,
-        { entity: this.activity },
-        {
-          class: 'm-overlayModal--media',
-        }
-      )
-      .present();
+    this.activityModalCreator.create(this.activity, this.injector);
   }
 }

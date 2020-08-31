@@ -80,4 +80,11 @@ export class StackableModalComponent implements AfterViewInit {
       this.host.viewContainerRef.clear();
     }
   }
+
+  /**
+   * Don't let clicks affect what's underneath the modal
+   */
+  onClick($event) {
+    $event.stopPropagation();
+  }
 }

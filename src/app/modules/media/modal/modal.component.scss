@@ -585,6 +585,22 @@ m-media--modal {
         color: themed($m-blue-grey-600);
       }
     }
+    .m-tipButton {
+      &:hover {
+        i {
+          @include m-theme() {
+            color: themed($m-blue-grey-800);
+          }
+        }
+      }
+      i {
+        font-size: 23px;
+        padding-top: 2px;
+        @include m-theme() {
+          color: themed($m-blue-grey-500);
+        }
+      }
+    }
   }
   .m-wire-button {
     @include m-theme() {

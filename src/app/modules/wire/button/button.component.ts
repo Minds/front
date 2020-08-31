@@ -6,28 +6,13 @@ import { Session } from '../../../services/session';
 import { WireModalService } from '../wire-modal.service';
 import { WireEventType } from '../v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
+import { StackableModalService } from '../../../services/ux/stackable-modal.service';
+import { WireCreatorComponent } from '../v2/creator/wire-creator.component';
 
 @Component({
   selector: 'm-wire-button',
-  template: `
-    <button
-      class="m-btn m-btn--action m-btn--slim m-wire-button"
-      (click)="wire()"
-    >
-      <ng-container *ngIf="!features.has('pay'); else payButton">
-        <i class="ion-icon ion-flash"></i>
-        <span>Wire</span>
-      </ng-container>
-      <ng-template #payButton>
-        <m-icon
-          from="assets-file"
-          iconId="assets/icons/wire.svg"
-          [sizeFactor]="25"
-        ></m-icon>
-        <span>Pay</span>
-      </ng-template>
-    </button>
-  `,
+  templateUrl: './button.component.html',
+  styleUrls: ['./button.component.ng.scss'],
 })
 export class WireButtonComponent {
   @Input() object: any;
@@ -38,7 +23,8 @@ export class WireButtonComponent {
     private overlayModal: OverlayModalService,
     private modal: SignupModalService,
     private wireModal: WireModalService,
-    public features: FeaturesService
+    public features: FeaturesService,
+    private stackableModal: StackableModalService
   ) {}
 
   async wire() {
@@ -48,20 +34,14 @@ export class WireButtonComponent {
       return;
     }
 
-    const wireEvent = await this.wireModal
-      .present(this.object, {
+    await this.stackableModal
+      .present(WireCreatorComponent, this.object, {
+        wrapperClass: 'm-modalV2__wrapper',
         default: this.object && this.object.wire_threshold,
+        onComplete: () => {
+          this.stackableModal.dismiss();
+        },
       })
       .toPromise();
-
-    if (wireEvent.type === WireEventType.Completed) {
-      const wire = wireEvent.payload;
-
-      if (this.object.wire_totals) {
-        this.object.wire_totals[wire.currency] = wire.amount;
-      }
-
-      this.doneEmitter.emit(wire);
-    }
   }
 }
