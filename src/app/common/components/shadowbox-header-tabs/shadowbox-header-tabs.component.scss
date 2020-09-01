@@ -52,10 +52,6 @@
       .m-tooltip--bubble {
         z-index: 99;
         font-size: 11px;
-        @include m-theme() {
-          color: themed($m-white);
-          background-color: themed($m-blue);
-        }
       }
     }
   }

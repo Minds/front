@@ -25,10 +25,6 @@ m-dropdownSelector {
     bottom: 110%;
     left: 0;
     width: 160px;
-    @include m-theme() {
-      color: themed($m-white);
-      background-color: themed($m-blue);
-    }
     > * {
       font-size: 11px;
       font-weight: 300;

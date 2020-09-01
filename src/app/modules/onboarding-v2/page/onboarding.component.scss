@@ -555,14 +555,9 @@ m-onboarding {
             font-size: 15px;
             line-height: 18px;
             letter-spacing: 0;
-
-            @include m-theme() {
-              color: themed($m-grey-700);
-            }
           }
 
           .m-tooltip--bubble {
-            background-color: #4a90e2;
             font-size: 15px;
             line-height: 18px;
           }

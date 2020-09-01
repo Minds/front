@@ -41,7 +41,7 @@
           <m-tooltip
             icon="home"
             i18n="@@COMMON__NEWSFEED"
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -61,7 +61,7 @@
       >
         <a routerLink="/discovery" (click)="toggle()">
           <m-tooltip
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -86,7 +86,7 @@
       >
         <a routerLink="/discovery/plus" (click)="toggle()">
           <m-tooltip
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -106,7 +106,7 @@
       >
         <a [routerLink]="['/wallet/canary']" (click)="toggle()">
           <m-tooltip
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -198,7 +198,7 @@
           <m-tooltip
             icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
