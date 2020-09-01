@@ -178,7 +178,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/eth/eth.component.html</context>
@@ -230,15 +230,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">440</context>
+          <context context-type="linenumber">439</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">440</context>
+          <context context-type="linenumber">439</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">440</context>
+          <context context-type="linenumber">439</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/activity/toolbar/toolbar.component.html</context>
@@ -380,7 +380,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/splash/splash.component.html</context>
@@ -727,366 +727,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/user/user.html</context>
           <context context-type="linenumber">69</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__HEADER" datatype="html">
-        <source>Share this post</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__LINK_COPY_ACTION" datatype="html">
-        <source>Copy</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__LINK_COPY_STATE" datatype="html">
-        <source>Copied</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL" datatype="html">
-        <source>Include referral code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__REFERRAL_CODE_EXPLANATION" datatype="html">
-        <source>Use your referral code to earn tokens for referring new users to Minds. Learn more at the {$START_LINK}Referrals Console{$CLOSE_LINK}</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_TWITTER" datatype="html">
-        <source>Twitter</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_FACEBOOK" datatype="html">
-        <source>Facebook</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">73</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_MESSENGER" datatype="html">
-        <source>Messenger</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_Whatsapp" datatype="html">
-        <source>Whatsapp</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_SMS" datatype="html">
-        <source>SMS</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_EMAIL" datatype="html">
-        <source>Email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__MATURE_CONTENT" datatype="html">
-        <source>Mature content</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">241</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">314</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">343</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">371</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">241</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">314</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">343</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">371</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/list/list.component.html</context>
-          <context context-type="linenumber">161</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">137</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">170</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">204</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">289</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">241</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">314</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">343</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">371</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">129</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">162</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">196</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">283</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/poster/poster.component.html</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">165</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__CONFIRM_18" datatype="html">
-        <source>Click to confirm you are 18+</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">98</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">246</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">319</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">348</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">376</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">246</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">319</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">348</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">376</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">175</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">209</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">246</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">319</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">348</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">376</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">167</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">201</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__EDITED" datatype="html">
-        <source>edited</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">335</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
-          <context context-type="linenumber">404</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
-          <context context-type="linenumber">385</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL" datatype="html">
-        <source>Boosted</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">348</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html">
-        <source>Boosted Onchain</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
-          <context context-type="linenumber">354</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2045,11 +1685,11 @@
         <source>This post can only be seen by supporters who send</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">265</context>
+          <context context-type="linenumber">264</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2057,11 +1697,11 @@
         <source>over {$INTERPOLATION}/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">271</context>
+          <context context-type="linenumber">270</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2069,11 +1709,11 @@
         <source>over {$INTERPOLATION} points/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">279</context>
+          <context context-type="linenumber">278</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2081,11 +1721,11 @@
         <source>over {$INTERPOLATION} Tokens/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">286</context>
+          <context context-type="linenumber">285</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2093,11 +1733,11 @@
         <source>to @{$INTERPOLATION}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">293</context>
+          <context context-type="linenumber">292</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2105,15 +1745,15 @@
         <source>Join @{$INTERPOLATION}&apos;s {$INTERPOLATION_1} Membership to see this post</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2121,11 +1761,11 @@
         <source>We&apos;ve received your transaction. Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">129</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2133,7 +1773,7 @@
         <source>Unlock Post</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2141,7 +1781,7 @@
         <source>Wire me over</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">147</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2149,15 +1789,15 @@
         <source>{$INTERPOLATION}/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="linenumber">186</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">243</context>
+          <context context-type="linenumber">242</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2165,15 +1805,15 @@
         <source>{$INTERPOLATION} points/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">194</context>
+          <context context-type="linenumber">193</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">250</context>
+          <context context-type="linenumber">249</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2181,15 +1821,15 @@
         <source>{$INTERPOLATION} Tokens/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">167</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">200</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">257</context>
+          <context context-type="linenumber">256</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2197,7 +1837,7 @@
         <source>to see this post.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">172</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2205,7 +1845,7 @@
         <source>Only supporters who wire you over</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">180</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2213,7 +1853,7 @@
         <source>will see this post.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">205</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2221,7 +1861,7 @@
         <source>Unlock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">216</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2752,6 +2392,138 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="M_SHARE__HEADER" datatype="html">
+        <source>Share this post</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__LINK_COPY_ACTION" datatype="html">
+        <source>Copy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__LINK_COPY_STATE" datatype="html">
+        <source>Copied</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL" datatype="html">
+        <source>Include referral code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__REFERRAL_CODE_EXPLANATION" datatype="html">
+        <source>Use your referral code to earn tokens for referring new users to Minds. Learn more at the {$START_LINK}Referrals Console{$CLOSE_LINK}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__BUTTON_TWITTER" datatype="html">
+        <source>Twitter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__BUTTON_FACEBOOK" datatype="html">
+        <source>Facebook</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__BUTTON_MESSENGER" datatype="html">
+        <source>Messenger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__BUTTON_Whatsapp" datatype="html">
+        <source>Whatsapp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__BUTTON_SMS" datatype="html">
+        <source>SMS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_SHARE__BUTTON_EMAIL" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/modals/share/share.html</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EDITED" datatype="html">
+        <source>edited</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">335</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">404</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">385</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" datatype="html">
         <source>Boosted</source>
         <context-group purpose="location">
@@ -2832,6 +2604,218 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="M__COMMON__MATURE_CONTENT" datatype="html">
+        <source>Mature content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">241</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">314</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">343</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">241</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">314</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">343</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/list/list.component.html</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">204</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">289</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">241</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">314</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">343</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">371</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">196</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">283</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/poster/poster.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">165</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__CONFIRM_18" datatype="html">
+        <source>Click to confirm you are 18+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">319</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">348</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">376</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">319</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">348</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">376</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/comment/comment.component.html</context>
+          <context context-type="linenumber">209</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">319</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">348</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
+          <context context-type="linenumber">376</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
+          <context context-type="linenumber">201</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="ACTIVITY__REMIND_NOT_AVAILABLE" datatype="html">
         <source>This remind is not available because you blocked {$START_LINK}@{$INTERPOLATION}{$CLOSE_LINK}.</source>
         <context-group purpose="location">
@@ -2852,15 +2836,15 @@
         <source>Boost this post to reach more people!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">484</context>
+          <context context-type="linenumber">483</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">484</context>
+          <context context-type="linenumber">483</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">484</context>
+          <context context-type="linenumber">483</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2868,15 +2852,15 @@
         <source>This post is pinned</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">503</context>
+          <context context-type="linenumber">502</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">503</context>
+          <context context-type="linenumber">502</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">503</context>
+          <context context-type="linenumber">502</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2884,15 +2868,15 @@
         <source>Click to pin this post to the top of your channel feed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">510</context>
+          <context context-type="linenumber">509</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">510</context>
+          <context context-type="linenumber">509</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">510</context>
+          <context context-type="linenumber">509</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2900,15 +2884,15 @@
         <source>This post is awaiting moderation.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">543</context>
+          <context context-type="linenumber">542</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">543</context>
+          <context context-type="linenumber">542</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
-          <context context-type="linenumber">543</context>
+          <context context-type="linenumber">542</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2957,6 +2941,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/language/prompts/sidebar-prompt.component.html</context>
           <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL" datatype="html">
+        <source>Boosted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">348</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html">
+        <source>Boosted Onchain</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
+          <context context-type="linenumber">354</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3274,7 +3274,7 @@
         <source>Already have an account?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3282,7 +3282,7 @@
         <source>from</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3290,7 +3290,7 @@
         <source>${$INTERPOLATION} per month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3298,7 +3298,7 @@
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3306,7 +3306,7 @@
         <source>Feed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/hamburger-menu/hamburger-menu.component.html</context>
@@ -3322,7 +3322,7 @@
         <source>Videos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/hamburger-menu/hamburger-menu.component.html</context>
@@ -3338,7 +3338,7 @@
         <source>Images</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">124</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/hamburger-menu/hamburger-menu.component.html</context>
@@ -3354,7 +3354,7 @@
         <source>Articles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">133</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/hamburger-menu/hamburger-menu.component.html</context>
@@ -3366,7 +3366,7 @@
         <source>Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">142</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/hamburger-menu/hamburger-menu.component.html</context>
@@ -3973,6 +3973,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/console/booster/booster.component.html</context>
           <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON__TIP" datatype="html">
+        <source>Tip</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/button/button.component.html</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9548,7 +9556,7 @@
         <source>JOIN NOW</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/join-button/join-button.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9676,7 +9684,7 @@
         <source>Suggested Channels</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9684,7 +9692,7 @@
         <source>Suggested Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">107</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9764,7 +9772,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
@@ -9796,7 +9804,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -10153,7 +10161,7 @@
         <source>{$INTERPOLATION} posts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/sidebar-tags.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -10161,7 +10169,7 @@
         <source>See more</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/sidebar-tags.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11167,7 +11175,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/memberships.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -11451,7 +11459,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">185</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11479,27 +11487,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_YT_MIGRATION__1000_YT_SUBSCRIBER_CLAIM" datatype="html">
-        <source>If you have over 1,000 YouTube subscribers, {$START_LINK}claim a free annual subscription to Minds Plus{$CLOSE_LINK}.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">89</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_YT_MIGRATION__10000_YT_SUBSCRIBER_CLAIM" datatype="html">
-        <source>If you have over 10,000 YouTube subscribers, {$START_LINK}claim a free annual subscription to Minds Pro{$CLOSE_LINK}.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="MARKETING_YT_MIGRATION__REGAIN_YOUR_FREEDOM" datatype="html">
         <source>Regain your freedom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11507,7 +11499,7 @@
         <source>Tired of the unfair treatment from traditional social networks?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">125</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11515,7 +11507,7 @@
         <source>Minds offers a fully transparent, privacy-focused platform built for creators.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11523,7 +11515,7 @@
         <source>Take back control of your social media</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/marketing/marketing.component.html</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">172</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11555,7 +11547,7 @@
         <source>Tags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11563,7 +11555,7 @@
         <source>Post</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -11572,7 +11564,7 @@
         <source>Schedule Post</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16754,11 +16746,27 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="M__ACTION__MAKE__SEED" datatype="html">
+        <source>Add as Seed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REMOVE__SEED" datatype="html">
+        <source>Remove as Seed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__UNBLOCK" datatype="html">
         <source>Unblock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16766,7 +16774,7 @@
         <source>Block</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16774,7 +16782,7 @@
         <source>Report</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">144</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16975,11 +16983,35 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="CHANNELS_SHOP_MEMBERSHIPS_BENEFIT_DESCRIPTION" datatype="html">
+        <source>Add a short description of what your supporters will get for joining this tier.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/edit.component.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CHANNELS_SHOP_MEMBERSHIPS_CONNECT_YOUR_BANK" datatype="html">
+        <source>Important! {$START_LINK}Connect your bank A/C{$CLOSE_LINK} to receive USD payments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/edit.component.html</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CHANNELS_SHOP_MEMBERSHIPS_ADD_RECEIVER_ADDRESS" datatype="html">
+        <source>{$START_LINK}Add receiver address{$CLOSE_LINK} to receive tokens payments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/edit.component.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="CHANNELS_SHOP_MEMBERSHIPS_EDIT_SAVE" datatype="html">
         <source>Save Tier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/edit.component.html</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="linenumber">189</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17007,11 +17039,19 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="CHANNELS_SHOP_MEMBERSHIPS_TITLE_HEADLINE__NO_MEMBERSHIPS" datatype="html">
+        <source>@{$INTERPOLATION} doesn&apos;t offer any memberships</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/memberships.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="CHANNELS_SHOP_MEMBERSHIPS_TITLE_HEADLINE" datatype="html">
         <source>Access exclusive content through a monthly contribution</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/memberships.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17019,7 +17059,7 @@
         <source>View Supporters</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/memberships.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17027,7 +17067,7 @@
         <source>Create New</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/memberships.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17035,7 +17075,7 @@
         <source>Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/memberships/memberships.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
