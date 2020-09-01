@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
         (ngModelChange)="selectYear($event)"
         [disabled]="disabled"
       >
-        <option selected value="">YEAR</option>
+        <option selected value="">Year</option>
         <option *ngFor="let year of years">{{ year }}</option>
       </select>
     </div>
@@ -23,7 +23,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
         (ngModelChange)="selectMonth($event)"
         [disabled]="disabled"
       >
-        <option selected value="">MONTH</option>
+        <option selected value="">Month</option>
         <option *ngFor="let month of monthNames">{{ month }}</option>
       </select>
     </div>
@@ -35,7 +35,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
         (ngModelChange)="selectDay($event)"
         [disabled]="disabled"
       >
-        <option selected value="">DAY</option>
+        <option selected value="">Day</option>
         <option *ngFor="let day of days">{{ day }}</option>
       </select>
     </div>
