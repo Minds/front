@@ -42,7 +42,6 @@ export class GroupsSidebarMarkersComponent
   groups = [];
   offset = 0;
   moreData: boolean = true;
-  tooltipsAnchor: string = 'right';
   readonly hasNewNavigation: boolean;
   readonly cdnUrl: string;
 
@@ -181,8 +180,6 @@ export class GroupsSidebarMarkersComponent
   }
 
   @HostListener('window:resize') onResize() {
-    this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
-
     if (window.innerWidth > 1000) {
       this.layoutMode = 'desktop';
     } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {
@@ -197,5 +194,9 @@ export class GroupsSidebarMarkersComponent
    */
   onGroupClick(): void {
     this.onGroupSelected.emit(true);
+  }
+
+  get tooltipsEnabled() {
+    return this.layoutMode === 'tablet';
   }
 }

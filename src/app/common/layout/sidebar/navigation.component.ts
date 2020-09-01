@@ -42,6 +42,7 @@ export class SidebarNavigationComponent
   groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
+  showLabels: boolean = false;
 
   settingsLink: string = '/settings';
 
@@ -155,12 +156,15 @@ export class SidebarNavigationComponent
 
   @HostListener('window:resize')
   onResize() {
-    if (window.innerWidth > 1000) {
+    this.showLabels = window.innerWidth >= 1220 ? true : false;
+
+    if (window.innerWidth > 1040) {
       this.layoutMode = 'desktop';
-    } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {
+    } else if (window.innerWidth >= 480) {
       this.layoutMode = 'tablet';
     } else {
       this.layoutMode = 'phone';
+      this.showLabels = true;
     }
 
     if (this.layoutMode !== 'phone') {
@@ -168,7 +172,7 @@ export class SidebarNavigationComponent
     }
 
     if (this.groupsSidebar) {
-      this.groupsSidebar.showLabels = this.layoutMode !== 'tablet';
+      this.groupsSidebar.showLabels = this.showLabels;
     }
   }
 }

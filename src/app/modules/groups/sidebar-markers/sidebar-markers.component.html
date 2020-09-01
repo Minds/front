@@ -12,7 +12,11 @@
       class="m-groupSidebarMarkersList__item m-groupSidebarMarkersList__item--newGroup"
       [routerLink]="['/groups/create']"
     >
-      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
+      <m-tooltip
+        anchor="left"
+        [useParentPosition]="true"
+        [enabled]="!showLabels"
+      >
         <i class="material-icons" m-tooltip--anchor>add</i>
         <span i18n="@@M__COMMON__NEW_GROUP">New group</span>
 
@@ -39,7 +43,11 @@
           : ['/newsfeed/global/top', { period: '12h', type: 'groups', all: 1 }]
       "
     >
-      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
+      <m-tooltip
+        anchor="left"
+        [useParentPosition]="true"
+        [enabled]="!showLabels"
+      >
         <i class="material-icons" m-tooltip--anchor>people</i>
         <span i18n="@@M__COMMON__DISCOVER_GROUPS">Discover Groups</span>
 
@@ -65,7 +73,11 @@
       [routerLink]="['/groups/profile', group.guid]"
       (click)="onGroupClick()"
     >
-      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
+      <m-tooltip
+        anchor="left"
+        [useParentPosition]="true"
+        [enabled]="!showLabels"
+      >
         <img
           [class.m-pulsating--small]="
             !hasNewNavigation && (group.hasGathering$ | async)
@@ -88,7 +100,11 @@
   <!-- If no results -->
   <li *ngIf="(!groups || groups.length === 0) && !inProgress">
     <a [routerLink]="['/groups/top']">
-      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
+      <m-tooltip
+        anchor="left"
+        [useParentPosition]="true"
+        [enabled]="!showLabels"
+      >
         <img
           src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
           m-tooltip--anchor
