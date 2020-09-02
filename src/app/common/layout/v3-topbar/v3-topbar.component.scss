@@ -168,21 +168,6 @@
       .mdl-textfield__label {
         display: none;
       }
-
-      .m-search-bar-suggestions-list {
-        left: 0;
-        right: 0;
-        top: 75px;
-        width: 100%;
-        border-radius: 0;
-        border: 0;
-        box-sizing: content-box;
-        @include m-theme() {
-          box-shadow: none;
-          border-bottom: 1px solid themed($m-borderColor--primary);
-          border-right: 1px solid themed($m-borderColor--primary);
-        }
-      }
     }
   }
 

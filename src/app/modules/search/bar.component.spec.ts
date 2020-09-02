@@ -21,14 +21,14 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { RecentService } from '../../services/ux/recent';
-import { recentServiceMock } from '../../../tests/minds-recent-service-mock.spec';
+import { recentServiceMock } from '../../mocks/services/ux/recent-mock.spec';
 import { MockDirective } from '../../utils/mock';
 import { SharedModule } from '../../common/shared.module';
 
 // Mocks
 
 @Component({
-  selector: 'm-search--bar-suggestions',
+  selector: 'm-searchBar__suggestions',
   template: '',
 })
 class SearchBarSuggestionsMock {
