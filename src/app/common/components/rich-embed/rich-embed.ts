@@ -36,6 +36,14 @@ export class MindsRichEmbed {
   private lastInlineEmbedParsed: string;
   public isPaywalled: boolean = false;
 
+  @Input() set isModal(value: boolean) {
+    if (value) {
+      this.modalRequestSubscribed = false;
+      if (this.mediaSource !== 'minds') this.embeddedInline = true;
+      this.detectChanges();
+    }
+  }
+
   constructor(
     private sanitizer: DomSanitizer,
     private session: Session,
@@ -52,6 +60,9 @@ export class MindsRichEmbed {
       return;
     }
 
+    /**
+     * Make a copy of the source entity
+     */
     this.src = Object.assign({}, value);
     this.type = 'src';
 
@@ -93,10 +104,10 @@ export class MindsRichEmbed {
   }
 
   init() {
-    // Inline Embedding
+    // Create inline embed object
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (this.mediaSource === 'youtube' || this.mediaSource === 'minds') {
+    if (this.mediaSource === 'minds' || this.mediaSource === 'youtube') {
       this.modalRequestSubscribed =
         this.mediaModalRequested.observers.length > 0;
     }
@@ -162,7 +173,7 @@ export class MindsRichEmbed {
     }
   }
 
-  parseInlineEmbed(current?: any) {
+  parseInlineEmbed(current?: any): any {
     if (!this.src || !this.src.perma_url) {
       return null;
     }
