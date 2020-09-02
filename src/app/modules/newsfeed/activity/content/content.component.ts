@@ -248,14 +248,14 @@ export class ActivityContentComponent
     const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
     if (!originalHeight || !originalWidth) {
-      if (this.service.displayOptions.isModal) {
+      if (this.isModal) {
         return `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
       } else {
         return null;
       }
     }
 
-    if (this.service.displayOptions.isModal && originalHeight) {
+    if (this.isModal && originalHeight) {
       return `${originalHeight}px`;
     }
 
@@ -308,6 +308,10 @@ export class ActivityContentComponent
     return null;
   }
 
+  get isModal(): boolean {
+    return this.service.displayOptions.isModal;
+  }
+
   calculateFixedContentHeight(): void {
     if (!this.service.displayOptions.fixedHeight) {
       return;
@@ -351,10 +355,7 @@ export class ActivityContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    if (
-      !this.overlayModal.canOpenInModal() ||
-      this.service.displayOptions.isModal
-    ) {
+    if (!this.overlayModal.canOpenInModal() || this.isModal) {
       return;
     }
     if (event) {
