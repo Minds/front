@@ -130,6 +130,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   focus() {
     this.active = true;
+
+    // move cursor to end of input
+    const el = this.searchInput.nativeElement;
+    if (el) {
+      setTimeout(
+        () => (el.selectionStart = el.selectionEnd = this.q.length),
+        0
+      );
+    }
   }
 
   blur() {
@@ -148,7 +157,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       ]);
     }
 
-    this.recentService.store('recent:text', this.q);
+    this.recentService.storeSuggestion(
+      'text',
+      { value: this.q },
+      entry => entry.value === this.q
+    );
   }
 
   @HostListener('keyup', ['$event'])
@@ -210,6 +223,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.placeholder = $localize`:@@COMMON__SEARCH:Search Minds`;
     if (window.innerWidth < 360) {
       this.placeholder = $localize`:@@COMMON__SEARCH__SHORT:Search`;
+    }
+  }
+
+  moveCursorToEnd(el) {
+    if (typeof el.selectionStart == 'number') {
+      el.selectionStart = el.selectionEnd = el.value.length;
+    } else if (typeof el.createTextRange != 'undefined') {
+      el.focus();
+      var range = el.createTextRange();
+      range.collapse(false);
+      range.select();
     }
   }
 }

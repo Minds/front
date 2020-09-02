@@ -178,6 +178,7 @@ import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
+import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 
 const routes: Routes = [
   {
@@ -328,6 +329,7 @@ const routes: Routes = [
     ClientMetaDirective,
     CarouselComponent,
     PoweredByComponent,
+    LoadingEllipsisComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -456,6 +458,7 @@ const routes: Routes = [
     ClientMetaDirective,
     CarouselComponent,
     PoweredByComponent,
+    LoadingEllipsisComponent,
   ],
   providers: [
     SiteService,

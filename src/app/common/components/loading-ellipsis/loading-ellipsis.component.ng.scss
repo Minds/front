@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+
+:host {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+
+  .m-loadingEllipsis__container {
+    span {
+      display: inline-block;
+      height: 8px;
+      width: 8px;
+      margin: 0 6px;
+      border-radius: 50%;
+      animation-name: blinkingEllipsis;
+      animation-duration: 1.4s;
+      animation-iteration-count: infinite;
+      animation-fill-mode: both;
+      @include m-theme() {
+        background-color: themed($m-textColor--tertiary);
+      }
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  @keyframes loadingEllipsis {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(0.95);
+    }
+  }
+}
