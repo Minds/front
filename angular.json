@@ -24,6 +24,9 @@
           "fr": {
             "translation": "src/locale/Minds.fr.xliff"
           },
+          "hi": {
+            "translation": "src/locale/Minds.hi.xliff"
+          },
           "it": {
             "translation": "src/locale/Minds.it.xliff"
           },
