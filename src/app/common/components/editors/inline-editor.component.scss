@@ -206,7 +206,7 @@ m-inline-editor {
   position: absolute;
   top: 0;
   visibility: hidden;
-  z-index: 2000;
+  z-index: 999999;
 }
 
 .medium-editor-toolbar ul {
