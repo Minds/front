@@ -121,7 +121,6 @@ export class CarouselComponent implements AfterViewInit {
     let targetScrollLeft;
     let scrollEndOffset = 0;
 
-    // console.log(this.container.clientWidth);
     const partiallyVisibleMetricWidth =
       this.container.clientWidth % this.childClientWidth;
     const completelyVisibleMetricsWidth =

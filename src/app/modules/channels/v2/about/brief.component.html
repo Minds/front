@@ -25,10 +25,13 @@
   </ng-container>
 
   <div class="m-channelAboutBrief__stats">
-    <div class="m-channelAboutBriefStats__item">
+    <div
+      class="m-channelAboutBriefStats__item m-channelAboutBriefStats__item--subs"
+    >
       <span
         class="m-channelAboutBriefStatsItem__label"
         i18n="@@COMMON__SUBSCRIBERS"
+        [routerLink]="['/', this.service.username$ | async, 'subscribers']"
         >Subscribers</span
       >
       <a
@@ -38,10 +41,13 @@
       >
     </div>
 
-    <div class="m-channelAboutBriefStats__item">
+    <div
+      class="m-channelAboutBriefStats__item m-channelAboutBriefStats__item--subs"
+    >
       <span
         class="m-channelAboutBriefStatsItem__label"
         i18n="@@COMMON__SUBSCRIPTIONS"
+        [routerLink]="['/', this.service.username$ | async, 'subscriptions']"
         >Subscriptions</span
       >
       <a
@@ -70,7 +76,7 @@
     <m-channel__socialLinks
       [socialLinks]="channel.social_profiles"
     ></m-channel__socialLinks>
-  </div> 
+  </div>
 
   <div class="m-channelAboutBrief__spacer"></div> -->
 </div>
