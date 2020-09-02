@@ -23,11 +23,11 @@
   .m-overlay-modal {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: static;
     padding: 0;
-    margin: 0 auto;
+    margin: 35px auto;
     transform: none !important;
     overflow: initial;
     width: auto;
@@ -40,6 +40,7 @@
     @media screen and (max-width: $max-mobile) {
       position: absolute;
       top: 0;
+      margin: 0 auto;
     }
     .m-overlay-modal--close {
       @include m-theme() {
