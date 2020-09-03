@@ -47,8 +47,13 @@
   .m-activityModal__mediaWrapper--richEmbed {
     width: 100%;
 
-    .meta {
-      display: none;
+    // Don't show youtube meta
+    &:not(.isBlog) {
+      ::ng-deep {
+        .meta {
+          display: none;
+        }
+      }
     }
   }
 
@@ -266,6 +271,11 @@
       }
       m-paywallBadge {
         display: none;
+      }
+      .m-activityContent__media--richEmbed {
+        img {
+          max-height: none;
+        }
       }
 
       .m-activityContent__media--video,

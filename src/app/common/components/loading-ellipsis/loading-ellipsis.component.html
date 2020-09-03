@@ -1,0 +1,9 @@
+<div class="m-blinkingEllipsis__container" *ngIf="inProgress">
+  <ng-container *ngTemplateOutlet="dot"></ng-container>
+  <ng-container *ngTemplateOutlet="dot"></ng-container>
+  <ng-container *ngTemplateOutlet="dot"></ng-container>
+</div>
+
+<ng-template #dot>
+  <span [style.height]="dotDiameter" [style.width]="dotDiameter"></span>
+</ng-template>

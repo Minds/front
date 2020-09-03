@@ -39,7 +39,7 @@
     }
   }
 
-  .m-search-bar-suggestions-list {
+  .m-searchBarSuggestions {
     width: 100%;
     margin-top: 1px;
     border-radius: 6px;
@@ -48,7 +48,7 @@
       box-shadow: 1px 1px 1px rgba(themed($m-black), 0.26);
     }
 
-    .m-search-bar-suggestions-suggestion {
+    .m-searchBarSuggestions__suggestion {
       padding: 16px 8px;
 
       &:last-child {

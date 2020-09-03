@@ -52,7 +52,8 @@
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
       [src]="entity"
-      [maxheight]="320"
+      [maxheight]="isModal ? null : 320"
+      [isModal]="isModal"
     >
     </minds-rich-embed>
     <div
@@ -73,7 +74,7 @@
 
     <m-videoPlayer--scrollaware
       [guid]="videoGuid"
-      [shouldPlayInModal]="!service.displayOptions.isModal"
+      [shouldPlayInModal]="!isModal"
       (mediaModalRequested)="onModalRequested($event)"
       [autoplay]="
         service.displayOptions.autoplayVideo &&
@@ -88,7 +89,7 @@
   <!-- IMAGE -->
   <!-- ----------------------------------- -->
   <div class="m-activityContent__media--image" *ngIf="isImage">
-    <ng-container *ngIf="!service.displayOptions.isModal; else image">
+    <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
         [routerLink]="['/media', imageGuid]"

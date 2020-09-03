@@ -262,9 +262,11 @@ export class ChannelComponent {
       return;
     }
 
-    this.recent
-      .store('recent', this.user, entry => entry.guid == this.user.guid)
-      .splice('recent', 50);
+    this.recent.storeSuggestion(
+      'publisher',
+      this.user,
+      entry => entry.guid === this.user.guid
+    );
   }
 
   /**

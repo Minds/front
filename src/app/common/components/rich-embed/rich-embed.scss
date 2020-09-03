@@ -87,5 +87,8 @@ minds-rich-embed {
   }
   .m-rich-embed--title {
     word-break: break-word;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
   }
 }

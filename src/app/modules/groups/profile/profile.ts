@@ -291,9 +291,11 @@ export class GroupsProfile {
     if (!this.group) {
       return;
     }
-    this.recent
-      .store('recent', this.group, entry => entry.guid == this.group.guid)
-      .splice('recent', 50);
+    this.recent.storeSuggestion(
+      'publisher',
+      this.group,
+      entry => entry.guid === this.group.guid
+    );
   }
 
   filterToDefaultView() {

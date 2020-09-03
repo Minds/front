@@ -44,12 +44,13 @@
                 : mediaHeight + 'px'
             "
             [ngClass]="{
-              'm-activityModal__mediaWrapper--richEmbed':
-                entity.activity_type === 'rich-embed',
               'm-activityModal__mediaWrapper--image':
                 entity.activity_type === 'image',
               'm-activityModal__mediaWrapper--video':
-                entity.activity_type === 'video'
+                entity.activity_type === 'video',
+              'm-activityModal__mediaWrapper--richEmbed':
+                entity.activity_type === 'rich-embed',
+              isBlog: entity.content_type === 'blog'
             }"
           >
             <m-activity__content

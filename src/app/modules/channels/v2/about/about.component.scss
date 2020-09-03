@@ -41,6 +41,10 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+
+      &.m-channelAboutField__label--subs {
+        cursor: pointer;
+      }
     }
 
     .m-channelAboutField__content {
