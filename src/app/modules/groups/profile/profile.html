@@ -92,7 +92,7 @@
                 [class.m-pulsating--small]="group.hasGathering$ | async"
                 style="margin-left: 8;"
                 (click)="videochat.activate(group)"
-                *ngIf="!group.videoChatDisabled"
+                *ngIf="!group.videoChatDisabled && group['is:member']"
               >
                 <span class="m-gatheringIcon">Gathering</span>
                 <i class="material-icons">video_call</i>
