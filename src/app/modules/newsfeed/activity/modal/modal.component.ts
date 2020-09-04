@@ -90,6 +90,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   pagerTimeout: any = null;
   navigatedAway: boolean = false;
+  tabletOverlayTimeout: any = null;
 
   /**
    * Dimensions
@@ -281,21 +282,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
   }
 
-  /////////////////////////////////////////////////////////////////
-  // KEYBOARD SHORTCUTS
-  /////////////////////////////////////////////////////////////////
-
-  @HostListener('window:keydown', ['$event']) onWindowKeyDown(
-    $event: KeyboardEvent
-  ): Boolean {
-    if (!this.service.shouldFilterOutKeyDownEvent($event)) {
-      if ($event.key === 'Escape' && this.isOpen) {
-        this.service.dismiss();
-      }
-    }
-    return true;
-  }
-
   ngOnDestroy() {
     if (this.entitySubscription) {
       this.entitySubscription.unsubscribe();
@@ -313,6 +299,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       this.fullscreenSubscription.unsubscribe();
     }
 
+    if (this.tabletOverlayTimeout) {
+      clearTimeout(this.tabletOverlayTimeout);
+    }
+
     if (this.isOpenTimeout) {
       clearTimeout(this.isOpenTimeout);
     }
@@ -323,6 +313,39 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     if (!this.navigatedAway) {
       this.service.returnToSourceUrl();
     }
+  }
+
+  /////////////////////////////////////////////////////////////////
+  // KEYBOARD SHORTCUTS
+  /////////////////////////////////////////////////////////////////
+
+  @HostListener('window:keydown', ['$event']) onWindowKeyDown(
+    $event: KeyboardEvent
+  ): Boolean {
+    if (!this.service.shouldFilterOutKeyDownEvent($event)) {
+      if ($event.key === 'Escape' && this.isOpen) {
+        this.service.dismiss();
+      }
+    }
+    return true;
+  }
+
+  /////////////////////////////////////////////////////////////////
+  // TABLET TOUCH CONTROLS
+  /////////////////////////////////////////////////////////////////
+  /**
+   * Briefly display title overlay and video controls on stage touch
+   */
+  showOverlaysOnTablet() {
+    this.onMouseEnterStage();
+
+    if (this.tabletOverlayTimeout) {
+      clearTimeout(this.tabletOverlayTimeout);
+    }
+
+    this.tabletOverlayTimeout = setTimeout(() => {
+      this.onMouseLeaveStage();
+    }, 3000);
   }
 
   /////////////////////////////////////////////////////////////////
