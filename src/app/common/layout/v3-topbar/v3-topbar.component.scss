@@ -127,13 +127,13 @@
           padding: 0 20px;
         }
 
-        @media screen and(max-width: $m-grid-max-mobile) {
+        @media screen and(max-width: $layoutMin2ColWidth) {
           // width: 20px;
           transition: width ease-in-out 0.2s;
           padding: 0;
 
           &.is-focused {
-            // width: 270px;
+            width: 270px;
           }
         }
 

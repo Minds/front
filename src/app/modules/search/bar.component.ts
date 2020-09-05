@@ -166,7 +166,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   @HostListener('keyup', ['$event'])
   keyup(e) {
-    if (e.keyCode === 13 && this.session.isLoggedIn()) {
+    if (e.keyCode === 13) {
       this.search();
       this.unsetFocus();
     }
@@ -221,8 +221,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   updatePlaceholder(): void {
     this.placeholder = $localize`:@@COMMON__SEARCH:Search Minds`;
-    if (window.innerWidth < 360) {
+    if (window.innerWidth < 550) {
       this.placeholder = $localize`:@@COMMON__SEARCH__SHORT:Search`;
+    }
+    if (window.innerWidth < 400) {
+      this.placeholder = '';
     }
   }
 

@@ -10,6 +10,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 
 import { combineLatest, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-discovery__search',
@@ -30,7 +31,8 @@ export class DiscoverySearchComponent {
     private route: ActivatedRoute,
     private service: DiscoveryFeedsService,
     private router: Router,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private metaService: MetaService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -47,6 +49,8 @@ export class DiscoverySearchComponent {
             <DiscoveryFeedsContentType>params.get('t') || 'all'
           );
           //this.service.search(this.q);
+          this.metaService.setTitle(`${this.q} - Minds Search`);
+          this.metaService.setDescription(`Discover ${this.q} posts on Minds.`);
         }),
       combineLatest(
         this.service.nsfw$,
