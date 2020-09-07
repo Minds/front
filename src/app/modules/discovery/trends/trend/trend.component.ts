@@ -10,6 +10,7 @@ import { Observable, of, BehaviorSubject, Subscription } from 'rxjs';
 import { FastFadeAnimation } from '../../../../animations';
 import { DiscoveryService } from '../../discovery.service';
 import { PaywallService } from '../../../wire/v2/paywall.service';
+import { MetaService } from '../../../../common/services/meta.service';
 
 @Component({
   selector: 'm-discovery__trend',
@@ -20,12 +21,14 @@ import { PaywallService } from '../../../wire/v2/paywall.service';
 export class DiscoveryTrendComponent {
   entity$: Observable<Object> = of(null);
   paramSubscription: Subscription;
+  entitySubscription: Subscription;
 
   constructor(
     private entitiesService: EntitiesService,
     private route: ActivatedRoute,
     private discoveryService: DiscoveryService,
-    private paywallService: PaywallService
+    private paywallService: PaywallService,
+    private metaService: MetaService
   ) {}
 
   ngOnInit() {
@@ -34,6 +37,14 @@ export class DiscoveryTrendComponent {
         this.loadEntity(params.get('guid'));
       }
     );
+    this.entitySubscription = this.entity$.subscribe((entity: any) => {
+      if (entity) this.metaService.setCanonicalUrl(`/newsfeed/${entity.guid}`);
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription.unsubscribe();
+    this.entitySubscription.unsubscribe();
   }
 
   loadEntity(guid: string): void {
