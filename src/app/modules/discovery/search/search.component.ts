@@ -48,12 +48,7 @@ export class DiscoverySearchComponent {
           this.service.setType(
             <DiscoveryFeedsContentType>params.get('t') || 'all'
           );
-          //this.service.search(this.q);
-          this.metaService.setTitle(`${this.q} - Minds Search`);
-          this.metaService.setDescription(`Discover ${this.q} posts on Minds.`);
-          this.metaService.setCanonicalUrl(
-            `/discovery/search?q=${this.q}&f=${this.filter}&t=${this.type$.value}`
-          );
+          this.setSeo();
         }),
       combineLatest(
         this.service.nsfw$,
@@ -74,7 +69,18 @@ export class DiscoverySearchComponent {
           this.service.search(this.q);
           // }
         }),
+      this.entities$.subscribe(() => {
+        this.setSeo();
+      }),
     ];
+  }
+
+  setSeo() {
+    this.metaService.setTitle(`${this.q} - Minds Search`);
+    this.metaService.setDescription(`Discover ${this.q} posts on Minds.`);
+    this.metaService.setCanonicalUrl(
+      `/discovery/search?q=${this.q}&f=${this.filter}&t=${this.type$.value}`
+    );
   }
 
   ngOnDestroy() {
