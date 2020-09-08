@@ -29,7 +29,7 @@
       href="https://cdn-assets.minds.com/front/fonts/MaterialIcons-Regular.woff2"
       as="font"
       type="font/woff2"
-      crossorigin
+      crossorigin=""
     />
     <style type="text/css">
       .m-app__loadingContainer {
@@ -58,6 +58,8 @@
       }
     </style>
     <title>Minds</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#1976d2" />
   </head>
   <body class="m-theme__light">
     <!-- The app component created in app.ts -->
@@ -102,5 +104,8 @@
 
     <!-- shims:js -->
     <!-- endinject -->
+    <noscript
+      >Please enable JavaScript to continue using this application.</noscript
+    >
   </body>
 </html>

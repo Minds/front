@@ -12,9 +12,17 @@ import {
   HeadersService,
   BrowserHeadersService,
 } from './common/services/headers.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
-  imports: [MindsModule, CookieModule],
+  imports: [
+    MindsModule,
+    CookieModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
+  ],
   bootstrap: [Minds],
   providers: [
     { provide: 'ORIGIN_URL', useValue: location.origin },

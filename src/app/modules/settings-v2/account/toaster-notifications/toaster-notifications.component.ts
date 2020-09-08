@@ -15,6 +15,8 @@ import { Observable, Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
+import { SwPush } from '@angular/service-worker';
+import { Client } from '../../../../services/api';
 
 @Component({
   selector: 'm-settingsV2__toasterNotifications',
@@ -30,9 +32,14 @@ export class SettingsV2ToasterNotificationsComponent
   settingsSubscription: Subscription;
   form;
 
+  readonly VAPID_PUBLIC_KEY =
+    'BLBx-hf2WrL2qEa0qKb-aCJbcxEvyn62GDTyyP9KTS5K7ZL0K7TfmOKSPqp8vQF0DaG8hpSBknz_x3qf5F4iEFo';
+
   constructor(
+    private swPush: SwPush,
     protected cd: ChangeDetectorRef,
     private session: Session,
+    private client: Client,
     protected settingsService: SettingsV2Service,
     private dialogService: DialogService
   ) {}
@@ -52,6 +59,15 @@ export class SettingsV2ToasterNotificationsComponent
 
     this.init = true;
     this.detectChanges();
+  }
+
+  subscribeToNotifications() {
+    this.swPush
+      .requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY,
+      })
+      .then(sub => this.client.post('api/v2/push', { sub }))
+      .catch(err => console.error('Could not subscribe to notifications', err));
   }
 
   async submit() {

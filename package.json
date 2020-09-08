@@ -36,6 +36,7 @@
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/platform-server": "~9.1.12",
     "@angular/router": "~9.1.12",
+    "@angular/service-worker": "~9.1.12",
     "@danielmoncada/angular-datetime-picker": "^9.3.1",
     "@gorniv/ngx-universal": "^2.2.2",
     "@nguniversal/builders": "~9.1.1",

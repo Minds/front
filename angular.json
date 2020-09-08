@@ -78,7 +78,7 @@
             "extractCss": true,
             "aot": true,
             "localize": ["en"],
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": ["src/assets", "src/favicon.ico", "src/manifest.webmanifest"],
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
@@ -114,7 +114,9 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "hmr": {
               "fileReplacements": [
@@ -171,7 +173,7 @@
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
               "src/shims/jitsi-api.min.js"
             ],
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": ["src/assets", "src/favicon.ico", "src/manifest.webmanifest"],
             "polyfills": "src/polyfills.ts",
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
