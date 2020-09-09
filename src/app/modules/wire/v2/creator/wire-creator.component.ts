@@ -95,7 +95,9 @@ export class WireCreatorComponent implements OnDestroy {
       if (defaultValues.upgradeType) {
         this.service.setIsUpgrade(true);
         this.service.setUpgradeType(defaultValues.upgradeType);
-        this.service.setUpgradeInterval('yearly');
+        this.service.setUpgradeInterval(
+          defaultValues.upgradeInterval || 'yearly'
+        );
         return;
       }
       this.service.setAmount(parseFloat(defaultValues.min || '0'));

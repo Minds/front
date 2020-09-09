@@ -116,6 +116,7 @@
             [class.m-wireCreatorForm__intervalOption--selected]="
               (service.upgradeInterval$ | async) === 'monthly'
             "
+            *ngIf="(service.type$ | async) === 'usd'"
           >
             <div i18n="@@COMMON__MONTHLY">Monthly</div>
             <div>
