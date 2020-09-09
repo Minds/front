@@ -25,7 +25,6 @@ import { Subscription, Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { map } from 'rxjs/operators';
 import { FeaturesService } from '../../../services/features.service';
 import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
@@ -89,8 +88,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   heightPx: string;
 
   heightSubscription: Subscription;
-  contentType: string;
-  isPaywall2020: boolean = false;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -107,7 +104,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
     this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
-    this.isPaywall2020 = this.featuresService.has('paywall-2020');
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;
@@ -159,5 +155,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete() {
     this.deleted.emit(this.service.entity$.value);
+  }
+
+  get isPaywall2020(): boolean {
+    return this.featuresService.has('paywall-2020');
   }
 }

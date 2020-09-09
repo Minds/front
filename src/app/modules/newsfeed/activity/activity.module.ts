@@ -25,6 +25,10 @@ import { ActivityMetricsComponent } from './metrics/metrics.component';
 import { ActivityRemindComponent } from './remind/remind.component';
 import { ActivityPaywallComponent } from './paywall/paywall.component';
 import { CodeHighlightModule } from '../../code-highlight/code-highlight.module';
+import { ActivityModalComponent } from './modal/modal.component';
+import { ActivityModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
+import { ActivityModalPagerComponent } from './modal/pager/pager.component';
+import { ActivityModalCreatorService } from './modal/modal-creator.service';
 
 @NgModule({
   imports: [
@@ -53,8 +57,11 @@ import { CodeHighlightModule } from '../../code-highlight/code-highlight.module'
     ActivityMetricsComponent,
     ActivityRemindComponent,
     ActivityPaywallComponent,
+    ActivityModalComponent,
+    ActivityModalTitleOverlayComponent,
+    ActivityModalPagerComponent,
   ],
-  providers: [],
+  providers: [ActivityModalCreatorService],
   exports: [ActivityComponent],
 })
 export class ActivityModule {}

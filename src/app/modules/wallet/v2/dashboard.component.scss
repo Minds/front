@@ -50,10 +50,6 @@ m-walletDashboard {
         // z-index: 9999;
         font-size: 12px;
         line-height: 16px;
-        @include m-theme() {
-          color: themed($m-white);
-          background-color: themed($m-blue);
-        }
       }
     }
   }

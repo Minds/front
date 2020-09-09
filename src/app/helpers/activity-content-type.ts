@@ -10,6 +10,7 @@ export default function getActivityContentType(
   isolateBlogs: boolean = false
 ): 'image' | 'video' | 'rich-embed' | 'status' | 'remind' | 'blog' {
   const e = entity;
+
   if (e.remind_object) {
     return 'remind';
   }
@@ -20,7 +21,7 @@ export default function getActivityContentType(
     return 'image';
   }
   if (e.perma_url) {
-    if (isolateBlogs && e.entity_guid) {
+    if (isolateBlogs && (e.entity_guid || e.subtype === 'blog')) {
       return 'blog';
     }
     return 'rich-embed';

@@ -157,7 +157,7 @@ minds-button-remind {
   width: 100vw;
   height: 100vh;
   cursor: default;
-  // pointer-events: none;
+  z-index: 1;
 }
 
 minds-button-comment a,

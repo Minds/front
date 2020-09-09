@@ -153,9 +153,11 @@ export class ChannelComponent implements OnInit, OnDestroy {
       });
 
       if (currentUser && currentUser.guid !== user.guid) {
-        this.recent
-          .store('recent', user, entry => entry.guid == user.guid)
-          .splice('recent', 50);
+        this.recent.storeSuggestion(
+          'publisher',
+          user,
+          entry => entry.guid === user.guid
+        );
       }
     }
   }

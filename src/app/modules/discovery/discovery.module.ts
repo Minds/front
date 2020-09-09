@@ -26,6 +26,8 @@ import { DiscoveryPlusUpgradeComponent } from './plus-upgrade/plus-upgrade.compo
 import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.service';
 import { WireModalService } from '../wire/wire-modal.service';
 import { DiscoveryService } from './discovery.service';
+import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
+import { DiscoveryTabsComponent } from './tabs/tabs.component';
 
 @NgModule({
   imports: [
@@ -38,6 +40,9 @@ import { DiscoveryService } from './discovery.service';
           {
             path: 'overview',
             component: DiscoveryTrendsComponent,
+            data: {
+              title: 'Discovery / Overview',
+            },
           },
           {
             path: 'trend/:guid',
@@ -49,7 +54,26 @@ import { DiscoveryService } from './discovery.service';
           },
           {
             path: 'tags',
-            component: DiscoveryTagsComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'your',
+              },
+              {
+                path: ':type',
+                component: DiscoveryTagsComponent,
+                data: {
+                  title: 'Discovery / Tags',
+                },
+              },
+            ],
+          },
+          {
+            path: 'boost/feed',
+            component: DiscoveryBoostFeedComponent,
+            data: {
+              title: 'Discovery / Boosted',
+            },
           },
           {
             path: 'feeds',
@@ -87,7 +111,10 @@ import { DiscoveryService } from './discovery.service';
               {
                 path: 'overview',
                 component: DiscoveryTrendsComponent,
-                data: { plus: true },
+                data: {
+                  title: 'Minds+ / Overview',
+                  plus: true,
+                },
               },
               {
                 path: 'trend/:guid',
@@ -156,12 +183,15 @@ import { DiscoveryService } from './discovery.service';
     DiscoverySuggestionsComponent,
     DiscoveryNoTagsPromptComponent,
     DiscoveryPlusUpgradeComponent,
+    DiscoveryBoostFeedComponent,
+    DiscoveryTabsComponent,
   ],
   exports: [
     DiscoveryComponent,
     DiscoveryTrendsComponent,
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
+    DiscoveryBoostFeedComponent,
     DiscoveryFeedsComponent,
     DiscoverySidebarTagsComponent,
   ],

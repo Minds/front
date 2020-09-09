@@ -8,7 +8,7 @@ m-plus--subscription {
     justify-content: flex-start;
     margin-bottom: 23px;
 
-    @media screen and (max-width: $m-grid-min-vp) {
+    @media screen and (max-width: $max-mobile) {
       justify-content: center;
       margin-bottom: 40px;
     }
@@ -29,7 +29,7 @@ m-plus--subscription {
   .m-plusSubscriptionPlan__pricing {
     margin-bottom: 24px;
 
-    @media screen and (max-width: $m-grid-min-vp) {
+    @media screen and (max-width: $max-mobile) {
       margin-bottom: 40px;
       text-align: center;
     }

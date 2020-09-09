@@ -9,6 +9,7 @@ import { WireModalService } from '../../../wire/wire-modal.service';
   selector: 'm-channelActions__wire',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'wire.component.html',
+  styleUrls: ['wire.component.ng.scss'],
 })
 export class ChannelActionsWireComponent {
   /**

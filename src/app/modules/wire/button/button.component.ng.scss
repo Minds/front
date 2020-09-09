@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+
+:host {
+  .m-wire-button {
+    padding: 3px;
+    height: auto;
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+
+    &:hover {
+      @include m-theme() {
+        color: rgba(themed($m-blue-dark), 0.9);
+      }
+    }
+
+    > .ion-icon {
+      //  transform: scale(1.6);
+      font-size: 18px;
+      vertical-align: middle;
+    }
+
+    span {
+      margin-left: $minds-margin;
+      vertical-align: middle;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.m-tipButton {
+      text-transform: none;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: center;
+      margin-top: -3px;
+      padding: 0;
+      span {
+        font-size: 14px;
+        letter-spacing: 0.7;
+      }
+      i {
+        font-size: 20px;
+      }
+    }
+  }
+}

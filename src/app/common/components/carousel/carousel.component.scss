@@ -13,7 +13,6 @@ m-carousel {
 .m-carousel__wrapper {
   position: relative;
   z-index: 1;
-  height: 124px;
   @include m-theme() {
     box-shadow: none;
   }

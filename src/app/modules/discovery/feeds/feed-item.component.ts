@@ -13,14 +13,9 @@ export class DiscoveryFeedItemComponent implements OnInit {
   @Input() openComments: boolean = false;
   readonly cdnUrl: string;
 
-  constructor(
-    private configs: ConfigsService,
-    private metaService: MetaService
-  ) {
+  constructor(private configs: ConfigsService) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
-  ngOnInit(): void {
-    this.metaService.setCanonicalUrl(`/newsfeed/${this.entity.guid}`);
-  }
+  ngOnInit(): void {}
 }

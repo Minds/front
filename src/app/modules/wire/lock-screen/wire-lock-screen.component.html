@@ -7,7 +7,6 @@
       isVideo: contentType === 'video'
     }"
     [style.maxHeight.px]="mediaHeight"
-    (click)="$event.stopPropagation(); unlock()"
     *ngIf="entity.wire_threshold && init"
   >
     <!-- ------------------------------ -->

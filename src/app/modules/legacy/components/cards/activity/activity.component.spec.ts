@@ -64,6 +64,7 @@ import { RedirectService } from '../../../../../common/services/redirect.service
 import { ModalService } from '../../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../../composer/services/composer.service';
 import { WireModalService } from '../../../../wire/wire-modal.service';
+import { ActivityModalCreatorService } from '../../../../newsfeed/activity/modal/modal-creator.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -531,6 +532,10 @@ describe('Activity', () => {
         {
           provide: ModalService,
           useValue: MockService(ModalService),
+        },
+        {
+          provide: ActivityModalCreatorService,
+          useValue: MockService(ActivityModalCreatorService),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
