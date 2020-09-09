@@ -78,6 +78,6 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
   ],
-  exports: [BlogEditorComponent],
+  exports: [BlogEditorComponent, BlogView, BlogCard],
 })
 export class BlogModule {}
