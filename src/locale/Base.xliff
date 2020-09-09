@@ -14,15 +14,15 @@
         <source>New group</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -30,15 +30,15 @@
         <source>Discover Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -46,11 +46,11 @@
         <source>Join some groups to populate this sidebar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">116</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">124</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1266,7 +1266,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">121</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1286,7 +1286,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">163</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/currency-toggle/currency-toggle.component.html</context>
@@ -1331,11 +1331,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">133</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/currency-toggle/currency-toggle.component.html</context>
@@ -3607,7 +3607,7 @@
         <source>Monthly</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3615,7 +3615,7 @@
         <source>USD</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3623,7 +3623,7 @@
         <source>Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3631,11 +3631,11 @@
         <source>{$START_TAG_SPAN}{$INTERPOLATION}{$CLOSE_TAG_SPAN} per month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3643,7 +3643,7 @@
         <source>Upgrade to Plus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3651,7 +3651,7 @@
         <source>Cancel Plus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4897,7 +4897,7 @@
         <source>Translate to</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/translate/translate.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4905,7 +4905,7 @@
         <source>Select Language</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/translate/translate.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">123</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4913,7 +4913,7 @@
         <source>Preferred Languages</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/translate/translate.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -7305,42 +7305,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/search.component.html</context>
           <context context-type="linenumber">216</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="SEARCH_SUGGESTIONS__CLEAR_HISTORY" datatype="html">
-        <source>Search History</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL" datatype="html">
-        <source>Search Minds:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="SEARCH_CONTEXT_COLON" datatype="html">
-        <source>Search {$INTERPOLATION}:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">110</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">124</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11056,7 +11020,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11064,7 +11028,7 @@
         <source>Ether</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">166</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
@@ -11077,7 +11041,7 @@
         <source>Bitcoin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">169</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -11086,7 +11050,7 @@
         <source>Wallet Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">196</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11094,7 +11058,7 @@
         <source>On-chain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">203</context>
+          <context context-type="linenumber">204</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11102,7 +11066,7 @@
         <source>Off-chain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">218</context>
+          <context context-type="linenumber">219</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11110,7 +11074,7 @@
         <source>Wallet Balance</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">231</context>
+          <context context-type="linenumber">232</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11118,7 +11082,7 @@
         <source>Top-up wallet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">261</context>
+          <context context-type="linenumber">262</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11126,7 +11090,7 @@
         <source>Payment Method</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">279</context>
+          <context context-type="linenumber">280</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/support-tier-confirmation/support-tier-confirmation.component.html</context>
@@ -11138,7 +11102,7 @@
         <source>Repeat Payment Monthly</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">303</context>
+          <context context-type="linenumber">304</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11146,7 +11110,7 @@
         <source>Repeat</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">321</context>
+          <context context-type="linenumber">322</context>
         </context-group>
         <note priority="1" from="meaning">action</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -11155,7 +11119,7 @@
         <source>Monthly recurrent payments may be cancelled at any point within in your wallet.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">324</context>
+          <context context-type="linenumber">325</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16362,26 +16326,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="DISCOVERY__TRENDS__JUST_FOR_YOU" datatype="html">
-        <source>Just for you</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/trends/trends.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="DISCOVERY_TAGS__DISCOVERY_BY_TAGS" datatype="html">
-        <source>Discover by tags</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/trends/trends.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="DISCOVERY_SEARCH__TOP" datatype="html">
         <source>Top</source>
         <context-group purpose="location">
@@ -16422,35 +16366,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="DISCOVERY_TAGS__JUST_FOR_YOU" datatype="html">
-        <source>Just for you</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="DISCOVERY_TAGS__YOUR_TAGS" datatype="html">
-        <source>Your Tags</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__SEE_YOUR_FEED" datatype="html">
         <source>See your feed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="DISCOVERY_TAGS__TRENDING_TAGS" datatype="html">
-        <source>Trending Tags</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16458,7 +16378,7 @@
         <source>See trending feed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16539,6 +16459,38 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/notags-prompt/notags-prompt.component.html</context>
           <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__JUST_FOR_YOU" datatype="html">
+        <source>Just for you</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tabs/tabs.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__YOUR_TAGS" datatype="html">
+        <source>Your tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tabs/tabs.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__TRENDING" datatype="html">
+        <source>Trending</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tabs/tabs.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__BOOSTED" datatype="html">
+        <source>Boosted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tabs/tabs.component.html</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16646,7 +16598,7 @@
         <source>Subscribers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/about/brief.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16654,11 +16606,11 @@
         <source>Subscriptions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/about/brief.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/about/extra-info.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16666,7 +16618,7 @@
         <source>Views</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/about/brief.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16710,7 +16662,7 @@
         <source>Subscribers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/about/extra-info.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
