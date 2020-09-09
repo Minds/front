@@ -1,0 +1,14 @@
+<m-discovery__tabs [showSettingsButton]="false"></m-discovery__tabs>
+
+<m-discovery__feedItem
+  *ngFor="let entity$ of feed$ | async"
+  [entity]="entity$ | async"
+></m-discovery__feedItem>
+
+<infinite-scroll
+  distance="25%"
+  (load)="loadNext()"
+  [moreData]="hasMore$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
