@@ -2,6 +2,7 @@ import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryTagsService } from './tags.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ActivatedRoute } from '@angular/router';
 import { DiscoveryTagSettingsComponent } from './settings.component';
 import { DiscoveryService } from '../discovery.service';
 
@@ -18,6 +19,7 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
   parentPath: string = '';
 
   constructor(
+    public route: ActivatedRoute,
     private service: DiscoveryTagsService,
     private overlayModal: OverlayModalService,
     private injector: Injector,
