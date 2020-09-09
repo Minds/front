@@ -4,6 +4,7 @@ import { WireContractService } from '../blockchain/contracts/wire-contract.servi
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { BTCService } from '../payments/btc/btc.service';
+import { FormToastService } from '../../common/services/form-toast.service';
 
 export type PayloadType =
   | 'onchain'
@@ -31,7 +32,8 @@ export class WireService {
     private wireContract: WireContractService,
     private tokenContract: TokenContractService,
     private web3Wallet: Web3WalletService,
-    private btcService: BTCService
+    private btcService: BTCService,
+    private toast: FormToastService
   ) {}
 
   async submitWire(wire: WireStruc) {
@@ -132,6 +134,10 @@ export class WireService {
       this.wireSent.next(wire);
       return { done: true };
     } catch (e) {
+      if (e.message) {
+        this.toast.error(e.message);
+      }
+
       if (e && e.stage === 'transaction') {
         throw new Error(
           'Sorry, your payment failed. Please, try again or use another card'
