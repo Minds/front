@@ -8,8 +8,10 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 import { BlogsEditService } from './blog-edit.service';
 import { MockService } from '../../../../utils/mock';
 import { BlogEditorV2Component } from './editor-base.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { composerMockService } from '../../../../mocks/modules/composer/services/composer.service.mock';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 const content$ = new BehaviorSubject<string>('');
 
@@ -31,6 +33,9 @@ describe('BlogEditorV2Component', () => {
   let fixture: ComponentFixture<BlogEditorV2Component>;
 
   beforeEach(() => {
+    TestBed.overrideProvider(ComposerService, {
+      useValue: composerMockService,
+    });
     TestBed.configureTestingModule({
       declarations: [BlogEditorV2Component],
       imports: [RouterTestingModule],
@@ -53,6 +58,7 @@ describe('BlogEditorV2Component', () => {
         { provide: Location, useValue: MockService(Location) },
         { provide: FormToastService, useValue: MockService(FormToastService) },
         { provide: BlogsEditService, useValue: blogsEditServiceMock },
+        { provide: ComposerService, useValue: composerMockService },
       ],
     }).compileComponents();
   });
@@ -61,6 +67,15 @@ describe('BlogEditorV2Component', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    TestBed.overrideComponent(BlogEditorV2Component, {
+      set: {
+        providers: [
+          { provide: BlogsEditService, useValue: blogsEditServiceMock },
+          { provide: ComposerService, useValue: composerMockService },
+        ],
+      },
+    });
 
     fixture = TestBed.createComponent(BlogEditorV2Component);
 

@@ -15,6 +15,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 import { BlogsEditService } from './blog-edit.service';
 import { take } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 @Component({
   selector: 'm-blogEditor--v2',
@@ -22,6 +23,8 @@ import { Location } from '@angular/common';
     class: 'm-blog',
   },
   templateUrl: 'editor-base.component.html',
+  styleUrls: ['./editor-base.component.ng.scss'],
+  providers: [BlogsEditService, ComposerService],
 })
 export class BlogEditorV2Component implements OnInit, OnDestroy {
   readonly cdnUrl: string;

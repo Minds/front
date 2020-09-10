@@ -15,12 +15,15 @@ const title$ = new BehaviorSubject<string>('');
 
 const banner$ = new BehaviorSubject<string>('');
 
+const tags$ = new BehaviorSubject<string[]>([]);
+
 const blogsEditServiceMock: any = MockService(BlogsEditService, {
-  has: ['content$', 'title$', 'banner$'],
+  has: ['content$', 'title$', 'banner$', 'tags$'],
   props: {
     title$: { get: () => title$ },
     content$: { get: () => content$ },
     banner$: { get: () => banner$ },
+    tags$: { get: () => tags$ },
   },
 });
 

@@ -28,21 +28,19 @@ import { BlogV2Module } from './v2/blog-v2.module';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
 const routes: Routes = [
-  { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
-  { path: 'blog/view/:guid', component: BlogViewInfinite },
+  { path: '', redirectTo: '/discovery/overview', pathMatch: 'full' },
+  { path: 'view/:guid/:title', component: BlogViewInfinite },
+  { path: 'view/:guid', component: BlogViewInfinite },
   {
-    path: 'blog/edit/:guid',
+    path: 'edit/:guid',
     component: BlogEdit,
     canDeactivate: [CanDeactivateGuardService],
     data: {
       title: 'Edit Blog',
     },
   },
-  { path: 'blog/:filter', component: BlogListComponent },
-  { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
-  { path: ':username/blog/:slugid', component: BlogViewInfinite },
   {
-    path: 'blog/v2/edit/:guid',
+    path: 'v2/edit/:guid',
     component: BlogEditorV2Component,
     canDeactivate: [CanDeactivateGuardService],
     data: {

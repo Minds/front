@@ -37,6 +37,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
     class: 'm-blog',
   },
   templateUrl: 'view.html',
+  styleUrls: ['./view.ng.scss'],
   providers: [ActivityService],
 })
 export class BlogView implements OnInit, OnDestroy {

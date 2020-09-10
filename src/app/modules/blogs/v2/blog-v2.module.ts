@@ -11,6 +11,7 @@ import { BlogEditorMetaComponent } from '../v2/edit/bottom-bar/meta/meta.compone
 import { BlogEditorBottomBarComponent } from '../v2/edit/bottom-bar/bottom-bar.component';
 import { BlogEditorTagsComponent } from '../v2/edit/bottom-bar/tags/tags.component';
 import { FormsModule } from '@angular/forms';
+import { ComposerModule } from '../../composer/composer.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     CKEditorModule,
     CaptchaModule,
     FormsModule,
+    ComposerModule,
   ],
   declarations: [
     BlogEditorComponent,
@@ -29,6 +31,5 @@ import { FormsModule } from '@angular/forms';
     BlogEditorTagsComponent,
   ],
   exports: [BlogEditorComponent],
-  providers: [BlogsEditService],
 })
 export class BlogV2Module {}

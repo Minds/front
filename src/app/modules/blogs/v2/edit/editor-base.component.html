@@ -5,6 +5,7 @@
 
 <!-- Main Editor Container -->
 <div class="m-blogEditor">
+  <!-- Banner Preview -->
   <div
     *ngIf="service.banner$ | async"
     class="m-blogEditor__bannerImageContainer"
@@ -15,7 +16,10 @@
     </div>
     <img [src]="service.banner$ | async" />
   </div>
+
+  <!-- Container -->
   <div class="m-blogEditor__container">
+    <!-- Banner setup -->
     <div class="m-blogEditor__bannerContainer">
       <div
         class="m-blogEditor__bannerUploader"
@@ -51,12 +55,15 @@
           </em>
         </span> -->
       </div>
+
       <div class="m-blogEditor__ellipsis" *ngIf="!(service.banner$ | async)">
         <ng-template
           [ngTemplateOutlet]="optionsDropdownContainer"
         ></ng-template>
       </div>
     </div>
+
+    <!-- Title -->
     <div class="m-blogEditor__titleContainer">
       <input
         class="m-blogEditor__titleInput"
@@ -69,6 +76,8 @@
         data-cy="data-minds-blog-title-input"
       />
     </div>
+
+    <!-- Body -->
     <div class="m-blogEditor__bodyContainer">
       <m-blog__editor
         (contentChanged)="onContentChange($event)"
@@ -76,5 +85,6 @@
       ></m-blog__editor>
     </div>
   </div>
+
   <m-blogEditor__bottomBar></m-blogEditor__bottomBar>
 </div>

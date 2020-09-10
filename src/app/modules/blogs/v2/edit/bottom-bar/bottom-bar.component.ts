@@ -14,83 +14,8 @@ export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
  */
 @Component({
   selector: 'm-blogEditor__bottomBar',
-  template: `
-    <div
-      class="m-blogEditor__bottomBarTabContainer blogEditor__dropShadowTop"
-      *ngIf="activeTab$ | async"
-    >
-      <div class="m-blogEditor__bottomBarTabHeader">
-        <ng-container [ngSwitch]="activeTab$ | async">
-          <h4 *ngSwitchCase="'meta'">META</h4>
-          <h4 *ngSwitchCase="'tags'">Tags</h4>
-        </ng-container>
-        <m-icon iconId="expand_more" (click)="activeTab$.next('')"></m-icon>
-      </div>
-
-      <ng-container [ngSwitch]="activeTab$ | async">
-        <div
-          *ngSwitchCase="'meta'"
-          class="m-blogEditor__metaContainer m-blogEditor__tab"
-        >
-          <m-blogEditor__metadata></m-blogEditor__metadata>
-        </div>
-        <div
-          *ngSwitchCase="'tags'"
-          class="m-blogEditor__tagsContainer m-blogEditor__tab"
-        >
-          <m-blogEditor__tags></m-blogEditor__tags>
-        </div>
-      </ng-container>
-    </div>
-    <div
-      class="m-blogEditor__bottomBar"
-      [ngClass]="{
-        blogEditor__dropShadowTop: !(activeTab$ | async),
-        blogEditor__backgroundSecondary: activeTab$ | async
-      }"
-    >
-      <div class="m-blogEditor__options">
-        <div
-          (click)="toggleActiveTab('tags')"
-          class="m-blogEditor__tabToggle"
-          data-cy="data-minds-blog-editor-tags-toggle"
-        >
-          <span>#</span>
-          <span> Tags </span>
-        </div>
-        <div
-          (click)="toggleActiveTab('meta')"
-          class="m-blogEditor__tabToggle"
-          data-cy="data-minds-blog-editor-meta-toggle"
-        >
-          <i class="material-icons">description</i>
-          <span> Meta </span>
-        </div>
-      </div>
-      <div class="m-blogEditor__saveButtons">
-        <m-shadowboxSubmitButton
-          class="m-blogEditor__saveDraftButton m-blogEditor__saveButton"
-          [disabled]="!(service.canPost$ | async)"
-          [saving]="service.inProgress$ | async"
-          (click)="save(true)"
-          i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
-          data-cy="data-minds-blog-editor-save-draft"
-        >
-          Save Draft
-        </m-shadowboxSubmitButton>
-        <m-shadowboxSubmitButton
-          class="m-blogEditor__saveButton"
-          [disabled]="!(service.canPost$ | async)"
-          [saving]="service.inProgress$ | async"
-          (click)="save()"
-          i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
-          data-cy="data-minds-blog-editor-publish"
-        >
-          Publish
-        </m-shadowboxSubmitButton>
-      </div>
-    </div>
-  `,
+  templateUrl: './bottom-bar.component.html',
+  styleUrls: ['./bottom-bar.component.ng.scss'],
 })
 export class BlogEditorBottomBarComponent {
   /**
@@ -105,6 +30,14 @@ export class BlogEditorBottomBarComponent {
     private toast: FormToastService,
     private overlay: OverlayModalService
   ) {}
+
+  ngOnInit() {
+    this.service.tags$.subscribe(() => {
+      if (this.activeTab$.value === 'tags') {
+        this.activeTab$.next('');
+      }
+    });
+  }
 
   /**
    * Validate, show captcha modal and save on completion.

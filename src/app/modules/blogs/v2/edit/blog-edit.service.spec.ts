@@ -3,6 +3,7 @@ import { BlogsEditService } from './blog-edit.service';
 import { uploadMock } from '../../../../../tests/upload-mock.spec';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { siteServiceMock } from '../../../notifications/notification.service.spec';
+import { composerMockService } from '../../../../mocks/modules/composer/services/composer.service.mock';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
@@ -30,7 +31,8 @@ describe('BlogsEditService', () => {
       routerMock,
       clientMock,
       siteServiceMock,
-      toastServiceMock
+      toastServiceMock,
+      composerMockService
     );
   });
 

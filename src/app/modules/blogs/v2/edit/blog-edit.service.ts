@@ -7,7 +7,7 @@
  * [] Monetization - later iteration.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Self, Inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 // import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
 import { Upload, Client } from '../../../../services/api';
@@ -16,6 +16,7 @@ import { distinctUntilChanged, tap, take } from 'rxjs/operators';
 import { SiteService } from '../../../../common/services/site.service';
 import { Captcha } from '../../../captcha/captcha.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ComposerService } from '../../../composer/services/composer.service';
 
 export interface MetaData {
   title: string;
@@ -67,7 +68,7 @@ export class BlogsEditService {
   readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly nsfw$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-  readonly tags$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  readonly tags$: BehaviorSubject<string[]> = this.composerService.tags$;
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   readonly accessId$: BehaviorSubject<number> = new BehaviorSubject<number>(
@@ -122,7 +123,8 @@ export class BlogsEditService {
     protected router: Router,
     protected client: Client,
     protected site: SiteService,
-    private toaster: FormToastService
+    private toaster: FormToastService,
+    @Self() @Inject(ComposerService) private composerService: ComposerService
   ) {
     this.contentSubscription = this.content$
       .pipe(

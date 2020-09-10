@@ -66,19 +66,19 @@ describe('BlogEditorDropdownComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should set and get license, and toggle off when value exists', () => {
-    comp.setLicense('1');
-    expect(comp.getLicense().getValue()).toBe('1');
-    comp.setLicense('1');
-    expect(comp.getLicense().getValue()).toBe('');
-  });
+  // it('should set and get license, and toggle off when value exists', () => {
+  //   comp.setLicense('1');
+  //   expect(comp.getLicense().getValue()).toBe('1');
+  //   comp.setLicense('1');
+  //   expect(comp.getLicense().getValue()).toBe('');
+  // });
 
-  it('should set and get access id, and toggle off when value exists', () => {
-    comp.setAccessId(1);
-    expect(comp.getAccessId().getValue()).toBe(1);
-    comp.setAccessId(1);
-    expect(comp.getAccessId().getValue()).toBe(null);
-  });
+  // it('should set and get access id, and toggle off when value exists', () => {
+  //   comp.setAccessId(1);
+  //   expect(comp.getAccessId().getValue()).toBe(1);
+  //   comp.setAccessId(1);
+  //   expect(comp.getAccessId().getValue()).toBe(null);
+  // });
 
   it('should set and get nsfw', () => {
     comp.toggleNSFW(1);

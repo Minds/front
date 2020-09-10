@@ -1,21 +1,10 @@
-.blogEditor__dropShadowTop {
-  @include m-theme() {
-    box-shadow: -2px -3px 8px 0px themed($m-borderColor--tertiary);
-    -webkit-box-shadow: -2px -3px 8px 0px themed($m-borderColor--tertiary);
-    -moz-box-shadow: -2px -3px 8px 0px themed($m-borderColor--tertiary);
-  }
-}
+@import 'defaults.scss';
 
-.blogEditor__backgroundSecondary {
-  @include m-theme() {
-    background-color: themed($m-bgColor--secondary) !important;
-  }
-}
-
-m-blogeditor__bottombar {
+:host {
   @include m-theme() {
     color: themed($m-textColor--primary);
   }
+
   .m-blogEditor__bottomBarTabContainer {
     display: flex;
     flex-direction: column;
@@ -34,6 +23,7 @@ m-blogeditor__bottombar {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 20px;
 
       m-icon {
         cursor: pointer;
@@ -46,10 +36,10 @@ m-blogeditor__bottombar {
       h4 {
         font-size: 20px;
         margin: 0;
-        margin-bottom: 24px;
       }
     }
   }
+
   .m-blogEditor__bottomBar {
     display: flex;
     position: relative;
@@ -57,9 +47,11 @@ m-blogeditor__bottombar {
     bottom: 0px;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 16px 100px 46px 100px;
+    padding: 20px 100px 60px 100px;
+
     @media screen and (max-width: $min-desktop) {
       padding: unset;
+      padding-bottom: 60px;
       justify-content: space-evenly;
     }
 
@@ -92,11 +84,14 @@ m-blogeditor__bottombar {
         span {
           font-size: 12pt;
           margin-right: 4px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
       }
     }
 
-    .m-blogEditor__saveButtons {
+    .m-blogEditor__saveButtons ::ng-deep {
       display: flex;
       justify-content: flex-end;
       align-items: center;

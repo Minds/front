@@ -39,38 +39,7 @@ export class TitleBarComponent {
     void
   > = new EventEmitter<void>();
 
-  /**
-   * Visibility items list
-   */
-  visibilityItems: Array<{ text: string; value: string }> = ACCESS.map(
-    ({ text, value }) => ({
-      text,
-      value: `${value}`,
-    })
-  );
-
-  /**
-   * License items list
-   */
-  licenseItems: Array<LicensesEntry> = LICENSES.filter(
-    license => license.selectable
-  );
-
   constructor(protected service: ComposerService) {}
-
-  /**
-   * Access ID subject from service
-   */
-  get accessId$(): BehaviorSubject<AccessIdSubjectValue> {
-    return this.service.accessId$;
-  }
-
-  /**
-   * License subject from service
-   */
-  get license$(): BehaviorSubject<LicenseSubjectValue> {
-    return this.service.license$;
-  }
 
   /**
    * Attachment subject value from service
@@ -94,36 +63,9 @@ export class TitleBarComponent {
   }
 
   /**
-   * Can the actor change visibility? (disabled when there's a container)
-   */
-  get canChangeVisibility(): boolean {
-    return !this.service.getContainerGuid();
-  }
-
-  /**
    * Clicked Create Blog trigger
    */
   onCreateBlogClick() {
     this.onCreateBlogEmitter.emit();
-  }
-
-  /**
-   * Emits the new visibility (access ID)
-   * @param $event
-   */
-  onVisibilityClick($event) {
-    if (!this.canChangeVisibility) {
-      return;
-    }
-
-    this.accessId$.next($event);
-  }
-
-  /**
-   * Emits the new license
-   * @param $event
-   */
-  onLicenseClick($event) {
-    this.license$.next($event);
   }
 }

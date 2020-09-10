@@ -23,6 +23,7 @@ import { CaptchaComponent } from '../../captcha/captcha.component';
     class: 'm-blog',
   },
   templateUrl: 'edit.html',
+  styleUrls: ['../view/view.ng.scss'],
 })
 export class BlogEdit implements OnInit, OnDestroy {
   readonly cdnUrl: string;

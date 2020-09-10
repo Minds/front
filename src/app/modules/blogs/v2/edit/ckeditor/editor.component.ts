@@ -24,6 +24,7 @@ declare var require: any;
     class: 'm-blog',
   },
   templateUrl: 'editor.component.html',
+  styleUrls: ['./editor.component.ng.scss', '../../../view/view.ng.scss'],
 })
 export class BlogEditorComponent {
   /**
