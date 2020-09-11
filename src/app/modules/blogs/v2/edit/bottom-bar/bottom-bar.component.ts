@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { BlogsEditService } from '../blog-edit.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { CaptchaModalComponent } from '../../../../captcha/captcha-modal/captcha-modal.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Captcha } from '../../../../captcha/captcha.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 
-export type BlogsBottomBarContainerType = 'tags' | 'meta' | '';
+export type BlogsBottomBarContainerType = 'tags' | 'meta' | 'monetize' | '';
 
 /**
  * Base bottom bar component for blogs v2
@@ -25,6 +25,16 @@ export class BlogEditorBottomBarComponent {
     BlogsBottomBarContainerType
   > = new BehaviorSubject<BlogsBottomBarContainerType>('');
 
+  /**
+   * Tags subscription
+   */
+  tagsSubscription: Subscription;
+
+  /**
+   * Tags subscription
+   */
+  monetizeSubscription: Subscription;
+
   constructor(
     public service: BlogsEditService,
     private toast: FormToastService,
@@ -32,11 +42,21 @@ export class BlogEditorBottomBarComponent {
   ) {}
 
   ngOnInit() {
-    this.service.tags$.subscribe(() => {
+    this.tagsSubscription = this.service.tags$.subscribe(() => {
       if (this.activeTab$.value === 'tags') {
         this.activeTab$.next('');
       }
     });
+    this.monetizeSubscription = this.service.monetize$.subscribe(() => {
+      if (this.activeTab$.value === 'monetize') {
+        this.activeTab$.next('');
+      }
+    });
+  }
+
+  ngOnDestory() {
+    this.tagsSubscription.unsubscribe();
+    this.monetizeSubscription.unsubscribe();
   }
 
   /**

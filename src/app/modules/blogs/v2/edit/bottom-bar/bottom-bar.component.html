@@ -6,6 +6,7 @@
     <ng-container [ngSwitch]="activeTab$ | async">
       <h4 *ngSwitchCase="'meta'">Meta</h4>
       <h4 *ngSwitchCase="'tags'">Tags</h4>
+      <h4 *ngSwitchCase="'monetize'">Monetize</h4>
     </ng-container>
     <m-icon iconId="expand_more" (click)="activeTab$.next('')"></m-icon>
   </div>
@@ -23,8 +24,15 @@
     >
       <m-blogEditor__tags></m-blogEditor__tags>
     </div>
+    <div
+      *ngSwitchCase="'monetize'"
+      class="m-blogEditor__tagsContainer m-blogEditor__tab"
+    >
+      <m-composer__monetizeV2></m-composer__monetizeV2>
+    </div>
   </ng-container>
 </div>
+
 <div
   class="m-blogEditor__bottomBar"
   [ngClass]="{
@@ -36,6 +44,7 @@
     <div
       (click)="toggleActiveTab('tags')"
       class="m-blogEditor__tabToggle"
+      [class.is-active]="(service.tags$ | async).length"
       data-cy="data-minds-blog-editor-tags-toggle"
     >
       <span>#</span>
@@ -49,7 +58,17 @@
       <i class="material-icons">description</i>
       <span> Meta </span>
     </div>
+    <div
+      (click)="toggleActiveTab('monetize')"
+      class="m-blogEditor__tabToggle"
+      [class.is-active]="service.monetize$ | async"
+      data-cy="data-minds-blog-editor-meta-toggle"
+    >
+      <i class="material-icons">attach_money</i>
+      <span> Monetize </span>
+    </div>
   </div>
+
   <div class="m-blogEditor__saveButtons">
     <m-shadowboxSubmitButton
       class="m-blogEditor__saveDraftButton m-blogEditor__saveButton"
@@ -58,6 +77,7 @@
       (click)="save(true)"
       i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
       data-cy="data-minds-blog-editor-save-draft"
+      *ngIf="!(service.published$ | async)"
     >
       Save Draft
     </m-shadowboxSubmitButton>

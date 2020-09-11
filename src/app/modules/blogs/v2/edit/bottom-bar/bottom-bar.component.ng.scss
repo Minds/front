@@ -88,6 +88,15 @@
             color: themed($m-textColor--secondary);
           }
         }
+
+        &.is-active {
+          i,
+          span {
+            @include m-theme() {
+              color: themed($m-btn--primary);
+            }
+          }
+        }
       }
     }
 
@@ -127,6 +136,21 @@
         white-space: nowrap;
         overflow: hidden;
         min-width: min-content;
+      }
+    }
+  }
+}
+
+:host {
+  ::ng-deep {
+    m-composer__tags,
+    m-composer__monetizeV2 {
+      .m-composerPopup__body,
+      .m-composerPopup__content {
+        padding: unset;
+      }
+      .m-composerPopup__title {
+        display: none;
       }
     }
   }

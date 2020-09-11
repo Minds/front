@@ -16,7 +16,10 @@ import { distinctUntilChanged, tap, take } from 'rxjs/operators';
 import { SiteService } from '../../../../common/services/site.service';
 import { Captcha } from '../../../captcha/captcha.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
-import { ComposerService } from '../../../composer/services/composer.service';
+import {
+  ComposerService,
+  MonetizationSubjectValue,
+} from '../../../composer/services/composer.service';
 
 export interface MetaData {
   title: string;
@@ -43,9 +46,9 @@ export interface BlogEditEntity {
   file: any;
   fileKey: string;
   captcha: Captcha;
-  // paywall?: boolean;
-  // wire_threshold?: any;
+  paywall?: boolean;
   // monetized?: boolean;
+  wire_threshold: MonetizationSubjectValue;
   time_created: number;
   access_id: number;
   custom_meta?: {
@@ -65,15 +68,13 @@ export class BlogsEditService {
   readonly banner$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>('new');
   readonly published$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly license$: BehaviorSubject<string> = this.composerService.license$;
   readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly nsfw$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   readonly tags$: BehaviorSubject<string[]> = this.composerService.tags$;
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  readonly accessId$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    null
-  );
+  readonly accessId$: BehaviorSubject<string> = this.composerService.accessId$;
 
   readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
     string
@@ -111,9 +112,8 @@ export class BlogsEditService {
     string
   >('');
 
-  // readonly monetization$: BehaviorSubject<
-  //   MonetizationSubjectValue
-  // > = new BehaviorSubject<MonetizationSubjectValue>(null);
+  readonly monetize$: BehaviorSubject<MonetizationSubjectValue> = this
+    .composerService.monetization$;
 
   private contentSubscription: Subscription;
   private accessIdSubscription: Subscription;
@@ -167,7 +167,8 @@ export class BlogsEditService {
       this.accessId$.next(blog.access_id);
       this.schedule$.next(blog.time_created);
       this.savedContent$.next(blog.description);
-      // this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
+      this.license$.next(blog.license);
+      this.monetize$.next(blog.wire_threshold);
       this.tags$.next(blog.tags);
       this.metaDescription$.next(blog.custom_meta.description);
       this.metaTitle$.next(blog.custom_meta.title);
@@ -238,9 +239,10 @@ export class BlogsEditService {
       return;
     }
 
-    await this.setNextPublishState(draft);
+    // await this.setNextPublishState(draft);
 
     const blog = await this.buildBlog();
+    console.log(blog);
 
     this.canPost$.next(false);
     this.inProgress$.next(true);
@@ -300,21 +302,17 @@ export class BlogsEditService {
       .pipe(
         take(1),
         tap(id => {
-          if (typeof id !== 'number') {
-            id = Number(id);
-          }
-
           this.published$.next(draft ? 0 : 1);
 
           // if saving as draft force id to be 0.
           if (draft) {
-            this.accessId$.next(0);
+            this.accessId$.next('0');
             return;
           }
 
           // if not saving as draft and value is 0 set to publicly visible.
-          if (id === 0) {
-            this.accessId$.next(2);
+          if (id === '0') {
+            this.accessId$.next('2');
             return;
           }
 
@@ -347,10 +345,8 @@ export class BlogsEditService {
       license: this.license$.getValue(),
       fileKey: 'header',
       nsfw: this.nsfw$.getValue(),
-      // paywall: Boolean(this.monetization$.getValue()),
-      // wire_threshold: this.monetization$.getValue()
-      //   ? this.monetization$.getValue().min
-      //   : 0,
+      paywall: Boolean(this.monetize$.getValue()),
+      wire_threshold: this.monetize$.getValue(),
       published: this.published$.getValue(),
       custom_meta: {
         title: this.metaTitle$.getValue(),

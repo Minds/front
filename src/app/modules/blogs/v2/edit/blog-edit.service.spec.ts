@@ -63,7 +63,7 @@ describe('BlogsEditService', () => {
         },
         time_updated: 0,
         published: 1,
-        access_id: 0,
+        access_id: '0',
         time_created: 0,
         tags: ['1', '2'],
         nsfw: [1, 2],
@@ -82,15 +82,15 @@ describe('BlogsEditService', () => {
     expect(service.canPost$.getValue()).toBe(true);
     expect(service.guid$.getValue()).toBe('1');
     expect(service.published$.getValue()).toBe(1);
-    expect(service.accessId$.getValue()).toBe(0);
+    expect(service.accessId$.getValue()).toBe('0');
     expect(service.schedule$.getValue()).toBe(0);
     expect(service.savedContent$.getValue()).toBe('content');
-    expect(service.accessId$.getValue()).toBe(0);
+    // expect(service.accessId$.getValue()).toBe(0);
     expect(service.tags$.getValue()).toEqual(['1', '2']);
     expect(service.metaDescription$.getValue()).toBe('meta-description');
     expect(service.metaTitle$.getValue()).toBe('meta-title');
-    expect(service.accessId$.getValue()).toBe(0);
-    expect(service.accessId$.getValue()).toBe(0);
+    // expect(service.accessId$.getValue()).toBe(0);
+    // expect(service.accessId$.getValue()).toBe(0);
   });
 
   it('should save a blog', async () => {
@@ -205,30 +205,30 @@ describe('BlogsEditService', () => {
   });
 
   it('should always set accessId to 0 when saving draft', () => {
-    service.accessId$.next(0);
+    service.accessId$.next('0');
     (service as any).setNextPublishState(true);
-    expect(service.accessId$.getValue()).toBe(0);
+    expect(service.accessId$.getValue()).toBe('0');
 
-    service.accessId$.next(1);
+    service.accessId$.next('1');
     (service as any).setNextPublishState(true);
-    expect(service.accessId$.getValue()).toBe(0);
+    expect(service.accessId$.getValue()).toBe('0');
 
-    service.accessId$.next(2);
+    service.accessId$.next('2');
     (service as any).setNextPublishState(true);
-    expect(service.accessId$.getValue()).toBe(0);
+    expect(service.accessId$.getValue()).toBe('0');
   });
 
   it('should override an accessId of 0 when publishing, unless specified as logged in', () => {
-    service.accessId$.next(0);
+    service.accessId$.next('0');
     (service as any).setNextPublishState();
-    expect(service.accessId$.getValue()).toBe(2);
+    expect(service.accessId$.getValue()).toBe('2');
 
-    service.accessId$.next(2);
+    service.accessId$.next('2');
     (service as any).setNextPublishState();
-    expect(service.accessId$.getValue()).toBe(2);
+    expect(service.accessId$.getValue()).toBe('2');
 
-    service.accessId$.next(1);
+    service.accessId$.next('1');
     (service as any).setNextPublishState();
-    expect(service.accessId$.getValue()).toBe(1);
+    expect(service.accessId$.getValue()).toBe('1');
   });
 });

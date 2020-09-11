@@ -8,6 +8,7 @@ import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { MonetizationSubjectValue } from '../../../../composer/services/composer.service';
 
 const content$ = new BehaviorSubject<string>('');
 
@@ -17,13 +18,16 @@ const banner$ = new BehaviorSubject<string>('');
 
 const tags$ = new BehaviorSubject<string[]>([]);
 
+const monetize$ = new BehaviorSubject<MonetizationSubjectValue>(null);
+
 const blogsEditServiceMock: any = MockService(BlogsEditService, {
-  has: ['content$', 'title$', 'banner$', 'tags$'],
+  has: ['content$', 'title$', 'banner$', 'tags$', 'monetize$'],
   props: {
     title$: { get: () => title$ },
     content$: { get: () => content$ },
     banner$: { get: () => banner$ },
     tags$: { get: () => tags$ },
+    monetize$: { get: () => monetize$ },
   },
 });
 
