@@ -26,6 +26,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;
+  readonly cdnUrl: string;
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
@@ -69,6 +70,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.cdnUrl = configs.get('cdn_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
@@ -93,6 +95,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
+        this.setReferrerMetaImage();
+      } else {
+        this.setPlaceholderMetaImage();
       }
     });
 
@@ -101,6 +106,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
+  }
+
+  async setReferrerMetaImage(): Promise<void> {
+    try {
+      const response: any = await this.client.get(
+        `api/v1/channel/${this.referrer}`
+      );
+      if (response && response.channel) {
+        const ch = response.channel;
+        ch.icontime = ch.icontime ? ch.icontime : '';
+
+        this.metaService.setOgImage(
+          `${this.cdnUrl}icon/${ch.guid}/large/${ch.icontime}`
+        );
+      } else {
+        this.setPlaceholderMetaImage();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setPlaceholderMetaImage(): void {
+    this.metaService.setOgImage('/assets/logos/placeholder.jpg');
   }
 
   registered() {

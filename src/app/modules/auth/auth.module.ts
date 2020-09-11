@@ -21,7 +21,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    data: { title: 'Login', description: 'Login to Minds or create a channel' },
+    data: {
+      title: 'Login',
+      description: 'Login to Minds or create a channel',
+      ogImage: '/assets/logos/placeholder.jpg',
+    },
   },
   { path: 'logout/all', component: LogoutComponent },
   { path: 'logout', component: LogoutComponent },
