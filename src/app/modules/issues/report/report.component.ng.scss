@@ -1,6 +1,6 @@
-@import './src/stylesheets/defaults.scss';
+@import 'defaults.scss';
 
-.m-issues__report {
+:host {
   display: block;
   width: 100%;
   padding: 16px 0;
@@ -11,7 +11,7 @@
     margin: auto;
     padding: 16px;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     h2 {
@@ -19,21 +19,29 @@
       margin-bottom: 16px;
       font-weight: 600;
       @include m-theme() {
-        color: themed($m-grey-700);
+        color: themed($m-textColor--primary);
       }
     }
 
     p {
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--primary);
       }
     }
-  }
-  .mdl-textfield {
-    width: 600px;
   }
 
   textarea {
     min-height: 100px;
+  }
+
+  input,
+  textarea {
+    @include m-theme() {
+      background-color: themed($m-white) !important;
+      color: themed($m-textColor--primary) !important;
+    }
+  }
+
+  m-shadowboxSubmitButton {
   }
 }

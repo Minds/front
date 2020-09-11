@@ -1,5 +1,5 @@
 <div class="m-issues__report">
-  <div class="m-issuesReport__container m-border">
+  <div class="m-issuesReport__container">
     <h2>Report an issue</h2>
     <p>
       Please before reporting an issue verify that it has not already been
@@ -7,12 +7,11 @@
       <a href="https://gitlab.com/minds/front/issues" target="_blank">here</a>
     </p>
     <m-dynamic-form [fields]="fields" #reportform></m-dynamic-form>
-    <button
-      class="m-btn m-btn--slim m-btn--action"
+    <m-shadowboxSubmitButton
       (click)="submit(reportform)"
       [disabled]="submiting"
     >
       Submit
-    </button>
+    </m-shadowboxSubmitButton>
   </div>
 </div>
