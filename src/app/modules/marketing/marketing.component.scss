@@ -11,7 +11,7 @@ m-marketing {
 
   @include m-theme() {
     background: themed($m-white);
-    color: themed($m-grey-800);
+    color: themed($m-textColor--primary);
   }
 
   .m-marketing {
@@ -42,7 +42,7 @@ m-marketing {
     }
 
     @include m-theme() {
-      border-color: themed($m-grey-50);
+      border-color: themed($m-borderColor--primary);
     }
   }
 
@@ -77,7 +77,7 @@ m-marketing {
   padding: 100px 0 200px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-grey-50);
+    background-color: themed($m-borderColor--primary);
   }
 
   &.m-marketing--hero {
@@ -294,7 +294,7 @@ m-marketing {
     margin-left: 8px;
     margin-right: 8px;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
 
     @media screen and (max-width: 720px) {
@@ -308,7 +308,7 @@ m-marketing {
     font-weight: 600;
     letter-spacing: 1.25px;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
 
     @media screen and (max-width: 720px) {
@@ -343,7 +343,7 @@ m-marketing {
     -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
     @include m-theme() {
-      color: themed($m-grey-200);
+      color: themed($m-textColor--tertiary);
     }
 
     @media screen and (max-width: 720px) {
@@ -376,7 +376,7 @@ m-marketing {
       text-align: center;
       font-size: 72px;
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--primary);
       }
     }
 
@@ -385,7 +385,7 @@ m-marketing {
       font-weight: 300;
       font-size: 28px;
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--primary);
       }
     }
   }
@@ -395,7 +395,7 @@ m-marketing {
 .m-marketingSection__subsection {
   @include m-theme() {
     background-color: themed($m-white);
-    border-bottom: 1px solid themed($m-grey-50);
+    border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
   .m-marketing--section--subsection-container {
@@ -432,15 +432,6 @@ m-marketing {
     }
   }
 
-  &.m-marketing--section--subsection--thin {
-    padding: 16px;
-    border-bottom: 0;
-
-    .m-marketing--section--subsection-container {
-      padding: 0;
-    }
-  }
-
   .m-marketing--section--subsection-left,
   .m-marketing--section--subsection-right {
     flex: 1;
@@ -461,7 +452,7 @@ m-marketing {
       margin: 16px 0;
 
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--primary);
       }
 
       @media screen and (max-width: $max-mobile) {
@@ -474,7 +465,7 @@ m-marketing {
       line-height: 1.5;
 
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--secondary);
       }
 
       @media screen and (max-width: $max-mobile) {
@@ -502,7 +493,7 @@ m-marketing {
     padding: 32px 16px;
     text-align: center;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
 
     i {
@@ -575,7 +566,7 @@ m-marketing {
     font-weight: 600;
     letter-spacing: 0.25px;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 }
@@ -698,9 +689,20 @@ m-marketing {
 
   font-size: 11px;
   @include m-theme() {
-    color: themed($m-grey-400);
+    color: themed($m-textColor--tertiary);
+    border: none;
   }
   img {
     width: 24px;
+  }
+  a {
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

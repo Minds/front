@@ -21,6 +21,7 @@ m-languageModal {
     text-decoration: underline;
     box-sizing: border-box;
     cursor: pointer;
+    text-transform: capitalize;
 
     @include m-theme() {
       color: themed($m-link);
@@ -28,9 +29,8 @@ m-languageModal {
 
     &:hover {
       text-decoration: none;
-
       @include m-theme() {
-        text-shadow: 0px 0px 1px themed($m-textColor--secondary);
+        color: themed($m-link--hover);
       }
     }
   }

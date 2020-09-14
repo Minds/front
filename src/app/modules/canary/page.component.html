@@ -1,79 +1,47 @@
-<div class="m-marketing m-canary__page">
-  <div class="m-marketing--hero">
-    <div class="m-marketing--hero--inner">
-      <div class="m-marketing--hero--slogans">
-        <h1 i18n="@@M__CANARY_TITLE">
-          Canary
-        </h1>
-
+<m-marketing
+  class="m-aux__marketing m-aux__marketing--hasHero"
+  [useFullWidth]="false"
+>
+  <div class="m-marketing__main">
+    <div class="m-aux__hero">
+      <div class="m-aux__heroInner">
+        <h1>Canary</h1>
         <h3>Receive the latest Minds features before everyone else</h3>
-
-        <div class="m-canaryPage__buttons">
-          <button
-            class="m-btn m-btn--slim"
-            *ngIf="!user.canary"
-            (click)="turnOn()"
-          >
-            Turn on
-          </button>
-          <button
-            class="m-btn m-btn--slim"
-            *ngIf="user.canary"
-            (click)="turnOff()"
-          >
-            Turn off
-          </button>
-          <a
-            class="m-btn m-btn--slim"
-            routerLink="/groups/profile/1003662081932754944/feed"
-          >
-            <span>Canaries Group</span>
-            <i class="material-icons">chevron_right</i>
-          </a>
-        </div>
+        <m-shadowboxSubmitButton
+          (click)="user.canary ? turnOff() : turnOn()"
+          (mouseenter)="buttonHovering = true"
+          (mouseleave)="buttonHovering = false"
+          [saving]="inProgress"
+        >
+          <ng-container *ngIf="!user.canary">
+            Join
+          </ng-container>
+          <ng-container *ngIf="user.canary">
+            {{ buttonHovering ? '  Disable  ' : 'Enabled' }}
+          </ng-container>
+        </m-shadowboxSubmitButton>
       </div>
     </div>
-  </div>
-
-  <section
-    class="m-marketing--section mdl-color--white"
-    style="padding-bottom: 0; padding-top: 0"
-  >
-    <div
-      class="m-marketing--section--subsection m-marketing--section--subsection--first"
+    <p>
+      In the early 20th century, coal miners would send canaries into the mines
+      to signal early warnings for obstacles ahead. By turning on Canary mode,
+      you can help test our newest features so we can work out any issues before
+      rolling them out to everyone.
+    </p>
+    <a
+      class="m-canary__groupLink"
+      routerLink="/groups/profile/1003662081932754944/feed"
     >
-      <div
-        class="m-marketing--section--subsection-container"
-        style="align-items: flex-start;"
-      >
-        <div
-          class="m-marketing--section--subsection-left m-marketing--section--subsection-text"
+      See the Canaries group
+    </a>
+    <h2>Latest Experiments</h2>
+    <ul class="m-canaryExperiments__list">
+      <li>
+        Upgrade to Angular 9 - 5th June 2020
+        <a href="https://gitlab.com/minds/front/-/merge_requests/981"
+          >(front!918)</a
         >
-          <h2>Experiments</h2>
-          <ul class="m-canaryExperiments__list">
-            <li>
-              Upgrade to Angular 9 - 5th June 2020
-              <a href="https://gitlab.com/minds/front/-/merge_requests/981"
-                >(front!918)</a
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div
-          class="m-marketing--section--subsection-right m-marketing--section--subsection-text"
-        >
-          <p>
-            In the early 20th century, coal miners would send Canaries into the
-            mines first as an early-warning signal for potential dangers or
-            obstacles ahead. By turning on Canary mode, you can help test out
-            all of our newest features so we can be sure to work out any issues
-            before rolling it out to everyone.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<m-footer></m-footer>
+      </li>
+    </ul>
+  </div>
+</m-marketing>

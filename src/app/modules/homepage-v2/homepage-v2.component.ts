@@ -70,6 +70,10 @@ export class HomepageV2Component implements OnInit {
     this.pageLayoutService.removeTopbarBorder();
   }
 
+  ngOnDestroy() {
+    this.navigationService.setVisible(true);
+  }
+
   @HostListener('window:scroll')
   onScroll() {
     if (window.document.body.scrollTop > 52) {
