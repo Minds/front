@@ -62,6 +62,7 @@ export class SettingsV2ToasterNotificationsComponent
   }
 
   subscribeToNotifications() {
+    console.log('subscribing to push notifications');
     this.swPush
       .requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY,
