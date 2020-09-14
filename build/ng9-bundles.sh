@@ -3,8 +3,8 @@
 BROWSER_PATH=${1:-dist/browser}
 SERVER_PATH=${3:-dist/server}
 
-# Allow Node.js to use up to 3.5G
-export NODE_OPTIONS="--max-old-space-size=3584"
+# Allow Node.js to use up to 4G
+export NODE_OPTIONS="--max-old-space-size=4096"
 
 # Build
 npx gulp build.sass --deploy-url="/static/"

@@ -2691,10 +2691,6 @@
           <context context-type="linenumber">371</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
           <context context-type="linenumber">129</context>
         </context-group>
@@ -2721,6 +2717,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
           <context context-type="linenumber">165</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2799,10 +2799,6 @@
           <context context-type="linenumber">376</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">app/modules/comments/card/comment.component.html</context>
           <context context-type="linenumber">134</context>
         </context-group>
@@ -2817,6 +2813,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
           <context context-type="linenumber">71</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -6283,16 +6283,16 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/search.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/search.component.html</context>
           <context context-type="linenumber">110</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -6648,254 +6648,6 @@
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="BLOGS__VIEW__FLAGGED_AS_SPAM" datatype="html">
-        <source>This blog was flagged as spam.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__VIEW__FLAGGED_AS_DELETED" datatype="html">
-        <source>This blog was flagged as deleted.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__ACTION__APPEAL_MARK" datatype="html">
-        <source>If you wish to appeal, please check your {$START_LINK}Reported Content console{$CLOSE_LINK}.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/channels/channel.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__LICENSE_ALL_RIGHT_RESERVED" datatype="html">
-        <source>All Rights Reserved</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">174</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__VISIBILITY_PUBLIC" datatype="html">
-        <source>Public</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">122</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">151</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__VISIBILITY_UNLISTED" datatype="html">
-        <source>Unlisted</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">156</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__VIEW__SHARE" datatype="html">
-        <source>SHARE</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">132</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__DELETE_CONFIRMATION" datatype="html">
-        <source>Are you sure you want to delete this blog?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">175</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__THERES_NO_UNDO" datatype="html">
-        <source>There&apos;s no UNDO!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">177</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__VIEW__DELETION_CONFIRMATION" datatype="html">
-        <source>The blog has been deleted.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">181</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__DELETE_PERMANENTLY" datatype="html">
-        <source>Delete permanently</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">170</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/post-menu/post-menu.component.html</context>
-          <context context-type="linenumber">271</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">344</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__PLEASE_TRY_AGAIN" datatype="html">
-        <source>Please try again later</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/view/infinite.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/newsfeed/single/single.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__TITLE_PLACEHOLDER" datatype="html">
-        <source>Your title</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__INLINE_EDITOR_PLACEHOLDER" datatype="html">
-        <source>Go ahead and write some content!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__SAVE_DRAFT_ACTION" datatype="html">
-        <source>Save draft</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__PUBLISH_ACTION" datatype="html">
-        <source>Publish</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">85</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__LICENCE_PLACEHOLDER" datatype="html">
-        <source>-- License --</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__URL_SLUG" datatype="html">
-        <source>URL Slug</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">180</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__META_TITLE" datatype="html">
-        <source>Meta Title</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">186</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__META_DESCRIPTION" datatype="html">
-        <source>Meta Description</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">196</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BLOGS__EDIT__META_AUTHOR" datatype="html">
-        <source>Meta Author</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
-          <context context-type="linenumber">205</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON_TOPBAR_SUBSCRIPTIONS" datatype="html">
-        <source>Subscriptions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP" datatype="html">
-        <source>Blogs from channels you are subscribed to</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON_TOPBAR_MY_BLOGS" datatype="html">
-        <source>My Blogs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP" datatype="html">
-        <source>Your blogs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON_TOPBAR_WRITE_NEW_BLOG" datatype="html">
-        <source>Write a new blog</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP" datatype="html">
-        <source>Write a new Blog</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="M__ACTION__VIEW" datatype="html">
         <source>View</source>
         <context-group purpose="location">
@@ -7073,6 +6825,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/post-menu/post-menu.component.html</context>
           <context context-type="linenumber">292</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__DELETE_PERMANENTLY" datatype="html">
+        <source>Delete permanently</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/components/post-menu/post-menu.component.html</context>
+          <context context-type="linenumber">271</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">344</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">171</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9718,6 +9486,10 @@
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
           <context context-type="linenumber">61</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/dropdown/dropdown.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMPOSER_NSFW__IF_POST_CONTAINS" datatype="html">
@@ -10202,6 +9974,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
           <context context-type="linenumber">79</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PLEASE_TRY_AGAIN" datatype="html">
+        <source>Please try again later</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/newsfeed/single/single.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/infinite.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11379,11 +11163,63 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="M__ACTION__APPEAL_MARK" datatype="html">
+        <source>If you wish to appeal, please check your {$START_LINK}Reported Content console{$CLOSE_LINK}.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/channel.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MINDS__MEDIA__ENTITY_NOT_EXISTS" datatype="html">
         <source>The post may not exist</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VISIBILITY_PUBLIC" datatype="html">
+        <source>Public</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VISIBILITY_UNLISTED" datatype="html">
+        <source>Unlisted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__LICENSE_ALL_RIGHT_RESERVED" datatype="html">
+        <source>All Rights Reserved</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11597,6 +11433,142 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
           <context context-type="linenumber">68</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__FLAGGED_AS_SPAM" datatype="html">
+        <source>This blog was flagged as spam.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__FLAGGED_AS_DELETED" datatype="html">
+        <source>This blog was flagged as deleted.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__SHARE" datatype="html">
+        <source>SHARE</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__DELETE_CONFIRMATION" datatype="html">
+        <source>Are you sure you want to delete this blog?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__THERES_NO_UNDO" datatype="html">
+        <source>There&apos;s no UNDO!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">178</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__DELETION_CONFIRMATION" datatype="html">
+        <source>The blog has been deleted.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">182</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__TITLE_PLACEHOLDER" datatype="html">
+        <source>Your title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__INLINE_EDITOR_PLACEHOLDER" datatype="html">
+        <source>Go ahead and write some content!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__SAVE_DRAFT_ACTION" datatype="html">
+        <source>Save draft</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__PUBLISH_ACTION" datatype="html">
+        <source>Publish</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__LICENCE_PLACEHOLDER" datatype="html">
+        <source>-- License --</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__URL_SLUG" datatype="html">
+        <source>URL Slug</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/bottom-bar/meta/meta.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__META_TITLE" datatype="html">
+        <source>Meta Title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/bottom-bar/meta/meta.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__META_DESCRIPTION" datatype="html">
+        <source>Meta Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">196</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/bottom-bar/meta/meta.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__META_AUTHOR" datatype="html">
+        <source>Meta Author</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/edit/edit.html</context>
+          <context context-type="linenumber">205</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/bottom-bar/meta/meta.component.html</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16571,6 +16543,86 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/helpdesk/creator/question/creator.component.html</context>
           <context context-type="linenumber">39</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON_TOPBAR_SUBSCRIPTIONS" datatype="html">
+        <source>Subscriptions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP" datatype="html">
+        <source>Blogs from channels you are subscribed to</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON_TOPBAR_MY_BLOGS" datatype="html">
+        <source>My Blogs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP" datatype="html">
+        <source>Your blogs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON_TOPBAR_WRITE_NEW_BLOG" datatype="html">
+        <source>Write a new blog</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP" datatype="html">
+        <source>Write a new Blog</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/list.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS_EDITOR__UPLOAD_BANNER_IMAGE" datatype="html">
+        <source>{$START_TAG_BUTTON}{$START_ITALIC_TEXT}publish{$CLOSE_ITALIC_TEXT} Upload Banner {$CLOSE_TAG_BUTTON}{$TAG_INPUT}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/editor-base.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOG_EDITOR__TITLE" datatype="html">
+        <source>Title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/editor-base.component.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS_EDITOR__SAVE_DRAFT" datatype="html">
+        <source>Save Draft</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/bottom-bar/bottom-bar.component.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="BLOGS_EDITOR__PUBLISH_BLOG" datatype="html">
+        <source>Publish</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/v2/edit/bottom-bar/bottom-bar.component.html</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>

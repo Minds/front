@@ -1,0 +1,39 @@
+.m-captcha__container {
+  .m-captcha__header {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  .m-captcha__body {
+    m-captcha {
+      input {
+        display: block;
+        width: 250px;
+        margin: 20px 0;
+      }
+    }
+    .m-captcha__submitButtonContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      .m-captcha__submitButton {
+        border-radius: 2em;
+        padding: 10px 20px;
+        font-size: 15px;
+        cursor: pointer;
+
+        @include m-theme() {
+          background-color: themed($m-btn--primary);
+          border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-white-always);
+        }
+      }
+    }
+  }
+}
+
+.m-captcha--modal-wrapper {
+  width: 600px !important;
+  max-width: 100% !important;
+}

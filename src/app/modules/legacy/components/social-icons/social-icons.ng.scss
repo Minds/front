@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+:host {
+  .m-social-icons {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    bottom: 0;
+    left: calc(50% - 100px);
+    z-index: 100;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: row;
+      top: auto;
+      right: auto;
+      // bottom: 50px;
+      left: 50%;
+      margin-left: -100px;
+      align-items: center;
+    }
+
+    .m-social-icons-icon-inline {
+      display: inline-block;
+      width: 100%;
+      cursor: pointer;
+      @include m-theme() {
+        fill: themed($m-textColor--secondary);
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  m-social-icons {
+    .m-modal-container {
+      min-height: 0;
+
+      .mdl-card {
+        min-height: 0;
+        padding-bottom: 16px;
+      }
+    }
+  }
+}

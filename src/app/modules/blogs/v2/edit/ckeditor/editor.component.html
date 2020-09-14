@@ -1,0 +1,9 @@
+<div class="m-ck-editor-wrapper m-blog__body">
+  <ckeditor
+    *mIfBrowser
+    [ngModel]="content"
+    (ngModelChange)="onContentChanged($event)"
+    [editor]="Editor"
+    data-cy="data-minds-ckeditor-input"
+  ></ckeditor>
+</div>

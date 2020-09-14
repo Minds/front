@@ -16,6 +16,7 @@ import { CommentsTreeComponent } from './tree/tree.component';
 import { CommentsThreadComponent } from './thread/thread.component';
 import { CommentsService } from './comments.service';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
+import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.component';
 
 @NgModule({
@@ -28,6 +29,7 @@ import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.com
     TranslateModule,
     ModalsModule,
     TextInputAutocompleteModule,
+    CodeHighlightModule,
   ],
   declarations: [
     CommentsScrollDirective,

@@ -15,6 +15,10 @@ import { CanaryModuleLazyRoutes } from './modules/canary/canary.lazy';
 import { MobileModuleLazyRoutes } from './modules/mobile/mobile.lazy';
 import { HelpdeskModuleLazyRoutes } from './modules/helpdesk/helpdesk.lazy';
 import { AuxModuleLazyRoutes } from './modules/aux/aux.lazy';
+import {
+  BlogModuleLazyRoutes,
+  BlogSlugModuleLazyRoutes,
+} from './modules/blogs/blog.lazy';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -27,6 +31,8 @@ const routes: Routes = [
   MobileModuleLazyRoutes,
   HelpdeskModuleLazyRoutes,
   AuxModuleLazyRoutes,
+  BlogModuleLazyRoutes,
+  BlogSlugModuleLazyRoutes,
   // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
   { path: ':username', redirectTo: ':username/', pathMatch: 'full' },
   {

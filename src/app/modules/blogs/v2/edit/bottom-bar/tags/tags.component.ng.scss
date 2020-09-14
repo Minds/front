@@ -1,0 +1,15 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep {
+    m-composer__tags {
+      .m-composerPopup__body,
+      .m-composerPopup__content {
+        padding: unset;
+      }
+      .m-composerPopup__title {
+        display: none;
+      }
+    }
+  }
+}

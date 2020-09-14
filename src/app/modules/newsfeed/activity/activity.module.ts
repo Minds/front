@@ -24,6 +24,7 @@ import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.compon
 import { ActivityMetricsComponent } from './metrics/metrics.component';
 import { ActivityRemindComponent } from './remind/remind.component';
 import { ActivityPaywallComponent } from './paywall/paywall.component';
+import { CodeHighlightModule } from '../../code-highlight/code-highlight.module';
 import { ActivityModalComponent } from './modal/modal.component';
 import { ActivityModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
 import { ActivityModalPagerComponent } from './modal/pager/pager.component';
@@ -44,6 +45,7 @@ import { ActivityModalCreatorService } from './modal/modal-creator.service';
     LegacyModule, // For remind button
     PostMenuModule,
     WireModule,
+    CodeHighlightModule,
   ],
   declarations: [
     ActivityComponent,
