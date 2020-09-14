@@ -1,0 +1,210 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: 20px 0 40px;
+  margin-top: 80px;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    border-top: 1px solid themed($m-borderColor--tertiary);
+    background: linear-gradient(
+      180deg,
+      themed($m-marketing-bg-gradient-start) 0%,
+      themed($m-white) 100%
+    );
+  }
+  .m-marketing__footer {
+    padding-bottom: 10px;
+    @media screen and (max-width: $min-tablet) {
+      padding-bottom: 0;
+    }
+
+    [class*='m-marketingFooter__section'] {
+      max-width: 900px;
+      margin: 0 auto;
+
+      padding-left: 40px;
+      padding-right: 40px;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      &[class*='--language'] {
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        @media screen and (max-width: $min-tablet) {
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
+
+        ::ng-deep m-language__bar {
+          width: 90%;
+          display: block;
+          @media screen and (max-width: $min-tablet) {
+            width: 100%;
+          }
+        }
+      }
+
+      &[class*='--main'] {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+        margin-bottom: 50px;
+        @media screen and (max-width: $min-tablet) {
+          flex-direction: column-reverse;
+          margin-bottom: 32px;
+        }
+
+        [class*='m-marketingFooter__mainSubsection'] {
+          // brand
+          &:first-child {
+            flex: 0 0 30%;
+            max-width: 170px;
+            margin-right: 100px;
+            transition: 0.3s all cubic-bezier(0.23, 1, 0.32, 1);
+
+            @media screen and (max-width: $min-tablet) {
+              flex-basis: 100%;
+              margin-top: 32px;
+            }
+            @media screen and (max-width: $m-grid-min-vp) {
+              margin-right: 6vh;
+            }
+            @media screen and (max-width: 800px) and (min-width: $min-tablet) {
+              margin-right: 3vh;
+            }
+          }
+          // links
+          &:last-child {
+            flex-grow: 1;
+          }
+
+          &[class*='--brand'] {
+            margin-top: 25px;
+            @media screen and (max-width: $min-tablet) {
+              margin-top: 40px;
+            }
+
+            .m-marketingFooter__logo {
+              width: 116px;
+              height: 43px;
+              margin-bottom: 18px;
+              background: url('../../../assets/logos/bulb.svg') no-repeat center
+                left;
+              background-size: contain;
+            }
+            h4.m-marketingFooter__slogan {
+              font-weight: 600;
+              margin-bottom: 21px;
+              font-size: 18px;
+              line-height: 23px;
+            }
+          }
+
+          &[class*='--links'] {
+            display: flex;
+            flex-flow: row nowrap;
+
+            @media screen and (max-width: $min-tablet) {
+              flex-direction: column;
+
+              h4 {
+                margin-bottom: 8px;
+              }
+            }
+            h4 {
+              font-weight: 500;
+            }
+            .m-marketingFooter__mainLinksCategory {
+              flex: 1 0 22%;
+            }
+          }
+        }
+      }
+
+      &[class*='--legal'] {
+        text-align: right;
+        margin-top: 40px;
+        @media screen and (max-width: $min-tablet) {
+          margin-top: 35px;
+          text-align: left;
+        }
+        li {
+          margin-right: 40px;
+          display: inline-block;
+
+          transition: margin 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+          @media screen and (max-width: $m-grid-min-vp) {
+            margin-right: 3vw;
+          }
+          @media screen and (max-width: $min-tablet) {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    .m-marketingFooter__sep {
+      width: 100%;
+      margin: 20px 0;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--tertiary);
+      }
+    }
+
+    h4 {
+      font-size: 16px;
+      line-height: 21px;
+      margin: 20px 0 18px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-marketingFooter__text {
+      font-size: 14px;
+      line-height: 26px;
+
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      > li {
+        @extend .m-marketingFooter__text;
+
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+
+        @media screen and (max-width: $min-tablet) {
+          margin-right: 10px;
+          display: inline-block;
+        }
+
+        a {
+          color: inherit;
+          font-weight: normal;
+          text-decoration: none;
+
+          &:hover {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+      }
+    }
+  }
+}

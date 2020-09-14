@@ -45,7 +45,7 @@ m-usermenu__v3 {
         }
         span {
           @include m-theme() {
-            color: themed($m-grey-700);
+            color: rgba(themed($m-textColor--primary), 0.8);
           }
         }
 
@@ -94,7 +94,12 @@ m-usermenu__v3 {
             word-break: break-all;
 
             @include m-theme() {
-              color: #777981;
+              color: themed($m-textColor--secondary);
+            }
+            &:hover {
+              @include m-theme() {
+                color: rgba(themed($m-textColor--primary), 0.8);
+              }
             }
           }
         }

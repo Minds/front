@@ -10,6 +10,7 @@ import { LanguageModalService } from './language-modal/language-modal.service';
 @Component({
   selector: 'm-language__bar',
   templateUrl: 'language-bar.component.html',
+  styleUrls: ['language-bar.component.ng.scss'],
 })
 export class LanguageBarComponent {
   /**

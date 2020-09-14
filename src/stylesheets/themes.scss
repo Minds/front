@@ -101,6 +101,7 @@ $themes: (
     m-borderColor--tertiary: #ececec,
     m-alert: #e03c20,
     m-link: #1b85d6,
+    m-link--hover: #0052a3,
     m-positive: #95c064,
     m-btn--primary: #5dbac0,
     m-btn--primaryText: #ffffff,
@@ -169,9 +170,10 @@ $themes: (
     m-bgColor--quaternary: #323c3f,
     m-borderColor--primary: #404a4e,
     m-borderColor--secondary: #979797,
-    m-borderColor--tertiary: #202527,
+    m-borderColor--tertiary: #3a3f41,
     m-alert: #e03c20,
     m-link: #1b85d6,
+    m-link--hover: #4eb8ff,
     m-positive: #95c064,
     m-btn--primary: #5dbac0,
     m-btn--primaryText: #ffffff,
@@ -305,6 +307,7 @@ $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';
 $m-alert: 'm-alert';
 $m-link: 'm-link';
+$m-link--hover: 'm-link--hover';
 $m-positive: 'm-positive';
 $m-btn--primary: 'm-btn--primary';
 $m-btn--primaryText: 'm-btn--primaryText';

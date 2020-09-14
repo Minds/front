@@ -8,22 +8,28 @@ import { MobileService } from './mobile.service';
 import { HttpClient } from '@angular/common/http';
 import { FeaturesService } from '../../services/features.service';
 import { Session } from '../../services/session';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
     path: '',
     component: MobileMarketingComponent,
     data: {
-      title: 'The Minds Social Network Mobile App',
+      title: 'Mobile App',
       description:
         'Download the Minds mobile app and use the leading alternative social media platform anywhere. Available on both iOS & Android.',
-      ogImage: '/assets/photos/mobile-app.jpg',
+      ogImage: '/assets/photos/network.jpg',
     },
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), NgCommonModule, CommonModule],
+  imports: [
+    RouterModule.forChild(routes),
+    NgCommonModule,
+    CommonModule,
+    MarketingModule,
+  ],
   declarations: [MobileMarketingComponent],
   exports: [MobileMarketingComponent],
   providers: [

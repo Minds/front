@@ -14,35 +14,18 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
   selector: 'm-marketing__footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'footer.component.html',
+  styleUrls: ['footer.component.ng.scss'],
 })
-export class MarketingFooterComponent implements OnInit {
+export class MarketingFooterComponent {
   readonly year: number = new Date().getFullYear();
 
   readonly cdnAssetsUrl: string;
-  isMobile: boolean;
 
   constructor(
     private configs: ConfigsService,
     protected cd: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
     @SkipSelf() private injector: Injector
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
-
-  ngOnInit() {
-    this.onResize();
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.isMobile = window.innerWidth <= 480;
-
-    this.detectChanges();
-  }
-
-  detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
   }
 }

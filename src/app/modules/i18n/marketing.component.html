@@ -1,27 +1,25 @@
-<div class="m-marketing-i18n">
-  <div class="m-marketing--hero">
-    <div class="m-marketing--hero--video"></div>
-    <div class="m-marketing--hero--inner">
-      <div class="m-marketing--hero--slogans">
+<m-marketing
+  class="m-aux__marketing m-aux__marketing--hasHero"
+  [useFullWidth]="false"
+>
+  <div class="m-marketing__main">
+    <div class="m-aux__hero">
+      <div class="m-aux__heroInner">
         <h1 i18n="@@I18N__LOCALIZATION_TITLE">Localization</h1>
         <h3 i18n="@@I18N__LOCALIZATION_DESC">
           Help translate Minds into every global language
         </h3>
-      </div>
-      <div class="m-marketing--hero--actions">
-        <div class="m-marketing--marketing-action-button">
-          <a
-            class="mdl-button mdl-button--colored mdl-color--green mdl-color-text--white"
+        <m-shadowboxSubmitButton
+          ><a
             href="https://poeditor.com/join/project/A45VLCwD0Y"
             target="_blank"
-            i18n="@@I18N__CONTRIBUTE_ACTION"
-            >Contribute</a
           >
-        </div>
+            <ng-container i18n="@@I18N__CONTRIBUTE_ACTION"
+              >Contribute</ng-container
+            ></a
+          >
+        </m-shadowboxSubmitButton>
       </div>
-      <div class="m-marketing--hero--overlay"></div>
     </div>
   </div>
-</div>
-
-<m-footer></m-footer>
+</m-marketing>

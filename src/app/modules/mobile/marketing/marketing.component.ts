@@ -11,6 +11,10 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 @Component({
   selector: 'm-mobile--marketing',
   templateUrl: 'marketing.component.html',
+  styleUrls: [
+    '../../aux/aux.component.ng.scss',
+    './marketing.component.ng.scss',
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MobileMarketingComponent {
