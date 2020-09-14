@@ -9,12 +9,12 @@
 
     .m-blogEditor__bannerImageContainer {
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
-      overflow: hidden;
 
       img {
         width: 100%;
-        position: absolute;
+        max-height: 60vh;
+        height: 60vh;
+        object-fit: cover;
       }
 
       .m-blogEditor__bannerToolbar {
