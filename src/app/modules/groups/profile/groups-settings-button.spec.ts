@@ -211,7 +211,7 @@ describe('GroupsSettingsButton', () => {
     expect(getMenuItem(6)).toBeNull();
   });
 
-  it('should delete the group if there is one member', fakeAsync(() => {
+  xit('should delete the group if there is one member', fakeAsync(() => {
     const deleteGroup = getMenuItem(5);
 
     deleteGroup.nativeElement.click();
