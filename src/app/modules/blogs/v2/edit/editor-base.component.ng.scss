@@ -140,4 +140,18 @@
       }
     }
   }
+
+  .m-blogEditor__legacyPrompt {
+    padding: 20px 40px;
+    box-sizing: border-box;
+
+    p {
+      @include m-theme() {
+        border-left: 5px solid themed($m-borderColor--primary);
+        color: themed($m-textColor--secondary);
+      }
+      padding: 0 20px;
+      margin: 0;
+    }
+  }
 }

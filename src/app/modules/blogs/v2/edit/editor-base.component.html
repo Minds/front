@@ -5,6 +5,20 @@
 
 <!-- Main Editor Container -->
 <div class="m-blogEditor">
+  <!-- Legacy blog prompt -->
+  <div
+    class="m-blogEditor__legacyPrompt"
+    *ngIf="
+      (service.guid$ | async) != 'new' &&
+      (service.schedule$ | async) < 1600086270
+    "
+  >
+    <p>
+      You are editing a blog that created with an older editor. Media embeds may
+      not work and should be re-added when saving this blog.
+    </p>
+  </div>
+
   <!-- Banner Preview -->
   <div
     *ngIf="service.banner$ | async"

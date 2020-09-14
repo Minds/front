@@ -242,7 +242,6 @@ export class BlogsEditService {
     // await this.setNextPublishState(draft);
 
     const blog = await this.buildBlog();
-    console.log(blog);
 
     this.canPost$.next(false);
     this.inProgress$.next(true);
