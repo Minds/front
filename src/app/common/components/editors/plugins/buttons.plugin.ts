@@ -226,8 +226,8 @@ export class ButtonsPlugin {
 
       const pRect = $p.getBoundingClientRect();
 
-      $buttons.style.left = pRect.left + document.body.scrollLeft - 40 + 'px';
-      $buttons.style.top = pRect.top + document.body.scrollTop + 'px';
+      $buttons.style.left = $p.offsetLeft - 40 + 'px';
+      $buttons.style.top = $p.offsetTop + 'px';
 
       if (activeAddon) {
         $buttons.style.left +=
