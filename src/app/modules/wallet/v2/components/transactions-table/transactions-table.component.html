@@ -137,12 +137,7 @@
           <span
             class="m-walletTransactionsTable__total--int"
             *ngIf="currency !== 'tokens'"
-            >{{
-              tx.runningTotal.int
-                | number: '1.0-0'
-                | currency: currency
-                | slice: 0:-3
-            }}</span
+            >{{ tx.runningTotal.int | currency: currency | slice: 0:-3 }}</span
           >
           <span
             class="m-walletTransactionsTable__total--frac"
