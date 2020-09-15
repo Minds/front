@@ -44,7 +44,7 @@
       </div>
       <div class="m-walletBalance--cash__colValWrapper">
         <span class="m-walletBalance--cash__colVal--int">{{
-          proEarnings.int | number: '1.0-0' | currency: 'USD' | slice: 0:-3
+          proEarnings.int | currency: 'USD' | slice: 0:-3
         }}</span
         ><span
           class="m-walletBalance--cash__colVal--frac"
@@ -74,10 +74,7 @@
       <ng-container *ngIf="hasAccount">
         <div class="m-walletBalance--cash__colValWrapper">
           <span class="m-walletBalance--cash__colVal--int">{{
-            pendingBalance.int
-              | number: '1.0-0'
-              | currency: currency
-              | slice: 0:-3
+            pendingBalance.int | currency: currency | slice: 0:-3
           }}</span
           ><span
             class="m-walletBalance--cash__colVal--frac"
@@ -116,10 +113,7 @@
       <ng-container *ngIf="hasAccount">
         <div class="m-walletBalance--cash__colValWrapper">
           <span class="m-walletBalance--cash__colVal--int">{{
-            totalPaidOut.int
-              | number: '1.0-0'
-              | currency: currency
-              | slice: 0:-3
+            totalPaidOut.int | currency: currency | slice: 0:-3
           }}</span
           ><span
             class="m-walletBalance--cash__colVal--frac"
