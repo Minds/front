@@ -19,6 +19,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 import {
   ComposerService,
   MonetizationSubjectValue,
+  DEFAULT_ACCESS_ID_VALUE,
 } from '../../../composer/services/composer.service';
 
 export interface MetaData {
@@ -213,7 +214,7 @@ export class BlogsEditService {
     this.canPost$.next(true);
     this.guid$.next('');
     this.published$.next(0);
-    this.accessId$.next(null);
+    this.accessId$.next(DEFAULT_ACCESS_ID_VALUE);
     this.schedule$.next(null);
     this.savedContent$.next('');
     // this.monetization$.next(null);
