@@ -5,7 +5,6 @@ import { FeaturesService } from '../../../services/features.service';
 @Component({
   selector: 'm-topbarwrapper',
   templateUrl: 'topbar.component.html',
-  styleUrls: ['topbar.component.ng.scss'],
 })
 export class TopbarWrapperComponent {
   constructor(
