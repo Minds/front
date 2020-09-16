@@ -61,6 +61,8 @@ export interface BlogEditEntity {
   license?: string;
 }
 
+export const DEFAULT_BLOG_EDITOR_VERSION_VALUE = 2;
+
 @Injectable()
 export class BlogsEditService {
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -115,6 +117,10 @@ export class BlogsEditService {
 
   readonly monetize$: BehaviorSubject<MonetizationSubjectValue> = this
     .composerService.monetization$;
+
+  readonly editorVersion$: BehaviorSubject<number> = new BehaviorSubject(
+    DEFAULT_BLOG_EDITOR_VERSION_VALUE
+  );
 
   private contentSubscription: Subscription;
   private accessIdSubscription: Subscription;
@@ -173,6 +179,7 @@ export class BlogsEditService {
       this.tags$.next(blog.tags);
       this.metaDescription$.next(blog.custom_meta.description);
       this.metaTitle$.next(blog.custom_meta.title);
+      this.editorVersion$.next(blog.editor_version);
     }
 
     this.inProgress$.next(false);
@@ -222,6 +229,7 @@ export class BlogsEditService {
     this.nsfw$.next([]);
     this.metaDescription$.next('');
     this.metaTitle$.next('');
+    this.editorVersion$.next(DEFAULT_BLOG_EDITOR_VERSION_VALUE);
   }
 
   /**
@@ -356,7 +364,7 @@ export class BlogsEditService {
       slug: this.urlSlug$.getValue(),
       tags: this.tags$.getValue(),
       time_created: this.schedule$.getValue(),
-      editor_version: 2,
+      editor_version: DEFAULT_BLOG_EDITOR_VERSION_VALUE, // NOTE: we always set this to current editor
       captcha: this.captcha$.getValue(),
     };
   }
