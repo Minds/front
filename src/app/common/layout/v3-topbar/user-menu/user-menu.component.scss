@@ -35,17 +35,12 @@ m-usermenu__v3 {
         line-height: 20px;
         border: 0 !important;
 
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
         &:not(.m-userMenuDropdown__footer) {
           > * {
             padding: 8px 21px;
-          }
-        }
-        span {
-          @include m-theme() {
-            color: rgba(themed($m-textColor--primary), 0.8);
+            @include m-theme() {
+              color: rgba(themed($m-textColor--primary), 0.8);
+            }
           }
         }
 
@@ -94,11 +89,11 @@ m-usermenu__v3 {
             word-break: break-all;
 
             @include m-theme() {
-              color: themed($m-textColor--secondary);
+              color: rgba(themed($m-textColor--secondary), 0.7);
             }
             &:hover {
               @include m-theme() {
-                color: rgba(themed($m-textColor--primary), 0.8);
+                color: rgba(themed($m-textColor--primary), 0.85);
               }
             }
           }

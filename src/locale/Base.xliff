@@ -1689,11 +1689,11 @@
         <source>This post can only be seen by supporters who send</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">264</context>
+          <context context-type="linenumber">265</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1701,11 +1701,11 @@
         <source>over {$INTERPOLATION}/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">270</context>
+          <context context-type="linenumber">271</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1713,11 +1713,11 @@
         <source>over {$INTERPOLATION} points/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">278</context>
+          <context context-type="linenumber">279</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1725,11 +1725,11 @@
         <source>over {$INTERPOLATION} Tokens/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">285</context>
+          <context context-type="linenumber">286</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1737,11 +1737,11 @@
         <source>to @{$INTERPOLATION}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">292</context>
+          <context context-type="linenumber">293</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1749,15 +1749,15 @@
         <source>Join @{$INTERPOLATION}&apos;s {$INTERPOLATION_1} Membership to see this post</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1765,11 +1765,11 @@
         <source>We&apos;ve received your transaction. Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">101</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">130</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1777,7 +1777,7 @@
         <source>Unlock Post</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1785,7 +1785,7 @@
         <source>Wire me over</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">148</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1793,15 +1793,15 @@
         <source>{$INTERPOLATION}/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">154</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">186</context>
+          <context context-type="linenumber">187</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">242</context>
+          <context context-type="linenumber">243</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1809,15 +1809,15 @@
         <source>{$INTERPOLATION} points/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">161</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">193</context>
+          <context context-type="linenumber">194</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">249</context>
+          <context context-type="linenumber">250</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1825,15 +1825,15 @@
         <source>{$INTERPOLATION} Tokens/month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">168</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">200</context>
+          <context context-type="linenumber">201</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">256</context>
+          <context context-type="linenumber">257</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1841,7 +1841,7 @@
         <source>to see this post.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">173</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1849,7 +1849,7 @@
         <source>Only supporters who wire you over</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">180</context>
+          <context context-type="linenumber">181</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1857,7 +1857,7 @@
         <source>will see this post.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">205</context>
+          <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1865,7 +1865,7 @@
         <source>Unlock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/lock-screen/wire-lock-screen.component.html</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">217</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13592,7 +13592,7 @@
         <source>Estimated</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13600,7 +13600,7 @@
         <source>Total Transferred {$START_TAG_M-TOOLTIP} This is the total amount that has been paid out to your bank {$CLOSE_TAG_M-TOOLTIP}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
