@@ -12320,7 +12320,7 @@
         <source>Contribute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/i18n/marketing.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
