@@ -23,6 +23,7 @@ export interface StripeDetails {
   hasAccount: boolean;
   hasBank: boolean;
   verified: boolean;
+  payoutInterval?: string;
 }
 
 export interface WalletCurrency {

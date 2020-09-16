@@ -52,10 +52,6 @@ export class WalletBalanceCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.nextPayoutDate = moment()
-      .endOf('month')
-      .format('ddd Do MMM');
-
     this.cashWalletSubscription = this.walletService.wallet$
       .pipe(map((wallet: Wallet) => wallet.cash))
       .subscribe((cashWallet: WalletCurrency) => {
@@ -85,6 +81,19 @@ export class WalletBalanceCashComponent implements OnInit {
     this.pendingBalance = this.cashWallet.stripeDetails.pendingBalanceSplit;
     this.totalPaidOut = this.cashWallet.stripeDetails.totalPaidOutSplit;
     this.currency = this.hasBank ? this.cashWallet.label : 'USD';
+
+    const payoutInterval = this.walletService.stripeDetails.payoutInterval;
+
+    if (payoutInterval === 'daily') {
+      this.nextPayoutDate = moment()
+        .add(1, 'days')
+        .format('ddd Do MMM');
+    } else {
+      this.nextPayoutDate = moment()
+        .endOf('month')
+        .format('ddd Do MMM');
+    }
+
     this.init = true;
     this.detectChanges();
   }
