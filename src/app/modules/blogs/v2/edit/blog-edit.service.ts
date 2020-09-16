@@ -248,6 +248,8 @@ export class BlogsEditService {
       return;
     }
 
+    this.published$.next(draft ? 0 : 1);
+
     // await this.setNextPublishState(draft);
 
     const blog = await this.buildBlog();
