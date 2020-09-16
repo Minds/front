@@ -96,11 +96,9 @@ import { AndroidAppDownloadComponent } from './components/android-app-download-b
 import { SwitchComponent } from './components/switch/switch.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { BoostedContentService } from './services/boosted-content.service';
 import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
-import { SettingsService } from '../modules/settings/settings.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
@@ -480,30 +478,6 @@ const routes: Routes = [
     },
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
-    {
-      provide: BoostedContentService,
-      useFactory: (
-        client,
-        session,
-        entitiesService,
-        blockListService,
-        settingsService
-      ) =>
-        new BoostedContentService(
-          client,
-          session,
-          entitiesService,
-          blockListService,
-          settingsService
-        ),
-      deps: [
-        Client,
-        Session,
-        EntitiesService,
-        BlockListService,
-        SettingsService,
-      ],
-    },
     {
       provide: FeaturedContentService,
       useFactory: boostedContentService =>

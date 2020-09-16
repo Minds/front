@@ -84,6 +84,10 @@ export class SettingsV2Component implements OnInit {
             id: 'password',
           },
           {
+            label: $localize`:@@SETTINGS__ACCOUNT__BOOST__LABEL:Boosted Content`,
+            id: 'boosted-content',
+          },
+          {
             label: $localize`:@@SETTINGS__ACCOUNT__NSFW__LABEL:NSFW Content`,
             id: 'nsfw-content',
           },

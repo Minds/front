@@ -8,11 +8,11 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
-import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
 import { HashtagsSelectorModalComponent } from '../../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-newsfeed--top',
@@ -28,7 +28,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   allHashtags: boolean;
 
   paramsSubscription: Subscription;
-  ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
 
   @ViewChild('poster') private poster: PosterComponent;
@@ -42,16 +41,12 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private context: ContextService,
     private session: Session,
-    private settingsService: SettingsService,
+    private settingsService: SettingsV2Service,
     private overlayModal: OverlayModalService,
     private newsfeedService: NewsfeedService
   ) {
     if (this.session.isLoggedIn())
       this.rating = this.session.getLoggedInUser().boost_rating;
-
-    this.ratingSubscription = settingsService.ratingChanged.subscribe(event => {
-      this.onRatingChanged(event);
-    });
 
     this.allHashtags = this.newsfeedService.allHashtags;
 
@@ -70,10 +65,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.ratingSubscription) {
-      this.ratingSubscription.unsubscribe();
-    }
-
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
@@ -153,12 +144,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
   prepend(activity: any) {
     this.prepended.unshift(activity);
-  }
-
-  onRatingChanged(rating) {
-    this.rating = rating;
-
-    this.load(true);
   }
 
   openHashtagsSelector() {
