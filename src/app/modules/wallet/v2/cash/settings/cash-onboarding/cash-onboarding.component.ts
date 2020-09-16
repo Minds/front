@@ -48,11 +48,11 @@ export class WalletCashOnboardingComponent implements OnInit {
       dob: ['', Validators.required],
       phoneNumber: ['', requiredFor(['JP'])],
       ssn: ['', requiredFor(['US'])],
-      personalIdNumber: ['', requiredFor(['HK', 'SG'])],
+      personalIdNumber: ['', requiredFor(['HK', 'SG', 'IN'])],
 
       street: ['', optionalFor(['JP'])],
       city: ['', optionalFor(['JP', 'SG'])],
-      state: ['', requiredFor(['AU', 'CA', 'IE', 'US'])],
+      state: ['', requiredFor(['AU', 'CA', 'IE', 'US', 'IN'])],
       postCode: ['', optionalFor(['HK', 'IE', 'JP'])],
       stripeAgree: ['', Validators.required],
     });
