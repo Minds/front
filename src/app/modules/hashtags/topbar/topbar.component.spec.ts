@@ -89,27 +89,6 @@ describe('TopbarHashtagsComponent', () => {
     expect(comp.all).toBeTruthy();
   }));
 
-  it('should have two hashtags, and one should be selected', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
-
-    let hashtag1 = fixture.debugElement.query(
-      By.css(
-        'span.m-topbar--hashtags--hashtag.m-topbar--hashtags--hashtag--selected:not(.m-topbar--hashtags--hashtag--all)'
-      )
-    );
-    expect(hashtag1).not.toBeNull();
-    expect(hashtag1.nativeElement.textContent).toContain('#hashtag1');
-
-    let hashtag2 = fixture.debugElement.query(
-      By.css(
-        'span.m-topbar--hashtags--hashtag:not(.m-topbar--hashtags--hashtag--selected):not(.m-topbar--hashtags--hashtag--all)'
-      )
-    );
-    expect(hashtag2).not.toBeNull();
-    expect(hashtag2.nativeElement.textContent).toContain('#hashtag2');
-  }));
-
   it('should toggle the hashtag when clicked', fakeAsync(() => {
     fixture.detectChanges();
     tick();
