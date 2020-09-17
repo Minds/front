@@ -143,8 +143,6 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async initialize() {
-    this.blockListService.fetch();
-
     if (this.site.isProDomain) {
       this.site.listen();
     } else {

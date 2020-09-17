@@ -4,9 +4,9 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BlockListService {
-  blocked: BehaviorSubject<string[]>;
+  readonly blocked: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
   constructor(
     protected client: Client,
@@ -15,7 +15,7 @@ export class BlockListService {
   ) {
     //OK to remove as SSR will handle
     //this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
-    this.blocked = new BehaviorSubject([]);
+    this.fetch();
   }
 
   fetch() {

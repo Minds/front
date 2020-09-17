@@ -98,7 +98,6 @@ import { FeaturedContentComponent } from './components/featured-content/featured
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
 import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
-import { BlockListService } from './services/block-list.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
