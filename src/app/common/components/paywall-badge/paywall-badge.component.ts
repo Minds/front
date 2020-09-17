@@ -5,6 +5,7 @@ import { ConfigsService } from '../../services/configs.service';
 @Component({
   selector: 'm-paywallBadge',
   templateUrl: './paywall-badge.component.html',
+  styleUrls: ['./paywall-badge.component.ng.scss'],
 })
 export class PaywallBadgeComponent {
   private _entity: any;
