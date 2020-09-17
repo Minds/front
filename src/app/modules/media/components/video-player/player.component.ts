@@ -19,7 +19,7 @@ import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -149,12 +149,16 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
-  get sources$(): BehaviorSubject<VideoSource> {
+  get sources$(): BehaviorSubject<VideoSource[]> {
     return this.service.sources$;
   }
 
   get status(): string {
     return this.service.status;
+  }
+
+  get awaitingTranscode(): Observable<boolean> {
+    return this.service.awaitingTranscode();
   }
 
   onPlayed(event: Plyr.PlyrEvent): void {
