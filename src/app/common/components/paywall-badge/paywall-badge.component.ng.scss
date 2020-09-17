@@ -1,4 +1,6 @@
-m-paywallBadge {
+@import 'defaults.scss';
+
+:host {
   z-index: 3;
   cursor: default;
 
@@ -29,6 +31,12 @@ m-paywallBadge {
         margin: 0 -1 0 0;
       }
     }
+    &.isPlus {
+      @include m-theme() {
+        background-color: themed($m-aqua);
+      }
+    }
+
     > .m-paywallBadge__tierName {
       font-weight: 500;
       @include m-theme() {
