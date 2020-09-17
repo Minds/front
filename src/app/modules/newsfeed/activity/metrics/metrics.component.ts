@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'm-activity__metrics',
   templateUrl: 'metrics.component.html',
+  styleUrls: ['metrics.component.ng.scss'],
 })
 export class ActivityMetricsComponent {
   entity$: Observable<ActivityEntity> = this.service.entity$;
