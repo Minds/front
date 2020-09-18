@@ -1,5 +1,6 @@
 <div class="m-pageLayout__container m-channel__feed">
   <div class="m-channelFeed__list" m-pageLayout__pane="main">
+    <m-composer *ngIf="service.isOwner$ | async"></m-composer>
     <m-feedFilter
       class="m-channelFeedList__filter"
       [options]="['type']"

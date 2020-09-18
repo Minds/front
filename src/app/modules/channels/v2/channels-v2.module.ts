@@ -35,6 +35,7 @@ import { ModalsModule } from '../../modals/modals.module';
 import { DiscoverySharedModule } from '../../discovery/discovery-shared.module';
 import { ChannelActionsBoostComponent } from './actions/boost.component';
 import { ChannelShopLazyComponent } from './shop/shop-lazy.component';
+import { ComposerModule } from '../../composer/composer.module';
 
 /**
  * Generally available components
@@ -90,6 +91,7 @@ const PROVIDERS = [ChannelEditModalService];
     HashtagsModule,
     ModalsModule,
     DiscoverySharedModule,
+    ComposerModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
