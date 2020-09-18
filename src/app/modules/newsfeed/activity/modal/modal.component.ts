@@ -78,7 +78,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     'image',
   ];
 
-  entity: ActivityEntity;
+  entity: any;
   entitySubscription: Subscription;
   routerSubscription: Subscription;
   fullscreenSubscription: Subscription;
@@ -362,15 +362,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
      * Get intrinsic dimensions
      */
     switch (this.entity.content_type) {
-      case 'video':
-      case 'rich-embed':
-        this.entityWidth = this.entity.custom_data.dimensions
-          ? this.entity.custom_data.dimensions.width
-          : 1280;
-        this.entityHeight = this.entity.custom_data.dimensions
-          ? this.entity.custom_data.dimensions.height
-          : 720;
-        break;
       case 'image':
         this.entityWidth = this.entity.custom_data[0].width;
         this.entityHeight = this.entity.custom_data[0].height;
@@ -378,6 +369,22 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       case 'blog':
         this.entityWidth = window.innerWidth * 0.6;
         this.entityHeight = window.innerHeight * 0.6;
+        break;
+      case 'video':
+      case 'rich-embed':
+        let providedCustomWidth,
+          providedCustomHeight,
+          providedWidth,
+          providedHeight;
+        if (this.entity.custom_data && this.entity.custom_data.dimensions) {
+          providedCustomWidth = this.entity.custom_data.dimensions.width;
+          providedCustomHeight = this.entity.custom_data.dimensions.height;
+        }
+        if (this.entity.width) providedWidth = this.entity.width;
+        if (this.entity.height) providedHeight = this.entity.height;
+
+        this.entityWidth = providedCustomWidth || providedWidth || 1280;
+        this.entityHeight = providedCustomHeight || providedHeight || 720;
     }
 
     /**
