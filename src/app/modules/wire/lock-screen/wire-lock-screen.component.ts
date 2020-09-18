@@ -159,7 +159,8 @@ export class WireLockScreenComponent implements OnInit {
       })
       .subscribe(payEvent => {
         if (payEvent.type === WireEventType.Completed) {
-          this.wireSubmitted();
+          // this.wireSubmitted();
+          this.unlock(); // TODO: check onchain wires don't get stuck in a loop?
         }
       });
   }
