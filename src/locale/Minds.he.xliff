@@ -2,16 +2,16 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="he">
     <body>
-      <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html">
+      <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html" approved="yes">
         <source>Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קבוצות</target>
+        <target state="final">קבוצות</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__NEW_GROUP" datatype="html">
+      <trans-unit id="M__COMMON__NEW_GROUP" datatype="html" approved="yes">
         <source>New group</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
@@ -26,9 +26,9 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קבוצה חדשה</target>
+        <target state="final">קבוצה חדשה</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html">
+      <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html" approved="yes">
         <source>Discover Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
@@ -43,9 +43,9 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">גלה קבוצות</target>
+        <target state="final">גלה קבוצות</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
+      <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html" approved="yes">
         <source>Join some groups to populate this sidebar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
@@ -56,9 +56,9 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הצטרף לכמה קבוצות כדי למלא את תפריט הצד</target>
+        <target state="final">הצטרף לכמה קבוצות כדי למלא את תפריט הצד</target>
       </trans-unit>
-      <trans-unit id="COMMON__HOME" datatype="html">
+      <trans-unit id="COMMON__HOME" datatype="html" approved="yes">
         <source>Home</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -69,9 +69,9 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">בית</target>
+        <target state="final">בית</target>
       </trans-unit>
-      <trans-unit id="COMMON__NEWSFEED" datatype="html">
+      <trans-unit id="COMMON__NEWSFEED" datatype="html" approved="yes">
         <source>Newsfeed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -82,9 +82,9 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">רצועת חדשות</target>
+        <target state="final">רצועת חדשות</target>
       </trans-unit>
-      <trans-unit id="COMMON__DISCOVERY" datatype="html">
+      <trans-unit id="COMMON__DISCOVERY" datatype="html" approved="yes">
         <source>Discovery</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -95,9 +95,9 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">גילוי</target>
+        <target state="final">גילוי</target>
       </trans-unit>
-      <trans-unit id="COMMON__WALLET" datatype="html">
+      <trans-unit id="COMMON__WALLET" datatype="html" approved="yes">
         <source>Wallet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -108,7 +108,7 @@
           <context context-type="linenumber">94</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ארנק</target>
+        <target state="final">ארנק</target>
       </trans-unit>
       <trans-unit id="COMMON__ANALYTICS" datatype="html">
         <source>Analytics</source>
@@ -121,18 +121,18 @@
           <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אנליטיקה</target>
+        <target state="needs-translation">Analytics</target>
       </trans-unit>
-      <trans-unit id="COMMON__TRAFFIC" datatype="html">
+      <trans-unit id="COMMON__TRAFFIC" datatype="html" approved="yes">
         <source>Traffic</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
           <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">תעבורה</target>
+        <target state="final">תעבורה</target>
       </trans-unit>
-      <trans-unit id="COMMON__ENGAGEMENT" datatype="html">
+      <trans-unit id="COMMON__ENGAGEMENT" datatype="html" approved="yes">
         <source>Engagement</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -143,18 +143,18 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">רמת שימוש</target>
+        <target state="final">רמת שימוש</target>
       </trans-unit>
-      <trans-unit id="COMMON__EARNINGS" datatype="html">
+      <trans-unit id="COMMON__EARNINGS" datatype="html" approved="yes">
         <source>Earnings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
           <context context-type="linenumber">153</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">רווחים</target>
+        <target state="final">רווחים</target>
       </trans-unit>
-      <trans-unit id="COMMON__TRENDING" datatype="html">
+      <trans-unit id="COMMON__TRENDING" datatype="html" approved="yes">
         <source>Trending</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -165,9 +165,9 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פופולרי</target>
+        <target state="final">פופולרי</target>
       </trans-unit>
-      <trans-unit id="COMMON__SETTINGS" datatype="html">
+      <trans-unit id="COMMON__SETTINGS" datatype="html" approved="yes">
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
@@ -190,25 +190,25 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הגדרות</target>
+        <target state="final">הגדרות</target>
       </trans-unit>
-      <trans-unit id="CHANNEL__ONBOARDING__CHOOSE_DISPLAY_NAME" datatype="html">
+      <trans-unit id="CHANNEL__ONBOARDING__CHOOSE_DISPLAY_NAME" datatype="html" approved="yes">
         <source>Choose your display name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding/channel/channel/channel.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">בחר שם תצוגה</target>
+        <target state="final">בחר שם תצוגה</target>
       </trans-unit>
-      <trans-unit id="CHANNEL__ONBOARDING__BRIEFLY_DESCRIBE_YOUR_CHANNEL" datatype="html">
+      <trans-unit id="CHANNEL__ONBOARDING__BRIEFLY_DESCRIBE_YOUR_CHANNEL" datatype="html" approved="yes">
         <source>Briefly describe your channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding/channel/channel/channel.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">תאר בקצרה את הערוץ שלך</target>
+        <target state="final">תאר בקצרה את הערוץ שלך</target>
       </trans-unit>
       <trans-unit id="MINDS_FESTIVAL_TICKET_SALE" datatype="html">
         <source>BREAKING: Tickets on sale for &quot;MINDS: FESTIVAL OF IDEAS&quot; @ Radio City on 6/13/2020. HELP US SELL OUT FAST!</source>
@@ -219,7 +219,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">BREAKING: Tickets on sale for "MINDS: FESTIVAL OF IDEAS" @ Radio City on 6/13/2020. HELP US SELL OUT FAST!</target>
       </trans-unit>
-      <trans-unit id="M__ACTION__BOOST" datatype="html">
+      <trans-unit id="M__ACTION__BOOST" datatype="html" approved="yes">
         <source>Boost</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
@@ -251,9 +251,9 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קדם</target>
+        <target state="final">קדם</target>
       </trans-unit>
-      <trans-unit id="M__ACTION__VIEW_CHANNEL" datatype="html">
+      <trans-unit id="M__ACTION__VIEW_CHANNEL" datatype="html" approved="yes">
         <source>View Channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
@@ -261,9 +261,9 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הצג ערוץ</target>
+        <target state="final">הצג ערוץ</target>
       </trans-unit>
-      <trans-unit id="COMMON__ADMIN" datatype="html">
+      <trans-unit id="COMMON__ADMIN" datatype="html" approved="yes">
         <source>Admin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
@@ -274,34 +274,34 @@
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ניהול</target>
+        <target state="final">ניהול</target>
       </trans-unit>
-      <trans-unit id="COMMON_SETTINGS" datatype="html">
+      <trans-unit id="COMMON_SETTINGS" datatype="html" approved="yes">
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
           <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הגדרות</target>
+        <target state="final">הגדרות</target>
       </trans-unit>
-      <trans-unit id="COMMON_FAQ" datatype="html">
+      <trans-unit id="COMMON_FAQ" datatype="html" approved="yes">
         <source>FAQ</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
           <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">שאלות נפוצות</target>
+        <target state="final">שאלות נפוצות</target>
       </trans-unit>
-      <trans-unit id="COMMON__HELP DESK" datatype="html">
+      <trans-unit id="COMMON__HELP DESK" datatype="html" approved="yes">
         <source>Help Desk</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">תמיכה טכנית</target>
+        <target state="final">תמיכה טכנית</target>
       </trans-unit>
       <trans-unit id="COMMON__HELP_AND_SUPPORT" datatype="html">
         <source>Help &amp; Support</source>
@@ -314,25 +314,25 @@
           <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">עזרה ותמיכה</target>
+        <target state="needs-translation">Help &amp; Support</target>
       </trans-unit>
-      <trans-unit id="COMMON__WHITEPAPER" datatype="html">
+      <trans-unit id="COMMON__WHITEPAPER" datatype="html" approved="yes">
         <source>Whitepaper</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">נייר לבן</target>
+        <target state="final">נייר לבן</target>
       </trans-unit>
-      <trans-unit id="COMMON__OPT_INTO_EXPERIMENTS" datatype="html">
+      <trans-unit id="COMMON__OPT_INTO_EXPERIMENTS" datatype="html" approved="yes">
         <source>Opt-in to Experiments</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
           <context context-type="linenumber">105</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הירשם לניסויים</target>
+        <target state="final">הירשם לניסויים</target>
       </trans-unit>
       <trans-unit id="COMMON__CANARY" datatype="html">
         <source>Canary</source>
@@ -341,18 +341,18 @@
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קנרית</target>
+        <target state="needs-translation">Canary</target>
       </trans-unit>
-      <trans-unit id="COMMON_LOGOUT" datatype="html">
+      <trans-unit id="COMMON_LOGOUT" datatype="html" approved="yes">
         <source>Logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">יציאה</target>
+        <target state="final">יציאה</target>
       </trans-unit>
-      <trans-unit id="M__ACTION__LOGIN" datatype="html">
+      <trans-unit id="M__ACTION__LOGIN" datatype="html" approved="yes">
         <source>Login</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
@@ -371,9 +371,9 @@
           <context context-type="linenumber">207</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">כניסה</target>
+        <target state="final">כניסה</target>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP" datatype="html">
+      <trans-unit id="MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP" datatype="html" approved="yes">
         <source>Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/options.component.html</context>
@@ -384,9 +384,9 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פתיחה עלולה להכיל תוכן שנוי במחלוקת. על-ידי לחיצה על פתיחה, אני מסכים להיחשף למידע שנוי במחלוקת.</target>
+        <target state="final">פתיחה עלולה להכיל תוכן שנוי במחלוקת. על-ידי לחיצה על פתיחה, אני מסכים להיחשף למידע שנוי במחלוקת.</target>
       </trans-unit>
-      <trans-unit id="COMMON__LOGIN" datatype="html">
+      <trans-unit id="COMMON__LOGIN" datatype="html" approved="yes">
         <source>Login</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/v3-topbar.component.html</context>
@@ -397,7 +397,7 @@
           <context context-type="linenumber">58</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">כניסה</target>
+        <target state="final">כניסה</target>
       </trans-unit>
       <trans-unit id="COMMON__JOIN_MINDS_NOW" datatype="html">
         <source>Join Minds Now</source>
@@ -406,18 +406,18 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הצטרף ל-Minds עכשיו</target>
+        <target state="needs-translation">Join Minds Now</target>
       </trans-unit>
-      <trans-unit id="COMMON__UPGRADE" datatype="html">
+      <trans-unit id="COMMON__UPGRADE" datatype="html" approved="yes">
         <source>Upgrade</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">שדרוג</target>
+        <target state="final">שדרוג</target>
       </trans-unit>
-      <trans-unit id="COMMON__BUY_TOKENS" datatype="html">
+      <trans-unit id="COMMON__BUY_TOKENS" datatype="html" approved="yes">
         <source>Buy tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
@@ -437,54 +437,54 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קנה מטבעות</target>
+        <target state="final">קנה מטבעות</target>
       </trans-unit>
-      <trans-unit id="COMMON__LIGHT_MODE" datatype="html">
+      <trans-unit id="COMMON__LIGHT_MODE" datatype="html" approved="yes">
         <source>Enter Light Mode</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">עבור לתצוגה בהירה</target>
+        <target state="final">עבור לתצוגה בהירה</target>
       </trans-unit>
-      <trans-unit id="COMMON__DARK_MODE" datatype="html">
+      <trans-unit id="COMMON__DARK_MODE" datatype="html" approved="yes">
         <source>Enter Dark Mode</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">עבור לתצוגה כהה</target>
+        <target state="final">עבור לתצוגה כהה</target>
       </trans-unit>
-      <trans-unit id="COMMON__BOOST_CONSOLE" datatype="html">
+      <trans-unit id="COMMON__BOOST_CONSOLE" datatype="html" approved="yes">
         <source>Boost Console</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ממשק קידום</target>
+        <target state="final">ממשק קידום</target>
       </trans-unit>
-      <trans-unit id="COMMON__HELP" datatype="html">
+      <trans-unit id="COMMON__HELP" datatype="html" approved="yes">
         <source>Help</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">עזרה</target>
+        <target state="final">עזרה</target>
       </trans-unit>
-      <trans-unit id="COMMON__FAQ" datatype="html">
+      <trans-unit id="COMMON__FAQ" datatype="html" approved="yes">
         <source>FAQ</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">שאלות נפוצות</target>
+        <target state="final">שאלות נפוצות</target>
       </trans-unit>
-      <trans-unit id="COMMON__LOGOUT" datatype="html">
+      <trans-unit id="COMMON__LOGOUT" datatype="html" approved="yes">
         <source>Logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
@@ -495,25 +495,25 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">יציאה</target>
+        <target state="final">יציאה</target>
       </trans-unit>
-      <trans-unit id="COMMON__MORE" datatype="html">
+      <trans-unit id="COMMON__MORE" datatype="html" approved="yes">
         <source>More</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">155</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">עוד</target>
+        <target state="final">עוד</target>
       </trans-unit>
-      <trans-unit id="COMMON__LESS" datatype="html">
+      <trans-unit id="COMMON__LESS" datatype="html" approved="yes">
         <source>Less</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">158</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פחות</target>
+        <target state="final">פחות</target>
       </trans-unit>
       <trans-unit id="M__COMMON__COPYRIGHT_YEAR" datatype="html">
         <source>
@@ -529,12 +529,12 @@
           <context context-type="linenumber">124</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          מיינדס 
+        <target state="needs-translation">
+          © Minds 
           <x id="INTERPOLATION"/>
         </target>
       </trans-unit>
-      <trans-unit id="COMMON__INFINITE_SCROLL__LOAD_MORE" datatype="html">
+      <trans-unit id="COMMON__INFINITE_SCROLL__LOAD_MORE" datatype="html" approved="yes">
         <source>Click to load more</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/infinite-scroll/infinite-scroll.ts</context>
@@ -545,9 +545,9 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">לחץ על מנת לטעון עוד</target>
+        <target state="final">לחץ על מנת לטעון עוד</target>
       </trans-unit>
-      <trans-unit id="COMMON__INFINITE_SCROLL__NOTHING_MORE" datatype="html">
+      <trans-unit id="COMMON__INFINITE_SCROLL__NOTHING_MORE" datatype="html" approved="yes">
         <source>Nothing more to load</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/infinite-scroll/infinite-scroll.ts</context>
@@ -558,45 +558,45 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אין יותר מה להציג</target>
+        <target state="final">אין יותר מה להציג</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__COUNTRY" datatype="html">
+      <trans-unit id="M__COMMON__COUNTRY" datatype="html" approved="yes">
         <source>Country</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/country-input/country-input.component.ts</context>
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מדינה</target>
+        <target state="final">מדינה</target>
       </trans-unit>
-      <trans-unit id="COMMON__DATE_INPUT__MONTH_LABEL" datatype="html">
+      <trans-unit id="COMMON__DATE_INPUT__MONTH_LABEL" datatype="html" approved="yes">
         <source>Month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/date-input/date-input.component.ts</context>
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">חודש</target>
+        <target state="final">חודש</target>
       </trans-unit>
-      <trans-unit id="COMMON__DATE_INPUT__DAY_LABEL" datatype="html">
+      <trans-unit id="COMMON__DATE_INPUT__DAY_LABEL" datatype="html" approved="yes">
         <source>Day</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/date-input/date-input.component.ts</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">יום</target>
+        <target state="final">יום</target>
       </trans-unit>
-      <trans-unit id="COMMON__DATE_INPUT__YEAR_LABEL" datatype="html">
+      <trans-unit id="COMMON__DATE_INPUT__YEAR_LABEL" datatype="html" approved="yes">
         <source>Year</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/date-input/date-input.component.ts</context>
           <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">שנה</target>
+        <target state="final">שנה</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__ENTER_CITY" datatype="html">
+      <trans-unit id="M__COMMON__ENTER_CITY" datatype="html" approved="yes">
         <source>Enter your city...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/city-finder/city-finder.component.html</context>
@@ -607,9 +607,9 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הכנס את שם העיר שלך...</target>
+        <target state="final">הכנס את שם העיר שלך...</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__SELECT_CITY" datatype="html">
+      <trans-unit id="M__COMMON__SELECT_CITY" datatype="html" approved="yes">
         <source>Select your city:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/city-finder/city-finder.component.html</context>
@@ -620,9 +620,9 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">בחר את העיר שלך:</target>
+        <target state="final">בחר את העיר שלך:</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__COUNTRY_STATE" datatype="html">
+      <trans-unit id="M__COMMON__COUNTRY_STATE" datatype="html" approved="yes">
         <source>State</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/state-input/state-input.component.ts</context>
@@ -630,27 +630,27 @@
         </context-group>
         <note priority="1" from="description">State as a country entity</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מצב</target>
+        <target state="final">מצב</target>
       </trans-unit>
-      <trans-unit id="COMMON__SEE_MORE__ACTION" datatype="html">
+      <trans-unit id="COMMON__SEE_MORE__ACTION" datatype="html" approved="yes">
         <source>See More</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/read-more/button.component.ts</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">לראות עוד</target>
+        <target state="final">לראות עוד</target>
       </trans-unit>
-      <trans-unit id="COMMON__READ_MORE__ACTION" datatype="html">
+      <trans-unit id="COMMON__READ_MORE__ACTION" datatype="html" approved="yes">
         <source>Read more</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/read-more/button.component.ts</context>
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">לקרוא עוד</target>
+        <target state="final">לקרוא עוד</target>
       </trans-unit>
-      <trans-unit id="COMMON__BADGES__PLUS" datatype="html">
+      <trans-unit id="COMMON__BADGES__PLUS" datatype="html" approved="yes">
         <source>Plus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
@@ -658,18 +658,18 @@
         </context-group>
         <note priority="1" from="description">Plus as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פלוס</target>
+        <target state="final">פלוס</target>
       </trans-unit>
-      <trans-unit id="COMMON__BADGES__PRO" datatype="html">
+      <trans-unit id="COMMON__BADGES__PRO" datatype="html" approved="yes">
         <source>Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פרו</target>
+        <target state="final">פרו</target>
       </trans-unit>
-      <trans-unit id="COMMON__BADGES__ADMIN" datatype="html">
+      <trans-unit id="COMMON__BADGES__ADMIN" datatype="html" approved="yes">
         <source>Admin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
@@ -677,9 +677,9 @@
         </context-group>
         <note priority="1" from="description">Admin as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מנהל</target>
+        <target state="final">מנהל</target>
       </trans-unit>
-      <trans-unit id="COMMON__BADGES__VERIFIED" datatype="html">
+      <trans-unit id="COMMON__BADGES__VERIFIED" datatype="html" approved="yes">
         <source>Verified</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
@@ -687,9 +687,9 @@
         </context-group>
         <note priority="1" from="description">Verified as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מאומת</target>
+        <target state="final">מאומת</target>
       </trans-unit>
-      <trans-unit id="COMMON__BADGES__FOUNDER" datatype="html">
+      <trans-unit id="COMMON__BADGES__FOUNDER" datatype="html" approved="yes">
         <source>Founder</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
@@ -701,16 +701,16 @@
         </context-group>
         <note priority="1" from="description">Founder as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מייסד</target>
+        <target state="final">מייסד</target>
       </trans-unit>
-      <trans-unit id="BADGES__BOOSTER" datatype="html">
+      <trans-unit id="BADGES__BOOSTER" datatype="html" approved="yes">
         <source>Boosted OnChain in the last 7 days</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
           <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קודם על גבי השרשרת ב-7 הימים האחרונים</target>
+        <target state="final">קודם על גבי השרשרת ב-7 הימים האחרונים</target>
       </trans-unit>
       <trans-unit id="MINDS__TAGCLOUD__TITLE" datatype="html">
         <source>Suggested Hashtags</source>
@@ -719,7 +719,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">האשטג מוצעים</target>
+        <target state="needs-translation">Suggested Hashtags</target>
       </trans-unit>
       <trans-unit id="MINDS__EMOJI__LABEL" datatype="html">
         <source>Emoji</source>
@@ -728,36 +728,36 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אימוג'י</target>
+        <target state="needs-translation">Emoji</target>
       </trans-unit>
-      <trans-unit id="COMMON__AVATAR__CHANGE" datatype="html">
+      <trans-unit id="COMMON__AVATAR__CHANGE" datatype="html" approved="yes">
         <source>Change avatar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/avatar/avatar.ts</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">שינוי תמונה</target>
+        <target state="final">שינוי תמונה</target>
       </trans-unit>
-      <trans-unit id="COMMON__AVATAR__ADD" datatype="html">
+      <trans-unit id="COMMON__AVATAR__ADD" datatype="html" approved="yes">
         <source>Add an avatar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/avatar/avatar.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הוספת תמונה</target>
+        <target state="final">הוספת תמונה</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__SUBSCRIBERS" datatype="html">
+      <trans-unit id="M__COMMON__SUBSCRIBERS" datatype="html" approved="yes">
         <source>Subscribers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/user/user.html</context>
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">רשומים</target>
+        <target state="final">רשומים</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__SUBSCRIPTIONS" datatype="html">
+      <trans-unit id="M__COMMON__SUBSCRIPTIONS" datatype="html" approved="yes">
         <source>Subscriptions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/user/user.html</context>
@@ -772,16 +772,16 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מנויים</target>
+        <target state="final">מנויים</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__VIEWS" datatype="html">
+      <trans-unit id="M__COMMON__VIEWS" datatype="html" approved="yes">
         <source>Views</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/user/user.html</context>
           <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">תצוגות</target>
+        <target state="final">תצוגות</target>
       </trans-unit>
       <trans-unit id="M_SHARE__HEADER" datatype="html">
         <source>Share this post</source>
@@ -790,34 +790,34 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">שתף פוסט</target>
+        <target state="needs-translation">Share this post</target>
       </trans-unit>
-      <trans-unit id="M_SHARE__LINK_COPY_ACTION" datatype="html">
+      <trans-unit id="M_SHARE__LINK_COPY_ACTION" datatype="html" approved="yes">
         <source>Copy</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">העתק</target>
+        <target state="final">העתק</target>
       </trans-unit>
-      <trans-unit id="M_SHARE__LINK_COPY_STATE" datatype="html">
+      <trans-unit id="M_SHARE__LINK_COPY_STATE" datatype="html" approved="yes">
         <source>Copied</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הועתק</target>
+        <target state="final">הועתק</target>
       </trans-unit>
-      <trans-unit id="M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL" datatype="html">
+      <trans-unit id="M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL" datatype="html" approved="yes">
         <source>Include referral code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הזן קוד הפניה</target>
+        <target state="final">הזן קוד הפניה</target>
       </trans-unit>
       <trans-unit id="M_SHARE__REFERRAL_CODE_EXPLANATION" datatype="html">
         <source>
@@ -831,10 +831,10 @@
           <context context-type="linenumber">49</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          השתמש בקוד ההפנייה שלך כדי להרוויח טוקנים על הפנייה של משתמשים חדשים ל-מיינדס. למד עוד ב
+        <target state="needs-translation">
+          Use your referral code to earn tokens for referring new users to Minds. Learn more at the 
           <x id="START_LINK"/>
-          קונסול ההפניות
+          Referrals Console
           <x id="CLOSE_LINK"/>
         </target>
       </trans-unit>
@@ -845,7 +845,7 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">טוויטר</target>
+        <target state="needs-translation">Twitter</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_FACEBOOK" datatype="html">
         <source>Facebook</source>
@@ -854,7 +854,7 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פייסבוק</target>
+        <target state="needs-translation">Facebook</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_MESSENGER" datatype="html">
         <source>Messenger</source>
@@ -863,7 +863,7 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מסנג'ר</target>
+        <target state="needs-translation">Messenger</target>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_Whatsapp" datatype="html">
         <source>Whatsapp</source>
@@ -872,27 +872,27 @@
           <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ווטסאפ</target>
+        <target state="needs-translation">Whatsapp</target>
       </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_SMS" datatype="html">
+      <trans-unit id="M_SHARE__BUTTON_SMS" datatype="html" approved="yes">
         <source>SMS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
           <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הודעת טקסט</target>
+        <target state="final">הודעת טקסט</target>
       </trans-unit>
-      <trans-unit id="M_SHARE__BUTTON_EMAIL" datatype="html">
+      <trans-unit id="M_SHARE__BUTTON_EMAIL" datatype="html" approved="yes">
         <source>Email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
           <context context-type="linenumber">112</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אימייל</target>
+        <target state="final">אימייל</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__MATURE_CONTENT" datatype="html">
+      <trans-unit id="M__COMMON__MATURE_CONTENT" datatype="html" approved="yes">
         <source>Mature content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
@@ -1007,7 +1007,7 @@
           <context context-type="linenumber">165</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">תוכן למבוגרים</target>
+        <target state="final">תוכן למבוגרים</target>
       </trans-unit>
       <trans-unit id="M__COMMON__CONFIRM_18" datatype="html">
         <source>Click to confirm you are 18+</source>
@@ -1104,9 +1104,9 @@
           <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">לחץ כדי לאשר כי הינך 18+</target>
+        <target state="needs-translation">Click to confirm you are 18+</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__EDITED" datatype="html">
+      <trans-unit id="M__COMMON__EDITED" datatype="html" approved="yes">
         <source>edited</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
@@ -1149,25 +1149,25 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">נערך</target>
+        <target state="final">נערך</target>
       </trans-unit>
-      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL" datatype="html">
+      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL" datatype="html" approved="yes">
         <source>Boosted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
           <context context-type="linenumber">350</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קודם</target>
+        <target state="final">קודם</target>
       </trans-unit>
-      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html">
+      <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" datatype="html" approved="yes">
         <source>Boosted Onchain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/modal/modal.component.html</context>
           <context context-type="linenumber">356</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">קודם על גבי השרשרת</target>
+        <target state="final">קודם על גבי השרשרת</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_YOUR_TX" datatype="html">
         <source>Complete your OnChain transaction</source>
@@ -1176,7 +1176,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">השלם את העסקה שלך על גבי הבלוקצ'יין</target>
+        <target state="needs-translation">Complete your OnChain transaction</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_USING_METAMASK" datatype="html">
         <source>Please open your Metamask client to complete the transaction.</source>
@@ -1185,7 +1185,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אנא פתח את תוסף ה-Metamask כדי להשלים את העסקה.</target>
+        <target state="needs-translation">Please open your Metamask client to complete the transaction.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__YOURE_APPROVING_MESSAGE" datatype="html">
         <source>
@@ -1197,8 +1197,8 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          הינך מאשר 
+        <target state="needs-translation">
+          You are approving a 
           <x id="INTERPOLATION"/>
         </target>
       </trans-unit>
@@ -1209,7 +1209,7 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אנא הכנס מטה את המפתח הפרטי כדי לפתוח את החשבון שלך. הינך יכול גם לגרור קובץ CSV לתוך חלון זה.</target>
+        <target state="needs-translation">Please enter your private key below in order to unlock your account. You can also drag and drop a CSV file into this window.</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__CREATE_WALLET_AND_LEARN_ABOUT_TOKENS" datatype="html">
         <source>
@@ -1224,42 +1224,42 @@
           <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">
-          אין כתובת\מפתח פרטי? היכנסו ללינק 
+        <target state="needs-translation">
+          Don't have an address/private key? Checkout 
           <x id="START_LINK"/>
           minds.com/wallet
           <x id="CLOSE_LINK"/>
-           בכדי ליצור ארנק וללמוד איך ניתן לקבל טוקנים של מיינדס.
+           to create a wallet and learn how to get Minds tokens.
         </target>
       </trans-unit>
-      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__DROP_KEYFILE_BELOW" datatype="html">
+      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__DROP_KEYFILE_BELOW" datatype="html" approved="yes">
         <source>Drop key file below to auto-fill the field.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
           <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">גרור קובץ מפתח מטה בכדי להשלים אוטומטית.</target>
+        <target state="final">גרור קובץ מפתח מטה בכדי להשלים אוטומטית.</target>
       </trans-unit>
-      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__PRIVATE_KEY" datatype="html">
+      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__PRIVATE_KEY" datatype="html" approved="yes">
         <source>Private Key</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
           <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מפתח פרטי</target>
+        <target state="final">מפתח פרטי</target>
       </trans-unit>
-      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__REMEMBER_PKEY_FOR_1_MIN" datatype="html">
+      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__REMEMBER_PKEY_FOR_1_MIN" datatype="html" approved="yes">
         <source>Remember this private key for 1 minute only.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
           <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">זכור מפתח פרטי זה למשך דקה אחת בלבד.</target>
+        <target state="final">זכור מפתח פרטי זה למשך דקה אחת בלבד.</target>
       </trans-unit>
-      <trans-unit id="M__ACTION__CANCEL" datatype="html">
+      <trans-unit id="M__ACTION__CANCEL" datatype="html" approved="yes">
         <source>Cancel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
@@ -1318,16 +1318,16 @@
           <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ביטול</target>
+        <target state="final">ביטול</target>
       </trans-unit>
-      <trans-unit id="MM__ACTION__COMPLETE" datatype="html">
+      <trans-unit id="MM__ACTION__COMPLETE" datatype="html" approved="yes">
         <source>Complete</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
           <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">סיים</target>
+        <target state="final">סיים</target>
       </trans-unit>
       <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__WARNING_REMEMBER_KEY_FOREVER" datatype="html">
         <source>Warning: Remembering the private key for the rest of the session can be insecure and might lead to your ETH being stolen.</source>
@@ -1336,27 +1336,27 @@
           <context context-type="linenumber">128</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אזהרה: שמירת המפתח עד לסיום הסשיין יכול להיות לא מאובטח ולהוביל לגניבה של טוקני ה-ETH שלך.</target>
+        <target state="needs-translation">Warning: Remembering the private key for the rest of the session can be insecure and might lead to your ETH being stolen.</target>
       </trans-unit>
-      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE" datatype="html">
+      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE" datatype="html" approved="yes">
         <source>Gas Price</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
           <context context-type="linenumber">143</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">מחיר דלק</target>
+        <target state="final">מחיר דלק</target>
       </trans-unit>
-      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS" datatype="html">
+      <trans-unit id="M__BLOCKCHAIN__TX_OVERLAY__GAS" datatype="html" approved="yes">
         <source>Gas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
           <context context-type="linenumber">157</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">דלק</target>
+        <target state="final">דלק</target>
       </trans-unit>
-      <trans-unit id="COMMON__CANCEL" datatype="html">
+      <trans-unit id="COMMON__CANCEL" datatype="html" approved="yes">
         <source>Cancel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
@@ -1367,9 +1367,9 @@
           <context context-type="linenumber">345</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ביטול</target>
+        <target state="final">ביטול</target>
       </trans-unit>
-      <trans-unit id="COMMON__APPROVE" datatype="html">
+      <trans-unit id="COMMON__APPROVE" datatype="html" approved="yes">
         <source>Approve</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/transaction-overlay/transaction-overlay.component.html</context>
@@ -1380,25 +1380,25 @@
           <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">אשר</target>
+        <target state="final">אשר</target>
       </trans-unit>
-      <trans-unit id="M__FEATURE__BOOST" datatype="html">
+      <trans-unit id="M__FEATURE__BOOST" datatype="html" approved="yes">
         <source>Boost</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">האץ</target>
+        <target state="final">האץ</target>
       </trans-unit>
-      <trans-unit id="BOOST__CREATOR__BOOST_TYPE_TITLE" datatype="html">
+      <trans-unit id="BOOST__CREATOR__BOOST_TYPE_TITLE" datatype="html" approved="yes">
         <source>Boost Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">סוג האצה</target>
+        <target state="final">סוג האצה</target>
       </trans-unit>
       <trans-unit id="M__FEATURE__NEWSFEED_PLURAL" datatype="html">
         <source>Feeds</source>
@@ -1411,18 +1411,18 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">פידים</target>
+        <target state="needs-translation">Feeds</target>
       </trans-unit>
-      <trans-unit id="BOOST__CREATOR__NEWSFEEDS_SELECTOR_DESC" datatype="html">
+      <trans-unit id="BOOST__CREATOR__NEWSFEEDS_SELECTOR_DESC" datatype="html" approved="yes">
         <source>Your content will appear on newsfeeds across the site.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">התוכן שלך יופיע ברצועות החדשות בכל האתר.</target>
+        <target state="final">התוכן שלך יופיע ברצועות החדשות בכל האתר.</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__SELECTED" datatype="html">
+      <trans-unit id="M__COMMON__SELECTED" datatype="html" approved="yes">
         <source>Selected</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
@@ -1485,9 +1485,9 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">נבחר</target>
+        <target state="final">נבחר</target>
       </trans-unit>
-      <trans-unit id="M__FEATURE__OFFER__PLURAL" datatype="html">
+      <trans-unit id="M__FEATURE__OFFER__PLURAL" datatype="html" approved="yes">
         <source>Offers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
@@ -1498,7 +1498,7 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">הצעות</target>
+        <target state="final">הצעות</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__OFFERS_SELECTOR_DESC" datatype="html">
         <source>Your content will be shared to a specific channel in exchange for USD or tokens.</source>
@@ -1507,9 +1507,9 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">התוכן שלך יופץ לערוץ ספציפי בתמורה לדולר ארה"ב או טוקנים.</target>
+        <target state="needs-translation">Your content will be shared to a specific channel in exchange for USD or tokens.</target>
       </trans-unit>
-      <trans-unit id="M__FEATURE__SIDEBAR_PLURAL" datatype="html">
+      <trans-unit id="M__FEATURE__SIDEBAR_PLURAL" datatype="html" approved="yes">
         <source>Sidebars</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
@@ -1520,16 +1520,16 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">סרגל צד</target>
+        <target state="final">סרגל צד</target>
       </trans-unit>
-      <trans-unit id="BOOST__CREATOR__SIDEBARS_SELECTOR_DESC" datatype="html">
+      <trans-unit id="BOOST__CREATOR__SIDEBARS_SELECTOR_DESC" datatype="html" approved="yes">
         <source>Your content will display on the sidebars throughout the site.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
           <context context-type="linenumber">72</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">התוכן שלך יוצג בסרגלי צד בכל האתר.</target>
+        <target state="final">התוכן שלך יוצג בסרגלי צד בכל האתר.</target>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__BID_TITLE" datatype="html">
         <source>How many views do you want?</source>
