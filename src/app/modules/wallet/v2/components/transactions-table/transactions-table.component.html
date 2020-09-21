@@ -71,9 +71,7 @@
               ><div class="m-walletTransactionsTable__typeWrapper--pro_earning">
                 <i class="material-icons m-walletTransactionsTable__icon--arrow"
                   >arrow_forward</i
-                ><span i18n="@@WALLETV2_TX_TABLE__PRO_EARNINGS"
-                  >Pro Earnings</span
-                >
+                ><span i18n="@@WALLETV2_TX_TABLE__PRO_EARNINGS">Earnings</span>
               </div></ng-template
             >
 
@@ -137,12 +135,7 @@
           <span
             class="m-walletTransactionsTable__total--int"
             *ngIf="currency !== 'tokens'"
-            >{{
-              tx.runningTotal.int
-                | number: '1.0-0'
-                | currency: currency
-                | slice: 0:-3
-            }}</span
+            >{{ tx.runningTotal.int | currency: currency | slice: 0:-3 }}</span
           >
           <span
             class="m-walletTransactionsTable__total--frac"

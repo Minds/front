@@ -581,6 +581,16 @@
       margin: 0 20px 10px 0;
       padding-left: 40px;
     }
+    &[class*='disabled'] {
+      @include m-theme() {
+        color: rgba(themed($m-textColor--tertiary), 0.8);
+      }
+      .m-form__customInput__radio:after {
+        @include m-theme() {
+          border-color: rgba(themed($m-textColor--tertiary), 0.6) !important;
+        }
+      }
+    }
 
     input {
       position: absolute;
@@ -632,7 +642,7 @@
       &[class*='__radio'] {
         border-radius: 50%;
         @include m-theme() {
-          background-color: themed($m-grey-50);
+          background-color: themed($m-borderColor--tertiary);
         }
         &:after {
           border-radius: 50%;

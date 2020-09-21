@@ -27,8 +27,6 @@ import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
 import { Client } from '../../../services/api/client';
 import { Storage } from '../../../services/storage';
-import { SettingsService } from '../../settings/settings.service';
-import { settingsServiceMock } from '../../../mocks/modules/settings/settings.service.mock.spec';
 
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -94,7 +92,6 @@ describe('NewsfeedTopComponent', () => {
         { provide: Upload, useValue: uploadMock },
         { provide: Storage, useValue: storageMock },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: SettingsService, useValue: settingsServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
@@ -166,18 +163,4 @@ describe('NewsfeedTopComponent', () => {
     const list = fixture.debugElement.query(By.css('.minds-list'));
     expect(list.nativeElement.children.length).toBe(4); // poster + 2 activities + infinite-scroll
   });
-
-  it("should reload the list if the user's content rating changed ", fakeAsync(() => {
-    clientMock.get.calls.reset();
-    settingsServiceMock.setRating(2);
-    jasmine.clock().tick(10);
-    fixture.detectChanges();
-
-    expect(comp.rating).toBe(2);
-
-    const call = clientMock.get.calls.mostRecent();
-    expect(call.args[0]).toBe('api/v2/entities/suggested/activities');
-    expect(call.args[1]).toEqual({ limit: 12, offset: '', rating: 2 });
-    expect(call.args[2]).toEqual({ cache: true });
-  }));
 });

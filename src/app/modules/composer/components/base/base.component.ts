@@ -18,6 +18,7 @@ import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
@@ -83,6 +84,7 @@ export class BaseComponent implements AfterViewInit {
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
     protected toasterService: FormToastService,
+    protected featuresService: FeaturesService,
     configs: ConfigsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
@@ -153,6 +155,10 @@ export class BaseComponent implements AfterViewInit {
       this.popup.close();
     }
 
+    if (this.featuresService.has('ckeditor5')) {
+      this.router.navigate(['/blog/v2/edit/new']);
+      return;
+    }
     this.router.navigate(['/blog/edit/new']);
   }
 

@@ -6,7 +6,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss'],
+  styleUrls: ['./report.component.ng.scss'],
 })
 export class ReportComponent implements OnInit {
   submiting = false;
@@ -21,14 +21,18 @@ export class ReportComponent implements OnInit {
       },
     },
     env: {
-      label: 'Browser and OS',
+      label: 'Browser and Operating System',
       type: 'text',
       validation: {
         required: true,
       },
     },
+    contact: {
+      label: 'Email Address',
+      type: 'text',
+    },
     description: {
-      label: 'Description',
+      label: 'Issue Summary',
       value: '',
       type: 'textarea',
       validation: {
@@ -36,7 +40,7 @@ export class ReportComponent implements OnInit {
       },
     },
     steps: {
-      label: 'Steps to reproduce',
+      label: 'Steps to Replicate',
       value: '',
       type: 'textarea',
       validation: {
@@ -71,12 +75,14 @@ export class ReportComponent implements OnInit {
     this.submiting = true;
 
     const formValues = dform.getValues();
-    const description = `### Summary:\n\n${formValues.description}\n\n### Steps to reproduce:\n\n${formValues.steps}\n\n### Browser and OS\n\n${formValues.env}`;
+    const description = `### Summary:\n\n${formValues.description}\n\n### Steps to reproduce:\n\n${formValues.steps}\n\n### Browser and OS\n\n${formValues.env}\n\n### Contact Details:\n\n${formValues.contact}`;
     const body = { title: formValues.title, description, labels: 'by user' };
 
     try {
       const result: any = await this.client.post('api/v2/issues/front', body);
-      this.toasterService.error(`Issue #${result.iid} submitted successfully.`);
+      this.toasterService.success(
+        `Issue #${result.iid} submitted successfully.`
+      );
       this.router.navigate(['/help']);
     } catch (err) {
       console.log(err);

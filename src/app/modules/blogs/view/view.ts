@@ -8,6 +8,7 @@ import {
   Optional,
   SkipSelf,
   ViewChild,
+  Injector,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -23,6 +24,7 @@ import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { FeaturesService } from '../../../services/features.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
@@ -35,6 +37,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
     class: 'm-blog',
   },
   templateUrl: 'view.html',
+  styleUrls: ['./view.ng.scss'],
   providers: [ActivityService],
 })
 export class BlogView implements OnInit, OnDestroy {
@@ -106,10 +109,12 @@ export class BlogView implements OnInit, OnDestroy {
     protected activityService: ActivityService,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
+    private clientMetaService: ClientMetaService,
+    public featuresService: FeaturesService,
+    protected toasterService: FormToastService,
+    @SkipSelf() injector: Injector,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
-    protected clientMetaService: ClientMetaService,
-    configs: ConfigsService,
-    protected toasterService: FormToastService
+    configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.siteUrl = configs.get('site_url');
@@ -187,10 +192,17 @@ export class BlogView implements OnInit, OnDestroy {
     }
   }
 
-  menuOptionSelected(option: string) {
+  async menuOptionSelected(option: string) {
     switch (option) {
       case 'edit':
-        this.router.navigate(['/blog/edit', this.blog.guid]);
+        if (
+          this.featuresService.has('ckeditor5') &&
+          (!this.blog.time_created || Number(this.blog.editor_version) === 2)
+        ) {
+          await this.router.navigate(['/blog/v2/edit', this.blog.guid]);
+          break;
+        }
+        await this.router.navigate(['/blog/edit', this.blog.guid]);
         break;
       case 'delete':
         this.delete();

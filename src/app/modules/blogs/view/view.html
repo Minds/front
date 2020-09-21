@@ -93,7 +93,8 @@
 
   <div style="width:100%; padding:8px; position:relative;">
     <div
-      class="mdl-cell mdl-cell--12-col minds-blog-body"
+      m-code-highlight
+      class="mdl-cell mdl-cell--12-col minds-blog-body m-blog__body"
       [innerHtml]="blog.description | safe"
       [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(blog) }"
       [hidden]="!blog.description"
@@ -147,7 +148,7 @@
 <ng-container *mIfBrowser>
   <div
     class="mdl-grid blogs-grid"
-    style="max-width:660px"
+    style="max-width:660px; padding-bottom: 50px;"
     *ngIf="showComments && blog.guid"
   >
     <m-comments__tree [entity]="blog"> </m-comments__tree>

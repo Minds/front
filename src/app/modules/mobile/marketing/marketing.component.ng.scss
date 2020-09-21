@@ -1,0 +1,73 @@
+@import 'defaults.scss';
+
+:host {
+  .m-aux__hero {
+    background-image: url('../../../../assets/product-pages/nodes/nodes-1.jpg');
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.2);
+  }
+  .m-aux__mobile__downloadPlatform {
+    h2 {
+      margin-top: 40px;
+    }
+  }
+  .m-aux__mobile__downloadOption {
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 45px;
+    }
+    img {
+      max-width: 200px;
+      min-width: 175px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    [class*='m-aux__mobile__downloadButton'] {
+      margin-bottom: 20px;
+      &:not(.m-aux__mobile__downloadButton--iOS) {
+        margin-left: -12px;
+      }
+      &[class*='--iOS'] {
+        margin-top: 22px;
+        margin-bottom: 30px;
+      }
+      &[class*='--playStore'] {
+        margin-top: -4px;
+      }
+    }
+  }
+  .m-aux__mobile__showMobile {
+    margin-top: 8px;
+    @media screen and (min-width: $max-mobile + 1) {
+      display: none;
+    }
+  }
+  h2 {
+    line-height: 1.3em;
+  }
+  h3 {
+    margin-bottom: 0px;
+  }
+  .m-aux__mobile__changes {
+    li {
+      margin-bottom: 4px;
+    }
+  }
+  .m-aux__mobile__hashes {
+    list-style-type: circle;
+
+    li {
+      font-size: 12px;
+      margin-bottom: 0px;
+      font-style: italic;
+      word-break: break-all;
+    }
+  }
+  .m-aux__mobile__canaryNote {
+    font-size: 12px;
+    line-height: 13px;
+  }
+}

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { WireV2Service } from '../../wire-v2.service';
+import { WireType, WireV2Service } from '../../wire-v2.service';
 
 @Component({
   selector: 'm-wireCreator__form',
@@ -34,5 +34,19 @@ export class WireCreatorFormComponent {
 
     // TODO: Remove non-digits properly to avoid NaN
     this.service.setAmount(numericAmount);
+  }
+
+  /**
+   * Sets the type of the wire service and the default amount.
+   * @param { WireType } the currency e.g. 'eth', 'btc'.
+   * @returns { void }
+   */
+  public setType(type: WireType): void {
+    if (type === 'eth' || type === 'btc') {
+      this.service.amount$.next(0.01);
+    } else {
+      this.service.amount$.next(1);
+    }
+    this.service.setType(type);
   }
 }

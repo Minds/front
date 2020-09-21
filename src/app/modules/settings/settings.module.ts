@@ -21,7 +21,6 @@ import { SettingsBillingComponent } from './billing/billing.component';
 import { SettingsBillingSavedCardsComponent } from './billing/saved-cards/saved-cards.component';
 import { SettingsBillingSubscriptionsComponent } from './billing/subscriptions/subscriptions.component';
 import { SettingsReportedContentComponent } from './reported-content/reported-content.component';
-import { SettingsService } from './settings.service';
 import { SettingsWireComponent } from './wire/wire.component';
 import { WireModule } from '../wire/wire.module';
 import { SettingsBlockedChannelsComponent } from './blocked-channels/blocked-channels.component';
@@ -77,7 +76,6 @@ const settingsRoutes: Routes = [
     SettingsBlockedChannelsComponent,
     SettingsTiersComponent,
   ],
-  providers: [SettingsService],
   exports: [
     SettingsBillingSavedCardsComponent,
     SettingsBillingSubscriptionsComponent,

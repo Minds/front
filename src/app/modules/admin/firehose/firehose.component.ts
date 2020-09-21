@@ -17,7 +17,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   entity: any = null;
   inProgress = true;
   algorithm = 'latest';
-  period = '12h';
+  period = 'all';
   customType = 'activities';
   plus = false;
   hashtag: string | null = null;
@@ -82,8 +82,13 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     const all = this.all ? '1' : '';
 
     try {
-      const url = `api/v2/admin/firehose/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&plus=${this.plus}`;
-      const response: any = await this.client.get(url);
+      const url = `api/v2/admin/firehose/${this.algorithm}/${this.customType}`;
+      const response: any = await this.client.get(url, {
+        hashtags,
+        period,
+        all,
+        plus: this.plus,
+      });
       this.entities = response.entities;
 
       if (this.entities.length > 0) {

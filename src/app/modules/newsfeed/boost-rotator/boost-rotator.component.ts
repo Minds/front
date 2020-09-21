@@ -22,10 +22,7 @@ import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { NewsfeedBoostService } from '../newsfeed-boost.service';
-import { SettingsService } from '../../settings/settings.service';
 import { FeaturesService } from '../../../services/features.service';
-import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {
@@ -38,8 +35,9 @@ import {
 import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
-const BOOST_VIEW_THESHOLD = 1000;
+const BOOST_VIEW_THRESHOLD = 1000;
 
 @Component({
   moduleId: module.id,
@@ -53,6 +51,7 @@ const BOOST_VIEW_THESHOLD = 1000;
   inputs: ['interval', 'channel'],
   providers: [FeedsService],
   templateUrl: 'boost-rotator.component.html',
+  styleUrls: ['boost-rotator.component.ng.scss'],
   animations: [
     trigger('fastFade', [
       transition(':enter', [
@@ -87,14 +86,12 @@ export class NewsfeedBoostRotatorComponent {
   scroll_listener;
 
   rating: number = 2; //default to Safe Mode Off
-  ratingMenuToggle: boolean = false;
   plus: boolean = false;
   disabled: boolean = false;
-  useNewNavigation = false;
 
   height: number;
 
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
 
   @ViewChildren('activities') activities: QueryList<Activity>;
 
@@ -111,34 +108,21 @@ export class NewsfeedBoostRotatorComponent {
     public client: Client,
     public scroll: ScrollService,
     public newsfeedService: NewsfeedService,
-    public settingsService: SettingsService,
+    public settingsService: SettingsV2Service,
     private storage: Storage,
     public element: ElementRef,
-    public service: NewsfeedBoostService,
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
-    this.subscriptions = [
-      this.settingsService.ratingChanged.subscribe(event =>
-        this.onRatingChanged(event)
-      ),
-      this.service.enableChanged.subscribe(event =>
-        this.onEnableChanged(event)
-      ),
-      this.service.pauseChanged.subscribe(event => this.onPauseChanged(event)),
-      this.service.explicitChanged.subscribe(event =>
-        this.onExplicitChanged(event)
-      ),
-    ];
   }
 
   ngOnInit() {
     this.subscriptions.push(
       this.viewsCollector$
-        .pipe(distinctUntilChanged(), debounceTime(BOOST_VIEW_THESHOLD))
+        .pipe(distinctUntilChanged(), debounceTime(BOOST_VIEW_THRESHOLD))
         .subscribe(position => {
           if (this.boosts[position] && this.boosts[position].boosted_guid) {
             this.newsfeedService.recordView(
@@ -162,11 +146,15 @@ export class NewsfeedBoostRotatorComponent {
         })
     );
 
-    this.useNewNavigation = this.featuresService.has('navigation');
-    this.rating = this.session.getLoggedInUser().boost_rating;
-    this.plus = this.session.getLoggedInUser().plus;
-    this.disabled = !this.service.isBoostEnabled();
+    const user = this.session.getLoggedInUser();
+
+    this.plus = user.plus;
+
+    this.rating = user.boost_rating;
+    this.disabled = user.disabled_boost;
+
     this.load();
+
     this.subscriptions.push(
       (this.scroll_listener = this.scroll
         .listenForView()
@@ -174,7 +162,7 @@ export class NewsfeedBoostRotatorComponent {
     );
     this.isVisible();
 
-    this.paused = this.service.isBoostPaused();
+    this.paused = !user.boost_autorotate;
 
     this.subscriptions.push(
       this.feedsService.feed.subscribe(async boosts => {
@@ -220,26 +208,6 @@ export class NewsfeedBoostRotatorComponent {
 
     this.inProgress = false;
     return true;
-  }
-
-  onExplicitChanged(value: boolean) {
-    this.load();
-  }
-
-  onPauseChanged(value: boolean) {
-    console.warn('on pause changed');
-    this.paused = value;
-  }
-
-  onRatingChanged(rating) {
-    this.rating = rating;
-    this.boosts = [];
-
-    this.load();
-  }
-
-  ratingMenuHandler() {
-    this.ratingMenuToggle = !this.ratingMenuToggle;
   }
 
   start() {
@@ -307,9 +275,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   async next() {
-    //this.activities.toArray()[this.currentPosition].hide();
     if (this.currentPosition + 1 > this.boosts.length - 1) {
-      //this.currentPosition = 0;
       try {
         this.load();
         this.currentPosition++;
@@ -347,11 +313,5 @@ export class NewsfeedBoostRotatorComponent {
       this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
 
     if (this.height < 500) this.height = 500;
-
-    // console.log(
-    //   'boost rotator',
-    //   this.rotatorEl.nativeElement.clientWidth,
-    //   this.height
-    // );
   }
 }

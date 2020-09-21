@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  ElementRef,
 } from '@angular/core';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Session } from '../../../../../services/session';
@@ -38,6 +39,14 @@ export class WalletTokenOnboardingComponent {
   }
   get phoneVerified(): boolean {
     return this._phoneVerified;
+  }
+
+  private _dashboardView: ElementRef;
+  @Input() set dashboardView(value: ElementRef) {
+    this._dashboardView = value;
+  }
+  get dashboardView(): ElementRef {
+    return this._dashboardView;
   }
 
   showModal = false;
@@ -91,6 +100,13 @@ export class WalletTokenOnboardingComponent {
     } else {
       this.finishedOnboarding();
     }
+  }
+
+  scrollToElement() {
+    this._dashboardView.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 
   finishedOnboarding() {

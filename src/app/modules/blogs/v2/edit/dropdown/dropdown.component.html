@@ -1,0 +1,25 @@
+<ng-template #nsfwMenu>
+  <ul data-cy="meatball-menu-nsfw-menu">
+    <li *ngFor="let reason of reasons" (click)="toggleNSFW(reason.value)">
+      <span>{{ reason.label }}</span>
+      <m-icon
+        iconId="check"
+        *ngIf="(getNSFW() | async).indexOf(reason.value) > -1"
+      ></m-icon>
+    </li>
+  </ul>
+</ng-template>
+
+<m-composerTitleBar__dropdown [anchorPosition]="{ top: 0, right: 0 }">
+  <li>
+    <m-dropdownMenu
+      [menu]="nsfwMenu"
+      [anchorPosition]="{ top: '0' }"
+      triggerClass="m-dropdownMenu__item"
+      data-cy="meatball-menu-nsfw"
+    >
+      <span i18n="@@COMMON__NSFW">NSFW</span>
+      <m-icon iconId="chevron_right"></m-icon>
+    </m-dropdownMenu>
+  </li>
+</m-composerTitleBar__dropdown>

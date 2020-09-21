@@ -88,9 +88,7 @@ describe('AdminFirehose', () => {
     fixture.detectChanges();
 
     clientMock.response = {};
-    clientMock.response[
-      `api/v2/admin/firehose/latest/activities?hashtags=&period=12h&all=&plus=false`
-    ] = {
+    clientMock.response[`api/v2/admin/firehose/latest/activities`] = {
       status: 'success',
       entities: getMockActivities(),
     };

@@ -7,6 +7,7 @@ import { EmbedService } from '../../../../services/embed';
   selector: 'm-social-icons',
   inputs: ['_url: url', '_title: title', '_embed: embed'],
   templateUrl: 'social-icons.html',
+  styleUrls: ['./social-icons.ng.scss'],
 })
 export class SocialIcons {
   url: string = '';

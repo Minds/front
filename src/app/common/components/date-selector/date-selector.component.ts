@@ -24,7 +24,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       *ngIf="tooltipIcon"
       icon="{{ tooltipIcon }}"
       [owlDateTimeTrigger]="dt"
-      i18n-label="{{ i18n }}"
     >
       {{ tooltipText }}
     </m-tooltip>

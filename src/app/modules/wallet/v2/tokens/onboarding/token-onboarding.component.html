@@ -24,6 +24,7 @@
         routerLink="settings"
         [ngClass]="{ disabled: !phoneVerified, stepComplete: hasAddress }"
         i18n="@@WALLET_V2_TOKEN_ONBOARDING__ADD_ONCHAIN_ADDRESS"
+        (click)="scrollToElement()"
       >
         Add your on-chain address</a
       >

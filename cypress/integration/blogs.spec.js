@@ -1,7 +1,29 @@
-// import 'cypress-file-upload';
+import generateRandomId from '../support/utilities';
 
-context.skip('Blogs', () => {
+context('Blogs', () => {
+  const ckeditor = '[data-cy=data-minds-ckeditor-input] div';
   const closeButton = '[data-cy=data-minds-conversation-close]';
+  const postText = generateRandomId();
+  const titleText = generateRandomId();
+  const saveDraftButton = '[data-cy=data-minds-blog-editor-save-draft]';
+  const publishButton = '[data-cy=data-minds-blog-editor-publish]';
+  const toastWrapper = '[data-cy=data-minds-form-toast-wrapper]';
+  const titleInput = '[data-cy=data-minds-blog-title-input]';
+  const bannerInput = '[data-cy=data-minds-blog-banner-upload]';
+  const captchaSubmitButton = '[data-cy=data-minds-captcha-modal-submit]';
+  const tagsToggle = '[data-cy=data-minds-blog-editor-tags-toggle]';
+  const metaToggle = '[data-cy=data-minds-blog-editor-meta-toggle]';
+
+  const tagsInput = '[data-cy=data-minds-blog-editor-tags-input]';
+  const tagsContainer = '[data-cy=data-minds-blog-editor-tags-container]';
+
+  const metaSlugInput = '[data-cy=data-minds-meta-slug-input]';
+  const metaTitleInput = '[data-cy=data-minds-meta-title-input]';
+  const metaAuthorInput = '[data-cy=data-minds-meta-author-input]';
+  const metaDescriptionTextarea = '[data-cy=data-minds-meta-description-textarea]';
+
+  const dropdownMenu = '[data-cy=meatball-menu-trigger]';
+  const viewPostMenu = '[data-cy=data-minds-post-menu-button]';
 
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
@@ -20,313 +42,191 @@ context.skip('Blogs', () => {
 
   beforeEach(() => {
     cy.preserveCookies();
-    cy.overrideFeatureFlags({
-      channels: false,
-    });
     cy.server();
-    cy.route('POST', '**/api/v1/blog/new').as('postBlog');
-    cy.route('POST', '**/api/v1/media**').as('postMedia');
-    cy.route('GET', '**/api/v1/blog/**').as('getBlog');
-    cy.route('DELETE', '**/api/v1/blog/**').as('deleteBlog');
-
-    cy.visit('/newsfeed/global/top')
-      .location('pathname')
-      .should('eq', '/newsfeed/global/top');
+    cy.route('POST', '**/api/v1/blog/**').as('postBlog');
   });
 
-  const uploadAvatar = () => {
-    cy.visit(`/${Cypress.env().username}`);
-    cy.get('.m-channel--name .minds-button-edit button:first-child').click();
-    cy.uploadFile(
-      '.minds-avatar input[type=file]',
-      '../fixtures/avatar.jpeg',
-      'image/jpg'
-    );
-    cy.get('.m-channel--name .minds-button-edit button:last-child').click();
-  };
+  it('should show editor toolbar on text highlight', () => {
+    navigateToNewBlog();
+    cy.get(ckeditor).type(postText);
+    cy.highlightText(postText);
+    cy.get('.ck-toolbar__items');
+  });
 
-  const createBlogPost = (title, body, nsfw = false, schedule = false) => {
-    cy.visit('/blog/edit/new');
-
-    cy.uploadFile(
-      '.minds-banner input[type=file]',
-      '../fixtures/international-space-station-1776401_1920.jpg',
-      'image/jpg'
-    );
-
-    cy.get('minds-textarea .m-editor').type(title);
-    cy.get('m-inline-editor .medium-editor-element').type(body);
-
-    // // click on plus button
-    // cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
-    // // click on camera
-    // cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
-
-    // upload the image
-    cy.uploadFile(
-      '.medium-media-file-input',
-      '../fixtures/international-space-station-1776401_1920.jpg',
-      'image/jpg'
-    )
-      .wait('@postMedia', { timeout: 30000 })
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.equal('success');
-      });
-
-    // open license dropdown & select first license
-    cy.get('.m-license-info select').select('All rights reserved');
-
-    // click on hashtags dropdown
-    cy.get(
-      '.m-category-info m-hashtags-selector .m-dropdown--label-container'
-    ).click();
-    // select #ART
-    cy.get('.m-category-info m-dropdown m-form-tags-input > div > span')
-      .contains('#art')
-      .click();
-    // type in another hashtag manually
-    cy.get('.m-category-info m-hashtags-selector m-form-tags-input input')
-      .type('hashtag{enter}')
+  it('should show block toolbar button with options (+)', () => {
+    cy.get('.ck-block-toolbar-button')
+      .should('be.visible')
       .click();
 
-    // click away
-    cy.get('.m-category-info m-hashtags-selector .minds-bg-overlay').click();
-
-    // select visibility
-    cy.get('.m-visibility-info select').select('Loggedin');
-
-    // open metadata form
-    cy.get('.m-blog-edit--toggle-wrapper .m-blog-edit--toggle')
-      .contains('Metadata')
-      .click();
-    // set url slug
-    cy.get('.m-blog-edit--field input[name=slug]').type('123');
-    // set meta title
-    cy.get('.m-blog-edit--field input[name=custom_meta_title]').type('Test');
-    // set meta description
-    cy.get('.m-blog-edit--field textarea[name=custom_meta_description]').type(
-      'This is a test blog'
-    );
-    // set meta author
-    cy.get('.m-blog-edit--field input[name=custom_meta_author]').type(
-      'Minds Test'
-    );
-
-    if (nsfw) {
-      // click on nsfw dropdown
-      cy.get('m-nsfw-selector .m-dropdown--label-container').click();
-
-      // select Nudity
-      cy.get('m-nsfw-selector .m-dropdownList__item')
-        .contains('Nudity')
-        .click();
-
-      // click away
-      cy.get('m-nsfw-selector .minds-bg-overlay').click({ force: true });
-    }
-
-    if (schedule) {
-      cy.get('.m-poster-date-selector__input').click();
-      cy.get(
-        'td.c-datepicker__day-body.c-datepicker__day--selected + td'
-      ).click();
-      cy.get('a.c-btn.c-btn--flat.js-ok').click();
-
-      // get setted date to compare
-      let scheduledDate;
-      cy.get('div.m-poster-date-selector__input div.m-tooltip--bubble')
-        .invoke('text')
-        .then(text => {
-          scheduledDate = text;
-        });
-    }
-
-    cy.completeCaptcha();
-
-    cy.get('.m-button--submit')
-      .click({ force: true }) // TODO: Investigate why disabled flag is being detected
-      .wait('@postBlog')
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.equal('success');
-      })
-      .wait('@getBlog')
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.equal('success');
-        expect(xhr.response.body).to.have.property('blog');
-      });
-
-    cy.location('pathname').should(
-      'contains',
-      `/${Cypress.env().username}/blog`
-    );
-
-    cy.get('.m-blog--title').contains(title);
-    cy.get('.minds-blog-body p').contains(body);
-    cy.get('.m-license-info span').contains('all-rights-reserved');
-
-    if (schedule) {
-      cy.wait(1000);
-
-      cy.get('div.m-blog-container div.mdl-grid div.minds-body span')
-        .invoke('text')
-        .then(text => {
-          const time_created = new Date(text).getTime();
-          scheduledDate = new Date(scheduledDate).getTime();
-          expect(scheduledDate).to.equal(time_created);
-        });
-    }
-  };
-
-  const deleteBlogPost = () => {
-    cy.get('m-post-menu button.minds-more').click();
-    cy.get('m-post-menu ul.minds-dropdown-menu li')
-      .contains('Delete')
-      .click();
-    cy.get('m-post-menu m-modal-confirm .mdl-button--colored').click();
-    cy.wait('@deleteBlog').then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-    });
-  };
-
-  const editBlogPost = (title, body) => {
-    cy.location('pathname').should(
-      'contains',
-      `/${Cypress.env().username}/blog`
-    );
-
-    cy.get('m-post-menu').click();
-    cy.get('.minds-dropdown-menu li')
-      .first()
-      .click();
-    cy.location('pathname').should('contains', '/blog/edit');
-    cy.get('minds-textarea .m-editor').type(title);
-    cy.get('m-inline-editor .medium-editor-element').type(body);
-
-    cy.get('.m-button--submit').click();
-
-    cy.wait('@postBlog').then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-
-      cy.wait('@getBlog').then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.equal('success');
-        expect(xhr.response.body).to.have.property('blog');
-      });
-    });
-
-    cy.location('pathname').should(
-      'contains',
-      `/${Cypress.env().username}/blog`
-    );
-
-    cy.get('.m-blog--title').contains(title);
-    cy.get('.minds-blog-body p').contains(body);
-  };
+    cy.get('.ck-file-dialog-button').should('be.visible');
+    cy.get('.ck-dropdown').should('be.visible');
+  });
 
   it('should not be able to create a new blog if no title or banner are specified', () => {
-    cy.visit('/blog/edit/new');
-    cy.completeCaptcha();
-    cy.get('.m-button--submit').click();
-    cy.get('.m-blog--edit--error').contains('Error: You must provide a title');
-    cy.get('minds-textarea .m-editor').type('Title');
-    cy.get('.m-button--submit').click();
-    cy.get('.m-blog--edit--error').contains('Error: You must upload a banner');
+    // no title
+    cy.get(publishButton).click();
+    cy.get(toastWrapper)
+      .should('be.visible')
+      .contains("You must provide a title");
+
+    // no banner
+    cy.get(titleInput).type(titleText);
+    cy.get(publishButton).click();
+    cy.get(toastWrapper)
+      .should('be.visible')
+      .contains("You must provide a title");
+
   });
 
-  it('should be able to create a new blog', () => {
-    const title = 'Title';
-    const body = 'Content';
-
-    uploadAvatar();
-    createBlogPost(title, body, true);
-    deleteBlogPost();
-  });
-
-  /**
-   * Skipping until the scheduling options are visible on sandboxes
-   * currently they are not, missing setting perhaps?
-   */
-
-  it.skip('should be able to create a new scheduled blog', () => {
-    uploadAvatar();
-    createBlogPost('Title', 'Content', true, true);
-    deleteBlogPost();
-  });
-
-  /**
-   * Skipping until sandbox behaves consistently as currently when posting,
-   * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
-   */
-
-  it.skip('should create an activity for the blog post', () => {
-    const identifier = Math.floor(Math.random() * 100);
-    const title = 'Test Post for Activity ' + identifier;
-    const body = 'Some content here ' + identifier;
-
-    createBlogPost(title, body);
-    cy.visit(`/${Cypress.env().username}`);
-    //:nth-child(3) > .mdl-card > .m-rich-embed > minds-rich-embed > .m-rich-embed-src > .meta > .m-rich-embed--title
-    cy.get('minds-activity:first .m-blurb').contains(body);
-    cy.get('minds-activity:first .m-rich-embed--title')
-      .first()
-      .contains(title);
-
-    cy.get('minds-activity:first .thumbnail')
-      .should('have.attr', 'href')
-      .then(href => {
-        cy.visit(href);
-      });
-    cy.location('pathname').should(
-      'contains',
-      `/${Cypress.env().username}/blog`
+  it('should be able to add banner, tags and metadata', () => {
+    cy.uploadFile(
+      bannerInput,
+      '../fixtures/international-space-station-1776401_1920.jpg',
+      'image/jpg'
     );
-    deleteBlogPost();
-    cy.location('pathname').should('contains', `/blog/owner`);
   });
 
-  /**
-   * Skipping until sandbox behaves consistently as currently when posting,
-   * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
-   */
+  it('should let the user add only 5 tags', () => {
+    cy.get(tagsToggle).click();
 
-  it.skip('should update the activity when blog is updated', () => {
-    const identifier = Math.floor(Math.random() * 100);
-    const title = 'Test Post for Activity ' + identifier;
-    const body = 'Some content here ' + identifier;
+    cy.get(tagsInput).type('tag1\r');
+    cy.get(tagsInput).type('tag2\r');
+    cy.get(tagsInput).type('tag3\r');
+    cy.get(tagsInput).type('tag4\r');
+    cy.get(tagsInput).type('tag5\r');
+    cy.get(tagsInput).type('tag6\r');
 
-    createBlogPost(title, body);
-    cy.visit(`/${Cypress.env().username}`);
-    cy.get('minds-activity:first .m-blurb').contains(body);
-    cy.get('minds-activity:first .m-rich-embed--title')
-      .first()
-      .contains(title);
+    cy.get(tagsContainer).within($list => {
+      cy.contains('#tag1');
+      cy.contains('#tag2');
+      cy.contains('#tag3');
+      cy.contains('#tag4');
+      cy.contains('#tag5');
 
-    cy.get('minds-activity:first .thumbnail')
-      .should('have.attr', 'href')
-      .then(href => {
-        cy.visit(href);
-      });
+      // limit reached
+      cy.contains('#tag6')
+        .should('not.exist');
+      
+      // remove tag
+      cy.contains('#tag1')
+        .click();
 
-    const newtitle = title + ' changed';
-    const newbody = body + ' changed';
-    editBlogPost(newtitle, newbody);
-
-    cy.visit(`/${Cypress.env().username}`);
-    cy.get('minds-activity:first .m-blurb').contains(body);
-    cy.get('minds-activity:first .m-rich-embed--title')
-      .first()
-      .contains(title);
-
-    cy.get('minds-activity:first .thumbnail')
-      .should('have.attr', 'href')
-      .then(href => {
-        cy.visit(href);
-      });
-    deleteBlogPost();
+      cy.contains('#tag1')
+        .should('not.exist');
+    });
   });
+
+  it('should allow the user to set metadata', () => {
+    cy.get(metaToggle).click();
+    cy.get(metaSlugInput).type('my-slug');
+    cy.get(metaTitleInput).type('meta-title');
+    cy.get(metaAuthorInput).type('meta-author');
+    cy.get(metaDescriptionTextarea).type('meta-description');
+  });
+
+  it('should allow the user to set license', () => {
+    cy.get(dropdownMenu).click();
+    cy.contains('License').click();
+    cy.contains('Creative Commons Attribution').click();
+
+    cy.get(dropdownMenu).click();
+    cy.contains('License').click();
+    
+    cy.contains('Creative Commons Attribution')
+      .parent()
+      .contains("check");
+  });
+
+  it('should allow the user to set nsfw', () => {
+    cy.get(dropdownMenu).click();
+    cy.contains('NSFW').click();
+    cy.contains('Other').click();
+
+    cy.get(dropdownMenu).click();
+    cy.contains('NSFW').click();
+    
+    cy.contains('Other')
+      .parent()
+      .contains("check");
+  });
+
+  it('should allow the user to set visibility', () => {
+    cy.get(dropdownMenu).click();
+    cy.contains('Visibility').click();
+    cy.contains('Loggedin').click();
+
+    cy.get(dropdownMenu).click();
+    cy.contains('Visibility').click();
+    
+    cy.contains('Loggedin')
+      .parent()
+      .contains("check");
+  });
+
+  it('should let the user save a draft', () => {
+    saveBlog(true);
+    cy.get(toastWrapper).contains("Your draft has been successfully saved")
+  });
+
+  it('should be able to publish a new blog', () => {
+    saveBlog();
+  });
+
+
+  it('should contain the blogs data after posting', () => {
+    cy.contains(titleText);
+    cy.contains(postText);
+    cy.contains('attribution-cc');
+
+    cy.get('head meta[name="og:title"]')
+      .should("have.attr", "content", "meta-title");
+    
+    cy.get('head title')
+      .contains("meta-title");
+    
+    cy.get('head meta[name="description"]')
+      .should("have.attr", "content", postText);
+    
+    cy.get('head meta[property="og:image"]')
+      .should("have.attr", "content");
+
+    cy.location('href').should('contain', 'my-slug');
+  });
+
+  it('should allow the user to edit their blog', () => {
+    const editText = '@'+postText+'@';
+
+    cy.get(viewPostMenu).click();
+    cy.contains('Edit').click();
+    
+    cy.get(ckeditor)
+      .clear()
+      .type(editText);
+    
+    saveBlog();
+
+    cy.contains(editText);
+  });
+
+  const navigateToNewBlog = () => {
+    cy.visit('/blog/v2/edit/new')
+        .location('pathname')
+        .should('eq', '/blog/v2/edit/new');
+  }
+
+  const saveBlog = (draft = false) => { 
+    if (draft) {
+      cy.get(saveDraftButton).click({force: true});
+    } else {
+      cy.get(publishButton).click({force: true});
+    }
+
+    cy.completeCaptcha();
+    cy.get(captchaSubmitButton)
+      .click()
+      .wait('@postBlog').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
+  }
 });

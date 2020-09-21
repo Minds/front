@@ -16,7 +16,6 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { CookieService } from '../../../common/services/cookie.service';
 import { ContextService } from '../../../services/context.service';
-import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -25,6 +24,7 @@ import { NewsfeedHashtagSelectorService } from '../services/newsfeed-hashtag-sel
 import { FeedsService } from '../../../common/services/feeds.service';
 import { FeaturesService } from '../../../services/features.service';
 import { isPlatformServer } from '@angular/common';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -46,7 +46,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   rating: number = 1;
 
   paramsSubscription: Subscription;
-  ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   selectionChangeSubscription: Subscription;
   hashtagFilterChangeSubscription: Subscription;
@@ -63,7 +62,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected cookieService: CookieService,
     protected context: ContextService,
     protected session: Session,
-    protected settingsService: SettingsService,
+    protected settingsService: SettingsV2Service,
     protected overlayModal: OverlayModalService,
     protected newsfeedService: NewsfeedService,
     protected topbarHashtagsService: TopbarHashtagsService,
@@ -75,10 +74,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     if (this.session.isLoggedIn()) {
       this.rating = this.session.getLoggedInUser().boost_rating;
     }
-
-    this.ratingSubscription = settingsService.ratingChanged.subscribe(event => {
-      this.onRatingChanged(event);
-    });
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
       () => {
@@ -159,10 +154,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.ratingSubscription) {
-      this.ratingSubscription.unsubscribe();
-    }
-
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
@@ -252,12 +243,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
   prepend(activity: any) {
     this.prepended.unshift(activity);
-  }
-
-  onRatingChanged(rating) {
-    this.rating = rating;
-
-    this.load(true);
   }
 
   setSort(algorithm: string, period: string | null, customType: string | null) {

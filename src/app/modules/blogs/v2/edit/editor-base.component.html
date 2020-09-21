@@ -1,0 +1,101 @@
+<!-- Reuusable dropdown -->
+<ng-template #optionsDropdownContainer>
+  <m-blogEditor__dropdown></m-blogEditor__dropdown>
+</ng-template>
+
+<!-- Main Editor Container -->
+<div class="m-blogEditor">
+  <!-- Legacy blog prompt -->
+  <div
+    class="m-blogEditor__legacyPrompt"
+    *ngIf="(service.editorVersion$ | async) < 2"
+  >
+    <p>
+      You are editing a blog that was created with an older editor. Media embeds
+      may not work and should be re-added when saving this blog.
+    </p>
+  </div>
+
+  <!-- Banner Preview -->
+  <div
+    *ngIf="service.banner$ | async"
+    class="m-blogEditor__bannerImageContainer"
+  >
+    <div class="m-blogEditor__bannerToolbar">
+      <i class="material-icons" (click)="service.banner$.next('')">delete</i>
+      <ng-template [ngTemplateOutlet]="optionsDropdownContainer"></ng-template>
+    </div>
+    <img [src]="service.banner$ | async" />
+  </div>
+
+  <!-- Container -->
+  <div class="m-blogEditor__container">
+    <!-- Banner setup -->
+    <div class="m-blogEditor__bannerContainer">
+      <div
+        class="m-blogEditor__bannerUploader"
+        *ngIf="!(service.banner$ | async)"
+      >
+        <span
+          class="m-blogEditor__bannerText"
+          i18n="@@BLOGS_EDITOR__UPLOAD_BANNER_IMAGE"
+        >
+          <button
+            class="m-blogEditor__bannerUploadButton"
+            (click)="bannerUpload.click()"
+          >
+            <i class="material-icons">publish</i>
+            Upload Banner
+          </button>
+          <input
+            hidden
+            id="channel-v2-edit-avatar"
+            type="file"
+            accept="image/*"
+            (change)="uploadBanner(bannerUpload)"
+            data-cy="data-minds-blog-banner-upload"
+            #bannerUpload
+          />
+        </span>
+        <!-- <span
+          class="m-blogEditor__bannerSizeText"
+          i18n="@@BLOGS_EDITOR__RECOMMENDED_BANNER_SIZE_INFO"
+        >
+          <em>
+            Recommended minimum size 200px x 1125 (Ratio 16:9)
+          </em>
+        </span> -->
+      </div>
+
+      <div class="m-blogEditor__ellipsis" *ngIf="!(service.banner$ | async)">
+        <ng-template
+          [ngTemplateOutlet]="optionsDropdownContainer"
+        ></ng-template>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="m-blogEditor__titleContainer">
+      <input
+        class="m-blogEditor__titleInput"
+        type="text"
+        placeholder="Title"
+        i18n-placeholder="@@BLOG_EDITOR__TITLE"
+        [ngModel]="service.title$ | async"
+        (ngModelChange)="onTitleChange($event)"
+        maxlength="128"
+        data-cy="data-minds-blog-title-input"
+      />
+    </div>
+
+    <!-- Body -->
+    <div class="m-blogEditor__bodyContainer">
+      <m-blog__editor
+        (contentChanged)="onContentChange($event)"
+        [content]="service.content$ | async"
+      ></m-blog__editor>
+    </div>
+  </div>
+
+  <m-blogEditor__bottomBar></m-blogEditor__bottomBar>
+</div>

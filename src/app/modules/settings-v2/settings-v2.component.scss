@@ -12,7 +12,7 @@ m-settingsV2 {
 
   m-draggableList {
     @include m-theme {
-      box-shadow: none;
+      box-shadow: none !important;
     }
   }
 
@@ -173,7 +173,18 @@ m-settingsV2 {
       textarea,
       label.m-form__colorPreview {
         @include m-theme() {
-          box-shadow: none;
+          box-shadow: none !important;
+        }
+      }
+      .m-form__row--label label {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 400;
+
+        > m-tooltip {
+          font-size: 15px;
+          line-height: 20px;
+          font-weight: 300;
         }
       }
     }

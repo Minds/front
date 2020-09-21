@@ -1,4 +1,9 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -6,6 +11,8 @@ import { Session } from '../../../../services/session';
   templateUrl: './tokens.component.html',
 })
 export class WalletV2TokensComponent {
+  @ViewChild('dashboardViews') dashboardView: ElementRef;
+
   phoneVerified: boolean;
   hasOnchainAddress: boolean;
   tokenOnboardingComplete = false;

@@ -9,6 +9,7 @@
       [@fader]="toast.dismissed ? 'dismissed' : 'active'"
       (mouseover)="pauseTimeout(i)"
       (mouseleave)="resumeTimeout(i)"
+      data-cy="data-minds-form-toast-wrapper"
     >
       <div [ngClass]="['m-formToast__iconWrapper--' + toast.type]">
         <i class="material-icons">

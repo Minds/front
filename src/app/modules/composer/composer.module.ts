@@ -31,6 +31,7 @@ import { ComposerMonetizeV2Component } from './components/popup/monetize/v2/comp
 
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete/text-input-autocomplete.module';
 import { RouterModule } from '@angular/router';
+import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdown/dropdown.component';
 /**
  * Exported components
  */
@@ -46,6 +47,7 @@ const COMPONENTS = [
   ComposerMonetizeV2PlusComponent,
   ComposerMonetizeV2MembershipsComponent,
   ComposerMonetizeV2CustomComponent,
+  ComposerTitleBarDropdownComponent,
 ];
 
 /**
