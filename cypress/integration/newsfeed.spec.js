@@ -3,6 +3,15 @@ import generateRandomId from '../support/utilities';
 context('Newsfeed', () => {
 
   const postText = generateRandomId();
+  const titleText = generateRandomId();
+
+  const composer = {
+    trigger: 'm-composer .m-composer__trigger',
+    messageTextArea: 'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
+    postButton: "m-composer__modal [data-cy='button-default-action']",
+    titleArea: 'm-composer__modal [data-cy="composer-activity-title"]',
+    uploadButton: `m-composer__modal [data-cy="upload-button"] input`
+  };
 
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
@@ -18,12 +27,16 @@ context('Newsfeed', () => {
     cy.preserveCookies();
     cy.server();
     cy.route('POST', '**/api/v1/newsfeed').as('newsfeedPOST');
-    cy.route('POST', '**/api/v1/media').as('mediaPOST');
     cy.route('POST', '**/api/v1/newsfeed/**').as('newsfeedEDIT');
+
+    cy.route('POST', '**api/v2/newsfeed**').as('postActivity');
+    cy.route('POST', '**api/v2/newsfeed/**').as('editActivity');
     cy.route('POST', '**/api/v1/media/**').as('mediaEDIT');
+    cy.route('POST', '**api/v1/media**').as('postMedia');
     cy.visit('/newsfeed/subscriptions');
   });
 
+  
   const deleteActivityFromNewsfeed = () => {
     cy.contains(postText)
       .parentsUntil('m-activity')
@@ -120,6 +133,52 @@ context('Newsfeed', () => {
 
   it('should post an activity', () => {
     cy.post(postText);
+    deleteActivityFromNewsfeed();
+  });
+
+  it('should post an activity and let you edit it', () => {
+    // open composer
+    cy.openComposer();
+
+    // type in text area
+    cy.get(composer.messageTextArea)
+      .clear()
+      .type(postText);
+
+    // upload and wait for media
+    cy.uploadFile(
+      composer.uploadButton,
+      '../fixtures/international-space-station-1776401_1920.jpg',
+      'image/jpg'
+    ).wait('@postMedia');
+
+    // click title button and type title
+    cy.get(composer.titleArea).eq(1).click();
+    cy.get(composer.titleArea).first().type(titleText);
+    cy.get(composer.postButton).click().wait('@postActivity');
+    
+    // get activity and edit it 
+    cy.contains(postText)
+      .parentsUntil('m-activity')
+      .parent()
+      .within($list => {
+        cy.get('.m-postMenu__button').click();
+        cy.contains('Edit Post').click();
+      });
+
+    // type edit at the end of text area
+    cy.get(composer.messageTextArea)
+      .type('edit');
+    
+    // type edit at the end of title area.
+    cy.get(composer.titleArea).first().type('edit');
+    cy.get(composer.postButton).click().wait('@editActivity');
+
+    // assert new post is visible
+    cy.contains(`${postText}edit`).should('be.visible');
+    cy.contains(`${titleText}edit`).should('be.visible');
+
+    // cleanup
     deleteActivityFromNewsfeed();
   });
 
