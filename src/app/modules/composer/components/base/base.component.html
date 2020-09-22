@@ -3,6 +3,8 @@
   [class.m-composer__base--withPreview]="
     (attachmentPreview$ | async) || (richEmbedPreview$ | async)
   "
+  m-dragAndDrop
+  (onFileDropped)="onAttachmentPaste($event)"
 >
   <div class="m-composerBase__container">
     <m-composer__titleBar

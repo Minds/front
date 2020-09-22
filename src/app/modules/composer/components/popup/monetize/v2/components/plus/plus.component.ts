@@ -38,6 +38,11 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
   isPro: boolean;
 
   /**
+   * If the user is Plus
+   */
+  isPlus: boolean;
+
+  /**
    * Terms & Conditions accepted state
    */
   termsAccepted: boolean = false;
@@ -91,6 +96,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
 
   setup(): void {
     this.isPro = this.session.getLoggedInUser().pro;
+    this.isPlus = this.session.getLoggedInUser().plus;
 
     this.detectChanges();
     setTimeout(() => this.detectChanges(), 1);
@@ -103,27 +109,27 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
     this.expires = expires;
   }
 
-  async openProUpgradeModal(): Promise<void> {
-    const proEntity = await this.wirePaymentHandlers.get('pro');
+  async openPlusUpgradeModal(): Promise<void> {
+    const plusEntity = await this.wirePaymentHandlers.get('plus');
     let completed = false;
 
     const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(WireCreatorComponent, proEntity, {
+      .present(WireCreatorComponent, plusEntity, {
         wrapperClass: 'm-modalV2__wrapper',
         default: {
           type: 'money',
-          upgradeType: 'pro',
+          upgradeType: 'plus',
         },
         onComplete: wire => {
           completed = true;
-          this.isPro = true;
+          this.isPlus = true;
           this.detectChanges();
           this.stackableModal.dismiss();
         },
       })
       .toPromise();
     if (stackableModalEvent.state === StackableModalState.Dismissed) {
-      this.isPro = completed;
+      this.isPlus = completed;
     }
   }
 

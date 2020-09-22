@@ -2,16 +2,16 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="hu">
     <body>
-      <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html">
+      <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html" approved="yes">
         <source>Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Csoportok</target>
+        <target state="final">Csoportok</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__NEW_GROUP" datatype="html">
+      <trans-unit id="M__COMMON__NEW_GROUP" datatype="html" approved="yes">
         <source>New group</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
@@ -26,9 +26,9 @@
           <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Új csoport</target>
+        <target state="final">Új csoport</target>
       </trans-unit>
-      <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html">
+      <trans-unit id="M__COMMON__DISCOVER_GROUPS" datatype="html" approved="yes">
         <source>Discover Groups</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
@@ -43,7 +43,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Fedezze fel a Csoportokat</target>
+        <target state="final">Fedezze fel a Csoportokat</target>
       </trans-unit>
       <trans-unit id="M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR" datatype="html">
         <source>Join some groups to populate this sidebar</source>

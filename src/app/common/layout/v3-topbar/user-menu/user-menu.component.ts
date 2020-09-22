@@ -13,6 +13,7 @@ import { Navigation as NavigationService } from '../../../../services/navigation
 import { RouterLink } from '@angular/router';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
+import { UserMenuService } from './user-menu.service';
 
 @Component({
   selector: 'm-usermenu__v3',
@@ -22,8 +23,6 @@ import { MindsUser } from '../../../../interfaces/entities';
 export class UserMenuV3Component implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
   @Input() showFooterLinks: boolean = false;
-
-  isOpen: boolean = false;
 
   isDark: boolean = false;
   themeSubscription: Subscription;
@@ -45,11 +44,13 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
-    protected featuresService: FeaturesService
+    protected featuresService: FeaturesService,
+    public service: UserMenuService
   ) {}
 
   ngOnInit(): void {
     this.session.isLoggedIn(() => this.detectChanges());
+
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
@@ -72,11 +73,11 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   }
 
   toggleMenu(): void {
-    this.isOpen = !this.isOpen;
+    this.service.isOpen$.next(!this.service.isOpen$.getValue());
   }
 
   closeMenu(): void {
-    this.isOpen = false;
+    this.service.isOpen$.next(false);
   }
 
   detectChanges(): void {

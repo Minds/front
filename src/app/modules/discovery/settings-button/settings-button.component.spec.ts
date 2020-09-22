@@ -12,6 +12,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { DiscoverySettingsButtonComponent } from './settings-button.component';
 import { TooltipComponent } from '../../../common/components/tooltip/tooltip.component';
+import { DiscoveryFeedsService } from '../feeds/feeds.service';
 
 describe('DiscoverySettingsButtonComponent', () => {
   let component: DiscoverySettingsButtonComponent;
@@ -30,6 +31,10 @@ describe('DiscoverySettingsButtonComponent', () => {
           useValue: MockService(DiscoveryTagsService),
         },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        {
+          provide: DiscoveryFeedsService,
+          useValue: MockService(DiscoveryFeedsService),
+        },
       ],
     }).compileComponents();
   }));

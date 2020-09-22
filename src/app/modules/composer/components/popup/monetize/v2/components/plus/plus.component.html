@@ -6,7 +6,7 @@
     Earn revenue for your creations
   </p>
 
-  <ng-container *ngIf="isPro"
+  <ng-container *ngIf="isPlus"
     ><p
       class="m-form__row--label m-composerPopup__text"
       i18n="@@COMPOSER__MONETIZE_PLUS__POOL_DESC"
@@ -52,20 +52,20 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!isPro"
+  <ng-container *ngIf="!isPlus"
     ><p
       class="m-composerPopup__text"
       i18n="@@COMPOSER__MONETIZE_PLUS__NOT_PRO_DESC"
     >
-      You’ll need to upgrade to Minds Pro in order to submit your post to the
+      You’ll need to upgrade to Minds+ in order to submit your post to the
       Minds+ content pool. You will earn revenue based on the performance of the
       content.
     </p>
     <m-shadowboxSubmitButton
-      (click)="openProUpgradeModal()"
+      (click)="openPlusUpgradeModal()"
       i18n="@@COMPOSER__MONETIZE_PLUS_UPGRADE_TO_PRO"
     >
-      Upgrade to Minds Pro
+      Upgrade to Minds Plus
     </m-shadowboxSubmitButton>
   </ng-container>
 </div>
