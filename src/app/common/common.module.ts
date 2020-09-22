@@ -178,6 +178,7 @@ import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 const routes: Routes = [
   {
@@ -329,6 +330,7 @@ const routes: Routes = [
     CarouselComponent,
     PoweredByComponent,
     LoadingEllipsisComponent,
+    DragAndDropDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -458,6 +460,7 @@ const routes: Routes = [
     CarouselComponent,
     PoweredByComponent,
     LoadingEllipsisComponent,
+    DragAndDropDirective,
   ],
   providers: [
     SiteService,
