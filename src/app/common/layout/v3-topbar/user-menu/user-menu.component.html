@@ -13,7 +13,7 @@
 
   <ul
     class="m-dropdown__list m-userMenu__dropdown mdl-shadow--3dp"
-    [hidden]="!isOpen"
+    [hidden]="!(service.isOpen$ | async)"
   >
     <li
       class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__username"
@@ -180,4 +180,8 @@
   </ul>
 </div>
 
-<div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isOpen"></div>
+<div
+  class="minds-bg-overlay"
+  (click)="closeMenu()"
+  [hidden]="!(service.isOpen$ | async)"
+></div>
