@@ -177,6 +177,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { UserMenuService } from './layout/v3-topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 const routes: Routes = [
   {
@@ -328,6 +329,7 @@ const routes: Routes = [
     CarouselComponent,
     PoweredByComponent,
     LoadingEllipsisComponent,
+    DragAndDropDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -457,6 +459,7 @@ const routes: Routes = [
     CarouselComponent,
     PoweredByComponent,
     LoadingEllipsisComponent,
+    DragAndDropDirective,
   ],
   providers: [
     SiteService,
