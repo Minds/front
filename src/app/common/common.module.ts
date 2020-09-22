@@ -174,6 +174,7 @@ import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { UserMenuService } from './layout/v3-topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 
@@ -502,6 +503,7 @@ const routes: Routes = [
     ApiService,
     AttachmentApiService,
     ClientMetaService,
+    UserMenuService,
   ],
 })
 export class CommonModule {}

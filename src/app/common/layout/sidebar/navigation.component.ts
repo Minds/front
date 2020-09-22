@@ -23,6 +23,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -66,7 +67,8 @@ export class SidebarNavigationComponent
     @Inject(PLATFORM_ID) private platformId: Object,
     private featuresService: FeaturesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userMenu: UserMenuService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -152,6 +154,13 @@ export class SidebarNavigationComponent
     } else {
       this.host.viewContainerRef.clear();
     }
+  }
+
+  /**
+   * Closes the user menu if it's open
+   */
+  onSidebarNavClick(): void {
+    this.userMenu.isOpen$.next(false);
   }
 
   @HostListener('window:resize')
