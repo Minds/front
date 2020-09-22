@@ -3,6 +3,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { DiscoveryFeedsSettingsComponent } from '../feeds/settings.component';
 import { DiscoveryTagSettingsComponent } from '../tags/settings.component';
 import { DiscoveryTagsService } from '../tags/tags.service';
+import { DiscoveryFeedsService } from '../feeds/feeds.service';
 
 @Component({
   selector: 'm-discovery__settingsButton',
@@ -14,6 +15,7 @@ export class DiscoverySettingsButtonComponent {
   constructor(
     private service: DiscoveryTagsService,
     private overlayModal: OverlayModalService,
+    private feeds: DiscoveryFeedsService,
     private injector: Injector
   ) {}
 
@@ -41,6 +43,7 @@ export class DiscoverySettingsButtonComponent {
             if (this.modalType === 'tags') {
               const tags = payload;
               this.service.tags$.next(tags);
+              this.feeds.load();
             }
             this.overlayModal.dismiss();
           },
