@@ -180,7 +180,10 @@ export class NewsfeedSingleComponent {
     } else {
       description = activity.blurb || '';
     }
-    description += `. Subscribe to @${activity.ownerObj.username} on Minds`;
+    if (description) {
+      description += `. `;
+    }
+    description += `Subscribe to @${activity.ownerObj.username} on Minds`;
 
     this.metaService
       .setTitle(title)
