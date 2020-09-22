@@ -40,7 +40,7 @@ import { ChartV2Module } from '../analytics/components/chart-v2/chart-v2.module'
 export const WALLET_ROUTES: Routes = [
   {
     path: '',
-    component: WalletComponent,
+    redirectTo: '/wallet/canary',
     data: {
       title: 'Wallet',
       description: 'Manage all of your transactions and earnings on Minds',
