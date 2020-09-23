@@ -88,6 +88,7 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.blockListService.fetch();
     this.clientError$ = this.client.onError.subscribe(
       this.checkXHRError.bind(this)
     );

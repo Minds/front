@@ -15,7 +15,6 @@ export class BlockListService {
   ) {
     //OK to remove as SSR will handle
     //this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
-    this.fetch();
   }
 
   fetch() {
