@@ -21,6 +21,18 @@
     </div>
   </ng-template>
 
+  <ng-template [ngSwitchCase]="'require-login'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">error_outline</i>
+      <h3
+        class="m-channelContent__primaryText"
+        i18n="@@CHANNEL_CONTENT__SORRY_CHANNEL_DOES_NOT_EXIST"
+      >
+        Sorry, you need to be logged in to view this channel
+      </h3>
+    </div>
+  </ng-template>
+
   <ng-container *ngIf="!session.isAdmin()">
     <ng-template [ngSwitchCase]="'banned'">
       <div class="m-channelContent__wrapper">
