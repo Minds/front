@@ -18,6 +18,7 @@ import { FeaturesService } from '../../services/features.service';
 import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.component';
 import { TRIGGER_EXCEPTION } from '../channels/v2/content/content.service';
 import { HeadersService } from '../../common/services/headers.service';
+import { AuthModalService } from '../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-channel-container',
@@ -51,7 +52,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected site: SiteService,
     protected features: FeaturesService,
-    protected headersService: HeadersService
+    protected headersService: HeadersService,
+    protected authModalService: AuthModalService
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +116,13 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
           replaceUrl: true,
         });
       }
+
+      // Note: we don't throw an exception as we do want og:title etc to still work
+      if (response.require_login) {
+        this.headersService.setCode(401);
+        this.channel.require_login = true;
+        await this.openLoginModal();
+      }
     } catch (e) {
       this.channel = {
         type: 'user',
@@ -145,6 +154,13 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     }
 
     this.inProgress = false;
+  }
+
+  async openLoginModal(): Promise<void> {
+    try {
+      await this.authModalService.open();
+      this.load();
+    } catch {}
   }
 
   get isOwner() {

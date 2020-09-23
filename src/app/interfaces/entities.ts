@@ -132,6 +132,7 @@ export interface MindsUser {
   not_found?: boolean;
   email?: string;
   seed?: boolean;
+  require_login?: boolean;
 }
 
 export interface MindsGroup {

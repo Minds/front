@@ -15,6 +15,7 @@ import {
 } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -42,7 +43,8 @@ export class NewsfeedSingleComponent {
     protected featuresService: FeaturesService,
     private metaService: MetaService,
     configs: ConfigsService,
-    private headersService: HeadersService
+    private headersService: HeadersService,
+    private authModalService: AuthModalService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -120,6 +122,8 @@ export class NewsfeedSingleComponent {
 
         this.updateMeta();
 
+        if (this.activity.require_login) this.openLoginModal();
+
         this.inProgress = false;
 
         if (this.activity.ownerObj) {
@@ -164,6 +168,16 @@ export class NewsfeedSingleComponent {
       });
 
     return fakeEmitter;
+  }
+
+  async openLoginModal(): Promise<void> {
+    this.error = 'You must be logged in to see this post';
+    this.headersService.setCode(401);
+    try {
+      await this.authModalService.open();
+      this.activity.require_login = false;
+      this.error = null;
+    } catch {}
   }
 
   private updateMeta(): void {

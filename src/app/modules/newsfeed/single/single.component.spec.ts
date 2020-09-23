@@ -31,6 +31,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { SocialIcons } from '../../legacy/components/social-icons/social-icons';
 import { ActivityComponent } from '../activity/activity.component';
 import { HeadersService } from '../../../common/services/headers.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'minds-activity',
@@ -89,6 +90,7 @@ describe('NewsfeedSingleComponent', () => {
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: HeadersService, useValue: MockService(HeadersService) },
+        { provide: AuthModalService, useValue: MockService(AuthModalService) },
       ],
     }).compileComponents();
   }));
@@ -116,6 +118,7 @@ describe('NewsfeedSingleComponent', () => {
         message: "i'm a message",
         ownerObj: {},
       },
+      require_login: false,
     };
 
     sessionMock.user.admin = false;
