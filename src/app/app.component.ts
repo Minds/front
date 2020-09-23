@@ -88,7 +88,6 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.blockListService.fetch();
     this.clientError$ = this.client.onError.subscribe(
       this.checkXHRError.bind(this)
     );
@@ -126,6 +125,8 @@ export class Minds implements OnInit, OnDestroy {
     } catch (e) {
       console.error('ngOnInit()', e);
     }
+
+    this.blockListService.fetch(); // fetch blocklist
 
     this.ready = true;
     this.detectChanges();
