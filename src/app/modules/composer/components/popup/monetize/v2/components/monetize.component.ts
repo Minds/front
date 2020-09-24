@@ -47,6 +47,10 @@ export class ComposerMonetizeV2Component implements OnInit {
     configs: ConfigsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
+
+    if (this.features.has('plus-2020')) {
+      this.type = 'plus';
+    }
   }
 
   /**
