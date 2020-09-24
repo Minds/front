@@ -6,9 +6,9 @@ m-upgrades__buyTokens {
   margin-bottom: 105px;
 
   .m-upgradesBuyTokens__wrapper {
-    padding: 40px 60px 60px;
-    background: url('<%= APP_CDN %>/assets/marketing/buytokens_bg.jpg')
-      no-repeat 382px center #726061;
+    padding: 40px 60px 30px;
+    background: url('<%= APP_CDN %>/assets/photos/chinese-coins.jpg') no-repeat
+      382px center #726061;
     background-size: contain;
     color: #ffffff;
 
@@ -21,6 +21,9 @@ m-upgrades__buyTokens {
 
   .m-upgradesBuyTokens__body {
     max-width: 320px;
+    @media screen and (max-width: $m-grid-min-vp) {
+      max-width: none;
+    }
   }
 
   h2 {
@@ -35,11 +38,20 @@ m-upgrades__buyTokens {
       color: #4690df !important;
       text-decoration: underline;
       font-weight: 400;
+      line-height: 21px;
+      font-size: 16px;
     }
 
     &.m-upgradesBuyTokens__description {
       margin-bottom: 25px;
       opacity: 0.6;
+      line-height: 21px;
+      font-size: 16px;
+      padding-top: 8px;
+      margin-right: 40px;
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin-right: 20px;
+      }
     }
   }
 
@@ -49,7 +61,7 @@ m-upgrades__buyTokens {
     margin-top: 40px;
 
     @include m-theme() {
-      color: themed($m-black); // Back to default color
+      color: themed($m-textColor--primary); // Back to default color
     }
 
     .m-blockchainTokenPurchase {
@@ -62,7 +74,6 @@ m-upgrades__buyTokens {
       a {
         color: inherit;
         font-weight: bold;
-        text-decoration: underline;
       }
     }
   }
