@@ -155,13 +155,13 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
       return;
     }
 
-    if (
-      !this.dialogService.confirm(
-        "Are you sure? Once a post enters the Minds+ pool, you can't edit its monetization settings."
-      )
-    ) {
-      return;
-    }
+    // if (
+    //   !this.dialogService.confirm(
+    //     "Are you sure? Once a post enters the Minds+ pool, you can't edit its monetization settings."
+    //   )
+    // ) {
+    //   return;
+    // }
 
     const support_tier: any = {
       urn: this.plusSupportTierUrn,
