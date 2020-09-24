@@ -127,6 +127,16 @@
           flex-direction: row;
           justify-content: space-between;
 
+          .m-login__formError {
+            margin-right: 20%;
+          }
+
+          ::ng-deep {
+            m-shadowboxsubmitbutton {
+              flex-shrink: 0;
+            }
+          }
+
           button.mf-button {
             width: 132px;
             height: 60px;
