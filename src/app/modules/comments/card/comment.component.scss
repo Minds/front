@@ -54,6 +54,15 @@
   //margin: 0 0 0 8px;
   font-size: 13px;
   line-height: 16px;
+
+  .m-code-highlight {
+    overflow-x: auto;
+    font-size: 14px;
+
+    pre {
+      overflow-x: auto;
+    }
+  }
 }
 
 .m-comment__attachment > * {
