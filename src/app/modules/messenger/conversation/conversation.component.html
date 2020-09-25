@@ -5,7 +5,7 @@
   <div
     class="m-messenger--dockpane-tab"
     [class.mdl-color--amber]="conversation.unread && !conversation.open"
-    (click)="toggle(); initialLoad()"
+    (click)="toggle()"
   >
     <div class="m-messenger--dockpane-tab-title">
       <span *ngFor="let participant of conversation.participants">{{
