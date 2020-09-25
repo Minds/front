@@ -60,6 +60,15 @@ m-activity__content {
   }
   .m-activityContent__messageWrapper {
     padding: 0px $activity-padding-lr 16px;
+
+    .m-code-highlight {
+      overflow-x: auto;
+      font-size: 16px;
+
+      pre {
+        overflow-x: auto;
+      }
+    }
   }
 }
 
