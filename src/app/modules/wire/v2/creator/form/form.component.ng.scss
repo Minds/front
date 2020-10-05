@@ -134,6 +134,13 @@
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+
+    a {
+      font-weight: inherit;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
   }
 
   .m-wireCreatorForm__toggleContainer {

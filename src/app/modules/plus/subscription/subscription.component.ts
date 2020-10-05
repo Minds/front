@@ -130,9 +130,6 @@ export class PlusSubscriptionComponent implements OnInit {
           WireCreatorComponent,
           await this.wirePaymentHandlers.get('plus'),
           {
-            //interval: this.interval,
-            //currency: this.currency,
-            //amount: this.upgrades.plus[this.interval][this.currency],
             wrapperClass: 'm-modalV2__wrapper',
             default: {
               type: this.currency === 'usd' ? 'money' : 'tokens',

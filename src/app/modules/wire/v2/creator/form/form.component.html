@@ -323,12 +323,35 @@
           <m-tooltip class="m-wireCreatorFormRecurring__tooltip">
             <span m-tooltip--anchor>?</span>
             <ng-container i18n="@@WIRE_CREATOR_FORM__MONTHLY_PAYMENT_INFO">
-              Monthly recurrent payments may be cancelled at any point within in
+              Monthly recurrent payments may be cancelled at any point within
               your wallet.
             </ng-container>
           </m-tooltip>
         </label>
       </div>
     </div>
+    <!--------------------------->
+    <!-- DISCLAIMER : MONETIZATION TERMS -->
+    <!--------------------------->
+    <ng-container
+      *ngIf="service.isUpgrade$ | async"
+      i18n="@@WIRE_CREATOR_FORM__TERMS_DISCLAIMER"
+    >
+      <div class="m-wireCreatorForm__fields">
+        <div class="m-wireCreatorForm__field m-wireCreatorForm__label">
+          By purchasing
+          <ng-container *ngIf="(service.upgradeType$ | async) === 'plus'"
+            >Minds+</ng-container
+          >
+          <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
+            Pro</ng-container
+          >
+          you agree to the
+          <a routerLink="/p/monetization-terms" target="_blank"
+            >Minds Monetization Terms</a
+          >.
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
