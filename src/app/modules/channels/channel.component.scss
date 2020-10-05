@@ -4,8 +4,13 @@
  * Channel profile pages
  */
 m-channel {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
   grid-area: content / span 2;
   min-width: 0;
+  display: block;
 
   .m-channel__middleColumn {
     grid-area: content;
@@ -65,7 +70,7 @@ m-channel {
       left: 0;
       width: 100%;
       height: 124px;
-      z-index: 999;
+      z-index: 2;
       overflow: hidden;
 
       .minds-channel-title > div h1 {
@@ -362,7 +367,7 @@ m-channel {
 
     minds-newsfeed-boost-rotator {
       ul {
-        z-index: 900;
+        z-index: 2;
       }
     }
   }

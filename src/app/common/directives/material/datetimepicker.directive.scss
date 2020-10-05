@@ -7,7 +7,6 @@
   opacity: 0;
   transition: 200ms ease opacity;
   will-change: opacity;
-  z-index: 9999;
   @include m-theme() {
     background-color: rgba(themed($m-black-always), 0.541176);
   }
@@ -31,7 +30,6 @@
   opacity: 0;
   will-change: opacity;
   transition: 200ms ease-in-out opacity, 200ms ease-in-out top;
-  z-index: 9999;
   @include m-theme() {
     background-color: themed($m-white);
     box-shadow: 0 14px 45px rgba(themed($m-black), 0.25),
@@ -385,7 +383,6 @@ c-datepicker__day-body {
   width: 50px;
   height: 50px;
   margin: -25px;
-  z-index: 98;
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(1) {
@@ -948,7 +945,6 @@ c-datepicker__day-body {
   position: absolute;
   top: 122px;
   left: 37px;
-  z-index: 99;
 }
 
 .c-datepicker__mask:after {

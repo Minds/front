@@ -1,13 +1,13 @@
 @import 'defaults';
 
 m-cookies-notice {
+  @include z-index(toast);
   box-sizing: border-box;
   position: fixed;
   bottom: $minds-margin * 2;
   left: $minds-padding * 2;
   width: 360px;
   max-height: 75vh;
-  z-index: 999999999;
 
   display: flex;
   align-items: center;

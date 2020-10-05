@@ -1,6 +1,9 @@
 @import 'defaults';
 
 m-notifications--toaster {
+  @include z-index(toast);
+  position: relative;
+  display: block;
   .m-notifications--toaster {
     position: fixed;
     top: 64px + ($minds-padding / 2);

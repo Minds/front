@@ -1,0 +1,72 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  @include z-index(announcement);
+
+  .m-announcement {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    @include m-theme() {
+      background-color: themed($m-blue);
+    }
+
+    @media screen and (max-width: 770px) {
+      width: 100%;
+    }
+  }
+
+  .m-announcement--content {
+    text-align: center;
+    letter-spacing: 1.2px;
+    font-weight: 300;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-size: 16px;
+    flex: 1;
+    padding: 15px 50px 15px 15px;
+    @include m-theme() {
+      color: themed($m-white);
+    }
+
+    @media screen and (max-width: 770px) {
+      font-size: 14px;
+      line-height: 19px;
+    }
+
+    a {
+      text-decoration: none;
+      @include m-theme() {
+        color: themed($m-white);
+      }
+      display: block;
+      font-weight: 300;
+    }
+  }
+
+  .m-announcement--close {
+    cursor: pointer;
+    padding: 12px;
+    position: absolute;
+    right: 0;
+
+    i {
+      @include m-theme() {
+        color: themed($m-white);
+      }
+    }
+  }
+
+  .m-announcement__clickable {
+    cursor: pointer;
+    font-weight: bold;
+  }
+}

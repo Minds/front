@@ -19,7 +19,7 @@ m-dropdownMenu {
 
   .m-dropdownMenu__menu {
     display: none;
-    z-index: 10010;
+    z-index: 1;
 
     @media screen and (min-width: $max-mobile + 1) {
       display: block;
@@ -103,8 +103,6 @@ m-dropdownMenu {
   }
 
   > m-overlay {
-    z-index: 10000;
-
     @media screen and (max-width: $max-mobile) {
       @include m-on-theme(light) {
         background: rgba(255, 255, 255, 0.85);

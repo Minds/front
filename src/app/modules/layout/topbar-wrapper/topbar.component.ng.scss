@@ -1,0 +1,7 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  position: relative;
+  @include z-index(topbar);
+}

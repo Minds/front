@@ -28,7 +28,6 @@ import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
-  styleUrls: ['navigation.component.ng.scss'],
 })
 export class SidebarNavigationComponent
   implements OnInit, AfterViewInit, OnDestroy {
