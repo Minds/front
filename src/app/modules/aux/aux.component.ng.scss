@@ -51,14 +51,26 @@
         }
       }
 
-      h3 {
+      h3,
+      h4 {
         font-size: 20px;
         font-weight: 600;
       }
 
-      b {
+      b,
+      strong {
         @include m-theme() {
           color: themed($m-textColor--primary);
+        }
+      }
+
+      ol {
+        list-style-type: decimal;
+        ol {
+          list-style-type: lower-alpha;
+          ol {
+            list-style-type: lower-roman;
+          }
         }
       }
 

@@ -21,6 +21,7 @@ import {
 import currency from '../../../helpers/currency';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
 
 @Component({
   selector: 'm-pro--subscription',
@@ -101,15 +102,6 @@ export class ProSubscriptionComponent implements OnInit {
   }
 
   async enable() {
-    if (!this.session.isLoggedIn()) {
-      localStorage.setItem(
-        'redirect',
-        `/pro?c=${this.currency}&i=${this.interval}`
-      );
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.inProgress = true;
     this.error = '';
     this.detectChanges();
@@ -117,18 +109,18 @@ export class ProSubscriptionComponent implements OnInit {
     try {
       this.overlayModal
         .create(
-          WirePaymentsCreatorComponent,
+          WireCreatorComponent,
           await this.wirePaymentHandlers.get('pro'),
           {
-            interval: this.interval,
-            currency: this.currency,
-            amount: this.upgrades.pro[this.interval][this.currency],
+            wrapperClass: 'm-modalV2__wrapper',
+            default: {
+              type: this.currency === 'usd' ? 'money' : 'tokens',
+              upgradeType: 'pro',
+              upgradeInterval: this.interval,
+            },
             onComplete: () => {
-              this.active = true;
-              this.session.getLoggedInUser().pro = true;
-              this.onEnable.emit(Date.now());
-              this.inProgress = false;
-              this.detectChanges();
+              this.paymentComplete();
+              this.overlayModal.dismiss();
             },
           }
         )
@@ -146,6 +138,16 @@ export class ProSubscriptionComponent implements OnInit {
     }
 
     this.detectChanges();
+  }
+
+  paymentComplete(): void {
+    this.active = true;
+    this.session.getLoggedInUser().plus = true;
+    this.onEnable.emit(Date.now());
+    this.inProgress = false;
+    this.detectChanges();
+
+    this.toasterService.success('Welcome to Minds Pro');
   }
 
   async disable() {
