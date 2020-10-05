@@ -9,6 +9,7 @@ import { AuxDmcaComponent } from './pages/dmca/dmca.component';
 import { AuxTermsComponent } from './pages/terms/terms.component';
 import { AuxRightsComponent } from './pages/rights/rights.component';
 import { AuxContactComponent } from './pages/contact/contact.component';
+import { AuxMonetizationTermsComponent } from './pages/monetization-terms/monetization-terms.component';
 
 const AUX_ROUTES: Routes = [
   {
@@ -70,6 +71,16 @@ const AUX_ROUTES: Routes = [
         },
       },
       {
+        path: 'monetization-terms',
+        component: AuxMonetizationTermsComponent,
+        data: {
+          title: 'Minds Pro Terms of Service',
+          description:
+            'If  you  have  been  invited  to  or  joined  Minds  Pro  ("Minds Pro"),  and  your  participation  in  Minds Pro has  not  been  terminated,  then  the  following  terms  shall  apply.',
+          ogImage: '/assets/product-pages/pro/pro-1.jpg',
+        },
+      },
+      {
         path: '**',
         redirectTo: '',
       },
@@ -91,6 +102,7 @@ const AUX_ROUTES: Routes = [
     AuxTermsComponent,
     AuxRightsComponent,
     AuxContactComponent,
+    AuxMonetizationTermsComponent,
   ],
 })
 export class AuxModule {}

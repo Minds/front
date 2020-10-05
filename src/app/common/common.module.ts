@@ -177,6 +177,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { UserMenuService } from './layout/v3-topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
+import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 const routes: Routes = [
@@ -329,6 +330,7 @@ const routes: Routes = [
     CarouselComponent,
     PoweredByComponent,
     LoadingEllipsisComponent,
+    MarkedDirective,
     DragAndDropDirective,
   ],
   exports: [
@@ -459,6 +461,7 @@ const routes: Routes = [
     CarouselComponent,
     PoweredByComponent,
     LoadingEllipsisComponent,
+    MarkedDirective,
     DragAndDropDirective,
   ],
   providers: [
