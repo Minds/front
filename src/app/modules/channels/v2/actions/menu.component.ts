@@ -90,7 +90,7 @@ export class ChannelActionsMenuComponent {
 
   viewLedger() {
     this.router.navigate([
-      '/wallet/tokens/transactions',
+      '/wallet/canary/tokens/transactions',
       { remote: this.service.channel$.getValue().username },
     ]);
   }
