@@ -1,0 +1,42 @@
+<div class="m-composerPopup__body m-composer__permawebTerms">
+  <div class="m-composerPopup__content">
+    <h3 class="m-composerPopup__title">Permaweb</h3>
+
+    <p
+      class="m-composerPopup__text"
+      i18n="@@PERMAWEB_TERMS__PLEASE CHECK_BELOW"
+    >
+      Please check the box to confirm that you understand the terms of usage for
+      the permaweb.
+    </p>
+
+    <p i18n="@@PERMAWEB_TERMS__TERMS_OF_USAGE">
+      I have read and agree to the
+      <a routerLink="/p/terms" target="_blank">Terms of Service</a>
+      and confirm that I have all necessary rights with regard to any data,
+      information or other material (“Stored Material”) which I post or upload
+      to Minds and the Arweave network (or Permaweb). I also understand that
+      this content cannot be deleted from the Permaweb.
+    </p>
+    <div class="m-composerPopup__field">
+      <input
+        type="checkbox"
+        [(ngModel)]="checked"
+        data-cy="permaweb-terms-checkbox"
+      />
+      <label [for]="checked" i18n="@@PERMAWEB_TERMS__I_CONFIRM_MY_UNDERSTANDING"
+        >I confirm my understanding</label
+      >
+    </div>
+  </div>
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="save()"
+      data-cy="permaweb-terms-save-button"
+      i18n="@@COMPOSER_POPUP__SAVE"
+    >
+      Save
+    </m-button>
+  </div>
+</div>
