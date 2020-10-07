@@ -242,7 +242,7 @@ export class GroupProfileFeedSortedComponent implements OnInit {
    * Applies dontPin value to the entities
    * @param entity
    */
-  patchEntity(entity: Object): Object {
+  patchEntity(entity) {
     entity.dontPin = !(this.group['is:moderator'] || this.group['is:owner']);
     return entity;
   }
