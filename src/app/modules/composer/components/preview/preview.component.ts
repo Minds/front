@@ -45,6 +45,11 @@ export class PreviewComponent {
   portrait: boolean = false;
 
   /**
+   * Are we editing?
+   */
+  isEditing$ = this.service.isEditing$;
+
+  /**
    * Constructor.
    * @param service
    * @param cd
