@@ -8,6 +8,8 @@ import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { MonetizeComponent } from '../popup/monetize/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -76,6 +78,14 @@ describe('Composer Toolbar', () => {
         {
           provide: PopupService,
           useValue: popupServiceMock,
+        },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
+        {
+          provide: FeaturesService,
+          useValue: MockService(FeaturesService),
         },
       ],
     }).compileComponents();
