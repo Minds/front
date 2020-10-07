@@ -110,20 +110,7 @@ export class GroupProfileFeedSortedComponent implements OnInit {
         .setLimit(12)
         .fetch();
 
-      this.feed$ = this.feedsService.feed.pipe(
-        map(feed => {
-          const entities = [];
-
-          for (let i = 0; i < feed.length; i++) {
-            const entity: any = feed[i].getValue();
-            entity.dontPin = !(
-              this.group['is:moderator'] || this.group['is:owner']
-            );
-            entities.push(new BehaviorSubject<Object>(entity));
-          }
-          return entities;
-        })
-      );
+      this.feed$ = this.feedsService.feed;
 
       this.getScheduledCount();
     } catch (e) {
@@ -249,5 +236,14 @@ export class GroupProfileFeedSortedComponent implements OnInit {
     const response: any = await this.client.get(url);
     this.scheduledCount = response.count;
     this.detectChanges();
+  }
+
+  /**
+   * Applies dontPin value to the entities
+   * @param entity
+   */
+  patchEntity(entity: Object): Object {
+    entity.dontPin = !(this.group['is:moderator'] || this.group['is:owner']);
+    return entity;
   }
 }
