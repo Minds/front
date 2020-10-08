@@ -67,7 +67,7 @@ export class PostMenuV2Component implements OnInit {
   }
 
   shouldShowEdit(): boolean {
-    if (this.mediaModal) {
+    if (this.mediaModal || this.entity.permaweb_id) {
       return false;
     }
     return (
