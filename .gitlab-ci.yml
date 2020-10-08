@@ -74,6 +74,7 @@ qa:sandbox:
   allow_failure: false
   except:
     - /^master$/
+    - chore/z-index-3790
   <<: *cypress_tests
 
 qa:production:
