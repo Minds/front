@@ -22,6 +22,7 @@
         *ngIf="user"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        data-cy="data-minds-sidebar-nav-channel"
       >
         <a [routerLink]="['/' + user.username]" (click)="toggle()">
           <img
@@ -37,6 +38,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        data-cy="data-minds-sidebar-nav-newsfeed"
       >
         <a [routerLink]="['/newsfeed/subscriptions']" (click)="toggle()">
           <m-tooltip
@@ -59,6 +61,7 @@
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: plusPageActive }"
+        data-cy="data-minds-sidebar-nav-discovery"
       >
         <a routerLink="/discovery" (click)="toggle()">
           <m-tooltip
@@ -84,6 +87,7 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         routerLinkActiveOptions="{ exact: true }"
         *mIfFeature="'nav-plus-2020'"
+        data-cy="data-minds-sidebar-nav-plus"
       >
         <a routerLink="/discovery/plus" (click)="toggle()">
           <m-tooltip
@@ -104,6 +108,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        data-cy="data-minds-sidebar-nav-wallet"
       >
         <a [routerLink]="['/wallet/canary']" (click)="toggle()">
           <m-tooltip
@@ -124,6 +129,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        data-cy="data-minds-sidebar-nav-analytics"
       >
         <a routerLink="/analytics" (click)="toggle()">
           <m-tooltip
@@ -147,6 +153,7 @@
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            data-cy="data-minds-sidebar-nav-analytics-traffic"
           >
             <a
               routerLink="/analytics/dashboard/traffic"
@@ -158,6 +165,7 @@
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            data-cy="data-minds-sidebar-nav-analytics-engagement"
           >
             <a
               routerLink="/analytics/dashboard/engagement"
@@ -169,6 +177,7 @@
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            data-cy="data-minds-sidebar-nav-analytics-earnings"
           >
             <a
               routerLink="/analytics/dashboard/earnings"
@@ -180,6 +189,7 @@
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            data-cy="data-minds-sidebar-nav-analytics-trending"
           >
             <a
               routerLink="/analytics/dashboard/trending"
@@ -194,6 +204,7 @@
       <li
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         class="m-sidebarNavigation__item"
+        data-cy="data-minds-sidebar-nav-settings"
       >
         <a [routerLink]="[settingsLink]" (click)="toggle()">
           <m-tooltip

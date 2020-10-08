@@ -9,6 +9,7 @@
     <m-shadowboxSubmitButton
       (click)="enterEditMode()"
       i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_DETAILS"
+      data-cy="cash-onboarding-add-bank-button"
       >Add your bank details</m-shadowboxSubmitButton
     >
   </div>
@@ -41,7 +42,7 @@
                 id="country"
                 name="country"
                 class="form-control"
-                data-minds="country"
+                data-cy="cash-onboarding-input-country"
                 [allowed]="allowedCountries"
                 [country]="country.value"
                 (countryChange)="countryChange($event)"
@@ -68,7 +69,7 @@
                   name="firstName"
                   formControlName="firstName"
                   class="form-control fieldPairInput"
-                  data-minds="firstName"
+                  data-cy="cash-onboarding-input-firstName"
                 />
               </div>
             </div>
@@ -88,6 +89,7 @@
                   name="lastName"
                   formControlName="lastName"
                   class="form-control fieldPairInput"
+                  data-cy="cash-onboarding-input-lastName"
                   data-minds="lastName"
                 />
               </div>
@@ -107,6 +109,7 @@
                 name="dob"
                 class="form-control"
                 (selectedDateChange)="dob.setValue($event)"
+                data-cy="cash-onboarding-dob-dropdowns"
               ></m-date__dropdowns>
             </div>
           </div>
@@ -126,9 +129,9 @@
                 name="phoneNumber"
                 formControlName="phoneNumber"
                 class="form-control"
-                data-minds="phoneNumber"
                 initCountryCode="US"
                 [allowedCountries]="allowedCountries"
+                data-cy="cash-onboarding-input-phone"
               >
               </m-phoneInput>
             </div>
@@ -168,6 +171,7 @@
                 name="personalIdNumber"
                 formControlName="personalIdNumber"
                 class="form-control"
+                data-cy="cash-onboarding-input-id-num"
               />
             </div>
           </div>
@@ -191,6 +195,7 @@
                 name="ssn"
                 formControlName="ssn"
                 class="form-control"
+                data-cy="cash-onboarding-input-us-id"
               />
             </div>
           </div>
@@ -215,6 +220,7 @@
                 name="street"
                 formControlName="street"
                 class="form-control"
+                data-cy="cash-onboarding-input-address1"
               />
             </div>
           </div>
@@ -236,6 +242,7 @@
                 name="city"
                 formControlName="city"
                 class="form-control"
+                data-cy="cash-onboarding-input-city"
               />
             </div>
           </div>
@@ -258,6 +265,7 @@
                 name="state"
                 formControlName="state"
                 class="form-control"
+                data-cy="cash-onboarding-input-state"
               />
             </div>
           </div>
@@ -278,6 +286,7 @@
                 name="state"
                 formControlName="state"
                 class="form-control"
+                data-cy="cash-onboarding-input-state"
               />
             </div>
           </div>
@@ -311,6 +320,7 @@
                 name="postCode"
                 formControlName="postCode"
                 class="form-control"
+                data-cy="cash-onboarding-input-postal"
               />
             </div>
           </div>
@@ -321,7 +331,10 @@
         <!-- -------------------------------------------- -->
         <div class="m-walletForm__field--checkbox">
           <div class="m-walletSettings__row--input">
-            <m-formInput__checkbox formControlName="stripeAgree">
+            <m-formInput__checkbox
+              formControlName="stripeAgree"
+              data-cy="cash-onboarding-input-terms-checkbox"
+            >
               <span i18n="@@CASH_ONBOARDING__READ_AND_AGREED_STRIPE"
                 >I have read and agree to the
                 <a href="https://stripe.com/legal" target="_blank">
@@ -339,7 +352,7 @@
         <!-- -------------------------------------------- -->
         <!--- ERROR ---------------------------------------->
         <!-- -------------------------------------------- -->
-        <p class="m-walletSecondaryText--error">
+        <p class="m-walletSecondaryText--error" data-cy="cash-onboarding-error">
           {{ error }}
         </p>
       </div>
@@ -352,6 +365,7 @@
           [disabled]="inProgress"
           color="grey"
           i18n="@@COMMON__CANCEL"
+          data-cy="cash-onboarding-cancel-button"
           >Cancel</m-shadowboxSubmitButton
         >
         <m-shadowboxSubmitButton
@@ -359,6 +373,7 @@
           [disabled]="inProgress || form.invalid"
           [saving]="inProgress"
           i18n="@@COMMON__UPDATE_PERSONAL_INFORMATION"
+          data-cy="cash-onboarding-update-information"
           >Update Personal Information</m-shadowboxSubmitButton
         >
       </div>
