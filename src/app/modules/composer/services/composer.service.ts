@@ -572,9 +572,10 @@ export class ComposerService implements OnDestroy {
     this.richEmbedExtractorSubscription = combineLatest([
       this.messageUrl$.pipe(distinctUntilChanged()),
       this.richEmbed$.pipe(distinctUntilChanged()),
+      this.attachment$.pipe(distinctUntilChanged()),
     ])
       .pipe(debounceTime(500))
-      .subscribe(([messageUrl, richEmbed]) => {
+      .subscribe(([messageUrl, richEmbed, attachment]) => {
         // Use current message URL when:
         // a) there's no rich embed already set; or
         // b) rich embed's type is a string (locally extracted); or
@@ -585,9 +586,10 @@ export class ComposerService implements OnDestroy {
         //
         // Be very careful, as it depends on the same observable we're modifying
         if (
-          !richEmbed ||
-          typeof richEmbed === 'string' ||
-          !richEmbed.entityGuid
+          (!richEmbed ||
+            typeof richEmbed === 'string' ||
+            !richEmbed.entityGuid) &&
+          !attachment
         ) {
           if (!this.canEditMetadata()) {
             return;
@@ -596,6 +598,12 @@ export class ComposerService implements OnDestroy {
           if (messageUrl) {
             this.richEmbed$.next(messageUrl);
           }
+        }
+
+        // If there is an attachment already provided then reset the rich embed
+        // as we can't have both values
+        if (richEmbed && attachment) {
+          this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
         }
       });
   }
