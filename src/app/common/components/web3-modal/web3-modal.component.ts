@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IProviderUserOptions } from '../../../lib/web3modal';
-import { Web3ModalService } from './web3-modal.service';
+import { Web3ModalService } from '../../services/web3-modal.service';
 
 @Component({
   selector: 'm-web3-modal',

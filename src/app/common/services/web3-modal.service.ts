@@ -9,7 +9,7 @@ import {
   CLOSE_EVENT,
   EventController,
   ProviderController,
-} from '../../../lib/web3modal';
+} from '../../lib/web3modal';
 
 @Injectable()
 export class Web3ModalService {

@@ -179,7 +179,7 @@ import { PoweredByComponent } from './components/powered-by/powered-by.component
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
-import { Web3Modal } from '../lib/web3modal/core/web3-modal.component';
+import { Web3Modal } from './components/web3-modal/web3-modal.component';
 
 const routes: Routes = [
   {
