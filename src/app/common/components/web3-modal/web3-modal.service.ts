@@ -1,15 +1,15 @@
-import {
-  IProviderUserOptions,
-  ThemeColors,
-  getThemeColors,
-  SimpleFunction,
-} from '../helpers';
-import { CONNECT_EVENT, ERROR_EVENT, CLOSE_EVENT } from '../constants';
-import { themesList } from '../themes';
-import { EventController, ProviderController } from '../controllers';
 import { EventEmitter, Injectable } from '@angular/core';
 import Fortmatic from 'fortmatic';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import {
+  IProviderUserOptions,
+  SimpleFunction,
+  CONNECT_EVENT,
+  ERROR_EVENT,
+  CLOSE_EVENT,
+  EventController,
+  ProviderController,
+} from '../../../lib/web3modal';
 
 @Injectable()
 export class Web3ModalService {
@@ -17,21 +17,10 @@ export class Web3ModalService {
   private eventController: EventController = new EventController();
   private providerController: ProviderController;
 
-  themeColors: ThemeColors;
   userOptions: IProviderUserOptions[];
   shouldOpen: EventEmitter<boolean> = new EventEmitter();
-  lightboxOpacity: number;
 
-  constructor() {}
-
-  get cachedProvider(): string {
-    return this.providerController.cachedProvider;
-  }
-
-  public async open() {
-    this.lightboxOpacity = 0.4;
-    this.themeColors = getThemeColors(themesList.default.name);
-
+  constructor() {
     this.providerController = new ProviderController({
       disableInjectedProvider: false,
       cacheProvider: false,
@@ -59,10 +48,17 @@ export class Web3ModalService {
 
     this.userOptions = this.providerController.getUserOptions();
     this.clearCachedProvider();
+  }
+
+  get cachedProvider(): string {
+    return this.providerController.cachedProvider;
+  }
+
+  async open() {
     await this.toggleModal();
   }
 
-  public connect = (): Promise<any> =>
+  connect = (): Promise<any> =>
     new Promise(async (resolve, reject) => {
       this.on(CONNECT_EVENT, provider => resolve(provider));
       this.on(ERROR_EVENT, error => reject(error));
@@ -70,7 +66,7 @@ export class Web3ModalService {
       await this.toggleModal();
     });
 
-  public connectTo = (id: string): Promise<any> =>
+  connectTo = (id: string): Promise<any> =>
     new Promise(async (resolve, reject) => {
       this.on(CONNECT_EVENT, provider => resolve(provider));
       this.on(ERROR_EVENT, error => reject(error));
@@ -86,7 +82,7 @@ export class Web3ModalService {
       await this.providerController.connectTo(provider.id, provider.connector);
     });
 
-  public async toggleModal(): Promise<void> {
+  async toggleModal(): Promise<void> {
     if (this.cachedProvider) {
       await this.providerController.connectToCachedProvider();
       return;
@@ -102,7 +98,7 @@ export class Web3ModalService {
     this._toggleModal();
   }
 
-  public on(event: string, callback: SimpleFunction): SimpleFunction {
+  on(event: string, callback: SimpleFunction): SimpleFunction {
     this.eventController.on({
       event,
       callback,
@@ -115,32 +111,29 @@ export class Web3ModalService {
       });
   }
 
-  public off(event: string, callback?: SimpleFunction): void {
+  off(event: string, callback?: SimpleFunction): void {
     this.eventController.off({
       event,
       callback,
     });
   }
 
-  public clearCachedProvider(): void {
+  clearCachedProvider(): void {
     this.providerController.clearCachedProvider();
   }
 
-  public setCachedProvider(id: string): void {
+  setCachedProvider(id: string): void {
     this.providerController.setCachedProvider(id);
   }
 
-  private _toggleModal = () => {
-    const d = typeof window !== 'undefined' ? document : '';
-    const body = d ? d.body || d.getElementsByTagName('body')[0] : '';
-    if (body) {
-      if (this.isOpen) {
-        body.style.overflow = '';
-      } else {
-        body.style.overflow = 'hidden';
-      }
+  close = () => {
+    if (this.isOpen) {
+      this._toggleModal();
     }
-    console.log(this.shouldOpen, this.isOpen);
+    this.eventController.trigger(CLOSE_EVENT);
+  };
+
+  private _toggleModal = () => {
     this.shouldOpen.next(!this.isOpen);
     this.isOpen = !this.isOpen;
   };
@@ -157,12 +150,5 @@ export class Web3ModalService {
       this._toggleModal();
     }
     this.eventController.trigger(CONNECT_EVENT, provider);
-  };
-
-  close = () => {
-    if (this.isOpen) {
-      this._toggleModal();
-    }
-    this.eventController.trigger(CLOSE_EVENT);
   };
 }
