@@ -9,65 +9,77 @@ import {
   CLOSE_EVENT,
   EventController,
   ProviderController,
+  IProviderControllerOptions,
 } from '../../lib/web3modal';
 
 @Injectable()
 export class Web3ModalService {
+  private defaultOptions: IProviderControllerOptions = {
+    disableInjectedProvider: false,
+    cacheProvider: false,
+    providerOptions: {
+      fortmatic: {
+        package: Fortmatic,
+        options: {
+          key: 'FORTMATIC_KEY',
+        },
+      },
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: 'INFURA_ID',
+        },
+      },
+    },
+    network: '',
+  };
   private isOpen: boolean = false;
   private eventController: EventController = new EventController();
   private providerController: ProviderController;
 
   userOptions: IProviderUserOptions[];
   shouldOpen: EventEmitter<boolean> = new EventEmitter();
+  providers: EventEmitter<IProviderUserOptions[]> = new EventEmitter();
 
-  constructor() {
-    this.providerController = new ProviderController({
-      disableInjectedProvider: false,
-      cacheProvider: false,
-      providerOptions: {
-        fortmatic: {
-          package: Fortmatic, // required
-          options: {
-            key: 'FORTMATIC_KEY', // required
-          },
-        },
-        walletconnect: {
-          package: WalletConnectProvider, // required
-          options: {
-            infuraId: 'INFURA_ID', // required
-          },
-        },
-      },
-      network: '',
-    });
-
-    this.providerController.on(CONNECT_EVENT, provider =>
-      this.onConnect(provider)
-    );
-    this.providerController.on(ERROR_EVENT, error => this.onError(error));
-
-    this.userOptions = this.providerController.getUserOptions();
-    this.clearCachedProvider();
-  }
+  constructor() {}
 
   get cachedProvider(): string {
     return this.providerController.cachedProvider;
   }
 
-  async open() {
-    await this.toggleModal();
-  }
+  setConfiguration = (options?: IProviderControllerOptions): void => {
+    if (options) {
+      this.providerController = new ProviderController(options);
+    } else {
+      this.providerController = new ProviderController(this.defaultOptions);
+    }
 
-  connect = (): Promise<any> =>
-    new Promise(async (resolve, reject) => {
+    this.attachEventHandlers();
+    this.clearCachedProvider();
+
+    this.userOptions = this.providerController.getUserOptions();
+    this.providers.next(this.userOptions);
+  };
+
+  connect = (): Promise<any> => {
+    if (!this.providerController) {
+      this.setConfiguration();
+    }
+
+    return new Promise(async (resolve, reject) => {
       this.on(CONNECT_EVENT, provider => resolve(provider));
       this.on(ERROR_EVENT, error => reject(error));
       this.on(CLOSE_EVENT, () => reject('Modal closed by user'));
       await this.toggleModal();
     });
+  };
 
-  connectTo = (id: string): Promise<any> =>
-    new Promise(async (resolve, reject) => {
+  connectTo = (id: string): Promise<any> => {
+    if (!this.providerController) {
+      this.setConfiguration();
+    }
+
+    return new Promise(async (resolve, reject) => {
       this.on(CONNECT_EVENT, provider => resolve(provider));
       this.on(ERROR_EVENT, error => reject(error));
       this.on(CLOSE_EVENT, () => reject('Modal closed by user'));
@@ -81,6 +93,7 @@ export class Web3ModalService {
       }
       await this.providerController.connectTo(provider.id, provider.connector);
     });
+  };
 
   async toggleModal(): Promise<void> {
     if (this.cachedProvider) {
@@ -150,5 +163,12 @@ export class Web3ModalService {
       this._toggleModal();
     }
     this.eventController.trigger(CONNECT_EVENT, provider);
+  };
+
+  private attachEventHandlers = () => {
+    this.providerController.on(CONNECT_EVENT, provider =>
+      this.onConnect(provider)
+    );
+    this.providerController.on(ERROR_EVENT, error => this.onError(error));
   };
 }

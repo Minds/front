@@ -1,19 +1,25 @@
 <m-modal [open]="open" (closed)="close()">
-  <div class="m-web3-modal-body">
-    <div
-      class="m-web3-modal__provider-wrapper"
-      *ngFor="let provider of providers"
-      (click)="provider.onClick()"
-    >
-      <div class="m-web3-modal__provider-container">
+  <div class="m-web3-modal__body">
+    <h3 class="m-web3-modal__body-title">Connect Wallet</h3>
+    <div class="m-web3-modal__body-description-container">
+      <p>
+        To earn tokens and access the decentralized web, select an option below
+      </p>
+      <p class="m-web3-modal__body-description-gray">
+        (It's easier than you think)
+      </p>
+    </div>
+    <div class="m-web3-modal__provider-container">
+      <div
+        class="m-web3-modal__provider-wrapper"
+        *ngFor="let provider of providers"
+        (click)="provider.onClick()"
+      >
         <div class="m-web3-modal__provider-icon">
           <img [src]="provider.logo" [alt]="provider.logo" />
         </div>
         <div class="m-web3-modal__provider-name">
           {{ provider.name }}
-        </div>
-        <div class="m-web3-modal__provider-description">
-          {{ provider.description }}
         </div>
       </div>
     </div>

@@ -1,74 +1,67 @@
-.m-web3-modal-body {
-  position: relative;
-  width: 100%;
-  background-color: #ffffff;
-  border-radius: 12px;
-  margin: 10px;
-  padding: 0;
+.m-web3-modal__body {
+  box-sizing: border-box;
+  padding: 40px 50px 60px 50px;
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  max-width: 500px;
-  min-width: fit-content;
-  max-height: 100%;
-  overflow: auto;
+  .m-web3-modal__body-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
 
-  @media screen and (max-width: 768px) {
-    max-width: '500px';
-    grid-template-columns: 1fr;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
   }
-}
 
-.m-web3-modal__provider-container {
-  transition: background-color 0.2s ease-in-out;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 24px 16px;
-  @media screen and (max-width: 768px) {
-    padding: 1vw;
+  .m-web3-modal__body-description-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 0 32px 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .m-web3-modal__body-description-gray {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
   }
 }
 
 .m-web3-modal__provider-wrapper {
-  width: 100%;
-  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   cursor: pointer;
-  border-radius: 0;
-  border: 1px solid gray;
+  width: 194px;
+  height: 165px;
+  margin: 10px;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
 }
 
-.m-web3-modal__provider-description {
-  width: 100%;
-  font-size: 18px;
-  margin: 0.333em 0;
-
-  @media screen and (max-width: 768px) {
-    font-size: 4vw;
-  }
+.m-web3-modal__provider-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .m-web3-modal__provider-name {
-  width: 100%;
-  font-size: 24px;
-  font-weight: 700;
   margin-top: 0.5em;
-  @media screen and (max-width: 768px) {
-    font-size: 5vw;
-  }
 }
 
 .m-web3-modal__provider-icon {
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   display: flex;
   border-radius: 50%;
   overflow: visible;
@@ -78,10 +71,5 @@
   & img {
     width: 100%;
     height: 100%;
-  }
-
-  @media screen and (max-width: 768px) {
-    width: 8.5vw;
-    height: 8.5vw;
   }
 }

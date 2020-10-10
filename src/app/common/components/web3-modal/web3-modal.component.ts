@@ -5,11 +5,10 @@ import { Web3ModalService } from '../../services/web3-modal.service';
 @Component({
   selector: 'm-web3-modal',
   templateUrl: 'web3-modal.component.html',
-  styleUrls: ['./web3-modal.component.scss'],
 })
 export class Web3Modal {
   open: boolean = false;
-  providers: IProviderUserOptions[];
+  providers: IProviderUserOptions[] = [];
 
   constructor(private service: Web3ModalService) {
     this.service.shouldOpen.subscribe({
@@ -18,7 +17,12 @@ export class Web3Modal {
       },
     });
 
-    this.providers = this.service.userOptions;
+    this.service.providers.subscribe({
+      next: providers => {
+        console.log(providers);
+        this.providers = providers;
+      },
+    });
   }
 
   close() {
