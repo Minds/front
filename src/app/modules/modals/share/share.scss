@@ -15,8 +15,7 @@
 
   .m-share__copyableLinkContainer {
     .m-share__copyableLink {
-      max-width: 450px;
-      margin: 0 16px 8px 0;
+      margin-bottom: 0;
       border-radius: 18px;
       display: flex;
       justify-content: space-between;
@@ -182,5 +181,12 @@
         background-color: themed($m-blue-grey-500);
       }
     }
+  }
+
+  .m-share__embedTextArea {
+    font-family: 'Liberation Mono', monospace;
+    text-align: justify;
+    overflow: hidden;
+    border-radius: 3px;
   }
 }

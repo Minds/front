@@ -35,7 +35,8 @@ m-videoPlayer--scrollaware {
 }
 
 .m-videoPlayer__placeholder {
-  height: 330px;
+  min-height: 330px;
+  height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

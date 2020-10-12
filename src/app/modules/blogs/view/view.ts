@@ -248,9 +248,13 @@ export class BlogView implements OnInit, OnDestroy {
       (this.blog.route ? this.blog.route : 'blog/view/' + this.blog.guid);
 
     this.overlayModal
-      .create(ShareModalComponent, url, {
-        class: 'm-overlay-modal--medium m-overlayModal__share',
-      })
+      .create(
+        ShareModalComponent,
+        { url },
+        {
+          class: 'm-overlay-modal--medium m-overlayModal__share',
+        }
+      )
       .present();
   }
 

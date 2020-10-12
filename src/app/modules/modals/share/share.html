@@ -29,32 +29,55 @@
   </div>
 </div>
 
-<div
-  class="m-share__referrerParamCheckboxContainer"
-  *ngIf="session.isLoggedIn()"
->
-  <input
-    type="checkbox"
-    checked
-    id="referrer-param"
-    name="referrer-param"
-    (click)="toggleReferrerParam()"
-  />
-  <label for="referrer-param">
-    <span i18n="@@M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL">
-      Include referral code
-    </span>
-  </label>
-  <m-tooltip [anchor]="left" icon="help">
-    <ng-container i18n="@@M_SHARE__REFERRAL_CODE_EXPLANATION">
-      Use your referral code to earn tokens for referring new users to Minds.
-      Learn more at the
-      <a [routerLink]="['/wallet/tokens/referrals']" target="_blank"
-        >Referrals Console</a
-      >
-    </ng-container>
-    <i class="material-icons m-share__newWindowIcon">open_in_new</i>
-  </m-tooltip>
+<div class="m-grid">
+  <div
+    class="m-share__referrerParamCheckboxContainer m-grid__column-6 m-grid__column-12--mobile"
+    *ngIf="session.isLoggedIn()"
+  >
+    <input
+      type="checkbox"
+      checked
+      id="referrer-param"
+      name="referrer-param"
+      (click)="toggleReferrerParam()"
+    />
+    <label for="referrer-param">
+      <span i18n="@@M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL">
+        Include referral code
+      </span>
+    </label>
+    <m-tooltip [anchor]="left" icon="help">
+      <ng-container i18n="@@M_SHARE__REFERRAL_CODE_EXPLANATION">
+        Use your referral code to earn tokens for referring new users to Minds.
+        Learn more at the
+        <a [routerLink]="['/wallet/tokens/referrals']" target="_blank"
+          >Referrals Console</a
+        >
+      </ng-container>
+      <i class="material-icons m-share__newWindowIcon">open_in_new</i>
+    </m-tooltip>
+  </div>
+  <div class="m-grid__column-6 m-grid__column-12--mobile" *ngIf="embedCode">
+    <label for="referrer-param">
+      <span i18n="@@M__COMMON__EMBED_INTO_WEBSITE">
+        Embed into your website:
+      </span>
+    </label>
+    <div
+      [mdlTextfield]
+      class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+      style="width: 100%"
+    >
+      <textarea
+        [autoGrow]
+        (click)="copyToClipboard(textAreaElement, false)"
+        [ngModel]="embedCode"
+        class="mdl-textfield__input m-share__embedTextArea"
+        readonly
+        #textAreaElement
+      ></textarea>
+    </div>
+  </div>
 </div>
 
 <div class="m-share__buttonsContainer">

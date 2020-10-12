@@ -204,8 +204,133 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "sourceMap": false,
-              "optimization": true
+              "sourceMap": true,
+              "optimization": false
+            }
+          }
+        }
+      }
+    },
+    "minds-embedded": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en"
+        },
+        "locales": {
+          "cs": {
+            "translation": "src/locale/Minds.cs.xliff"
+          },
+          "de": {
+            "translation": "src/locale/Minds.de.xliff"
+          },
+          "es": {
+            "translation": "src/locale/Minds.es.xliff"
+          },
+          "fr": {
+            "translation": "src/locale/Minds.fr.xliff"
+          },
+          "hi": {
+            "translation": "src/locale/Minds.hi.xliff"
+          },
+          "it": {
+            "translation": "src/locale/Minds.it.xliff"
+          },
+          "ja": {
+            "translation": "src/locale/Minds.ja.xliff"
+          },
+          "nl": {
+            "translation": "src/locale/Minds.nl.xliff"
+          },
+          "no": {
+            "translation": "src/locale/Minds.no.xliff"
+          },
+          "pl": {
+            "translation": "src/locale/Minds.pl.xliff"
+          },
+          "pt": {
+            "translation": "src/locale/Minds.pt.xliff"
+          },
+          "ro": {
+            "translation": "src/locale/Minds.ro.xliff"
+          },
+          "ru": {
+            "translation": "src/locale/Minds.ru.xliff"
+          },
+          "sv": {
+            "translation": "src/locale/Minds.sv.xliff"
+          },
+          "uk": {
+            "translation": "src/locale/Minds.uk.xliff"
+          },
+          "vi": {
+            "translation": "src/locale/Minds.vi.xliff"
+          },
+          "th": {
+            "translation": "src/locale/Minds.th.xliff"
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/browser",
+            "index": "src/app/modules/embed/embed.template.html",
+            "baseHref": "/static/",
+            "deleteOutputPath": false,
+            "main": "src/app/modules/embed/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "extractCss": true,
+            "aot": true,
+            "outputHashing": "bundles",
+            "localize": [
+              "en"
+            ],
+            "assets": ["src/favicon.ico"],
+            "styles": [
+              "node_modules/plyr/dist/plyr.css",
+              "src/main.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/stylesheets"
+              ]
+            }
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "localize": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           }
         }

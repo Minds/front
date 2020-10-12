@@ -12,6 +12,8 @@ import {
   Output,
   OnInit,
 } from '@angular/core';
+import { EmbedService } from '../../../services/embed.service';
+import { EmbedServiceV2 } from '../../../services/embedV2.service';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
@@ -22,6 +24,7 @@ import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { ConfigsService } from '../../services/configs.service';
 import { FormToastService } from '../../services/form-toast.service';
 
 type Option =
@@ -83,7 +86,9 @@ export class PostMenuComponent implements OnInit {
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
     public featuresService: FeaturesService,
-    protected formToastService: FormToastService
+    protected formToastService: FormToastService,
+    private configs: ConfigsService,
+    public embedService: EmbedServiceV2
   ) {}
 
   ngOnInit() {}
@@ -358,8 +363,15 @@ export class PostMenuComponent implements OnInit {
   }
 
   openShareModal() {
+    const data = {
+      url: this.entity.url,
+      embedCode:
+        this.entity.custom_type === 'video' &&
+        this.embedService.getIframeFromObject(this.entity),
+    };
+
     this.overlayModal
-      .create(ShareModalComponent, this.entity.url, {
+      .create(ShareModalComponent, data, {
         class: 'm-overlay-modal--medium m-overlayModal__share',
       })
       .present();

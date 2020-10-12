@@ -851,7 +851,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   }
 
   async openShareModal(): Promise<void> {
-    const data = this.site.baseUrl + this.pageUrl.substr(1);
+    const data = {
+      url: this.site.baseUrl + this.pageUrl.substr(1),
+    };
     const opts = {
       class: 'm-overlayModal__share m-overlay-modal--medium',
     };

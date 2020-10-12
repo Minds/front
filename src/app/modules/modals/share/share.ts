@@ -22,11 +22,14 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   shareUrlFocused: boolean = false;
   shareUrlTimeout;
 
+  embedCode: string;
+
   includeReferrerParam: boolean = true; // Include referrer param in url by default
   flashing: boolean = false;
   flashTimeout;
 
-  @Input('url') set data(url) {
+  @Input('data') set data({ url, embedCode }) {
+    this.embedCode = embedCode;
     this.rawUrl = url;
     this.encodedRawUrl = encodeURI(this.rawUrl);
   }
@@ -121,16 +124,18 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   }
 
   // Receives input element whose text you want to copy
-  copyToClipboard(inputElement) {
+  copyToClipboard(inputElement, notify: boolean = true) {
     inputElement.select();
     document.execCommand('copy');
 
-    // Temporarily change button text from 'copy' to 'copied'
-    clearTimeout(this.shareUrlTimeout);
-    this.shareUrlRecentlyCopied = true;
-    this.shareUrlTimeout = setTimeout(() => {
-      this.shareUrlRecentlyCopied = false;
-    }, 2000);
+    if (notify) {
+      // Temporarily change button text from 'copy' to 'copied'
+      clearTimeout(this.shareUrlTimeout);
+      this.shareUrlRecentlyCopied = true;
+      this.shareUrlTimeout = setTimeout(() => {
+        this.shareUrlRecentlyCopied = false;
+      }, 2000);
+    }
   }
 
   // Make copyable link container appear focused when you click on it

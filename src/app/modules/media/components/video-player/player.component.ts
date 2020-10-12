@@ -28,8 +28,7 @@ import { Session } from '../../../../services/session';
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
 })
-export class MindsVideoPlayerComponent
-  implements OnChanges, OnDestroy, OnChanges {
+export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -109,7 +108,6 @@ export class MindsVideoPlayerComponent
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
-    private session: Session,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
