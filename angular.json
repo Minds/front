@@ -204,14 +204,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "sourceMap": true,
-              "optimization": false
+              "sourceMap": false,
+              "optimization": true
             }
           }
         }
       }
     },
-    "minds-embedded": {
+    "minds-embed": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -292,8 +292,7 @@
             ],
             "assets": ["src/favicon.ico"],
             "styles": [
-              "node_modules/plyr/dist/plyr.css",
-              "src/main.css"
+              "node_modules/plyr/dist/plyr.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

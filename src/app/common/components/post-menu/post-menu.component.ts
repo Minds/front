@@ -12,7 +12,6 @@ import {
   Output,
   OnInit,
 } from '@angular/core';
-import { EmbedService } from '../../../services/embed.service';
 import { EmbedServiceV2 } from '../../../services/embedV2.service';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -24,7 +23,6 @@ import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
-import { ConfigsService } from '../../services/configs.service';
 import { FormToastService } from '../../services/form-toast.service';
 
 type Option =
@@ -87,7 +85,6 @@ export class PostMenuComponent implements OnInit {
     protected activityService: ActivityService,
     public featuresService: FeaturesService,
     protected formToastService: FormToastService,
-    private configs: ConfigsService,
     public embedService: EmbedServiceV2
   ) {}
 

@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
 export class EmbeddedVideoComponent implements OnInit {
   guid: string;
   autoplay: boolean = true;
-  paramsSubscription: Subscription;
+  paramsSubscription$: Subscription;
+  queryParamsSubscription$: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -17,14 +18,23 @@ export class EmbeddedVideoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.paramsSubscription = this.activatedRoute.paramMap.subscribe(params => {
-      this.guid = params.get('guid');
-      this.detectChanges();
-    });
+    this.queryParamsSubscription$ = this.activatedRoute.queryParamMap.subscribe(
+      params => {
+        this.autoplay = !!params.get('autoplay') || true;
+        this.detectChanges();
+      }
+    );
+    this.paramsSubscription$ = this.activatedRoute.paramMap.subscribe(
+      params => {
+        this.guid = params.get('guid');
+        this.detectChanges();
+      }
+    );
   }
 
   public ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    this.queryParamsSubscription$.unsubscribe();
+    this.paramsSubscription$.unsubscribe();
   }
 
   detectChanges() {
