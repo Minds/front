@@ -22,6 +22,7 @@ import * as BN from 'bn.js';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { Web3ModalService } from '../../../common/services/web3-modal.service';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -67,6 +68,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
     protected overlayModal: OverlayModalService,
+    protected web3modalService: Web3ModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,
     public session: Session,
@@ -207,7 +209,10 @@ export class BlockchainPurchaseComponent implements OnInit {
     }, 2000);*/
   }
 
-  purchaseEth() {
+  async purchaseEth() {
+    //TODO: for testing purposes
+    await this.web3modalService.connect();
+
     this.showEthModal = true;
     this.detectChanges();
     //let win = window.open('/checkout');
