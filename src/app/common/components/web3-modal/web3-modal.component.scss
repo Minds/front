@@ -1,6 +1,8 @@
 .m-web3-modal__body {
   box-sizing: border-box;
-  padding: 40px 50px 60px 50px;
+  padding: 40px 50px;
+  max-height: 800px;
+  overflow-y: auto;
 
   .m-web3-modal__body-title {
     font-size: 30px;
@@ -38,7 +40,7 @@
   cursor: pointer;
   width: 194px;
   height: 165px;
-  margin: 10px;
+  margin: 0 20px 20px 20px;
 
   @include m-theme() {
     background-color: themed($m-bgColor--secondary);

@@ -1,6 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import Fortmatic from 'fortmatic';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import Squarelink from 'squarelink';
+import Portis from '@portis/web3';
+import Torus from '@toruslabs/torus-embed';
+
+import { environment } from '../../../environments/environment';
+
 import {
   IProviderUserOptions,
   SimpleFunction,
@@ -11,28 +17,11 @@ import {
   ProviderController,
   IProviderControllerOptions,
 } from '../../lib/web3modal';
+import { ConfigsService } from './configs.service';
 
 @Injectable()
 export class Web3ModalService {
-  private defaultOptions: IProviderControllerOptions = {
-    disableInjectedProvider: false,
-    cacheProvider: false,
-    providerOptions: {
-      fortmatic: {
-        package: Fortmatic,
-        options: {
-          key: 'FORTMATIC_KEY',
-        },
-      },
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: 'INFURA_ID',
-        },
-      },
-    },
-    network: '',
-  };
+  private defaultOptions: IProviderControllerOptions;
   private isOpen: boolean = false;
   private eventController: EventController = new EventController();
   private providerController: ProviderController;
@@ -41,7 +30,49 @@ export class Web3ModalService {
   shouldOpen: EventEmitter<boolean> = new EventEmitter();
   providers: EventEmitter<IProviderUserOptions[]> = new EventEmitter();
 
-  constructor() {}
+  constructor(private configs: ConfigsService) {
+    const walletProviderKeys = this.configs.get('blockchain')
+      .wallet_provider_keys;
+
+    if (walletProviderKeys) {
+      const { fortmatic, portis, squarelink } = walletProviderKeys;
+
+      this.defaultOptions = {
+        disableInjectedProvider: false,
+        cacheProvider: false,
+        providerOptions: {
+          fortmatic: {
+            package: Fortmatic,
+            options: {
+              key: fortmatic,
+            },
+          },
+          torus: {
+            package: Torus,
+          },
+          portis: {
+            package: Portis,
+            options: {
+              id: portis,
+            },
+          },
+          squarelink: {
+            package: Squarelink,
+            options: {
+              id: squarelink,
+            },
+          },
+          walletconnect: {
+            package: WalletConnectProvider,
+            options: {
+              infuraId: 'INFURA_ID',
+            },
+          },
+        },
+        network: '',
+      };
+    }
+  }
 
   get cachedProvider(): string {
     return this.providerController.cachedProvider;
