@@ -42,6 +42,9 @@
 
 :host {
   ::ng-deep {
+    position: relative;
+    z-index: 1;
+
     .ck-editor__editable {
       h1 {
         margin: 0;

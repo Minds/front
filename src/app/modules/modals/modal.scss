@@ -2,7 +2,9 @@
 
 m-modal-signup,
 m-modal-signup-on-action {
-  z-index: 1000;
+  position: relative;
+  @include z-index(modal);
+  display: block;
 
   m-modal {
     position: fixed;
@@ -10,7 +12,6 @@ m-modal-signup-on-action {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999990;
   }
 
   .m-modal-container {

@@ -1,5 +1,4 @@
 m-sidebar--navigation {
-  z-index: 999999; // TODO: improve out z spatial
   @media screen and (max-width: $max-mobile) {
     display: none;
   }
@@ -14,38 +13,14 @@ m-sidebar--navigation {
 
 .m-sidebarNavigation--opened {
   display: block;
-  .m-sidebarNavigation__overlay {
-    z-index: 999998;
-
-    @include m-theme() {
-      background-color: rgba(themed($m-grey-700), 0.2);
-    }
-  }
 
   .m-sidebarNavigation.m-sidebarNavigation--slide {
     transform: translateX(316px);
   }
 }
 
-.m-sidebarNavigation__overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  background-color: transparent;
-  transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-  &.m-sidebarNavigation--opened {
-    z-index: 999998;
-    @include m-theme() {
-      background-color: rgba(themed($m-grey-700), 0.2);
-    }
-  }
-}
-
 .m-sidebarNavigation {
+  @include z-index(sidebar);
   padding-top: 26px;
   min-width: 0;
   display: block;
@@ -53,7 +28,6 @@ m-sidebar--navigation {
   height: calc(100vh - 75px);
   overflow: scroll;
   position: fixed;
-  z-index: 2;
   box-sizing: border-box;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -77,6 +51,7 @@ m-sidebar--navigation {
   }
 
   &.m-sidebarNavigation--slide {
+    @include z-index(topbar);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -84,7 +59,6 @@ m-sidebar--navigation {
     width: 316px;
     height: 100vh;
     max-width: 79vw;
-    z-index: 999999;
     padding: 0;
     border-right: 0;
 

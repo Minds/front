@@ -37,7 +37,7 @@ m-popover {
       }
 
       &.m-popover__content--visible {
-        z-index: 10;
+        @include z-index(toast);
         opacity: 1;
         visibility: visible;
         transform: translate(0, -20px);

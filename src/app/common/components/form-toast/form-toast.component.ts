@@ -19,6 +19,7 @@ import {
 @Component({
   selector: 'm-formToast',
   templateUrl: './form-toast.component.html',
+  styleUrls: ['./form-toast.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fader', [

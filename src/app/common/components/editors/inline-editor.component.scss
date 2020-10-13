@@ -1,4 +1,10 @@
 m-inline-editor {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
+  display: block;
+
   .material-icons.file-upload::before {
     content: 'file_upload';
   }
@@ -117,6 +123,7 @@ m-inline-editor {
   word-break: break-all;
   word-wrap: break-word;
   visibility: hidden;
+  // z-index note: leaving this high value here b/c external plugin
   z-index: 2000;
 }
 
@@ -206,6 +213,7 @@ m-inline-editor {
   position: absolute;
   top: 0;
   visibility: hidden;
+  // z-index note: leaving this high value here b/c external plugin
   z-index: 999999;
 }
 
