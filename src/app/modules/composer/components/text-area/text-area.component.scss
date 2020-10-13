@@ -60,7 +60,7 @@ m-composer__textArea {
     align-items: center;
     min-height: 28px;
 
-    > input {
+    > textarea {
       flex: 1;
       margin-right: 10px;
       padding: 0;
@@ -69,6 +69,8 @@ m-composer__textArea {
       border: none;
       font-size: 24px;
       width: 100%;
+      resize: vertical;
+      min-height: 20px;
 
       @include m-theme() {
         color: themed($m-textColor--primary);

@@ -16,6 +16,7 @@ import { BlogsEditService } from './blog-edit.service';
 import { take } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { ComposerService } from '../../../composer/services/composer.service';
+import { PopupService } from '../../../composer/components/popup/popup.service';
 
 @Component({
   selector: 'm-blogEditor--v2',
@@ -24,7 +25,7 @@ import { ComposerService } from '../../../composer/services/composer.service';
   },
   templateUrl: 'editor-base.component.html',
   styleUrls: ['./editor-base.component.ng.scss'],
-  providers: [BlogsEditService, ComposerService],
+  providers: [BlogsEditService, ComposerService, PopupService],
 })
 export class BlogEditorV2Component implements OnInit, OnDestroy {
   readonly cdnUrl: string;

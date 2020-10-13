@@ -49,6 +49,7 @@ export type ActivityEntity = {
   activity_type?: string; // all blogs are rich-embeds
   content_type?: string; // blogs and rich-embeds are separate
   paywall_unlocked?: boolean;
+  permaweb_id?: string;
 };
 
 // Constants of blocks

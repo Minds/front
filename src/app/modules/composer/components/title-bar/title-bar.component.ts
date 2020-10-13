@@ -5,17 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import {
-  ACCESS,
-  LICENSES,
-  LicensesEntry,
-} from '../../../../services/list-options';
-import {
-  AccessIdSubjectValue,
-  ComposerService,
-  LicenseSubjectValue,
-} from '../../services/composer.service';
-import { BehaviorSubject } from 'rxjs';
+
+import { ComposerService } from '../../services/composer.service';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu

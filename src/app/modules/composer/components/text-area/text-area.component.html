@@ -1,6 +1,7 @@
 <div class="m-composer__textArea">
   <div class="m-composerTextarea__title" *ngIf="attachment$ | async">
-    <input
+    <textarea
+      rows="1"
       type="text"
       placeholder="Title"
       i18n-placeholder="@@COMMON__TITLE"
@@ -10,7 +11,8 @@
       (ngModelChange)="onTitleChange($event)"
       data-cy="composer-activity-title"
       #titleInput
-    />
+      [autoGrow]
+    ></textarea>
 
     <div
       class="m-composerTextareaTitle__toggle"
