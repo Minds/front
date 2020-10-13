@@ -63,7 +63,7 @@
   width: 150px;
   border-radius: 4px;
   position: absolute;
-  z-index: 1000;
+  z-index: 1;
   top: 8px;
   right: 8px;
   overflow: visible;
@@ -215,7 +215,7 @@ m-channel--carousel {
     position: absolute;
     top: 8px;
     right: 8px;
-    z-index: 998;
+    // z-index: 998;
 
     button {
       font-size: 23px;
@@ -227,7 +227,7 @@ m-channel--carousel {
     position: absolute;
     top: 8px;
     right: 80px;
-    z-index: 998;
+    // z-index: 998;
     i {
       margin-top: 2px;
     }
@@ -235,7 +235,7 @@ m-channel--carousel {
 
   > i {
     top: 50%;
-    z-index: 999;
+    // z-index: 999;
     position: absolute;
     font-size: 60px !important;
     cursor: pointer;
@@ -440,7 +440,7 @@ minds-graph-line {
   left: 0;
   bottom: auto;
   right: auto;
-  z-index: 999995;
+  @include z-index(tooltip);
   width: 330px;
   padding-bottom: $minds-padding;
   @include m-theme() {
@@ -450,7 +450,6 @@ minds-graph-line {
 
 .m-bubble-popup {
   position: fixed;
-  z-index: 999995;
   user-select: none;
 }
 
@@ -525,7 +524,7 @@ minds-tooltip .m-bubble-popup {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99990;
+  // z-index: 99990;
   @include m-theme() {
     background-color: themed($m-white);
   }
@@ -627,7 +626,7 @@ svg.m-facebook-icon {
     top: 0;
     width: 100%;
     left: 0;
-    z-index: 10;
+    @include z-index(announcement);
   }
 }
 
@@ -717,7 +716,7 @@ m-text-input--autocomplete-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    // z-index: 1000;
     float: left;
     min-width: 160px;
     padding: 5px 0;

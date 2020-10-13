@@ -1,13 +1,14 @@
 @import 'defaults.scss';
 
 m-messenger {
+  display: block;
   @media screen and (max-width: $max-mobile) {
     display: none;
   }
   position: fixed;
   bottom: 0;
   right: 52px;
-  z-index: 999999;
+  @include z-index(messenger);
 
   .m-messenger--conversations-wrappers {
     position: absolute;

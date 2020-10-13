@@ -1,6 +1,10 @@
 @import 'defaults';
 
 .m-group__grid {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
   display: flex;
   flex-direction: row;
 
@@ -30,7 +34,7 @@
     top: 55px;
     right: 60px;
     display: block;
-    z-index: 99;
+    z-index: 1;
     cursor: pointer;
 
     @media screen and (max-width: $min-desktop) {

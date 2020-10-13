@@ -1,4 +1,8 @@
 m-accordion {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
   display: block;
 
   m-accordion__pane {

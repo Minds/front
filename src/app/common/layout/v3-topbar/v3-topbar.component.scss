@@ -44,8 +44,6 @@
   border: none;
   height: 75px;
   width: 100%;
-  z-index: 1000000;
-  transform: translateZ(0);
 
   .m-v3TopbarTop__inner {
     height: 100%;
@@ -435,8 +433,6 @@
   padding: 0;
   border: none;
   min-height: 75px;
-  z-index: 9999;
-  transform: translateZ(0);
   @include m-theme() {
     background-color: themed($m-white);
     border-top: 1px solid themed($m-grey-50);
@@ -462,7 +458,7 @@
     width: 1px;
 
     .m-notifications--toaster {
-      z-index: 500;
+      @include z-index(toast);
       position: relative;
       top: 50px;
       right: 350px;

@@ -18,6 +18,11 @@ $min-tablet-pro: 900px;
         display: none;
       }
     }
+    &.splashVisible {
+      max-height: 100vh;
+      max-width: 100vw;
+    }
+
     .is-pro-domain & {
       min-height: 100vh;
     }
@@ -88,6 +93,7 @@ $min-tablet-pro: 900px;
 
     .m-proChannel__loginRow,
     .m-proChannel__topbar {
+      @include z-index(topbar);
       width: 100%;
       box-sizing: border-box;
 

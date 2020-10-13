@@ -1,19 +1,15 @@
-@import 'defaults';
+@import 'defaults.scss';
 
-$m-announcment-height: 50px;
-
-m-announcement {
+:host {
   display: block;
   position: relative;
   width: 100%;
-  min-height: $m-announcment-height;
-  height: $m-announcment-height;
+  min-height: 50px;
+  @include z-index(announcement);
 
   .m-announcement {
     position: fixed;
     width: 100%;
-    height: $m-announcment-height;
-    z-index: 998;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -36,13 +32,14 @@ m-announcement {
     text-rendering: optimizeLegibility;
     font-size: 16px;
     flex: 1;
+    padding: 15px 50px 15px 15px;
     @include m-theme() {
       color: themed($m-white);
     }
 
     @media screen and (max-width: 770px) {
-      font-size: 10px;
-      padding-right: 50px;
+      font-size: 14px;
+      line-height: 19px;
     }
 
     a {

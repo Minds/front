@@ -29,7 +29,6 @@ m-settingsV2__referralsDashboard {
         }
       }
       .m-tooltip--bubble {
-        z-index: 9999;
         bottom: auto;
         @media screen and (max-width: $max-mobile) {
           top: -56px;
@@ -50,6 +49,9 @@ m-settingsV2__referralsDashboard {
           @include m-theme() {
             color: themed($m-textColor--secondary) !important;
           }
+        }
+        > * {
+          overflow: visible;
         }
         .m-settingsV2__referralsDashboard__rewardsCol {
           .m-tooltip {

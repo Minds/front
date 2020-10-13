@@ -1,6 +1,10 @@
 m-categories--selector {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  // new stacking context
   position: relative;
+  z-index: 0;
+
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  display: block;
 
   input {
     max-width: 190px;
@@ -24,7 +28,7 @@ m-categories--selector {
 
   .m-categories--selector--suggestions-list {
     position: absolute;
-    z-index: 5000;
+    z-index: 1;
     margin: 0;
     padding: 0;
     max-height: 300px;
