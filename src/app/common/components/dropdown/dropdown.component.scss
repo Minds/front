@@ -132,7 +132,7 @@
 .m-dropdown--v2 {
   // new stacking context
   position: relative;
-  z-index: 2;
+  z-index: 3;
 
   .m-dropdown__list {
     width: 180px;
