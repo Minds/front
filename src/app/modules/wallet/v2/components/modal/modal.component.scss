@@ -1,4 +1,6 @@
 m-walletModal {
+  position: relative;
+  @include z-index(modal);
   .m-walletModal__container {
     display: block;
     position: fixed;
@@ -9,7 +11,7 @@ m-walletModal {
     height: 100%;
     width: 100%;
     overflow: scroll;
-    z-index: 9999999;
+    z-index: 4;
   }
 
   .m-walletModal__backdrop {
@@ -18,7 +20,7 @@ m-walletModal {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999995;
+    z-index: 1;
     @include m-theme() {
       background-color: rgba(themed($m-black-always), 0.8);
     }
@@ -27,7 +29,7 @@ m-walletModal {
   .m-walletModal {
     padding: 56px 65px;
     border-radius: 5px;
-    z-index: 9999996;
+    z-index: 2;
     position: fixed;
     transform: translateY(-50%);
     width: 70vw;
@@ -76,7 +78,7 @@ m-walletModal {
   }
 
   .m-walletModal__close {
-    z-index: 9999998;
+    z-index: 3;
     line-height: normal;
     cursor: pointer;
     box-sizing: border-box;

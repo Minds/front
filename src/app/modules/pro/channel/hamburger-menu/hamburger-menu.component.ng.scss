@@ -7,8 +7,9 @@
     visibility: hidden;
 
     position: fixed;
+    @include z-index(topbar);
+
     width: 95vw;
-    z-index: 999999999;
     top: 0;
     bottom: 0;
     background: var(--m-pro--plain-background-color);

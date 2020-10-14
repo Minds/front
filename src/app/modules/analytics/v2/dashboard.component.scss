@@ -1,6 +1,9 @@
 m-analytics__dashboard {
-  display: block;
+  // new stacking context
   position: relative;
+  z-index: 0;
+
+  display: block;
   width: 100%;
   m-tooltip {
     .m-tooltip {
@@ -12,7 +15,7 @@ m-analytics__dashboard {
         }
       }
       .m-tooltip--bubble {
-        z-index: 99;
+        z-index: 2;
         font-size: 11px;
       }
     }

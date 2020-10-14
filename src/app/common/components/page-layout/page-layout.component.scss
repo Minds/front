@@ -23,7 +23,7 @@ m-pageLayout {
       }
     }
     .m-tooltip--bubble {
-      z-index: 99;
+      @include z-index(tooltip);
       font-size: 11px;
     }
   }

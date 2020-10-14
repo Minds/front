@@ -1,23 +1,25 @@
-<div
-  class="m-overlay-modal--backdrop"
-  [hidden]="hidden"
-  (click)="clickToDismiss($event)"
-></div>
-<div class="m-overlay-modal {{ class }}" [hidden]="hidden" #modalElement>
-  <a class="m-overlay-modal--close"
-    ><i
-      class="material-icons"
-      (click)="clickToDismiss($event)"
-      (keyup.esc)="onEscKeyup()"
-      >close</i
+<div class="m-overlay-modal--wrapper">
+  <div
+    class="m-overlay-modal--backdrop"
+    [hidden]="hidden"
+    (click)="clickToDismiss($event)"
+  ></div>
+  <div class="m-overlay-modal {{ class }}" [hidden]="hidden" #modalElement>
+    <a class="m-overlay-modal--close"
+      ><i
+        class="material-icons"
+        (click)="clickToDismiss($event)"
+        (keyup.esc)="onEscKeyup()"
+        >close</i
+      >
+      <div
+        *ngIf="isMediaModal && !hidden"
+        class="m-overlay-modal--escHint"
+        @fadeOut
+      >
+        ESC
+      </div></a
     >
-    <div
-      *ngIf="isMediaModal && !hidden"
-      class="m-overlay-modal--escHint"
-      @fadeOut
-    >
-      ESC
-    </div></a
-  >
-  <ng-template dynamic-host></ng-template>
+    <ng-template dynamic-host></ng-template>
+  </div>
 </div>

@@ -27,6 +27,7 @@ import { AnnouncementComponent } from '../announcements/announcement.component';
 @Component({
   selector: 'm-emailConfirmation',
   templateUrl: 'email-confirmation.component.html',
+  styleUrls: ['email-confirmation.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmailConfirmationComponent implements OnInit, OnDestroy {

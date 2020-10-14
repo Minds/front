@@ -1,0 +1,73 @@
+@import 'defaults.scss';
+@import '../../layout/layout.scss';
+
+:host {
+  .m-feedFilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 20px;
+
+    .m-feedFilterMenu__trigger {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 14px;
+      line-height: 19px;
+
+      > span {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &.m-feedFilterMenuTrigger__selectionLabel {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+
+      > span:first-child {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      > * + * {
+        margin-left: 9px;
+      }
+    }
+  }
+
+  ::ng-deep {
+    m-dropdownMenu {
+      .m-dropdownMenu__item {
+        span {
+          display: inline-block;
+          margin-left: 31px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        m-icon {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+      .m-dropdownMenu__item--selected {
+        span {
+          margin-left: 0;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+}

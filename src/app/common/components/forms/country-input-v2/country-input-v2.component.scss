@@ -1,5 +1,8 @@
 m-countryInput {
+  // new stacking context
   position: relative;
+  z-index: 0;
+
   display: inline-flex;
   margin-bottom: $minds-padding;
   flex-grow: 1;

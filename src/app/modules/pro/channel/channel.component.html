@@ -1,9 +1,13 @@
-<div class="m-pro__channel" [ngClass]="{ hideLoginRow: !showLoginRow }">
+<div
+  class="m-pro__channel"
+  [ngClass]="{
+    hideLoginRow: !showLoginRow
+  }"
+>
   <ng-container *ngIf="channel">
     <m-proChannel__splash
       *ngIf="channelService.showSplash$ | async"
     ></m-proChannel__splash>
-
     <ng-container *ngIf="!(channelService.showSplash$ | async)">
       <div class="m-proChannel__loginRow">
         <ng-container
