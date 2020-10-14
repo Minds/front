@@ -16,7 +16,7 @@ context('Notification', () => {
   const commentButton = 'minds-activity > div.tabs > minds-button-comment > a';
   const commentInput = 'm-comment__poster minds-textarea > div';
   const commentContent = '.m-comment__bubble > p';
-  const notificationBell = 'm-notifications--topbar-toggle > a > i';
+  const notificationBell = '.m-notificationsTopbarToggle--newNav';
   const notification = 'minds-notification';
   /**
    * Before all, generate username and password, login as the new user and log out.
