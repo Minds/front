@@ -38,6 +38,7 @@ interface LabelValue<T> {
   selector: 'm-feedFilter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed-filter.component.html',
+  styleUrls: ['feed-filter.component.ng.scss'],
 })
 export class FeedFilterComponent {
   /**
@@ -77,4 +78,8 @@ export class FeedFilterComponent {
     { label: 'Videos', value: 'videos' },
     { label: 'Blogs', value: 'blogs' },
   ];
+
+  get typeLabel() {
+    return this.types.find(typeObj => typeObj.value === this.type).label;
+  }
 }

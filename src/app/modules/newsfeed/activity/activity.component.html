@@ -54,6 +54,10 @@
     *ngIf="service.displayOptions.showToolbar"
   ></m-activity__toolbar>
 
+  <m-activity__minimalMetrics
+    *ngIf="service.displayOptions.minimalMode"
+  ></m-activity__minimalMetrics>
+
   <ng-container *mIfBrowser>
     <m-comments__entityOutlet
       *ngIf="service.displayOptions.showComments"

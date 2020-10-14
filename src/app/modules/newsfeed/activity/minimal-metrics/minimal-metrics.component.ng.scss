@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  .m-activity__minimalMetrics {
+    padding: 0 21px 16px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &.addTopSpacing {
+      padding-top: 16px;
+    }
+  }
+  a {
+    font-weight: 400;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
