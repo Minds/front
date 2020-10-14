@@ -51,7 +51,6 @@ import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.serv
 import { CookieService } from '../common/services/cookie.service';
 import { RedirectService } from '../common/services/redirect.service';
 import { StackableModalService } from './ux/stackable-modal.service';
-import { Web3ModalService } from '../common/services/web3-modal.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -108,7 +107,6 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: SessionsStorageService._,
     deps: [],
   },
-  Web3ModalService,
   SignupModalService,
   {
     provide: CacheService,

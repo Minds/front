@@ -179,7 +179,6 @@ import { PoweredByComponent } from './components/powered-by/powered-by.component
 import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
 import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
-import { Web3Modal } from './components/web3-modal/web3-modal.component';
 
 const routes: Routes = [
   {
@@ -231,8 +230,6 @@ const routes: Routes = [
     TagcloudComponent,
     DropdownComponent,
     QRCodeComponent,
-
-    Web3Modal,
 
     AutoGrow,
     InlineAutoGrow,
@@ -366,8 +363,6 @@ const routes: Routes = [
     TagcloudComponent,
     DropdownComponent,
     QRCodeComponent,
-
-    Web3Modal,
 
     AutoGrow,
     InlineAutoGrow,
