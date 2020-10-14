@@ -233,24 +233,26 @@ m-activity__content {
   }
 
   // Fixed height remind workarounds
-  .m-activity--fixedHeight .m-activityContent__remind--hasMessage & {
-    .m-rich-embed-src {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 80px;
-      padding: 10px;
-      position: relative;
+  .m-activity--fixedHeight {
+    .m-activityContent__remind--hasMessage & {
+      .m-rich-embed-src {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 80px;
+        padding: 10px;
+        position: relative;
 
-      .thumbnail {
-        width: 30%;
-        img {
-          height: 80px;
-          border-radius: 4px;
+        .thumbnail {
+          width: 30%;
+          img {
+            height: 80px;
+            border-radius: 4px;
+          }
         }
-      }
-      .meta {
-        flex: 1;
+        .meta {
+          flex: 1;
+        }
       }
     }
   }
@@ -258,4 +260,10 @@ m-activity__content {
 
 .m-activityContent__remind {
   padding: 0 $activity-padding-lr 16px;
+
+  &.m-activityContent__remind--minimalMode {
+    &:not(.m-activityContent__remind--hasMessage) {
+      padding-top: 16px;
+    }
+  }
 }

@@ -56,6 +56,17 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input() set displayOptions(options) {
+    if (options.minimalMode) {
+      this.service.setDisplayOptions({
+        minimalMode: true,
+        showComments: false,
+        autoplayVideo: false,
+        showToolbar: false,
+        showOwnerBlock: false,
+        bypassMediaModal: true,
+      });
+      return;
+    }
     this.service.setDisplayOptions(options);
   }
 

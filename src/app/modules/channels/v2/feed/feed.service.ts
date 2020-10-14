@@ -7,6 +7,7 @@ import {
 import { distinctUntilChanged, map, switchAll, filter } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
+import { Router } from '@angular/router';
 
 /**
  * Feed component service, handles filtering and pagination
@@ -47,7 +48,11 @@ export class FeedService {
    * @param service
    * @param api
    */
-  constructor(public service: FeedsService, protected api: ApiService) {
+  constructor(
+    public service: FeedsService,
+    protected api: ApiService,
+    protected router: Router
+  ) {
     // Fetch when GUID or filter change
     this.filterChangeSubscription = combineLatest([
       this.guid$,
