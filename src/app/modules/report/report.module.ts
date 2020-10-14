@@ -36,7 +36,7 @@ import { MarketingModule } from '../marketing/marketing.module';
         path: 'content-policy',
         component: ReportsMarketingComponent,
         data: {
-          title: 'The Jury System',
+          title: 'Content Policy',
           description:
             'The goal of Minds is to have fair, transparent and ethical moderation practices',
           ogImage: '/assets/photos/canyon.jpg',
