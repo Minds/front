@@ -23,7 +23,7 @@ m-sidebar {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-property: transform;
   overflow: hidden;
-  z-index: 5;
+  z-index: 1;
   @include m-theme() {
     background-color: themed($m-grey-950);
     color: themed($m-grey-800);

@@ -6,16 +6,16 @@ import {
   Inject,
   PLATFORM_ID,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FeedService } from './feed.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { tap } from 'rxjs/operators';
 import { Session } from '../../../../services/session';
 
 /**
@@ -25,9 +25,17 @@ import { Session } from '../../../../services/session';
   selector: 'm-channel__feed',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
+  styleUrls: ['feed.component.ng.scss'],
   providers: [FeedService, FeedsService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
+  isGrid: boolean = false;
+
+  @Input('layout') set _layout(layout: string) {
+    this.isGrid = layout === 'grid';
+    this.detectChanges();
+  }
+
   /**
    * Parses the view onto the current feed/type
    * @param view
@@ -75,8 +83,10 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     public feed: FeedService,
     public service: ChannelsV2Service,
     protected router: Router,
+    protected route: ActivatedRoute,
     public feedsUpdate: FeedsUpdateService,
     private session: Session,
+    protected cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -141,6 +151,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   onTypeChange(type: FeedFilterType) {
     const filter = type !== 'activities' ? type : '';
-    this.router.navigate(['/', this.service.username$.getValue(), filter]);
+    this.router.navigate(['/', this.service.username$.getValue(), filter], {
+      preserveQueryParams: true,
+    });
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

@@ -4,16 +4,20 @@
       class="m-paywallBadge"
       [ngClass]="{
         isPlus: paywallType === 'plus',
-        isCustom: paywallType === 'custom',
+        iconOnly:
+          paywallType === 'custom' || (paywallType === 'tier' && !showTierName),
         topRightPosition: topRightPosition
       }"
     >
       <i *ngIf="paywallType !== 'plus'" class="material-icons">lock</i>
+
+      <span
+        class="m-paywallBadge__tierName"
+        *ngIf="paywallType === 'tier' && showTierName"
+        >{{ tierName }} Members Only</span
+      >
       <span class="m-paywallBadge__tierName" *ngIf="paywallType === 'plus'"
         >MINDS+</span
-      >
-      <span class="m-paywallBadge__tierName" *ngIf="paywallType === 'tier'"
-        >{{ tierName }} Members Only</span
       >
     </div>
   </ng-container>

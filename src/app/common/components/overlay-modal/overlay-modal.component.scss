@@ -1,3 +1,5 @@
+@import 'defaults.scss';
+
 m-overlay-modal {
   position: relative;
   top: 0;
@@ -8,22 +10,29 @@ m-overlay-modal {
   width: 100%;
   overflow: overlay;
   overflow: scroll;
+  @include z-index(modal);
 
   .m-overlay-modal--backdrop {
-    z-index: 9999995;
     @include m-theme() {
       background-color: rgba(themed($m-black-always), 0.8);
     }
   }
 }
 
+.m-overlay-modal--wrapper {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+}
+
 .m-overlay-modal {
+  z-index: 2;
+
   &:not(.m-overlayModal--media) {
     position: fixed;
     right: 2vw;
     left: 2vw;
     margin: auto;
-    z-index: 9999999;
 
     top: 50%;
     max-height: 98vh;
@@ -56,7 +65,6 @@ m-overlay-modal {
       width: 100%;
 
       .m-overlay-modal--close {
-        z-index: 9999998;
         line-height: normal;
         opacity: 0.6;
         position: fixed;
@@ -176,7 +184,7 @@ m-overlay-modal {
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 99999999;
+  z-index: 3;
 
   display: inline-block;
   padding: 10px;
@@ -221,7 +229,7 @@ m-overlay-modal {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 9999998;
+  z-index: 1;
   @include m-theme() {
     background-color: rgba(themed($m-black-always), 0.5);
   }

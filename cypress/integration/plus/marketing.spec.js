@@ -8,11 +8,7 @@ context('Plus Product Page', () => {
   }
 
   before(() => {
-    cy.getCookie('minds_sess').then(sessionCookie => {
-      if (!sessionCookie) {
-        return cy.login(true);
-      }
-    });
+    cy.clearCookies()
   });
 
   beforeEach(() => {
@@ -20,11 +16,11 @@ context('Plus Product Page', () => {
   });
 
   const upgradeButton = 'm-plus--subscription .mf-button';
-  const wirePaymentsComponent = 'm-wire__paymentscreator .m-wire--creator';
+  const wirePaymentsComponent = '.m-wireCreator';
 
-  it('should automatically open the Wire Payment modal', () => {
+  it('should automatically open the register modal if not logged in', () => {
     cy.visit('/plus?i=yearly&c=tokens')
-    cy.get(wirePaymentsComponent).should('be.visible');
+    cy.get('.m-authModal__orDivider').should('be.visible');
   });
 
   it('should open the Wire Payment modal', () => {
@@ -34,7 +30,7 @@ context('Plus Product Page', () => {
 
     cy.get(upgradeButton)
       .should('be.visible')
-      .should('contain', 'Upgrade to Plus')
+      .should('contain', 'Upgrade to Minds+')
       .click();
 
     cy.get(wirePaymentsComponent).should('be.visible');

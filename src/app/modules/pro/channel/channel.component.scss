@@ -61,7 +61,6 @@ m-pro--channel {
   &.m-overlay-modal--shown {
     m-overlay-modal {
       position: fixed;
-      z-index: 9999990;
     }
   }
 
@@ -71,8 +70,6 @@ m-pro--channel {
 
   m-modal-signup {
     m-modal {
-      z-index: 9999999;
-
       .m-modal-container .mdl-card {
         background-color: var(--m-pro--transparent-background-color);
         color: var(--m-pro--text-color);

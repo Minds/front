@@ -25,7 +25,6 @@
       }
     }
     .m-tooltip--bubble {
-      z-index: 9999;
       @media screen and (max-width: $max-mobile) {
         top: -56px;
         right: 30px;

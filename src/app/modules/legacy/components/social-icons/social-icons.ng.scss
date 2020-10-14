@@ -6,7 +6,6 @@
     flex-direction: row;
     bottom: 0;
     left: calc(50% - 100px);
-    z-index: 100;
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);

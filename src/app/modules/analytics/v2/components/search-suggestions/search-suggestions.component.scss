@@ -1,11 +1,15 @@
 m-analytics__searchSuggestions {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
   display: block;
 
   .m-analytics__searchSuggestions__list {
     padding: 0;
     margin: 0;
     position: absolute;
-    z-index: 5000;
+    z-index: 1;
     box-sizing: border-box;
     width: 100%;
     @include m-theme() {

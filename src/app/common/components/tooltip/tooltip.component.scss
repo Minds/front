@@ -12,11 +12,11 @@ m-tooltip {
 }
 
 .m-tooltip--bubble {
+  @include z-index(tooltip);
   position: absolute;
   font-size: 13px;
   padding: 12px;
   border-radius: 3px;
-  z-index: 999;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
   letter-spacing: 1.4px;

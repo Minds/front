@@ -1,3 +1,10 @@
+m-date-selector {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
+  display: block;
+}
 .m-dateSelector__label {
   text-transform: uppercase;
   letter-spacing: 2.5px;
@@ -25,6 +32,7 @@
 }
 
 .cdk-overlay-container {
+  // z-index note: leaving this high value here b/c external plugin
   z-index: 10000 !important;
   .owl-dt-container {
     @include m-theme() {

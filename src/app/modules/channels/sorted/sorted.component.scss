@@ -8,6 +8,7 @@
   margin-bottom: 16px;
   flex-direction: row;
   align-items: center;
+  z-index: 3; // So nearby post menu trigger stays beneath dropdown
 
   .m-mindsListTools__scheduled {
     cursor: pointer;

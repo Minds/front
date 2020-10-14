@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  z-index: 3;
+  z-index: 1;
   cursor: default;
 
   .m-paywallBadge {
@@ -12,7 +12,7 @@
     font-size: 12px;
     line-height: 12px;
     font-weight: 500;
-    z-index: 3;
+    z-index: 2;
     @include m-theme() {
       color: themed($m-white-always);
       background-color: themed($m-textColor--secondary);
@@ -25,7 +25,7 @@
       display: flex;
     }
 
-    &.isCustom {
+    &.iconOnly {
       padding: 4px 4px;
       i {
         margin: 0 -1 0 0;
