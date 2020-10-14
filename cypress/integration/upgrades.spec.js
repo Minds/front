@@ -33,7 +33,7 @@ context('Upgrades page', () => {
     const heading = '.m-upgradesUpgradeOptions__header h2';
 
     cy.get(scrollButton)
-      .should('contain', 'Upgrade now')
+      .should('contain', 'Upgrade Now')
       .click();
 
     cy.wait(1500);

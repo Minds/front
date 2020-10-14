@@ -16,6 +16,7 @@ context('Newsfeed', () => {
         return cy.login(true);
       }
     });
+    cy.overrideFeatureFlags({ 'permaweb': true });
   });
 
   beforeEach(() => {

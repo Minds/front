@@ -111,30 +111,6 @@ context('Discovery', () => {
     cy.url().should('not.include', '=images');
   });
 
-  it('should allow the user to toggle nsfw', () => {
-    cy.visit('/newsfeed/global/top?type=images');
-    cy.get('m-topbar--navigation--options').click();
-    cy.get('m-topbar--navigation--options label > span').click();
-    cy.get(
-      "m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Nudity')"
-    ).click();
-    cy.get(
-      "m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Pornography')"
-    ).click();
-    cy.get(
-      "m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Profanity')"
-    ).click();
-    cy.get(
-      "m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Violence and Gore')"
-    ).click();
-    cy.get(
-      "m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Race and Religion')"
-    ).click();
-    cy.get(
-      "m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Other')"
-    ).click();
-  });
-
   it.skip('should allow the user to turn off single hashtag filter and view all posts', () => {
     cy.visit('/newsfeed/global/top');
     cy.get('m-hashtagssidebarselector__item')
