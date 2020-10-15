@@ -1,8 +1,8 @@
-.m-web3-modal {
+.m-modalV2__inner {
   box-sizing: border-box;
   max-width: 805px !important; // Override m-modalV2__inner so that the modal fits 3 columns
 
-  .m-web3-modal__body__title {
+  .m-web3ModaHeader__title {
     font-size: 30px;
     font-weight: bold;
     margin: 0;
@@ -12,7 +12,7 @@
     }
   }
 
-  .m-web3-modal__body__description {
+  .m-web3ModaHeader__description {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,24 +22,24 @@
     }
   }
 
-  .m-web3-modal__body__description--gray {
+  .m-web3ModaHeader__text--gray {
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
   }
 }
 
-.m-web3-modal__body {
+.m-web3Modal__body {
   overflow-y: auto !important; // m-modalV2__body so that the overflow is auto
 }
 
-.m-web3-modal__body__provider {
+.m-web3ModalBody__provider {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.m-web3-modal__body__provider__body {
+.m-web3ModalProvider__body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,11 +58,11 @@
   }
 }
 
-.m-web3-modal__body__provider__body__name {
+.m-web3ModalProviderBody__name {
   margin-top: 0.5em;
 }
 
-.m-web3-modal__body__provider__body__icon {
+.m-web3ModalProviderBody__icon {
   width: 60px;
   height: 60px;
   display: flex;

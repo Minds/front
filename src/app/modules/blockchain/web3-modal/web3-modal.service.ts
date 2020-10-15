@@ -11,7 +11,7 @@ import {
   ERROR_EVENT,
   ProviderController,
   IProviderControllerOptions,
-} from '../../../lib/web3modal';
+} from '@dorgtech/web3modal-ts';
 import { ConfigsService } from '../../../common/services/configs.service';
 import {
   StackableModalEvent,

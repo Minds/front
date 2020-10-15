@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IProviderUserOptions } from '../../../lib/web3modal';
+import { IProviderUserOptions } from '@dorgtech/web3modal-ts';
 import { Web3ModalService } from './web3-modal.service';
 
 @Component({
