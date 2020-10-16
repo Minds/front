@@ -170,8 +170,6 @@ import { FeedsService } from '../../common/services/feeds.service';
     WirePaymentHandlersService,
     WireModalService,
     DiscoveryService,
-    DiscoveryFeedsService,
-    FeedsService,
   ],
   declarations: [
     DiscoveryComponent,

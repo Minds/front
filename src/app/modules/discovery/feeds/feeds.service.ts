@@ -49,21 +49,23 @@ export class DiscoveryFeedsService {
 
   async load(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
-    const algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
+    const isPlusPage: boolean = this.discoveryService.isPlusPage$.value;
+    let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
+
+    if (isPlusPage) {
+      algorithm = 'plusFeed'; // Temporary, need to make backend sorting algo for plus
+    }
+
     const type = this.type$.value;
     this.feedsService.clear();
     this.feedsService
       .setEndpoint(`api/v2/feeds/global/${algorithm}/${type}`)
       .setParams({
-        all:
-          this.filter$.value === 'trending' ||
-          this.discoveryService.isPlusPage$.value
-            ? 1
-            : 0,
+        all: this.filter$.value === 'trending' || isPlusPage ? 1 : 0,
         period: this.period$.value,
         nsfw: this.getNsfwString(),
         period_fallback: 0,
-        plus: this.discoveryService.isPlusPage$.value,
+        plus: isPlusPage,
       })
       .fetch();
   }
