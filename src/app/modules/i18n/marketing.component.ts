@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'm-plus--marketing',
   templateUrl: 'marketing.component.html',
   styleUrls: [
-    '../aux-pages/aux.component.ng.scss',
+    '../aux-pages/aux-pages.component.ng.scss',
     'marketing.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

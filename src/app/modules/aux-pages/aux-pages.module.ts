@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
-import { AuxComponent } from './aux.component';
+import { AuxComponent } from './aux-pages.component';
 import { AuxPrivacyComponent } from './pages/privacy/privacy.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { AuxDmcaComponent } from './pages/dmca/dmca.component';
