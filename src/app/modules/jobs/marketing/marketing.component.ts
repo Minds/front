@@ -5,7 +5,10 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-jobs--marketing',
   templateUrl: 'marketing.component.html',
-  styleUrls: ['../../aux/aux.component.ng.scss', 'marketing.component.ng.scss'],
+  styleUrls: [
+    '../../aux-pages/aux.component.ng.scss',
+    'marketing.component.ng.scss',
+  ],
 })
 export class JobsMarketingComponent {
   user;

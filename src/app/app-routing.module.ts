@@ -14,7 +14,7 @@ import { DiscoveryModuleLazyRoutes } from './modules/discovery/discovery.lazy';
 import { CanaryModuleLazyRoutes } from './modules/canary/canary.lazy';
 import { MobileModuleLazyRoutes } from './modules/mobile/mobile.lazy';
 import { HelpdeskModuleLazyRoutes } from './modules/helpdesk/helpdesk.lazy';
-import { AuxModuleLazyRoutes } from './modules/aux/aux.lazy';
+import { AuxModuleLazyRoutes } from './modules/aux-pages/aux.lazy';
 import {
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,

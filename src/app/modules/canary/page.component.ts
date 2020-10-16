@@ -6,7 +6,7 @@ import { Client } from '../../services/api';
 @Component({
   selector: 'm-canary',
   templateUrl: 'page.component.html',
-  styleUrls: ['./page.component.ng.scss', '../aux/aux.component.ng.scss'],
+  styleUrls: ['./page.component.ng.scss', '../aux-pages/aux.component.ng.scss'],
 })
 export class CanaryPageComponent {
   user;
