@@ -19,7 +19,7 @@ m-dropdownMenu {
 
   .m-dropdownMenu__menu {
     display: none;
-    z-index: 1;
+    @include z-index(modal);
 
     @media screen and (min-width: $max-mobile + 1) {
       display: block;
