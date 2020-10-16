@@ -55,7 +55,11 @@ export class DiscoveryFeedsService {
     this.feedsService
       .setEndpoint(`api/v2/feeds/global/${algorithm}/${type}`)
       .setParams({
-        all: this.filter$.value === 'trending' ? 1 : 0,
+        all:
+          this.filter$.value === 'trending' ||
+          this.discoveryService.isPlusPage$.value
+            ? 1
+            : 0,
         period: this.period$.value,
         nsfw: this.getNsfwString(),
         period_fallback: 0,
