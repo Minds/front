@@ -1,4 +1,4 @@
-import { Compiler, EventEmitter, Injectable, Injector } from '@angular/core';
+import { Compiler, Injectable, Injector } from '@angular/core';
 import Fortmatic from 'fortmatic';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Squarelink from 'squarelink';
@@ -6,12 +6,11 @@ import Portis from '@portis/web3';
 import Torus from '@toruslabs/torus-embed';
 
 import {
-  IProviderUserOptions,
   CONNECT_EVENT,
   ERROR_EVENT,
-  ProviderController,
   IProviderControllerOptions,
-} from '@dorgtech/web3modal-ts';
+  Web3WalletConnector,
+} from '@dorgtech/web3-wallet-connector';
 import { ConfigsService } from '../../../common/services/configs.service';
 import {
   StackableModalEvent,
@@ -23,9 +22,7 @@ import { Web3ModalComponent } from './web3-modal.component';
 
 @Injectable()
 export class Web3ModalService {
-  private defaultOptions: IProviderControllerOptions;
-  private providerController: ProviderController;
-  private userOptions: IProviderUserOptions[];
+  private web3WalletConnector: Web3WalletConnector;
 
   constructor(
     private compiler: Compiler,
@@ -39,7 +36,7 @@ export class Web3ModalService {
     if (walletProviderKeys) {
       const { fortmatic, portis, squarelink } = walletProviderKeys;
 
-      this.defaultOptions = {
+      this.web3WalletConnector = new Web3WalletConnector({
         disableInjectedProvider: false,
         cacheProvider: false,
         providerOptions: {
@@ -72,30 +69,15 @@ export class Web3ModalService {
           },
         },
         network: '',
-      };
-    }
-  }
-
-  get cachedProvider(): string {
-    return this.providerController.cachedProvider;
-  }
-
-  setConfiguration = (options?: IProviderControllerOptions): void => {
-    if (options) {
-      this.providerController = new ProviderController(options);
+      });
     } else {
-      this.providerController = new ProviderController(this.defaultOptions);
+      this.web3WalletConnector = new Web3WalletConnector();
     }
-
-    this.clearCachedProvider();
-
-    this.userOptions = this.providerController.getUserOptions();
-  };
+  }
 
   async open() {
-    if (!this.providerController) {
-      this.setConfiguration();
-    }
+    const providers = this.web3WalletConnector.providers;
+    console.log(providers);
 
     const { Web3ModalModule } = await import('./web3-modal.module');
 
@@ -105,27 +87,27 @@ export class Web3ModalService {
 
     const moduleRef = moduleFactory.create(this.injector);
 
-    const componentFactory = moduleRef.instance.resolveComponent();
+    moduleRef.instance.resolveComponent();
 
     const onSuccess$: Subject<any> = new Subject();
 
     const evt: StackableModalEvent = await this.stackableModal
       .present(Web3ModalComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
-        providers: this.userOptions,
+        providers,
         onDismissIntent: () => {
           this.stackableModal.dismiss();
         },
       })
       .toPromise();
 
-    this.providerController.on(CONNECT_EVENT, provider => {
+    this.web3WalletConnector.providerController.on(CONNECT_EVENT, provider => {
       onSuccess$.next(provider);
       onSuccess$.complete();
       this.stackableModal.dismiss();
     });
 
-    this.providerController.on(ERROR_EVENT, error => {
+    this.web3WalletConnector.providerController.on(ERROR_EVENT, error => {
       console.error(error);
       this.stackableModal.dismiss();
     });
@@ -137,26 +119,15 @@ export class Web3ModalService {
     return onSuccess$.toPromise();
   }
 
-  async checkIfCachedProviderOrSingleOption(): Promise<void> {
-    if (this.cachedProvider) {
-      await this.providerController.connectToCachedProvider();
-      return;
-    }
-    if (
-      this.userOptions &&
-      this.userOptions.length === 1 &&
-      this.userOptions[0].name
-    ) {
-      await this.userOptions[0].onClick();
-      return;
-    }
+  setConfiguration(options: IProviderControllerOptions) {
+    this.web3WalletConnector.setConfiguration(options);
   }
 
   clearCachedProvider(): void {
-    this.providerController.clearCachedProvider();
+    this.web3WalletConnector.providerController.clearCachedProvider();
   }
 
   setCachedProvider(id: string): void {
-    this.providerController.setCachedProvider(id);
+    this.web3WalletConnector.providerController.setCachedProvider(id);
   }
 }

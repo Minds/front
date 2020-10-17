@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IProviderUserOptions } from '@dorgtech/web3modal-ts';
-import { Web3ModalService } from './web3-modal.service';
+import { IProviderUserOptions } from '@dorgtech/web3-wallet-connector';
 
 @Component({
   selector: 'm-web3-modal',
@@ -18,5 +17,5 @@ export class Web3ModalComponent {
     this.providers = providers;
   }
 
-  constructor(private service: Web3ModalService) {}
+  constructor() {}
 }
