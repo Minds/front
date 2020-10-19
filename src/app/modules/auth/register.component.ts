@@ -138,6 +138,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.featuresService.has('onboarding-october-2020')) {
+      // TODO: Lazy load here https://gitlab.com/minds/front/blob/2694aeaaee3f0c73ef8f4f38b763251f34393f4c/src/app/modules/homepage-v2/homepage-v2.component.ts#L121
+      return;
+    }
+
     if (this.featuresService.has('ux-2020')) {
       if (this.onboardingService.shouldShow()) {
         this.router.navigate(['/onboarding']);

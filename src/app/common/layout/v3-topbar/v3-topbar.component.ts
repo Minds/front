@@ -19,6 +19,7 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -54,6 +55,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected topbarService: TopbarService,
     protected router: Router,
+    private authModal: AuthModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     public pageLayoutService: PageLayoutService
   ) {
@@ -171,6 +173,18 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     }
     if (this.router$) {
       this.router$.unsubscribe();
+    }
+  }
+
+  async presentSignupModal(): Promise<void> {
+    try {
+      await this.authModal.open();
+      this.router.navigate(['/newsfeed/subscriptions', { onboarding: true }]);
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
     }
   }
 }

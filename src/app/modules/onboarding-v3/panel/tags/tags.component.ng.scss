@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 60px 20px;
+
+  .m-onboardingTags__header {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 16px;
+    margin: 30px 120px 30px 60px;
+  }
+
+  .m-onboardingTags__tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 120px 20px 60px;
+    transform: translateX(-10px);
+
+    .m-onboardingTags__tag {
+      border-radius: 20px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 8px 16px;
+      margin: 10px 20px 0 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+
+        &.m-onboardingTags__tag--selected {
+          border: 1px solid themed($m-black);
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+}

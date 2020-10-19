@@ -1,0 +1,15 @@
+<span class="m-onboardingTags__header">
+  Select at least three tags that are of interest to you. This will allow you to
+  discovery relevant content.
+</span>
+
+<div class="m-onboardingTags__tagContainer">
+  <div
+    class="m-onboardingTags__tag"
+    *ngFor="let tag of tags$ | async"
+    (click)="toggleTag(tag.value)"
+    [ngClass]="{ 'm-onboardingTags__tag--selected': tag.selected }"
+  >
+    {{ tag.value | titlecase }}
+  </div>
+</div>

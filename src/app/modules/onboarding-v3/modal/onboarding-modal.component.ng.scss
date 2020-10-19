@@ -1,0 +1,61 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    min-width: 725px;
+    @media screen and (max-width: $max-mobile) {
+      // flex: unset;
+    }
+  }
+
+  .m-modalV2__header {
+    height: 150px;
+    background-size: cover;
+    background-image: url('../../../../assets/photos/confetti-concert.png');
+    box-sizing: border-box;
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10%;
+
+    @media screen and (min-width: $max-mobile) {
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 30px;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-white-always);
+      }
+    }
+  }
+
+  .m-modalV2__footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-onboardingModal__nextButton {
+      margin: 20px 60px;
+      border-radius: 21px;
+      padding: 10px 16px;
+      background: unset;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 17px;
+
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+        border: 1px solid themed($m-blue);
+      }
+    }
+  }
+}

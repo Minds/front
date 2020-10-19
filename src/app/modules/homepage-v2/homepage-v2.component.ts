@@ -17,6 +17,8 @@ import { MetaService } from '../../common/services/meta.service';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { AuthModalService } from '../auth/modal/auth-modal.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -38,10 +40,12 @@ export class HomepageV2Component implements OnInit {
     private featuresService: FeaturesService,
     configs: ConfigsService,
     private onboardingService: OnboardingV2Service,
+    private onboardingV3Service: OnboardingV3Service,
     private metaService: MetaService,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private authModal: AuthModalService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -86,6 +90,11 @@ export class HomepageV2Component implements OnInit {
   }
 
   registered() {
+    if (this.featuresService.has('onboarding-october-2020')) {
+      this.presentSignupModal();
+      return;
+    }
+
     if (this.featuresService.has('ux-2020')) {
       if (this.onboardingService.shouldShow()) {
         this.router.navigate(['/onboarding']);
@@ -102,5 +111,19 @@ export class HomepageV2Component implements OnInit {
 
   isMobile() {
     return window.innerWidth <= 540;
+  }
+
+  async presentSignupModal(): Promise<void> {
+    try {
+      await this.authModal.open();
+      await this.onboardingV3Service.open();
+
+      // this.router.navigate(['/newsfeed/subscriptions', { 'onboarding': true }]);
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
   }
 }

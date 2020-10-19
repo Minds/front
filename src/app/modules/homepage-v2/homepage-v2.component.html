@@ -24,15 +24,27 @@
           your mind and get paid for creating content, driving traffic and
           referring friends.
         </p>
-
-        <button
-          class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
-          (click)="navigate()"
-          *mExperiment="'Homepage121119'; bucket: 'base'"
-          i18n
+        <ng-container
+          *mIfFeature="'onboarding-october-2020'; else legacyButton"
         >
-          Join Minds Now
-        </button>
+          <button
+            class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
+            (click)="presentSignupModal()"
+            i18n="@@HOMEPAGE__V2__JOIN_MINDS_NOW"
+          >
+            Join Minds Now
+          </button>
+        </ng-container>
+        <ng-template #legacyButton>
+          <button
+            class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
+            (click)="navigate()"
+            *mExperiment="'Homepage121119'; bucket: 'base'"
+            i18n="@@HOMEPAGE__V2__JOIN_MINDS_NOW"
+          >
+            Join Minds Now
+          </button>
+        </ng-template>
 
         <div class="m-homepage__appButtons">
           <a [href]="siteUrl + 'mobile'" target="_blank">

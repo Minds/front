@@ -47,7 +47,7 @@ export class AuthModalService {
 
     // Modal was closed before login completed
     if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
-      throw 'Dismissed modal';
+      throw 'DismissedModalException';
     }
 
     return onSuccess$.toPromise();
