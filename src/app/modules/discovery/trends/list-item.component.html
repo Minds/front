@@ -21,7 +21,9 @@
           [entity]="trend.entity"
           [topRightPosition]="false"
         ></m-paywallBadge>
-        <span>{{ trend.volume }} channels discussing</span>
+        <span *ngIf="trend.volume > 0"
+          >{{ trend.volume }} channels discussing</span
+        >
         <span>{{ trend.entity.time_created | friendlytime }}</span>
       </div>
     </div>
