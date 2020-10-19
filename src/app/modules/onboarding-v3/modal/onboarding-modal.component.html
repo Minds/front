@@ -1,14 +1,22 @@
 <div class="m-onboardingModal__container m-modalV2__inner">
   <div class="m-modalV2__header">
     <h2 class="m-modalV2Header__title">
-      Join Minds
+      Join Minds Debug: {{ currentStep$ | async }}
     </h2>
   </div>
-  <m-onboardingV3__tags></m-onboardingV3__tags>
+  <ng-container [ngSwitch]="currentStep$ | async">
+    <m-onboardingV3__tags
+      *ngSwitchCase="'SuggestedHashtagsStep'"
+    ></m-onboardingV3__tags>
+    <m-onboardingV3__welcome
+      *ngSwitchCase="'WelcomeStep'"
+    ></m-onboardingV3__welcome>
+  </ng-container>
   <div class="m-modalV2__footer">
     <button
       class="m-onboardingModal__nextButton"
       [disabled]="disabled$ | async"
+      (click)="nextClicked()"
     >
       Next
     </button>

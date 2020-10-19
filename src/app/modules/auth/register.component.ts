@@ -18,6 +18,7 @@ import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-register',
@@ -67,7 +68,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
     private metaService: MetaService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private onboardingV3Service: OnboardingV3Service
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -133,14 +135,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   registered() {
+    // TODO:: confirm behavior
     if (this.redirectTo) {
       this.navigateToRedirection();
       return;
     }
 
+    console.log('registered');
     if (this.featuresService.has('onboarding-october-2020')) {
-      // TODO: Lazy load here https://gitlab.com/minds/front/blob/2694aeaaee3f0c73ef8f4f38b763251f34393f4c/src/app/modules/homepage-v2/homepage-v2.component.ts#L121
-      return;
+      console.log('presentingModal');
+      return this.presentOnboardingModal().then(() => null);
     }
 
     if (this.featuresService.has('ux-2020')) {
@@ -182,5 +186,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     this.router.navigate([uri[0]], extras);
+  }
+
+  private async presentOnboardingModal() {
+    try {
+      await this.onboardingV3Service.open();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
   }
 }

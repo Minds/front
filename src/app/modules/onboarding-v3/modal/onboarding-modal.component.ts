@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { StepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 
 @Component({
@@ -10,7 +11,15 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 export class OnboardingV3ModalComponent {
   constructor(private panel: OnboardingV3PanelService) {}
 
+  get currentStep$(): BehaviorSubject<StepName> {
+    return this.panel.currentStep$;
+  }
+
   get disabled$(): Observable<boolean> {
     return this.panel.disableProgress$;
+  }
+
+  public nextClicked(): void {
+    this.panel.nextStep();
   }
 }

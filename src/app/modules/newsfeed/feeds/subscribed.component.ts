@@ -31,6 +31,8 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
+import { OnboardingV3PanelService } from '../../onboarding-v3/panel/onboarding-panel.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -84,6 +86,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
+    public onboarding: OnboardingV3Service,
+    private onboardingPanel: OnboardingV3PanelService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -108,6 +112,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.load(true, true);
 
     this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['onboarding']) {
+        this.onboardingPanel.currentStep$.next('WelcomeStep');
+        this.onboarding.open();
+      }
+
       if (params['message']) {
         this.message = params['message'];
       }

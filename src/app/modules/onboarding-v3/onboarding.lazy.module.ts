@@ -8,16 +8,30 @@ import { CommonModule } from '../../common/common.module';
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
 import { OnboardingV3Service } from './onboarding-v3.service';
 import { OnboardingV3TagsComponent } from './panel/tags/tags.component';
+import { OnboardingV3TagsService } from './panel/tags/tags.service';
 import { OnboardingV3PanelService } from './panel/onboarding-panel.service';
+import { OnboardingV3WelcomeComponent } from './panel/welcome/welcome.component';
 
 /**
  * Module definition
  */
 @NgModule({
   imports: [NgCommonModule, CommonModule],
-  declarations: [OnboardingV3ModalComponent, OnboardingV3TagsComponent],
-  exports: [OnboardingV3ModalComponent, OnboardingV3TagsComponent],
-  providers: [OnboardingV3Service, OnboardingV3PanelService],
+  declarations: [
+    OnboardingV3ModalComponent,
+    OnboardingV3TagsComponent,
+    OnboardingV3WelcomeComponent,
+  ],
+  exports: [
+    OnboardingV3ModalComponent,
+    OnboardingV3TagsComponent,
+    OnboardingV3WelcomeComponent,
+  ],
+  providers: [
+    OnboardingV3Service,
+    OnboardingV3PanelService,
+    OnboardingV3TagsService,
+  ],
 })
 export class OnboardingV3ProgressLazyModule {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}

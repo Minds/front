@@ -44,8 +44,7 @@ export class HomepageV2Component implements OnInit {
     private metaService: MetaService,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
-    private pageLayoutService: PageLayoutService,
-    private authModal: AuthModalService
+    private pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -91,7 +90,6 @@ export class HomepageV2Component implements OnInit {
 
   registered() {
     if (this.featuresService.has('onboarding-october-2020')) {
-      this.presentSignupModal();
       return;
     }
 
@@ -114,16 +112,6 @@ export class HomepageV2Component implements OnInit {
   }
 
   async presentSignupModal(): Promise<void> {
-    try {
-      await this.authModal.open();
-      await this.onboardingV3Service.open();
-
-      // this.router.navigate(['/newsfeed/subscriptions', { 'onboarding': true }]);
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    this.onboardingV3Service.presentHomepageModals();
   }
 }

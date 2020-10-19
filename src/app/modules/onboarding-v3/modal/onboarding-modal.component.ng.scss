@@ -4,7 +4,8 @@
   display: contents;
 
   .m-modalV2__inner {
-    min-width: 725px;
+    min-width: min-content;
+
     @media screen and (max-width: $max-mobile) {
       // flex: unset;
     }

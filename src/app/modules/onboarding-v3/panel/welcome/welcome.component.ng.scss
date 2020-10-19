@@ -1,0 +1,33 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 20px 60px;
+  display: flex;
+  flex-flow: row wrap;
+  width: 897px;
+
+  .m-onboardingWelcome__textBlock {
+    width: 50%;
+    width: calc(50% - 40px);
+    padding: 10px 40px;
+    box-sizing: border-box;
+
+    .m-onboardingWelcome__textBlockHeader {
+      font-size: 19px;
+      font-weight: 700;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    .m-onboardingWelcome__textBlockBody {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.375;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

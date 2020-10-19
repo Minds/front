@@ -1,12 +1,14 @@
-import { Compiler, Injectable, Injector, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { ApiService } from '../../common/api/api.service';
+import { Compiler, Injectable, Injector } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
+
 import {
   StackableModalEvent,
   StackableModalService,
   StackableModalState,
 } from '../../services/ux/stackable-modal.service';
+
+import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
 
 export type OnboardingResponse = {
@@ -27,37 +29,19 @@ export type StepName =
   | 'SuggestedHashtagsStep'
   | 'SetupChannelStep'
   | 'VerifyUniquenessStep'
-  | 'CreatePostStep';
+  | 'CreatePostStep'
+  | 'WelcomeStep';
 
 @Injectable()
 export class OnboardingV3Service {
-  public progress$: Observable<OnboardingResponse> = new Observable<
-    OnboardingResponse
-  >(null);
-
-  OnboardingV3ModalComponent;
   constructor(
     private compiler: Compiler,
     private injector: Injector,
     private stackableModal: StackableModalService,
-    private api: ApiService
+    private authModal: AuthModalService
   ) {}
 
-  public load() {
-    this.progress$ = this.api.get('/api/v3/onboarding');
-    this.progress$.pipe(take(1)).subscribe(progress => {
-      if (progress.status === 'success') {
-        for (let i = 0; i < progress.steps.length; i++) {
-          if (!progress.steps[i].is_completed) {
-          }
-          console.log(progress.steps[i]);
-        }
-      }
-      console.log(progress);
-    });
-  }
-
-  public async open(step: StepName = 'SuggestedHashtagsStep'): Promise<any> {
+  public async open(): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
@@ -93,35 +77,31 @@ export class OnboardingV3Service {
 
     return onSuccess$.toPromise();
   }
-}
 
-/**
- * {
-"status": "success",
-"id": "InitialOnboardingGroup",
-"completed_pct": 0,
-"is_completed": false,
-"steps": [
-  {
-    "id": "VerifyEmailStep",
-    "is_completed": false
-  },
-  {
-    "id": "SuggestedHashtagsStep",
-    "is_completed": false
-  },
-  {
-    "id": "SetupChannelStep",
-    "is_completed": false
-  },
-  {
-      "id": "VerifyUniquenessStep",
-      "is_completed": false
-    },
-    {
-      "id": "CreatePostStep",
-      "is_completed": false
+  public async presentHomepageModals(): Promise<void> {
+    try {
+      await this.authModal.open();
+      await this.open();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
     }
-  ]
+  }
+
+  // TODO: Implement for sidebar widget
+  // public load() {
+  //   this.progress$ = this.api.get('/api/v3/onboarding');
+  //   this.progress$.pipe(take(1)).subscribe(progress => {
+  //     if (progress.status === 'success') {
+  //       for (let i = 0; i < progress.steps.length; i++) {
+  //         if (!progress.steps[i].is_completed) {
+  //         }
+  //         console.log(progress.steps[i]);
+  //       }
+  //     }
+  //     console.log(progress);
+  //   });
+  // }
 }
- */
