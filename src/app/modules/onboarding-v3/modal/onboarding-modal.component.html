@@ -6,7 +6,10 @@
   </div>
   <m-onboardingV3__tags></m-onboardingV3__tags>
   <div class="m-modalV2__footer">
-    <button class="m-onboardingModal__nextButton">
+    <button
+      class="m-onboardingModal__nextButton"
+      [disabled]="disabled$ | async"
+    >
       Next
     </button>
   </div>

@@ -1,7 +1,7 @@
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
-import { ApiService } from '../../../common/api/api.service';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
+import { ApiResponse, ApiService } from '../../../common/api/api.service';
 
 type TagsResponse = {
   status: string;
@@ -15,10 +15,18 @@ export type Tag = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class OnboardingV3PanelService {
+export class OnboardingV3PanelService implements OnDestroy {
+  private _tags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
+
+  private subscriptions: Subscription[] = [];
+
   constructor(private api: ApiService) {}
 
-  private _tags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
+  ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
   get tags$(): BehaviorSubject<Tag[]> {
     return this._tags$;
@@ -29,56 +37,61 @@ export class OnboardingV3PanelService {
   }
 
   public loadTags(): OnboardingV3PanelService {
-    this.api
-      .get(
-        'api/v2/hashtags/suggested',
-        {
-          trending: 0,
-          defaults: 1,
-          limit: 15,
-        },
-        3
-      )
-      .pipe(take(1))
-      .subscribe(response => {
-        this.tags$.next(response.tags);
-      });
+    this.subscriptions.push(
+      this.api
+        .get(
+          'api/v2/hashtags/suggested',
+          {
+            trending: 0,
+            defaults: 1,
+            limit: 15,
+          },
+          3
+        )
+        .pipe(take(1))
+        .subscribe(response => {
+          this.tags$.next(response.tags);
+        })
+    );
     return this;
   }
 
   public async toggleTag(tagValue: string): Promise<OnboardingV3PanelService> {
-    console.log('toggling?');
+    this.subscriptions.push(
+      this.tags$
+        .pipe(
+          take(1),
+          tap(async tags => {
+            for (let i = 0; i < tags.length; i++) {
+              if (tags[i].value === tagValue) {
+                let requestObservable: Observable<ApiResponse>;
+                const endpoint = `api/v2/hashtags/user/${tags[i].value}`;
 
-    this.tags$
-      .pipe(
-        take(1),
-        map((tags: Tag[]) => {
-          return tags.map(tag => {
-            if (tag.value === tagValue) {
-              tag.selected = !tag.selected;
+                if (!tags[i].selected) {
+                  requestObservable = this.api.post(endpoint);
+                } else {
+                  requestObservable = this.api.delete(endpoint);
+                }
+
+                tags[i].selected = !tags[i].selected;
+
+                this.subscriptions.push(
+                  requestObservable.pipe(take(1)).subscribe()
+                );
+              }
             }
-          });
-        })
-      )
-      .subscribe();
+          })
+        )
+        .subscribe()
+    );
+    return this;
+  }
 
-    // TODO: Merge these 2, above one toggles value, below one SHOULD send requests. needs testing modnay
-
-    this.tags$.pipe(
-      take(1),
-      tap(async tags => {
-        for (let i = 0; i < tags.length; i++) {
-          if (tags[i].value === tagValue) {
-            if (!tags[i].selected) {
-              await this.api.delete(`api/v2/hashtags/user/${tags[i].value}`);
-            } else {
-              await this.api.post(`api/v2/hashtags/user/${tags[i].value}`);
-            }
-          }
-        }
+  get disableProgress$(): Observable<boolean> {
+    return combineLatest([this.tags$]).pipe(
+      map(([tags]) => {
+        return tags.filter(tag => tag.selected).length < 3;
       })
     );
-
-    return this;
   }
 }
