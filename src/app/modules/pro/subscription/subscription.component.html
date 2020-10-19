@@ -5,7 +5,8 @@
         <span i18n="@@PRO_SUBSCRIPTION__YEARLY">Yearly</span>
         <span
           ><m-toggle
-            [(mModel)]="interval"
+            [mModel]="interval"
+            (mModelChange)="setInterval($event)"
             leftValue="yearly"
             rightValue="monthly"
           ></m-toggle
@@ -17,7 +18,8 @@
         <span i18n="@@PRO_SUBSCRIPTION__USD">USD</span>
         <span
           ><m-toggle
-            [(mModel)]="currency"
+            [mModel]="currency"
+            (mModelChange)="setCurrency($event)"
             leftValue="usd"
             rightValue="tokens"
           ></m-toggle
