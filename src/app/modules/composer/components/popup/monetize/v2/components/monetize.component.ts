@@ -14,6 +14,8 @@ import { Session } from '../../../../../../../services/session';
 import { FeaturesService } from '../../../../../../../services/features.service';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
 import { ComposerMonetizeV2Service } from './monetize.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export type MonetizationTabType = 'plus' | 'membership' | 'custom';
 
@@ -24,7 +26,13 @@ export type MonetizationTabType = 'plus' | 'membership' | 'custom';
 })
 export class ComposerMonetizeV2Component implements OnInit {
   type: MonetizationTabType = 'membership';
-  hasSupportTiers$ = this.monetizeService.supportTiers$.pipe();
+  hasSupportTiers$: Observable<
+    boolean
+  > = this.monetizeService.supportTiers$.pipe(
+    map(supportTiers => {
+      return supportTiers.length > 0;
+    })
+  );
 
   isEditingPlus: boolean = false;
 
