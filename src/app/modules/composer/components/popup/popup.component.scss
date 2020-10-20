@@ -27,7 +27,7 @@ m-composer__popup {
   left: 0;
   right: 0;
   bottom: auto;
-  min-height: 477px;
+  min-height: 360px; // Why is this needed?
   max-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
