@@ -15,6 +15,7 @@
     .m-onboardingWelcome__textBlockHeader {
       font-size: 19px;
       font-weight: 700;
+      margin: 24px 0 6px 0;
 
       @include m-theme() {
         color: themed($m-textColor--primary);
