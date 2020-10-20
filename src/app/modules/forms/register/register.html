@@ -45,8 +45,6 @@
           formControlName="username"
           [placeholder]="showLabels ? '' : 'Username'"
           i18n-placeholder="@@M__COMMON__USERNAME"
-          readonly
-          onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           [pattern]="alphanumericPattern"
         />
@@ -119,8 +117,6 @@
             formControlName="password"
             [placeholder]="showLabels ? '' : 'Password'"
             i18n-placeholder="@@M__COMMON__PASSWORD"
-            readonly
-            onfocus="this.removeAttribute('readonly');"
             (focus)="onPasswordFocus()"
             (blur)="onPasswordBlur()"
             (ngModelChange)="popover.show(); popover.checkRules($event)"
@@ -150,8 +146,6 @@
           [placeholder]="showLabels ? '' : 'Confirm your password'"
           i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
           (keydown.enter)="register($event)"
-          readonly
-          onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
         />
       </div>
