@@ -200,6 +200,13 @@ export class BaseComponent implements AfterViewInit {
       this.toasterService.error('Minds+ posts must have at least one hashtag');
       return false;
     }
+
+    // Can not be NSFW
+    if (this.service.nsfw$.getValue().length > 0) {
+      this.toasterService.error('Minds+ posts can not be NSFW');
+      return false;
+    }
+
     return true;
   }
 
