@@ -18,7 +18,8 @@ import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
-const distFolder = join(process.cwd(), 'dist', 'browser');
+const browserDistFolder = join(process.cwd(), 'dist', 'browser');
+const embedDistFolder = join(process.cwd(), 'dist', 'embed');
 const PORT = process.env.PORT || 4200;
 
 export function app() {
@@ -31,7 +32,8 @@ export function app() {
   server.use(cookieparser());
 
   // Server static files from dist folder
-  server.get('*.*', express.static(distFolder));
+  server.use('/embed-static', express.static(embedDistFolder));
+  server.get('*.*', express.static(browserDistFolder));
 
   // Socket.io hitting wrong endpoint (dev?)
   server.get('/socket.io', (req, res) => {
@@ -143,7 +145,7 @@ export function app() {
     `/embed/*`,
     cache(),
     render(EmbedServerModule, locale =>
-      readFileSync(join(distFolder, `${locale}/embed.template.html`)).toString()
+      readFileSync(join(embedDistFolder, `${locale}/embed.html`)).toString()
     )
   );
 
@@ -152,7 +154,7 @@ export function app() {
     '*',
     cache(),
     render(AppServerModule, locale =>
-      readFileSync(join(distFolder, `${locale}/index.html`)).toString()
+      readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
     )
   );
 
@@ -169,7 +171,7 @@ function getLocale(req): string {
   const hostLanguage = req.headers['x-minds-locale'] || defaultLocale;
 
   if (hostLanguage && hostLanguage.length === 2) {
-    const path = join(distFolder, hostLanguage);
+    const path = join(browserDistFolder, hostLanguage);
     if (existsSync(path)) {
       return hostLanguage;
     }
