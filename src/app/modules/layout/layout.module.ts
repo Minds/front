@@ -13,6 +13,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { RouterModule } from '@angular/router';
 import { ComposerModule } from '../composer/composer.module';
+import { Web3ModalModule } from '@dorgtech/web3modal-angular';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ComposerModule } from '../composer/composer.module';
     SearchModule,
     NotificationModule,
     ModalsModule,
+    Web3ModalModule,
     OnboardingV2Module,
     ReportModule,
     BlockchainModule,
