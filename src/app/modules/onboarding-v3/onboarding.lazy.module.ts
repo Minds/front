@@ -11,27 +11,31 @@ import { OnboardingV3TagsComponent } from './panel/tags/tags.component';
 import { OnboardingV3TagsService } from './panel/tags/tags.service';
 import { OnboardingV3PanelService } from './panel/onboarding-panel.service';
 import { OnboardingV3WelcomeComponent } from './panel/welcome/welcome.component';
+import { OnboardingV3ChannelComponent } from './panel/channel/channel.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
+const COMPONENTS = [
+  OnboardingV3ModalComponent,
+  OnboardingV3TagsComponent,
+  OnboardingV3WelcomeComponent,
+  OnboardingV3ChannelComponent,
+];
+
+const PROVIDERS = [
+  OnboardingV3Service,
+  OnboardingV3PanelService,
+  OnboardingV3TagsService,
+];
+
+const MODULES = [NgCommonModule, CommonModule, ReactiveFormsModule];
 /**
  * Module definition
  */
 @NgModule({
-  imports: [NgCommonModule, CommonModule],
-  declarations: [
-    OnboardingV3ModalComponent,
-    OnboardingV3TagsComponent,
-    OnboardingV3WelcomeComponent,
-  ],
-  exports: [
-    OnboardingV3ModalComponent,
-    OnboardingV3TagsComponent,
-    OnboardingV3WelcomeComponent,
-  ],
-  providers: [
-    OnboardingV3Service,
-    OnboardingV3PanelService,
-    OnboardingV3TagsService,
-  ],
+  imports: [...MODULES],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
+  providers: [...PROVIDERS],
 })
 export class OnboardingV3ProgressLazyModule {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}

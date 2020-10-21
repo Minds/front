@@ -25,12 +25,12 @@ export type OnboardingStep = {
 };
 
 export type StepName =
-  | 'VerifyEmailStep'
   | 'SuggestedHashtagsStep'
+  | 'WelcomeStep'
+  | 'VerifyEmailStep'
   | 'SetupChannelStep'
   | 'VerifyUniquenessStep'
-  | 'CreatePostStep'
-  | 'WelcomeStep';
+  | 'CreatePostStep';
 
 @Injectable()
 export class OnboardingV3Service {

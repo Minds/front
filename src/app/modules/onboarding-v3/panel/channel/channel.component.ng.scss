@@ -1,0 +1,7 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 20px 60px;
+  display: flex;
+  flex-flow: column nowrap;
+}

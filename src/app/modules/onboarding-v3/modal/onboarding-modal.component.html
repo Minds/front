@@ -1,6 +1,12 @@
 <div class="m-onboardingModal__container m-modalV2__inner">
-  <div class="m-modalV2__header">
-    <h2 class="m-modalV2Header__title">
+  <div class="m-modalV2__header" [ngStyle]="bannerSrc$ | async">
+    <h2
+      class="m-modalV2Header__title"
+      [ngClass]="{
+        lightTitle: showBanner$ | async,
+        themedTitle: !showBanner$
+      }"
+    >
       Join Minds Debug: {{ currentStep$ | async }}
     </h2>
   </div>
@@ -11,6 +17,8 @@
     <m-onboardingV3__welcome
       *ngSwitchCase="'WelcomeStep'"
     ></m-onboardingV3__welcome>
+    <m-onboardingV3__channel *ngSwitchCase="'SetupChannelStep'">
+    </m-onboardingV3__channel>
   </ng-container>
   <div class="m-modalV2__footer">
     <button

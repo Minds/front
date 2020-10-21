@@ -14,7 +14,6 @@
   .m-modalV2__header {
     height: 150px;
     background-size: cover;
-    background-image: url('../../../../assets/photos/confetti-concert.png');
     box-sizing: border-box;
     padding: 0 60px;
     display: flex;
@@ -26,11 +25,18 @@
       margin-top: 0;
     }
 
-    h2 {
+    .m-modalV2Header__title {
       font-size: 30px;
       font-weight: 500;
+
       @include m-theme() {
-        color: themed($m-white-always);
+        &.lightTitle {
+          color: themed($m-white-always);
+        }
+
+        &.themedTitle {
+          color: themed($m-textColor--primary);
+        }
       }
     }
   }

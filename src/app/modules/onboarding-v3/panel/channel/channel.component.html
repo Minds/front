@@ -1,0 +1,30 @@
+<form (submit)="submit()" [formGroup]="form" class="m-onboardingChannel__form">
+  <label
+    class="m-onboardingChannel__label"
+    i18n="@@ONBOARDING_CHANNEL__DISPLAY_NAME"
+    >Display Name</label
+  >
+  <input
+    class="m-onboardingChannel__input"
+    formControlName="name"
+    placeholder="e.g. John Smith"
+  />
+
+  <label
+    class="m-onboardingChannel__label"
+    i18n="about me section|@@ONBOARDING_CHANNEL__BIO"
+    >Bio</label
+  >
+  <textarea
+    class="m-onboardingChannel__textarea"
+    formControlName="bio"
+  ></textarea>
+
+  <label class="m-onboardingChannel__label" i18n="@@ONBOARDING_CHANNEL__AVATAR"
+    >Avatar</label
+  >
+  <textarea
+    class="m-onboardingChannel__avatarUploader"
+    formControlName="avatar"
+  ></textarea>
+</form>
