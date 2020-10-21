@@ -35,11 +35,9 @@
     class="m-videoPlayer__placeholder"
     [style.background-image]="'url(' + (service.poster$ | async) + ')'"
   >
-    <i
-      class="material-icons minds-video-play-icon"
+    <img
       (click)="onPlaceholderClick($event)"
-    >
-      play_circle_outline
-    </i>
+      [src]="cdnAssetsUrl + 'assets/icons/play.svg'"
+    />
   </div>
 </ng-template>

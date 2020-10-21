@@ -14,6 +14,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { ConfigsService } from '../../../../common/services/configs.service';
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
@@ -27,6 +28,7 @@ import { Session } from '../../../../services/session';
   templateUrl: 'player.component.html',
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
+  styleUrls: ['./player.component.scss'],
 })
 export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   /**
@@ -61,6 +63,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   player: PlyrComponent;
 
   useEmptySource: boolean = false;
+  readonly cdnAssetsUrl: string;
 
   emptySource = {
     id: null,
@@ -108,9 +111,12 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
+    private configs: ConfigsService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (isPlatformBrowser(this.platformId)) {
