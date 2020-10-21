@@ -9,7 +9,7 @@ export class EmbedServiceV2 {
     this.siteUrl = configs.get('site_url');
   }
 
-  getIframeFromObject(object: any) {
+  getIframeFromObject(object: any): string {
     if (typeof object !== 'object') {
       return '';
     }
@@ -27,7 +27,7 @@ export class EmbedServiceV2 {
     return '';
   }
 
-  getIframe(guid: string, opts: any = {}) {
+  getIframe(guid: string, opts: any = {}): string {
     if (!guid) {
       return '';
     }
@@ -40,7 +40,7 @@ export class EmbedServiceV2 {
     )}" width="${width}" height="${height}" frameborder="0" allowfullscreen="1"></iframe>`;
   }
 
-  getUrl(guid: string) {
+  getUrl(guid: string): string {
     return `${this.siteUrl}embed/${guid}`;
   }
 }
