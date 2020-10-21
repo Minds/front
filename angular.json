@@ -331,6 +331,21 @@
               ]
             }
           }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "minds-embed:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "minds-embed:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "minds-embed:build:hmr"
+            }
+          }
         }
       }
     },

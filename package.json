@@ -19,6 +19,8 @@
     "serve:ssr": "node dist/server/main",
     "build:ssr": "ng run minds:server:production",
     "build:ssr:dev": "ng run minds:server:production",
+    "build:embed": "ng run minds-embed:build",
+    "serve:embed:dev": "ng serve minds-embed --deploy-url=http://localhost:4300/ --watch=true --poll=1000 --progress --proxy-config proxy.conf.js --host=0.0.0.0 --port=4300 --disableHostCheck=true",
     "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json",
     "xi18n": "gulp extract.i18n",
     "xi18n-import": "gulp import.i18n"
