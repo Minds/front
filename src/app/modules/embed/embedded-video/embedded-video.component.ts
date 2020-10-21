@@ -20,7 +20,7 @@ export class EmbeddedVideoComponent implements OnInit {
   ngOnInit() {
     this.queryParamsSubscription$ = this.activatedRoute.queryParamMap.subscribe(
       params => {
-        this.autoplay = !!params.get('autoplay') || true;
+        this.autoplay = !!params.get('autoplay') || false;
         this.detectChanges();
       }
     );
