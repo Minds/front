@@ -13,6 +13,7 @@ import { SentryErrorHandler } from '../../app.module';
 import { MindsHttpClient } from '../../common/api/client.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { MetaService } from '../../common/services/meta.service';
+import { SiteService } from '../../common/services/site.service';
 import { Client } from '../../services/api/client';
 import { VideoModule } from '../media/components/video/video.module';
 import { EmbedComponent } from './embed.component';
@@ -32,6 +33,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
+    SiteService,
     MetaService,
     {
       provide: MindsHttpClient,

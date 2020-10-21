@@ -1,1 +1,22 @@
-<m-videoPlayer [guid]="guid" [autoplay]="autoplay"> </m-videoPlayer>
+<m-videoPlayer
+  *ngIf="guid"
+  [guid]="guid"
+  [autoplay]="autoplay"
+  [shouldPlayInModal]="false"
+  (onControlsShown)="onControlsShown()"
+  (onControlsHidden)="onControlsHidden()"
+></m-videoPlayer>
+
+<div
+  class="embedded-video__top"
+  [class.embedded-video__top--active]="topVisible"
+  *ngIf="entity"
+>
+  <a href="{{ channelUrl }}">
+    <div
+      class="embedded-video__channel-avatar"
+      [ngStyle]="{ 'background-image': 'url(' + avatarSrc + ')' }"
+    ></div>
+  </a>
+  <a href="{{ mediaUrl }}" class="embedded-video__title">{{ title }}</a>
+</div>

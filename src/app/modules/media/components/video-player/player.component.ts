@@ -48,6 +48,12 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   @Output() dimensions: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * Controls events
+   */
+  @Output() onControlsShown: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onControlsHidden: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
    * Autoplay (if set to false, then placeholder will be displayed)
    * calling .play() will override this
    */

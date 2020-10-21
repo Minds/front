@@ -1,20 +1,41 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MetaService } from '../../../common/services/meta.service';
+import { Client } from '../../../services/api/client';
 
 @Component({
   selector: 'm-embedded-video',
   templateUrl: './embedded-video.component.html',
+  styleUrls: ['./embedded-video.component.scss'],
 })
 export class EmbeddedVideoComponent implements OnInit {
   guid: string;
-  autoplay: boolean = true;
+  title?: string;
+  channelUrl?: string;
+  mediaUrl?: string;
+  entity: any = {};
+  topVisible: boolean = true;
+  autoplay: boolean = false;
+  avatarSrc: string;
   paramsSubscription$: Subscription;
   queryParamsSubscription$: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private configs: ConfigsService,
+    private metaService: MetaService,
+    public client: Client,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -27,9 +48,62 @@ export class EmbeddedVideoComponent implements OnInit {
     this.paramsSubscription$ = this.activatedRoute.paramMap.subscribe(
       params => {
         this.guid = params.get('guid');
+
+        /**
+         * Load metadata only on server-side
+         * */
+        if (isPlatformServer(this.platformId) && this.guid) {
+          this.load(this.guid);
+        }
         this.detectChanges();
       }
     );
+  }
+
+  load(guid: string) {
+    this.client
+      .get('api/v1/media/' + guid, { children: false })
+      .then((response: any) => {
+        if (response.entity.type !== 'object') {
+          return;
+        }
+
+        if (response.entity) {
+          this.entity = response.entity;
+          this.avatarSrc = this.getAvatarSrc(response.entity.ownerObj);
+          this.channelUrl =
+            this.configs.get('site_url') + response.entity.ownerObj.username;
+          this.mediaUrl = this.configs.get('site_url') + 'media/' + this.guid;
+          this.updateMeta();
+        }
+
+        this.detectChanges();
+      });
+  }
+
+  public getAvatarSrc(user: any) {
+    return `${this.configs.get('cdn_url')}icon/${user.guid}/large/${
+      user.icontime
+    }`;
+  }
+
+  private updateMeta(): void {
+    this.title =
+      this.entity.title ||
+      `${this.entity.ownerObj.username}'s ${this.entity.subtype}`;
+
+    this.metaService
+      .setTitle(this.title)
+      .setDescription(this.entity.description)
+      .setOgImage(this.entity.thumbnail_src);
+  }
+
+  onControlsShown() {
+    this.topVisible = true;
+  }
+
+  onControlsHidden() {
+    this.topVisible = false;
   }
 
   public ngOnDestroy() {
