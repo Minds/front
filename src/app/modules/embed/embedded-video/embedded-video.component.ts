@@ -50,9 +50,11 @@ export class EmbeddedVideoComponent implements OnInit {
         this.guid = params.get('guid');
 
         /**
-         * Load metadata only on server-side
+         * Load entity and update metadata.
+         * This request must ideally be run on the
+         * server side and transferred to the client
          * */
-        if (isPlatformServer(this.platformId) && this.guid) {
+        if (this.guid) {
           this.load(this.guid);
         }
         this.detectChanges();
