@@ -337,6 +337,10 @@ export class ActivityContentComponent
     return this.service.displayOptions.isModal;
   }
 
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   calculateFixedContentHeight(): void {
     if (!this.service.displayOptions.fixedHeight) {
       return;

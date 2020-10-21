@@ -3,7 +3,7 @@
 <!-- ----------------------------------- -->
 <m-paywallBadge
   [entity]="entity"
-  [showTierName]="!service.displayOptions.minimalMode"
+  [showTierName]="!minimalMode"
 ></m-paywallBadge>
 <ng-container *mIfFeature="'paywall-2020'">
   <ng-container *ngIf="!hideMedia">
@@ -27,9 +27,7 @@
       [class.m-activityContent__message--remind]="entity.remind_object"
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="message.length <= 300"
-      [class.m-activityContent__message--minimalMode]="
-        service.displayOptions.minimalMode
-      "
+      [class.m-activityContent__message--minimalMode]="minimalMode"
       [maxHeightAllowed]="maxMessageHeight"
       *ngIf="message"
     >
@@ -41,7 +39,7 @@
             else teaserFadeout
           "
           [v2]="true"
-          [showOnlyFadeout]="service.displayOptions.minimalMode"
+          [showOnlyFadeout]="minimalMode"
         ></m-read-more--button>
       </div>
       <!-- ----------------------------------- -->
@@ -53,7 +51,7 @@
   </ng-container>
 </ng-template>
 <!-- Message usually goes above rich-embed preview -->
-<ng-container *ngIf="!service.displayOptions.minimalMode"
+<ng-container *ngIf="!minimalMode"
   ><ng-container *ngTemplateOutlet="messageTemplate"></ng-container
 ></ng-container>
 <!-- ----------------------------------- -->
@@ -63,9 +61,7 @@
   <div
     class="m-activityContent__media--richEmbed"
     *ngIf="isRichEmbed"
-    [class.m-activityContent__mediaRichEmbed--minimalMode]="
-      service.displayOptions.minimalMode
-    "
+    [class.m-activityContent__mediaRichEmbed--minimalMode]="minimalMode"
   >
     <div class="m-activityContent__fixedHeightSpacer"></div>
     <minds-rich-embed
@@ -82,7 +78,7 @@
   </div>
   <!-- ----------------------------------- -->
   <!-- Message goes below rich-embed preview in minimal mode-->
-  <ng-container *ngIf="service.displayOptions.minimalMode"
+  <ng-container *ngIf="minimalMode"
     ><ng-container *ngTemplateOutlet="messageTemplate"></ng-container
   ></ng-container>
   <!-- ----------------------------------- -->
@@ -143,9 +139,7 @@
   >
     <div
       class="m-activityContent__descriptionWrapper"
-      [class.m-activityContent__descriptionWrapper--minimalMode]="
-        service.displayOptions.minimalMode
-      "
+      [class.m-activityContent__descriptionWrapper--minimalMode]="minimalMode"
     >
       <p
         [innerHtml]="mediaTitle | tags"
@@ -160,7 +154,7 @@
       <m-read-more--button
         *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
         [v2]="true"
-        [showOnlyFadeout]="service.displayOptions.minimalMode"
+        [showOnlyFadeout]="minimalMode"
       ></m-read-more--button>
     </div>
     <!-- ----------------------------------- -->
@@ -176,9 +170,7 @@
   <div
     class="m-activityContent__remind"
     [class.m-activityContent__remind--hasMessage]="!!message"
-    [class.m-activityContent__remind--minimalMode]="
-      service.displayOptions.minimalMode
-    "
+    [class.m-activityContent__remind--minimalMode]="minimalMode"
     #remindContainerEl
     *ngIf="service.isRemind$ | async"
   >
@@ -204,7 +196,7 @@
     [translateEvent]="translateEvent"
     (onTranslate)="(service.displayOptions.showTranslation === false)"
     (onTranslateError)="(service.displayOptions.showTranslation === false)"
-    [class.m-translate--minimalMode]="service.displayOptions.minimalMode"
+    [class.m-translate--minimalMode]="minimalMode"
     #translate
   ></m-translate>
 </ng-template>
