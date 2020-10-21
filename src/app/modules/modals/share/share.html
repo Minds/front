@@ -63,16 +63,12 @@
         Embed into your website:
       </span>
     </label>
-    <div
-      [mdlTextfield]
-      class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
-      style="width: 100%"
-    >
+    <div style="width: 100%">
       <textarea
         [autoGrow]
         (click)="copyToClipboard(textAreaElement, false)"
         [ngModel]="embedCode"
-        class="mdl-textfield__input m-share__embedTextArea"
+        class="m-input m-share__embedTextArea"
         readonly
         #textAreaElement
       ></textarea>
