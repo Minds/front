@@ -6,7 +6,11 @@ import {
   NgModule,
   PLATFORM_ID,
 } from '@angular/core';
-import { TransferState } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  BrowserTransferStateModule,
+  TransferState,
+} from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CookieModule, CookieService } from '@gorniv/ngx-universal';
 import { SentryErrorHandler } from '../../app.module';
@@ -26,6 +30,8 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   exports: [EmbedComponent],
   imports: [
     CommonModule,
+    BrowserModule.withServerTransition({ appId: 'm-app' }),
+    BrowserTransferStateModule,
     HttpClientModule,
     VideoModule,
     CookieModule.forRoot(),
