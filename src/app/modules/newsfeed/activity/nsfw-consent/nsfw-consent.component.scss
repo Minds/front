@@ -62,3 +62,9 @@ m-activity__nsfwConsent {
     flex-direction: column;
   }
 }
+
+.m-activity__nsfwConsent--minimalMode {
+  .m-activityNsfwConsent__button {
+    margin: 38px $activity-padding-lr--minimalMode;
+  }
+}

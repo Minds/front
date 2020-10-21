@@ -27,6 +27,9 @@
       [class.m-activityContent__message--remind]="entity.remind_object"
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="message.length <= 300"
+      [class.m-activityContent__message--minimalMode]="
+        service.displayOptions.minimalMode
+      "
       [maxHeightAllowed]="maxMessageHeight"
       *ngIf="message"
     >
@@ -57,7 +60,13 @@
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="!hideMedia">
-  <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
+  <div
+    class="m-activityContent__media--richEmbed"
+    *ngIf="isRichEmbed"
+    [class.m-activityContent__mediaRichEmbed--minimalMode]="
+      service.displayOptions.minimalMode
+    "
+  >
     <div class="m-activityContent__fixedHeightSpacer"></div>
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
@@ -132,14 +141,22 @@
     *ngIf="mediaDescription || mediaTitle"
     [maxHeightAllowed]="maxDescHeight"
   >
-    <div class="m-activityContent__descriptionWrapper">
+    <div
+      class="m-activityContent__descriptionWrapper"
+      [class.m-activityContent__descriptionWrapper--minimalMode]="
+        service.displayOptions.minimalMode
+      "
+    >
       <p
         [innerHtml]="mediaTitle | tags"
         class="m-activityContent__mediaTitle"
         [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
         *ngIf="mediaTitle"
       ></p>
-      <p *ngIf="mediaDescription" [innerHtml]="mediaDescription | tags"></p>
+      <p
+        *ngIf="mediaDescription && !hideMediaDescription"
+        [innerHtml]="mediaDescription | tags"
+      ></p>
       <m-read-more--button
         *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
         [v2]="true"
@@ -187,6 +204,7 @@
     [translateEvent]="translateEvent"
     (onTranslate)="(service.displayOptions.showTranslation === false)"
     (onTranslateError)="(service.displayOptions.showTranslation === false)"
+    [class.m-translate--minimalMode]="service.displayOptions.minimalMode"
     #translate
   ></m-translate>
 </ng-template>

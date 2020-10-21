@@ -99,5 +99,12 @@
         }
       }
     }
+    &.m-channel__feed--grid {
+      ::ng-deep {
+        m-newsfeed__entity {
+          margin-bottom: 0px;
+        }
+      }
+    }
   }
 }

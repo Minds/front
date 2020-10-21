@@ -1,8 +1,10 @@
 @import 'defaults.scss';
+@import '../activity.component.scss';
 
 :host {
   .m-activity__minimalMetrics {
-    padding: 0 21px 16px;
+    font-size: 16px;
+    padding: 0 $activity-padding-lr--minimalMode 16px;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

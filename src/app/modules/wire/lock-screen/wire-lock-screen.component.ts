@@ -33,6 +33,7 @@ export class WireLockScreenComponent implements OnInit {
   @Input() preview: any;
   @Input() mediaHeight: number | null = null;
   @Input() showLegacyPaywall: boolean = true;
+  @Input() minimalMode: boolean = false;
 
   init: boolean = false;
   showSubmittedInfo: boolean = false;

@@ -4,7 +4,8 @@
     [ngClass]="{
       isTextOnly: contentType === 'status',
       isMedia: contentType !== 'status',
-      isVideo: contentType === 'video'
+      isVideo: contentType === 'video',
+      'm-wire__lockScreen--minimalMode': minimalMode
     }"
     [style.maxHeight.px]="mediaHeight"
     (click)="$event.stopPropagation(); unlock()"
