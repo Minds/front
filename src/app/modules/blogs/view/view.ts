@@ -10,7 +10,7 @@ import {
   ViewChild,
   Injector,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -94,11 +94,13 @@ export class BlogView implements OnInit, OnDestroy {
   }
 
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
+  @ViewChild('lockScreen') lockScreenComponent;
 
   constructor(
     public session: Session,
     public client: Client,
     public router: Router,
+    private route: ActivatedRoute,
     _element: ElementRef,
     public scroll: ScrollService,
     public metaService: MetaService,
@@ -129,6 +131,8 @@ export class BlogView implements OnInit, OnDestroy {
       source: 'single',
       medium: 'single',
     });
+
+    this.unlockIfQueryParam();
   }
 
   isVisible() {
@@ -161,6 +165,20 @@ export class BlogView implements OnInit, OnDestroy {
       0,
       300
     );
+  }
+
+  /**
+   * Unlocks the paywall if there is an unlock query param
+   * !! This must be within a 1 minute window of the current time !!
+   * This constraints prevents users accidentaly sharing unlocked posts
+   */
+  unlockIfQueryParam(): void {
+    const unlockTs = parseInt(this.route.snapshot.queryParamMap.get('unlock'));
+    if (unlockTs > Date.now() - 60000 && unlockTs < Date.now() + 60000) {
+      setTimeout(() => {
+        this.lockScreenComponent.unlock(); // Unlock if param provided and within 1 minute
+      }, 1);
+    }
   }
 
   /**
