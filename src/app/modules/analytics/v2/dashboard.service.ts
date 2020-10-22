@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
@@ -68,8 +69,11 @@ export class AnalyticsDashboardService {
    */
   vm$: Observable<UserState> = new BehaviorSubject(_state);
 
-  constructor(private http: MindsHttpClient) {
-    this.loadFromRemote();
+  constructor(
+    private http: MindsHttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) this.loadFromRemote();
   }
 
   loadFromRemote() {
