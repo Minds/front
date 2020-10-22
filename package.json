@@ -55,6 +55,7 @@
     "braintree-web": "3.41.0",
     "cookie-parser": "^1.4.4",
     "core-js": "~2.6.2",
+    "ethers": "^5.0.18",
     "ethjs": "~0.4.0",
     "ethjs-account": "^0.1.4",
     "ethjs-provider-signer": "^0.1.4",
