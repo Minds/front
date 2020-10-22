@@ -636,6 +636,17 @@ export class WireV2Service implements OnDestroy {
       };
       this.upgradePricingOptions$.next(upgradePricingOptions);
     }
+
+    // Update the amount when anything changes
+    let upgradePrice = this.upgrades[this.upgradeType$.value][
+      this.upgradeInterval$.value
+    ][this.type$.value];
+    if (this.upgradeInterval$.value === 'yearly') {
+      upgradePrice = upgradePrice;
+    }
+
+    this.setAmount(upgradePrice);
+
     return this;
   }
 
