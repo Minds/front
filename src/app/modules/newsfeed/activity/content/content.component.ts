@@ -168,7 +168,9 @@ export class ActivityContentComponent
           this.videoPlayer.forcePlay();
         }
         if (this.entity.content_type === 'blog') {
-          this.redirectService.redirect(this.entity.perma_url);
+          this.redirectService.redirect(
+            this.entity.perma_url + '?unlock=' + Date.now()
+          );
         }
       }
     );
