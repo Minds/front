@@ -272,7 +272,6 @@ export class Client {
       'X-XSRF-TOKEN': XSRF_TOKEN,
       'X-VERSION': environment.version,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
     };
 
     const builtOptions = {

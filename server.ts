@@ -53,33 +53,35 @@ export function app() {
   const NodeCache = require('node-cache');
   const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
 
-  const cache = () => (req, res, next) => {
-    const sessKey =
-      Object.entries(req.cookies)
-        .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
-        .join(':') || 'loggedout';
-    const key =
-      `__express__/${sessKey}/` +
-      `${req.headers.host}` +
-      (req.originalUrl || req.url) +
-      `/${req.headers['x-minds-locale']}` +
-      (isMobileOrTablet() ? '/mobile' : '/desktop');
-    const exists = myCache.has(key);
-    if (exists) {
-      console.log(`from cache: ${key}`);
-      const cachedBody = myCache.get(key);
-      res.send(cachedBody);
-      return;
-    } else {
-      res.sendResponse = res.send;
-      res.send = body => {
-        if (res.status === 200) {
-          myCache.set(key, body);
-        }
-        res.sendResponse(body);
-      };
-      next();
-    }
+  const cache = () => {
+    return (req, res, next) => {
+      const sessKey =
+        Object.entries(req.cookies)
+          .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
+          .join(':') || 'loggedout';
+      const key =
+        `__express__/${sessKey}/` +
+        `${req.headers.host}` +
+        (req.originalUrl || req.url) +
+        `/${req.headers['x-minds-locale']}` +
+        (isMobileOrTablet() ? '/mobile' : '/desktop');
+      const exists = myCache.has(key);
+      if (exists) {
+        console.log(`from cache: ${key}`);
+        const cachedBody = myCache.get(key);
+        res.send(cachedBody);
+        return;
+      } else {
+        res.sendResponse = res.send;
+        res.send = body => {
+          if (res.status === 200) {
+            myCache.set(key, body);
+          }
+          res.sendResponse(body);
+        };
+        next();
+      }
+    };
   };
 
   const render = (
@@ -204,11 +206,11 @@ function run() {
 // Webpack will replace 'require' with '__webpack_require__'
 // '__non_webpack_require__' is a proxy to Node 'require'
 // The below code is to ensure that the server is run only when not requiring the bundle.
-// declare const __non_webpack_require__: NodeRequire;
-// const mainModule = __non_webpack_require__.main;
-// const moduleFilename = (mainModule && mainModule.filename) || '';
-// if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
-run();
-// }
+declare const __non_webpack_require__: NodeRequire;
+const mainModule = __non_webpack_require__.main;
+const moduleFilename = (mainModule && mainModule.filename) || '';
+if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+  run();
+}
 
 export * from './src/main.server';

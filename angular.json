@@ -204,8 +204,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "sourceMap": true,
-              "optimization": false
+              "sourceMap": false,
+              "optimization": true
             }
           }
         }
