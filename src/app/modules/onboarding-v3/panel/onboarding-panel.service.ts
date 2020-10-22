@@ -51,8 +51,9 @@ export class OnboardingV3PanelService implements OnDestroy {
   public nextStep() {
     const currentIndex = this.steps.indexOf(this.currentStep$.getValue());
     const nextStep = this.steps[currentIndex + 1];
+    const currentStep = this.steps[currentIndex];
 
-    if (nextStep === 'WelcomeStep') {
+    if (currentStep === 'SuggestedHashtagsStep') {
       this.router.navigate([
         '/newsfeed/subscriptions',
         {
@@ -61,6 +62,15 @@ export class OnboardingV3PanelService implements OnDestroy {
         },
       ]);
     }
+
+    if (
+      currentStep === 'VerifyPhoneStep' ||
+      currentStep === 'VerifyEmailStep' ||
+      currentStep === 'VerifyWalletStep'
+    ) {
+      // CreatePostStep - close and trigger composer to open.
+    }
+
     this.currentStep$.next(nextStep);
   }
 }

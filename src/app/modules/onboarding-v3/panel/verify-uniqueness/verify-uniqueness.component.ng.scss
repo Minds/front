@@ -1,0 +1,117 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 0 60px;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 710px;
+
+  .m-onboardingUniqueness__headerSpan {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 40px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-onboardingUniqueness__optionContainer {
+    display: flex;
+    flex-flow: row wrap;
+
+    * + div {
+      margin-left: 20px;
+    }
+
+    &:first-child {
+      @include m-theme() {
+        border-color: themed($m-blue);
+      }
+    }
+
+    .m-onboardingUniqueness__optionContainer {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      flex-grow: 1;
+      border: 1px solid #d3dbe3;
+      flex-direction: column;
+      align-items: center;
+      padding: 45px 0;
+      margin-bottom: 40px;
+      cursor: pointer;
+
+      .m-onboardingUniqueness__tooltip {
+        width: 100%;
+        position: absolute;
+        left: calc(100% - 32px);
+        height: calc(100% - 8px);
+      }
+    }
+
+    .m-onboardingUniqueness__optionIcon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    ::ng-deep {
+      .m-icon__custom svg {
+        margin-bottom: 4px;
+      }
+    }
+
+    .m-onboardingUniqueness__optionSpan {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .m-onboardingUniqueness__divider {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    .m-onboardingUniqueness__midDividerSpan {
+      font-size: 16px;
+      font-weight: 500;
+      padding: 0 16px;
+      position: absolute;
+      top: -11px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background-color: themed($m-bgColor--secondary);
+      }
+    }
+
+    .m-onboardingUniqueness__dividerBar {
+      display: block;
+      width: 100%;
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-onboardingUniqueness__otherOptionsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 50px 0;
+
+    .m-onboardingUniqueness__otherOption {
+      display: block;
+      text-align: center;
+      flex-grow: 1;
+      font-size: 16px;
+      font-weight: 500;
+      max-width: 33.3%;
+      cursor: pointer;
+      text-decoration: none;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

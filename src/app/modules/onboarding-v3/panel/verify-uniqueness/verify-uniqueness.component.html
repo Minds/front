@@ -1,0 +1,102 @@
+<span
+  class="m-onboardingUniqueness__headerSpan"
+  i18n="@@ONBOARDING_VERIFY_UNIQUENESS__HEADING"
+>
+  Before you can start earning tokens, it is important that we can simply verify
+  your uniqueness. The less tokens spammers take, the more that are left for
+  you! To learn about how we keep your data private,
+  <a [href]="'/p/terms'" target="_blank">click here</a>.</span
+>
+<!--TODO: Link to a seperate /p/ page for data handling -->
+
+<div class="m-onboardingUniqueness__optionContainer">
+  <div
+    class="m-onboardingUniqueness__optionContainer m-onboardingUniqueness__phoneContainer"
+    (click)="optionClicked('VerifyPhoneStep')"
+  >
+    <i class="material-icons m-onboardingUniqueness__optionIcon">phone</i>
+    <span
+      class="m-onboardingUniqueness__optionSpan"
+      i18n="@@ONBOARDING_VERIFY_UNIQUENESS__PHONE_NUMBER"
+      >Phone Number</span
+    >
+    <m-tooltip
+      icon="info"
+      class="m-onboardingUniqueness__tooltip"
+      i18n="@@ONBOARDING_VERIFY_UNIQUENESS__PROVIDE_AS_VERIFICATION_EXPLANATION"
+    >
+      Provide your phone number as verification of your identity. Minds does not
+      store the phone numbers you provide. The numbers are hashed using SHA-256
+      and combined with a salt key for privacy and security purposes.
+    </m-tooltip>
+  </div>
+  <div
+    class="m-onboardingUniqueness__optionContainer m-onboardingUniqueness__bankContainer"
+    (click)="optionClicked('VerifyBankStep')"
+  >
+    <i class="material-icons m-onboardingUniqueness__optionIcon"
+      >account_balance</i
+    >
+    <span
+      class="m-onboardingUniqueness__optionSpan"
+      i18n="@@ONBOARDING_VERIFY_UNIQUENESS__CONNECT_BANK"
+      >Connect Bank</span
+    >
+    <m-tooltip
+      icon="info"
+      class="m-onboardingUniqueness__tooltip"
+      i18n="@@ONBOARDING_VERIFY_UNIQUENESS__LINK_BANK_ACCOUNT"
+    >
+      Confirm your details by linking your bank account.
+    </m-tooltip>
+  </div>
+  <div
+    class="m-onboardingUniqueness__optionContainer m-onboardingUniqueness__walletContainer"
+    (click)="optionClicked('VerifyWalletStep')"
+  >
+    <m-icon from="custom" iconId="ethereum" m-tooltip--icon></m-icon>
+    <span
+      class="m-onboardingUniqueness__optionSpan"
+      i18n="@@ONBOARDING_VERIFY_UNIQUENESS__CONNECT_WALLET"
+      >Connect Wallet</span
+    >
+    <m-tooltip
+      icon="info"
+      class="m-onboardingUniqueness__tooltip"
+      i18n="@@ONBOARDING_VERIFY_UNIQUENESS__CONNECT_WALLET_TOOLTIP"
+    >
+      Connect your Ethereum wallet to verify your identity.
+    </m-tooltip>
+  </div>
+</div>
+<div class="m-onboardingUniqueness__divider">
+  <span class="m-onboardingUniqueness__dividerBar"></span>
+  <span
+    class="m-onboardingUniqueness__midDividerSpan"
+    i18n="@@ONBOARDING_VERIFY_UNIQUENESS__OTHER_OPTIONS"
+    >Other options</span
+  >
+</div>
+<div class="m-onboardingUniqueness__otherOptionsContainer">
+  <a
+    class="m-onboardingUniqueness__otherOption"
+    [href]="'/plus'"
+    i18n="membership tier|@@ONBOARDING_VERIFY_UNIQUENESS__UPGRADE_TO_PLUS"
+  >
+    Upgrade to Minds+
+  </a>
+  <a
+    class="m-onboardingUniqueness__otherOption"
+    [href]="'/pro'"
+    i18n="membership tier|@@ONBOARDING_VERIFY_UNIQUENESS__UPGRADE_TO_PRO"
+  >
+    Upgrade to Minds Pro
+  </a>
+  <a
+    class="m-onboardingUniqueness__otherOption"
+    [href]="'/token'"
+    i18n="@@ONBOARDING_VERIFY_UNIQUENESS__BUY_TOKENS"
+  >
+    Buy Tokens
+  </a>
+</div>

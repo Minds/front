@@ -30,6 +30,9 @@ export type StepName =
   | 'VerifyEmailStep'
   | 'SetupChannelStep'
   | 'VerifyUniquenessStep'
+  | 'VerifyPhoneStep'
+  | 'VerifyBankStep'
+  | 'VerifyWalletStep'
   | 'CreatePostStep';
 
 @Injectable()

@@ -4,10 +4,10 @@
       class="m-modalV2Header__title"
       [ngClass]="{
         lightTitle: showBanner$ | async,
-        themedTitle: !showBanner$
+        themedTitle: !showBanner$ | async
       }"
     >
-      Join Minds Debug: {{ currentStep$ | async }}
+      {{ currentStep$ | async }}
     </h2>
   </div>
   <ng-container [ngSwitch]="currentStep$ | async">
@@ -17,10 +17,15 @@
     <m-onboardingV3__welcome
       *ngSwitchCase="'WelcomeStep'"
     ></m-onboardingV3__welcome>
-    <m-onboardingV3__channel *ngSwitchCase="'SetupChannelStep'">
-    </m-onboardingV3__channel>
+    <m-onboardingV3__channel
+      *ngSwitchCase="'SetupChannelStep'"
+      [nextClicked$]="nextClicked$"
+    ></m-onboardingV3__channel>
+    <m-onboardingV3__verifyUniqueness
+      *ngSwitchCase="'VerifyUniquenessStep'"
+    ></m-onboardingV3__verifyUniqueness>
   </ng-container>
-  <div class="m-modalV2__footer">
+  <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
     <button
       class="m-onboardingModal__nextButton"
       [disabled]="disabled$ | async"

@@ -13,18 +13,22 @@ import { OnboardingV3PanelService } from './panel/onboarding-panel.service';
 import { OnboardingV3WelcomeComponent } from './panel/welcome/welcome.component';
 import { OnboardingV3ChannelComponent } from './panel/channel/channel.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChannelEditService } from '../channels/v2/edit/edit.service';
+import { OnboardingV3VerifyUniquenessComponent } from './panel/verify-uniqueness/verify-uniqueness.component';
 
 const COMPONENTS = [
   OnboardingV3ModalComponent,
   OnboardingV3TagsComponent,
   OnboardingV3WelcomeComponent,
   OnboardingV3ChannelComponent,
+  OnboardingV3VerifyUniquenessComponent,
 ];
 
 const PROVIDERS = [
   OnboardingV3Service,
   OnboardingV3PanelService,
   OnboardingV3TagsService,
+  ChannelEditService,
 ];
 
 const MODULES = [NgCommonModule, CommonModule, ReactiveFormsModule];

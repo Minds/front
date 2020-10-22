@@ -25,6 +25,10 @@
       margin-top: 0;
     }
 
+    &.noBannerImage {
+      height: 100px;
+    }
+
     .m-modalV2Header__title {
       font-size: 30px;
       font-weight: 500;

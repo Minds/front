@@ -1,4 +1,4 @@
-<form (submit)="submit()" [formGroup]="form" class="m-onboardingChannel__form">
+<form [formGroup]="form" class="m-onboardingChannel__form">
   <label
     class="m-onboardingChannel__label"
     i18n="@@ONBOARDING_CHANNEL__DISPLAY_NAME"
@@ -23,8 +23,22 @@
   <label class="m-onboardingChannel__label" i18n="@@ONBOARDING_CHANNEL__AVATAR"
     >Avatar</label
   >
-  <textarea
-    class="m-onboardingChannel__avatarUploader"
-    formControlName="avatar"
-  ></textarea>
+  <div
+    class="m-onboardingChannel__avatarContainer"
+    [ngStyle]="{ backgroundImage: avatarSrc$ | async }"
+  >
+    <label
+      for="channel-v2-edit-avatar"
+      class="m-onboardingChannel__avatarLabel"
+    >
+      <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+      <input
+        id="channel-v2-edit-avatar"
+        type="file"
+        accept="image/*"
+        (change)="uploadAvatar(avatarFile)"
+        #avatarFile
+      />
+    </label>
+  </div>
 </form>

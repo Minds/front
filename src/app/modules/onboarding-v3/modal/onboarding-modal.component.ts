@@ -10,6 +10,10 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
   styleUrls: ['./onboarding-modal.component.ng.scss'],
 })
 export class OnboardingV3ModalComponent {
+  public nextClicked$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
   constructor(private panel: OnboardingV3PanelService) {}
 
   get currentStep$(): BehaviorSubject<StepName> {
@@ -25,7 +29,9 @@ export class OnboardingV3ModalComponent {
               backgroundImage:
                 "url('../../../../assets/photos/confetti-concert.png')",
             }
-          : {};
+          : {
+              height: '100px',
+            };
       })
     );
   }
@@ -41,11 +47,20 @@ export class OnboardingV3ModalComponent {
     );
   }
 
+  get showFooter$(): Observable<boolean> {
+    return this.currentStep$.pipe(
+      map((currentStep: string): boolean => {
+        return currentStep !== 'VerifyUniquenessStep';
+      })
+    );
+  }
+
   get disabled$(): Observable<boolean> {
     return this.panel.disableProgress$;
   }
 
   public nextClicked(): void {
+    this.nextClicked$.next(true);
     this.panel.nextStep();
   }
 }
