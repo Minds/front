@@ -4,19 +4,15 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Inject,
-  PLATFORM_ID,
-  ViewChild,
 } from '@angular/core';
+
 import { EmailConfirmationService } from './email-confirmation.service';
 import { Session } from '../../../services/session';
-import { Subscription } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
+import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
 import { ConfigsService } from '../../services/configs.service';
-import { NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { filter } from 'rxjs/operators';
-import { AnnouncementComponent } from '../announcements/announcement.component';
+import { scan, takeWhile } from 'rxjs/operators';
+import { FormToastService } from '../../services/form-toast.service';
 
 /**
  * Component that displays an announcement-like banner
@@ -31,70 +27,39 @@ import { AnnouncementComponent } from '../announcements/announcement.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmailConfirmationComponent implements OnInit, OnDestroy {
-  readonly fromEmailConfirmation: number;
-  sent: boolean = false;
-  shouldShow: boolean = false;
-  canClose: boolean = false;
-
-  @ViewChild('announcement')
-  announcement: AnnouncementComponent;
+  private readonly fromEmailConfirmation: number;
+  public sent: boolean = false;
+  public shouldShow: boolean = false;
+  public retryTimer$: Observable<number> = new BehaviorSubject<number>(0);
 
   protected userEmitter$: Subscription;
-  protected routerEvent$: Subscription;
-  protected canCloseTimer: number;
 
   constructor(
     protected service: EmailConfirmationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) protected platformId: Object,
-    configs: ConfigsService,
-    protected router: Router,
-    protected location: Location
+    protected location: Location,
+    protected toast: FormToastService,
+    configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
-    this.service.setContainer(this);
   }
 
   ngOnInit(): void {
     this.setShouldShow(this.session.getLoggedInUser());
 
+    // subscribe to user changes
     this.userEmitter$ = this.session.userEmitter.subscribe(user => {
       this.sent = false;
       this.setShouldShow(user);
       this.detectChanges();
     });
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.canCloseTimer = window.setTimeout(() => {
-        this.canClose = true;
-        this.detectChanges();
-      }, 3000);
-    }
-
-    this.routerEvent$ = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.setShouldShow(this.session.getLoggedInUser());
-        this.detectChanges();
-      });
   }
 
   ngOnDestroy(): void {
-    window.clearTimeout(this.canCloseTimer);
-
     if (this.userEmitter$) {
       this.userEmitter$.unsubscribe();
     }
-
-    if (this.routerEvent$) {
-      this.routerEvent$.unsubscribe();
-    }
-  }
-
-  show() {
-    this.announcement.hidden = false;
-    this.detectChanges();
   }
 
   /**
@@ -114,17 +79,39 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    */
   async send(): Promise<void> {
     this.sent = true;
+    this.startRetryCountdown();
     this.detectChanges();
 
     try {
       const sent = await this.service.send();
 
       if (!sent) {
+        this.toast.error(
+          'There was an issue sending the email to your email address.'
+        );
         this.sent = false;
+      } else {
+        this.toast.success('Verification email sent to your email address.');
       }
-    } catch (e) {}
+    } catch (e) {
+      this.toast.error(
+        'An unknown error occurred sending the email to your email address.'
+      );
+    }
 
     this.detectChanges();
+  }
+
+  /**
+   * Starts retry timer, which counts down to 0.
+   * @param { number } - seconds to countdown - defaults to 30.
+   * @returns { void }
+   */
+  private startRetryCountdown(seconds: number = 30): void {
+    this.retryTimer$ = timer(0, 1000).pipe(
+      scan(acc => --acc, seconds),
+      takeWhile(x => x >= 0)
+    );
   }
 
   detectChanges(): void {
