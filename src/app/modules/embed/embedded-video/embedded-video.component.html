@@ -8,15 +8,15 @@
 ></m-videoPlayer>
 
 <div
-  class="embedded-video__top"
-  [class.embedded-video__top--active]="topVisible"
+  class="m-embedded-video__top"
+  [class.m-embedded-video__top--active]="topVisible"
   *ngIf="entity"
 >
   <a href="{{ channelUrl }}">
     <div
-      class="embedded-video__channel-avatar"
+      class="m-embedded-video__channel-avatar"
       [ngStyle]="{ 'background-image': 'url(' + avatarSrc + ')' }"
     ></div>
   </a>
-  <a href="{{ mediaUrl }}" class="embedded-video__title">{{ title }}</a>
+  <a href="{{ mediaUrl }}" class="m-embedded-video__title">{{ title }}</a>
 </div>

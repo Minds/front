@@ -14,8 +14,8 @@ import { Client } from '../../../services/api/client';
 
 @Component({
   selector: 'm-embedded-video',
-  templateUrl: './embedded-video.component.html',
-  styleUrls: ['./embedded-video.component.scss'],
+  templateUrl: 'embedded-video.component.html',
+  styleUrls: ['embedded-video.component.ng.scss'],
 })
 export class EmbeddedVideoComponent implements OnInit {
   guid: string;
@@ -26,8 +26,8 @@ export class EmbeddedVideoComponent implements OnInit {
   topVisible: boolean = true;
   autoplay: boolean = false;
   avatarSrc: string;
-  paramsSubscription$: Subscription;
-  queryParamsSubscription$: Subscription;
+  paramsSubscription: Subscription;
+  queryParamsSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -39,27 +39,25 @@ export class EmbeddedVideoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.queryParamsSubscription$ = this.activatedRoute.queryParamMap.subscribe(
+    this.queryParamsSubscription = this.activatedRoute.queryParamMap.subscribe(
       params => {
         this.autoplay = params.get('autoplay') === 'true' || false;
         this.detectChanges();
       }
     );
-    this.paramsSubscription$ = this.activatedRoute.paramMap.subscribe(
-      params => {
-        this.guid = params.get('guid');
+    this.paramsSubscription = this.activatedRoute.paramMap.subscribe(params => {
+      this.guid = params.get('guid');
 
-        /**
-         * Load entity and update metadata.
-         * This request must ideally be run on the
-         * server side and transferred to the client
-         * */
-        if (this.guid) {
-          this.load(this.guid);
-        }
-        this.detectChanges();
+      /**
+       * Load entity and update metadata.
+       * This request must ideally be run on the
+       * server side and transferred to the client
+       * */
+      if (this.guid) {
+        this.load(this.guid);
       }
-    );
+      this.detectChanges();
+    });
   }
 
   load(guid: string) {
@@ -109,8 +107,8 @@ export class EmbeddedVideoComponent implements OnInit {
   }
 
   public ngOnDestroy() {
-    this.queryParamsSubscription$.unsubscribe();
-    this.paramsSubscription$.unsubscribe();
+    this.queryParamsSubscription.unsubscribe();
+    this.paramsSubscription.unsubscribe();
   }
 
   detectChanges() {

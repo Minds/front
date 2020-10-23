@@ -1,4 +1,4 @@
-.embedded-video__top {
+.m-embedded-video__top {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,11 +16,11 @@
   padding: 16px 16px 50px;
 }
 
-.embedded-video__top--active {
+.m-embedded-video__top--active {
   opacity: 1;
 }
 
-.embedded-video__channel-avatar {
+.m-embedded-video__channel-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -29,7 +29,7 @@
   margin: 0 16px 0 0;
 }
 
-.embedded-video__title {
+.m-embedded-video__title {
   color: white;
   text-decoration: none;
   font-family: 'Roboto', Helvetica, sans-serif;
