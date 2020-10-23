@@ -9,19 +9,12 @@ import { FormToastService } from '../../services/form-toast.service';
  */
 @Injectable({ providedIn: 'root' })
 export class EmailConfirmationService {
-  private container: EmailConfirmationComponent;
-
-  setContainer(container: EmailConfirmationComponent) {
-    this.container = container;
-  }
-
   constructor(
     protected client: Client,
     private toasterService: FormToastService
   ) {}
 
   show() {
-    this.container.show();
     this.toasterService.error('You must confirm your email address.');
   }
 

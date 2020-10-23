@@ -4,7 +4,6 @@
   [class.has-v3-navbar]="featuresService.has('navigation')"
   [class.is-pro-domain]="isProDomain"
 >
-  <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
   <m-onboardingReminder
     *ngIf="!isProDomain && featuresService.has('onboarding-reminder')"
   ></m-onboardingReminder>
