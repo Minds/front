@@ -1,6 +1,23 @@
 m-channel__content {
   display: block;
 
+  &.m-channelContent--nsfw {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+
+    .m-channelContent--unavailable {
+      margin-top: 0;
+      padding-top: 1px;
+
+      @include m-theme() {
+        border-top: none;
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
   .m-channelContent--unavailable {
     margin: 5% 0 0;
     height: 100%;
