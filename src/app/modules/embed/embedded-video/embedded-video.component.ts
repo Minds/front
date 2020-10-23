@@ -1,4 +1,3 @@
-import { isPlatformServer } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,

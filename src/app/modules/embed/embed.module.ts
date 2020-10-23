@@ -13,7 +13,6 @@ import {
 } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CookieModule, CookieService } from '@gorniv/ngx-universal';
-import { SentryErrorHandler } from '../../app.module';
 import { MindsHttpClient } from '../../common/api/client.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { MetaService } from '../../common/services/meta.service';
@@ -38,7 +37,6 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     RouterModule.forRoot(routes),
   ],
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
     SiteService,
     MetaService,
     {

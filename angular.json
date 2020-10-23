@@ -281,7 +281,7 @@
             "index": "src/app/modules/embed/embed.html",
             "baseHref": "/embed-static/",
             "main": "src/app/modules/embed/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "src/app/modules/embed/tsconfig.json",
             "polyfills": "src/polyfills.ts",
             "extractCss": true,
             "aot": true,
