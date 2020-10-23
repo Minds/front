@@ -14,6 +14,35 @@
 }
 
 .m-settingsV2__referralsLinks {
+  .m-settingsV2__desc {
+    font-size: 16px !important;
+    margin-bottom: 35px !important;
+    @include m-theme() {
+      color: themed($m-textColor--secondary) !important;
+    }
+  }
+  .m-settingsV2ReferralsLinks__bankConnect {
+    display: flex;
+    flex-flow: row nowrap;
+    @include m-theme() {
+      color: themed($m-textColor--primary) !important;
+    }
+    i {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+
+    a {
+      display: inline-block;
+      margin: 0 3px;
+
+      text-decoration: underline !important;
+      @include m-theme() {
+        color: themed($m-textColor--primary) !important;
+      }
+    }
+  }
+
   .m-settingsV2__referralsLinks__modalShow {
     display: none;
   }
@@ -30,18 +59,16 @@
   }
 
   .m-settingsV2__referralsLinks__copyableLinks {
-    h3 {
-      font-size: 28px;
-      font-weight: 600;
-      margin: 0 50px 26px 0;
+    > * {
+      font-size: 16px;
+      line-height: 20px;
       @include m-theme() {
-        color: themed($m-textColor--primary);
+        color: themed($m-textColor--secondary);
       }
     }
 
     > p {
       margin: 0 0 10px 0 !important;
-      line-height: 20px;
     }
 
     .m-settingsV2__referralsLinks__copyableLink {
@@ -52,7 +79,6 @@
       justify-content: space-between;
       @include m-theme() {
         background-color: themed($m-bgColor--secondary);
-        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
         border: 1px solid themed($m-borderColor--primary);
       }
 
@@ -68,7 +94,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         text-align: left !important;
-        font-size: 18px;
+        font-size: 16px;
         border: none;
         padding: 12px 0 12px 12px;
         margin: 1px 0 1px 4px;
@@ -89,20 +115,39 @@
 
       .m-settingsV2__referralsLinks__copyableLinkButton {
         cursor: pointer;
-        padding: 13px 14px 10px 8px;
-        @include m-theme() {
-          color: themed($m-blue);
-        }
+        padding: 12px;
 
-        &:hover {
-          text-decoration: underline;
+        i {
+          font-size: 20px;
+          transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+          &:hover {
+            transform: scale(1.05);
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+          &:active {
+            transform: scale(0.95);
+          }
         }
       }
     }
   }
 
   .m-settingsV2__referralsLinks__share {
-    margin-top: 24px;
+    margin-top: 30px;
+
+    p {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
 
     .m-settingsV2__referralsLinks__shareButtons {
       display: flex;
@@ -116,7 +161,7 @@
         height: 32px;
         width: 32px;
         border: none;
-        margin: 0 18px 12px 0;
+        margin: 0 20px 12px 0;
         position: relative;
         padding-top: 1px;
 

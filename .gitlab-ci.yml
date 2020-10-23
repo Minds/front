@@ -74,6 +74,7 @@ qa:sandbox:
   allow_failure: false
   except:
     - /^master$/
+    - chore/z-index-3790
   <<: *cypress_tests
 
 qa:production:
@@ -117,7 +118,7 @@ build:review:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
   tags:
     - angular
 
@@ -141,7 +142,7 @@ build:production:bundles:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
   tags:
     - angular
 
@@ -176,7 +177,7 @@ prepare:review:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -187,7 +188,7 @@ prepare:review:sentry:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
   dependencies:
     - build:review
 
@@ -206,8 +207,8 @@ prepare:production:
     refs:
       - master
       - production
-      - epic/angular-9
       - test/gitlab-ci
+      - chore/z-index-3790
   dependencies:
     - build:production:bundles
 
@@ -220,7 +221,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
   dependencies:
     - build:production:bundles
 
@@ -244,7 +245,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
 
 review:start:
   stage: review
@@ -273,7 +274,7 @@ review:start:
       - master
       - production
       - test/gitlab-ci
-      - epic/angular-9
+      - chore/z-index-3790
 
 review:stop:
   <<: *cleanup_review
@@ -317,6 +318,7 @@ staging:fpm:
     refs:
       - master
       - test/gitlab-ci
+      - chore/z-index-3790
 
 review:preprod:
   <<: *deploy
@@ -349,6 +351,7 @@ deploy:canary:
       - master
       - test/gitlab-ci
       - epic/angular-9
+      - chore/z-index-3790
 
 deploy:production:
   <<: *deploy
@@ -378,3 +381,4 @@ cleanup:review: # We stop the review site after the e2e tests have run
       - master
       - production
       - test/gitlab-ci
+      - chore/z-index-3790

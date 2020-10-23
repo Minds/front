@@ -1,18 +1,17 @@
 <div class="m-feedFilter">
-  <div class="m-feedFilter__content">
-    <ng-content></ng-content>
-  </div>
-
-  <div class="m-feedFilter__spacer"></div>
-
   <div *ngIf="options?.length" class="m-feedFilter__menu">
     <m-dropdownMenu [menu]="filtersMenu">
-      <div class="m-FeedFilterMenu__trigger">
-        <m-icon iconId="filter_list" [sizeFactor]="15"></m-icon>
-
-        <span i18n="@@COMMON__FILTER">Filter</span>
+      <div class="m-feedFilterMenu__trigger">
+        <span>Type: </span
+        ><span class="m-feedFilterMenuTrigger__selectionLabel">{{
+          typeLabel
+        }}</span
+        ><span>▾</span>
       </div>
     </m-dropdownMenu>
+  </div>
+  <div class="m-feedFilter__content">
+    <ng-content></ng-content>
   </div>
 </div>
 
@@ -24,9 +23,14 @@
         [class.m-dropdownMenu__item--first]="first"
         (click)="typeChangeEmitter.emit(typeEntry.value)"
       >
-        <span class="m-dropdownMenu__item">
-          <span>{{ typeEntry.label }}</span>
+        <span
+          class="m-dropdownMenu__item"
+          [ngClass]="{
+            'm-dropdownMenu__item--selected': type === typeEntry.value
+          }"
+        >
           <m-icon *ngIf="type === typeEntry.value" iconId="check"></m-icon>
+          <span>{{ typeEntry.label }}</span>
         </span>
       </li>
     </ng-container>

@@ -4,20 +4,9 @@
   [class.has-v3-navbar]="featuresService.has('navigation')"
   [class.is-pro-domain]="isProDomain"
 >
-  <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
   <m-onboardingReminder
     *ngIf="!isProDomain && featuresService.has('onboarding-reminder')"
   ></m-onboardingReminder>
-  <m-announcement [id]="'festival:sale'" *mIfFeature="'radiocity'">
-    <span
-      class="m-blockchain--wallet-address-notice--action"
-      i18n="@@MINDS_FESTIVAL_TICKET_SALE"
-    >
-      BREAKING: Tickets on sale for "MINDS: FESTIVAL OF IDEAS" @ Radio City on
-      6/13/2020. HELP US SELL OUT FAST!
-    </span>
-  </m-announcement>
-
   <div
     [class.m-pageLayout__container]="!(pageLayoutService.isFullWidth$ | async)"
     [class.m-pageLayout__container--fullWidth]="

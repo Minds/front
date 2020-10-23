@@ -32,15 +32,4 @@
   </m-dashboardLayout>
 </ng-template>
 
-<ng-container *mIfFeature="'navigation'; else oldNav">
-  <ng-container *ngTemplateOutlet="layout"></ng-container>
-</ng-container>
-
-<ng-template #oldNav>
-  <m-pageLayout>
-    <div class="m-walletDashboard" m-pageLayout__main *ngIf="tabs">
-      <ng-container *ngTemplateOutlet="layout"></ng-container>
-    </div>
-  </m-pageLayout>
-  <ng-template> </ng-template
-></ng-template>
+<ng-container *ngTemplateOutlet="layout"></ng-container>

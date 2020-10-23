@@ -7,7 +7,10 @@
   width: 100%;
 
   .m-activityModal__wrapper {
+    // new stacking context
     position: static;
+    z-index: 0;
+
     margin: 20px;
     display: inline-block;
     text-align: left;
@@ -15,7 +18,7 @@
 
     .m-activityModal__theater {
       position: relative;
-      z-index: 9999996;
+      z-index: 1;
       @include m-theme() {
         box-shadow: 0 12px 24px rgba(themed($m-black-always), 0.3);
       }
@@ -33,7 +36,7 @@
     min-height: 480px;
     position: relative;
     text-align: center;
-    z-index: 9999997;
+    z-index: 2;
     @include m-theme() {
       background-color: rgba(themed($m-black-always), 0.9);
       box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
@@ -242,10 +245,6 @@
     padding: 0;
   }
 
-  .minds-avatar-hovercard {
-    z-index: 9999999 !important;
-  }
-
   .m-activityModal__clearFix:after {
     clear: both;
     content: '.';
@@ -295,12 +294,6 @@
 
     m-activity__nsfwConsent {
       position: absolute;
-    }
-
-    m-activity__menu {
-      .m-bgOverlay--v2 {
-        z-index: 999;
-      }
     }
   }
 }

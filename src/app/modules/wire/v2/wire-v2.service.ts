@@ -11,6 +11,7 @@ import { PlusService } from '../../plus/plus.service';
 import { ProService } from '../../pro/pro.service';
 import { SupportTier } from './support-tiers.service';
 import { Session } from '../../../services/session';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 /**
  * Wire event types
@@ -367,7 +368,8 @@ export class WireV2Service implements OnDestroy {
     private plusService: PlusService,
     private proService: ProService,
     private session: Session,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private toasterSevice: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
 
@@ -614,6 +616,15 @@ export class WireV2Service implements OnDestroy {
     type: WireType,
     upgradeType: WireUpgradeType
   ): WireV2Service {
+    // Tokens can only be used on annual subscriptions
+    if (
+      this.type$.value === 'tokens' &&
+      this.upgradeInterval$.value === 'monthly'
+    ) {
+      this.upgradeInterval$.next('yearly');
+      this.toasterSevice.inform('Tokens can only be used on the yearly plan');
+    }
+
     // If it's an upgrade, calculate the pricing options
     // for the selected currency
     let upgradePricingOptions;
@@ -625,6 +636,17 @@ export class WireV2Service implements OnDestroy {
       };
       this.upgradePricingOptions$.next(upgradePricingOptions);
     }
+
+    // Update the amount when anything changes
+    let upgradePrice = this.upgrades[this.upgradeType$.value][
+      this.upgradeInterval$.value
+    ][this.type$.value];
+    if (this.upgradeInterval$.value === 'yearly') {
+      upgradePrice = upgradePrice;
+    }
+
+    this.setAmount(upgradePrice);
+
     return this;
   }
 

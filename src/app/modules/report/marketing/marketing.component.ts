@@ -15,7 +15,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-reports__marketing',
   templateUrl: 'marketing.component.html',
-  styleUrls: ['../../aux/aux.component.ng.scss'],
+  styleUrls: ['../../aux-pages/aux-pages.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportsMarketingComponent {

@@ -33,6 +33,10 @@
   }
 
   ::ng-deep {
+    m-wire--lock-screen.m-wire--lock-screen-2020 {
+      position: relative;
+      z-index: 0;
+    }
     .m-blog__body {
       padding: 0 $minds-padding;
 

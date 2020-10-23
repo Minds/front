@@ -25,7 +25,7 @@
     bottom: 20px;
     left: 20vw;
     right: 20vw;
-    z-index: 9999;
+    @include z-index(toast);
     box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
   }
 

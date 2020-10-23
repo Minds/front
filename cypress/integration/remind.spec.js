@@ -1,7 +1,8 @@
 context('Remind', () => {
   const remindText = 'remind test text';
-  const textArea = 'm-text-input--autocomplete-container textarea';
+  const textArea = '.m-modal__remindComposer m-text-input--autocomplete-container textarea';
   const sendButton = '.m-modalRemindComposer__send';
+  const userMenu = 'm-usermenu__v3';
 
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
@@ -9,22 +10,19 @@ context('Remind', () => {
         return cy.login(true);
       }
     });
-    cy.overrideFeatureFlags({
-      channels: false,
-    });
-    cy.visit(`/${Cypress.env().username}`);
   });
 
   beforeEach(() => {
-    cy.preserveCookies();
     cy.server();
     cy.route('POST', '**/api/v2/newsfeed/remind/*').as('postRemind');
   });
 
   it('should allow a user to remind their post', () => {
-    //post
-    cy.overrideFeatureFlags(['composer']);
-    cy.reload(); // reload to force feature flag
+    cy.get('.m-sidebarNavigation')
+      .contains(Cypress.env().username)
+      .click({force: true})
+      .location('pathname')
+      .should('eq', `/${Cypress.env().username}/`);
 
     //open remind composer
     cy.get('minds-button-remind > a')

@@ -87,7 +87,6 @@ m-sidebarMenu {
 
     .m-sidebarMenu__topbar {
       display: block;
-      z-index: 99999;
       position: fixed;
       top: 0;
       left: 0;
@@ -125,14 +124,12 @@ m-sidebarMenu {
       background-color: transparent;
       transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       &.mobileMenuExpanded {
-        z-index: 999998;
         @include m-theme() {
           background-color: rgba(themed($m-grey-700), 0.2);
         }
       }
     }
     .m-sidebarMenu__sidebar {
-      z-index: 999999;
       position: fixed;
       top: 0;
       bottom: 0;

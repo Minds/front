@@ -105,7 +105,6 @@ minds-groups-profile {
   }
 
   .group-header-bar {
-    z-index: 9999;
   }
 
   .m-group--sidebar {
@@ -475,7 +474,6 @@ minds-groups-create {
     padding-top: 50vh;
     padding-top: calc(50vh - 50px);
 
-    z-index: 999;
     @include m-theme() {
       background: rgba(themed($m-black), 0.8);
     }
@@ -563,7 +561,6 @@ minds-groups-create {
     }
 
     m-modal {
-      z-index: 999;
       position: relative;
     }
   }
@@ -679,12 +676,9 @@ minds-groups-card-user-actions-button {
     top: 12px;
     right: 0;
     width: 180px;
-    z-index: 10000;
   }
 
   m-modal {
-    z-index: 99999;
-
     position: fixed;
     top: 0;
     left: 0;

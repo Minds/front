@@ -1,5 +1,8 @@
 m-button {
+  // new stacking context
   position: relative;
+  z-index: 0;
+
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -46,26 +49,6 @@ m-button {
     }
   }
 
-  .m-button__dropdownContainer {
-    position: absolute;
-    top: calc(100% + 4px);
-    right: 0;
-    min-width: 100%;
-    z-index: 10005;
-
-    @media screen and (max-width: $max-mobile) {
-      position: fixed;
-      top: 2vh;
-      right: 2vw;
-      bottom: 2vh;
-      left: 2vw;
-      min-width: initial;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
   .m-button__disabledOverlay {
     display: block;
     position: absolute;
@@ -73,7 +56,7 @@ m-button {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 10;
+    z-index: 1;
     cursor: initial;
 
     @include m-theme() {
@@ -82,7 +65,7 @@ m-button {
   }
 
   m-overlay {
-    z-index: 10000;
+    z-index: 2;
 
     @media screen and (max-width: $max-mobile) {
       @include m-on-theme(light) {
