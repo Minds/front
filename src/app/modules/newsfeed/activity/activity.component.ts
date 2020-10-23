@@ -41,6 +41,8 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
   ],
   host: {
     class: 'm-border',
+    '[class.m-activity--minimalMode]':
+      'this.service.displayOptions.minimalMode',
   },
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {

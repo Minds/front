@@ -78,18 +78,30 @@ export class ActivityMinimalMetricsComponent implements OnInit, OnDestroy {
     if (!this.entity || !this.entity.activity_type) {
       return false;
     }
-    if (this.entity.activity_type === 'rich-embed' && !this.entity.message) {
-      return true;
-    }
+    const entity =
+      this.entity.activity_type !== 'remind'
+        ? this.entity
+        : this.entity.remind_object;
+
     if (
-      (this.entity.activity_type === 'image' ||
-        this.entity.activity_type === 'video') &&
-      !this.entity.message &&
-      !this.entity.title
+      this.isRichEmbedWithoutText(entity) ||
+      this.isMediaWithoutText(entity)
     ) {
       return true;
     }
     return false;
+  }
+
+  isRichEmbedWithoutText(entity: any): boolean {
+    return entity.activity_type === 'rich-embed' && !entity.message;
+  }
+
+  isMediaWithoutText(entity: any): boolean {
+    return (
+      (entity.activity_type === 'image' || entity.activity_type === 'video') &&
+      !entity.message &&
+      !entity.title
+    );
   }
 
   /**
