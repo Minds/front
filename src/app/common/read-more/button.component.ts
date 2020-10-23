@@ -68,9 +68,10 @@ export class ReadMoreButtonComponent {
     if (!this.showOnlyFadeout) {
       return;
     }
-    $event.stopPropagation();
-    $event.preventDefault();
-
+    if ($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
     this.content.expand();
   }
 
