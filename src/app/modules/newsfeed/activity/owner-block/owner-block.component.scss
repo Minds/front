@@ -30,7 +30,7 @@ m-activity__ownerBlock {
         height: 17px;
         width: 17px;
         @include m-theme() {
-          background-color: themed($m-bgColor--contrast);
+          background-color: themed($m-bgColor--quinary);
         }
         i {
           font-weight: 700;
