@@ -23,6 +23,10 @@ export class OnboardingV3PanelService implements OnDestroy {
     'CreatePostStep',
   ];
 
+  public readonly dismiss$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
   public readonly currentStep$: BehaviorSubject<StepName> = new BehaviorSubject<
     StepName
   >(this.steps[0]);
@@ -65,10 +69,10 @@ export class OnboardingV3PanelService implements OnDestroy {
 
     if (
       currentStep === 'VerifyPhoneStep' ||
-      currentStep === 'VerifyEmailStep' ||
+      currentStep === 'VerifyBankStep' ||
       currentStep === 'VerifyWalletStep'
     ) {
-      // CreatePostStep - close and trigger composer to open.
+      return;
     }
 
     this.currentStep$.next(nextStep);

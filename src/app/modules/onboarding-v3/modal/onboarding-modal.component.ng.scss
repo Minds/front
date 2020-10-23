@@ -6,8 +6,8 @@
   .m-modalV2__inner {
     min-width: min-content;
 
-    @media screen and (max-width: $max-mobile) {
-      // flex: unset;
+    @media screen and (max-width: $min-mobile) {
+      max-width: 100%;
     }
   }
 
@@ -19,11 +19,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 10%;
-
-    @media screen and (min-width: $max-mobile) {
-      margin-top: 0;
-    }
 
     &.noBannerImage {
       height: 100px;

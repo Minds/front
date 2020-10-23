@@ -24,6 +24,9 @@
     <m-onboardingV3__verifyUniqueness
       *ngSwitchCase="'VerifyUniquenessStep'"
     ></m-onboardingV3__verifyUniqueness>
+    <m-onboardingV3__phone
+      *ngSwitchCase="'VerifyPhoneStep'"
+    ></m-onboardingV3__phone>
   </ng-container>
   <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
     <button

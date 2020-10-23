@@ -6,6 +6,10 @@
   flex-flow: column nowrap;
   width: 710px;
 
+  @media screen and (max-width: 710px) {
+    width: unset;
+  }
+
   .m-onboardingUniqueness__headerSpan {
     font-size: 16px;
     font-weight: 400;
@@ -20,8 +24,14 @@
     display: flex;
     flex-flow: row wrap;
 
-    * + div {
-      margin-left: 20px;
+    @media screen and (max-width: $max-mobile) {
+      min-width: 100%;
+    }
+
+    @media screen and (min-width: $max-mobile) {
+      * + div {
+        margin-left: 20px;
+      }
     }
 
     &:first-child {

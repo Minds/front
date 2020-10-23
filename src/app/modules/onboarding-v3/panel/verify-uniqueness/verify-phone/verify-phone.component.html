@@ -1,0 +1,92 @@
+<ng-container *ngIf="(verificationStep$ | async) === 'InputNumberStep'">
+  <form class="m-onboardingPhone__formContainer" [formGroup]="form">
+    <div class="m-onboardingPhone__labelContainer">
+      <label class="m-onboardingPhone__label">Mobile Phone Number</label>
+      <m-tooltip icon="info" class="m-onboardingUniqueness__tooltip">
+        Input your phone number
+      </m-tooltip>
+      <div></div>
+      <!-- Spacer -->
+    </div>
+    <div class="m-onboardingPhone__numberContainer">
+      <m-phoneInput
+        formControlName="number"
+        class="m-onboardingPhone__numberInput"
+        name="number"
+        id="number"
+        ngDefaultControl
+      ></m-phoneInput>
+      <button
+        [disabled]="inProgress$ | async"
+        class="m-onboardingPhone__sendButton"
+        (click)="onSend()"
+      >
+        Send verification code
+      </button>
+    </div>
+    <div class="m-onboardingPhone__allowFriendFindingContainer">
+      <input formControlName="friendFinding" type="checkbox" />
+      <span class="m-onboardingPhone__allowFriendFindingSpan"
+        >Allow my friends to find me</span
+      >
+    </div>
+  </form>
+  <span class="m-onboardingPhone__footnoteSpan">
+    Note: Minds does not store the phone numbers you provide. The numbers are
+    hashed using SHA-256 and combined with a salt key for privacy and security
+    purposes.
+  </span>
+</ng-container>
+<ng-container *ngIf="(verificationStep$ | async) === 'ConfirmCodeStep'">
+  <form class="m-onboardingPhone__formContainer" [formGroup]="form">
+    <div class="m-onboardingPhone__labelContainer">
+      <label
+        class="m-onboardingPhone__label m-onboardingPhone__label--tertiaryColor"
+      >
+        Verification Code
+      </label>
+    </div>
+    <div class="m-onboardingPhone__numberContainer">
+      <input
+        type="text"
+        formControlName="code"
+        class="m-onboardingPhone__numberInput"
+        name="code"
+        id="code"
+        ngDefaultControl
+      />
+      <button
+        [disabled]="inProgress$ | async"
+        class="m-onboardingPhone__sendButton"
+        (click)="onCodeSubmit()"
+      >
+        Confirm code
+      </button>
+    </div>
+  </form>
+  <span class="m-onboardingPhone__notice">
+    We just send a verification code to +{{ form.get('number').value }}.
+  </span>
+  <span
+    class="m-onboardingPhone__footnoteSpan m-onboardingPhone__footnoteSpan--mediumFont"
+  >
+    Didn’t receive it?
+    <span
+      class="m-onboardingPhone__footnoteSpan--link"
+      (click)="onSend()"
+      *ngIf="(retryTimer$ | async) < 1"
+    >
+      Send it again
+    </span>
+    <span *ngIf="(retryTimer$ | async) > 0">
+      Send it again in {{ retryTimer$ | async }} seconds
+    </span>
+    or
+    <span
+      class="m-onboardingPhone__footnoteSpan--link"
+      (click)="onChangeNumberClick()"
+    >
+      change phone number
+    </span>
+  </span>
+</ng-container>

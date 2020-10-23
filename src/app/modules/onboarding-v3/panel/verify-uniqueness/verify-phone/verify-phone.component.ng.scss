@@ -1,0 +1,115 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 20px 60px;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 710px;
+
+  @media screen and (max-width: 710px) {
+    width: auto;
+  }
+
+  .m-onboardingPhone__formContainer {
+    width: 100%;
+
+    .m-onboardingPhone__labelContainer {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+
+      .m-onboardingPhone__label {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 16px;
+        display: block;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      .m-onboardingPhone__label--tertiaryColor {
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+
+    .m-onboardingPhone__numberContainer {
+      display: flex;
+      flex-flow: row wrap;
+
+      .m-onboardingPhone__numberInput {
+        flex-grow: 10;
+        margin-bottom: unset;
+      }
+
+      .m-onboardingPhone__sendButton {
+        border-radius: 21px;
+        margin: 0 0 0 30px;
+        padding: 10px 20px;
+        flex-grow: 1;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+
+        @media screen and (max-width: 710px) {
+          margin: 16px 0 0 0;
+        }
+        @include m-theme() {
+          background: themed($m-bgColor--primary);
+          border: 1px solid themed($m-blue);
+        }
+      }
+    }
+
+    .m-onboardingPhone__allowFriendFindingContainer {
+      display: flex;
+      margin: 16px 0;
+
+      .m-onboardingPhone__allowFriendFindingSpan {
+        display: flex;
+        margin-left: 8px;
+        font-size: 15px;
+        font-weight: 400px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-onboardingPhone__notice {
+    margin-bottom: 32px;
+    font-size: 15px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-onboardingPhone__footnoteSpan {
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 22px;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+
+    .m-onboardingPhone__footnoteSpan--link {
+      text-decoration: underline;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+
+  .m-onboardingPhone__footnoteSpan--mediumFont {
+    font-size: 15px;
+  }
+}

@@ -6,11 +6,19 @@
   flex-flow: row wrap;
   width: 897px;
 
+  @media screen and (max-width: 897px) {
+    margin: unset;
+    width: 100%;
+  }
   .m-onboardingWelcome__textBlock {
     width: 50%;
     width: calc(50% - 40px);
     padding: 10px 40px;
     box-sizing: border-box;
+
+    @media screen and (max-width: $max-mobile) {
+      min-width: 100%;
+    }
 
     .m-onboardingWelcome__textBlockHeader {
       font-size: 19px;

@@ -68,7 +68,7 @@ export class OnboardingV3Service {
           this.stackableModal.dismiss();
         },
         onDismissIntent: () => {
-          this.stackableModal.dismiss();
+          this.dismiss();
         },
       })
       .toPromise();
@@ -91,6 +91,10 @@ export class OnboardingV3Service {
       }
       console.error(e);
     }
+  }
+
+  public dismiss() {
+    this.stackableModal.dismiss();
   }
 
   // TODO: Implement for sidebar widget
