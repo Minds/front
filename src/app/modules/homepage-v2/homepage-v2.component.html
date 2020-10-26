@@ -195,12 +195,48 @@
       </div>
     </div>
 
+    <!-- Section 4 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2-ux.png'"
+            />
+          </span>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n="@@MARKETING_PLUS__EARN_REVENUE">
+            Submit content to Minds+ and earn a share of revenue
+          </h2>
+
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PLUS__MONTHLY_REVENUE_MODEL_SECTION"
+          >
+            Minds+ is a new model for creators and brands to gain exposure and
+            monetize their content. Our monthly revenue is shared directly with
+            the creators who contribute the most popular and engaging exclusive
+            content to Minds+.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- Final section -->
 
-    <div
-      class="m-marketing__section m-marketing__section--tail"
-      *mExperiment="'Homepage121119'; bucket: 'base'"
-    >
+    <div class="m-marketing__section m-marketing__section--tail">
       <div class="m-grid m-marketing__wrapper">
         <div class="m-grid__column-12 m-marketing__body">
           <h3

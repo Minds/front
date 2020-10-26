@@ -1,4 +1,11 @@
 m-translate {
+  &.m-translate--minimalMode {
+    .m-translate__hasNav2020 {
+      > * {
+        padding: 10px $activity-padding-lr--minimalMode;
+      }
+    }
+  }
   .m-translate__hasNav2020 {
     > * {
       padding: 10px $activity-padding-lr;

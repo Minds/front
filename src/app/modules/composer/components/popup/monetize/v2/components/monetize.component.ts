@@ -13,16 +13,26 @@ import {
 import { Session } from '../../../../../../../services/session';
 import { FeaturesService } from '../../../../../../../services/features.service';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
+import { ComposerMonetizeV2Service } from './monetize.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export type MonetizationTabType = 'plus' | 'membership' | 'custom';
 
 @Component({
   selector: 'm-composer__monetizeV2',
   templateUrl: 'monetize.component.html',
-  providers: [SupportTiersService],
+  providers: [SupportTiersService, ComposerMonetizeV2Service],
 })
 export class ComposerMonetizeV2Component implements OnInit {
   type: MonetizationTabType = 'membership';
+  hasSupportTiers$: Observable<
+    boolean
+  > = this.monetizeService.supportTiers$.pipe(
+    map(supportTiers => {
+      return supportTiers.length > 0;
+    })
+  );
 
   isEditingPlus: boolean = false;
 
@@ -44,7 +54,8 @@ export class ComposerMonetizeV2Component implements OnInit {
     public service: ComposerService,
     public features: FeaturesService,
     protected session: Session,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected monetizeService: ComposerMonetizeV2Service
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
@@ -57,6 +68,8 @@ export class ComposerMonetizeV2Component implements OnInit {
    * Component initialization. Set initial state.
    */
   ngOnInit(): void {
+    this.monetizeService.loadSupportTiers(this.session.getLoggedInUser().guid);
+
     const monetization = this.service.monetization$.getValue();
     const pendingMonetization = this.service.pendingMonetization$.getValue();
 
