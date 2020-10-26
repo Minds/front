@@ -216,8 +216,6 @@ export class BlockchainPurchaseComponent implements OnInit {
     const provider = await this.web3modalService.open();
     this.web3service.setProvider(provider);
 
-    console.log(this.web3service.provider);
-
     this.showEthModal = true;
     this.detectChanges();
     //let win = window.open('/checkout');

@@ -45,8 +45,6 @@ export class WireService {
 
     switch (wire.payloadType) {
       case 'onchain':
-        await this.web3Wallet.ready();
-
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
@@ -85,8 +83,6 @@ export class WireService {
         break;
 
       case 'eth':
-        await this.web3Wallet.ready();
-
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {

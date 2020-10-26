@@ -172,8 +172,6 @@ export class TokenOnChainOnboardingComponent {
   }
 
   async useExternal() {
-    await this.web3Wallet.ready();
-
     this.detectExternal();
 
     this._externalTimer = setInterval(() => {

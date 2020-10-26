@@ -15,8 +15,6 @@ export class TokenDistributionEventService {
     gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1,
     message: string = ''
   ) {
-    await this.web3Wallet.ready();
-
     if (this.web3Wallet.isUnavailable()) {
       throw new Error('No Ethereum wallets available on your browser.');
     } else if (!(await this.web3Wallet.unlock())) {

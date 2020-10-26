@@ -1,19 +1,12 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer, isPlatformBrowser } from '@angular/common';
-import * as Eth from 'ethjs';
-import * as SignerProvider from 'ethjs-provider-signer';
-
 import { LocalWalletService } from './local-wallet.service';
-import callbackToPromise from '../../helpers/callback-to-promise';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
+import { Web3Service } from './web3.service';
 
 @Injectable()
 export class Web3WalletService {
-  eth: any;
-  EthJS: any;
-
   public config; // TODO add types
 
   protected unavailable: boolean = false;
@@ -24,6 +17,7 @@ export class Web3WalletService {
   constructor(
     protected localWallet: LocalWalletService,
     protected transactionOverlay: TransactionOverlayService,
+    protected web3service: Web3Service,
     @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService
   ) {
@@ -32,34 +26,20 @@ export class Web3WalletService {
 
   // Wallet
 
-  async getWallets(forceAuthorization: boolean = false) {
-    try {
-      await this.ready();
-
-      if (!(await this.isSameNetwork())) {
-        return false;
-      }
-
-      if (forceAuthorization && window.ethereum) {
-        await window.ethereum.enable();
-      }
-
-      return await this.eth.accounts();
-    } catch (e) {
-      return false;
-    }
-  }
-
   async getCurrentWallet(
     forceAuthorization: boolean = false
   ): Promise<string | false> {
-    let wallets = await this.getWallets(forceAuthorization);
+    if (forceAuthorization) {
+      await this.web3service.initializeProvider();
+    }
 
-    if (!wallets || !wallets.length) {
+    const signer = this.web3service.getSigner();
+
+    if (!signer) {
       return false;
     }
 
-    return wallets[0];
+    return await signer.getAddress();
   }
 
   async getBalance(address): Promise<string | false> {
@@ -79,106 +59,40 @@ export class Web3WalletService {
     return !(await this.getCurrentWallet());
   }
 
-  async isLocal() {
-    await this.ready();
-    return this.local;
-  }
-
   async setupMetamask() {
-    if (await this.isLocal()) {
-      return await this.localWallet.setupMetamask();
-    }
+    return await this.localWallet.setupMetamask();
   }
 
   async unlock() {
-    if ((await this.isLocal()) && (await this.isLocked())) {
-      await this.localWallet.unlock();
+    if (await this.isLocked()) {
+      try {
+        await this.getCurrentWallet(true);
+      } catch (e) {
+        console.log(e);
+      }
     }
 
-    await this.getCurrentWallet(true);
     return !(await this.isLocked());
   }
 
   // Network
 
   async isSameNetwork() {
-    if (await this.isLocal()) {
-      // Using local provider means we're on the same network
-      return true;
+    const provider = this.web3service.provider;
+    let chainId = null;
+
+    if (provider) {
+      const network = await provider.getNetwork();
+      chainId = network.chainId;
     }
 
-    // assume main network
-    return (
-      ((await callbackToPromise(window.web3.version.getNetwork)) || 1) ==
-      this.config.client_network
-    );
+    return (chainId || 1) == this.config.client_network;
   }
 
   // Bootstrap
 
   setUp() {
     this.config = this.configs.get('blockchain');
-    this.ready() // boot web3 loading
-      .catch(e => {
-        console.error('[Web3WalletService]', e);
-      });
-  }
-
-  ready(): Promise<any> {
-    if (!this._ready) {
-      this._ready = new Promise((resolve, reject) => {
-        if (
-          isPlatformBrowser(this.platformId) &&
-          typeof window.web3 !== 'undefined'
-        ) {
-          this.loadFromWeb3();
-          return resolve(true);
-        }
-
-        this.waitForWeb3(resolve, reject);
-      });
-    }
-
-    return this._ready;
-  }
-
-  private waitForWeb3(resolve, reject) {
-    this._web3LoadAttempt++;
-
-    if (this._web3LoadAttempt > 3 || isPlatformServer(this.platformId)) {
-      this.loadLocal();
-      return resolve(true);
-    }
-
-    setTimeout(() => {
-      if (typeof window.web3 !== 'undefined') {
-        this.loadFromWeb3();
-        return resolve(true);
-      }
-
-      setTimeout(() => this.waitForWeb3(resolve, reject), 0);
-    }, 1000);
-  }
-
-  private loadFromWeb3() {
-    this.EthJS = Eth;
-
-    // MetaMask found
-    this.eth = new Eth(window.ethereum || window.web3.currentProvider);
-    this.local = false;
-  }
-
-  private loadLocal() {
-    this.EthJS = Eth;
-    // Non-metamask
-    this.eth = new Eth(
-      new SignerProvider(this.config.network_address, {
-        signTransaction: (rawTx, cb) =>
-          this.localWallet.signTransaction(rawTx, cb),
-        accounts: cb => this.localWallet.accounts(cb),
-      })
-    );
-    this.local = true;
   }
 
   isUnavailable() {
@@ -195,34 +109,12 @@ export class Web3WalletService {
     message: string = '',
     tokenDelta: number = 0
   ): Promise<string> {
-    let txHash;
+    const txHash = await this.transactionOverlay.waitForExternalTx(
+      () => contract[method](...params, { value }),
+      message
+    );
 
-    if (await this.isLocal()) {
-      await this.localWallet.unlock();
-
-      let passedTxObject = { value, ...contract.defaultTxObject };
-
-      if (!passedTxObject.gas) {
-        passedTxObject.gas = 300000; // TODO: estimate gas
-      }
-
-      let txObject = await this.transactionOverlay.waitForLocalTxObject(
-        passedTxObject,
-        message,
-        tokenDelta
-      );
-
-      txHash = await contract[method](...params, txObject);
-
-      this.localWallet.prune();
-    } else {
-      txHash = await this.transactionOverlay.waitForExternalTx(
-        () => contract[method](...params, { value }),
-        message
-      );
-    }
-
-    await asyncSleep(this.isLocal() ? 250 : 1000); // Modals "cooldown"
+    await asyncSleep(1000); // Modals "cooldown"
 
     return txHash;
   }
@@ -250,31 +142,12 @@ export class Web3WalletService {
     originalTxObject: any,
     message: string = ''
   ): Promise<string> {
-    let txHash;
+    const txHash = await this.transactionOverlay.waitForExternalTx(
+      () => this.web3service.getSigner().sendTransaction(originalTxObject),
+      message
+    );
 
-    if (await this.isLocal()) {
-      await this.localWallet.unlock();
-
-      if (!originalTxObject.gas) {
-        originalTxObject.gas = 300000; // TODO: estimate gas
-      }
-
-      let txObject = await this.transactionOverlay.waitForLocalTxObject(
-        originalTxObject,
-        message
-      );
-
-      txHash = await this.eth.sendTransaction(txObject);
-
-      this.localWallet.prune();
-    } else {
-      txHash = await this.transactionOverlay.waitForExternalTx(
-        () => this.eth.sendTransaction(originalTxObject),
-        message
-      );
-    }
-
-    await asyncSleep(this.isLocal() ? 250 : 1000); // Modals "cooldown"
+    await asyncSleep(1000); // Modals "cooldown"
 
     return txHash;
   }
@@ -306,12 +179,14 @@ export class Web3WalletService {
   static _(
     localWallet: LocalWalletService,
     transactionOverlay: TransactionOverlayService,
+    web3service: Web3Service,
     platformId: Object,
     configs: ConfigsService
   ) {
     return new Web3WalletService(
       localWallet,
       transactionOverlay,
+      web3service,
       platformId,
       configs
     );

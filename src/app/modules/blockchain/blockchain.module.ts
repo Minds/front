@@ -75,6 +75,7 @@ const cryptoRoutes: Routes = [
       deps: [
         LocalWalletService,
         TransactionOverlayService,
+        Web3Service,
         PLATFORM_ID,
         ConfigsService,
       ],

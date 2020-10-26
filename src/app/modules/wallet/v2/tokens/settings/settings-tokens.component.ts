@@ -242,8 +242,6 @@ export class WalletSettingsTokensComponent
     this.linkingMetamask = true;
     this.inProgress = true;
     this.detectChanges();
-
-    await this.web3Wallet.ready();
     this.detectExternal();
 
     // keep checking for metamask if it's not detected right away

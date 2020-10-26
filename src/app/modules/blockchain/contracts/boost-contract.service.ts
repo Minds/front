@@ -18,8 +18,6 @@ export class BoostContractService {
   }
 
   async load() {
-    await this.web3Wallet.ready();
-
     this.instance = this.web3Wallet.eth
       .contract(this.web3Wallet.config.boost.abi, '0x')
       .at(this.web3Wallet.config.boost.address);

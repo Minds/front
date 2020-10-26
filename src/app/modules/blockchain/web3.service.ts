@@ -11,7 +11,7 @@ type Address = string;
 @Injectable()
 export class Web3Service {
   public config: any;
-  private provider: Web3Provider;
+  public provider: Web3Provider | null = null;
 
   constructor(
     private configs: ConfigsService,
@@ -22,7 +22,7 @@ export class Web3Service {
     console.log(this.config);
   }
 
-  async getProvider() {
+  async initializeProvider() {
     if (!this.provider) {
       const provider = await this.web3modalService.open();
       this.setProvider(provider);
@@ -31,15 +31,12 @@ export class Web3Service {
     return this.provider;
   }
 
-  async getSigner() {
-    const provider = await this.getProvider();
-    return provider.getSigner();
-  }
+  public getSigner() {
+    if (this.provider) {
+      return this.provider.getSigner();
+    }
 
-  async getCurrentWalletAddress() {
-    const signer = await this.getSigner();
-
-    return await signer.getAddress();
+    return null;
   }
 
   getABIInterface(abi: any) {

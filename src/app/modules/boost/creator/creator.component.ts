@@ -584,8 +584,6 @@ export class BoostCreatorComponent implements AfterViewInit {
       if (this.boost.type !== 'p2p') {
         switch (this.boost.currency) {
           case 'onchain':
-            await this.web3Wallet.ready();
-
             const tokensFixRate = this.rates.tokens / 10000;
             let amount =
               Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
@@ -649,8 +647,6 @@ export class BoostCreatorComponent implements AfterViewInit {
 
         switch (this.boost.currency) {
           case 'onchain':
-            await this.web3Wallet.ready();
-
             if (this.web3Wallet.isUnavailable()) {
               throw new Error('No Ethereum wallets available on your browser.');
             } else if (!(await this.web3Wallet.unlock())) {

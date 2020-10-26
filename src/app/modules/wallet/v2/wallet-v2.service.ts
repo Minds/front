@@ -421,7 +421,6 @@ export class WalletV2Service {
   }
 
   async web3WalletUnlocked() {
-    await this.web3Wallet.ready();
     if (await this.web3Wallet.unlock()) {
       return true;
     } else {

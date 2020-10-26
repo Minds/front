@@ -14,8 +14,6 @@ export class WireContractService {
   }
 
   async load() {
-    await this.web3Wallet.ready();
-
     this.instance = this.web3Wallet.eth
       .contract(this.web3Wallet.config.wire.abi, '0x')
       .at(this.web3Wallet.config.wire.address);
