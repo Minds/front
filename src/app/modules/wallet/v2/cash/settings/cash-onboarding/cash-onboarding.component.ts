@@ -19,6 +19,7 @@ import { Client } from '../../../../../../services/api';
 })
 export class WalletCashOnboardingComponent implements OnInit {
   @Input() allowedCountries: string[];
+  @Input() embedded = false;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
   form;
   user;

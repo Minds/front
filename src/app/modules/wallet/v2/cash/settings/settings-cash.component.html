@@ -1,5 +1,7 @@
 <div class="m-walletSettings">
-  <h2 i18n="@@WALLETV2_SETTINGS_CASH__BANK_INFO">Bank Information</h2>
+  <h2 i18n="@@WALLETV2_SETTINGS_CASH__BANK_INFO" *ngIf="!embedded">
+    Bank Information
+  </h2>
   <div *ngIf="inProgress" class="m-wallet__spinner">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
@@ -9,6 +11,7 @@
       *ngIf="view === 'onboarding'"
       [allowedCountries]="allowedCountries"
       (submitted)="setView()"
+      [embedded]="embedded"
     ></m-walletCashOnboarding>
     <!-- BANK FORM ----------------------- -->
     <m-walletCashBankForm

@@ -71,7 +71,6 @@ export class OnboardingV3VerifyPhoneService implements OnDestroy {
       )
       .subscribe((response: any) => {
         if (!response) {
-          this.toast.success('An error has occurred');
           return;
         }
 

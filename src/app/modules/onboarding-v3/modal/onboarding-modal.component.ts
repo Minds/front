@@ -82,7 +82,8 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
       map((currentStep: string): boolean => {
         return (
           currentStep !== 'VerifyUniquenessStep' &&
-          currentStep !== 'VerifyPhoneStep'
+          currentStep !== 'VerifyPhoneStep' &&
+          currentStep !== 'VerifyBankStep'
         );
       })
     );

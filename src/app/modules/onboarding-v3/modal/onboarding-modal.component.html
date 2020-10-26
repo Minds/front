@@ -27,6 +27,9 @@
     <m-onboardingV3__phone
       *ngSwitchCase="'VerifyPhoneStep'"
     ></m-onboardingV3__phone>
+    <m-onboardingV3__bank
+      *ngSwitchCase="'VerifyBankStep'"
+    ></m-onboardingV3__bank>
   </ng-container>
   <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
     <button

@@ -58,13 +58,11 @@ export class OnboardingV3PanelService implements OnDestroy {
     const currentStep = this.steps[currentIndex];
 
     if (currentStep === 'SuggestedHashtagsStep') {
-      this.router.navigate([
-        '/newsfeed/subscriptions',
-        {
+      this.router.navigate(['/newsfeed/subscriptions'], {
+        queryParams: {
           onboarding: true,
-          onboardingStep: 'WelcomeStep'.toLowerCase(),
         },
-      ]);
+      });
     }
 
     if (
