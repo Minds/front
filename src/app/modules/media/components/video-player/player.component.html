@@ -35,6 +35,7 @@
 <ng-template #placeholder>
   <div
     class="m-videoPlayer__placeholder"
+    [class.m-videoPlayer__placeholder--embedded]="embedded"
     [style.background-image]="'url(' + (service.poster$ | async) + ')'"
   >
     <img

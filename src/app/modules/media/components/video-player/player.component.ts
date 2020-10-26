@@ -63,6 +63,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     }
   }
 
+  @Input() embedded?: boolean = false;
+
   /**
    * This is the video player component
    */

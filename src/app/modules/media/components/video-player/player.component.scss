@@ -28,8 +28,7 @@ m-videoPlayer--scrollaware {
 }
 
 .m-videoPlayer__placeholder {
-  min-height: 330px;
-  height: 100%;
+  height: 330px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,4 +51,8 @@ m-videoPlayer--scrollaware {
       opacity: 1;
     }
   }
+}
+
+.m-videoPlayer__placeholder--embedded {
+  height: 100%;
 }
