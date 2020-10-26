@@ -91,10 +91,9 @@ export class EmbeddedVideoComponent implements OnInit {
       this.entity.title ||
       `${this.entity.ownerObj.username}'s ${this.entity.subtype}`;
 
-    this.metaService
-      .setTitle(this.title)
-      .setDescription(this.entity.description)
-      .setOgImage(this.entity.thumbnail_src);
+    this.metaService.setTitle(this.title);
+    this.metaService.setDescription(this.entity.description);
+    this.metaService.setOgImage(this.entity.thumbnail_src);
   }
 
   onControlsShown() {
