@@ -14,9 +14,10 @@ export class WireContractService {
   }
 
   async load() {
-    this.instance = this.web3Wallet.eth
-      .contract(this.web3Wallet.config.wire.abi, '0x')
-      .at(this.web3Wallet.config.wire.address);
+    this.instance = this.web3Wallet.getContract(
+      this.web3Wallet.config.wire.address,
+      this.web3Wallet.config.wire.abi
+    );
 
     this.wire(); // Refresh default account
   }
@@ -36,7 +37,7 @@ export class WireContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.toWei(
         gasPriceGwei,
         'Gwei'
       );

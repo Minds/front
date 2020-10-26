@@ -4,6 +4,8 @@ import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3Service } from './web3.service';
+import { BigNumberish, utils } from 'ethers';
+import BN from 'bn.js';
 
 @Injectable()
 export class Web3WalletService {
@@ -107,7 +109,7 @@ export class Web3WalletService {
     params: any[],
     value: number | string,
     message: string = '',
-    tokenDelta: number = 0
+    tokenDelta: string | 0 = 0
   ): Promise<string> {
     const txHash = await this.transactionOverlay.waitForExternalTx(
       () => contract[method](...params, { value }),
@@ -124,7 +126,7 @@ export class Web3WalletService {
     method: string,
     params: any[],
     message: string = '',
-    tokenDelta: number = 0
+    tokenDelta: string | 0 = 0
   ): Promise<string> {
     return await this.sendSignedContractMethodWithValue(
       contract,
@@ -152,6 +154,18 @@ export class Web3WalletService {
     return txHash;
   }
 
+  getContract(address: string, abi: any[]) {
+    return this.web3service.getContract(address, abi);
+  }
+
+  toWei(amount: number | string, unit?: BigNumberish) {
+    return this.web3service.toWei(amount, unit);
+  }
+
+  fromWei(amount: BN, unit?: BigNumberish) {
+    return this.web3service.fromWei(amount, unit);
+  }
+
   // Provider
 
   getOnChainInterfaceLabel() {
@@ -172,6 +186,10 @@ export class Web3WalletService {
     }
 
     return 'Local Interface';
+  }
+
+  public encodeParams(types: (string | utils.ParamType)[], values: any[]) {
+    return this.web3service.encodeParams(types, values);
   }
 
   // Service provider

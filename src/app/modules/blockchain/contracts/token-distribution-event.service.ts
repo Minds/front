@@ -35,8 +35,8 @@ export class TokenDistributionEventService {
       {
         from: wallet,
         to: this.web3Wallet.config.token_distribution_event_address,
-        value: this.web3Wallet.EthJS.toWei(ethAmount, 'ether'),
-        gasPrice: this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei'),
+        value: this.web3Wallet.toWei(ethAmount, 'ether'),
+        gasPrice: this.web3Wallet.toWei(gasPriceGwei, 'Gwei'),
         data: '0x',
       },
       `purchase of ${ethAmount} ETH worth Minds Tokens. ${message}`.trim()
