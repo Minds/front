@@ -220,7 +220,8 @@ export class PlusSubscriptionComponent implements OnInit {
   get canHaveTrial(): boolean {
     return (
       this.currency === 'usd' &&
-      this.upgrades.plus[this.interval].can_have_trial
+      (this.upgrades.plus[this.interval].can_have_trial ||
+        !this.session.isLoggedIn())
     );
   }
 

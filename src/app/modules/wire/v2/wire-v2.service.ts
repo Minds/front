@@ -354,7 +354,7 @@ export class WireV2Service implements OnDestroy {
   /**
    * Prices for upgrades to Pro/Plus
    */
-  readonly upgrades: any;
+  upgrades: any; // readonly removed as component reydrates post authModal login
 
   userIsPlus: boolean;
   userIsPro: boolean;
