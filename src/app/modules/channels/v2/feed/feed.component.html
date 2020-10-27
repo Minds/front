@@ -35,7 +35,7 @@
     <!-- ----------------------------------------- -->
     <div class="m-channelFeed__grid" *ngIf="isGrid">
       <m-feedGrid
-        [maxColumns]="3"
+        [maxColumns]="5"
         [entities]="feed.service.feed | async"
         [isProSite]="false"
         (deleted)="feed.onDelete($event)"
