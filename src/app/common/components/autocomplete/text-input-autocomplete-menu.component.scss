@@ -3,6 +3,6 @@ m-text-input--autocomplete-menu {
     display: block;
     max-height: 200px;
     overflow-y: auto;
-    @include z-index(modal);
+    @include z-index(tooltip);
   }
 }
