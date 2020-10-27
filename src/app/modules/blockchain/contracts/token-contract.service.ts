@@ -28,8 +28,8 @@ export class TokenContractService {
 
   async load() {
     this.instance = this.web3Wallet.getContract(
-      this.web3Wallet.config.token.abi,
-      this.web3Wallet.config.token.address
+      this.web3Wallet.config.token.address,
+      this.web3Wallet.config.token.abi
     );
 
     this.token(); // Refresh default account

@@ -4,7 +4,7 @@ import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import BN from 'bn.js';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3ModalService } from '@dorgtech/web3modal-angular';
-import { AbiCoder, Interface } from 'ethers/lib/utils';
+import { AbiCoder, defaultAbiCoder, Interface } from 'ethers/lib/utils';
 
 type Address = string;
 
@@ -52,9 +52,7 @@ export class Web3Service {
   }
 
   public encodeParams(types: (string | utils.ParamType)[], values: any[]) {
-    const coder = new AbiCoder();
-
-    return coder.encode(types, values);
+    return defaultAbiCoder.encode(types, values);
   }
 
   public fromWei(amount: BN, unit?: BigNumberish): string {

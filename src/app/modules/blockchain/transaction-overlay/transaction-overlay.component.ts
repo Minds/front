@@ -124,7 +124,7 @@ export class TransactionOverlayComponent implements OnInit {
     this.data.tx = Object.assign({}, tx);
 
     if (typeof this.data.tx.gasPrice !== 'undefined') {
-      this.data.tx.gasPrice = Eth.fromWei(this.data.tx.gasPrice, 'Gwei');
+      this.data.tx.gasPrice = Eth.fromWei(this.data.tx.gasPrice, 'gwei');
     }
 
     if (typeof this.data.tx.gas === 'undefined') {
@@ -139,7 +139,7 @@ export class TransactionOverlayComponent implements OnInit {
 
     let tx = Object.assign({}, this.data.tx);
 
-    tx.gasPrice = Eth.toWei(tx.gasPrice, 'Gwei');
+    tx.gasPrice = Eth.toWei(tx.gasPrice, 'gwei');
 
     return tx;
   }

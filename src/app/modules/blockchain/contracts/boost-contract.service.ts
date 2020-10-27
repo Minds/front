@@ -20,7 +20,7 @@ export class BoostContractService {
   async load() {
     this.instance = this.web3Wallet.getContract(
       this.web3Wallet.config.boost.address,
-      this.web3Wallet.config.boost.ab
+      this.web3Wallet.config.boost.abi
     );
 
     this.boost(); // Refresh default account
@@ -73,10 +73,10 @@ export class BoostContractService {
             type: 'uint256',
             value: guid,
           },
-          {
-            type: 'uint256',
-            value: checksum,
-          },
+          // {
+          //   type: 'bytes32',
+          //   value: checksum,
+          // },
         ]),
       ],
       `Network Boost for ${amount} Tokens. ${message}`.trim(),

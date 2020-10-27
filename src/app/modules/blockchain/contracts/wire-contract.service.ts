@@ -39,7 +39,7 @@ export class WireContractService {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
       this.instance.defaultTxObject.gasPrice = this.web3Wallet.toWei(
         gasPriceGwei,
-        'Gwei'
+        'gwei'
       );
     }
 

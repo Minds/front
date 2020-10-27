@@ -39,6 +39,7 @@ import { WalletProEarningsCashComponent } from './cash/pro-earnings/pro-earnings
 import { WalletTabHistoryService } from './tab-history.service';
 import { DefaultRedirectGuard } from './guards/default-redirect-guard.component';
 import { TabStorageGuard } from './guards/tab-storage-guard.component';
+import { Web3Service } from '../../blockchain/web3.service';
 
 export const WALLET_V2_ROUTES: Routes = [
   {
@@ -179,6 +180,7 @@ export const WALLET_V2_ROUTES: Routes = [
       deps: [
         LocalWalletService,
         TransactionOverlayService,
+        Web3Service,
         PLATFORM_ID,
         ConfigsService,
       ],

@@ -4,13 +4,12 @@ import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3Service } from './web3.service';
-import { BigNumberish, utils } from 'ethers';
+import { BigNumberish, Contract, utils } from 'ethers';
 import BN from 'bn.js';
 
 @Injectable()
 export class Web3WalletService {
   public config; // TODO add types
-
   protected unavailable: boolean = false;
   protected local: boolean = false;
   protected _ready: Promise<any>;
@@ -28,11 +27,25 @@ export class Web3WalletService {
 
   // Wallet
 
+  async getWallets() {
+    const address = await this.getCurrentWallet();
+
+    if (!address) {
+      return [];
+    }
+
+    return [address];
+  }
+
   async getCurrentWallet(
     forceAuthorization: boolean = false
   ): Promise<string | false> {
     if (forceAuthorization) {
-      await this.web3service.initializeProvider();
+      try {
+        await this.web3service.initializeProvider();
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     const signer = this.web3service.getSigner();
@@ -45,16 +58,15 @@ export class Web3WalletService {
   }
 
   async getBalance(address): Promise<string | false> {
-    return new Promise<string | false>((resolve, reject) => {
-      if (!window.web3 && !window.web3.eth) return reject(false);
-      window.web3.eth.getBalance(address, (error, result) => {
-        if (error) {
-          console.log(error);
-          return reject(false);
-        }
-        resolve(result.toNumber());
-      });
-    });
+    const signer = this.web3service.getSigner();
+
+    if (!signer) {
+      return false;
+    }
+
+    const balance = await signer.getBalance();
+
+    return balance.toString();
   }
 
   async isLocked() {
@@ -104,15 +116,21 @@ export class Web3WalletService {
   // Contract Methods
 
   async sendSignedContractMethodWithValue(
-    contract: any,
+    contract: Contract,
     method: string,
     params: any[],
     value: number | string,
     message: string = '',
     tokenDelta: string | 0 = 0
   ): Promise<string> {
+    const connectedContract = contract.connect(this.web3service.getSigner());
+
     const txHash = await this.transactionOverlay.waitForExternalTx(
-      () => contract[method](...params, { value }),
+      () =>
+        connectedContract[method](...params, {
+          value,
+          gasLimit: 15000000, // This manual gas limit is needed
+        }),
       message
     );
 
