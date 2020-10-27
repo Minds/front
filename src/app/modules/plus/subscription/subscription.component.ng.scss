@@ -1,6 +1,7 @@
+@import 'defaults.scss';
 @import '../../../foundation/grid-values';
 
-m-plus--subscription {
+:host {
   .m-plusSubscriptionPlan__toggleContainer {
     display: flex;
     flex-direction: row;
@@ -26,10 +27,22 @@ m-plus--subscription {
     }
   }
 
+  .m-plusSubscriptionPlan__trial {
+    h4 {
+      font-weight: 700;
+      font-size: 26;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
   .m-plusSubscriptionPlan__pricing {
     margin-bottom: 24px;
 
     @media screen and (max-width: $max-mobile) {
+      display: block;
       margin-bottom: 40px;
       text-align: center;
     }
@@ -41,10 +54,10 @@ m-plus--subscription {
       line-height: 24px;
 
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--secondary);
       }
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $m-grid-max-tablet) {
         display: block;
       }
 
@@ -52,7 +65,7 @@ m-plus--subscription {
         font-size: 24px;
 
         @include m-theme() {
-          color: themed($m-black);
+          color: themed($m-textColor--primary);
         }
       }
     }
@@ -67,7 +80,7 @@ m-plus--subscription {
         color: themed($m-red);
       }
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $m-grid-max-tablet) {
         display: block;
         margin-left: 0;
       }

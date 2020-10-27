@@ -30,6 +30,7 @@ import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.compone
 @Component({
   selector: 'm-plus--subscription',
   templateUrl: 'subscription.component.html',
+  styleUrls: ['./subscription.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusSubscriptionComponent implements OnInit {
@@ -214,6 +215,13 @@ export class PlusSubscriptionComponent implements OnInit {
         offerFrom: null,
       };
     }
+  }
+
+  get canHaveTrial(): boolean {
+    return (
+      this.currency === 'usd' &&
+      this.upgrades.plus[this.interval].can_have_trial
+    );
   }
 
   setCurrency(currency: UpgradeOptionCurrency) {

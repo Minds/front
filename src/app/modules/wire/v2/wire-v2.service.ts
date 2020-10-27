@@ -255,6 +255,11 @@ export class WireV2Service implements OnDestroy {
   );
 
   /**
+   * Wire upgrade trial observable
+   */
+  readonly upgradeCanHaveTrial$: Observable<boolean>;
+
+  /**
    * Wire token type subject
    */
   readonly tokenType$: BehaviorSubject<WireTokenType> = new BehaviorSubject<
@@ -499,6 +504,19 @@ export class WireV2Service implements OnDestroy {
           });
       }
     });
+
+    this.upgradeCanHaveTrial$ = combineLatest([
+      this.upgradeType$,
+      this.upgradeInterval$,
+      this.type$,
+    ]).pipe(
+      map(([upgradeType, upgradeInterval, paymentType]) => {
+        return (
+          this.upgrades[upgradeType][upgradeInterval].can_have_trial &&
+          paymentType === 'usd'
+        );
+      })
+    );
 
     // Sync balances
     if (this.session.isLoggedIn()) {

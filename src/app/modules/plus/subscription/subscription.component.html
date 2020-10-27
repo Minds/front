@@ -28,6 +28,10 @@
       </div>
     </div>
 
+    <div class="m-plusSubscriptionPlan__trial" *ngIf="canHaveTrial">
+      <h4>Start your free trial for 7 days</h4>
+    </div>
+
     <div class="m-plusSubscriptionPlan__pricing">
       <span
         class="m-plusSubscriptionPlanPricing__amount"
@@ -52,7 +56,12 @@
         (click)="enable()"
         i18n="@@PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS"
       >
-        Upgrade to Minds+
+        <ng-container *ngIf="!canHaveTrial; else startTrialTxt">
+          Upgrade to Minds+
+        </ng-container>
+        <ng-template #startTrialTxt>
+          Start free trial
+        </ng-template>
       </button>
     </div>
   </div>
