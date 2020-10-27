@@ -50,7 +50,7 @@ export class WalletSettingsTokensComponent
   display: Views;
   generatedAccount: any;
   providedAddress: string = '';
-  hasExternal: boolean = false;
+  hasExternal: boolean = true;
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
   form;
@@ -114,7 +114,6 @@ export class WalletSettingsTokensComponent
       this.detectChanges();
     }
 
-    this.hasExternal = !(await this.web3Wallet.isLocal());
     this.detectChanges();
   }
 
@@ -242,17 +241,7 @@ export class WalletSettingsTokensComponent
     this.linkingMetamask = true;
     this.inProgress = true;
     this.detectChanges();
-    this.detectExternal();
-
-    // keep checking for metamask if it's not detected right away
-    if (isPlatformBrowser(this.platformId)) {
-      this._externalTimer = setInterval(() => {
-        if (!(this.cd as ViewRef).destroyed) {
-          this.detectExternal();
-        }
-      }, 1000);
-    }
-    this.detectChanges();
+    await this.detectExternal();
   }
 
   async detectExternal() {

@@ -592,19 +592,6 @@ export class BoostCreatorComponent implements AfterViewInit {
               throw new Error('No Ethereum wallets available on your browser.');
             }
 
-            if (await this.web3Wallet.isLocal()) {
-              const action = await this.web3Wallet.setupMetamask();
-              switch (action) {
-                case GetMetamaskComponent.ACTION_CREATE:
-                  this.router.navigate(['/wallet']);
-                  this.inProgress = false;
-                  this.overlayModal.dismiss();
-                  break;
-                case GetMetamaskComponent.ACTION_CANCEL:
-                  return;
-              }
-            }
-
             if (!(await this.web3Wallet.unlock())) {
               throw new Error(
                 'Your Ethereum wallet is locked or connected to another network.'

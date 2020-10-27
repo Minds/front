@@ -41,11 +41,7 @@ export class Web3WalletService {
     forceAuthorization: boolean = false
   ): Promise<string | false> {
     if (forceAuthorization) {
-      try {
-        await this.web3service.initializeProvider();
-      } catch (e) {
-        console.log(e);
-      }
+      await this.web3service.initializeProvider();
     }
 
     const signer = this.web3service.getSigner();

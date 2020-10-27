@@ -400,11 +400,6 @@ export class WalletV2Service {
     }
   }
 
-  async hasMetamask(): Promise<boolean> {
-    const isLocal: any = await this.web3Wallet.isLocal();
-    return Boolean(isLocal);
-  }
-
   async canTransfer() {
     try {
       const response: any = await this.client.post(

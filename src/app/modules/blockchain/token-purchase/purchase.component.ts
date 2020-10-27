@@ -155,21 +155,7 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   async purchase() {
     await this.load();
-    if (this.session.isLoggedIn()) {
-      if (await this.web3Wallet.isLocal()) {
-        const action = await this.web3Wallet.setupMetamask();
-        switch (action) {
-          case GetMetamaskComponent.ACTION_CREATE:
-            this.router.navigate(['/wallet']);
-            this.inProgress = false;
-            this.overlayModal.dismiss();
-            return;
-        }
-      }
-      this.showPledgeModal = true;
-    } else {
-      this.showLoginModal = true;
-    }
+    this.showLoginModal = true;
     this.detectChanges();
   }
 
@@ -212,10 +198,6 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   async purchaseEth() {
-    //TODO: for testing purposes
-    const provider = await this.web3modalService.open();
-    this.web3service.setProvider(provider);
-
     this.showEthModal = true;
     this.detectChanges();
     //let win = window.open('/checkout');
