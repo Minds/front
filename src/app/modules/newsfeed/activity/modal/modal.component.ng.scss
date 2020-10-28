@@ -228,7 +228,7 @@
   .m-activityModal__scrollableAreaWrapper {
     margin-left: -100px;
     margin-right: -50px;
-    padding: 10px 35px 20px 100px;
+    padding: 10px 50px 20px 110px;
 
     min-height: 320px;
     height: 100%;
@@ -237,13 +237,6 @@
     position: relative;
     overflow-y: scroll;
   }
-
-  .m-activityModal__scrollableAreaWrapper--with-engagements {
-    m-activity__ownerBlock {
-      padding-bottom: 0;
-    }
-  }
-
   .scrollableAreaBody {
     direction: ltr;
     position: relative;
@@ -262,7 +255,8 @@
     visibility: hidden;
   }
 
-  .m-activityModal__toolbarWrapper--bordered {
+  .m-activityModal__toolbarWrapper {
+    margin: 0 12px 0 4px;
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
     }

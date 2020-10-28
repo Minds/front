@@ -2,7 +2,6 @@ import { NgZone, RendererFactory2, PLATFORM_ID, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
-import VotersModalService from '../modules/modals/voters/service';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -109,7 +108,6 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [],
   },
   SignupModalService,
-  VotersModalService,
   {
     provide: CacheService,
     useFactory: CacheService._,

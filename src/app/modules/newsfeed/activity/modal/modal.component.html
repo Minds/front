@@ -91,12 +91,7 @@
           <div
             class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter"
           >
-            <div
-              class="m-activityModal__scrollableAreaWrapper"
-              [class.m-activityModal__scrollableAreaWrapper--with-engagements]="
-                showEngagements
-              "
-            >
+            <div class="m-activityModal__scrollableAreaWrapper">
               <!-- OWNER BLOCK -->
               <m-activity__ownerBlock>
                 <ng-container class="m-activityOwnerBlock__right">
@@ -118,23 +113,6 @@
                   ></m-activity__menu>
                 </ng-container>
               </m-activity__ownerBlock>
-              <!-- TOOLBAR -->
-              <div
-                [class.m-activityModal__toolbarWrapper--bordered]="
-                  !showEngagements
-                "
-              >
-                <m-activity__toolbar
-                  [modalToolbar]="true"
-                  *ngIf="activityService.displayOptions.showToolbar"
-                ></m-activity__toolbar>
-              </div>
-
-              <!-- ENGAGEMENT -->
-              <m-activity__engagements
-                *ngIf="showEngagements"
-              ></m-activity__engagements>
-
               <!-- MESSAGE -->
               <m-activity__content
                 *ngIf="activityService.shouldShowContent$ | async"
@@ -145,6 +123,12 @@
                 "
               >
               </m-activity__content>
+              <!-- TOOLBAR -->
+              <div class="m-activityModal__toolbarWrapper">
+                <m-activity__toolbar
+                  *ngIf="activityService.displayOptions.showToolbar"
+                ></m-activity__toolbar>
+              </div>
               <!-- COMMENTS -->
               <div class="m-activityModal__comments" *ngIf="entity.guid">
                 <ng-container *mIfBrowser>

@@ -2,12 +2,10 @@ m-activity__toolbar {
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: $minds-padding * 2;
-  padding-bottom: $minds-padding * 2;
+  padding: 0 25px 16px;
+  padding-top: $minds-padding * 2;
   box-sizing: border-box;
   text-align: center;
-  align-items: center;
-  justify-content: space-between;
 
   @include m-theme() {
     border-top: 1px solid themed($m-borderColor--tertiary);
@@ -15,18 +13,10 @@ m-activity__toolbar {
   }
 
   > * {
-    margin-right: $minds-padding;
+    margin-right: 22px;
 
-    a {
+    > a {
       line-height: 18px;
-      padding: 12px;
-      border-radius: 5px;
-
-      &:hover {
-        @include m-theme() {
-          background-color: themed($m-bgColor--primary);
-        }
-      }
 
       i.material-icons {
         font-size: 18px;

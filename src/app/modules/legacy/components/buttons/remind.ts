@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
 } from '@angular/core';
 
 import { Session } from '../../../../services/session';
@@ -23,7 +22,7 @@ import {
   template: `
     <a (click)="remind()" [ngClass]="{ selected: reminded }">
       <i class="material-icons">repeat</i>
-      <span class="minds-counter" *ngIf="!iconOnly && counter > 0">{{
+      <span class="minds-counter" *ngIf="counter > 0">{{
         counter | number
       }}</span>
     </a>
@@ -36,9 +35,6 @@ export class RemindButton {
   remindOpen: boolean = false;
   counter: number = 0;
   reminded: boolean = false;
-
-  @Input()
-  iconOnly?: boolean = false;
 
   constructor(
     public overlayModal: OverlayModalService,
