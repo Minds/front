@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
@@ -15,6 +15,9 @@ import { StackableModalService } from '../../../../services/ux/stackable-modal.s
 export class ActivityToolbarComponent {
   private entitySubscription: Subscription;
   private paywallBadgeSubscription: Subscription;
+
+  @Input()
+  modalToolbar: boolean = false;
 
   entity: ActivityEntity;
   allowReminds: boolean = true;

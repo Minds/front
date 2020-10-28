@@ -582,4 +582,14 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   get modalWidth(): number {
     return this.stageWidth + ACTIVITY_MODAL_CONTENT_WIDTH;
   }
+
+  get showEngagements() {
+    if (!this.entity) return false;
+
+    const downVoteCount = this.entity['thumbs:down:count'];
+    const upVoteCount = this.entity['thumbs:up:count'];
+    const remindsCount = this.entity.reminds;
+
+    return downVoteCount > 0 || upVoteCount > 0 || remindsCount > 0;
+  }
 }

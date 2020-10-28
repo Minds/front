@@ -1,17 +1,24 @@
-<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
-<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
-
-<minds-button-remind
+<minds-button-thumbs-up
   [object]="entity"
-  *ngIf="allowReminds"
-></minds-button-remind>
+  [iconOnly]="modalToolbar"
+></minds-button-thumbs-up>
+<minds-button-thumbs-down
+  [object]="entity"
+  [iconOnly]="modalToolbar"
+></minds-button-thumbs-down>
 <minds-button-comment
   [object]="entity"
+  [iconOnly]="modalToolbar"
   (click)="toggleComments()"
   *ngIf="
     !service.displayOptions.showComments || service.displayOptions.showComments
   "
 ></minds-button-comment>
+<minds-button-remind
+  [object]="entity"
+  [iconOnly]="modalToolbar"
+  *ngIf="allowReminds"
+></minds-button-remind>
 
 <!-- Show wire if not own post -->
 <ng-container *ngIf="session.getLoggedInUser().guid != entity.ownerObj.guid">
@@ -22,7 +29,7 @@
 
 <!-- Show boost if own post -->
 <ng-container *ngIf="session.getLoggedInUser().guid == entity.ownerObj.guid">
-  <div class="m-layout__spacer"></div>
+  <div *ngIf="!modalToolbar" class="m-layout__spacer"></div>
 
   <button
     class="m-btn m-btn--slim m-boostButton"

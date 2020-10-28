@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 
 import { CommonModule } from '../../../common/common.module';
 import { ActivityComponent } from './activity.component';
+import { ActivityEngagementsComponent } from './engagements/engagements.component';
 import { ActivityOwnerBlockComponent } from './owner-block/owner-block.component';
 import { ActivityContentComponent } from './content/content.component';
 import { CommentsModule } from '../../comments/comments.module';
@@ -62,6 +63,7 @@ import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metri
     ActivityModalTitleOverlayComponent,
     ActivityModalPagerComponent,
     ActivityMinimalMetricsComponent,
+    ActivityEngagementsComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent],

@@ -7,6 +7,7 @@ import { CommonModule } from '../../common/common.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
 import { ConfirmModal } from './confirm/confirm';
+import VotersModalComponent from './voters/voters.component';
 import { RemindComposerModal } from './remind-composer/remind-composer';
 import { ShareModalComponent } from './share/share';
 import { SignupOnActionModal } from './signup/signup-on-action';
@@ -37,6 +38,7 @@ import { RemindComposerModalComponent } from './remind-composer-v2/reminder-comp
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
     RemindComposerModalComponent,
+    VotersModalComponent,
   ],
   exports: [
     ConfirmModal,
@@ -47,6 +49,7 @@ import { RemindComposerModalComponent } from './remind-composer-v2/reminder-comp
     SignupModal,
     TOSUpdatedModal,
     RemindComposerModalComponent,
+    VotersModalComponent,
   ],
 })
 export class ModalsModule {}

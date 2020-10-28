@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
+  Input,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -23,7 +24,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
       <i class="material-icons">thumb_down</i>
       <span
         class="minds-counter"
-        *ngIf="object['thumbs:down:count'] > 0"
+        *ngIf="!iconOnly && object['thumbs:down:count'] > 0"
         data-cy="data-minds-thumbs-down-counter"
         >{{ object['thumbs:down:count'] | number }}</span
       >
@@ -40,6 +41,9 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;
   object;
+
+  @Input()
+  iconOnly?: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
