@@ -72,7 +72,6 @@ describe('WireLockScreenComponent', () => {
             },
           }),
         },
-        { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: AuthModalService, useValue: MockService(AuthModalService) },
       ],
     }).compileComponents(); // compile template and css
@@ -80,8 +79,6 @@ describe('WireLockScreenComponent', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
-    featuresServiceMock.mock('paywall-2020', false);
-
     fixture = TestBed.createComponent(WireLockScreenComponent);
 
     comp = fixture.componentInstance; // LoginForm test instance

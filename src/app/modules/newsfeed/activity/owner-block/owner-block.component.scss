@@ -7,11 +7,62 @@ m-activity__ownerBlock {
   padding-left: $activity-padding-lr;
   padding-right: $activity-padding-lr / 2;
   box-sizing: border-box;
+
+  &.m-activity__ownerBlock--minimalMode {
+    padding-left: $activity-padding-lr--minimalMode;
+    padding-right: $activity-padding-lr--minimalMode / 2;
+    .m-activityOwnerBlock__avatar {
+      img {
+        height: 35px;
+        width: 35px;
+        @include m-theme() {
+          border: none;
+        }
+      }
+      .m-activityOwnerBlock__remindIcon--minimalMode {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border-radius: 50%;
+        height: 17px;
+        width: 17px;
+        @include m-theme() {
+          background-color: themed($m-bgColor--quinary);
+        }
+        i {
+          font-weight: 700;
+          font-size: 11px;
+          @include m-theme() {
+            color: themed($m-link);
+          }
+        }
+      }
+    }
+    .m-activityOwnerBlock__displayName,
+    .m-activityOwnerBlock__groupName {
+      margin-left: 6px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    strong {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .m-activityOwnerBlock__permalink,
+    .m-activityOwnerBlock__right {
+      display: none;
+    }
+  }
 }
 
 .m-activityOwnerBlock__avatar {
   align-self: center;
   padding-right: $minds-padding;
+  position: relative;
   img {
     border-radius: 50%;
     width: 50px;

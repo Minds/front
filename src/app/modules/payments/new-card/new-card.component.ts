@@ -19,6 +19,7 @@ import { Session } from '../../../services/session';
   selector: 'm-payments__newCard',
   templateUrl: 'new-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./new-card.component.ng.scss'],
 })
 export class PaymentsNewCard {
   minds = (<any>window).Minds;

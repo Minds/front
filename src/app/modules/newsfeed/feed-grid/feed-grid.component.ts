@@ -41,12 +41,7 @@ export class FeedGridComponent
 
   macyInstance: Macy;
 
-  displayOptions: any = {
-    showComments: true,
-    showOnlyCommentsInput: true,
-    v2: true,
-    autoplayVideo: false,
-  };
+  displayOptions: any = { minimalMode: true };
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -55,10 +50,6 @@ export class FeedGridComponent
   ) {}
 
   ngOnInit() {
-    if (!this.isProSite) {
-      this.displayOptions = { minimalMode: true };
-    }
-
     this.macyInstance = new Macy({
       container: this.elementRef.nativeElement,
       columns: this.maxColumns,

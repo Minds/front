@@ -39,6 +39,12 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity && !!this.entity.remind_object;
   }
 
+  // Note: currenly ownerBlocks are only visible in minimalMode for reminds
+  @HostBinding('class.m-activity__ownerBlock--minimalMode')
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   get owner(): MindsUser {
     return this.entity.ownerObj;
   }

@@ -229,6 +229,14 @@ export class ActivityContentComponent
       : '';
   }
 
+  get hideMediaDescription(): boolean {
+    // Minimal mode hides description if there is already a title
+    return this.service.displayOptions.minimalMode &&
+      this.mediaTitle.length >= 1
+      ? true
+      : false;
+  }
+
   get isVideo(): boolean {
     return this.entity.custom_type == 'video';
   }
@@ -331,6 +339,10 @@ export class ActivityContentComponent
     return this.service.displayOptions.isModal;
   }
 
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   calculateFixedContentHeight(): void {
     if (!this.service.displayOptions.fixedHeight) {
       return;
@@ -382,7 +394,11 @@ export class ActivityContentComponent
       event.preventDefault();
       event.stopPropagation();
     }
-    if (this.service.displayOptions.bypassMediaModal) {
+    if (
+      this.service.displayOptions.bypassMediaModal &&
+      this.entity.content_type !== 'image' &&
+      this.entity.content_type !== 'video'
+    ) {
       // Open new window to media page instead of media modal
       window.open(this.canonicalUrl, '_blank');
       return;

@@ -58,6 +58,18 @@ m-activity__content {
       font-size: 28px;
     }
   }
+  &.m-activityContent__message--minimalMode {
+    &.m-activityContent__message--remind {
+      display: none;
+    }
+
+    .m-activityContent__messageWrapper {
+      padding: 16px $activity-padding-lr--minimalMode;
+    }
+    a {
+      font-weight: 400;
+    }
+  }
   .m-activityContent__messageWrapper {
     padding: 0px $activity-padding-lr 16px;
 
@@ -72,10 +84,6 @@ m-activity__content {
   }
 }
 
-.m-activity--noOwnerBlock .m-activityContent__message {
-  padding-top: 16px;
-}
-
 .m-activityContent__message,
 .m-activityContent__mediaDescription {
   white-space: pre-line;
@@ -87,7 +95,6 @@ m-activity__content {
 
   a {
     text-decoration: none;
-    // font-weight: 600;
     @include m-theme() {
       color: themed($m-blue);
     }
@@ -103,6 +110,22 @@ m-activity__content {
   margin: 0;
   .m-activityContent__descriptionWrapper {
     padding: 16px $activity-padding-lr;
+    &.m-activityContent__descriptionWrapper--minimalMode {
+      padding: 16px $activity-padding-lr--minimalMode;
+      > p {
+        line-height: 20px;
+      }
+      .m-activityContent__mediaTitle {
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 0px;
+      }
+      > p:not(.m-activityContent__mediaTitle) {
+        a {
+          font-weight: 400;
+        }
+      }
+    }
   }
   p {
     margin: 0;
@@ -169,6 +192,27 @@ m-activity__content {
 }
 
 .m-activityContent__media--richEmbed {
+  &.m-activityContent__mediaRichEmbed--minimalMode {
+    .meta {
+      padding: 20px $activity-padding-lr--minimalMode;
+      > * {
+        font-size: 15px;
+      }
+      h2 {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+      .m-blurb {
+        display: none;
+      }
+      .m-url {
+        @include m-theme() {
+          color: themed($m-textColor--secondary) !important;
+        }
+      }
+    }
+  }
   img {
     width: 100%;
     display: block;
@@ -262,8 +306,28 @@ m-activity__content {
   padding: 0 $activity-padding-lr 16px;
 
   &.m-activityContent__remind--minimalMode {
-    &:not(.m-activityContent__remind--hasMessage) {
-      padding-top: 16px;
+    padding: 0;
+    .m-activityContent__messageWrapper {
+      padding-top: 0;
     }
+
+    m-activity__remind {
+      @include m-theme() {
+        border: none;
+      }
+      font-weight: 400;
+      a {
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.m-activity--minimalMode {
+  .m-activityContent--paywalledStatus {
+    padding-top: 30px;
+  }
+  .m-videoPlayer__placeholder i {
+    font-size: 70px;
   }
 }
