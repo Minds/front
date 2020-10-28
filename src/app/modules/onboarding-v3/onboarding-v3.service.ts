@@ -9,7 +9,6 @@ import {
   StackableModalState,
 } from '../../services/ux/stackable-modal.service';
 
-import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
 
 /**
@@ -66,7 +65,6 @@ export class OnboardingV3Service {
     private compiler: Compiler,
     private injector: Injector,
     private stackableModal: StackableModalService,
-    private authModal: AuthModalService,
     private api: ApiService
   ) {}
 
@@ -97,6 +95,7 @@ export class OnboardingV3Service {
     const evt: StackableModalEvent = await this.stackableModal
       .present(OnboardingV3ModalComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
+        dismissOnRouteChange: false,
         onComplete: (complete: boolean) => {
           onSuccess$.next(complete);
           onSuccess$.complete(); // Ensures promise can be called below
@@ -122,7 +121,6 @@ export class OnboardingV3Service {
    */
   public async presentHomepageModals(): Promise<void> {
     try {
-      await this.authModal.open();
       await this.open();
     } catch (e) {
       if (e === 'DismissedModalException') {

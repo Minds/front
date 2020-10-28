@@ -43,6 +43,10 @@
       .m-onboardingPhone__numberInput {
         flex-grow: 10;
         margin-bottom: unset;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
       }
 
       .m-onboardingPhone__sendButton {
@@ -60,6 +64,7 @@
         @include m-theme() {
           background: themed($m-bgColor--primary);
           border: 1px solid themed($m-blue);
+          color: themed($m-textColor--primary);
         }
       }
     }

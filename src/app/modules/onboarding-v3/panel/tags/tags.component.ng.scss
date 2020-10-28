@@ -7,6 +7,10 @@
   flex-flow: column;
   box-sizing: border-box;
 
+  @media screen and (max-width: 725px) {
+    min-width: unset;
+  }
+
   .m-onboardingTags__header {
     display: flex;
     flex-wrap: wrap;

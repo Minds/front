@@ -19,6 +19,8 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -55,7 +57,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected topbarService: TopbarService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    public pageLayoutService: PageLayoutService
+    public pageLayoutService: PageLayoutService,
+    private featuresService: FeaturesService,
+    private authModal: AuthModalService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -172,5 +176,13 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     if (this.router$) {
       this.router$.unsubscribe();
     }
+  }
+
+  onJoinNowClick() {
+    if (this.featuresService.has('onboarding-october-2020')) {
+      this.authModal.open();
+      return;
+    }
+    this.router.navigate(['/register']);
   }
 }

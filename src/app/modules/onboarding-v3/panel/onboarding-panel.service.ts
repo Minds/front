@@ -24,11 +24,7 @@ export class OnboardingV3PanelService implements OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    private router: Router,
-    private tags: OnboardingV3TagsService,
-    private storage: Storage
-  ) {}
+  constructor(private tags: OnboardingV3TagsService, private router: Router) {}
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
@@ -59,13 +55,11 @@ export class OnboardingV3PanelService implements OnDestroy {
     this.subscriptions.push(
       this.currentStep$.pipe(take(1)).subscribe(currentStep => {
         if (currentStep === 'SuggestedHashtagsStep') {
-          // use storage rather than a Query param incase
-          // user wants to share link.
-          this.storage.set('show:welcome:modal', true);
-
-          // navigate router to newsfeed
-          this.router.navigate(['/newsfeed/subscriptions']);
+          this.currentStep$.next('WelcomeStep');
+          this.router.navigate(['/newsfeed/subscribed']);
+          return;
         }
+
         this.dismiss$.next(true);
       })
     );

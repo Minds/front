@@ -4,6 +4,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -39,7 +42,10 @@ export class LoginForm {
     public client: Client,
     fb: FormBuilder,
     private zone: NgZone,
-    private userAvatarService: UserAvatarService
+    private userAvatarService: UserAvatarService,
+    private featuresService: FeaturesService,
+    private authModal: AuthModalService,
+    private router: Router
   ) {
     this.form = fb.group({
       username: ['', Validators.required],
@@ -138,5 +144,24 @@ export class LoginForm {
         this.twofactorToken = '';
         this.hideLogin = false;
       });
+  }
+
+  /**
+   * Called on join now button clicked.
+   * @returns { void }
+   */
+  public onJoinNowClick(): void {
+    if (this.featuresService.has('onboarding-october-2020')) {
+      try {
+        this.authModal.open();
+      } catch (e) {
+        if (e === 'DismissedModalException') {
+          return; // modal dismissed, do nothing
+        }
+        console.error(e);
+      }
+      return;
+    }
+    this.router.navigate(['/register']);
   }
 }
