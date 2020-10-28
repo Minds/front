@@ -24,6 +24,12 @@
     display: flex;
     flex-flow: row wrap;
 
+    /**
+     * TODO: remove when adding other 2 options
+     * to panel.
+     */
+    justify-content: center;
+
     @media screen and (max-width: $max-mobile) {
       min-width: 100%;
     }
@@ -52,11 +58,16 @@
       margin-bottom: 40px;
       cursor: pointer;
 
+      /**
+       * TODO: remove when adding other 2 options
+       */
+      max-width: 50%;
+
       .m-onboardingUniqueness__tooltip {
         width: 100%;
         position: absolute;
         left: calc(100% - 32px);
-        height: calc(100% - 8px);
+        top: 8px;
       }
     }
 

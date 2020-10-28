@@ -1,10 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ChannelEditService } from '../../../channels/v2/edit/edit.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 
+/**
+ * Channel editing component for onboarding v3.
+ */
 @Component({
   selector: 'm-onboardingV3__channel',
   templateUrl: './channel.component.html',
@@ -12,11 +15,26 @@ import { Session } from '../../../../services/session';
   providers: [ChannelEditService],
 })
 export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
-  form: FormGroup;
-  cdnUrl: string;
-  avatarSrc$: BehaviorSubject<string> = new BehaviorSubject<string>('none');
   subscriptions: Subscription[] = [];
 
+  /**
+   * FormGroup
+   */
+  public form: FormGroup;
+
+  /**
+   * CDN URL
+   */
+  private cdnUrl: string;
+
+  /**
+   * Behaviour subject containing the avatar src as a string.
+   */
+  avatarSrc$: BehaviorSubject<string> = new BehaviorSubject<string>('none');
+
+  /**
+   * Emitted to on next button clicked.
+   */
   @Input() nextClicked$: BehaviorSubject<boolean>;
 
   constructor(
@@ -27,8 +45,10 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // set channel edit service channel
     this.channelEditService.setChannel(this.session.getLoggedInUser());
 
+    // init form
     this.form = this.fb.group({
       name: [
         this.name$.getValue(),
@@ -41,14 +61,18 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
       avatar: ['', Validators.required],
     });
 
+    // set cdn url
     this.cdnUrl = this.configs.get('cdn_url');
 
+    // setup subscriptions
     this.subscriptions.push(
+      // save on next clicked
       this.nextClicked$.subscribe(clicked => {
         if (clicked) {
           this.save();
         }
       }),
+      // set new avatar src on change
       this.channelEditService.avatar$.subscribe(avatar => {
         const channel = this.channelEditService.channel$.getValue();
         let src: string = '';
@@ -74,22 +98,38 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Get users display name.
+   * @returns { BehaviorSubject<string> } - users display name.
+   */
   get name$(): BehaviorSubject<string> {
     return this.channelEditService.displayName$;
   }
 
+  /**
+   * Get users bio.
+   * @returns { BehaviorSubject<string> } - users bio.
+   */
   get bio$(): BehaviorSubject<string> {
     return this.channelEditService.bio$;
   }
 
+  /**
+   * Saves bio and display name using channel service.
+   * @returns { Promise<void> } - awaitable.
+   */
   public async save(): Promise<void> {
-    console.log('saving....');
     this.channelEditService.bio$.next(this.form.get('bio').value);
     this.channelEditService.displayName$.next(this.form.get('name').value);
     await this.channelEditService.save();
   }
 
-  public uploadAvatar(fileInput: HTMLInputElement) {
+  /**
+   * Take first selected file and upload it.
+   * @param fileInput: HTMLInputElement - input element
+   * @returns { void }
+   */
+  public uploadAvatar(fileInput: HTMLInputElement): void {
     const file = fileInput.files.item(0);
 
     if (!file) {

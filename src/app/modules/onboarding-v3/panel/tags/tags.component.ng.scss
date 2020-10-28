@@ -1,22 +1,27 @@
 @import 'defaults.scss';
 
 :host {
-  margin: 40px 20px;
+  padding: 20px 120px 20px 40px;
   min-width: 725px;
   display: flex;
   flex-flow: column;
+  box-sizing: border-box;
 
   .m-onboardingTags__header {
     display: flex;
     flex-wrap: wrap;
     font-size: 16px;
-    margin: 0px 120px 20px 60px;
+    margin: 20px 0;
   }
 
   .m-onboardingTags__tagContainer {
     display: flex;
     flex-wrap: wrap;
-    margin: 20px 120px 20px 60px;
+    margin-bottom: 20px;
+    /**
+     * So that when unselected, the tag 
+     * is inline with the header title.
+     */
     transform: translateX(-10px);
 
     .m-onboardingTags__tag {

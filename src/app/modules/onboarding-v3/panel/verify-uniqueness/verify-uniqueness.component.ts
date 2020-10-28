@@ -1,26 +1,24 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { StepName } from '../../onboarding-v3.service';
+import { Component } from '@angular/core';
+import { OnboardingStepName } from '../../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../onboarding-panel.service';
 
+/**
+ * Parent panel linking the user to uniqueness verification methods.
+ */
 @Component({
   selector: 'm-onboardingV3__verifyUniqueness',
   templateUrl: './verify-uniqueness.component.html',
   styleUrls: ['./verify-uniqueness.component.ng.scss'],
-  providers: [],
 })
-export class OnboardingV3VerifyUniquenessComponent implements OnDestroy {
-  private subscriptions: Subscription[] = [];
-
+export class OnboardingV3VerifyUniquenessComponent {
   constructor(private panel: OnboardingV3PanelService) {}
 
-  ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
-  }
-
-  public optionClicked(option: StepName): void {
+  /**
+   * On option selected.
+   * @param { OnboardingStepName } - option clicked.
+   * @returns { void }
+   */
+  public optionClicked(option: OnboardingStepName): void {
     this.panel.currentStep$.next(option);
   }
 }

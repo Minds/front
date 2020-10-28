@@ -5,7 +5,7 @@ import { OnboardingV3WidgetComponent } from './widget/onboarding-widget.componen
 import { OnboardingV3Service } from './onboarding-v3.service';
 
 /**
- * Module definition
+ * Non-lazy loaded module.
  */
 @NgModule({
   imports: [NgCommonModule, CommonModule],

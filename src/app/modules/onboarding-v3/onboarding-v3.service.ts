@@ -1,6 +1,7 @@
 import { Compiler, Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
+import { ApiService } from '../../common/api/api.service';
 
 import {
   StackableModalEvent,
@@ -11,6 +12,9 @@ import {
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
 
+/**
+ * api/v3/onboarding response
+ */
 export type OnboardingResponse = {
   status: string;
   id?: string;
@@ -19,12 +23,18 @@ export type OnboardingResponse = {
   steps?: OnboardingStep[];
 } | null;
 
+/**
+ * Individual onboarding steps
+ */
 export type OnboardingStep = {
-  id: StepName;
+  id: OnboardingStepName;
   is_completed: boolean;
 };
 
-export type StepName =
+/**
+ * Names of different onboarding steps
+ */
+export type OnboardingStepName =
   | 'SuggestedHashtagsStep'
   | 'WelcomeStep'
   | 'VerifyEmailStep'
@@ -35,15 +45,41 @@ export type StepName =
   | 'VerifyWalletStep'
   | 'CreatePostStep';
 
-@Injectable()
+/**
+ * Core service for onboarding v3 for loading
+ * progress and opening the modal.
+ */
+@Injectable({
+  providedIn: 'root',
+})
 export class OnboardingV3Service {
+  private subscriptions: Subscription[] = [];
+
+  /*
+   * Holds response of progress that can be loaded using load().
+   */
+  public readonly progress$: BehaviorSubject<
+    OnboardingResponse
+  > = new BehaviorSubject<OnboardingResponse>(null);
+
   constructor(
     private compiler: Compiler,
     private injector: Injector,
     private stackableModal: StackableModalService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private api: ApiService
   ) {}
 
+  ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Lazy load modules and open modal.
+   * @returns { Promise<any> }
+   */
   public async open(): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
@@ -61,11 +97,10 @@ export class OnboardingV3Service {
     const evt: StackableModalEvent = await this.stackableModal
       .present(OnboardingV3ModalComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
-        // formDisplay: opts.formDisplay,
         onComplete: (complete: boolean) => {
           onSuccess$.next(complete);
           onSuccess$.complete(); // Ensures promise can be called below
-          this.stackableModal.dismiss();
+          this.dismiss();
         },
         onDismissIntent: () => {
           this.dismiss();
@@ -81,6 +116,10 @@ export class OnboardingV3Service {
     return onSuccess$.toPromise();
   }
 
+  /**
+   * Present initial modals to be shown before navigation
+   * to newsfeed.
+   */
   public async presentHomepageModals(): Promise<void> {
     try {
       await this.authModal.open();
@@ -93,22 +132,35 @@ export class OnboardingV3Service {
     }
   }
 
-  public dismiss() {
-    this.stackableModal.dismiss();
+  /**
+   * Dismiss the modal
+   */
+  public dismiss(): void {
+    try {
+      this.stackableModal.dismiss();
+    } catch (e) {
+      // do nothing
+    }
   }
 
-  // TODO: Implement for sidebar widget
-  // public load() {
-  //   this.progress$ = this.api.get('/api/v3/onboarding');
-  //   this.progress$.pipe(take(1)).subscribe(progress => {
-  //     if (progress.status === 'success') {
-  //       for (let i = 0; i < progress.steps.length; i++) {
-  //         if (!progress.steps[i].is_completed) {
-  //         }
-  //         console.log(progress.steps[i]);
-  //       }
-  //     }
-  //     console.log(progress);
-  //   });
-  // }
+  /**
+   * Get onboarding progress to the server
+   * and pass it to the progress$ Observable.
+   */
+  public load(): void {
+    this.subscriptions.push(
+      this.api
+        .get('/api/v3/onboarding')
+        .pipe(
+          take(1),
+          catchError(e => {
+            console.error(e);
+            return of(null);
+          })
+        )
+        .subscribe((progress: OnboardingResponse) => {
+          this.progress$.next(progress);
+        })
+    );
+  }
 }

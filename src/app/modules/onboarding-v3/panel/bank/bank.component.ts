@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
 
 @Component({
@@ -9,6 +8,5 @@ import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
   providers: [WalletV2Service],
 })
 export class OnboardingV3BankComponent {
-  @Input() nextClicked$: BehaviorSubject<boolean>;
   constructor() {}
 }

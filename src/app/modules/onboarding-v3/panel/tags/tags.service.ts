@@ -2,24 +2,56 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
-import { Tag } from '../onboarding-panel.service';
 
+/**
+ *  Tag object
+ */
+export type Tag = {
+  selected: boolean;
+  value: string;
+  type: string;
+};
+
+/**
+ * Singleton service at lazy module level, dealing with tags for onboarding v3
+ */
 @Injectable({ providedIn: 'root' })
 export class OnboardingV3TagsService {
+  /**
+   * Holds selected tags
+   */
   private _tags$: BehaviorSubject<Tag[]> = new BehaviorSubject<Tag[]>([]);
 
   private subscriptions: Subscription[] = [];
 
   constructor(private api: ApiService) {}
 
+  ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Get all tags.
+   * @returns { BehaviorSubject<Tag[]> } - array of Tags
+   */
   get tags$(): BehaviorSubject<Tag[]> {
     return this._tags$;
   }
 
+  /**
+   * Set all tags.
+   * @param { BehaviorSubject<Tag> } - behaviour subject ot tag
+   */
   set tags$(tags$: BehaviorSubject<Tag[]>) {
     this._tags$ = tags$;
   }
 
+  /**
+   * Load tags from server and push value to tags$.
+   * @returns { OnboardingV3TagsService } - chainable.
+   */
   public loadTags(): OnboardingV3TagsService {
     this.subscriptions.push(
       this.api
@@ -40,6 +72,11 @@ export class OnboardingV3TagsService {
     return this;
   }
 
+  /**
+   * Toggle a tag selected or unselected. Write to db.
+   * @param { string } tagValue - value of the tag e.g. "technology"
+   * @return { Promise<OnboardingV3TagsService> } - chainable.
+   */
   public async toggleTag(tagValue: string): Promise<OnboardingV3TagsService> {
     this.subscriptions.push(
       this.tags$

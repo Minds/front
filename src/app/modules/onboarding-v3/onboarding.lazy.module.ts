@@ -44,8 +44,9 @@ const MODULES = [
   ReactiveFormsModule,
   WalletV2Module,
 ];
+
 /**
- * Module definition
+ * Lazy loaded module
  */
 @NgModule({
   imports: [...MODULES],

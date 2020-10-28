@@ -7,7 +7,38 @@
         themedTitle: !showBanner$ | async
       }"
     >
-      {{ currentStep$ | async }}
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container
+          *ngSwitchCase="'SuggestedHashtagsStep'"
+          i18n="@@ONBOARDING_MODAL__SUGGESTED_HASHTAG_STEP"
+        >
+          Join Minds
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'WelcomeStep'"
+          i18n="@@ONBOARDING_MODAL__WELCOME_TO_MINDS"
+        >
+          Welcome to Minds
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'SetupChannelStep'"
+          i18n="@@ONBOARDING_MODAL__SETUP_CHANNEL"
+        >
+          Setup Channel
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'VerifyUniquenessStep'"
+          i18n="@@ONBOARDING_MODAL__VERIFY_UNIQUENESS"
+        >
+          Verify Uniqueness
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'VerifyPhoneStep'"
+          i18n="@@ONBOARDING_MODAL__VERIFY_PHONE_NUMBER"
+        >
+          Verify Phone Number
+        </ng-container>
+      </ng-container>
     </h2>
   </div>
   <ng-container [ngSwitch]="currentStep$ | async">
@@ -27,9 +58,9 @@
     <m-onboardingV3__phone
       *ngSwitchCase="'VerifyPhoneStep'"
     ></m-onboardingV3__phone>
-    <m-onboardingV3__bank
+    <!-- <m-onboardingV3__bank
       *ngSwitchCase="'VerifyBankStep'"
-    ></m-onboardingV3__bank>
+    ></m-onboardingV3__bank> -->
   </ng-container>
   <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
     <button
@@ -37,7 +68,18 @@
       [disabled]="disabled$ | async"
       (click)="nextClicked()"
     >
-      Next
+      <ng-container
+        *ngIf="(currentStep$ | async) === 'SetupChannelStep'"
+        i18n="@@ONBOARDING_MODAL__SAVE_BUTTON"
+      >
+        Save
+      </ng-container>
+      <ng-container
+        *ngIf="(currentStep$ | async) !== 'SetupChannelStep'"
+        i18n="@@ONBOARDING_MODAL__NEXT_BUTTON"
+      >
+        Next
+      </ng-container>
     </button>
   </div>
 </div>

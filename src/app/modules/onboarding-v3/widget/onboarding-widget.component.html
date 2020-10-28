@@ -1,3 +1,88 @@
-<div class="m-onboardingProgress__container">
-  OnboardingProgressComponent THINGS HERE
+<div
+  class="m-onboardingWidget__container"
+  *mIfFeature="'onboarding-october-2020'"
+>
+  <!-- Header -->
+  <div class="m-onboardingWidget__header">
+    <span
+      class="m-onboardingWidget__title"
+      i18n="@@ONBOARDING_WIDGET__COMPLETE_TO_EARN"
+      >Complete to earn tokens</span
+    >
+    <m-dropdownMenu
+      *ngIf="dropdown"
+      [menu]="dropdown"
+      [anchorPosition]="{ top: '100%', right: '0' }"
+      triggerClass="m-button__dropdownArrow"
+      menuClass="m-button__dropdownMenu"
+      #dropdownMenuComponent
+    >
+      <i class="material-icons m-onboardingWidget__ellipsisMenu">more_vert</i>
+    </m-dropdownMenu>
+  </div>
+  <!-- Body -->
+  <div class="m-onboardingWidget__body" *ngIf="!hidden">
+    <!-- Progress bar -->
+    <div class="m-onboardingWidget__progressBarContainer">
+      <div
+        class="m-onboardingWidget__progressBar"
+        [ngStyle]="{ width: (progress$ | async)?.completed_pct * 100 + '%' }"
+      ></div>
+    </div>
+    <!-- Tasks -->
+    <div class="m-onboardingWidget__stepsContainer">
+      <div
+        class="m-onboardingWidget__step"
+        *ngFor="let step of (progress$ | async)?.steps"
+        [ngClass]="{ completed: step.is_completed }"
+        (click)="onTaskClick(step.id)"
+      >
+        <ng-container
+          *ngIf="step.id === 'VerifyEmailStep'"
+          i18n="@@ONBOARDING_WIDGET__VERIFY_EMAIL_ADDRESS"
+        >
+          Verify email address
+        </ng-container>
+        <ng-container
+          *ngIf="step.id === 'SuggestedHashtagsStep'"
+          i18n="@@ONBOARDING_WIDGET__SELECT_TAGS"
+        >
+          Select tags
+        </ng-container>
+        <ng-container
+          *ngIf="step.id === 'SetupChannelStep'"
+          i18n="@@ONBOARDING_WIDGET__SETUP_CHANNEL"
+        >
+          Setup channel
+        </ng-container>
+        <ng-container
+          *ngIf="step.id === 'VerifyUniquenessStep'"
+          i18n="@@ONBOARDING_WIDGET__VERIFY_UNIQUENESS"
+        >
+          Verify uniqueness
+        </ng-container>
+        <ng-container
+          *ngIf="step.id === 'CreatePostStep'"
+          i18n="@@ONBOARDING_WIDGET__CREATE_A_POST"
+        >
+          Create a post
+        </ng-container>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- Dropdown template -->
+<ng-template #dropdown>
+  <ul>
+    <li (click)="onHideClick('hide')" *ngIf="!hidden">
+      <span class="m-dropdownMenu__item">
+        <span i18n="@@ONBOARDING_WIDGET__HIDE_THIS_PANEL">Hide this panel</span>
+      </span>
+    </li>
+    <li (click)="onHideClick('show')" *ngIf="hidden">
+      <span class="m-dropdownMenu__item">
+        <span i18n="@@ONBOARDING_WIDGET__SHOW_THIS_PANEL">Show this panel</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>

@@ -1,33 +1,30 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { exit } from 'process';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  Subscription,
-  timer,
-} from 'rxjs';
-import { map, scan, take, takeWhile, tap } from 'rxjs/operators';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { StepName } from '../../../onboarding-v3.service';
-import { OnboardingV3PanelService } from '../../onboarding-panel.service';
+import { BehaviorSubject, Observable, timer } from 'rxjs';
+import { scan, takeWhile } from 'rxjs/operators';
 import {
   OnboardingV3VerifyPhoneService,
   PhoneVerificationStep,
 } from './verify-phone.service';
 
+/**
+ * Verify phone component for onboarding v3
+ */
 @Component({
   selector: 'm-onboardingV3__phone',
   templateUrl: './verify-phone.component.html',
   styleUrls: ['./verify-phone.component.ng.scss'],
-  providers: [],
 })
-export class OnboardingV3VerifyPhoneComponent implements OnDestroy {
-  private subscriptions: Subscription[] = [];
+export class OnboardingV3VerifyPhoneComponent {
+  /**
+   * Holds an observable of a retry countdown.
+   */
   public retryTimer$: Observable<number>;
 
-  form = this.fb.group({
+  /**
+   * FormGroup object
+   */
+  public form = this.fb.group({
     number: [''],
     code: [''],
     secret: [''],
@@ -39,43 +36,57 @@ export class OnboardingV3VerifyPhoneComponent implements OnDestroy {
     private service: OnboardingV3VerifyPhoneService
   ) {}
 
+  /**
+   * Get inProgress$ from service.
+   * @returns { Observable<boolean> } - true if in progress.
+   */
   get inProgress$(): Observable<boolean> {
     return this.service.inProgress$;
   }
 
+  /**
+   * Get current PhoneVerificationStep from service.
+   * @returns { BehaviorSubject<PhoneVerificationStep> } - current step.
+   */
   get verificationStep$(): BehaviorSubject<PhoneVerificationStep> {
     return this.service.verificationStep$;
   }
 
-  ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
-  }
-
-  public onSend() {
+  /**
+   * Called on send pressed. Calls send-code in service
+   * and starts retry timer.
+   * @returns { void }
+   */
+  public onSend(): void {
     this.service.sendCode(this.form.get('number').value);
     this.startRetryTimer();
   }
 
-  public onCodeSubmit() {
+  /**
+   * Called on code submission. Calls verify code in service.
+   * @returns { void }
+   */
+  public onCodeSubmit(): void {
     this.service.verifyCode(
       this.form.get('number').value,
       this.form.get('code').value
     );
   }
 
-  public onChangeNumberClick() {
+  /**
+   * On change number click, change step to InputNumberStep
+   * @returns { void }
+   */
+  public onChangeNumberClick(): void {
     this.verificationStep$.next('InputNumberStep');
   }
 
-  // get canResend$(): Observable<boolean> {
-  //   return this.retryTimer$.pipe(
-  //     map(timer => timer < 1)
-  //   )
-  // }
-
-  private startRetryTimer(seconds: number = 30) {
+  /**
+   * Starts observable countdown held by the class member retryTimer$
+   * @param { number } - amount of seconds to countdown from - defaults to 30.
+   * @returns { void }
+   */
+  private startRetryTimer(seconds: number = 30): void {
     this.retryTimer$ = timer(0, 1000).pipe(
       scan(acc => --acc, seconds),
       takeWhile(x => x >= 0)

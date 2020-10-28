@@ -2,6 +2,8 @@
 
 :host {
   display: contents;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 
   .m-modalV2__inner {
     min-width: min-content;
@@ -50,7 +52,7 @@
     }
 
     .m-onboardingModal__nextButton {
-      margin: 20px 60px;
+      margin: 20px 40px;
       border-radius: 21px;
       padding: 10px 16px;
       background: unset;

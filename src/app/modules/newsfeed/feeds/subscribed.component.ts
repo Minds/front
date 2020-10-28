@@ -31,8 +31,8 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { OnboardingV3PanelService } from '../../onboarding-v3/panel/onboarding-panel.service';
+import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -86,13 +86,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
-    public onboarding: OnboardingV3Service,
     private onboardingPanel: OnboardingV3PanelService,
+    private onboarding: OnboardingV3Service,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.routerSubscription = this.router.events
       .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -109,14 +109,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
+    // Show welcome modal if user has local storage item.
+    if (this.storage.get('show:welcome:modal')) {
+      this.storage.destroy('show:welcome:modal');
+      this.onboardingPanel.currentStep$.next('WelcomeStep');
+      try {
+        await this.onboarding.open();
+      } catch (e) {
+        // do nothing
+      }
+    }
+
     this.load(true, true);
 
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['onboarding']) {
-        this.onboardingPanel.currentStep$.next('WelcomeStep');
-        this.onboarding.open();
-      }
-
       if (params['message']) {
         this.message = params['message'];
       }

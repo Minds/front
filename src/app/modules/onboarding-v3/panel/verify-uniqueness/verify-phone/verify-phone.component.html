@@ -1,8 +1,16 @@
 <ng-container *ngIf="(verificationStep$ | async) === 'InputNumberStep'">
   <form class="m-onboardingPhone__formContainer" [formGroup]="form">
     <div class="m-onboardingPhone__labelContainer">
-      <label class="m-onboardingPhone__label">Mobile Phone Number</label>
-      <m-tooltip icon="info" class="m-onboardingUniqueness__tooltip">
+      <label
+        class="m-onboardingPhone__label"
+        i18n="@@ONBOARDING_VERIFY_PHONE__MOBILE_PHONE_NUMBERS"
+        >Mobile Phone Number</label
+      >
+      <m-tooltip
+        icon="info"
+        class="m-onboardingUniqueness__tooltip"
+        i18n="@@ONBOARDING_VERIFY_PHONE__INPUT_YOUR_NUMBER"
+      >
         Input your phone number
       </m-tooltip>
       <div></div>
@@ -20,18 +28,23 @@
         [disabled]="inProgress$ | async"
         class="m-onboardingPhone__sendButton"
         (click)="onSend()"
+        i18n="@@ONBOARDING_VERIFY_PHONE__SEND_VERIFICATION_CODE"
       >
         Send verification code
       </button>
     </div>
-    <div class="m-onboardingPhone__allowFriendFindingContainer">
+    <!-- Friend finder checkbox -->
+    <!-- <div class="m-onboardingPhone__allowFriendFindingContainer">
       <input formControlName="friendFinding" type="checkbox" />
       <span class="m-onboardingPhone__allowFriendFindingSpan"
         >Allow my friends to find me</span
       >
-    </div>
+    </div> -->
   </form>
-  <span class="m-onboardingPhone__footnoteSpan">
+  <span
+    class="m-onboardingPhone__footnoteSpan"
+    i18n="@@ONBOARDING_VERIFY_PHONE__MINDS_DONT_STORE_NUMBER"
+  >
     Note: Minds does not store the phone numbers you provide. The numbers are
     hashed using SHA-256 and combined with a salt key for privacy and security
     purposes.
@@ -42,6 +55,7 @@
     <div class="m-onboardingPhone__labelContainer">
       <label
         class="m-onboardingPhone__label m-onboardingPhone__label--tertiaryColor"
+        i18n="@@ONBOARDING_VERIFY_PHONE__VERIFICATION_CODE"
       >
         Verification Code
       </label>
@@ -59,32 +73,48 @@
         [disabled]="inProgress$ | async"
         class="m-onboardingPhone__sendButton"
         (click)="onCodeSubmit()"
+        i18n="@@ONBOARDING_VERIFY_PHONE__CONFIRM_CODE"
       >
         Confirm code
       </button>
     </div>
   </form>
   <span class="m-onboardingPhone__notice">
-    We just send a verification code to +{{ form.get('number').value }}.
+    <span i18n="@@ONBOARDING_VERIFY_PHONE__WE_JUST_SENT_CODE_TO"
+      >We just send a verification code to
+    </span>
+    +{{ form.get('number').value }}.
   </span>
   <span
     class="m-onboardingPhone__footnoteSpan m-onboardingPhone__footnoteSpan--mediumFont"
   >
-    Didn’t receive it?
+    <span i18n="@@ONBOARDING_VERIFY_PHONE__DIDNT_RECEIVE_IT"
+      >Didn’t receive it?
+    </span>
     <span
+      *ngIf="(retryTimer$ | async) < 1"
       class="m-onboardingPhone__footnoteSpan--link"
       (click)="onSend()"
-      *ngIf="(retryTimer$ | async) < 1"
+      i18n="@@ONBOARDING_VERIFY_PHONE__SEND_IT_AGAIN"
     >
       Send it again
     </span>
-    <span *ngIf="(retryTimer$ | async) > 0">
-      Send it again in {{ retryTimer$ | async }} seconds
+    <ng-container *ngIf="(retryTimer$ | async) > 0">
+      <span i18n="@@ONBOARDING_VERIFY_PHONE__SEND_IT_AGAIN_IN">
+        Send it again in
+      </span>
+      {{ retryTimer$ | async }}
+      <span i18n="unit of time|@@ONBOARDING_VERIFY_PHONE__SECONDS">
+        seconds
+      </span>
+    </ng-container>
+    <span i18n="resend code OR change number|@@ONBOARDING_VERIFY_PHONE__OR">
+      or
     </span>
-    or
     <span
       class="m-onboardingPhone__footnoteSpan--link"
       (click)="onChangeNumberClick()"
+      i18n="@@ONBOARDING_VERIFY_PHONE__CHANGE_PHONE_NUMBER"
     >
       change phone number
     </span>
