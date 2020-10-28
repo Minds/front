@@ -109,11 +109,16 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
+    console.log('subscribed...1');
     // Show welcome modal if user has local storage item.
     if (this.storage.get('show:welcome:modal')) {
+      console.log('subscribed...2');
       this.storage.destroy('show:welcome:modal');
+
+      console.log('subscribed...3');
       this.onboardingPanel.currentStep$.next('WelcomeStep');
       try {
+        console.log('subscribed...4');
         await this.onboarding.open();
       } catch (e) {
         // do nothing

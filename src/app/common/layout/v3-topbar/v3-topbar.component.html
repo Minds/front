@@ -67,28 +67,15 @@
             >
               Login
             </a>
-            <ng-container
-              *mIfFeature="'onboarding-october-2020'; else legacyButton"
+
+            <a
+              class="m-v3TopbarLoginWrapper__joinMindsNow"
+              routerLink="/register"
+              title="Join Minds Now"
+              i18n-title="@@COMMON__JOIN_MINDS_NOW"
             >
-              <a
-                class="m-v3TopbarLoginWrapper__joinMindsNow"
-                (click)="presentSignupModal()"
-                title="Join Minds Now"
-                i18n-title="@@COMMON__JOIN_MINDS_NOW"
-              >
-                Join Minds Now
-              </a>
-            </ng-container>
-            <ng-template #legacyButton>
-              <a
-                class="m-v3TopbarLoginWrapper__joinMindsNow"
-                routerLink="/register"
-                title="Join Minds Now"
-                i18n-title="@@COMMON__JOIN_MINDS_NOW"
-              >
-                Join Minds Now
-              </a>
-            </ng-template>
+              Join Minds Now
+            </a>
           </div>
         </ng-container>
 
