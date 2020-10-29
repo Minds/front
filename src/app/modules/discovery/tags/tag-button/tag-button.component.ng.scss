@@ -1,0 +1,38 @@
+@import 'defaults.scss';
+
+:host {
+  .m-discovery__tagButton {
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--secondary);
+    }
+
+    &:hover {
+      cursor: pointer;
+      @include m-theme() {
+        border: 1px solid themed($m-textColor--secondary);
+      }
+    }
+
+    i {
+      font-size: 23px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    &.m-discovery__tagButton--recentlySelected {
+      @include m-theme() {
+        border: 1px solid themed($m-link);
+      }
+    }
+  }
+}

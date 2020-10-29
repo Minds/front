@@ -47,6 +47,14 @@
           margin-top: 0;
         }
       }
+
+      &.m-wireCreatorForm__field--card {
+        margin-right: 20px;
+
+        @media screen and (max-width: $max-mobile) {
+          margin-right: 0;
+        }
+      }
     }
 
     @media screen and (max-width: $max-mobile) {
