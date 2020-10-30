@@ -158,6 +158,8 @@ export class BlockchainPurchaseComponent implements OnInit {
 
     if (!this.session.isLoggedIn()) {
       this.showLoginModal = true;
+    } else {
+      this.showPledgeModal = true;
     }
 
     this.detectChanges();

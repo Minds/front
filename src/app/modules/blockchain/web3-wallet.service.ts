@@ -4,7 +4,7 @@ import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3Service } from './web3.service';
-import { BigNumberish, Contract, utils, Wallet } from 'ethers';
+import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
 import BN from 'bn.js';
 
 @Injectable()
@@ -121,11 +121,22 @@ export class Web3WalletService {
   ): Promise<string> {
     const connectedContract = contract.connect(this.web3service.getSigner());
 
+    let gasLimit: string;
+
+    try {
+      gasLimit = (
+        await connectedContract.estimateGas[method](...params, { value })
+      ).toHexString();
+    } catch (e) {
+      console.log(e);
+      gasLimit = BigNumber.from(15000000).toHexString();
+    }
+
     const txHash = await this.transactionOverlay.waitForExternalTx(
       () =>
         connectedContract[method](...params, {
           value,
-          gasLimit: 15000000, // This manual gas limit is needed
+          gasLimit,
         }),
       message
     );
@@ -158,6 +169,18 @@ export class Web3WalletService {
     originalTxObject: any,
     message: string = ''
   ): Promise<string> {
+    if (!originalTxObject.gasLimit) {
+      try {
+        const gasLimit = await this.web3service
+          .getSigner()
+          .estimateGas(originalTxObject);
+        originalTxObject.gasLimit = gasLimit.toHexString();
+      } catch (e) {
+        console.log(e);
+        originalTxObject.gasLimit = 15000000;
+      }
+    }
+
     const txHash = await this.transactionOverlay.waitForExternalTx(
       () => this.web3service.getSigner().sendTransaction(originalTxObject),
       message
@@ -173,11 +196,15 @@ export class Web3WalletService {
   }
 
   toWei(amount: number | string, unit?: BigNumberish) {
-    return this.web3service.toWei(amount, unit);
+    return BigNumber.from(
+      this.web3service.toWei(amount, unit).toString()
+    ).toHexString();
   }
 
   fromWei(amount: BN, unit?: BigNumberish) {
-    return this.web3service.fromWei(amount, unit);
+    return BigNumber.from(
+      this.web3service.fromWei(amount, unit).toString()
+    ).toHexString();
   }
 
   privateKeyToAccount(privateKey: string | utils.Bytes | utils.SigningKey) {
