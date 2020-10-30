@@ -69,29 +69,6 @@ const cryptoRoutes: Routes = [
       useFactory: LocalWalletService._,
       deps: [TransactionOverlayService],
     },
-    {
-      provide: Web3WalletService,
-      useFactory: Web3WalletService._,
-      deps: [
-        LocalWalletService,
-        TransactionOverlayService,
-        Web3Service,
-        PLATFORM_ID,
-        ConfigsService,
-      ],
-    },
-    {
-      provide: Web3ModalService,
-      useFactory: configs => {
-        const walletProviderKeys = configs.get('blockchain')
-          .wallet_provider_keys;
-        const config = createWeb3ModalConfig(walletProviderKeys);
-
-        return new Web3ModalService(config);
-      },
-      deps: [ConfigsService],
-    },
-    Web3Service,
     TokenContractService,
     WireContractService,
     WithdrawContractService,

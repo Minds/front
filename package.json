@@ -51,6 +51,7 @@
     "@toruslabs/torus-embed": "^1.8.5",
     "@walletconnect/web3-provider": "^1.2.2",
     "angular-plotly.js": "^2.0.0",
+    "authereum": "^0.1.0",
     "bn.js": "^4.11.8",
     "braintree-web": "3.41.0",
     "cookie-parser": "^1.4.4",
