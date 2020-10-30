@@ -3,5 +3,5 @@
 :host {
   display: block;
   position: relative;
-  @include z-index(topbar);
+  @include z-index(topbar--stackable);
 }
