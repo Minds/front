@@ -77,6 +77,16 @@ export type NsfwSubjectValue = Array<number>;
 export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 
 /**
+ * post to permaweb value type
+ */
+export type PostToPermawebSubjectValue = boolean;
+
+/**
+ * Default post to permaweb value
+ */
+export const DEFAULT_POST_TO_PERMAWEB_VALUE: PostToPermawebSubjectValue = false;
+
+/**
  * Monetization value type
  */
 export type MonetizationSubjectValue = {
@@ -168,6 +178,7 @@ export interface Data {
   attachment: AttachmentMetadataMappedValue;
   richEmbed: RichEmbedMetadataMappedValue;
   videoPoster: VideoPoster;
+  postToPermaweb: PostToPermawebSubjectValue;
 }
 
 /**
@@ -329,6 +340,13 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
+   * Determines whether content is to be posted to Permaweb.
+   */
+  readonly postToPermaweb$: BehaviorSubject<boolean> = new BehaviorSubject<
+    PostToPermawebSubjectValue
+  >(DEFAULT_POST_TO_PERMAWEB_VALUE);
+
+  /**
    * Tag count subject
    */
   readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -403,7 +421,8 @@ export class ComposerService implements OnDestroy {
         LicenseSubjectValue,
         AttachmentMetadataMappedValue,
         RichEmbedMetadataMappedValue,
-        VideoPoster
+        VideoPoster,
+        PostToPermawebSubjectValue
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -470,6 +489,7 @@ export class ComposerService implements OnDestroy {
         // Value will be either a RichEmbed interface object or null
       ),
       this.videoPoster$.pipe(distinctUntilChanged()),
+      this.postToPermaweb$,
     ]).pipe(
       map(
         // Create an JSON object based on an array of Subject values
@@ -485,6 +505,7 @@ export class ComposerService implements OnDestroy {
           attachment,
           richEmbed,
           videoPoster,
+          postToPermaweb,
         ]) => ({
           message,
           title,
@@ -497,6 +518,7 @@ export class ComposerService implements OnDestroy {
           attachment,
           richEmbed,
           videoPoster,
+          postToPermaweb,
         })
       ),
       tap(values => {
@@ -523,9 +545,9 @@ export class ComposerService implements OnDestroy {
 
     // Subscribe to data stream and re-build API payload when it changes
 
-    this.dataSubscription = this.data$.subscribe(data =>
-      this.buildPayload(data)
-    );
+    this.dataSubscription = this.data$.subscribe(data => {
+      return this.buildPayload(data);
+    });
 
     // Subscribe to pending monetization and format monetization$
     this.pendingMonetizationSubscription = this.pendingMonetization$.subscribe(
@@ -550,9 +572,10 @@ export class ComposerService implements OnDestroy {
     this.richEmbedExtractorSubscription = combineLatest([
       this.messageUrl$.pipe(distinctUntilChanged()),
       this.richEmbed$.pipe(distinctUntilChanged()),
+      this.attachment$.pipe(distinctUntilChanged()),
     ])
       .pipe(debounceTime(500))
-      .subscribe(([messageUrl, richEmbed]) => {
+      .subscribe(([messageUrl, richEmbed, attachment]) => {
         // Use current message URL when:
         // a) there's no rich embed already set; or
         // b) rich embed's type is a string (locally extracted); or
@@ -563,9 +586,10 @@ export class ComposerService implements OnDestroy {
         //
         // Be very careful, as it depends on the same observable we're modifying
         if (
-          !richEmbed ||
-          typeof richEmbed === 'string' ||
-          !richEmbed.entityGuid
+          (!richEmbed ||
+            typeof richEmbed === 'string' ||
+            !richEmbed.entityGuid) &&
+          !attachment
         ) {
           if (!this.canEditMetadata()) {
             return;
@@ -574,6 +598,12 @@ export class ComposerService implements OnDestroy {
           if (messageUrl) {
             this.richEmbed$.next(messageUrl);
           }
+        }
+
+        // If there is an attachment already provided then reset the rich embed
+        // as we can't have both values
+        if (richEmbed && attachment) {
+          this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
         }
       });
   }
@@ -648,6 +678,8 @@ export class ComposerService implements OnDestroy {
 
     // Reset rich embed preview
     this.richEmbedPreview$.next(null);
+
+    this.postToPermaweb$.next(false);
 
     // Reset original source
     this.entity = null;
@@ -821,6 +853,7 @@ export class ComposerService implements OnDestroy {
    * @param schedule
    * @param richEmbed
    * @param videoPoster
+   * @param postToPermaweb
    */
   buildPayload({
     message,
@@ -834,6 +867,7 @@ export class ComposerService implements OnDestroy {
     attachment,
     richEmbed,
     videoPoster,
+    postToPermaweb,
   }: Data): any {
     if (this.containerGuid) {
       // Override accessId if there's a container set
@@ -850,6 +884,7 @@ export class ComposerService implements OnDestroy {
       tags: tags || [],
       access_id: accessId,
       license: license,
+      post_to_permaweb: postToPermaweb,
     };
 
     const attachmentGuid = (attachment && attachment.guid) || null;

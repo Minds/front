@@ -34,11 +34,14 @@ export class FeedGridComponent
   @Input() maxColumns = 3;
   @Input('entities') entities: any[];
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+  @Input() isProSite: boolean = true;
 
   windowResizeSubscription: Subscription;
   recalculateSubscription: Subscription;
 
   macyInstance: Macy;
+
+  displayOptions: any = { minimalMode: true };
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,

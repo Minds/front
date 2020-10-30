@@ -651,5 +651,9 @@ describe('Activity', () => {
     comp.activity.owner_guid = '123';
     expect(comp.showBoostButton()).toBeTruthy();
   });
-  // TODO test the rest of the features
+
+  it('should show permaweb label when permaweb_id is set', () => {
+    comp.activity.permaweb_id = '123';
+    expect(By.css('.m-activity__flag--permaweb')).toBeDefined();
+  });
 });

@@ -35,6 +35,8 @@
     [object]="blog"
     *ngIf="blog.header_bg"
   ></minds-banner>
+
+  <m-paywallBadge [entity]="blog" [showTierName]="true"></m-paywallBadge>
 </header>
 
 <div
@@ -91,7 +93,10 @@
     </div>
   </div>
 
-  <div style="width:100%; padding:8px; position:relative;">
+  <div
+    style="width:100%; padding:8px; position:relative;"
+    *ngIf="!blog.paywall"
+  >
     <div
       m-code-highlight
       class="mdl-cell mdl-cell--12-col minds-blog-body m-blog__body"
@@ -101,9 +106,16 @@
     ></div>
   </div>
 
+  <m-wire--lock-screen
+    [(entity)]="blog"
+    *ngIf="blog.paywall"
+    #lockScreen
+  ></m-wire--lock-screen>
+
   <!-- Additional block -->
   <div
     class="m-blog--footer mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200"
+    *ngIf="!blog.paywall"
   >
     <div class="m-license-info">
       <i class="material-icons">public</i>
@@ -139,17 +151,11 @@
   </div>
 </div>
 
-<m-wire--lock-screen
-  [(entity)]="blog"
-  *ngIf="blog.paywall"
-  #lockScreen
-></m-wire--lock-screen>
-
 <ng-container *mIfBrowser>
   <div
     class="mdl-grid blogs-grid"
     style="max-width:660px; padding-bottom: 50px;"
-    *ngIf="showComments && blog.guid"
+    *ngIf="showComments && blog.guid && !blog.paywall"
   >
     <m-comments__tree [entity]="blog"> </m-comments__tree>
   </div>

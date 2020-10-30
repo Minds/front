@@ -47,6 +47,14 @@
           margin-top: 0;
         }
       }
+
+      &.m-wireCreatorForm__field--card {
+        margin-right: 20px;
+
+        @media screen and (max-width: $max-mobile) {
+          margin-right: 0;
+        }
+      }
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -162,6 +170,13 @@
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+  }
+
+  .m-wireCreatorForm__upgradeTrialHeader {
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: 22px;
   }
 
   .m-wireCreatorForm__intervalToggleContainer {

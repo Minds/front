@@ -22,9 +22,11 @@ import { ReadMoreDirective } from './read-more.directive';
         <div
           class="m-read-more--button m-readMoreButton--v2"
           *ngIf="content && content.expandable"
+          [class.showOnlyFadeout]="showOnlyFadeout"
+          (click)="expandIfShowingOnlyFadeout()"
         >
           <span (click)="content.expand()" i18n="@@COMMON__SEE_MORE__ACTION"
-            >See More</span
+            ><ng-container>See More</ng-container></span
           >
         </div>
       </ng-container>
@@ -46,6 +48,9 @@ import { ReadMoreDirective } from './read-more.directive';
 export class ReadMoreButtonComponent {
   @Input() v2 = false;
 
+  // Don't show the "see more" text
+  @Input() showOnlyFadeout: boolean = false;
+
   // Wrapper class, same type as ngClass
   @Input() wrapperClass:
     | string
@@ -58,6 +63,17 @@ export class ReadMoreButtonComponent {
   content: ReadMoreDirective;
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  expandIfShowingOnlyFadeout($event: MouseEvent) {
+    if (!this.showOnlyFadeout) {
+      return;
+    }
+    if ($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
+    this.content.expand();
+  }
 
   detectChanges() {
     setTimeout(() => {

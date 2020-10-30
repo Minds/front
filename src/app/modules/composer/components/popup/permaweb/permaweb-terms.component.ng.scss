@@ -1,0 +1,41 @@
+@import 'defaults.scss';
+
+:host {
+  .m-composerPopup__content {
+    min-height: 450px;
+
+    p {
+      margin-top: 16px;
+    }
+
+    p,
+    label {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-composerPopup__title {
+      margin-bottom: 52px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin-bottom: 100px;
+      }
+    }
+
+    .m-composerPopup__field {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .m-composerPopup__action {
+    position: absolute;
+    bottom: 0;
+    padding: 30px;
+    right: 0;
+    width: 100%;
+  }
+}

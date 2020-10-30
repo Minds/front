@@ -9,7 +9,25 @@
           class="m-activity__flag m-activity__flag--pinned"
           data-cy="m-activity__pinnedFlag"
         >
+          <m-icon from="custom" iconId="push_pin" m-tooltip--icon></m-icon>
           <span>Pinned</span>
+        </span>
+        <span
+          *ngIf="entity.permaweb_id"
+          class="m-activity__flag m-activity__flag--permaweb"
+          data-cy="m-activity__permawebFlag"
+        >
+          <a
+            [href]="
+              'https://viewblock.io/arweave/tx/' +
+              entity.permaweb_id +
+              '?showData'
+            "
+            target="_blank"
+          >
+            <i class="material-icons">vpn_lock</i>
+            <span>Permaweb</span>
+          </a>
         </span>
       </ng-container>
 
@@ -35,6 +53,10 @@
   <m-activity__toolbar
     *ngIf="service.displayOptions.showToolbar"
   ></m-activity__toolbar>
+
+  <m-activity__minimalMetrics
+    *ngIf="service.displayOptions.minimalMode"
+  ></m-activity__minimalMetrics>
 
   <ng-container *mIfBrowser>
     <m-comments__entityOutlet

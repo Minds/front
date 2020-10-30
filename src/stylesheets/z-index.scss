@@ -1,0 +1,55 @@
+// ** GLOBAL **
+// Use this when you are setting up a
+// structural building block that interacts
+// with layers outside of its host component
+//
+//
+// Usage:
+// .m-announcement {
+//   @include z-index(announcement);
+//   position: absolute; (**see note about stacking contexts**)
+// }
+//
+// Stacking contexts:
+// When using the z-index map, the z-index will not work unless
+// you also add an attribute that creates a stacking context,
+// e.g. any "position" besides static
+//
+// See developer docs site for more info
+
+$z-index: (
+  // POPOVER--MODAL: for popovers that should be visible while a modal is open
+    popover--modal: 150,
+  //
+    // **NOTE!** leave numerical space here in case of add'l stacked modals
+    //
+    // MODAL--STACKABLE: modals that go on top of other modals
+    modal--stackable: 100,
+  // MODAL: for modals that go on top of the page body. Usually come with a semi-translucent overlay base layer
+    modal: 90,
+  // SPLASH: this covers everything on the page, except for potential modals
+    splash: 80,
+  // TOAST: for toast notifications that should not go on top of modals
+    toast: 70,
+  // TOOLTIP: informative popup usually triggered by mouseover
+    tooltip--stackable: 61,
+  tooltip: 60,
+  // TOPBAR: top navigation bar. Almost always visible. Goes on top of the page body but below the body's tooltips
+    topbar: 50,
+  // MESSENGER: messenger dockpane and chat tabs
+    messenger: 40,
+  // ANNOUNCEMENT: informative element that is less ephermeral than a tooltip (e.g. user action required to dismiss)
+    announcement: 30,
+  // SIDEBAR: side navigation bar, not hidden by page body
+    sidebar: 20,
+  // BODY: page content that is framed by the topbar and side-nav
+    body: 10
+);
+
+@function z-index($key) {
+  @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+  z-index: z-index($key);
+}

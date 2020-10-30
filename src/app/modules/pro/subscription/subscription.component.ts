@@ -78,6 +78,7 @@ export class ProSubscriptionComponent implements OnInit {
         this.interval = params.i || 'yearly';
 
         if (params.c || params.i) {
+          this.setTokensToYearlyInterval();
           this.enable();
         }
       }
@@ -195,6 +196,23 @@ export class ProSubscriptionComponent implements OnInit {
         ),
         offerFrom: null,
       };
+    }
+  }
+
+  setCurrency(currency: UpgradeOptionCurrency) {
+    this.currency = currency;
+    this.setTokensToYearlyInterval();
+  }
+
+  setInterval(interval: UpgradeOptionInterval) {
+    this.interval = interval;
+    this.setTokensToYearlyInterval();
+  }
+
+  setTokensToYearlyInterval() {
+    if (this.currency === 'tokens' && this.interval === 'monthly') {
+      this.interval = 'yearly';
+      this.toasterService.inform('Tokens can only be used on the yearly plan');
     }
   }
 

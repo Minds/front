@@ -12,7 +12,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   selector: 'm-mobile--marketing',
   templateUrl: 'marketing.component.html',
   styleUrls: [
-    '../../aux/aux.component.ng.scss',
+    '../../aux-pages/aux-pages.component.ng.scss',
     './marketing.component.ng.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

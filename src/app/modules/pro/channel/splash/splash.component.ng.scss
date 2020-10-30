@@ -1,12 +1,12 @@
 @import 'defaults.scss';
 
 :host {
+  @include z-index(splash);
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
-  z-index: 999999;
   font-weight: 400;
   display: flex;
   min-height: 440px;

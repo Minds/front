@@ -1,4 +1,5 @@
 $activity-padding-lr: 21px;
+$activity-padding-lr--minimalMode: 16px;
 
 m-activity {
   display: block;
@@ -9,6 +10,10 @@ m-activity {
   &.m-border {
     border-radius: $m-borderRadius;
     box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
+  }
+
+  &.m-activity--minimalMode {
+    box-shadow: none;
   }
 
   @include m-theme() {
@@ -47,25 +52,68 @@ m-activity {
   align-items: center;
   flex-direction: row;
   cursor: default;
+  text-decoration: none;
 
   > i,
-  > span {
+  > span > a > span,
+  > a > i {
     line-height: 16px;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: 400;
+    display: flex;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
   }
 
   &:has(& > span) i {
     margin-right: 5px;
   }
 
-  > span {
-    @media screen and (max-width: $max-mobile) {
+  > span,
+  > a > span {
+    @media screen and (max-width: $min-tablet) {
       display: none;
     }
   }
 
   @include m-theme() {
     border: 1px solid themed($m-borderColor--primary);
-    background-color: themed($m-bgColor--tertiary);
+    background-color: unset;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     color: themed($m-textColor--secondary);
+  }
+}
+.m-activity__flag--permaweb,
+.m-activity__flag--pinned,
+.m-activity__flag--boosted {
+  i {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  svg {
+    @include m-theme() {
+      fill: themed(m-textColor--secondary);
+    }
+  }
+
+  i,
+  svg {
+    font-size: 18px;
+    @media screen and (max-width: $min-tablet) {
+      margin-right: 4px;
+    }
+  }
+}
+@media screen and (max-width: $max-mobile) {
+  m-channel--badges {
+    /* prevent badges from shown behind right container */
+    overflow: visible !important;
   }
 }

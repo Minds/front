@@ -21,6 +21,7 @@ import { NsfwComponent } from './components/popup/nsfw/nsfw.component';
 import { MonetizeComponent } from './components/popup/monetize/monetize.component';
 import { TagsComponent } from './components/popup/tags/tags.component';
 import { ScheduleComponent } from './components/popup/schedule/schedule.component';
+import { PermawebTermsComponent } from './components/popup/permaweb/permaweb-terms.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
 import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
@@ -42,6 +43,7 @@ const COMPONENTS = [
   MonetizeComponent,
   TagsComponent,
   ScheduleComponent,
+  PermawebTermsComponent,
   ComposerTopbarButtonComponent,
   ComposerMonetizeV2Component,
   ComposerMonetizeV2PlusComponent,

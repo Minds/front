@@ -28,6 +28,8 @@ import { WireModalService } from '../wire/wire-modal.service';
 import { DiscoveryService } from './discovery.service';
 import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
+import { DiscoveryFeedsService } from './feeds/feeds.service';
+import { FeedsService } from '../../common/services/feeds.service';
 
 @NgModule({
   imports: [

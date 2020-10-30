@@ -21,6 +21,7 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ACTIVITY_OWNERBLOCK_HEIGHT,
   ACTIVITY_TOOLBAR_HEIGHT,
+  ACTIVITY_GRID_LAYOUT_MAX_HEIGHT,
   ActivityEntity,
   ActivityService,
 } from '../activity.service';
@@ -94,19 +95,18 @@ export class ActivityContentComponent
   @ViewChild(ScrollAwareVideoPlayerComponent) videoPlayer;
 
   maxFixedHeightContent: number = 750 * ACTIVITY_FIXED_HEIGHT_RATIO;
-  get maxMessageHeight(): number {
-    return this.service.displayOptions.fixedHeight ? 130 : 320; // This is actually remind
-  }
 
   activityHeight: number;
   remindWidth: number;
   remindHeight: number;
 
   paywallUnlocked: boolean = false;
+  canonicalUrl: string;
 
   private entitySubscription: Subscription;
   private activityHeightSubscription: Subscription;
   private paywallUnlockedSubscription: Subscription;
+  private canonicalUrlSubscription: Subscription;
 
   readonly siteUrl: string;
   readonly cdnAssetsUrl: string;
@@ -147,6 +147,12 @@ export class ActivityContentComponent
         }
       }
     );
+    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
+      canonicalUrl => {
+        if (!this.entity) return;
+        this.canonicalUrl = canonicalUrl;
+      }
+    );
     this.activityHeightSubscription = this.service.height$.subscribe(
       (height: number) => {
         this.activityHeight = height;
@@ -162,8 +168,20 @@ export class ActivityContentComponent
           this.videoPlayer.forcePlay();
         }
         if (this.entity.content_type === 'blog') {
-          this.redirectService.redirect(this.entity.perma_url);
+          this.redirectService.redirect(
+            this.entity.perma_url + '?unlock=' + Date.now()
+          );
         }
+      }
+    );
+
+    this.canonicalUrlSubscription = this.service.canonicalUrl$.subscribe(
+      canonicalUrl => {
+        if (!this.entity) return;
+        /**
+         * Record pageviews
+         */
+        this.canonicalUrl = canonicalUrl;
       }
     );
   }
@@ -179,6 +197,7 @@ export class ActivityContentComponent
     this.entitySubscription.unsubscribe();
     this.activityHeightSubscription.unsubscribe();
     this.paywallUnlockedSubscription.unsubscribe();
+    this.canonicalUrlSubscription.unsubscribe();
   }
 
   get message(): string {
@@ -208,6 +227,14 @@ export class ActivityContentComponent
       this.entity.message !== this.entity.title
       ? this.entity.message
       : '';
+  }
+
+  get hideMediaDescription(): boolean {
+    // Minimal mode hides description if there is already a title
+    return this.service.displayOptions.minimalMode &&
+      this.mediaTitle.length >= 1
+      ? true
+      : false;
   }
 
   get isVideo(): boolean {
@@ -312,6 +339,10 @@ export class ActivityContentComponent
     return this.service.displayOptions.isModal;
   }
 
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   calculateFixedContentHeight(): void {
     if (!this.service.displayOptions.fixedHeight) {
       return;
@@ -358,10 +389,21 @@ export class ActivityContentComponent
     if (!this.overlayModal.canOpenInModal() || this.isModal) {
       return;
     }
+
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
+    if (
+      this.service.displayOptions.bypassMediaModal &&
+      this.entity.content_type !== 'image' &&
+      this.entity.content_type !== 'video'
+    ) {
+      // Open new window to media page instead of media modal
+      window.open(this.canonicalUrl, '_blank');
+      return;
+    }
+
     if (
       this.entity.perma_url &&
       this.entity.perma_url.indexOf(this.siteUrl) === 0
@@ -374,4 +416,23 @@ export class ActivityContentComponent
   }
 
   onImageError(e: Event): void {}
+
+  get maxMessageHeight(): number {
+    if (this.service.displayOptions.minimalMode) {
+      return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
+    } else {
+      const maxMessageHeight = this.service.displayOptions.fixedHeight
+        ? 130
+        : 320;
+      return this.isTextOnly ? this.maxFixedHeightContent : maxMessageHeight;
+    }
+  }
+
+  get maxDescHeight(): number {
+    if (this.service.displayOptions.minimalMode) {
+      return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
+    } else {
+      return this.service.displayOptions.fixedHeight ? 80 : 320;
+    }
+  }
 }

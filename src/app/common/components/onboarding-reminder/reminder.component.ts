@@ -19,6 +19,7 @@ import { OnboardingWrapperService } from '../../../modules/channels/service/onbo
 @Component({
   selector: 'm-onboardingReminder',
   templateUrl: 'reminder.component.html',
+  styleUrls: ['reminder.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OnboardingReminderComponent implements OnInit, OnDestroy {

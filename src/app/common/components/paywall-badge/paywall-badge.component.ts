@@ -18,6 +18,7 @@ export class PaywallBadgeComponent {
    * Override the top-right positioning
    */
   @Input() topRightPosition: boolean = true;
+  @Input() showTierName: boolean = true;
 
   hasPaywall: boolean = false;
   paywallType: PaywallType = 'custom';

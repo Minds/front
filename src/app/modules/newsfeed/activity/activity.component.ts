@@ -41,6 +41,8 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
   ],
   host: {
     class: 'm-border',
+    '[class.m-activity--minimalMode]':
+      'this.service.displayOptions.minimalMode',
   },
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -56,6 +58,17 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input() set displayOptions(options) {
+    if (options.minimalMode) {
+      this.service.setDisplayOptions({
+        minimalMode: true,
+        showComments: false,
+        autoplayVideo: false,
+        showToolbar: false,
+        showOwnerBlock: false,
+        bypassMediaModal: true,
+      });
+      return;
+    }
     this.service.setDisplayOptions(options);
   }
 

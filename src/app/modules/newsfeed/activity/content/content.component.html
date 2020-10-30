@@ -1,7 +1,10 @@
 <!-- ----------------------------------- -->
 <!-- PAYWALL -->
 <!-- ----------------------------------- -->
-<m-paywallBadge [entity]="entity"></m-paywallBadge>
+<m-paywallBadge
+  [entity]="entity"
+  [showTierName]="!minimalMode"
+></m-paywallBadge>
 <ng-container *mIfFeature="'paywall-2020'">
   <ng-container *ngIf="!hideMedia">
     <m-activity__paywall
@@ -14,40 +17,52 @@
 <!-- ----------------------------------- -->
 <!-- MESSAGE -->
 <!-- ----------------------------------- -->
-<ng-container *ngIf="!hideText">
-  <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
-  <div
-    #messageEl
-    m-read-more
-    class="m-activityContent__message"
-    [class.m-activityContent__message--remind]="entity.remind_object"
-    [class.m-activityContent__message--isTextOnly]="isTextOnly"
-    [class.m-activityContent__message--short]="message.length <= 300"
-    [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : maxMessageHeight"
-    *ngIf="message"
-  >
-    <div class="m-activityContent__messageWrapper">
-      <span [innerHtml]="message | tags | codeHighlight"></span>
-      <m-read-more--button
-        *ngIf="
-          !(service.shouldShowPaywall$ | async) || isTextOnly;
-          else teaserFadeout
-        "
-        [v2]="true"
-      ></m-read-more--button>
+<ng-template #messageTemplate
+  ><ng-container *ngIf="!hideText">
+    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
+    <div
+      #messageEl
+      m-read-more
+      class="m-activityContent__message"
+      [class.m-activityContent__message--remind]="entity.remind_object"
+      [class.m-activityContent__message--isTextOnly]="isTextOnly"
+      [class.m-activityContent__message--short]="message.length <= 300"
+      [class.m-activityContent__message--minimalMode]="minimalMode"
+      [maxHeightAllowed]="maxMessageHeight"
+      *ngIf="message"
+    >
+      <div class="m-activityContent__messageWrapper">
+        <span [innerHtml]="message | tags | codeHighlight"></span>
+        <m-read-more--button
+          *ngIf="
+            !(service.shouldShowPaywall$ | async) || isTextOnly;
+            else teaserFadeout
+          "
+          [v2]="true"
+          [showOnlyFadeout]="minimalMode"
+        ></m-read-more--button>
+      </div>
+      <!-- ----------------------------------- -->
+      <!-- TRANSLATION (MESSAGE) -->
+      <!-- ----------------------------------- -->
+      <ng-container *ngTemplateOutlet="translation"></ng-container>
     </div>
-    <!-- ----------------------------------- -->
-    <!-- TRANSLATION (MESSAGE) -->
-    <!-- ----------------------------------- -->
-    <ng-container *ngTemplateOutlet="translation"></ng-container>
-  </div>
-  <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
-</ng-container>
+    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
+  </ng-container>
+</ng-template>
+<!-- Message usually goes above rich-embed preview -->
+<ng-container *ngIf="!minimalMode"
+  ><ng-container *ngTemplateOutlet="messageTemplate"></ng-container
+></ng-container>
 <!-- ----------------------------------- -->
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="!hideMedia">
-  <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
+  <div
+    class="m-activityContent__media--richEmbed"
+    *ngIf="isRichEmbed"
+    [class.m-activityContent__mediaRichEmbed--minimalMode]="minimalMode"
+  >
     <div class="m-activityContent__fixedHeightSpacer"></div>
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
@@ -61,6 +76,11 @@
       *ngIf="!mediaDescription"
     ></div>
   </div>
+  <!-- ----------------------------------- -->
+  <!-- Message goes below rich-embed preview in minimal mode-->
+  <ng-container *ngIf="minimalMode"
+    ><ng-container *ngTemplateOutlet="messageTemplate"></ng-container
+  ></ng-container>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->
   <!-- ----------------------------------- -->
@@ -114,20 +134,27 @@
     #mediaDescriptionEl
     class="m-activityContent__mediaDescription"
     m-read-more
-    [maxHeightAllowed]="service.displayOptions.fixedHeight ? 80 : 320"
     *ngIf="mediaDescription || mediaTitle"
+    [maxHeightAllowed]="maxDescHeight"
   >
-    <div class="m-activityContent__descriptionWrapper">
+    <div
+      class="m-activityContent__descriptionWrapper"
+      [class.m-activityContent__descriptionWrapper--minimalMode]="minimalMode"
+    >
       <p
         [innerHtml]="mediaTitle | tags"
         class="m-activityContent__mediaTitle"
         [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
         *ngIf="mediaTitle"
       ></p>
-      <p *ngIf="mediaDescription" [innerHtml]="mediaDescription | tags"></p>
+      <p
+        *ngIf="mediaDescription && !hideMediaDescription"
+        [innerHtml]="mediaDescription | tags"
+      ></p>
       <m-read-more--button
         *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
         [v2]="true"
+        [showOnlyFadeout]="minimalMode"
       ></m-read-more--button>
     </div>
     <!-- ----------------------------------- -->
@@ -143,6 +170,7 @@
   <div
     class="m-activityContent__remind"
     [class.m-activityContent__remind--hasMessage]="!!message"
+    [class.m-activityContent__remind--minimalMode]="minimalMode"
     #remindContainerEl
     *ngIf="service.isRemind$ | async"
   >
@@ -168,6 +196,7 @@
     [translateEvent]="translateEvent"
     (onTranslate)="(service.displayOptions.showTranslation === false)"
     (onTranslateError)="(service.displayOptions.showTranslation === false)"
+    [class.m-translate--minimalMode]="minimalMode"
     #translate
   ></m-translate>
 </ng-template>

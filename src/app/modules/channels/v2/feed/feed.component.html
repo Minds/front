@@ -1,41 +1,85 @@
-<div class="m-pageLayout__container m-channel__feed">
-  <div class="m-channelFeed__list" m-pageLayout__pane="main">
-    <m-composer *ngIf="service.isOwner$ | async"></m-composer>
-    <m-feedFilter
-      class="m-channelFeedList__filter"
-      [options]="['type']"
-      [type]="feed.type$ | async"
-      (typeChange)="onTypeChange($event)"
-    >
-      <ng-container *ngIf="service.isOwner$">
-        <a
-          *ngIf="feed.scheduledCount$ | async as scheduledCount"
-          class="m-channelFeedListFilter__scheduled"
-          [routerLink]="['/', service.username$ | async, 'scheduled']"
-        >
-          Scheduled <strong>{{ scheduledCount }}</strong>
-        </a>
-      </ng-container>
-    </m-feedFilter>
+<div
+  class="m-pageLayout__container m-channel__feed"
+  [ngClass]="{ 'm-channel__feed--grid': isGrid }"
+>
+  <div class="m-channelFeed__body" m-pageLayout__pane="main">
+    <!-- ----------------------------------------- -->
+    <!-- TOOLBAR -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__toolbar">
+      <m-feedFilter
+        class="m-channelFeed__filter"
+        [options]="['type']"
+        [type]="feed.type$ | async"
+        (typeChange)="onTypeChange($event)"
+      >
+        <ng-container *ngIf="service.isOwner$ && !isGrid">
+          <a
+            *ngIf="feed.scheduledCount$ | async as scheduledCount"
+            class="m-channelFeedFilter__scheduled"
+            [routerLink]="['/', service.username$ | async, 'scheduled']"
+          >
+            <m-tooltip [anchor]="'bottom'" icon="alarm">
+              <ng-container i18n="@@M__CHANNEL_FEED__SCHEDULED_TOOLTIP">
+                Scheduled posts
+              </ng-container>
+            </m-tooltip>
+            <span>{{ scheduledCount }}</span>
+          </a>
+        </ng-container>
+      </m-feedFilter>
+    </div>
 
-    <div class="m-channelFeedList__entities">
-      <m-newsfeed__entity
-        *ngFor="let entity of feed.service.feed | async; let i = index"
-        [entity]="entity | async"
-        [slot]="i + 1"
+    <!-- ----------------------------------------- -->
+    <!-- LAYOUT : GRID  -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__grid" *ngIf="isGrid">
+      <m-feedGrid
+        [maxColumns]="3"
+        [entities]="feed.service.feed | async"
+        [isProSite]="false"
         (deleted)="feed.onDelete($event)"
-      ></m-newsfeed__entity>
+      >
+      </m-feedGrid>
+      <ng-container [ngTemplateOutlet]="infiniteScroll"></ng-container>
+    </div>
 
-      <infinite-scroll
-        distance="25%"
-        (load)="feed.loadNext()"
-        [moreData]="feed.service.hasMore | async"
-        [inProgress]="feed.service.inProgress | async"
-      ></infinite-scroll>
+    <!-- ----------------------------------------- -->
+    <!-- LAYOUT : LIST  -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__list" *ngIf="!isGrid">
+      <m-composer *ngIf="service.isOwner$ | async"></m-composer>
+      <div class="m-channelFeedList__entities">
+        <m-newsfeed__entity
+          *ngFor="let entity of feed.service.feed | async; let i = index"
+          [entity]="entity | async"
+          [slot]="i + 1"
+          (deleted)="feed.onDelete($event)"
+        ></m-newsfeed__entity>
+      </div>
+      <ng-container [ngTemplateOutlet]="infiniteScroll"></ng-container>
     </div>
   </div>
 
-  <div class="m-channelFeed__sidebar" m-pageLayout__pane="right">
+  <!-- ----------------------------------------- -->
+  <!-- INFINITE SCROLL TEMPLATE  -->
+  <!-- ----------------------------------------- -->
+  <ng-template #infiniteScroll>
+    <infinite-scroll
+      distance="25%"
+      (load)="feed.loadNext()"
+      [moreData]="feed.service.hasMore | async"
+      [inProgress]="feed.service.inProgress | async"
+    ></infinite-scroll
+  ></ng-template>
+  <!-- ----------------------------------------- -->
+  <!-- SIDEBAR  -->
+  <!-- ----------------------------------------- -->
+  <div
+    class="m-channelFeed__sidebar"
+    m-pageLayout__pane="right"
+    *ngIf="!isGrid"
+  >
     <div class="m-pageLayoutPane__inner">
       <m-channelAbout__brief></m-channelAbout__brief>
       <ng-container *mIfBrowser>

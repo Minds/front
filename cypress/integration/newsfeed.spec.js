@@ -46,6 +46,7 @@ context('Newsfeed', () => {
         cy.get('.m-postMenu__button')
           .click();
       });
+
       cy.contains('Delete Post')
         .click();
       

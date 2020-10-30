@@ -73,12 +73,15 @@
 }
 
 .m-dropdown {
+  // new stacking context
+  position: relative;
+  z-index: 2;
+
   .m-dropdown--list,
   .m-dropdown__list {
     width: 150px;
     border-radius: 3px;
     position: absolute;
-    z-index: 1000;
     top: 0;
     right: 0;
     overflow: visible;
@@ -127,7 +130,10 @@
 // v2 specific
 
 .m-dropdown--v2 {
+  // new stacking context
   position: relative;
+  z-index: 4;
+
   .m-dropdown__list {
     width: 180px;
     border-radius: $m-borderRadius;
@@ -135,7 +141,6 @@
 
     box-sizing: border-box;
     position: absolute;
-    z-index: 1000;
     top: 0;
     right: 0;
     overflow: visible;

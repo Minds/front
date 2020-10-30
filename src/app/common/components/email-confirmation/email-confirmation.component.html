@@ -1,16 +1,28 @@
-<ng-container *ngIf="shouldShow">
-  <m-announcement
-    id="email-confirmation"
-    [canClose]="canClose"
-    [remember]="false"
-    #announcement
-  >
-    Please confirm your email address.
-    <ng-container *ngIf="!sent"
-      >Didn't get it?
-      <span class="m-announcement__clickable" (click)="send()"
-        >Click here to send again.</span
-      ></ng-container
+<div class="m-emailConfirmation__bannerContainer" *ngIf="shouldShow">
+  <div class="m-emailConfirmation__informationContainer">
+    <i class="material-icons m-emailConfirmation__emailIcon">email</i>
+    <span
+      class="m-emailConfirmation__verifyText"
+      i18n="@@EMAIL_CONFIRMATION__VERIFY_YOUR_EMAIL_ADDRESS"
+      >Please verify your email address
+    </span>
+  </div>
+  <div class="m-emailConfirmation__actionContainer">
+    <span
+      *ngIf="(retryTimer$ | async) === 0"
+      class="m-emailConfirmation__resendText"
+      i18n="@@EMAIL_CONFIRMATION__RESEND_EMAIL"
+      (click)="send()"
     >
-  </m-announcement>
-</ng-container>
+      Resend
+    </span>
+    <ng-container *ngIf="(retryTimer$ | async) > 0">
+      <span i18n="@@EMAIL_CONFIRMATION__RESEND_IN_X_SECONDS">
+        Resend in
+      </span>
+      <span>
+        {{ retryTimer$ | async }}
+      </span>
+    </ng-container>
+  </div>
+</div>
