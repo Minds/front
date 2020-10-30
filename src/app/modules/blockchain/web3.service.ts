@@ -39,6 +39,11 @@ export class Web3Service {
     return null;
   }
 
+  public resetProvider() {
+    this.provider = null;
+    this.web3modalService.clearCachedProvider();
+  }
+
   getABIInterface(abi: any) {
     return new Interface(abi);
   }

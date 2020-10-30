@@ -7,8 +7,6 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
-import * as ethAccount from 'ethjs-account';
-import * as Eth from 'ethjs';
 import * as BN from 'bn.js';
 
 import { TransactionOverlayService } from './transaction-overlay.service';
@@ -124,7 +122,10 @@ export class TransactionOverlayComponent implements OnInit {
     this.data.tx = Object.assign({}, tx);
 
     if (typeof this.data.tx.gasPrice !== 'undefined') {
-      this.data.tx.gasPrice = Eth.fromWei(this.data.tx.gasPrice, 'gwei');
+      this.data.tx.gasPrice = this.web3Wallet.fromWei(
+        this.data.tx.gasPrice,
+        'gwei'
+      );
     }
 
     if (typeof this.data.tx.gas === 'undefined') {
@@ -139,7 +140,7 @@ export class TransactionOverlayComponent implements OnInit {
 
     let tx = Object.assign({}, this.data.tx);
 
-    tx.gasPrice = Eth.toWei(tx.gasPrice, 'gwei');
+    tx.gasPrice = this.web3Wallet.toWei(tx.gasPrice, 'gwei');
 
     return tx;
   }
@@ -158,7 +159,7 @@ export class TransactionOverlayComponent implements OnInit {
         privateKey = `0x${privateKey}`;
       }
 
-      ethAccount.privateToAccount(privateKey);
+      this.web3Wallet.privateKeyToAccount(privateKey);
     } catch (e) {
       return false;
     }
@@ -257,7 +258,7 @@ export class TransactionOverlayComponent implements OnInit {
           privateKey = `0x${privateKey}`;
         }
 
-        if (ethAccount.privateToAccount(privateKey)) {
+        if (this.web3Wallet.privateKeyToAccount(privateKey)) {
           this.data.unlock.privateKey = privateKey;
           this.detectChanges();
         }

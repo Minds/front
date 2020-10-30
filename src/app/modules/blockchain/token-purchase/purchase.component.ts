@@ -155,7 +155,11 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   async purchase() {
     await this.load();
-    this.showLoginModal = true;
+
+    if (!this.session.isLoggedIn()) {
+      this.showLoginModal = true;
+    }
+
     this.detectChanges();
   }
 

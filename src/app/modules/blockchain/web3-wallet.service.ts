@@ -4,7 +4,7 @@ import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3Service } from './web3.service';
-import { BigNumberish, Contract, utils } from 'ethers';
+import { BigNumberish, Contract, utils, Wallet } from 'ethers';
 import BN from 'bn.js';
 
 @Injectable()
@@ -180,7 +180,19 @@ export class Web3WalletService {
     return this.web3service.fromWei(amount, unit);
   }
 
-  // Provider
+  privateKeyToAccount(privateKey: string | utils.Bytes | utils.SigningKey) {
+    if (typeof privateKey === 'string') {
+      if (privateKey.indexOf('0x') !== 0) {
+        return new Wallet('0x' + privateKey).address;
+      }
+    }
+
+    return new Wallet(privateKey).address;
+  }
+
+  resetProvider() {
+    this.web3service.resetProvider();
+  }
 
   getOnChainInterfaceLabel() {
     if (this.local) {

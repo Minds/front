@@ -62,8 +62,6 @@ export class TokenOnChainOnboardingComponent {
       this.next.next();
       return;
     }
-
-    this.detectChanges();
   }
 
   ngOnDestroy() {

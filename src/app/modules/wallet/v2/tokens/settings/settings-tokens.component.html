@@ -17,24 +17,10 @@
     <ul class="m-walletSettings__tokenSetupOptionsContainer">
       <li class="m-walletSettings__tokenSetupOption--metamask">
         <div>
-          <img
-            class="metamask"
-            [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
-            i18n="@@WALLET_V2_SETTINGS_TOKENS__METAMASK"
-          />
           <h2>
-            MetaMask
+            Web3 Wallet
           </h2>
         </div>
-
-        <p *ngIf="!hasExternal">
-          <a
-            (click)="downloadMetamask()"
-            i18n="@@WALLET_V2_SETTINGS_TOKENS__INSTALL_METAMASK"
-            >Install MetaMask</a
-          >
-          for the most seamless user experience.
-        </p>
         <ng-container *ngIf="hasExternal">
           <p i18n="@@WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_METAMASK_INFO">
             Minds recommends using MetaMask for the most seamless user
@@ -49,7 +35,7 @@
             (click)="useExternal()"
             i18n="@@WALLET_V2_SETTINGS_TOKENS__LINK_METAMASK"
           >
-            Link MetaMask
+            Link Wallet Provider
           </m-shadowboxSubmitButton>
         </ng-container>
         <p
@@ -66,8 +52,8 @@
           Custom
         </h2>
         <p i18n="@@WALLET_V2_SETTINGS_TOKENS__METAMASK_ALT_INFO">
-          You don’t need to use MetaMask. You can alternatively manage your own
-          address.
+          You don’t need to use a Web3 Wallet provider. You can alternatively
+          manage your own address.
         </p>
         <div>
           <a (click)="display = Views.CreateAddress">Create a new address</a>
@@ -250,7 +236,7 @@
       </p>
       <div class="m-walletSettings__currentAddressContainer">
         <div class="m-walletPrimaryText">{{ currentAddress }}</div>
-        <a (click)="display = null" i18n="@@SETTINGS_TOKENS__CHANGE_ADDRESS"
+        <a (click)="changeProvider()" i18n="@@SETTINGS_TOKENS__CHANGE_ADDRESS"
           >Change Address</a
         >
       </div>

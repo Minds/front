@@ -246,29 +246,10 @@ export class WalletSettingsTokensComponent
 
   async detectExternal() {
     this.error = '';
-    const address: string =
-      (await this.web3Wallet.getCurrentWallet(true)) || '';
+    let address: string;
 
-    if (this.providedAddress !== address) {
-      this.providedAddress = address;
-      this.currentAddress = address;
-      this.detectChanges();
-    }
-    // stop checking for metamask and set address
-    if (isPlatformBrowser(this.platformId)) {
-      if (address) {
-        clearInterval(this._externalTimer);
-        this.provideMetamaskAddress(address);
-        this.detectChanges();
-      }
-    }
-  }
-
-  async provideMetamaskAddress(address) {
-    this.error = '';
     try {
-      this.inProgress = true;
-      this.detectChanges();
+      address = (await this.web3Wallet.getCurrentWallet(true)) || '';
 
       await this.blockchain.setWallet({ address: address });
 
@@ -277,10 +258,16 @@ export class WalletSettingsTokensComponent
       this.walletService.onOnchainAddressChange();
     } catch (e) {
       this.error = e.message;
-      console.error(e);
     } finally {
       this.inProgress = false;
       this.linkingMetamask = false;
+
+      this.detectChanges();
+    }
+
+    if (this.providedAddress !== address) {
+      this.providedAddress = address;
+      this.currentAddress = address;
       this.detectChanges();
     }
   }
@@ -295,6 +282,11 @@ export class WalletSettingsTokensComponent
 
     this.display = this.Views.CurrentAddress;
     this.detectChanges();
+  }
+
+  changeProvider() {
+    this.display = null;
+    this.web3Wallet.resetProvider();
   }
 
   detectChanges() {
