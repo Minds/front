@@ -8,7 +8,6 @@ import { createWeb3ModalConfig } from '../helpers/web3modal-configuration';
 import { LocalWalletService } from '../modules/blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
 import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
-import { Web3Service } from '../modules/blockchain/web3.service';
 
 @NgModule({
   imports: [Web3ModalModule],
@@ -31,12 +30,11 @@ import { Web3Service } from '../modules/blockchain/web3.service';
       deps: [
         LocalWalletService,
         TransactionOverlayService,
-        Web3Service,
         PLATFORM_ID,
         ConfigsService,
+        Web3ModalService,
       ],
     },
-    Web3Service,
   ],
 })
 export class SharedModule {}

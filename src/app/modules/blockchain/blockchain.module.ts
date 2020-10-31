@@ -30,7 +30,6 @@ import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
 import { Web3ModalModule, Web3ModalService } from '@dorgtech/web3modal-angular';
 import { createWeb3ModalConfig } from '../../helpers/web3modal-configuration';
-import { Web3Service } from './web3.service';
 
 const cryptoRoutes: Routes = [
   {

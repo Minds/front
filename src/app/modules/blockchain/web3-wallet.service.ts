@@ -1,15 +1,20 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
+import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
+import BN from 'bn.js';
+import { Web3ModalService } from '@dorgtech/web3modal-angular';
 import { LocalWalletService } from './local-wallet.service';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
-import { Web3Service } from './web3.service';
-import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
-import BN from 'bn.js';
+import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
+
+type Address = string;
 
 @Injectable()
 export class Web3WalletService {
   public config; // TODO add types
+  public provider: Web3Provider | null = null;
   protected unavailable: boolean = false;
   protected local: boolean = false;
   protected _ready: Promise<any>;
@@ -18,14 +23,42 @@ export class Web3WalletService {
   constructor(
     protected localWallet: LocalWalletService,
     protected transactionOverlay: TransactionOverlayService,
-    protected web3service: Web3Service,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private web3modalService: Web3ModalService
   ) {
     this.config = this.configs.get('blockchain');
   }
 
-  // Wallet
+  async initializeProvider() {
+    if (!this.provider) {
+      const provider = await this.web3modalService.open();
+      this.setProvider(provider);
+    }
+
+    return this.provider;
+  }
+
+  getSigner() {
+    if (this.provider) {
+      return this.provider.getSigner();
+    }
+
+    return null;
+  }
+
+  resetProvider() {
+    this.provider = null;
+    this.web3modalService.clearCachedProvider();
+  }
+
+  getABIInterface(abi: any) {
+    return new Interface(abi);
+  }
+
+  setProvider(provider: ExternalProvider) {
+    this.provider = new Web3Provider(provider);
+  }
 
   async getWallets() {
     const address = await this.getCurrentWallet();
@@ -41,10 +74,10 @@ export class Web3WalletService {
     forceAuthorization: boolean = false
   ): Promise<string | false> {
     if (forceAuthorization) {
-      await this.web3service.initializeProvider();
+      await this.initializeProvider();
     }
 
-    const signer = this.web3service.getSigner();
+    const signer = this.getSigner();
 
     if (!signer) {
       return false;
@@ -54,7 +87,7 @@ export class Web3WalletService {
   }
 
   async getBalance(): Promise<string | false> {
-    const signer = this.web3service.getSigner();
+    const signer = this.getSigner();
 
     if (!signer) {
       return false;
@@ -88,7 +121,7 @@ export class Web3WalletService {
   // Network
 
   async isSameNetwork() {
-    const provider = this.web3service.provider;
+    const provider = this.provider;
     let chainId = null;
 
     if (provider) {
@@ -118,7 +151,7 @@ export class Web3WalletService {
     value: number | string,
     message: string = ''
   ): Promise<string> {
-    const connectedContract = contract.connect(this.web3service.getSigner());
+    const connectedContract = contract.connect(this.getSigner());
 
     let gasLimit: string;
 
@@ -168,9 +201,7 @@ export class Web3WalletService {
   ): Promise<string> {
     if (!originalTxObject.gasLimit) {
       try {
-        const gasLimit = await this.web3service
-          .getSigner()
-          .estimateGas(originalTxObject);
+        const gasLimit = await this.getSigner().estimateGas(originalTxObject);
         originalTxObject.gasLimit = gasLimit.toHexString();
       } catch (e) {
         console.log(e);
@@ -179,7 +210,7 @@ export class Web3WalletService {
     }
 
     const txHash = await this.transactionOverlay.waitForExternalTx(
-      () => this.web3service.getSigner().sendTransaction(originalTxObject),
+      () => this.getSigner().sendTransaction(originalTxObject),
       message
     );
 
@@ -188,20 +219,22 @@ export class Web3WalletService {
     return txHash;
   }
 
-  getContract(address: string, abi: any[]) {
-    return this.web3service.getContract(address, abi);
+  getContract(address: Address, abi: string[]): Contract {
+    return new Contract(address, abi);
   }
 
   toWei(amount: number | string, unit?: BigNumberish) {
-    return BigNumber.from(
-      this.web3service.toWei(amount, unit).toString()
-    ).toHexString();
+    const weiAmount = utils.parseUnits(amount.toString(), unit).toString();
+    return BigNumber.from(weiAmount).toHexString();
   }
 
   fromWei(amount: BN, unit?: BigNumberish) {
-    return BigNumber.from(
-      this.web3service.fromWei(amount, unit).toString()
-    ).toHexString();
+    const etherAmount = utils.formatUnits(amount.toString(), unit).toString();
+    return BigNumber.from(etherAmount).toHexString();
+  }
+
+  encodeParams(types: (string | utils.ParamType)[], values: any[]) {
+    return defaultAbiCoder.encode(types, values);
   }
 
   privateKeyToAccount(privateKey: string | utils.Bytes | utils.SigningKey) {
@@ -212,10 +245,6 @@ export class Web3WalletService {
     }
 
     return new Wallet(privateKey).address;
-  }
-
-  resetProvider() {
-    this.web3service.resetProvider();
   }
 
   getOnChainInterfaceLabel() {
@@ -238,25 +267,21 @@ export class Web3WalletService {
     return 'Local Interface';
   }
 
-  public encodeParams(types: (string | utils.ParamType)[], values: any[]) {
-    return this.web3service.encodeParams(types, values);
-  }
-
   // Service provider
 
   static _(
     localWallet: LocalWalletService,
     transactionOverlay: TransactionOverlayService,
-    web3service: Web3Service,
     platformId: Object,
-    configs: ConfigsService
+    configs: ConfigsService,
+    web3modalService: Web3ModalService
   ) {
     return new Web3WalletService(
       localWallet,
       transactionOverlay,
-      web3service,
       platformId,
-      configs
+      configs,
+      web3modalService
     );
   }
 }

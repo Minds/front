@@ -23,7 +23,6 @@ import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.comp
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Web3ModalService } from '@dorgtech/web3modal-angular';
-import { Web3Service } from '../web3.service';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -72,7 +71,6 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected web3modalService: Web3ModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,
-    protected web3service: Web3Service,
     public session: Session,
     private route: ActivatedRoute,
     protected router: Router,
