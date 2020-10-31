@@ -62,8 +62,7 @@ export class WireContractService {
           },
         ]),
       ],
-      `Send ${amount} Tokens to ${receiver}. ${message}`.trim(),
-      this.tokenContract.tokenToUnit(-amount)
+      `Send ${amount} Tokens to ${receiver}. ${message}`.trim()
     );
   }
 

@@ -28,7 +28,7 @@ import { BlockchainPurchaseComponent } from './token-purchase/purchase.component
 import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
-import { Web3ModalService } from '@dorgtech/web3modal-angular';
+import { Web3ModalModule, Web3ModalService } from '@dorgtech/web3modal-angular';
 import { createWeb3ModalConfig } from '../../helpers/web3modal-configuration';
 import { Web3Service } from './web3.service';
 
@@ -51,6 +51,7 @@ const cryptoRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     ModalsModule,
+    Web3ModalModule,
   ],
   declarations: [
     BlockchainConsoleComponent,
@@ -85,6 +86,7 @@ const cryptoRoutes: Routes = [
     GetMetamaskComponent,
     BlockchainEthModalComponent,
     BlockchainPurchaseComponent,
+    Web3ModalModule,
   ],
 })
 export class BlockchainModule {}

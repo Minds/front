@@ -207,7 +207,7 @@ export class WalletV2Service {
       const address = await this.web3Wallet.getCurrentWallet();
       if (address) {
         this.wallet.eth.address = address;
-        const ethBalance = await this.web3Wallet.getBalance(address);
+        const ethBalance = await this.web3Wallet.getBalance();
         if (ethBalance) {
           this.wallet.eth.balance = toFriendlyCryptoVal(ethBalance);
         }

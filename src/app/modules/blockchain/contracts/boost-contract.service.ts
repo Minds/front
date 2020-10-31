@@ -79,8 +79,7 @@ export class BoostContractService {
           // },
         ]),
       ],
-      `Network Boost for ${amount} Tokens. ${message}`.trim(),
-      this.tokenContract.tokenToUnit(-amount)
+      `Network Boost for ${amount} Tokens. ${message}`.trim()
     );
   }
 
@@ -112,8 +111,7 @@ export class BoostContractService {
           },
         ]),
       ],
-      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim(),
-      this.tokenContract.tokenToUnit(-amount)
+      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim()
     );
   }
 

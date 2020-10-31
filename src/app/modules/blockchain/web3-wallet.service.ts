@@ -53,7 +53,7 @@ export class Web3WalletService {
     return await signer.getAddress();
   }
 
-  async getBalance(address): Promise<string | false> {
+  async getBalance(): Promise<string | false> {
     const signer = this.web3service.getSigner();
 
     if (!signer) {
@@ -116,8 +116,7 @@ export class Web3WalletService {
     method: string,
     params: any[],
     value: number | string,
-    message: string = '',
-    tokenDelta: string | 0 = 0
+    message: string = ''
   ): Promise<string> {
     const connectedContract = contract.connect(this.web3service.getSigner());
 
@@ -150,16 +149,14 @@ export class Web3WalletService {
     contract: any,
     method: string,
     params: any[],
-    message: string = '',
-    tokenDelta: string | 0 = 0
+    message: string = ''
   ): Promise<string> {
     return await this.sendSignedContractMethodWithValue(
       contract,
       method,
       params,
       0,
-      message,
-      tokenDelta
+      message
     );
   }
 

@@ -203,7 +203,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     }, 2000);*/
   }
 
-  async purchaseEth() {
+  purchaseEth() {
     this.showEthModal = true;
     this.detectChanges();
     //let win = window.open('/checkout');

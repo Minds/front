@@ -317,7 +317,7 @@ export class TransactionOverlayComponent implements OnInit {
 
   async getEthBalance() {
     try {
-      const balance = await this.web3Wallet.getBalance(this.data.tx.from);
+      const balance = await this.web3Wallet.getBalance();
       this.ethBalance = balance ? balance : '0';
     } catch (e) {
       console.error(e);

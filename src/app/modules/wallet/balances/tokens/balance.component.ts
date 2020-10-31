@@ -84,7 +84,7 @@ export class WalletBalanceTokensComponent implements OnInit {
     const address = await this.web3Wallet.getCurrentWallet();
     if (!address) return;
     const ethBalance = await this.web3Wallet.fromWei(
-      new BN(await this.web3Wallet.getBalance(address)),
+      new BN((await this.web3Wallet.getBalance()) || 0),
       'ether'
     );
     this.ethBalance = ethBalance ? ethBalance : '0';
