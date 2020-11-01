@@ -102,10 +102,6 @@ export class Web3WalletService {
     return !(await this.getCurrentWallet());
   }
 
-  async setupMetamask() {
-    return await this.localWallet.setupMetamask();
-  }
-
   async unlock() {
     if (await this.isLocked()) {
       try {
