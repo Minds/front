@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { Storage } from '../../../services/storage';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3TagsService } from './tags/tags.service';
 
@@ -28,7 +27,11 @@ export class OnboardingV3PanelService implements OnDestroy {
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
+      try {
+        subscription.unsubscribe();
+      } catch (e) {
+        // race condition - do nothing.
+      }
     }
   }
 
