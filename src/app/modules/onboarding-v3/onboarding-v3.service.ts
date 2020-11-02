@@ -71,7 +71,7 @@ export class OnboardingV3Service {
   ngOnDestroy() {
     try {
       for (let subscription of this.subscriptions) {
-        if (subscription) {
+        if (subscription.unsubscribe !== undefined) {
           subscription.unsubscribe();
         }
       }
