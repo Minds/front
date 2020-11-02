@@ -69,8 +69,14 @@ export class OnboardingV3Service {
   ) {}
 
   ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
+    try {
+      for (let subscription of this.subscriptions) {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+      }
+    } catch (e) {
+      // do nothing, race condition.
     }
   }
 

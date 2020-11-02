@@ -35,9 +35,4 @@ describe('OnboardingV3Service', () => {
     service.load();
     expect((service as any).api.get).toHaveBeenCalled();
   });
-
-  it('it should call to dismiss stackable modal', () => {
-    service.dismiss();
-    expect((service as any).stackableModal.dismiss).toHaveBeenCalled();
-  });
 });

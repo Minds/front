@@ -11,7 +11,7 @@
     "build:dev": "ng build --watch=true --poll=1000",
     "preserve:dev": "gulp build.sass --deploy-url=http://localhost:4200/",
     "serve:dev": "ng serve --deploy-url=http://localhost:4200/ --watch=true --poll=1000 --progress --proxy-config proxy.conf.js --host=0.0.0.0 --disableHostCheck=true",
-    "test": "ng test",
+    "test": "ng test --source-map=false",
     "lint": "ng lint",
     "e2e": "cypress run --debug",
     "e2e-open": "cypress open",
