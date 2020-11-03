@@ -13,12 +13,19 @@
     }
   }
 
-  .m-share__copyableLinkContainer {
+  .m-share__label-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: $minds-margin;
+  }
+
+  .m-share__input-container {
     margin-bottom: 16px;
 
-    .m-share__copyableLink {
+    .m-share__input {
       margin-bottom: 0;
-      border-radius: 18px;
+      border-radius: 2px;
       display: flex;
       justify-content: space-between;
 
@@ -28,7 +35,7 @@
         }
       }
 
-      .m-share__copyableLinkText {
+      .m-share__inputText {
         width: 95%;
         overflow: hidden;
         white-space: nowrap;
@@ -55,20 +62,24 @@
           outline: none;
         }
 
-        &.m-share__copyableLinkText--flashing {
+        &.m-share__inputText--flashing {
           opacity: 0.5;
         }
       }
 
-      .m-share__copyableLinkButton {
+      .m-share__inputButton {
         cursor: pointer;
-        padding: 9px 14px 10px 8px;
+        padding: 11px;
         @include m-theme() {
-          color: themed($m-blue);
+          color: themed($m-textColor--secondary);
         }
 
         &:hover {
           text-decoration: underline;
+        }
+
+        .m-share__copy-icon {
+          font-size: 16px;
         }
       }
     }
@@ -117,7 +128,6 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      padding-left: $minds-padding;
 
       button {
         cursor: pointer;
@@ -183,14 +193,5 @@
         background-color: themed($m-blue-grey-500);
       }
     }
-  }
-
-  .m-share__embedTextArea {
-    font-family: Consolas, Menlo, Courier, monospace;
-    text-align: justify;
-    overflow: hidden;
-    border-radius: 3px;
-    resize: none;
-    margin-top: 4px;
   }
 }
