@@ -22,8 +22,8 @@
           </h2>
         </div>
         <ng-container *ngIf="hasExternal">
-          <p i18n="@@WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_METAMASK_INFO">
-            Minds recommends using MetaMask for the most seamless user
+          <p i18n="@@WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_COINBASE_INFO">
+            Minds recommends using Coinbase for the most seamless user
             experience.
           </p>
           <!-- <p *ngIf="linkingMetamask && !providedAddress">
@@ -33,25 +33,18 @@
             [disabled]="inProgress || linkingMetamask"
             [saving]="inProgress || linkingMetamask"
             (click)="useExternal()"
-            i18n="@@WALLET_V2_SETTINGS_TOKENS__LINK_METAMASK"
+            i18n="@@WALLET_V2_SETTINGS_TOKENS__LINK_WALLET"
           >
             Link Wallet Provider
           </m-shadowboxSubmitButton>
         </ng-container>
-        <p
-          *ngIf="linkingMetamask && downloadingMetamask"
-          i18n="@@WALLET_V2_SETTINGS_TOKENS__RELOAD_INFO"
-        >
-          Note: You might need to reload Minds after installing and setting up
-          MetaMask.
-        </p>
       </li>
 
       <li class="m-walletSettings__tokenSetupOption--custom">
         <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CUSTOM">
           Custom
         </h2>
-        <p i18n="@@WALLET_V2_SETTINGS_TOKENS__METAMASK_ALT_INFO">
+        <p i18n="@@WALLET_V2_SETTINGS_TOKENS__WALLET_ALT_INFO">
           You don’t need to use a Web3 Wallet provider. You can alternatively
           manage your own address.
         </p>
@@ -89,9 +82,9 @@
         class="m-walletSecondaryText--desc"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__GENERATE_CUSTOM_ADDRESS_INFO"
       >
-        Generate a custom address to use instead of MetaMask. Once the address
-        is generated, you will be provided with a link to download the address
-        and private key.
+        Generate a custom address to use instead of a Wallet Provider. Once the
+        address is generated, you will be provided with a link to download the
+        address and private key.
       </p>
       <m-shadowboxSubmitButton
         *ngIf="!generatedAccount"
@@ -144,7 +137,7 @@
       >
         Enter the address that will be stored as your wallet for Minds on-chain
         tokens and Ether payments. To conduct transactions you will need your
-        wallet's private key and MetaMask cannot be installed in your browser.
+        wallet's private key.
       </p>
 
       <form

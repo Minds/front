@@ -1,5 +1,5 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import Authereum from 'authereum';
+import WalletLink from 'walletlink';
 
 export const createWeb3ModalConfig = () => {
   return {
@@ -12,8 +12,16 @@ export const createWeb3ModalConfig = () => {
           infuraId: 'b76cba91dc954ceebff27244923224b1',
         },
       },
-      authereum: {
-        package: Authereum,
+      walletlink: {
+        package: WalletLink,
+        options: {
+          infuraUrl:
+            'https://mainnet.infura.io/v3/b76cba91dc954ceebff27244923224b1',
+          appName: 'Minds',
+          appLogoUrl:
+            'https://upload.wikimedia.org/wikipedia/commons/1/1d/Minds_logo.svg',
+          darkMode: false,
+        },
       },
     },
     network: '',
