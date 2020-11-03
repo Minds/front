@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { OnboardingV3ModalComponent } from './onboarding-modal.component';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
 const currentStep$ = new BehaviorSubject<OnboardingStepName>(
   'SuggestedHashtagsStep'
 );
 
-const dismiss$ = new BehaviorSubject<boolean>(null);
+const dismiss$ = new BehaviorSubject<boolean>(false);
 
 const panelServiceMock: any = MockService(OnboardingV3PanelService, {
   has: ['dismiss$', 'currentStep$'],
@@ -27,7 +27,12 @@ describe('OnboardingV3ModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OnboardingV3ModalComponent],
+      declarations: [
+        OnboardingV3ModalComponent,
+        MockComponent({
+          selector: 'm-onboardingV3__tags',
+        }),
+      ],
       providers: [
         { provide: OnboardingV3PanelService, useValue: panelServiceMock },
       ],
@@ -40,7 +45,7 @@ describe('OnboardingV3ModalComponent', () => {
     fixture = TestBed.createComponent(OnboardingV3ModalComponent);
 
     comp = fixture.componentInstance;
-
+    (comp as any).dismiss$ = new Subscription();
     fixture.detectChanges();
   });
 
@@ -75,19 +80,8 @@ describe('OnboardingV3ModalComponent', () => {
     });
   });
 
-  it('should call next step in panel service and emit to nextClicked$', () => {
-    const sub = comp.nextClicked$.subscribe(val => {
-      expect(val).toBe(false);
-      sub.unsubscribe();
-    });
-
+  it('should call next step in panel service', () => {
     comp.nextClicked();
-
-    const sub2 = comp.nextClicked$.subscribe(val => {
-      expect(val).toBe(true);
-      sub.unsubscribe();
-    });
-
     expect((comp as any).panel.nextStep).toHaveBeenCalled();
   });
 });

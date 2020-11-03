@@ -27,11 +27,7 @@ export class OnboardingV3PanelService implements OnDestroy {
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
-      try {
-        subscription.unsubscribe();
-      } catch (e) {
-        // race condition - do nothing.
-      }
+      subscription.unsubscribe();
     }
   }
 
