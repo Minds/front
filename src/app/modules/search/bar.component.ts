@@ -26,6 +26,7 @@ import {
   DiscoveryFeedsContentType,
   DiscoveryFeedsContentFilter,
 } from '../discovery/feeds/feeds.service';
+import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
 
 @Component({
   selector: 'm-search--bar',
@@ -46,6 +47,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   placeholder: string;
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
+  @ViewChild(SearchBarSuggestionsComponent)
+  suggestions: SearchBarSuggestionsComponent;
 
   @HostBinding('class.m-search--bar--default-sizes')
   @Input()
@@ -130,6 +133,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   focus() {
     this.active = true;
+
+    if (this.suggestions) this.suggestions.loadRecent();
 
     // move cursor to end of input
     const el = this.searchInput.nativeElement;

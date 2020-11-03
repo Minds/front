@@ -197,7 +197,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: BlockListService,
     useFactory: BlockListService._,
-    deps: [Client, Session, Storage],
+    deps: [Client, Session, Storage, RecentService],
   },
   {
     provide: EntitiesService,

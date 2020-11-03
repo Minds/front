@@ -74,7 +74,7 @@ qa:sandbox:
   allow_failure: false
   except:
     - /^master$/
-    - chore/z-index-3790
+    - feat/1732-block-refactor
   <<: *cypress_tests
 
 qa:production:
@@ -118,7 +118,7 @@ build:review:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
   tags:
     - angular
 
@@ -141,7 +141,7 @@ build:production:bundles:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
   tags:
     - angular
 
@@ -176,7 +176,7 @@ prepare:review:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -187,7 +187,7 @@ prepare:review:sentry:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
   dependencies:
     - build:review
 
@@ -207,7 +207,7 @@ prepare:production:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
   dependencies:
     - build:production:bundles
 
@@ -220,7 +220,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
   dependencies:
     - build:production:bundles
 
@@ -244,7 +244,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
 
 review:start:
   stage: review
@@ -273,7 +273,7 @@ review:start:
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
 
 review:stop:
   <<: *cleanup_review
@@ -317,7 +317,7 @@ staging:fpm:
     refs:
       - master
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor
 
 review:preprod:
   <<: *deploy
@@ -350,7 +350,7 @@ deploy:canary:
       - master
       - test/gitlab-ci
       - epic/angular-9
-      - chore/z-index-3790
+      - feat/1732-block-refactor
 
 deploy:production:
   <<: *deploy
@@ -380,4 +380,4 @@ cleanup:review: # We stop the review site after the e2e tests have run
       - master
       - production
       - test/gitlab-ci
-      - chore/z-index-3790
+      - feat/1732-block-refactor

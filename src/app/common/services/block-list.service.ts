@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { RecentService } from '../../services/ux/recent';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
@@ -11,7 +12,8 @@ export class BlockListService {
   constructor(
     protected client: Client,
     protected session: Session,
-    protected storage: Storage
+    protected storage: Storage,
+    protected recentService: RecentService
   ) {
     //OK to remove as SSR will handle
     //this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
@@ -45,6 +47,11 @@ export class BlockListService {
     const guids = this.blocked.getValue();
     if (guids.indexOf(guid) < 0) this.blocked.next([...guids, ...[guid]]);
     this.storage.set('blocked', JSON.stringify(this.blocked.getValue()));
+    this.recentService.storeSuggestion(
+      'publisher',
+      { guid, blocked: true },
+      entry => entry.guid === guid
+    );
   }
 
   async remove(guid: string) {
@@ -58,7 +65,12 @@ export class BlockListService {
     this.storage.set('blocked', JSON.stringify(this.blocked.getValue()));
   }
 
-  static _(client: Client, session: Session, storage: Storage) {
-    return new BlockListService(client, session, storage);
+  static _(
+    client: Client,
+    session: Session,
+    storage: Storage,
+    recent: RecentService
+  ) {
+    return new BlockListService(client, session, storage, recent);
   }
 }
