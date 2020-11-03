@@ -37,8 +37,8 @@ export class BlockListService {
 
   async get() {}
 
-  async getList() {
-    return this.blocked.getValue();
+  async getList(limit: number, offset: string) {
+    return this.client.get('api/v1/block', { limit, offset });
   }
 
   async add(guid: string) {
