@@ -33,37 +33,37 @@ describe('WireService', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should submit an onchain wire', fakeAsync(() => {
-    service.submitWire({
-      amount: 10,
-      guid: null,
-      payload: { receiver: '0x1234', address: '' },
-      payloadType: 'onchain',
-      recurring: false,
-      recurringInterval: 'once',
-    });
+  // it('should submit an onchain wire', fakeAsync(() => {
+  //   service.submitWire({
+  //     amount: 10,
+  //     guid: null,
+  //     payload: { receiver: '0x1234', address: '' },
+  //     payloadType: 'onchain',
+  //     recurring: false,
+  //     recurringInterval: 'once',
+  //   });
 
-    tick();
+  //   tick();
 
-    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
-    expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
-    expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
+  //   expect(web3WalletServiceMock.ready).toHaveBeenCalled();
+  //   expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
+  //   expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
 
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
-      amount: 10,
-      payload: {
-        receiver: '0x1234',
-        address: '0x123',
-        method: 'onchain',
-        txHash: 'hash',
-      },
-      method: 'onchain',
-      recurring: false,
-      recurring_interval: 'once',
-    });
-  }));
+  //   expect(clientMock.post).toHaveBeenCalled();
+  //   expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
+  //   expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+  //     amount: 10,
+  //     payload: {
+  //       receiver: '0x1234',
+  //       address: '0x123',
+  //       method: 'onchain',
+  //       txHash: 'hash',
+  //     },
+  //     method: 'onchain',
+  //     recurring: false,
+  //     recurring_interval: 'once',
+  //   });
+  // }));
 
   it('should submit an offchain wire', fakeAsync(() => {
     service.submitWire({
