@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import sidebarMenu from '../../../modules/pro/settings/sidebar-menu.default';
 import { ConfigsService } from '../../services/configs.service';
 import { MockService } from '../../../utils/mock';
 import { SidebarWidgetComponent } from './sidebar-widget.component';
