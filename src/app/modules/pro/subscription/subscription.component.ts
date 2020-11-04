@@ -22,10 +22,12 @@ import currency from '../../../helpers/currency';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-pro--subscription',
   templateUrl: 'subscription.component.html',
+  styleUrls: ['subscription.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProSubscriptionComponent implements OnInit {
@@ -46,6 +48,10 @@ export class ProSubscriptionComponent implements OnInit {
   inProgress: boolean = false;
 
   active: boolean;
+
+  hasSubscription: boolean = false;
+
+  expires: number = 0;
 
   criticalError: boolean = false;
 
@@ -92,6 +98,8 @@ export class ProSubscriptionComponent implements OnInit {
 
     try {
       this.active = await this.service.isActive();
+      this.hasSubscription = await this.service.hasSubscription();
+      this.expires = await this.service.expires();
     } catch (e) {
       this.criticalError = true;
       this.error = (e && e.message) || 'Unknown error';
@@ -132,6 +140,7 @@ export class ProSubscriptionComponent implements OnInit {
         .present();
     } catch (e) {
       this.active = false;
+      this.hasSubscription = false;
       this.session.getLoggedInUser().pro = false;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
@@ -143,6 +152,7 @@ export class ProSubscriptionComponent implements OnInit {
 
   paymentComplete(): void {
     this.active = true;
+    this.hasSubscription = true;
     this.session.getLoggedInUser().plus = true;
     this.onEnable.emit(Date.now());
     this.inProgress = false;
@@ -162,14 +172,12 @@ export class ProSubscriptionComponent implements OnInit {
 
     try {
       await this.service.disable();
-      this.active = false;
-      this.session.getLoggedInUser().pro = false;
+      this.hasSubscription = false;
       this.onDisable.emit(Date.now());
     } catch (e) {
-      this.active = true;
-      this.session.getLoggedInUser().pro = true;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
+      this.hasSubscription = true;
     }
 
     this.inProgress = false;
@@ -197,6 +205,16 @@ export class ProSubscriptionComponent implements OnInit {
         offerFrom: null,
       };
     }
+  }
+
+  get expiryString(): string {
+    if (this.expires * 1000 <= Date.now()) {
+      return '';
+    }
+
+    return moment(this.expires * 1000)
+      .local()
+      .format('h:mma [on] MMM Do, YYYY');
   }
 
   setCurrency(currency: UpgradeOptionCurrency) {
