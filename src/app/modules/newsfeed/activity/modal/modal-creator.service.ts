@@ -25,9 +25,9 @@ export class ActivityModalCreatorService {
      */
     entity.modal_source_url = this.router.url;
 
-    // const modal = this.features.has('activity-modal')
-    //   ? ActivityModalComponent
-    //   : MediaModalComponent;
+    if (entity.type === 'comment') {
+      entity.entity_guid = (entity as any).attachment_guid;
+    }
 
     const modal = ActivityModalComponent;
 
