@@ -45,7 +45,7 @@
     "@nguniversal/express-engine": "~9.1.1",
     "@nguniversal/module-map-ngfactory-loader": "~8.2.6",
     "@nguniversal/socket-engine": "~9.1.1",
-    "@sentry/browser": "^5.11.1",
+    "@sentry/browser": "^5.27.3",
     "angular-plotly.js": "^2.0.0",
     "bn.js": "^4.11.8",
     "braintree-web": "3.41.0",
