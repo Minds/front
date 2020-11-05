@@ -26,10 +26,12 @@ import { WireModalService } from '../../wire/wire-modal.service';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-plus--subscription',
   templateUrl: 'subscription.component.html',
+  styleUrls: ['./subscription.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusSubscriptionComponent implements OnInit {
@@ -50,7 +52,11 @@ export class PlusSubscriptionComponent implements OnInit {
 
   active: boolean;
 
-  canBeCancelled: boolean;
+  hasSubscription: boolean = false;
+
+  expires: number = 0;
+
+  userIsPro: boolean = false;
 
   criticalError: boolean = false;
 
@@ -70,6 +76,9 @@ export class PlusSubscriptionComponent implements OnInit {
     private features: FeaturesService
   ) {
     this.upgrades = configs.get('upgrades');
+
+    const user = session.getLoggedInUser();
+    this.userIsPro = user && user.pro;
   }
 
   ngOnInit() {
@@ -99,7 +108,8 @@ export class PlusSubscriptionComponent implements OnInit {
 
     try {
       this.active = await this.service.isActive();
-      this.canBeCancelled = await this.service.canBeCancelled();
+      this.hasSubscription = await this.service.hasSubscription();
+      this.expires = await this.service.expires();
     } catch (e) {
       this.criticalError = true;
       this.error = (e && e.message) || 'Unknown error';
@@ -149,6 +159,7 @@ export class PlusSubscriptionComponent implements OnInit {
         .present();
     } catch (e) {
       this.active = false;
+      this.hasSubscription = false;
       this.session.getLoggedInUser().plus = false;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
@@ -160,6 +171,7 @@ export class PlusSubscriptionComponent implements OnInit {
 
   paymentComplete() {
     this.active = true;
+    this.hasSubscription = true;
     this.session.getLoggedInUser().plus = true;
     this.onEnable.emit(Date.now());
     this.inProgress = false;
@@ -179,14 +191,12 @@ export class PlusSubscriptionComponent implements OnInit {
 
     try {
       await this.service.disable();
-      this.active = false;
-      this.session.getLoggedInUser().plus = false;
+      this.hasSubscription = false;
       this.onDisable.emit(Date.now());
     } catch (e) {
-      this.active = true;
-      this.session.getLoggedInUser().plus = true;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
+      this.hasSubscription = true;
     }
 
     this.inProgress = false;
@@ -214,6 +224,29 @@ export class PlusSubscriptionComponent implements OnInit {
         offerFrom: null,
       };
     }
+  }
+
+  get canHaveTrial(): boolean {
+    return (
+      this.currency === 'usd' &&
+      (this.upgrades.plus[this.interval].can_have_trial ||
+        !this.session.isLoggedIn())
+    );
+  }
+
+  get expiryString(): string {
+    if (this.expires * 1000 <= Date.now()) {
+      return '';
+    }
+
+    return moment(this.expires * 1000)
+      .local()
+      .format('h:mma [on] MMM Do, YYYY');
+  }
+
+  get upgradeButtonDisabled(): boolean {
+    const cancelledButNotExpired = !this.hasSubscription && this.active;
+    return this.userIsPro || cancelledButNotExpired;
   }
 
   setCurrency(currency: UpgradeOptionCurrency) {

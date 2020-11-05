@@ -12,6 +12,8 @@ import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DiscoveryService } from './discovery.service';
+import { DiscoveryTagButtonComponent } from './tags/tag-button/tag-button.component';
+import { DiscoveryTagWidgetComponent } from './tags/tag-widget/tag-widget.component';
 
 @NgModule({
   imports: [
@@ -28,11 +30,15 @@ import { DiscoveryService } from './discovery.service';
     DiscoveryTagSettingsComponent,
     DiscoveryFeedsSettingsComponent,
     DiscoveryFeedItemComponent,
+    DiscoveryTagButtonComponent,
+    DiscoveryTagWidgetComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
     DiscoveryTagSettingsComponent,
     DiscoveryFeedItemComponent,
+    DiscoveryTagButtonComponent,
+    DiscoveryTagWidgetComponent,
   ],
   providers: [DiscoveryTagsService, DiscoveryService],
 })

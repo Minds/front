@@ -112,7 +112,7 @@ export class WireCreatorComponent implements OnDestroy {
   constructor(
     public service: WireV2Service,
     public supportTiers: SupportTiersService,
-    configs: ConfigsService,
+    private configs: ConfigsService,
     private cd: ChangeDetectorRef,
     private session: Session,
     private authModal: AuthModalService
@@ -127,9 +127,13 @@ export class WireCreatorComponent implements OnDestroy {
     if (!this.session.isLoggedIn()) {
       this.authModal
         .open()
-        .then(() => {
+        .then(async () => {
           this.isLoggedIn = this.session.isLoggedIn();
           this.service.wallet.getTokenAccounts();
+          await this.configs.loadFromRemote();
+          // We do this to prompt the trial to display
+          this.service.upgradeType$.next(this.service.upgradeType$.value);
+          this.service.upgrades = this.configs.get('upgrades');
           this.cd.markForCheck();
           this.cd.detectChanges();
         })

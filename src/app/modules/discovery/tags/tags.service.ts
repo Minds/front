@@ -79,6 +79,7 @@ export class DiscoveryTagsService {
               return {
                 value: tag.hashtag,
                 posts_count: tag.volume,
+                selected: tag.selected,
               };
             })
           : response.default
@@ -104,6 +105,16 @@ export class DiscoveryTagsService {
 
     this.tags$.next(selected);
     this.remove$.next([...this.remove$.value, tag]);
+  }
+
+  async addSingleTag(tag: DiscoveryTag): Promise<boolean> {
+    this.addTag(tag);
+    return await this.saveTags();
+  }
+
+  async removeSingleTag(tag: DiscoveryTag): Promise<boolean> {
+    this.removeTag(tag);
+    return await this.saveTags();
   }
 
   async saveTags(): Promise<boolean> {

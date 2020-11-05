@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ProService {
+  protected cachedResponse: any;
+
   public readonly ratios = ['16:9', '16:10', '4:3', '1:1'];
 
   proSettings: any = {};
@@ -18,8 +20,23 @@ export class ProService {
     if (!result || typeof result.isActive === 'undefined') {
       throw new Error('Unable to check your Pro status');
     }
+    this.cachedResponse = result;
 
     return Boolean(result.isActive);
+  }
+
+  async hasSubscription(): Promise<boolean> {
+    if (!this.cachedResponse) {
+      await this.isActive();
+    }
+    return Boolean(this.cachedResponse.has_subscription);
+  }
+
+  async expires(): Promise<number> {
+    if (!this.cachedResponse) {
+      await this.isActive();
+    }
+    return Number(this.cachedResponse.expires) || 0;
   }
 
   async disable(): Promise<boolean> {

@@ -56,13 +56,20 @@
       *ngIf="service.isUpgrade$ | async"
       i18n="@@WIRE_CREATOR_TOOLBAR__SUBMIT_UPGRADE"
     >
-      Upgrade to Minds<ng-container
-        *ngIf="(service.upgradeType$ | async) === 'plus'"
-        >+</ng-container
+      <ng-container
+        *ngIf="!(service.upgradeCanHaveTrial$ | async); else startTrialTxt"
       >
-      <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
-        Pro</ng-container
-      >
+        Upgrade to Minds<ng-container
+          *ngIf="(service.upgradeType$ | async) === 'plus'"
+          >+</ng-container
+        >
+        <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
+          Pro</ng-container
+        >
+      </ng-container>
+      <ng-template #startTrialTxt>
+        Start free trial
+      </ng-template>
     </ng-container>
 
     <ng-container

@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  iframe {
+    height: 152px;
+
+    @media screen and (max-width: $max-mobile) {
+      height: 300px;
+    }
+  }
+}
