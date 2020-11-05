@@ -112,7 +112,7 @@
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
-        [routerLink]="['/media', imageGuid]"
+        [routerLink]="['/newsfeed', imageGuid]"
         (click)="onModalRequested($event)"
         ><ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>
@@ -122,7 +122,6 @@
         [src]="imageUrl"
         [style.height]="imageHeight"
         (error)="onImageError($event)"
-        (click)="onModalRequested($event)"
     /></ng-template>
   </div>
 </ng-container>
