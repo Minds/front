@@ -629,8 +629,10 @@ export class BoostCreatorComponent implements AfterViewInit {
           }
         );
       } else {
-        const tokenDec = new BN(10).pow(new BN(18)).toString();
-        let bid: number = (this.boost.amount || 0) * tokenDec;
+        const tokenDec = new BN(10).pow(new BN(18));
+        let bid: string = new BN(this.boost.amount || 0)
+          .mul(tokenDec)
+          .toString();
 
         switch (this.boost.currency) {
           case 'onchain':

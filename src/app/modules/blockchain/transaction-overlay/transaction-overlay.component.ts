@@ -296,7 +296,7 @@ export class TransactionOverlayComponent implements OnInit {
   async checkTokenBalance(passedTokenDelta) {
     const tokenDelta = new BN(passedTokenDelta);
 
-    if (tokenDelta.gte('0') || !this.data.tx.from) {
+    if (tokenDelta.gte(new BN('0')) || !this.data.tx.from) {
       return;
     }
 
@@ -307,7 +307,7 @@ export class TransactionOverlayComponent implements OnInit {
 
       this.balance = balance.toString(10);
 
-      if (balance.add(tokenDelta).lt('0')) {
+      if (balance.add(tokenDelta).lt(new BN('0'))) {
         this.reject('Not enough tokens to complete this transaction');
       }
     } catch (e) {
