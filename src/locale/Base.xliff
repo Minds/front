@@ -58,7 +58,7 @@
         <source>Home</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/v3-topbar.component.html</context>
@@ -70,11 +70,11 @@
         <source>Newsfeed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -82,11 +82,11 @@
         <source>Discovery</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -94,11 +94,11 @@
         <source>Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -106,11 +106,11 @@
         <source>Wallet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -118,11 +118,11 @@
         <source>Analytics</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">135</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">141</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -130,7 +130,7 @@
         <source>Traffic</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">155</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -138,7 +138,7 @@
         <source>Engagement</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">166</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/marketing/rewards.component.html</context>
@@ -150,7 +150,7 @@
         <source>Earnings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">177</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -158,7 +158,7 @@
         <source>Trending</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="linenumber">188</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/trends/list-item.component.html</context>
@@ -170,11 +170,11 @@
         <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">205</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">209</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
@@ -611,7 +611,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMMON__BADGES__PLUS" datatype="html">
-        <source>Plus</source>
+        <source>Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
           <context context-type="linenumber">10</context>
@@ -894,7 +894,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">345</context>
+          <context context-type="linenumber">355</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1353,7 +1353,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADE_OPTIONS__PLUS" datatype="html">
-        <source>Plus</source>
+        <source>Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
           <context context-type="linenumber">35</context>
@@ -1369,7 +1369,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADE_OPTIONS__UPGRADE_CHANNEL_INFO" datatype="html">
-        <source>Upgrade your channel to unlock new features and upgrade your experience.</source>
+        <source>Unlock the first community-powered streaming service and earn revenue.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
           <context context-type="linenumber">49</context>
@@ -1377,26 +1377,38 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADE_OPTIONS__ACCESS_EXCLUSIVE_CONTENT" datatype="html">
-        <source>Access exclusive content</source>
+        <source>Access exclusive Minds+ content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
           <context context-type="linenumber">56</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__VERIFY_YOUR_CHANNEL" datatype="html">
-        <source>Verify your channel</source>
+      <trans-unit id="UPGRADE_OPTIONS__SUBMIT_EXCLUSIVE_CONTENT" datatype="html">
+        <source>Submit content to Minds+ and earn</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__HIDE_BOOSTED_CONTENT" datatype="html">
-        <source>Hide boosted content</source>
+      <trans-unit id="UPGRADE_OPTIONS__UNLOCK_BONUS_FEATURES" datatype="html">
+        <source>Unlock bonus features</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__PRIORITY_SUPPORT" datatype="html">
+        <source>Priority support</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">256</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1404,11 +1416,11 @@
         <source>More info</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">257</context>
+          <context context-type="linenumber">270</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1416,19 +1428,19 @@
         <source>{$START_TAG_SPAN}{$INTERPOLATION}{$CLOSE_TAG_SPAN} per month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE_TO_PLUS" datatype="html">
-        <source>Upgrade to Plus</source>
+        <source>Upgrade to Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">109</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1436,7 +1448,7 @@
         <source>Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1444,7 +1456,7 @@
         <source>For independent content creators</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">122</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1452,7 +1464,7 @@
         <source>The ultimate platform for independent creators and brands.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1460,7 +1472,7 @@
         <source>Get paid for your work</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">138</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1468,7 +1480,7 @@
         <source>Build your own custom website</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">142</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1476,7 +1488,7 @@
         <source>Professional media tools</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">146</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1484,7 +1496,7 @@
         <source>Custom support</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1492,7 +1504,7 @@
         <source>More info</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">164</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1500,7 +1512,7 @@
         <source>Try Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">175</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1508,11 +1520,11 @@
         <source>{$START_TAG_SPAN}{$INTERPOLATION}{$CLOSE_TAG_SPAN} per month</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">182</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">190</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1520,7 +1532,7 @@
         <source>Upgrade to Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">199</context>
+          <context context-type="linenumber">204</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1528,7 +1540,7 @@
         <source>Coming soon</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">209</context>
+          <context context-type="linenumber">214</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/subscription/subscription.component.html</context>
@@ -1540,7 +1552,7 @@
         <source>Node</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">218</context>
+          <context context-type="linenumber">223</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1548,7 +1560,7 @@
         <source>For next-level content creators</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="linenumber">228</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1556,23 +1568,23 @@
         <source>Launch your own white-labeled social network and mobile app.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">237</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__WHITE_LABEL_WEB_MOBILE" datatype="html">
-        <source>White-labeled web + mobile app</source>
+      <trans-unit id="UPGRADE_OPTIONS__WHITE_LABEL_MOBILE" datatype="html">
+        <source>White-labeled mobile app</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">239</context>
+          <context context-type="linenumber">244</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADE_OPTIONS__CUSTOM_DOMAIN_BRAND" datatype="html">
-        <source>Custom domain and brand</source>
+        <source>Use a custom domain and branding</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">243</context>
+          <context context-type="linenumber">248</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1580,7 +1592,7 @@
         <source>Independent from Minds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">247</context>
+          <context context-type="linenumber">252</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1588,7 +1600,7 @@
         <source>Contact us for pricing</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">267</context>
+          <context context-type="linenumber">277</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1596,7 +1608,7 @@
         <source>Contact us</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">278</context>
+          <context context-type="linenumber">288</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3640,7 +3652,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS" datatype="html">
-        <source>Upgrade to Plus</source>
+        <source>Upgrade to Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
           <context context-type="linenumber">54</context>
@@ -3648,7 +3660,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="PLUS_SUBSCRIPTION__CANCEL_PLUS" datatype="html">
-        <source>Cancel Plus</source>
+        <source>Cancel Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/subscription/subscription.component.html</context>
           <context context-type="linenumber">67</context>
@@ -5033,7 +5045,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">378</context>
+          <context context-type="linenumber">388</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
@@ -7677,6 +7689,30 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="WEB3_MODAL__CONNECT_WALLET" datatype="html">
+        <source>Connect Wallet</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blockchain/web3-modal/web3-modal.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WEB3_MODAL__INSTRUCTION" datatype="html">
+        <source>To earn tokens and access the decentralized web, select an option below</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blockchain/web3-modal/web3-modal.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WEB3_MODAL__INSTRUCTION_GRAY" datatype="html">
+        <source>(It&apos;s easier than you think)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blockchain/web3-modal/web3-modal.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="COMMON__PURCHASE_TOKENS" datatype="html">
         <source>Purchase Tokens</source>
         <context-group purpose="location">
@@ -7695,7 +7731,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMMON__BUY_ETH" datatype="html">
-        <source>Buy Eth</source>
+        <source>Buy ETH</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/token-purchase/purchase.component.html</context>
           <context context-type="linenumber">46</context>
@@ -9139,14 +9175,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="PRO_SUBSCRIPTION__BY_PURCHASING_PRO_AGREE" datatype="html">
-        <source>By purchasing Pro you agree to {$START_LINK}Terms &amp; Conditions{$CLOSE_LINK}.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/pro/subscription/subscription.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="PRO_CHANNEL_LIST__ALL" datatype="html">
         <source>All</source>
         <context-group purpose="location">
@@ -9684,7 +9712,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMPOSER__MONETIZE_PLUS__NOT_PRO_DESC" datatype="html">
-        <source>You’ll need to upgrade to Minds Pro in order to submit your post to the Minds+ content pool. You will earn revenue based on the performance of the content.</source>
+        <source>You’ll need to upgrade to Minds+ in order to submit your post to the Minds+ content pool. You will earn revenue based on the performance of the content.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/popup/monetize/v2/components/plus/plus.component.html</context>
           <context context-type="linenumber">59</context>
@@ -9692,7 +9720,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMPOSER__MONETIZE_PLUS_UPGRADE_TO_PRO" datatype="html">
-        <source>Upgrade to Minds Pro</source>
+        <source>Upgrade to Minds Plus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/popup/monetize/v2/components/plus/plus.component.html</context>
           <context context-type="linenumber">67</context>
@@ -10843,10 +10871,18 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WIRE_CREATOR_FORM__MONTHLY_PAYMENT_INFO" datatype="html">
-        <source>Monthly recurrent payments may be cancelled at any point within in your wallet.</source>
+        <source>Monthly recurrent payments may be cancelled at any point within your wallet.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
           <context context-type="linenumber">325</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_FORM__TERMS_DISCLAIMER" datatype="html">
+        <source>{$START_TAG_DIV_1}{$START_TAG_DIV} By purchasing {$START_TAG_NG-CONTAINER}Minds+{$CLOSE_TAG_NG-CONTAINER}{$START_TAG_NG-CONTAINER_1} Pro{$CLOSE_TAG_NG-CONTAINER} you agree to the {$START_LINK}Minds Monetization Terms{$CLOSE_LINK}. {$CLOSE_TAG_DIV}{$CLOSE_TAG_DIV}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">339</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11868,7 +11904,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__MINDS_PLUS" datatype="html">
-        <source>Minds Plus</source>
+        <source>Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
           <context context-type="linenumber">11</context>
@@ -11876,7 +11912,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__UPGRADE_CHANNEL_PREMIUM_FEATURES" datatype="html">
-        <source>Upgrade your channel and {$START_EMPHASISED_TEXT}unlock premium features{$CLOSE_EMPHASISED_TEXT}</source>
+        <source>Join the world&apos;s first {$START_EMPHASISED_TEXT}community-powered{$CLOSE_EMPHASISED_TEXT} streaming service</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
           <context context-type="linenumber">18</context>
@@ -11884,7 +11920,7 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS_UNLOCK_FEATURES" datatype="html">
-        <source>Support Minds and unlock features such as hiding ads, accessing exclusive content, receiving a badge and verifying your channel.</source>
+        <source>Your monthly payments are shared directly with the creators who submit the most popular content. Unlock new features and help fund Minds filmmakers, writers, artists, memers, podcasters, musicians, journalists and more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
           <context context-type="linenumber">25</context>
@@ -11895,7 +11931,7 @@
         <source>Click here to request to be verified</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11903,71 +11939,71 @@
         <source>You are verified!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__HIDE_BOOSTED_CONTENT" datatype="html">
-        <source>Hide boosted content</source>
+      <trans-unit id="MARKETING_PLUS__ACCESS_PREMIUM_CONTENT" datatype="html">
+        <source>Access premium videos, blogs and photos from independent creators</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__TIRED_SEEING_ADS_SECTION" datatype="html">
-        <source>Tired of seeing ads? All Plus users have the option of hiding all boosted content from their feeds. Just click on the settings icon on the Boost rotator in your newsfeed and select “Hide Boosts” to turn this on.</source>
+      <trans-unit id="MARKETING_PLUS__PREMIUM_CONTENT_SECTION" datatype="html">
+        <source>We are democratizing the way media is created and consumed. Every time you watch a video, read a blog or view a photo in Minds+, that creator earns revenue. Your attention and support enables them to make a living doing what they love.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__ACCESS_EXCLUSIVE_CONTENT" datatype="html">
-        <source>Access exclusive content</source>
+      <trans-unit id="MARKETING_PLUS__EARN_REVENUE" datatype="html">
+        <source>Submit content to Minds+ and earn a share of revenue</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">121</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__VIEW_LATEST_BEHIND_SCENES_SECTION" datatype="html">
-        <source>View the latest behind-the-scenes content from the Minds team. Plus members will also gain access to exclusive content from MindsTV (coming soon).</source>
+      <trans-unit id="MARKETING_PLUS__MONTHLY_REVENUE_MODEL_SECTION" datatype="html">
+        <source>Minds+ is a new model for creators and brands to gain exposure and monetize their content. Our monthly revenue is shared directly with the creators who contribute the most popular and engaging exclusive content to Minds+.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">128</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__VERIFY_YOUR_CHANNEL" datatype="html">
-        <source>Verify your channel</source>
+      <trans-unit id="MARKETING_PLUS__NETFLIX_ANALOGY_SECTION" datatype="html">
+        <source>Imagine Netflix, but if anyone could submit content and earn!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">138</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__MEMBERS_REQUEST_TO_VERIFY_SECTION" datatype="html">
-        <source>Plus members are able to request to {$START_LINK}verify their channel{$CLOSE_LINK} and receive a verified badge.</source>
+      <trans-unit id="MARKETING_PLUS__PROTECT_YOUR_CONTENT" datatype="html">
+        <source>Protect your content from censorship and demonetization</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">167</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__JUST_POST_URL_SECTION" datatype="html">
-        <source>Just post your Minds channel URL to two other social networks where you have the same identify and provide us with the proof.</source>
+      <trans-unit id="MARKETING_PLUS__PROTECTED_CONTENT_SECTION" datatype="html">
+        <source>Migrate your entire YouTube library to Minds and automatically sync new uploads. Optionally post your public content to the Permaweb, a censorship-resitatant and decentralized storage system. Upload unlimited HD video up to 95 minutes in duration. Get priority support.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">174</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__OTHER_PLUS_FEATURES" datatype="html">
-        <source>Other Plus features</source>
+        <source>Other Minds+ features</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">202</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11975,44 +12011,60 @@
         <source>Receive a badge</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">212</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__MEMBERS_RECEIVE_BADGE_SECTION" datatype="html">
-        <source>Plus members receive a badge for their channel to indicate they are part of the community.</source>
+        <source>Get a badge on your channel to increase your reputation and stand out.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">221</context>
+          <context context-type="linenumber">217</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS" datatype="html">
-        <source>Support Minds</source>
+      <trans-unit id="MARKETING_PLUS__HIDE_BOOST" datatype="html">
+        <source>Hide boosted content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">230</context>
+          <context context-type="linenumber">226</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MARKETING_PLUS__BUYING_PLUS_SECTION" datatype="html">
-        <source>Buying Plus is a great way to keep Minds independent and show your support for Internet freedom.</source>
+      <trans-unit id="MARKETING_PLUS__HIDE_BOOST_SECTION" datatype="html">
+        <source>Remove all boosted content from your feeds to keep your experience ad-free.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">235</context>
+          <context context-type="linenumber">231</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__VERIFY_CHANNEL" datatype="html">
+        <source>Verify your channel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">239</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__VERIFY_CHANNEL_SECTION" datatype="html">
+        <source>Request to verify your digital identity and let people know you are real.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">244</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MARKETING_PLUS__UPGRADE_TO_PLUS" datatype="html">
-        <source>Upgrade to Plus</source>
+        <source>Upgrade to Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">250</context>
+          <context context-type="linenumber">259</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMMON__MINDS_PLUS" datatype="html">
-        <source>Minds Plus</source>
+        <source>Minds+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
           <context context-type="linenumber">5</context>
@@ -12696,42 +12748,42 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADES__UNLOCK_POWERFUL_FEATURES" datatype="html">
-        <source>Unlock powerful features to supercharge your channel.</source>
+        <source>Your support helps keep Minds and its creator community free and independent.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrades.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="UPGRADES__JOIN_PLUS_HIDE_BOOSTS" datatype="html">
-        <source>Join Plus to hide boosts, access exclusive content and more</source>
+      <trans-unit id="UPGRADES__JOIN_PLUS_STREAMING_SERVICE" datatype="html">
+        <source>Join Minds+, the first ever community-powered streaming service</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrades.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADES__LAUNCH_PRO_BUILD_WEBSITE" datatype="html">
-        <source>Launch Pro to build your own website and get paid for your work</source>
+        <source>Join Minds Pro and upgrade your channel to a custom website</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrades.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="UPGRADES__BUY_MINDS_TOKENS_BOOST_CONTENT" datatype="html">
-        <source>Buy Minds Tokens to boost content and support creators</source>
+        <source>Buy Minds Tokens to boost content for more views</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrades.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMMON__UPGRADE_NOW" datatype="html">
-        <source>Upgrade now</source>
+        <source>Upgrade Now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/upgrades/upgrades.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -12888,10 +12940,10 @@
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WALLETV2_TX_TABLE__PRO_EARNINGS" datatype="html">
-        <source>Pro Earnings</source>
+        <source>Earnings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -12899,7 +12951,7 @@
         <source>Transaction</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13487,8 +13539,8 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="WALLET_V2__BALANCE_CASH__PRO_EARNINGS_INFO" datatype="html">
-        <source>Pro Earnings{$START_TAG_M-TOOLTIP}At the end of each month, your Pro earnings will move into your pending balance if you&apos;ve reached the $100 threshold. When this happens, your Pro earnings will be reset to zero. If you haven&apos;t reached the threshold, your earnings will rollover to the next month.{$CLOSE_TAG_M-TOOLTIP}</source>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__EARNINGS_INFO" datatype="html">
+        <source>Earnings{$START_TAG_M-TOOLTIP}At the end of each month, your earnings will move into your pending balance if you&apos;ve reached the $100 threshold. When this happens, your earnings will be reset to zero. If you haven&apos;t reached the threshold, your earnings will rollover to the next month.{$CLOSE_TAG_M-TOOLTIP}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
           <context context-type="linenumber">36</context>
@@ -13499,7 +13551,7 @@
         <source>Pending Transfers {$START_TAG_M-TOOLTIP} This is the balance you&apos;ve been paid out that will be transferred to your bank. Transfers may take up to 7 days. {$CLOSE_TAG_M-TOOLTIP}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13507,7 +13559,7 @@
         <source>Estimated</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13515,7 +13567,7 @@
         <source>Total Transferred {$START_TAG_M-TOOLTIP} This is the total amount that has been paid out to your bank {$CLOSE_TAG_M-TOOLTIP}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">103</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13631,11 +13683,19 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="CASH_ONBOARDING__IN_PAN_NUMBER" datatype="html">
+        <source>Permanent Account Number (PAN)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="CASH_ONBOARDING__SSN_LAST_4_DIGITS" datatype="html">
         <source>SSN (last 4 digits)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">178</context>
+          <context context-type="linenumber">184</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13643,7 +13703,7 @@
         <source>Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">208</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13651,7 +13711,7 @@
         <source>City</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">224</context>
+          <context context-type="linenumber">230</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13659,7 +13719,7 @@
         <source>State</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">246</context>
+          <context context-type="linenumber">252</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13667,7 +13727,7 @@
         <source>State / Province</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">265</context>
+          <context context-type="linenumber">271</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13675,7 +13735,7 @@
         <source>Zip Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">292</context>
+          <context context-type="linenumber">298</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13683,15 +13743,15 @@
         <source>Postal Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">298</context>
+          <context context-type="linenumber">304</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="CASH_ONBOARDING__READ_AND_AGREED_STRIPE" datatype="html">
-        <source>I have read and agree to the {$START_LINK} Stripe Services Agreement {$CLOSE_LINK}</source>
+        <source>I have read and agree to the {$START_LINK} Stripe Services Agreement {$CLOSE_LINK} and {$START_LINK_1}Minds Monetization Terms{$CLOSE_LINK}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">320</context>
+          <context context-type="linenumber">326</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13699,7 +13759,7 @@
         <source>Update Personal Information</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">352</context>
+          <context context-type="linenumber">362</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13707,7 +13767,7 @@
         <source>Are you sure you want to stop? Any personal information you&apos;ve entered will be lost.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">368</context>
+          <context context-type="linenumber">378</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13715,7 +13775,7 @@
         <source>I&apos;m sure</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">384</context>
+          <context context-type="linenumber">394</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
@@ -16617,7 +16677,7 @@
         <source>{$START_TAG_BUTTON}{$START_ITALIC_TEXT}publish{$CLOSE_ITALIC_TEXT} Upload Banner {$CLOSE_TAG_BUTTON}{$TAG_INPUT}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blogs/v2/edit/editor-base.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16625,7 +16685,7 @@
         <source>Title</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blogs/v2/edit/editor-base.component.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16867,17 +16927,21 @@
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="CHANNEL_CONTENT__ACCOUNT_BANNED" datatype="html">
         <source>Account banned</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16885,7 +16949,7 @@
         <source>This channel has been disabled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16893,7 +16957,7 @@
         <source>You have blocked this channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16901,7 +16965,7 @@
         <source>This channel is NSFW</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16909,7 +16973,7 @@
         <source>I am 18 or over</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/content/content.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>

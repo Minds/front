@@ -15,8 +15,6 @@ export class TokenDistributionEventService {
     gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1,
     message: string = ''
   ) {
-    await this.web3Wallet.ready();
-
     if (this.web3Wallet.isUnavailable()) {
       throw new Error('No Ethereum wallets available on your browser.');
     } else if (!(await this.web3Wallet.unlock())) {
@@ -37,8 +35,9 @@ export class TokenDistributionEventService {
       {
         from: wallet,
         to: this.web3Wallet.config.token_distribution_event_address,
-        value: this.web3Wallet.EthJS.toWei(ethAmount, 'ether'),
-        gasPrice: this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei'),
+        value: this.web3Wallet.toWei(ethAmount, 'ether'),
+        gasPrice: this.web3Wallet.toWei(gasPriceGwei, 'gwei'),
+        gasLimit: 210000,
         data: '0x',
       },
       `purchase of ${ethAmount} ETH worth Minds Tokens. ${message}`.trim()

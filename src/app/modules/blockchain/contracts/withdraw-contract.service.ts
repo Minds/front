@@ -13,11 +13,10 @@ export class WithdrawContractService {
   }
 
   async load() {
-    await this.web3Wallet.ready();
-
-    this.instance = this.web3Wallet.eth
-      .contract(this.web3Wallet.config.withdraw.abi, '0x')
-      .at(this.web3Wallet.config.withdraw.address);
+    this.instance = this.web3Wallet.getContract(
+      this.web3Wallet.config.withdraw.address,
+      this.web3Wallet.config.withdraw.abi
+    );
 
     this.contract();
   }
@@ -37,9 +36,9 @@ export class WithdrawContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.toWei(
         gasPriceGwei,
-        'Gwei'
+        'gwei'
       );
     }
 
@@ -55,13 +54,13 @@ export class WithdrawContractService {
     const gas = new BN(this.instance.defaultTxObject.gasPrice).mul(
       new BN(gasLimit)
     );
-    const gasEther = this.web3Wallet.EthJS.fromWei(gas, 'ether');
+    const gasEther = this.web3Wallet.fromWei(gas, 'ether');
 
     let tx = await this.web3Wallet.sendSignedContractMethodWithValue(
       await this.contract(),
       'request',
       [guid, amount],
-      gas.clone(),
+      gas.clone().toString(),
       `Request a withdrawal of ${tokens} Minds Tokens. ${gasEther} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. ${message}`.trim()
     );
 

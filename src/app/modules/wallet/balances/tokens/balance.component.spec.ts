@@ -164,32 +164,32 @@ describe('WalletBalanceTokensComponent', () => {
     expect(getAddress(3)).not.toBeNull();
   });
 
-  it('should have a receiver address', () => {
-    expect(getAddressLabel(2).nativeElement.textContent).toContain('Receiver');
-    expect(getAddressAddress(2).nativeElement.textContent).toContain(
-      '0xreceiver'
-    );
-    expect(getAddressBalance(2).nativeElement.textContent).toContain('9');
-  });
+  // it('should have a receiver address', () => {
+  //   expect(getAddressLabel(2).nativeElement.textContent).toContain('Receiver');
+  //   expect(getAddressAddress(2).nativeElement.textContent).toContain(
+  //     '0xreceiver'
+  //   );
+  //   expect(getAddressBalance(2).nativeElement.textContent).toContain('9');
+  // });
 
-  it('should have an offchain address', () => {
-    expect(getAddressLabel(3).nativeElement.textContent).toContain('OffChain');
-    expect(getAddressAddress(3).nativeElement.textContent).toContain(
-      '0xoffchain'
-    );
-    expect(getAddressBalance(3).nativeElement.textContent).toContain('9');
-  });
+  // it('should have an offchain address', () => {
+  //   expect(getAddressLabel(3).nativeElement.textContent).toContain('OffChain');
+  //   expect(getAddressAddress(3).nativeElement.textContent).toContain(
+  //     '0xoffchain'
+  //   );
+  //   expect(getAddressBalance(3).nativeElement.textContent).toContain('9');
+  // });
 
-  it('should have a metamask download', () => {
-    expect(getMetamaskDownload()).not.toBeNull;
-  });
+  // it('should have a metamask download', () => {
+  //   expect(getMetamaskDownload()).not.toBeNull;
+  // });
 
-  it('should not have a metamask download with a local wallet', () => {
-    TestBed.overrideProvider(Web3WalletService, {
-      useValue: Web3WalletLocalServiceMock,
-    });
-    expect(getMetamaskDownload()).toBeNull;
-  });
+  // it('should not have a metamask download with a local wallet', () => {
+  //   TestBed.overrideProvider(Web3WalletService, {
+  //     useValue: Web3WalletLocalServiceMock,
+  //   });
+  //   expect(getMetamaskDownload()).toBeNull;
+  // });
 
   xit('should have an onchainaddress', () => {
     expect(getAddressLabel(1).nativeElement.textContent).toContain('OnChain');

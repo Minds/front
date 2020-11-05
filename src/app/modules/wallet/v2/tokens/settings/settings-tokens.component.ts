@@ -50,7 +50,7 @@ export class WalletSettingsTokensComponent
   display: Views;
   generatedAccount: any;
   providedAddress: string = '';
-  hasExternal: boolean = false;
+  hasExternal: boolean = true;
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
   form;
@@ -114,7 +114,6 @@ export class WalletSettingsTokensComponent
       this.detectChanges();
     }
 
-    this.hasExternal = !(await this.web3Wallet.isLocal());
     this.detectChanges();
   }
 
@@ -242,46 +241,15 @@ export class WalletSettingsTokensComponent
     this.linkingMetamask = true;
     this.inProgress = true;
     this.detectChanges();
-
-    await this.web3Wallet.ready();
-    this.detectExternal();
-
-    // keep checking for metamask if it's not detected right away
-    if (isPlatformBrowser(this.platformId)) {
-      this._externalTimer = setInterval(() => {
-        if (!(this.cd as ViewRef).destroyed) {
-          this.detectExternal();
-        }
-      }, 1000);
-    }
-    this.detectChanges();
+    await this.detectExternal();
   }
 
   async detectExternal() {
     this.error = '';
-    const address: string =
-      (await this.web3Wallet.getCurrentWallet(true)) || '';
+    let address: string;
 
-    if (this.providedAddress !== address) {
-      this.providedAddress = address;
-      this.currentAddress = address;
-      this.detectChanges();
-    }
-    // stop checking for metamask and set address
-    if (isPlatformBrowser(this.platformId)) {
-      if (address) {
-        clearInterval(this._externalTimer);
-        this.provideMetamaskAddress(address);
-        this.detectChanges();
-      }
-    }
-  }
-
-  async provideMetamaskAddress(address) {
-    this.error = '';
     try {
-      this.inProgress = true;
-      this.detectChanges();
+      address = (await this.web3Wallet.getCurrentWallet(true)) || '';
 
       await this.blockchain.setWallet({ address: address });
 
@@ -290,10 +258,16 @@ export class WalletSettingsTokensComponent
       this.walletService.onOnchainAddressChange();
     } catch (e) {
       this.error = e.message;
-      console.error(e);
     } finally {
       this.inProgress = false;
       this.linkingMetamask = false;
+
+      this.detectChanges();
+    }
+
+    if (this.providedAddress !== address) {
+      this.providedAddress = address;
+      this.currentAddress = address;
       this.detectChanges();
     }
   }
@@ -308,6 +282,11 @@ export class WalletSettingsTokensComponent
 
     this.display = this.Views.CurrentAddress;
     this.detectChanges();
+  }
+
+  changeProvider() {
+    this.display = null;
+    this.web3Wallet.resetProvider();
   }
 
   detectChanges() {
