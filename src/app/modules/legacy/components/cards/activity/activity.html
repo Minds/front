@@ -391,7 +391,7 @@
     <!-- Reminds -->
     <div *ngIf="activity.remind_object">
       <ng-container
-        *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate"
+        *ngIf="!activity.remind_object.blocked; else blockedRemindTemplate"
       >
         <minds-remind
           [object]="activity.remind_object"
