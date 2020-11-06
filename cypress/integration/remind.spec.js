@@ -15,15 +15,17 @@ context('Remind', () => {
   beforeEach(() => {
     cy.server();
     cy.route('POST', '**/api/v2/newsfeed/remind/*').as('postRemind');
-  });
+    cy.route('GET', '**/api/v1/channel/**').as('getChannel');
 
-  it('should allow a user to remind their post', () => {
     cy.get('.m-sidebarNavigation')
       .contains(Cypress.env().username)
       .click({force: true})
+      .wait('@getChannel')
       .location('pathname')
       .should('eq', `/${Cypress.env().username}/`);
+  });
 
+  it('should allow a user to remind their post', () => {
     //open remind composer
     cy.get('minds-button-remind > a')
       .first()
