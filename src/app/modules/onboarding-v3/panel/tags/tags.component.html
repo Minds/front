@@ -7,12 +7,12 @@
 </span>
 
 <div class="m-onboardingTags__tagContainer">
-  <div
+  <span
     class="m-onboardingTags__tag"
     *ngFor="let tag of tags$ | async"
     (click)="toggleTag(tag.value)"
     [ngClass]="{ 'm-onboardingTags__tag--selected': tag.selected }"
   >
     {{ tag.value | titlecase }}
-  </div>
+  </span>
 </div>

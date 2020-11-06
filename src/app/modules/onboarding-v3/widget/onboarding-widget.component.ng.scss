@@ -56,6 +56,9 @@
       }
 
       .m-onboardingWidget__stepsContainer {
+        display: flex;
+        flex-direction: column;
+
         > * + * {
           margin-top: 16px;
         }

@@ -40,8 +40,9 @@
         color: themed($m-textColor--secondary);
 
         &.m-onboardingTags__tag--selected {
-          border: 1px solid themed($m-black);
+          border: 1px solid themed($m-borderColor--primary);
           color: themed($m-textColor--primary);
+          margin-left: 10px;
         }
       }
     }

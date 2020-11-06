@@ -61,13 +61,18 @@
       /**
        * TODO: remove when adding other 2 options
        */
-      max-width: 50%;
+      max-width: 33%;
 
       .m-onboardingUniqueness__tooltip {
-        width: 100%;
         position: absolute;
         left: calc(100% - 32px);
         top: 8px;
+
+        ::ng-deep {
+          .m-tooltip--bubble {
+            width: 300px;
+          }
+        }
       }
     }
 

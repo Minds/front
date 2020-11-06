@@ -31,7 +31,7 @@
     </div>
     <!-- Tasks -->
     <div class="m-onboardingWidget__stepsContainer">
-      <div
+      <span
         class="m-onboardingWidget__step"
         *ngFor="let step of (progress$ | async)?.steps"
         [ngClass]="{ completed: step.is_completed }"
@@ -67,7 +67,7 @@
         >
           Create a post
         </ng-container>
-      </div>
+      </span>
     </div>
   </div>
 </div>

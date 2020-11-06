@@ -64,7 +64,7 @@ export class ApiService {
     protected cookie: CookieService
   ) {
     if (baseUrl) {
-      console.log(`${baseUrl}/`);
+      // console.log(`${baseUrl}/`);
       this.baseUrl = `${baseUrl}/`;
     }
   }
@@ -220,7 +220,7 @@ export class ApiService {
     }
 
     output = this.baseUrl.replace(/\/+$/, '') + '/' + output;
-    console.log(output);
+    // console.log(output);
     if (queryParams) {
       const queryString = Object.keys(queryParams)
         .map(
