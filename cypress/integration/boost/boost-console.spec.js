@@ -97,9 +97,6 @@ context('Boost Console', () => {
     cy.server();
     cy.route('POST', '**/api/v2/boost/**').as('boostPost');
 
-    // cy.visit('/newsfeed/subscriptions');
-    // cy.reload(); // workaround to ensure feature flag set
-
     cy.post(text);
 
     cy.get('.m-boostButton')
@@ -109,7 +106,7 @@ context('Boost Console', () => {
     cy.get('.m-boost--creator-section-amount input').type(views);
 
     cy.get(
-      'm-overlay-modal > div.m-overlay-modal > m-boost--creator button'
+      '.m-boost--creator-button--submit'
     ).click();
 
     cy.wait('@boostPost').then(xhr => {
