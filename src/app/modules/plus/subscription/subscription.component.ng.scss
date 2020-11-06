@@ -87,6 +87,36 @@
     }
   }
 
+  .m-plusSubscription__button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+
+      button {
+        margin-right: 0 !important;
+      }
+
+      .m-plusSubscriptionButton__notice {
+        margin-top: 20px;
+        max-width: none;
+      }
+    }
+
+    button {
+      margin-right: 20px;
+    }
+  }
+  .m-plusSubscriptionButton__notice {
+    max-width: 175px;
+    line-height: 20px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
   .m-plusSubscription__error {
     display: block;
     font-weight: bold;

@@ -211,9 +211,7 @@ export class Activity implements OnInit {
     this.siteUrl = configs.get('site_url');
   }
 
-  ngOnInit() {
-    this.loadBlockedUsers();
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.activityAnalyticsOnViewService
@@ -535,21 +533,6 @@ export class Activity implements OnInit {
     if (this.player) {
       this.player.pause();
     }
-  }
-
-  async loadBlockedUsers() {
-    try {
-      this.blockedUsers = (await this.blockListService.getList()) || [];
-      this.detectChanges();
-    } catch (e) {
-      console.warn('Activity.loadBlockedUsers', e);
-    }
-
-    return true;
-  }
-
-  isOwnerBlocked(activity) {
-    return activity && this.blockedUsers.indexOf(activity.owner_guid) > -1;
   }
 
   isPending(activity) {

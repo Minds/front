@@ -23,9 +23,6 @@ export class EntitiesService {
       return [];
     }
 
-    const blockedGuids = await this.blockListService.blocked
-      .pipe(first())
-      .toPromise();
     const urnsToFetch = [];
     const urnsToResync = [];
     const entities = [];
@@ -62,10 +59,7 @@ export class EntitiesService {
 
     for (const feedItem of feed) {
       if (feedItem.entity || feedItem.urn) {
-        if (
-          this.entities.has(feedItem.urn) &&
-          (!blockedGuids || blockedGuids.indexOf(feedItem.owner_guid) < 0)
-        ) {
+        if (this.entities.has(feedItem.urn)) {
           const entity = this.entities.get(feedItem.urn);
           try {
             if (await entity.pipe(first()).toPromise()) {

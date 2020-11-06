@@ -66,7 +66,6 @@ export class Minds implements OnInit, OnDestroy {
     public upload: Upload,
     private emailConfirmationService: EmailConfirmationService,
     public router: Router,
-    public blockListService: BlockListService,
     public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
@@ -143,8 +142,6 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async initialize() {
-    this.blockListService.fetch();
-
     if (this.site.isProDomain) {
       this.site.listen();
     } else {

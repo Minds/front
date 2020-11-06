@@ -28,6 +28,7 @@ import { storageMock } from '../../../../tests/storage-mock.spec';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { FormToastService } from '../../services/form-toast.service';
 import { MockService } from '../../../utils/mock';
+import { recentServiceMock } from '../../../mocks/services/ux/recent-mock.spec';
 /* tslint:disable */
 
 /* Mock section */
@@ -105,7 +106,12 @@ describe('PostMenuComponent', () => {
         {
           provide: BlockListService,
           useFactory: () => {
-            return BlockListService._(clientMock, sessionMock, storageMock);
+            return BlockListService._(
+              clientMock,
+              sessionMock,
+              storageMock,
+              recentServiceMock
+            );
           },
         },
         {

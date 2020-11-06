@@ -19,6 +19,7 @@ import { Session } from '../../../services/session';
 import { RecentService } from '../../../services/ux/recent';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 /**
  * Views
@@ -126,7 +127,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
     protected recent: RecentService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected toasterService: FormToastService
   ) {}
 
   /**
@@ -203,6 +205,12 @@ export class ChannelComponent implements OnInit, OnDestroy {
           'publisher',
           user,
           entry => entry.guid === user.guid
+        );
+      }
+
+      if (user.blocked_by) {
+        this.toasterService.warn(
+          `${user.name} has blocked you. You will not be able to interact with them.`
         );
       }
     }

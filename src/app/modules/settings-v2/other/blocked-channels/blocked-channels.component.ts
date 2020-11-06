@@ -17,11 +17,10 @@ import { FormToastService } from '../../../../common/services/form-toast.service
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsV2BlockedChannelsComponent implements OnInit {
-  blockedGuids: any[] = [];
   channels;
   hasList: boolean = true;
 
-  offset: number = 0;
+  offset: string = '';
 
   moreData: boolean = true;
   inProgress: boolean = false;
@@ -38,37 +37,38 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
 
   ngOnInit() {
     this.load(true);
-    // Hydrate the channel entities from blocked guids
-    this.channels = this.blockListService.blocked.pipe(
-      tap(() => {
-        this.inProgress = true;
-        this.moreData = false; // Support pagination in the future
-        this.detectChanges();
-      }),
-      filter(list => list.length > 0),
-      switchMap(async guids => {
-        const response: any = await this.entitiesService.fetch(guids);
-
-        return response.entities;
-      }),
-      tap(blocked => {
-        this.inProgress = false;
-        this.detectChanges();
-      })
-    );
   }
 
   async load(refresh: boolean = false) {
     if (this.inProgress) return;
-    this.blockListService.fetch(); // Get latest
-    if (this.blockListService.blocked.value.length === 0) {
-      this.hasList = false;
+    if (refresh) {
+      this.channels = [];
+      this.offset = '';
       this.detectChanges();
     }
+
+    this.inProgress = true;
+
+    const response: any = await this.blockListService.getList(12, this.offset);
+    this.offset = response['load-next'];
+    for (let i in response.entities) {
+      this.channels.push(response.entities[i]);
+    }
+
+    this.inProgress = false;
+
+    if (!this.offset) {
+      this.moreData = false;
+    }
+
+    this.detectChanges();
   }
 
   loadMore() {
-    // Implement soon
+    if (!this.moreData) {
+      return;
+    }
+    this.load();
   }
 
   getChannelIcon(channel) {
@@ -92,7 +92,7 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
       await this.client.delete(`api/v1/block/${guid}`, {});
       await this.blockListService.remove(guid);
       this.toasterService.success(channel.username + ' has been unblocked');
-      this.load(false);
+      this.load(true);
     } catch (e) {
       channel._unblocked = void 0;
       console.error(e);

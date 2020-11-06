@@ -1,0 +1,83 @@
+@import 'defaults.scss';
+
+$default-width: 500px;
+$default-height: 200px;
+
+:host {
+  width: $default-width;
+  min-height: $default-height;
+  position: absolute;
+  top: 200px;
+  padding: 40px;
+  border-radius: 5px;
+
+  @media screen and (max-width: $default-width) {
+    width: 100%;
+  }
+
+  @include z-index(body);
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  .m-confirmV2Modal__textWrapper {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-confirmV2Modal__title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-top: unset;
+    }
+
+    .m-confirmV2Modal__text {
+      font-size: 18px;
+      font-weight: 400;
+      margin-right: 80px;
+    }
+  }
+  .m-confirmV2Modal__buttonWrapper {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+
+    .m-confirmV2Modal__cancelButton {
+      margin: 0 10px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      border: 1px solid gray;
+      background-color: unset;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+
+        &:hover {
+          background-color: themed($m-blue);
+          color: themed($m-white-always);
+        }
+      }
+    }
+
+    .m-confirmV2Modal__confirmButton {
+      margin: 0 10px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      height: auto;
+      background-color: unset;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-blue);
+
+        &:hover {
+          background-color: themed($m-blue);
+          color: themed($m-white-always);
+        }
+      }
+    }
+  }
+}
