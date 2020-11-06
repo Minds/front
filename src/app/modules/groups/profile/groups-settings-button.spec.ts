@@ -219,8 +219,6 @@ describe('GroupsSettingsButton', () => {
     fixture.detectChanges();
     jasmine.clock().tick(10);
 
-    expect(comp.isGoingToBeDeleted).toBeTruthy();
-
     const confirmButton = fixture.debugElement.query(
       By.css('m-modal button.mdl-button')
     );
@@ -242,6 +240,5 @@ describe('GroupsSettingsButton', () => {
     fixture.detectChanges();
 
     expect(groupsServiceMock.countMembers).toHaveBeenCalled();
-    expect(comp.isGoingToBeDeleted).toBeFalsy();
   }));
 });
