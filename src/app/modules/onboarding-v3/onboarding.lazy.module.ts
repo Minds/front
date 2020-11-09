@@ -17,8 +17,6 @@ import { ChannelEditService } from '../channels/v2/edit/edit.service';
 import { OnboardingV3VerifyUniquenessComponent } from './panel/verify-uniqueness/verify-uniqueness.component';
 import { OnboardingV3VerifyPhoneComponent } from './panel/verify-uniqueness/verify-phone/verify-phone.component';
 import { OnboardingV3VerifyPhoneService } from './panel/verify-uniqueness/verify-phone/verify-phone.service';
-import { OnboardingV3BankComponent } from './panel/bank/bank.component';
-import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
 
 const COMPONENTS = [
   OnboardingV3ModalComponent,
@@ -27,7 +25,7 @@ const COMPONENTS = [
   OnboardingV3ChannelComponent,
   OnboardingV3VerifyUniquenessComponent,
   OnboardingV3VerifyPhoneComponent,
-  OnboardingV3BankComponent,
+  // OnboardingV3BankComponent,
 ];
 
 const PROVIDERS = [
@@ -38,12 +36,7 @@ const PROVIDERS = [
   OnboardingV3VerifyPhoneService,
 ];
 
-const MODULES = [
-  NgCommonModule,
-  CommonModule,
-  ReactiveFormsModule,
-  WalletV2Module,
-];
+const MODULES = [NgCommonModule, CommonModule, ReactiveFormsModule];
 
 /**
  * Lazy loaded module
