@@ -147,10 +147,6 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
-            id: 'two-factor',
-          },
-          {
             label: $localize`:@@SETTINGS__SECURITY__SESSIONS__LABEL:Sessions`,
             id: 'sessions',
           },
@@ -352,7 +348,15 @@ export class SettingsV2Component implements OnInit {
 
     this.setProRoutes();
     this.setSecondaryPane();
-    this.loadSettings();
+    this.loadSettings().then(() => {
+      if (this.settingsService.settings$.getValue().has2fa) {
+        const mfaMenuItem = {
+          label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
+          id: 'two-factor',
+        };
+        this.secondaryMenus.security[0].items.splice(0, 0, mfaMenuItem);
+      }
+    });
   }
 
   setProRoutes() {
