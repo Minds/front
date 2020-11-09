@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 
 /**
@@ -64,8 +64,14 @@ export class OnboardingV3TagsService {
           },
           3
         )
-        .pipe(take(1))
-        .subscribe(response => {
+        .pipe(
+          take(1),
+          catchError((e: any) => {
+            console.error(e);
+            return of([]);
+          })
+        )
+        .subscribe((response: any) => {
           this.tags$.next(response.tags);
         })
     );
@@ -97,7 +103,15 @@ export class OnboardingV3TagsService {
                 tags[i].selected = !tags[i].selected;
 
                 this.subscriptions.push(
-                  requestObservable.pipe(take(1)).subscribe()
+                  requestObservable
+                    .pipe(
+                      take(1),
+                      catchError((e: any) => {
+                        console.error(e);
+                        return of(null);
+                      })
+                    )
+                    .subscribe()
                 );
               }
             }

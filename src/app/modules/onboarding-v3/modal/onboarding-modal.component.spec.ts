@@ -4,6 +4,7 @@ import { OnboardingV3ModalComponent } from './onboarding-modal.component';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
@@ -35,6 +36,7 @@ describe('OnboardingV3ModalComponent', () => {
       ],
       providers: [
         { provide: OnboardingV3PanelService, useValue: panelServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));
@@ -59,7 +61,7 @@ describe('OnboardingV3ModalComponent', () => {
       By.css('.m-modalV2__header')
     ).nativeElement;
     expect(bannerElement.style['background-image']).toBe(
-      'url("../../../../assets/photos/confetti-concert-colors.jpg")'
+      'url("nullassets/photos/confetti-concert-colors.jpg")'
     );
   });
 
@@ -69,7 +71,7 @@ describe('OnboardingV3ModalComponent', () => {
       By.css('.m-modalV2__header')
     ).nativeElement;
     expect(bannerElement.style['background-image']).toBe(
-      'url("../../../../assets/photos/confetti-concert-colors.jpg")'
+      'url("nullassets/photos/confetti-concert-colors.jpg")'
     );
   });
 

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfigsService } from '../../../common/services/configs.service';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 
@@ -23,12 +24,19 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
 
   private dismissSubscription: Subscription;
 
+  public cdnAssetsUrl: string;
+
   /**
    * Dismiss intent.
    */
   onDismissIntent: () => void = () => {};
 
-  constructor(private panel: OnboardingV3PanelService) {}
+  constructor(
+    private panel: OnboardingV3PanelService,
+    private configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit(): void {
     // Dismiss when panel service BehaviourSubject is pushed to.
@@ -70,8 +78,7 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
         return currentStep === 'SuggestedHashtagsStep' ||
           currentStep === 'WelcomeStep'
           ? {
-              backgroundImage:
-                "url('../../../../assets/photos/confetti-concert-colors.jpg')",
+              backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/confetti-concert-colors.jpg')`,
             }
           : {
               height: '100px',

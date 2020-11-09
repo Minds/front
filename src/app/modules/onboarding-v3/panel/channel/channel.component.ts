@@ -15,7 +15,7 @@ import { Session } from '../../../../services/session';
   providers: [ChannelEditService],
 })
 export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
-  subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
 
   /**
    * FormGroup
@@ -30,7 +30,9 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
   /**
    * Behaviour subject containing the avatar src as a string.
    */
-  avatarSrc$: BehaviorSubject<string> = new BehaviorSubject<string>('none');
+  public avatarSrc$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    'none'
+  );
 
   /**
    * Emitted to on next button clicked.
