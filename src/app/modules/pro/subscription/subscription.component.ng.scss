@@ -1,6 +1,7 @@
 @import '../../../foundation/grid-values';
+@import 'defaults.scss';
 
-m-pro--subscription {
+:host {
   .m-proSubscriptionPlan__toggleContainer {
     display: flex;
     flex-direction: row;
@@ -74,13 +75,36 @@ m-pro--subscription {
     }
   }
 
+  .m-proSubscription__buttonsContainer {
+    margin-bottom: 50px;
+  }
+
   .m-proSubscription__button {
     display: flex;
+    align-items: center;
 
-    .m-proSubscription__alreadyAMemberNotice {
-      margin-left: 25px;
-      display: flex;
+    @media screen and (max-width: $min-tablet) {
       flex-direction: column;
+
+      button {
+        margin-right: 0 !important;
+      }
+
+      .m-proSubscriptionButton__notice {
+        margin-top: 20px;
+        max-width: none;
+      }
+    }
+
+    button {
+      margin-right: 20px;
+    }
+  }
+  .m-proSubscriptionButton__notice {
+    max-width: 175px;
+    line-height: 20px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
     }
   }
 

@@ -14,10 +14,7 @@
 </m-settingsV2__header>
 
 <ng-container *ngIf="hasList">
-  <div
-    *ngFor="let channel of channels | async"
-    class="m-settingsV2BlockedChannel"
-  >
+  <div *ngFor="let channel of channels" class="m-settingsV2BlockedChannel">
     <a
       class="m-settingsV2BlockedChannel__detailsWrapper"
       [routerLink]="['/', channel.username]"

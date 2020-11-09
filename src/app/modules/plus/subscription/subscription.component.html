@@ -1,5 +1,10 @@
 <ng-container *ngIf="!inProgress; else inProgressSpinner">
-  <div *ngIf="!active; else cancelButton">
+  <div
+    *ngIf="
+      !active || userIsPro || (active && !hasSubscription);
+      else cancelButton
+    "
+  >
     <div class="m-plusSubscriptionPlan__toggleContainer">
       <div class="m-plusSubscriptionPlan__toggle">
         <span i18n="@@PLUS_SUBSCRIPTION_OPTION__YEARLY">Yearly</span>
@@ -49,10 +54,10 @@
       </span>
     </div>
 
-    <div>
+    <div class="m-plusSubscription__button">
       <button
         class="mf-button mf-button--alt"
-        [disabled]="inProgress || criticalError"
+        [disabled]="upgradeButtonDisabled || inProgress || criticalError"
         (click)="enable()"
         i18n="@@PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS"
       >
@@ -63,14 +68,31 @@
           Start free trial
         </ng-template>
       </button>
+      <div
+        class="m-plusSubscriptionButton__notice"
+        *ngIf="upgradeButtonDisabled"
+      >
+        <ng-container
+          i18n="@@PLUS_SUBSCRIPTION__DISABLED_BECAUSE_PRO_MESSAGE"
+          *ngIf="userIsPro; else cancelledButNotExpired"
+          >Minds+ is already included with your subscription to Minds
+          Pro</ng-container
+        ><ng-template #cancelledButNotExpired
+          ><ng-container
+            *ngIf="expiryString"
+            i18n="@@PLUS_SUBSCRIPTION__DISABLED_BECAUSE_CANCELLED"
+            >You still have Minds+ until {{ expiryString }}.</ng-container
+          ></ng-template
+        >
+      </div>
     </div>
   </div>
 
   <ng-template #cancelButton>
-    <div>
+    <div class="m-plusSubscription__button">
       <button
         class="mf-button mf-button--destructive"
-        [disabled]="!canBeCancelled || inProgress || criticalError"
+        [disabled]="inProgress || criticalError"
         (click)="disable()"
         i18n="@@PLUS_SUBSCRIPTION__CANCEL_PLUS"
       >
