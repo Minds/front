@@ -53,18 +53,6 @@
 
     .m-onboardingModal__nextButton {
       margin: 20px 40px;
-      border-radius: 21px;
-      padding: 10px 16px;
-      background: unset;
-      cursor: pointer;
-      font-weight: 500;
-      font-size: 17px;
-
-      @include m-theme() {
-        border-top: 1px solid themed($m-borderColor--primary);
-        border: 1px solid themed($m-blue);
-        color: themed($m-textColor--primary);
-      }
     }
   }
 }

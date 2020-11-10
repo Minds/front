@@ -26,6 +26,8 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
 
   public cdnAssetsUrl: string;
 
+  public inProgress = false;
+
   /**
    * Dismiss intent.
    */
@@ -132,10 +134,12 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    */
   public async nextClicked(): Promise<void> {
     try {
+      this.inProgress = true;
       this.nextClicked$.next(true);
       await this.panel.nextStep();
+      this.inProgress = false;
     } catch (e) {
-      // nothing
+      this.inProgress = false;
     }
   }
 }

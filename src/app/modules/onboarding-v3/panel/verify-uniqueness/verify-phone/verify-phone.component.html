@@ -24,14 +24,14 @@
         id="number"
         ngDefaultControl
       ></m-phoneInput>
-      <button
+      <m-shadowboxSubmitButton
         [disabled]="inProgress$ | async"
         class="m-onboardingPhone__sendButton"
         (click)="onSend()"
         i18n="@@ONBOARDING_VERIFY_PHONE__SEND_VERIFICATION_CODE"
       >
         <span>Send verification code</span>
-      </button>
+      </m-shadowboxSubmitButton>
     </div>
     <!-- Friend finder checkbox -->
     <!-- <div class="m-onboardingPhone__allowFriendFindingContainer">
@@ -64,19 +64,19 @@
       <input
         type="text"
         formControlName="code"
-        class="m-onboardingPhone__numberInput"
+        class="m-onboardingPhone__numberInput m-onboardingPhone__numberInput--padded"
         name="code"
         id="code"
         ngDefaultControl
       />
-      <button
-        [disabled]="inProgress$ | async"
+      <m-shadowboxSubmitButton
+        [saving]="inProgress$ | async"
         class="m-onboardingPhone__sendButton"
         (click)="onCodeSubmit()"
         i18n="@@ONBOARDING_VERIFY_PHONE__CONFIRM_CODE"
       >
         Confirm code
-      </button>
+      </m-shadowboxSubmitButton>
     </div>
   </form>
   <span class="m-onboardingPhone__notice">

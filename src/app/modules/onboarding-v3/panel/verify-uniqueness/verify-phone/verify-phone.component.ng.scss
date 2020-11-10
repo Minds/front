@@ -21,7 +21,6 @@
       .m-onboardingPhone__label {
         font-size: 16px;
         font-weight: 400;
-        margin-bottom: 16px;
         display: block;
 
         @include m-theme() {
@@ -42,29 +41,29 @@
 
       .m-onboardingPhone__numberInput {
         flex-grow: 10;
-        margin-bottom: unset;
+        margin: 8px 0;
+        outline: none !important;
 
         @include m-theme() {
           border: 1px solid themed($m-borderColor--primary);
+
+          &:focus {
+            border-color: themed($m-blue);
+          }
+        }
+
+        &.m-onboardingPhone__numberInput--padded {
+          padding: 0 16px;
         }
       }
 
       .m-onboardingPhone__sendButton {
-        border-radius: 21px;
         margin: 0 0 0 30px;
         padding: 10px 20px;
         flex-grow: 1;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
 
         @media screen and (max-width: 710px) {
           margin: 16px 0 0 0;
-        }
-        @include m-theme() {
-          background: themed($m-bgColor--primary);
-          border: 1px solid themed($m-blue);
-          color: themed($m-textColor--primary);
         }
       }
     }

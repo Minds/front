@@ -21,9 +21,14 @@
       border-radius: 2;
       padding: 10px 16px;
       margin-bottom: 32px;
+      outline: none !important;
 
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
+
+        &:focus {
+          border-color: themed($m-blue);
+        }
       }
     }
 

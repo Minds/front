@@ -63,10 +63,11 @@
     ></m-onboardingV3__bank> -->
   </ng-container>
   <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
-    <button
+    <m-shadowboxSubmitButton
       class="m-onboardingModal__nextButton"
       [disabled]="disabled$ | async"
       (click)="nextClicked()"
+      [saving]="inProgress"
     >
       <ng-container
         *ngIf="(currentStep$ | async) === 'SetupChannelStep'"
@@ -80,6 +81,6 @@
       >
         Next
       </ng-container>
-    </button>
+    </m-shadowboxSubmitButton>
   </div>
 </div>
