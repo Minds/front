@@ -3,7 +3,7 @@ import { PageLayoutService } from './layout/page-layout.service';
 import { FeaturesService } from '../services/features.service';
 import { ConfigsService } from './services/configs.service';
 import { AuthModalService } from '../modules/auth/modal/auth-modal.service';
-import { Web3ModalModule, Web3ModalService } from '@dorgtech/web3modal-angular';
+import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../helpers/web3modal-configuration';
 import { LocalWalletService } from '../modules/blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';

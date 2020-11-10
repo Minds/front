@@ -22,7 +22,7 @@ import * as BN from 'bn.js';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { Web3ModalService } from '@dorgtech/web3modal-angular';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
 
 @Component({
   selector: 'm-blockchain--purchase',

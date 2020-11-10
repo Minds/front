@@ -28,7 +28,7 @@ import { BlockchainPurchaseComponent } from './token-purchase/purchase.component
 import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
-import { Web3ModalModule, Web3ModalService } from '@dorgtech/web3modal-angular';
+import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../../helpers/web3modal-configuration';
 
 const cryptoRoutes: Routes = [

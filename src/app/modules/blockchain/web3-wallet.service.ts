@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
 import BN from 'bn.js';
-import { Web3ModalService } from '@dorgtech/web3modal-angular';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
 import { LocalWalletService } from './local-wallet.service';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
