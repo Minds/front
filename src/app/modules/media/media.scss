@@ -105,7 +105,7 @@ m-media--edit {
   display: block;
   height: 100%;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
   .m-h1-input {
     padding: 0;
@@ -438,7 +438,7 @@ m-media--grid {
         width: 50px;
         border-radius: 50%;
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }
@@ -527,7 +527,7 @@ m-media--grid {
   margin-bottom: 50px;
   box-sizing: border-box;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--primary);
   }
 
   minds-comments {
@@ -555,7 +555,7 @@ m-media--grid {
     flex-grow: 1;
     max-width: 100%;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
   }
 

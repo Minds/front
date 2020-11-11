@@ -114,6 +114,9 @@
       padding: 8px;
       line-height: 1em;
       font-family: minds_emoji, 'Roboto', Helvetica, sans-serif;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primaryAlt);
+      }
     }
     i {
       width: 24px;

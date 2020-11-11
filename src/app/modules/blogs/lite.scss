@@ -9,7 +9,7 @@
   align-items: center;
   //border-bottom: 1px solid #EDEDEA;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-lite--logo {

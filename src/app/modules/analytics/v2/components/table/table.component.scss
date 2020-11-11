@@ -2,6 +2,7 @@
   font-size: 13px;
   font-weight: 300;
   overflow-x: scroll;
+  overflow-x: overlay;
   @include m-theme() {
     color: themed($m-textColor--primary);
   }
@@ -58,8 +59,7 @@
 .m-analyticsTable__row--data {
   &:hover {
     @include m-theme() {
-      background-color: rgba(themed($m-bgColor--tertiary), 0.4);
-      // background-color: rgba(themed($m-blue-grey-50), 0.5);
+      background-color: themed($m-bgColor--primaryAlt);
     }
     .m-analyticsTable__col--entity .m-analyticsTable__entityTitle i {
       visibility: visible;

@@ -11,15 +11,15 @@ const chartPalette = {
   themeMaps: [
     {
       id: 'm-bgColor--primary',
-      themeMap: ['#fafafa', '#252e31'],
+      themeMap: ['#ffffff', '#242a30'],
     },
     {
       id: 'm-borderColor--primary',
-      themeMap: ['#dce2e4', '#404a4e'],
+      themeMap: ['#d3dbe3', '#414c57'],
     },
     {
       id: 'm-borderColor--secondary',
-      themeMap: ['#979797', '#404a4e'],
+      themeMap: ['#E7EFF7', '#2C363A'], // m-borderColor--primary +/- 8%
     },
     {
       id: 'm-textColor--tertiary',

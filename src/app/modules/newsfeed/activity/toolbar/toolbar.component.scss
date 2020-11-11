@@ -8,8 +8,8 @@ m-activity__toolbar {
   text-align: center;
 
   @include m-theme() {
-    border-top: 1px solid themed($m-borderColor--tertiary);
-    background-color: themed($m-bgColor--secondary);
+    border-top: 1px solid themed($m-borderColor--primary);
+    background-color: themed($m-bgColor--primary);
   }
 
   > * {

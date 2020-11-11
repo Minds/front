@@ -14,7 +14,7 @@ m-overlay-modal {
 
   .m-overlay-modal--backdrop {
     @include m-theme() {
-      background-color: rgba(themed($m-black-always), 0.8);
+      background-color: themed($m-overlay);
     }
   }
 }
@@ -138,7 +138,7 @@ m-overlay-modal {
       max-width: 480px;
       padding: 16px;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
     }
 
@@ -231,7 +231,7 @@ m-overlay-modal {
   height: 100%;
   z-index: 1;
   @include m-theme() {
-    background-color: rgba(themed($m-black-always), 0.5);
+    background-color: themed($m-overlay);
   }
 }
 

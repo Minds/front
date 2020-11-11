@@ -8,7 +8,7 @@ m-composer__modal {
   box-sizing: border-box;
 
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
+    background: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: $max-mobile) {

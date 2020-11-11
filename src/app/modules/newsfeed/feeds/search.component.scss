@@ -6,7 +6,7 @@
   padding: 12px;
   margin-bottom: 16px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   m-sort-selector {
@@ -33,7 +33,7 @@
     .mdl-textfield__input {
       outline: none;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
       border-radius: 6px;
     }

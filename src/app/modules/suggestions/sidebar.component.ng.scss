@@ -26,13 +26,13 @@
     padding: 0;
     list-style: none;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
   .m-suggestionsSidebarList__item {
     // @include m-theme() {
-    //   border-bottom: 1px solid themed($m-grey-50);
+    //   border-bottom: 1px solid themed($m-borderColor--primary);
     // }
 
     &:last-of-type {
@@ -57,6 +57,12 @@
         border: 1px solid themed($m-borderColor--primary);
       }
     }
+    .m-suggestionsSidebarListItem__passBtn {
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+
     .m-suggestionsSidebarListItem__body {
       display: inline-flex;
       vertical-align: middle;

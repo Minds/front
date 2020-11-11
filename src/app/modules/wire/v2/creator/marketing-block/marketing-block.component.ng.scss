@@ -14,7 +14,7 @@
     background-size: cover;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--tertiary);
+      background-color: themed($m-bgColor--primary);
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
 

@@ -19,7 +19,7 @@
     background-size: cover;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 

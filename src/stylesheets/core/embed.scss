@@ -38,7 +38,7 @@
     font-family: monospace;
     font-size: 12px;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 }

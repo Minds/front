@@ -58,7 +58,7 @@ minds-card-user,
 
     img {
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
@@ -377,7 +377,7 @@ minds-activity-preview {
     }
     .mdl-card__menu {
       @include m-theme() {
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primary);
       }
     }
     minds-card-comment:hover {
@@ -611,7 +611,7 @@ minds-activity-preview {
     padding: $minds-padding;
     color: inherit;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 

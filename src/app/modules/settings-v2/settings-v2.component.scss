@@ -10,12 +10,6 @@ m-settingsV2 {
     }
   }
 
-  m-draggableList {
-    @include m-theme {
-      box-shadow: none !important;
-    }
-  }
-
   .m-settingsV2 {
     display: flex;
     font-weight: 300;
@@ -168,14 +162,6 @@ m-settingsV2 {
     }
 
     .m-formWrapper .m-form__fieldsContainer {
-      input,
-      select,
-      textarea,
-      label.m-form__colorPreview {
-        @include m-theme() {
-          box-shadow: none !important;
-        }
-      }
       .m-form__row--label label {
         font-size: 18px;
         line-height: 24px;

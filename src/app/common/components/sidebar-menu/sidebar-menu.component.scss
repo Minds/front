@@ -140,7 +140,7 @@ m-sidebarMenu {
       max-width: 70%;
 
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
       &.mobileMenuExpanded {
         left: 0;

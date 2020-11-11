@@ -10,7 +10,7 @@ m-admin--interactions {
   padding: 8px;
   margin-bottom: 16px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
   @media screen and (max-width: $max-mobile) {
     flex-direction: column;
@@ -67,7 +67,7 @@ m-admin--interactions--table {
   width: 300px;
   flex: 1;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   h3 {
@@ -83,7 +83,7 @@ m-admin--interactions--table {
     td {
       font-size: 11px;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
     tr:first-child td {

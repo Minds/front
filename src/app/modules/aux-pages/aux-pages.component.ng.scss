@@ -5,7 +5,7 @@
   .m-aux__marketing,
   .m-aux__marketing > * {
     @include m-theme {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
@@ -103,7 +103,7 @@
       background-size: cover;
       margin: 0 -40px 40px;
       @include m-theme() {
-        background-color: themed($m-bgColor--tertiary);
+        background-color: themed($m-bgColor--primary);
       }
       .m-aux__heroInner {
         padding: 6em 40px;

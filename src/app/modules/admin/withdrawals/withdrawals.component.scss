@@ -23,7 +23,7 @@
     @include m-theme() {
       background: themed($m-white);
       color: themed($m-black);
-      border-color: themed($m-grey-50);
+      border-color: themed($m-borderColor--primary);
     }
   }
 
@@ -42,7 +42,7 @@
       border-top: 1px dotted;
 
       @include m-theme() {
-        border-color: themed($m-grey-50);
+        border-color: themed($m-borderColor--primary);
       }
     }
 
@@ -94,7 +94,7 @@
     @include m-theme() {
       background: themed($m-white);
       color: themed($m-black);
-      border-color: themed($m-grey-50);
+      border-color: themed($m-borderColor--primary);
     }
   }
 }

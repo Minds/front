@@ -19,6 +19,7 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-v3topbar',
@@ -44,6 +45,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   onAuthPages: boolean = false; // sets to false if we're on login or register pages
 
   router$;
+
+  themeSubscription: Subscription;
+  isDarkTheme: boolean = false;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
@@ -116,6 +120,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   private listen() {
     this.setOnAuthPages(this.router.url);
+
+    this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
+      this.isDarkTheme = isDark;
+      this.detectChanges();
+    });
 
     this.router$ = this.router.events.subscribe(
       (navigationEvent: NavigationEnd) => {

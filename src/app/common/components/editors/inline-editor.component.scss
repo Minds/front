@@ -522,8 +522,8 @@ m-inline-editor {
       margin: 0 10px 0 0;
       @include m-theme() {
         color: themed($m-grey-200);
-        background-color: themed($m-white);
-        border: 1px solid themed($m-grey-100);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
     .medium-insert-link-input {
@@ -534,7 +534,7 @@ m-inline-editor {
       flex-grow: 1;
       @include m-theme() {
         color: themed($m-grey-400);
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
   }
@@ -558,8 +558,8 @@ m-inline-editor {
       font-family: Arial;
       @include m-theme() {
         color: themed($m-grey-200);
-        background-color: themed($m-white);
-        border: 1px solid themed($m-grey-100);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 

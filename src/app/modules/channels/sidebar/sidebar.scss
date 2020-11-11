@@ -24,7 +24,7 @@
   -webkit-font-smoothing: antialiased;
   text-align: center;
   @include m-theme() {
-    border: 1px solid themed($m-grey-100);
+    border: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -41,7 +41,7 @@
     border-radius: 3px;
     display: inline-block;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
   .m-channel-bio-field__tags-container {
@@ -59,7 +59,7 @@
       border-radius: 3px;
       display: inline-block;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
   }
