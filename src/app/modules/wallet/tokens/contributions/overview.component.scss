@@ -2,7 +2,7 @@
   padding: 16px;
   margin-bottom: 8px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-token-contributions--overview--columns {

@@ -84,7 +84,7 @@
 
         @include m-theme() {
           border: 1px solid themed($m-borderColor--primary);
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-textColor--secondary);
         }
       }

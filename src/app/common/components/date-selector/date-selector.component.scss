@@ -27,7 +27,7 @@ m-date-selector {
 
   @include m-theme() {
     color: themed($m-grey-600);
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 

@@ -75,7 +75,7 @@
     padding: 12px;
     margin-bottom: 16px;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     m-sort-selector {

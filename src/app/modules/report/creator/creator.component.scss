@@ -15,7 +15,7 @@
     display: inline-flex;
     /* width: 100%; */
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
     border-radius: 24px;
     font-weight: 600;
@@ -86,7 +86,7 @@
     font-size: 16px;
     letter-spacing: 1px;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
       background-color: rgba(themed($m-white), 0.5);
     }
   }

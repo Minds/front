@@ -32,7 +32,7 @@ m-boost-console-card {
     @include m-theme() {
       color: themed($m-blue-grey-500);
       background-color: themed($m-blue-grey-50);
-      border-top: 1px solid themed($m-grey-100);
+      border-top: 1px solid themed($m-borderColor--primary);
     }
   }
 

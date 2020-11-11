@@ -27,8 +27,8 @@ m-tooltip {
   text-transform: none;
   @include m-theme() {
     color: themed($m-textColor--primary);
-    background-color: themed($m-bgColor--secondary);
-    border: 1px solid themed($m-borderColor--tertiary);
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
     box-shadow: 0 2px 4px 0 rgba(themed($m-black), 0.2);
   }
 

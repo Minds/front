@@ -29,7 +29,7 @@ minds-country-input {
     width: 100%;
     font-family: 'Roboto', Helvetica, sans-serif;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 }

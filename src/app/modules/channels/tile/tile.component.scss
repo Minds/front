@@ -2,7 +2,7 @@
   padding: 0;
   position: relative;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-channels--tile-banner {
@@ -61,7 +61,7 @@
     background-position: center;
     background-size: cover;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
       background-color: themed($m-grey-50);
     }
   }

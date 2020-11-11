@@ -6,7 +6,7 @@ m-activity__remind {
   width: 100%;
 
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
+    background: themed($m-bgColor--primary);
     border: 1px solid themed($m-borderColor--primary);
   }
 }

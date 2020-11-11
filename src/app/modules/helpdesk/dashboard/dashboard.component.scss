@@ -6,7 +6,7 @@ m-helpdesk--dashboard {
 
 .m-helpdesk__dashboard {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-helpdeskQuestions__questions {
@@ -31,7 +31,7 @@ m-helpdesk--dashboard {
     overflow-y: auto;
     box-sizing: border-box;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     &:after {
@@ -58,7 +58,7 @@ m-helpdesk--dashboard {
       justify-content: space-between;
       font-weight: 400;
       @include m-theme() {
-        border-top: 1px solid themed($m-grey-50);
+        border-top: 1px solid themed($m-borderColor--primary);
       }
 
       &:hover,
@@ -95,7 +95,7 @@ m-helpdesk--dashboard {
     width: 100%;
     padding: 16px 16px 16px 56px;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
@@ -263,7 +263,7 @@ m-helpdesk--dashboard {
 .m-helpdesk--dashboard--popular-questions {
   text-align: left;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-helpdesk--dashboard--popular-questions--title {

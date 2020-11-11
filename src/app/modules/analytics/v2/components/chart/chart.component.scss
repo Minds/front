@@ -37,7 +37,7 @@ m-analytics__chart {
   opacity: 0;
   transition: opacity 0.2s ease-in;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
     color: themed($m-grey-300);
   }

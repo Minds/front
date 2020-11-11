@@ -4,7 +4,7 @@
   padding: 24px;
   margin-bottom: 16px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   h2 {
@@ -52,11 +52,11 @@ minds-button-thumbs-up,
 minds-button-thumbs-down {
   a {
     @include m-theme() {
-      color: themed($m-blue-grey-500);
+      color: themed($m-textColor--secondary);
     }
     &:hover {
       @include m-theme() {
-        color: themed($m-blue-grey-800);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -81,7 +81,7 @@ minds-button-thumbs-down {
     cursor: pointer;
     font-weight: 600;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 

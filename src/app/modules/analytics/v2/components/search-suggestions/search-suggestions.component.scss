@@ -13,8 +13,8 @@ m-analytics__searchSuggestions {
     box-sizing: border-box;
     width: 100%;
     @include m-theme() {
-      background-color: themed($m-white);
-      border: 1px solid themed($m-grey-50);
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     .m-analytics__searchSuggestions__suggestion {
@@ -28,7 +28,7 @@ m-analytics__searchSuggestions {
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       @include m-theme() {
-        border-bottom: 1px solid themed($m-grey-50);
+        border-bottom: 1px solid themed($m-borderColor--primary);
         color: themed($m-grey-700);
       }
 

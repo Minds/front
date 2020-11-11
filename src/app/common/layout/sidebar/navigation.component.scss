@@ -223,7 +223,7 @@ m-sidebar--navigation {
   // margin: 4px 20px;
   // padding: 20px;
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
+    background: themed($m-bgColor--primary);
     border: 1px solid themed($m-borderColor--primary);
     border-right: 0;
   }
@@ -239,7 +239,7 @@ m-sidebar--navigation {
     left: 48px;
     transform: rotate(45deg);
     @include m-theme() {
-      background: themed($m-bgColor--secondary);
+      background: themed($m-bgColor--primary);
       border-top: 1px solid themed($m-borderColor--primary);
       border-left: 1px solid themed($m-borderColor--primary);
     }

@@ -1,7 +1,7 @@
 .m-blockchain--options {
   max-width: 900px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-blockchain--options-wallet {

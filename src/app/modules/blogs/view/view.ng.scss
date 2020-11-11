@@ -17,6 +17,11 @@
 
   .m-blog--footer {
     margin-bottom: 50px;
+    .m-license-info {
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
   }
 
   .m-share-buttons {
@@ -104,11 +109,11 @@
         text-align: center;
 
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-black);
 
           &:focus {
-            background-color: themed($m-bgColor--tertiary);
+            background-color: themed($m-bgColor--primary);
           }
         }
       }
@@ -169,12 +174,12 @@
           @include m-theme(){
              border-left: 2px solid themed($m-grey-600);
           }
-      
+
           &:before, &:after {
             position: initial;
             content: initial;
           }
-      
+
           p, ul, ol {
             &:last-child {
               margin-bottom: 0;

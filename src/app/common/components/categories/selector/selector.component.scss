@@ -35,7 +35,7 @@ m-categories--selector {
     overflow-y: visible;
     overflow-x: auto;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     .mdl-menu__item {

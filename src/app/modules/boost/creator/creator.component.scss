@@ -355,7 +355,7 @@
       &.m-boost--creator-autocomplete--result-highlight {
         font-weight: 400;
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-black);
         }
       }
@@ -470,7 +470,7 @@
     min-width: 440px;
     @include m-theme() {
       background-color: rgba(themed($m-black), 0.1);
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -510,7 +510,7 @@
     .m-payments--saved-card-item {
       @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
@@ -733,7 +733,7 @@
 
     &:after {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
     }
   }
@@ -811,7 +811,7 @@
       &:focus {
         @include m-theme() {
           color: themed($m-black);
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }

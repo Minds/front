@@ -60,7 +60,7 @@
 
       &:hover {
         @include m-theme() {
-          background-color: rgba(themed($m-bgColor--tertiary), 0.7);
+          background-color: themed($m-bgColor--secondaryAlt);
         }
       }
 
