@@ -74,7 +74,7 @@ qa:sandbox:
   allow_failure: false
   except:
     - /^master$/
-    - feat/1732-block-refactor
+    - feat-embeddable-video-player
   <<: *cypress_tests
 
 qa:production:
@@ -118,7 +118,7 @@ build:review:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
   tags:
     - angular
 
@@ -142,7 +142,7 @@ build:production:bundles:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
   tags:
     - angular
 
@@ -177,7 +177,7 @@ prepare:review:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -188,7 +188,7 @@ prepare:review:sentry:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
   dependencies:
     - build:review
 
@@ -208,7 +208,7 @@ prepare:production:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
   dependencies:
     - build:production:bundles
 
@@ -221,7 +221,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
   dependencies:
     - build:production:bundles
 
@@ -245,7 +245,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
 
 review:start:
   stage: review
@@ -274,7 +274,7 @@ review:start:
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
 
 review:stop:
   <<: *cleanup_review
@@ -318,7 +318,7 @@ staging:fpm:
     refs:
       - master
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
 
 review:preprod:
   <<: *deploy
@@ -351,7 +351,7 @@ deploy:canary:
       - master
       - test/gitlab-ci
       - epic/angular-9
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
 
 deploy:production:
   <<: *deploy
@@ -381,4 +381,4 @@ cleanup:review: # We stop the review site after the e2e tests have run
       - master
       - production
       - test/gitlab-ci
-      - feat/1732-block-refactor
+      - feat-embeddable-video-player
