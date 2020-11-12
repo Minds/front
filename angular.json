@@ -233,17 +233,11 @@
             "extractCss": true,
             "aot": true,
             "outputHashing": "bundles",
-            "localize": [
-              "en"
-            ],
+            "localize": ["en"],
             "assets": ["src/favicon.ico"],
-            "styles": [
-              "node_modules/plyr/dist/plyr.css"
-            ],
+            "styles": ["node_modules/plyr/dist/plyr.css", "src/main.css"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/stylesheets"
-              ]
+              "includePaths": ["src/stylesheets"]
             }
           },
           "configurations": {
