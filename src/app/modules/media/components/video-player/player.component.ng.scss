@@ -1,3 +1,5 @@
+@import 'defaults.scss';
+
 .plyr video {
   height: 100%;
 }
@@ -29,25 +31,31 @@ m-videoPlayer--scrollaware {
 
 .m-videoPlayer__placeholder {
   height: 330px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   background-color: #222;
   position: relative;
 
-  img {
+  i {
     opacity: 0.8;
+    display: block;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 100px;
+    position: absolute;
     cursor: pointer;
+    width: 100%;
     transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    width: 60px;
-    height: 60px;
+    @include m-theme() {
+      color: themed($m-white-always);
+      text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
+    }
   }
 
   &:hover {
-    img {
+    i {
       opacity: 1;
     }
   }

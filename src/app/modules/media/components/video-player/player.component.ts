@@ -28,7 +28,7 @@ import { Session } from '../../../../services/session';
   templateUrl: 'player.component.html',
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
-  styleUrls: ['./player.component.scss'],
+  styleUrls: ['./player.component.ng.scss'],
 })
 export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   /**

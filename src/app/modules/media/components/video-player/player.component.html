@@ -38,9 +38,11 @@
     [class.m-videoPlayer__placeholder--embedded]="embedded"
     [style.background-image]="'url(' + (service.poster$ | async) + ')'"
   >
-    <img
+    <i
+      class="material-icons minds-video-play-icon"
       (click)="onPlaceholderClick($event)"
-      [src]="cdnAssetsUrl + 'assets/icons/play.svg'"
-    />
+    >
+      play_circle_outline
+    </i>
   </div>
 </ng-template>
