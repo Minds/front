@@ -17,6 +17,7 @@
     <div
       class="m-embedded-video__channel-avatar"
       [ngStyle]="{ 'background-image': 'url(' + avatarSrc + ')' }"
+      *ngIf="avatarSrc"
     ></div>
   </a>
   <a href="{{ mediaUrl }}" class="m-embedded-video__title">{{ title }}</a>
