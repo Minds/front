@@ -243,14 +243,14 @@ export class ChartV2Component implements OnInit, OnDestroy {
         tickformat: this.xTickFormat,
         tickmode: 'array',
         tickson: 'labels',
-        tickcolor: this.getColor('m-borderColor--secondary'),
+        tickcolor: this.getColor('m-borderColor--primary'),
         tickangle: -45,
         tickfont: {
           color: this.getColor('m-textColor--tertiary'),
         },
         showgrid: false,
         showline: true,
-        linecolor: this.getColor('m-borderColor--secondary'),
+        linecolor: this.getColor('m-borderColor--primary'),
         linewidth: 1,
         zeroline: false,
         fixedrange: true,
@@ -261,7 +261,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
         tickmode: 'array',
         tickson: 'labels',
         showgrid: !this.isMini,
-        gridcolor: this.getColor('m-borderColor--primary'),
+        gridcolor: this.getColor('m-borderColor--secondary'),
         zeroline: false,
         visible: true,
         side: 'right',
@@ -319,7 +319,9 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
   emptyMarkerFill() {
     this.data.forEach((segment, i) => {
-      this.markerFills[i][this.hoverPoint] = this.getColor('m-white');
+      this.markerFills[i][this.hoverPoint] = this.getColor(
+        'm-bgColor--primary'
+      );
       segment.marker.color = this.markerFills[i];
     });
   }
@@ -334,7 +336,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
     hoverLine.y0 = this.lineRange[0];
     hoverLine.y1 = this.lineRange[1] * 0.99;
-    hoverLine.line.color = this.getColor('m-grey-70');
+    hoverLine.line.color = this.getColor('m-borderColor--secondary');
     this.layout.shapes = this.shapes;
   }
 

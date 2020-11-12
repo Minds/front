@@ -16,7 +16,7 @@ m-admin--purchases {
       width: 300px;
       flex: 1;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
 
       h3 {
@@ -33,7 +33,7 @@ m-admin--purchases {
         td {
           font-size: 14px;
           @include m-theme() {
-            border: 1px solid themed($m-grey-50);
+            border: 1px solid themed($m-borderColor--primary);
           }
 
           &.m-admin--pledges--actions {
@@ -51,7 +51,7 @@ m-admin--purchases {
         }
         th {
           @include m-theme() {
-            border: 1px solid themed($m-grey-50);
+            border: 1px solid themed($m-borderColor--primary);
             border-top: 0;
           }
           &:first-child {

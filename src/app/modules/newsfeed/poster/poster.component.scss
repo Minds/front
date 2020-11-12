@@ -255,7 +255,7 @@ m-hashtags-selector {
     align-content: center;
     padding: 8px 0;
     @include m-theme() {
-      border-top: 1px solid themed($m-grey-50);
+      border-top: 1px solid themed($m-borderColor--primary);
     }
 
     > * {
@@ -264,7 +264,7 @@ m-hashtags-selector {
       white-space: nowrap;
       text-decoration: none;
       @include m-theme() {
-        border-right: 1px solid themed($m-grey-50);
+        border-right: 1px solid themed($m-borderColor--primary);
         color: themed($m-grey-700);
       }
 
@@ -384,7 +384,7 @@ m-hashtags-selector {
 
   .post-preview {
     @include m-theme() {
-      border-top: 1px solid themed($m-grey-50);
+      border-top: 1px solid themed($m-borderColor--primary);
     }
   }
 

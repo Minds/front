@@ -42,7 +42,7 @@
   padding: 16px;
   margin: 16px 8px;
   @include m-theme() {
-    border: 1px solid themed($m-grey-100);
+    border: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -81,7 +81,7 @@
     display: block;
     padding: $minds-padding;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 }

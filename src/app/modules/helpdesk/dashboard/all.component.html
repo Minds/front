@@ -4,9 +4,19 @@
       *ngFor="let category of categories"
       class="m-helpdeskQuestions__questions m-border"
     >
-      <ul>
+      <!-- Category header -->
+      <span
+        class="m-helpdeskQuestions__categoryHeader"
+        (click)="toggleCategory(category)"
+      >
         <h4>{{ category.title }}</h4>
+        <m-icon iconId="expand_more"></m-icon>
+      </span>
 
+      <!-- Loading spinner -->
+      <m-loadingSpinner [inProgress]="category.inProgress"></m-loadingSpinner>
+
+      <ul *ngIf="!category.collapsed">
         <li
           *ngFor="let question of category.questions"
           class="m-helpdeskQuestions__question"

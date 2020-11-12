@@ -17,7 +17,7 @@
     margin: 16px;
     border-radius: 3px;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     > * {

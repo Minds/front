@@ -63,7 +63,7 @@ m-marketing {
 
 .m-marketing {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -269,7 +269,7 @@ m-marketing {
   padding: 80px 0;
   height: auto;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: 720px) {
@@ -394,7 +394,7 @@ m-marketing {
 .m-marketing--section--subsection,
 .m-marketingSection__subsection {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
@@ -606,7 +606,7 @@ m-marketing {
   max-height: 600px;
   overflow: scroll;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -659,7 +659,7 @@ m-marketing {
 .m-marketing--section,
 .m-marketing__section {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 

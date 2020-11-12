@@ -20,7 +20,7 @@ m-wire-threshold-input,
       padding: 8px;
       line-height: 1;
       @include m-theme() {
-        border-bottom: 1px solid themed($m-grey-50);
+        border-bottom: 1px solid themed($m-borderColor--primary);
       }
     }
 
@@ -105,7 +105,7 @@ m-wire-threshold-input,
     vertical-align: middle;
     padding: ($minds-padding / 4) ($minds-padding / 2);
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
       color: themed($m-grey-400);
     }
 

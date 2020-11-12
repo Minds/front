@@ -7,7 +7,7 @@ m--rejection-reason-modal {
     h5.m-modal-reasons--title {
       padding: 0 16px 16px;
       @include m-theme() {
-        border-bottom: 1px solid themed($m-grey-50);
+        border-bottom: 1px solid themed($m-borderColor--primary);
       }
     }
     .m-modal-reasons--reasons {
@@ -18,12 +18,12 @@ m--rejection-reason-modal {
         min-height: 20px;
         cursor: pointer;
         @include m-theme() {
-          border-bottom: 1px solid themed($m-grey-50);
+          border-bottom: 1px solid themed($m-borderColor--primary);
         }
 
         &:hover {
           @include m-theme() {
-            background-color: themed($m-white);
+            background-color: themed($m-bgColor--primary);
           }
         }
       }

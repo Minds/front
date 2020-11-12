@@ -37,7 +37,7 @@
   input,
   textarea {
     @include m-theme() {
-      background-color: themed($m-white) !important;
+      background-color: themed($m-bgColor--primary) !important;
       color: themed($m-textColor--primary) !important;
     }
   }

@@ -30,7 +30,7 @@ m-activity__ownerBlock {
         height: 17px;
         width: 17px;
         @include m-theme() {
-          background-color: themed($m-bgColor--quinary);
+          background-color: themed($m-bgColor--contrast);
         }
         i {
           font-weight: 700;
@@ -136,7 +136,7 @@ m-activity__ownerBlock {
   font-weight: normal;
 
   @include m-theme() {
-    color: themed($m-textColor--tertiary);
+    color: themed($m-textColor--secondary);
   }
 
   .material-icons {

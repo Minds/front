@@ -2,8 +2,8 @@
 
 :host {
   .m-discovery__tagButton {
-    width: 29px;
-    height: 29px;
+    width: 27px;
+    height: 27px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -13,7 +13,7 @@
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
 
     &:hover {
@@ -24,12 +24,12 @@
     }
 
     i {
-      font-size: 23px;
+      font-size: 17px;
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
     }
-    &.m-discovery__tagButton--recentlySelected {
+    &.m-discovery__tagButton--selected {
       @include m-theme() {
         border: 1px solid themed($m-link);
       }

@@ -10,7 +10,7 @@ m-walletRewardsPopup {
   line-height: 18px;
 
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     color: themed($m-textColor--secondary);
     box-shadow: 0 0 10px 0 rgba(themed($m-black), 0.1);
     border: 1px solid themed($m-borderColor--primary);

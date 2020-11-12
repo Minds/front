@@ -6,7 +6,7 @@ m-blockchain--wallet-selector {
   padding: $minds-padding * 2;
   font-size: 14px;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -18,7 +18,7 @@ m-blockchain--wallet-selector {
     padding: $minds-padding * 2;
     cursor: pointer;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
     }
     &.m-blockchain--wallet-selector--item-active {
       cursor: default;

@@ -41,7 +41,7 @@
 
   @include m-theme() {
     color: themed($m-textColor--primary);
-    background-color: rgba(themed($m-bgColor--secondary), 0.6);
+    background-color: rgba(themed($m-bgColor--primary), 0.6);
   }
 
   > m-icon {

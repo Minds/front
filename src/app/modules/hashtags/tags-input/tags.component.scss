@@ -2,7 +2,7 @@ minds-form-tags-input {
   display: block;
   padding: 4px;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--primary);
   }
 
   .m-form-tags-input-tags-tag {

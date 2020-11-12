@@ -184,9 +184,9 @@ m-activity__content {
   @include m-theme() {
     background: linear-gradient(
       to bottom,
-      rgba(themed($m-bgColor--secondary), 0.3) 0%,
-      rgba(themed($m-bgColor--secondary), 0.8) 30%,
-      rgba(themed($m-bgColor--secondary), 1) 70%
+      rgba(themed($m-bgColor--primary), 0.3) 0%,
+      rgba(themed($m-bgColor--primary), 0.8) 30%,
+      rgba(themed($m-bgColor--primary), 1) 70%
     );
   }
 }
@@ -252,7 +252,7 @@ m-activity__content {
     position: relative;
     cursor: default;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
     .m-rich-embed--title {
       font-size: 18px;

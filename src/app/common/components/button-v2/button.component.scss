@@ -140,7 +140,7 @@ m-button {
 
   @include m-theme() {
     color: themed($m-textColor--secondary);
-    background: themed($m-bgColor--secondary);
+    background: themed($m-bgColor--primary);
     border-color: themed($m-borderColor--primary);
   }
 

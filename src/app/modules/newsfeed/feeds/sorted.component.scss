@@ -86,7 +86,7 @@ m-newsfeed--sorted {
   padding: 12px;
   margin-bottom: 16px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   &.m-feeds-sorted__Filter--end {
@@ -118,7 +118,7 @@ m-newsfeed--sorted {
       outline: none;
       border-radius: 6px;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
   }

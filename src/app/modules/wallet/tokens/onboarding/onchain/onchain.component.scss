@@ -47,7 +47,7 @@
         letter-spacing: 1px;
         font-weight: 300;
         @include m-theme() {
-          border: 1px solid themed($m-grey-50);
+          border: 1px solid themed($m-borderColor--primary);
         }
       }
 

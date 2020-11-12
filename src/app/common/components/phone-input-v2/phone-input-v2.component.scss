@@ -24,8 +24,8 @@ m-phoneInput {
     flex-flow: row nowrap;
     align-items: center;
     @include m-theme() {
-      background-color: themed($m-white);
-      border: 1px solid themed($m-grey-50);
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
     }
     * {
       box-sizing: border-box;
@@ -100,7 +100,7 @@ m-phoneInput {
     border-bottom-left-radius: 6px;
     outline: 0;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     .m-phoneInput__dialCode {
@@ -135,8 +135,8 @@ m-phoneInput {
     overflow-x: hidden;
 
     @include m-theme() {
-      background-color: themed($m-white);
-      border-left: 1px solid themed($m-grey-50);
+      background-color: themed($m-bgColor--primary);
+      border-left: 1px solid themed($m-borderColor--primary);
     }
     &:focus {
       outline: none;
@@ -162,8 +162,7 @@ m-phoneInput {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     @include m-theme() {
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-blue);
       border-top: none;
     }
@@ -215,12 +214,12 @@ m-phoneInput {
     background-color: transparent;
     margin-top: 0;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-100);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
   &.country:not(:last-child) {
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-50);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 
@@ -1302,7 +1301,6 @@ m-phoneInput {
     background-position: 20px 0;
     @include m-theme() {
       background-color: themed($m-grey-100);
-      box-shadow: 0px 0px 1px 0px themed($m-grey-400);
     }
   }
   @media only screen and (-webkit-min-device-pixel-ratio: 2),
