@@ -136,6 +136,7 @@ build:production:bundles:
     paths:
       - dist/browser
       - dist/server
+      - dist/embed
   only:
     refs:
       - master

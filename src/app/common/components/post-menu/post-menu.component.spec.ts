@@ -7,6 +7,7 @@ import {
   Output,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
+import { EmbedServiceV2 } from '../../../services/embedV2.service';
 
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -117,6 +118,10 @@ describe('PostMenuComponent', () => {
         {
           provide: FormToastService,
           useValue: MockService(FormToastService),
+        },
+        {
+          provide: EmbedServiceV2,
+          useValue: MockService(EmbedServiceV2),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

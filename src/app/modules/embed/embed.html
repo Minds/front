@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link rel="icon" type="image/svg" href="assets/logos/bulb.svg" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/logos/bulb-apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/logos/bulb-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/logos/bulb-16x16.png"
+    />
+    <title>Minds Embed</title>
+    <style>
+      :root {
+        --plyr-font-family: 'Roboto', Helvetica, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body class="m-theme__light">
+    <m-app></m-app>
+
+    <script>
+      function module() {} // Fixes undefined module function in SystemJS bundle
+    </script>
+
+    <!-- shims:js -->
+    <!-- endinject -->
+  </body>
+</html>

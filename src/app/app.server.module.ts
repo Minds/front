@@ -32,23 +32,25 @@ export class ServerXhr implements XhrFactory {
   }
 }
 
+export const SERVER_PROVIDERS = [
+  { provide: XhrFactory, useClass: ServerXhr },
+  {
+    provide: CookieService,
+    useClass: CookieBackendService,
+  },
+  {
+    provide: RedirectService,
+    useClass: ServerRedirectService,
+  },
+  {
+    provide: HeadersService,
+    useClass: ServerHeadersService,
+  },
+];
+
 @NgModule({
   imports: [MindsModule, ServerModule, ServerTransferStateModule, PlotlyModule],
-  providers: [
-    { provide: XhrFactory, useClass: ServerXhr },
-    {
-      provide: CookieService,
-      useClass: CookieBackendService,
-    },
-    {
-      provide: RedirectService,
-      useClass: ServerRedirectService,
-    },
-    {
-      provide: HeadersService,
-      useClass: ServerHeadersService,
-    },
-  ],
+  providers: SERVER_PROVIDERS,
   bootstrap: [Minds],
 })
 export class AppServerModule {}

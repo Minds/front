@@ -1,4 +1,9 @@
+/***************************************************************************************************
+ * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
+ */
+import '@angular/localize/init';
 import 'zone.js/dist/zone-node';
+import { renderModule } from '@angular/platform-server';
 
 import { join } from 'path';
 import { readFileSync, existsSync } from 'fs';
@@ -6,16 +11,10 @@ import * as _url from 'url';
 
 import './server-polyfills';
 
-import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
-import {
-  enableProdMode,
-  TRANSLATIONS,
-  TRANSLATIONS_FORMAT,
-  LOCALE_ID,
-} from '@angular/core';
-import { XhrFactory } from '@angular/common/http';
+import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
 import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
+import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
 
 import * as express from 'express';
@@ -23,9 +22,9 @@ import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
+const browserDistFolder = join(process.cwd(), 'dist', 'browser');
+const embedDistFolder = join(process.cwd(), 'dist', 'embed');
 const PORT = process.env.PORT || 4200;
-// Dist folder
-const distFolder = join(process.cwd(), 'dist', 'browser');
 
 export function app() {
   // Express server
@@ -33,21 +32,12 @@ export function app() {
 
   // gzip
   server.use(compression());
-  // cokies
+  // cookies
   server.use(cookieparser());
 
-  server.engine(
-    'html',
-    ngExpressEngine({
-      bootstrap: AppServerModule,
-    })
-  );
-
-  server.set('view engine', 'html');
-  server.set('views', distFolder);
-
   // Server static files from dist folder
-  server.get('*.*', express.static(distFolder));
+  server.use('/embed-static', express.static(embedDistFolder));
+  server.get('*.*', express.static(browserDistFolder));
 
   // Socket.io hitting wrong endpoint (dev?)
   server.get('/socket.io', (req, res) => {
@@ -94,8 +84,10 @@ export function app() {
     };
   };
 
-  // All regular routes use the Universal engine
-  server.get('*', cache(), (req, res) => {
+  const render = (
+    bootstrap: any,
+    getDocument?: (locale: string) => string
+  ) => async (req: any, res: any) => {
     const http =
       req.headers['x-forwarded-proto'] === undefined
         ? 'http'
@@ -106,63 +98,69 @@ export function app() {
 
     // tslint:disable-next-line:no-console
     console.time(`GET: ${url}`);
-    res.render(
-      `${locale}/index`,
-      {
-        req: req,
-        res: res,
-        // provers from server
-        providers: [
-          // for http and cookies
-          {
-            provide: REQUEST,
-            useValue: req,
-          },
-          {
-            provide: RESPONSE,
-            useValue: res,
-          },
-          // for cookie
-          {
-            provide: NgxRequest,
-            useValue: req,
-          },
-          {
-            provide: NgxResponse,
-            useValue: res,
-          },
-          // for absolute path
-          {
-            provide: 'ORIGIN_URL',
-            useValue: `${http}://${req.headers.host}`,
-          },
-          // for initial query params before router loads
-          {
-            provide: 'QUERY_STRING',
-            useFactory: () => {
-              return _url.parse(req.url, true).search || '';
-            },
-            deps: [],
-          },
-          {
-            provide: TRANSLATIONS,
-            useValue: getLocaleTranslations(locale),
-          },
-          { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-          // { provide: LOCALE_ID, useValue: locale },
-        ],
-      },
-      (err, html) => {
-        if (!!err) {
-          throw err;
-        }
+    const html = await renderModule(bootstrap, {
+      url: `${req.protocol}://${req.get('host') || ''}${req.originalUrl}`,
+      document: getDocument(locale),
+      extraProviders: [
+        // for http and cookies
+        {
+          provide: REQUEST,
+          useValue: req,
+        },
+        {
+          provide: RESPONSE,
+          useValue: res,
+        },
+        // for cookie
+        {
+          provide: NgxRequest,
+          useValue: req,
+        },
+        {
+          provide: NgxResponse,
+          useValue: res,
+        },
+        // for absolute path
+        {
+          provide: 'ORIGIN_URL',
+          useValue: `${http}://${req.headers.host}`,
+        },
+        // for initial query params before router loads
+        {
+          provide: 'QUERY_STRING',
+          useFactory: () => _url.parse(req.url, true).search || '',
+          deps: [],
+        },
+        {
+          provide: TRANSLATIONS,
+          useValue: getLocaleTranslations(locale),
+        },
+        { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+        // { provide: LOCALE_ID, useValue: locale },
+      ],
+    });
+    console.timeEnd(`GET: ${url}`);
 
-        // tslint:disable-next-line:no-console
-        console.timeEnd(`GET: ${url}`);
-        res.send(html);
-      }
-    );
-  });
+    res.send(html);
+  };
+
+  // embed route loads its own module
+  server.get(
+    `/embed/*`,
+    cache(),
+    render(EmbedServerModule, locale =>
+      readFileSync(join(embedDistFolder, `${locale}/embed.html`)).toString()
+    )
+  );
+
+  // All regular routes use the Universal engine
+  server.get(
+    '*',
+    cache(),
+    render(AppServerModule, locale =>
+      readFileSync(join(browserDistFolder, `${locale}/index.html`)).toString()
+    )
+  );
 
   return server;
 }
@@ -177,7 +175,7 @@ function getLocale(req): string {
   const hostLanguage = req.headers['x-minds-locale'] || defaultLocale;
 
   if (hostLanguage && hostLanguage.length === 2) {
-    const path = join(distFolder, hostLanguage);
+    const path = join(browserDistFolder, hostLanguage);
     if (existsSync(path)) {
       return hostLanguage;
     }

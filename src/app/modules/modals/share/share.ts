@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../helpers/is-mobile';
@@ -18,20 +19,26 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   shareUrl: string = '';
   encodedShareUrl: string = '';
 
-  shareUrlRecentlyCopied: boolean = false;
   shareUrlFocused: boolean = false;
-  shareUrlTimeout;
+  embedInputFocused: boolean = false;
+
+  embedCode: string;
 
   includeReferrerParam: boolean = true; // Include referrer param in url by default
   flashing: boolean = false;
   flashTimeout;
 
-  @Input('url') set data(url) {
+  @Input('data') set data({ url, embedCode }) {
+    this.embedCode = embedCode;
     this.rawUrl = url;
     this.encodedRawUrl = encodeURI(this.rawUrl);
   }
 
-  constructor(public session: Session, configs: ConfigsService) {
+  constructor(
+    public session: Session,
+    configs: ConfigsService,
+    private toasterService: FormToastService
+  ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
@@ -121,28 +128,45 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   }
 
   // Receives input element whose text you want to copy
-  copyToClipboard(inputElement) {
+  copyShareUrlToClipboard(inputElement) {
     inputElement.select();
     document.execCommand('copy');
 
-    // Temporarily change button text from 'copy' to 'copied'
-    clearTimeout(this.shareUrlTimeout);
-    this.shareUrlRecentlyCopied = true;
-    this.shareUrlTimeout = setTimeout(() => {
-      this.shareUrlRecentlyCopied = false;
-    }, 2000);
+    // TODO: translate
+    this.notify('Post link copied to clipboard');
+  }
+
+  copyEmbedCodeToClipboard(inputElement) {
+    inputElement.select();
+    document.execCommand('copy');
+
+    // TODO: translate
+    this.notify('Post embed code copied to clipboard');
+  }
+
+  /**
+   * Notify the user using the toast service
+   * @param {string} msg
+   * */
+  private notify(msg: string) {
+    this.toasterService.success(msg);
   }
 
   // Make copyable link container appear focused when you click on it
   // Receives the inputElement to be focused
-  applyFocus(inputElement) {
+  applyFocusToShareInput(inputElement) {
     inputElement.focus();
     inputElement.select();
     this.shareUrlFocused = true;
   }
 
+  applyFocusToEmbedInput(inputElement) {
+    inputElement.focus();
+    inputElement.select();
+    this.embedInputFocused = true;
+  }
+
   ngOnDestroy() {
-    clearTimeout(this.shareUrlTimeout);
     clearTimeout(this.flashTimeout);
   }
 }
