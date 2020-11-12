@@ -18,6 +18,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { MetaService } from '../../common/services/meta.service';
 import { SiteService } from '../../common/services/site.service';
 import { Client } from '../../services/api/client';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { VideoModule } from '../media/components/video/video.module';
 import { EmbedComponent } from './embed.component';
 import { EmbeddedVideoComponent } from './embedded-video/embedded-video.component';
@@ -63,6 +64,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
       multi: true,
     },
     { provide: APP_BASE_HREF, useValue: '/' },
+    OverlayModalService,
   ],
   bootstrap: [EmbedComponent],
 })

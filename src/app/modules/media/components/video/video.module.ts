@@ -10,6 +10,5 @@ import { ScrollAwareVideoPlayerComponent } from '../video-player/scrollaware-pla
   imports: [NgCommonModule, RouterModule.forChild([]), PlyrModule],
   declarations: [MindsVideoPlayerComponent, ScrollAwareVideoPlayerComponent],
   exports: [MindsVideoPlayerComponent, ScrollAwareVideoPlayerComponent],
-  providers: [OverlayModalService],
 })
 export class VideoModule {}
