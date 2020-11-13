@@ -1,0 +1,5 @@
+<div [@fader]="state$ | async" *ngIf="(state$ | async) === 'active'">
+  <div class="m-appPrompt__container" (click)="onClick()">
+    Switch to App
+  </div>
+</div>
