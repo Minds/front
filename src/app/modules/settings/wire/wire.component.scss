@@ -7,7 +7,7 @@ m-settings--wire {
       display: block;
       padding: $minds-padding;
       @include m-theme() {
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
   }

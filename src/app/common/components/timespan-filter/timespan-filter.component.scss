@@ -16,7 +16,7 @@ m-timespanFilter {
     padding: 5px 16px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
-      background-color: rgba(themed($m-bgColor--tertiary), 0.5);
+      background-color: themed($m-bgColor--primary);
     }
     &:first-child {
       border-top-left-radius: 5px;
@@ -34,7 +34,7 @@ m-timespanFilter {
     &.active,
     &:hover {
       @include m-theme() {
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primaryAlt);
         color: themed($m-textColor--secondary);
       }
     }
@@ -42,7 +42,7 @@ m-timespanFilter {
       transition: all 0.1s cubic-bezier(0.23, 1, 0.32, 1);
 
       @include m-theme() {
-        background-color: rgba(themed($m-bgColor--tertiary), 0.2);
+        background-color: themed($m-bgColor--primaryAlt);
         box-shadow: inset 0 1px 4px 0 rgba(themed($m-black), 0.2);
       }
     }

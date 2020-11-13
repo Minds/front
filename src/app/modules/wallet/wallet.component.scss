@@ -96,10 +96,10 @@ m-wallet {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    /* border-right: 1px solid themed($m-grey-100); */
+    /* border-right: 1px solid themed($m-borderColor--primary); */
     border-radius: 0;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
       background-color: rgba(themed($m-grey-50), 0.8);
     }
   }

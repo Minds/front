@@ -101,7 +101,7 @@ m-dropdownSelector {
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
     color: themed($m-textColor--tertiary);
   }
   @include m-theme() {
@@ -133,7 +133,7 @@ m-dropdownSelector {
   @include m-theme() {
     border: 1px solid themed($m-blue);
     border-top: 1px solid themed($m-blue);
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     box-shadow: 0px 8px 16px 0px rgba(themed($m-black), 0.15);
   }
 
@@ -142,7 +142,6 @@ m-dropdownSelector {
     &:hover:not(.unavailable) {
       @include m-theme() {
         color: themed($m-textColor--primary);
-        background-color: rgba(themed($m-bgColor--tertiary), 0.3);
       }
     }
     &:first-child {

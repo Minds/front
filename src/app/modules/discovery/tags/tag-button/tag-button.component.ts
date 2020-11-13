@@ -1,4 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Session } from '../../../../services/session';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { DiscoveryTag, DiscoveryTagsService } from '../tags.service';
 
 @Component({
@@ -10,12 +12,15 @@ export class DiscoveryTagButtonComponent implements OnDestroy {
   @Input() tag: DiscoveryTag;
 
   recentlyToggled: boolean = false;
-  recentlySelected: boolean = false;
   hovering: boolean = false;
 
   timeout: any;
 
-  constructor(private service: DiscoveryTagsService) {}
+  constructor(
+    private service: DiscoveryTagsService,
+    private authModal: AuthModalService,
+    private session: Session
+  ) {}
 
   ngOnDestroy(): void {
     if (this.timeout) {
@@ -24,8 +29,11 @@ export class DiscoveryTagButtonComponent implements OnDestroy {
   }
 
   async addTag(): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      await this.authModal.open({ formDisplay: 'login' });
+    }
+
     this.tag.selected = true;
-    this.recentlySelected = true;
     this.recentlyToggled = true;
 
     let saved = await this.service.addSingleTag(this.tag);
@@ -40,7 +48,6 @@ export class DiscoveryTagButtonComponent implements OnDestroy {
 
   async removeTag(): Promise<void> {
     this.tag.selected = false;
-    this.recentlySelected = false;
     this.recentlyToggled = true;
 
     let saved = await this.service.removeSingleTag(this.tag);

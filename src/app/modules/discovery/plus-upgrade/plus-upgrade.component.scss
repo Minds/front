@@ -7,7 +7,7 @@ m-discovery__plusUpgrade {
     font-weight: 300;
     margin-bottom: 10px;
     @include m-theme() {
-      background-color: themed($m-bgColor--tertiary);
+      background-color: themed($m-bgColor--primary);
     }
   }
   a {

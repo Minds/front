@@ -1,6 +1,6 @@
 .m-mindsList__tools {
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
   display: flex;
   position: relative;

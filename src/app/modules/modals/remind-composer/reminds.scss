@@ -29,7 +29,7 @@ m-modal-remind-composer {
       padding: $minds-padding (24px + $minds-padding) $minds-padding
         $minds-padding;
       @include m-theme() {
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 

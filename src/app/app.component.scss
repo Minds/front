@@ -113,8 +113,8 @@ m-app {
     font-size: 13px;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
-      border: 1px solid themed($m-borderColor--tertiary);
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     &.m-page--sidebar--navigation--item-active {

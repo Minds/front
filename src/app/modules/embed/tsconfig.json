@@ -1,0 +1,17 @@
+{
+  "extends": "../../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/embed",
+    "baseUrl": "./",
+    "module": "esNext",
+    "types": ["node"]
+  },
+  "include": [
+    "main.ts",
+    "../../../polyfills.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/testing/*"
+  ]
+}

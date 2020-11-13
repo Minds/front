@@ -11,7 +11,7 @@ m-languageModal {
     padding: 24px 32px;
 
     @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--tertiary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 

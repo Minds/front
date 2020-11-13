@@ -27,7 +27,7 @@ m-channel--onboarding {
   line-height: 1.5em;
   padding-top: 24px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-channelOnboarding__logo {
@@ -176,7 +176,7 @@ m-channel--onboarding {
           height: 64px;
           border-radius: 50%;
           @include m-theme() {
-            border: 1px solid themed($m-grey-50);
+            border: 1px solid themed($m-borderColor--primary);
           }
 
           .overlay {
@@ -207,7 +207,7 @@ m-channel--onboarding {
         text-align: center;
         padding: 8px 16px;
         @include m-theme() {
-          border: 1px solid themed($m-grey-50);
+          border: 1px solid themed($m-borderColor--primary);
         }
 
         &:focus {
@@ -228,7 +228,7 @@ m-channel--onboarding {
       font-weight: 600;
       text-transform: lowercase;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
         color: themed($m-grey-700);
       }
     }
@@ -255,7 +255,7 @@ m-channel--onboarding {
       border-radius: 24px;
       padding: 8px 12px;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       &li {
@@ -287,7 +287,7 @@ m-channel--onboarding {
           text-transform: lowercase;
           margin-right: 8px;
           @include m-theme() {
-            border: 1px solid themed($m-grey-100);
+            border: 1px solid themed($m-borderColor--primary);
           }
         }
 
@@ -401,7 +401,7 @@ m-channel--onboarding {
         cursor: pointer;
         @include m-theme() {
           color: themed($m-grey-800);
-          border-bottom: 1px solid themed($m-grey-50);
+          border-bottom: 1px solid themed($m-borderColor--primary);
         }
       }
 
@@ -446,7 +446,7 @@ m-channel--onboarding {
       display: flex;
       flex-direction: row;
       flex-flow: row wrap;
-      //background-color: themed($m-white);
+      //background-color: themed($m-bgColor--primary);
       max-width: 1280px;
       margin: auto;
 

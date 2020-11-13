@@ -15,7 +15,7 @@
     }
     font-size: 14px;
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
   }
 }

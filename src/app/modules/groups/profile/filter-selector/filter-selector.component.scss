@@ -30,7 +30,7 @@ m-groups--filter-selector {
     text-align: right;
     display: inline-block;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     @media screen and (max-width: 840px) {

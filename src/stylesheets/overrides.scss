@@ -42,7 +42,7 @@
 .mdl-card {
   z-index: initial;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
   .mdl-card__supporting-text {
     -webkit-font-smoothing: antialiased;
@@ -78,15 +78,15 @@ textarea:-internal-autofill-selected,
 select:-internal-autofill-previewed,
 select:-internal-autofill-selected {
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
     color: rgba(themed($m-black), 0.87);
   }
 }
 
 .mdl-data-table {
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
-    border: 1px solid rgba(themed($m-borderColor--tertiary), 0.12);
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid rgba(themed($m-borderColor--primary), 0.12);
   }
 }
 
@@ -131,7 +131,7 @@ select:-internal-autofill-selected {
 
 hr {
   @include m-theme() {
-    border-top: 1px solid themed($m-grey-100);
+    border-top: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -224,7 +224,7 @@ hr {
 
 .mdl-button--raised.mdl-button--colored .mdl-ripple {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -312,7 +312,7 @@ hr {
 
 .mdl-button--primary.mdl-button--primary .mdl-ripple {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -481,7 +481,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 .mdl-data-table {
   @include m-theme() {
     border: 1px solid rgba(themed($m-black), 0.12);
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -575,7 +575,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 
 .mdl-menu__outline {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
       0 3px 1px -2px rgba(themed($m-black), 0.2),
       0 1px 5px 0 rgba(themed($m-black), 0.12);
@@ -1082,7 +1082,7 @@ fieldset[disabled] .mdl-radio .mdl-radio__label,
 
 .mdl-tabs__tab-bar {
   @include m-theme() {
-    border-bottom: 1px solid themed($m-grey-50);
+    border-bottom: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -1237,7 +1237,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 }
 .mdl-color--white {
   @include m-theme() {
-    background-color: themed($m-white) !important;
+    background-color: themed($m-bgColor--primary) !important;
   }
 }
 //////////////////////////////////////////////

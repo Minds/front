@@ -411,7 +411,7 @@ m-walletDashboard {
     .m-walletForm__row--input {
       input {
         @include m-theme() {
-          background-color: themed($m-bgColor--secondary);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-textColor--primary);
         }
       }
@@ -548,7 +548,6 @@ m-walletDashboard {
   minds-country-input select {
     border-radius: 2px;
     @include m-theme() {
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       border: 1px solid themed($m-borderColor--primary);
     }
     &:focus {
@@ -600,7 +599,7 @@ m-walletDashboard {
       line-height: 20px;
       font-weight: 300;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         color: themed($m-textColor--primary);
       }
     }
@@ -648,7 +647,6 @@ m-walletDashboard {
       @include m-theme() {
         color: themed($m-textColor--primary);
         border: 1px solid themed($m-borderColor--primary);
-        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       }
       &:focus {
         @include m-theme() {

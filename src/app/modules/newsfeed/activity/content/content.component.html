@@ -112,7 +112,7 @@
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
-        [routerLink]="['/media', imageGuid]"
+        [routerLink]="['/newsfeed', imageGuid]"
         (click)="onModalRequested($event)"
         ><ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>

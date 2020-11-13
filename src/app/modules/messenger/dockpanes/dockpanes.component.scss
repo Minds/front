@@ -12,16 +12,15 @@
     .m-messenger--dockpane-container {
       display: block;
       width: 100%;
-      //height: 99px;
       display: block;
       position: relative;
       @include m-theme() {
-        background-color: rgba(themed($m-white), 1);
+        background-color: themed($m-bgColor--primaryAlt);
       }
     }
     .m-messenger--dockpane-tab {
       @include m-theme() {
-        border-bottom: 1px solid themed($m-grey-50);
+        border-bottom: 1px solid themed($m-borderColor--primary);
       }
     }
   }
@@ -34,7 +33,7 @@
     display: block;
     cursor: pointer;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primaryAlt);
       color: themed($m-textColor--primary);
     }
 
@@ -104,8 +103,8 @@
     align-items: center;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
-      border-bottom: 1px solid themed($m-borderColor--tertiary);
+      background-color: themed($m-bgColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
     .m-messenger--dockpane-tab-icon {

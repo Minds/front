@@ -12,7 +12,7 @@ m-usermenu__v3 {
       background-position: center;
       background-size: cover;
       @include m-theme() {
-        border: 1px solid themed($m-borderColor--tertiary);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
@@ -46,7 +46,7 @@ m-usermenu__v3 {
 
         &:not(.m-userMenuDropdown__username):not(.m-userMenuDropdown__spacer):not(.m-userMenuDropdown__footer):hover {
           @include m-theme() {
-            background-color: themed($m-bgColor--primary);
+            background-color: themed($m-bgColor--secondaryAlt);
             color: themed($m-textColor--primary);
           }
         }

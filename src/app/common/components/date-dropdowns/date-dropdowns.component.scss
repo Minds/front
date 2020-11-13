@@ -11,8 +11,7 @@ m-date__dropdowns {
     margin: 0 10px 0 0;
 
     @include m-theme() {
-      background-color: themed($m-white);
-      box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+      background-color: themed($m-bgColor--primary);
     }
 
     &::after {
@@ -65,7 +64,7 @@ m-date__dropdowns {
 
     @include m-theme() {
       color: themed($m-grey-800);
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid #e2e2e2;
     }
   }

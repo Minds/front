@@ -17,7 +17,7 @@ m-loadingSpinner {
   margin: auto;
   box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 }
 .m-loadingSpinner__inner {

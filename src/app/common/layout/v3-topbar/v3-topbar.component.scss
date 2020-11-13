@@ -50,7 +50,7 @@
   }
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
@@ -182,7 +182,7 @@
       font-family: 'Roboto', sans-serif;
       cursor: pointer;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-blue);
         color: themed($m-blue);
       }
@@ -410,7 +410,7 @@
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-blue);
       color: themed($m-blue);
     }
@@ -434,8 +434,8 @@
   border: none;
   min-height: 75px;
   @include m-theme() {
-    background-color: themed($m-white);
-    border-top: 1px solid themed($m-grey-50);
+    background-color: themed($m-bgColor--primary);
+    border-top: 1px solid themed($m-borderColor--primary);
   }
 
   @media screen and (max-width: 480px) {

@@ -34,7 +34,7 @@
   text-decoration: none;
   font-family: 'Roboto', Helvetica, sans-serif;
   padding: 12px 8px;
-  //border-right: 1px solid themed($m-grey-50);
+  //border-right: 1px solid themed($m-borderColor--primary);
 
   @include m-theme() {
     color: themed($m-grey-950);

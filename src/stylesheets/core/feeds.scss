@@ -103,7 +103,7 @@ minds-newsfeed-single {
   width: 100%;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   &.m-title-block-fixed {

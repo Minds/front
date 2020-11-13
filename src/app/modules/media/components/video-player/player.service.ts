@@ -71,7 +71,6 @@ export class VideoPlayerService implements OnDestroy {
 
   constructor(
     private client: Client,
-    private session: Session,
     private overlayModalService: OverlayModalService
   ) {
     this.setShouldPlayInModal(true);
