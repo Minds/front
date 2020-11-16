@@ -32,6 +32,16 @@ export type TitleSubjectValue = string | null;
 export const DEFAULT_TITLE_VALUE: MessageSubjectValue = null;
 
 /**
+ * Remind value type
+ */
+export type RemindSubjectValue = ActivityEntity | null;
+
+/**
+ * Default attachment value
+ */
+export const DEFAULT_REMIND_VALUE: RemindSubjectValue = null;
+
+/**
  * Attachment value type
  */
 export type AttachmentSubjectValue = File | Attachment | null;
@@ -179,6 +189,7 @@ export interface Data {
   richEmbed: RichEmbedMetadataMappedValue;
   videoPoster: VideoPoster;
   postToPermaweb: PostToPermawebSubjectValue;
+  remind: RemindSubjectValue;
 }
 
 /**
@@ -251,6 +262,13 @@ export class ComposerService implements OnDestroy {
   readonly license$: BehaviorSubject<LicenseSubjectValue> = new BehaviorSubject<
     LicenseSubjectValue
   >(DEFAULT_LICENSE_VALUE);
+
+  /**
+   * Remind subject
+   */
+  readonly remind$: BehaviorSubject<RemindSubjectValue> = new BehaviorSubject<
+    RemindSubjectValue
+  >(DEFAULT_REMIND_VALUE);
 
   /**
    * Attachment subject
@@ -422,7 +440,8 @@ export class ComposerService implements OnDestroy {
         AttachmentMetadataMappedValue,
         RichEmbedMetadataMappedValue,
         VideoPoster,
-        PostToPermawebSubjectValue
+        PostToPermawebSubjectValue,
+        RemindSubjectValue
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -490,6 +509,7 @@ export class ComposerService implements OnDestroy {
       ),
       this.videoPoster$.pipe(distinctUntilChanged()),
       this.postToPermaweb$,
+      this.remind$.pipe(distinctUntilChanged()),
     ]).pipe(
       map(
         // Create an JSON object based on an array of Subject values
@@ -506,6 +526,7 @@ export class ComposerService implements OnDestroy {
           richEmbed,
           videoPoster,
           postToPermaweb,
+          remind,
         ]) => ({
           message,
           title,
@@ -519,6 +540,7 @@ export class ComposerService implements OnDestroy {
           richEmbed,
           videoPoster,
           postToPermaweb,
+          remind,
         })
       ),
       tap(values => {
@@ -573,9 +595,10 @@ export class ComposerService implements OnDestroy {
       this.messageUrl$.pipe(distinctUntilChanged()),
       this.richEmbed$.pipe(distinctUntilChanged()),
       this.attachment$.pipe(distinctUntilChanged()),
+      this.remind$.pipe(distinctUntilChanged()),
     ])
       .pipe(debounceTime(500))
-      .subscribe(([messageUrl, richEmbed, attachment]) => {
+      .subscribe(([messageUrl, richEmbed, attachment, remind]) => {
         // Use current message URL when:
         // a) there's no rich embed already set; or
         // b) rich embed's type is a string (locally extracted); or
@@ -589,7 +612,8 @@ export class ComposerService implements OnDestroy {
           (!richEmbed ||
             typeof richEmbed === 'string' ||
             !richEmbed.entityGuid) &&
-          !attachment
+          !attachment &&
+          !remind
         ) {
           if (!this.canEditMetadata()) {
             return;
@@ -602,7 +626,7 @@ export class ComposerService implements OnDestroy {
 
         // If there is an attachment already provided then reset the rich embed
         // as we can't have both values
-        if (richEmbed && attachment) {
+        if ((richEmbed && attachment) || (richEmbed && remind)) {
           this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
         }
       });
@@ -664,6 +688,7 @@ export class ComposerService implements OnDestroy {
     this.attachment$.next(DEFAULT_ATTACHMENT_VALUE);
     this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
     this.videoPoster$.next(DEFAULT_VIDEOPOSTER_VALUE);
+    this.remind$.next(DEFAULT_REMIND_VALUE);
 
     // Reset state
     this.inProgress$.next(false);
@@ -746,6 +771,7 @@ export class ComposerService implements OnDestroy {
 
     // Priority service state elements
 
+    this.remind$.next(activity.remind_object || null);
     this.attachment$.next(attachment);
     this.richEmbed$.next(richEmbed);
     this.videoPoster$.next(videoPoster);
@@ -854,6 +880,7 @@ export class ComposerService implements OnDestroy {
    * @param richEmbed
    * @param videoPoster
    * @param postToPermaweb
+   * @param remind
    */
   buildPayload({
     message,
@@ -868,6 +895,7 @@ export class ComposerService implements OnDestroy {
     richEmbed,
     videoPoster,
     postToPermaweb,
+    remind,
   }: Data): any {
     if (this.containerGuid) {
       // Override accessId if there's a container set
@@ -886,6 +914,10 @@ export class ComposerService implements OnDestroy {
       license: license,
       post_to_permaweb: postToPermaweb,
     };
+
+    if (remind) {
+      this.payload.remind_guid = remind.guid;
+    }
 
     const attachmentGuid = (attachment && attachment.guid) || null;
 

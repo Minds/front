@@ -13,6 +13,7 @@
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
     data-cy="upload-button"
+    *ngIf="!(remind$ | async)"
     #fileUploadComponent
   >
     <m-icon
@@ -37,7 +38,7 @@
   </a>
 
   <a
-    *ngIf="!legacyPaywallEnabled"
+    *ngIf="!legacyPaywallEnabled && !(remind$ | async)"
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"

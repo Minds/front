@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+/**
+ * TODO: move the non .ng.scss file into here
+ */
+:host {
+  .m-activity__remindDeletedNotice {
+    padding: 20px;
+    margin: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-color: themed($m-borderColor--primary);
+    }
+
+    i,
+    span {
+      vertical-align: middle;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    i {
+      margin-right: 10px;
+    }
+  }
+}

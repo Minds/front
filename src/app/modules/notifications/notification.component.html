@@ -575,9 +575,7 @@
         *ngIf="notification.entityObj.type == 'object'"
       >
         <p>
-          <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED"
-            >{{ notification.fromObj.name }} reminded
-          </ng-container>
+          <ng-container *ngTemplateOutlet="remindPrefix"></ng-container>
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="notification.entityObj.title"
@@ -592,6 +590,7 @@
             "
             >your {{ notification.entityObj.subtype }}</span
           >
+          <ng-container *ngTemplateOutlet="remindQuote"></ng-container>
         </p>
       </a>
       <a
@@ -599,25 +598,58 @@
         *ngIf="notification.entityObj.type == 'activity'"
       >
         <p *ngIf="notification.entityObj.title">
-          <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_ACTIVITY"
-            >{{ notification.fromObj.name }} reminded
+          <ng-container *ngTemplateOutlet="remindPrefix"></ng-container>
+          <ng-container>
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{
               notification.entityObj.title | excerpt
             }}</span></ng-container
           >
+          <ng-container *ngTemplateOutlet="remindQuote"></ng-container>
         </p>
         <p *ngIf="!notification.entityObj.title">
+          <ng-container *ngTemplateOutlet="remindPrefix"></ng-container>
           <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_OWN_ACTIVITY"
-            >{{ notification.fromObj.name }} reminded
+            i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_YOUR_POST"
+          >
             <span class="pseudo-link mdl-color-text--blue-grey-400"
-              >your activity</span
+              >your post</span
             ></ng-container
           >
+          <ng-container *ngTemplateOutlet="remindQuote"></ng-container>
         </p>
       </a>
     </div>
+
+    <ng-template #remindPrefix>
+      {{ notification.fromObj.name }}
+
+      <ng-container
+        *ngIf="notification.params.is_quoted_post; else remindedText"
+        i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__QUOTED__SINGULAR"
+        >quoted
+      </ng-container>
+
+      <ng-template #remindedText>
+        <ng-container
+          i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED__SINGULAR"
+          >reminded
+        </ng-container>
+      </ng-template>
+    </ng-template>
+
+    <ng-template #remindQuote>
+      <span
+        *ngIf="
+          notification.params.is_quoted_post && notification.params.message
+        "
+      >
+        - "{{
+          notification.params.message.length < 50
+            ? notification.params.message
+            : (notification.params.message | slice: 0:50) + '...'
+        }}"</span
+      >
+    </ng-template>
   </ng-template>
 
   <!-- featured -->

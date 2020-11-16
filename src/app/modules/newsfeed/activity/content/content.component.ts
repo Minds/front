@@ -61,6 +61,7 @@ import { ActivityModalCreatorService } from '../modal/modal-creator.service';
       ]),
     ]),
   ],
+  styleUrls: ['./content.component.ng.scss'],
 })
 export class ActivityContentComponent
   implements OnInit, AfterViewInit, OnDestroy {
@@ -201,6 +202,10 @@ export class ActivityContentComponent
   }
 
   get message(): string {
+    if (this.entity.remind_deleted && this.entity.message.indexOf(' ') === 0) {
+      return ''; // This is a delete remind, with only the fallback link displaying
+    }
+
     // No message if media post
     if (this.mediaDescription || this.mediaTitle) return '';
 
