@@ -74,7 +74,6 @@ export class AppPromptComponent {
       this.service.setPlatform();
       this.service.open();
     }
-    this.service.hasAvailableApp();
   }
 
   /**
