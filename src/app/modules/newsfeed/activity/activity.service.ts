@@ -54,6 +54,7 @@ export type ActivityEntity = {
   paywall_unlocked?: boolean;
   permaweb_id?: string;
   type?: string;
+  remind_deleted?: boolean;
 };
 
 // Constants of blocks
