@@ -1,82 +1,90 @@
-<div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
-  <a [routerLink]="['/', username]">
-    <img [src]="avatarUrl" class="m-border" />
-  </a>
-  <div
-    *ngIf="minimalMode"
-    class="m-activityOwnerBlock__remindIcon--minimalMode"
-  >
-    <i class="material-icons">repeat</i>
+<div
+  class="m-activity__remindUsers"
+  *ngIf="entity.remind_users && entity.remind_users.length > 0"
+>
+  <i class="material-icons">repeat</i>
+  <span>Reminded by </span>
+  <ng-container *ngFor="let reminder of entity.remind_users; let i = index">
+    <a [routerLink]="['/', reminder.username]">{{ reminder.name }}</a>
+  </ng-container>
+</div>
+
+<div class="m-activity__ownerBlock">
+  <div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
+    <a [routerLink]="['/', username]">
+      <img [src]="avatarUrl" class="m-border" />
+    </a>
+    <div
+      *ngIf="minimalMode"
+      class="m-activityOwnerBlock__remindIcon--minimalMode"
+    >
+      <i class="material-icons">repeat</i>
+    </div>
   </div>
-</div>
 
-<div class="m-activityOwnerBlock__body">
-  <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
-    <i
-      class="material-icons m-activityOwnerBlock__remindIcon"
-      *ngIf="service.isRemind$ | async"
-      >repeat</i
-    >
-    <strong [title]="displayName">{{ displayName }}</strong>
-    <m-channel--badges
-      class="m-channel--badges-activity"
-      [user]="owner"
-      badges="[ 'admin', 'verified' ]"
-    ></m-channel--badges>
-  </a>
-  <ng-container *ngIf="group">
-    <!-- Show group name-->
-    <a
-      [routerLink]="['/groups/profile', group.guid]"
-      class="m-activityOwnerBlock__groupName"
-    >
-      <strong>({{ group.name }})</strong>
+  <div class="m-activityOwnerBlock__body">
+    <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
+      <strong [title]="displayName">{{ displayName }}</strong>
+      <m-channel--badges
+        class="m-channel--badges-activity"
+        [user]="owner"
+        badges="[ 'admin', 'verified' ]"
+      ></m-channel--badges>
     </a>
-  </ng-container>
-  <ng-container>
-    <!-- Perma link to post -->
-    <a
-      [routerLink]="service.canonicalUrl$ | async"
-      class="m-activityOwnerBlock__permalink"
-    >
-      <div *ngIf="isScheduled()" class="m-activityOwnerBlockPermalink__text">
-        <i class="material-icons">schedule</i>
-        <span>
-          {{ toReadableDate(entity.time_created) }}
+    <ng-container *ngIf="group">
+      <!-- Show group name-->
+      <a
+        [routerLink]="['/groups/profile', group.guid]"
+        class="m-activityOwnerBlock__groupName"
+      >
+        <strong>({{ group.name }})</strong>
+      </a>
+    </ng-container>
+    <ng-container>
+      <!-- Perma link to post -->
+      <a
+        [routerLink]="service.canonicalUrl$ | async"
+        class="m-activityOwnerBlock__permalink"
+      >
+        <div *ngIf="isScheduled()" class="m-activityOwnerBlockPermalink__text">
+          <i class="material-icons">schedule</i>
+          <span>
+            {{ toReadableDate(entity.time_created) }}
+          </span>
+        </div>
+        <span
+          class="m-activityOwnerBlockPermalink__text--timestamp"
+          [title]="entity.time_created * 1000 | date: 'medium'"
+          *ngIf="!isScheduled()"
+        >
+          {{ entity.time_created * 1000 | friendlydatediff }}
         </span>
-      </div>
-      <span
-        class="m-activityOwnerBlockPermalink__text--timestamp"
-        [title]="entity.time_created * 1000 | date: 'medium'"
-        *ngIf="!isScheduled()"
-      >
-        {{ entity.time_created * 1000 | friendlydatediff }}
-      </span>
-      <span
-        *ngIf="
-          service.displayOptions.showEditedTag && (service.isEdited$ | async)
-        "
-        class="m-activityOwnerBlockPermalink__text--edited"
-        i18n="@@M__COMMON__EDITED"
-        >edited</span
-      >
-      <ng-template [ngTemplateOutlet]="boostedTag"></ng-template>
-      <div
-        class="m-activityOwnerBlockPermalink__text--visibility"
-        *ngIf="
-          service.displayOptions.showVisibilityState &&
-          (service.isUnlisted$ | async)
-        "
-      >
-        <i class="material-icons unlisted">visibility_off</i>
-        <a i18n="@@OWNER_BLOCK__UNLISTED">Unlisted</a>
-      </div>
-    </a>
-  </ng-container>
-</div>
+        <span
+          *ngIf="
+            service.displayOptions.showEditedTag && (service.isEdited$ | async)
+          "
+          class="m-activityOwnerBlockPermalink__text--edited"
+          i18n="@@M__COMMON__EDITED"
+          >edited</span
+        >
+        <ng-template [ngTemplateOutlet]="boostedTag"></ng-template>
+        <div
+          class="m-activityOwnerBlockPermalink__text--visibility"
+          *ngIf="
+            service.displayOptions.showVisibilityState &&
+            (service.isUnlisted$ | async)
+          "
+        >
+          <i class="material-icons unlisted">visibility_off</i>
+          <a i18n="@@OWNER_BLOCK__UNLISTED">Unlisted</a>
+        </div>
+      </a>
+    </ng-container>
+  </div>
 
-<div class="m-activityOwnerBlock__right">
-  <ng-content select=".m-activityOwnerBlock__right"></ng-content>
+  <div class="m-activityOwnerBlock__right">
+    <ng-content select=".m-activityOwnerBlock__right"></ng-content>
+  </div>
 </div>
 
 <ng-template #boostedTag>
