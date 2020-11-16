@@ -24,6 +24,10 @@
         (filePaste)="onAttachmentPaste($event)"
         #textAreaComponent
       ></m-composer__textArea>
+
+      <m-composerRemindPreview
+        *ngIf="remind$ | async"
+      ></m-composerRemindPreview>
     </div>
     <m-composer__toolbar
       (onPost)="onPost($event)"

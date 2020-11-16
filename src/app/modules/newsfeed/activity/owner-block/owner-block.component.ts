@@ -10,6 +10,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'm-activity__ownerBlock',
   templateUrl: 'owner-block.component.html',
+  styleUrls: ['./owner-block.component.ng.scss'],
 })
 export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   private entitySubscription: Subscription;

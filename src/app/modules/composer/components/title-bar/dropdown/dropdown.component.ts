@@ -180,6 +180,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
     return (
       this.features.has('permaweb') &&
       !this.service.isEditing$.getValue() &&
+      !this.service.remind$.getValue() &&
       this.canChangeVisibility // true is there is a container_guid
     );
   }

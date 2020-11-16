@@ -14,13 +14,14 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
-import { Subject, Subscription, BehaviorSubject } from 'rxjs';
+import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
   MonetizationSubjectValue,
   NsfwSubjectValue,
+  RemindSubjectValue,
   TagsSubjectValue,
 } from '../../services/composer.service';
 import {
@@ -93,6 +94,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   protected attachmentSubscription: Subscription;
 
   public legacyPaywallEnabled: boolean = false;
+
+  remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
   /**
    * Constructor
