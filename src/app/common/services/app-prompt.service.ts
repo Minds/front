@@ -74,10 +74,7 @@ export class AppPromptService implements OnDestroy {
    * @returns { boolean } true if platform has app available.
    */
   public hasAvailableApp(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      return isMobileOrTablet();
-    }
-    return false;
+    return isMobileOrTablet();
   }
 
   /**
