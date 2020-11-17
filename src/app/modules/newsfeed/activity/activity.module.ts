@@ -66,6 +66,6 @@ import { ActiviyRemindButtonComponent } from './remind-button/remind-button.comp
     ActiviyRemindButtonComponent,
   ],
   providers: [ActivityModalCreatorService],
-  exports: [ActivityComponent],
+  exports: [ActivityComponent, ActiviyRemindButtonComponent],
 })
 export class ActivityModule {}

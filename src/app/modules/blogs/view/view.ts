@@ -22,7 +22,8 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { ActivityService } from '../../../common/services/activity.service';
+import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
+import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { FeaturesService } from '../../../services/features.service';
 import { MetaService } from '../../../common/services/meta.service';
@@ -38,7 +39,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   },
   templateUrl: 'view.html',
   styleUrls: ['./view.ng.scss'],
-  providers: [ActivityService],
+  providers: [ActivityService, ActivityServiceCommentsLegacySupport],
 })
 export class BlogView implements OnInit, OnDestroy {
   readonly cdnUrl: string;
@@ -77,6 +78,7 @@ export class BlogView implements OnInit, OnDestroy {
 
   @Input('blog') set _blog(value: MindsBlogEntity) {
     this.blog = value;
+    this.activityService.setEntity(value);
     setTimeout(() => {
       this.calculateLockScreenHeight();
     });
@@ -286,6 +288,16 @@ export class BlogView implements OnInit, OnDestroy {
    */
   onResize(event: Event) {
     this.calculateLockScreenHeight();
+  }
+
+  /**
+   * Returns if blog can be deleted
+   */
+  get canDelete(): boolean {
+    return (
+      this.blog.ownerObj.guid == this.session.getLoggedInUser().guid ||
+      this.session.isAdmin()
+    );
   }
 
   private updateMeta(): void {
