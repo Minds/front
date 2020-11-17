@@ -82,6 +82,9 @@ export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
     this.composerService.remind$.next(entity);
     await this.composerService.post();
 
+    // Update the counter
+    this.incrementCounter();
+
     this.toasterService.success('Post has been reminded');
   }
 
@@ -108,5 +111,14 @@ export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
       .setInjector(this.injector)
       .present()
       .toPromise();
+  }
+
+  incrementCounter(): void {
+    const entity = this.service.entity$.getValue();
+    if (!entity.reminds) {
+      entity.reminds = 0;
+    }
+    entity.reminds++;
+    this.service.entity$.next(entity);
   }
 }
