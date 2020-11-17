@@ -43,7 +43,7 @@
       @include m-theme() {
         border-color: themed($m-borderColor--primary);
         color: themed($m-textColor--secondary);
-        background: themed($m-bgColor--secondary);
+        background: themed($m-bgColor--primary);
       }
 
       @include m-on-theme(light) {
@@ -78,7 +78,7 @@
           color: themed($m-textColor--primary);
 
           &:hover {
-            background-color: themed($m-bgColor--quaternary);
+            background-color: themed($m-bgColor--secondary);
           }
         }
       }

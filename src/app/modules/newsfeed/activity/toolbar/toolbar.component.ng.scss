@@ -1,4 +1,6 @@
-m-activity__toolbar {
+@import 'defaults.scss';
+
+:host {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -8,15 +10,17 @@ m-activity__toolbar {
   text-align: center;
 
   @include m-theme() {
-    border-top: 1px solid themed($m-borderColor--tertiary);
-    background-color: themed($m-bgColor--secondary);
+    border-top: 1px solid themed($m-borderColor--primary);
+    background-color: themed($m-bgColor--primary);
   }
 
-  > * {
+  ::ng-deep > * {
     margin-right: 22px;
 
-    > a {
+    > a,
+    ::ng-deep .m-activityRemindButton__icon {
       line-height: 18px;
+      cursor: pointer;
 
       i.material-icons {
         font-size: 18px;
@@ -41,7 +45,7 @@ m-activity__toolbar {
     }
   }
 
-  minds-button-comment {
+  ::ng-deep minds-button-comment {
     cursor: pointer;
     .selected i.material-icons,
     .selected .minds-counter {
@@ -55,7 +59,7 @@ m-activity__toolbar {
     margin-right: 0;
   }
 
-  m-wire-button {
+  ::ng-deep m-wire-button {
     .m-wire-button {
       border: 0 !important;
       padding: 0;
@@ -80,7 +84,7 @@ m-activity__toolbar {
     }
   }
 
-  .m-boostButton {
+  ::ng-deep .m-boostButton {
     width: auto;
     height: auto;
     min-width: unset;

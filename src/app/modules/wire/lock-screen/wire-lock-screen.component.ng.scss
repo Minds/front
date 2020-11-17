@@ -37,12 +37,12 @@
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
-        border-bottom: 1px solid themed($m-borderColor--tertiary);
-        background-color: themed($m-white);
+        border-bottom: 1px solid themed($m-borderColor--primary);
+        background-color: themed($m-bgColor--primary);
       }
       &:not(.m-wire__lockScreen--minimalMode) {
         @include m-theme() {
-          border-top: 1px solid themed($m-borderColor--tertiary);
+          border-top: 1px solid themed($m-borderColor--primary);
         }
       }
 
@@ -65,7 +65,7 @@
     width: 100%;
     position: absolute;
     @include m-theme() {
-      background-color: rgba(themed($m-black-always), 0.4);
+      background-color: themed($m-overlay);
     }
   }
 

@@ -30,7 +30,7 @@ m-switch {
     border-radius: 8px;
     transition: border-color 0.15s ease-out;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     .m-switch__thumb {

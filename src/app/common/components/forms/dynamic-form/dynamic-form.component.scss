@@ -20,8 +20,8 @@ m-dynamic-form {
     align-items: center;
     @include m-theme() {
       color: themed($m-grey-600);
-      background-color: themed($m-white);
-      border: 1px solid themed($m-grey-100);
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     input {
@@ -52,7 +52,7 @@ m-dynamic-form {
     margin: 8px 0;
     outline: none;
     @include m-theme() {
-      border-color: themed($m-grey-50);
+      border-color: themed($m-borderColor--primary);
     }
   }
 }

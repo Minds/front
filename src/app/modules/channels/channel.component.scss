@@ -409,7 +409,7 @@ m-channel {
         font-size: 20px;
         box-sizing: border-box;
         @include m-theme() {
-          border-top: 1px solid themed($m-grey-50);
+          border-top: 1px solid themed($m-borderColor--primary);
         }
 
         .m-channel-social-profile > a {
@@ -444,7 +444,7 @@ m-channel {
           font-size: 12px;
           font-family: inherit;
           @include m-theme() {
-            border: 1px solid themed($m-grey-50);
+            border: 1px solid themed($m-borderColor--primary);
           }
         }
 
@@ -465,7 +465,7 @@ m-channel {
 
           margin-top: $minds-padding;
           @include m-theme() {
-            border: 1px solid themed($m-grey-50);
+            border: 1px solid themed($m-borderColor--primary);
           }
 
           &:first-child {
@@ -518,7 +518,7 @@ m-channel {
             padding: 12px 0;
             cursor: pointer;
             @include m-theme() {
-              border-bottom: 1px solid themed($m-grey-50);
+              border-bottom: 1px solid themed($m-borderColor--primary);
             }
           }
         }
@@ -538,7 +538,7 @@ m-channel {
 
   .minds-channel-edit-upload-separator {
     @include m-theme() {
-      border-left: 1px solid themed($m-grey-100);
+      border-left: 1px solid themed($m-borderColor--primary);
     }
 
     input {
@@ -618,6 +618,6 @@ m-channel {
   margin-bottom: 8px;
   position: relative;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }

@@ -49,7 +49,7 @@ m-activity__nsfwConsent {
     }
     &:hover {
       @include m-theme() {
-        border: 1px solid themed($m-borderColor--tertiary);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
   }
@@ -63,7 +63,7 @@ m-activity__nsfwConsent {
   }
 }
 
-.m-activity__nsfwConsent--minimalMode {
+.m-activityNsfwConsent--minimalMode {
   .m-activityNsfwConsent__button {
     margin: 38px $activity-padding-lr--minimalMode;
   }

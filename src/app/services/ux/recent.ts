@@ -69,7 +69,9 @@ export class RecentService {
    */
   fetchSuggestions(): Array<any> {
     const textSuggestions = this.read('suggestions:text');
-    const publishersSuggestions = this.read('suggestions:publisher');
+    const publishersSuggestions = this.read('suggestions:publisher').filter(
+      user => !user.blocked
+    );
 
     let suggestions = textSuggestions.concat(publishersSuggestions);
 

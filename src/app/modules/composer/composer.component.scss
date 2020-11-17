@@ -10,8 +10,8 @@ m-composer {
   box-sizing: border-box;
 
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
-    border: 1px solid themed($m-borderColor--tertiary);
+    background: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
   }
 
   @media screen and (max-width: $max-mobile) {

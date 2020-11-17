@@ -13,7 +13,7 @@
   max-width: 75%;
   white-space: pre-line;
   @include m-theme() {
-    background-color: themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -93,12 +93,11 @@
     .material-icons {
       font-size: 16px;
       vertical-align: middle;
-      //color: themed($m-grey-600);
     }
 
     &.m-clickable {
       @include m-theme() {
-        color: themed($m-blue-grey-500);
+        color: themed($m-textColor--secondary);
       }
       .material-icons {
         margin-top: -2px;
@@ -106,13 +105,13 @@
 
       &:hover {
         @include m-theme() {
-          color: themed($m-blue-grey-700);
+          color: themed($m-textColor--primary);
         }
       }
 
       &.selected:hover {
         @include m-theme() {
-          color: themed($m-blue-dark) !important;
+          color: themed($m-link--hover) !important;
         }
       }
 
@@ -138,7 +137,7 @@
   line-height: 13px;
   font-weight: 500;
   @include m-theme() {
-    color: themed($m-grey-400);
+    color: themed($m-textColor--secondary);
   }
 }
 
@@ -147,7 +146,7 @@
   vertical-align: middle;
   line-height: 13px;
   @include m-theme() {
-    color: themed($m-grey-200);
+    color: themed($m-textColor--tertiary);
   }
 }
 
@@ -168,13 +167,13 @@
   cursor: pointer;
   outline: none;
   @include m-theme() {
-    color: themed($m-grey-400);
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
+    color: themed($m-textColor--secondary);
   }
 
   &:hover {
     @include m-theme() {
-      color: themed($m-grey-600);
+      color: themed($m-textColor--primary);
     }
   }
 
@@ -209,12 +208,12 @@
     vertical-align: middle;
     margin-right: 8px;
     @include m-theme() {
-      color: themed($m-grey-400);
+      color: themed($m-textColor--secondary);
     }
 
     &:hover {
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--primary);
       }
     }
 

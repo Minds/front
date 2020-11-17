@@ -1,3 +1,5 @@
+@import 'defaults.scss';
+
 .plyr video {
   height: 100%;
 }
@@ -14,17 +16,10 @@
   z-index: 1;
   width: 100%;
   box-sizing: border-box;
-
-  @include m-theme() {
-    color: themed($m-white);
-    @include m-theme() {
-      background: linear-gradient(
-        rgba(themed($m-black-always), 0.5),
-        rgba(themed($m-black-always), 0)
-      );
-      color: themed($m-white-always);
-    }
-  }
+  // We don't use theme here because this component is used in
+  // Embed mode and theming is not available there
+  background: linear-gradient(rgba(#000, 0.5), rgba(#000, 0));
+  color: #fff;
 }
 
 m-videoPlayer,
@@ -41,6 +36,7 @@ m-videoPlayer--scrollaware {
   background-size: contain;
   background-color: #222;
   position: relative;
+
   i {
     opacity: 0.8;
     display: block;
@@ -57,9 +53,14 @@ m-videoPlayer--scrollaware {
       text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
     }
   }
+
   &:hover {
     i {
       opacity: 1;
     }
   }
+}
+
+.m-videoPlayer__placeholder--embedded {
+  height: 100%;
 }

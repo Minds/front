@@ -1,4 +1,4 @@
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
 import { Injectable, EventEmitter } from '@angular/core';
@@ -27,6 +27,7 @@ export type ActivityDisplayOptions = {
 export type ActivityEntity = {
   guid: string;
   remind_object?: Object;
+  remind_users?: Array<MindsUser>;
   ownerObj: MindsUser;
   containerObj: MindsGroup | null;
   message: string;
@@ -52,6 +53,8 @@ export type ActivityEntity = {
   content_type?: string; // blogs and rich-embeds are separate
   paywall_unlocked?: boolean;
   permaweb_id?: string;
+  type?: string;
+  remind_deleted?: boolean;
 };
 
 // Constants of blocks
@@ -229,6 +232,11 @@ export class ActivityService {
   height$: BehaviorSubject<number> = new BehaviorSubject(
     ACTIVITY_FIXED_HEIGHT_HEIGHT
   );
+
+  /**
+   * Called when this post is deleted
+   */
+  onDelete$: Subject<boolean> = new Subject();
 
   displayOptions: ActivityDisplayOptions = {
     autoplayVideo: true,

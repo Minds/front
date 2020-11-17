@@ -7,6 +7,7 @@ import {
   Output,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
+import { EmbedServiceV2 } from '../../../services/embedV2.service';
 
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -28,6 +29,7 @@ import { storageMock } from '../../../../tests/storage-mock.spec';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { FormToastService } from '../../services/form-toast.service';
 import { MockService } from '../../../utils/mock';
+import { recentServiceMock } from '../../../mocks/services/ux/recent-mock.spec';
 /* tslint:disable */
 
 /* Mock section */
@@ -105,12 +107,21 @@ describe('PostMenuComponent', () => {
         {
           provide: BlockListService,
           useFactory: () => {
-            return BlockListService._(clientMock, sessionMock, storageMock);
+            return BlockListService._(
+              clientMock,
+              sessionMock,
+              storageMock,
+              recentServiceMock
+            );
           },
         },
         {
           provide: FormToastService,
           useValue: MockService(FormToastService),
+        },
+        {
+          provide: EmbedServiceV2,
+          useValue: MockService(EmbedServiceV2),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

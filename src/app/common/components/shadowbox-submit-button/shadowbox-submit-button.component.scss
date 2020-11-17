@@ -18,7 +18,7 @@
       span {
         @include m-theme() {
           // Color of the animated circles
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }
@@ -31,14 +31,14 @@
     .m-shadowboxSubmitButton__status--saving {
       span {
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }
   }
   &.grey {
     @include m-theme() {
-      background-color: themed($m-bgColor--tertiary);
+      background-color: themed($m-bgColor--secondary);
       color: themed($m-textColor--secondary);
     }
     .m-shadowboxSubmitButton__status--saving {
@@ -71,7 +71,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: rgba(themed($m-bgColor--tertiary), 0.7);
+          background-color: rgba(themed($m-bgColor--secondary), 0.7);
         }
       }
     }
@@ -96,7 +96,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: themed($m-bgColor--tertiary);
+          background-color: themed($m-bgColor--secondary);
         }
       }
     }

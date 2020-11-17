@@ -1,10 +1,18 @@
 <div class="m-composer__titleBar">
   <div class="m-composerTitleBar__title">
-    <label [for]="inputId" i18n="@@COMPOSER__COMPOSE">Compose</label>
+    <label [for]="inputId" i18n="@@COMPOSER__COMPOSE" *ngIf="!(remind$ | async)"
+      >Compose</label
+    >
+
+    <label [for]="inputId" i18n="@@COMPOSER__COMPOSE" *ngIf="remind$ | async"
+      >Quote post</label
+    >
   </div>
 
   <div
-    *ngIf="!(isEditing$ | async) && !(attachment$ | async)"
+    *ngIf="
+      !(isEditing$ | async) && !(attachment$ | async) && !(remind$ | async)
+    "
     class="m-composerTitleBar__createBlogTrigger"
     [hidden]="isPosting$ | async"
     (click)="onCreateBlogClick()"

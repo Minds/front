@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  Injector,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups.service';
@@ -7,6 +13,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
 
 @Component({
   selector: 'minds-groups-settings-button',
@@ -170,29 +177,6 @@ import { FormToastService } from '../../../common/services/form-toast.service';
       [hidden]="!showMenu"
     ></div>
 
-    <m-modal [open]="group['is:owner'] && isGoingToBeDeleted">
-      <div class="mdl-card__supporting-text">
-        <p i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP_CONFIRM">
-          Are you sure you want to delete {{ group.name }}? This action cannot
-          be undone.
-        </p>
-      </div>
-      <div class="mdl-card__actions">
-        <button
-          (click)="delete()"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
-        </button>
-        <button
-          (click)="cancelDelete()"
-          class="mdl-button mdl-js-button mdl-button--colored"
-        >
-          <ng-container i18n="@@M__ACTION__CANCEL">Cancel</ng-container>
-        </button>
-      </div>
-    </m-modal>
-
     <m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
       <div class="m-button-feature-modal">
         <select [(ngModel)]="category">
@@ -233,8 +217,6 @@ export class GroupsSettingsButton {
   editing: boolean = false;
   showMenu: boolean = false;
 
-  isGoingToBeDeleted: boolean = false;
-
   categories: Array<any> = [];
   category: string = 'not-selected';
 
@@ -246,6 +228,7 @@ export class GroupsSettingsButton {
     public service: GroupsService,
     public client: Client,
     public session: Session,
+    private injector: Injector,
     public overlayService: OverlayModalService,
     public router: Router,
     protected toasterService: FormToastService
@@ -337,11 +320,8 @@ export class GroupsSettingsButton {
       this.toasterService.error('You cannot delete a group that has members.');
       return;
     }
-    this.isGoingToBeDeleted = true;
-  }
 
-  cancelDelete() {
-    this.isGoingToBeDeleted = false;
+    this.openConfirmationModal();
   }
 
   setExplicit(value) {
@@ -353,10 +333,6 @@ export class GroupsSettingsButton {
   }
 
   delete() {
-    if (!this.isGoingToBeDeleted) {
-      return;
-    }
-
     this.group.deleted = true;
 
     this.service.deleteGroup(this.group).then(deleted => {
@@ -369,7 +345,6 @@ export class GroupsSettingsButton {
     });
 
     this.showMenu = false;
-    this.isGoingToBeDeleted = false;
   }
 
   toggleMenu(e) {
@@ -418,5 +393,36 @@ export class GroupsSettingsButton {
     const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.group.guid}`, { nsfw });
     this.group.nsfw = nsfw;
+  }
+
+  /**
+   * Opens confirmation of deletion modal
+   * @returns { void }
+   */
+  public openConfirmationModal(): void {
+    let component: Object = ConfirmV2Component;
+
+    this.overlayService
+      .create(
+        component,
+        null,
+        {
+          wrapperClass: 'm-modalV2__wrapper',
+          title: 'Confirm',
+          body:
+            'Are you sure you want to delete this? This action cannot be undone.',
+          onConfirm: () => {
+            this.delete();
+            this.router.navigate(['/']);
+            this.overlayService.dismiss();
+          },
+          onDismiss: () => {
+            this.overlayService.dismiss();
+          },
+        },
+        this.injector
+      )
+      .onDidDismiss(() => {})
+      .present();
   }
 }

@@ -48,7 +48,7 @@ p {
 .m-border {
   border-radius: 6px;
   @include m-theme() {
-    border: 1px solid themed($m-borderColor--tertiary);
+    border: 1px solid themed($m-borderColor--primary);
   }
 }
 
@@ -220,7 +220,7 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     color: rgba(themed($m-black), 0.87);
   }
 }

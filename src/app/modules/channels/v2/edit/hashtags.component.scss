@@ -31,8 +31,8 @@
 
     @include m-theme() {
       color: themed($m-textColor--primary);
-      border-color: themed($m-bgColor--secondary);
-      background: themed($m-bgColor--secondary);
+      border-color: themed($m-bgColor--primary);
+      background: themed($m-bgColor--primary);
     }
 
     .m-channelEditHashtagListItem__remove {

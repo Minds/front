@@ -234,7 +234,7 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
   });
 });
 
-const composer = {
+export const composer = {
   trigger: 'm-composer .m-composer__trigger',
   messageTextArea:
     'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',

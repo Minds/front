@@ -126,7 +126,7 @@
       font-size: 13px;
       letter-spacing: 1px;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
@@ -141,7 +141,7 @@
       float: right;
       margin: 8px 0;
       @include m-theme() {
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
         color: themed($m-grey-400);
       }
 
@@ -154,7 +154,7 @@
   .m-report-console--appeal-note {
     padding: 16px;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     p {

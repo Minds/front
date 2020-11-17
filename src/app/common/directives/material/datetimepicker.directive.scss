@@ -31,7 +31,7 @@
   will-change: opacity;
   transition: 200ms ease-in-out opacity, 200ms ease-in-out top;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     box-shadow: 0 14px 45px rgba(themed($m-black), 0.25),
       0 10px 18px rgba(themed($m-black), 0.22);
   }
@@ -98,7 +98,7 @@
   -webkit-font-smoothing: antialiased;
   cursor: pointer;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 

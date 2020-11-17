@@ -74,7 +74,7 @@ m-hashtags-selector,
           border-radius: 0;
           text-align: left;
           @include m-theme() {
-            border-bottom: 1px solid themed($m-grey-50);
+            border-bottom: 1px solid themed($m-borderColor--primary);
           }
 
           &:not(.custom) {

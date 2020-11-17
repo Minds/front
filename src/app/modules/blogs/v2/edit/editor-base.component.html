@@ -76,16 +76,17 @@
 
     <!-- Title -->
     <div class="m-blogEditor__titleContainer">
-      <input
+      <textarea
         class="m-blogEditor__titleInput"
-        type="text"
         placeholder="Title"
         i18n-placeholder="@@BLOG_EDITOR__TITLE"
+        [autoGrow]
         [ngModel]="service.title$ | async"
         (ngModelChange)="onTitleChange($event)"
-        maxlength="128"
+        maxlength="512"
+        rows="1"
         data-cy="data-minds-blog-title-input"
-      />
+      ></textarea>
     </div>
 
     <!-- Body -->

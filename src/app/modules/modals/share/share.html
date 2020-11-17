@@ -1,63 +1,103 @@
 <h3 i18n="@@M_SHARE__HEADER">Share this post</h3>
-<div class="m-share__copyableLinkContainer">
+<div class="m-share__input-container">
+  <div class="m-share__label-container">
+    <label [htmlFor]="shareInput">
+      <span i18n="@@M_SHARE__REFERRER_PARAM_INPUT_LABEL">
+        Link to post
+      </span>
+    </label>
+    <div
+      class="m-share__referrerParamCheckboxContainer"
+      *ngIf="session.isLoggedIn()"
+    >
+      <input
+        type="checkbox"
+        checked
+        id="referrer-param"
+        name="referrer-param"
+        (click)="toggleReferrerParam()"
+      />
+      <label for="referrer-param">
+        <span i18n="@@M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL">
+          Include referral code
+        </span>
+      </label>
+      <m-tooltip anchor="right" icon="help">
+        <ng-container i18n="@@M_SHARE__REFERRAL_CODE_EXPLANATION">
+          Use your referral code to earn tokens for referring new users to
+          Minds. Learn more at the
+          <a [routerLink]="['/wallet/tokens/referrals']" target="_blank"
+            >Referrals Console</a
+          >
+        </ng-container>
+        <i class="material-icons m-share__newWindowIcon">open_in_new</i>
+      </m-tooltip>
+    </div>
+  </div>
   <div
-    class="m-share__copyableLink m-border"
+    class="m-share__input m-border"
     [class.focused]="shareUrlFocused"
-    (click)="applyFocus(shareUrlEl)"
+    (click)="applyFocusToShareInput(shareInput)"
   >
     <input
-      class="m-share__copyableLinkText"
-      [ngClass]="{ 'recentlyCopied': shareUrlRecentlyCopied, 'm-share__copyableLinkText--flashing': flashing }"
+      class="m-share__inputText"
+      [ngClass]="{ 'm-share__inputText--flashing': flashing }"
       readonly
       tabindex="-1"
       (focus)="shareUrlFocused"
       (focusout)="shareUrlFocused = false"
       value="{{shareUrl}}"
-      #shareUrlEl
+      #shareInput
     />
     <div
-      (click)="copyToClipboard(shareUrlEl)"
-      class="m-share__copyableLinkButton"
+      (click)="copyShareUrlToClipboard(shareInput)"
+      class="m-share__inputButton"
     >
-      <div *ngIf="!shareUrlRecentlyCopied" i18n="@@M_SHARE__LINK_COPY_ACTION">
-        Copy
-      </div>
-      <div *ngIf="shareUrlRecentlyCopied" i18n="@@M_SHARE__LINK_COPY_STATE">
-        Copied
-      </div>
+      <i class="material-icons m-share__copy-icon">content_copy</i>
     </div>
   </div>
 </div>
 
-<div
-  class="m-share__referrerParamCheckboxContainer"
-  *ngIf="session.isLoggedIn()"
->
-  <input
-    type="checkbox"
-    checked
-    id="referrer-param"
-    name="referrer-param"
-    (click)="toggleReferrerParam()"
-  />
-  <label for="referrer-param">
-    <span i18n="@@M_SHARE__REFERRER_PARAM_CHECKBOX_LABEL">
-      Include referral code
-    </span>
-  </label>
-  <m-tooltip [anchor]="left" icon="help">
-    <ng-container i18n="@@M_SHARE__REFERRAL_CODE_EXPLANATION">
-      Use your referral code to earn tokens for referring new users to Minds.
-      Learn more at the
-      <a [routerLink]="['/settings/other/referrals']" target="_blank"
-        >Referrals Console</a
-      >
-    </ng-container>
-    <i class="material-icons m-share__newWindowIcon">open_in_new</i>
-  </m-tooltip>
+<div class="m-share__input-container" *ngIf="embedCode">
+  <div class="m-share__label-container">
+    <label [htmlFor]="embedInput">
+      <span i18n="@@M_SHARE__EMBED_POST">
+        Embed post
+      </span>
+    </label>
+  </div>
+  <div
+    class="m-share__input m-border"
+    [class.focused]="embedInputFocused"
+    (click)="applyFocusToEmbedInput(embedInput)"
+  >
+    <input
+      class="m-share__inputText"
+      [ngClass]="{ 'm-share__inputText--flashing': flashing }"
+      readonly
+      tabindex="-1"
+      (focus)="embedInputFocused"
+      (focusout)="embedInputFocused = false"
+      [ngModel]="embedCode"
+      #embedInput
+    />
+    <div
+      (click)="copyEmbedCodeToClipboard(embedInput)"
+      class="m-share__inputButton"
+    >
+      <i class="material-icons m-share__copy-icon">content_copy</i>
+    </div>
+  </div>
 </div>
 
 <div class="m-share__buttonsContainer">
+  <div class="m-share__label-container">
+    <label>
+      <span i18n="@@M_SHARE__MORE_WAYS_TO_SHARE">
+        More ways to share
+      </span>
+    </label>
+  </div>
   <div class="m-share__buttons">
     <button
       i18n-title="@@M_SHARE__BUTTON_TWITTER"

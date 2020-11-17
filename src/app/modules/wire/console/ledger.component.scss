@@ -79,7 +79,7 @@
       margin-right: 8px;
       @include m-theme() {
         color: themed($m-grey-400);
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       > * {

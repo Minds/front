@@ -17,7 +17,7 @@
     padding: 16px;
     margin-bottom: 8px;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
 
     .m-token--ledger--reward-amount {
@@ -75,7 +75,7 @@
         overflow: hidden;
         display: flex;
         @include m-theme() {
-          border-right: 1px solid themed($m-grey-50);
+          border-right: 1px solid themed($m-borderColor--primary);
         }
 
         &.m-token--ledger--reward-details--meta-wrapper {
@@ -133,7 +133,7 @@
   margin-bottom: 8px;
   flex-wrap: wrap;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: $min-tablet) {
@@ -170,7 +170,7 @@
   input,
   select {
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 

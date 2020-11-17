@@ -25,7 +25,7 @@ m-composer__coverPhotoSelector {
   @include m-theme() {
     border: 0;
     // border: 1px solid themed($m-borderColor--primary);
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
     color: themed($m-textColor--secondary);
   }
 
@@ -53,7 +53,7 @@ m-composer__coverPhotoSelector {
   box-sizing: border-box;
   @include m-theme() {
     //border: 1px solid themed($m-borderColor--primary);
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   label {

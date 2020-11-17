@@ -25,6 +25,7 @@
           [displayOptions]="{
             showOnlyCommentsInput: true
           }"
+          (deleted)="delete(preActivity)"
         ></m-activity>
       </ng-container>
       <ng-template #legacyActivity>
@@ -63,6 +64,7 @@
             showOnlyCommentsInput: true
           }"
           [slot]="i + 1"
+          (deleted)="delete(activity)"
         ></m-activity>
       </ng-container>
       <ng-template #legacyActivity>

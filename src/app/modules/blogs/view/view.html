@@ -79,15 +79,18 @@
     </div>
     <div class="mdl-cell mdl-cell--7-col m-actions-block" *ngIf="showActions">
       <div class="mdl-layout-spacer"></div>
-      <m-post-menu
+      <m-postMenu--v2
         [entity]="blog"
-        [user]="blog.ownerObj"
-        [askForCategoriesWhenFeaturing]="true"
-        [canDelete]="blog.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()"
+        [canDelete]="canDelete"
+        [isTranslatable]="false"
+        [mediaModal]="false"
         [options]="menuOptions"
         (optionSelected)="menuOptionSelected($event)"
-      ></m-post-menu>
-      <minds-button-remind [object]="blog"></minds-button-remind>
+      >
+      </m-postMenu--v2>
+
+      <m-activity__remindButton></m-activity__remindButton>
+
       <minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
       <minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
     </div>
@@ -157,7 +160,12 @@
     style="max-width:660px; padding-bottom: 50px;"
     *ngIf="showComments && blog.guid && !blog.paywall"
   >
-    <m-comments__tree [entity]="blog"> </m-comments__tree>
+    <m-comments__entityOutlet
+      [entity]="blog"
+      [canDelete]="canDelete"
+      [showOnlyPoster]="false"
+    >
+    </m-comments__entityOutlet>
   </div>
 </ng-container>
 

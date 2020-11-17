@@ -158,12 +158,12 @@ m-hashtags--sidebar-selector {
       font-weight: 500;
       @include m-theme() {
         color: themed($m-grey-600);
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       &::placeholder {
         @include m-theme() {
-          color: themed($m-grey-200);
+          color: themed($m-textColor--secondary);
         }
       }
     }
@@ -284,8 +284,8 @@ m-hashtags--sidebar-selector {
   overflow-y: auto;
   max-height: 70vh;
   @include m-theme() {
-    background-color: themed($m-white);
-    border: 1px solid themed($m-grey-50);
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
     box-shadow: 1px 1px 1px rgba(themed($m-black), 0.1);
   }
 }

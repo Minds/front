@@ -21,7 +21,13 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
 } from './activity.service';
-import { Subscription, Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import {
+  Subscription,
+  Observable,
+  BehaviorSubject,
+  combineLatest,
+  Subject,
+} from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -83,7 +89,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() canRecordAnalytics: boolean = true;
 
-  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleted: Subject<boolean> = this.service.onDelete$;
 
   @HostBinding('class.m-activity--boost')
   isBoost = false;
@@ -167,7 +173,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   delete() {
-    this.deleted.emit(this.service.entity$.value);
+    this.deleted.next(this.service.entity$.value);
   }
 
   get isPaywall2020(): boolean {

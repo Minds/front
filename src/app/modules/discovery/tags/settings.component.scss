@@ -53,7 +53,7 @@ m-discovery__tagSettings {
     border-radius: 2px;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--quaternary);
+      background-color: themed($m-bgColor--secondary);
     }
 
     i {

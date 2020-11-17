@@ -34,7 +34,7 @@ m-sidebarMenu {
   width: 245px;
   padding-left: 20px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 }
 .m-pageLayout__main {

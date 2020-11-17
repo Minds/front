@@ -10,7 +10,7 @@ m-moderation__strikes h2 {
 
 .m-moderation__strike {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
   padding: 16px;
   margin-bottom: 16px;

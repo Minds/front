@@ -206,8 +206,8 @@ m--blockchain--transaction-overlay {
   font-size: 18px;
   @include m-theme() {
     color: themed($m-grey-800);
-    background-color: themed($m-white);
-    border: 1px solid themed($m-grey-50);
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
   }
 
   &.m--blockchain--transaction-overlay--dropping {

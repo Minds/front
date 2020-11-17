@@ -76,6 +76,7 @@ export interface MindsUser {
     master: string;
   };
   blocked?: boolean;
+  blocked_by?: boolean;
   carousels?: any[] | boolean;
   city?: string;
   social_profiles?: KeyVal[];

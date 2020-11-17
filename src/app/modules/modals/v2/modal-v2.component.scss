@@ -59,7 +59,7 @@
   box-sizing: border-box;
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: $max-mobile) {

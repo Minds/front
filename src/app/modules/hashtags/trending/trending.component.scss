@@ -24,8 +24,8 @@
     @include m-theme() {
       background: linear-gradient(
         90deg,
-        rgba(themed($m-bgColor--secondary), 0) 0%,
-        rgba(themed($m-bgColor--secondary), 1) 50%
+        rgba(themed($m-bgColor--primary), 0) 0%,
+        rgba(themed($m-bgColor--primary), 1) 50%
       );
     }
   }

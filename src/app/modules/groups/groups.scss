@@ -299,7 +299,7 @@ minds-groups-profile-members-invite {
       padding: $minds-padding;
       vertical-align: middle;
       @include m-theme() {
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       &.h1 {
@@ -366,7 +366,7 @@ minds-groups-profile-members-invite {
         border-radius: 3px;
         display: inline-block;
         @include m-theme() {
-          border: 1px solid themed($m-grey-50);
+          border: 1px solid themed($m-borderColor--primary);
         }
       }
     }
@@ -384,7 +384,7 @@ minds-groups-profile-members-invite {
       padding: $minds-padding;
       vertical-align: middle;
       @include m-theme() {
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       &.h1 {
@@ -651,7 +651,7 @@ minds-groups-profile-requests {
   border-radius: 2px;
   opacity: 0.65;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     color: themed($m-blue-grey-700);
   }
 }

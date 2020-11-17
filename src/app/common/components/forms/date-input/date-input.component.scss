@@ -25,7 +25,7 @@
     padding: 8px 40px 8px 8px;
     appearance: none;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 }

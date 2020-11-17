@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { EmbedService } from '../../../../services/embed';
+import { EmbedService } from '../../../../services/embed.service';
 
 @Component({
   moduleId: module.id,

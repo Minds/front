@@ -1,7 +1,6 @@
 import generateRandomId from '../support/utilities';
 
 context('Newsfeed', () => {
-
   const postText = generateRandomId();
   const titleText = generateRandomId();
 
@@ -33,7 +32,10 @@ context('Newsfeed', () => {
     cy.route('POST', '**api/v2/newsfeed/**').as('editActivity');
     cy.route('POST', '**/api/v1/media/**').as('mediaEDIT');
     cy.route('POST', '**api/v1/media**').as('postMedia');
-    cy.visit('/newsfeed/subscriptions');
+
+    cy.get('.m-sidebarNavigation__list')
+      .contains('Newsfeed').click();
+
   });
 
   

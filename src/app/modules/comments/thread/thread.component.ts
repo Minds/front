@@ -51,7 +51,6 @@ export class CommentsThreadComponent implements OnInit {
   autoloadBlocked: boolean = false;
 
   comments: Array<any> = [];
-  blockedUsers: string[] = [];
   inProgress: boolean = false;
   error: string = '';
 
@@ -93,8 +92,6 @@ export class CommentsThreadComponent implements OnInit {
         this.sockets.leave(this.socketRoomName);
       }
       this.socketRoomName = void 0;
-
-      await this.loadBlockedUsers();
     }
 
     this.inProgress = true;
@@ -163,22 +160,8 @@ export class CommentsThreadComponent implements OnInit {
     this.detectChanges();
   }
 
-  async loadBlockedUsers() {
-    try {
-      this.blockedUsers = (await this.blockListService.getList()) || [];
-    } catch (e) {
-      console.warn('CommentsThreadComponent.loadBlockedUsers', e);
-    }
-
-    return true;
-  }
-
-  isOwnerBlocked(comment) {
-    return comment && this.blockedUsers.indexOf(comment.owner_guid) > -1;
-  }
-
   getComments() {
-    return this.comments.filter(comment => !this.isOwnerBlocked(comment));
+    return this.comments;
   }
 
   isThreadBlocked() {
@@ -234,7 +217,6 @@ export class CommentsThreadComponent implements OnInit {
             this.scrollView.nativeElement.scrollHeight;
 
           if (comment) {
-            await this.loadBlockedUsers();
             this.comments.push(comment);
           }
 

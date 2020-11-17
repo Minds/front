@@ -11,6 +11,7 @@ import { StackableModalService } from '../../../../services/ux/stackable-modal.s
 @Component({
   selector: 'm-activity__toolbar',
   templateUrl: 'toolbar.component.html',
+  styleUrls: ['./toolbar.component.ng.scss'],
 })
 export class ActivityToolbarComponent {
   private entitySubscription: Subscription;
@@ -36,7 +37,7 @@ export class ActivityToolbarComponent {
 
     this.paywallBadgeSubscription = this.service.shouldShowPaywallBadge$.subscribe(
       (showBadge: boolean) => {
-        this.allowReminds = !showBadge;
+        // this.allowReminds = !showBadge;
       }
     );
   }

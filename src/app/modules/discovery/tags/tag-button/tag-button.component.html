@@ -1,7 +1,7 @@
 <div
   class="m-discovery__tagButton"
   [ngClass]="{
-    'm-discovery__tagButton--recentlySelected': recentlySelected
+    'm-discovery__tagButton--selected': tag.selected
   }"
   (mouseenter)="hovering = true"
   (mouseleave)="hovering = false; recentlyToggled = false"

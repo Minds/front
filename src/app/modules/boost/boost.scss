@@ -37,7 +37,7 @@
       padding: 16px;
       width: 100%;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         -webkit-box-shadow: inset 0 0 3px themed($m-grey-400);
         box-shadow: inset 0 0 3px themed($m-grey-400);
       }

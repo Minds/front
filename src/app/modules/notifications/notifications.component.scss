@@ -11,7 +11,7 @@ minds-notification.mdl-card {
 
   &:not(.mdl-shadow--2dp) {
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }

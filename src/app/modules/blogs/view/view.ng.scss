@@ -17,6 +17,34 @@
 
   .m-blog--footer {
     margin-bottom: 50px;
+    .m-license-info {
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+
+  ::ng-deep {
+    m-postmenu--v2 {
+      .m-postMenu__button {
+        padding: 0;
+      }
+      i {
+        font-size: 24px;
+      }
+    }
+    m-activity__remindbutton {
+      button {
+        cursor: pointer;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &.m-activityRemindButton__icon .minds-counter {
+          padding-right: 8px !important; // 8px because that is what legacy .minds-counter is
+        }
+      }
+    }
   }
 
   .m-share-buttons {
@@ -104,11 +132,11 @@
         text-align: center;
 
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-black);
 
           &:focus {
-            background-color: themed($m-bgColor--tertiary);
+            background-color: themed($m-bgColor--primary);
           }
         }
       }
@@ -169,12 +197,12 @@
           @include m-theme(){
              border-left: 2px solid themed($m-grey-600);
           }
-      
+
           &:before, &:after {
             position: initial;
             content: initial;
           }
-      
+
           p, ul, ol {
             &:last-child {
               margin-bottom: 0;

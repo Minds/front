@@ -12,7 +12,6 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { ProChannelListComponent } from './channel/list/list.component';
 import { ProTileComponent } from './channel/tiles/media/tile.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
-import { ProSettingsComponent } from './settings/settings.component';
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { WireModule } from '../wire/wire.module';
@@ -62,7 +61,6 @@ const routes: Routes = [
         redirectTo: ':username/settings/general',
         pathMatch: 'full',
       },
-      { path: ':username/settings/:tab', component: ProSettingsComponent },
       {
         path: ':username',
         component: ProChannelComponent,
@@ -167,7 +165,6 @@ export const PRO_DOMAIN_ROUTES = [
   providers: [ProService],
   declarations: [
     ProMarketingComponent,
-    ProSettingsComponent,
     ProSubscriptionComponent,
     ProTileComponent,
     ProChannelHomeComponent,

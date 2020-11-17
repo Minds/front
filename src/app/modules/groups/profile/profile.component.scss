@@ -17,7 +17,7 @@
     min-width: 33%;
     width: 33%;
     @include m-theme() {
-      border-left: 1px solid themed($m-grey-50);
+      border-left: 1px solid themed($m-borderColor--primary);
     }
   }
 
@@ -74,7 +74,7 @@
   max-width: 780px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   minds-groups-settings-button.m-button {
@@ -231,7 +231,7 @@ m-groups--profile .m-group__grid header {
   padding: 8px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
