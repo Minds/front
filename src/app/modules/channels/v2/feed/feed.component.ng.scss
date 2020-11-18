@@ -50,6 +50,83 @@
         min-width: 100%;
       }
     }
+
+    .m-channelFeed__emptyFeedContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 60px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+
+      .m-channelFeed__emptyFeedTitle {
+        font-size: 22px;
+        font-weight: 600;
+        text-align: center;
+        line-height: 28px; // translation may force multiline.
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      .m-channelFeed__emptyFeedSubtitle {
+        font-size: 18px;
+        margin-top: 20px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-channelFeed__firstPostButton {
+        margin-top: 30px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 500;
+        border: unset;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          background-color: themed($m-black);
+        }
+
+        &.m-channelFeed__firstPostButton--light {
+          @include m-theme() {
+            color: themed($m-white-always);
+            background-color: themed($m-grey-500);
+
+            &:hover {
+              background-color: themed($m-grey-700);
+            }
+          }
+        }
+
+        &.m-channelFeed__firstPostButton--dark {
+          @include m-theme() {
+            color: themed($m-bgColor--secondary);
+            background-color: themed($m-white-always);
+
+            &:hover {
+              background-color: themed($m-grey-700);
+            }
+          }
+        }
+      }
+
+      &.m-channelFeed__emptyFeedContainer--bordered {
+        padding: 50px 30px;
+        margin: 60px;
+
+        @include m-theme() {
+          border: 1px dashed themed($m-borderColor--primary);
+        }
+      }
+    }
+
     .m-channelFeed__body {
       display: flex;
       flex-direction: column;
