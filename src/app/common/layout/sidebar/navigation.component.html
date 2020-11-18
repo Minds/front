@@ -7,6 +7,7 @@
     <div class="m-sidebarNavigation__top">
       <a routerLink="/" title="Home" i18n-title="@@COMMON__HOME">
         <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
+        <m-canaryFlag class="m-sidebarNavigation__canaryFlag"></m-canaryFlag>
       </a>
 
       <i class="material-icons" (click)="toggle()">close</i>
