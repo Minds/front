@@ -120,9 +120,6 @@ export class FeedService {
       return;
     }
 
-    this.service.deleteItem(
-      entity,
-      (item, entity) => item.guid === entity.guid
-    );
+    this.service.deleteItem(entity, (item, entity) => item.urn === entity.urn);
   }
 }

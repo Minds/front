@@ -5,8 +5,12 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { ComposerService } from '../../services/composer.service';
+import {
+  ComposerService,
+  RemindSubjectValue,
+} from '../../services/composer.service';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -29,6 +33,8 @@ export class TitleBarComponent {
   @Output('onCreateBlog') onCreateBlogEmitter: EventEmitter<
     void
   > = new EventEmitter<void>();
+
+  remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
   constructor(protected service: ComposerService) {}
 

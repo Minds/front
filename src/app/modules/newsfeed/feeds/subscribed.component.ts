@@ -133,26 +133,19 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
   load(refresh: boolean = false, forceSync: boolean = false) {
     if (isPlatformServer(this.platformId)) return;
-    if (this.featuresService.has('es-feeds')) {
-      this.loadFromService(refresh, forceSync);
-    } else {
-      this.loadLegacy(refresh);
-    }
+
+    this.loadFromService(refresh, forceSync);
   }
 
   loadNext() {
-    if (this.featuresService.has('es-feeds')) {
-      if (
-        this.feedsService.canFetchMore &&
-        !this.feedsService.inProgress.getValue() &&
-        this.feedsService.offset.getValue()
-      ) {
-        this.feedsService.fetch(); // load the next 150 in the background
-      }
-      this.feedsService.loadMore();
-    } else {
-      this.loadLegacy();
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      this.feedsService.offset.getValue()
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
     }
+    this.feedsService.loadMore();
   }
 
   async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
@@ -175,68 +168,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     } catch (e) {
       console.error('SortedComponent', e);
     }
-  }
-
-  /**
-   * Load newsfeed
-   */
-  loadLegacy(refresh: boolean = false) {
-    if (this.inProgress) return;
-
-    if (refresh) {
-      this.offset = '';
-      this.feedsService.clear();
-    }
-
-    this.feedsService.inProgress.next(true);
-    if (!this.offset) {
-      this.feedsService.setOffset(0);
-    } else {
-      this.feedsService.setOffset(this.feedsService.rawFeed.getValue().length);
-    }
-    this.inProgress = true;
-
-    this.client
-      .get(
-        'api/v1/newsfeed',
-        { limit: 12, offset: this.offset },
-        { cache: true }
-      )
-      .then((data: MindsActivityObject) => {
-        if (!data.activity) {
-          this.moreData = false;
-          this.feedsService.inProgress.next(false);
-          return false;
-        }
-
-        const feedItems = [];
-        for (const entity of data.activity) {
-          feedItems.push({
-            urn: entity.urn,
-            guid: entity.guid,
-            owner_guid: entity.owner_guid,
-            entity: entity,
-          });
-        }
-
-        if (this.feedsService.rawFeed.getValue() && !refresh) {
-          this.feedsService.rawFeed.next([
-            ...this.feedsService.rawFeed.getValue(),
-            ...feedItems,
-          ]);
-        } else {
-          this.feedsService.rawFeed.next(feedItems);
-        }
-
-        this.feedsService.inProgress.next(false);
-        //this.feedsService.setOffset(this.feedsService.offset.getValue() + 12); // Hacky!
-        this.offset = data['load-next'];
-        this.inProgress = false;
-      })
-      .catch(e => {
-        console.error(e);
-        this.inProgress = false;
-      });
   }
 
   prepend(activity: any) {
@@ -272,7 +203,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     }
 
     this.feedsService.deleteItem(activity, (item, obj) => {
-      return item.guid === obj.guid;
+      return item.urn === obj.urn;
     });
   }
 

@@ -245,7 +245,28 @@
 .m-v3Topbar__nav {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
+
+  @media screen and (max-width: $layoutMax3ColWidth) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  m-canaryFlag > span {
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      display: flex;
+      z-index: -1;
+      margin-left: unset !important;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
 }
 
 .m-v3TopbarNav__item {
@@ -303,12 +324,20 @@
     cursor: pointer;
     transition: opacity 0.5s ease;
 
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      margin: 0;
+    }
+
     @media screen and (max-width: $max-mobile) {
       display: none;
     }
 
     .m-v3Topbar__logo--bulb {
       height: 36px;
+      transform: translateY(
+        4px
+      ); // overlap effect while still retaining flexbox.
+
       //display: none;
       @media screen and (min-width: $layoutMax3ColWidth) {
         display: none;
