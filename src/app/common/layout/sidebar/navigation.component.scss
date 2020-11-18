@@ -76,9 +76,13 @@ m-sidebar--navigation {
         border-bottom: 1px solid themed($m-borderColor--primary);
       }
 
-      a > img {
-        height: 36px;
-        cursor: pointer;
+      a {
+        text-decoration: none;
+
+        & > img {
+          height: 36px;
+          cursor: pointer;
+        }
       }
 
       i.material-icons {
