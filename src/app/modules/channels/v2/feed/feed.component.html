@@ -49,7 +49,7 @@
     <!-- ----------------------------------------- -->
     <div
       class="m-channelFeed__list"
-      *ngIf="!isGrid && (feed.service.feed | async).length > 0"
+      *ngIf="!isGrid && (feed.service.feed | async)?.length > 0"
     >
       <m-composer *ngIf="service.isOwner$ | async"></m-composer>
       <div class="m-channelFeedList__entities">
@@ -69,7 +69,7 @@
     <div
       *ngIf="
         !(feed.service.inProgress | async) &&
-        (feed.service.feed | async).length < 1 &&
+        (feed.service.feed | async)?.length < 1 &&
         !isOwnedChannel
       "
       class="m-channelFeed__emptyFeedContainer"
@@ -117,7 +117,7 @@
     <div
       *ngIf="
         !(feed.service.inProgress | async) &&
-        (feed.service.feed | async).length < 1 &&
+        (feed.service.feed | async)?.length < 1 &&
         isOwnedChannel
       "
       class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
