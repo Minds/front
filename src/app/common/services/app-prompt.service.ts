@@ -74,7 +74,12 @@ export class AppPromptService implements OnDestroy {
    * @returns { boolean } true if platform has app available.
    */
   public hasAvailableApp(): boolean {
-    return isMobileOrTablet();
+    console.log('checking if has app'); //TODO: Diagnostics - remove
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
+      console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
+      return isMobileOrTablet();
+    }
   }
 
   /**
@@ -82,10 +87,13 @@ export class AppPromptService implements OnDestroy {
    * @returns { void }
    */
   public setPlatform(): void {
+    console.log('setting platform...'); //TODO: Diagnostics - remove
     if (isIos()) {
-      this.platform$.next('iphone');
+      console.log('is iOS');
+      this.platform$.next('iphone'); //TODO: Diagnostics - remove
     }
     if (isAndroid()) {
+      console.log('is android'); //TODO: Diagnostics - remove
       this.platform$.next('android');
     }
   }
@@ -109,6 +117,7 @@ export class AppPromptService implements OnDestroy {
               switch (platform) {
                 case 'iphone':
                   setTimeout(function() {
+                    console.log('timeout fn iphone'); //TODO: Diagnostics - remove
                     window.location.href =
                       'https://itunes.apple.com/us/app/minds-com/id961771928';
                   }, 25);
