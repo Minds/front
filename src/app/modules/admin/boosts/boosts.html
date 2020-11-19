@@ -71,17 +71,6 @@
       *ngFor="let boost of boosts; let i = index"
     >
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
-      <minds-card-video
-        [object]="boost.entity"
-        class="mdl-card mdl-shadow--8dp"
-        *ngIf="boost.entity.subtype == 'video'"
-      ></minds-card-video>
-      <minds-card-image
-        [object]="boost.entity"
-        class="mdl-card mdl-shadow--8dp"
-        *ngIf="boost.entity.subtype == 'image'"
-      ></minds-card-image>
-
       <minds-card-user
         [object]="boost.entity"
         class="mdl-card mdl-shadow--8dp"
@@ -89,7 +78,11 @@
       ></minds-card-user>
       <m-activity
         [entity]="boost.entity"
-        *ngIf="boost.entity.type == 'activity' || boost.entity.subtype === 'blog'"
+        *ngIf="boost.entity.type == 'activity' 
+          || boost.entity.subtype === 'blog'
+          || boost.entity.subtype == 'image'
+          || boost.entity.subtype == 'video'
+          "
         [attr.data-minds-activity-guid]="boost.entity.guid"
       ></m-activity>
       <minds-card-group

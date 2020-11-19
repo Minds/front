@@ -211,8 +211,5 @@ describe('BlogCard', () => {
         By.css('.m-action-tabs minds-button-thumbs-down')
       )
     ).not.toBeNull();
-    expect(
-      fixture.debugElement.query(By.css('.m-action-tabs minds-button-comment'))
-    ).not.toBeNull();
   });
 });

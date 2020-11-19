@@ -41,8 +41,9 @@ import { DefaultRedirectGuard } from './guards/default-redirect-guard.component'
 import { TabStorageGuard } from './guards/tab-storage-guard.component';
 
 export const WALLET_V2_ROUTES: Routes = [
+  { path: 'canary', redirectTo: '..', pathMatch: 'full' },
   {
-    path: 'canary',
+    path: '',
     component: WalletDashboardComponent,
     data: {
       title: 'Wallet',

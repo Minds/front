@@ -12,9 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api/client';
-import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';

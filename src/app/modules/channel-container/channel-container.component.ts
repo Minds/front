@@ -10,7 +10,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { ChannelComponent } from '../channels/channel.component';
 import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
 import { SiteService } from '../../common/services/site.service';
@@ -35,9 +34,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   protected showPro: boolean;
 
   protected param$: Subscription;
-
-  @ViewChild('v1ChannelComponent')
-  v1ChannelComponent: ChannelComponent;
 
   @ViewChild('v2ChannelComponent')
   v2ChannelComponent: ChannelV2Component;
@@ -73,10 +69,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): boolean | Observable<boolean> {
-    if (this.v1ChannelComponent) {
-      return this.v1ChannelComponent.canDeactivate();
-    }
-
     if (this.v2ChannelComponent) {
       return this.v2ChannelComponent.canDeactivate();
     }

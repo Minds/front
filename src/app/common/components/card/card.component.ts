@@ -15,14 +15,11 @@ import {
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
 import { UserCard } from '../../../modules/legacy/components/cards/user/user';
-import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { GroupsCard } from '../../../modules/groups/card/card';
-import { ImageCard } from '../../../modules/legacy/components/cards/object/image/image';
-import { VideoCard } from '../../../modules/legacy/components/cards/object/video/video';
-import { AlbumCard } from '../../../modules/legacy/components/cards/object/album/album';
 import { BlogCard } from '../../../modules/blogs/card/card';
 import { CommentComponentV2 } from '../../../modules/comments/comment/comment.component';
 import { ActivityService } from '../../services/activity.service';
+import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
 
 @Component({
   selector: 'minds-card',
@@ -95,18 +92,17 @@ export class MindsCard implements AfterViewInit {
 
     if (object.type === 'user') {
       return UserCard;
-    } else if (object.type === 'activity') {
-      return Activity;
+    } else if (
+      object.type === 'activity' ||
+      object.subtype === 'image' ||
+      object.subtype === 'video' ||
+      object.subtype === 'album'
+    ) {
+      return ActivityComponent;
     } else if (object.type === 'group') {
       return GroupsCard;
-    } else if (object.subtype === 'image') {
-      return ImageCard;
-    } else if (object.subtype === 'video') {
-      return VideoCard;
     } else if (object.subtype === 'blog') {
       return BlogCard;
-    } else if (object.subtype === 'album') {
-      return AlbumCard;
     } else if (object.type === 'comment') {
       return CommentComponentV2;
     }
@@ -160,7 +156,7 @@ export class MindsCard implements AfterViewInit {
       this.componentInstance.object = this.object;
 
       if (this.object.type === 'activity') {
-        (<Activity>this.componentInstance).hideTabs =
+        (<ActivityComponent>this.componentInstance).displayOptions.showToolbar =
           this.flags.hideTabs || false;
       }
     }

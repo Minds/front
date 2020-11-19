@@ -163,12 +163,10 @@ import {
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 import { SidebarNavigationSubnavDirective } from './layout/sidebar/subnav.directive';
-import { OnboardingReminderComponent } from './components/onboarding-reminder/reminder.component';
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
-import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
 import { ClientMetaDirective } from './directives/client-meta.directive';
@@ -303,7 +301,6 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -437,7 +434,6 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,

@@ -4,14 +4,11 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 
 import { CommonModule } from '../../common/common.module';
 
-import { WalletComponent } from '../wallet/wallet.component';
-import { BlockchainConsoleComponent } from './console/console.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.component';
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
-import { BlockchainTdeBuyComponent } from './tde-buy/tde-buy.component';
 import { Web3WalletService } from './web3-wallet.service';
 import { TokenContractService } from './contracts/token-contract.service';
 import { BoostContractService } from './contracts/boost-contract.service';
@@ -20,7 +17,6 @@ import { WithdrawContractService } from './contracts/withdraw-contract.service';
 import { TokenDistributionEventService } from './contracts/token-distribution-event.service';
 import { LocalWalletService } from './local-wallet.service';
 import { OffchainPaymentService } from './offchain-payment.service';
-import { Client } from '../../services/api/client';
 import { GetMetamaskComponent } from './metamask/getmetamask.component';
 import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
 import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
@@ -29,16 +25,7 @@ import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
 
-const cryptoRoutes: Routes = [
-  {
-    path: 'wallet/crypto',
-    component: WalletComponent,
-    children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: BlockchainConsoleComponent },
-    ],
-  },
-];
+const cryptoRoutes: Routes = [];
 
 @NgModule({
   imports: [
@@ -50,11 +37,9 @@ const cryptoRoutes: Routes = [
     ModalsModule,
   ],
   declarations: [
-    BlockchainConsoleComponent,
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
-    BlockchainTdeBuyComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,
     BlockchainMarketingOnboardComponent,
@@ -88,7 +73,6 @@ const cryptoRoutes: Routes = [
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
-    BlockchainTdeBuyComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,
     BlockchainPurchaseComponent,

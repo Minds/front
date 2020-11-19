@@ -52,7 +52,7 @@ export interface Wallet {
 
 @Injectable()
 export class WalletV2Service {
-  readonly basePath: string = '/wallet/canary';
+  readonly basePath: string = '/wallet';
 
   totalTokens = 0;
   stripeDetails: StripeDetails;

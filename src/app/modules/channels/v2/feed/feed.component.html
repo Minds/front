@@ -117,6 +117,7 @@
     <div
       *ngIf="
         !(feed.service.inProgress | async) &&
+        (feed.service.feed | async) &&
         (feed.service.feed | async).length < 1 &&
         isOwnedChannel
       "

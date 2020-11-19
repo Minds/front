@@ -10,142 +10,12 @@
   m-pageLayout__container
 >
   <div
-    class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar"
-    *mIfFeature="'!navigation'"
-  >
-    <minds-card-user
-      *ngIf="session.isLoggedIn()"
-      [object]="session.getLoggedInUser()"
-      [avatarSize]="'large'"
-      class="mdl-card m-border"
-    ></minds-card-user>
-
-    <ng-container *ngTemplateOutlet="hashtagSelector"> </ng-container>
-
-    <div class="minds-spacer minds-spacer-2x"></div>
-
-    <div class="m-page--sidebar--navigation">
-      <a
-        class="m-page--sidebar--navigation--item"
-        *ngIf="session.isLoggedIn()"
-        (click)="openReferralsModal()"
-      >
-        <i class="material-icons">people</i>
-        <span i18n="@@M__COMMON__REFER_FRIENDS">Refer Friends</span>
-      </a>
-
-      <a
-        class="m-page--sidebar--navigation--item"
-        routerLink="/plus"
-        *ngIf="
-          session.isLoggedIn() &&
-          !session.getLoggedInUser().plus &&
-          showPlusButton
-        "
-      >
-        <i class="material-icons">add_circle</i>
-        <span>Upgrade to Plus</span>
-      </a>
-
-      <ng-container *mIfFeature="'pro'">
-        <a
-          class="m-page--sidebar--navigation--item"
-          [routerLink]="[
-            '/pro/' + session.getLoggedInUser().username + '/settings'
-          ]"
-          *ngIf="session.isLoggedIn() && !session.getLoggedInUser().pro"
-        >
-          <i class="material-icons">business_center</i>
-          <span>Try Pro</span>
-        </a>
-      </ng-container>
-
-      <a
-        class="m-page--sidebar--navigation--item"
-        routerLink="/tokens"
-        *ngIf="session.isLoggedIn()"
-      >
-        <i class="material-icons">shopping_cart</i>
-        <span>Buy Tokens</span>
-      </a>
-
-      <ng-container *mIfFeature="'!top-feeds'">
-        <a
-          class="m-page--sidebar--navigation--item"
-          routerLink="/wallet"
-          *ngIf="session.isLoggedIn()"
-        >
-          <i class="material-icons">account_balance</i>
-          <span>Wallet</span>
-        </a>
-      </ng-container>
-
-      <a
-        class="m-page--sidebar--navigation--item"
-        routerLink="/login"
-        *ngIf="!session.isLoggedIn()"
-      >
-        <i class="material-icons">vpn_key</i>
-        <span>Login</span>
-      </a>
-    </div>
-
-    <div class="minds-spacer minds-spacer-2x"></div>
-
-    <div class="m-newsfeed--dynamic-siderbar" *ngIf="!showRightSidebar">
-      <m-ads-boost limit="8"></m-ads-boost>
-      <div class="minds-spacer minds-spacer-2x"></div>
-    </div>
-
-    <div class="m-newsfeed-footer" *ngIf="!newNavigation">
-      <ul class="m-footer-nav m-footer-nav-inline">
-        <li
-          *ngFor="let page of navigation.getItems('footer')"
-          class="m-footer-nav-item"
-        >
-          <a
-            *ngIf="pagesService.isInternalLink(page.path)"
-            [routerLink]="['/' + page.path]"
-          >
-            {{ page.title }}
-          </a>
-          <a
-            *ngIf="!pagesService.isInternalLink(page.path)"
-            [href]="page.path"
-            target="_blank"
-          >
-            {{ page.title }}
-          </a>
-        </li>
-      </ul>
-      <span
-        class="copyright mdl-color-text--blue-grey-700"
-        i18n="@@M__COMMON__COPYRIGHT_YEAR"
-      >
-        &#169; Minds {{ '2020' }}
-      </span>
-    </div>
-  </div>
-
-  <div
     class="m-newsfeed--feed"
     [class.mdl-cell]="!newNavigation"
     [class.mdl-cell--8-col]="!newNavigation"
     m-pageLayout__pane="main"
     [ngClass]="{ 'm-newsfeed--logged-out': !session.getLoggedInUser() }"
   >
-    <div
-      class="mdl-card m-newsfeed__CompactHashtagSelector"
-      *mIfFeature="'!navigation'"
-    >
-      <m-hashtags--sidebar-selector
-        [compact]="true"
-        [disabled]="!isSorted"
-        [currentHashtag]="hashtag"
-        (filterChange)="hashtagFilterChange($event)"
-        (switchAttempt)="navigateToGlobal()"
-      ></m-hashtags--sidebar-selector>
-    </div>
     <router-outlet></router-outlet>
   </div>
 
@@ -183,17 +53,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #hashtagSelector>
-  <h3 class="m-newsfeedSidebar__header">
-    <span>Hashtags</span>
-  </h3>
-  <div class="mdl-card m-border">
-    <m-hashtags--sidebar-selector
-      [disabled]="!isSorted"
-      [currentHashtag]="hashtag"
-      (filterChange)="hashtagFilterChange($event)"
-      (switchAttempt)="navigateToGlobal()"
-    ></m-hashtags--sidebar-selector>
-  </div>
-</ng-template>

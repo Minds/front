@@ -16,16 +16,6 @@
       class="mdl-card mdl-shadow--4dp m-report"
       *ngFor="let entity of entities; let i = index"
     >
-      <minds-card-video
-        [object]="entity"
-        class="mdl-card"
-        *ngIf="entity.subtype == 'video'"
-      ></minds-card-video>
-      <minds-card-image
-        [object]="entity"
-        class="mdl-card"
-        *ngIf="entity.subtype == 'image'"
-      ></minds-card-image>
       <minds-card-user
         [object]="entity"
         class="mdl-card"
@@ -37,6 +27,16 @@
         *ngIf="entity.type == 'activity'"
         [attr.data-minds-activity-guid]="entity.guid"
       ></minds-activity>
+
+      <m-activity
+        [entity]="entity"
+        *ngIf="entity.type == 'activity' 
+          || entity.subtype === 'blog'
+          || entity.subtype == 'image'
+          || entity.subtype == 'video'
+          "
+        [attr.data-minds-activity-guid]="entity.guid"
+      ></m-activity>
 
       <div class="mdl-card__supporting-text m-action-buttons">
         <button
