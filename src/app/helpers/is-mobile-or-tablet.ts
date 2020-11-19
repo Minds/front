@@ -28,6 +28,7 @@ export function isTablet() {
  * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
  */
 export function isAndroid(): boolean {
+  console.log(navigator);
   return /\bAndroid\b/i.test(navigator.userAgent || navigator.vendor || '');
 }
 /**
@@ -35,5 +36,6 @@ export function isAndroid(): boolean {
  * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
  */
 export function isIos(): boolean {
+  console.log(navigator);
   return /\b(iPad|iPod)\b/i.test(navigator.userAgent || navigator.vendor || '');
 }
