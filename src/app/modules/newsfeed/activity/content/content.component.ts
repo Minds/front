@@ -29,7 +29,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { RedirectService } from '../../../../common/services/redirect.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Session } from '../../../../services/session';
 import {
   animate,

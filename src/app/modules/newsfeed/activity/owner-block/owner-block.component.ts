@@ -5,7 +5,7 @@ import { ActivityService, ActivityEntity } from '../activity.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'm-activity__ownerBlock',

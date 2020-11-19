@@ -14,7 +14,7 @@ import { WalletV2Service } from '../../wallet-v2.service';
 import { Filter } from '../../../../../interfaces/dashboard';
 import toFriendlyCryptoVal from '../../../../../helpers/friendly-crypto';
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { Subscription } from 'rxjs';
 
 @Component({

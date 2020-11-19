@@ -8,9 +8,9 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as xhr2 from 'xhr2';
+import xhr2 from 'xhr2';
 
-import * as express from 'express';
+import express from 'express';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 @Injectable()

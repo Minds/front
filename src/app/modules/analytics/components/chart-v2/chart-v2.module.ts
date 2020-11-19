@@ -4,7 +4,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { ChartV2Component } from './chart-v2.component';
 import { CommonModule } from '../../../../common/common.module';
 
-import * as PlotlyJS from 'plotly.js/dist/plotly-basic.min.js';
+import PlotlyJS from 'plotly.js/dist/plotly-basic.min.js';
 import { PlotlyModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
 

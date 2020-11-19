@@ -3,7 +3,7 @@ import { Client } from '../../../../../services/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Filter, Option } from '../../../../../interfaces/dashboard';
-import * as moment from 'moment';
+import moment from 'moment';
 
 const SUM_CENTS = (arr): number => {
   return arr.reduce((acc, item) => {

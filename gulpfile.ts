@@ -1,8 +1,8 @@
-import * as gulp from 'gulp';
-import * as autoprefixer from 'gulp-autoprefixer';
-import * as sass from 'gulp-sass';
-import * as sassGlob from 'gulp-sass-glob';
-import * as template from 'gulp-template';
+import gulp from 'gulp';
+import autoprefixer from 'gulp-autoprefixer';
+import sass from 'gulp-sass';
+import sassGlob from 'gulp-sass-glob';
+import template from 'gulp-template';
 
 import { join } from 'path';
 import { argv } from 'yargs';

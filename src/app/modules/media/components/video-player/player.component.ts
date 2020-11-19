@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
-import * as Plyr from 'plyr';
+import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';

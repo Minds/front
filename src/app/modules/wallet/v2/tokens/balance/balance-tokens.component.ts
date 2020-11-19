@@ -15,7 +15,7 @@ import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'm-walletBalance--tokens',

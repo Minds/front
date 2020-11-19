@@ -11,7 +11,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import * as BN from 'bn.js';
+import BN from 'bn.js';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';

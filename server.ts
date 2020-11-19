@@ -7,7 +7,7 @@ import { renderModule } from '@angular/platform-server';
 
 import { join } from 'path';
 import { readFileSync, existsSync } from 'fs';
-import * as _url from 'url';
+import _url from 'url';
 
 import './server-polyfills';
 
@@ -17,9 +17,9 @@ import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
 
-import * as express from 'express';
-import * as compression from 'compression';
-import * as cookieparser from 'cookie-parser';
+import express from 'express';
+import compression from 'compression';
+import cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');

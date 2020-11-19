@@ -23,7 +23,7 @@ import {
 } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 import isMobile from '../../../helpers/is-mobile';
-import * as Macy from 'macy';
+import Macy from 'macy';
 
 @Component({
   selector: 'm-feedGrid',

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { XhrFactory } from '@angular/common/http';
-import * as xhr2 from 'xhr2';
+import xhr2 from 'xhr2';
 
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';

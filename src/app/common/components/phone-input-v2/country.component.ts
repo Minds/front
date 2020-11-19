@@ -19,7 +19,7 @@ import { verticallyScrollElementIntoView } from '../../../helpers/scrollable-con
 
 import { Country } from './country';
 import { CountryCode } from './countries';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export type CountrySelectedEvent = {
   number: Country;

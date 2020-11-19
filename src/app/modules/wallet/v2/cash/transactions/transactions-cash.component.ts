@@ -16,7 +16,7 @@ import {
   StripeDetails,
 } from '../../wallet-v2.service';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'm-walletTransactions--cash',

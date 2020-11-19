@@ -17,7 +17,7 @@
 // import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // import { verticallyScrollElementIntoView } from '../../../../helpers/scrollable-container-visibility';
-// import * as moment from 'moment';
+// import moment from 'moment';
 
 // // export const COUNTRY_INPUT_VALUE_ACCESSOR: any = {
 // //   provide: NG_VALUE_ACCESSOR,

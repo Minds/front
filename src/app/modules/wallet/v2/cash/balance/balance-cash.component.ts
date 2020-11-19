@@ -18,7 +18,7 @@ import {
   WalletCurrency,
   SplitBalance,
 } from '../../wallet-v2.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { PlusService } from '../../../../plus/plus.service';
 
 @Component({
