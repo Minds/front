@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import BN from 'bn.js';
 import { BigNumber } from 'ethers';
 
 import { Web3WalletService } from '../web3-wallet.service';

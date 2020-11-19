@@ -6,7 +6,7 @@ import {
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
-import BN from 'bn.js';
+import * as BN from 'bn.js';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
