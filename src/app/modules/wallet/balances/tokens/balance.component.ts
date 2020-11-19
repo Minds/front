@@ -6,7 +6,7 @@ import {
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
-import * as BN from 'bn.js';
+import BN from 'bn.js';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
@@ -14,6 +14,7 @@ import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { isPlatformBrowser } from '@angular/common';
+import { BigNumber } from 'ethers';
 
 @Component({
   selector: 'm-wallet--balance-tokens',
@@ -84,7 +85,7 @@ export class WalletBalanceTokensComponent implements OnInit {
     const address = await this.web3Wallet.getCurrentWallet();
     if (!address) return;
     const ethBalance = await this.web3Wallet.fromWei(
-      new BN((await this.web3Wallet.getBalance()) || 0),
+      BigNumber.from((await this.web3Wallet.getBalance()) || 0),
       'ether'
     );
     this.ethBalance = ethBalance ? ethBalance : '0';

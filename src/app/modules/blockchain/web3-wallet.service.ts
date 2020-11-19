@@ -224,9 +224,8 @@ export class Web3WalletService {
     return BigNumber.from(weiAmount).toHexString();
   }
 
-  fromWei(amount: BN, unit?: BigNumberish) {
-    const etherAmount = utils.formatUnits(amount.toString(), unit).toString();
-    return BigNumber.from(etherAmount).toHexString();
+  fromWei(amount: BigNumber, unit?: BigNumberish) {
+    return utils.formatUnits(amount.toString(), unit).toString();
   }
 
   encodeParams(types: (string | utils.ParamType)[], values: any[]) {
