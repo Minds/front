@@ -143,6 +143,8 @@ export class MindsCard implements AfterViewInit {
 
     if (this.object.type === 'group') {
       (<GroupsCard>this.componentInstance).group = this.object;
+    } else if (this.object.type === 'user') {
+      this.componentInstance.object = this.object;
     } else if (this.object.subtype === 'blog') {
       (<BlogCard>this.componentInstance)._blog = this.object;
     } else if (this.object.type === 'comment') {
@@ -158,6 +160,7 @@ export class MindsCard implements AfterViewInit {
       if (this.object.type === 'activity') {
         (<ActivityComponent>this.componentInstance).displayOptions.showToolbar =
           this.flags.hideTabs || false;
+        this.componentInstance.displayOptions.minimalMode = true;
       }
     }
 
