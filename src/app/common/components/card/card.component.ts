@@ -153,7 +153,7 @@ export class MindsCard implements AfterViewInit {
       commentComp.canEdit = false;
       commentComp.hideToolbar = this.flags.hideTabs || true;
     } else {
-      this.componentInstance.object = this.object;
+      this.componentInstance.entity = this.object;
 
       if (this.object.type === 'activity') {
         (<ActivityComponent>this.componentInstance).displayOptions.showToolbar =
