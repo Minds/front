@@ -41,27 +41,29 @@
         (deleted)="feed.onDelete($event)"
       >
       </m-feedGrid>
-      <ng-container [ngTemplateOutlet]="infiniteScroll"></ng-container>
     </div>
 
     <!-- ----------------------------------------- -->
     <!-- LAYOUT : LIST  -->
     <!-- ----------------------------------------- -->
-    <div
-      class="m-channelFeed__list"
-      *ngIf="!isGrid && (feed.service.feed | async)?.length > 0"
-    >
-      <m-composer *ngIf="service.isOwner$ | async"></m-composer>
-      <div class="m-channelFeedList__entities">
-        <m-newsfeed__entity
-          *ngFor="let entity of feed.service.feed | async; let i = index"
-          [entity]="entity | async"
-          [slot]="i + 1"
-          (deleted)="feed.onDelete($event)"
-        ></m-newsfeed__entity>
-      </div>
-      <ng-container [ngTemplateOutlet]="infiniteScroll"></ng-container>
+    <div class="m-channelFeed__list" *ngIf="!isGrid">
+      <ng-container *ngIf="(feed.service.feed | async)?.length > 0">
+        <m-composer *ngIf="service.isOwner$ | async"></m-composer>
+        <div class="m-channelFeedList__entities">
+          <m-newsfeed__entity
+            *ngFor="let entity of feed.service.feed | async; let i = index"
+            [entity]="entity | async"
+            [slot]="i + 1"
+            (deleted)="feed.onDelete($event)"
+          ></m-newsfeed__entity>
+        </div>
+      </ng-container>
     </div>
+
+    <ng-container
+      *ngIf="showInfiniteScroll()"
+      [ngTemplateOutlet]="infiniteScroll"
+    ></ng-container>
 
     <!-- ----------------------------------------- -->
     <!-- LAYOUT : NO POSTS  -->
