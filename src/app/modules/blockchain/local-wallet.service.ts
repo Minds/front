@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import randomString from '../../helpers/random-string';
 import asyncSleep from '../../helpers/async-sleep';
-import ethSigner from 'ethjs-signer';
-import ethAccount from 'ethjs-account';
+import * as ethSigner from 'ethjs-signer';
+import * as ethAccount from 'ethjs-account';
 
 const SECURE_MODE_TIMEOUT = 60 * 1000; // 1 minute
 

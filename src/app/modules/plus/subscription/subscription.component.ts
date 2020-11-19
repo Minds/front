@@ -26,7 +26,7 @@ import { WireModalService } from '../../wire/wire-modal.service';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-plus--subscription',

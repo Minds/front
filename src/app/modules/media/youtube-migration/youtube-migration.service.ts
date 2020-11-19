@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject, Observable } from 'rxjs';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export interface YoutubeChannel {
   id: string;

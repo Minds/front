@@ -60,7 +60,7 @@ import { ProModule } from './modules/pro/pro.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 
-import Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/browser';
 import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';

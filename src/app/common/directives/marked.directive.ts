@@ -1,7 +1,7 @@
 // Credit to Jamie Cockrill @ https://www.jamiecockrill.com/2018-04-30-marked-directive/
 
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
-import marked from 'marked';
+import * as marked from 'marked';
 
 /**
  * Convert the contents of the decorated element from Markdown into HTML.

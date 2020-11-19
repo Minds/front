@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { map } from 'rxjs/operators';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-activity__minimalMetrics',

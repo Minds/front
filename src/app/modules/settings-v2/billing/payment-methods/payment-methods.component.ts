@@ -3,7 +3,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { Client } from '../../../../common/api/client.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { PaymentsNewCard } from '../../../payments/new-card/new-card.component';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-settingsV2__paymentMethods',

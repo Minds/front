@@ -22,7 +22,7 @@ import currency from '../../../helpers/currency';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-pro--subscription',

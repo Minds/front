@@ -6,7 +6,7 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { Session } from './session';
-import io from 'socket.io-client';
+import * as io from 'socket.io-client';
 import { ConfigsService } from '../common/services/configs.service';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformServer } from '@angular/common';

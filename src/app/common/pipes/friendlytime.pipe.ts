@@ -1,5 +1,5 @@
 import { Pipe } from '@angular/core';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Pipe({
   name: 'friendlytime',

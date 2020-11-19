@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { WalletV2Service } from '../../wallet-v2.service';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-walletRewardsPopup',

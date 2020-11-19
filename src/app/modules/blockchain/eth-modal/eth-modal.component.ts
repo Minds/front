@@ -19,7 +19,7 @@ import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import isMobile from '../../../helpers/is-mobile';
 import { SendWyreService } from '../sendwyre/sendwyre.service';
-import BN from 'bn.js';
+import * as BN from 'bn.js';
 import { SendWyreConfig } from '../sendwyre/sendwyre.interface';
 import { SiteService } from '../../../common/services/site.service';
 import { ConfigsService } from '../../../common/services/configs.service';

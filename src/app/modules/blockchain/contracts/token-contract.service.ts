@@ -1,5 +1,5 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import BN from 'bn.js';
+import * as BN from 'bn.js';
 
 import { Web3WalletService } from '../web3-wallet.service';
 import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';

@@ -9,7 +9,7 @@ import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Client } from '../../../../services/api';
 import { PhoneVerificationComponent } from './phone-input/input.component';
-import moment from 'moment';
+import * as moment from 'moment';
 import { OnboardingV2Service } from '../../service/onboarding.service';
 import { DateDropdownsComponent } from '../../../../common/components/date-dropdowns/date-dropdowns.component';
 import { Subscription } from 'rxjs';

@@ -18,7 +18,7 @@ import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
-import BN from 'bn.js';
+import * as BN from 'bn.js';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';

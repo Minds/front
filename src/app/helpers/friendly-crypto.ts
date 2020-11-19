@@ -1,4 +1,4 @@
-import BN from 'bn.js';
+import * as BN from 'bn.js';
 // **
 // Converts really long crypto values into friendly numbers
 // Notes:

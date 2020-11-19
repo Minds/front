@@ -13,7 +13,7 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-settingsV2Pro__cancel',
