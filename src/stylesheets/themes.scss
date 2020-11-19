@@ -97,6 +97,8 @@ $themes: (
     m-bgColor--secondary: #f6f7f7,
     m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
+    m-bgColor--btnHover: #f0f3f7,
+    m-bgColor--btnActive: #dadfe5,
     m-borderColor--primary: #d3dbe3,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
@@ -171,6 +173,8 @@ $themes: (
     m-bgColor--secondary: #1a2025,
     m-bgColor--secondaryAlt: #232b31,
     m-bgColor--contrast: #d8d8d8,
+    m-bgColor--btnHover: #343c44,
+    m-bgColor--btnActive: #48525b,
     m-borderColor--primary: #414c57,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #3a3f41,
@@ -307,6 +311,8 @@ $m-bgColor--primaryAlt: 'm-bgColor--primaryAlt';
 $m-bgColor--secondary: 'm-bgColor--secondary';
 $m-bgColor--secondaryAlt: 'm-bgColor--secondaryAlt';
 $m-bgColor--contrast: 'm-bgColor--contrast';
+$m-bgColor--btnHover: 'm-bgColor--btnHover';
+$m-bgColor--btnActive: 'm-bgColor--btnActive';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';

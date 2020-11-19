@@ -10,6 +10,7 @@ import {
 @Component({
   selector: 'm-shadowboxSubmitButton',
   templateUrl: './shadowbox-submit-button.component.html',
+  styleUrls: ['./shadowbox-submit-button.component.ng.scss'],
 })
 export class ShadowboxSubmitButtonComponent implements AfterViewInit {
   buttonTextWidth: number;
@@ -18,7 +19,9 @@ export class ShadowboxSubmitButtonComponent implements AfterViewInit {
 
   @Input() type: string = 'submit';
   @Input() disabled: boolean = false;
-  @Input() color: 'green' | 'grey' | 'red' = 'green';
+  @Input() overlay: boolean = false;
+  @Input() color: 'blue' | 'grey' | 'red' = 'grey';
+  @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   private _saving: boolean;
   @Input() set saving(value: boolean) {
