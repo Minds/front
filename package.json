@@ -15,7 +15,7 @@
     "lint": "ng lint",
     "e2e": "cypress run --debug",
     "e2e-open": "cypress open",
-    "postinstall": "node patch.js",
+    "postinstall": "node patch.js && ngcc",
     "serve:ssr": "node dist/server/main",
     "build:ssr": "ng run minds:server:production",
     "build:ssr:dev": "ng run minds:server:production",
