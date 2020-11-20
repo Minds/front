@@ -24,6 +24,29 @@
     }
   }
 
+  ::ng-deep {
+    m-postmenu--v2 {
+      .m-postMenu__button {
+        padding: 0;
+      }
+      i {
+        font-size: 24px;
+      }
+    }
+    m-activity__remindbutton {
+      button {
+        cursor: pointer;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &.m-activityRemindButton__icon .minds-counter {
+          padding-right: 8px !important; // 8px because that is what legacy .minds-counter is
+        }
+      }
+    }
+  }
+
   .m-share-buttons {
     cursor: pointer;
     padding-right: 8px;

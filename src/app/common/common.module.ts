@@ -181,6 +181,7 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { AppPromptComponent } from './components/app-prompt/app-prompt.component';
+import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
 
 const routes: Routes = [
   {
@@ -336,6 +337,7 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     AppPromptComponent,
+    CanaryFlagComponent,
   ],
   exports: [
     MINDS_PIPES,

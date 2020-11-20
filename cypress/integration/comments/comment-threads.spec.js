@@ -217,12 +217,12 @@ context.only('Comment Threads', () => {
 
       });
 
-      cy.get('.m-share__copyableLinkText')
+      cy.get('.m-share__inputText')
         .invoke('val')
         .then(val => {
           // log out
           cy.logout();
-
+          cy.log(val)
           // visit link
           cy.visit(val);
 

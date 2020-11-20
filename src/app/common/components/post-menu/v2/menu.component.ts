@@ -82,11 +82,25 @@ export class PostMenuV2Component implements OnInit {
       return false;
     }
 
+    if (this.entity.remind_users && this.entity.remind_users.length) {
+      return false; // Do not show the delete option here as users have become confused
+    }
+
     return (
       (this.options.indexOf('delete') !== -1 &&
         this.entity.owner_guid == this.session.getLoggedInUser().guid) ||
       this.session.isAdmin() ||
       this.canDelete
+    );
+  }
+
+  shouldShowUndoRemind(): boolean {
+    return (
+      this.entity.type === 'activity' &&
+      this.entity.remind_users &&
+      this.entity.remind_users.filter(
+        user => user.guid === this.session.getLoggedInUser().guid
+      ).length > 0
     );
   }
 

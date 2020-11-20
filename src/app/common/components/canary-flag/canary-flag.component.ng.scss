@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  .m-v3TopbarNav__canaryFlag {
+    border-radius: 2px;
+    margin-left: 8px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: unset;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      background: themed($m-bgColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+}

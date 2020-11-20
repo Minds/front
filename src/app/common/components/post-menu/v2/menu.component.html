@@ -3,7 +3,7 @@
     <i class="material-icons">more_vert</i>
   </button>
 
-  <ul class="m-dropdown__list" [hidden]="!(isOpened$ | async)">
+  <ul class="m-dropdown__list" *ngIf="isOpened$ | async">
     <li
       class="m-dropdownList__item"
       *ngIf="options.indexOf('view') !== -1"
@@ -184,6 +184,15 @@
       <ng-content select="[post-menu]"></ng-content>
     </div>
 
+    <!-- UNDO REMIND -->
+    <li
+      class="m-dropdownList__item m-dropdownList__item--destructive"
+      *ngIf="shouldShowUndoRemind()"
+      (click)="onSelectedOption('undo-remind')"
+      i18n="@@M__ACTION__UNDO_REMIND"
+    >
+      Undo Remind
+    </li>
     <!-- DELETE -->
     <li
       class="m-dropdownList__item m-dropdownList__item--destructive"
@@ -211,5 +220,5 @@
 <div
   class="m-bgOverlay--v2"
   (click)="isOpened$.next(false)"
-  [hidden]="!(isOpened$ | async)"
+  *ngIf="isOpened$ | async"
 ></div>
