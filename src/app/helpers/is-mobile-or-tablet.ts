@@ -16,6 +16,8 @@ export default function isMobileOrTablet() {
     )
       check = true;
   })(navigator.userAgent || navigator.vendor || '');
+
+  console.log(navigator);
   return check;
 }
 
@@ -28,6 +30,7 @@ export function isTablet() {
  * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
  */
 export function isAndroid(): boolean {
+  console.log('is android > navigator...');
   console.log(navigator);
   return /\bAndroid\b/i.test(navigator.userAgent || navigator.vendor || '');
 }

@@ -1,5 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { FormToastService } from './form-toast.service';
@@ -23,7 +29,7 @@ export type MobilePlatform = 'android' | 'iphone' | 'non-mobile';
  * Service for interacting with the mobile app prompt.
  */
 @Injectable({ providedIn: 'root' })
-export class AppPromptService implements OnDestroy {
+export class AppPromptService implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
 
   /**
@@ -44,6 +50,12 @@ export class AppPromptService implements OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private toaster: FormToastService
   ) {}
+
+  ngOnInit(): void {
+    if (this.hasAvailableApp()) {
+      this.setPlatform();
+    }
+  }
 
   ngOnDestroy(): void {
     for (const subscription of this.subscriptions) {
@@ -77,6 +89,7 @@ export class AppPromptService implements OnDestroy {
     console.log('checking if has app'); //TODO: Diagnostics - remove
     if (isPlatformBrowser(this.platformId)) {
       console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
+      console.log('this.platformId.toString()', this.platformId.toString());
       console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
       return isMobileOrTablet();
     }
