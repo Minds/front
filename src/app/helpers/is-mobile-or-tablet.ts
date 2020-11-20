@@ -30,15 +30,13 @@ export function isTablet() {
  * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
  */
 export function isAndroid(): boolean {
-  console.log('is android > navigator...');
-  console.log(navigator);
-  return /\bAndroid\b/i.test(navigator.userAgent || navigator.vendor || '');
+  return /android/i.test(navigator.userAgent);
 }
 /**
  * True if useragent is iOS.
  * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
  */
 export function isIos(): boolean {
-  console.log(navigator);
-  return /\b(iPad|iPod)\b/i.test(navigator.userAgent || navigator.vendor || '');
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }

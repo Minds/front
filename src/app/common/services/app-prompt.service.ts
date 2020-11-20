@@ -54,6 +54,7 @@ export class AppPromptService implements OnDestroy, OnInit {
   ngOnInit(): void {
     if (this.hasAvailableApp()) {
       this.setPlatform();
+      this.open();
     }
   }
 
@@ -88,8 +89,8 @@ export class AppPromptService implements OnDestroy, OnInit {
   public hasAvailableApp(): boolean {
     console.log('checking if has app'); //TODO: Diagnostics - remove
     if (isPlatformBrowser(this.platformId)) {
-      console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
       console.log('this.platformId.toString()', this.platformId.toString());
+      console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
       console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
       return isMobileOrTablet();
     }
