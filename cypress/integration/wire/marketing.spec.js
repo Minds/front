@@ -11,7 +11,7 @@ context('Pay Product Page', () => {
     cy.preserveCookies();
   });
 
-  const monetizeChannelButton = '.m-marketing__mainWrapper .mf-button';
+  const monetizeChannelButton = '.m-marketing__mainWrapper m-button';
 
   it('should have a monetize channel button', () => {
     cy.visit('/pay');

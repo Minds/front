@@ -11,7 +11,7 @@ context('Onboarding', () => {
   const passwordField = 'minds-form-register #password';
   const password2Field = 'minds-form-register #password2';
   const checkbox = '[data-cy=minds-accept-tos-input] [type=checkbox]';
-  const submitButton = '.m-shadowboxSubmitButton';
+  const submitButton = '.m-button';
   const letsGetSetupButton = '[data-cy=onboarding-lets-get-setup-button]';
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ context('Onboarding', () => {
     cy.visit('/register')
       .location('pathname')
       .should('eq', '/register');
-  
+
     cy.get(usernameField)
       .focus()
       .type(username);
@@ -98,8 +98,8 @@ context('Onboarding', () => {
     cy.get('.m-hashtags__list li.m-hashtagsList__item.m-hashtagsList__item--selected');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Continue').click();
+    cy.get('button.m-button').contains('Skip');
+    cy.get('button').contains('Continue').click();
 
     // should be in the info step
     cy.get('.m-onboardingProgressbar__item--selected span').contains('2');
@@ -116,7 +116,7 @@ context('Onboarding', () => {
 
     // every input should be optional, so we should be able to click on "Continue"
 
-    cy.get('button.mf-button--alt').contains('Continue').click({force: true});
+    cy.get('button').contains('Continue').click({force: true});
     cy.visit('/onboarding/info');
 
     // cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
@@ -132,12 +132,12 @@ context('Onboarding', () => {
     cy.get('.m-onboarding__controls > .m-onboarding__control select[data-minds=yearDropdown]').select('1991');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--alt').contains('Continue').click({force: true});
+    cy.get('button').contains('Continue').click({force: true});
 
     // should be in the Avatar step
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Upload a Photo');
+    cy.get('button.m-button').contains('Skip');
+    cy.get('button').contains('Upload a Photo');
 
     // add avatar
     cy.uploadFile(
@@ -165,10 +165,10 @@ context('Onboarding', () => {
     );
 
     // should cancel cropping
-    cy.get('button.mf-button--hollow').contains('Cancel').click();
+    cy.get('button.m-button').contains('Cancel').click();
 
     // should redirect to next step
-    cy.get('button.mf-button--hollow').contains('Skip').click();
+    cy.get('button.m-button').contains('Skip').click();
 
     // should be in the Groups step
 
@@ -182,8 +182,8 @@ context('Onboarding', () => {
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribe i').contains('add');
 
     // should have a continue and a skip button
-    // cy.get('button.mf-button--hollow').contains('Skip');
-    // cy.get('button.mf-button--alt').contains('Continue').click();
+    // cy.get('button.m-button').contains('Skip');
+    // cy.get('button').contains('Continue').click();
 
 
     // should be in the Channels step
@@ -198,8 +198,8 @@ context('Onboarding', () => {
     // cy.get('.m-channelList__list .m-channelList__item:first-child .m-join__subscribe i').contains('add');
 
     // should have a continue and a skip button
-    // cy.get('button.mf-button--hollow').contains('Skip');
-    // cy.get('button.mf-button--alt').contains('Finish').click();
+    // cy.get('button.m-button').contains('Skip');
+    // cy.get('button').contains('Finish').click();
 
     // should be in the newsfeed
     // cy.location('pathname').should('eq', '/newsfeed/subscriptions');

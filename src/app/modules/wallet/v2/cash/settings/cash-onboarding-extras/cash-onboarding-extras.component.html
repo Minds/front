@@ -31,12 +31,12 @@
       </div>
     </div>
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
-        (click)="file.click()"
+      <m-button
+        (onAction)="file.click()"
         [disabled]="inProgress"
         [saving]="inProgress"
         i18n="@@CASH_ONBOARD_EXTRAS__UPLOAD_PHOTO_ID"
-        >Upload Photo ID</m-shadowboxSubmitButton
+        >Upload Photo ID</m-button
       >
     </div>
     <div class="m-walletForm__row--validation">
@@ -70,12 +70,12 @@
       </div>
     </div>
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
-        (click)="file.click()"
+      <m-button
+        (onAction)="file.click()"
         [disabled]="inProgress"
         [saving]="inProgress"
         i18n="@@CASH_ONBOARD_EXTRAS__UPLOAD_PROOF_OF_ADDRESS"
-        >Upload Proof of Address</m-shadowboxSubmitButton
+        >Upload Proof of Address</m-button
       >
     </div>
     <div class="m-walletForm__row--validation">
@@ -110,12 +110,12 @@
       <p *ngIf="error">{{ error }}</p>
     </div>
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
-        (click)="updateField('phone', phone.value)"
+      <m-button
+        (onAction)="updateField('phone', phone.value)"
         [disabled]="inProgress"
         [saving]="inProgress"
         i18n="@@CASH_ONBOARD_EXTRAS__SAVE"
-        >Save</m-shadowboxSubmitButton
+        >Save</m-button
       >
     </div>
   </ng-container>
@@ -149,12 +149,12 @@
       <p *ngIf="error">{{ error }}</p>
     </div>
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
-        (click)="updateField('id_number', personalIdNumber.value)"
+      <m-button
+        (onAction)="updateField('id_number', personalIdNumber.value)"
         [disabled]="inProgress"
         [saving]="inProgress"
         i18n="@@COMMON__SAVE"
-        >Save</m-shadowboxSubmitButton
+        >Save</m-button
       >
     </div>
   </ng-container>
@@ -175,12 +175,12 @@
       </div>
     </div>
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
-        (click)="acceptTos()"
+      <m-button
+        (onAction)="acceptTos()"
         [disabled]="inProgress"
         [saving]="inProgress"
         i18n="@@COMMON__SAVE"
-        >Save</m-shadowboxSubmitButton
+        >Save</m-button
       >
     </div>
   </ng-container>

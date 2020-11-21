@@ -4,18 +4,15 @@
     to be automatically posted to Minds?
   </p>
   <div class="m-youtubeMigration__setupModal__buttonsContainer">
-    <m-shadowboxSubmitButton
-      color="grey"
-      (click)="submit(false)"
-      [disabled]="inProgress"
-      >I'll do it manually</m-shadowboxSubmitButton
+    <m-button color="grey" (onAction)="submit(false)" [disabled]="inProgress"
+      >I'll do it manually</m-button
     >
-    <m-shadowboxSubmitButton
-      color="green"
-      (click)="submit(true)"
+    <m-button
+      color="blue"
+      (onAction)="submit(true)"
       [disabled]="inProgress"
       [saving]="inProgress"
-      >Auto-post new YouTube videos</m-shadowboxSubmitButton
+      >Auto-post new YouTube videos</m-button
     >
   </div>
 </ng-container>

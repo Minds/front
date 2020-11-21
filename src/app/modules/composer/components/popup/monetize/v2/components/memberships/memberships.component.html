@@ -113,13 +113,13 @@
     </ng-container>
   </div>
   <div class="m-composerPopup__action">
-    <m-shadowboxSubmitButton
+    <m-button
       *ngIf="hasSupportTiers"
       type="button"
-      (click)="save()"
+      (onAction)="save()"
       i18n="@@COMMON__SAVE"
     >
       Save
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </ng-container>

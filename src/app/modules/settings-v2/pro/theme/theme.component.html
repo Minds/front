@@ -291,13 +291,13 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@PRO_THEME__SAVE_THEME"
     >
       Save Theme
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

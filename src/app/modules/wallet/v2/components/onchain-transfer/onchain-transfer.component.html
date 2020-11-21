@@ -82,11 +82,11 @@
       </div>
     </div>
   </div>
-  <m-shadowboxSubmitButton
+  <m-button
     [disabled]="!isFormValid() || loading"
     [saving]="transferring"
-    (click)="submitError ? load() : onSubmit()"
+    (onAction)="submitError ? load() : onSubmit()"
   >
     {{ submitError ? 'Reset' : 'Transfer' }}
-  </m-shadowboxSubmitButton>
+  </m-button>
 </form>

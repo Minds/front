@@ -1,6 +1,10 @@
 @import 'defaults.scss';
 
 :host {
+  .m-composerToolbar__action--post {
+    font-size: 15px;
+  }
+
   span.m-animation__shimmer--text,
   .m-animation__shimmer--icon {
     @include m-theme() {

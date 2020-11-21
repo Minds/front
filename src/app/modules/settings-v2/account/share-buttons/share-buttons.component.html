@@ -36,13 +36,13 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@SETTINGS_V2_SHARE_BUTTONS__UPDATE_PREFERENCES"
     >
       Update Preference
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

@@ -132,33 +132,32 @@
           }
 
           ::ng-deep {
-            m-shadowboxsubmitbutton {
+            m-button {
               flex-shrink: 0;
             }
           }
 
           button.mf-button {
-            width: 132px;
-            height: 60px;
+            width: 132px; //ojm test?
           }
         }
       }
 
-      ::ng-deep m-shadowboxSubmitButton {
-        min-width: 0 !important;
+      //ojm maybe remove
+      ::ng-deep m-button {
+        // min-width: 0 !important;
         button {
-          width: 132px;
-          height: 60px;
-          border-radius: 2px;
-          > div {
-            font-size: 18px;
-            @include m-theme() {
-              color: themed($m-white) !important;
-            }
-            @media screen and (max-width: $max-mobile) {
-              font-size: 15px;
-            }
-          }
+          width: 132px; //ojm test?
+          // border-radius: 2px;
+          // > div {
+          //   font-size: 18px;
+          //   @include m-theme() {
+          //     color: themed($m-white) !important;
+          //   }
+          //   @media screen and (max-width: $max-mobile) {
+          //     font-size: 15px;
+          //   }
+          // }
         }
       }
     }

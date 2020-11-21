@@ -82,13 +82,13 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@DOMAIN_SETTINGS__SAVE_DOMAIN"
     >
       Save Domain
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

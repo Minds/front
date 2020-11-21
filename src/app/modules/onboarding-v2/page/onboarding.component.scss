@@ -23,7 +23,7 @@ m-onboarding {
   }
 
   @include m-theme() {
-    background-color: themed($m-body-bg);
+    background-color: themed($m-bgcolor--primary);
   }
 
   &.m-onboarding__iosFallback {
@@ -487,113 +487,117 @@ m-onboarding {
 
           .m-onboarding__input {
             display: flex;
+            input {
+              outline: none;
+            }
           }
 
+          // ojm need to handle this one
           .m-onboardingInput__saveButton {
             height: 36px !important;
-            font-size: 16px !important;
-            padding: 4px 20px;
+            // font-size: 16px !important;
+            // padding: 4px 20px;
             margin-left: 8px;
-            cursor: pointer;
+            // cursor: pointer;
             width: auto !important;
             flex-shrink: 2;
 
-            @include m-theme() {
-              color: themed($m-aqua);
-            }
+            // @include m-theme() {
+            //   color: themed($m-aqua);
+            // }
 
-            &.disabled {
-              cursor: not-allowed;
-              @include m-theme() {
-                color: themed($m-grey-100);
-              }
-            }
-          }
-
-          .m-onboardingInput__smallButton {
-            height: 36px !important;
-            font-size: 18px !important;
-            padding: 4px 8px;
-            margin-left: 8px;
-            cursor: pointer;
-            width: auto !important;
-            flex-shrink: 2;
-
-            @include m-theme() {
-              color: themed($m-aqua);
-            }
-
-            &.disabled {
-              cursor: not-allowed;
-              @include m-theme() {
-                color: themed($m-grey-100);
-              }
-            }
-
-            & > i.material-icons {
-              opacity: 1;
-            }
+            // &.disabled {
+            //   cursor: not-allowed;
+            //   @include m-theme() {
+            //     color: themed($m-grey-100);
+            //   }
           }
         }
 
-        .m-onboarding__error {
-          font-size: 14px;
-          line-height: 19px;
-          margin-top: 3px;
-          text-align: right;
-          color: #d0021b;
-        }
+        .m-onboardingInput__smallButton {
+          height: 36px !important;
+          font-size: 18px !important;
+          padding: 4px 8px;
+          margin-left: 8px;
+          cursor: pointer;
+          width: auto !important;
+          flex-shrink: 2;
 
-        m-tooltip {
-          margin-left: 10px;
-
-          .m-tooltip--anchored {
-            font-weight: bold;
-            font-size: 15px;
-            line-height: 18px;
-            letter-spacing: 0;
+          @include m-theme() {
+            color: themed($m-aqua);
           }
 
-          .m-tooltip--bubble {
-            font-size: 15px;
-            line-height: 18px;
+          &.disabled {
+            cursor: not-allowed;
+            @include m-theme() {
+              color: themed($m-grey-100);
+            }
+          }
+
+          & > i.material-icons {
+            opacity: 1;
           }
         }
       }
 
-      .m-onboarding__actionButtons {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        margin-top: 50px;
-        margin-bottom: 30px;
+      .m-onboarding__error {
+        font-size: 14px;
+        line-height: 19px;
+        margin-top: 3px;
+        text-align: right;
+        color: #d0021b;
+      }
 
-        & > *:not(:first-child) {
-          margin-left: 30px;
+      m-tooltip {
+        margin-left: 10px;
+
+        .m-tooltip--anchored {
+          font-weight: bold;
+          font-size: 15px;
+          line-height: 18px;
+          letter-spacing: 0;
         }
 
-        a {
-          cursor: pointer;
+        .m-tooltip--bubble {
+          font-size: 15px;
+          line-height: 18px;
         }
+      }
+    }
+
+    .m-onboarding__actionButtons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 50px;
+      margin-bottom: 30px;
+
+      & > *:not(:first-child) {
+        margin-left: 30px;
+      }
+
+      a {
+        cursor: pointer;
       }
     }
   }
 
-  .mf-button--hollow {
-    border-color: #e7e7e7 !important;
-    color: #9b9b9b !important;
-    font-size: 16px !important;
-    line-height: 21px !important;
-    font-weight: 300 !important;
-    height: 56px !important;
-  }
+  // ojm remove
+  // .mf-button--hollow {
+  //   border-color: #e7e7e7 !important;
+  //   color: #9b9b9b !important;
+  //   font-size: 16px !important;
+  //   line-height: 21px !important;
+  //   font-weight: 300 !important;
+  //   height: 56px !important;
+  // }
 
-  .mf-button--alt {
-    background-color: #5dbac0 !important;
-    border-color: #5dbac0 !important;
-    color: white !important;
-    font-size: 20px !important;
-    line-height: 26px !important;
-    height: 56px !important;
-  }
+  // .mf-button--alt {
+  //   background-color: #5dbac0 !important;
+  //   border-color: #5dbac0 !important;
+  //   color: white !important;
+  //   font-size: 20px !important;
+  //   line-height: 26px !important;
+  //   height: 56px !important;
+  // }
 }

@@ -99,14 +99,14 @@
     </h5>
 
     <ng-container *ngIf="!showSubmittedInfo">
-      <m-shadowboxSubmitButton
+      <m-button
         (click)="unlock()"
         [saving]="inProgress"
         data-cy="wire-lock-screen-unlock-button"
         class="m-unlock-button"
       >
         <ng-container i18n="@@WIRE__UNLOCK__POST">Unlock Post</ng-container>
-      </m-shadowboxSubmitButton>
+      </m-button>
     </ng-container>
   </div>
 </div>

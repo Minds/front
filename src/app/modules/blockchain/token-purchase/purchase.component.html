@@ -23,14 +23,14 @@
   </div>
 
   <div class="m-blockchainTokenPurchase__action">
-    <button
-      class="mf-button"
+    <m-button
+      color="blue"
       [disabled]="!tokens"
-      (click)="purchase(); $event.preventDefault()"
+      (onAction)="purchase(); $event.preventDefault()"
       i18n="verb|@@COMMON__BUY"
     >
       Buy
-    </button>
+    </m-button>
   </div>
 </div>
 

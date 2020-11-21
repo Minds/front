@@ -47,13 +47,13 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="save()"
+      (onAction)="save()"
       i18n="@@ACCOUNT_EMAIL_ADDRESS__SAVE_EMAIL_ADDRESS"
     >
       Save Email Address
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

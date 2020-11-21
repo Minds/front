@@ -50,7 +50,7 @@ m-newsfeed--sorted {
   border-top: 1px solid;
 
   @include m-theme() {
-    border-top-color: themed($m-grey-200);
+    border-top-color: themed($m-borderColor--primary);
   }
 
   > span {
@@ -66,8 +66,8 @@ m-newsfeed--sorted {
     text-transform: uppercase;
 
     @include m-theme() {
-      color: themed($m-grey-400);
-      background: themed($m-body-bg);
+      color: themed($m-textColor--tertiary);
+      background: themed($m-bgcolor--primary);
     }
   }
 }

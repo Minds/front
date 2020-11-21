@@ -211,10 +211,13 @@ m-upgrades__upgradeOptions {
     }
 
     .m-upgradesUpgradeOptionsPlan__action {
+      display: block;
       margin-top: 25px;
-      width: 66%;
-      @media screen and (max-width: $m-grid-min-vp) {
-        width: auto;
+      button {
+        width: 66%;
+        @media screen and (max-width: $m-grid-min-vp) {
+          width: 100%;
+        }
       }
     }
   }

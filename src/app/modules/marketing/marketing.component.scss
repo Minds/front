@@ -10,7 +10,7 @@ m-marketing {
   -webkit-font-smoothing: antialiased;
 
   @include m-theme() {
-    background: themed($m-white);
+    background: themed($m-bgColor--primary);
     color: themed($m-textColor--primary);
   }
 

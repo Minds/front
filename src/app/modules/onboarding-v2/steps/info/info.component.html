@@ -87,20 +87,16 @@
   </div>
 
   <div class="m-onboarding__actionButtons">
-    <button
-      class="mf-button mf-button--hollow"
-      (click)="skip()"
-      i18n="@@COMMON__SKIP"
-    >
+    <m-button (onAction)="skip()" i18n="@@COMMON__SKIP">
       Skip
-    </button>
-    <button
-      class="mf-button mf-button--alt"
+    </m-button>
+    <m-button
+      color="blue"
       [disabled]="!canContinue()"
-      (click)="continue()"
+      (onAction)="continue()"
       i18n="@@COMMON__CONTINUE"
     >
       Continue
-    </button>
+    </m-button>
   </div>
 </div>

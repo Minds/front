@@ -67,15 +67,15 @@
 
     <ng-template #saveButton>
       <div class="m-form__buttonsContainer m-channelEdit__buttonsContainer">
-        <m-shadowboxSubmitButton
+        <m-button
           type="button"
           [disabled]="false"
           [saving]="service.inProgress$ | async"
-          (click)="onSubmit()"
+          (onAction)="onSubmit()"
           i18n="@@COMMON__SAVE"
         >
           Save
-        </m-shadowboxSubmitButton>
+        </m-button>
       </div>
     </ng-template>
   </form>

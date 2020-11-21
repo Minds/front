@@ -104,6 +104,8 @@ export class RegisterForm {
   }
 
   register(e) {
+    console.log(e);
+
     e.preventDefault();
     this.errorMessage = '';
     if (!this.form.value.tos) {

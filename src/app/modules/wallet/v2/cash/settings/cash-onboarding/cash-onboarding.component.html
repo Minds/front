@@ -6,10 +6,10 @@
     >
       Add your bank account details where cash rewards will be deposited.
     </p>
-    <m-shadowboxSubmitButton
-      (click)="enterEditMode()"
+    <m-button
+      (onAction)="enterEditMode()"
       i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_DETAILS"
-      >Add your bank details</m-shadowboxSubmitButton
+      >Add your bank details</m-button
     >
   </div>
   <!-- -------------------------------------------- -->
@@ -347,19 +347,19 @@
       <!--- FORM BUTTONS --------------------------------->
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__buttonsContainer">
-        <m-shadowboxSubmitButton
-          (click)="cancelForm()"
+        <m-button
+          (onAction)="cancelForm()"
           [disabled]="inProgress"
           color="grey"
           i18n="@@COMMON__CANCEL"
-          >Cancel</m-shadowboxSubmitButton
+          >Cancel</m-button
         >
-        <m-shadowboxSubmitButton
-          (click)="createAccount()"
+        <m-button
+          (onAction)="createAccount()"
           [disabled]="inProgress || form.invalid"
           [saving]="inProgress"
           i18n="@@COMMON__UPDATE_PERSONAL_INFORMATION"
-          >Update Personal Information</m-shadowboxSubmitButton
+          >Update Personal Information</m-button
         >
       </div>
     </form>
@@ -381,17 +381,17 @@
     </p>
 
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
+      <m-button
         color="grey"
-        (click)="showModal = false"
+        (onAction)="showModal = false"
         i18n="@@COMMON__GO_BACK"
-        >Go back</m-shadowboxSubmitButton
+        >Go back</m-button
       >
-      <m-shadowboxSubmitButton
+      <m-button
         color="red"
-        (click)="leaveEditMode()"
+        (onAction)="leaveEditMode()"
         i18n="@@COMMON__IM_SURE"
-        >I'm sure</m-shadowboxSubmitButton
+        >I'm sure</m-button
       >
     </div>
   </m-walletModal>

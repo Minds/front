@@ -176,18 +176,19 @@
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </button>
-    <m-shadowboxSubmitButton
+    <m-button
       *ngIf="showBigButton"
       type="button"
       [disabled]="inProgress"
       [saving]="inProgress"
-      (click)="login()"
+      (onAction)="login()"
+      color="blue"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">
         Login
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: LOGIN -->

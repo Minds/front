@@ -37,12 +37,12 @@ const registerForm = {
   password: 'minds-form-register #password',
   password2: 'minds-form-register #password2',
   checkbox: '[data-cy=minds-accept-tos-input] [type=checkbox]',
-  submitButton: 'm-shadowboxsubmitbutton',
+  submitButton: 'm-button',
 };
 
 const settings = {
   deleteAccountButton:
-    'm-shadowboxsubmitbutton',
+    'm-button',
   deleteSubmitButton:
     'm-confirm-password--modal > div > form > div:nth-child(2) > button',
 };
@@ -280,7 +280,7 @@ Cypress.Commands.add('highlightText', (text) => {
         document.getSelection().removeAllRanges(range)
         document.getSelection().addRange(range)
       }).trigger('mouseup');
-      
+
   cy.document().trigger('selectionchange')
 });
 

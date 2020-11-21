@@ -28,7 +28,7 @@
     }
   }
 
-  m-shadowboxSubmitButton {
+  m-button {
     @media screen and (max-width: $max-mobile) {
       min-width: initial;
     }

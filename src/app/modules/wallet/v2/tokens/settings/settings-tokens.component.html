@@ -43,14 +43,14 @@
           <!-- <p *ngIf="linkingMetamask && !providedAddress">
             MetaMask is either locked or connected to another network.
           </p> -->
-          <m-shadowboxSubmitButton
+          <m-button
             [disabled]="inProgress || linkingMetamask"
             [saving]="inProgress || linkingMetamask"
-            (click)="useExternal()"
+            (onAction)="useExternal()"
             i18n="@@WALLET_V2_SETTINGS_TOKENS__LINK_METAMASK"
           >
             Link MetaMask
-          </m-shadowboxSubmitButton>
+          </m-button>
         </ng-container>
         <p
           *ngIf="linkingMetamask && downloadingMetamask"
@@ -107,14 +107,14 @@
         is generated, you will be provided with a link to download the address
         and private key.
       </p>
-      <m-shadowboxSubmitButton
+      <m-button
         *ngIf="!generatedAccount"
         [saving]="inProgress"
-        (click)="createAddress()"
+        (onAction)="createAddress()"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS"
       >
         Create Address
-      </m-shadowboxSubmitButton>
+      </m-button>
       <!-- Address created -->
       <p
         *ngIf="generatedAccount"
@@ -130,14 +130,14 @@
         so ensure you safely store the private key file.
       </p>
 
-      <m-shadowboxSubmitButton
+      <m-button
         *ngIf="generatedAccount"
         [saving]="inProgress"
-        (click)="downloadPrivateKey()"
+        (onAction)="downloadPrivateKey()"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__DOWNLOAD_PRIVATE_KEY"
       >
         Download Private Key
-      </m-shadowboxSubmitButton>
+      </m-button>
       <a class="m-walletSecondaryText--backButton" (click)="display = null"
         ><i class="material-icons">❮</i
         ><span i18n="@@WALLET_V2_SETTINGS_TOKENS__BACK_TO_SETTINGS"
@@ -212,17 +212,17 @@
           </div>
         </div>
         <div class="m-walletForm__buttonsContainer">
-          <m-shadowboxSubmitButton
+          <m-button
             [disabled]="
               inProgress ||
               ((this.form.dirty || this.form.touched) && this.form.invalid)
             "
             [saving]="inProgress"
-            (click)="provideAddress()"
+            (onAction)="provideAddress()"
             i18n="@@SETTINGS_TOKENS__UPDATE_ONCHAIN_ADDRESS"
           >
             Update on-chain address
-          </m-shadowboxSubmitButton>
+          </m-button>
         </div>
       </form>
       <a class="m-walletSecondaryText--backButton" (click)="display = null"

@@ -1,0 +1,223 @@
+@import 'defaults.scss';
+
+:host {
+  .m-button {
+    //min-width: 220px;
+    position: relative;
+    cursor: pointer;
+    padding: 10px 20px;
+    min-width: 100px;
+    min-height: 42px;
+    transition: all 0.1s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 22.5px;
+    outline: 0;
+    font-weight: 400;
+    background-clip: padding-box;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: rgba(themed($m-black-always), 0);
+    }
+
+    &.iconOnly {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(1em + 16px);
+      height: calc(1em + 16px);
+      min-width: 0;
+      min-height: 0;
+      padding: 0 !important;
+    }
+
+    ::ng-deep {
+      a {
+        text-decoration: none;
+        font-weight: inherit;
+      }
+    }
+
+    ///////////////////////////////////////////////////
+
+    &.grey {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border-color: themed($m-borderColor--primary);
+      }
+    }
+    &.blue {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border-color: themed($m-link);
+      }
+    }
+    &.red {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border-color: themed($m-alert);
+      }
+    }
+    &:not(.overlay) {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    &.overlay {
+      @include m-theme() {
+        border-color: rgba(themed($m-white-always), 0.5);
+        background-color: rgba(themed($m-black-always), 0.4);
+        color: themed($m-white-always);
+      }
+    }
+    &.noBorder {
+      @include m-theme() {
+        border-color: rgba(themed($m-black-always), 0.4);
+      }
+    }
+
+    ///////////////////////////////////////////////////
+    &.xsmall {
+      font-size: 1em;
+      line-height: calc(1em + 5px);
+      padding: 7px 20px;
+      min-height: 0;
+    }
+    &.small {
+      font-size: 16px;
+      line-height: 20px;
+      padding: 8px 20px;
+    }
+    &.medium {
+      font-size: 17px;
+      line-height: 21px;
+      padding: 10px 20px;
+    }
+    &.large {
+      font-size: 19px;
+      line-height: 24px;
+      padding: 10px 24px;
+    }
+    ///////////////////////////////////////////////////
+    &:not(:disabled) {
+      &:not(.overlay) {
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--btnHover);
+          }
+        }
+        &:active {
+          @include m-theme() {
+            background-color: themed($m-bgColor--btnActive);
+          }
+        }
+      }
+      &.overlay {
+        &:hover {
+          @include m-theme() {
+            background-color: rgba(themed($m-black-always), 0.7);
+          }
+        }
+        &:active {
+          @include m-theme() {
+            background-color: rgba(themed($m-black-always), 0.9);
+          }
+        }
+      }
+    }
+
+    ///////////////////////////////////////////////////
+    &:disabled,
+    &[disabled] {
+      cursor: not-allowed !important;
+      &:not(.saving) {
+        opacity: 0.6;
+      }
+    }
+    ///////////////////////////////////////////////////
+    .m-button__status--saving {
+      span {
+        @include m-theme() {
+          // Color of the animated circles
+          background-color: themed($m-textColor--primary);
+        }
+        display: inline-block;
+        height: 8px;
+        width: 8px;
+        margin: 0 6px;
+        border-radius: 50%;
+        animation-name: blink;
+        animation-duration: 1.4s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        &:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+      }
+    }
+    .m-button__status--unsaved {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      i {
+        margin-right: 12px;
+        font-size: 22px;
+      }
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      m-button {
+        min-width: 50%;
+      }
+    }
+
+    //////////////////////////////////////
+
+    &.dropdown {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+
+      > * {
+        padding-top: 10px; //ojm temp
+      }
+
+      ::ng-deep .m-button__dropdownArrow {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 0 12px;
+        border-left: 1px solid;
+        font-size: 9px; /* m-icon is 135% this size */
+        // ojm don't allow cursor to become pointer when not-allowed
+
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+  }
+  ///////////////////////////////////////////////////
+
+  &button {
+    outline: 0;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(0.95);
+    }
+  }
+}

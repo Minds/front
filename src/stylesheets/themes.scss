@@ -152,7 +152,6 @@ $themes: (
     m-black-always: $black,
     m-white: $white,
     m-white-always: $white,
-    m-body-bg: #f8f8f8,
     m-marketing-bg-gradient-start: #f9fafc,
     m-marketing-bg-colored-gradient-start: #f6eded,
     m-marketing-bg-colored-gradient-end: #f5f5fe,
@@ -213,8 +212,8 @@ $themes: (
     m-black: $white,
     m-black-always: $black,
     m-white: #202527,
-    m-white-always: $white,
-    m-body-bg: lighten(#080808, $percent),
+    //ojm change this to $black?
+      m-white-always: $white,
     m-marketing-bg-gradient-start: #202527,
     m-marketing-bg-colored-gradient-start: #4e5965,
     m-marketing-bg-colored-gradient-end: #58565c,
@@ -275,7 +274,6 @@ $m-black: 'm-black';
 $m-black-always: 'm-black-always';
 $m-white: 'm-white';
 $m-white-always: 'm-white-always';
-$m-body-bg: 'm-body-bg';
 $m-marketing-bg-gradient-start: 'm-marketing-bg-gradient-start';
 $m-marketing-bg-colored-gradient-start: 'm-marketing-bg-colored-gradient-start';
 $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';

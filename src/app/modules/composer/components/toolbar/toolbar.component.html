@@ -77,13 +77,14 @@
   <span class="m-composerToolbar__itemSpacer"></span>
 
   <m-button
-    class="m-composerToolbar__action"
+    class="m-composerToolbar__action m-composerToolbar__action--post"
     [disabled]="
       (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
     "
     [dropdown]="postButtonDropdown"
     [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
     (onAction)="onPost($event)"
+    size="small"
     data-cy="post-button"
   >
     <ng-container

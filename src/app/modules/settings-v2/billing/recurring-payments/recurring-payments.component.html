@@ -89,15 +89,15 @@
         </span>
       </div>
       <div class="m-settingsV2__recurringPayment__cancelWrapper">
-        <m-shadowboxSubmitButton
+        <m-button
           [disabled]="subscription._cancelling"
           [saving]="subscription._cancelling"
           color="grey"
           i18n="@@M__ACTION__CANCEL"
-          (click)="cancel(i)"
+          (onAction)="cancel(i)"
         >
           Cancel
-        </m-shadowboxSubmitButton>
+        </m-button>
       </div>
     </li>
   </ul>

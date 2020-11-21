@@ -169,13 +169,13 @@
   <!-- SUBMIT -->
   <!-- ------------------------------------ -->
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@BOOSTED_CONTENT__SAVE_BOOST SETTINGS"
     >
       Save Boost Settings
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

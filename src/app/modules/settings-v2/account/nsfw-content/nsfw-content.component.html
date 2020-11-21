@@ -37,13 +37,13 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@NSFW_CONTENT_SETTINGS__UPDATE_PREFERENCES"
     >
       Update NSFW Preference
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

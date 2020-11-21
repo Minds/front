@@ -4,6 +4,7 @@
 .m-marketing__section {
   &.m-marketing__section--style-1 {
     @include m-theme() {
+      // ojm wha't sup with m-white
       background: linear-gradient(
         180deg,
         themed($m-white) 0%,

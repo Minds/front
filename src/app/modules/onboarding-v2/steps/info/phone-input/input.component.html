@@ -31,16 +31,18 @@
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
       </div>
 
-      <button
-        class="mf-button mf-button--alt m-onboardingInput__saveButton"
+      <m-button
+        color="blue"
+        size="small"
+        class="m-onboardingInput__saveButton"
         style="height: 38px !important;"
-        [class.disabled]="disabled || !number || number.length < 13"
-        (click)="savePhoneNumber()"
+        [disabled]="disabled || !number || number.length < 13"
+        (onAction)="savePhoneNumber()"
         *ngIf="!inProgress"
         i18n="@@ONBOARDING_PHONE__VERIFY"
       >
         Verify
-      </button>
+      </m-button>
     </div>
     <div
       class="m-onboarding__error"

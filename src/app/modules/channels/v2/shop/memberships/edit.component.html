@@ -181,14 +181,14 @@
     </div>
 
     <div class="m-form__buttonsContainer">
-      <m-shadowboxSubmitButton
+      <m-button
         [disabled]="!(service.canSave$ | async)"
         [saving]="service.inProgress$ | async"
-        (click)="save()"
+        (onAction)="save()"
         i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_SAVE"
       >
         Save Tier
-      </m-shadowboxSubmitButton>
+      </m-button>
     </div>
   </div>
 </div>

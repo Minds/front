@@ -219,17 +219,18 @@
       </ng-container>
     </button>
 
-    <m-shadowboxSubmitButton
+    <m-button
       *ngIf="showBigButton"
       type="button"
       [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
       [saving]="inProgress"
-      (click)="register($event)"
+      color="blue"
+      (onAction)="register($event)"
     >
       <ng-container i18n="@@FORMS__REGISTER__JOIN_NOW_ACTION">
         Join Now
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: Register -->

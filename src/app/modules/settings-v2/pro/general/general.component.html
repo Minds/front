@@ -119,13 +119,13 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@PRO_GENERAL__SAVE_PERSONAL_DETAILS"
     >
       Save Personal Details
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

@@ -17,14 +17,14 @@
 m-body m-register.m-register--newDesign,
 m-body m-login.m-login--newDesign {
   @include m-theme() {
-    background: themed($m-body-bg);
+    background: themed($m-bgColor--primary);
   }
   margin-bottom: 0;
 
   m-marketing__footer {
     margin-bottom: 0;
     @include m-theme() {
-      background: themed($m-body-bg);
+      background: themed($m-bgColor--primary);
     }
     .m-marketing__footer {
       padding-top: 0px;

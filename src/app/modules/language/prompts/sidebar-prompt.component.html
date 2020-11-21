@@ -10,15 +10,15 @@
           {{ languageName$ | async }}?
         </p>
 
-        <m-shadowboxSubmitButton
-          (click)="onClick($event)"
+        <m-button
+          (onAction)="onClick($event)"
           [saving]="saving"
           data-cy="language-sidebar-prompt-button"
         >
           <ng-container i18n="@@LANGUAGE__SIDEBAR__PROMPT__BUTTON"
             >Switch to {{ languageName$ | async }}</ng-container
           >
-        </m-shadowboxSubmitButton>
+        </m-button>
       </div>
     </m-sidebarWidget>
   </ng-container>

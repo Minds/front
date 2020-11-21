@@ -2,12 +2,9 @@
   <div class="m-marketing__main">
     <h1>Content Policy</h1>
 
-    <m-shadowboxSubmitButton
-      *ngIf="session.isAdmin()"
-      (click)="startJuryDuty()"
-    >
+    <m-button *ngIf="session.isAdmin()" (onAction)="startJuryDuty()">
       Start Admin Review
-    </m-shadowboxSubmitButton>
+    </m-button>
     <p>
       The goal of Minds is to have fair, transparent and ethical moderation
       practices.

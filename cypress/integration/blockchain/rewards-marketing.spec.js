@@ -11,7 +11,7 @@ context('Rewards Product Page', () => {
     cy.preserveCookies();
   });
 
-  const joinRewards = '.m-marketing__mainWrapper .mf-button';
+  const joinRewards = '.m-marketing__mainWrapper m-button';
 
   it('should have a join rewards button', () => {
     cy.visit('/rewards');
