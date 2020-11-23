@@ -38,5 +38,5 @@ export function isAndroid(): boolean {
  */
 export function isIos(): boolean {
   // iOS detection from: http://stackoverflow.com/a/9039885/177710
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  return /iPad|iPhone|iPod/i.test(navigator.userAgent) && !window.MSStream;
 }
