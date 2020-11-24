@@ -91,7 +91,7 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
 
   navigateToCategory(tag) {
     this.router.navigate(
-      this.channelService.getRouterLink('all', { hashtag: tag })
+      this.channelService.getRouterLink('feed', { hashtag: tag })
     );
   }
 
