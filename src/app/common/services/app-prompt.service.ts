@@ -101,10 +101,13 @@ export class AppPromptService implements OnDestroy, OnInit {
    * @returns { void }
    */
   public setPlatform(): void {
+    console.log('ua ' + navigator.userAgent);
     console.log('setting platform...'); //TODO: Diagnostics - remove
+
     if (isIos()) {
       console.log('is iOS');
       this.platform$.next('iphone'); //TODO: Diagnostics - remove
+      return;
     }
     if (isAndroid()) {
       console.log('is android'); //TODO: Diagnostics - remove
