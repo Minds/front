@@ -969,7 +969,7 @@
   <ng-template ngSwitchCase="boost_rejected">
     <a
       [routerLink]="
-        notification.entityObj.type == 'activity'
+        notification.entityObj?.type == 'activity'
           ? ['/newsfeed', notification.entityObj.guid]
           : ['/boost/console/content']
       "
