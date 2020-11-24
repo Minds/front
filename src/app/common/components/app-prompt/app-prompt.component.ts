@@ -70,9 +70,20 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AppPromptComponent {
   constructor(private service: AppPromptService) {
+    // if (this.service.hasAvailableApp()) {
+    //   this.service.setPlatform();
+    //   this.service.open();
+    // }
+  }
+
+  ngOnInit(): void {
+    console.log('initing in component');
     if (this.service.hasAvailableApp()) {
+      console.log('settings platform from component');
       this.service.setPlatform();
+      console.log('opening...');
       this.service.open();
+      console.log(this.service.platform$.getValue());
     }
   }
 

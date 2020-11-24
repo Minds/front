@@ -11,9 +11,6 @@ import { catchError, take } from 'rxjs/operators';
 import { FormToastService } from './form-toast.service';
 
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
-import hasTouchScreen from '../../helpers/is-mobile-or-tablet';
-import isAndroid from '../../helpers/is-mobile-or-tablet';
-import isIos from '../../helpers/is-mobile-or-tablet';
 
 /**
  * Dismissed or active to make use of animations.
@@ -31,6 +28,13 @@ export type MobilePlatform = 'android' | 'iphone' | 'non-mobile';
 @Injectable({ providedIn: 'root' })
 export class AppPromptService implements OnDestroy {
   private subscriptions: Subscription[] = [];
+
+  ngOnInit(): void {
+    // if (this.hasAvailableApp()) {
+    //   this.setPlatform();
+    //   this.open();
+    // }
+  }
 
   /**
    * Current state of modal
@@ -98,12 +102,12 @@ export class AppPromptService implements OnDestroy {
     console.log('setting platform...'); //TODO: Diagnostics - remove
     if (isPlatformBrowser(this.platformId)) {
       if (/iPad|iPhone|iPod/i.test(navigator.userAgent)) {
-        console.log('is iOS'); //TODO: Diagnostics - remove
+        console.log('>>>>>>.is iOS'); //TODO: Diagnostics - remove
         this.platform$.next('iphone');
         return;
       }
       if (/android/i.test(navigator.userAgent)) {
-        console.log('is android'); //TODO: Diagnostics - remove
+        console.log('>>>>>>is android'); //TODO: Diagnostics - remove
         this.platform$.next('android');
       }
     }
