@@ -214,4 +214,15 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  /**
+   * Determines whether to show infinite scroll.
+   * @returns true if infinite scroll should be shown.
+   */
+  public showInfiniteScroll(): boolean {
+    return (
+      this.feed.service.inProgress.getValue() ||
+      this.feed.service.rawFeed.getValue().length > 0
+    );
+  }
 }
