@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 import {
   animate,
@@ -69,12 +69,13 @@ import { BehaviorSubject } from 'rxjs';
   ],
 })
 export class AppPromptComponent {
-  constructor(private service: AppPromptService) {
-    // if (this.service.hasAvailableApp()) {
-    //   this.service.setPlatform();
-    //   this.service.open();
-    // }
+  @HostListener('document:click')
+  clickOutside() {
+    // TODO: Add local storage
+    this.service.close();
   }
+
+  constructor(private service: AppPromptService) {}
 
   ngOnInit(): void {
     console.log('initing in component');
