@@ -1,9 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { ChannelEditService } from '../../../channels/v2/edit/edit.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
+import { MindsChannelResponse } from '../../../../interfaces/responses';
+import { ApiService } from '../../../../common/api/api.service';
+import { catchError, take } from 'rxjs/operators';
+import { OnboardingV3Service } from '../../onboarding-v3.service';
 
 /**
  * Channel editing component for onboarding v3.
@@ -35,6 +39,12 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
   );
 
   /**
+   * Used in a similar way to inProgress$ but when true
+   * the component can be shown even if init is not finished.
+   */
+  public preloading$ = new BehaviorSubject<boolean>(true);
+
+  /**
    * Emitted to on next button clicked.
    */
   @Input() nextClicked$: BehaviorSubject<boolean>;
@@ -43,12 +53,17 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: Session,
     private configs: ConfigsService,
-    private channelEditService: ChannelEditService
+    private channelEditService: ChannelEditService,
+    private onboarding: OnboardingV3Service,
+    private api: ApiService
   ) {}
 
-  ngOnInit() {
-    // set channel edit service channel
-    this.channelEditService.setChannel(this.session.getLoggedInUser());
+  async ngOnInit() {
+    // get latest channel from API.
+    const { channel } = await this.sync();
+
+    // set channel service
+    this.channelEditService.setChannel(channel);
 
     // init form
     this.form = this.fb.group({
@@ -62,6 +77,9 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
       ],
       avatar: ['', Validators.required],
     });
+
+    // we can now show the component as form is initialized with values.
+    this.preloading$.next(false);
 
     // set cdn url
     this.cdnUrl = this.configs.get('cdn_url');
@@ -81,7 +99,7 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
 
         if (avatar) {
           src = `url(${URL.createObjectURL(avatar)})`;
-        } else if (channel.icontime) {
+        } else if (channel && channel.icontime) {
           src = `url(${this.cdnUrl}icon/${(channel as any).guid}/large/${
             (channel as any).icontime
           })`;
@@ -124,6 +142,8 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     this.channelEditService.bio$.next(this.form.get('bio').value);
     this.channelEditService.displayName$.next(this.form.get('name').value);
     await this.channelEditService.save();
+
+    this.onboarding.strikeThrough('SetupChannelStep');
   }
 
   /**
@@ -140,5 +160,21 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
 
     this.channelEditService.avatar$.next(file);
     this.channelEditService.save();
+  }
+
+  /**
+   * GET Minds channel from server.
+   * @returns { Promise<MindsChannelResponse> } - awaitable object containing `channel` property.
+   */
+  async sync(): Promise<MindsChannelResponse> {
+    return this.api
+      .get(`api/v1/channel/${this.session.getLoggedInUser().username}`)
+      .pipe(
+        take(1),
+        catchError((e: any) => {
+          return of(null);
+        })
+      )
+      .toPromise();
   }
 }

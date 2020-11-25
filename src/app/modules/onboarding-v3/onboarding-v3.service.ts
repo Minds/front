@@ -1,6 +1,6 @@
 import { Compiler, Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
 import {
@@ -113,6 +113,32 @@ export class OnboardingV3Service {
     }
 
     return onSuccess$.toPromise();
+  }
+
+  /**
+   * Manually strike through a step.
+   * @param { OnboardingStepName } step - the step name to strike through.
+   * @returns { void }
+   */
+  public strikeThrough(step: OnboardingStepName): void {
+    this.subscriptions.push(
+      this.progress$
+        .pipe(
+          take(1),
+          catchError((e: any) => {
+            console.error(e);
+            return of(e);
+          }),
+          map(progress =>
+            progress.steps.map((progressStep: OnboardingStep) => {
+              if (step === progressStep.id) {
+                progressStep.is_completed = true;
+              }
+            })
+          )
+        )
+        .subscribe()
+    );
   }
 
   /**

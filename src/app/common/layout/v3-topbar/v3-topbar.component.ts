@@ -21,6 +21,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-v3topbar',
@@ -191,5 +192,13 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/register']);
+  }
+
+  /**
+   * True if current theme is dark.
+   * @returns { Observable<boolean> } - true if theme is dark, else false.
+   */
+  get isDarkTheme$(): Observable<boolean> {
+    return this.themeService.isDark$;
   }
 }

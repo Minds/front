@@ -71,7 +71,13 @@ export class OnboardingV3WidgetComponent implements OnInit {
           this.composerModal
             .setInjector(this.injector)
             .present()
-            .toPromise();
+            .toPromise()
+            .then(response => {
+              // if activity posted, manually strike through task.
+              if (response) {
+                this.onboarding.strikeThrough('CreatePostStep');
+              }
+            });
           // TODO: Can we get hold of onPost and trigger the Strikethrough.
           break;
         default:

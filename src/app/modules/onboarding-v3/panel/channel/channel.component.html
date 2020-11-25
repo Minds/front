@@ -1,4 +1,8 @@
-<form [formGroup]="form" class="m-onboardingChannel__form">
+<form
+  *ngIf="!(preloading$ | async)"
+  [formGroup]="form"
+  class="m-onboardingChannel__form"
+>
   <label
     class="m-onboardingChannel__label"
     i18n="@@ONBOARDING_CHANNEL__DISPLAY_NAME"

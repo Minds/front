@@ -11,7 +11,7 @@
     -webkit-font-smoothing: antialiased;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-blue);
     }
 
@@ -42,7 +42,7 @@
         margin-bottom: 16px;
 
         @include m-theme() {
-          background-color: themed($m-bgColor--quinary);
+          background-color: themed($m-bgColor--contrast);
         }
 
         .m-onboardingWidget__progressBar {
