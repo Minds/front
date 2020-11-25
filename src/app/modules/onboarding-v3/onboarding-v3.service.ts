@@ -107,7 +107,7 @@ export class OnboardingV3Service {
       })
       .toPromise();
 
-    // Modal was closed before login completed
+    // Modal was closed before login completed.
     if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
       throw 'DismissedModalException';
     }
