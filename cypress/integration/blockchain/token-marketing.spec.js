@@ -33,9 +33,7 @@ context('Token Page', () => {
       .should('not.be.disabled')
       .click();
 
-    cy.get('.m-get-metamask--cancel-btn.m-btn').click();
-
-    cy.get(anyBuyTokensModal).should('be.visible');
+    cy.contains('Please verify your phone number');
   });
 
   it('should have the ability to trigger Buy Eth modal', () => {
