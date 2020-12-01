@@ -1,3 +1,5 @@
+<m-loadingSpinner [inProgress]="preloading$ | async"></m-loadingSpinner>
+
 <form
   *ngIf="!(preloading$ | async)"
   [formGroup]="form"

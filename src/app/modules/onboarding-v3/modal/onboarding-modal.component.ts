@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
+import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-progress.service';
 
 /**
  * Onboarding modal component; core function as a connector,
@@ -25,9 +26,6 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   private dismissSubscription: Subscription;
 
   public cdnAssetsUrl: string;
-
-  public inProgress = false;
-
   /**
    * Dismiss intent.
    */
@@ -35,6 +33,7 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
 
   constructor(
     private panel: OnboardingV3PanelService,
+    private inProgressService: OnboardingV3ModalProgressService,
     private configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -59,6 +58,13 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    */
   set opts({ onDismissIntent }) {
     this.onDismissIntent = onDismissIntent || (() => {});
+  }
+
+  /**
+   * Subject containing true if in progress
+   */
+  get inProgress$(): BehaviorSubject<boolean> {
+    return this.inProgressService.inProgress$;
   }
 
   /**
@@ -134,12 +140,12 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    */
   public async nextClicked(): Promise<void> {
     try {
-      this.inProgress = true;
-      this.nextClicked$.next(true);
-      await this.panel.nextStep();
-      this.inProgress = false;
+      if (!this.inProgressService.inProgress$.getValue()) {
+        this.nextClicked$.next(true);
+        await this.panel.nextStep();
+      }
     } catch (e) {
-      this.inProgress = false;
+      console.error(e);
     }
   }
 }

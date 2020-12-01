@@ -8,6 +8,7 @@ import { MindsChannelResponse } from '../../../../interfaces/responses';
 import { ApiService } from '../../../../common/api/api.service';
 import { catchError, take } from 'rxjs/operators';
 import { OnboardingV3Service } from '../../onboarding-v3.service';
+import { OnboardingV3ModalProgressService } from '../../modal/onboarding-modal-progress.service';
 
 /**
  * Channel editing component for onboarding v3.
@@ -42,7 +43,9 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
    * Used in a similar way to inProgress$ but when true
    * the component can be shown even if init is not finished.
    */
-  public preloading$ = new BehaviorSubject<boolean>(true);
+  public preloading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
 
   /**
    * Emitted to on next button clicked.
@@ -55,6 +58,7 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     private configs: ConfigsService,
     private channelEditService: ChannelEditService,
     private onboarding: OnboardingV3Service,
+    private inProgressService: OnboardingV3ModalProgressService,
     private api: ApiService
   ) {}
 
@@ -139,11 +143,14 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   public async save(): Promise<void> {
+    this.inProgressService.next(true);
+
     this.channelEditService.bio$.next(this.form.get('bio').value);
     this.channelEditService.displayName$.next(this.form.get('name').value);
     await this.channelEditService.save();
 
     this.onboarding.strikeThrough('SetupChannelStep');
+    this.inProgressService.next(false);
   }
 
   /**
@@ -151,7 +158,9 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
    * @param fileInput: HTMLInputElement - input element
    * @returns { void }
    */
-  public uploadAvatar(fileInput: HTMLInputElement): void {
+  public async uploadAvatar(fileInput: HTMLInputElement): Promise<void> {
+    this.inProgressService.next(true);
+
     const file = fileInput.files.item(0);
 
     if (!file) {
@@ -159,7 +168,9 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     }
 
     this.channelEditService.avatar$.next(file);
-    this.channelEditService.save();
+    await this.channelEditService.save();
+
+    this.inProgressService.next(false);
   }
 
   /**
@@ -172,6 +183,7 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         catchError((e: any) => {
+          console.error(e);
           return of(null);
         })
       )

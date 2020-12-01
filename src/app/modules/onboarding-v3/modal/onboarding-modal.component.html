@@ -67,7 +67,7 @@
       class="m-onboardingModal__nextButton"
       [disabled]="disabled$ | async"
       (click)="nextClicked()"
-      [saving]="inProgress"
+      [saving]="inProgress$ | async"
     >
       <ng-container
         *ngIf="(currentStep$ | async) === 'SetupChannelStep'"

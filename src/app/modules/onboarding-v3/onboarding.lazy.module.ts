@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { OnboardingV3VerifyUniquenessComponent } from './panel/verify-uniqueness/verify-uniqueness.component';
 import { OnboardingV3VerifyPhoneComponent } from './panel/verify-uniqueness/verify-phone/verify-phone.component';
 import { OnboardingV3VerifyPhoneService } from './panel/verify-uniqueness/verify-phone/verify-phone.service';
+import { OnboardingV3ModalProgressService } from './modal/onboarding-modal-progress.service';
 
 const COMPONENTS = [
   OnboardingV3ModalComponent,
@@ -32,6 +33,7 @@ const PROVIDERS = [
   OnboardingV3PanelService,
   OnboardingV3TagsService,
   OnboardingV3VerifyPhoneService,
+  OnboardingV3ModalProgressService,
 ];
 
 const MODULES = [NgCommonModule, CommonModule, ReactiveFormsModule];
