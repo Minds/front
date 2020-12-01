@@ -42,8 +42,6 @@ export class BlockchainConsoleComponent implements OnInit {
       if (address) {
         this.form.controls.address.setValue(address);
       } else if (this.route.snapshot.params.auto) {
-        await this.web3Wallet.ready();
-
         let localWallet = await this.web3Wallet.getCurrentWallet();
 
         if (localWallet) {

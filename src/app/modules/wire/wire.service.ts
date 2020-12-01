@@ -45,8 +45,6 @@ export class WireService {
 
     switch (wire.payloadType) {
       case 'onchain':
-        await this.web3Wallet.ready();
-
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
@@ -85,8 +83,6 @@ export class WireService {
         break;
 
       case 'eth':
-        await this.web3Wallet.ready();
-
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
@@ -98,9 +94,9 @@ export class WireService {
         await this.web3Wallet.sendTransaction({
           from: await this.web3Wallet.getCurrentWallet(),
           to: payload.receiver,
-          gasPrice: this.web3Wallet.EthJS.toWei(2, 'Gwei'),
-          gas: 21000,
-          value: this.web3Wallet.EthJS.toWei(wire.amount, 'ether').toString(),
+          gasPrice: this.web3Wallet.toWei(2, 'gwei'),
+          gasLimit: 21000,
+          value: this.web3Wallet.toWei(wire.amount, 'ether').toString(),
           data: '0x',
         });
         break;

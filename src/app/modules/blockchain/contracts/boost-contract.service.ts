@@ -2,6 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
 import { isPlatformBrowser } from '@angular/common';
+import { BigNumber } from 'ethers';
 
 @Injectable()
 export class BoostContractService {
@@ -18,11 +19,10 @@ export class BoostContractService {
   }
 
   async load() {
-    await this.web3Wallet.ready();
-
-    this.instance = this.web3Wallet.eth
-      .contract(this.web3Wallet.config.boost.abi, '0x')
-      .at(this.web3Wallet.config.boost.address);
+    this.instance = this.web3Wallet.getContract(
+      this.web3Wallet.config.boost.address,
+      this.web3Wallet.config.boost.abi
+    );
 
     this.boost(); // Refresh default account
   }
@@ -42,9 +42,9 @@ export class BoostContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.toWei(
         gasPriceGwei,
-        'Gwei'
+        'gwei'
       );
     }
 
@@ -59,6 +59,8 @@ export class BoostContractService {
     checksum: string,
     message: string = ''
   ) {
+    const checksumInt = BigNumber.from('0x' + checksum).toString();
+
     return await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
       'approveAndCall',
@@ -76,12 +78,11 @@ export class BoostContractService {
           },
           {
             type: 'uint256',
-            value: checksum,
+            value: checksumInt,
           },
         ]),
       ],
-      `Network Boost for ${amount} Tokens. ${message}`.trim(),
-      this.tokenContract.tokenToUnit(-amount)
+      `Network Boost for ${amount} Tokens. ${message}`.trim()
     );
   }
 
@@ -113,8 +114,7 @@ export class BoostContractService {
           },
         ]),
       ],
-      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim(),
-      this.tokenContract.tokenToUnit(-amount)
+      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim()
     );
   }
 
