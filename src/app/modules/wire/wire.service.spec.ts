@@ -45,7 +45,6 @@ describe('WireService', () => {
 
     tick();
 
-    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
     expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
     expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
 

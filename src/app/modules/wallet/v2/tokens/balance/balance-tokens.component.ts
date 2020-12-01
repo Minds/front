@@ -106,6 +106,12 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
   }
 
+  async openTransferModal() {
+    await this.walletService.web3WalletUnlocked();
+
+    this.showTransferModal = true;
+  }
+
   updateNextPayoutDate() {
     if (this.nextPayoutDate) {
       this.nextPayoutDate--;

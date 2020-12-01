@@ -14,6 +14,7 @@ import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { isPlatformBrowser } from '@angular/common';
+import { BigNumber } from 'ethers';
 
 @Component({
   selector: 'm-wallet--balance-tokens',
@@ -49,7 +50,6 @@ export class WalletBalanceTokensComponent implements OnInit {
     await this.loadRemote();
     await this.loadLocal();
     await this.loadEth();
-    this.isLocal = await this.web3Wallet.isLocal();
     this.detectChanges();
   }
 
@@ -68,7 +68,7 @@ export class WalletBalanceTokensComponent implements OnInit {
       }
 
       const balance = await this.tokenContract.balanceOf(address);
-      this.balance = new BN(this.balance).add(balance[0]);
+      this.balance = new BN(this.balance).add(balance[0]).toNumber();
       this.addresses.unshift({
         label: 'OnChain',
         address: address,
@@ -84,8 +84,8 @@ export class WalletBalanceTokensComponent implements OnInit {
   async loadEth() {
     const address = await this.web3Wallet.getCurrentWallet();
     if (!address) return;
-    const ethBalance = await this.web3Wallet.EthJS.fromWei(
-      await this.web3Wallet.getBalance(address),
+    const ethBalance = await this.web3Wallet.fromWei(
+      BigNumber.from((await this.web3Wallet.getBalance()) || 0),
       'ether'
     );
     this.ethBalance = ethBalance ? ethBalance : '0';

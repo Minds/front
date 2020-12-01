@@ -51,11 +51,6 @@ export class BlockchainEthModalComponent implements OnInit {
 
   ngOnInit() {
     // grab latest ETH rate
-    this.detectMetamask();
-  }
-
-  async detectMetamask() {
-    this.hasMetamask = !(await this.web3Wallet.isLocal());
     this.detectChanges();
   }
 

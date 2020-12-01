@@ -36,7 +36,7 @@ export class TokenOnChainOnboardingComponent {
   display: Views;
   generatedAccount: any;
   providedAddress: string = '';
-  hasExternal: boolean = false;
+  hasExternal: boolean = true;
   downloadingMetamask: boolean = false;
 
   readonly Views = Views;
@@ -62,19 +62,12 @@ export class TokenOnChainOnboardingComponent {
       this.next.next();
       return;
     }
-
-    this.checkExternal();
   }
 
   ngOnDestroy() {
     if (this._externalTimer) {
       clearInterval(this._externalTimer);
     }
-  }
-
-  async checkExternal() {
-    this.hasExternal = !(await this.web3Wallet.isLocal());
-    this.detectChanges();
   }
 
   async createAddress() {
@@ -172,8 +165,6 @@ export class TokenOnChainOnboardingComponent {
   }
 
   async useExternal() {
-    await this.web3Wallet.ready();
-
     this.detectExternal();
 
     this._externalTimer = setInterval(() => {
