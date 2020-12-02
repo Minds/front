@@ -162,12 +162,10 @@
 
       <div
         class="mdl-card__supporting-text action-buttons"
-        *ngIf="boost.transaction_id && boost.transaction_id.indexOf('0x') === 0"
+        *ngIf="boost.transaction_id && getHash(boost).indexOf('0x') === 0"
       >
-        <a
-          href="https://etherscan.com/tx/{{boost.transaction_id}}"
-          target="_blank"
-          >Etherscan: {{boost.transaction_id}}</a
+        <a href="https://etherscan.com/tx/{{getHash(boost)}}" target="_blank"
+          >Etherscan: {{getHash(boost)}}</a
         >
       </div>
 

@@ -10,6 +10,10 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 
+type TransactionId = {
+  transaction_id: string | { hash: string };
+};
+
 @Component({
   moduleId: module.id,
   selector: 'minds-admin-boosts',
@@ -228,6 +232,28 @@ export class AdminBoosts {
         padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
       }
       return padString.slice(0, targetLength) + String(str);
+    }
+  }
+
+  /**
+   * Gets hash from a given boost
+   * @param { TransactionId } - An object containing transaction_id, that contains
+   *    either a string of the hash or an object containing a hash property.
+   * @returns { string } - transaction_id as string.
+   */
+  public getHash({ transaction_id }: TransactionId): string {
+    try {
+      if (typeof transaction_id === 'object') {
+        return transaction_id.hash;
+      } else if (typeof transaction_id === 'string') {
+        return transaction_id;
+      }
+      throw new Error(
+        'Error in admin boosts, transaction_id is neither a string nor an object.'
+      );
+    } catch (e) {
+      console.error(e);
+      return '';
     }
   }
 }
