@@ -12,7 +12,7 @@ import {
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
 
 /**
- * api/v3/onboarding response
+ * api/v3/onboarding response.
  */
 export type OnboardingResponse = {
   status: string;
@@ -23,7 +23,7 @@ export type OnboardingResponse = {
 } | null;
 
 /**
- * Individual onboarding steps
+ * Individual onboarding steps.
  */
 export type OnboardingStep = {
   id: OnboardingStepName;
@@ -31,7 +31,7 @@ export type OnboardingStep = {
 };
 
 /**
- * Names of different onboarding steps
+ * Names of different onboarding steps.
  */
 export type OnboardingStepName =
   | 'SuggestedHashtagsStep'
