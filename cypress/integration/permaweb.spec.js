@@ -1,6 +1,6 @@
 import generateRandomId from '../support/utilities';
 
-context('Newsfeed', () => {
+context('Permaweb', () => {
 
   const composer = {
     trigger: 'm-composer .m-composer__trigger',

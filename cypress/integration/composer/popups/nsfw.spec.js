@@ -48,8 +48,6 @@ context('Composer NSFW Popup', () => {
 
     cy.get(nsfwSaveButton).click();
 
-    cy.get(nsfwPopup).should('not.be.visible');
-
     cy.get(nsfwButton).click();
 
     cy.get(`${nsfwPopup} .m-composerNsfw__list .m-composerNsfw__item:eq(1)`)
@@ -61,8 +59,6 @@ context('Composer NSFW Popup', () => {
       .should('have.class', 'm-composerNsfw__item--active');
 
     cy.get(nsfwSaveButton).click();
-
-    cy.get(nsfwPopup).should('not.be.visible');
 
     cy.get(nsfwButton).click();
 

@@ -12,6 +12,7 @@
       type="file"
       accept="image/*"
       (change)="uploadBanner(bannerFile)"
+      data-cy="data-minds-channel-banner-upload"
       #bannerFile
     />
   </label>
@@ -30,6 +31,7 @@
         type="file"
         accept="image/*"
         (change)="uploadAvatar(avatarFile)"
+        data-cy="data-minds-channel-avatar-upload"
         #avatarFile
       />
     </label>
@@ -47,6 +49,7 @@
       name="bio"
       [ngModel]="service.bio$ | async"
       (ngModelChange)="service.bio$.next($event)"
+      data-cy="data-minds-channel-bio-textarea"
     ></textarea>
   </div>
 </div>
