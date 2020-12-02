@@ -40,7 +40,7 @@ context('Upgrades page', () => {
     cy.isInViewport(heading);
   });
 
-  it('should have the ability to trigger Buy Tokens modal', () => {
+  it('should have the ability to trigger pre Buy Tokens modal phone verification', () => {
     cy.server();
     cy.route('GET', '**api/v2/blockchain/purchase**').as('purchaseGET');
 
@@ -70,13 +70,7 @@ context('Upgrades page', () => {
       });
 
     // alternative to waiting
-    cy.contains('Setup Your OnChain Address to buy, send and receive crypto');
-
-    cy.get('.m-get-metamask--cancel-btn')
-      .should('not.be.disabled')
-      .click();
-
-    cy.get(anyBuyTokensModal).should('be.visible');
+    cy.contains('Please verify your phone number');
   });
 
   it('should have the ability to trigger Buy Eth modal', () => {
@@ -94,9 +88,9 @@ context('Upgrades page', () => {
       '[data-cy="m-upgradeOptions__contact-us-nodes-button"]'
     );
 
-    upgradeButton.click();
-
-    cy.location('pathname').should('contain', '/nodes');
+    upgradeButton
+      .click()
+      .location('pathname').should('contain', '/nodes');
   });
 
   // TODO: Make new user for tests

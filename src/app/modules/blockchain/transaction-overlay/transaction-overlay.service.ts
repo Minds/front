@@ -88,6 +88,6 @@ export class TransactionOverlayService {
       this.comp.hide();
     }
 
-    return result;
+    return result.hash;
   }
 }
