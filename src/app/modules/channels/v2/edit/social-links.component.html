@@ -9,6 +9,7 @@
       [(ngModel)]="url"
       (keydown.enter)="addSocialLink()"
       #socialLinkUrlInput
+      data-cy="data-minds-social-link-input"
     />
 
     <button
@@ -16,6 +17,7 @@
       [disabled]="!socialLinkUrlInput.value"
       (click)="addSocialLink()"
       i18n="@@COMMON__ADD"
+      data-cy="data-minds-social-link-add-button"
     >
       Add
     </button>
@@ -33,6 +35,7 @@
       iconId="close"
       [sizeFactor]="-20"
       (click)="service.removeSocialLink(i)"
+      data-cy="data-minds-social-link-remove-button"
     ></m-icon>
   </li>
 </ul>

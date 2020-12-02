@@ -67,14 +67,12 @@ context('Blogs', () => {
     // no title
     cy.get(publishButton).click();
     cy.get(toastWrapper)
-      .should('be.visible')
       .contains("You must provide a title");
 
     // no banner
     cy.get(titleInput).type(titleText);
     cy.get(publishButton).click();
     cy.get(toastWrapper)
-      .should('be.visible')
       .contains("You must provide a title");
 
   });

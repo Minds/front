@@ -1,7 +1,6 @@
 context('Composer Bottom Bar', () => {
   before(() => {
     // This test makes use of cy.post()
-    cy.overrideFeatureFlags({ 'activity-composer': true });
     // cy.getCookie('minds_sess').then(sessionCookie => {
     //   if (!sessionCookie) {
     //     return
@@ -44,7 +43,6 @@ context('Composer Bottom Bar', () => {
   const showComposer = () => {
     const composerTrigger = 'm-composer .m-composer__trigger';
 
-    cy.overrideFeatureFlags({ 'activity-composer': true });
     cy.visit('/newsfeed/subscriptions');
 
     cy.get(composerTrigger)
@@ -129,17 +127,15 @@ context('Composer Bottom Bar', () => {
         .clear()
         .type('Hello Minds!');
 
-      cy.get(postButtonDropdownMenu).should('not.be.visible');
-
       cy.get(postButtonDropdownAction)
         .should('be.visible')
         .click();
 
       cy.get(postButtonDropdownMenu).should('be.visible');
 
-      cy.get(`${postButton} m-overlay`).click();
+      cy.contains('Schedule Post').click();
 
-      cy.get(postButtonDropdownMenu).should('not.be.visible');
+      cy.contains('Close').click({force: true});
     });
   });
 
@@ -191,8 +187,6 @@ context('Composer Bottom Bar', () => {
         .clear()
         .type('Hello Minds!');
 
-      cy.get(postButtonDropdownMenu).should('not.be.visible');
-
       cy.get(postButtonDropdownAction)
         .should('be.visible')
         .click();
@@ -200,8 +194,6 @@ context('Composer Bottom Bar', () => {
       cy.get(postButtonDropdownMenu).should('be.visible');
 
       cy.get(`${postButton} m-overlay`).click({ force: true });
-
-      cy.get(postButtonDropdownMenu).should('not.be.visible');
     });
   });
 });
