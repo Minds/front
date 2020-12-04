@@ -1777,15 +1777,10 @@
   <ng-template ngSwitchCase="contributions"></ng-template>
 
   <ng-template ngSwitchCase="rewards_summary">
-    <a target="_blank" routerLink="/wallet/tokens/contributions">
-      <p
-        i18n="
-
-          @@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY
-
-        "
-      >
-        You earned {{ notification.params.amount }} tokens today.
+    <a target="_blank" routerLink="/wallet/canary/tokens/transactions">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__SUMMARY">
+        Your activity yesterday earned you
+        {{ notification.params.amount }} tokens. Nice job!
       </p>
     </a>
   </ng-template>
