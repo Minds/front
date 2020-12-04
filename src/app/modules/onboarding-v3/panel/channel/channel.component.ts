@@ -9,6 +9,7 @@ import { ApiService } from '../../../../common/api/api.service';
 import { catchError, take } from 'rxjs/operators';
 import { OnboardingV3Service } from '../../onboarding-v3.service';
 import { OnboardingV3ModalProgressService } from '../../modal/onboarding-modal-progress.service';
+import { UserAvatarService } from '../../../../common/services/user-avatar.service';
 
 /**
  * Channel editing component for onboarding v3.
@@ -59,7 +60,8 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     private channelEditService: ChannelEditService,
     private onboarding: OnboardingV3Service,
     private inProgressService: OnboardingV3ModalProgressService,
-    private api: ApiService
+    private api: ApiService,
+    private userAvatarService: UserAvatarService
   ) {}
 
   async ngOnInit() {
@@ -168,7 +170,6 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     }
 
     this.channelEditService.avatar$.next(file);
-    await this.channelEditService.save();
 
     this.inProgressService.next(false);
   }

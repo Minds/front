@@ -1,6 +1,7 @@
 <div
   class="m-onboardingWidget__container"
   *mIfFeature="'onboarding-october-2020'"
+  data-cy="data-minds-onboarding-widget"
 >
   <!-- Header -->
   <div class="m-onboardingWidget__header">
@@ -16,58 +17,69 @@
       triggerClass="m-button__dropdownArrow"
       menuClass="m-button__dropdownMenu"
       #dropdownMenuComponent
+      data-cy="data-minds-onboarding-widget-dropdown"
     >
       <i class="material-icons m-onboardingWidget__ellipsisMenu">more_vert</i>
     </m-dropdownMenu>
   </div>
   <!-- Body -->
-  <div class="m-onboardingWidget__body" *ngIf="!hidden">
+  <div
+    class="m-onboardingWidget__body"
+    *ngIf="!hidden"
+    data-cy="data-minds-onboarding-widget-body"
+  >
     <!-- Progress bar -->
     <div class="m-onboardingWidget__progressBarContainer">
       <div
         class="m-onboardingWidget__progressBar"
         [ngStyle]="{ width: (progress$ | async)?.completed_pct * 100 + '%' }"
+        data-cy="data-minds-onboarding-widget-progress-bar"
       ></div>
     </div>
     <!-- Tasks -->
     <div class="m-onboardingWidget__stepsContainer">
-      <span
+      <div
         class="m-onboardingWidget__step"
         *ngFor="let step of (progress$ | async)?.steps"
         [ngClass]="{ completed: step.is_completed }"
         (click)="onTaskClick(step.id)"
       >
-        <ng-container
+        <span
           *ngIf="step.id === 'VerifyEmailStep'"
           i18n="@@ONBOARDING_WIDGET__VERIFY_EMAIL_ADDRESS"
+          data-cy="data-minds-onboarding-widget-verify-email"
         >
           Verify email address
-        </ng-container>
-        <ng-container
+        </span>
+        <span
           *ngIf="step.id === 'SuggestedHashtagsStep'"
           i18n="@@ONBOARDING_WIDGET__SELECT_TAGS"
+          data-cy="data-minds-onboarding-widget-select-tags"
         >
           Select tags
-        </ng-container>
-        <ng-container
+        </span>
+        <span
           *ngIf="step.id === 'SetupChannelStep'"
           i18n="@@ONBOARDING_WIDGET__SETUP_CHANNEL"
+          data-cy="data-minds-onboarding-widget-setup-channel"
         >
           Setup channel
-        </ng-container>
-        <ng-container
+        </span>
+        <span
           *ngIf="step.id === 'VerifyUniquenessStep'"
           i18n="@@ONBOARDING_WIDGET__VERIFY_UNIQUENESS"
+          data-cy="data-minds-onboarding-widget-verify-uniqueness"
         >
           Verify uniqueness
-        </ng-container>
-        <ng-container
+        </span>
+        <span
           *ngIf="step.id === 'CreatePostStep'"
           i18n="@@ONBOARDING_WIDGET__CREATE_A_POST"
+          data-cy="data-minds-onboarding-widget-create-post"
         >
           Create a post
-        </ng-container>
-      </span>
+        </span>
+      </div>
     </div>
   </div>
 </div>

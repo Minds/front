@@ -1,6 +1,6 @@
 import generateRandomId from "../../support/utilities";
 
-context('Onboarding', () => {
+context.skip('Onboarding V2', () => {
 
   const username = generateRandomId();
   const password = `${generateRandomId()}0oA!`;
