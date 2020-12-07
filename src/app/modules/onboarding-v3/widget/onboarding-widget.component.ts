@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Storage } from '../../../services/storage';
 import {
@@ -10,6 +10,7 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { take } from 'rxjs/operators';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -20,11 +21,15 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   styleUrls: ['./onboarding-widget.component.ng.scss'],
   providers: [ComposerService],
 })
-export class OnboardingV3WidgetComponent implements OnInit {
+export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   /**
    * If true, widget will be collapsed.
    */
   public hidden = false;
+
+  public completed = false;
+
+  private progressSubscription: Subscription;
 
   constructor(
     private onboarding: OnboardingV3Service,
@@ -44,6 +49,19 @@ export class OnboardingV3WidgetComponent implements OnInit {
 
     // else load
     this.onboarding.load();
+
+    // sub to progress; hide if completed.
+    this.progressSubscription = this.progress$.subscribe(progress => {
+      if (progress.is_completed) {
+        this.completed = true;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.progressSubscription) {
+      this.progressSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -78,7 +96,6 @@ export class OnboardingV3WidgetComponent implements OnInit {
                 this.onboarding.strikeThrough('CreatePostStep');
               }
             });
-          // TODO: Can we get hold of onPost and trigger the Strikethrough.
           break;
         default:
           this.panel.currentStep$.next(step);
