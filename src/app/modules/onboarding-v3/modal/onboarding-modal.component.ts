@@ -16,6 +16,8 @@ import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-prog
   styleUrls: ['./onboarding-modal.component.ng.scss'],
 })
 export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
+  private subscriptions: Subscription[] = [];
+
   /**
    * Used to trigger next clicked event in subscribers.
    */
@@ -23,13 +25,19 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
     false
   );
 
-  private dismissSubscription: Subscription;
-
   public cdnAssetsUrl: string;
+
+  public saved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   /**
    * Dismiss intent.
    */
   onDismissIntent: () => void = () => {};
+
+  /**
+   * Save intent.
+   */
+  onSaveIntent: (step: OnboardingStepName) => void = () => {};
 
   constructor(
     private panel: OnboardingV3PanelService,
@@ -40,15 +48,19 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    // Dismiss when panel service BehaviourSubject is pushed to.
-    this.dismissSubscription = this.panel.dismiss$.subscribe(dismiss => {
-      this.onDismissIntent();
-    });
+    this.subscriptions.push(
+      this.panel.dismiss$.subscribe(dismiss => {
+        this.onDismissIntent();
+      }),
+      this.saved$.subscribe(val => {
+        this.onSaveIntent('SetupChannelStep');
+      })
+    );
   }
 
-  ngOnDestroy(): void {
-    if (this.dismissSubscription) {
-      this.dismissSubscription.unsubscribe();
+  ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -56,8 +68,9 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    * Sets modal options.
    * @param onDismissIntent - set dismiss intent callback.
    */
-  set opts({ onDismissIntent }) {
+  set opts({ onDismissIntent, onSaveIntent }) {
     this.onDismissIntent = onDismissIntent || (() => {});
+    this.onSaveIntent = onSaveIntent || (() => {});
   }
 
   /**

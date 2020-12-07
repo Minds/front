@@ -51,6 +51,7 @@
     <m-onboardingV3__channel
       *ngSwitchCase="'SetupChannelStep'"
       [nextClicked$]="nextClicked$"
+      [saved$]="saved$"
     ></m-onboardingV3__channel>
     <m-onboardingV3__verifyUniqueness
       *ngSwitchCase="'VerifyUniquenessStep'"

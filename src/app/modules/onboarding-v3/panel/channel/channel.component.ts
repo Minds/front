@@ -7,7 +7,6 @@ import { Session } from '../../../../services/session';
 import { MindsChannelResponse } from '../../../../interfaces/responses';
 import { ApiService } from '../../../../common/api/api.service';
 import { catchError, take } from 'rxjs/operators';
-import { OnboardingV3Service } from '../../onboarding-v3.service';
 import { OnboardingV3ModalProgressService } from '../../modal/onboarding-modal-progress.service';
 import { UserAvatarService } from '../../../../common/services/user-avatar.service';
 
@@ -49,16 +48,20 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
   );
 
   /**
-   * Emitted to on next button clicked.
+   * Pushed to on next button clicked. Used so that exterior service can
    */
   @Input() nextClicked$: BehaviorSubject<boolean>;
+
+  /**
+   * Pushed to on next button clicked. Indicates that values were saved.
+   */
+  @Input() saved$: BehaviorSubject<boolean>;
 
   constructor(
     private fb: FormBuilder,
     private session: Session,
     private configs: ConfigsService,
     private channelEditService: ChannelEditService,
-    private onboarding: OnboardingV3Service,
     private inProgressService: OnboardingV3ModalProgressService,
     private api: ApiService,
     private userAvatarService: UserAvatarService
@@ -149,9 +152,11 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
 
     this.channelEditService.bio$.next(this.form.get('bio').value);
     this.channelEditService.displayName$.next(this.form.get('name').value);
-    await this.channelEditService.save();
+    const user = await this.channelEditService.save();
 
-    this.onboarding.strikeThrough('SetupChannelStep');
+    this.userAvatarService.src$.next(user.avatar_url.medium);
+
+    this.saved$.next(true);
     this.inProgressService.next(false);
   }
 

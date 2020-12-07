@@ -96,10 +96,17 @@ export class OnboardingV3Service {
       .present(OnboardingV3ModalComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
         dismissOnRouteChange: false,
-        onComplete: (complete: boolean) => {
-          onSuccess$.next(complete);
-          onSuccess$.complete(); // Ensures promise can be called below
-          this.dismiss();
+        // onComplete: (complete: boolean) => {
+        //   console.log("hello");
+        //   onSuccess$.next(complete);
+        //   onSuccess$.complete(); // Ensures promise can be called below
+        //   this.dismiss();
+        // },
+        onSaveIntent: (step: OnboardingStepName) => {
+          console.log('onsaveintent');
+          if (step === 'SetupChannelStep') {
+            this.strikeThrough('SetupChannelStep');
+          }
         },
         onDismissIntent: () => {
           this.dismiss();

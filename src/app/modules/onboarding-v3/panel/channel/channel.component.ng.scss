@@ -24,6 +24,8 @@
       outline: none !important;
 
       @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
         border: 1px solid themed($m-borderColor--primary);
 
         &:focus {

@@ -9,7 +9,6 @@ import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
-import { OnboardingV3PanelService } from '../../onboarding-v3/panel/onboarding-panel.service';
 
 @Injectable()
 export class AuthModalService {
@@ -18,8 +17,7 @@ export class AuthModalService {
     private injector: Injector,
     private stackableModal: StackableModalService,
     private features: FeaturesService,
-    private onboardingV3: OnboardingV3Service,
-    private onboardingV3Panel: OnboardingV3PanelService
+    private onboardingV3: OnboardingV3Service
   ) {}
 
   async open(
@@ -49,7 +47,6 @@ export class AuthModalService {
             this.features.has('onboarding-october-2020') &&
             opts.formDisplay === 'register'
           ) {
-            this.onboardingV3Panel.currentStep$.next('SuggestedHashtagsStep');
             this.onboardingV3.open();
           }
         },

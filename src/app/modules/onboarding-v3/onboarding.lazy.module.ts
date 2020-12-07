@@ -29,7 +29,6 @@ const COMPONENTS = [
 ];
 
 const PROVIDERS = [
-  OnboardingV3Service,
   OnboardingV3PanelService,
   OnboardingV3TagsService,
   OnboardingV3VerifyPhoneService,

@@ -59,7 +59,6 @@ const routes: Routes = [
     ModalsModule,
     MindsFormsModule,
     MarketingModule,
-    OnboardingV3Module,
   ],
   declarations: [
     LoginComponent,
