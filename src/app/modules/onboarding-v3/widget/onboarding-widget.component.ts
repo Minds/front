@@ -52,7 +52,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
 
     // sub to progress; hide if completed.
     this.progressSubscription = this.progress$.subscribe(progress => {
-      if (progress.is_completed) {
+      if (progress && progress.is_completed) {
         this.completed = true;
       }
     });
@@ -104,8 +104,9 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
       }
     } catch (e) {
       if (e === 'DismissedModalException') {
-        // Check for changes
-        this.onboarding.load();
+        if (this.onboarding.loadOverrideSteps.indexOf(step) === -1) {
+          this.onboarding.load();
+        }
         return;
       }
       console.error(e);

@@ -1,7 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  Subscription,
+} from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3TagsService } from './tags/tags.service';
 
@@ -52,15 +58,22 @@ export class OnboardingV3PanelService implements OnDestroy {
    */
   public nextStep(): void {
     this.subscriptions.push(
-      this.currentStep$.pipe(take(1)).subscribe(currentStep => {
-        if (currentStep === 'SuggestedHashtagsStep') {
-          this.currentStep$.next('WelcomeStep');
-          this.router.navigate(['/newsfeed/subscribed']);
-          return;
-        }
-
-        this.dismiss$.next(true);
-      })
+      this.currentStep$
+        .pipe(
+          take(1),
+          catchError(e => {
+            console.error(e);
+            return of(null);
+          })
+        )
+        .subscribe(currentStep => {
+          if (currentStep === 'SuggestedHashtagsStep') {
+            this.currentStep$.next('WelcomeStep');
+            this.router.navigate(['/newsfeed/subscribed']);
+            return;
+          }
+          this.dismiss$.next(true);
+        })
     );
   }
 }

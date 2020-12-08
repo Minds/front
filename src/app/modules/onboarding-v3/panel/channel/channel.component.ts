@@ -52,11 +52,6 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
    */
   @Input() nextClicked$: BehaviorSubject<boolean>;
 
-  /**
-   * Pushed to on next button clicked. Indicates that values were saved.
-   */
-  @Input() saved$: BehaviorSubject<boolean>;
-
   constructor(
     private fb: FormBuilder,
     private session: Session,
@@ -156,7 +151,6 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
 
     this.userAvatarService.src$.next(user.avatar_url.medium);
 
-    this.saved$.next(true);
     this.inProgressService.next(false);
   }
 

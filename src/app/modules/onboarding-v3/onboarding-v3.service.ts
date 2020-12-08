@@ -55,6 +55,11 @@ export class OnboardingV3Service {
   private subscriptions: Subscription[] = [];
 
   /*
+   * Steps that will not trigger endpoint reload
+   */
+  public readonly loadOverrideSteps = ['SetupChannelStep'];
+
+  /*
    * Holds response of progress that can be loaded using load().
    */
   public readonly progress$: BehaviorSubject<
@@ -94,9 +99,11 @@ export class OnboardingV3Service {
 
     const evt: StackableModalEvent = await this.stackableModal
       .present(OnboardingV3ModalComponent, null, {
+        wrapperClass: 'm-modalV2__wrapper',
+        dismissOnRouteChange: false,
         onSaveIntent: (step: OnboardingStepName) => {
-          if (step === 'SetupChannelStep') {
-            this.strikeThrough('SetupChannelStep');
+          if (this.loadOverrideSteps.indexOf(step) > -1) {
+            this.strikeThrough(step);
           }
         },
         onDismissIntent: () => {

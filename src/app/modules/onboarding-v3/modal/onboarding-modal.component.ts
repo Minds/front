@@ -27,8 +27,6 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
 
   public cdnAssetsUrl: string;
 
-  public saved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   /**
    * Dismiss intent.
    */
@@ -51,9 +49,6 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
     this.subscriptions.push(
       this.panel.dismiss$.subscribe(dismiss => {
         this.onDismissIntent();
-      }),
-      this.saved$.subscribe(val => {
-        this.onSaveIntent('SetupChannelStep');
       })
     );
   }
@@ -155,7 +150,8 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
     try {
       if (!this.inProgressService.inProgress$.getValue()) {
         this.nextClicked$.next(true);
-        await this.panel.nextStep();
+        this.onSaveIntent(this.currentStep$.getValue());
+        this.panel.nextStep();
       }
     } catch (e) {
       console.error(e);
