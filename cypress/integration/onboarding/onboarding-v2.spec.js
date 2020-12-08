@@ -21,6 +21,10 @@ context.skip('Onboarding V2', () => {
 
     cy.clearCookies();
 
+    cy.overrideFeatureFlags({
+      'onboarding-october-2020': false,
+    });
+
     cy.visit('/register')
       .location('pathname')
       .should('eq', '/register');

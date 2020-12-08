@@ -10,7 +10,6 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { take } from 'rxjs/operators';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.

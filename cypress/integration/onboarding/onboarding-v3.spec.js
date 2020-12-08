@@ -41,11 +41,26 @@ context('Onboarding V3', () => {
     }
   };
 
+
+  const composer = {
+    trigger: 'm-composer .m-composer__trigger',
+    messageTextArea:
+      'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
+    postButton:
+      'm-composer__modal > m-composer__base [data-cy="post-button"] [data-cy="button-default-action"]',
+  };
+
+
   before(() => {
     cy.clearCookies();
+
+    cy.overrideFeatureFlags({
+      'onboarding-october-2020': true,
+    });
+
     cy.visit('/')
       .location('pathname')
-      .should('eq', `/`);
+      .should('eq', `/`);    
   });
 
   beforeEach(()=> {
@@ -193,17 +208,37 @@ context('Onboarding V3', () => {
     cy.get(submitButton).should('not.be.disabled')
       .click()
       .wait('@POSTAvatar')
-      .should('eq', 200)
+      // .should('eq', 200)
       .wait('@POSTInfo')
       .its('response.statusCode')
       .should('eq', 200);
+    
+    assertTaskIsCompleted(cy.get(widget.tasks.setupChannel).parent())
 
     cy.get(widget.tasks.setupChannel).click({force: true});
 
     cy.get(setupChannel.name).should('have.value', displayNameText);
     cy.get(setupChannel.bio).should('have.value', bioText);
+
+    cy.get('.m-overlay-modal--backdrop').dblclick({force: true});
+
+    assertTaskIsCompleted(cy.get(widget.tasks.setupChannel).parent())
   });
 
+  it('should open composer modal for a new post and complete when posted', () => {
+    cy.get(widget.tasks.createPost).click();
+    cy.get(composer.messageTextArea)
+      .clear()
+      .type(generateRandomId());
+
+    cy.intercept('POST', '**/v2/newsfeed**').as('postActivity');
+
+    cy.get(composer.postButton)
+      .click()
+      .wait('@postActivity');
+
+    assertTaskIsCompleted(cy.get(widget.tasks.createPost).parent())
+  });
   /**
    * Asserts a task is complete.
    * @param element - best to use cy.get('foo'); 
