@@ -232,6 +232,21 @@
         <a (click)="changeProvider()" i18n="@@SETTINGS_TOKENS__CHANGE_ADDRESS"
           >Change Address</a
         >
+        <ng-container *mIfFeature="'unique-onchain'">
+          &nbsp;
+          <a
+            (click)="validate()"
+            i18n="@@SETTINGS_TOKENS__VALIDATR_ADDRESS"
+            *ngIf="isVerified === false"
+            >Validate Address</a
+          >
+          <a
+            (click)="unValidate()"
+            i18n="@@SETTINGS_TOKENS__VALIDATR_ADDRESS"
+            *ngIf="isVerified === true"
+            >Remove Validation</a
+          >
+        </ng-container>
       </div>
     </li>
   </ul>
