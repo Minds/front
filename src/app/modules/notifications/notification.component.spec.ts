@@ -431,7 +431,7 @@ describe('NotificationComponent', () => {
     );
   });
 
-  it('Should load the notification rewards summary', () => {
+  xit('Should load the notification rewards summary', () => {
     comp.notification = {
       type: 'notification',
       guid: '843204301747658770',
