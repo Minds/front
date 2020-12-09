@@ -64,8 +64,8 @@ describe('OnboardingV3WidgetComponent', () => {
   });
 
   it('should hide on init if local storage item is set', () => {
-    storageMock.set('onboarding:widget:hidden', 99999999999999999999);
-    expect((comp as any).shouldHide()).toBeTruthy();
+    storageMock.set('onboarding:widget:collapsed', 99999999999999999999);
+    expect((comp as any).shouldCollapse()).toBeTruthy();
   });
 
   it('should get progress from service', () => {
@@ -95,13 +95,13 @@ describe('OnboardingV3WidgetComponent', () => {
 
   it('should hide and show the widget and change local storage appropriately', () => {
     comp.onHideClick('hide');
-    expect(comp.hidden).toBeTruthy();
-    expect(storageMock.get('onboarding:widget:hidden')).toBeGreaterThan(
+    expect(comp.collapsed).toBeTruthy();
+    expect(storageMock.get('onboarding:widget:collapsed')).toBeGreaterThan(
       Date.now()
     );
 
     comp.onHideClick('show');
-    expect(comp.hidden).toBeFalsy();
-    expect(storageMock.get('onboarding:widget:hidden')).toBeFalsy();
+    expect(comp.collapsed).toBeFalsy();
+    expect(storageMock.get('onboarding:widget:collapsed')).toBeFalsy();
   });
 });

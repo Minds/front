@@ -70,9 +70,29 @@ export class OnboardingV3Service {
     private compiler: Compiler,
     private injector: Injector,
     private stackableModal: StackableModalService,
-    private api: ApiService
+    private api: ApiService,
+    private storage: Storage
   ) {}
 
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.progress$.subscribe(progress => {
+        // filter not completed steps
+        const completed = progress.steps.filter(
+          (progressStep: OnboardingStep) => {
+            return progressStep.is_completed;
+          }
+        );
+        // if all completed, lengths will be the same
+        if (
+          completed.length === progress.steps.length ||
+          progress.is_completed
+        ) {
+          this.storage.set('onboarding:widget:completed', 259200); // expires 3 days
+        }
+      })
+    );
+  }
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();

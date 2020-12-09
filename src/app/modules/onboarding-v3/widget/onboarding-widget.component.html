@@ -1,4 +1,4 @@
-<ng-container *ngIf="!completed">
+<ng-container *ngIf="!completed && !hidden">
   <div
     class="m-onboardingWidget__container"
     *mIfFeature="'onboarding-october-2020'"
@@ -26,7 +26,7 @@
     <!-- Body -->
     <div
       class="m-onboardingWidget__body"
-      *ngIf="!hidden"
+      *ngIf="!collapsed"
       data-cy="data-minds-onboarding-widget-body"
     >
       <!-- Progress bar -->

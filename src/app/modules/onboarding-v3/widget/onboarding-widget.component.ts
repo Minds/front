@@ -24,9 +24,17 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   /**
    * If true, widget will be collapsed.
    */
-  public hidden = false;
+  public collapsed = false;
 
+  /**
+   * If true, all steps are completed.
+   */
   public completed = false;
+
+  /**
+   * If true, widget is hidden
+   */
+  public hidden = false;
 
   private progressSubscription: Subscription;
 
@@ -43,6 +51,12 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     // if should hide, hide and return
     if (this.shouldHide()) {
       this.hidden = true;
+      return;
+    }
+
+    // if should collapse, collapse and return
+    if (this.shouldCollapse()) {
+      this.collapsed = true;
       return;
     }
 
@@ -119,26 +133,44 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    */
   public onHideClick(option: 'show' | 'hide'): void {
     if (option === 'hide') {
-      this.hidden = true;
+      this.collapsed = true;
       const expiryTime = Date.now() + 604800000; // 1 week
-      this.storage.set('onboarding:widget:hidden', expiryTime);
+      this.storage.set('onboarding:widget:collapsed', expiryTime);
       return;
     }
     if (option === 'show') {
-      this.hidden = false;
+      this.collapsed = false;
       this.onboarding.load();
-      this.storage.destroy('onboarding:widget:hidden');
+      this.storage.destroy('onboarding:widget:collapsed');
       return;
     }
   }
 
   /**
-   * Determines whether body of panel should be hidden.
+   * Determines whether body of panel should be collapsed.
+   * @returns { boolean } true if should be hidden.
+   */
+  private shouldCollapse(): boolean {
+    const storedExpiryTime: string = this.storage.get(
+      'onboarding:widget:collapsed'
+    );
+    const parsedExpiryTime = parseInt(storedExpiryTime);
+
+    // if time set and not malformed or null.
+    if (!isNaN(parsedExpiryTime)) {
+      return Date.now() < parsedExpiryTime;
+    }
+
+    return false;
+  }
+
+  /**
+   * Determines whether widget should be hidden.
    * @returns { boolean } true if should be hidden.
    */
   private shouldHide(): boolean {
     const storedExpiryTime: string = this.storage.get(
-      'onboarding:widget:hidden'
+      'onboarding:widget:completed'
     );
     const parsedExpiryTime = parseInt(storedExpiryTime);
 
