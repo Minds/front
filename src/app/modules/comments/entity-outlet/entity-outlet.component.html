@@ -7,7 +7,7 @@
 </div>
 
 <m-comments__tree
-  *ngIf="!showOnlyPoster"
+  *ngIf="!showOnlyPoster || showOnlyTree"
   [entity]="entity"
   [canDelete]="canDelete"
 >
@@ -16,7 +16,7 @@
 <ng-container *ngIf="showOnlyPoster">
   <div
     class="m-commentsEntityOutlet__expand"
-    *ngIf="count > 0"
+    *ngIf="count > 0 && !showOnlyTree"
     (click)="openFullComments()"
   >
     View {{ count }} comment{{ count > 1 ? 's' : '' }}
@@ -43,7 +43,7 @@
   </div>
 
   <m-comment__poster
-    *ngIf="legacyActivityService.allowComment$ | async"
+    *ngIf="(legacyActivityService.allowComment$ | async) && !showOnlyTree"
     [guid]="guid"
     [parent]="entity"
     [entity]="entity"

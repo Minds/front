@@ -5,6 +5,8 @@ import { EntitiesService } from './entities.service';
 
 /**
  * Specifies how to interpret base entity and which correlation to use
+ *
+ * Container can be a user or group
  */
 export type HorizontalFeedContext = 'container';
 
@@ -291,7 +293,7 @@ export class HorizontalFeedService {
     const baseEntity = this.baseEntity;
     const baseEntityTimestamp = baseEntity.time_created * 1000;
     const guid = baseEntity.container_guid || baseEntity.owner_guid;
-    const endpoint = `api/v2/feeds/container/${guid}/all`;
+    const endpoint = `api/v2/feeds/container/${guid}/activities`;
 
     const params = {
       sync: 1,
@@ -300,6 +302,7 @@ export class HorizontalFeedService {
       from_timestamp: baseEntityTimestamp,
     };
 
+    // Create pools if they exist
     // TODO: Make this less convoluted
     const [prev, next] = await Promise.all([
       this.pools.prev.moreData
@@ -313,21 +316,11 @@ export class HorizontalFeedService {
         : Promise.resolve(null),
     ]);
 
-    const baseGuids = [
-      this.baseEntity.guid,
-      this.baseEntity.entity_guid,
-      this.baseEntity.remind_object && this.baseEntity.remind_object.guid,
-      this.baseEntity.remind_object &&
-        this.baseEntity.remind_object.entity_guid,
-    ].filter(Boolean);
-
     let changed = false;
 
     if (prev !== null) {
       this.pools.prev = {
-        entities: prev.filter(
-          entity => entity.guid && !baseGuids.includes(entity.guid)
-        ),
+        entities: this._removeDuplicates(prev),
         moreData: false,
       };
 
@@ -336,9 +329,7 @@ export class HorizontalFeedService {
 
     if (next !== null) {
       this.pools.next = {
-        entities: next.filter(
-          entity => entity.guid && !baseGuids.includes(entity.guid)
-        ),
+        entities: this._removeDuplicates(next),
         moreData: false,
       };
 
@@ -348,6 +339,36 @@ export class HorizontalFeedService {
     if (changed) {
       this._emitChange();
     }
+  }
+
+  protected _removeDuplicates(entities): Array<any> {
+    const baseRemind = this.baseEntity.remind_object || null;
+
+    const baseGuids = [
+      this.baseEntity.guid,
+      this.baseEntity.entity_guid,
+      baseRemind && baseRemind.guid ? baseRemind.guid : false,
+      baseRemind && baseRemind.entity_guid ? baseRemind.entity_guid : false,
+    ].filter(Boolean);
+
+    const uniqueEntities = entities.filter(entity => {
+      let duplicateGuid,
+        duplicateEntityGuid = true;
+
+      if (entity && entity.guid) {
+        duplicateGuid = baseGuids.includes(entity.guid);
+
+        if (entity.entity) {
+          duplicateEntityGuid = baseGuids.includes(entity.entity.entity_guid);
+        }
+      }
+
+      if (!duplicateGuid && !duplicateEntityGuid) {
+        return entity;
+      }
+    });
+
+    return uniqueEntities;
   }
 
   /**
@@ -364,10 +385,20 @@ export class HorizontalFeedService {
       cache: true,
     })) as any;
 
-    if (!response || !response.entities || !response.entities.length) {
-      return [];
+    // don't return reminds or non-activities
+    if (response && response.entities && response.entities.length) {
+      const responseEntities = response.entities.filter(
+        e =>
+          e.entity &&
+          !e.entity.remind_object &&
+          (e.entity.entity_guid || e.entity.message)
+      );
+
+      if (responseEntities.length) {
+        return responseEntities;
+      }
     }
 
-    return response.entities;
+    return [];
   }
 }

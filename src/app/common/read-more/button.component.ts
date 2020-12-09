@@ -25,7 +25,10 @@ import { ReadMoreDirective } from './read-more.directive';
           [class.showOnlyFadeout]="showOnlyFadeout"
           (click)="expandIfShowingOnlyFadeout()"
         >
-          <span (click)="content.expand()" i18n="@@COMMON__SEE_MORE__ACTION"
+          <span
+            (click)="content.expand()"
+            i18n="@@COMMON__SEE_MORE__ACTION"
+            class="m-readMoreButtonV2__text"
             ><ng-container>See More</ng-container></span
           >
         </div>

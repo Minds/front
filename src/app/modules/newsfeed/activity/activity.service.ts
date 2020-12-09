@@ -54,6 +54,8 @@ export type ActivityEntity = {
   paywall_unlocked?: boolean;
   permaweb_id?: string;
   type?: string;
+  description?: string; // xml for inline rich-embeds
+  excerpt?: string; // for blogs
   remind_deleted?: boolean;
 };
 
@@ -72,6 +74,9 @@ export const ACTIVITY_FIXED_HEIGHT_RATIO =
 
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
+
+// Constants for content-specific displays
+export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 300;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
@@ -274,7 +279,7 @@ export class ActivityService {
     if (entity.type !== 'activity') entity = this.patchForeignEntity(entity);
 
     if (!entity.content_type) {
-      entity.content_type = getActivityContentType(entity, true);
+      entity.content_type = getActivityContentType(entity, true, true);
     }
     if (!entity.activity_type) {
       entity.activity_type = getActivityContentType(entity);

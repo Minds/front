@@ -49,6 +49,7 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   @Input() canDelete: boolean = false;
   @Input() fixedHeight = false;
   @Input() showOnlyPoster = true;
+  @Input() showOnlyTree = false;
   optimisticList: Array<any> = [];
 
   // private shouldReuseRouteFn;

@@ -12,7 +12,11 @@ import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { SlowFadeAnimation } from '../../../../animations';
-import { ActivityService, ActivityEntity } from '../activity.service';
+import {
+  ActivityService,
+  ActivityEntity,
+  ACTIVITY_SHORT_STATUS_MAX_LENGTH,
+} from '../activity.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -71,13 +75,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.horizontalFeed.setBaseEntity(params.entity);
   }
 
-  private readonly allowedActivityTypes = [
-    // No status posts or reminds
-    'rich-embed', // includes blogs
-    'video',
-    'image',
-  ];
-
   entity: any;
   entitySubscription: Subscription;
   routerSubscription: Subscription;
@@ -101,13 +98,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   stageHeight: number;
   maxStageWidth: number;
 
-  mediaWidth: number;
+  mediaWidth: number = 0;
   mediaHeight: number;
 
   entityWidth: number = 0;
   entityHeight: number = 0;
-
-  isPaywall2020: boolean = false;
 
   constructor(
     @Self() public activityService: ActivityService,
@@ -134,24 +129,10 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
-    this.isPaywall2020 = this.features.has('paywall-2020');
-
     this.entitySubscription = this.activityService.entity$.subscribe(
       (entity: ActivityEntity) => {
-        /**
-         * Modal doesn't handle reminds or status posts
-         */
-
         if (!entity) {
           return;
-        }
-
-        if (
-          entity.activity_type &&
-          !this.allowedActivityTypes.includes(entity.activity_type)
-        ) {
-          // TODO this should go to next activity in horizontal feed instead
-          this.service.dismiss();
         }
 
         this.entity = entity;
@@ -364,14 +345,22 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     switch (this.entity.content_type) {
       case 'image':
         this.entityWidth = this.entity.custom_data[0].width;
-        this.entityHeight = this.entity.custom_data[0].height;
+        this.entityHeight =
+          this.entity.custom_data[0].height !== '0'
+            ? this.entity.custom_data[0].height
+            : ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
+        break;
+      case 'quote':
+        this.entityWidth = 500;
+        this.entityHeight = 600;
         break;
       case 'blog':
-        this.entityWidth = window.innerWidth * 0.6;
+        this.entityWidth = window.innerWidth * 0.4;
         this.entityHeight = window.innerHeight * 0.6;
         break;
       case 'video':
       case 'rich-embed':
+      case 'status':
         let providedCustomWidth,
           providedCustomHeight,
           providedWidth,
@@ -468,8 +457,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
           this.mediaWidth = windowWidth;
       }
 
-      this.mediaWidth =
-        this.entity.content_type === 'blog' ? windowWidth : this.scaleWidth();
+      if (this.entity.content_type === 'blog') {
+        this.mediaWidth = windowWidth;
+      } else if (this.mediaWidth >= 1) {
+        this.scaleWidth;
+      }
 
       if (this.mediaWidth > windowWidth) {
         // Width was too wide, need to rescale heights so width fits
@@ -581,5 +573,56 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   get modalWidth(): number {
     return this.stageWidth + ACTIVITY_MODAL_CONTENT_WIDTH;
+  }
+
+  get showContentMessageOnRight(): boolean {
+    return (
+      (this.entity.content_type === 'image' ||
+        this.entity.content_type === 'video' ||
+        this.entity.content_type === 'quote') &&
+      (this.entity.title || this.entity.message)
+    );
+  }
+
+  get shortStatus(): boolean {
+    return (
+      this.entity &&
+      this.entity.content_type === 'status' &&
+      this.entity.message &&
+      this.entity.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
+    );
+  }
+
+  get mediaWrapperWidth(): string {
+    if (
+      this.entity.content_type === status ||
+      !this.mediaWidth ||
+      this.mediaWidth <= 0
+    ) {
+      return '100%';
+    } else {
+      return `${this.mediaWidth}px`;
+    }
+  }
+
+  get mediaWrapperHeight(): string {
+    if (this.entity.content_type === 'status') {
+      return '100%';
+    }
+
+    if (
+      this.entity.activity_type === 'rich-embed' &&
+      this.entity.content_type === 'rich-embed'
+    ) {
+      return `${this.stageHeight}px`;
+    }
+
+    return this.mediaHeight === 0
+      ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
+      : this.mediaHeight + 'px';
+  }
+
+  get isQuote(): boolean {
+    return this.entity.activity_type === 'quote';
   }
 }
