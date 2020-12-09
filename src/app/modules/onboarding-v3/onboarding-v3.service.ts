@@ -55,7 +55,7 @@ export class OnboardingV3Service {
   private subscriptions: Subscription[] = [];
 
   /*
-   * Steps that will not trigger endpoint reload
+   * Steps that will not trigger endpoint reload.
    */
   public readonly loadOverrideSteps = ['SetupChannelStep'];
 
