@@ -31,6 +31,7 @@ import { newsfeedHashtagSelectorServiceMock } from '../../../tests/newsfeed-hash
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PagesService } from '../../common/services/pages.service';
 import { pagesServiceMock } from '../../mocks/services/pages-mock.spec';
+import { LiquiditySpotComponent } from '../boost/liquidity-spot/liquidity-spot.component';
 
 describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
@@ -77,6 +78,7 @@ describe('NewsfeedComponent', () => {
           inputs: ['disabled', 'currentHashtag', 'preferred', 'compact'],
           outputs: ['filterChange', 'switchAttempt'],
         }),
+        LiquiditySpotComponent,
         IfFeatureDirective,
         NewsfeedComponent,
       ],
@@ -123,6 +125,7 @@ describe('NewsfeedComponent', () => {
     featuresServiceMock.mock('suggested-users', false);
     featuresServiceMock.mock('pro', false);
     featuresServiceMock.mock('navigation', false);
+    featuresServiceMock.mock('liquidity-spot', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;

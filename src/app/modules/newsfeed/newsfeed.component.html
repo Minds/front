@@ -161,13 +161,14 @@
         <m-language__sidebarPrompt></m-language__sidebarPrompt>
         <m-suggestions__sidebar type="user"></m-suggestions__sidebar>
 
-        <ng-container *mIfFeature="'navigation'">
-          <!-- <m-suggestions__sidebar type="group"></m-suggestions__sidebar> -->
-
-          <m-discovery__sidebarTags></m-discovery__sidebarTags>
-        </ng-container>
+        <m-discovery__sidebarTags></m-discovery__sidebarTags>
 
         <div class="m-spacer"></div>
+
+        <ng-container *mIfFeature="'liquidity-spot'">
+          <m-liquiditySpot> </m-liquiditySpot>
+          <div class="m-spacer"></div>
+        </ng-container>
 
         <m-ads-boost
           limit="8"
