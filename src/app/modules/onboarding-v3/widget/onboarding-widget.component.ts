@@ -41,7 +41,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
-    private storage: OnboardingV3StorageService,
+    private onboardingStorage: OnboardingV3StorageService,
     private composerModal: ModalService,
     private injector: Injector,
     private toast: FormToastService
@@ -134,13 +134,13 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   public onHideClick(option: 'show' | 'hide'): void {
     if (option === 'hide') {
       this.collapsed = true;
-      this.storage.set('onboarding:widget:collapsed');
+      this.onboardingStorage.set('onboarding:widget:collapsed');
       return;
     }
     if (option === 'show') {
       this.collapsed = false;
       this.onboarding.load();
-      this.storage.destroy('onboarding:widget:collapsed');
+      this.onboardingStorage.destroy('onboarding:widget:collapsed');
       return;
     }
   }
@@ -150,7 +150,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { boolean } true if should be hidden.
    */
   private shouldCollapse(): boolean {
-    return this.storage.hasNotExpired('onboarding:widget:collapsed');
+    return this.onboardingStorage.hasNotExpired('onboarding:widget:collapsed');
   }
 
   /**
@@ -158,6 +158,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { boolean } true if should be hidden.
    */
   private shouldHide(): boolean {
-    return this.storage.hasNotExpired('onboarding:widget:completed');
+    return this.onboardingStorage.hasNotExpired('onboarding:widget:completed');
   }
 }

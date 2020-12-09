@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { Storage } from '../../services/storage';
 /**
  * Possible onboarding key names as strings.
  */

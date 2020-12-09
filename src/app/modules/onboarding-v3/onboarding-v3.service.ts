@@ -72,7 +72,7 @@ export class OnboardingV3Service {
     private injector: Injector,
     private stackableModal: StackableModalService,
     private api: ApiService,
-    private storage: OnboardingV3StorageService
+    private onboardingStorage: OnboardingV3StorageService
   ) {}
 
   ngOnInit(): void {
@@ -89,7 +89,7 @@ export class OnboardingV3Service {
           completed.length === progress.steps.length ||
           progress.is_completed
         ) {
-          this.storage.set('onboarding:widget:completed'); // expires 3 days
+          this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
         }
       })
     );
