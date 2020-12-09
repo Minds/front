@@ -300,3 +300,12 @@ body.m-theme-in-transition *:after {
   transition: background-color 0.75s ease 0s, border-color 0.75s ease 0s,
     box-shadow 0.75s ease 0s, stroke 0.75s ease 0s, fill 0.75s ease 0s !important;
 }
+
+.m-disableScrollbars {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Chrome/Safari/Webkit */
+  }
+}

@@ -93,6 +93,7 @@ $themes: (
     m-textColor--secondary: #72727c,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
+    m-bgColor--primaryDarkAlways: #242a30,
     m-bgColor--primaryAlt: #e7edf3,
     m-bgColor--secondary: #f6f7f7,
     m-bgColor--secondaryAlt: #e6ebed,
@@ -167,6 +168,7 @@ $themes: (
     m-textColor--secondary: #b8c1ca,
     m-textColor--tertiary: #797b82,
     m-bgColor--primary: #242a30,
+    m-bgColor--primaryDarkAlways: #242a30,
     m-bgColor--primaryAlt: #1e242a,
     m-bgColor--secondary: #1a2025,
     m-bgColor--secondaryAlt: #232b31,
@@ -303,6 +305,7 @@ $m-textColor--primary: 'm-textColor--primary';
 $m-textColor--secondary: 'm-textColor--secondary';
 $m-textColor--tertiary: 'm-textColor--tertiary';
 $m-bgColor--primary: 'm-bgColor--primary';
+$m-bgColor--primaryDarkAlways: 'm-bgColor--primaryDarkAlways';
 $m-bgColor--primaryAlt: 'm-bgColor--primaryAlt';
 $m-bgColor--secondary: 'm-bgColor--secondary';
 $m-bgColor--secondaryAlt: 'm-bgColor--secondaryAlt';

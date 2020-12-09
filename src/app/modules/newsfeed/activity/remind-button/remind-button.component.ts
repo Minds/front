@@ -15,7 +15,7 @@ import { StackableModalService } from '../../../../services/ux/stackable-modal.s
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
 })
-export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
+export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   remindCount$: Observable<number> = this.service.entity$.pipe(
     map(entity => entity.reminds)
