@@ -15,13 +15,22 @@ describe('OnboardingV3WidgetComponent', () => {
   let comp: OnboardingV3WidgetComponent;
   let fixture: ComponentFixture<OnboardingV3WidgetComponent>;
 
+  const progress$ = new BehaviorSubject<string>('');
+
+  const onboardingServiceMock: any = MockService(OnboardingV3Service, {
+    has: ['progress$'],
+    props: {
+      progress$: { get: () => progress$ },
+    },
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OnboardingV3WidgetComponent],
       providers: [
         {
           provide: OnboardingV3Service,
-          useValue: MockService(OnboardingV3Service),
+          useValue: onboardingServiceMock,
         },
         {
           provide: OnboardingV3PanelService,
