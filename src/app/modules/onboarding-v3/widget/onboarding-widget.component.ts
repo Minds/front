@@ -1,6 +1,5 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Storage } from '../../../services/storage';
 import {
   OnboardingResponse,
   OnboardingV3Service,
@@ -10,6 +9,7 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { OnboardingV3StorageService } from '../onboarding-storage.service';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -41,7 +41,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
-    private storage: Storage,
+    private storage: OnboardingV3StorageService,
     private composerModal: ModalService,
     private injector: Injector,
     private toast: FormToastService
@@ -134,8 +134,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   public onHideClick(option: 'show' | 'hide'): void {
     if (option === 'hide') {
       this.collapsed = true;
-      const expiryTime = Date.now() + 604800000; // 1 week
-      this.storage.set('onboarding:widget:collapsed', expiryTime);
+      this.storage.set('onboarding:widget:collapsed');
       return;
     }
     if (option === 'show') {
@@ -151,17 +150,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { boolean } true if should be hidden.
    */
   private shouldCollapse(): boolean {
-    const storedExpiryTime: string = this.storage.get(
-      'onboarding:widget:collapsed'
-    );
-    const parsedExpiryTime = parseInt(storedExpiryTime);
-
-    // if time set and not malformed or null.
-    if (!isNaN(parsedExpiryTime)) {
-      return Date.now() < parsedExpiryTime;
-    }
-
-    return false;
+    return this.storage.hasNotExpired('onboarding:widget:collapsed');
   }
 
   /**
@@ -169,16 +158,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { boolean } true if should be hidden.
    */
   private shouldHide(): boolean {
-    const storedExpiryTime: string = this.storage.get(
-      'onboarding:widget:completed'
-    );
-    const parsedExpiryTime = parseInt(storedExpiryTime);
-
-    // if time set and not malformed or null.
-    if (!isNaN(parsedExpiryTime)) {
-      return Date.now() < parsedExpiryTime;
-    }
-
-    return false;
+    return this.storage.hasNotExpired('onboarding:widget:completed');
   }
 }

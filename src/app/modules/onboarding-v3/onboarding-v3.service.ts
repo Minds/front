@@ -10,6 +10,7 @@ import {
 } from '../../services/ux/stackable-modal.service';
 
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
+import { OnboardingV3StorageService } from './onboarding-storage.service';
 
 /**
  * api/v3/onboarding response.
@@ -71,7 +72,7 @@ export class OnboardingV3Service {
     private injector: Injector,
     private stackableModal: StackableModalService,
     private api: ApiService,
-    private storage: Storage
+    private storage: OnboardingV3StorageService
   ) {}
 
   ngOnInit(): void {
@@ -88,7 +89,7 @@ export class OnboardingV3Service {
           completed.length === progress.steps.length ||
           progress.is_completed
         ) {
-          this.storage.set('onboarding:widget:completed', 259200); // expires 3 days
+          this.storage.set('onboarding:widget:completed'); // expires 3 days
         }
       })
     );

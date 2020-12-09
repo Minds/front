@@ -4,12 +4,12 @@ import { MockService } from '../../../utils/mock';
 import { OnboardingV3WidgetComponent } from './onboarding-widget.component';
 import { OnboardingV3Service } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
-import { storageMock } from '../../../../tests/storage-mock.spec';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { Injector } from '@angular/core';
 import { Storage } from '../../../services/storage';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
+import { OnboardingV3StorageService } from '../onboarding-storage.service';
 
 describe('OnboardingV3WidgetComponent', () => {
   let comp: OnboardingV3WidgetComponent;
@@ -36,7 +36,10 @@ describe('OnboardingV3WidgetComponent', () => {
           provide: OnboardingV3PanelService,
           useValue: MockService(OnboardingV3PanelService),
         },
-        { provide: Storage, useValue: storageMock },
+        {
+          provide: OnboardingV3StorageService,
+          useValue: MockService(OnboardingV3StorageService),
+        },
         { provide: ModalService, useValue: MockService(ModalService) },
         { provide: Injector, useValue: MockService(Injector) },
         { provide: FormToastService, useValue: MockService(FormToastService) },
@@ -63,11 +66,6 @@ describe('OnboardingV3WidgetComponent', () => {
     expect((comp as any).onboarding.load).toHaveBeenCalled();
   });
 
-  it('should hide on init if local storage item is set', () => {
-    storageMock.set('onboarding:widget:collapsed', 99999999999999999999);
-    expect((comp as any).shouldCollapse()).toBeTruthy();
-  });
-
   it('should get progress from service', () => {
     let response = { status: 'success' };
     (comp as any).onboarding.progress$ = new BehaviorSubject<any>(response);
@@ -91,17 +89,5 @@ describe('OnboardingV3WidgetComponent', () => {
     expect((comp as any).composerModal.setInjector).toHaveBeenCalledWith(
       (comp as any).injector
     );
-  });
-
-  it('should hide and show the widget and change local storage appropriately', () => {
-    comp.onHideClick('hide');
-    expect(comp.collapsed).toBeTruthy();
-    expect(storageMock.get('onboarding:widget:collapsed')).toBeGreaterThan(
-      Date.now()
-    );
-
-    comp.onHideClick('show');
-    expect(comp.collapsed).toBeFalsy();
-    expect(storageMock.get('onboarding:widget:collapsed')).toBeFalsy();
   });
 });
