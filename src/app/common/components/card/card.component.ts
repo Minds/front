@@ -26,6 +26,7 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
   template: `
     <ng-template dynamic-host></ng-template>
   `,
+  styleUrls: ['./card.component.ng.scss'],
   providers: [ActivityService],
 })
 export class MindsCard implements AfterViewInit {
@@ -157,11 +158,11 @@ export class MindsCard implements AfterViewInit {
     } else {
       this.componentInstance.entity = this.object;
 
-      if (this.object.type === 'activity') {
-        (<ActivityComponent>this.componentInstance).displayOptions.showToolbar =
-          this.flags.hideTabs || false;
-        this.componentInstance.displayOptions.minimalMode = true;
-      }
+      (<ActivityComponent>this.componentInstance).displayOptions = {
+        showToolbar: this.flags.hideTabs || false,
+        showComments: false,
+        autoplayVideo: false,
+      };
     }
 
     this.componentRef.changeDetectorRef.detectChanges();
