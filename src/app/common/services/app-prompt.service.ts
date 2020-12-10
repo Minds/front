@@ -141,7 +141,7 @@ export class AppPromptService implements OnDestroy {
                   window.location.href = 'mindsapp://';
                   break;
                 case 'android':
-                  window.location.replace('mindsapp://');
+                  window.location.replace('https://www.minds.com/');
                   setTimeout(
                     (window.location.href =
                       'https://play.google.com/store/apps/details?id=com.minds.mobile'),
