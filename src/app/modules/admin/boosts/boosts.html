@@ -71,17 +71,6 @@
       *ngFor="let boost of boosts; let i = index"
     >
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
-      <minds-card-video
-        [object]="boost.entity"
-        class="mdl-card mdl-shadow--8dp"
-        *ngIf="boost.entity.subtype == 'video'"
-      ></minds-card-video>
-      <minds-card-image
-        [object]="boost.entity"
-        class="mdl-card mdl-shadow--8dp"
-        *ngIf="boost.entity.subtype == 'image'"
-      ></minds-card-image>
-
       <minds-card-user
         [object]="boost.entity"
         class="mdl-card mdl-shadow--8dp"
@@ -89,7 +78,11 @@
       ></minds-card-user>
       <m-activity
         [entity]="boost.entity"
-        *ngIf="boost.entity.type == 'activity' || boost.entity.subtype === 'blog'"
+        *ngIf="boost.entity.type == 'activity'
+          || boost.entity.subtype === 'blog'
+          || boost.entity.subtype == 'image'
+          || boost.entity.subtype == 'video'
+          "
         [attr.data-minds-activity-guid]="boost.entity.guid"
       ></m-activity>
       <minds-card-group
@@ -175,36 +168,40 @@
         class="mdl-card__supporting-text action-buttons"
         *ngIf="boost.state == 'created'"
       >
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--accept-button m-admin-button--green"
-          (click)="accept(boost, false)"
+        <m-button
+          (onAction)="accept(boost, false)"
+          color="blue"
+          size="xsmall"
+          class="m-admin-boosts--accept-button"
         >
           Accept
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--open-button m-admin-button--green-dark"
-          (click)="accept(boost, true)"
+        </m-button>
+        <m-button
+          (onAction)="accept(boost, true)"
+          size="xsmall"
+          class="m-admin-boosts--open-button"
         >
           Open
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button-accept m-admin-button--green-dark"
-          (click)="accept(boost, true, { mature: 1 })"
-        >
+        </m-button>
+        <m-button (onAction)="accept(boost, true, { mature: 1 })" size="xsmall">
           Open (E-tag)
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--reject-button m-admin-button--red"
-          (click)="openReasonsModal(boost)"
+        </m-button>
+        <m-button
+          (onAction)="openReasonsModal(boost)"
+          color="red"
+          size="xsmall"
+          class="m-admin-boosts--reject-button"
         >
           Reject
-        </button>
-        <button
-          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button m-admin-button--red"
+        </m-button>
+        <m-button
           (click)="eTag(boost)"
+          class="m-admin-boosts--e-tag-button"
+          color="red"
+          size="xsmall"
         >
           E-tag
-        </button>
+        </m-button>
       </div>
     </div>
   </div>

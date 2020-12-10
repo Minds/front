@@ -1,11 +1,11 @@
-<div
+<m-button
   class="m-discovery__tagButton"
-  [ngClass]="{
-    'm-discovery__tagButton--selected': tag.selected
-  }"
   (mouseenter)="hovering = true"
   (mouseleave)="hovering = false; recentlyToggled = false"
-  (click)="tag.selected ? removeTag() : addTag()"
+  (onAction)="tag.selected ? removeTag() : addTag()"
+  [color]="tag.selected ? 'blue' : 'grey'"
+  size="xsmall"
+  iconOnly="true"
 >
   <i class="material-icons">{{ icon }}</i>
-</div>
+</m-button>

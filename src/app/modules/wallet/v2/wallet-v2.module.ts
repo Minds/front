@@ -42,8 +42,9 @@ import { TabStorageGuard } from './guards/tab-storage-guard.component';
 import { SharedModule } from 'angular-plotly.js/src/app/shared/shared.module';
 
 export const WALLET_V2_ROUTES: Routes = [
+  { path: 'canary', redirectTo: '..', pathMatch: 'full' },
   {
-    path: 'canary',
+    path: '',
     component: WalletDashboardComponent,
     data: {
       title: 'Wallet',

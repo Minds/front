@@ -40,7 +40,7 @@ m-settingsV2__recurringPayments {
         > * {
           width: 100%;
         }
-        .m-shadowboxSubmitButton {
+        .m-button {
           width: 100%;
         }
       }
@@ -102,7 +102,7 @@ m-settingsV2__recurringPayments {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    .m-shadowboxSubmitButton {
+    .m-button {
       min-width: 160px;
     }
   }

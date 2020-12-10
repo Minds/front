@@ -8,7 +8,7 @@ import { clientMock } from '../../../../../tests/client-mock.spec';
 import { Client } from '../../../../services/api';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { DiscoveryNoTagsPromptComponent } from './notags-prompt.component';
-import { ShadowboxSubmitButtonComponent } from '../../../../common/components/shadowbox-submit-button/shadowbox-submit-button.component';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
 import { DiscoveryTagsService } from '../tags.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../../tests/overlay-modal-service-mock.spec';
@@ -19,10 +19,7 @@ describe('DiscoveryNoTagsPromptComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        DiscoveryNoTagsPromptComponent,
-        ShadowboxSubmitButtonComponent,
-      ],
+      declarations: [DiscoveryNoTagsPromptComponent, ButtonComponent],
       imports: [RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },

@@ -44,13 +44,9 @@
     ></minds-groups-join-button>
 
     <ng-template #isMember>
-      <button
-        class="m-btn m-btn--action"
-        [routerLink]="['/groups/profile', entity.guid]"
-        i18n="@@GROUPS__TILE__OPEN_ACTION"
-      >
-        Open
-      </button>
+      <m-button color="blue" i18n="@@GROUPS__TILE__OPEN_ACTION"
+        ><a [routerLink]="['/groups/profile', entity.guid]"> Open</a>
+      </m-button>
     </ng-template>
 
     <m-safe-toggle

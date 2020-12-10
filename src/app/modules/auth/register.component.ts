@@ -8,7 +8,6 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
-import { OnboardingService } from '../onboarding/onboarding.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
@@ -59,7 +58,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
-    private onboarding: OnboardingService,
     public navigation: NavigationService,
     private navigationService: SidebarNavigationService,
     configs: ConfigsService,
@@ -144,8 +142,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return;
       }
     }
-
-    this.router.navigate(['/' + this.session.getLoggedInUser().username]);
   }
 
   onSourceError() {

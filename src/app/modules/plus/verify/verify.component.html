@@ -37,13 +37,14 @@
       <li><textarea formControlName="description"></textarea></li>
     </ul>
 
-    <button
-      class="mdl-button mdl-button--raised"
+    <m-button
+      color="blue"
       type="submit"
-      [disabled]="inProgress || !f.form.valid"
+      [disabled]="!f.form.valid"
+      [saving]="inProgress"
       i18n="@@PLUS__VERIFY__SUBMIT_ACTION"
     >
       Submit
-    </button>
+    </m-button>
   </form>
 </m-modal>

@@ -28,12 +28,13 @@
     </div>
   </div>
 
-  <m-shadowboxSubmitButton
+  <m-button
     class="m-wireCreatorToolbar__send"
     [disabled]="disabled | async"
     [saving]="service.inProgress$ | async"
-    (click)="onSubmitClick($event)"
+    (onAction)="onSubmitClick($event)"
     data-cy="wire-v2-send"
+    color="blue"
   >
     <ng-container
       *ngIf="!(service.isUpgrade$ | async) && !(service.supportTier$ | async)"
@@ -78,5 +79,5 @@
     >
       Join Membership
     </ng-container>
-  </m-shadowboxSubmitButton>
+  </m-button>
 </div>

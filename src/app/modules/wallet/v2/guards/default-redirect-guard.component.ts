@@ -23,13 +23,12 @@ export class DefaultRedirectGuard implements CanActivate {
     const lastTab = this.tabHistory.lastTab;
 
     if (lastTab) {
-      console.log('naving to ' + `/wallet/canary${lastTab}`);
-      this.router.navigateByUrl(`/wallet/canary${lastTab}`);
+      this.router.navigateByUrl(`/wallet${lastTab}`);
       return false;
     }
 
     // default redirect
-    this.router.navigateByUrl('/wallet/canary/cash/earnings');
+    this.router.navigateByUrl('/wallet/cash/earnings');
     return true;
   }
 }

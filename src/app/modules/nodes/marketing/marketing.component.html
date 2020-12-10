@@ -27,14 +27,14 @@
           by leveraging Minds’ open source code base.
         </p>
 
-        <div class="">
-          <button
-            class="mf-button mf-button--alt"
-            (click)="action(); $event.preventDefault()"
+        <div>
+          <m-button
+            (onAction)="action(); $event.preventDefault()"
             i18n="@@MARKETING_NODES__CONTACT_US_FOR_DETAILS"
+            color="blue"
           >
             Contact us for details
-          </button>
+          </m-button>
         </div>
       </div>
 
@@ -233,13 +233,13 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button
-            class="mf-button mf-button--alt"
-            (click)="scrollToTop()"
+          <m-button
+            color="blue"
+            (onAction)="scrollToTop()"
             i18n="@@MARKETING_NODES__CONTACT_FOR_DETAILS"
           >
             Contact us for details
-          </button>
+          </m-button>
         </div>
       </div>
     </div>

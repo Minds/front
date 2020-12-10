@@ -98,7 +98,7 @@
 
       &.m-calendarGridDate--selected {
         @include m-theme() {
-          color: themed($m-btn--primaryText);
+          color: themed($m-white-always);
         }
 
         a::after {
@@ -114,7 +114,7 @@
           border-radius: 50%;
 
           @include m-theme() {
-            background: themed($m-btn--primary);
+            background: themed($m-link);
           }
         }
       }

@@ -32,21 +32,21 @@
           <td>{{ item.timestamp | date: 'mediumDate' }}</td>
           <td class="m-admin--pledges--actions" [ngSwitch]="item.status">
             <ng-template ngSwitchCase="purchased">
-              <button
-                class="m-btn m-btn--action m-btn--slim"
-                (click)="issue(i)"
-                [disabled]="inProgress"
+              <m-button
+                color="blue"
+                (onAction)="issue(i)"
+                [saving]="inProgress"
               >
                 Issue
-              </button>
+              </m-button>
 
-              <button
-                class="m-btn m-btn--destructive m-btn--slim"
-                (click)="reject(i)"
-                [disabled]="inProgress"
+              <m-button
+                color="red"
+                (onAction)="reject(i)"
+                [saving]="inProgress"
               >
                 Refund
-              </button>
+              </m-button>
             </ng-template>
 
             <ng-template ngSwitchDefault>

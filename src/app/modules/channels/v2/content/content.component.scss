@@ -62,20 +62,5 @@ m-channel__content {
         }
       }
     }
-
-    .m-channelContent__confirmButton {
-      background: transparent;
-      padding: 14px 30px;
-      border-radius: calc(1em + 40px);
-      font-size: 1.2em;
-      font-weight: 500;
-      line-height: calc(1em + 5px);
-      cursor: pointer;
-
-      @include m-theme() {
-        color: themed($m-black);
-        border: 1px solid themed($m-borderColor--primary);
-      }
-    }
   }
 }

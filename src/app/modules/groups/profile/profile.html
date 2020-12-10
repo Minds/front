@@ -87,16 +87,16 @@
                 *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
               >
               </minds-groups-join-button>
-              <button
-                class="m-btn m-btn--slim m-btn--with-icon"
-                [class.m-pulsating--small]="group.hasGathering$ | async"
+              <m-button
                 style="margin-left: 8;"
-                (click)="videochat.activate(group)"
+                (onAction)="videochat.activate(group)"
                 *ngIf="!group.videoChatDisabled && group['is:member']"
+                size="small"
+                [pulsating]="group.hasGathering$ | async"
               >
-                <span class="m-gatheringIcon">Gathering</span>
                 <i class="material-icons">video_call</i>
-              </button>
+                <span class="m-gatheringIcon">Gathering</span>
+              </m-button>
             </div>
           </div>
 
@@ -139,191 +139,10 @@
             </textarea>
           </m-text-input--autocomplete-container>
         </p>
-
-        <ng-container *ngIf="false">
-          <!-- Tags -->
-          <div class="m-group-info-tags">
-            <div>
-              <i class="material-icons">local_offer</i>
-              <ng-container *ngIf="!editing && group.tags">
-                <span *ngFor="let tag of group.tags">#{{tag}}</span>
-              </ng-container>
-              <m-hashtags-selector
-                #hashtagsSelector
-                [alignLeft]="true"
-                [tags]="group.tags"
-                (tagsChange)="onTagsChange($event)"
-                p
-                (tagsAdded)="onTagsAdded($event)"
-                (tagsRemoved)="onTagsRemoved($event)"
-                *ngIf="editing && group['is:owner']"
-              ></m-hashtags-selector>
-            </div>
-          </div>
-
-          <!-- Membership -->
-          <div class="m-group-info-membership">
-            <div [hidden]="editing || group.membership != 2">
-              <i class="material-icons">public</i>
-              <span i18n="@@GROUPS__OPEN_GROUP">Open Group</span>
-            </div>
-
-            <div [hidden]="editing || group.membership != 0">
-              <i class="material-icons">lock</i>
-              <span i18n="@@GROUPS__CLOSED_GROUP">Closed Group</span>
-            </div>
-
-            <div *ngIf="editing && group['is:owner']">
-              <i class="material-icons">
-                {{ group.membership == 2 ? 'public' : 'lock' }}
-              </i>
-              <select
-                class="icon-prefix"
-                name="membership"
-                [ngModel]="group.membership"
-                (change)="group.membership = $event.target.value"
-              >
-                <option value="2" i18n="@@GROUPS__OPEN_GROUP">
-                  Open Group
-                </option>
-                <option value="0" i18n="@@GROUPS__CLOSED_GROUP">
-                  Closed Group
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Post moderation -->
-          <div class="m-group-info-moderated" *ngIf="group['is:owner']">
-            <div [hidden]="editing || group.moderated != 0">
-              <i class="material-icons">rate_review</i>
-              <span i18n="@@GROUPS__ANYONE_CAN_POST">Anyone can post</span>
-            </div>
-
-            <div [hidden]="editing || group.moderated != 1">
-              <a [routerLink]="['/groups/profile', group.guid, 'review']">
-                <i class="material-icons">rate_review</i>
-                <span>
-                  <ng-container i18n="@@GROUPS__POSTS_ARE_MODERATED"
-                    >Posts are moderated</ng-container
-                  >
-                  <b *ngIf="group['adminqueue:count']">
-                    (<ng-container i18n="@@GROUPS__PROFILE__ADMINQUEUE_COUNT"
-                      >{{ group['adminqueue:count'] }} new</ng-container
-                    >)
-                  </b>
-                </span>
-              </a>
-            </div>
-
-            <div *ngIf="editing && group['is:owner']">
-              <i class="material-icons">rate_review</i>
-              <select
-                class="icon-prefix"
-                name="moderated"
-                [ngModel]="group.moderated"
-                (change)="group.moderated = $event.target.value"
-              >
-                <option value="0" i18n="@@GROUPS__ANYONE_CAN_POST">
-                  Anyone can post
-                </option>
-                <option value="1" i18n="@@GROUPS__POSTS_ARE_MODERATED">
-                  Posts are moderated
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Default view -->
-          <div class="m-group-info-moderated" *ngIf="group['is:owner']">
-            <div [hidden]="editing || group.default_view != 0">
-              <i class="material-icons">pageview</i>
-              <span i18n="@@GROUPS__DEFAULT_VIEW_FEED">Default view: Feed</span>
-            </div>
-
-            <div [hidden]="editing || group.default_view != 1">
-              <i class="material-icons">pageview</i>
-              <span i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS">
-                Default view: Conversations
-              </span>
-            </div>
-
-            <div *ngIf="editing && group['is:owner']">
-              <i class="material-icons">pageview</i>
-              <select
-                class="icon-prefix"
-                name="default_view"
-                [ngModel]="group.default_view"
-                (change)="group.default_view = $event.target.value"
-              >
-                <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED">
-                  Default view: Feed
-                </option>
-                <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS">
-                  Default view: Conversations
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Video calls -->
-          <div
-            class="m-group-info-video-calls"
-            *ngIf="group['is:owner'] && session.isAdmin()"
-          >
-            <div [hidden]="editing" *ngIf="group.videoChatDisabled == 0">
-              <i class="material-icons">call</i>
-              <span i18n="@@GROUPS__VIDEO_CALLS_ENABLED">
-                Video calls enabled
-              </span>
-            </div>
-
-            <div [hidden]="editing" *ngIf="group.videoChatDisabled == 1">
-              <i class="material-icons">call</i>
-              <span i18n="@@GROUPS__VIDEO_CALLS_DISABLED">
-                Video calls disabled
-              </span>
-            </div>
-
-            <div *ngIf="editing && group['is:owner']">
-              <i class="material-icons">call</i>
-              <select
-                class="icon-prefix"
-                name="video_calls"
-                [ngModel]="group.videoChatDisabled"
-                (change)="group.videoChatDisabled = $event.target.value"
-              >
-                <option value="0" i18n="@@GROUPS__VIDEO_CALLS_ENABLED">
-                  Video calls enabled
-                </option>
-                <option value="1" i18n="@@GROUPS__VIDEO_CALLS_DISABLED">
-                  Video calls disabled
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Extra actions -->
-          <div
-            class="m-group-boost"
-            *ngIf="session.isLoggedIn() && !editing && group['is:owner']"
-          >
-            <i class="material-icons">trending_up</i>
-            <minds-button-boost [object]="group"></minds-button-boost>
-          </div>
-        </ng-container>
       </div>
       <!-- END INFO -->
     </div>
     <!-- END INFO WRAPPER -->
-
-    <ng-container *mIfFeature="'!es-feeds'">
-      <m-groups--filter-selector
-        [group]="group"
-        [filter]="filter"
-        *ngIf="group['is:member']"
-      ></m-groups--filter-selector>
-    </ng-container>
 
     <div class="m-group__feeds">
       <router-outlet></router-outlet>

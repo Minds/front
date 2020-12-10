@@ -132,15 +132,15 @@
       </div>
 
       <div class="m-form__buttonsContainer m-groupsCreate__buttonsContainer">
-        <m-shadowboxSubmitButton
+        <m-button
           type="button"
           [saving]="inProgress"
           [disabled]="!form.valid"
-          (click)="onSubmit($event)"
+          (onAction)="onSubmit($event)"
           data-cy="minds-groups-create-submit"
         >
           Create Group
-        </m-shadowboxSubmitButton>
+        </m-button>
       </div>
     </form>
   </div>

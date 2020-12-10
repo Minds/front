@@ -106,32 +106,35 @@
     *ngIf="canAccept() || canReject() || canRevoke()"
     class="m-boost-card--manager-item m-boost-card--manager-item--buttons"
   >
-    <button
+    <m-button
+      class="m-boostCardManagerButton--revoke"
       *ngIf="canRevoke()"
-      class="mdl-button mdl-button--raised mdl-color--red-600 mdl-color-text--white"
-      (click)="revoke()"
+      color="red"
+      (onAction)="revoke()"
       i18n="@@BOOST__CONSOLE__CARD__REVOKE_ACTION"
     >
       Revoke
-    </button>
+    </m-button>
 
-    <button
+    <m-button
+      class="m-boostCardManagerButton--reject"
       *ngIf="canReject()"
-      class="mdl-button mdl-button--raised mdl-color--red-600 mdl-color-text--white"
-      (click)="reject()"
+      color="red"
+      (onAction)="reject()"
       i18n="@@M__ACTION__REJECT"
     >
       Reject
-    </button>
+    </m-button>
 
-    <button
+    <m-button
+      class="m-boostCardManagerButton--accept"
       *ngIf="canAccept()"
-      class="mdl-button mdl-button--raised mdl-color--green-400 mdl-color-text--white"
-      (click)="accept()"
+      color="blue"
+      (onAction)="accept()"
       i18n="@@M__ACTION__ACCEPT"
     >
       Accept
-    </button>
+    </m-button>
   </div>
 </div>
 

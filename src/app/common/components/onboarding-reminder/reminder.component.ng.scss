@@ -1,7 +1,0 @@
-@import 'defaults.scss';
-
-:host {
-  position: relative;
-  @include z-index(announcement);
-  display: block;
-}

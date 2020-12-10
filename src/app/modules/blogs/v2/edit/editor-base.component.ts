@@ -7,8 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { InlineEditorComponent } from '../../../../common/components/editors/inline-editor.component';
-import { WireThresholdInputComponent } from '../../../wire/threshold-input/threshold-input.component';
-import { HashtagsSelectorComponent } from '../../../hashtags/selector/selector.component';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -35,10 +33,6 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
 
   @ViewChild('inlineEditor')
   inlineEditor: InlineEditorComponent;
-  @ViewChild('thresholdInput')
-  thresholdInput: WireThresholdInputComponent;
-  @ViewChild('hashtagsSelector')
-  hashtagsSelector: HashtagsSelectorComponent;
 
   protected time_created: any;
 

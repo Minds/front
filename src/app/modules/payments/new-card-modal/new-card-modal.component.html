@@ -14,11 +14,8 @@
   </div>
 
   <div class="m-modalV2__toolbar">
-    <m-shadowboxSubmitButton
-      color="grey"
-      (click)="goBack($event)"
-      i18n="@@COMMON__GO_BACK"
-      >Go back</m-shadowboxSubmitButton
+    <m-button color="grey" (onAction)="goBack($event)" i18n="@@COMMON__GO_BACK"
+      >Go back</m-button
     >
     <div class="m-layout__spacer"></div>
   </div>

@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { FeaturedContentService } from './featured-content.service';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { isPlatformBrowser } from '@angular/common';
 import { FeaturesService } from '../../../services/features.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
@@ -95,25 +94,14 @@ export class FeaturedContentComponent implements OnInit {
     }
 
     if (this.entity.type === 'activity') {
-      if (this.featuresService.has('navigation')) {
-        return {
-          component: ActivityComponent,
-          injector: (componentRef, entity) => {
-            componentRef.instance.entity = entity;
-            //componentRef.instance.slot = this.slot;
-            componentRef.changeDetectorRef.detectChanges();
-          },
-        };
-      } else {
-        return {
-          component: Activity,
-          injector: (componentRef, entity) => {
-            componentRef.instance.object = entity;
-            componentRef.instance.slot = this.slot;
-            componentRef.changeDetectorRef.detectChanges();
-          },
-        };
-      }
+      return {
+        component: ActivityComponent,
+        injector: (componentRef, entity) => {
+          componentRef.instance.entity = entity;
+          //componentRef.instance.slot = this.slot;
+          componentRef.changeDetectorRef.detectChanges();
+        },
+      };
     }
   }
 

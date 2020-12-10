@@ -54,7 +54,9 @@ minds-button-subscribe {
 
       &.m-subscribeButton__subscribed {
         & > i {
-          color: #5dbac0;
+          @include m-theme() {
+            color: themed($m-link);
+          }
         }
       }
     }

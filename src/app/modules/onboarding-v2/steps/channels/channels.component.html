@@ -4,19 +4,11 @@
   </div>
 
   <div class="m-onboarding__actionButtons">
-    <button
-      class="mf-button mf-button--hollow"
-      (click)="finish()"
-      i18n="@@COMMON__SKIP"
-    >
+    <m-button (onAction)="finish()" i18n="@@COMMON__SKIP">
       Skip
-    </button>
-    <button
-      class="mf-button mf-button--alt"
-      (click)="finish()"
-      i18n="@@COMMON__FINISH"
-    >
+    </m-button>
+    <m-button color="blue" (onAction)="finish()" i18n="@@COMMON__FINISH">
       Finish
-    </button>
+    </m-button>
   </div>
 </div>

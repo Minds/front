@@ -25,14 +25,14 @@
           referring friends.
         </p>
 
-        <button
-          class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
-          (click)="navigate()"
+        <m-button
+          class="m-homepage__joinButton m-homepage__joinButton--first"
+          (onAction)="navigate()"
           *mExperiment="'Homepage121119'; bucket: 'base'"
           i18n
         >
           Join Minds Now
-        </button>
+        </m-button>
 
         <div class="m-homepage__appButtons">
           <a [href]="siteUrl + 'mobile'" target="_blank">
@@ -235,13 +235,13 @@
           </h3>
 
           <div class="m-marketing__actionButtons">
-            <button
-              class="mf-button mf-button--alt m-homepage__joinButton"
-              (click)="navigate()"
+            <m-button
+              class="m-homepage__joinButton"
+              (onAction)="navigate()"
               i18n
             >
               Join Minds Now
-            </button>
+            </m-button>
           </div>
         </div>
       </div>

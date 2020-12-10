@@ -20,21 +20,13 @@
       </div>
 
       <div class="m-admin--verify-requests-cta">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
-          (click)="verify(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="blue" (onAction)="verify(i)" [saving]="inProgress">
           Verify
-        </button>
+        </m-button>
 
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
-          (click)="reject(i)"
-          [disabled]="inProgress"
-        >
+        <m-button (onAction)="reject(i)" color="red" [saving]="inProgress">
           Reject
-        </button>
+        </m-button>
       </div>
     </div>
   </div>

@@ -30,24 +30,24 @@
 
     <div class="m-settingsV2BlockedChannel__actions">
       <!-- *ngIf="!channel._unblocked; else blockButtonTemplate" -->
-      <m-shadowboxSubmitButton
+      <m-button
         [disabled]="channel._saving"
         [saving]="channel._saving"
         color="grey"
-        (click)="unblock(channel)"
+        (onAction)="unblock(channel)"
       >
         <i class="material-icons">person_add</i
         ><span i18n="@@COMMON__UNBLOCK">Unblock</span>
-      </m-shadowboxSubmitButton>
+      </m-button>
       <!-- <ng-template #blockButtonTemplate>
-      <m-shadowboxSubmitButton
+      <m-button
         [disabled]="channel._saving"
         [saving]="channel._saving"
         color="red"
-        (click)="block(channel)"
+        (onAction)="block(channel)"
       >
         <i class="material-icons">block</i><span i18n="@@COMMON__BLOCK">Block</span>
-      </m-shadowboxSubmitButton>
+      </m-button>
     </ng-template> -->
     </div>
   </div>

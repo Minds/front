@@ -45,6 +45,7 @@ import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CookieModule, CookieService } from '@gorniv/ngx-universal';
 import { Storage } from '../../../services/storage';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 /* tslint:disable */
 @Component({
@@ -369,7 +370,15 @@ describe('BoostCreatorComponent', () => {
   function getSubmitButton(): DebugElement {
     return fixture.debugElement.query(
       By.css(
-        '.m-boost--creator--submit .m-boost--creator-button.m-boost--creator-button--submit'
+        '.m-boost--creator--submit .m-boost--creator-button.m-boost--creator-button--submit button'
+      )
+    );
+  }
+
+  function getBoostButton(): DebugElement {
+    return fixture.debugElement.query(
+      By.css(
+        '.m-boost--creator-section-submit .m-boost--creator-button--boost button'
       )
     );
   }
@@ -377,7 +386,7 @@ describe('BoostCreatorComponent', () => {
   function getNextButton(): DebugElement {
     return fixture.debugElement.query(
       By.css(
-        '.m-boost--creator-section-submit .m-boost--creator--submit button.m-boost--creator-button'
+        '.m-boost--creator-section-submit .m-boost--creator--submit m-button.m-boost--creator-button-next button'
       )
     );
   }
@@ -400,6 +409,7 @@ describe('BoostCreatorComponent', () => {
         BoostCategorySelectorMock,
         BoostP2PSearchMock,
         BoostCheckoutMock,
+        ButtonComponent,
       ],
       imports: [FormsModule, RouterTestingModule, CookieModule],
       providers: [
@@ -464,7 +474,9 @@ describe('BoostCreatorComponent', () => {
       By.css('section.m-boost--creator-section-submit')
     );
     boostSubmitButton = fixture.debugElement.query(
-      By.css('.m-boost--creator--submit > button.m-boost--creator-button')
+      By.css(
+        '.m-boost--creator--submit > button.m-boost--creator-button button'
+      )
     );
 
     fixture.detectChanges();
@@ -718,7 +730,7 @@ describe('BoostCreatorComponent', () => {
 
     boostComponent.boost.nonce = 'nonce';
     fixture.detectChanges();
-    expect(getSubmitButton().nativeElement.disabled).toBeFalsy();
+    expect(getBoostButton().nativeElement.disabled).toBeFalsy();
   });
 
   it('clicking on "boost" should submit the boost', fakeAsync(() => {
@@ -752,7 +764,7 @@ describe('BoostCreatorComponent', () => {
     expect(boostComponent.canSubmit()).toBeTruthy();
     expect(boostComponent.inProgress).toBeFalsy();
 
-    getSubmitButton().nativeElement.click();
+    getBoostButton().nativeElement.click();
     fixture.detectChanges();
     tick();
     jasmine.clock().tick(10);
@@ -806,7 +818,7 @@ describe('BoostCreatorComponent', () => {
 
     spyOn(boostComponent, 'submit').and.callThrough();
 
-    getSubmitButton().nativeElement.click();
+    getBoostButton().nativeElement.click();
     fixture.detectChanges();
     tick();
     jasmine.clock().tick(10);

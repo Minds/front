@@ -33,8 +33,8 @@
           background: linear-gradient(
             90deg,
             transparent,
-            themed($m-marketing-bg-gradient-start),
-            themed($m-marketing-bg-gradient-start)
+            themed($m-bgColor--primary),
+            themed($m-bgColor--primary)
           );
         }
         right: 0;

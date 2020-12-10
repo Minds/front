@@ -25,13 +25,9 @@
 
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
-      <button
-        class="m-btn m-btn--action m-btn--login"
-        (click)="submit()"
-        [disabled]="inProgress"
-      >
+      <m-button color="blue" (onAction)="submit()" [saving]="inProgress">
         <ng-container i18n="@@M__ACTION__SUBMIT">Submit</ng-container>
-      </button>
+      </m-button>
     </div>
   </form>
 </div>

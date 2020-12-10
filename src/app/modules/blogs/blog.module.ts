@@ -9,13 +9,9 @@ import { AdsModule } from '../ads/ads.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
-import {
-  BlogListComponent,
-  BlogEdit,
-  BlogViewInfinite,
-} from './list.component';
 import { BlogCard } from './card/card';
 import { BlogView } from './view/view';
+import { BlogViewInfinite } from './view/infinite';
 import { BlogTileComponent } from './tile/tile.component';
 import { WireModule } from '../wire/wire.module';
 import { CommentsModule } from '../comments/comments.module';
@@ -34,7 +30,7 @@ const routes: Routes = [
   { path: 'view/:guid', component: BlogViewInfinite },
   {
     path: 'edit/:guid',
-    component: BlogEdit,
+    component: BlogEditorV2Component,
     canDeactivate: [CanDeactivateGuardService],
     data: {
       title: 'Edit Blog',
@@ -42,11 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'v2/edit/:guid',
-    component: BlogEditorV2Component,
-    canDeactivate: [CanDeactivateGuardService],
-    data: {
-      title: 'Edit Blog',
-    },
+    redirectTo: 'edit/:guid',
   },
 ];
 
@@ -70,14 +62,7 @@ const routes: Routes = [
     CodeHighlightModule,
     ActivityModule,
   ],
-  declarations: [
-    BlogView,
-    BlogCard,
-    BlogViewInfinite,
-    BlogEdit,
-    BlogListComponent,
-    BlogTileComponent,
-  ],
+  declarations: [BlogView, BlogCard, BlogViewInfinite, BlogTileComponent],
   exports: [BlogEditorComponent, BlogView, BlogCard],
 })
 export class BlogModule {}

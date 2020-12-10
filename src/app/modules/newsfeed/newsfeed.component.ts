@@ -15,11 +15,7 @@ import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
-import { PosterComponent } from './poster/poster.component';
 import { NewsfeedService } from './services/newsfeed.service';
-import { SideBarSelectorChange } from '../hashtags/sidebar-selector/sidebar-selector.component';
-import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
-import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
 
@@ -65,8 +61,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   newNavigation: boolean = false;
 
-  @ViewChild('poster') private poster: PosterComponent;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -79,8 +73,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected storage: Storage,
     protected overlayModal: OverlayModalService,
     protected context: ContextService,
-    protected newsfeedService: NewsfeedService,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService
+    protected newsfeedService: NewsfeedService
   ) {
     this.newNavigation = this.featuresService.has('navigation');
     this.urlSubscription = this.route.url.subscribe(() => {
@@ -149,29 +142,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  async hashtagFilterChange(filter: SideBarSelectorChange) {
-    if (!this.isSorted && !this.legacySorting) {
-      switch (filter.type) {
-        case 'single':
-          await this.router.navigate([
-            '/newsfeed/global/hot',
-            { hashtag: filter.value },
-          ]);
-          break;
-
-        case 'preferred':
-          await this.router.navigate(['/newsfeed/global/hot']);
-          break;
-
-        case 'all':
-          await this.router.navigate(['/newsfeed/global/hot', { all: 1 }]);
-          break;
-      }
-    }
-
-    this.newsfeedHashtagSelectorService.emit(filter);
-  }
-
   async navigateToGlobal() {
     await this.router.navigate(['/newsfeed/global']);
   }
@@ -189,24 +159,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate() {
-    if (!this.poster || !this.poster.attachment) return true;
-    const progress = this.poster.attachment.getUploadProgress();
-    if (progress > 0 && progress < 100) {
-      return confirm('Your file is still uploading. Are you sure?');
-    }
-
     return true;
-  }
-
-  openReferralsModal() {
-    this.overlayModal
-      .create(
-        ReferralsLinksComponent,
-        {},
-        {
-          class: 'm-overlay-modal--referrals-links m-overlay-modal--medium',
-        }
-      )
-      .present();
   }
 }

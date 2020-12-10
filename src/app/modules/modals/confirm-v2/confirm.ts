@@ -15,12 +15,16 @@ const DEFAULT_BODY = 'Are you sure?';
       <span class="m-confirmV2Modal__text">{{ body }}</span>
     </div>
     <div class="m-confirmV2Modal__buttonWrapper">
-      <button class="m-confirmV2Modal__cancelButton" (click)="onDismiss()">
+      <m-button class="m-confirmV2Modal__cancelButton" (onAction)="onDismiss()">
         Cancel
-      </button>
-      <button class="m-confirmV2Modal__confirmButton" (click)="onConfirm()">
+      </m-button>
+      <m-button
+        class="m-confirmV2Modal__confirmButton"
+        color="blue"
+        (onAction)="onConfirm()"
+      >
         Confirm
-      </button>
+      </m-button>
     </div>
   `,
   styleUrls: ['./confirm.ng.scss'],

@@ -30,14 +30,14 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       color="red"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@SETTINGS_V2_DELETE_ACCOUNT__DELETE_ACCOUNT"
     >
       Delete Account
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

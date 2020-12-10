@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToolbarComponent } from './toolbar.component';
-import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
 import { ComposerService } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
@@ -10,6 +9,7 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -52,6 +52,7 @@ describe('Composer Toolbar', () => {
     TestBed.configureTestingModule({
       declarations: [
         ToolbarComponent,
+        ButtonComponent,
         MockComponent(
           {
             selector: 'm-file-upload',
@@ -63,11 +64,6 @@ describe('Composer Toolbar', () => {
         MockComponent({
           selector: 'm-icon',
           inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-        MockComponent({
-          selector: 'm-button',
-          inputs: ['disabled', 'dropdown', 'dropdownAnchorPosition'],
-          outputs: ['onAction'],
         }),
       ],
       providers: [
@@ -161,14 +157,5 @@ describe('Composer Toolbar', () => {
     comp.onSchedulerClick();
     expect(popupServiceMock.create).toHaveBeenCalledWith(ScheduleComponent);
     expect(popupServiceMock.present).toHaveBeenCalled();
-  });
-
-  it('should emit on post', () => {
-    spyOn(comp.onPostEmitter, 'emit');
-    fixture.detectChanges();
-
-    const action: ButtonComponentAction = { type: 'mock' };
-    comp.onPost(action);
-    expect(comp.onPostEmitter.emit).toHaveBeenCalledWith(action);
   });
 });

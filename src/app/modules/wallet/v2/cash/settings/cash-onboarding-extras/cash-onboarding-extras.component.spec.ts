@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WalletCashOnboardingExtrasComponent } from './cash-onboarding-extras.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from '../../../../../../common/components/button/button.component';
 
 describe('WalletCashOnboardingExtrasComponent', () => {
   let component: WalletCashOnboardingExtrasComponent;
@@ -9,7 +10,7 @@ describe('WalletCashOnboardingExtrasComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WalletCashOnboardingExtrasComponent],
+      declarations: [WalletCashOnboardingExtrasComponent, ButtonComponent],
       imports: [ReactiveFormsModule],
     }).compileComponents();
   }));
