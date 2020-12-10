@@ -1,8 +1,10 @@
-<a
+<m-button
   class="m-button-v2 m-button-v2--transparent"
-  (click)="channelEditIntent.edit()"
+  (onAction)="channelEditIntent.edit()"
   data-cy="data-minds-channel-edit-button"
   i18n
+  overlay="true"
+  size="xsmall"
 >
   Edit Channel
-</a>
+</m-button>

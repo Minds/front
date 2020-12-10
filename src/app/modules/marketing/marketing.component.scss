@@ -10,7 +10,7 @@ m-marketing {
   -webkit-font-smoothing: antialiased;
 
   @include m-theme() {
-    background: themed($m-white);
+    background: themed($m-bgColor--primary);
     color: themed($m-textColor--primary);
   }
 
@@ -225,18 +225,7 @@ m-marketing {
   .m-marketing__actionButton {
     margin-bottom: -80px;
     margin-top: 32px;
-    button {
-      letter-spacing: 3px;
-      font-size: 13px;
-      line-height: 35px;
-      height: 48px;
-      padding: 0 24px;
-      font-weight: 400;
-      font-family: 'Roboto', Helvetica, sans-serif;
-      @include m-theme() {
-        color: themed($m-white);
-      }
-    }
+
     z-index: 2;
   }
 

@@ -57,8 +57,8 @@
       be placed in the description.
     </p>
 
-    <m-shadowboxSubmitButton [saving]="inProgress" (click)="connect()">
+    <m-button [saving]="inProgress" (onAction)="connect()">
       Connect to your YouTube
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

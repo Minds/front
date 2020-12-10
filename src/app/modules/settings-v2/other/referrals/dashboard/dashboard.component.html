@@ -111,12 +111,11 @@
                   class="m-settingsV2__referralsDashboard__pingTooltip"
                 >
                   <div>
-                    <button
-                      class="m-btn m-btn--slim m-btn--with-icon"
-                      [ngClass]="{
-                        'm-settingsV2__referralsDashboard__pingButton--disabled': !referral.pingable
-                      }"
-                      (click)="triggerNotification(referral)"
+                    <m-button
+                      size="xsmall"
+                      color="blue"
+                      [disabled]="!referral.pingable"
+                      (onAction)="triggerNotification(referral)"
                     >
                       <i
                         *ngIf="referral.pingable"
@@ -135,14 +134,14 @@
                       <span
                         *ngIf="referral.pingable"
                         i18n="@@M_REFERRALS_DASHBOARD__PING_BUTTON"
-                        >ping</span
+                        >Ping</span
                       >
                       <span
                         *ngIf="!referral.pingable"
                         i18n="@@M_REFERRALS_DASHBOARD__PING_STATE"
-                        >pinged</span
+                        >Pinged</span
                       >
-                    </button>
+                    </m-button>
                   </div>
                 </div>
                 <ng-container

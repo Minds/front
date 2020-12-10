@@ -6,7 +6,10 @@
   [hidden]="isPosting$ | async"
   data-cy="meatball-menu-trigger"
 >
-  <m-icon iconId="more_vert"></m-icon>
+  <m-icon *ngIf="!displayAsButton" iconId="more_vert"></m-icon>
+  <m-button *ngIf="displayAsButton" overlay="true" size="xsmall" iconOnly="true"
+    ><i class="material-icons">more_vert</i></m-button
+  >
 </m-dropdownMenu>
 
 <ng-template #menu>

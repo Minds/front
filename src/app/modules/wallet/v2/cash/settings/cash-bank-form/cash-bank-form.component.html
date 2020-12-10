@@ -95,19 +95,20 @@
     <!--- FORM BUTTONS --------------------------------->
     <!-- -------------------------------------------- -->
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
-        (click)="cancelEdits()"
+      <m-button
+        (onAction)="cancelEdits()"
         [disabled]="inProgress"
         color="grey"
         i18n="@@CASH_BANK_FORM__CANCEL"
-        >Cancel</m-shadowboxSubmitButton
+        >Cancel</m-button
       >
-      <m-shadowboxSubmitButton
-        (click)="addBank()"
+      <m-button
+        (onAction)="addBank()"
         [disabled]="inProgress || form.invalid"
         [saving]="inProgress"
         i18n="@@CASH_BANK_FORM__ADD_BANK_ACCOUNT"
-        >Add Bank Account</m-shadowboxSubmitButton
+        color="blue"
+        >Add Bank Account</m-button
       >
     </div>
   </form>
@@ -148,10 +149,10 @@
           For security reasons, you won't be able to rejoin the monetization
           program.
         </p>
-        <m-shadowboxSubmitButton
+        <m-button
           color="red"
-          (click)="showModal = true; modalContent = 'leaveMonetization'"
-          >Leave Monetization Program</m-shadowboxSubmitButton
+          (onAction)="showModal = true; modalContent = 'leaveMonetization'"
+          >Leave Monetization Program</m-button
         >
       </div> -->
   </ng-container>
@@ -172,19 +173,19 @@
     </p>
 
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton
+      <m-button
         color="grey"
-        (click)="showModal = false"
+        (onAction)="showModal = false"
         i18n="@@COMMON__GO_BACK"
-        >Go back</m-shadowboxSubmitButton
+        >Go back</m-button
       >
-      <m-shadowboxSubmitButton
+      <m-button
         color="red"
-        (click)="leaveEditMode()"
+        (onAction)="leaveEditMode()"
         [disabled]="inProgress"
         [saving]="inProgress"
         i18n="@@COMMON__IM_SURE"
-        >I'm sure</m-shadowboxSubmitButton
+        >I'm sure</m-button
       >
     </div>
   </m-walletModal>
@@ -201,15 +202,15 @@
       be able to receive payments until you add another one.
     </p>
     <div class="m-walletForm__buttonsContainer">
-      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
-        >Cancel</m-shadowboxSubmitButton
+      <m-button color="grey" (onAction)="showModal = false"
+        >Cancel</m-button
       >
-      <m-shadowboxSubmitButton
+      <m-button
         color="red"
-        (click)="removeBank()"
+        (onAction)="removeBank()"
         [disabled]="inProgress"
         [saving]="inProgress"
-        >I'm sure</m-shadowboxSubmitButton
+        >I'm sure</m-button
       >
     </div>
   </m-walletModal> -->
@@ -226,15 +227,15 @@
         able to rejoin again.
       </p>
       <div class="m-walletForm__buttonsContainer">
-        <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
-          >Cancel</m-shadowboxSubmitButton
+        <m-button color="grey" (onAction)="showModal = false"
+          >Cancel</m-button
         >
-        <m-shadowboxSubmitButton
+        <m-button
           color="red"
-          (click)="leaveMonetization()"
+          (onAction)="leaveMonetization()"
           [disabled]="inProgress"
           [saving]="inProgress"
-          >I'm sure</m-shadowboxSubmitButton
+          >I'm sure</m-button
         >
       </div>
     </m-walletModal> -->

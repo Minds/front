@@ -6,14 +6,11 @@
     class="mdl-card__supporting-text"
     *ngIf="!inProgress && telno && !waitingForCheck"
   >
-    <button
-      class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-      (click)="cancel()"
-    >
+    <m-button (onAction)="cancel()">
       <ng-container i18n="@@MINDS__SETTINGS__REMOVE_2FA_ACTION">
         Remove two factor
       </ng-container>
-    </button>
+    </m-button>
   </div>
 
   <!-- SETUP -->
@@ -35,16 +32,17 @@
     </div>
     <p class="mdl-color-text--red">{{ error }}</p>
     <div class="m-twoFactor__sendButtonWrapper">
-      <button
+      <m-button
+        color="blue"
         class="m-twoFactor__sendButton"
         id="numberSendButton"
-        (click)="setup()"
+        (onAction)="setup()"
         [disabled]="waitingForCheck"
       >
         <ng-container i18n="@@MINDS__SETTINGS__SETUP_ACTION">
           Setup
         </ng-container>
-      </button>
+      </m-button>
     </div>
   </div>
 
@@ -77,20 +75,14 @@
       </label>
     </div>
     <div>
-      <button
-        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-twoFactor__confirm"
-        (click)="check(code.value)"
-      >
+      <m-button color="blue" size="xsmall" (onAction)="check(code.value)">
         <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
-      </button>
-      <button
-        class="mdl-button mdl-js-button mdl-button--raised m-twoFactor__retry"
-        (click)="check(code.value)"
-      >
+      </m-button>
+      <m-button size="xsmall" (onAction)="check(code.value)">
         <ng-container i18n="@@MINDS__SETTINGS__2FA_RETRY_ACTION">
           Retry
         </ng-container>
-      </button>
+      </m-button>
     </div>
   </div>
 </div>

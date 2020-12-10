@@ -42,31 +42,32 @@
         </div>
 
         <div class="m-helpdesk__dashboardButtons" *ngIf="session.isAdmin()">
-          <button
-            class="m-btn m-btn--slim"
+          <m-button
+            overlay="true"
             i18n="@@HELPDESK__DASHBOARD__NEW_CATEGORY"
-            (click)="newCategory()"
+            (onAction)="newCategory()"
           >
             New Category
-          </button>
-          <button
-            class="m-btn m-btn--slim"
+          </m-button>
+          <m-button
+            overlay="true"
             i18n="@@HELPDESK__DASHBOARD__NEW_CATEGORY"
-            (click)="newQuestion()"
+            (onAction)="newQuestion()"
           >
             New Question
-          </button>
+          </m-button>
         </div>
         <div class="m-helpdesk__dashboardButtons">
-          <a
-            class="m-btn m-btn--slim"
-            routerLink="/groups/profile/100000000000000681/feed"
+          <m-button overlay="true"
+            ><a routerLink="/groups/profile/100000000000000681/feed">
+              Help & Support Group
+            </a></m-button
           >
-            Help & Support Group
-          </a>
-          <a class="m-btn m-btn--slim" routerLink="/issues/report">
-            Report a bug
-          </a>
+          <m-button overlay="true">
+            <a routerLink="/issues/report">
+              Report a bug
+            </a>
+          </m-button>
         </div>
       </div>
       <div class="m-layout__cell">

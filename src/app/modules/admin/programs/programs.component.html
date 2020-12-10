@@ -40,47 +40,23 @@
       </div>
 
       <div class="m-application-cta" *ngIf="reviewing !== i">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-          (click)="review(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="blue" (onAction)="review(i)" [saving]="inProgress">
           Review
-        </button>
+        </m-button>
       </div>
       <div class="m-application-cta" *ngIf="reviewing === i">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
-          (click)="accept(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="blue" (onAction)="accept(i)" [saving]="inProgress">
           Accept
-        </button>
+        </m-button>
 
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
-          (click)="reject(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="red" (onAction)="reject(i)" [saving]="inProgress">
           Reject
-        </button>
+        </m-button>
 
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-          (click)="review(null)"
-          [disabled]="inProgress"
-        >
+        <m-button (onAction)="review(null)" [saving]="inProgress">
           Cancel
-        </button>
+        </m-button>
       </div>
     </div>
   </div>
-
-  <infinite-scroll
-    distance="25%"
-    (load)="load()"
-    [moreData]="moreData"
-    [inProgress]="inProgress"
-  >
-  </infinite-scroll>
 </div>

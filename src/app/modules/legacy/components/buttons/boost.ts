@@ -11,9 +11,9 @@ import { BoostCreatorComponent } from '../../../boost/creator/creator.component'
   selector: 'minds-button-boost',
   inputs: ['object'],
   template: `
-    <button class="m-btn m-btn--action m-btn--slim" (click)="boost()">
+    <m-button color="blue" (onAction)="boost()">
       <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
-    </button>
+    </m-button>
   `,
 })
 export class BoostButton {

@@ -87,21 +87,22 @@
             >History</a
           >
 
-          <button
-            class="mf-button mf-button--smaller"
-            [disabled]="inProgress"
-            (click)="approve(request)"
+          <m-button
+            size="small"
+            [saving]="inProgress"
+            (onAction)="approve(request)"
           >
             Approve
-          </button>
+          </m-button>
 
-          <button
-            class="mf-button mf-button--destructive mf-button--smaller"
-            [disabled]="inProgress"
-            (click)="reject(request)"
+          <m-button
+            size="small"
+            color="red"
+            [saving]="inProgress"
+            (onAction)="reject(request)"
           >
             Reject
-          </button>
+          </m-button>
         </div>
       </div>
     </ng-container>

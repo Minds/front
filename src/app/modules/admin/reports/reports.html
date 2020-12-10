@@ -139,63 +139,40 @@
       <div class="mdl-card__supporting-text m-action-buttons">
         <ng-container *ngIf="filter == 'reports'">
           <ng-container *ngIf="type == 'review'">
-            <button
-              type="button"
-              a
-              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber"
-              (click)="archive(report, i)"
-            >
+            <m-button (onAction)="archive(report, i)">
               Archive
-            </button>
+            </m-button>
           </ng-container>
 
           <ng-container *ngIf="type == 'review' || type == 'archived'">
-            <button
-              type="button"
-              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber-dark"
-              (click)="explicit(report, i)"
-            >
+            <m-button (onAction)="explicit(report, i)">
               Mark as <i class="material-icons">explicit</i>
-            </button>
+            </m-button>
 
-            <button
-              type="button"
+            <m-button
               *ngIf="report.entityObj
                 && report.entityObj.type != 'comment'
                 && report.entityObj.type != 'user'
                 "
-              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber-dark"
-              (click)="spam(report, i)"
+              (onAction)="spam(report, i)"
             >
               Mark as spam
-            </button>
+            </m-button>
 
-            <button
-              type="button"
-              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
-              (click)="delete(report, i)"
-            >
+            <m-button color="red" (onAction)="delete(report, i)">
               Delete
-            </button>
+            </m-button>
           </ng-container>
         </ng-container>
 
         <ng-container *ngIf="type == 'appealed'">
-          <button
-            type="button"
-            class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--green"
-            (click)="approveAppeal(report, i)"
-          >
+          <m-button color="blue" (onAction)="approveAppeal(report, i)">
             Approve
-          </button>
+          </m-button>
 
-          <button
-            type="button"
-            class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
-            (click)="rejectAppeal(report, i)"
-          >
+          <m-button color="red" (onAction)="rejectAppeal(report, i)">
             Reject
-          </button>
+          </m-button>
         </ng-container>
       </div>
     </div>

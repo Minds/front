@@ -22,7 +22,13 @@
     class="m-blogEditor__bannerImageContainer"
   >
     <div class="m-blogEditor__bannerToolbar">
-      <i class="material-icons" (click)="service.banner$.next('')">delete</i>
+      <m-button
+        overlay="true"
+        size="xsmall"
+        iconOnly="true"
+        (onAction)="service.banner$.next('')"
+        ><i class="material-icons">delete</i></m-button
+      >
       <ng-template [ngTemplateOutlet]="optionsDropdownContainer"></ng-template>
     </div>
     <img [src]="service.banner$ | async" />
@@ -40,13 +46,13 @@
           class="m-blogEditor__bannerText"
           i18n="@@BLOGS_EDITOR__UPLOAD_BANNER_IMAGE"
         >
-          <button
+          <m-button
             class="m-blogEditor__bannerUploadButton"
-            (click)="bannerUpload.click()"
+            (onAction)="bannerUpload.click()"
           >
             <i class="material-icons">publish</i>
             Upload Banner
-          </button>
+          </m-button>
           <input
             hidden
             id="channel-v2-edit-avatar"

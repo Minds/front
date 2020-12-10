@@ -28,14 +28,13 @@
         i18n="@@REPORT__CONSOLE__APPEAL_COMPOSER_PLACEHOLDER"
       ></textarea>
 
-      <button
-        class="m-moderationAppeal__button"
-        [disabled]="appeal.inProgress"
-        (click)="sendAppeal()"
+      <m-button
+        [saving]="appeal.inProgress"
+        (onAction)="sendAppeal()"
         i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
       >
         Appeal
-      </button>
+      </m-button>
     </div>
     <div class="m-moderationAppeal__appealNote" *ngIf="appeal.note">
       <b>Appeal Note: </b>

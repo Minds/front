@@ -11,7 +11,6 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { ChannelsTileComponent } from '../../channels/tile/tile.component';
 import { GroupsTileComponent } from '../../groups/tile/tile.component';
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { FeaturesService } from '../../../services/features.service';
@@ -40,7 +39,7 @@ export class NewsfeedEntityComponent {
 
   // Return the component to use
   private getComponent(type: string) {
-    return type === 'user' ? ChannelsTileComponent : GroupsTileComponent;
+    return type === 'user' ? null : GroupsTileComponent;
   }
 
   @Input() slot: number;

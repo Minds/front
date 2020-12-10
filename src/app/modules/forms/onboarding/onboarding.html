@@ -19,13 +19,13 @@
   </div>
 
   <div class="mdl-card__actions">
-    <button
-      class="mdl-button mdl-button--colored m-register-btn"
-      (click)="submit($event)"
-      [disabled]="inProgress"
+    <m-button
+      class="m-register-btn"
+      (onAction)="submit($event)"
+      [saving]="inProgress"
     >
       <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
-    </button>
+    </m-button>
   </div>
 </form>
 <!-- END: Onboarding bio input-->

@@ -167,27 +167,29 @@
 
     <div class="m-login__spacer" *ngIf="showBigButton"></div>
 
-    <button
-      class="m-btn m-btn--action m-btn--login"
-      (click)="login()"
-      [disabled]="inProgress"
+    <m-button
+      class="m-login__button--login"
+      color="blue"
+      (onAction)="login()"
+      [saving]="inProgress"
       *ngIf="!showBigButton"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-    </button>
-    <m-shadowboxSubmitButton
+    </m-button>
+    <m-button
+      class="m-login__button--login"
       *ngIf="showBigButton"
       type="button"
-      [disabled]="inProgress"
       [saving]="inProgress"
-      (click)="login()"
+      (onAction)="login()"
+      color="blue"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">
         Login
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: LOGIN -->
@@ -219,7 +221,7 @@
   </div>
   <div></div>
 
-  <button class="m-btn m-btn--action" (click)="twofactorAuth(code)">
+  <m-button color="blue" (onAction)="twofactorAuth(code)">
     <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-  </button>
+  </m-button>
 </div>

@@ -20,7 +20,6 @@ import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
-import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
@@ -92,8 +91,6 @@ export class NewsfeedBoostRotatorComponent {
   height: number;
 
   subscriptions: Subscription[] = [];
-
-  @ViewChildren('activities') activities: QueryList<Activity>;
 
   @ViewChild('rotatorEl')
   rotatorEl: ElementRef;

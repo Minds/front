@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MonetizationSubjectValue } from '../../../../composer/services/composer.service';
+import { ButtonComponent } from '../../../../../common/components/button/button.component';
 
 const content$ = new BehaviorSubject<string>('');
 
@@ -45,7 +46,7 @@ describe('BlogEditorBottomBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BlogEditorBottomBarComponent],
+      declarations: [BlogEditorBottomBarComponent, ButtonComponent],
       imports: [RouterTestingModule, NgCommonModule, FormsModule],
       providers: [
         { provide: BlogsEditService, useValue: blogsEditServiceMock },

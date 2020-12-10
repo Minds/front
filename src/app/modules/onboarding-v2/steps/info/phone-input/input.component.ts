@@ -4,7 +4,7 @@ import { Session } from '../../../../../services/session';
 import { PhoneInputV2Component } from '../../../../../common/components/phone-input-v2/phone-input-v2.component';
 
 @Component({
-  selector: 'm-onboarding__phoneverification',
+  selector: 'm-onboarding__phoneVerification',
   templateUrl: 'input.component.html',
 })
 export class PhoneVerificationComponent {
@@ -108,5 +108,9 @@ export class PhoneVerificationComponent {
     this.error = null;
     this.numberError = null;
     this.codeError = null;
+  }
+
+  get verifyDisabled() {
+    return this.disabled || !this.number || this.number.length <= 1;
   }
 }

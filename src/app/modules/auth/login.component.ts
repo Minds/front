@@ -7,7 +7,6 @@ import { SignupModalService } from '../modals/signup/service';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
-import { OnboardingService } from '../onboarding/onboarding.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { FeaturesService } from '../../services/features.service';
 import { iOSVersion } from '../../helpers/is-safari';
@@ -51,7 +50,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     private cookieService: CookieService,
-    private onboarding: OnboardingService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,

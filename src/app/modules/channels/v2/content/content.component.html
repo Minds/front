@@ -88,13 +88,12 @@
       >
         This channel is NSFW
       </h3>
-      <button
-        class="m-channelContent__confirmButton"
-        (click)="content.forceNsfwContent$.next(true)"
+      <m-button
+        (onAction)="content.forceNsfwContent$.next(true)"
         i18n="@@CHANNEL_CONTENT__I_AM_OVER_18"
       >
         I am 18 or over
-      </button>
+      </m-button>
     </div>
   </ng-template>
 

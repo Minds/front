@@ -16,21 +16,21 @@
     </ul>
 
     <div class="m-modal-confirm-buttons">
-      <button
+      <m-button
         class="mdl-button mdl-button--colored mdl-button--raised"
         [disabled]="boost.rejection_reason == -1"
-        (click)="action()"
+        (onAction)="action()"
       >
         {{ yesButton }}
-      </button>
+      </m-button>
 
-      <button
+      <m-button
         class="mdl-button mdl-button--raised m-modal-reasons--no-button"
-        (click)="close()"
+        (onAction)="close()"
         *ngIf="noButton"
       >
         {{ noButton }}
-      </button>
+      </m-button>
     </div>
   </div>
 
@@ -41,9 +41,9 @@
     <ng-content select="[confirm-success-message]"></ng-content>
 
     <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
-      <button class="mdl-button mdl-button--raised" (click)="close()">
+      <m-button (onAction)="close()">
         {{ dismissButton }}
-      </button>
+      </m-button>
     </div>
   </div>
 
@@ -54,9 +54,9 @@
     <ng-content select="[confirm-error-message]"></ng-content>
 
     <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
-      <button class="mdl-button mdl-button--raised" (click)="close()">
+      <m-button (onAction)="close()">
         {{ dismissButton }}
-      </button>
+      </m-button>
     </div>
   </div>
 </m-modal>

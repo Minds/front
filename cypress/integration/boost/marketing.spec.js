@@ -11,7 +11,7 @@ context('Boost Product Page', () => {
     cy.preserveCookies();
   });
 
-  const createBoostButton = '.m-marketing__mainWrapper .mf-button';
+  const createBoostButton = '.m-marketing__mainWrapper m-button';
 
   it('should have a create boost button', () => {
     cy.visit('/boost');

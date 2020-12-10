@@ -13,13 +13,13 @@
     <ng-content select="[icons]"></ng-content>
   </div>
 
-  <button
-    class="m-btn m-btn--action m-btn--slim m-btn--boost"
+  <m-button
+    color="blue"
     [routerLink]="['/boost/console/newsfeed/history', { toggled: true }]"
     *ngIf="session.isLoggedIn()"
   >
     <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
-  </button>
+  </m-button>
 
   <div class="m-dropdown m-topbar--account" *ngIf="session.isLoggedIn()" #menu>
     <a (click)="menu.value = !menu.value">
@@ -127,14 +127,14 @@
     ></div>
   </div>
 
-  <button
-    class="m-btn m-btn--action m-btn--login m-btn--slim"
+  <m-button
+    color="blue"
     *ngIf="!session.isLoggedIn()"
     [routerLink]="['/login']"
     routerLinkActive="hidden"
   >
     <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-  </button>
+  </m-button>
 </div>
 
 <div class="m-topbar--toaster">

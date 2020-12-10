@@ -11,8 +11,6 @@ import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup
 import { SignupModalService } from '../modals/signup/service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { LoginReferrerService } from '../../services/login-referrer.service';
-import { OnboardingService } from '../onboarding/onboarding.service';
-import { onboardingServiceMock } from '../../mocks/modules/onboarding/onboarding.service.mock.spec';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MockComponent, MockService } from '../../utils/mock';

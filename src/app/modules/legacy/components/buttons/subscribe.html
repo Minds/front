@@ -1,0 +1,47 @@
+<ng-container *ngIf="iconsOnly; else normalView">
+  <m-button
+    *ngIf="!_user.subscribed"
+    (onAction)="subscribe($event)"
+    iconOnly="true"
+    size="xsmall"
+  >
+    <i class="material-icons">
+      add
+    </i>
+  </m-button>
+  <m-button
+    (onAction)="unSubscribe($event)"
+    *ngIf="_user.subscribed"
+    iconOnly="true"
+    size="xsmall"
+  >
+    <i class="material-icons">
+      check
+    </i>
+  </m-button>
+</ng-container>
+
+<ng-template #normalView>
+  <m-button
+    *ngIf="!_user.subscribed"
+    (onAction)="subscribe($event)"
+    size="xsmall"
+  >
+    <i class="material-icons">person_add</i>
+    <span>
+      <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
+    </span>
+  </m-button>
+  <m-button
+    *ngIf="_user.subscribed"
+    (onAction)="unSubscribe($event)"
+    size="xsmall"
+  >
+    <i class="material-icons">close</i>
+    <span>
+      <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
+        >Unsubscribe</ng-container
+      >
+    </span></m-button
+  >
+</ng-template>

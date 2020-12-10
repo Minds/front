@@ -44,40 +44,10 @@ $default-height: 200px;
 
     .m-confirmV2Modal__cancelButton {
       margin: 0 10px;
-      padding: 12px 24px;
-      border-radius: 25px;
-      border: 1px solid gray;
-      background-color: unset;
-      cursor: pointer;
-
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-        border: 1px solid themed($m-borderColor--primary);
-
-        &:hover {
-          background-color: themed($m-blue);
-          color: themed($m-white-always);
-        }
-      }
     }
 
     .m-confirmV2Modal__confirmButton {
       margin: 0 10px;
-      padding: 12px 24px;
-      border-radius: 25px;
-      height: auto;
-      background-color: unset;
-      cursor: pointer;
-
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-        border: 1px solid themed($m-blue);
-
-        &:hover {
-          background-color: themed($m-blue);
-          color: themed($m-white-always);
-        }
-      }
     }
   }
 }

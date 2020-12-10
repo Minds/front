@@ -10,7 +10,7 @@ context('Registration', () => {
   const passwordField = 'minds-form-register #password';
   const password2Field = 'minds-form-register #password2';
   const checkbox = '[data-cy=minds-accept-tos-input] [type=checkbox]';
-  const submitButton = '.m-shadowboxSubmitButton';
+  const submitButton = '.m-button';
 
   beforeEach(() => {
     cy.clearCookies();

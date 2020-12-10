@@ -25,14 +25,14 @@
           cryptocurrency. Get tips and monthly subscriptions for your content.
         </p>
 
-        <div class="">
-          <button
-            class="mf-button mf-button--alt"
-            (click)="action(); $event.preventDefault()"
+        <div>
+          <m-button
+            color="blue"
+            (onAction)="action(); $event.preventDefault()"
             i18n="@@MARKETING_WIRE__MONETIZE_YOUR_CHANNEL"
           >
             Monetize your channel
-          </button>
+          </m-button>
         </div>
       </div>
 
@@ -191,13 +191,13 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button
-            class="mf-button mf-button--alt"
-            (click)="scrollToTop()"
+          <m-button
+            color="blue"
+            (onAction)="scrollToTop()"
             i18n="@@MARKETING_WIRE__MONETIZE_YOUR_CHANNEL"
           >
             Monetize your channel
-          </button>
+          </m-button>
         </div>
       </div>
     </div>

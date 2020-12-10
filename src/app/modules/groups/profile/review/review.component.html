@@ -25,21 +25,21 @@
         <!-- Review -->
 
         <div bottom-content class="m-groups-feed--review-actions">
-          <button
-            class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500"
-            (click)="approve(entity, i)"
+          <m-button
+            color="blue"
+            (onAction)="approve(entity, i)"
             i18n="@@COMMON__APPROVE"
           >
             Approve
-          </button>
+          </m-button>
 
-          <button
-            class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red-500"
-            (click)="reject(entity, i)"
+          <m-button
+            color="red"
+            (onAction)="reject(entity, i)"
             i18n="@@COMMON__REJECT"
           >
             Reject
-          </button>
+          </m-button>
         </div>
 
         <!-- / -->

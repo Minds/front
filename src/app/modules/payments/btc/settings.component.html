@@ -10,16 +10,12 @@
     [(ngModel)]="btcAddress"
     [ngModelOptions]="{ standalone: true }"
   />
-  <button
-    class="m-btn m-btn--slim m-btn--action"
-    [disabled]="!btcAddress || saving"
-    (click)="save()"
+  <m-button
+    size="xsmall"
+    [disabled]="!btcAddress"
+    [saving]="saving"
+    (onAction)="save()"
   >
-    <ng-container *ngIf="saving">
-      Saving...
-    </ng-container>
-    <ng-container *ngIf="!saving">
-      Save
-    </ng-container>
-  </button>
+    Save
+  </m-button>
 </form>

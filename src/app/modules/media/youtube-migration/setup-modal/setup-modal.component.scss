@@ -12,13 +12,13 @@ m-youtubeMigration__setupModal {
     @media screen and (max-width: $max-mobile) {
       width: 100%;
     }
-    m-shadowboxSubmitButton {
+    m-button {
       margin: 8px 0 0 18px;
 
       @media screen and (max-width: $max-mobile) {
         width: 100%;
         margin: 8px 0 0 0;
-        .m-shadowboxSubmitButton {
+        .m-button {
           width: 100%;
         }
       }

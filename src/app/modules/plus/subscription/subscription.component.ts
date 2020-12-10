@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { PlusService } from '../plus.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { WirePaymentsCreatorComponent } from '../../wire/creator/payments/payments.creator.component';
 import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
 import {
   UpgradeOptionCurrency,

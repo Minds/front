@@ -47,14 +47,13 @@
 
     <div class="m-proSubscription__buttonsContainer">
       <div class="m-proSubscription__button">
-        <button
-          class="mf-button mf-button--alt"
+        <m-button
+          color="blue"
           [disabled]="active || inProgress || criticalError"
-          (click)="enable()"
-          i18n="@@PRO_SUBSCRIPTION__UPGRADE_TO_PRO"
+          (onAction)="enable()"
         >
-          Upgrade to Pro
-        </button>
+          <span i18n="@@PRO_SUBSCRIPTION__UPGRADE_TO_PRO">Upgrade to Pro</span>
+        </m-button>
         <div class="m-proSubscriptionButton__notice" *ngIf="active">
           <span
             i18n="@@PRO_SUBSCRIPTION__DISABLED_BECAUSE_CANCELLED"
@@ -79,16 +78,15 @@
           </ng-container>
         </div>
       </div>
-      <button
-        class="mf-button mf-button--alt"
-        *ngIf="session.getLoggedInUser() && !active"
-        [routerLink]="[
-          '/pro/' + session.getLoggedInUser().username + '/settings'
-        ]"
-        i18n="@@PRO_SUBSCRIPTION__TRY_PRO"
-      >
-        Try Pro
-      </button>
+      <m-button color="blue" *ngIf="session.getLoggedInUser() && !active">
+        <a
+          [routerLink]="[
+            '/pro/' + session.getLoggedInUser().username + '/settings'
+          ]"
+          i18n="@@PRO_SUBSCRIPTION__TRY_PRO"
+          >Try Pro</a
+        >
+      </m-button>
     </div>
   </div>
 </ng-container>

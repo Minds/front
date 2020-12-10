@@ -2,37 +2,37 @@
 
 :host {
   .m-discovery__tagButton {
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
+    // width: 27px;
+    // height: 27px;
+    // border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    // transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
-    @include m-theme() {
-      border: 1px solid themed($m-borderColor--primary);
-      background-color: themed($m-bgColor--primary);
-    }
+    // @include m-theme() {
+    //   border: 1px solid themed($m-borderColor--primary);
+    //   background-color: themed($m-bgColor--primary);
+    // }
 
-    &:hover {
-      cursor: pointer;
-      @include m-theme() {
-        border: 1px solid themed($m-textColor--secondary);
-      }
-    }
+    // &:hover {
+    //   cursor: pointer;
+    //   @include m-theme() {
+    //     border: 1px solid themed($m-textColor--secondary);
+    //   }
+    // }
 
     i {
       font-size: 17px;
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
+      // @include m-theme() {
+      //   color: themed($m-textColor--primary);
+      // }
     }
-    &.m-discovery__tagButton--selected {
-      @include m-theme() {
-        border: 1px solid themed($m-link);
-      }
-    }
+    // &.m-discovery__tagButton--selected {
+    //   @include m-theme() {
+    //     border: 1px solid themed($m-link);
+    //   }
+    // }
   }
 }

@@ -22,6 +22,7 @@ import { DebugElement } from '@angular/core';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('HelpdeskDashboardComponent', () => {
   let comp: HelpdeskDashboardComponent;
@@ -37,6 +38,7 @@ describe('HelpdeskDashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         HelpdeskDashboardComponent,
+        ButtonComponent,
         MockComponent({
           selector: 'm-helpdesk--dashboard--all',
         }),

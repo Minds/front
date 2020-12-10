@@ -15,7 +15,7 @@ context('Plus Product Page', () => {
     cy.preserveCookies();
   });
 
-  const upgradeButton = 'm-plus--subscription .mf-button';
+  const upgradeButton = 'm-plus--subscription m-button';
   const wirePaymentsComponent = '.m-wireCreator';
 
   it('should automatically open the register modal if not logged in', () => {
@@ -36,5 +36,5 @@ context('Plus Product Page', () => {
     cy.get(wirePaymentsComponent).should('be.visible');
     cy.deleteUser(user.username, user.password)
   });
-  
+
 });

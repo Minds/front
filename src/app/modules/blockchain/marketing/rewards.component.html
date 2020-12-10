@@ -35,13 +35,13 @@
         </p>
 
         <div class="">
-          <button
-            class="mf-button mf-button--alt"
-            (click)="action(); $event.preventDefault()"
+          <m-button
+            color="blue"
+            (onAction)="action(); $event.preventDefault()"
             i18n="@@COMMON__JOIN_REWARDS"
           >
             Join Rewards
-          </button>
+          </m-button>
         </div>
       </div>
 
@@ -207,14 +207,15 @@
           </p>
 
           <div class="m-marketing__actionButtons">
-            <a
-              class="mf-button mf-button--smaller mf-button--hollow-mono"
-              href="https://gitlab.com/minds"
-              target="_blank"
-              i18n="@@COMMON__VIEW_SOURCECODE"
+            <m-button size="small">
+              <a
+                href="https://gitlab.com/minds"
+                target="_blank"
+                i18n="@@COMMON__VIEW_SOURCECODE"
+              >
+                View Sourcecode
+              </a></m-button
             >
-              View Sourcecode
-            </a>
           </div>
         </div>
         <div
@@ -316,13 +317,13 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button
-            class="mf-button mf-button--alt"
-            (click)="scrollToTop()"
+          <m-button
+            color="blue"
+            (onAction)="scrollToTop()"
             i18n="@@COMMON__JOIN_REWARDS"
           >
             Join Rewards
-          </button>
+          </m-button>
         </div>
       </div>
     </div>

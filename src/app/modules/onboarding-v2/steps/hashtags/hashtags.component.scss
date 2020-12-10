@@ -36,7 +36,7 @@ m-onboarding__hashtagsStep {
       &.m-hashtagsList__item--selected {
         span {
           @include m-theme() {
-            color: themed($m-aqua);
+            color: themed($m-blue);
           }
         }
 
