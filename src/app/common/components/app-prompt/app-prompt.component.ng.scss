@@ -17,7 +17,7 @@
     font-size: 17px;
     font-weight: 500;
     cursor: pointer;
-    opacity: 85%;
+    opacity: 0.8;
 
     @include m-theme() {
       background-color: themed($m-black);
