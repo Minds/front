@@ -30,10 +30,10 @@ export class AppPromptService implements OnDestroy {
   private subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
-    // if (this.hasAvailableApp()) {
-    //   this.setPlatform();
-    //   this.open();
-    // }
+    if (this.hasAvailableApp()) {
+      this.setPlatform();
+      this.open();
+    }
   }
 
   /**
@@ -85,12 +85,13 @@ export class AppPromptService implements OnDestroy {
    */
   public hasAvailableApp(): boolean {
     console.log('checking if has app'); //TODO: Diagnostics - remove
-    if (isPlatformBrowser(this.platformId)) {
-      console.log('this.platformId.toString()', this.platformId.toString()); //TODO: Diagnostics - remove
-      console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
-      console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
-      return isMobileOrTablet();
+    if (!isPlatformBrowser(this.platformId)) {
+      return false;
     }
+    console.log('this.platformId.toString()', this.platformId.toString()); //TODO: Diagnostics - remove
+    console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
+    console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
+    return isMobileOrTablet();
   }
 
   /**
@@ -100,16 +101,17 @@ export class AppPromptService implements OnDestroy {
   public setPlatform(): void {
     console.log('ua ' + navigator.userAgent);
     console.log('setting platform...'); //TODO: Diagnostics - remove
-    if (isPlatformBrowser(this.platformId)) {
-      if (/iPad|iPhone|iPod/i.test(navigator.userAgent)) {
-        console.log('>>>>>>.is iOS'); //TODO: Diagnostics - remove
-        this.platform$.next('iphone');
-        return;
-      }
-      if (/android/i.test(navigator.userAgent)) {
-        console.log('>>>>>>is android'); //TODO: Diagnostics - remove
-        this.platform$.next('android');
-      }
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    if (/iPad|iPhone|iPod/i.test(navigator.userAgent)) {
+      console.log('>>>>>>.is iOS'); //TODO: Diagnostics - remove
+      this.platform$.next('iphone');
+      return;
+    }
+    if (/android/i.test(navigator.userAgent)) {
+      console.log('>>>>>>is android'); //TODO: Diagnostics - remove
+      this.platform$.next('android');
     }
   }
 
