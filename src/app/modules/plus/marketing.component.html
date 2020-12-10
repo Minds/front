@@ -252,13 +252,11 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button
-            class="mf-button mf-button--alt"
-            (click)="scrollToTop()"
-            i18n="@@MARKETING_PLUS__UPGRADE_TO_PLUS"
-          >
-            Upgrade to Minds+
-          </button>
+          <m-button color="blue" (onAction)="scrollToTop()">
+            <span i18n="@@MARKETING_PLUS__UPGRADE_TO_PLUS"
+              >Upgrade to Minds+</span
+            >
+          </m-button>
         </div>
       </div>
     </div>

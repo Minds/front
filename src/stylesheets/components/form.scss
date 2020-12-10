@@ -14,10 +14,10 @@
     justify-content: flex-end;
     align-items: center;
 
-    m-shadowboxSubmitButton {
+    m-button {
       margin-top: 8px;
       margin: 8px 0 0 18px;
-      .m-shadowboxSubmitButton {
+      .m-button {
         min-height: 42px;
         width: 100%;
       }
@@ -670,7 +670,7 @@
     @media screen and (max-width: $max-mobile) {
       width: 100%;
     }
-    m-shadowboxSubmitButton {
+    m-button {
       margin: 8px 0 0 18px;
       &:first-child {
         margin-left: 0px;
@@ -679,7 +679,7 @@
       @media screen and (max-width: $max-mobile) {
         width: 100%;
         margin: 8px 0 0 0;
-        .m-shadowboxSubmitButton {
+        .m-button {
           width: 100%;
         }
       }

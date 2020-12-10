@@ -33,14 +33,22 @@
     }
     &.isPlus {
       @include m-theme() {
-        background-color: themed($m-aqua);
+        background-color: themed($m-bgColor--primary) !important;
+        color: themed($m-textColor--primary) !important;
+        border: 1px solid (themed($m-link));
+        box-shadow: none !important;
+      }
+      > .m-paywallBadge__tierName {
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
       }
     }
 
     > .m-paywallBadge__tierName {
       font-weight: 500;
       @include m-theme() {
-        color: themed($m-white-always);
+        color: themed($m-textColor--primary) !important;
       }
       margin-right: 0;
     }

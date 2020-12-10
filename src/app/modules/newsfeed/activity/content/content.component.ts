@@ -9,10 +9,11 @@ import {
   ViewChild,
   HostBinding,
   Injector,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import {
   ACTIVITY_COMMENTS_MORE_HEIGHT,
   ACTIVITY_COMMENTS_POSTER_HEIGHT,
@@ -22,6 +23,7 @@ import {
   ACTIVITY_OWNERBLOCK_HEIGHT,
   ACTIVITY_TOOLBAR_HEIGHT,
   ACTIVITY_GRID_LAYOUT_MAX_HEIGHT,
+  ACTIVITY_SHORT_STATUS_MAX_LENGTH,
   ActivityEntity,
   ActivityService,
 } from '../activity.service';
@@ -87,6 +89,9 @@ export class ActivityContentComponent
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
 
+  @ViewChild('imageEl', { read: ElementRef })
+  imageEl: ElementRef;
+
   @ViewChild('messageEl', { read: ElementRef })
   messageEl: ElementRef;
 
@@ -100,6 +105,8 @@ export class ActivityContentComponent
   activityHeight: number;
   remindWidth: number;
   remindHeight: number;
+  videoHeight: string;
+  imageHeight: string;
 
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
@@ -127,7 +134,8 @@ export class ActivityContentComponent
     configs: ConfigsService,
     private features: FeaturesService,
     private injector: Injector,
-    private activityModalCreator: ActivityModalCreatorService
+    private activityModalCreator: ActivityModalCreatorService,
+    private cd: ChangeDetectorRef
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -137,7 +145,12 @@ export class ActivityContentComponent
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+
         this.calculateFixedContentHeight();
+        setTimeout(() => {
+          this.calculateVideoHeight();
+          this.calculateImageHeight();
+        });
         this.isPaywalledStatusPost =
           this.showPaywallBadge && entity.content_type === 'status';
         if (
@@ -188,10 +201,14 @@ export class ActivityContentComponent
   }
 
   ngAfterViewInit() {
-    // Run after view initialized
+    // Run after view initialized (as modal uses the same component this doesnt get called)
     timer(0)
       .toPromise()
-      .then(() => this.calculateRemindHeight());
+      .then(() => {
+        this.calculateRemindHeight();
+        this.calculateVideoHeight();
+        this.calculateImageHeight();
+      });
   }
 
   ngOnDestroy() {
@@ -213,14 +230,23 @@ export class ActivityContentComponent
     if (
       this.entity.perma_url &&
       (!this.entity.message || this.entity.title === this.entity.message)
-    )
+    ) {
       return '';
+    }
 
     return this.entity.message || this.entity.title;
   }
 
   get isRichEmbed(): boolean {
     return !!this.entity.perma_url && !this.isVideo && !this.isImage;
+  }
+
+  get isQuote(): boolean {
+    return this.entity.content_type && this.entity.content_type === 'quote';
+  }
+
+  get isBlog(): boolean {
+    return this.entity.content_type === 'blog';
   }
 
   get mediaTitle(): string {
@@ -273,30 +299,6 @@ export class ActivityContentComponent
     return ''; // TODO: placeholder
   }
 
-  get imageHeight(): string {
-    if (this.service.displayOptions.fixedHeight) return null;
-    if (this.entity.custom_type !== 'batch') return null;
-    const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
-    const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
-
-    if (!originalHeight || !originalWidth) {
-      if (this.isModal) {
-        return `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
-      } else {
-        return null;
-      }
-    }
-
-    if (this.isModal && originalHeight) {
-      return `${originalHeight}px`;
-    }
-
-    const ratio = originalHeight / originalWidth;
-
-    const height = this.el.nativeElement.clientWidth * ratio;
-    return `${height}px`;
-  }
-
   get imageGuid(): string {
     return this.entity.entity_guid;
   }
@@ -310,29 +312,13 @@ export class ActivityContentComponent
     );
   }
 
-  get videoHeight(): string {
-    if (!this.mediaEl) return '';
-    let aspectRatio = 16 / 9;
-    if (
-      this.entity.custom_data &&
-      this.entity.custom_data.height &&
-      this.entity.custom_data.height !== '0'
-    ) {
-      aspectRatio =
-        parseInt(this.entity.custom_data.width, 10) /
-        parseInt(this.entity.custom_data.height, 10);
-    }
-    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
-    return `${height}px`;
-  }
-
   get mediaHeight(): number | null {
     if (this.isImage) {
       const imageHeight = this.imageHeight || '410px';
       return parseInt(imageHeight.slice(0, -2), 10);
     }
     if (this.isVideo) {
-      return parseInt(this.videoHeight.slice(0, -2), 10);
+      return this.videoHeight ? parseInt(this.videoHeight.slice(0, -2), 10) : 0;
     }
     if (this.isRichEmbed) {
       return 400;
@@ -390,6 +376,99 @@ export class ActivityContentComponent
     //this.remindWidth = this.remindHeight * ACTIVITY_FIXED_HEIGHT_RATIO;
   }
 
+  /**
+   * Calculates the video height after the video has loaded in
+   */
+  calculateVideoHeight(): void {
+    if (!this.mediaEl) {
+      return;
+    }
+    let aspectRatio = 16 / 9;
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data.height &&
+      this.entity.custom_data.height !== '0'
+    ) {
+      aspectRatio =
+        parseInt(this.entity.custom_data.width, 10) /
+        parseInt(this.entity.custom_data.height, 10);
+    }
+    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
+    this.videoHeight = `${height}px`;
+
+    this.detectChanges();
+  }
+
+  /**
+   * Calculates the image height
+   */
+  calculateImageHeight(): void {
+    if (!this.imageEl) {
+      return;
+    }
+    if (
+      this.service.displayOptions.fixedHeight ||
+      this.entity.custom_type !== 'batch'
+    ) {
+      this.imageHeight = null;
+    }
+
+    if (
+      this.entity.custom_data &&
+      this.entity.custom_data[0] &&
+      this.entity.custom_data[0].height &&
+      this.entity.custom_data[0].height !== '0'
+    ) {
+      const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
+      const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
+
+      if (this.isModal) {
+        this.imageHeight =
+          originalHeight > 0
+            ? `${originalHeight}px`
+            : `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else {
+        const ratio = originalHeight / originalWidth;
+
+        const height = this.el.nativeElement.clientWidth * ratio;
+        this.imageHeight = `${height}px`;
+      }
+    } else {
+      // No custom dimensions data
+      if (this.isModal) {
+        this.imageHeight = `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
+      } else {
+        this.imageHeight = null;
+      }
+    }
+
+    this.detectChanges();
+  }
+
+  /**
+   * Open the activity in the modal when you click on
+   * its message or description
+   */
+  onMessageClick(event): void {
+    if (this.isModal) {
+      return;
+    }
+
+    /**
+     * Don't open modal if click on link or readmore
+     */
+    if (event.target instanceof HTMLAnchorElement) {
+      return;
+    } else if (
+      event.target.classList.contains('m-readMoreButton--v2') ||
+      event.target.classList.contains('m-readMoreButtonV2__text')
+    ) {
+      return;
+    } else {
+      this.onModalRequested(event);
+    }
+  }
+
   onModalRequested(event: MouseEvent) {
     if (!this.overlayModal.canOpenInModal() || this.isModal) {
       return;
@@ -409,15 +488,20 @@ export class ActivityContentComponent
       return;
     }
 
+    // Don't open modal for minds links
     if (
       this.entity.perma_url &&
       this.entity.perma_url.indexOf(this.siteUrl) === 0
     ) {
       this.redirectService.redirect(this.entity.perma_url);
-      return; // Don't open modal for minds links
+      return;
     }
 
     this.activityModalCreator.create(this.entity, this.injector);
+  }
+
+  onTranslate(e: Event): void {
+    this.service.displayOptions.showTranslation === false;
   }
 
   onImageError(e: Event): void {}
@@ -429,6 +513,7 @@ export class ActivityContentComponent
       const maxMessageHeight = this.service.displayOptions.fixedHeight
         ? 130
         : 320;
+
       return this.isTextOnly ? this.maxFixedHeightContent : maxMessageHeight;
     }
   }
@@ -436,8 +521,23 @@ export class ActivityContentComponent
   get maxDescHeight(): number {
     if (this.service.displayOptions.minimalMode) {
       return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
-    } else {
-      return this.service.displayOptions.fixedHeight ? 80 : 320;
+    } else if (this.service.displayOptions.fixedHeight) {
+      return 80;
+    } else if (this.isModal) {
+      return 115;
     }
+    return 320;
+  }
+
+  get shortStatus(): boolean {
+    return (
+      this.entity.content_type === 'status' &&
+      this.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
+    );
+  }
+
+  detectChanges(): void {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

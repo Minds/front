@@ -257,13 +257,14 @@
   </div>
 
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
+      color="blue"
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@EMAIL_NOTIFICATIONS__UPDATE_PREFERENCES"
     >
       Update Preferences
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </div>

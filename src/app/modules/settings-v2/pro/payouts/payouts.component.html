@@ -76,13 +76,14 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
+      color="blue"
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@PAYOUT_SETTINGS__SAVE_PAYOUT_CURRENCY"
     >
       Save Payout Currency
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

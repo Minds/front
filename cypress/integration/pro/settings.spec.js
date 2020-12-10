@@ -333,7 +333,7 @@ context('Pro Settings', () => {
 
     function save() {
       //save and await response
-      cy.get('.m-shadowboxSubmitButton')
+      cy.get('.m-button')
         .contains('Save')
         .click({ force: true })
         .wait('@settings')

@@ -4,7 +4,6 @@ import { BoostConsoleType } from '../console.component';
 
 import { BoostService } from '../../boost.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { ModalPosterComponent } from '../../../newsfeed/poster/poster-modal.component';
 
 @Component({
   moduleId: module.id,
@@ -40,18 +39,6 @@ export class BoostConsoleNetworkListComponent {
   ngOnInit() {
     this.load(true);
     this.initialized = true;
-  }
-
-  showPoster() {
-    const creator = this.overlayModal.create(
-      ModalPosterComponent,
-      {},
-      {
-        class:
-          'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium m-overlay-modal--overflow',
-      }
-    );
-    creator.present();
   }
 
   load(refresh?: boolean) {

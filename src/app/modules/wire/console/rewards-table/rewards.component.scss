@@ -1,7 +1,0 @@
-m-wire-console-rewards--container {
-  .m-wire-console--rewards {
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-    }
-  }
-}

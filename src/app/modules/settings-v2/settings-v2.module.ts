@@ -26,7 +26,6 @@ import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-cont
 import { SettingsV2ShareButtonsComponent } from './account/share-buttons/share-buttons.component';
 import { MindsFormsModule } from '../forms/forms.module';
 import { SettingsV2Service } from './settings-v2.service';
-import { SettingsModule } from '../settings/settings.module';
 import { SettingsV2PaymentMethodsComponent } from './billing/payment-methods/payment-methods.component';
 import { SettingsV2RecurringPaymentsComponent } from './billing/recurring-payments/recurring-payments.component';
 import { SettingsV2ReportedContentComponent } from './other/reported-content/reported-content.component';
@@ -60,6 +59,8 @@ import { SettingsV2I18nHack } from './settings-i18n-hack.component';
 import { SettingsV2HeaderComponent } from './settings-header.component';
 import { SettingsV2BoostedContentComponent } from './account/boosted-content/boosted-content.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { SettingsTwoFactorComponent } from '../settings/two-factor/two-factor.component';
+import { SettingsReportedContentComponent } from '../settings/reported-content/reported-content.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -454,7 +455,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     PaymentsModule,
     WireModule,
     MindsFormsModule,
-    SettingsModule,
     // WalletV2Module,
     ProModule,
     YoutubeMigrationModule,
@@ -493,6 +493,10 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
     SettingsV2BoostedContentComponent,
+
+    // These need moving to settings folder
+    SettingsTwoFactorComponent,
+    SettingsReportedContentComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

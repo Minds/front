@@ -10,7 +10,10 @@
   </ul>
 </ng-template>
 
-<m-composerTitleBar__dropdown [anchorPosition]="{ top: 0, right: 0 }">
+<m-composerTitleBar__dropdown
+  displayAsButton="true"
+  [anchorPosition]="{ top: 0, right: 0 }"
+>
   <li>
     <m-dropdownMenu
       [menu]="nsfwMenu"

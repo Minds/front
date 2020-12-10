@@ -35,23 +35,8 @@ m-activity__nsfwConsent {
   }
 
   .m-activityNsfwConsent__button {
+    display: block;
     margin: 38px 0 50px 0;
-    padding: 12px 16px;
-    font-size: 16px;
-    border-radius: $m-borderRadius;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-      color: themed($m-textColor--primary);
-      border: 1px solid themed($m-borderColor--primary);
-    }
-    &:hover {
-      @include m-theme() {
-        border: 1px solid themed($m-borderColor--primary);
-      }
-    }
   }
 }
 .m-activity--fixedHeight {

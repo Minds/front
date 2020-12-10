@@ -53,12 +53,12 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
-import { MindsButton } from './components/button/button.component';
+import { MindsButton } from './components/button-v1/button-v1.component';
 import { OverlayModalComponent } from './components/overlay-modal/overlay-modal.component';
 
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
-import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
+import { AdminActionsButtonComponent } from './components/button-v1/admin-actions/admin-actions.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
@@ -118,7 +118,7 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
-import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
+import { ButtonComponent } from './components/button/button.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
@@ -148,7 +148,6 @@ import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component'
 import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { IconComponent } from './components/icon/icon.component';
-import { ButtonComponent } from './components/button-v2/button.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { AttachmentApiService } from './api/attachment-api.service';
 import { ApiService } from './api/api.service';
@@ -163,12 +162,10 @@ import {
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 import { SidebarNavigationSubnavDirective } from './layout/sidebar/subnav.directive';
-import { OnboardingReminderComponent } from './components/onboarding-reminder/reminder.component';
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
-import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
 import { ClientMetaDirective } from './directives/client-meta.directive';
@@ -299,11 +296,10 @@ const routes: Routes = [
     DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
-    ShadowboxSubmitButtonComponent,
+    ButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -313,7 +309,6 @@ const routes: Routes = [
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,
-    ButtonComponent,
     OverlayComponent,
     DropdownMenuComponent,
     CalendarComponent,
@@ -432,12 +427,11 @@ const routes: Routes = [
     DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
-    ShadowboxSubmitButtonComponent,
+    ButtonComponent,
     ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -447,7 +441,6 @@ const routes: Routes = [
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,
-    ButtonComponent,
     OverlayComponent,
     DropdownMenuComponent,
     CalendarComponent,

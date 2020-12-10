@@ -1,7 +1,19 @@
 .m-mindsList__tools {
+  display: flex;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 16px;
+  flex-direction: row;
+  align-items: center;
+  z-index: 3;
   .m-group--sorted__SortSelector {
     margin-left: auto;
   }
+}
+
+.mindsListTools__scheduled {
+  align-items: center;
+  display: flex;
 }
 
 m-group-profile-feed__sorted m-activity {

@@ -28,7 +28,7 @@ export class TabStorageGuard implements CanActivate {
       )
       .subscribe((event: any) => {
         const url = event.snapshot['_routerState'].url;
-        const splitUrl = url.split('/wallet/canary')[1];
+        const splitUrl = url.split('/wallet')[1];
         if (splitUrl) {
           this.tabHistory.lastTab = splitUrl;
         }

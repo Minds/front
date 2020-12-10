@@ -10,7 +10,6 @@ import {
   Input,
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
-import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
 import {
   ComposerService,
   RemindSubjectValue,
@@ -223,7 +222,7 @@ export class BaseComponent implements AfterViewInit {
    * Post intent
    * @param event
    */
-  async onPost(event: ButtonComponentAction) {
+  async onPost(event) {
     if (!(await this.meetsPlusPostRequirements())) {
       return;
     }

@@ -8,11 +8,7 @@
   @include m-theme() {
     color: themed($m-textColor--primary);
     border-top: 1px solid themed($m-borderColor--primary);
-    background: linear-gradient(
-      180deg,
-      themed($m-marketing-bg-gradient-start) 0%,
-      themed($m-white) 100%
-    );
+    background-color: themed($m-bgColor--primary);
   }
   .m-marketing__footer {
     padding-bottom: 10px;
@@ -172,7 +168,7 @@
       line-height: 26px;
 
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
 
@@ -185,7 +181,7 @@
         @extend .m-marketingFooter__text;
 
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--secondary);
         }
 
         @media screen and (max-width: $min-tablet) {
@@ -200,7 +196,7 @@
 
           &:hover {
             @include m-theme() {
-              color: themed($m-textColor--secondary);
+              color: themed($m-textColor--primary);
             }
           }
         }

@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { ExcerptPipe } from '../../../common/pipes/excerpt';
-import { SafeToggleComponentMock } from '../../legacy/components/cards/activity/activity.component.spec';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlogTileComponent } from './tile.component';
 import { Session } from '../../../services/session';
@@ -20,7 +19,7 @@ describe('BlogTileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ExcerptPipe, SafeToggleComponentMock, BlogTileComponent],
+      declarations: [ExcerptPipe, BlogTileComponent],
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,

@@ -11,7 +11,7 @@ context('Pro Product Page', () => {
     cy.preserveCookies();
   });
 
-  const contactUsButton = '.m-marketing__mainWrapper .mf-button';
+  const contactUsButton = '.m-marketing__mainWrapper m-button';
 
   it('should have a contact us button', () => {
     cy.visit('/nodes', {

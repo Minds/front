@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutModule } from '../checkout/checkout.module';
-import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-networks.module';
 import { AdsModule } from '../ads/ads.module';
 
 import { BoostCreatorComponent } from './creator/creator.component';
@@ -22,11 +21,6 @@ import { BoostConsoleP2PListComponent } from './console/list/p2p.component';
 import { BoostConsoleCard } from './console/card/card.component';
 import { BoostConsoleBooster } from './console/booster/booster.component';
 import { BoostMarketingComponent } from './marketing.component';
-import { BoostPublisherComponent } from './publisher/publisher.component';
-import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.component';
-import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
-import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
-import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
 import { MarketingModule } from '../marketing/marketing.module';
 
 const boostRoutes: Routes = [
@@ -35,17 +29,6 @@ const boostRoutes: Routes = [
     component: BoostConsoleComponent,
     children: [
       { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
-      {
-        path: 'publisher',
-        component: BoostPublisherComponent,
-        children: [
-          { path: '', redirectTo: 'earnings', pathMatch: 'full' },
-          { path: 'earnings', component: BoostPublisherEarningsComponent },
-          { path: 'payouts', component: BoostPublisherPayoutsComponent },
-          { path: 'settings', component: BoostPublisherSettingsComponent },
-        ],
-      },
-      { path: 'publisher/:filter', component: BoostPublisherComponent },
       {
         path: ':type',
         component: BoostConsoleTypesComponent,
@@ -77,13 +60,11 @@ const boostRoutes: Routes = [
     RouterModule.forChild(boostRoutes),
     CommonModule,
     CheckoutModule,
-    ThirdPartyNetworksModule,
     AdsModule,
     MarketingModule,
   ],
   declarations: [
     BoostCreatorComponent,
-    BoostPublisherComponent,
     BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
@@ -96,10 +77,6 @@ const boostRoutes: Routes = [
     BoostCreatorCategoriesComponent,
     BoostConsoleTypesComponent,
     BoostConsoleHistoryComponent,
-    BoostPublisherEarningsComponent,
-    BoostPublisherPayoutsComponent,
-    BoostPublisherSettingsComponent,
-    BoostPublisherLedgerComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,

@@ -30,26 +30,17 @@
       You can not purchase more than $40 worth of ETH
     </p>
 
-    <button
-      class="m-btn m-btn--slim m-btn--action"
-      (click)="buy()"
-      *ngIf="hasMetamask"
-    >
+    <m-button (onAction)="buy()" *ngIf="hasMetamask" color="blue">
       Buy with SendWyre
-    </button>
+    </m-button>
 
-    <a
-      href="https://metamask.io/"
-      target="_blank"
-      *ngIf="!hasMetamask && !isMobile()"
+    <m-button *ngIf="!hasMetamask && !isMobile()" color="blue">
+      <a href="https://metamask.io/" target="_blank"
+        >Download Metamask</a
+      ></m-button
     >
-      <button class="m-btn m-btn--slim m-btn--action">Download Metamask</button>
-    </a>
-
-    <a *ngIf="!hasMetamask && isMobile()">
-      <button class="m-btn m-btn--slim">
-        Sorry, this feature is only available on desktop
-      </button>
-    </a>
+    <m-button *ngIf="!hasMetamask && isMobile()">
+      Sorry, this feature is only available on desktop
+    </m-button>
   </div>
 </m-modal>

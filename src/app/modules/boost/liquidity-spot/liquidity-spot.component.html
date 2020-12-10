@@ -1,0 +1,14 @@
+<ng-container *ngIf="entity$ | async as entity">
+  <minds-card
+    [object]="entity"
+    class="mdl-card m-border m-liquiditySpot__entity"
+  ></minds-card>
+
+  <div class="m-liquiditySpot__disclaimer">
+    <m-tooltip icon="info" anchor="bottom">
+      Minds Token liquidity providers are rewarded with boosted ad space
+      relative to their % of the liquidity pool.
+    </m-tooltip>
+    <span>Liquidity Provider Boost</span>
+  </div>
+</ng-container>

@@ -6,8 +6,6 @@ import { CommonModule } from '../../common/common.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { ModalsModule } from '../modals/modals.module';
 
-import { PayWall } from './paywall/paywall.component';
-import { PaywallCancelButton } from './paywall/paywall-cancel.component';
 import { PaymentsNewCard } from './new-card/new-card.component';
 import { PaymentsSelectCard } from './select-card/select-card.component';
 import { BTCService } from './btc/btc.service';
@@ -25,21 +23,13 @@ import { NewCardModalComponent } from './new-card-modal/new-card-modal.component
     ModalsModule,
   ],
   declarations: [
-    PayWall,
-    PaywallCancelButton,
     PaymentsNewCard,
     PaymentsSelectCard,
     BTCComponent,
     BTCSettingsComponent,
     NewCardModalComponent,
   ],
-  exports: [
-    PayWall,
-    PaywallCancelButton,
-    PaymentsNewCard,
-    PaymentsSelectCard,
-    NewCardModalComponent,
-  ],
+  exports: [PaymentsNewCard, PaymentsSelectCard, NewCardModalComponent],
   providers: [BTCService],
 })
 export class PaymentsModule {}

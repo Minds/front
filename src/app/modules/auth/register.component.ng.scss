@@ -23,7 +23,7 @@
     }
   }
 
-  ::ng-deep m-shadowboxSubmitButton {
+  ::ng-deep m-button {
     min-width: 0 !important;
     align-self: flex-end;
     @media screen and (max-width: $max-mobile) {
@@ -31,20 +31,9 @@
     }
     button {
       width: 195px;
-      height: 55px;
-      border-radius: 2px;
 
       @media screen and (max-width: $max-mobile) {
         width: 100%;
-      }
-      > div {
-        font-size: 18px;
-        @include m-theme() {
-          color: themed($m-white) !important;
-        }
-        @media screen and (max-width: $max-mobile) {
-          font-size: 15px;
-        }
       }
     }
   }
@@ -219,9 +208,6 @@
 
       button {
         align-self: flex-end;
-        @include m-theme() {
-          background-color: themed($m-aqua);
-        }
       }
     }
 

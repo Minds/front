@@ -1,6 +1,24 @@
 @import 'defaults.scss';
 
 :host {
+  .m-composerToolbar__action--post {
+    margin-top: -4px;
+    ::ng-deep .m-button__text--unsaved > * {
+      font-size: 15px !important;
+    }
+  }
+
+  .m-composerToolbarAction__disabledOverlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: auto;
+  }
+
   span.m-animation__shimmer--text,
   .m-animation__shimmer--icon {
     @include m-theme() {
@@ -12,10 +30,11 @@
         right top,
         from(themed($m-textColor--secondary)),
         to(themed($m-textColor--secondary)),
-        color-stop(0.3, themed($m-aqua)),
-        color-stop(0.6, #90edf3),
-        color-stop(0.8, themed($m-aqua))
+        color-stop(0.3, themed($m-link)),
+        color-stop(0.6, #4eb8ff),
+        color-stop(0.8, themed($m-link))
       );
+
       background-color: themed($m-textColor--secondary);
       background-size: 30px 150%;
       background-repeat: no-repeat;
@@ -91,9 +110,9 @@
         right top,
         from(themed($m-textColor--secondary)),
         to(themed($m-textColor--secondary)),
-        color-stop(0.3, themed($m-aqua)),
-        color-stop(0.6, #90edf3),
-        color-stop(0.8, themed($m-aqua))
+        color-stop(0.3, themed($m-link)),
+        color-stop(0.6, #4eb8ff),
+        color-stop(0.8, themed($m-link))
       );
       background-color: themed($m-textColor--secondary);
       background-size: 30px 150%;

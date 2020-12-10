@@ -212,28 +212,29 @@
 
     <div class="m-layout__spacer"></div>
 
-    <button
-      class="m-btn m-btn--action"
-      (click)="register($event)"
-      [disabled]="!this.form.valid || inProgress"
+    <m-button
+      color="blue"
+      (onAction)="register($event)"
+      [saving]="inProgress"
+      [disabled]="!this.form.valid"
       *ngIf="!showBigButton"
     >
       <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
         Signup
       </ng-container>
-    </button>
+    </m-button>
 
-    <m-shadowboxSubmitButton
+    <m-button
       *ngIf="showBigButton"
-      type="button"
       [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
       [saving]="inProgress"
-      (click)="register($event)"
+      color="blue"
+      (onAction)="register($event)"
     >
       <ng-container i18n="@@FORMS__REGISTER__JOIN_NOW_ACTION">
         Join Now
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: Register -->

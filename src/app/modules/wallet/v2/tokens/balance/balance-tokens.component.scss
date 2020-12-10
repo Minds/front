@@ -146,15 +146,15 @@ m-walletBalance--tokens {
     margin-top: 24px;
   }
 
-  m-shadowboxSubmitButton {
+  m-button {
     min-width: 105px;
-    button.m-shadowboxSubmitButton {
+    button.m-button {
       height: 35px;
       max-height: 35px;
       min-width: 105px;
       min-height: 0;
     }
-    .m-shadowboxSubmitButton__status--unsaved {
+    .m-button__status--unsaved {
       line-height: 15px;
     }
   }

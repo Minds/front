@@ -3,6 +3,7 @@ import { MockComponent, MockService } from '../../../../../utils/mock';
 import { PermawebTermsComponent } from './permaweb-terms.component';
 import { ComposerService } from '../../../services/composer.service';
 import { By } from '@angular/platform-browser';
+import { ButtonComponent } from '../../../../../common/components/button/button.component';
 
 describe('Permaweb Terms Component', () => {
   let comp: PermawebTermsComponent;
@@ -21,13 +22,7 @@ describe('Permaweb Terms Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        PermawebTermsComponent,
-        MockComponent({
-          selector: 'm-button',
-          outputs: ['onAction'],
-        }),
-      ],
+      declarations: [PermawebTermsComponent, ButtonComponent],
       providers: [
         {
           provide: ComposerService,

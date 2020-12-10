@@ -74,14 +74,14 @@
     </form>
   </div>
   <div class="m-composerPopup__action">
-    <m-shadowboxSubmitButton
+    <m-button
       [disabled]="!canSave"
       [saving]="inProgress"
       type="button"
-      (click)="save()"
+      (onAction)="save()"
       i18n="@@COMMON__SAVE"
     >
       Save
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </ng-container>

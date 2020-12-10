@@ -4,7 +4,6 @@ import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { NewsfeedHashtagSelectorService } from '../../newsfeed/services/newsfeed-hashtag-selector.service';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
 @Component({
@@ -30,7 +29,6 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
     private overlayModal: OverlayModalService,
     protected activityService: ActivityService
   ) {

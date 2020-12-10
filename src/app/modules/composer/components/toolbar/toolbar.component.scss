@@ -29,7 +29,7 @@
 
     &.m-composerToolbar__item--active {
       @include m-theme() {
-        color: themed($m-btn--primary);
+        color: themed($m-link);
       }
     }
 

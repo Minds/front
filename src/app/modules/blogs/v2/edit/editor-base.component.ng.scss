@@ -30,25 +30,8 @@
         @media screen and (max-width: $min-desktop) {
           // top: 20px;
         }
-
-        & > i,
-        ::ng-deep .m-blodEditor__optionMenuIcon,
-        ::ng-deep .m-composerTitleBar__menuButton {
-          font-size: 1.35em;
-          border-radius: 50%;
-          padding: 2px;
-          min-width: 25px;
-          min-height: 25px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        > * {
           margin-left: 10px;
-          cursor: pointer;
-
-          @include m-theme() {
-            background-color: themed($m-bgColor--primary);
-            color: themed($m-textColor--primary);
-          }
         }
       }
     }

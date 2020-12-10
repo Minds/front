@@ -51,23 +51,24 @@
         [mdl]
       ></div>
 
-      <button
-        class="m-btn m-btn--slim m-btn--action"
-        (click)="setup(password)"
-        [disabled]="inProgress"
+      <m-button
+        color="blue"
+        size="xsmall"
+        (onAction)="setup(password)"
+        [saving]="inProgress"
         *ngIf="password == password2 && password2"
         i18n="@@M__COMMON__CONFIRM"
       >
         Confirm
-      </button>
-      <button
+      </m-button>
+      <m-button
         *ngIf="skippable === true"
-        class="m-btn m-btn--slim"
-        (click)="next.next()"
+        size="xsmall"
+        (onAction)="next.next()"
         i18n="@@M__COMMON__SKIP_W_PERIOD"
       >
         Skip.
-      </button>
+      </m-button>
     </div>
   </div>
 </div>

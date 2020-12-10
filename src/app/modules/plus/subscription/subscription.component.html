@@ -55,10 +55,10 @@
     </div>
 
     <div class="m-plusSubscription__button">
-      <button
-        class="mf-button mf-button--alt"
+      <m-button
+        color="blue"
         [disabled]="upgradeButtonDisabled || inProgress || criticalError"
-        (click)="enable()"
+        (onAction)="enable()"
         i18n="@@PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS"
       >
         <ng-container *ngIf="!canHaveTrial; else startTrialTxt">
@@ -67,7 +67,7 @@
         <ng-template #startTrialTxt>
           Start free trial
         </ng-template>
-      </button>
+      </m-button>
       <div
         class="m-plusSubscriptionButton__notice"
         *ngIf="upgradeButtonDisabled"
@@ -90,14 +90,14 @@
 
   <ng-template #cancelButton>
     <div class="m-plusSubscription__button">
-      <button
-        class="mf-button mf-button--destructive"
+      <m-button
+        color="red"
         [disabled]="inProgress || criticalError"
-        (click)="disable()"
+        (onAction)="disable()"
         i18n="@@PLUS_SUBSCRIPTION__CANCEL_PLUS"
       >
         Cancel Minds+
-      </button>
+      </m-button>
     </div>
   </ng-template>
 </ng-container>

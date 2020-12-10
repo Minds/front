@@ -311,13 +311,14 @@
     "
   >
     <div class="m-boost--creator--submit">
-      <button
-        class="m-boost--creator-button"
-        (click)="next()"
+      <m-button
+        class="m-boost--creator-button-next"
+        (onAction)="next()"
         i18n="verb|@@M__ACTION__BOOST_NEXT"
+        color="blue"
       >
         Next
-      </button>
+      </m-button>
     </div>
   </section>
 
@@ -331,23 +332,25 @@
     "
   >
     <div class="m-boost--creator--submit">
-      <button
-        class="m-boost--creator-button m-boost--creator-button-back"
-        (click)="back()"
+      <m-button
+        class="m-boost--creator-button--back"
+        (onAction)="back()"
         i18n="verb|@@M__ACTION__BOOST_BACK"
         *ngIf="boost.currency === 'usd' || boost.currency === 'creditcard'"
       >
         Back
-      </button>
+      </m-button>
 
-      <button
-        class="m-boost--creator-button m-boost--creator-button--submit"
-        [disabled]="!canSubmit() || inProgress || success || criticalError"
-        (click)="submit()"
+      <m-button
+        class="m-boost--creator-button--submit m-boost--creator-button--boost"
+        [disabled]="!canSubmit() || success || criticalError"
+        [saving]="inProgress"
+        (onAction)="submit()"
         i18n="verb|@@M__ACTION__BOOST"
+        color="blue"
       >
         Boost
-      </button>
+      </m-button>
 
       <div
         *ngIf="inProgress"

@@ -85,13 +85,14 @@
       </div>
     </div>
   </div>
-  <m-shadowboxSubmitButton
+  <m-button
     [disabled]="inProgress"
     [saving]="inProgress"
-    (click)="onSubmit()"
+    color="blue"
+    (onAction)="onSubmit()"
   >
     {{ !confirming ? 'Send Verification' : 'Verify Code' }}
-  </m-shadowboxSubmitButton>
+  </m-button>
 </form>
 
 <div class="m-walletModal__footnote" *ngIf="confirming">

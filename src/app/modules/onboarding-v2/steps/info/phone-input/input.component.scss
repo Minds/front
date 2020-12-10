@@ -1,4 +1,4 @@
-m-onboarding__phoneverification {
+m-onboarding__phoneVerification {
   m-phoneInput {
     .m-phoneInput__countryList {
       top: 38px;
@@ -6,6 +6,20 @@ m-onboarding__phoneverification {
     .m-phoneInput__input {
       padding-top: 0;
       padding-bottom: 0;
+    }
+  }
+  .m-onboarding__input {
+    align-items: center;
+  }
+  m-button {
+    height: 36px;
+    width: 36px;
+    flex-shrink: 2;
+    &:first-child {
+      margin-left: 5px;
+    }
+    &:last-child {
+      margin-right: 0px;
     }
   }
 }

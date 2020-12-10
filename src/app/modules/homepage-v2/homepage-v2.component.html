@@ -36,23 +36,23 @@
         </p>
 
         <ng-container *mIfFeature="'!onboarding-october-2020'">
-          <button
+          <m-button
             class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
             (click)="register()"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
           >
             Join Minds Now
-          </button>
+          </m-button>
         </ng-container>
         <ng-container *mIfFeature="'onboarding-october-2020'">
-          <button
+          <m-button
             class="m-homepage__joinButton--blueOutline"
             (click)="register()"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
             data-cy="data-minds-homepage-join-button-main"
           >
             Join Minds Now
-          </button>
+          </m-button>
         </ng-container>
 
         <div class="m-homepage__appButtons">
@@ -268,6 +268,7 @@
           </h3>
 
           <div class="m-marketing__actionButtons">
+            <<<<<<< HEAD
             <ng-container *mIfFeature="'!onboarding-october-2020'">
               1
               <button
@@ -287,6 +288,15 @@
                 Join Minds Now
               </button>
             </ng-container>
+            =======
+            <m-button
+              class="m-homepage__joinButton"
+              (onAction)="navigate()"
+              i18n
+            >
+              Join Minds Now
+            </m-button>
+            >>>>>>> 03fdfdb89f50d87406bdb56decff0bb32baddde6
           </div>
         </div>
       </div>

@@ -30,30 +30,18 @@
       </div>
 
       <div class="m-payout-cta" *ngIf="reviewing !== i">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-          (click)="review(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="blue" (onAction)="review(i)" [saving]="inProgress">
           Review
-        </button>
+        </m-button>
       </div>
       <div class="m-payout-cta" *ngIf="reviewing === i">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
-          (click)="pay(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="blue" (onAction)="pay(i)" [saving]="inProgress">
           Pay
-        </button>
+        </m-button>
 
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-          (click)="review(null)"
-          [disabled]="inProgress"
-        >
+        <m-button (onAction)="review(null)" [saving]="inProgress">
           Cancel
-        </button>
+        </m-button>
       </div>
     </div>
   </div>

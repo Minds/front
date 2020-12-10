@@ -6,13 +6,13 @@
 body.m-theme__light,
 body .m-theme--wrapper.m-theme--wrapper__light {
   color: rgba(0, 0, 0, 0.87);
-  background-color: #fff;
+  background-color: #fff; // $m-bgColor--primary (light)
 }
 
 body.m-theme__dark,
 body .m-theme--wrapper.m-theme--wrapper__dark {
   color: rgba(255, 255, 255, 0.87);
-  background-color: #080808;
+  background-color: #242a30; //$m-bgColor--primary (dark)
 }
 
 // 2020 theme overrides
@@ -299,4 +299,13 @@ body.m-theme-in-transition *:before,
 body.m-theme-in-transition *:after {
   transition: background-color 0.75s ease 0s, border-color 0.75s ease 0s,
     box-shadow 0.75s ease 0s, stroke 0.75s ease 0s, fill 0.75s ease 0s !important;
+}
+
+.m-disableScrollbars {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Chrome/Safari/Webkit */
+  }
 }

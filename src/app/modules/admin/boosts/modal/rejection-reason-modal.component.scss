@@ -1,7 +1,7 @@
 m--rejection-reason-modal {
   m-modal {
     @include m-theme() {
-      color: themed($m-blue-grey-700);
+      color: themed($m-textColor--primary);
     }
 
     h5.m-modal-reasons--title {
@@ -30,14 +30,6 @@ m--rejection-reason-modal {
     }
     .m-modal-confirm-buttons {
       padding: 16px;
-      @include m-theme() {
-        color: themed($m-white);
-      }
-      button {
-        @include m-theme() {
-          color: themed($m-blue-grey-700);
-        }
-      }
     }
   }
 }

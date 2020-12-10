@@ -16,10 +16,8 @@ import { RecentService } from '../../../services/ux/recent';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
-import { GroupsProfileLegacyFeed } from './feed/legacy';
 import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
-import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { filter, map, startWith, throttle } from 'rxjs/operators';
@@ -62,10 +60,6 @@ export class GroupsProfile {
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
-
-  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector')
-  hashtagsSelector: HashtagsSelectorComponent;
 
   private reviewCountInterval: any;
   private socketSubscription: any;
@@ -366,8 +360,7 @@ export class GroupsProfile {
   }
 
   canDeactivate() {
-    if (!this.feed) return true;
-    return this.feed.canDeactivate();
+    return true;
   }
 
   joinCommentsSocketRoom(keepAlive: boolean = false) {

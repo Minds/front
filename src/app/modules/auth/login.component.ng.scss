@@ -132,33 +132,20 @@
           }
 
           ::ng-deep {
-            m-shadowboxsubmitbutton {
+            m-button {
               flex-shrink: 0;
             }
           }
 
-          button.mf-button {
+          button {
             width: 132px;
-            height: 60px;
           }
         }
       }
 
-      ::ng-deep m-shadowboxSubmitButton {
-        min-width: 0 !important;
+      ::ng-deep m-button {
         button {
           width: 132px;
-          height: 60px;
-          border-radius: 2px;
-          > div {
-            font-size: 18px;
-            @include m-theme() {
-              color: themed($m-white) !important;
-            }
-            @media screen and (max-width: $max-mobile) {
-              font-size: 15px;
-            }
-          }
         }
       }
     }
@@ -188,9 +175,6 @@
 
       button {
         align-self: flex-end;
-        @include m-theme() {
-          background-color: themed($m-aqua);
-        }
       }
     }
   }

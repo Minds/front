@@ -46,7 +46,7 @@ context('Upgrades page', () => {
 
     const tokensInput = 'm-blockchain--purchase input[name=amount]';
     const buyTokensButton =
-      'm-blockchain--purchase .m-blockchainTokenPurchase__action .mf-button';
+      'm-blockchain--purchase .m-blockchainTokenPurchase__action';
     const anyBuyTokensModal =
       'm-blockchain--purchase m-modal .m-modal-container';
 

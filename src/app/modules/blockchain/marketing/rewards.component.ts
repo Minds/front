@@ -41,7 +41,7 @@ export class BlockchainMarketingRewardsComponent {
   }
 
   action() {
-    this.router.navigate(['/wallet/canary/tokens/overview']);
+    this.router.navigate(['/wallet/tokens/overview']);
   }
 
   detectChanges() {

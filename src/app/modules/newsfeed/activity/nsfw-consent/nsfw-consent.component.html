@@ -7,12 +7,12 @@
   <h2 class="m-activityNsfwConsent__title">NSFW</h2>
   <h3 class="m-activityNsfwConsent__reasons">{{ reasonsLabel$ | async }}</h3>
 
-  <button
+  <m-button
     class="m-activityNsfwConsent__button"
-    (click)="onConsentedClick($event)"
+    (onAction)="onConsentedClick($event)"
   >
     I am over 18 years of age
-  </button>
+  </m-button>
 </div>
 
 <div class="m-activityContent__fixedHeightSpacer"></div>
