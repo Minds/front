@@ -87,14 +87,14 @@
   <!-- Dropdown template -->
   <ng-template #dropdown>
     <ul>
-      <li (click)="onHideClick('hide')" *ngIf="!hidden">
+      <li (click)="onHideClick('hide')" *ngIf="!collapsed">
         <span class="m-dropdownMenu__item">
           <span i18n="@@ONBOARDING_WIDGET__HIDE_THIS_PANEL"
             >Hide this panel</span
           >
         </span>
       </li>
-      <li (click)="onHideClick('show')" *ngIf="hidden">
+      <li (click)="onHideClick('show')" *ngIf="collapsed">
         <span class="m-dropdownMenu__item">
           <span i18n="@@ONBOARDING_WIDGET__SHOW_THIS_PANEL"
             >Show this panel</span
