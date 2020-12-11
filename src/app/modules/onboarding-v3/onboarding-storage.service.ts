@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
+
 /**
  * Possible onboarding key names as strings.
  */
@@ -14,7 +16,7 @@ export type OnboardingStorageKey =
   providedIn: 'root',
 })
 export class OnboardingV3StorageService {
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private session: Session) {}
 
   /**
    * Sets a new entry to mark completion or collapsing.
@@ -28,8 +30,9 @@ export class OnboardingV3StorageService {
         : 604800; // 1 week
 
     const expiryTimestamp = Date.now() + futureTime;
+    const value = `${expiryTimestamp}:${this.session.getLoggedInUser().guid}`;
 
-    this.storage.set(key, expiryTimestamp); // expires 3 days
+    this.storage.set(key, value); // expires 3 days
   }
 
   /**
@@ -42,13 +45,28 @@ export class OnboardingV3StorageService {
   }
 
   /**
-   * Determine whether a key has not expired.
+   * Determine whether a key has not expired or is invalid.
    * @param { OnboardingStorageKey } - key name.
    * @returns { boolean } - true if key has not expired.
    */
   public hasNotExpired(key: OnboardingStorageKey): boolean {
-    const storedExpiryTime: string = this.storage.get(key);
-    const parsedExpiryTime: number = parseInt(storedExpiryTime);
+    const value = this.storage.get(key);
+
+    // if no value, treat as expired.
+    if (!value) {
+      return false;
+    }
+
+    // destructuring split string array - userGuid:expiryTimestamp
+    const [userGuid, expiryTimestamp] = value.split(':');
+
+    // if this is a different user, expire.
+    if (userGuid !== this.session.getLoggedInUser().guid) {
+      this.destroy(key);
+      return false;
+    }
+
+    const parsedExpiryTime: number = parseInt(expiryTimestamp);
 
     // if time set and not malformed or null.
     if (!isNaN(parsedExpiryTime)) {

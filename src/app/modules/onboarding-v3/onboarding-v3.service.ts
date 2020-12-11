@@ -1,4 +1,4 @@
-import { Compiler, Injectable, Injector } from '@angular/core';
+import { Compiler, Injectable, Injector, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
@@ -10,14 +10,13 @@ import {
 } from '../../services/ux/stackable-modal.service';
 
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
-import { OnboardingV3StorageService } from './onboarding-storage.service';
 
 /**
- * api/v3/onboarding response.
+ * GET api/v3/onboarding response.
  */
 export type OnboardingResponse = {
   status: string;
-  id?: string;
+  id?: OnboardingGroup;
   completed_pct?: number;
   is_completed?: boolean;
   steps?: OnboardingStep[];
@@ -46,13 +45,25 @@ export type OnboardingStepName =
   | 'CreatePostStep';
 
 /**
+ * Onboarding groups - possible ids returned from api/v3/onboarding
+ */
+export type OnboardingGroup =
+  | 'InitialOnboardingGroup'
+  | 'OngoingOnboardingGroup';
+
+/**
+ * Groups that the front-end has support for.
+ */
+export const RELEASED_STEPS: OnboardingGroup[] = ['InitialOnboardingGroup'];
+
+/**
  * Core service for onboarding v3 for loading
  * progress and opening the modal.
  */
 @Injectable({
   providedIn: 'root',
 })
-export class OnboardingV3Service {
+export class OnboardingV3Service implements OnDestroy {
   private subscriptions: Subscription[] = [];
 
   /*
@@ -67,33 +78,27 @@ export class OnboardingV3Service {
     OnboardingResponse
   > = new BehaviorSubject<OnboardingResponse>(null);
 
+  /**
+   * True if object is completed
+   */
+  public readonly completed$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * True if still loading
+   */
+  public readonly loading$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(true);
+
   constructor(
     private compiler: Compiler,
     private injector: Injector,
     private stackableModal: StackableModalService,
-    private api: ApiService,
-    private onboardingStorage: OnboardingV3StorageService
+    private api: ApiService
   ) {}
 
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.progress$.subscribe(progress => {
-        // filter not completed steps
-        const completed = progress.steps.filter(
-          (progressStep: OnboardingStep) => {
-            return progressStep.is_completed;
-          }
-        );
-        // if all completed, lengths will be the same
-        if (
-          completed.length === progress.steps.length ||
-          progress.is_completed
-        ) {
-          this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
-        }
-      })
-    );
-  }
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
@@ -124,7 +129,7 @@ export class OnboardingV3Service {
         dismissOnRouteChange: false,
         onSaveIntent: (step: OnboardingStepName) => {
           if (this.loadOverrideSteps.indexOf(step) > -1) {
-            this.strikeThrough(step);
+            this.forceCompletion(step);
           }
         },
         onDismissIntent: () => {
@@ -142,11 +147,12 @@ export class OnboardingV3Service {
   }
 
   /**
-   * Manually strike through a step.
+   * Manually set a steps state to complete -
+   * override that will be wiped by next load if the server has not yet updated.
    * @param { OnboardingStepName } step - the step name to strike through.
    * @returns { void }
    */
-  public strikeThrough(step: OnboardingStepName): void {
+  public forceCompletion(step: OnboardingStepName): void {
     this.subscriptions.push(
       this.progress$
         .pipe(
@@ -170,6 +176,7 @@ export class OnboardingV3Service {
   /**
    * Present initial modals to be shown before navigation
    * to newsfeed.
+   * @returns { Promise<void> } - awaitable.
    */
   public async presentHomepageModals(): Promise<void> {
     try {
@@ -183,7 +190,8 @@ export class OnboardingV3Service {
   }
 
   /**
-   * Dismiss the modal
+   * Dismiss the modal.
+   * @returns { void }
    */
   public dismiss(): void {
     try {
@@ -196,8 +204,9 @@ export class OnboardingV3Service {
   /**
    * Get onboarding progress to the server
    * and pass it to the progress$ Observable.
+   * @returns { Promise<void> } - awaitable.
    */
-  public load(): void {
+  public async load(): Promise<void> {
     this.subscriptions.push(
       this.api
         .get('/api/v3/onboarding')
@@ -205,11 +214,13 @@ export class OnboardingV3Service {
           take(1),
           catchError(e => {
             console.error(e);
+            this.loading$.next(false);
             return of(null);
           })
         )
         .subscribe((progress: OnboardingResponse) => {
           this.progress$.next(progress);
+          this.loading$.next(false);
         })
     );
   }

@@ -1,15 +1,18 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   OnboardingResponse,
   OnboardingV3Service,
   OnboardingStepName,
+  OnboardingStep,
+  RELEASED_STEPS,
 } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { OnboardingV3StorageService } from '../onboarding-storage.service';
+import { take, tap } from 'rxjs/operators';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -21,6 +24,8 @@ import { OnboardingV3StorageService } from '../onboarding-storage.service';
   providers: [ComposerService],
 })
 export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+
   /**
    * If true, widget will be collapsed.
    */
@@ -29,14 +34,14 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   /**
    * If true, all steps are completed.
    */
-  public completed = false;
+  public completed$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   /**
-   * If true, widget is hidden
+   * If true, widget is hidden.
    */
   public hidden = false;
-
-  private progressSubscription: Subscription;
 
   constructor(
     private onboarding: OnboardingV3Service,
@@ -50,7 +55,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // if should hide, hide and return
     if (this.shouldHide()) {
-      this.hidden = true;
+      this.completed$.next(true);
       return;
     }
 
@@ -63,17 +68,18 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     // else load
     this.onboarding.load();
 
-    // sub to progress; hide if completed.
-    this.progressSubscription = this.progress$.subscribe(progress => {
-      if (progress && progress.is_completed) {
-        this.completed = true;
-      }
-    });
+    // on progress change (reload from server), check completion.
+    this.subscriptions.push(
+      this.progress$.subscribe(progress => {
+        // catches after completed local storage is no longer valid
+        this.checkCompletion();
+      })
+    );
   }
 
-  ngOnDestroy(): void {
-    if (this.progressSubscription) {
-      this.progressSubscription.unsubscribe();
+  ngOnDestroy() {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -83,6 +89,15 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    */
   get progress$(): Observable<OnboardingResponse> {
     return this.onboarding.progress$;
+  }
+
+  /**
+   * Get loading boolean from the service.
+   * Used to prevent component showing on load for users who are have completed.
+   * @returns Observable<boolean> - response from the service.
+   */
+  get loading$(): Observable<boolean> {
+    return this.onboarding.loading$;
   }
 
   /**
@@ -106,7 +121,8 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
             .then(response => {
               // if activity posted, manually strike through task.
               if (response) {
-                this.onboarding.strikeThrough('CreatePostStep');
+                this.onboarding.forceCompletion('CreatePostStep');
+                this.checkCompletion();
               }
             });
           break;
@@ -117,6 +133,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
       }
     } catch (e) {
       if (e === 'DismissedModalException') {
+        this.checkCompletion();
         if (this.onboarding.loadOverrideSteps.indexOf(step) === -1) {
           this.onboarding.load();
         }
@@ -159,5 +176,54 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    */
   private shouldHide(): boolean {
     return this.onboardingStorage.hasNotExpired('onboarding:widget:completed');
+  }
+
+  /**
+   * Checks the completion of this group - when adding additional groups extend here.
+   * If completed; sets local storage item with 3 day expiry (check for new released stages).
+   * Also sets completed to true which is used to hide the widget.
+   * @returns { void }
+   */
+  private checkCompletion(): void {
+    this.subscriptions.push(
+      this.progress$
+        .pipe(
+          take(1),
+          tap((progress: OnboardingResponse) => {
+            // catch initial load
+            if (!progress) {
+              return;
+            }
+
+            // if step is not released - set completed.
+            if (RELEASED_STEPS.indexOf(progress.id) === -1) {
+              this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
+              this.completed$.next(true);
+              return;
+            }
+
+            // if is completed.
+            if (progress.is_completed) {
+              this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
+              this.completed$.next(true);
+            }
+
+            // filter out not-completed steps.
+            const completedSteps = progress.steps.filter(
+              (progressStep: OnboardingStep) => {
+                return progressStep.is_completed;
+              }
+            );
+
+            // if all steps are completed, lengths will be the same.
+            if (completedSteps.length === progress.steps.length) {
+              this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
+              this.completed$.next(true);
+              return;
+            }
+          })
+        )
+        .subscribe()
+    );
   }
 }

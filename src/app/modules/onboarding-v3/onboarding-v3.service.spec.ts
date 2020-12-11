@@ -24,8 +24,7 @@ describe('OnboardingV3Service', () => {
       new (() => {})(),
       new (() => {})(),
       stackableModalMock,
-      apiMock,
-      storageMock
+      apiMock
     );
   });
 

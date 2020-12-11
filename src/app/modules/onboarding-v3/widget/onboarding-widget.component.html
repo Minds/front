@@ -1,4 +1,4 @@
-<ng-container *ngIf="!completed && !hidden">
+<ng-container *ngIf="!(completed$ | async) && !(loading$ | async) && !hidden">
   <div
     class="m-onboardingWidget__container"
     *mIfFeature="'onboarding-october-2020'"
