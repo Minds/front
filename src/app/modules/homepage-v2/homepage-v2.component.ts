@@ -103,10 +103,10 @@ export class HomepageV2Component implements OnInit {
    * depending on feat flag will route to /register or open auth modal.
    * @returns { void }
    */
-  public register(): void {
+  public async register(): Promise<void> {
     if (this.featuresService.has('onboarding-october-2020')) {
       try {
-        this.authModal.open();
+        await this.authModal.open();
       } catch (e) {
         if (e === 'DismissedModalException') {
           return; // modal dismissed, do nothing

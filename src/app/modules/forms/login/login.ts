@@ -150,10 +150,10 @@ export class LoginForm {
    * Called on join now button clicked.
    * @returns { void }
    */
-  public onJoinNowClick(): void {
+  public async onJoinNowClick(): Promise<void> {
     if (this.featuresService.has('onboarding-october-2020')) {
       try {
-        this.authModal.open();
+        await this.authModal.open();
       } catch (e) {
         if (e === 'DismissedModalException') {
           return; // modal dismissed, do nothing

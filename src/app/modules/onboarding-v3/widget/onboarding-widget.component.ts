@@ -145,7 +145,14 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
                 // else, default
                 default:
                   this.panel.currentStep$.next(step);
-                  await this.onboarding.open();
+                  try {
+                    await this.onboarding.open();
+                  } catch (e) {
+                    if (e === 'DismissedModalException') {
+                      return;
+                    }
+                    console.error(e);
+                  }
                   break;
               }
             })
@@ -210,6 +217,10 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
       this.progress$
         .pipe(
           take(1),
+          catchError(e => {
+            console.error(e);
+            return of(e);
+          }),
           tap((progress: OnboardingResponse) => {
             // catch initial load
             if (!progress) {

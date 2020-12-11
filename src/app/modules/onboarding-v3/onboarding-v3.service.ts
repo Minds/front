@@ -138,7 +138,7 @@ export class OnboardingV3Service implements OnDestroy {
       })
       .toPromise();
 
-    // Modal was closed before login completed.
+    // Modal was closed.
     if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
       throw 'DismissedModalException';
     }

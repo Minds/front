@@ -179,10 +179,10 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  onJoinNowClick() {
+  async onJoinNowClick() {
     if (this.featuresService.has('onboarding-october-2020')) {
       try {
-        this.authModal.open();
+        await this.authModal.open();
       } catch (e) {
         if (e === 'DismissedModalException') {
           return; // modal dismissed, do nothing
