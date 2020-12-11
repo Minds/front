@@ -1,5 +1,5 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import {
   OnboardingResponse,
   OnboardingV3Service,
@@ -12,7 +12,7 @@ import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { OnboardingV3StorageService } from '../onboarding-storage.service';
-import { take, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -107,30 +107,51 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    */
   public async onTaskClick(step: OnboardingStepName): Promise<void> {
     try {
-      switch (step) {
-        case 'VerifyEmailStep':
-          this.toast.inform(
-            'Check your inbox for a verification email from us.'
-          );
-          break;
-        case 'CreatePostStep':
-          this.composerModal
-            .setInjector(this.injector)
-            .present()
-            .toPromise()
-            .then(response => {
-              // if activity posted, manually strike through task.
-              if (response) {
-                this.onboarding.forceCompletion('CreatePostStep');
-                this.checkCompletion();
+      this.subscriptions.push(
+        this.progress$
+          .pipe(
+            take(1),
+            catchError((err: any) => {
+              console.error(err);
+              return of(null);
+            }),
+            tap(async (progress: OnboardingResponse) => {
+              switch (step) {
+                case 'VerifyEmailStep':
+                  this.toast.inform(
+                    this.isStepComplete(step, progress)
+                      ? 'Your email address has already been confirmed.'
+                      : 'Check your inbox for a verification email from us.'
+                  );
+                  break;
+                case 'CreatePostStep':
+                  this.composerModal
+                    .setInjector(this.injector)
+                    .present()
+                    .toPromise()
+                    .then(response => {
+                      // if activity posted, manually strike through task.
+                      if (response) {
+                        this.onboarding.forceCompletion('CreatePostStep');
+                        this.checkCompletion();
+                      }
+                    });
+                  break;
+                case 'VerifyUniquenessStep':
+                  if (this.isStepComplete(step, progress)) {
+                    this.toast.inform('You have already completed this step');
+                    break;
+                  }
+                // else, default
+                default:
+                  this.panel.currentStep$.next(step);
+                  await this.onboarding.open();
+                  break;
               }
-            });
-          break;
-        default:
-          this.panel.currentStep$.next(step);
-          await this.onboarding.open();
-          break;
-      }
+            })
+          )
+          .subscribe()
+      );
     } catch (e) {
       if (e === 'DismissedModalException') {
         this.checkCompletion();
@@ -209,11 +230,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
             }
 
             // filter out not-completed steps.
-            const completedSteps = progress.steps.filter(
-              (progressStep: OnboardingStep) => {
-                return progressStep.is_completed;
-              }
-            );
+            const completedSteps = this.getCompletedSteps(progress);
 
             // if all steps are completed, lengths will be the same.
             if (completedSteps.length === progress.steps.length) {
@@ -224,6 +241,35 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe()
+    );
+  }
+
+  /**
+   * Get all completed steps.
+   * @param { OnboardingResponse } progress - progress.
+   * @returns { OnboardingStep[] } array of completed onboarding steps.
+   */
+  private getCompletedSteps(progress: OnboardingResponse): OnboardingStep[] {
+    return progress.steps.filter((progressStep: OnboardingStep) => {
+      return progressStep.is_completed;
+    });
+  }
+
+  /**
+   * Determines whether or not a step is complete.
+   * @param { OnboardingStepName } stepName - step name.
+   * @param { OnboardingResponse } progress - progress.
+   */
+  private isStepComplete(
+    stepName: OnboardingStepName,
+    progress: OnboardingResponse
+  ) {
+    return (
+      this.getCompletedSteps(progress)
+        .map(step => {
+          return step.id;
+        })
+        .indexOf(stepName) !== -1
     );
   }
 }
