@@ -1,13 +1,15 @@
-m-discovery__plusUpgrade {
+@import 'defaults.scss';
+
+:host {
   > div {
     padding: 20px;
     font-size: 15px;
     line-height: 20px;
     display: flex;
     font-weight: 300;
-    margin-bottom: 10px;
+
     @include m-theme() {
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--secondary);
     }
   }
   a {
