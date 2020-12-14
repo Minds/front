@@ -421,21 +421,6 @@ m-homepage__v2 {
     }
   }
 
-  .m-homepage__joinButton--blueOutline {
-    border-radius: 23px;
-    font-size: 19px;
-    font-weight: 500;
-    padding: 10px 20px;
-    margin-top: 30px;
-
-    @include m-theme() {
-      border: 1px solid themed($m-blue);
-      background-color: themed($m-bgColor--primary);
-      color: themed($m-textColor--primary);
-      cursor: pointer;
-    }
-  }
-
   .m-homepage__phoneImageContainer {
     @include z-index(body);
     display: flex;
