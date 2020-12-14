@@ -334,6 +334,10 @@ export class ActivityContentComponent
     return this.service.displayOptions.minimalMode;
   }
 
+  get isMessageAbovePreview(): boolean {
+    return !(this.minimalMode || (this.isRichEmbed && this.isModal));
+  }
+
   calculateFixedContentHeight(): void {
     if (!this.service.displayOptions.fixedHeight) {
       return;
