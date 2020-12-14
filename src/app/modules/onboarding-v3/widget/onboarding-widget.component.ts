@@ -5,7 +5,7 @@ import {
   OnboardingV3Service,
   OnboardingStepName,
   OnboardingStep,
-  RELEASED_STEPS,
+  RELEASED_GROUPS,
 } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
@@ -228,7 +228,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
             }
 
             // if step is not released - set completed.
-            if (RELEASED_STEPS.indexOf(progress.id) === -1) {
+            if (RELEASED_GROUPS.indexOf(progress.id) === -1) {
               this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
               this.completed$.next(true);
               return;

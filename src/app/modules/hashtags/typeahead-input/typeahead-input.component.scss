@@ -24,6 +24,10 @@ m-hashtags__typeaheadInput {
     padding: 0;
     list-style: none;
     box-sizing: border-box;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
   }
 
   .m-hashtagsTypeaheadInputList__mruHeader {
@@ -36,5 +40,10 @@ m-hashtags__typeaheadInput {
 
   .m-hashtagsTypeaheadInputList__item {
     cursor: pointer;
+    padding: 10px;
+
+    @include m-theme() {
+      outline: 1px solid themed($m-borderColor--primary);
+    }
   }
 }

@@ -236,7 +236,7 @@
       align-items: center;
       padding: 0;
 
-      > * {
+      > *:not(.m-button__text--saving) {
         height: 100%;
       }
 

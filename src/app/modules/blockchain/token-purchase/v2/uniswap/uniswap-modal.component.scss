@@ -1,0 +1,20 @@
+.m-uniswapModalBody > iframe {
+  height: 600px;
+  width: 350px;
+  margin: 0 auto;
+  display: block;
+}
+
+.m-uniswapModalNeedMore {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+
+  & > a {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

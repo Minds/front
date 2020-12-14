@@ -53,9 +53,9 @@
   </ng-container>
 </ng-template>
 <!-- Message usually goes above rich-embed preview -->
-<ng-template #messageAbovePreview>
+<ng-container *ngIf="isMessageAbovePreview">
   <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
-></ng-template>
+></ng-container>
 <!-- ----------------------------------- -->
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
@@ -80,9 +80,7 @@
   </div>
   <!-- ----------------------------------- -->
   <!-- Message goes below rich-embed preview in minimal mode and modal-->
-  <ng-container
-    *ngIf="minimalMode || (isRichEmbed && isModal); else messageAbovePreview"
-  >
+  <ng-container *ngIf="!isMessageAbovePreview">
     <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
   ></ng-container>
   <!-- ----------------------------------- -->

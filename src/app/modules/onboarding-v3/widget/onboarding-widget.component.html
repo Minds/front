@@ -6,11 +6,22 @@
   >
     <!-- Header -->
     <div class="m-onboardingWidget__header">
-      <span
-        class="m-onboardingWidget__title"
-        i18n="@@ONBOARDING_WIDGET__COMPLETE_TO_EARN"
-        >Complete to earn tokens</span
-      >
+      <ng-container [ngSwitch]="(progress$ | async).id">
+        <ng-template ngSwitchCase="InitialOnboardingGroup">
+          <span
+            class="m-onboardingWidget__title"
+            i18n="@@ONBOARDING_WIDGET__COMPLETE_TO_EARN"
+            >Complete to earn tokens</span
+          >
+        </ng-template>
+        <ng-template ngSwitchCase="OngoingOnboardingGroup">
+          <span
+            class="m-onboardingWidget__title"
+            i18n="@@ONBOARDING_WIDGET__IMPROVE_YOUR_CHANNEL"
+            >Improve your channel</span
+          >
+        </ng-template>
+      </ng-container>
       <m-dropdownMenu
         *ngIf="dropdown"
         [menu]="dropdown"
@@ -45,41 +56,44 @@
           [ngClass]="{ completed: step.is_completed }"
           (click)="onTaskClick(step.id)"
         >
-          <span
-            *ngIf="step.id === 'VerifyEmailStep'"
-            i18n="@@ONBOARDING_WIDGET__VERIFY_EMAIL_ADDRESS"
-            data-cy="data-minds-onboarding-widget-verify-email"
-          >
-            Verify email address
-          </span>
-          <span
-            *ngIf="step.id === 'SuggestedHashtagsStep'"
-            i18n="@@ONBOARDING_WIDGET__SELECT_TAGS"
-            data-cy="data-minds-onboarding-widget-select-tags"
-          >
-            Select tags
-          </span>
-          <span
-            *ngIf="step.id === 'SetupChannelStep'"
-            i18n="@@ONBOARDING_WIDGET__SETUP_CHANNEL"
-            data-cy="data-minds-onboarding-widget-setup-channel"
-          >
-            Setup channel
-          </span>
-          <span
-            *ngIf="step.id === 'VerifyUniquenessStep'"
-            i18n="@@ONBOARDING_WIDGET__VERIFY_UNIQUENESS"
-            data-cy="data-minds-onboarding-widget-verify-uniqueness"
-          >
-            Verify uniqueness
-          </span>
-          <span
-            *ngIf="step.id === 'CreatePostStep'"
-            i18n="@@ONBOARDING_WIDGET__CREATE_A_POST"
-            data-cy="data-minds-onboarding-widget-create-post"
-          >
-            Create a post
-          </span>
+          <ng-container [ngSwitch]="step.id">
+            <span
+              *ngSwitchCase="'VerifyEmailStep'"
+              i18n="@@ONBOARDING_WIDGET__VERIFY_EMAIL_ADDRESS"
+              data-cy="data-minds-onboarding-widget-verify-email"
+            >
+              Verify email address
+            </span>
+            <span
+              *ngSwitchCase="'SuggestedHashtagsStep'"
+              i18n="@@ONBOARDING_WIDGET__SELECT_TAGS"
+              data-cy="data-minds-onboarding-widget-select-tags"
+            >
+              Select tags
+            </span>
+            <span
+              *ngSwitchCase="'SetupChannelStep'"
+              i18n="@@ONBOARDING_WIDGET__SETUP_CHANNEL"
+              data-cy="data-minds-onboarding-widget-setup-channel"
+            >
+              Setup channel
+            </span>
+            <span
+              *ngSwitchCase="'VerifyUniquenessStep'"
+              i18n="@@ONBOARDING_WIDGET__VERIFY_UNIQUENESS"
+              data-cy="data-minds-onboarding-widget-verify-uniqueness"
+            >
+              Verify uniqueness
+            </span>
+            <span
+              *ngSwitchCase="'CreatePostStep'"
+              i18n="@@ONBOARDING_WIDGET__CREATE_A_POST"
+              data-cy="data-minds-onboarding-widget-create-post"
+            >
+              Create a post
+            </span>
+            <span *ngSwitchDefault>{{ step.id }}</span>
+          </ng-container>
         </div>
       </div>
     </div>

@@ -421,6 +421,50 @@ m-homepage__v2 {
     }
   }
 
+  .m-homepage__joinButton--blueOutline {
+    border-radius: 23px;
+    font-size: 19px;
+    font-weight: 500;
+    padding: 10px 20px;
+    margin-top: 30px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-blue);
+      background-color: themed($m-bgColor--primary);
+      color: themed($m-textColor--primary);
+      cursor: pointer;
+    }
+  }
+
+  .m-homepage__phoneImageContainer {
+    @include z-index(body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 35%;
+      right: -50%;
+      width: 500px;
+      height: 500px;
+      background: url('http://localhost:4200//assets/marketing/deco_2.svg')
+        no-repeat;
+      z-index: -1; // we need to layer this manually behind the phone image
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        content: initial;
+        display: none;
+      }
+    }
+
+    .m-homepage__phoneImage {
+    }
+  }
+
   .m-homepage__appButtons {
     display: flex;
     flex-direction: row;
