@@ -1,6 +1,6 @@
 import generateRandomId from "../../support/utilities";
 
-context('Onboarding', () => {
+context.skip('Onboarding V2', () => {
 
   const username = generateRandomId();
   const password = `${generateRandomId()}0oA!`;
@@ -20,6 +20,10 @@ context('Onboarding', () => {
     cy.route('POST', '**/api/v2/onboarding/onboarding_shown').as('postOnboarding');
 
     cy.clearCookies();
+
+    cy.overrideFeatureFlags({
+      'onboarding-october-2020': false,
+    });
 
     cy.visit('/register')
       .location('pathname')

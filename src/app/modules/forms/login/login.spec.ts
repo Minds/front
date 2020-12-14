@@ -17,6 +17,8 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockDirective, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('LoginForm', () => {
@@ -94,6 +96,8 @@ describe('LoginForm', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FeaturesService, useValue: MockService(FeaturesService) },
+        { provide: AuthModalService, useValue: MockService(AuthModalService) },
       ],
     }).compileComponents(); // compile template and css
   }));

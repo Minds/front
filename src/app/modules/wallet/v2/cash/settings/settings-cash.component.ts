@@ -23,6 +23,8 @@ import { Session } from '../../../../../services/session';
   templateUrl: './settings-cash.component.html',
 })
 export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
+  @Input() embedded = false;
+
   cashWallet: WalletCurrency;
   cashWalletSubscription: Subscription;
 

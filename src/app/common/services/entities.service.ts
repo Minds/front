@@ -90,8 +90,14 @@ export class EntitiesService {
 
     this.fetch([urn]) // Update in the background
       .then((response: any) => {
+        if (!response.entities[0]) {
+          return;
+        }
         const entity = response.entities[0];
-        entity.require_login = response.require_login;
+        entity.require_login = response.require_login
+          ? response.require_login
+          : false;
+
         if (entity && entity.urn !== urn) {
           // urns may differn so fix this
           entity.urn = urn;

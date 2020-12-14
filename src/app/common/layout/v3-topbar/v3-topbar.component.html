@@ -32,12 +32,12 @@
             class="m-v3Topbar__logo--bulb"
           />
           <img
-            *ngIf="!isDarkTheme"
+            *ngIf="!isDarkTheme$ | async"
             [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
           <img
-            *ngIf="isDarkTheme"
+            *ngIf="isDarkTheme$ | async"
             [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
@@ -76,7 +76,7 @@
 
             <a
               class="m-v3TopbarLoginWrapper__joinMindsNow"
-              routerLink="/register"
+              (click)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
             >

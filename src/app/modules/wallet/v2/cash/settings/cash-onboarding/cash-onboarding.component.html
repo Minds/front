@@ -1,5 +1,8 @@
 <div class="m-walletCashOnboarding">
-  <div class="m-walletCashOnboardingView--addDetails" *ngIf="!editing">
+  <div
+    class="m-walletCashOnboardingView--addDetails"
+    *ngIf="!editing && !embedded"
+  >
     <p
       class="m-walletSecondaryText--desc"
       i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_ACCOUNT_INFO"
@@ -16,7 +19,7 @@
   <!-- -------------------------------------------- -->
   <!--- FORM ----------------------------------------->
   <!-- -------------------------------------------- -->
-  <div class="m-walletCashOnboardingView--form" *ngIf="editing">
+  <div class="m-walletCashOnboardingView--form" *ngIf="editing || embedded">
     <form [formGroup]="form" class="m-walletButtonLayout--buttonOffsetRight">
       <p
         class="m-walletSecondaryText--desc"
@@ -349,7 +352,8 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__buttonsContainer">
         <m-button
-          (onAction)="cancelForm()"
+          *ngIf="!embedded"
+          (click)="cancelForm()"
           [disabled]="inProgress"
           color="grey"
           i18n="@@COMMON__CANCEL"
