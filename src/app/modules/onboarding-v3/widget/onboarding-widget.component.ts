@@ -11,7 +11,6 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { OnboardingV3StorageService } from '../onboarding-storage.service';
 import { catchError, take, tap } from 'rxjs/operators';
 
 /**
@@ -38,34 +37,22 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     false
   );
 
-  /**
-   * If true, widget is hidden.
-   */
-  public hidden = false;
-
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
-    private onboardingStorage: OnboardingV3StorageService,
     private composerModal: ModalService,
     private injector: Injector,
     private toast: FormToastService
   ) {}
 
   ngOnInit(): void {
-    // if should hide, hide and return
-    if (this.shouldHide()) {
-      this.completed$.next(true);
-      return;
-    }
+    // // if should collapse, collapse and return
+    // if (this.shouldCollapse()) {
+    //   this.collapsed = true;
+    //   return;
+    // }
 
-    // if should collapse, collapse and return
-    if (this.shouldCollapse()) {
-      this.collapsed = true;
-      return;
-    }
-
-    // else load
+    // load onboarding progress from server.
     this.onboarding.load();
 
     // on progress change (reload from server), check completion.
@@ -179,31 +166,13 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   public onHideClick(option: 'show' | 'hide'): void {
     if (option === 'hide') {
       this.collapsed = true;
-      this.onboardingStorage.set('onboarding:widget:collapsed');
       return;
     }
     if (option === 'show') {
       this.collapsed = false;
       this.onboarding.load();
-      this.onboardingStorage.destroy('onboarding:widget:collapsed');
       return;
     }
-  }
-
-  /**
-   * Determines whether body of panel should be collapsed.
-   * @returns { boolean } true if should be hidden.
-   */
-  private shouldCollapse(): boolean {
-    return this.onboardingStorage.hasNotExpired('onboarding:widget:collapsed');
-  }
-
-  /**
-   * Determines whether widget should be hidden.
-   * @returns { boolean } true if should be hidden.
-   */
-  private shouldHide(): boolean {
-    return this.onboardingStorage.hasNotExpired('onboarding:widget:completed');
   }
 
   /**
@@ -229,14 +198,12 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
 
             // if step is not released - set completed.
             if (RELEASED_GROUPS.indexOf(progress.id) === -1) {
-              this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
               this.completed$.next(true);
               return;
             }
 
             // if is completed.
             if (progress.is_completed) {
-              this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
               this.completed$.next(true);
             }
 
@@ -245,7 +212,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
 
             // if all steps are completed, lengths will be the same.
             if (completedSteps.length === progress.steps.length) {
-              this.onboardingStorage.set('onboarding:widget:completed'); // expires 3 days
               this.completed$.next(true);
               return;
             }
