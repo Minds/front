@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  SkipSelf,
+} from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { BuyTokensModalService } from '../buy-tokens-modal.service';
 import { UniswapAction } from './uniswap-modal.service';
 
 @Component({
@@ -27,12 +31,5 @@ export class UniswapModalComponent {
     }
   }
 
-  constructor(
-    private configService: ConfigsService,
-    private buyTokensModalService: BuyTokensModalService
-  ) {}
-
-  async openBuyTokens() {
-    await this.buyTokensModalService.open();
-  }
+  constructor(private configService: ConfigsService) {}
 }
