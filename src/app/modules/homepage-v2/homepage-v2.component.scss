@@ -392,35 +392,6 @@ m-homepage__v2 {
     }
   }
 
-  .m-homepage__joinButton {
-    width: 230px;
-    height: 60px;
-    margin: 60px 0;
-
-    @media screen and (max-width: $m-grid-max-mobile) {
-      width: 100%;
-    }
-
-    &.m-homepage__joinButton--first {
-      margin: 22px 0 0 0;
-    }
-  }
-
-  .m-homepage__joinButton--blueOutline {
-    border-radius: 23px;
-    font-size: 19px;
-    font-weight: 500;
-    padding: 10px 20px;
-    margin-top: 30px;
-
-    @include m-theme() {
-      border: 1px solid themed($m-blue);
-      background-color: themed($m-bgColor--primary);
-      color: themed($m-textColor--primary);
-      cursor: pointer;
-    }
-  }
-
   .m-homepage__phoneImageContainer {
     @include z-index(body);
     display: flex;

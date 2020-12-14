@@ -40,14 +40,16 @@
             class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
             (click)="register()"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+            [size]="'large'"
           >
             Join Minds Now
           </m-button>
         </ng-container>
         <ng-container *mIfFeature="'onboarding-october-2020'">
           <m-button
-            class="m-homepage__joinButton--blueOutline"
             (click)="register()"
+            [size]="'large'"
+            [color]="'blue'"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
             data-cy="data-minds-homepage-join-button-main"
           >
@@ -269,20 +271,21 @@
 
           <div class="m-marketing__actionButtons">
             <ng-container *mIfFeature="'!onboarding-october-2020'">
-              1
               <m-button
                 class="mf-button mf-button--alt m-homepage__joinButton"
                 (click)="register()"
                 i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+                [size]="'large'"
               >
                 Join Minds Now
               </m-button>
             </ng-container>
             <ng-container *mIfFeature="'onboarding-october-2020'">
               <m-button
-                class="m-homepage__joinButton--blueOutline"
                 (click)="register()"
                 i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+                [size]="'large'"
+                [color]="'blue'"
               >
                 Join Minds Now
               </m-button>
