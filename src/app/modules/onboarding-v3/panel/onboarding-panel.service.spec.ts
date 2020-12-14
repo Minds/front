@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 import { ApiService } from '../../../common/api/api.service';
 import { MockService } from '../../../utils/mock';
 import { OnboardingV3PanelService } from './onboarding-panel.service';
@@ -16,7 +17,7 @@ describe('OnboardingV3PanelService', () => {
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new OnboardingV3PanelService(tagsMock, routerMock);
+    service = new OnboardingV3PanelService(tagsMock, routerMock, sessionMock);
   });
 
   afterEach(() => {

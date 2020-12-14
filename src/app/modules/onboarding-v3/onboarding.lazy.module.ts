@@ -6,7 +6,6 @@ import {
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
-import { OnboardingV3Service } from './onboarding-v3.service';
 import { OnboardingV3TagsComponent } from './panel/tags/tags.component';
 import { OnboardingV3TagsService } from './panel/tags/tags.service';
 import { OnboardingV3PanelService } from './panel/onboarding-panel.service';
