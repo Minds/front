@@ -33,6 +33,7 @@ import { FeedGridComponent } from './feed-grid/feed-grid.component';
 import { ComposerModule } from '../composer/composer.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { LanguageModule } from '../language/language.module';
+import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
 
 const routes: Routes = [
@@ -90,6 +91,7 @@ const routes: Routes = [
     ComposerModule,
     DiscoverySharedModule,
     LanguageModule,
+    OnboardingV3Module,
     LiquiditySpotModule,
   ],
   declarations: [

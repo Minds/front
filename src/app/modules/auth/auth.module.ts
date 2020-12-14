@@ -16,6 +16,7 @@ import { LogoutComponent } from './logout.component';
 import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 
 const routes: Routes = [
   {

@@ -1,0 +1,88 @@
+<div class="m-onboardingModal__container m-modalV2__inner">
+  <div class="m-modalV2__header" [ngStyle]="bannerSrc$ | async">
+    <h2
+      class="m-modalV2Header__title"
+      [ngClass]="{
+        lightTitle: showBanner$ | async,
+        themedTitle: !showBanner$ | async
+      }"
+    >
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container
+          *ngSwitchCase="'SuggestedHashtagsStep'"
+          i18n="@@ONBOARDING_MODAL__SUGGESTED_HASHTAG_STEP"
+        >
+          Join Minds
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'WelcomeStep'"
+          i18n="@@ONBOARDING_MODAL__WELCOME_TO_MINDS"
+        >
+          Welcome to Minds
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'SetupChannelStep'"
+          i18n="@@ONBOARDING_MODAL__SETUP_CHANNEL"
+        >
+          Setup Channel
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'VerifyUniquenessStep'"
+          i18n="@@ONBOARDING_MODAL__VERIFY_UNIQUENESS"
+        >
+          Verify Uniqueness
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'VerifyPhoneStep'"
+          i18n="@@ONBOARDING_MODAL__VERIFY_PHONE_NUMBER"
+        >
+          Verify Phone Number
+        </ng-container>
+      </ng-container>
+    </h2>
+  </div>
+  <ng-container [ngSwitch]="currentStep$ | async">
+    <m-onboardingV3__tags
+      *ngSwitchCase="'SuggestedHashtagsStep'"
+    ></m-onboardingV3__tags>
+    <m-onboardingV3__welcome
+      *ngSwitchCase="'WelcomeStep'"
+    ></m-onboardingV3__welcome>
+    <m-onboardingV3__channel
+      *ngSwitchCase="'SetupChannelStep'"
+      [nextClicked$]="nextClicked$"
+    ></m-onboardingV3__channel>
+    <m-onboardingV3__verifyUniqueness
+      *ngSwitchCase="'VerifyUniquenessStep'"
+    ></m-onboardingV3__verifyUniqueness>
+    <m-onboardingV3__phone
+      *ngSwitchCase="'VerifyPhoneStep'"
+    ></m-onboardingV3__phone>
+    <!-- <m-onboardingV3__bank
+      *ngSwitchCase="'VerifyBankStep'"
+    ></m-onboardingV3__bank> -->
+  </ng-container>
+  <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
+    <m-button
+      class="m-onboardingModal__nextButton"
+      [disabled]="disabled$ | async"
+      (click)="nextClicked()"
+      [saving]="inProgress$ | async"
+      [size]="'medium'"
+      [color]="'blue'"
+    >
+      <ng-container
+        *ngIf="(currentStep$ | async) === 'SetupChannelStep'"
+        i18n="@@ONBOARDING_MODAL__SAVE_BUTTON"
+      >
+        Save
+      </ng-container>
+      <ng-container
+        *ngIf="(currentStep$ | async) !== 'SetupChannelStep'"
+        i18n="@@ONBOARDING_MODAL__NEXT_BUTTON"
+      >
+        Next
+      </ng-container>
+    </m-button>
+  </div>
+</div>
