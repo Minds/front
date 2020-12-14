@@ -54,11 +54,7 @@ export type OnboardingGroup =
 /**
  * Groups that the front-end has support for.
  */
-<<<<<<< HEAD
-export const RELEASED_STEPS: OnboardingGroup[] = ['InitialOnboardingGroup'];
-=======
 export const RELEASED_GROUPS: OnboardingGroup[] = ['InitialOnboardingGroup'];
->>>>>>> 31f09bfcd171c8d6086207e6924aa94011f4139d
 
 /**
  * Core service for onboarding v3 for loading
