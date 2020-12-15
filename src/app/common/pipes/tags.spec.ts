@@ -204,6 +204,63 @@ describe('TagPipe', () => {
     );
   });
 
+  it('should transform url with a ? at the end, without the ?', () => {
+    const string = 'text https://minds.com/test?';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test"'
+    );
+  });
+
+  it("should transform url with multiple ?'s at the end, without the ?'s", () => {
+    const string = 'text https://minds.com/test???????';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test"'
+    );
+  });
+
+  it('should transform url with a ! at the end, without the !', () => {
+    const string = 'text https://minds.com/test!';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test"'
+    );
+  });
+
+  it("should transform url with a !'s at the end, without the !'s", () => {
+    const string = 'text https://minds.com/test!!!!!!!!!!!!';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test"'
+    );
+  });
+
+  it('should transform url with a !? at the end, without the !?', () => {
+    const string = 'text https://minds.com/test!?';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test"'
+    );
+  });
+
+  // reversed
+  it('should transform url with a ?! at the end, without the ?!', () => {
+    const string = 'text https://minds.com/test?!';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test"'
+    );
+  });
+
+  it('should not transform ? when NOT in the last character position', () => {
+    const string = 'text https://minds.com/test/test?url=!t#rue.asp';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      'text <a href="https://minds.com/test/test?url=!t#rue.asp"'
+    );
+  });
+
   it('should transform many tags', () => {
     const string = `text http://minds.com/#position@some @name
     @name1 #hash1#hash2 #hash3 ftp://s.com name@mail.com
