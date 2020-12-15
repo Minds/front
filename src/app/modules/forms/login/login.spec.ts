@@ -79,9 +79,7 @@ describe('LoginForm', () => {
   }
 
   function getTwoFactorLoginButton() {
-    return fixture.debugElement.query(
-      By.css('.m-login__2fa > m-button button')
-    );
+    return fixture.debugElement.query(By.css('.m-login-2fa > m-button button'));
   }
 
   beforeEach(async(() => {
