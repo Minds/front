@@ -37,7 +37,7 @@ export class OnboardingV3PanelService implements OnDestroy {
   ) {
     // fixes session bleed causing wrong panel to show at start.
     this.subscriptions.push(
-      this.session.loggedinEmitter.subscribe(user => {
+      this.session.loggedinEmitter?.subscribe(user => {
         if (user) {
           this.currentStep$.next('SuggestedHashtagsStep');
         }

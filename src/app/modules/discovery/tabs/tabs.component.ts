@@ -12,11 +12,6 @@ import { Observable } from 'rxjs';
 })
 export class DiscoveryTabsComponent {
   /**
-   * Set to true to show settings button.
-   */
-  @Input() showSettingsButton = true;
-
-  /**
    * If plus or not
    */
   isPlusPage$: Observable<boolean> = this.service.isPlusPage$;

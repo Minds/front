@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { By } from '@angular/platform-browser';
 import { MockService } from '../../../utils/mock';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { Client } from '../../../services/api';
