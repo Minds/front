@@ -6,10 +6,8 @@ import { OnboardingV3Service } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { Injector } from '@angular/core';
-import { Storage } from '../../../services/storage';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
-import { OnboardingV3StorageService } from '../onboarding-storage.service';
 
 describe('OnboardingV3WidgetComponent', () => {
   let comp: OnboardingV3WidgetComponent;
@@ -35,10 +33,6 @@ describe('OnboardingV3WidgetComponent', () => {
         {
           provide: OnboardingV3PanelService,
           useValue: MockService(OnboardingV3PanelService),
-        },
-        {
-          provide: OnboardingV3StorageService,
-          useValue: MockService(OnboardingV3StorageService),
         },
         { provide: ModalService, useValue: MockService(ModalService) },
         { provide: Injector, useValue: MockService(Injector) },

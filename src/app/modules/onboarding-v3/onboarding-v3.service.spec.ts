@@ -1,5 +1,4 @@
 import { BehaviorSubject } from 'rxjs';
-import { storageMock } from '../../../tests/storage-mock.spec';
 import { ApiService } from '../../common/api/api.service';
 import { MockService } from '../../utils/mock';
 import { OnboardingV3Service } from './onboarding-v3.service';
