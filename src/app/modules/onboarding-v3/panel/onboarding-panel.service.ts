@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
@@ -8,6 +8,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
+import { Session } from '../../../services/session';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3TagsService } from './tags/tags.service';
 
@@ -29,7 +30,20 @@ export class OnboardingV3PanelService implements OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private tags: OnboardingV3TagsService, private router: Router) {}
+  constructor(
+    private tags: OnboardingV3TagsService,
+    private router: Router,
+    private session: Session
+  ) {
+    // fixes session bleed causing wrong panel to show at start.
+    this.subscriptions.push(
+      this.session.loggedinEmitter.subscribe(user => {
+        if (user) {
+          this.currentStep$.next('SuggestedHashtagsStep');
+        }
+      })
+    );
+  }
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
