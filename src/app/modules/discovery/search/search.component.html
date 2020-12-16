@@ -53,7 +53,7 @@
 
   <div class="m-discoveryFeeds__feed">
     <m-discovery__feedItem
-      *ngFor="let entity$ of entities$ | async"
+      *ngFor="let entity$ of entities"
       [entity]="entity$ | async"
     ></m-discovery__feedItem>
     <infinite-scroll
