@@ -138,11 +138,16 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // scroll to focused comment.
     if (this.comment.focused) {
-      this.el.nativeElement.scrollIntoView(true);
-      setTimeout(() => {
-        window.scrollBy(0, -200);
-      }, 10);
+      // offset to give some padding to the scroll position.
+      const headerOffset = 100;
+      const elementPosition = this.el.nativeElement.getBoundingClientRect().top;
+
+      window.scrollTo({
+        top: elementPosition - headerOffset,
+        behavior: 'smooth',
+      });
     }
   }
 

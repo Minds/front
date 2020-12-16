@@ -224,6 +224,9 @@
                 ? ['/' + notification.entityObj.route]
                 : ['/blog/view', notification.entityObj.guid]
             "
+            [queryParams]="{
+              focusedCommentUrn: notification.params?.focusedCommentUrn
+            }"
           >
             <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
               {{ notification.fromObj.name }} commented on
