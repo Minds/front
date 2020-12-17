@@ -56,8 +56,11 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
 
     this.activityRelatedTagsSubscription = this.tagsService.activityRelated$.subscribe(
       tags => {
-        this.visible =
-          this.entityGuid && tags && tags.length > 0 ? true : false;
+        if (this.entityGuid) {
+          this.visible = tags && tags.length > 0 ? true : false;
+        } else {
+          this.visible = true;
+        }
       }
     );
 
