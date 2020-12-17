@@ -113,7 +113,7 @@
           Password
         </label>
       </div>
-      <m-popover (change)="onPopoverChange($event)" #popover>
+      <m-validationPopover (change)="onPopoverChange($event)" #popover>
         <div class="m-form__row--input">
           <input
             type="password"
@@ -130,7 +130,7 @@
             data-cy="data-minds-register-password-input-1"
           />
         </div>
-      </m-popover>
+      </m-validationPopover>
     </div>
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"

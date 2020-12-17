@@ -32,23 +32,25 @@ m-tooltip {
     box-shadow: 0 2px 4px 0 rgba(themed($m-black), 0.2);
   }
 
-  &.m-tooltip--bubble--anchor-bottom {
-    bottom: 24px;
-  }
+  &:not(.m-tooltip--bubble--anchorV2) {
+    &.m-tooltip--bubble--fixed {
+      position: fixed;
+    }
 
-  &.m-tooltip--bubble--fixed {
-    position: fixed;
-  }
+    &.m-tooltip--bubble--anchor-bottom {
+      bottom: 24px;
+    }
 
-  &.m-tooltip--bubble--anchor-left {
-    left: 0;
-    right: auto;
-    width: 220px;
-  }
+    &.m-tooltip--bubble--anchor-left {
+      left: 0;
+      right: auto;
+      width: 220px;
+    }
 
-  &.m-tooltip--bubble--anchor-right {
-    left: auto;
-    right: 0;
-    width: 220px;
+    &.m-tooltip--bubble--anchor-right {
+      left: auto;
+      right: 0;
+      width: 220px;
+    }
   }
 }

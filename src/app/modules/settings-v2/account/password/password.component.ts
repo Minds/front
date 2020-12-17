@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
-import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
+import { ValidationPopoverComponent } from '../../../forms/popover-validation/popover.component';
 
 @Component({
   selector: 'm-settingsV2__password',
@@ -33,7 +33,7 @@ export class SettingsV2PasswordComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('popover')
-  popover: PopoverComponent;
+  popover: ValidationPopoverComponent;
 
   init: boolean = false;
   inProgress: boolean = false;

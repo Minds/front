@@ -1,10 +1,10 @@
-m-popover {
-  .m-popover__wrapper {
+m-validationPopover {
+  .m-validationPopover__wrapper {
     position: relative;
     //margin-top: 1.5rem;
     display: block;
 
-    .m-popover__content {
+    .m-validationPopover__content {
       margin-top: 2.2rem;
       opacity: 0;
       visibility: hidden;
@@ -36,7 +36,7 @@ m-popover {
         background-color: themed($m-bgColor--primary);
       }
 
-      &.m-popover__content--visible {
+      &.m-validationPopover__content--visible {
         @include z-index(toast);
         opacity: 1;
         visibility: visible;
@@ -44,7 +44,7 @@ m-popover {
         transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
       }
 
-      ul.m-popover__rules {
+      ul.m-validationPopover__rules {
         list-style-type: none;
 
         li {
@@ -72,7 +72,7 @@ m-popover {
             -webkit-font-smoothing: antialiased;
           }
 
-          &.m-popover__rule--checked::before {
+          &.m-validationPopover__rule--checked::before {
             font-family: 'Material Icons';
             @include m-theme() {
               color: themed($m-green);

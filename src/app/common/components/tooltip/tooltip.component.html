@@ -9,6 +9,7 @@
   <div
     class="m-tooltip--bubble"
     [class.m-tooltip--bubble--fixed]="useParentPosition"
+    [class.m-tooltip--bubble--anchorV2]="anchorV2"
     [style.top.px]="useParentPosition ? offsetTop : false"
     [style.right.px]="useParentPosition ? offsetRight : false"
     [style.left.px]="useParentPosition ? offsetLeft : false"
@@ -20,6 +21,9 @@
     "
     [class.m-tooltip--bubble--anchor-right]="
       !useParentPosition && anchor == 'right'
+    "
+    [class.m-tooltip--bubble--anchor-top]="
+      !useParentPosition && anchor == 'top'
     "
     [hidden]="hidden"
   >

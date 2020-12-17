@@ -12,7 +12,7 @@ import { OnboardingForm } from './onboarding/onboarding';
 import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
-import { PopoverComponent } from './popover-validation/popover.component';
+import { ValidationPopoverComponent } from './popover-validation/popover.component';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { PopoverComponent } from './popover-validation/popover.component';
     FbRegisterForm,
     OnboardingForm,
     Tutorial,
-    PopoverComponent,
+    ValidationPopoverComponent,
   ],
   exports: [
     LoginForm,
@@ -38,7 +38,7 @@ import { PopoverComponent } from './popover-validation/popover.component';
     FbRegisterForm,
     OnboardingForm,
     Tutorial,
-    PopoverComponent,
+    ValidationPopoverComponent,
   ],
 })
 export class MindsFormsModule {}

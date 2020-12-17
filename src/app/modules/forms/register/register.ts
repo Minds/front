@@ -19,7 +19,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { PopoverComponent } from '../popover-validation/popover.component';
+import { ValidationPopoverComponent } from '../popover-validation/popover.component';
 import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 
@@ -55,7 +55,7 @@ export class RegisterForm {
   form: FormGroup;
   fbForm: FormGroup;
 
-  @ViewChild('popover') popover: PopoverComponent;
+  @ViewChild('popover') popover: ValidationPopoverComponent;
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
 
   constructor(

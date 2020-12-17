@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'm-popover',
+  selector: 'm-validationPopover',
   templateUrl: 'popover.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PopoverComponent {
+export class ValidationPopoverComponent {
   @ViewChild('content', { static: true }) content: ElementRef;
 
   lengthCheck: boolean = false;
@@ -30,13 +30,17 @@ export class PopoverComponent {
 
   show(): void {
     if (!this.hidden) {
-      this.content.nativeElement.classList.add('m-popover__content--visible');
+      this.content.nativeElement.classList.add(
+        'm-validationPopover__content--visible'
+      );
       this.detectChanges();
     }
   }
 
   hide(keepHidden: boolean = false): void {
-    this.content.nativeElement.classList.remove('m-popover__content--visible');
+    this.content.nativeElement.classList.remove(
+      'm-validationPopover__content--visible'
+    );
     this.hidden = keepHidden;
     this.detectChanges();
   }

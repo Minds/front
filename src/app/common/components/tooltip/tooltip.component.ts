@@ -1,21 +1,30 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-tooltip',
   templateUrl: 'tooltip.component.html',
+  styleUrls: ['tooltip.component.ng.scss'],
   host: {
     '(mouseover)': 'setHidden(false)',
     '(mouseout)': 'setHidden(true)',
   },
 })
-export class TooltipComponent {
+export class TooltipComponent implements OnInit {
   @Input() icon;
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
   @Input() iconSrc;
   @Input() useParentPosition: boolean = false;
   @Input() enabled: boolean = true;
+
+  /**
+   * AnchorV2 displays a triangle pointing toward the anchor el
+   * Usage: <m-tooltip anchor="bottom" anchorV2="true">
+   * Note: anchorV2 overrides/cancels the 'useParentPosition' property
+   */
+
+  @Input() anchorV2: false;
 
   public readonly cdnAssetsUrl: string;
 
@@ -26,6 +35,16 @@ export class TooltipComponent {
 
   constructor(private element: ElementRef, private configs: ConfigsService) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+  }
+
+  ngOnInit(): void {
+    if (this.anchorV2) {
+      if (!this.anchor) {
+        this.anchor = 'top';
+      }
+
+      this.useParentPosition = false;
+    }
   }
 
   setHidden(value: boolean) {

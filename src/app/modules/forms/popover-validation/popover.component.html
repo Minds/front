@@ -1,33 +1,33 @@
-<div class="m-popover__wrapper">
+<div class="m-validationPopover__wrapper">
   <ng-content></ng-content>
-  <div class="m-popover__content" #content>
-    <ul class="m-popover__rules">
+  <div class="m-validationPopover__content" #content>
+    <ul class="m-validationPopover__rules">
       <li
-        [class.m-popover__rule--checked]="lengthCheck"
+        [class.m-validationPopover__rule--checked]="lengthCheck"
         i18n="@@REGISTRATION_VALIDATOR__MORE_THAN_8_CHARACTERS"
       >
         8 or more characters
       </li>
       <li
-        [class.m-popover__rule--checked]="specialCharCheck"
+        [class.m-validationPopover__rule--checked]="specialCharCheck"
         i18n="@@REGISTRATION_VALIDATOR__1_SPECIAL_CHARACTER"
       >
         At least 1 special character
       </li>
       <li
-        [class.m-popover__rule--checked]="mixedCaseCheck"
+        [class.m-validationPopover__rule--checked]="mixedCaseCheck"
         i18n="@@REGISTRATION_VALIDATOR__MIXED_CASE"
       >
         Mixed case
       </li>
       <li
-        [class.m-popover__rule--checked]="numbersCheck"
+        [class.m-validationPopover__rule--checked]="numbersCheck"
         i18n="@@REGISTRATION_VALIDATOR__1_NUMBER"
       >
         At least 1 number
       </li>
       <li
-        [class.m-popover__rule--checked]="spacesCheck"
+        [class.m-validationPopover__rule--checked]="spacesCheck"
         i18n="@@REGISTRATION_VALIDATOR__NO_SPACES"
       >
         Doesn't have spaces

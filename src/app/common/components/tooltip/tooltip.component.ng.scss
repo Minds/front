@@ -1,0 +1,91 @@
+@import 'defaults.scss';
+
+$triangleShort: 8px;
+$triangleLong: 10px;
+
+:host {
+  .m-tooltip--bubble {
+    &.m-tooltip--bubble--anchorV2 {
+      border-radius: $m-borderRadius;
+
+      @include m-theme() {
+        border: 1px solid transparent;
+        box-shadow: 0px 0px 20px 0px rgba(themed($m-black-always), 0.25);
+      }
+
+      &::after {
+        width: 0;
+        height: 0;
+        position: absolute;
+        content: ' ';
+        font-size: 0;
+        line-height: 0;
+      }
+
+      &.m-tooltip--bubble--anchor-right,
+      &.m-tooltip--bubble--anchor-left {
+        top: 0;
+        &::after {
+          top: 20%;
+          @include m-theme() {
+            border-top: $triangleShort solid transparent;
+            border-bottom: $triangleShort solid transparent;
+          }
+        }
+      }
+
+      &.m-tooltip--bubble--anchor-right {
+        left: 100%;
+        margin-left: 10px;
+        &::after {
+          right: 100%;
+          @include m-theme() {
+            border-right: $triangleLong solid themed($m-bgColor--primary);
+          }
+        }
+      }
+      &.m-tooltip--bubble--anchor-left {
+        right: 100%;
+        margin-right: 10px;
+        &::after {
+          left: 100%;
+          @include m-theme() {
+            border-left: $triangleLong solid themed($m-bgColor--primary);
+          }
+        }
+      }
+
+      &.m-tooltip--bubble--anchor-bottom,
+      &.m-tooltip--bubble--anchor-top {
+        &::after {
+          left: 20%;
+          @include m-theme() {
+            border-left: $triangleShort solid transparent;
+            border-right: $triangleShort solid transparent;
+          }
+        }
+      }
+
+      &.m-tooltip--bubble--anchor-bottom {
+        bottom: 100%;
+        margin-bottom: 10px;
+        &::after {
+          top: 100%;
+          @include m-theme() {
+            border-top: $triangleLong solid themed($m-bgColor--primary);
+          }
+        }
+      }
+      &.m-tooltip--bubble--anchor-top {
+        top: 100%;
+        margin-top: 10px;
+        &::after {
+          bottom: 100%;
+          @include m-theme() {
+            border-bottom: $triangleLong solid themed($m-bgColor--primary);
+          }
+        }
+      }
+    }
+  }
+}
