@@ -132,7 +132,7 @@ import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
-import { HorizontalFeedService } from './services/horizontal-feed.service';
+import { RelatedContentService } from './services/related-content.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
@@ -502,7 +502,7 @@ const routes: Routes = [
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,
     },
-    HorizontalFeedService,
+    RelatedContentService,
     RegexService,
     ApiService,
     AttachmentApiService,
