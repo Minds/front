@@ -1,7 +1,7 @@
 /**
  * Header tabs for discovery feed.
  */
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DiscoveryService } from '../discovery.service';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'm-discovery__tabs',
   templateUrl: './tabs.component.html',
+  styleUrls: ['./tabs.component.ng.scss'],
 })
 export class DiscoveryTabsComponent {
   /**
