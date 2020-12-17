@@ -27,4 +27,10 @@
       }
     }
   }
+
+  ::ng-deep m-loadingSpinner {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
 }

@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+@import '../activity/activity.component.scss';
+
+$padding: $activity-padding-lr--minimalMode;
+
+:host {
+  .m-newsfeed__single--legacy {
+    max-width: 600px;
+    margin: auto;
+    padding: 16px;
+  }
+
+  .minds-list {
+    padding: 20px 40px;
+  }
+
+  .m-newsfeedSingle__mobileSuggestions {
+    display: none;
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .minds-list {
+      padding: 0;
+    }
+
+    ::ng-deep m-activity {
+      border: none !important;
+    }
+
+    .m-newsfeedSingle__mobileSuggestions {
+      display: block;
+
+      ::ng-deep {
+        .m-sidebarWidget {
+          @include m-theme() {
+            border: none;
+          }
+        }
+        > * {
+          display: block;
+
+          margin-top: $padding;
+          padding-top: $padding;
+          padding-bottom: $padding;
+
+          @include m-theme() {
+            border-top: 8px solid themed($m-borderColor--primary);
+          }
+        }
+
+        .m-sidebarWidget__title {
+          @media screen and (max-width: $max-mobile) {
+            padding: $padding;
+          }
+        }
+      }
+    }
+  }
+}

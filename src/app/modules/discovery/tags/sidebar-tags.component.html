@@ -1,41 +1,63 @@
-<m-sidebarWidget
-  [title]="isPlusPage ? 'Trending Minds+ Tags' : 'Tags for you'"
-  i18n-title="
-     isPlusPage ? '@@TRENDING__PLUS_TAGS' : '@@TRENDING__TAGS__FOR__YOU'
-  "
->
-  <div class="m-sidebarWidget__body">
-    <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
-    <ul>
-      <li
-        *ngFor="let tag of foryou$ | async | slice: 0:limit"
-        class="m-discoveryTrends__trend"
+<ng-container *ngIf="visible">
+  <m-sidebarWidget [title]="title">
+    <div class="m-sidebarWidget__body">
+      <m-loadingSpinner
+        *ngIf="!entityGuid"
+        [inProgress]="inProgress$ | async"
+      ></m-loadingSpinner>
+      <ul>
+        <ng-container *ngIf="entityGuid; else forYou">
+          <li
+            *ngFor="let tag of activityRelated$ | async | slice: 0:limit"
+            class="m-discoveryTrends__trend"
+          >
+            <ng-container
+              [ngTemplateOutlet]="tagTemplate"
+              [ngTemplateOutletContext]="{ tag: tag }"
+            ></ng-container>
+          </li>
+        </ng-container>
+        <ng-template #forYou>
+          <li
+            *ngFor="let tag of foryou$ | async | slice: 0:limit"
+            class="m-discoveryTrends__trend"
+          >
+            <ng-container
+              [ngTemplateOutlet]="tagTemplate"
+              [ngTemplateOutletContext]="{ tag: tag }"
+            ></ng-container>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+    <a
+      class="m-sidebarWidget__seeMore"
+      (click)="seeMore()"
+      *ngIf="limit === 5 && !(inProgress$ | async) && !entityGuid"
+      i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
+      >See more</a
+    >
+  </m-sidebarWidget>
+
+  <ng-template #tagTemplate let-tag="tag">
+    <ng-container>
+      <a
+        [routerLink]="parentPath + '/search'"
+        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
       >
-        <a
-          [routerLink]="parentPath + '/search'"
-          [queryParams]="{ q: '#' + tag.value, f: 'top' }"
-        >
-          <div>
-            <h4>#{{ tag.value }}</h4>
-            <div
-              class="m-discoveryTrendListItem__supportingText--below"
-              *ngIf="tag.posts_count"
+        <div>
+          <h4>#{{ tag.value }}</h4>
+          <div
+            class="m-discoveryTrendListItem__supportingText--below"
+            *ngIf="tag.posts_count"
+          >
+            <span i18n="@@DISCOVERY_SIDEBAR_TAGS__X_POSTS"
+              >{{ tag.posts_count }} posts</span
             >
-              <span i18n="@@DISCOVERY_SIDEBAR_TAGS__X_POSTS"
-                >{{ tag.posts_count }} posts</span
-              >
-            </div>
           </div>
-        </a>
-        <m-discovery__tagButton [tag]="tag"></m-discovery__tagButton>
-      </li>
-    </ul>
-  </div>
-  <a
-    class="m-sidebarWidget__seeMore"
-    (click)="seeMore()"
-    *ngIf="limit === 5 && !(inProgress$ | async)"
-    i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
-    >See more</a
-  >
-</m-sidebarWidget>
+        </div>
+      </a>
+      <m-discovery__tagButton [tag]="tag"></m-discovery__tagButton>
+    </ng-container>
+  </ng-template>
+</ng-container>
