@@ -26,7 +26,7 @@ $triangleLong: 10px;
       &.m-tooltip--bubble--anchor-left {
         top: 0;
         &::after {
-          top: 20%;
+          top: 7%;
           @include m-theme() {
             border-top: $triangleShort solid transparent;
             border-bottom: $triangleShort solid transparent;
@@ -58,7 +58,7 @@ $triangleLong: 10px;
       &.m-tooltip--bubble--anchor-bottom,
       &.m-tooltip--bubble--anchor-top {
         &::after {
-          left: 20%;
+          left: 7%;
           @include m-theme() {
             border-left: $triangleShort solid transparent;
             border-right: $triangleShort solid transparent;
