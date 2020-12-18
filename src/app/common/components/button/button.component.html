@@ -38,6 +38,7 @@
     menuClass="m-button__dropdownMenu"
     data-cy="button-dropdown-action"
     #dropdownMenuComponent
+    (click)="$event.preventDefault(); $event.stopPropagation()"
   >
     <m-icon from="ion" iconId="arrow-down-b"></m-icon>
   </m-dropdownMenu>
