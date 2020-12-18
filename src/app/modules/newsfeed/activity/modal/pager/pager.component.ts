@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivityModalService } from '../modal.service';
 import { ActivityService } from '../../activity.service';
-import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../../../common/services/related-content.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
 
@@ -23,7 +23,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityModalService,
     public activityService: ActivityService,
-    private horizontalFeed: HorizontalFeedService
+    private relatedContent: RelatedContentService
   ) {}
 
   ngOnInit(): void {
@@ -31,16 +31,16 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
      * Whenever user clicks a pager button,
      * recalculate whether or not to display pager buttons
      */
-    this.modalPagerSubscription = this.horizontalFeed
+    this.modalPagerSubscription = this.relatedContent
       .onChange()
       .subscribe(async change => {
         this.modalPager = {
-          hasNext: await this.horizontalFeed.hasNext(),
-          hasPrev: await this.horizontalFeed.hasPrev(),
+          hasNext: await this.relatedContent.hasNext(),
+          hasPrev: await this.relatedContent.hasPrev(),
         };
       });
 
-    this.horizontalFeed.setContext('container');
+    this.relatedContent.setContext('container');
   }
 
   ngOnDestroy(): void {
@@ -82,7 +82,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
     this.service.loading$.next(true);
 
-    const response = await this.horizontalFeed.next();
+    const response = await this.relatedContent.next();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);
@@ -102,7 +102,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
 
     this.service.loading$.next(true);
 
-    const response = await this.horizontalFeed.prev();
+    const response = await this.relatedContent.prev();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);

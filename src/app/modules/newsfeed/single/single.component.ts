@@ -20,6 +20,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 @Component({
   selector: 'm-newsfeed--single',
   templateUrl: 'single.component.html',
+  styleUrls: ['single.component.ng.scss'],
 })
 export class NewsfeedSingleComponent {
   readonly cdnAssetsUrl: string;

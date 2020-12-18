@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
-import { HorizontalFeedService } from '../../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../../common/services/related-content.service';
 import { ActivityEntity, ActivityService } from '../activity.service';
 import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { toggleFullscreen } from '../../../../helpers/fullscreen';

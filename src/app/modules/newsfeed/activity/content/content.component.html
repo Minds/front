@@ -103,6 +103,7 @@
         !(service.shouldShowPaywall$ | async)
       "
       [style.height]="videoHeight"
+      [style.overflow]="videoHeight ? 'hidden' : null"
     ></m-videoPlayer--scrollaware>
 
     <div class="m-activityContent__fixedHeightSpacer"></div>
