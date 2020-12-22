@@ -1,4 +1,4 @@
-<m-emailConfirmation></m-emailConfirmation>
+<m-emailConfirmation *mIfFeature="'!guest-mode'"></m-emailConfirmation>
 <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
   <div
     class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
@@ -10,7 +10,7 @@
     >
   </div>
 
-  <ng-container>
+  <ng-container *mIfFeature="'!guest-mode'">
     <m-composer
       [activity]="message ? { message: message } : undefined"
       #composer

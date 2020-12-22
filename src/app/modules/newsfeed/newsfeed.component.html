@@ -26,7 +26,7 @@
     m-pageLayout__pane="right"
     *ngIf="showRightSidebar || newNavigation"
   >
-    <div class="m-pageLayoutPane__inner">
+    <div class="m-pageLayoutPane__inner" *mIfFeature="'!guest-mode'">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
         <m-onboardingProgressWidget></m-onboardingProgressWidget>
         <m-language__sidebarPrompt></m-language__sidebarPrompt>

@@ -106,7 +106,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.session.isLoggedIn()) {
+    if (!this.session.isLoggedIn() && !this.featuresService.has('guest-mode')) {
       this.router.navigate(['/login']); //force login
     }
 

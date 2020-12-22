@@ -54,7 +54,7 @@ const routes: Routes = [
         canDeactivate: [CanDeactivateGuardService],
         data: {
           title: 'Newsfeed',
-          description: 'Posts from channels your subscribe to',
+          description: 'Posts from channels you subscribe to',
         },
       },
       {

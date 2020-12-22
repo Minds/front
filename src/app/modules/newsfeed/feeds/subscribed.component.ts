@@ -30,6 +30,8 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { Session } from '../../../services/session';
+import { GuestModeService } from '../../../common/services/guest-mode.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -43,6 +45,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
+  isGuest: boolean = false;
 
   attachment_preview;
 
@@ -60,6 +63,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
+  guestSubscription: Subscription;
 
   /**
    * Listening for new posts.
@@ -81,11 +85,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
+    protected session: Session,
+    protected guestModeService: GuestModeService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
+    this.guestSubscription = this.guestModeService.isGuest$.subscribe(
+      isGuest => {
+        this.isGuest = isGuest;
+        this.load(true, true);
+      }
+    );
+
     this.routerSubscription = this.router.events
       .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -161,6 +174,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
         .setLimit(12)
+        .setGuestMode(this.isGuest)
         .fetch();
     } catch (e) {
       console.error('SortedComponent', e);

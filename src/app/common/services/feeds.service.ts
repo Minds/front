@@ -25,6 +25,7 @@ export class FeedsService implements OnDestroy {
   params: any = { sync: 1 };
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
+  guestMode: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -161,6 +162,15 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets guestMode
+   * @param { boolean } guestMode - shows the feed of the Minds account to logged out users
+   */
+  setGuestMode(value: boolean): FeedsService {
+    this.guestMode = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
   fetch(): Promise<any> {
@@ -178,6 +188,7 @@ export class FeedsService implements OnDestroy {
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: this.pagingToken,
+          guest_mode: this.guestMode ? 1 : 0,
         },
       })
       .then((response: any) => {
