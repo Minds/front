@@ -18,6 +18,7 @@ import { ContextService } from '../../services/context.service';
 import { NewsfeedService } from './services/newsfeed.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
+import { GuestModeService } from '../../common/services/guest-mode.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -32,12 +33,14 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   moreData: boolean = true;
   showRightSidebar: boolean = true;
   preventHashtagOverflow: boolean = false;
+  isGuest: boolean = false;
 
   message: string = '';
   newUserPromo: boolean = false;
 
   paramsSubscription: Subscription;
   urlSubscription: Subscription;
+  guestSubscription: Subscription;
 
   pollingTimer: any;
   pollingOffset: string = '';
@@ -73,7 +76,8 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected storage: Storage,
     protected overlayModal: OverlayModalService,
     protected context: ContextService,
-    protected newsfeedService: NewsfeedService
+    protected newsfeedService: NewsfeedService,
+    protected guestModeService: GuestModeService
   ) {
     this.newNavigation = this.featuresService.has('navigation');
     this.urlSubscription = this.route.url.subscribe(() => {
@@ -125,6 +129,13 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.guestSubscription = this.guestModeService.isGuest$.subscribe(
+      isGuest => {
+        this.isGuest = isGuest;
+        this.detectWidth();
+      }
+    );
+
     this.context.set('activity');
     this.detectWidth();
   }
@@ -154,7 +165,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize') detectWidth() {
-    this.showRightSidebar = window.innerWidth >= 1100;
+    this.showRightSidebar = !this.isGuest && window.innerWidth >= 1100;
     this.preventHashtagOverflow = window.innerWidth < 400;
   }
 

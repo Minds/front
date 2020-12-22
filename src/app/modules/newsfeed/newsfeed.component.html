@@ -24,9 +24,9 @@
     [class.mdl-cell]="!newNavigation"
     [class.mdl-cell--4-col]="!newNavigation"
     m-pageLayout__pane="right"
-    *ngIf="showRightSidebar || newNavigation"
+    *ngIf="showRightSidebar || (newNavigation && !isGuest)"
   >
-    <div class="m-pageLayoutPane__inner" *mIfFeature="'!guest-mode'">
+    <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
         <m-onboardingProgressWidget></m-onboardingProgressWidget>
         <m-language__sidebarPrompt></m-language__sidebarPrompt>
