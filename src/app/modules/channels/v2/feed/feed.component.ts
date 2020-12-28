@@ -54,21 +54,23 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       case 'images':
       case 'videos':
       case 'blogs':
-        this.feed.sort$.next('latest');
-        this.feed.type$.next(view);
+        this.feedService.sort$.next('latest');
+        this.feedService.type$.next(view);
         break;
 
       case 'scheduled':
-        this.feed.sort$.next('scheduled');
-        this.feed.type$.next('activities');
+        this.feedService.sort$.next('scheduled');
+        this.feedService.type$.next('activities');
         break;
 
       default:
         // TODO: Warning / error / redirect?
-        this.feed.sort$.next('latest');
-        this.feed.type$.next('activities');
+        this.feedService.sort$.next('latest');
+        this.feedService.type$.next('activities');
     }
   }
+
+  feed: Object[] = [];
 
   /**
    * Constructor
@@ -77,7 +79,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * @param router
    */
   constructor(
-    public feed: FeedService,
+    public feedService: FeedService,
     public service: ChannelsV2Service,
     protected router: Router,
     protected route: ActivatedRoute,
@@ -91,7 +93,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   ) {
     if (isPlatformBrowser(platformId)) {
       this.subscriptions.push(
-        this.service.guid$.subscribe(guid => this.feed.guid$.next(guid))
+        this.service.guid$.subscribe(guid => this.feedService.guid$.next(guid))
       );
     }
   }
@@ -116,9 +118,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.subscriptions.push(
+      this.feedService.service.feed.subscribe(feed => {
+        this.feed = feed;
+      }),
       this.feedsUpdate.postEmitter.subscribe(newPost => {
         if (
-          this.feed.guid$.getValue() === this.session.getLoggedInUser().guid
+          this.feedService.guid$.getValue() ===
+          this.session.getLoggedInUser().guid
         ) {
           this.prepend(newPost);
         }
@@ -133,7 +139,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
     // TODO: Increment scheduled count https://gitlab.com/minds/front/-/issues/3127
     // if (activity.time_created > Date.now() / 1000) { // and route is actually on a channel.
-    // this.feed.scheduledCount$ = this.feed.scheduledCount$.pipe(
+    // this.feedService.scheduledCount$ = this.feedService.scheduledCount$.pipe(
     //   map(count => count++)
     // );
     // }
@@ -145,9 +151,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     };
 
     // Todo: Move to FeedsService
-    this.feed.service.rawFeed.next([
+    this.feedService.service.rawFeed.next([
       ...[feedItem],
-      ...this.feed.service.rawFeed.getValue(),
+      ...this.feedService.service.rawFeed.getValue(),
     ]);
   }
 
@@ -177,7 +183,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   public async onFirstPostButtonClick(): Promise<void> {
     this.subscriptions.push(
-      this.feed.type$
+      this.feedService.type$
         .pipe(
           take(1),
           catchError(error => {
@@ -221,8 +227,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   public showInfiniteScroll(): boolean {
     return (
-      this.feed.service.inProgress.getValue() ||
-      this.feed.service.rawFeed.getValue().length > 0
+      this.feedService.service.inProgress.getValue() ||
+      this.feedService.service.rawFeed.getValue().length > 0
     );
   }
 }

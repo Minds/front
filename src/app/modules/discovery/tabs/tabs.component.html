@@ -29,6 +29,15 @@
   </div>
   <div class="m-tabs__tab">
     <a
+      routerLink="/discovery/memberships/feed"
+      routerLinkActive="m-tabs__tab--selected"
+      data-cy="discovery-tab-link-memberships"
+      i18n="@@DISCOVERY_TAGS__MEMBERSHIPS"
+      >Memberships</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
       routerLink="/discovery/boost/feed"
       routerLinkActive="m-tabs__tab--selected"
       data-cy="discovery-tab-link-boosted"
@@ -37,8 +46,5 @@
     >
   </div>
   <div class="m-layout__spacer"></div>
-  <m-discovery__settingsButton
-    *ngIf="showSettingsButton"
-    modalType="tags"
-  ></m-discovery__settingsButton>
+  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
 </div>

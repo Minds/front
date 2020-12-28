@@ -30,6 +30,7 @@ import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
+import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.component';
 
 @NgModule({
   imports: [
@@ -75,6 +76,14 @@ import { FeedsService } from '../../common/services/feeds.service';
             component: DiscoveryBoostFeedComponent,
             data: {
               title: 'Discovery / Boosted',
+            },
+          },
+          {
+            path: 'memberships/feed',
+            component: DiscoveryMembershipsFeedComponent,
+            data: {
+              title: 'Discovery / Memberships',
+              memberships: true,
             },
           },
           {
@@ -187,6 +196,7 @@ import { FeedsService } from '../../common/services/feeds.service';
     DiscoveryPlusUpgradeComponent,
     DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
+    DiscoveryMembershipsFeedComponent,
   ],
   exports: [
     DiscoveryComponent,

@@ -32,7 +32,7 @@
             class="m-v3Topbar__logo--bulb"
           />
           <img
-            *ngIf="!isDarkTheme$ | async"
+            *ngIf="!(isDarkTheme$ | async)"
             [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
             class="m-v3Topbar__logo--full"
           />

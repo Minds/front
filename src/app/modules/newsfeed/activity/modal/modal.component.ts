@@ -32,7 +32,7 @@ import { ComposerService } from '../../../composer/services/composer.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../../common/services/activity.service';
 import { ActivityModalService } from './modal.service';
-import { HorizontalFeedService } from '../../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../../common/services/related-content.service';
 import { MediaModalParams } from '../../../media/modal/modal.component';
 
 // Constants of dimensions calculations
@@ -72,7 +72,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     });
 
     // Prepare pager
-    this.horizontalFeed.setBaseEntity(params.entity);
+    this.relatedContent.setBaseEntity(params.entity);
   }
 
   entity: any;
@@ -118,7 +118,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     protected clientMetaService: ClientMetaService,
     public attachment: AttachmentService,
     public service: ActivityModalService,
-    private horizontalFeed: HorizontalFeedService,
+    private relatedContent: RelatedContentService,
     private features: FeaturesService
   ) {}
 

@@ -30,7 +30,7 @@
       [class.m-activityContent__message--short]="shortStatus"
       [class.m-activityContent__message--minimalMode]="minimalMode"
       [maxHeightAllowed]="maxMessageHeight"
-      *ngIf="message.length >= 1"
+      *ngIf="message?.length >= 1"
       (click)="onMessageClick($event)"
     >
       <div class="m-activityContent__messageWrapper">
@@ -103,6 +103,7 @@
         !(service.shouldShowPaywall$ | async)
       "
       [style.height]="videoHeight"
+      [style.overflow]="videoHeight ? 'hidden' : null"
     ></m-videoPlayer--scrollaware>
 
     <div class="m-activityContent__fixedHeightSpacer"></div>

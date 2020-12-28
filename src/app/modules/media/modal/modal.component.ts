@@ -21,7 +21,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../common/services/related-content.service';
 import { ShareModalComponent } from '../../modals/share/share';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
@@ -121,7 +121,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.setEntity(params.entity);
 
     if (this.features.has('modal-pager')) {
-      this.horizontalFeed.setBaseEntity(params.entity);
+      this.relatedContent.setBaseEntity(params.entity);
     }
   }
 
@@ -170,7 +170,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private location: Location,
     private site: SiteService,
     private featureService: FeaturesService,
-    private horizontalFeed: HorizontalFeedService,
+    private relatedContent: RelatedContentService,
     private features: FeaturesService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
@@ -226,16 +226,16 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // -- Initialize Horizontal Feed service context
 
     if (this.features.has('modal-pager')) {
-      this.modalPager$ = this.horizontalFeed
+      this.modalPager$ = this.relatedContent
         .onChange()
         .subscribe(async change => {
           this.modalPager = {
-            hasNext: await this.horizontalFeed.hasNext(),
-            hasPrev: await this.horizontalFeed.hasPrev(),
+            hasNext: await this.relatedContent.hasNext(),
+            hasPrev: await this.relatedContent.hasPrev(),
           };
         });
 
-      this.horizontalFeed.setContext('container');
+      this.relatedContent.setContext('container');
     }
 
     // -- Load entity
@@ -808,7 +808,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const modalSourceUrl = this.entity.modal_source_url || '';
-    const response = await this.horizontalFeed.next();
+    const response = await this.relatedContent.next();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity, {
@@ -828,7 +828,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const modalSourceUrl = this.entity.modal_source_url || '';
-    const response = await this.horizontalFeed.prev();
+    const response = await this.relatedContent.prev();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity, {

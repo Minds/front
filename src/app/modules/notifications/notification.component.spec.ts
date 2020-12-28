@@ -452,7 +452,7 @@ describe('NotificationComponent', () => {
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
     expect(notification.nativeElement.innerHTML).toContain(
-      'You earned 10 tokens today.'
+      'earned you 10 tokens'
     );
   });
 

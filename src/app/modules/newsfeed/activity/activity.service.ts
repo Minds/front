@@ -21,7 +21,7 @@ export type ActivityDisplayOptions = {
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
-  bypassMediaModal: boolean; // Temporary - go to media page instead
+  bypassMediaModal: boolean; // Go to media page instead
 };
 
 export type ActivityEntity = {

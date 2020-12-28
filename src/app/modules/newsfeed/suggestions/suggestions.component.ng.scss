@@ -1,0 +1,65 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep m-sidebarWidget {
+    .m-sidebarWidget {
+      padding: 0;
+      @include m-theme() {
+        border: none !important;
+      }
+    }
+    .m-sidebarWidget__title {
+      padding: 0;
+    }
+    .m-sidebarWidget__body {
+      padding: 0 !important;
+    }
+
+    .m-newsfeedActivitySuggestion__item {
+      margin-top: 20px;
+      & > a {
+        display: block;
+        &,
+        * {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .m-activity__minimalMetrics {
+      padding-top: 0 !important;
+      & > span,
+      & > a {
+        font-weight: 300;
+      }
+    }
+  }
+
+  .m-rich-embed--title {
+    font-size: 16px !important;
+  }
+  .m-url {
+    display: none;
+  }
+
+  ::ng-deep m-activity__content {
+    ::ng-deep minds-rich-embed {
+      .meta {
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+      h2.m-rich-embed--title {
+        font-size: 16px !important;
+      }
+      .m-url {
+        display: none;
+      }
+    }
+  }
+
+  ::ng-deep m-loadingSpinner {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+}

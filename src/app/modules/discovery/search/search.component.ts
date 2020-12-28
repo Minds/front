@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
 import {
@@ -9,19 +13,21 @@ import {
 import { FeedsService } from '../../../common/services/feeds.service';
 
 import { combineLatest, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-discovery__search',
   templateUrl: './search.component.html',
   providers: [DiscoveryFeedsService, FeedsService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiscoverySearchComponent {
   q: string;
   filter: DiscoveryFeedsContentFilter;
   type$ = this.service.type$;
   entities$ = this.service.entities$;
+  entities: any[] = [];
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
   subscriptions: Subscription[];
@@ -32,7 +38,8 @@ export class DiscoverySearchComponent {
     private service: DiscoveryFeedsService,
     private router: Router,
     configs: ConfigsService,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private cd: ChangeDetectorRef
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -69,8 +76,15 @@ export class DiscoverySearchComponent {
           this.service.search(this.q);
           // }
         }),
-      this.entities$.subscribe(() => {
+      this.entities$.subscribe(entities => {
         this.setSeo();
+
+        this.entities = entities;
+
+        this.detectChanges();
+      }),
+      this.inProgress$.subscribe(() => {
+        this.detectChanges();
       }),
     ];
   }
@@ -90,6 +104,14 @@ export class DiscoverySearchComponent {
   }
 
   loadMore() {
+    if (this.service.inProgress$.getValue()) {
+      return;
+    }
     this.service.loadMore();
+  }
+
+  detectChanges(): void {
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 }

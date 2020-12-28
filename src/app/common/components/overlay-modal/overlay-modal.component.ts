@@ -91,7 +91,7 @@ export class OverlayModalComponent implements AfterViewInit, OnDestroy {
      */
     this.dismiss();
 
-    if ('dismissOnRouteChange' in opts) {
+    if (opts && 'dismissOnRouteChange' in opts) {
       this.dismissOnRouteChange = opts.dismissOnRouteChange;
     }
 

@@ -6,7 +6,7 @@
   >
     <!-- Header -->
     <div class="m-onboardingWidget__header">
-      <ng-container [ngSwitch]="(progress$ | async).id">
+      <ng-container [ngSwitch]="(progress$ | async)?.id">
         <ng-template ngSwitchCase="InitialOnboardingGroup">
           <span
             class="m-onboardingWidget__title"
