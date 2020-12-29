@@ -16,6 +16,8 @@ import { OnboardingV3VerifyUniquenessComponent } from './panel/verify-uniqueness
 import { OnboardingV3VerifyPhoneComponent } from './panel/verify-uniqueness/verify-phone/verify-phone.component';
 import { OnboardingV3VerifyPhoneService } from './panel/verify-uniqueness/verify-phone/verify-phone.service';
 import { OnboardingV3ModalProgressService } from './modal/onboarding-modal-progress.service';
+import { OnboardingV3SuggestionsPanelComponent } from './panel/suggested/suggested-panel.component';
+import { OnboardingV3SuggestionsPanelCardComponent } from './panel/suggested/suggested-panel-card/suggested-panel-card.component';
 
 const COMPONENTS = [
   OnboardingV3ModalComponent,
@@ -24,6 +26,8 @@ const COMPONENTS = [
   OnboardingV3ChannelComponent,
   OnboardingV3VerifyUniquenessComponent,
   OnboardingV3VerifyPhoneComponent,
+  OnboardingV3SuggestionsPanelComponent,
+  OnboardingV3SuggestionsPanelCardComponent,
   // OnboardingV3BankComponent,
 ];
 

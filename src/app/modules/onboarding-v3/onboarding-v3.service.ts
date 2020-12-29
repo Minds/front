@@ -31,9 +31,23 @@ export type OnboardingStep = {
 };
 
 /**
- * Names of different onboarding steps.
+ * Onboarding groups - possible ids returned from api/v3/onboarding
+ */
+export type OnboardingGroup =
+  | 'InitialOnboardingGroup'
+  | 'OngoingOnboardingGroup';
+
+/**
+ * Generic type encompassing all onboarding steps regardless of onboarding group.
  */
 export type OnboardingStepName =
+  | InitialOnboardingStepName
+  | OngoingOnboardingStepName;
+
+/**
+ * Initially shown step names.
+ */
+export type InitialOnboardingStepName =
   | 'SuggestedHashtagsStep'
   | 'WelcomeStep'
   | 'VerifyEmailStep'
@@ -45,16 +59,19 @@ export type OnboardingStepName =
   | 'CreatePostStep';
 
 /**
- * Onboarding groups - possible ids returned from api/v3/onboarding
+ * Ongoing onboarding step names.
  */
-export type OnboardingGroup =
-  | 'InitialOnboardingGroup'
-  | 'OngoingOnboardingGroup';
+export type OngoingOnboardingStepName =
+  | 'SuggestedChannelsStep'
+  | 'SuggestedGroupsStep';
 
 /**
  * Groups that the front-end has support for.
  */
-export const RELEASED_GROUPS: OnboardingGroup[] = ['InitialOnboardingGroup'];
+export const RELEASED_GROUPS: OnboardingGroup[] = [
+  'InitialOnboardingGroup',
+  'OngoingOnboardingGroup',
+];
 
 /**
  * Core service for onboarding v3 for loading

@@ -1,0 +1,45 @@
+<ng-container *ngIf="entity">
+  <a class="m-suggestedPanelCard__avatarContainer" routerLink="['/', username]">
+    <img [src]="avatarUrl" class="m-suggestedPanelCard__avatar" />
+  </a>
+
+  <div class="m-suggestedPanelCard__bodyContainer" #bodyContainer>
+    <span class="m-suggestedPanelCard__name">
+      {{ name }}
+    </span>
+    <span class="m-suggestedPanelCard__description">
+      {{ description }}
+    </span>
+    <div
+      *ngIf="hovering$ | async"
+      class="m-suggestedPanelCard__hoverCardContainer"
+    >
+      Entity hover card
+    </div>
+  </div>
+  <div class="m-suggestedPanelCard__subscribeButtonContainer">
+    <div
+      class="m-suggestedPanelCard__subscribeButton"
+      (click)="onSubscribeToggle()"
+    >
+      <!-- + symbol -->
+      <i
+        *ngIf="!subscribed && !(subscriptionInProgress$ | async)"
+        class="material-icons"
+        >add</i
+      >
+      <!-- checkmark symbol -->
+      <i
+        *ngIf="subscribed && !(subscriptionInProgress$ | async)"
+        class="material-icons m-suggestedPanelCard__subscribeButton--subscribed"
+        >done</i
+      >
+      <!-- in progress -->
+      <i
+        *ngIf="subscriptionInProgress$ | async"
+        class="material-icons m-suggestedPanelCard__subscribeButton--subscribed"
+        >more_horiz</i
+      >
+    </div>
+  </div>
+</ng-container>

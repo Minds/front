@@ -1,0 +1,7 @@
+<div class="m-onboardingV3__suggestionsPanelContainer">
+  <m-onboardingV3__suggestionsPanelCard
+    *ngFor="let suggestion of suggestions$ | async"
+    [entity]="suggestion.entity"
+  >
+  </m-onboardingV3__suggestionsPanelCard>
+</div>

@@ -128,7 +128,9 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
         return (
           currentStep !== 'VerifyUniquenessStep' &&
           currentStep !== 'VerifyPhoneStep' &&
-          currentStep !== 'VerifyBankStep'
+          currentStep !== 'VerifyBankStep' &&
+          currentStep !== 'SuggestedChannelsStep' &&
+          currentStep !== 'SuggestedGroupsStep'
         );
       })
     );

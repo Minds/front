@@ -1,0 +1,20 @@
+@import 'defaults.scss';
+
+:host {
+  .m-onboardingV3__suggestionsPanelContainer {
+    max-height: 60vh;
+    display: block;
+    overflow: scroll;
+
+    @media screen and (max-width: $min-desktop) {
+      max-height: unset;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

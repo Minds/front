@@ -38,10 +38,23 @@
         >
           Verify Phone Number
         </ng-container>
+        <ng-container
+          *ngSwitchCase="'SuggestedChannelsStep'"
+          i18n="@@ONBOARDING_MODAL__SUBSCRIBE_TO_A_CHANNEL"
+        >
+          Subscribe to a channel
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="'SuggestedGroupsStep'"
+          i18n="@@ONBOARDING_MODAL__SUBSCRIBE_TO_A_CHANNEL"
+        >
+          Join a group
+        </ng-container>
       </ng-container>
     </h2>
   </div>
   <ng-container [ngSwitch]="currentStep$ | async">
+    <!-- Intital Steps -->
     <m-onboardingV3__tags
       *ngSwitchCase="'SuggestedHashtagsStep'"
     ></m-onboardingV3__tags>
@@ -61,6 +74,15 @@
     <!-- <m-onboardingV3__bank
       *ngSwitchCase="'VerifyBankStep'"
     ></m-onboardingV3__bank> -->
+    <!-- Ongoing Steps -->
+    <m-onboardingV3__suggestionsPanel
+      *ngSwitchCase="'SuggestedChannelsStep'"
+      [type]="'channels'"
+    ></m-onboardingV3__suggestionsPanel>
+    <m-onboardingV3__suggestionsPanel
+      *ngSwitchCase="'SuggestedGroupsStep'"
+      [type]="'groups'"
+    ></m-onboardingV3__suggestionsPanel>
   </ng-container>
   <div class="m-modalV2__footer" *ngIf="showFooter$ | async">
     <m-button

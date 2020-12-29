@@ -1,0 +1,121 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 15px 30px;
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-suggestedPanelCard__avatarContainer {
+    margin-right: 10px;
+
+    .m-suggestedPanelCard__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--tertiary);
+      }
+    }
+  }
+
+  .m-suggestedPanelCard__bodyContainer {
+    width: 100%;
+    line-height: 22px;
+
+    .m-suggestedPanelCard__name {
+      font-size: 16px;
+      font-weight: 500;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-suggestedPanelCard__description {
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      font-size: 15px;
+      font-weight: 400;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-suggestedPanelCard__subscribeButtonContainer {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+
+    .m-suggestedPanelCard__subscribeButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+
+        &:hover {
+          border: 1px solid themed($m-borderColor--tertiary);
+          background-color: themed($m-bgColor--secondary);
+        }
+      }
+
+      i {
+        font-size: 18px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+
+          &:hover {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+
+      .m-suggestedPanelCard__subscribeButton--subscribed {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+
+      .m-suggestedPanelCard__subscribeButton--inProgress {
+        font-size: 30px;
+      }
+    }
+  }
+
+  .m-suggestedPanelCard__hoverCardContainer {
+    position: absolute;
+    left: 100px;
+    width: 50%;
+    height: 200px;
+
+    @include z-index(tooltip);
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+}

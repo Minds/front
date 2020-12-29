@@ -92,6 +92,21 @@
             >
               Create a post
             </span>
+
+            <span
+              *ngSwitchCase="'SuggestedChannelsStep'"
+              i18n="@@ONBOARDING_WIDGET__SUBSCRIBE_TO_CHANNEL"
+              data-cy="data-minds-onboarding-widget-create-post"
+            >
+              Subscribe to a channel
+            </span>
+            <span
+              *ngSwitchCase="'SuggestedGroupsStep'"
+              i18n="@@ONBOARDING_WIDGET__JOIN_A_GROUP"
+              data-cy="data-minds-onboarding-widget-create-post"
+            >
+              Join a group
+            </span>
             <span *ngSwitchDefault>{{ step.id }}</span>
           </ng-container>
         </div>
