@@ -47,6 +47,7 @@ export class SettingsV2BoostedContentComponent implements OnInit {
       disabled_boost: new FormControl(''),
       boost_autorotate: new FormControl(''),
       boost_rating: new FormControl(''),
+      liquidity_spot_opt_out: new FormControl(''),
     });
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(
@@ -54,6 +55,7 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         this.disabled_boost.setValue(settings.disabled_boost);
         this.boost_autorotate.setValue(settings.boost_autorotate);
         this.boost_rating.setValue(settings.boost_rating);
+        this.liquidity_spot_opt_out.setValue(0);
 
         /**
          * Check that the settings$ have actually been loaded
@@ -110,6 +112,7 @@ export class SettingsV2BoostedContentComponent implements OnInit {
       const formValue = {
         boost_autorotate: this.boost_autorotate.value,
         boost_rating: this.boost_rating.value,
+        liquidity_spot_opt_out: this.liquidity_spot_opt_out.value,
       };
 
       this.user.boost_autorotate = this.boost_autorotate.value;
@@ -172,6 +175,10 @@ export class SettingsV2BoostedContentComponent implements OnInit {
 
   get boost_rating() {
     return this.form.get('boost_rating');
+  }
+
+  get liquidity_spot_opt_out() {
+    return this.form.get('liquidity_spot_opt_out');
   }
 
   get plus(): boolean {
