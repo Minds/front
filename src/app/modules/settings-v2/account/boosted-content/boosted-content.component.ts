@@ -55,7 +55,7 @@ export class SettingsV2BoostedContentComponent implements OnInit {
         this.disabled_boost.setValue(settings.disabled_boost);
         this.boost_autorotate.setValue(settings.boost_autorotate);
         this.boost_rating.setValue(settings.boost_rating);
-        this.liquidity_spot_opt_out.setValue(0);
+        this.liquidity_spot_opt_out.setValue(settings.liquidity_spot_opt_out);
 
         /**
          * Check that the settings$ have actually been loaded
