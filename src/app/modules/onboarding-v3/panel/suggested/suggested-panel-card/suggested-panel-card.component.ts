@@ -75,6 +75,38 @@ export class OnboardingV3SuggestionsPanelCardComponent
   }
 
   /**
+   * Name to show on card.
+   * @returns { string }
+   */
+  get username(): string {
+    return this.entity.username;
+  }
+
+  /**
+   * Count of subscribers.
+   * @param { string | number }
+   */
+  get subscribersCount(): string | number {
+    return this.entity.subscribers_count || '0';
+  }
+
+  /**
+   * Count of subscriptions.
+   * @param { string | number }
+   */
+  get subscriptionsCount(): string | number {
+    return this.entity.subscriptions_count || '0';
+  }
+
+  /**
+   * Array of hashtags (without # char).
+   * @returns { string[] }
+   */
+  get hashtags(): string[] {
+    return this.entity.tags || [];
+  }
+
+  /**
    * True if subscribed to user.
    * @returns { boolean }
    */
@@ -192,6 +224,5 @@ export class OnboardingV3SuggestionsPanelCardComponent
           })
       );
     }
-    // TODO: Groups
   }
 }

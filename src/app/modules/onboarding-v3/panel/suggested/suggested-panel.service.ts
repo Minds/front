@@ -1074,7 +1074,7 @@ const mockResponse = {
         owner_guid: '0',
         site_guid: false,
         access_id: '2',
-        tags: [],
+        tags: ['all', 'blockchain', 'minds', 'comedy', 'gaming', 'memes'],
         nsfw: [],
         nsfw_lock: [],
         allow_comments: false,
@@ -1087,7 +1087,8 @@ const mockResponse = {
         banned: 'no',
         ban_reason: false,
         website: '',
-        briefdescription: 'Darkness to Light',
+        briefdescription:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor quam eget odio dictum ultricies. Quisque eget dui euismod, elementum quam quis, condimentum ligula. Etiam bibendum, purus dignissim gravida venenatis, nunc velit dictum risus, a sagittis magna ante eget arcu. Nunc vel nunc sit amet justo maximus imperdiet et at nulla. Proin id convallis sem. Aliquam et efficitur ante. Nulla laoreet eu nibh ac hendrerit. Fusce a interdum arcu. Nam luctus porta ligula. Donec orci felis, accumsan id lorem sed, dapibus pellentesque justo. Nam mattis lacus sem. Curabitur velit massa, tempus vel neque ut, efficitur auctor tortor. Mauris nec ipsum eleifend, sagittis est dignissim, ultricies mi. Morbi fermentum nulla lorem, id ultricies ex maximus rutrum.',
         gender: '',
         city: '',
         merchant: false,

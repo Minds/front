@@ -1,10 +1,7 @@
 <ng-container *ngIf="entity">
-  <a class="m-suggestedPanelCard__avatarContainer" routerLink="['/', username]">
-    <img [src]="avatarUrl" class="m-suggestedPanelCard__avatar" />
-  </a>
-
+  <ng-template [ngTemplateOutlet]="avatar"></ng-template>
   <div class="m-suggestedPanelCard__bodyContainer" #bodyContainer>
-    <span class="m-suggestedPanelCard__name">
+    <span class="m-suggestedPanelCard__name" routerLink="['/' + username]">
       {{ name }}
     </span>
     <span class="m-suggestedPanelCard__description">
@@ -13,10 +10,63 @@
     <div
       *ngIf="hovering$ | async"
       class="m-suggestedPanelCard__hoverCardContainer"
+      [ngStyle]="hoverPositionCSS"
     >
-      Entity hover card
+      <!-- Hover card -->
+      <div class="m-hoverCard__topbar">
+        <ng-template [ngTemplateOutlet]="avatar"></ng-template>
+        <div class="m-hoverCard__namePanel">
+          <a
+            class="m-suggestedPanelCard__link--undecorated"
+            [href]="'/' + username"
+            target="_blank"
+          >
+            <span class="m-hoverCard__name">
+              {{ name }}
+            </span>
+          </a>
+          <a
+            class="m-suggestedPanelCard__link--undecorated"
+            [href]="'/' + username"
+            target="_blank"
+          >
+            <span class="m-hoverCard__username"> @{{ username }} </span>
+          </a>
+        </div>
+        <ng-template [ngTemplateOutlet]="interactButton"></ng-template>
+      </div>
+      <div class="m-hoverCard__body">
+        <div class="m-hoverCard__subCountsContainer">
+          <span class="m-hoverCard__subscriberCount--primary">{{
+            subscribersCount
+          }}</span>
+          <span class="m-hoverCard__subscriberCount--secondary">
+            subscribers ·
+          </span>
+          <span class="m-hoverCard__subscriberCount--primary">{{
+            subscriptionsCount
+          }}</span>
+          <span class="m-hoverCard__subscriberCount--secondary">
+            subscriptions</span
+          >
+        </div>
+        <div class="m-hoverCard__hashtagsContainer">
+          <a
+            *ngFor="let hashtag of hashtags"
+            class="m-suggestedPanelCard__link--undecorated"
+            [href]="'/discovery/search?f=top&t=all&q=%23' + hashtag"
+            target="_blank"
+            >#{{ hashtag }}
+          </a>
+        </div>
+        <span class="m-hoverCard__description">{{ description }}</span>
+      </div>
     </div>
   </div>
+  <ng-template [ngTemplateOutlet]="interactButton"></ng-template>
+</ng-container>
+
+<ng-template #interactButton>
   <div class="m-suggestedPanelCard__subscribeButtonContainer">
     <div
       class="m-suggestedPanelCard__subscribeButton"
@@ -42,4 +92,14 @@
       >
     </div>
   </div>
-</ng-container>
+</ng-template>
+
+<ng-template #avatar>
+  <a
+    class="m-suggestedPanelCard__avatarContainer"
+    [href]="'/' + username"
+    target="_blank"
+  >
+    <img [src]="avatarUrl" class="m-suggestedPanelCard__avatar" />
+  </a>
+</ng-template>

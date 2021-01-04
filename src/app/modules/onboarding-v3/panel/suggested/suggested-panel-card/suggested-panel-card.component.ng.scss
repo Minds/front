@@ -28,10 +28,13 @@
     width: 100%;
     line-height: 22px;
 
+    /* Allow absolute child positioning relative to parent */
+    position: relative;
+
     .m-suggestedPanelCard__name {
       font-size: 16px;
       font-weight: 500;
-      max-width: 200px;
+      max-width: 400px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -106,10 +109,13 @@
   }
 
   .m-suggestedPanelCard__hoverCardContainer {
-    position: absolute;
+    position: absolute; // absolute relative to parent.
     left: 100px;
-    width: 50%;
-    height: 200px;
+    top: -20px;
+    left: -52px;
+    top: 0px;
+    width: 400px;
+    padding: 20px;
 
     @include z-index(tooltip);
 
@@ -117,5 +123,99 @@
       border: 1px solid themed($m-borderColor--primary);
       background-color: themed($m-bgColor--primary);
     }
+
+    .m-hoverCard__topbar {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .m-suggestedPanelCard__avatarContainer {
+        margin-right: 10px;
+
+        .m-suggestedPanelCard__avatar {
+          height: 50px;
+          width: 50px;
+        }
+      }
+
+      .m-hoverCard__namePanel {
+        display: flex;
+        flex-flow: column nowrap;
+        width: 100%; // fill available.
+        justify-content: center;
+
+        .m-hoverCard__name {
+          font-size: 18px;
+          font-weight: 500;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        .m-hoverCard__username {
+          font-size: 16;
+          font-weight: 400;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+    .m-hoverCard__body {
+      > *:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      .m-hoverCard__subCountsContainer {
+        font-size: 16px;
+        font-weight: 400;
+
+        .m-hoverCard__subscriberCount--primary {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        .m-hoverCard__subscriberCount--secondary {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+      .m-hoverCard__hashtagsContainer {
+        font-size: 16px;
+        font-weight: 400;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-hoverCard__description {
+        display: block;
+        font-size: 16px;
+        line-height: 1.188;
+        font-weight: 400;
+        max-height: 60px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 50%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-suggestedPanelCard__link--undecorated {
+    text-decoration: none;
   }
 }
