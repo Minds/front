@@ -30,7 +30,7 @@ import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
-import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.component';
+import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 
 @NgModule({
   imports: [
@@ -80,7 +80,7 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
           },
           {
             path: 'memberships/feed',
-            component: DiscoveryMembershipsFeedComponent,
+            component: DiscoveryLatestFeedComponent,
             data: {
               title: 'Discovery / Memberships',
               memberships: true,
@@ -131,6 +131,14 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
                 path: 'trend/:guid',
                 component: DiscoveryTrendComponent,
                 data: { plus: true },
+              },
+              {
+                path: 'latest/feed',
+                component: DiscoveryLatestFeedComponent,
+                data: {
+                  title: 'Minds+ / Latest',
+                  plus: true,
+                },
               },
               {
                 path: 'search',
@@ -196,7 +204,7 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
     DiscoveryPlusUpgradeComponent,
     DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
-    DiscoveryMembershipsFeedComponent,
+    DiscoveryLatestFeedComponent,
   ],
   exports: [
     DiscoveryComponent,
