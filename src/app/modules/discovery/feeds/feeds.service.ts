@@ -54,7 +54,7 @@ export class DiscoveryFeedsService {
     let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
 
     if (isPlusPage) {
-      algorithm = 'plusFeed'; // Temporary, need to make backend sorting algo for plus
+      algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
     }
 
     const type = this.type$.value;
