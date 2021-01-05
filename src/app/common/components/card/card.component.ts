@@ -159,7 +159,7 @@ export class MindsCard implements AfterViewInit {
       this.componentInstance.entity = this.object;
 
       (<ActivityComponent>this.componentInstance).displayOptions = {
-        showToolbar: this.flags.hideTabs || false,
+        showToolbar: this.flags.hideTabs === false,
         showComments: false,
         autoplayVideo: false,
       };
