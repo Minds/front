@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   OnboardingPanelSuggestionsType,
   OnboardingV3SuggestionsPanelService,
@@ -20,11 +21,24 @@ export class OnboardingV3SuggestionsPanelComponent {
    * holds suggestions
    * @returns { BehaviorSubject<any[]> }
    */
-  get suggestions$(): BehaviorSubject<any[]> {
-    return this.service.suggestions$;
+  get suggestions$(): Observable<any[]> {
+    return this.service.suggestions$.pipe(
+      map(arr => {
+        // filter out unhydrated
+        return arr.filter((entity: any) => entity.entity);
+      })
+    );
+  }
+
+  get inProgress$(): Observable<boolean> {
+    return this.service.inProgress$;
   }
 
   constructor(private service: OnboardingV3SuggestionsPanelService) {}
+
+  ngOnDestroy(): void {
+    this.service.clear();
+  }
 
   ngOnInit() {
     this.service.load(this.type);

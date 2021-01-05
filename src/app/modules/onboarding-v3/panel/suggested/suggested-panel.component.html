@@ -1,3 +1,5 @@
+<m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
+
 <div class="m-onboardingV3__suggestionsPanelContainer">
   <m-onboardingV3__suggestionsPanelCard
     *ngFor="let suggestion of suggestions$ | async"

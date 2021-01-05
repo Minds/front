@@ -65,4 +65,12 @@ export class OnboardingV3SuggestionsPanelService {
 
     this.inProgress$.next(false);
   }
+
+  /**
+   * Clear the feed
+   * @returns { void }
+   */
+  public clear(): void {
+    this.feeds.clear();
+  }
 }

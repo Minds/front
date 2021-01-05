@@ -1,7 +1,7 @@
 <ng-container *ngIf="entity">
   <ng-template [ngTemplateOutlet]="avatar"></ng-template>
   <div class="m-suggestedPanelCard__bodyContainer" #bodyContainer>
-    <span class="m-suggestedPanelCard__name" routerLink="['/' + username]">
+    <span class="m-suggestedPanelCard__name">
       {{ name }}
     </span>
     <span class="m-suggestedPanelCard__description">
@@ -17,7 +17,7 @@
         <div class="m-hoverCard__namePanel">
           <a
             class="m-suggestedPanelCard__link--undecorated"
-            [href]="'/' + username"
+            [href]="url"
             target="_blank"
           >
             <span class="m-hoverCard__name">
@@ -26,28 +26,43 @@
           </a>
           <a
             class="m-suggestedPanelCard__link--undecorated"
-            [href]="'/' + username"
+            [href]="url"
             target="_blank"
           >
-            <span class="m-hoverCard__username"> @{{ username }} </span>
+            <span
+              class="m-hoverCard__username"
+              *ngIf="entity.type !== 'group' && entity.username"
+            >
+              @{{ username }}
+            </span>
           </a>
         </div>
         <ng-template [ngTemplateOutlet]="interactButton"></ng-template>
       </div>
       <div class="m-hoverCard__body">
-        <div class="m-hoverCard__subCountsContainer">
-          <span class="m-hoverCard__subscriberCount--primary">{{
-            subscribersCount
-          }}</span>
-          <span class="m-hoverCard__subscriberCount--secondary">
-            subscribers ·
-          </span>
-          <span class="m-hoverCard__subscriberCount--primary">{{
-            subscriptionsCount
-          }}</span>
-          <span class="m-hoverCard__subscriberCount--secondary">
-            subscriptions</span
-          >
+        <div class="m-hoverCard__subCountsContainer" [ngSwitch]="entity.type">
+          <ng-container *ngSwitchCase="'user'">
+            <span class="m-hoverCard__subscriberCount--primary">{{
+              subscribersCount
+            }}</span>
+            <span class="m-hoverCard__subscriberCount--secondary">
+              subscribers ·
+            </span>
+            <span class="m-hoverCard__subscriberCount--primary">{{
+              subscriptionsCount
+            }}</span>
+            <span class="m-hoverCard__subscriberCount--secondary">
+              subscriptions</span
+            >
+          </ng-container>
+          <ng-container *ngSwitchCase="'group'">
+            <span class="m-hoverCard__subscriberCount--primary">{{
+              membershipCount
+            }}</span>
+            <span class="m-hoverCard__subscriberCount--secondary">
+              members
+            </span>
+          </ng-container>
         </div>
         <div class="m-hoverCard__hashtagsContainer">
           <a
@@ -69,23 +84,23 @@
   <div class="m-suggestedPanelCard__subscribeButtonContainer">
     <div
       class="m-suggestedPanelCard__subscribeButton"
-      (click)="onSubscribeToggle()"
+      (click)="onActionToggle()"
     >
       <!-- + symbol -->
       <i
-        *ngIf="!subscribed && !(subscriptionInProgress$ | async)"
+        *ngIf="!isSubscribed && !(actionInProgress$ | async)"
         class="material-icons"
         >add</i
       >
       <!-- checkmark symbol -->
       <i
-        *ngIf="subscribed && !(subscriptionInProgress$ | async)"
+        *ngIf="isSubscribed && !(actionInProgress$ | async)"
         class="material-icons m-suggestedPanelCard__subscribeButton--subscribed"
         >done</i
       >
       <!-- in progress -->
       <i
-        *ngIf="subscriptionInProgress$ | async"
+        *ngIf="actionInProgress$ | async"
         class="material-icons m-suggestedPanelCard__subscribeButton--subscribed"
         >more_horiz</i
       >
@@ -94,11 +109,7 @@
 </ng-template>
 
 <ng-template #avatar>
-  <a
-    class="m-suggestedPanelCard__avatarContainer"
-    [href]="'/' + username"
-    target="_blank"
-  >
+  <a class="m-suggestedPanelCard__avatarContainer" [href]="url" target="_blank">
     <img [src]="avatarUrl" class="m-suggestedPanelCard__avatar" />
   </a>
 </ng-template>

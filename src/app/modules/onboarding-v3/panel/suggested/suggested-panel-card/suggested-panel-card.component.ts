@@ -25,9 +25,9 @@ export class OnboardingV3SuggestionsPanelCardComponent
   private subscriptions: Subscription[] = [];
 
   /**
-   * Holds true if subscription is in progress.
+   * Holds true if subscription or joining is in progress.
    */
-  public readonly subscriptionInProgress$: BehaviorSubject<
+  public readonly actionInProgress$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
 
@@ -99,6 +99,14 @@ export class OnboardingV3SuggestionsPanelCardComponent
   }
 
   /**
+   * Count of memberships.
+   * @param { string | number }
+   */
+  get membershipCount(): string | number {
+    return this.entity['members:count'] || '0';
+  }
+
+  /**
    * Array of hashtags (without # char).
    * @returns { string[] }
    */
@@ -107,17 +115,46 @@ export class OnboardingV3SuggestionsPanelCardComponent
   }
 
   /**
-   * True if subscribed to user.
+   * Get url to navigate to on click.
+   * @returns { string }
+   */
+  get url(): string {
+    switch (this.entity.type) {
+      case 'user':
+        return '/' + this.entity.username;
+      case 'group':
+        return `/groups/profile/${this.entity.guid}/feed`;
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * True if subscribed to user or is member of group.
    * @returns { boolean }
    */
-  get subscribed(): boolean {
-    const subscribed = this.entity.subscribed;
+  get isSubscribed(): boolean {
+    switch (this.entity.type) {
+      case 'user':
+        const subscribed = this.entity.subscribed;
 
-    if (typeof subscribed === 'boolean') {
-      return this.entity.subscribed;
+        if (typeof subscribed === 'boolean') {
+          return this.entity.subscribed;
+        }
+        return false;
+
+      case 'group':
+        const isMember = this.entity['is:member'];
+
+        if (typeof isMember === 'boolean') {
+          return isMember;
+        }
+
+        return false;
+
+      default:
+        return false;
     }
-
-    return false;
   }
 
   /**
@@ -126,6 +163,13 @@ export class OnboardingV3SuggestionsPanelCardComponent
    */
   get avatarUrl(): string {
     const iconTime: number = this.entity.icontime || 0;
+
+    if (this.entity && this.entity.type === 'group') {
+      return `${this.configs.get('cdn_url')}fs/v1/avatars/${
+        this.entity.guid
+      }/${iconTime}`;
+    }
+
     return `${this.configs.get('cdn_url')}icon/${
       this.entity.guid
     }/medium/${iconTime}`;
@@ -155,6 +199,10 @@ export class OnboardingV3SuggestionsPanelCardComponent
    * @returns { void }
    */
   setupHoverListeners(): void {
+    if (!this.bodyContainerElement) {
+      return;
+    }
+
     // set instance variables to new observables that fire on mouseenter/mouseleave of card body
     this.mouseenter$ = fromEvent(
       this.bodyContainerElement.nativeElement,
@@ -188,41 +236,94 @@ export class OnboardingV3SuggestionsPanelCardComponent
    * Called when subscribe / join is toggled.
    * @returns { void }
    */
-  public onSubscribeToggle(): void {
-    this.subscriptionInProgress$.next(true);
+  public onActionToggle(): void {
+    this.actionInProgress$.next(true);
 
-    if (this.entity.type === 'user') {
-      const endpoint = `/${this.entity.guid}api/v1/subscribe/${this.entity.guid}`;
-
-      const request = this.subscribed
-        ? this.api.delete(endpoint)
-        : this.api.post(endpoint);
-
-      this.subscriptions.push(
-        request
-          .pipe(
-            take(1),
-            catchError(e => {
-              console.error(e);
-              this.toast.error(
-                'An unknown error has occurred subscribing to this channel'
-              );
-              this.subscriptionInProgress$.next(false);
-              return of(null);
-            })
-          )
-          .subscribe(response => {
-            this.subscriptionInProgress$.next(false);
-
-            if (response.status !== 200) {
-              throw new Error(
-                response.message || 'An unknown error has occurred'
-              );
-            }
-
-            this.entity.subscribed = !this.entity.subscribed;
-          })
-      );
+    switch (this.entity.type) {
+      case 'user':
+        this.toggleChannelSubscription();
+        break;
+      case 'group':
+        this.toggleGroupMembership();
+        break;
     }
+  }
+
+  /**
+   * Calls endpoint appropriately to toggle channel subscription
+   * between subscribed and not.
+   * @returns { void }
+   */
+  private toggleChannelSubscription(): void {
+    const endpoint = `${this.entity.guid}api/v1/subscribe/${this.entity.guid}`;
+
+    const request = this.isSubscribed
+      ? this.api.delete(endpoint)
+      : this.api.post(endpoint);
+
+    this.subscriptions.push(
+      request
+        .pipe(
+          take(1),
+          catchError(e => {
+            console.error(e);
+            this.toast.error(
+              'An unknown error has occurred subscribing to this channel'
+            );
+            this.actionInProgress$.next(false);
+            return of(null);
+          })
+        )
+        .subscribe(response => {
+          this.actionInProgress$.next(false);
+
+          if (response.status !== 200) {
+            throw new Error(
+              response.message || 'An unknown error has occurred'
+            );
+          }
+
+          this.entity.subscribed = !this.entity.subscribed;
+        })
+    );
+  }
+
+  /**
+   * Calls endpoint appropriately to toggle group membership
+   * between being a member and not being a member.
+   * @returns { void }
+   */
+  private toggleGroupMembership(): void {
+    const endpoint = `api/v1/groups/membership/${this.entity.guid}`;
+
+    const request = this.isSubscribed
+      ? this.api.delete(endpoint)
+      : this.api.put(endpoint);
+
+    this.subscriptions.push(
+      request
+        .pipe(
+          take(1),
+          catchError(e => {
+            console.error(e);
+            this.toast.error(
+              'An unknown error has occurred joining or leaving this group'
+            );
+            this.actionInProgress$.next(false);
+            return of(null);
+          })
+        )
+        .subscribe(response => {
+          this.actionInProgress$.next(false);
+
+          if (response.status === 'error') {
+            throw new Error(
+              response.message || 'An unknown error has occurred '
+            );
+          }
+
+          this.entity['is:member'] = !this.entity['is:member'];
+        })
+    );
   }
 }
