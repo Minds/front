@@ -5,7 +5,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable()
 export class GuestModeService {
-  isGuest$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // ojm uncomment
+  //isGuest$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isGuest$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   sessionSubscription: Subscription;
 
   constructor(private session: Session, private features: FeaturesService) {}
@@ -22,8 +24,12 @@ export class GuestModeService {
    * Emits an events that others can listen to
    */
   emitIsGuest(isGuest: boolean): void {
-    if (this.features.has('guest-mode')) {
-      this.isGuest$.next(isGuest);
-    }
+    // ojm uncomment
+    // if (this.features.has('guest-mode')) {
+    //   this.isGuest$.next(isGuest);
+    // }
+
+    //ojm remove
+    this.isGuest$.next(true);
   }
 }
