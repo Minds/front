@@ -7930,6 +7930,22 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="PLAYER__PLAY_NEXT" datatype="html">
+        <source>Playing next...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/components/video/auto-progress-overlay/auto-progress-overlay.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="PLAYER__CANCEL" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/components/video/auto-progress-overlay/auto-progress-overlay.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="TAKE_BACK_CONTROL" datatype="html">
         <source>Take back control of your social media</source>
         <context-group purpose="location">

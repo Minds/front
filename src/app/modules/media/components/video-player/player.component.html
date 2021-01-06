@@ -18,6 +18,7 @@
       [plyrPlaysInline]="true"
       [plyrSources]="!service.playable ? emptySource : (sources$ | async)"
       [plyrOptions]="options"
+      (plyrEnded)="onEnded($event)"
       (plyrPlay)="onPlayed($event)"
       (plyrControlsShown)="onControlsShown.next($event)"
       (plyrControlsHidden)="onControlsHidden.next($event)"
@@ -27,6 +28,7 @@
       (plyrPlaying)="onPlay()"
       (plyrReady)="onReady()"
       (plyrVolumeChange)="onVolumeChange()"
+      (plyrSeeking)="onSeeking()"
     >
     </plyr>
   </div>
@@ -46,3 +48,4 @@
     </i>
   </div>
 </ng-template>
+<m-autoProgress__overlay *ngIf="isModal"> </m-autoProgress__overlay>
