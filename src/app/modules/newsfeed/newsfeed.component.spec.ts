@@ -18,7 +18,7 @@ import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
-import { MockComponent, MockDirective } from '../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../utils/mock';
 import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { NewsfeedService } from './services/newsfeed.service';
@@ -30,6 +30,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PagesService } from '../../common/services/pages.service';
 import { pagesServiceMock } from '../../mocks/services/pages-mock.spec';
 import { LiquiditySpotComponent } from '../boost/liquidity-spot/liquidity-spot.component';
+import { GuestModeService } from '../../common/services/guest-mode.service';
+import { guestServiceMock } from '../../common/services/guest-mode.service.spec';
 
 describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
@@ -100,6 +102,7 @@ describe('NewsfeedComponent', () => {
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: PagesService, useValue: pagesServiceMock },
+        { provide: GuestModeService, useValue: guestServiceMock },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css
