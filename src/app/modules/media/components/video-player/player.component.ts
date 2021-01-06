@@ -21,6 +21,8 @@ import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
+import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -113,10 +115,13 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     this.cd.detectChanges();
   });
 
+  private timerSubscription: Subscription;
+
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
+    public autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -131,7 +136,12 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onReadySubscription.unsubscribe();
+    if (this.onReadySubscription) {
+      this.onReadySubscription.unsubscribe();
+    }
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
     //this.autoplayService.unregisterPlayer(this);
   }
 
@@ -161,6 +171,10 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
 
   get status(): string {
     return this.service.status;
+  }
+
+  get isModal(): boolean {
+    return this.service.isModal;
   }
 
   get awaitingTranscode(): Observable<boolean> {
@@ -305,5 +319,22 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
         video.load();
       } catch (err) {}
     }
+  }
+
+  onEnded($event: any): void {
+    this.autoProgress.next();
+  }
+
+  /**
+   * Called on Plyr seek.
+   */
+  onSeeking(): void {
+    this.timerSubscription = this.autoProgress.timer$
+      .pipe(take(1))
+      .subscribe(timer => {
+        if (timer > 0) {
+          this.autoProgress.cancel();
+        }
+      });
   }
 }
