@@ -79,6 +79,7 @@ export class ComposerMonetizeV2MembershipsComponent
       this.service.monetization$.getValue();
 
     if (!monetization) {
+      this.urn.setValue('none');
       return;
     }
     if (monetization.support_tier && monetization.support_tier.urn) {
