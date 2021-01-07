@@ -10,6 +10,7 @@
     <div
       *ngIf="hovering$ | async"
       class="m-suggestedPanelCard__hoverCardContainer"
+      [ngStyle]="cardTopStyle"
     >
       <!-- Hover card -->
       <div class="m-hoverCard__topbar">

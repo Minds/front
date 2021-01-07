@@ -175,6 +175,23 @@ export class OnboardingV3SuggestionsPanelCardComponent
     }/medium/${iconTime}`;
   }
 
+  /**
+   * Hover card positioning style (applied via ngStyle in template).
+   * @returns { { top: number } }  - returns an object containing a number variable, top.
+   */
+  get cardTopStyle(): { top: number } {
+    if (this.bodyContainerElement) {
+      const {
+        top,
+      } = this.bodyContainerElement.nativeElement.getBoundingClientRect();
+
+      return {
+        top: top - 150,
+      };
+    }
+    return { top: 0 };
+  }
+
   constructor(
     private configs: ConfigsService,
     private api: ApiService,
@@ -186,8 +203,23 @@ export class OnboardingV3SuggestionsPanelCardComponent
   }
 
   ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
+    this.unsubscribeAllSubscriptions();
+  }
+
+  /**
+   * Called when subscribe / join is toggled.
+   * @returns { void }
+   */
+  public onActionToggle(): void {
+    this.actionInProgress$.next(true);
+
+    switch (this.entity.type) {
+      case 'user':
+        this.toggleChannelSubscription();
+        break;
+      case 'group':
+        this.toggleGroupMembership();
+        break;
     }
   }
 
@@ -198,7 +230,7 @@ export class OnboardingV3SuggestionsPanelCardComponent
    *
    * @returns { void }
    */
-  setupHoverListeners(): void {
+  private setupHoverListeners(): void {
     if (!this.bodyContainerElement) {
       return;
     }
@@ -226,27 +258,14 @@ export class OnboardingV3SuggestionsPanelCardComponent
       // emit on mouseleave
       this.mouseleave$.subscribe(() => {
         this.hovering$.next(false); // hide card
+
+        // clear existing mouse listeners and api subscriptions.
+        this.unsubscribeAllSubscriptions();
+
         // recursively reset listeners so that events can fire again if the user mouses out and back in.
         this.setupHoverListeners();
       })
     );
-  }
-
-  /**
-   * Called when subscribe / join is toggled.
-   * @returns { void }
-   */
-  public onActionToggle(): void {
-    this.actionInProgress$.next(true);
-
-    switch (this.entity.type) {
-      case 'user':
-        this.toggleChannelSubscription();
-        break;
-      case 'group':
-        this.toggleGroupMembership();
-        break;
-    }
   }
 
   /**
@@ -325,5 +344,15 @@ export class OnboardingV3SuggestionsPanelCardComponent
           this.entity['is:member'] = !this.entity['is:member'];
         })
     );
+  }
+
+  /**
+   * Utility function to unsubscribe to ALL component subscriptions.
+   * @returns { Promise<void> }
+   */
+  private async unsubscribeAllSubscriptions(): Promise<void> {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 }

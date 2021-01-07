@@ -28,9 +28,6 @@
     width: 100%;
     line-height: 22px;
 
-    /* Allow absolute child positioning relative to parent */
-    position: relative;
-
     .m-suggestedPanelCard__name {
       font-size: 16px;
       font-weight: 500;
@@ -110,10 +107,7 @@
 
   .m-suggestedPanelCard__hoverCardContainer {
     position: absolute; // absolute relative to parent.
-    left: 100px;
-    top: -20px;
-    left: -52px;
-    top: 0px;
+    left: 40px;
     width: 400px;
     padding: 20px;
 
