@@ -184,12 +184,14 @@
           "
         >
           <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OWN"
-            >{{ notification.fromObj.name }} commented on
-            <span class="pseudo-link mdl-color-text--blue-grey-400"
-              >your activity</span
-            ></ng-container
-          >
+            *ngTemplateOutlet="
+              commentedOn;
+              context: {
+                from: notification.fromObj.name,
+                contentLabel: 'your activity'
+              }
+            "
+          ></ng-container>
         </p>
         <p
           *ngIf="
@@ -198,12 +200,15 @@
           "
         >
           <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OTHER"
-            >{{ notification.fromObj.name }} commented on
-            <span class="pseudo-link mdl-color-text--blue-grey-400"
-              >{{ notification.entityObj.ownerObj.name }}'s activity</span
-            ></ng-container
-          >
+            *ngTemplateOutlet="
+              commentedOn;
+              context: {
+                from: notification.fromObj.name,
+                contentLabel:
+                  notification.entityObj.ownerObj.name + '\'s activity'
+              }
+            "
+          ></ng-container>
         </p>
         <p *ngIf="notification.entityObj.title">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y"
@@ -228,18 +233,21 @@
               focusedCommentUrn: notification.params?.focusedCommentUrn
             }"
           >
-            <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
-              {{ notification.fromObj.name }} commented on
-              <span class="pseudo-link mdl-color-text--blue-grey-400">{{
-                notification.entityObj.title | excerpt
-              }}</span>
-            </p>
+            <ng-container
+              *ngTemplateOutlet="
+                commentedOn;
+                context: {
+                  from: notification.fromObj.name,
+                  contentLabel: notification.entityObj.title | excerpt
+                }
+              "
+            ></ng-container>
           </a>
         </div>
 
         <div *ngIf="notification.entityObj.subtype != 'blog'">
           <a
-            [routerLink]="['/media', notification.entityObj.guid]"
+            [routerLink]="['/newsfeed', notification.entityObj.guid]"
             [queryParams]="{
               focusedCommentUrn: notification.params?.focusedCommentUrn
             }"
@@ -336,6 +344,38 @@
         </p>
       </a>
     </div>
+
+    <!-- Reusable generic template for comments. 
+        Will differentiate between comment replies and post replies.
+
+        Context params:
+        @param { string } from - Who the comment was sent by.
+        @param { string } contentLabel - string that is appended to X replied on your comment on...
+
+        Usage:
+
+        <ng-container *ngTemplateOutlet="commentedOn; context: {
+          from: senderName,
+          contentLabel: postOwnerName+'\'s post'
+        }"></ng-container> -->
+    <ng-template #commentedOn let-from="from" let-contentLabel="contentLabel">
+      <ng-container *ngIf="!notification.params?.is_reply">
+        <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
+          {{ from }} commented on
+          <span class="pseudo-link mdl-color-text--blue-grey-400">
+            {{ contentLabel }}
+          </span>
+        </p>
+      </ng-container>
+      <ng-container *ngIf="notification.params?.is_reply">
+        <p i18n="@@@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO">
+          {{ from }} replied to your comment on
+          <span class="pseudo-link mdl-color-text--blue-grey-400"
+            >{{ contentLabel }}
+          </span>
+        </p>
+      </ng-container>
+    </ng-template>
   </ng-template>
 
   <!-- up voted content -->
