@@ -3,7 +3,7 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, switchAll, take, tap } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
-import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Injectable()

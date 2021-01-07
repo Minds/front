@@ -34,7 +34,7 @@ import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers
 import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
 import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
-import { WalletV2Service } from '../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../wallet/components/wallet-v2.service';
 import { ProModule } from '../pro/pro.module';
 import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
 import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
