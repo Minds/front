@@ -53,12 +53,12 @@ interface RelatedContentChange {
 /**
  * Types of filter for feed, appended to end of v2/feeds/container URL.
  */
-type FilterType = 'all' | 'videos';
+type FilterType = 'all' | 'videos' | 'activities';
 
 /**
  * Default value for filter.
  */
-const DEFAULT_FILTER_VALUE = 'all';
+const DEFAULT_FILTER_VALUE = 'activities';
 
 /**
  * This service allow retrieving entities to navigate through a horizontal feed whose entities will be loaded
@@ -350,7 +350,7 @@ export class RelatedContentService {
     const baseEntityTimestamp = baseEntity.time_created * 1000;
     const guid = baseEntity.container_guid || baseEntity.owner_guid;
 
-    const filter = this.filter ? this.filter : 'all';
+    const filter = this.filter ? this.filter : 'activities';
     const endpoint = `api/v2/feeds/container/${guid}/${filter}`;
 
     const params = {

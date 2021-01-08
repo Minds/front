@@ -79,7 +79,7 @@ export class ActivityMinimalMetricsComponent implements OnInit, OnDestroy {
       return false;
     }
     const entity =
-      this.entity.activity_type !== 'remind'
+      this.entity.activity_type !== 'quote'
         ? this.entity
         : this.entity.remind_object;
 
@@ -93,12 +93,12 @@ export class ActivityMinimalMetricsComponent implements OnInit, OnDestroy {
   }
 
   isRichEmbedWithoutText(entity: any): boolean {
-    return entity.activity_type === 'rich-embed' && !entity.message;
+    return entity.content_type === 'rich-embed' && !entity.message;
   }
 
   isMediaWithoutText(entity: any): boolean {
     return (
-      (entity.activity_type === 'image' || entity.activity_type === 'video') &&
+      (entity.content_type === 'image' || entity.content_type === 'video') &&
       !entity.message &&
       !entity.title
     );

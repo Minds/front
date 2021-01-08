@@ -75,20 +75,10 @@ export class NewsfeedActivitySuggestionsComponent {
     pool.entities.forEach(e => {
       let entity = e.entity;
       const type = getActivityContentType(entity, true, false);
-
       // if (type === 'image' || type === 'video' || type === 'blog') {
       this.entities.push(entity);
       // }
     });
-  }
-
-  activityClicked(event: MouseEvent) {
-    if (!event) {
-      return;
-    }
-
-    event.stopPropagation();
-    event.preventDefault();
   }
 
   get headerName(): string {
