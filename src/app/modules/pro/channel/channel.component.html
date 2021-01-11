@@ -11,11 +11,7 @@
     <ng-container *ngIf="!(channelService.showSplash$ | async)">
       <div class="m-proChannel__loginRow">
         <ng-container
-          *ngIf="
-            !(channelService.isOwner$ | async) &&
-              !(channelService.userIsMember$ | async);
-            else settingsLinks
-          "
+          *ngIf="!(channelService.isOwner$ | async); else settingsLinks"
         >
           <div class="m-proChannel__login" *ngIf="!currentUser">
             <span i18n="@@M_PRO_CHANNEL__HAVE_ACCOUNT"
