@@ -19,6 +19,22 @@
             ><a (click)="showLoginModal()" i18n="@@COMMON__LOGIN">Login</a>
           </div>
           <div class="m-proChannel__joinNow">
+            <m-button
+              class="m-proChannel__subscribe"
+              (click)="toggleSubscribe()"
+              [saving]="subscriptionInProgress$ | async"
+            >
+              <ng-container
+                *ngIf="!channel.subscribed"
+                i18n="@@follow channel|CHANNEL__SUBSCRIBE"
+                >SUBSCRIBE</ng-container
+              >
+              <ng-container
+                *ngIf="channel.subscribed"
+                i18n="@@unfollow channel|CHANNEL__UNSUBSCRIBE"
+                >UNSUBSCRIBE</ng-container
+              >
+            </m-button>
             <m-pro__joinButton
               *ngIf="channelService.showJoinButton$ | async"
             ></m-pro__joinButton>

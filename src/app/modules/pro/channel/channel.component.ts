@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Session } from '../../../services/session';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { ProChannelService } from './channel.service';
@@ -80,6 +80,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   showLoginRow: boolean = true;
 
   public lowestSupportTier: SupportTier | null;
+
+  readonly subscriptionInProgress$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject(false);
 
   protected params$: Subscription;
 
@@ -153,6 +157,36 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       ? `/settings/pro_canary/${this.username}`
       : '/settings/billing/recurring-payments';
     return [path];
+  }
+
+  /**
+   * Toggles subscription on a channel
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async toggleSubscribe(): Promise<void> {
+    try {
+      this.subscriptionInProgress$.next(true);
+
+      let message;
+      if (!this.channel.subscribed) {
+        await this.channelService.subscribe();
+        this.channel.subscribed = true;
+        message = `You have successfully subscribed to ${this.channel.username}.`;
+      } else {
+        await this.channelService.unsubscribe();
+        this.channel.subscribed = false;
+        message = `You have unsubscribed to @${this.channel.username}.`;
+      }
+      this.setSubscribed();
+      this.toasterService.success(message);
+      this.subscriptionInProgress$.next(false);
+    } catch (e) {
+      console.error(e);
+      this.toasterService.error(
+        'Something has gone wrong subscribing to this channel.'
+      );
+      this.subscriptionInProgress$.next(false);
+    }
   }
 
   get settingsHref() {

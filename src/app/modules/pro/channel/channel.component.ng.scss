@@ -60,6 +60,32 @@ $min-tablet-pro: 900px;
         flex-grow: 1;
         justify-content: flex-end;
 
+        ::ng-deep {
+          .m-proChannel__subscribe {
+            display: block;
+            button {
+              padding: 10px 20px;
+              min-height: 38px;
+
+              background-color: var(--m-pro--plain-background-color) !important;
+              // border: 2px solid var(--m-pro--primary-color);
+              &:hover,
+              &:active {
+                box-shadow: none !important;
+              }
+              div {
+                font-size: 17px;
+                line-height: 21px;
+                font-weight: 600;
+                color: var(--m-pro--text-color);
+                @media screen and(max-width: $max-mobile) {
+                  font-size: 20px;
+                }
+              }
+            }
+          }
+        }
+
         .m-proChannel__lowestPrice {
           font-size: 18px;
           font-weight: 400;
