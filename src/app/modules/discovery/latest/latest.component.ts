@@ -70,12 +70,6 @@ export class DiscoveryLatestFeedComponent implements OnInit {
    * @returns { Promise<void> } - awaitable.
    */
   public async loadNext(): Promise<void> {
-    if (
-      this.discoveryFeed.hasMoreData$ &&
-      !this.discoveryFeed.inProgress$.getValue()
-    ) {
-      this.discoveryFeed.load(); // load the next 150 in the background
-    }
     this.discoveryFeed.loadMore();
   }
 }
