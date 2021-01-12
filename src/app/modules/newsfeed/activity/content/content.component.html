@@ -24,7 +24,7 @@
       #messageEl
       m-read-more
       class="m-activityContent__message"
-      [class.m-activityContent__message--remind]="entity.remind_object"
+      [class.m-activityContent__message--quote]="entity.remind_object"
       [class.m-activityContent__message--richEmbed]="isRichEmbed"
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="shortStatus"
@@ -185,7 +185,7 @@
 
 <ng-container *ngIf="!hideMedia">
   <div
-    *ngIf="service.isRemind$ | async"
+    *ngIf="service.isQuote$ | async"
     class="m-activityContent__remind"
     [class.m-activityContent__remind--hasMessage]="!!message"
     [class.m-activityContent__remind--minimalMode]="minimalMode"
@@ -204,7 +204,7 @@
 <!-- ----------------------------------- -->
 <!--QUOTE MESSAGE -->
 <!-- ----------------------------------- -->
-<ng-container *ngIf="!hideText && isQuote && isModal">
+<ng-container *ngIf="!hideText && isModal && (service.isQuote$ | async)">
   <ng-container *ngTemplateOutlet="messageTemplate"></ng-container>
 </ng-container>
 <!-- ----------------------------------- -->

@@ -41,8 +41,6 @@ export class FeedGridComponent
 
   macyInstance: Macy;
 
-  displayOptions: any = { minimalMode: true };
-
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private elementRef: ElementRef,

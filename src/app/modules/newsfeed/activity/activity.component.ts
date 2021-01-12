@@ -64,17 +64,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input() set displayOptions(options) {
-    if (options.minimalMode) {
-      this.service.setDisplayOptions({
-        minimalMode: true,
-        showComments: false,
-        autoplayVideo: false,
-        showToolbar: false,
-        showOwnerBlock: false,
-        bypassMediaModal: true,
-      });
-      return;
-    }
     this.service.setDisplayOptions(options);
   }
 
@@ -106,7 +95,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('style.height')
   heightPx: string;
 
+  @HostBinding('class.m-activity--minimalRemind')
+  isMinimalRemind: boolean = false;
+
   heightSubscription: Subscription;
+  remindSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -132,6 +125,14 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+    this.remindSubscription = this.service.isRemind$.subscribe(isRemind => {
+      if (isRemind && this.service.displayOptions.minimalMode) {
+        this.service.displayOptions.showOwnerBlock = true;
+        this.isMinimalRemind = true;
+      } else {
+        this.isMinimalRemind = false;
+      }
+    });
   }
 
   ngOnDestroy() {

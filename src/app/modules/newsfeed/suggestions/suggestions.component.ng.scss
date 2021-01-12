@@ -33,6 +33,16 @@
         font-weight: 300;
       }
     }
+
+    .m-activityContent__message {
+      &.m-activityContent__message--isTextOnly {
+        &.m-activityContent__message--short {
+          line-height: 20px;
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+    }
   }
 
   .m-rich-embed--title {
