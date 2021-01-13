@@ -7,6 +7,7 @@ import {
   map,
   mapTo,
   mergeAll,
+  tap,
 } from 'rxjs/operators';
 import { Observable, of, OperatorFunction, throwError } from 'rxjs';
 import {
@@ -16,6 +17,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import getFileType from '../../helpers/get-file-type';
+import { FormToastService } from '../services/form-toast.service';
 
 /**
  * Upload event type
@@ -33,6 +35,7 @@ export interface UploadEventPayload {
   progress?: number;
   response?: any;
   request?: { type: string };
+  status?: string;
 }
 
 /**
@@ -103,6 +106,7 @@ export const httpEventToUploadEvent = (
       of({
         type: UploadEventType.Fail,
         payload: {
+          status: 'error',
           request: { type },
           response: (e && e.message) || 'E_CLIENT_ERROR',
         },
@@ -120,7 +124,11 @@ export class AttachmentApiService {
    * @param api
    * @param http
    */
-  constructor(protected api: ApiService, protected http: HttpClient) {}
+  constructor(
+    protected api: ApiService,
+    protected http: HttpClient,
+    protected toaster: FormToastService
+  ) {}
 
   /**
    * Uploads a file using a "smart" strategy.
@@ -231,7 +239,17 @@ export class AttachmentApiService {
         },
         { upload: true }
       )
-      .pipe(httpEventToUploadEvent(getFileType(file)));
+      .pipe(
+        httpEventToUploadEvent(getFileType(file)),
+        tap((response: any) => {
+          if (response.payload.status === 'error') {
+            this.toaster.error(
+              response.payload.response ||
+                'An unknown error has occurred whilst uploading this file.'
+            );
+          }
+        })
+      );
   }
 
   /**
