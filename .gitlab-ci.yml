@@ -51,6 +51,12 @@ lint:
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
     - >
+      git clone https://gitlab.com/benhayward.ben/cypress-tests/
+      mv ./cypress-tests cypress
+      cd ./cypress
+      git checkout $CI_BUILD_REF_NAME
+      cd ..
+    - >
       $(npm bin)/cypress run --browser chrome
       --parallel
       --record
