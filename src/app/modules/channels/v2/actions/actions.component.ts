@@ -8,6 +8,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
   selector: 'm-channel__actions',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'actions.component.html',
+  styleUrls: ['actions.component.ng.scss'],
 })
 export class ChannelActionsComponent {
   /**

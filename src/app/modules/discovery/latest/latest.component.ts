@@ -1,6 +1,7 @@
 /**
- * Membership activities feed for discovery module.
+ * Latest activities feed for discovery module.
  * Plugs into discovery feeds service.
+ * Used in memberships tab and Minds+ latest tab
  */
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -9,11 +10,11 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 
 @Component({
-  selector: 'm-discovery__membershipsFeed',
-  templateUrl: './memberships-feed.component.html',
+  selector: 'm-discovery__latestFeed',
+  templateUrl: './latest.component.html',
   providers: [DiscoveryFeedsService, FeedsService],
 })
-export class DiscoveryMembershipsFeedComponent implements OnInit {
+export class DiscoveryLatestFeedComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private discoveryFeed: DiscoveryFeedsService
@@ -69,12 +70,6 @@ export class DiscoveryMembershipsFeedComponent implements OnInit {
    * @returns { Promise<void> } - awaitable.
    */
   public async loadNext(): Promise<void> {
-    if (
-      this.discoveryFeed.hasMoreData$ &&
-      !this.discoveryFeed.inProgress$.getValue()
-    ) {
-      this.discoveryFeed.load(); // load the next 150 in the background
-    }
     this.discoveryFeed.loadMore();
   }
 }

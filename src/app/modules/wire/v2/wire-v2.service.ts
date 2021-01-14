@@ -3,7 +3,10 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
-import { Wallet, WalletV2Service } from '../../wallet/v2/wallet-v2.service';
+import {
+  Wallet,
+  WalletV2Service,
+} from '../../wallet/components/wallet-v2.service';
 import { WireService as WireV1Service, WireStruc } from '../wire.service';
 import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
 import { ConfigsService } from '../../../common/services/configs.service';

@@ -13,6 +13,7 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { SERVER_PROVIDERS } from '../../../app.server.module';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MetaService } from '../../../common/services/meta.service';
+import { RelatedContentService } from '../../../common/services/related-content.service';
 import { Client } from '../../../services/api/client';
 import { MockService } from '../../../utils/mock';
 import { siteServiceMock } from '../../notifications/notification.service.spec';
@@ -219,6 +220,10 @@ describe('EmbeddedVideoComponent', () => {
         ...SERVER_PROVIDERS,
         { provide: Client, useValue: clientMock },
         { provide: MetaService, useValue: metaServiceMock },
+        {
+          provide: RelatedContentService,
+          useValue: MockService(RelatedContentService),
+        },
         {
           provide: ConfigsService,
           useValue: configsServiceMock,

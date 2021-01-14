@@ -300,11 +300,23 @@ export class WalletSettingsTokensComponent
     this.isVerified = undefined;
 
     await this.web3Wallet.getCurrentWallet(true);
+
     const msg = JSON.stringify({
       user_guid: this.session.getLoggedInUser().guid,
-      unix_ts: Date.now() / 1000,
+      unix_ts: Math.round(Date.now() / 1000),
     });
-    const signature = await this.web3Wallet.getSigner().signMessage(msg);
+
+    // Non-metamask wallet require hashed byte messages, for some unknown reason
+    const msgHash = ethers.utils.hashMessage(msg);
+    const msgHashBytes = ethers.utils.arrayify(msgHash);
+
+    // Non-metamask wallets will only have correct signature if msgHashBytes are used.
+    const msgToSign =
+      this.web3Wallet.getSigner().provider.connection.url === 'metamask'
+        ? msg
+        : msgHashBytes;
+
+    const signature = await this.web3Wallet.getSigner().signMessage(msgToSign);
 
     try {
       const response = await (<any>this.client.post(
@@ -322,7 +334,7 @@ export class WalletSettingsTokensComponent
       }
     } catch (err) {
       this.isVerified = false;
-      this.toasterService.error(err.message);
+      this.toasterService.error(err?.message);
     }
 
     this.detectChanges();

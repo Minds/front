@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../wallet/components/wallet-v2.service';
 
 @Component({
   selector: 'm-onboardingV3__bank',

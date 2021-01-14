@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { WireService } from '../../wire.service';
 import { WireV2Service } from '../wire-v2.service';
-import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../wallet/components/wallet-v2.service';
 import { SupportTiersService } from '../support-tiers.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';

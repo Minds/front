@@ -1,11 +1,6 @@
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {
-  APP_INITIALIZER,
-  ErrorHandler,
-  NgModule,
-  PLATFORM_ID,
-} from '@angular/core';
+import { APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
 import {
   BrowserModule,
   BrowserTransferStateModule,
@@ -14,11 +9,17 @@ import {
 import { RouterModule } from '@angular/router';
 import { CookieModule, CookieService } from '@gorniv/ngx-universal';
 import { MindsHttpClient } from '../../common/api/client.service';
+import { BlockListService } from '../../common/services/block-list.service';
 import { ConfigsService } from '../../common/services/configs.service';
+import { EntitiesService } from '../../common/services/entities.service';
 import { MetaService } from '../../common/services/meta.service';
+import { RelatedContentService } from '../../common/services/related-content.service';
 import { SiteService } from '../../common/services/site.service';
 import { Client } from '../../services/api/client';
+import { Session } from '../../services/session';
+import { Storage } from '../../services/storage';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
+import { RecentService } from '../../services/ux/recent';
 import { VideoModule } from '../media/components/video/video.module';
 import { EmbedComponent } from './embed.component';
 import { EmbeddedVideoComponent } from './embedded-video/embedded-video.component';
@@ -65,6 +66,20 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     },
     { provide: APP_BASE_HREF, useValue: '/' },
     OverlayModalService,
+    RelatedContentService,
+    Session,
+    Storage,
+    RecentService,
+    {
+      provide: BlockListService,
+      useFactory: BlockListService._,
+      deps: [Client, Session, Storage, RecentService],
+    },
+    {
+      provide: EntitiesService,
+      useFactory: EntitiesService._,
+      deps: [Client, BlockListService],
+    },
   ],
   bootstrap: [EmbedComponent],
 })
