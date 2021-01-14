@@ -24,8 +24,13 @@ export class OnboardingV3SuggestionsPanelComponent {
   get suggestions$(): Observable<any[]> {
     return this.service.suggestions$.pipe(
       map(arr => {
-        // filter out unhydrated
-        return arr.filter((entity: any) => entity.entity);
+        // filter out unhydrated and add safety net for unexpected entity types.
+        return arr.filter(
+          (entity: any) =>
+            entity.entity &&
+            ((this.type === 'groups' && entity.entity.type === 'group') ||
+              (this.type === 'channels' && entity.entity.type === 'user'))
+        );
       })
     );
   }

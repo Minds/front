@@ -74,7 +74,13 @@
             >#{{ hashtag }}
           </a>
         </div>
-        <span class="m-hoverCard__description">{{ description }}</span>
+        <a
+          [href]="url"
+          target="_blank"
+          class="m-suggestedPanelCard__link--undecorated"
+        >
+          <span class="m-hoverCard__description">{{ description }}</span>
+        </a>
       </div>
     </div>
   </div>

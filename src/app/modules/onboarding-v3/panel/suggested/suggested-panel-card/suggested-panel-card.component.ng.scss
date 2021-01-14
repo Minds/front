@@ -36,6 +36,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: block;
+      cursor: pointer;
 
       @include m-theme() {
         color: themed($m-textColor--primary);
@@ -50,6 +51,7 @@
       display: block;
       font-size: 15px;
       font-weight: 400;
+      cursor: pointer;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
@@ -138,6 +140,7 @@
         flex-flow: column nowrap;
         width: 100%; // fill available.
         justify-content: center;
+        cursor: pointer;
 
         .m-hoverCard__name {
           font-size: 18px;
@@ -201,6 +204,7 @@
           transparent 100%
         );
         mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        cursor: pointer;
 
         @include m-theme() {
           color: themed($m-textColor--primary);
