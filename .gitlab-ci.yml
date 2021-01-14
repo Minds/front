@@ -50,12 +50,15 @@ lint:
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - >
-      git clone https://gitlab.com/benhayward.ben/cypress-tests/
-      mv ./cypress-tests cypress
-      cd ./cypress
-      git checkout $CI_BUILD_REF_NAME
-      cd ..
+    - git clone https://gitlab.com/benhayward.ben/cypress-tests/
+    - mv ./cypress-tests cypress
+    - BRANCH_EXISTS=$(git ls-remote --heads https://www.github.com/minds/front master | wc -l)
+    - if [ $BRANCH_EXISTS == "1" ] ; then
+    -    echo "Checking out $CI_BUILD_REF_NAME" 
+    -    cd ./cypress
+    -    git checkout $CI_BUILD_REF_NAME
+    -    cd ..
+    - fi;
     - >
       $(npm bin)/cypress run --browser chrome
       --parallel
