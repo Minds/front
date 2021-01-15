@@ -9,7 +9,10 @@
   </ng-container>
 </div>
 
-<div class="m-activity__ownerBlock">
+<div
+  class="m-activity__ownerBlock"
+  [ngClass]="{ 'm-activity__ownerBlock--minimalMode': minimalMode }"
+>
   <div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
     <a [routerLink]="['/', username]">
       <img [src]="avatarUrl" class="m-border" />

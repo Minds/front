@@ -9,18 +9,6 @@ context('Composer Modal', () => {
 
   beforeEach(() => {
     cy.preserveCookies();
-    cy.overrideFeatureFlags({
-      'activity-composer': true,
-      navigation: true,
-      channels: false,
-    });
-  });
-
-  after(() => {
-    cy.overrideFeatureFlags({
-      'activity-composer': false,
-      navigation: false,
-    });
   });
 
   const composer = 'm-composer__modal > m-composer__base';
@@ -82,8 +70,17 @@ context('Composer Modal', () => {
   });
 
   it('should open a composer modal popup in own channel', () => {
-    cy.visit(`/${Cypress.env().username}`);
+    // cy.visit(`/${Cypress.env().username}`);
+    cy.intercept('GET', '**/api/v1/channel/**').as('GETChannel');
 
+    cy.get('.m-sidebarNavigation__list')
+      .contains(`${Cypress.env().username}`)
+      .click({force: true})
+      .wait('@GETChannel')
+      .its('response.statusCode')
+      .should('eq', 200);
+
+      
     cy.get(composerTrigger)
       .should('be.visible')
       .click();

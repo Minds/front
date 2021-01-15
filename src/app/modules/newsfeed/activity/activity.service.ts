@@ -25,6 +25,7 @@ export type ActivityDisplayOptions = {
   showPostMenu: boolean; // Can be hidden for things like previews
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
+  sidebarMode: boolean; // activity is a sidebar suggestion
 };
 
 export type ActivityEntity = {
@@ -61,6 +62,7 @@ export type ActivityEntity = {
   excerpt?: string; // for blogs
   remind_deleted?: boolean;
   pinned?: boolean; // pinned to top of channel
+  subtype?: string;
 };
 
 // Constants of blocks
@@ -213,11 +215,20 @@ export class ActivityService {
   isBoost$: Observable<boolean> = this.entity$.pipe();
 
   /**
+   * If the post is a quote this will emit true
+   */
+  isQuote$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity && !!entity.remind_object;
+    })
+  );
+
+  /**
    * If the post is a remind this will emit true
    */
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      return entity && !!entity.remind_object;
+      return entity && entity.subtype && entity.subtype === 'remind';
     })
   );
 
@@ -265,6 +276,7 @@ export class ActivityService {
     isModal: false,
     minimalMode: false,
     bypassMediaModal: false,
+    sidebarMode: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
