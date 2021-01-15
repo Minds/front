@@ -17,9 +17,9 @@ context('Upgrades page', () => {
     cy.newUser(user.username, user.password);
   });
 
-  after(()=> {
-    cy.deleteUser(user.username, user.password);
-  });
+  // after(()=> {
+  //   cy.deleteUser(user.username, user.password);
+  // });
 
   beforeEach(() => {
     cy.preserveCookies();
@@ -41,12 +41,11 @@ context('Upgrades page', () => {
   });
 
   it('should have the ability to trigger pre Buy Tokens modal phone verification', () => {
-    cy.server();
-    cy.route('GET', '**api/v2/blockchain/purchase**').as('purchaseGET');
+    cy.intercept('GET', '**api/v2/blockchain/purchase**').as('purchaseGET');
 
     const tokensInput = 'm-blockchain--purchase input[name=amount]';
     const buyTokensButton =
-      'm-blockchain--purchase .m-blockchainTokenPurchase__action';
+      'm-blockchain--purchase .m-blockchainTokenPurchase__action button';
     const anyBuyTokensModal =
       'm-blockchain--purchase m-modal .m-modal-container';
 
@@ -64,10 +63,6 @@ context('Upgrades page', () => {
     cy.get(buyTokensButton)
       .should('not.be.disabled')
       .click({ force: true })
-      .wait('@purchaseGET')
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-      });
 
     // alternative to waiting
     cy.contains('Please verify your phone number');

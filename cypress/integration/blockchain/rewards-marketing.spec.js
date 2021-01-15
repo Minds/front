@@ -23,7 +23,7 @@ context('Rewards Product Page', () => {
 
     cy.location('pathname').should(
       'contains',
-      '/wallet/canary/tokens/'
+      '/wallet/tokens/overview'
     );
   });
 });

@@ -7,7 +7,7 @@ context('Newsfeed', () => {
   const composer = {
     trigger: 'm-composer .m-composer__trigger',
     messageTextArea: 'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
-    postButton: "m-composer__modal [data-cy='button-default-action']",
+    postButton: "m-composer__modal > m-composer__base [data-cy=post-button] button",
     titleArea: 'm-composer__modal [data-cy="composer-activity-title"]',
     uploadButton: `m-composer__modal [data-cy="upload-button"] input`
   };

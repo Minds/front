@@ -32,7 +32,7 @@ context('Composer Bottom Bar', () => {
 
   const tagsButton = `${composerToolbar} a[data-cy="tags-button"]`;
 
-  const postButton = `${composerToolbar} m-button[data-cy="post-button"]`;
+  const postButton = `${composerToolbar}  [data-cy="post-button"] button`;
 
   const postButtonDropdownAction = `${postButton} [data-cy="button-dropdown-action"]`;
 
@@ -57,14 +57,6 @@ context('Composer Bottom Bar', () => {
       showComposer();
     });
 
-    it('should show a disabled post button', () => {
-      cy.get(composerTextarea).clear();
-
-      cy.get(postButton)
-        .should('be.visible')
-        .should('have.class', 'm-button--disabled');
-    });
-
     it('should show an enabled post button', () => {
       cy.get(composerTextarea)
         .clear()
@@ -72,7 +64,6 @@ context('Composer Bottom Bar', () => {
 
       cy.get(postButton)
         .should('be.visible')
-        .should('not.have.class', 'm-button--disabled');
 
       cy.get(composerTextarea).clear();
     });
