@@ -31,7 +31,7 @@ const onboarding = {
 };
 
 //Login and register
-const registerForm = {
+const registerFormOnboardingV2 = {
   username: 'minds-form-register #username',
   email: 'minds-form-register #email',
   password: 'minds-form-register #password',
@@ -42,7 +42,7 @@ const registerForm = {
 
 const settings = {
   deleteAccountButton:
-    'm-button',
+    'm-button button',
   deleteSubmitButton:
     'm-confirm-password--modal > div > form > div:nth-child(2) > button',
 };
@@ -60,13 +60,36 @@ const defaults = {
 const loginForm = {
   password: '[data-cy=data-minds-login-password-input]',
   username: '[data-cy=data-minds-login-username-input]',
-  submit: '[data-cy=data-minds-login-button]',
+  submit: '[data-cy=data-minds-login-button] button',
 };
 
 const poster = {
   textArea: 'm-text-input--autocomplete-container textarea',
   postButton: '.m-posterActionBar__PostButton',
 };
+
+export const composer = {
+  trigger: 'm-composer .m-composer__trigger',
+  messageTextArea:
+    'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
+  postButton:
+    'm-composer__modal > m-composer__base [data-cy="post-button"] button',
+};
+
+const email = 'test@minds.com';
+
+const submitButton = '.m-onboardingModal__nextButton button';
+const joinButton = '[data-cy=data-minds-homepage-join-button-main]';
+
+const registerForm = {
+  usernameInput: '[data-cy=data-minds-register-username-input]',
+  emailInput: '[data-cy=data-minds-register-email-input]',
+  password1Input: '[data-cy=data-minds-register-password-input-1]',
+  password2Input: '[data-cy=data-minds-register-password-input-2]',
+  tosCheckbox:  '[data-cy=minds-accept-tos-input] [type=checkbox]',
+  submitButton: '.m-register__actions m-button', // 2020-12-03 - not adding data attribute yet as this is mid revamp.
+};
+
 
 /**
  * Logs a user in.
@@ -131,55 +154,78 @@ Cypress.Commands.add('logout', () => {
  */
 Cypress.Commands.add(
   'newUser',
-  (username = '', password = '', skipOnboarding = true) => {
-    cy.server();
+  (username = '', password = '', skipOnboarding = true, onboardingV2 = false) => {
+    if (onboardingV2) {
+      this.onboardingV2();
+    } else {
 
-    // We need an XSRF token before login can work
-    cy.route('POST', '/api/v2/mwa/pv').as('initXsrf');
+    cy.overrideFeatureFlags({
+      'onboarding-october-2020': true,
+    });
 
-    cy.visit('/register')
+    cy.visit('/')
       .location('pathname')
-      .should('eq', `/register`);
+      .should('eq', `/`);
+       // open join modal
+    cy.get(joinButton).click();
 
-    cy.wait('@initXsrf', { timeout: 30000 });
-
-    cy.setCookie('staging', '1');
-    cy.server();
-    cy.route('POST', '**/api/v1/register').as('registerPOST');
-
-    cy.get(registerForm.username)
-      .focus()
-      .type(username);
-    cy.get(registerForm.email)
-      .focus()
-      .type(defaults.email);
-    cy.get(registerForm.password)
-      .focus()
-      .type(password);
-    cy.wait(500); // give second password field chance to appear - not tied to a request.
-
-    cy.get(registerForm.password2)
-      .focus()
-      .type(password);
-    cy.get(registerForm.checkbox).click({ force: true });
-
+    // fill out information
+    cy.get(registerForm.usernameInput).focus().type(username);
+    cy.get(registerForm.emailInput).type(email);
+    cy.get(registerForm.password1Input).focus().type(password);
+    cy.get(registerForm.password2Input).focus().type(password);
+    
+    // complete captcha
     cy.completeCaptcha();
 
-    //submit.
-    cy.get(registerForm.submitButton)
-      .click({ force: true })
-      .wait('@registerPOST')
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.deep.equal('success');
-      })
-      .location('pathname')
-      .should('eq', '/onboarding/notice');
+    // click terms checkbox
+    cy.get(registerForm.tosCheckbox).click({force: true});
 
-    // skip onboarding
-    if (skipOnboarding) {
-      cy.contains("No thanks, I'll do it later").click();
+    // submit and check next steps hashtag call
+    cy.intercept('POST', '**/api/v1/register').as('POSTRegister');
+    cy.intercept('GET', '**/api/v2/hashtags/suggested**').as('GETTags')
+    cy.get(registerForm.submitButton)
+      .click()
+      .wait('@POSTRegister')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait('@GETTags')
+      .its('response.statusCode')
+      .should('eq', 200);
     }
+
+    cy.get(submitButton).should('be.disabled');
+
+    // add tag 1, check still disabled
+    cy.intercept('POST', '**/api/v2/hashtags/user/**').as('POSTTag');
+    cy.get('.m-onboardingTags__tag').eq(0).click().wait('@POSTTag');
+    cy.get(submitButton).should('be.disabled');
+
+    // add tag 2, check still disabled
+    cy.get('.m-onboardingTags__tag').eq(1).click().wait('@POSTTag');
+    cy.get(submitButton).should('be.disabled');
+
+
+    // add tag 3, check enabled and click through
+    cy.get('.m-onboardingTags__tag').eq(2).click().wait('@POSTTag');
+
+    cy.intercept('POST', '/api/v2/mwa/pv').as('initXsrf');
+
+    // submit
+    cy.get(submitButton).should('not.be.disabled')
+      .click()
+      .wait('@initXsrf')
+    
+    cy.contains('Welcome to Minds')
+      .location('pathname')
+      .should(
+        'contains',
+        'newsfeed/subscriptions'
+      );
+    
+    // click through
+    cy.get(submitButton).should('not.be.disabled')
+      .click()
   }
 );
 
@@ -233,14 +279,6 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
     });
   });
 });
-
-export const composer = {
-  trigger: 'm-composer .m-composer__trigger',
-  messageTextArea:
-    'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
-  postButton:
-    'm-composer__modal > m-composer__base [data-cy="post-button"] [data-cy="button-default-action"]',
-};
 
 Cypress.Commands.add('openComposer', () => {
   cy.get(composer.trigger)
@@ -373,3 +411,57 @@ Cypress.Commands.add('completeCaptcha', () => {
 
   cy.setCookie('captcha_bypass', token);
 });
+
+/**
+ * Tests now outdated v2 onboarding.
+ */
+const onboardingV2 = () => {
+  cy.server();
+
+  // We need an XSRF token before login can work
+  cy.route('POST', '/api/v2/mwa/pv').as('initXsrf');
+
+  cy.visit('/register')
+    .location('pathname')
+    .should('eq', `/register`);
+
+  cy.wait('@initXsrf', { timeout: 30000 });
+
+  cy.setCookie('staging', '1');
+  cy.server();
+  cy.route('POST', '**/api/v1/register').as('registerPOST');
+
+  cy.get(registerFormOnboardingV2.username)
+    .focus()
+    .type(username);
+  cy.get(registerFormOnboardingV2.email)
+    .focus()
+    .type(defaults.email);
+  cy.get(registerFormOnboardingV2.password)
+    .focus()
+    .type(password);
+  cy.wait(500); // give second password field chance to appear - not tied to a request.
+
+  cy.get(registerFormOnboardingV2.password2)
+    .focus()
+    .type(password);
+  cy.get(registerFormOnboardingV2.checkbox).click({ force: true });
+
+  cy.completeCaptcha();
+
+  //submit.
+  cy.get(registerFormOnboardingV2.submitButton)
+    .click({ force: true })
+    .wait('@registerPOST')
+    .then(xhr => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.deep.equal('success');
+    })
+    .location('pathname')
+    .should('eq', '/onboarding/notice');
+
+  // skip onboarding
+  if (skipOnboarding) {
+    cy.contains("No thanks, I'll do it later").click();
+  }
+}
