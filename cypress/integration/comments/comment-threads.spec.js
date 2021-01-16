@@ -276,7 +276,7 @@ context.only('Comment Threads', () => {
       cy.wait(500);
 
       // let num = 0;
-      // cy.get('.m-commentBubble__message').each(($el) => {
+      // cy.get('.m-comment__message').each(($el) => {
       //   expect($el.text()).to.contain(num);
       //   num++;
       // });

@@ -133,7 +133,7 @@ context.skip('Groups', () => {
 
     // comment should appear on the list
     cy.get(
-      'minds-groups-profile-conversation m-comments__tree > m-comments__thread .m-commentBubble__message'
+      'minds-groups-profile-conversation m-comments__tree > m-comments__thread .m-comment__message'
     ).contains('lvl 1 comment');
 
     cy.on('window:confirm', str => {

@@ -9,6 +9,7 @@ import {
   Renderer2,
   OnInit,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -28,6 +29,7 @@ import { CommentsService } from '../comments.service';
 @Component({
   selector: 'm-comments__tree',
   templateUrl: 'tree.component.html',
+  styleUrls: ['tree.component.ng.scss'],
   providers: [
     AttachmentService,
     {
@@ -41,6 +43,7 @@ import { CommentsService } from '../comments.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsTreeComponent implements OnInit, OnDestroy {
+  @ViewChild('posterEl') posterEl;
   entity;
   guid: string = '';
   parent: any;

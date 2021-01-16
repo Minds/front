@@ -1,27 +1,22 @@
-<div
-  class="m-commentsEntityOutlet__expand--hide"
-  *ngIf="count > 0 && !showOnlyPoster"
-  (click)="closeFullComments()"
->
-  Hide comments
-</div>
-
-<m-comments__tree
-  *ngIf="!showOnlyPoster || showOnlyTree"
-  [entity]="entity"
-  [canDelete]="canDelete"
->
-</m-comments__tree>
-
-<ng-container *ngIf="showOnlyPoster">
-  <div
-    class="m-commentsEntityOutlet__expand"
-    *ngIf="count > 0 && !showOnlyTree"
-    (click)="openFullComments()"
-  >
-    View {{ count }} comment{{ count > 1 ? 's' : '' }}
+<div class="m-commentsEntityOutlet__topBar" *ngIf="!showOnlyTree && count > 0">
+  <div class="m-commentsEntityOutlet__header">
+    <span class="m-commentsEntityOutlet__title" (click)="toggleComments()"
+      >Comments</span
+    >
+    <span class="m-commentsEntityOutlet__count" (click)="toggleComments()">{{
+      count
+    }}</span>
+    <span
+      class="m-commentsEntityOutlet__addComment"
+      (click)="scroll(commentsTree.posterEl)"
+      >Add your comment</span
+    >
   </div>
-
+  <div *ngIf="false" class="m-commentsEntityOutlet__filter">
+    <i class="material-icons">filter_list</i>
+  </div>
+</div>
+<ng-container *ngIf="showOnlyPoster">
   <div
     class="m-commentsEntityOutlet__optimisticList"
     *ngIf="optimisticList.length > 0"
@@ -54,3 +49,10 @@
   >
   </m-comment__poster>
 </ng-container>
+<m-comments__tree
+  #commentsTree
+  *ngIf="!showOnlyPoster || showOnlyTree"
+  [entity]="entity"
+  [canDelete]="canDelete"
+>
+</m-comments__tree>

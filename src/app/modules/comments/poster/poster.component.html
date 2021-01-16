@@ -1,16 +1,13 @@
-<div
-  class="m-comment m-comment--poster minds-block"
-  *ngIf="!readonly && isLoggedIn"
->
-  <div class="minds-avatar">
-    <a [routerLink]="['/', session.getLoggedInUser().username]">
-      <img [src]="getAvatar() | async" class="m-border" />
-    </a>
-  </div>
-
+<div class="m-comment m-commentPoster" *ngIf="!readonly && isLoggedIn">
   <div class="minds-body">
-    <div class="m-comments-composer">
-      <form (submit)="post($event)">
+    <div class="m-comments-composer m-commentPoster__wrapper">
+      <div class="m-commentPoster__avatar">
+        <a [routerLink]="['/', session.getLoggedInUser().username]">
+          <img [src]="getAvatar() | async" class="m-border" />
+        </a>
+      </div>
+
+      <form (submit)="post($event)" class="m-commentPoster__form">
         <ng-template
           #itemTemplate
           let-choice="choice"
@@ -32,7 +29,7 @@
             (keyup)="getPostPreview(content)"
             (keypress)="keypress($event)"
             [placeholder]="
-              conversation ? 'Enter your message' : 'Write your comment'
+              parent.child_path ? 'Add your reply' : 'Add your comment'
             "
             (filePaste)="uploadAttachment($event)"
             mTextInputAutocomplete
@@ -54,46 +51,75 @@
         >
       </div>
 
-      <div class="mdl-card__actions">
-        <!-- Overflow -->
-        <div class="m-comments-composer--overflow"></div>
-        <!-- Attachments -->
-        <div
-          class="attachment-button"
-          [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
-        >
-          <i class="material-icons">insert_photo</i>
-          <input
-            type="file"
-            id="file"
-            #file
-            name="attachment"
-            (change)="uploadFile(file, $event)"
-          />
-        </div>
+      <!-- --------------------- -->
+      <!-- ACTIONS -->
+      <!-- --------------------- -->
+      <div class="mdl-card__actions m-commentPoster__actions">
+        <div>
+          <!-- Dropdown meatball -->
+          <div class="m-dropdown--v2">
+            <div
+              class="m-commentPoster__menuButton"
+              (click)="onMenuClick($event)"
+            >
+              <i class="material-icons">more_vert</i>
+            </div>
 
-        <a
-          class="m-mature-button"
-          (click)="attachment.toggleMature()"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          *ngIf="content.length || attachment.hasFile()"
-        >
-          <i
-            class="material-icons"
-            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-            >explicit</i
+            <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
+              <!-- --------------------- -->
+              <!-- Attach a file-->
+              <!-- --------------------- -->
+              <li class="m-dropdownList__item">
+                <a class="attachment-button">
+                  <i class="material-icons">insert_photo</i>
+                  <span i18n="@@M__COMMENT_ACTIONS__ATTACH">Attach media</span>
+
+                  <input
+                    type="file"
+                    id="file"
+                    #file
+                    name="attachment"
+                    (change)="uploadFile(file, $event)"
+                  />
+                </a>
+              </li>
+              <!-- --------------------- -->
+              <!-- Mark as explicit -->
+              <!-- --------------------- -->
+              <li class="m-dropdownList__item">
+                <a (click)="attachment.toggleMature(); menuOpened$.next(false)">
+                  <i
+                    class="material-icons"
+                    [ngClass]="{ 'mdl-color-text--red': attachment.isMature() }"
+                    >explicit</i
+                  >
+                  <span i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                    >Mark as explicit</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="m-bgOverlay--v2"
+            (click)="menuOpened$.next(false)"
+            *ngIf="menuOpened$ | async"
+          ></div>
+          <!-- --------------------- -->
+          <!-- Post  -->
+          <!-- --------------------- -->
+
+          <a
+            class="m-post-button m-commentPoster__postButton"
+            (click)="post($event)"
+            [ngClass]="{ 'm-button-disabled': !postEnabled() }"
           >
-        </a>
-
-        <a
-          class="m-post-button"
-          (click)="post($event)"
-          [ngClass]="{ 'm-button-disabled': !postEnabled() }"
-          *ngIf="content.length || attachment.hasFile()"
-        >
-          <i class="material-icons">send</i>
-        </a>
+            <i class="material-icons">send</i>
+          </a>
+        </div>
+        <!-- --------------------- -->
+        <!-- Character count -->
+        <!-- --------------------- -->
 
         <div
           [class.hidden]="content.length < 140"
@@ -105,74 +131,83 @@
           </span>
           <span> / 1500</span>
         </div>
+        <!-- --------------------- -->
       </div>
+      <!-- --------------------- -->
+      <!-- -Login notice ------- -->
+      <!-- --------------------- -->
 
-      <!-- Rich embed preview -->
-      <div class="post-preview" *ngIf="attachment.isRich()">
-        <div
-          class="mdl-spinner mdl-js-spinner is-active"
-          [mdl]
-          [hidden]="attachment.getMeta().title"
-        ></div>
-        <div
-          class="m-rich-embed mdl-shadow--2dp cf"
-          *ngIf="attachment.getMeta().title"
-        >
-          <minds-rich-embed [preview]="attachment.getMeta()"></minds-rich-embed>
-          <div class="attachment-preview-delete" (click)="resetPreview()">
-            <i class="material-icons">delete</i>
-          </div>
+      <div
+        class="m-comments--start-conversation-label"
+        *ngIf="!isLoggedIn && level < 1"
+      >
+        <a (click)="showLoginModal(); $event.preventDefault()">
+          <ng-container
+            *ngIf="!conversation; else loggedOutConversationMessage"
+            i18n="@@MINDS__COMMENTS__LOGIN_TO_COMMENT"
+          >
+            <b>Log in</b> to comment
+          </ng-container>
+
+          <ng-template #loggedOutConversationMessage>
+            <ng-container i18n="@@COMMENT_POSTER__LOGIN_SEND_MESSAGE">
+              <b>Log in</b> to send a message
+            </ng-container>
+          </ng-template>
+        </a>
+      </div>
+    </div>
+    <!-- --------------------- -->
+    <!-- Rich embed preview -->
+    <!-- --------------------- -->
+
+    <div class="post-preview" *ngIf="attachment.isRich()">
+      <div
+        class="mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+        [hidden]="attachment.getMeta().title"
+      ></div>
+      <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
+        <minds-rich-embed [preview]="attachment.getMeta()"></minds-rich-embed>
+        <div class="attachment-preview-delete" (click)="resetPreview()">
+          <i class="material-icons">delete</i>
         </div>
       </div>
+    </div>
+    <!-- --------------------- -->
+    <!-- Attachment preview -->
+    <!-- --------------------- -->
 
-      <!-- Attachment preview -->
+    <div
+      class="post-preview"
+      *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
+      (click)="removeAttachment(file)"
+    >
       <div
-        class="post-preview"
-        *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
-        (click)="removeAttachment(file)"
-      >
-        <div
-          class="mdl-progress mdl-js-progress"
-          [mdlUpload]
-          [progress]="attachment.progress | async"
-          [hidden]="(attachment.progress | async) == 0"
-          [ngClass]="{ complete: (attachment.progress | async) == 100 }"
-        ></div>
+        *ngIf="attachment.hasFile()"
+        class="mdl-progress mdl-js-progress"
+        [mdlUpload]
+        [progress]="attachment.progress | async"
+        [hidden]="(attachment.progress | async) == 0"
+        [ngClass]="{ complete: (attachment.progress | async) == 100 }"
+      ></div>
+      <div class="m-attachmentPreviewWrapper">
         <div
           *ngIf="attachment.getMime() == 'video'"
-          class="attachment-preview video-placeholder mdl-color--blue-grey-600"
+          class="attachment-preview video-placeholder"
         >
           <i class="material-icons">videocam</i>
         </div>
         <img
           *ngIf="attachment.getMime() != 'video'"
           [src]="attachment.getPreview()"
-          class="attachment-preview mdl-shadow--2dp"
+          class="attachment-preview"
         />
-        <div class="attachment-preview-delete">
-          <i class="material-icons">delete</i>
+        <div *ngIf="attachment.hasFile()" class="attachment-preview-delete">
+          <i class="material-icons">clear</i>
         </div>
       </div>
     </div>
+    <!-- --------------------- -->
   </div>
-</div>
-
-<div
-  class="m-comments--start-conversation-label"
-  *ngIf="!isLoggedIn && level < 1"
->
-  <a (click)="showLoginModal(); $event.preventDefault()">
-    <ng-container
-      *ngIf="!conversation; else loggedOutConversationMessage"
-      i18n="@@MINDS__COMMENTS__LOGIN_TO_COMMENT"
-    >
-      <b>Log in</b> to comment
-    </ng-container>
-
-    <ng-template #loggedOutConversationMessage>
-      <ng-container i18n="@@COMMENT_POSTER__LOGIN_SEND_MESSAGE">
-        <b>Log in</b> to send a message
-      </ng-container>
-    </ng-template>
-  </a>
 </div>

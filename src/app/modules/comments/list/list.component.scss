@@ -1,16 +1,16 @@
+// ojm remove file ??? Or move to the generic comments.scss?
 @import 'defaults';
 
 minds-comments,
 m-comments__tree,
 m-comments__entityOutlet,
 .m-comment-wrapper {
-  //margin-top: 50px;
   width: 100%;
 
   .minds-comment {
     min-height: 0;
     margin: 0;
-    padding: $minds-padding $minds-padding * 1.5;
+    padding: 20px 30px 20px 10px;
     background-color: transparent;
     overflow: visible;
 
@@ -47,7 +47,7 @@ m-comments__entityOutlet,
       // margin-left: $minds-margin;
       font-size: 12px;
       max-width: 100%;
-      max-width: calc(100% - 60px);
+      max-width: calc(100% - 20px); //ojm???
 
       .username {
         font-size: 13px;
@@ -96,10 +96,6 @@ m-comments__entityOutlet,
       minds-button-thumbs-down {
         display: inline-block;
         margin-left: 0.35em;
-      }
-
-      minds-button-thumbs-down {
-        //margin-left: 1em;
       }
 
       .material-icons {
@@ -330,21 +326,22 @@ m-comments__entityOutlet,
       overflow: hidden;
       cursor: pointer;
 
-      &:hover {
-        i {
-          @include m-theme() {
-            color: themed($m-textColor--tertiary);
-          }
-        }
-      }
+      //ojm
+      // &:hover {
+      //   i {
+      //     @include m-theme() {
+      //       color: themed($m-textColor--tertiary);
+      //     }
+      //   }
+      // }
 
-      i {
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-        @include m-theme() {
-          color: themed($m-textColor--secondary);
-        }
-      }
+      // i {
+      //   cursor: pointer;
+      //   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      //   @include m-theme() {
+      //     color: themed($m-textColor--secondary);
+      //   }
+      // }
 
       input {
         position: absolute;

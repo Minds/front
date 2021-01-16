@@ -10,7 +10,7 @@
   #scrollArea
 >
   <div
-    class="mdl-color-text--blue-grey-500 m-comments-load-more"
+    class="m-comments-load-more"
     (click)="load()"
     [ngClass]="{ 'm-disabled': descendingInProgress }"
     *ngIf="moreDescendingData || !loaded"
@@ -58,15 +58,16 @@
   </p>
 
   <div class="m-layout--spacer"></div>
-  <minds-card-comment
+  <!-- ojm test -->
+  <m-comment
     *ngFor="let comment of comments; let i = index"
-    [object]="comment"
+    [comment]="comment"
     [parent]="parent"
     [canEdit]="canEdit"
     (delete)="delete(i)"
     (saved)="edited(i, $event)"
     (onReply)="reply($event.comment)"
-  ></minds-card-comment>
+  ></m-comment>
 
   <div
     class="mdl-color-text--blue-grey-500 m-comments-load-more"

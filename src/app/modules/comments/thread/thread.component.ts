@@ -27,6 +27,7 @@ import { TouchSequence } from 'selenium-webdriver';
 @Component({
   selector: 'm-comments__thread',
   templateUrl: 'thread.component.html',
+  styleUrls: ['thread.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CommentsService],
 })

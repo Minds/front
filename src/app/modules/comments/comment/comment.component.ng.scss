@@ -1,0 +1,280 @@
+@import 'defaults.scss';
+
+:host {
+  .m-comment {
+    position: relative;
+  }
+
+  .m-comment--focused {
+    margin-left: -4px;
+    @include m-theme() {
+      border-left: 4px solid themed($m-blue);
+    }
+  }
+
+  .m-comment--poster {
+    padding: 12px;
+  }
+
+  //ojm remove this?
+  // .m-mature-text-toggle {
+  //   i {
+  //     vertical-align: middle;
+  //     padding-right: 8px;
+  //   }
+  // }
+
+  ::ng-deep .m-comment__ownerRow {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .m-comment__timestamp::before {
+        display: none;
+      }
+    }
+
+    [class*='m-commentOwnerRow__'] {
+      display: flex;
+      > a span,
+      span {
+        &::before {
+          content: '·';
+          margin: 0 5px;
+        }
+      }
+      &.m-commentOwnerRow__owner {
+        a:first-child span::before {
+          display: none;
+        }
+      }
+
+      > a,
+      span {
+        display: inline-block;
+        line-height: 20px;
+        font-size: 15px;
+        font-weight: 400;
+        max-width: 100%;
+        white-space: nowrap;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          display: inline-block;
+          max-width: 100%;
+        }
+      }
+
+      .m-channel--badges-activity {
+        vertical-align: unset;
+        margin-top: -1px;
+      }
+    }
+  }
+
+  ::ng-deep m-translate {
+    > div {
+      margin: 20px 0 0 -20px;
+    }
+  }
+
+  .m-comment__matureScreen {
+    margin: 25px 0;
+    span {
+      font-size: 15px;
+      line-height: 23px;
+      display: block;
+    }
+    span:first-child {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    span:last-child {
+      font-weight: 700;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+      &:hover {
+        @include m-theme() {
+          color: themed($m-link--hover);
+        }
+      }
+    }
+  }
+
+  .m-comment__messageWrapper {
+    ::ng-deep m-read-more--button {
+      span {
+        font-weight: 600;
+        font-size: 15px;
+        text-transform: capitalize;
+        letter-spacing: inherit;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary) !important;
+        }
+      }
+    }
+  }
+
+  .m-comment__message {
+    display: inline;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .m-comment__attachment > * {
+    margin-top: 8px;
+  }
+
+  .m-comment__toolbar {
+    position: relative;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .m-commentToolbar__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    ::ng-deep {
+      .m-commentToolbarButton {
+        margin-right: 22px;
+        cursor: pointer;
+
+        span,
+        i {
+          font-size: 15px;
+          line-height: 20px;
+          vertical-align: middle;
+          font-weight: 700;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+
+          &:hover {
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+
+          &.selected:hover {
+            @include m-theme() {
+              color: themed($m-link--hover) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-comment__repliesToggle {
+    span {
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+
+  .m-edited-text {
+    vertical-align: middle;
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: 500;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-comment__timestamp {
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  .m-comment .minds-avatar {
+    margin-top: 2px;
+
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+    }
+  }
+
+  .m-comment__menuButton i {
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &:hover {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  // subcomments
+  .m-comment {
+    .m-comment {
+      padding: 8px 0;
+    }
+  }
+
+  .minds-comment {
+    &.m-comment--error {
+      opacity: 0.65;
+    }
+
+    .m-comment--error-label {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+
+      i.material-icons {
+        font-size: 1.2em;
+      }
+
+      > * {
+        vertical-align: middle;
+      }
+    }
+
+    .m-comment--username-wrapper {
+      min-width: 150px;
+      overflow-x: hidden;
+      width: calc(100% - 100px);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .m-redButton {
+    margin-right: 5px;
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+}

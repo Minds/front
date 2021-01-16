@@ -8,6 +8,7 @@ import {
   Output,
   OnInit,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -27,6 +28,7 @@ import { ActivityService } from '../../newsfeed/activity/activity.service';
 @Component({
   selector: 'm-comments__entityOutlet',
   templateUrl: 'entity-outlet.component.html',
+  styleUrls: ['entity-outlet.component.ng.scss'],
   providers: [
     AttachmentService,
     {
@@ -40,6 +42,10 @@ import { ActivityService } from '../../newsfeed/activity/activity.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
+  //ojm remove?
+  // @ViewChild('commentPosterEl')
+  // commentPosterEl: ElementRef;
+
   entity;
   guid: string = '';
   parent: any;
@@ -105,6 +111,16 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     this.optimisticList.push(comment);
   }
 
+  toggleComments(): void {
+    if (this.count > 0) {
+      if (this.showOnlyPoster) {
+        this.openFullComments();
+      } else {
+        this.closeFullComments();
+      }
+    }
+  }
+
   openFullComments(): void {
     if (this.fixedHeight) {
       // redirect to full view newsfeed post
@@ -127,6 +143,19 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
         fixedHeight: 0,
       },
     });
+  }
+
+  scroll(el: ElementRef) {
+    if (this.count > 0 && this.showOnlyPoster) {
+      this.openFullComments();
+    }
+
+    console.log('ojm el', el);
+    el.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+    });
+
+    this.detectChanges();
   }
 
   detectChanges(): void {
