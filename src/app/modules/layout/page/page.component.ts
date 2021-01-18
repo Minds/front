@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'm-page',
   templateUrl: 'page.component.html',
+  styleUrls: ['page.component.ng.scss'],
 })
 export class PageComponent implements OnInit {
   useNewNavigation: boolean = false;

@@ -15,7 +15,7 @@ context('Token Page', () => {
   it('should have the ability to trigger Buy Tokens modal', () => {
     const tokensInput = 'm-blockchain--purchase input[name=amount]';
     const buyTokensButton =
-      'm-blockchain--purchase .m-blockchainTokenPurchase__action m-button';
+      'm-blockchain--purchase .m-blockchainTokenPurchase__action m-button button';
     const anyBuyTokensModal =
       'm-blockchain--purchase m-modal .m-modal-container';
 

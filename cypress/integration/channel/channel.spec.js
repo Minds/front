@@ -61,6 +61,7 @@ context('Channel', () => {
 
   beforeEach(()=> {
     cy.preserveCookies();
+    cy.viewport(1920, 1080);
   });
 
   it('should allow a user to edit their avatar banner and bio', () => {
@@ -198,7 +199,9 @@ context('Channel', () => {
   it('should allow a channel to edit its social media links', () => {
     // click to navigate to correct area
     cy.get(channelEditButton).click();
-    cy.contains('Social Links').click();
+    cy.get('.m-modalV2__inner').within($then => {
+      cy.contains('Social Links').click({force: true});
+    });
 
     cy.get(socialMediaInput).type('https://www.gitlab.com/minds/');
     cy.get(socialMediaAddButton).click();
@@ -212,7 +215,7 @@ context('Channel', () => {
     });
 
     // reset
-    cy.get(channelEditButton).click({force: true});
+    cy.get(channelEditButton).click();
     cy.contains('Social Links').click({force: true});
     cy.get(socialMediaRemoveButton).click({force: true, multiple: true});
 

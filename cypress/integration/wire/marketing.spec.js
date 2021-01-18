@@ -23,7 +23,7 @@ context('Pay Product Page', () => {
 
     cy.location('pathname').should(
       'contains',
-      '/wallet/canary/cash/earnings'
+      '/wallet/cash/earnings'
     );
   });
 });

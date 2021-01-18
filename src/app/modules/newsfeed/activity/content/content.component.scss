@@ -59,8 +59,13 @@ m-activity__content {
     }
   }
   &.m-activityContent__message--minimalMode {
-    &.m-activityContent__message--remind {
-      display: none;
+    &.m-activityContent__message--quote {
+      .m-activityContent__messageWrapper {
+        font-weight: 400;
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+      }
     }
 
     .m-activityContent__messageWrapper {

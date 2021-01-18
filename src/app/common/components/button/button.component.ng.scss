@@ -240,6 +240,13 @@
         height: 100%;
       }
 
+      ::ng-deep {
+        > div span:first-child {
+          display: inline-block;
+          margin: 0 10px;
+        }
+      }
+
       .m-button__text--unsaved {
         width: 100%;
       }
