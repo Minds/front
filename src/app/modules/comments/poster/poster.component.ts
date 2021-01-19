@@ -31,6 +31,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
   templateUrl: 'poster.component.html',
   providers: [AttachmentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./poster.component.ng.scss'],
 })
 export class CommentPosterComponent implements OnInit, OnDestroy {
   @Input() guid;

@@ -1,0 +1,58 @@
+@import 'defaults.scss';
+
+:host {
+  .m-commentPoster__limit {
+    font-size: 10px;
+    color: $grey-600;
+    padding: 12px 0;
+    cursor: default;
+  }
+
+  .m-commentPoster__limit--maxed {
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+
+  .m-commentPosterLimit__inputed {
+    font-weight: 600;
+  }
+
+  .m-comment--poster {
+    padding: 8px 12px 12px 12px;
+  }
+  .post-preview {
+    position: relative;
+  }
+  .attachment-preview {
+    max-width: 100%;
+  }
+  .video-placeholder {
+    height: 240px;
+
+    @include m-theme() {
+      background-color: themed($m-black-always);
+    }
+  }
+  .attachment-preview-delete {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+
+    i {
+      border-radius: 50%;
+      padding: 8px;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--secondary);
+        // border: 1px solid themed($m-borderColor--secondary);
+
+        &:hover {
+          background-color: themed($m-bgColor--primary);
+        }
+      }
+    }
+  }
+}
