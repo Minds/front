@@ -22,6 +22,9 @@ export type ActivityDisplayOptions = {
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
   bypassMediaModal: boolean; // Go to media page instead
+  showPostMenu: boolean; // Can be hidden for things like previews
+  showPinnedBadge: boolean; // show pinned badge if a post is pinned
+  showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
 };
 
@@ -58,6 +61,7 @@ export type ActivityEntity = {
   description?: string; // xml for inline rich-embeds
   excerpt?: string; // for blogs
   remind_deleted?: boolean;
+  pinned?: boolean; // pinned to top of channel
   subtype?: string;
 };
 
@@ -264,6 +268,9 @@ export class ActivityService {
     showEditedTag: false,
     showVisibilityState: false,
     showTranslation: false,
+    showPostMenu: true,
+    showPinnedBadge: true,
+    showMetrics: true,
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
