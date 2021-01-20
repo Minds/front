@@ -51,16 +51,14 @@ lint:
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "Preparing E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
     - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/cypress-tests.git
-    - mv ./cypress-tests cypress
     - echo "Checking if branch exists..."
     - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
     - if [ $BRANCH_EXISTS == "1" ] ; then
     -    echo "Matching branch exists, checking out $CI_BUILD_REF_NAME".. 
-    -    cd ./cypress
+    -    cd ./cypress-tests
     -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
     -    cd ..
     - fi;
-    - cp cypress/cypress.json .
     - echo "Running Cypress"
     - >
       $(npm bin)/cypress run --browser chrome
