@@ -32,7 +32,7 @@ context('Boost Console', () => {
     cy.get(
       'm-boost-console-card:nth-child(1) div.m-boost-card--manager-item.m-boost-card--state'
     ).should('not.contain', 'revoked');
-    cy.get('m-boost-console-card:nth-child(1) .m-mature-message span').contains(
+    cy.get('m-boost-console-card:nth-child(1) span').contains(
       postContent
     );
   });
@@ -42,10 +42,11 @@ context('Boost Console', () => {
       'm-boost-console-card:nth-child(1) div.m-boost-card--manager-item.m-boost-card--state'
     ).should('not.contain', 'revoked');
 
-    cy.get(
-      'm-boost-console-card:nth-child(1) .m-boost-card--manager-item--buttons > button'
-    ).click();
+    // cy.get(
+    //   'm-boost-console-card:nth-child(1) .m-boost-card--manager-item--buttons > button'
+    // ).click();
 
+    cy.contains('Revoke').first().click();
     cy.get(
       'm-boost-console-card:nth-child(1) div.m-boost-card--manager-item.m-boost-card--state'
     ).contains('revoked');

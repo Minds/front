@@ -7,7 +7,7 @@ context('Permaweb', () => {
     messageTextArea:
       'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
     postButton:
-      'm-composer__modal > m-composer__base [data-cy="post-button"] [data-cy="button-default-action"]',
+      'm-composer__modal > m-composer__base [data-cy="post-button"] button',
   };
 
   before(() => {

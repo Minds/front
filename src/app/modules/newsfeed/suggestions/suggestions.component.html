@@ -5,13 +5,18 @@
       class="m-newsfeedActivitySuggestion__item"
       *ngFor="let entity of entities; let i = index"
     >
-      <a
-        [routerLink]="['/newsfeed', entity.entity_guid || entity.guid]"
-        (click)="activityClicked($event)"
-      >
+      <a [routerLink]="['/newsfeed', entity.entity_guid || entity.guid]">
         <m-newsfeed__entity
           [entity]="entity"
-          [displayOptions]="{ minimalMode: true }"
+          [displayOptions]="{
+            minimalMode: true,
+            showComments: false,
+            autoplayVideo: false,
+            showToolbar: false,
+            bypassMediaModal: true,
+            showOwnerBlock: entity.subtype === 'remind',
+            sidebarMode: true
+          }"
           [slot]="i"
         ></m-newsfeed__entity>
       </a>

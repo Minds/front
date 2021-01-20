@@ -65,6 +65,7 @@
         font-weight: 600;
         text-align: center;
         line-height: 28px; // translation may force multiline.
+        margin-bottom: 20px;
 
         @include m-theme() {
           color: themed($m-textColor--primary);
