@@ -320,6 +320,10 @@ export class CommentsThreadComponent implements OnInit {
     return true;
   }
 
+  edited(i, e) {
+    // TODO
+  }
+
   get isLoggedIn() {
     return this.session.isLoggedIn();
   }

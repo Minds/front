@@ -42,10 +42,6 @@ import { ActivityService } from '../../newsfeed/activity/activity.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
-  //ojm remove?
-  // @ViewChild('commentPosterEl')
-  // commentPosterEl: ElementRef;
-
   entity;
   guid: string = '';
   parent: any;
@@ -143,19 +139,6 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
         fixedHeight: 0,
       },
     });
-  }
-
-  scroll(el: ElementRef) {
-    if (this.count > 0 && this.showOnlyPoster) {
-      this.openFullComments();
-    }
-
-    console.log('ojm el', el);
-    el.nativeElement.scrollIntoView({
-      behavior: 'smooth',
-    });
-
-    this.detectChanges();
   }
 
   detectChanges(): void {

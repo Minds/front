@@ -5,7 +5,7 @@
   .m-commentsEntityOutlet__topBar {
     display: flex;
     justify-content: space-between;
-    margin: 5px 10px 20px 20px;
+    margin: 10px 10px 15px 20px;
   }
   .m-commentsEntityOutlet__header {
     display: flex;
@@ -49,6 +49,15 @@
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+    }
+  }
+
+  .m-commentsEntityOutlet__startConversation {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px auto 50px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
     }
   }
 }

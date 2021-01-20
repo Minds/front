@@ -77,9 +77,9 @@
                   <input
                     type="file"
                     id="file"
-                    #file
+                    #fileInput
                     name="attachment"
-                    (change)="uploadFile(file, $event)"
+                    (change)="uploadFile(fileInput, $event)"
                   />
                 </a>
               </li>
@@ -167,21 +167,28 @@
         [mdl]
         [hidden]="attachment.getMeta().title"
       ></div>
-      <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
-        <minds-rich-embed [preview]="attachment.getMeta()"></minds-rich-embed>
-        <div class="attachment-preview-delete" (click)="resetPreview()">
-          <i class="material-icons">delete</i>
+      <div
+        class="m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed"
+      >
+        <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
+          <minds-rich-embed
+            [preview]="attachment.getMeta()"
+            [cropImage]="true"
+            [maxheight]="240"
+          ></minds-rich-embed>
+          <div class="attachment-preview-delete" (click)="resetPreview()">
+            <i class="material-icons">clear</i>
+          </div>
         </div>
       </div>
     </div>
     <!-- --------------------- -->
     <!-- Attachment preview -->
     <!-- --------------------- -->
-
     <div
       class="post-preview"
       *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
-      (click)="removeAttachment(file)"
+      (click)="removeAttachment(fileInput)"
     >
       <div
         *ngIf="attachment.hasFile()"

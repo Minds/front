@@ -29,7 +29,6 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 @Component({
   selector: 'm-comment__poster',
   templateUrl: 'poster.component.html',
-  styleUrls: ['poster.component.ng.scss'],
   providers: [AttachmentService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

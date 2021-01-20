@@ -1,20 +1,25 @@
-<div class="m-commentsEntityOutlet__topBar" *ngIf="!showOnlyTree && count > 0">
+<div class="m-commentsEntityOutlet__topBar" *ngIf="!showOnlyPoster">
   <div class="m-commentsEntityOutlet__header">
     <span class="m-commentsEntityOutlet__title" (click)="toggleComments()"
       >Comments</span
     >
-    <span class="m-commentsEntityOutlet__count" (click)="toggleComments()">{{
-      count
-    }}</span>
     <span
-      class="m-commentsEntityOutlet__addComment"
-      (click)="scroll(commentsTree.posterEl)"
-      >Add your comment</span
+      class="m-commentsEntityOutlet__count"
+      (click)="toggleComments()"
+      *ngIf="count > 0"
+      >{{ count }}</span
     >
   </div>
   <div *ngIf="false" class="m-commentsEntityOutlet__filter">
     <i class="material-icons">filter_list</i>
   </div>
+</div>
+<div
+  class="m-commentsEntityOutlet__startConversation"
+  *ngIf="count < 1 && !showOnlyPoster"
+  i18n="@@MINDS__COMMENTS__START_CONVERSATION"
+>
+  <span>Start the conversation!</span>
 </div>
 <ng-container *ngIf="showOnlyPoster">
   <div

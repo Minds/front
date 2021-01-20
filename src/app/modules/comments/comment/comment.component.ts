@@ -62,6 +62,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   editing: boolean = false;
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  content: string = '';
 
   @Input('entity') entity;
   @Input('parent') parent;
@@ -141,8 +142,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     if (this.session.getLoggedInUser().guid === this.comment.ownerObj.guid) {
       this.showMature = true;
     }
-
-    console.log('ojm comment:', this.comment);
   }
 
   ngAfterViewInit() {
@@ -166,6 +165,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     }
     this.comment = value;
     this.attachment.load(this.comment);
+    this.content = this.comment.description;
 
     this.isTranslatable = this.translationService.isTranslatable(this.comment);
   }
@@ -174,7 +174,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.editing = value;
   }
 
-  saveEnabled() {
+  canSave() {
     return (
       !this.inProgress &&
       this.canPost &&
@@ -183,8 +183,19 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     );
   }
 
+  keypress(e: KeyboardEvent) {
+    if (!e.shiftKey && e.charCode === 13) {
+      e.preventDefault();
+      this.applyAndSave(e);
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this.cancel(e);
+    }
+  }
+
   save() {
-    this.comment.description = this.comment.description.trim();
+    this.comment.description = this.content.trim();
 
     if (!this.comment.description && !this.attachment.has()) {
       return;
@@ -214,27 +225,23 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       });
   }
 
-  applyAndSave(control: any, e) {
-    e.preventDefault();
-
-    if (!this.saveEnabled()) {
+  applyAndSave(e) {
+    if (!this.canSave()) {
       this.triedToPost = true;
       return;
     }
 
-    this.comment.description = control.value;
+    this.comment.description = this.content;
     this.save();
   }
 
-  cancel(control: any, e) {
-    e.preventDefault();
-
+  cancel(e) {
     if (this.inProgress) {
       return;
     }
 
     this.editing = false;
-    control.value = this.comment.description;
+    this.content = this.comment.description;
   }
 
   delete() {
@@ -382,7 +389,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
 
   onPosterMenuClick(e: MouseEvent): void {
-    console.log('ojm testing');
     this.posterMenuOpened$.next(true);
   }
 

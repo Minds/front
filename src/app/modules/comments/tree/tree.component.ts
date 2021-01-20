@@ -29,7 +29,6 @@ import { CommentsService } from '../comments.service';
 @Component({
   selector: 'm-comments__tree',
   templateUrl: 'tree.component.html',
-  styleUrls: ['tree.component.ng.scss'],
   providers: [
     AttachmentService,
     {

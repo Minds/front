@@ -5,6 +5,13 @@
     position: relative;
   }
 
+  .m-dropdown--v2 {
+    margin-right: 10px;
+    @media screen and (max-width: $max-mobile) {
+      margin-right: 0;
+    }
+  }
+
   .m-comment--focused {
     margin-left: -4px;
     @include m-theme() {
@@ -16,26 +23,23 @@
     padding: 12px;
   }
 
-  //ojm remove this?
-  // .m-mature-text-toggle {
-  //   i {
-  //     vertical-align: middle;
-  //     padding-right: 8px;
-  //   }
-  // }
-
   ::ng-deep .m-comment__ownerRow {
     max-width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 5px;
 
-    @media screen and (max-width: $max-mobile) {
-      flex-direction: column;
-      align-items: flex-start;
+    .m-commentOwnerRow__text {
+      display: flex;
+      align-items: center;
 
-      .m-comment__timestamp::before {
-        display: none;
+      @media screen and (max-width: $max-mobile) {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .m-comment__timestamp::before {
+          display: none;
+        }
       }
     }
 
@@ -83,8 +87,17 @@
   }
 
   ::ng-deep m-translate {
-    > div {
-      margin: 20px 0 0 -20px;
+    display: block;
+    .m-translate__hasNav2020 {
+      &.m-translate__visible {
+        padding-top: 20px;
+      }
+      > * {
+        padding: 5px 0;
+      }
+    }
+    .m-translation-wrapper .message {
+      font-size: 15px;
     }
   }
 
@@ -158,12 +171,7 @@
         margin-right: 22px;
         cursor: pointer;
 
-        span,
-        i {
-          font-size: 15px;
-          line-height: 20px;
-          vertical-align: middle;
-          font-weight: 700;
+        > a {
           @include m-theme() {
             color: themed($m-textColor--secondary);
           }
@@ -174,17 +182,32 @@
             }
           }
 
+          &.selected {
+            @include m-theme() {
+              color: themed($m-link) !important;
+            }
+          }
+
           &.selected:hover {
             @include m-theme() {
               color: themed($m-link--hover) !important;
             }
           }
         }
+
+        span,
+        i {
+          font-size: 15px;
+          line-height: 20px;
+          vertical-align: middle;
+          font-weight: 700;
+        }
       }
     }
   }
 
   .m-comment__repliesToggle {
+    margin: -5px 0 10px;
     span {
       font-size: 15px;
       line-height: 20px;
@@ -212,8 +235,24 @@
     }
   }
 
+  .m-comment .m-comment__avatar--largeScreens {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+  .m-comment .m-comment__avatar--smallScreens {
+    @media screen and (min-width: $max-mobile + 1) {
+      display: none;
+      .minds-avatar {
+        margin-left: 0;
+      }
+    }
+  }
+
   .m-comment .minds-avatar {
     margin-top: 2px;
+    margin-right: 15px;
+    min-width: 38px;
 
     img {
       width: 36px;

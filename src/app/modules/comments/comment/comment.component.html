@@ -3,44 +3,55 @@
   [class.m-comment--error]="error"
   [class.m-comment--focused]="comment.focused"
 >
-  <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
-    <a [routerLink]="['/', comment.ownerObj.username]">
-      <img [src]="getAvatarSrc() | async" class="m-border" />
-    </a>
+  <ng-template #avatar>
+    <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
+      <a [routerLink]="['/', comment.ownerObj.username]">
+        <img [src]="getAvatarSrc() | async" class="m-border" />
+      </a>
+    </div>
+  </ng-template>
+  <div class="m-comment__avatar--largeScreens">
+    <ng-container *ngTemplateOutlet="avatar"></ng-container>
   </div>
+
   <div class="minds-body">
     <div class="m-comment__ownerRow">
-      <div class="m-commentOwnerRow__owner">
-        <a [routerLink]="['/', comment.ownerObj.username]">
-          <span title="{{ comment.ownerObj.name }}"
-            >{{ comment.ownerObj.name }}
-          </span></a
-        >
-        <a [routerLink]="['/', comment.ownerObj.username]">
-          <span title="{{ comment.ownerObj.name }}"
-            >@{{ comment.ownerObj.username }}</span
-          ></a
-        >
-        <m-channel--badges
-          class="m-channel--badges-activity"
-          [user]="comment.ownerObj"
-          badges="[ 'admin', 'verified' ]"
-        ></m-channel--badges>
+      <div class="m-comment__avatar--smallScreens">
+        <ng-container *ngTemplateOutlet="avatar"></ng-container>
       </div>
+      <div class="m-commentOwnerRow__text">
+        <div class="m-commentOwnerRow__owner">
+          <a [routerLink]="['/', comment.ownerObj.username]">
+            <span title="{{ comment.ownerObj.name }}"
+              >{{ comment.ownerObj.name }}
+            </span></a
+          >
+          <a [routerLink]="['/', comment.ownerObj.username]">
+            <span title="{{ comment.ownerObj.name }}"
+              >@{{ comment.ownerObj.username }}</span
+            ></a
+          >
+          <m-channel--badges
+            class="m-channel--badges-activity"
+            [user]="comment.ownerObj"
+            badges="[ 'admin', 'verified' ]"
+          ></m-channel--badges>
+        </div>
 
-      <div class="m-commentOwnerRow__metrics">
-        <span
-          class="m-comment__timestamp"
-          [title]="comment.time_created * 1000 | date: 'medium'"
-          *ngIf="commentAge$ | async as commentAge"
-          >{{ commentAge | friendlydatediff }}</span
-        >
-        <span
-          *ngIf="comment.edited"
-          class="m-edited-text"
-          i18n="@@M__COMMON__EDITED"
-          >Edited</span
-        >
+        <div class="m-commentOwnerRow__metrics">
+          <span
+            class="m-comment__timestamp"
+            [title]="comment.time_created * 1000 | date: 'medium'"
+            *ngIf="commentAge$ | async as commentAge"
+            >{{ commentAge | friendlydatediff }}</span
+          >
+          <span
+            *ngIf="comment.edited"
+            class="m-edited-text"
+            i18n="@@M__COMMON__EDITED"
+            >Edited</span
+          >
+        </div>
       </div>
     </div>
 
@@ -82,7 +93,7 @@
       >
         <!-- Rich content -->
         <div
-          class="m-rich-embed m-border cf"
+          class="m-rich-embed cf"
           *ngIf="comment.perma_url && comment.title"
           [ngClass]="{
             'm-mature-content': attachment.shouldBeBlurred(comment),
@@ -202,8 +213,7 @@
       <!-- ---------------------------------------- -->
       <ng-container *ngIf="editing">
         <!-- <div class="minds-body"> -->
-        <!-- ojm -->
-        <div class="m-commentPoster__wrapper">
+        <div class="m-commentPoster__wrapper m-commentPoster__wrapper--editing">
           <form (submit)="post($event)" class="m-commentPoster__form">
             <ng-template
               #itemTemplate
@@ -219,10 +229,9 @@
               <minds-textarea
                 #edit
                 name="description"
-                [(mModel)]="comment.description"
+                [(mModel)]="content"
                 [disabled]="inProgress"
-                (keydown.enter)="applyAndSave(edit, $event)"
-                (keydown.esc)="cancel(edit, $event)"
+                (keypress)="keypress($event)"
                 (keyup)="getPostPreview(edit)"
                 (filePaste)="uploadAttachment($event)"
                 mTextInputAutocomplete
@@ -243,13 +252,6 @@
               >Please wait until the upload is complete.</ng-container
             >
           </div>
-          <!-- ojm <span
-            class="minds-comment-span m-comment__pressEscape"
-            *ngIf="canPost"
-            i18n="@@MINDS__CARDS__COMMENT__PRESS_ESC_TO_CANCEL"
-            >Press ESC to cancel</span
-          > -->
-
           <!-- --------------------- -->
           <!-- ACTIONS -->
           <!-- --------------------- -->
@@ -312,10 +314,10 @@
                   >
                     <div
                       (click)="
-                        attachment.toggleMature(); posterMenuOpened$.next(false)
+                        cancel(edit, $event); posterMenuOpened$.next(false)
                       "
                     >
-                      <i class="material-icons">cancel</i>
+                      <i class="material-icons">clear</i>
                       <span i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
                         >Cancel editing</span
                       >
@@ -334,7 +336,7 @@
               <a
                 class="m-post-button m-commentPoster__postButton"
                 (click)="applyAndSave(edit, $event)"
-                [ngClass]="{ 'm-button-disabled': !saveEnabled() }"
+                [ngClass]="{ 'm-button-disabled': !canSave() }"
               >
                 <i class="material-icons">send</i>
               </a>
@@ -358,46 +360,6 @@
           <!-- --------------------- -->
           <!-- END ACTIONS  -->
           <!-- --------------------- -->
-
-          <!-- ojm delete after testing  -->
-          <!-- <div class="mdl-card__actions"> -->
-          <!-- Attachments -->
-          <!-- <div class="attachment-button">
-              <i
-                class="material-icons"
-                [ngClass]="{ 'mdl-color-text--grey-700': attachment.hasFile() }"
-                >insert_photo</i
-              >
-              <input
-                type="file"
-                id="file"
-                #fileInput
-                name="attachment"
-                (change)="uploadAttachment(fileInput)"
-              />
-            </div> -->
-
-          <!-- <a
-              class="m-mature-button"
-              (click)="attachment.toggleMature()"
-              title="Mature content"
-              i18n-title="@@M__COMMON__MATURE_CONTENT"
-            >
-              <i
-                class="material-icons"
-                [ngClass]="{ selected: attachment.isMature() }"
-                >explicit</i
-              >
-            </a> -->
-          <!--
-            <a
-              class="m-post-button"
-              (click)="applyAndSave(edit, $event)"
-              [ngClass]="{ 'm-button-disabled': !saveEnabled() }"
-            >
-              <i class="material-icons">send</i>
-            </a> -->
-          <!-- </div> -->
         </div>
 
         <!-- --------------------- -->
@@ -410,13 +372,18 @@
             [mdl]
             [hidden]="attachment.getMeta().title"
           ></div>
-          <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
-            <minds-rich-embed
-              [preview]="attachment.getMeta()"
-              [cropImage]="true"
-            ></minds-rich-embed>
-            <div class="attachment-preview-delete" (click)="resetPreview()">
-              <i class="material-icons">delete</i>
+          <div
+            class="m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed"
+          >
+            <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
+              <minds-rich-embed
+                [preview]="attachment.getMeta()"
+                [cropImage]="true"
+                [maxheight]="240"
+              ></minds-rich-embed>
+              <div class="attachment-preview-delete" (click)="resetPreview()">
+                <i class="material-icons">clear</i>
+              </div>
             </div>
           </div>
         </div>
@@ -454,55 +421,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="m-editable-attachment-container"> -->
-        <!-- Attachment preview -->
-        <!-- <div
-            class="post-preview"
-            *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"
-            (click)="removeAttachment(fileInput)"
-          >
-            <div
-              class="mdl-progress mdl-js-progress"
-              [mdlUpload]
-              [progress]="attachment.getUploadProgress()"
-              [hidden]="attachment.getUploadProgress() == 0"
-              [ngClass]="{ complete: attachment.getUploadProgress() == 100 }"
-            ></div>
-            <div
-              *ngIf="attachment.getMime() == 'video'"
-              class="attachment-preview video-placeholder mdl-color--blue-grey-600"
-            >
-              <i class="material-icons">videocam</i>
-            </div>
-            <img
-              *ngIf="attachment.getMime() != 'video'"
-              [src]="attachment.getPreview()"
-              class="attachment-preview mdl-shadow--2dp"
-            />
-            <div class="attachment-preview-delete">
-              <i class="material-icons">delete</i>
-            </div>
-          </div> -->
-
-        <!-- Rich embed preview -->
-        <!-- <div class="post-preview" *ngIf="attachment.isRich()">
-          <div
-            class="mdl-spinner mdl-js-spinner is-active"
-            [mdl]
-            [hidden]="attachment.getMeta().title"
-          ></div>
-          <div
-            class="m-rich-embed mdl-shadow--2dp cf"
-            *ngIf="attachment.getMeta().title"
-          >
-            <minds-rich-embed
-              [preview]="attachment.getMeta()"
-              [cropImage]="true"
-            ></minds-rich-embed>
-          </div>
-        </div> -->
-        <!-- </div> -->
       </ng-container>
       <!-- ---------------------------------------- -->
       <!-- END EDIT MODE -------------------------- -->
@@ -525,7 +443,9 @@
           (click)="toggleReplies()"
           *ngIf="comment.can_reply"
         >
-          <span *ngIf="activityService.allowComment$ | async">Reply</span>
+          <a
+            ><span *ngIf="activityService.allowComment$ | async">Reply</span></a
+          >
         </div>
       </div>
       <div>

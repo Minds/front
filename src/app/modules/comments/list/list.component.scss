@@ -1,4 +1,3 @@
-// ojm remove file ??? Or move to the generic comments.scss?
 @import 'defaults';
 
 minds-comments,
@@ -7,12 +6,20 @@ m-comments__entityOutlet,
 .m-comment-wrapper {
   width: 100%;
 
+  m-comment:first-child {
+    margin-top: 20px;
+  }
+
   .minds-comment {
     min-height: 0;
     margin: 0;
-    padding: 20px 30px 20px 10px;
     background-color: transparent;
     overflow: visible;
+    padding: 5px 30px 20px 20px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 5px 20px 20px 20px;
+    }
 
     .m-comment-message {
       white-space: pre-line;
@@ -44,10 +51,12 @@ m-comments__entityOutlet,
     }
 
     .minds-body {
-      // margin-left: $minds-margin;
       font-size: 12px;
-      max-width: 100%;
-      max-width: calc(100% - 20px); //ojm???
+      max-width: calc(100% - 20px);
+
+      @media screen and (max-width: $max-mobile) {
+        max-width: 100%;
+      }
 
       .username {
         font-size: 13px;
@@ -117,18 +126,21 @@ m-comments__entityOutlet,
 
   .m-comment-attachment,
   .m-comments-composer,
-  .m-editable-attachment-container {
+  .m-editable-attachment-container,
+  .m-attachmentPreviewWrapper {
     background: transparent;
 
     .m-rich-embed {
       text-align: left;
       margin: 0 0 $minds-padding;
+      border-radius: $m-borderRadius;
       @include m-theme() {
         background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
       }
 
-      minds-rich-embed .m-rich-embed-src {
+      minds-rich-embed .m-rich-embed-src,
+      minds-rich-embed .m-rich-embed-preview {
         position: relative;
 
         .thumbnail {
@@ -143,7 +155,7 @@ m-comments__entityOutlet,
             background-size: cover;
             background-position: center;
             height: 100%;
-            border-radius: 5px 0 0 5px;
+            border-radius: $m-borderRadius 0 0 $m-borderRadius;
           }
 
           > img {
@@ -169,8 +181,7 @@ m-comments__entityOutlet,
 
         a.meta {
           display: block;
-          padding: $minds-padding;
-          padding-left: calc(25% + #{$minds-padding});
+          padding: 10px 40px 10px calc(25% + 10px);
 
           box-sizing: border-box;
           width: 100%;
@@ -182,8 +193,12 @@ m-comments__entityOutlet,
 
           h2 {
             margin-bottom: 0;
-            font-size: 13px;
-            line-height: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 20px;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
           }
 
           p {
@@ -191,8 +206,8 @@ m-comments__entityOutlet,
             text-overflow: ellipsis;
             overflow: hidden;
             max-height: ($lh * 2) + 1em;
-            line-height: $lh;
-            font-size: 11px;
+            line-height: 20px;
+            font-size: 15px;
 
             &.m-blurb {
               display: none;
@@ -208,6 +223,18 @@ m-comments__entityOutlet,
           display: none;
         }
       }
+    }
+  }
+
+  .m-comment__attachment {
+    img,
+    minds-video,
+    m-video {
+      max-width: 50%;
+      cursor: pointer;
+    }
+    .m-rich-embed img {
+      max-width: 100%;
     }
   }
 
@@ -270,6 +297,7 @@ m-comments__entityOutlet,
   }
 
   .m-comments-composer .mdl-card__actions,
+  .m-commentPoster__wrapper .mdl-card__actions,
   .minds-editable-container .mdl-card__actions {
     position: absolute;
     width: auto;
@@ -325,23 +353,6 @@ m-comments__entityOutlet,
       position: relative;
       overflow: hidden;
       cursor: pointer;
-
-      //ojm
-      // &:hover {
-      //   i {
-      //     @include m-theme() {
-      //       color: themed($m-textColor--tertiary);
-      //     }
-      //   }
-      // }
-
-      // i {
-      //   cursor: pointer;
-      //   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      //   @include m-theme() {
-      //     color: themed($m-textColor--secondary);
-      //   }
-      // }
 
       input {
         position: absolute;
