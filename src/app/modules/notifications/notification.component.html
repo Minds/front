@@ -187,7 +187,6 @@
             *ngTemplateOutlet="
               commentedOn;
               context: {
-                from: notification.fromObj.name,
                 contentLabel: 'your activity'
               }
             "
@@ -203,7 +202,6 @@
             *ngTemplateOutlet="
               commentedOn;
               context: {
-                from: notification.fromObj.name,
                 contentLabel:
                   notification.entityObj.ownerObj.name + '\'s activity'
               }
@@ -237,7 +235,6 @@
               *ngTemplateOutlet="
                 commentedOn;
                 context: {
-                  from: notification.fromObj.name,
                   contentLabel: notification.entityObj.title | excerpt
                 }
               "
@@ -349,19 +346,17 @@
         Will differentiate between comment replies and post replies.
 
         Context params:
-        @param { string } from - Who the comment was sent by.
         @param { string } contentLabel - string that is appended to X replied on your comment on...
 
         Usage:
 
         <ng-container *ngTemplateOutlet="commentedOn; context: {
-          from: senderName,
           contentLabel: postOwnerName+'\'s post'
         }"></ng-container> -->
-    <ng-template #commentedOn let-from="from" let-contentLabel="contentLabel">
+    <ng-template #commentedOn let-contentLabel="contentLabel">
       <ng-container *ngIf="!notification.params?.is_reply">
         <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
-          {{ from }} commented on
+          {{ notification.fromObj.name }} commented on
           <span class="pseudo-link mdl-color-text--blue-grey-400">
             {{ contentLabel }}
           </span>
@@ -369,7 +364,7 @@
       </ng-container>
       <ng-container *ngIf="notification.params?.is_reply">
         <p i18n="@@@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO">
-          {{ from }} replied to your comment on
+          {{ notification.fromObj.name }} replied to your comment on
           <span class="pseudo-link mdl-color-text--blue-grey-400"
             >{{ contentLabel }}
           </span>
