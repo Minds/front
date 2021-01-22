@@ -1,5 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+/**
+ * string Month names or empty string.
+ */
+export type MonthName =
+  | 'January'
+  | 'February'
+  | 'March'
+  | 'April'
+  | 'May'
+  | 'June'
+  | 'July'
+  | 'August'
+  | 'September'
+  | 'October'
+  | 'November'
+  | 'December'
+  | '';
+
 @Component({
   selector: 'm-date__dropdowns',
   template: `
@@ -44,27 +62,37 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class DateDropdownsComponent implements OnInit {
   @Input() disabled: boolean = false;
 
+  /**
+   * Set whole date and emit changes. Used to set default and "completed" states.
+   * @param { string } - date in format yyyy-mm-dd
+   */
   @Input() set selectedDate(date: string) {
     if (!date) {
       return;
     }
+    try {
+      const parts = date.split('-').map(part => parseInt(part, 10));
 
-    const parts = date.split('-').map(part => parseInt(part, 10));
+      if (!parts[0] || !parts[1] || !parts[2]) {
+        return;
+      }
 
-    if (!parts[0] || !parts[1] || parts[2]) {
-      return;
+      this.selectYear(parts[0], false);
+      this.selectMonth(this.getMonthByIndex(parts[1] - 1), false);
+      this.selectDay(parts[2].toString(), false);
+      this.emitChanges();
+    } catch (e) {
+      // likely a malformed date, do noting.
     }
-
-    this.selectYear(parts[0], false);
-    this.selectMonth(parts[1].toString(), false);
-    this.selectDay(parts[2].toString(), false);
-    this.emitChanges();
   }
 
   @Output()
   selectedDateChange: EventEmitter<string> = new EventEmitter<string>();
 
-  monthNames = [
+  /**
+   * Ordered array of month names.
+   */
+  monthNames: MonthName[] = [
     'January',
     'February',
     'March',
@@ -81,9 +109,9 @@ export class DateDropdownsComponent implements OnInit {
   days = [1];
   years = [];
 
-  selectedMonth = '';
-  selectedDay = '';
-  selectedYear = '';
+  selectedMonth: MonthName = '';
+  selectedDay: string = '';
+  selectedYear: string = '';
 
   constructor() {}
 
@@ -91,7 +119,12 @@ export class DateDropdownsComponent implements OnInit {
     this.years = this.range(100, new Date().getFullYear(), false);
   }
 
-  selectMonth(month: string, emit: boolean = true) {
+  /**
+   * Selects a given month to a given MonthName
+   * @param { MonthName } - e.g. 'January', 'February'
+   * @returns { void }
+   */
+  selectMonth(month: MonthName, emit: boolean = true): void {
     this.selectedMonth = month;
 
     this.populateDays(
@@ -135,7 +168,11 @@ export class DateDropdownsComponent implements OnInit {
     }
   }
 
-  buildDate() {
+  /**
+   * Builds date in yyyy-mm-dd format.
+   * @returns { string } - string of date in yyyy-mm-dd format
+   */
+  buildDate(): string {
     let date: string = '';
 
     if (this.selectedMonth !== '') {
@@ -161,8 +198,22 @@ export class DateDropdownsComponent implements OnInit {
     this.days = this.range(maxDays, 1);
   }
 
-  private getMonthNumber(month: string): number {
+  /**
+   * Gets number of month by name.
+   * @param month
+   */
+  private getMonthNumber(month: MonthName): number {
     return this.monthNames.indexOf(month);
+  }
+
+  /**
+   * Gets month by index !IMPORTANT! +1 to account for
+   * array causing 'January' to be offset to 0 rather than 1.
+   * @param { index } - month index.index
+   * @returns { MonthName } - 'January', 'February' etc.
+   */
+  private getMonthByIndex(index: number): MonthName {
+    return this.monthNames[index];
   }
 
   private getDaysInMonth(month, year): number {
@@ -186,7 +237,13 @@ export class DateDropdownsComponent implements OnInit {
     });
   }
 
-  private pad(val: any, pad: number = 0) {
+  /**
+   * Pads a date value if necessary, so '1' for January becomes '01'.
+   * @param { any } val - value to be padded.
+   * @param { number } - positions to pad.
+   * @returns { string } - padding number.
+   */
+  private pad(val: any, pad: number = 0): string {
     if (!pad) {
       return val;
     }
