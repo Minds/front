@@ -51,10 +51,8 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   @Input() canDelete: boolean = false;
   @Input() fixedHeight = false;
   @Input() showOnlyPoster = true;
-  @Input() showOnlyTree = false;
+  @Input() compact = false;
   optimisticList: Array<any> = [];
-
-  // private shouldReuseRouteFn;
 
   constructor(
     public session: Session,
@@ -64,7 +62,7 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     private router: Router,
     private cd: ChangeDetectorRef,
     public legacyActivityService: ActivityServiceCommentsLegacySupport,
-    private activityService: ActivityService
+    public activityService: ActivityService
   ) {}
 
   ngOnInit() {

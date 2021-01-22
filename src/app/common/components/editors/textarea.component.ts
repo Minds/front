@@ -15,7 +15,7 @@ declare var tinymce;
   template: `
     <div
       #editor
-      class="m-editor"
+      class="m-editor m-legible"
       [ngClass]="{ 'm-editor-disabled': disabled }"
       [attr.contenteditable]="!disabled ? 'true' : null"
       (keyup)="change()"

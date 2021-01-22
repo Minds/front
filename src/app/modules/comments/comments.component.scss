@@ -4,7 +4,7 @@
 
 .m-commentPoster__wrapper {
   position: relative;
-  margin: 10px;
+  margin: 10px 0;
   border-radius: $m-borderRadius;
   display: flex;
   align-items: flex-start;
@@ -57,8 +57,8 @@
 
   .m-commentPoster__actions {
     position: relative;
-    right: 0;
-    top: 0;
+    top: 6px;
+    right: 8px;
     display: flex;
     flex-direction: column;
 
@@ -68,6 +68,11 @@
     }
     .m-dropdown--v2 {
       margin: 0;
+      .m-commentPoster__menuButton {
+        i {
+          font-size: 23px;
+        }
+      }
     }
 
     .m-commentPoster__postButton i,
@@ -166,15 +171,10 @@ m-commentPoster {
   }
 
   .attachment-preview-delete {
+    cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
-    opacity: 0.5;
-    transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
-
-    &:hover {
-      opacity: 0.7;
-    }
 
     i {
       @include m-theme() {

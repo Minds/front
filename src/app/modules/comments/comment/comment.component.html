@@ -2,6 +2,7 @@
   class="m-comment minds-comment minds-block"
   [class.m-comment--error]="error"
   [class.m-comment--focused]="comment.focused"
+  [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
     <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
@@ -10,16 +11,16 @@
       </a>
     </div>
   </ng-template>
-  <div class="m-comment__avatar--largeScreens">
+  <div *ngIf="!_compact" class="m-comment__avatarWrapper">
     <ng-container *ngTemplateOutlet="avatar"></ng-container>
   </div>
 
   <div class="minds-body">
     <div class="m-comment__ownerRow">
-      <div class="m-comment__avatar--smallScreens">
+      <div *ngIf="_compact" class="m-comment__avatarWrapper--compact">
         <ng-container *ngTemplateOutlet="avatar"></ng-container>
       </div>
-      <div class="m-commentOwnerRow__text">
+      <div class="m-commentOwnerRow__text m-legible">
         <div class="m-commentOwnerRow__owner">
           <a [routerLink]="['/', comment.ownerObj.username]">
             <span title="{{ comment.ownerObj.name }}"
@@ -29,13 +30,12 @@
           <a [routerLink]="['/', comment.ownerObj.username]">
             <span title="{{ comment.ownerObj.name }}"
               >@{{ comment.ownerObj.username }}</span
-            ></a
-          >
-          <m-channel--badges
-            class="m-channel--badges-activity"
-            [user]="comment.ownerObj"
-            badges="[ 'admin', 'verified' ]"
-          ></m-channel--badges>
+            ><m-channel--badges
+              class="m-channel--badges-activity"
+              [user]="comment.ownerObj"
+              badges="[ 'admin', 'verified' ]"
+            ></m-channel--badges
+          ></a>
         </div>
 
         <div class="m-commentOwnerRow__metrics">
@@ -428,7 +428,10 @@
     </div>
     <!-- --------------------- -->
     <div class="m-comment__toolbar" *ngIf="comment?.guid">
-      <div class="m-commentToolbar__buttons" [hidden]="editing || hideToolbar">
+      <div
+        class="m-commentToolbar__buttons m-legible"
+        [hidden]="editing || hideToolbar"
+      >
         <minds-button-thumbs-up
           class="m-commentToolbarButton"
           [object]="comment"
@@ -440,8 +443,8 @@
         ></minds-button-thumbs-down>
         <div
           class="m-commentToolbarButton"
-          (click)="toggleReplies()"
-          *ngIf="comment.can_reply"
+          (click)="toggleReplyPoster()"
+          *ngIf="comment.can_reply && session.isLoggedIn()"
         >
           <a
             ><span *ngIf="activityService.allowComment$ | async">Reply</span></a
@@ -511,14 +514,15 @@
         ></div>
       </div>
     </div>
-    <div class="m-comment__repliesToggle" *ngIf="comment.replies_count > 0">
+    <div
+      class="m-comment__repliesToggle m-legible"
+      *ngIf="comment.replies_count > 0"
+    >
       <span (click)="toggleReplies()"
-        ><ng-container *ngIf="!this.showReplies"
+        ><ng-container *ngIf="!showReplies"
           >View {{ comment.replies_count }}
           {{ comment.replies_count > 1 ? 'replies' : 'reply' }}</ng-container
-        ><ng-container *ngIf="this.showReplies"
-          >Hide replies</ng-container
-        ></span
+        ><ng-container *ngIf="showReplies">Hide replies</ng-container></span
       >
     </div>
     <!-- --------------------- -->
@@ -529,6 +533,7 @@
       [level]="level + 1"
       [canEdit]="canEdit"
       [canDelete]="canDelete"
+      [showReplyPoster]="showReplyPoster"
       *ngIf="showReplies && comment.can_reply"
     >
     </m-comments__thread>

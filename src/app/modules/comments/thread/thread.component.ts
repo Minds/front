@@ -41,6 +41,8 @@ export class CommentsThreadComponent implements OnInit {
   @Input() conversation: boolean = false;
   @Input() limit: number = 12;
   @Input() level = 0;
+  @Input() compact: boolean = false;
+  @Input() showReplyPoster: boolean = false;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
     true

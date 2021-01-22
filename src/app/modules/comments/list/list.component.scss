@@ -373,38 +373,12 @@ m-comments__entityOutlet,
     }
   }
 
-  .attachment-preview-delete {
-    cursor: pointer;
-  }
-
   .post-preview {
     margin-bottom: $minds-padding;
   }
 
-  .m-comments-load-more {
-    padding: ($minds-padding / 2) $minds-padding;
-    margin: ($minds-padding / 2) 0;
-    text-align: center;
-    cursor: pointer;
-    font-size: 0.85em;
-
-    &.m-disabled {
-      cursor: default !important;
-      opacity: 0.35;
-    }
-
-    i {
-      font-size: 20px;
-      vertical-align: middle;
-      padding-right: 12px;
-    }
-  }
-
   .minds-comments-container {
     $mcc-height: 300px;
-
-    //max-height: $mcc-height;
-    //overflow-y: auto;
 
     .m-comment-attachment .item-image {
       &.m-mature-content-shown .m-mature-overlay {
@@ -421,6 +395,23 @@ m-comments__entityOutlet,
     }
     .m-comment-attachment .image-video {
       height: $mcc-height;
+    }
+  }
+  .m-comments__viewMore {
+    display: flex;
+    justify-content: space-around;
+    margin: -10px 0 10px;
+    m-button button {
+      min-height: 30px !important;
+      padding: 4px 11px !important;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary) !important;
+      }
+
+      div {
+        font-weight: 500 !important;
+        font-size: 13px !important;
+      }
     }
   }
 }

@@ -16,6 +16,7 @@ import {
   OnDestroy,
   AfterViewInit,
   Injector,
+  HostListener,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -75,6 +76,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() showReplies: boolean = false;
   changesDetected: boolean = false;
   showMature: boolean = false;
+  showReplyPoster: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -105,6 +107,16 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   posterMenuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  // Compact view may be determined by input or window width
+  _compact: boolean = false;
+
+  @Input() set compact(value: boolean) {
+    this._compact = value;
+    if (!value) {
+      this.onResize();
+    }
+  }
 
   constructor(
     public session: Session,
@@ -142,6 +154,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     if (this.session.getLoggedInUser().guid === this.comment.ownerObj.guid) {
       this.showMature = true;
     }
+
+    this.onResize();
   }
 
   ngAfterViewInit() {
@@ -172,6 +186,13 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   set _editing(value: boolean) {
     this.editing = value;
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    if (window.innerWidth <= 480) {
+      this._compact = true;
+    }
   }
 
   canSave() {
@@ -382,6 +403,10 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   toggleReplies() {
     this.showReplies = !this.showReplies;
+  }
+
+  toggleReplyPoster() {
+    this.showReplyPoster = !this.showReplyPoster;
   }
 
   onMenuClick(e: MouseEvent): void {

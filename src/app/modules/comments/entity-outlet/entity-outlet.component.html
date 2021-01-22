@@ -1,4 +1,20 @@
-<div class="m-commentsEntityOutlet__topBar" *ngIf="!showOnlyPoster">
+<!-- -------------------- -->
+<!-- HIDE (feeds only) -->
+<!-- -------------------- -->
+<div
+  class="m-commentsEntityOutlet__expand--hide"
+  *ngIf="count > 0 && !showOnlyPoster && activityService.displayOptions.isFeed"
+  (click)="closeFullComments()"
+>
+  Hide comments
+</div>
+<!-- -------------------- -->
+<!-- TOGGLE (everywhere except feeds) -->
+<!-- -------------------- -->
+<div
+  class="m-commentsEntityOutlet__topBar"
+  *ngIf="!activityService.displayOptions.isFeed"
+>
   <div class="m-commentsEntityOutlet__header">
     <span class="m-commentsEntityOutlet__title" (click)="toggleComments()"
       >Comments</span
@@ -14,14 +30,34 @@
     <i class="material-icons">filter_list</i>
   </div>
 </div>
+<!-- -------------------- -->
+<!-- START CONVERSATION -->
+<!-- -------------------- -->
 <div
-  class="m-commentsEntityOutlet__startConversation"
+  class="m-comments__startConversation"
   *ngIf="count < 1 && !showOnlyPoster"
   i18n="@@MINDS__COMMENTS__START_CONVERSATION"
 >
   <span>Start the conversation!</span>
 </div>
+<!-- -------------------- -->
+
 <ng-container *ngIf="showOnlyPoster">
+  <!-- -------------------- -->
+  <!-- SHOW (feeds only) -->
+  <!-- -------------------- -->
+
+  <div
+    class="m-commentsEntityOutlet__expand"
+    *ngIf="count > 0 && activityService.displayOptions.isFeed"
+    (click)="openFullComments()"
+  >
+    View {{ count }} comment{{ count > 1 ? 's' : '' }}
+  </div>
+  <!-- -------------------- -->
+  <!-- OPTIMISTIC LIST -->
+  <!-- -------------------- -->
+
   <div
     class="m-commentsEntityOutlet__optimisticList"
     *ngIf="optimisticList.length > 0"
@@ -35,15 +71,18 @@
         [canEdit]="canEdit"
         [canDelete]="canDelete"
         [showReplies]="comment.show_replies"
+        [compact]="compact"
         (delete)="delete(i)"
         (saved)="edited(i, $event)"
         (onReply)="reply($event.comment)"
       ></m-comment>
     </ng-container>
   </div>
-
+  <!-- -------------------- -->
+  <!-- POSTER ONLY -->
+  <!-- -------------------- -->
   <m-comment__poster
-    *ngIf="(legacyActivityService.allowComment$ | async) && !showOnlyTree"
+    *ngIf="legacyActivityService.allowComment$ | async"
     [guid]="guid"
     [parent]="entity"
     [entity]="entity"
@@ -54,10 +93,14 @@
   >
   </m-comment__poster>
 </ng-container>
+<!-- -------------------- -->
+<!-- TREE -->
+<!-- -------------------- -->
 <m-comments__tree
   #commentsTree
-  *ngIf="!showOnlyPoster || showOnlyTree"
+  *ngIf="!showOnlyPoster"
   [entity]="entity"
   [canDelete]="canDelete"
+  [compact]="compact"
 >
 </m-comments__tree>

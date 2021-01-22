@@ -2,6 +2,24 @@
 
 :host {
   display: block;
+
+  .m-commentsEntityOutlet__expand {
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+  .m-commentsEntityOutlet__expand--hide {
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  .m-commentsEntityOutlet__expand,
+  .m-commentsEntityOutlet__expand--hide {
+    font-weight: 400;
+    padding: 0 20px 6px;
+    cursor: pointer;
+  }
   .m-commentsEntityOutlet__topBar {
     display: flex;
     justify-content: space-between;
@@ -52,7 +70,7 @@
     }
   }
 
-  .m-commentsEntityOutlet__startConversation {
+  .m-comments__startConversation {
     display: flex;
     justify-content: space-around;
     margin: 40px auto 50px;

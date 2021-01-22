@@ -42,7 +42,6 @@ import { CommentsService } from '../comments.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsTreeComponent implements OnInit, OnDestroy {
-  @ViewChild('posterEl') posterEl;
   entity;
   guid: string = '';
   parent: any;
@@ -59,6 +58,7 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() showOnlyPoster: boolean = false;
+  @Input() compact: boolean = false;
 
   private shouldReuseRouteFn;
 

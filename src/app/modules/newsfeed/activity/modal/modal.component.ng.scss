@@ -497,26 +497,8 @@ $modal-padding: 20px;
           margin-top: 15px;
           margin-left: 0;
         }
-
-        .m-comment__ownerRow {
-          .m-commentOwnerRow__text {
-            flex-direction: column;
-            align-items: flex-start;
-
-            .m-comment__timestamp::before {
-              display: none;
-            }
-          }
-        }
-
-        .m-comment__avatar--smallScreens {
-          display: block !important;
-          .minds-avatar {
-            margin-left: 0;
-          }
-        }
-        .m-comment__avatar--largeScreens {
-          display: none !important;
+        m-comment__tree .m-comments__startConversation {
+          display: none;
         }
         .m-comment__attachment {
           .mdl-card {
@@ -551,9 +533,6 @@ $modal-padding: 20px;
         .m-comments--start-conversation-label {
           display: none;
         }
-        m-comments__tree m-comment__poster {
-          display: none;
-        }
         .minds-comment {
           padding-left: 0 !important;
           padding-right: 0 !important;
@@ -561,6 +540,9 @@ $modal-padding: 20px;
         .m-comments-load-more {
           margin-top: -14px;
         }
+      }
+      .m-comments__viewMore {
+        margin-top: 0;
       }
     }
   }
