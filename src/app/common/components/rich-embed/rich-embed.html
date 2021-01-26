@@ -4,7 +4,7 @@
 <div
   class="m-rich-embed-src"
   *ngIf="src && type == 'src'"
-  [ngClass]="{ 'm-has-inline-embed': hasInlineContentLoaded() }"
+  [ngClass]="{ 'm-has-inline-embed' : hasInlineContentLoaded(), 'm-richEmbedPreview--noThumbnail' : !src.thumbnail_src }"
 >
   <!-- ----------------------------------- -->
   <!-- MEDIA -->
@@ -92,8 +92,11 @@
 <!-- TYPE: PREVIEW -->
 <!-- (Currently used in comments) -->
 <!-- ----------------------------------- -->
-
-<div class="m-rich-embed-preview" *ngIf="preview && type == 'preview'">
+<div
+  class="m-rich-embed-preview"
+  [ngClass]="{'m-richEmbedPreview--noThumbnail' : !preview.thumbnail}"
+  *ngIf="preview && type == 'preview'"
+>
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img *ngIf="!cropImage" src="{{preview.thumbnail}}" />
     <div

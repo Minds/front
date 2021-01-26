@@ -10,19 +10,24 @@
   }"
   #scrollArea
 >
-  <m-comment__poster
-    *ngIf="showReplyPoster && (activityService.allowComment$ | async)"
-    [guid]="guid"
-    [parent]="parent"
-    [entity]="entity"
-    [currentIndex]="comments.length - 1"
-    [conversation]="conversation"
-    [level]="level"
-    (posted)="onPosted($event)"
-    (optimisticPost)="onOptimisticPost($event)"
-  >
-  </m-comment__poster>
-  <div class="m-comments__viewMore" *ngIf="loadPrevious">
+  <ng-container *ngIf="level >= 1">
+    <ng-container *ngTemplateOutlet="poster"></ng-container
+  ></ng-container>
+  <ng-template #poster>
+    <m-comment__poster
+      *ngIf="showReplyPoster && (activityService.allowComment$ | async)"
+      [guid]="guid"
+      [parent]="parent"
+      [entity]="entity"
+      [currentIndex]="comments.length - 1"
+      [conversation]="conversation"
+      [level]="level"
+      (posted)="onPosted($event)"
+      (optimisticPost)="onOptimisticPost($event)"
+    >
+    </m-comment__poster>
+  </ng-template>
+  <div class="m-comments__viewMore" *ngIf="loadPrevious && showReplies">
     <m-button
       (onAction)="load(false, 'desc')"
       [saving]="inProgress || descendingInProgress"
@@ -78,22 +83,24 @@
   </p>
 
   <div class="m-layout--spacer"></div>
-  <ng-container *ngFor="let comment of getComments(); let i = index">
-    <m-comment
-      [comment]="comment"
-      [entity]="entity"
-      [parent]="parent"
-      [level]="level"
-      [canEdit]="canEdit"
-      [canDelete]="canDelete"
-      [showReplies]="comment.show_replies"
-      [compact]="compact"
-      (delete)="delete(i)"
-      (saved)="edited(i, $event)"
-      (onReply)="reply($event.comment)"
-    ></m-comment>
+  <ng-container *ngIf="showReplies">
+    <ng-container *ngFor="let comment of getComments(); let i = index">
+      <m-comment
+        [comment]="comment"
+        [entity]="entity"
+        [parent]="parent"
+        [level]="level"
+        [canEdit]="canEdit"
+        [canDelete]="canDelete"
+        [showReplies]="comment.show_replies"
+        [compact]="compact"
+        (delete)="delete(i)"
+        (saved)="edited(i, $event)"
+        (onReply)="reply($event.comment)"
+      ></m-comment>
+    </ng-container>
   </ng-container>
-  <div class="m-comments__viewMore" *ngIf="loadNext">
+  <div class="m-comments__viewMore" *ngIf="loadNext && showReplies">
     <m-button
       (onAction)="load(false, 'asc')"
       [saving]="ascendingInProgress"
@@ -119,26 +126,28 @@
       </span>
     </m-button>
   </div>
-
-  <span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
-    <ng-container i18n="@@MINDS__COMMENTS__NO_LIVE_COMMENTS"
-      >Could not load live comments</ng-container
-    >
-    <br />
-    <a
-      *ngIf="!inProgress"
-      (click)="retry()"
-      class="m-commentsThread__connectionLost--retry"
-      i18n="@@MINDS__COMMENTS__SOCKET_RETRY"
-    >
-      Click to retry
-    </a>
-    <span
-      [hidden]="!inProgress"
-      class="m-commentsThread__connectionLost--loading"
-      i18n="@@MINDS__COMMENTS__SOCKET_LOADING"
-    >
-      Loading...
-    </span>
-  </span>
+  <ng-container *ngIf="level === 0">
+    <ng-container *ngTemplateOutlet="poster"></ng-container
+  ></ng-container>
 </div>
+<span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
+  <ng-container i18n="@@MINDS__COMMENTS__NO_LIVE_COMMENTS"
+    >Could not load live comments</ng-container
+  >
+  <br />
+  <a
+    *ngIf="!inProgress"
+    (click)="retry()"
+    class="m-commentsThread__connectionLost--retry"
+    i18n="@@MINDS__COMMENTS__SOCKET_RETRY"
+  >
+    Click to retry
+  </a>
+  <span
+    [hidden]="!inProgress"
+    class="m-commentsThread__connectionLost--loading"
+    i18n="@@MINDS__COMMENTS__SOCKET_LOADING"
+  >
+    Loading...
+  </span>
+</span>

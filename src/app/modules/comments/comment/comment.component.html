@@ -534,7 +534,8 @@
       [canEdit]="canEdit"
       [canDelete]="canDelete"
       [showReplyPoster]="showReplyPoster"
-      *ngIf="showReplies && comment.can_reply"
+      [showReplies]="showReplies"
+      *ngIf="comment.can_reply && (showReplies || showReplyPoster)"
     >
     </m-comments__thread>
   </div>

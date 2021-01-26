@@ -143,6 +143,13 @@ m-comments__entityOutlet,
       minds-rich-embed .m-rich-embed-preview {
         position: relative;
 
+        &.m-richEmbedPreview--noThumbnail,
+        &.m-richEmbedSrc--noThumbnail {
+          .meta {
+            margin-left: 20px;
+          }
+        }
+
         .thumbnail {
           display: block;
           float: left;

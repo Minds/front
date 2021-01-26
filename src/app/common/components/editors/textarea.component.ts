@@ -25,9 +25,11 @@ declare var tinymce;
       m-attachment-paste
       tabindex="0"
     ></div>
-    <span *ngIf="placeholder && model.length === 0" class="m-placeholder">{{
-      placeholder
-    }}</span>
+    <span
+      *ngIf="placeholder && model.length === 0"
+      class="m-placeholder m-legible"
+      >{{ placeholder }}</span
+    >
   `,
   exportAs: 'Textarea',
 })

@@ -8,6 +8,12 @@
     }
   }
 
+  .m-comments__thread--nested {
+    @media screen and (max-width: $max-mobile) {
+      margin-left: 53px;
+    }
+  }
+
   .m-commentsThread__blockedComment {
     display: block;
     font-size: 12px;
