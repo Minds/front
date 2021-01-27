@@ -62,4 +62,8 @@ export class ActivityToolbarComponent {
       .present(BoostCreatorComponent, this.entity)
       .toPromise();
   }
+
+  markAsTh() {
+    alert(this.entity.guid);
+  }
 }

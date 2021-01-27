@@ -22,7 +22,7 @@ export class FeaturesService {
     if (!features) return false;
 
     if (!feature) {
-      throw new Error('Invalid feature ID');
+      throw new Error(`Invalid feature ID ${feature} not found`);
     }
     if (feature.indexOf('!') === 0) {
       // Inverted check. Useful for *mIfFeature

@@ -154,9 +154,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
     this.topbarService.toggleVisibility(true);
 
-    if (this.featuresService.has('navigation')) {
-      this.navigationService.setVisible(true);
-    }
+    this.navigationService.setVisible(true);
   }
 
   private navigateToRedirection() {
