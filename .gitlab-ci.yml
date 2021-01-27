@@ -67,7 +67,7 @@ lint:
       --ci-build-id $CI_PIPELINE_ID
       --group "minds-e2e"
       --key $CYPRESS_RECORD_ID
-      --config CYPRESS_baseUrl=$E2E_DOMAIN
+      --config baseUrl=$E2E_DOMAIN
       --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION,captcha_shared_key=$CYPRESS_shared_key
   artifacts:
     when: always
