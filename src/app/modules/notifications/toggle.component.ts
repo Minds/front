@@ -22,7 +22,7 @@ export class NotificationsTopbarToggleComponent {
     public service: NotificationService,
     private featuresService: FeaturesService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
+    this.newNavigation = true;
   }
 
   toggle(e) {

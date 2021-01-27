@@ -60,28 +60,12 @@
           <span i18n="@@COMMON_SETTINGS">Settings</span>
         </a>
       </li>
-      <ng-container *mIfFeature="'helpdesk'; else faq"> </ng-container>
-      <ng-template #faq>
-        <li class="m-dropdownList__item" (click)="menu.value = false">
-          <a [routerLink]="['/faq']">
-            <i class="material-icons">help_outline</i>
-            <span i18n="@@COMMON_FAQ">FAQ</span>
-          </a>
-        </li>
-      </ng-template>
+
       <li class="m-dropdownList__item" (click)="menu.value = false">
-        <ng-container *mIfFeature="'helpdesk'; else helpAndSupport">
-          <a routerLink="/help">
-            <i class="material-icons">help_outline</i>
-            <span i18n="@@COMMON__HELP DESK">Help Desk</span>
-          </a>
-        </ng-container>
-        <ng-template #helpAndSupport>
-          <a [routerLink]="['/groups/profile/', '100000000000000681']">
-            <i class="material-icons">help_outline</i>
-            <span i18n="@@COMMON__HELP_AND_SUPPORT">Help & Support</span>
-          </a>
-        </ng-template>
+        <a routerLink="/help">
+          <i class="material-icons">help_outline</i>
+          <span i18n="@@COMMON__HELP DESK">Help Desk</span>
+        </a>
       </li>
       <li class="m-dropdownList__item">
         <a
