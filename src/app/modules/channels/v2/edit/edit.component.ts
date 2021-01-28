@@ -61,10 +61,6 @@ export class ChannelEditComponent {
       return [];
     }
 
-    if (!this.features.has('navigation')) {
-      return ['/pro', channel.username, 'settings'];
-    }
-
     return ['/settings/pro_canary', channel.username];
   }
 

@@ -75,7 +75,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected context: ContextService,
     protected newsfeedService: NewsfeedService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
+    this.newNavigation = true;
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 
