@@ -1,0 +1,70 @@
+@import 'defaults.scss';
+
+:host {
+  .m-walletTokenEarnings__dateSelector {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 400;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 2px;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-walletTokenEarningsDateSelector__label {
+      margin-right: 60px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse; /* Remove cell spacing */
+
+    td {
+      padding: 15px 0;
+
+      &:first-of-type {
+        font-weight: 500;
+        font-size: 17px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+
+    .total td {
+      border: 0 solid;
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+        color: themed($m-textColor--primary);
+      }
+      border-top-width: 1px;
+      border-bottom-width: 1px;
+    }
+
+    .labels {
+      font-size: 15px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    i {
+      cursor: pointer;
+    }
+  }
+
+  .m-walletTokenEarnings__expanded {
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+    width: 100%;
+    min-height: 50px;
+  }
+}
