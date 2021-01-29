@@ -52,7 +52,7 @@ m-comments__entityOutlet,
 
     .minds-body {
       font-size: 12px;
-      max-width: calc(100% - 20px);
+      max-width: calc(100% - 40px);
 
       @media screen and (max-width: $max-mobile) {
         max-width: 100%;
@@ -146,7 +146,7 @@ m-comments__entityOutlet,
         &.m-richEmbedPreview--noThumbnail,
         &.m-richEmbedSrc--noThumbnail {
           .meta {
-            margin-left: 20px;
+            padding-left: 20px;
           }
         }
 

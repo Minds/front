@@ -10,6 +10,7 @@
   }"
   #scrollArea
 >
+  <!-- --------------------------------  -->
   <ng-container *ngIf="level >= 1">
     <ng-container *ngTemplateOutlet="poster"></ng-container
   ></ng-container>
@@ -27,6 +28,7 @@
     >
     </m-comment__poster>
   </ng-template>
+  <!-- --------------------------------  -->
   <div class="m-comments__viewMore" *ngIf="loadPrevious && showReplies">
     <m-button
       (onAction)="load(false, 'desc')"
@@ -53,8 +55,8 @@
       </span>
     </m-button>
   </div>
-
-  <!-- <div
+  <!-- --------------------------------  -->
+  <div
     class="m-comments__startConversation"
     *ngIf="
       isLoggedIn &&
@@ -67,13 +69,13 @@
     i18n="@@MINDS__COMMENTS__START_CONVERSATION"
   >
     <span>Start the conversation!</span>
-  </div> -->
-
+  </div>
+  <!-- --------------------------------  -->
   <p class="m-comments--load-error-label" *ngIf="!inProgress && !!error">
     <i class="material-icons">warning</i>
     <span>{{ error }}</span>
   </p>
-
+  <!-- --------------------------------  -->
   <p
     class="m-commentsThread__blockedComment"
     *ngIf="isThreadBlocked()"
@@ -81,8 +83,8 @@
   >
     This thread contains replies from blocked channels.
   </p>
-
   <div class="m-layout--spacer"></div>
+  <!-- --------------------------------  -->
   <ng-container *ngIf="showReplies">
     <ng-container *ngFor="let comment of getComments(); let i = index">
       <m-comment
@@ -100,6 +102,7 @@
       ></m-comment>
     </ng-container>
   </ng-container>
+  <!-- --------------------------------  -->
   <div class="m-comments__viewMore" *ngIf="loadNext && showReplies">
     <m-button
       (onAction)="load(false, 'asc')"
@@ -130,6 +133,7 @@
     <ng-container *ngTemplateOutlet="poster"></ng-container
   ></ng-container>
 </div>
+<!-- --------------------------------  -->
 <span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
   <ng-container i18n="@@MINDS__COMMENTS__NO_LIVE_COMMENTS"
     >Could not load live comments</ng-container

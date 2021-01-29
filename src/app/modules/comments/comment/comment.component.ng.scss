@@ -62,8 +62,18 @@
         }
       }
       &.m-commentOwnerRow__owner {
-        a:first-child span::before {
-          display: none;
+        a:first-child span {
+          font-weight: 700;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+
+          &::before {
+            display: none;
+          }
+        }
+        a:last-child {
+          display: flex;
         }
       }
 

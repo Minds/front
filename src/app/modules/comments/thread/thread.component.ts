@@ -296,6 +296,9 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   onOptimisticPost(comment) {
+    this.showReplies = true;
+    this.showReplyPoster = false;
+
     this.comments.push(comment);
     this.detectChanges();
     this.commentsScrollEmitter.emit('bottom');
