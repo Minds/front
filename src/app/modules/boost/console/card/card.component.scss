@@ -42,6 +42,11 @@ m-boost-console-card {
     align-items: center;
     font-size: 12px;
 
+    .m-boost-card--manager-item__tooltip .m-tooltip--bubble {
+      position: absolute;
+      bottom: 10px;
+    }
+
     &.m-boost-card--manager-item--buttons {
       flex-direction: row;
 
