@@ -526,16 +526,14 @@
       >
     </div>
     <!-- --------------------- -->
-
     <m-comments__thread
       [entity]="entity"
       [parent]="comment"
       [level]="level + 1"
       [canEdit]="canEdit"
       [canDelete]="canDelete"
-      [showReplyPoster]="showReplyPoster"
       [showReplies]="showReplies"
-      *ngIf="comment.can_reply && (showReplies || showReplyPoster)"
+      *ngIf="comment.can_reply && showReplies"
     >
     </m-comments__thread>
   </div>

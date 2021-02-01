@@ -112,7 +112,7 @@
     </m-button>
   </div>
   <m-comment__poster
-    *ngIf="showReplyPoster && (activityService.allowComment$ | async)"
+    *ngIf="activityService.allowComment$ | async"
     [guid]="guid"
     [parent]="parent"
     [entity]="entity"

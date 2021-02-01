@@ -76,7 +76,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() showReplies: boolean = false;
   changesDetected: boolean = false;
   showMature: boolean = false;
-  showReplyPoster: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -403,10 +402,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   toggleReplies() {
     this.showReplies = !this.showReplies;
-  }
-
-  toggleReplyPoster() {
-    this.showReplyPoster = !this.showReplyPoster;
   }
 
   onMenuClick(e: MouseEvent): void {

@@ -42,7 +42,6 @@ export class CommentsThreadComponent implements OnInit {
   @Input() limit: number = 12;
   @Input() level = 0;
   @Input() compact: boolean = false;
-  @Input() showReplyPoster: boolean = false;
   @Input() showReplies: boolean = true;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
@@ -296,9 +295,6 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   onOptimisticPost(comment) {
-    this.showReplies = true;
-    this.showReplyPoster = false;
-
     this.comments.push(comment);
     this.detectChanges();
     this.commentsScrollEmitter.emit('bottom');
