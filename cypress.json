@@ -5,7 +5,7 @@
   "pageLoadTimeout": 120000,
   "defaultCommandTimeout": 120000,
   "integrationFolder": "./cypress-tests/integration",
-  "fixturesFolder": "./cypress-tests/integrationi",
+  "fixturesFolder": "./cypress-tests/fixtures",
   "pluginsFile": "cypress-tests/plugins/index.js",
   "supportFile": "cypress-tests/support/index.js",
   "retries": {
