@@ -6,6 +6,7 @@ import {
   Injector,
   Input,
   OnDestroy,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -15,6 +16,10 @@ import { BaseComponent } from './components/base/base.component';
 import { TagsPipe } from '../../common/pipes/tags';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Subscription } from 'rxjs';
+import { Session } from '../../services/session';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ConfigsService } from '../../common/services/configs.service';
+import { Storage } from '../../services/storage';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -26,7 +31,7 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'composer.component.html',
 })
-export class ComposerComponent implements OnDestroy {
+export class ComposerComponent implements OnInit, OnDestroy {
   /**
    * Is this an embedded composer (i.e. no modal)
    */
@@ -92,6 +97,10 @@ export class ComposerComponent implements OnDestroy {
 
   protected tooManyTagsSubscription: Subscription;
 
+  querySubscription: Subscription;
+
+  readonly siteUrl: string;
+
   /**
    * Constructor
    * @param modalService
@@ -105,8 +114,15 @@ export class ComposerComponent implements OnDestroy {
     protected formToast: FormToastService,
     protected service: ComposerService /* NOTE: Used for DI. DO NOT REMOVE OR CHANGE !!! */,
     protected cd: ChangeDetectorRef,
-    protected injector: Injector
+    protected injector: Injector,
+    protected session: Session,
+    protected route: ActivatedRoute,
+    public storage: Storage,
+    public router: Router,
+    configs: ConfigsService
   ) {
+    this.siteUrl = configs.get('site_url');
+
     this.tooManyTagsSubscription = this.service.tooManyTags$.subscribe(
       value => {
         if (value) {
@@ -120,6 +136,25 @@ export class ComposerComponent implements OnDestroy {
     );
   }
 
+  ngOnInit(): void {
+    this.querySubscription = this.route.queryParamMap.subscribe(
+      (params: ParamMap) => {
+        if (params.has('intentUrl')) {
+          const intentUrl = params.get('intentUrl');
+          if (this.session.isLoggedIn()) {
+            this.onTriggerClick();
+            this.service.message$.next(intentUrl);
+          } else {
+            this.storage.set(
+              'redirect',
+              `${this.siteUrl}?intentUrl=${intentUrl}`
+            );
+            this.router.navigate(['/login']);
+          }
+        }
+      }
+    );
+  }
   /**
    * Component destroy hook
    */
@@ -127,15 +162,18 @@ export class ComposerComponent implements OnDestroy {
     this.destroyed = true;
     this.tooManyTagsSubscription.unsubscribe();
     this.modalService.dismiss();
+    this.querySubscription.unsubscribe();
   }
 
   /**
    * Opens the modal when the placeholder is clicked
    * @param $event
    */
-  async onTriggerClick($event: MouseEvent) {
+  async onTriggerClick($event?: MouseEvent) {
     this.modalOpen = true;
     this.detectChanges();
+
+    //
 
     try {
       const $event = await this.modalService
@@ -157,6 +195,14 @@ export class ComposerComponent implements OnDestroy {
     }
 
     this.modalOpen = false;
+
+    // Cleanup intentUrl param
+    if (this.route.snapshot.queryParamMap.get('intentUrl')) {
+      this.router.navigate(['.'], {
+        queryParams: {},
+        relativeTo: this.route,
+      });
+    }
     this.detectChanges();
   }
 
