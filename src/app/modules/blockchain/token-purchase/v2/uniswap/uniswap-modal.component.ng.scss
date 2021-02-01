@@ -1,6 +1,9 @@
+:host {
+  width: 100%;
+  max-width: 512px;
+}
 .m-uniswapModalBody > iframe {
-  height: 600px;
-  width: 350px;
+  width: 100%;
   margin: 0 auto;
   display: block;
 }

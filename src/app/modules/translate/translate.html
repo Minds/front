@@ -2,7 +2,7 @@
   class="m-translate__hasNav2020"
   [ngClass]="{'m-translate__visible' : (translation.translated  || translationInProgress)}"
 >
-  <hr *ngIf="translation.translated  || translationInProgress" />
+  <hr *ngIf="(translation.translated  || translationInProgress)" />
 
   <!-- TRANSLATED MESSAGE  ----------------------- -->
   <div *ngIf="translation.translated" class="m-translation-wrapper">

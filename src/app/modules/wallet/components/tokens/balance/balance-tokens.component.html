@@ -1,77 +1,117 @@
 <ng-container *ngIf="!inProgress; else loading">
-  <div class="m-walletBalance--tokens__equationWrapper">
-    <div class="m-walletBalance--tokens__equationLeft">
-      <div class="m-walletBalance--tokens__balanceWrapper--total">
+  <ng-container *mIfFeature="'wallet-v3'; else walletV2">
+    <m-wallet__balance class="m-wallet__balance--primary">
+      <ng-container m-walletBalance__brief>
+        <m-wallet__currencyValue
+          [value]="wallet.tokens.balance"
+          currency="tokens"
+        ></m-wallet__currencyValue>
+      </ng-container>
+      <ng-container m-walletBalance__expanded>
+        <h4>Off-chain</h4>
+        <b>
+          <m-wallet__currencyValue
+            [value]="wallet.offchain.balance"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </b>
+        <div class="m-layout__spacer"></div>
+        <h4>On-chain</h4>
+        <b
+          ><m-wallet__currencyValue
+            [value]="wallet.onchain.balance"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </b>
+      </ng-container>
+    </m-wallet__balance>
+    <span style="width:10px; display: inline-block;"></span>
+    <m-wallet__balance>
+      <ng-container m-walletBalance__brief>
+        <m-wallet__currencyValue
+          [value]="wallet.eth.balance"
+          currency="eth"
+        ></m-wallet__currencyValue>
+      </ng-container>
+    </m-wallet__balance>
+  </ng-container>
+
+  <ng-template #walletV2>
+    <div class="m-walletBalance--tokens__equationWrapper">
+      <div class="m-walletBalance--tokens__equationLeft">
+        <div class="m-walletBalance--tokens__balanceWrapper--total">
+          <div
+            class="m-walletBalance--tokens__balanceTitle"
+            i18n="@@WALLET_V2_TOKENS_BALANCE__TOKEN_BALANCE"
+          >
+            Token Balance
+          </div>
+          <div class="m-walletBalance--tokens__balanceValWrapper">
+            <span class="m-walletBalance--tokens__balanceVal--int">{{
+              tokenBalance.int | number: '1.0-0'
+            }}</span
+            ><span
+              class="m-walletBalance--tokens__balanceVal--frac"
+              *ngIf="tokenBalance.frac"
+              >.{{ tokenBalance.frac }}</span
+            >
+          </div>
+        </div>
+        <a
+          class="m-walletBalance--tokens__buyButtonWrapper"
+          routerLink="/tokens"
+          ><m-button i18n="@@COMMON__BUY_TOKENS" color="blue"
+            >Buy tokens</m-button
+          ></a
+        >
+      </div>
+      <div class="m-walletBalance--tokens__equationSymbol">=</div>
+
+      <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
         <div
           class="m-walletBalance--tokens__balanceTitle"
-          i18n="@@WALLET_V2_TOKENS_BALANCE__TOKEN_BALANCE"
+          i18n="@@WALLET_V2_TOKENS_BALANCE__STORE_TOKENS_INFO"
         >
-          Token Balance
+          On-Chain<m-tooltip icon="help"
+            >Store tokens on your device instead of our servers for more control
+            and portability</m-tooltip
+          >
         </div>
         <div class="m-walletBalance--tokens__balanceValWrapper">
           <span class="m-walletBalance--tokens__balanceVal--int">{{
-            tokenBalance.int | number: '1.0-0'
+            onchainBalance.int | number
           }}</span
           ><span
             class="m-walletBalance--tokens__balanceVal--frac"
-            *ngIf="tokenBalance.frac"
-            >.{{ tokenBalance.frac }}</span
+            *ngIf="onchainBalance.frac"
+            >.{{ onchainBalance.frac }}</span
           >
+          tokens
         </div>
       </div>
-      <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
-        ><m-button i18n="@@COMMON__BUY_TOKENS" color="blue"
-          >Buy tokens</m-button
-        ></a
-      >
-    </div>
-    <div class="m-walletBalance--tokens__equationSymbol">=</div>
-
-    <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
-      <div
-        class="m-walletBalance--tokens__balanceTitle"
-        i18n="@@WALLET_V2_TOKENS_BALANCE__STORE_TOKENS_INFO"
-      >
-        On-Chain<m-tooltip icon="help"
-          >Store tokens on your device instead of our servers for more control
-          and portability</m-tooltip
+      <div class="m-walletBalance--tokens__equationSymbol">+</div>
+      <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
+        <div
+          class="m-walletBalance--tokens__balanceTitle"
+          i18n="@@WALLET_V2_TOKENS_BALANCE__OFFCHAIN_TOOLTIP"
         >
-      </div>
-      <div class="m-walletBalance--tokens__balanceValWrapper">
-        <span class="m-walletBalance--tokens__balanceVal--int">{{
-          onchainBalance.int | number
-        }}</span
-        ><span
-          class="m-walletBalance--tokens__balanceVal--frac"
-          *ngIf="onchainBalance.frac"
-          >.{{ onchainBalance.frac }}</span
-        >
-        tokens
-      </div>
-    </div>
-    <div class="m-walletBalance--tokens__equationSymbol">+</div>
-    <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
-      <div
-        class="m-walletBalance--tokens__balanceTitle"
-        i18n="@@WALLET_V2_TOKENS_BALANCE__OFFCHAIN_TOOLTIP"
-      >
-        Off-Chain<m-tooltip icon="help"
-          >Store tokens on our servers for quicker transaction times and no
-          fees</m-tooltip
-        >
-      </div>
-      <div class="m-walletBalance--tokens__balanceValWrapper">
-        <span class="m-walletBalance--tokens__balanceVal--int">{{
-          offchainBalance.int | number: '1.0-0'
-        }}</span
-        ><span
-          class="m-walletBalance--tokens__balanceVal--frac"
-          *ngIf="offchainBalance.frac"
-          >.{{ offchainBalance.frac }}</span
-        >
-        tokens
-      </div>
-      <!-- <a
+          Off-Chain<m-tooltip icon="help"
+            >Store tokens on our servers for quicker transaction times and no
+            fees</m-tooltip
+          >
+        </div>
+        <div class="m-walletBalance--tokens__balanceValWrapper">
+          <span class="m-walletBalance--tokens__balanceVal--int">{{
+            offchainBalance.int | number: '1.0-0'
+          }}</span
+          ><span
+            class="m-walletBalance--tokens__balanceVal--frac"
+            *ngIf="offchainBalance.frac"
+            >.{{ offchainBalance.frac }}</span
+          >
+          tokens
+        </div>
+        <!-- <a
         *ngIf="
           session.getLoggedInUser().rewards &&
           wallet.offchain.balance > 0 &&
@@ -80,35 +120,36 @@
         (click)="showTransferModal = true"
         >Transfer to On-Chain</a
       > -->
-      <a
-        (click)="openTransferModal()"
-        i18n="@@WALLET_V2_TOKENS_BALANCE__TRANSFER_TO_ONCHAIN"
-        >Transfer to On-Chain</a
-      >
+        <a
+          (click)="openTransferModal()"
+          i18n="@@WALLET_V2_TOKENS_BALANCE__TRANSFER_TO_ONCHAIN"
+          >Transfer to On-Chain</a
+        >
+      </div>
     </div>
-  </div>
 
-  <div class="m-walletBalance--tokens__payout">
-    <div i18n="@@WALLET_V2_TOKENS_BALANCE__TODAYS_ESTIMATED_PAYOUT">
-      Today's estimated payout
-      <span class="m-walletBalance--tokens__payoutEstimate">{{
-        estimatedTokenPayout | token: 18 | number: '1.0-3'
-      }}</span>
-      tokens.
+    <div class="m-walletBalance--tokens__payout">
+      <div i18n="@@WALLET_V2_TOKENS_BALANCE__TODAYS_ESTIMATED_PAYOUT">
+        Today's estimated payout
+        <span class="m-walletBalance--tokens__payoutEstimate">{{
+          estimatedTokenPayout | token: 18 | number: '1.0-3'
+        }}</span>
+        tokens.
+      </div>
+      <div i18n="@@WALLET_V2_TOKENS_BALANCE__NEXT_PAYOUT_INFO">
+        Next payout in <span>{{ nextPayoutDate | timediff: true }}</span> (Daily
+        at {{ localPayoutTime }})
+      </div>
     </div>
-    <div i18n="@@WALLET_V2_TOKENS_BALANCE__NEXT_PAYOUT_INFO">
-      Next payout in <span>{{ nextPayoutDate | timediff: true }}</span> (Daily
-      at {{ localPayoutTime }})
+    <div class="m-walletBalance--tokens__learnMore">
+      <a
+        (click)="showTokenModal = true"
+        i18n="@@WALLET_V2_TOKENS_BALANCE__LEARN_MORE_ABOUT_TOKENS"
+        >Learn more</a
+      >
+      about Minds Tokens and our Rewards System.
     </div>
-  </div>
-  <div class="m-walletBalance--tokens__learnMore">
-    <a
-      (click)="showTokenModal = true"
-      i18n="@@WALLET_V2_TOKENS_BALANCE__LEARN_MORE_ABOUT_TOKENS"
-      >Learn more</a
-    >
-    about Minds Tokens and our Rewards System.
-  </div>
+  </ng-template>
   <m-walletModal
     [showModal]="showTransferModal"
     (closeModal)="showTransferModal = false"

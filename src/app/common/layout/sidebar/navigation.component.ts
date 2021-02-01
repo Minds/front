@@ -104,9 +104,7 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
-    if (this.featuresService.has('navigation')) {
-      this.settingsLink = '/settings';
-    }
+    this.settingsLink = '/settings';
   }
 
   ngAfterViewInit() {

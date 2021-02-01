@@ -36,6 +36,9 @@ import { WalletTabHistoryService } from './components/tab-history.service';
 import { DefaultRedirectGuard } from './components/guards/default-redirect-guard.component';
 import { TabStorageGuard } from './components/guards/tab-storage-guard.component';
 import { WalletToggleComponent } from './toggle.component';
+import { WalletBalanceComponent } from './components/components/balance/balance.component';
+import { WalletCurrencyValueComponent } from './components/components/currency-value/currency-value.component';
+import { WalletTokenEarningsComponent } from './components/tokens/earnings/earnings.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -54,13 +57,23 @@ export const WALLET_ROUTES: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'overview',
+            redirectTo: 'earnings',
             pathMatch: 'full',
           },
           {
             path: 'overview',
+            redirectTo: 'balance',
+            pathMatch: 'full',
+          },
+          {
+            path: 'balance',
             canActivate: [TabStorageGuard],
             component: WalletChartComponent,
+          },
+          {
+            path: 'earnings',
+            canActivate: [TabStorageGuard],
+            component: WalletTokenEarningsComponent,
           },
           {
             path: 'transactions',
@@ -77,6 +90,11 @@ export const WALLET_ROUTES: Routes = [
         path: 'cash',
         component: WalletV2CashComponent,
         children: [
+          {
+            path: '',
+            redirectTo: 'earnings',
+            pathMatch: 'full',
+          },
           {
             path: 'earnings',
             component: WalletProEarningsCashComponent,
@@ -170,6 +188,10 @@ export const WALLET_ROUTES: Routes = [
     WalletV2BtcComponent,
     // Legacy wallet
     WalletToggleComponent,
+    // V3 wallet
+    WalletBalanceComponent,
+    WalletCurrencyValueComponent,
+    WalletTokenEarningsComponent,
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [

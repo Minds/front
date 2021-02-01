@@ -1,0 +1,10 @@
+<div
+  class="m-walletBalance__brief"
+  [class.m-walletBalance__brief--canExpand]="canExpand"
+>
+  <ng-content select="[m-walletBalance__brief]"></ng-content>
+</div>
+
+<div class="m-walletBalance__expanded" #expandedRef [hidden]="!expanded">
+  <ng-content select="[m-walletBalance__expanded]"></ng-content>
+</div>
