@@ -11,24 +11,6 @@
   #scrollArea
 >
   <!-- --------------------------------  -->
-  <ng-container *ngIf="level >= 1">
-    <ng-container *ngTemplateOutlet="poster"></ng-container
-  ></ng-container>
-  <ng-template #poster>
-    <m-comment__poster
-      *ngIf="showReplyPoster && (activityService.allowComment$ | async)"
-      [guid]="guid"
-      [parent]="parent"
-      [entity]="entity"
-      [currentIndex]="comments.length - 1"
-      [conversation]="conversation"
-      [level]="level"
-      (posted)="onPosted($event)"
-      (optimisticPost)="onOptimisticPost($event)"
-    >
-    </m-comment__poster>
-  </ng-template>
-  <!-- --------------------------------  -->
   <div class="m-comments__viewMore" *ngIf="loadPrevious && showReplies">
     <m-button
       (onAction)="load(false, 'desc')"
@@ -129,9 +111,18 @@
       </span>
     </m-button>
   </div>
-  <ng-container *ngIf="level === 0">
-    <ng-container *ngTemplateOutlet="poster"></ng-container
-  ></ng-container>
+  <m-comment__poster
+    *ngIf="showReplyPoster && (activityService.allowComment$ | async)"
+    [guid]="guid"
+    [parent]="parent"
+    [entity]="entity"
+    [currentIndex]="comments.length - 1"
+    [conversation]="conversation"
+    [level]="level"
+    (posted)="onPosted($event)"
+    (optimisticPost)="onOptimisticPost($event)"
+  >
+  </m-comment__poster>
 </div>
 <!-- --------------------------------  -->
 <span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
