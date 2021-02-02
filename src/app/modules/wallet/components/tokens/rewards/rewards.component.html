@@ -1,0 +1,357 @@
+<div
+  class="m-walletTokenEarnings__dateSelector"
+  (click)="dateSelector.open($event)"
+>
+  <span class="m-walletTokenEarningsDateSelector__label">{{
+    friendlyDate
+  }}</span>
+  <m-date-selector
+    #dateSelector
+    [date]="date"
+    [max]="maxDate"
+    [tooltipIcon]="'date_range'"
+    [tooltipText]="'Select date'"
+    [i18n]="'@@SCHEDULE__POST__DATE__SELECTOR__TOOLTIP'"
+    (dateChange)="onDateChange($event)"
+    hideInput="true"
+  ></m-date-selector>
+</div>
+
+<!-- <div class="m-walletTokenEarnings__estimates">
+  Today | Next payout | All-time earnings
+</div> -->
+
+<m-loadingSpinner [inProgress]="!data"></m-loadingSpinner>
+
+<div class="m-walletTokenEarnings__accordion" *ngIf="data">
+  <table>
+    <!------------------------------
+    !! Labels !!
+    ------------------------------->
+    <thead>
+      <tr class="labels">
+        <td></td>
+        <td>Daily</td>
+        <td>All-time</td>
+        <td></td>
+      </tr>
+    </thead>
+
+    <!------------------------------
+    !! Total !!
+    ------------------------------->
+    <tbody>
+      <tr class="total">
+        <td>Total</td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="total.daily"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="total.alltime"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+
+    <!------------------------------
+    !! Engagement !!
+    ------------------------------->
+    <tbody>
+      <tr>
+        <td>Engagement</td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="data.engagement.token_amount"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="data.engagement.alltime_summary.token_amount"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <ng-container
+            *ngTemplateOutlet="expandArrow; context: { rowId: 'engagement' }"
+          ></ng-container>
+        </td>
+      </tr>
+    </tbody>
+
+    <!------------------------------
+    !! Engagement Expanded !!
+    ------------------------------->
+    <tbody
+      class="m-walletTokenEarnings__expanded"
+      *ngIf="expandedRow === 'engagement'"
+    >
+      <tr>
+        <td>Your score</td>
+        <td colspan="3">{{ data.engagement.score }} points</td>
+      </tr>
+      <tr>
+        <td>Total network score</td>
+        <td colspan="3">
+          {{ data.engagement.global_summary.score | number }} points
+        </td>
+      </tr>
+      <tr>
+        <td>Your share</td>
+        <td colspan="3">{{ data.engagement.share_pct * 100 }}%</td>
+      </tr>
+      <tr>
+        <td>Reward</td>
+        <td colspan="3">
+          {{ data.engagement.token_amount | number }} ({{
+            data.engagement.share_pct * 100
+          }}% of
+          {{ round(data.engagement.global_summary.token_amount) | number }})
+        </td>
+      </tr>
+
+      <!-- SUMMARY -->
+      <tr class="m-walletTokenEarningsExpanded__summaryLabel">
+        <td>Summary</td>
+        <td colspan="3"></td>
+      </tr>
+
+      <tr
+        class="m-walletTokenEarningsExpanded__contributionRow"
+        *ngFor="let item of contributionScores | async"
+      >
+        <td>{{ item.label }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.score }} points</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td>Activity level</td>
+        <td colspan="3">Core (x{{ data.engagement.multiplier }} multiplier)</td>
+      </tr>
+      <tr>
+        <td>Total Points</td>
+        <td colspan="3">
+          {{ data.engagement.score }} points ({{
+            data.engagement.score / data.engagement.multiplier
+          }}
+          x {{ data.engagement.multiplier }})
+        </td>
+      </tr>
+    </tbody>
+
+    <!------------------------------
+    !! Holding !!
+    ------------------------------->
+    <tbody>
+      <tr>
+        <td>Holding</td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="data.holding.token_amount"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="data.holding.alltime_summary.token_amount"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <ng-container
+            *ngTemplateOutlet="expandArrow; context: { rowId: 'holding' }"
+          ></ng-container>
+        </td>
+      </tr>
+    </tbody>
+
+    <tbody
+      class="m-walletTokenEarnings__expanded"
+      *ngIf="expandedRow === 'holding'"
+    >
+      <tr>
+        <td>Your score</td>
+        <td colspan="3">{{ data.holding.score | number }}</td>
+      </tr>
+      <tr>
+        <td>Total network score</td>
+        <td colspan="3">
+          {{ data.holding.global_summary.score | number }}
+        </td>
+      </tr>
+      <tr>
+        <td>Your share</td>
+        <td colspan="3">{{ data.holding.share_pct * 100 }}%</td>
+      </tr>
+      <tr>
+        <td>Reward</td>
+        <td colspan="3">
+          {{ data.holding.token_amount | number }} ({{
+            data.holding.share_pct * 100
+          }}% of {{ round(data.holding.global_summary.token_amount) | number }})
+        </td>
+      </tr>
+
+      <!-- SUMMARY -->
+      <tr class="m-walletTokenEarningsExpanded__summaryLabel">
+        <td>Summary</td>
+        <td colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>On-chain Tokens</td>
+        <td colspan="3">
+          <m-wallet__currencyValue
+            [value]="data.holding.score"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Time multiplier</td>
+        <td colspan="3">
+          <div class="m-walletTokenEarnings__multiplierBarWrapper">
+            {{ data.holding.multiplier }}
+
+            <ng-container
+              *ngTemplateOutlet="
+                multiplierBar;
+                context: { $implicit: data.holding.multiplier }
+              "
+            ></ng-container>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+
+    <!------------------------------
+    !! Liquidity !!
+    ------------------------------->
+    <tbody>
+      <tr>
+        <td>Liquidity</td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="data.liquidity.token_amount"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="data.liquidity.alltime_summary.token_amount"
+            hideCurrency="true"
+            currency="tokens"
+          ></m-wallet__currencyValue>
+        </td>
+        <td>
+          <ng-container
+            *ngTemplateOutlet="expandArrow; context: { rowId: 'liquidity' }"
+          ></ng-container>
+        </td>
+      </tr>
+    </tbody>
+
+    <tbody
+      class="m-walletTokenEarnings__expanded"
+      *ngIf="expandedRow === 'liquidity'"
+    >
+      <tr>
+        <td>Your score</td>
+        <td colspan="3">{{ data.liquidity.score | number }}</td>
+      </tr>
+      <tr>
+        <td>Total network score</td>
+        <td colspan="3">
+          {{ data.liquidity.global_summary.score | number }}
+        </td>
+      </tr>
+      <tr>
+        <td>Your share</td>
+        <td colspan="3">{{ data.liquidity.share_pct * 100 }}%</td>
+      </tr>
+      <tr>
+        <td>Reward</td>
+        <td colspan="3">
+          {{ data.liquidity.token_amount | number }} ({{
+            data.liquidity.share_pct * 100
+          }}% of
+          {{ round(data.liquidity.global_summary.token_amount) | number }})
+        </td>
+      </tr>
+
+      <!-- SUMMARY -->
+      <tr class="m-walletTokenEarningsExpanded__summaryLabel">
+        <td>Summary</td>
+        <td colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>Liquidity position</td>
+        <td colspan="3">
+          {{
+            (liquidityPositions | async)?.current_liquidity?.MINDS
+              | number: '1.3-4'
+          }}
+          tokens /
+          {{
+            (liquidityPositions | async)?.current_liquidity?.USD
+              | number: '1.3-4'
+          }}
+          USD
+        </td>
+      </tr>
+
+      <tr>
+        <td>Time multiplier</td>
+        <td colspan="3">
+          <div class="m-walletTokenEarnings__multiplierBarWrapper">
+            {{ data.liquidity.multiplier }}
+
+            <ng-container
+              *ngTemplateOutlet="
+                multiplierBar;
+                context: { $implicit: data.liquidity.multiplier }
+              "
+            ></ng-container>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Reusable row arrow arrow -->
+<ng-template #expandArrow let-rowId="rowId">
+  <i class="material-icons" (click)="toggleRow(rowId)">{{
+    expandedRow === rowId ? 'expand_less' : 'expand_more'
+  }}</i>
+</ng-template>
+
+<!-- Reusable multiplier bar -->
+<ng-template #multiplierBar let-multiplier>
+  <div class="m-walletTokenEarnings__multiplierBar">
+    <div
+      class="m-walletTokenEarningsMultiplierBar__progress"
+      [style.width.%]="(multiplier / 3) * 100"
+    ></div>
+  </div>
+</ng-template>

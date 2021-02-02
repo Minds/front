@@ -1,0 +1,87 @@
+<div class="m-walletProEarnings__earnings">
+  <m-dropdownSelector
+    [filter]="filter"
+    [inlineLabel]="true"
+    (selectionMade)="filterSelected($event)"
+  >
+  </m-dropdownSelector>
+</div>
+
+<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+
+<div class="m-walletTokenEarnings__accordion" *ngIf="!inProgress">
+  <table>
+    <!------------------------------
+    !! Labels !!
+    ------------------------------->
+    <thead>
+      <tr class="labels">
+        <td></td>
+        <td>Total</td>
+        <td></td>
+      </tr>
+    </thead>
+
+    <!------------------------------
+    !! Total !!
+    ------------------------------->
+    <tbody>
+      <tr class="total">
+        <td>Total</td>
+        <td>
+          <m-wallet__currencyValue
+            [value]="earningsTotal$ | async"
+            [currency]="currencyType"
+          ></m-wallet__currencyValue>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+
+    <ng-container *ngFor="let earningsGroup of earnings$ | async">
+      <tbody>
+        <tr>
+          <td>{{ getFriendlyLabel(earningsGroup.id) }}</td>
+          <td>
+            <m-wallet__currencyValue
+              [value]="earningsGroup.amount_usd"
+              [currency]="currencyType"
+            ></m-wallet__currencyValue>
+          </td>
+          <td>
+            <ng-container
+              *ngTemplateOutlet="
+                expandArrow;
+                context: { rowId: earningsGroup.id }
+              "
+            ></ng-container>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody
+        class="m-walletTokenEarnings__expanded"
+        *ngIf="expandedRow === earningsGroup.id"
+      >
+        <tr *ngFor="let item of earningsGroup.items">
+          <td>
+            {{ getFriendlyLabel(item.id) }}
+          </td>
+          <td colspan="2">
+            <m-wallet__currencyValue
+              [value]="item.amount_usd"
+              [currency]="currencyType"
+            ></m-wallet__currencyValue>
+          </td>
+        </tr>
+      </tbody>
+    </ng-container>
+  </table>
+</div>
+
+<!-- Reusable row arrow arrow -->
+<ng-template #expandArrow let-rowId="rowId">
+  <i class="material-icons" (click)="toggleRow(rowId)">{{
+    expandedRow === rowId ? 'expand_less' : 'expand_more'
+  }}</i>
+</ng-template>

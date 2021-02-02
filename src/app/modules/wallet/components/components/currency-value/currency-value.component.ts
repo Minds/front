@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TokenPricesService } from './token-prices.service';
 
-type Currency = 'tokens' | 'eth';
+type Currency = 'tokens' | 'eth' | 'usd';
 
 @Component({
   selector: 'm-wallet__currencyValue',

@@ -1,8 +1,34 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
+
+export type TokenPrices = {
+  minds: number;
+  eth: number;
+};
 
 @Injectable({ providedIn: 'root' })
 export class TokenPricesService {
+  tokenPrices: Observable<TokenPrices> = this.api
+    .get('api/v3/blockchain/token-prices')
+    .pipe(
+      shareReplay({ bufferSize: 1, refCount: true }),
+      map(response => {
+        return {
+          minds: response.minds,
+          eth: response.eth,
+        };
+      })
+    );
+
+  eth$: Observable<number> = this.tokenPrices.pipe(
+    map(tokenPrice => tokenPrice.eth)
+  );
+  minds$: Observable<number> = this.tokenPrices.pipe(
+    map(tokenPrice => tokenPrice.minds)
+  );
+
   /** Eth Price */
   eth: number;
 
@@ -21,10 +47,7 @@ export class TokenPricesService {
     if (this.requested) return;
     this.requested = true;
 
-    const response = <{ status: string; minds: number; eth: number }>(
-      await this.api.get('api/v3/blockchain/token-prices').toPromise()
-    );
-    this.minds = response.minds;
-    this.eth = response.eth;
+    this.minds = await this.minds$.toPromise();
+    this.eth = await this.minds$.toPromise();
   }
 }
