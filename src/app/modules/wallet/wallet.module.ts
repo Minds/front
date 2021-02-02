@@ -40,6 +40,7 @@ import { WalletBalanceComponent } from './components/components/balance/balance.
 import { WalletCurrencyValueComponent } from './components/components/currency-value/currency-value.component';
 import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
 import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
+import { MindsWalletTokenPriceBadgeComponent } from './components/components/token-price-badge/token-price-badge.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -80,6 +81,7 @@ export const WALLET_ROUTES: Routes = [
             path: 'earnings',
             canActivate: [TabStorageGuard],
             component: WalletEarningsComponent,
+            data: {},
           },
           {
             path: 'transactions',
@@ -199,6 +201,7 @@ export const WALLET_ROUTES: Routes = [
     WalletCurrencyValueComponent,
     WalletTokenRewardsComponent,
     WalletEarningsComponent,
+    MindsWalletTokenPriceBadgeComponent,
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [
