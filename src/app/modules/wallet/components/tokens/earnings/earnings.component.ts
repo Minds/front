@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletTokenRewardsService } from './rewards.service';
+import {
+  ContributionMetric,
+  WalletTokenRewardsService,
+} from './rewards.service';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-wallet__tokenEarnings',
@@ -9,31 +13,49 @@ import * as moment from 'moment';
   providers: [WalletTokenRewardsService],
 })
 export class WalletTokenEarningsComponent implements OnInit {
-  /** The reference date */
+  /**
+   * The reference date
+   * */
   date = new Date();
 
-  /** The max date we can select */
+  /**
+   * The max date we can select
+   */
   maxDate = new Date();
 
+  /**
+   * The row to expand
+   * */
+  expandedRow: string;
+
+  /**
+   * Totals
+   */
   total = {
     daily: null,
     all_time: null,
   };
+
+  /**
+   * The data for the rows
+   * TODO: add types
+   */
   data;
+
+  /** Breakdown of relative dates engangement scores */
+  contributionScores: Observable<ContributionMetric[]> = this.rewards
+    .contributionScores;
+
+  /** Breakdown of relative dates liquidity */
+  liquidityPositions: Observable<any> = this.rewards.liquidityPositions;
 
   constructor(private rewards: WalletTokenRewardsService) {}
 
   ngOnInit() {
-    this.load();
-  }
-
-  /**
-   * Loads the table
-   */
-  async load() {
-    const response = <any>await this.rewards.load(this.getDate());
-    this.data = response;
-    this.total = response.total;
+    this.rewards.rewards.subscribe(response => {
+      this.total = response.total;
+      this.data = response;
+    });
   }
 
   /**
@@ -42,7 +64,20 @@ export class WalletTokenEarningsComponent implements OnInit {
    */
   onDateChange(date) {
     this.date = new Date(date);
-    this.load();
+    this.total = { daily: null, all_time: null };
+    this.data = null;
+    this.rewards.setDate(date);
+  }
+
+  /**
+   *
+   */
+  toggleRow(rowId: string): void {
+    if (this.expandedRow === rowId) {
+      this.expandedRow = null;
+      return;
+    }
+    this.expandedRow = rowId;
   }
 
   /**
@@ -56,6 +91,10 @@ export class WalletTokenEarningsComponent implements OnInit {
       '-' +
       this.date.getUTCDate()
     );
+  }
+
+  round(number): number {
+    return Math.round(number);
   }
 
   /**

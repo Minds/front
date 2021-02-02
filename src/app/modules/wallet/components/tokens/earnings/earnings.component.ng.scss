@@ -32,6 +32,7 @@
       &:first-of-type {
         font-weight: 500;
         font-size: 17px;
+        text-transform: capitalize;
         @include m-theme() {
           color: themed($m-textColor--primary);
         }
@@ -62,9 +63,69 @@
 
   .m-walletTokenEarnings__expanded {
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--btnHover);
     }
-    width: 100%;
-    min-height: 50px;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+
+    td {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      &:first-of-type {
+        font-weight: 400;
+        font-size: 16px;
+        padding: 0 20px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      &:nth-of-type(2) {
+        font-weight: 500;
+      }
+    }
+    .m-walletTokenEarningsExpanded__summaryLabel {
+      border-top: 20px solid transparent;
+      td {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+    .m-walletTokenEarningsExpanded__contributionRow {
+      td {
+        &:nth-of-type(2) {
+          font-weight: 400;
+        }
+        &:nth-of-type(3) {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .m-walletTokenEarnings__multiplierBarWrapper {
+    display: inline-flex;
+    align-items: center;
+
+    .m-walletTokenEarnings__multiplierBar {
+      margin-left: 20px;
+    }
+  }
+
+  .m-walletTokenEarnings__multiplierBar {
+    width: 120px;
+    height: 15px;
+    border-radius: 2px;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    .m-walletTokenEarningsMultiplierBar__progress {
+      height: 100%;
+      @include m-theme() {
+        background-color: themed($m-blue);
+      }
+    }
   }
 }
