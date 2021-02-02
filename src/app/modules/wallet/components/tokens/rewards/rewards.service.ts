@@ -61,7 +61,10 @@ export class WalletTokenRewardsService {
    */
   rewards: Observable<any> = this.dateTs.pipe(
     switchMap(dateTs => {
-      const date = moment(dateTs * 1000).format('Y-M-d');
+      const date = moment(dateTs * 1000)
+        .utc()
+        .startOf('day')
+        .format('Y-M-D');
       return this.api.get('api/v3/rewards', { date });
     })
   );

@@ -1,27 +1,6 @@
 @import 'defaults.scss';
 
 :host {
-  .m-walletTokenEarnings__dateSelector {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 17px;
-    font-weight: 400;
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    border: 2px;
-    cursor: pointer;
-
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-      border: 1px solid themed($m-borderColor--primary);
-    }
-
-    .m-walletTokenEarningsDateSelector__label {
-      margin-right: 60px;
-    }
-  }
-
   table {
     width: 100%;
     border-collapse: collapse; /* Remove cell spacing */
@@ -100,31 +79,6 @@
         &:nth-of-type(3) {
           font-weight: 500;
         }
-      }
-    }
-  }
-
-  .m-walletTokenEarnings__multiplierBarWrapper {
-    display: inline-flex;
-    align-items: center;
-
-    .m-walletTokenEarnings__multiplierBar {
-      margin-left: 20px;
-    }
-  }
-
-  .m-walletTokenEarnings__multiplierBar {
-    width: 120px;
-    height: 15px;
-    border-radius: 2px;
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-    }
-
-    .m-walletTokenEarningsMultiplierBar__progress {
-      height: 100%;
-      @include m-theme() {
-        background-color: themed($m-blue);
       }
     }
   }

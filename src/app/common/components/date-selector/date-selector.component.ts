@@ -96,7 +96,6 @@ export class DateSelectorComponent {
   }
 
   public open(e: MouseEvent): void {
-    console.log(this.dateTimePicker);
     this.dateTimePicker.open();
   }
 }

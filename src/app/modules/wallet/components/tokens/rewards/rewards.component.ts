@@ -7,12 +7,15 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'm-wallet__tokenEarnings',
-  templateUrl: './earnings.component.html',
-  styleUrls: ['./earnings.component.ng.scss'],
+  selector: 'm-wallet__tokenRewards',
+  templateUrl: './rewards.component.html',
+  styleUrls: [
+    './rewards.component.ng.scss',
+    '../../components/accordion/accordion.component.ng.scss',
+  ],
   providers: [WalletTokenRewardsService],
 })
-export class WalletTokenEarningsComponent implements OnInit {
+export class WalletTokenRewardsComponent implements OnInit {
   /**
    * The reference date
    * */

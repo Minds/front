@@ -188,7 +188,7 @@
     >
       <tr>
         <td>Your score</td>
-        <td colspan="3">{{ data.holding.score }}</td>
+        <td colspan="3">{{ data.holding.score | number }}</td>
       </tr>
       <tr>
         <td>Total network score</td>
@@ -216,7 +216,7 @@
       </tr>
 
       <tr>
-        <td>OnChain Tokens</td>
+        <td>On-chain Tokens</td>
         <td colspan="3">
           <m-wallet__currencyValue
             [value]="data.holding.score"
@@ -276,7 +276,7 @@
     >
       <tr>
         <td>Your score</td>
-        <td colspan="3">{{ data.liquidity.score }}</td>
+        <td colspan="3">{{ data.liquidity.score | number }}</td>
       </tr>
       <tr>
         <td>Total network score</td>
