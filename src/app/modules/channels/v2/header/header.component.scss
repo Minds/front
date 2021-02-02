@@ -70,6 +70,7 @@
     font-size: 22px;
     line-height: 30px;
     font-weight: bold;
+    margin: 0 20px;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -82,6 +83,14 @@
       @include m-theme() {
         color: themed($m-positive);
       }
+    }
+
+    span {
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      overflow: hidden;
+      max-height: 3.75em;
+      line-height: 1.25;
     }
   }
 

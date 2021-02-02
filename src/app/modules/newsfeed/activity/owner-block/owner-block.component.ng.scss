@@ -108,6 +108,14 @@
       max-width: 100%;
       text-overflow: ellipsis;
       overflow: hidden;
+      max-height: 3.75em;
+      line-height: 1.25em;
+      max-width: 325px;
+
+      @media screen and (max-width: $min-desktop) {
+        max-height: 5em;
+        line-height: 1.25em;
+      }
     }
 
     &:hover {
