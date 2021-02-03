@@ -46,16 +46,16 @@ export class WalletTokenRewardsComponent implements OnInit {
   data;
 
   /** Breakdown of relative dates engangement scores */
-  contributionScores: Observable<ContributionMetric[]> = this.rewards
-    .contributionScores;
+  contributionScores$: Observable<ContributionMetric[]> = this.rewards
+    .contributionScores$;
 
   /** Breakdown of relative dates liquidity */
-  liquidityPositions: Observable<any> = this.rewards.liquidityPositions;
+  liquidityPositions$: Observable<any> = this.rewards.liquidityPositions$;
 
   constructor(private rewards: WalletTokenRewardsService) {}
 
   ngOnInit() {
-    this.rewards.rewards.subscribe(response => {
+    this.rewards.rewards$.subscribe(response => {
       this.total = response.total;
       this.data = response;
     });

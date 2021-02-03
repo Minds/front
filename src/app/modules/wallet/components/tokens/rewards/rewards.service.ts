@@ -16,14 +16,14 @@ export class WalletTokenRewardsService {
   /**
    * Date in unix seconds observable
    */
-  dateTs: BehaviorSubject<number> = new BehaviorSubject(
+  dateTs$: BehaviorSubject<number> = new BehaviorSubject(
     this.getStartOfDayUnixTs(new Date())
   );
 
   /**
    * Contribution score for relative date
    */
-  contributionScores: Observable<ContributionMetric[]> = this.dateTs.pipe(
+  contributionScores$: Observable<ContributionMetric[]> = this.dateTs$.pipe(
     switchMap(dateTs => {
       return this.api
         .get('api/v2/blockchain/contributions', {
@@ -48,7 +48,7 @@ export class WalletTokenRewardsService {
   /**
    * Liquidity positions relative to date
    */
-  liquidityPositions: Observable<any> = this.dateTs.pipe(
+  liquidityPositions$: Observable<any> = this.dateTs$.pipe(
     switchMap(dateTs => {
       return this.api.get('api/v3/blockchain/liquidity-positions', {
         timestamp: dateTs,
@@ -59,7 +59,7 @@ export class WalletTokenRewardsService {
   /**
    * Rewards for relative date
    */
-  rewards: Observable<any> = this.dateTs.pipe(
+  rewards$: Observable<any> = this.dateTs$.pipe(
     switchMap(dateTs => {
       const date = moment(dateTs * 1000)
         .utc()
@@ -76,7 +76,7 @@ export class WalletTokenRewardsService {
    * @param date
    */
   setDate(date: Date) {
-    this.dateTs.next(this.getStartOfDayUnixTs(date));
+    this.dateTs$.next(this.getStartOfDayUnixTs(date));
   }
 
   /**

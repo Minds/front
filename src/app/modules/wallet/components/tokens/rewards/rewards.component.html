@@ -128,7 +128,7 @@
 
       <tr
         class="m-walletTokenEarningsExpanded__contributionRow"
-        *ngFor="let item of contributionScores | async"
+        *ngFor="let item of contributionScores$ | async"
       >
         <td>{{ item.label }}</td>
         <td>{{ item.amount }}</td>
@@ -314,21 +314,27 @@
         <td colspan="3"></td>
       </tr>
 
-      <tr>
-        <td>Liquidity position</td>
-        <td colspan="3">
-          {{
-            (liquidityPositions | async)?.current_liquidity?.MINDS
-              | number: '1.3-4'
-          }}
-          tokens /
-          {{
-            (liquidityPositions | async)?.current_liquidity?.USD
-              | number: '1.3-4'
-          }}
-          USD
-        </td>
-      </tr>
+      <ng-container *ngIf="liquidityPositions$ | async as liquidityPositions">
+        <tr>
+          <td>Liquidity position</td>
+          <td colspan="3">
+            {{ liquidityPositions?.current_liquidity?.MINDS | number: '1.3-4' }}
+            tokens /
+            {{ liquidityPositions?.current_liquidity?.USD | number: '1.3-4' }}
+            USD
+          </td>
+        </tr>
+
+        <tr>
+          <td>Liquidity yield</td>
+          <td colspan="3">
+            {{ liquidityPositions?.yield_liquidity?.MINDS | number: '1.3-4' }}
+            tokens /
+            {{ liquidityPositions?.yield_liquidity?.USD | number: '1.3-4' }}
+            USD
+          </td>
+        </tr>
+      </ng-container>
 
       <tr>
         <td>Time multiplier</td>
