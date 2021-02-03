@@ -1,4 +1,6 @@
-m-walletSettings--tokens {
+@import 'defaults.scss';
+
+:host {
   .m-wallet__spinner.m-wallet__spinner--tokenSettings {
     margin-top: 40px;
   }
@@ -101,5 +103,10 @@ m-walletSettings--tokens {
         color: themed($m-textColor--primary);
       }
     }
+  }
+
+  m-walletSettings--btc {
+    display: block;
+    margin-top: 60px;
   }
 }
