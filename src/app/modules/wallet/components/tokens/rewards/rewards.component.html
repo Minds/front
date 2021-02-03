@@ -140,8 +140,18 @@
       </tr>
 
       <tr>
-        <td>Activity level</td>
-        <td colspan="3">Core (x{{ data.engagement.multiplier }} multiplier)</td>
+        <td>Activity Multiplier</td>
+        <td colspan="3">
+          <div class="m-walletTokenEarnings__multiplierBarWrapper">
+            <span>{{ data.engagement.multiplier }}</span>
+            <ng-container
+              *ngTemplateOutlet="
+                multiplierBar;
+                context: { $implicit: data.engagement.multiplier }
+              "
+            ></ng-container>
+          </div>
+        </td>
       </tr>
       <tr>
         <td>Total Points</td>
@@ -229,7 +239,7 @@
         <td>Time multiplier</td>
         <td colspan="3">
           <div class="m-walletTokenEarnings__multiplierBarWrapper">
-            {{ data.holding.multiplier }}
+            {{ data.holding.multiplier | number: '1.0-4' }}
 
             <ng-container
               *ngTemplateOutlet="
@@ -324,7 +334,7 @@
         <td>Time multiplier</td>
         <td colspan="3">
           <div class="m-walletTokenEarnings__multiplierBarWrapper">
-            {{ data.liquidity.multiplier }}
+            {{ data.liquidity.multiplier | number: '1.0-4' }}
 
             <ng-container
               *ngTemplateOutlet="
