@@ -66,7 +66,12 @@
     ------------------------------->
     <tbody>
       <tr>
-        <td>Engagement</td>
+        <td>
+          <span>Engagement</span>
+          <m-tooltip icon="info">
+            Summary of your token rewards for engagement on your content
+          </m-tooltip>
+        </td>
         <td>
           <m-wallet__currencyValue
             [value]="data.engagement.token_amount"
@@ -97,21 +102,41 @@
       *ngIf="expandedRow === 'engagement'"
     >
       <tr>
-        <td>Your score</td>
+        <td>
+          <span>Your score</span>
+          <m-tooltip icon="info">
+            Your score for referrals and engagement on your content and channel
+          </m-tooltip>
+        </td>
         <td colspan="3">{{ data.engagement.score }} points</td>
       </tr>
       <tr>
-        <td>Total network score</td>
+        <td>
+          <span>Network score</span>
+          <m-tooltip icon="info">
+            Total network score for all referrals and engagement on the app
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.engagement.global_summary.score | number }} points
         </td>
       </tr>
       <tr>
-        <td>Your share</td>
+        <td>
+          <span>Your share</span>
+          <m-tooltip icon="info">
+            Your score divided by the total network score
+          </m-tooltip>
+        </td>
         <td colspan="3">{{ data.engagement.share_pct * 100 }}%</td>
       </tr>
       <tr>
-        <td>Reward</td>
+        <td>
+          <span>Reward</span>
+          <m-tooltip icon="info">
+            Your estimated token reward based on your percent share
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.engagement.token_amount | number }} ({{
             data.engagement.share_pct * 100
@@ -140,7 +165,12 @@
       </tr>
 
       <tr>
-        <td>Activity Multiplier</td>
+        <td>
+          <span>Activity Multiplier</span>
+          <m-tooltip icon="info">
+            Your account's activity level to determine your multiplier
+          </m-tooltip>
+        </td>
         <td colspan="3">
           <div class="m-walletTokenEarnings__multiplierBarWrapper">
             <span>{{ data.engagement.multiplier }}</span>
@@ -154,7 +184,12 @@
         </td>
       </tr>
       <tr>
-        <td>Total Points</td>
+        <td>
+          <span>Total Points</span>
+          <m-tooltip icon="info">
+            Your total points including your multiplier
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.engagement.score }} points ({{
             data.engagement.score / data.engagement.multiplier
@@ -169,7 +204,17 @@
     ------------------------------->
     <tbody>
       <tr>
-        <td>Holding</td>
+        <td>
+          <span>Holding</span>
+          <m-tooltip icon="info">
+            Summary of your token rewards for holding tokens on-chain
+          </m-tooltip>
+          <a
+            class="m-walletTokenEarnings__cta"
+            (click)="onTransferClick($event)"
+            >Transfer</a
+          >
+        </td>
         <td>
           <m-wallet__currencyValue
             [value]="data.holding.token_amount"
@@ -197,21 +242,41 @@
       *ngIf="expandedRow === 'holding'"
     >
       <tr>
-        <td>Your score</td>
+        <td>
+          <span>Your score</span>
+          <m-tooltip icon="info">
+            Your score for holding your tokens on-chain
+          </m-tooltip>
+        </td>
         <td colspan="3">{{ data.holding.score | number }}</td>
       </tr>
       <tr>
-        <td>Total network score</td>
+        <td>
+          <span>Network score</span>
+          <m-tooltip icon="info">
+            Total network score for holding tokens on-chain
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.holding.global_summary.score | number }}
         </td>
       </tr>
       <tr>
-        <td>Your share</td>
+        <td>
+          <span>Your share</span>
+          <m-tooltip icon="info">
+            Your score divided by the total network score
+          </m-tooltip>
+        </td>
         <td colspan="3">{{ data.holding.share_pct * 100 }}%</td>
       </tr>
       <tr>
-        <td>Reward</td>
+        <td>
+          <span>Reward</span>
+          <m-tooltip icon="info">
+            Your estimated token reward based on your percent share
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.holding.token_amount | number }} ({{
             data.holding.share_pct * 100
@@ -226,7 +291,12 @@
       </tr>
 
       <tr>
-        <td>On-chain Tokens</td>
+        <td>
+          <span>On-chain Tokens</span>
+          <m-tooltip icon="info">
+            Your On-chain token balance
+          </m-tooltip>
+        </td>
         <td colspan="3">
           <m-wallet__currencyValue
             [value]="data.holding.score"
@@ -236,7 +306,12 @@
       </tr>
 
       <tr>
-        <td>Time multiplier</td>
+        <td>
+          <span>Time multiplier</span>
+          <m-tooltip icon="info">
+            Your score multiplier as determined by duration
+          </m-tooltip>
+        </td>
         <td colspan="3">
           <div class="m-walletTokenEarnings__multiplierBarWrapper">
             {{ data.holding.multiplier | number: '1.0-4' }}
@@ -257,7 +332,17 @@
     ------------------------------->
     <tbody>
       <tr>
-        <td>Liquidity</td>
+        <td>
+          <span>Liquidity</span>
+          <m-tooltip icon="info">
+            Summary of your token rewards for providing liquidity
+          </m-tooltip>
+          <a
+            class="m-walletTokenEarnings__cta"
+            (click)="onProvideLiquidityClick($event)"
+            >Provide Liquidity</a
+          >
+        </td>
         <td>
           <m-wallet__currencyValue
             [value]="data.liquidity.token_amount"
@@ -285,21 +370,41 @@
       *ngIf="expandedRow === 'liquidity'"
     >
       <tr>
-        <td>Your score</td>
+        <td>
+          <span>Your score</span>
+          <m-tooltip icon="info">
+            Your score for providing liquidity
+          </m-tooltip>
+        </td>
         <td colspan="3">{{ data.liquidity.score | number }}</td>
       </tr>
       <tr>
-        <td>Total network score</td>
+        <td>
+          <span>Network score</span>
+          <m-tooltip icon="info">
+            Total network score for providing liquidity
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.liquidity.global_summary.score | number }}
         </td>
       </tr>
       <tr>
-        <td>Your share</td>
+        <td>
+          <span>Your share</span>
+          <m-tooltip icon="info">
+            Your score divided by the total network score
+          </m-tooltip>
+        </td>
         <td colspan="3">{{ data.liquidity.share_pct * 100 }}%</td>
       </tr>
       <tr>
-        <td>Reward</td>
+        <td>
+          <span>Reward</span>
+          <m-tooltip icon="info">
+            Your estimated token reward based on your percent share
+          </m-tooltip>
+        </td>
         <td colspan="3">
           {{ data.liquidity.token_amount | number }} ({{
             data.liquidity.share_pct * 100
@@ -316,7 +421,12 @@
 
       <ng-container *ngIf="liquidityPositions$ | async as liquidityPositions">
         <tr>
-          <td>Liquidity position</td>
+          <td>
+            <span>Liquidity position</span>
+            <m-tooltip icon="info">
+              Your current liquidity position
+            </m-tooltip>
+          </td>
           <td colspan="3">
             {{ liquidityPositions?.current_liquidity?.MINDS | number: '1.3-4' }}
             tokens /
@@ -326,7 +436,13 @@
         </tr>
 
         <tr>
-          <td>Liquidity yield</td>
+          <td>
+            <span>Liquidity yield</span>
+            <m-tooltip icon="info">
+              The difference between your provided liquidity and your current
+              liquidity position
+            </m-tooltip>
+          </td>
           <td colspan="3">
             {{ liquidityPositions?.yield_liquidity?.MINDS | number: '1.3-4' }}
             tokens /
@@ -337,7 +453,12 @@
       </ng-container>
 
       <tr>
-        <td>Time multiplier</td>
+        <td>
+          <span>Time multiplier</span>
+          <m-tooltip icon="info">
+            Your score multiplier as determined by duration
+          </m-tooltip>
+        </td>
         <td colspan="3">
           <div class="m-walletTokenEarnings__multiplierBarWrapper">
             {{ data.liquidity.multiplier | number: '1.0-4' }}

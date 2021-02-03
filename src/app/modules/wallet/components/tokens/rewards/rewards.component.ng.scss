@@ -46,4 +46,18 @@
       }
     }
   }
+
+  .m-walletTokenEarnings__cta {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 15px;
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+
+  m-tooltip {
+    vertical-align: middle;
+  }
 }

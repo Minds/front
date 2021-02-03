@@ -5,6 +5,8 @@ import {
 } from './rewards.service';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
+import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -52,7 +54,11 @@ export class WalletTokenRewardsComponent implements OnInit {
   /** Breakdown of relative dates liquidity */
   liquidityPositions$: Observable<any> = this.rewards.liquidityPositions$;
 
-  constructor(private rewards: WalletTokenRewardsService) {}
+  constructor(
+    private rewards: WalletTokenRewardsService,
+    private uniswapModalService: UniswapModalService,
+    private earnModalService: EarnModalService
+  ) {}
 
   ngOnInit() {
     this.rewards.rewards$.subscribe(response => {
@@ -120,5 +126,21 @@ export class WalletTokenRewardsComponent implements OnInit {
         }
       },
     });
+  }
+
+  /**
+   * Open the new withdraw modal
+   * @param e
+   */
+  onTransferClick(e: MouseEvent) {
+    alert('This will open olivias modal changes');
+  }
+
+  /**
+   * Opens the uniswap modal
+   * @param e
+   */
+  onProvideLiquidityClick(e: MouseEvent) {
+    this.uniswapModalService.open('add');
   }
 }
