@@ -17,9 +17,50 @@
   ></m-date-selector>
 </div>
 
-<!-- <div class="m-walletTokenEarnings__estimates">
-  Today | Next payout | All-time earnings
-</div> -->
+<!-- Shows only if is today -->
+<div class="m-walletTokenEarnings__estimates" *ngIf="showEstimates$ | async">
+  <div class="m-walletTokenEarningsEstimates__item">
+    <div class="m-walletTokenEarningsEstimatesItem__label">
+      <span>Today's estimate</span>
+      <m-tooltip icon="info">
+        Your estimated token payout for today's contribution
+      </m-tooltip>
+    </div>
+    <div class="m-walletTokenEarningsEstimatesItem__amount">
+      <m-wallet__currencyValue
+        [value]="total.daily"
+        hideCurrency="true"
+        currency="tokens"
+      ></m-wallet__currencyValue>
+    </div>
+  </div>
+  <div class="m-walletTokenEarningsEstimates__item">
+    <div class="m-walletTokenEarningsEstimatesItem__label">
+      <span>Next payout</span>
+      <m-tooltip icon="info">
+        Countdown until your next token payout is issued
+      </m-tooltip>
+    </div>
+    <div class="m-walletTokenEarningsEstimatesItem__amount">
+      <span>{{ nextPayoutDate$ | async | timediff: true }}</span>
+    </div>
+  </div>
+  <div class="m-walletTokenEarningsEstimates__item">
+    <div class="m-walletTokenEarningsEstimatesItem__label">
+      <span>All-time rewards</span>
+      <m-tooltip icon="info">
+        Your total token earnings throughout history
+      </m-tooltip>
+    </div>
+    <div class="m-walletTokenEarningsEstimatesItem__amount">
+      <m-wallet__currencyValue
+        [value]="total.alltime"
+        hideCurrency="true"
+        currency="tokens"
+      ></m-wallet__currencyValue>
+    </div>
+  </div>
+</div>
 
 <m-loadingSpinner [inProgress]="!data"></m-loadingSpinner>
 

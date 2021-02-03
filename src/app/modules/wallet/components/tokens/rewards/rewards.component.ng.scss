@@ -22,6 +22,30 @@
     }
   }
 
+  .m-walletTokenEarnings__estimates {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 0;
+    max-width: 600px;
+
+    .m-walletTokenEarningsEstimatesItem__label {
+      font-size: 16px;
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    .m-walletTokenEarningsEstimatesItem__amount {
+      font-size: 17px;
+      font-weight: 700;
+      padding: 10px 0;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
   .m-walletTokenEarnings__multiplierBarWrapper {
     display: inline-flex;
     align-items: center;

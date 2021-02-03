@@ -4,9 +4,10 @@ import {
   WalletTokenRewardsService,
 } from './rewards.service';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -46,6 +47,34 @@ export class WalletTokenRewardsComponent implements OnInit {
    * TODO: add types
    */
   data;
+
+  /**
+   * Obserbale to determine if estimates should be shown
+   */
+  showEstimates$: Observable<boolean> = this.rewards.dateTs$.pipe(
+    map(
+      dateTs =>
+        dateTs ==
+        moment()
+          .utc()
+          .startOf('d')
+          .unix()
+    )
+  );
+
+  nextPayoutDate$: Observable<number> = timer(0, 1000).pipe(
+    map(() => {
+      return (
+        moment()
+          .utc()
+          .endOf('day')
+          .unix() -
+        moment()
+          .utc()
+          .unix()
+      );
+    })
+  );
 
   /** Breakdown of relative dates engangement scores */
   contributionScores$: Observable<ContributionMetric[]> = this.rewards
