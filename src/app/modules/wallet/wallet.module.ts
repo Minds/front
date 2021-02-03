@@ -36,6 +36,11 @@ import { WalletTabHistoryService } from './components/tab-history.service';
 import { DefaultRedirectGuard } from './components/guards/default-redirect-guard.component';
 import { TabStorageGuard } from './components/guards/tab-storage-guard.component';
 import { WalletToggleComponent } from './toggle.component';
+import { WalletBalanceComponent } from './components/components/balance/balance.component';
+import { WalletCurrencyValueComponent } from './components/components/currency-value/currency-value.component';
+import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
+import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
+import { MindsWalletTokenPriceBadgeComponent } from './components/components/token-price-badge/token-price-badge.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -54,13 +59,29 @@ export const WALLET_ROUTES: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'overview',
+            redirectTo: 'rewards',
             pathMatch: 'full',
           },
           {
             path: 'overview',
+            redirectTo: 'balance',
+            pathMatch: 'full',
+          },
+          {
+            path: 'balance',
             canActivate: [TabStorageGuard],
             component: WalletChartComponent,
+          },
+          {
+            path: 'rewards',
+            canActivate: [TabStorageGuard],
+            component: WalletTokenRewardsComponent,
+          },
+          {
+            path: 'earnings',
+            canActivate: [TabStorageGuard],
+            component: WalletEarningsComponent,
+            data: {},
           },
           {
             path: 'transactions',
@@ -77,6 +98,11 @@ export const WALLET_ROUTES: Routes = [
         path: 'cash',
         component: WalletV2CashComponent,
         children: [
+          {
+            path: '',
+            redirectTo: 'earnings',
+            pathMatch: 'full',
+          },
           {
             path: 'earnings',
             component: WalletProEarningsCashComponent,
@@ -170,6 +196,12 @@ export const WALLET_ROUTES: Routes = [
     WalletV2BtcComponent,
     // Legacy wallet
     WalletToggleComponent,
+    // V3 wallet
+    WalletBalanceComponent,
+    WalletCurrencyValueComponent,
+    WalletTokenRewardsComponent,
+    WalletEarningsComponent,
+    MindsWalletTokenPriceBadgeComponent,
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [

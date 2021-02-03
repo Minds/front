@@ -1,0 +1,21 @@
+@import 'defaults.scss';
+
+:host {
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+  .m-walletCurrencyValue__usd {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    font-size: 0.9rem;
+  }
+
+  .m-walletCurrencyValue__currency--eth {
+    text-transform: uppercase;
+  }
+
+  * {
+    vertical-align: middle;
+  }
+}
