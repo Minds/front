@@ -7,7 +7,7 @@
   <!-- -------------------------------------------- -->
   <div *ngIf="!display">
     <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__ONCHAIN_ADDRESS">
-      On-Chain Address
+      On-chain Address
     </h2>
     <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
     <div class="m-walletSettings__recommendation">
@@ -274,3 +274,5 @@
     </m-tooltip>
   </p>
 </ng-template>
+
+<m-walletSettings--btc *mIfFeature="'wallet-v3'"></m-walletSettings--btc>

@@ -1,9 +1,11 @@
+<span *ngIf="currency === 'usd'">$</span>
+
 <span>{{ value | number: '1.0-2' }} </span>
 
 <span
   class="m-walletCurrencyValue__currency"
   class="m-walletCurrencyValue__currency--{{ currency }}"
-  *ngIf="!hideCurrency"
+  *ngIf="!hideCurrency && currency !== 'usd'"
   >{{ currency }}</span
 >
 

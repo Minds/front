@@ -15,6 +15,15 @@
 <div class="m-tabs__container">
   <li class="m-tabs__tab" *mIfFeature="'wallet-v3'">
     <a
+      routerLink="rewards"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__TOKENS__REWARDS"
+    >
+      Rewards
+    </a>
+  </li>
+  <li class="m-tabs__tab" *mIfFeature="'wallet-v3'">
+    <a
       routerLink="earnings"
       routerLinkActive="selected"
       i18n="@@WALLET_V2__TOKENS__EARNINGS"

@@ -39,6 +39,7 @@ enum Views {
 @Component({
   selector: 'm-walletSettings--tokens',
   templateUrl: './settings-tokens.component.html',
+  styleUrls: ['./settings-tokens.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletSettingsTokensComponent

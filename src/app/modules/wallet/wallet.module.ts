@@ -38,7 +38,9 @@ import { TabStorageGuard } from './components/guards/tab-storage-guard.component
 import { WalletToggleComponent } from './toggle.component';
 import { WalletBalanceComponent } from './components/components/balance/balance.component';
 import { WalletCurrencyValueComponent } from './components/components/currency-value/currency-value.component';
-import { WalletTokenEarningsComponent } from './components/tokens/earnings/earnings.component';
+import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
+import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
+import { MindsWalletTokenPriceBadgeComponent } from './components/components/token-price-badge/token-price-badge.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -57,7 +59,7 @@ export const WALLET_ROUTES: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'earnings',
+            redirectTo: 'rewards',
             pathMatch: 'full',
           },
           {
@@ -71,9 +73,15 @@ export const WALLET_ROUTES: Routes = [
             component: WalletChartComponent,
           },
           {
+            path: 'rewards',
+            canActivate: [TabStorageGuard],
+            component: WalletTokenRewardsComponent,
+          },
+          {
             path: 'earnings',
             canActivate: [TabStorageGuard],
-            component: WalletTokenEarningsComponent,
+            component: WalletEarningsComponent,
+            data: {},
           },
           {
             path: 'transactions',
@@ -191,7 +199,9 @@ export const WALLET_ROUTES: Routes = [
     // V3 wallet
     WalletBalanceComponent,
     WalletCurrencyValueComponent,
-    WalletTokenEarningsComponent,
+    WalletTokenRewardsComponent,
+    WalletEarningsComponent,
+    MindsWalletTokenPriceBadgeComponent,
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [
