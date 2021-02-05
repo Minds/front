@@ -443,7 +443,7 @@
         ></minds-button-thumbs-down>
         <div
           class="m-commentToolbarButton"
-          (click)="toggleReplyPoster()"
+          (click)="toggleReplies()"
           *ngIf="comment.can_reply && session.isLoggedIn()"
         >
           <a
