@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, last, map } from 'rxjs/operators';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
@@ -10,13 +12,21 @@ import { WalletV2Service } from '../../wallet-v2.service';
   styleUrls: ['./dropdown-menu.component.ng.scss'],
 })
 export class WalletTokensDropdownMenu {
+  address$: Observable<string> = this.walletService.wallet$.pipe(
+    map(wallet => wallet.receiver.address)
+  );
+
   canDisconnect$: Observable<boolean> = this.walletService.wallet$.pipe(
     map(wallet => !!wallet.receiver.address)
   );
 
+  @ViewChild('addressEl') addressElement;
+
   constructor(
     private buyTokensService: BuyTokensModalService,
-    private walletService: WalletV2Service
+    private walletService: WalletV2Service,
+    @Inject(DOCUMENT) private dom,
+    private toasterService: FormToastService
   ) {}
 
   /**
@@ -37,5 +47,25 @@ export class WalletTokensDropdownMenu {
 
   async onDisconnectClick(e: MouseEvent): Promise<void> {
     await this.walletService.removeOnchainAddress();
+  }
+
+  async copyAddressToClipboard(e: MouseEvent) {
+    const el = this.addressElement.nativeElement;
+    const selection = window.getSelection();
+    const range = this.dom.createRange();
+    range.selectNodeContents(el);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+      this.dom.execCommand('copy');
+      selection.removeAllRanges();
+
+      this.toasterService.success('Address copied to clipboard.');
+    } catch (e) {
+      this.toasterService.warn(
+        'Sorry, we are unable to copy to your clipboard'
+      );
+    }
   }
 }

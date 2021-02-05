@@ -22,6 +22,7 @@ import {
   distinctUntilChanged,
   map,
   shareReplay,
+  skipWhile,
   switchMap,
 } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
@@ -44,6 +45,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   protected updateTimer$;
 
   isConnected$: Observable<boolean> = this.walletService.wallet$.pipe(
+    skipWhile(wallet => wallet.receiver.address === undefined),
     map(wallet => !!wallet.receiver.address),
     switchMap(hasAddress => {
       if (!hasAddress) {

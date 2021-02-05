@@ -15,6 +15,12 @@
     <li (click)="onPurchaseTokensClick($event)">
       <span>Purchase tokens</span>
     </li>
+    <li *ngIf="address$ | async" (click)="copyAddressToClipboard($event)">
+      <span>Copy address to clipboard</span>
+      <span #addressEl class="m-walletTokensDropdown__copyToClipboardContent">{{
+        address$ | async
+      }}</span>
+    </li>
     <li *ngIf="canDisconnect$ | async" (click)="onDisconnectClick($event)">
       <span>Disconnect Wallet</span>
     </li>

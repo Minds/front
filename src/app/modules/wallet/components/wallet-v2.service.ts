@@ -81,7 +81,7 @@ export class WalletV2Service {
       label: 'Receiver',
       unit: 'tokens',
       balance: 0,
-      address: null,
+      address: undefined,
     },
     cash: {
       label: 'Cash',
