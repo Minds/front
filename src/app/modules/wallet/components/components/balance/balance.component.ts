@@ -21,6 +21,8 @@ export class WalletBalanceComponent {
 
   @ViewChild('expandedRef') expandedContent: ElementRef;
 
+  @ViewChild('addressRef') addressContent: ElementRef;
+
   /**
    * Will show the expanded content
    * @param e
@@ -42,5 +44,9 @@ export class WalletBalanceComponent {
    */
   get canExpand(): boolean {
     return this.expandedContent?.nativeElement?.childNodes.length > 0;
+  }
+
+  get hasAddress(): boolean {
+    return this.addressContent?.nativeElement?.childNodes.length > 0;
   }
 }

@@ -462,6 +462,14 @@ export class WalletV2Service {
     return splitBalance;
   }
 
+  async removeOnchainAddress(): Promise<void> {
+    this.wallet.receiver.address = '';
+    this.wallet$.next(this.wallet);
+    await (<any>(
+      this.client.delete('api/v3/blockchain/unique-onchain/validate')
+    ));
+  }
+
   async isVerified(): Promise<boolean> {
     const response = await (<any>(
       this.client.get('api/v3/blockchain/unique-onchain')
