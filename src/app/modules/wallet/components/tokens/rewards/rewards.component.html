@@ -456,7 +456,16 @@
 
       <!-- SUMMARY -->
       <tr class="m-walletTokenEarningsExpanded__summaryLabel">
-        <td>Summary</td>
+        <td>
+          <span>Summary</span>
+          <a
+            class="m-walletTokenEarnings__cta"
+            [href]="uniswapAccountLink"
+            target="_blank"
+            *ngIf="uniswapAccountLink"
+            >Uniswap Account</a
+          >
+        </td>
         <td colspan="3"></td>
       </tr>
 

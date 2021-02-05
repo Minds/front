@@ -8,6 +8,7 @@ import { Observable, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 import { map } from 'rxjs/operators';
+import { WalletV2Service } from '../../wallet-v2.service';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -86,7 +87,7 @@ export class WalletTokenRewardsComponent implements OnInit {
   constructor(
     private rewards: WalletTokenRewardsService,
     private uniswapModalService: UniswapModalService,
-    private earnModalService: EarnModalService
+    private walletService: WalletV2Service
   ) {}
 
   ngOnInit() {
@@ -155,6 +156,17 @@ export class WalletTokenRewardsComponent implements OnInit {
         }
       },
     });
+  }
+
+  get uniswapAccountLink(): string {
+    const address = this.walletService.wallet.receiver.address;
+
+    if (!address) {
+      return;
+    }
+
+    const uniswapUrl = 'https://info.uniswap.org/account/';
+    return uniswapUrl + address;
   }
 
   /**
