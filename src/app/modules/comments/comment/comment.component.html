@@ -51,13 +51,23 @@
             i18n="@@M__COMMON__EDITED"
             >Edited</span
           >
+          <span
+            *ngIf="
+              attachment.isMature() &&
+              comment.owner_guid === session.getLoggedInUser()?.guid
+            "
+            title="Explicit"
+            ><i class="material-icons m-material-icons-inline m-redButton"
+              >explicit</i
+            >
+          </span>
         </div>
       </div>
     </div>
 
     <div class="m-comment__matureScreen" *ngIf="comment.mature && !showMature">
-      <span>This comment is marked as Explicit</span>
-      <span (click)="toggleMatureVisibility()">I am over 18 years of age</span>
+      <span>This comment has been tagged as explicit</span>
+      <span (click)="toggleMatureVisibility()">View comment</span>
     </div>
     <div
       class="m-comment__messageWrapper"
@@ -212,7 +222,6 @@
       <!-- --EDIT MODE----------------------------- -->
       <!-- ---------------------------------------- -->
       <ng-container *ngIf="editing">
-        <!-- <div class="minds-body"> -->
         <div class="m-commentPoster__wrapper m-commentPoster__wrapper--editing">
           <form (submit)="post($event)" class="m-commentPoster__form">
             <ng-template
@@ -289,20 +298,23 @@
                   <!-- Mark as explicit -->
                   <!-- --------------------- -->
                   <li class="m-dropdownList__item">
-                    <a
-                      (click)="
-                        attachment.toggleMature(); posterMenuOpened$.next(false)
-                      "
-                    >
+                    <a (click)="toggleExplicit($event)">
                       <i
                         class="material-icons"
                         [ngClass]="{
-                          selected: attachment.isMature()
+                          'm-redButton': attachment.isMature()
                         }"
                         >explicit</i
                       >
-                      <span i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                      <span
+                        *ngIf="!attachment.isMature()"
+                        i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
                         >Mark as explicit</span
+                      >
+                      <span
+                        *ngIf="attachment.isMature()"
+                        i18n="@@M__COMMENT_ACTIONS__REMOVE_EXPLICIT"
+                        >Remove explicit</span
                       >
                     </a>
                   </li>

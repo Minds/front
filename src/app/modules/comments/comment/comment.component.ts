@@ -412,6 +412,11 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.posterMenuOpened$.next(true);
   }
 
+  toggleExplicit(e: MouseEvent): void {
+    this.attachment.toggleMature();
+    this.posterMenuOpened$.next(false);
+  }
+
   ngOnChanges(changes) {
     this.cd.markForCheck();
     this.cd.detectChanges();
