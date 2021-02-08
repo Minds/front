@@ -1,11 +1,13 @@
 <ng-container m-clientMeta>
   <m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
     <ng-container class="m-activityOwnerBlock__right">
-      <m-activity__metrics></m-activity__metrics>
+      <m-activity__metrics
+        *ngIf="service.displayOptions.showMetrics"
+      ></m-activity__metrics>
 
       <ng-container *ngIf="entity$ | async as entity">
         <span
-          *ngIf="entity.pinned"
+          *ngIf="entity.pinned && service.displayOptions.showPinnedBadge"
           class="m-activity__flag m-activity__flag--pinned"
           data-cy="m-activity__pinnedFlag"
         >
@@ -33,7 +35,9 @@
 
       <m-activity__menu
         (deleted)="delete()"
-        *ngIf="service.isLoggedIn$ | async"
+        *ngIf="
+          service.displayOptions.showPostMenu && (service.isLoggedIn$ | async)
+        "
       ></m-activity__menu>
     </ng-container>
   </m-activity__ownerBlock>
@@ -55,7 +59,9 @@
   ></m-activity__toolbar>
 
   <m-activity__minimalMetrics
-    *ngIf="service.displayOptions.minimalMode"
+    *ngIf="
+      service.displayOptions.minimalMode && service.displayOptions.showMetrics
+    "
   ></m-activity__minimalMetrics>
 
   <ng-container *mIfBrowser>

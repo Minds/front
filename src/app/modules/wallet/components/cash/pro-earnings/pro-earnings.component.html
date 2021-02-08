@@ -1,80 +1,86 @@
-<div class="m-walletProEarnings__earnings">
-  <m-dropdownSelector
-    [filter]="filter"
-    [inlineLabel]="true"
-    (selectionMade)="filterSelected($event)"
-  >
-  </m-dropdownSelector>
-</div>
+<m-wallet__earnings
+  *mIfFeature="'wallet-v3'; else walletV2"
+></m-wallet__earnings>
 
-<m-loadingSpinner
-  *ngIf="inProgress"
-  [inProgress]="inProgress"
-></m-loadingSpinner>
+<ng-template #walletV2>
+  <div class="m-walletProEarnings__earnings">
+    <m-dropdownSelector
+      [filter]="filter"
+      [inlineLabel]="true"
+      (selectionMade)="filterSelected($event)"
+    >
+    </m-dropdownSelector>
+  </div>
 
-<div *ngIf="payouts$ | async as payouts" style="margin-bottom: 40px;">
-  <ng-container
-    *ngTemplateOutlet="
-      sectionHeader;
-      context: { label: 'Payouts', total$: payoutsTotal$ }
-    "
-  ></ng-container>
+  <m-loadingSpinner
+    *ngIf="inProgress"
+    [inProgress]="inProgress"
+  ></m-loadingSpinner>
 
-  <table style="width: 100%">
-    <tbody>
-      <ng-container *ngFor="let item of payouts">
-        <ng-container
-          *ngTemplateOutlet="itemEl; context: { $implicit: item }"
-        ></ng-container>
-      </ng-container>
-    </tbody>
-  </table>
-</div>
+  <div *ngIf="payouts$ | async as payouts" style="margin-bottom: 40px;">
+    <ng-container
+      *ngTemplateOutlet="
+        sectionHeader;
+        context: { label: 'Payouts', total$: payoutsTotal$ }
+      "
+    ></ng-container>
 
-<div
-  *ngIf="earnings$ | async as earnings"
-  class="m-walletProEarnings__section--earnings"
->
-  <ng-container
-    *ngTemplateOutlet="
-      sectionHeader;
-      context: { label: 'Earnings', total$: earningsTotal$ }
-    "
-  ></ng-container>
-
-  <ng-container *ngFor="let earningsGroup of earnings">
-    <table class="m-walletProEarnings__table">
+    <table style="width: 100%">
       <tbody>
-        <!-- HEADER -->
-
-        <ng-container
-          *ngTemplateOutlet="
-            itemEl;
-            context: { $implicit: earningsGroup, isHeader: true }
-          "
-        ></ng-container>
-
-        <!-- Spacer, because CSS tables are weird -->
-        <tr
-          class="m-walletProEarningsTable__item .m-walletProEarningsTable__item--spacer"
-        ></tr>
-
-        <!-- ROWS -->
-
-        <ng-container *ngFor="let item of earningsGroup.items">
+        <ng-container *ngFor="let item of payouts">
           <ng-container
             *ngTemplateOutlet="itemEl; context: { $implicit: item }"
           ></ng-container>
         </ng-container>
-
-        <!-- Spacer, because CSS tables are weird -->
-        <tr
-          class="m-walletProEarningsTable__item m-walletProEarningsTable__item--spacer"
-        ></tr>
       </tbody>
     </table>
-  </ng-container>
-</div>
+  </div>
+
+  <div
+    *ngIf="earnings$ | async as earnings"
+    class="m-walletProEarnings__section--earnings"
+  >
+    <ng-container
+      *ngTemplateOutlet="
+        sectionHeader;
+        context: { label: 'Earnings', total$: earningsTotal$ }
+      "
+    ></ng-container>
+
+    <ng-container *ngFor="let earningsGroup of earnings">
+      <table class="m-walletProEarnings__table">
+        <tbody>
+          <!-- HEADER -->
+
+          <ng-container
+            *ngTemplateOutlet="
+              itemEl;
+              context: { $implicit: earningsGroup, isHeader: true }
+            "
+          ></ng-container>
+
+          <!-- Spacer, because CSS tables are weird -->
+          <tr
+            class="m-walletProEarningsTable__item .m-walletProEarningsTable__item--spacer"
+          ></tr>
+
+          <!-- ROWS -->
+
+          <ng-container *ngFor="let item of earningsGroup.items">
+            <ng-container
+              *ngTemplateOutlet="itemEl; context: { $implicit: item }"
+            ></ng-container>
+          </ng-container>
+
+          <!-- Spacer, because CSS tables are weird -->
+          <tr
+            class="m-walletProEarningsTable__item m-walletProEarningsTable__item--spacer"
+          ></tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</ng-template>
 
 <ng-template #sectionHeader let-label="label" let-total$="total$">
   <div class="m-walletProEarnings__sectionHeader">

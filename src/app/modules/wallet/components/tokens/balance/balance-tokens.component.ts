@@ -10,21 +10,31 @@ import {
   ViewRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import * as moment from 'moment';
+import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  skipWhile,
+  switchMap,
+} from 'rxjs/operators';
+import { ApiService } from '../../../../../common/api/api.service';
 
 @Component({
   selector: 'm-walletBalance--tokens',
   templateUrl: './balance-tokens.component.html',
+  styleUrls: ['./balance-tokens.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   wallet: Wallet;
-  walletSubscription: Subscription;
 
   tokenBalance;
   offchainBalance;
@@ -33,6 +43,29 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   showTransferModal = false;
   showTokenModal = false;
   protected updateTimer$;
+
+  isConnected$: Observable<boolean> = this.walletService.wallet$.pipe(
+    skipWhile(wallet => wallet.receiver.address === undefined),
+    map(wallet => !!wallet.receiver.address),
+    switchMap(hasAddress => {
+      if (!hasAddress) {
+        return of(false);
+      }
+      return this.api
+        .get('api/v3/blockchain/unique-onchain')
+        .pipe(map(response => response.unique));
+    })
+  );
+
+  /**
+   * Snapshot of isConnected observable
+   */
+  isConnected: boolean;
+
+  /**
+   * Subscriptions
+   */
+  subscriptions: Subscription[] = [];
 
   // display 2am UTC in local time
   localPayoutTime = moment()
@@ -46,16 +79,18 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   estimatedTokenPayout;
   constructor(
     protected client: Client,
+    protected api: ApiService,
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletV2Service,
     protected toasterService: FormToastService,
+    protected connectWalletModalService: ConnectWalletModalService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit() {
-    this.walletSubscription = this.walletService.wallet$.subscribe(
-      (wallet: Wallet) => {
+    this.subscriptions.push(
+      this.walletService.wallet$.subscribe((wallet: Wallet) => {
         this.wallet = wallet;
 
         this.tokenBalance = this.walletService.splitBalance(
@@ -68,7 +103,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
           this.wallet.onchain.balance
         );
         this.detectChanges();
-      }
+      })
     );
 
     this.getPayout();
@@ -81,6 +116,12 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       );
     }
 
+    this.subscriptions.push(
+      this.isConnected$.subscribe(
+        isConnected => (this.isConnected = isConnected)
+      )
+    );
+
     this.detectChanges();
   }
 
@@ -88,7 +129,9 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     if (this.updateTimer$) {
       clearInterval(this.updateTimer$);
     }
-    this.walletSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   async getPayout() {
@@ -129,5 +172,26 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       this.cd.markForCheck();
       this.cd.detectChanges();
     }
+  }
+
+  /**
+   * Connect wallet
+   * @param e
+   */
+  async connectWallet(e: MouseEvent): Promise<void> {
+    await this.connectWalletModalService.open();
+    this.isConnected = undefined;
+    await this.walletService.loadOffchainAndReceiver();
+  }
+
+  get truncatedOnchainAddress(): string {
+    if (!this.wallet.receiver.address) {
+      return '';
+    }
+    return (
+      this.wallet.receiver.address.substr(0, 4) +
+      '...' +
+      this.wallet.receiver.address.substr(-4)
+    );
   }
 }

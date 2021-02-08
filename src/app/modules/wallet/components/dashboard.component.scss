@@ -254,16 +254,16 @@ m-walletDashboard {
   // BALANCES  ///////////////////////////////
   ////////////////////////////////////////////
   .m-walletDashboardBalance__wrapper {
-    margin: 50px 50px 34px 50px;
+    margin: 40px;
     @media screen and (max-width: $min-tablet) {
-      margin: 50px 40px 34px 40px;
+      margin: 40px;
     }
     @media screen and (max-width: $max-mobile) {
-      margin: 22px 24px 25px 24px;
+      margin: 20px;
     }
     m-tooltip {
       .m-tooltip {
-        margin-left: 4px;
+        margin-left: 5px;
       }
     }
   }

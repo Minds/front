@@ -305,7 +305,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   calculateHeight(): void {
-    if (!this.featuresService.has('navigation') || !this.rotatorEl) return;
+    if (!this.rotatorEl) return;
     this.height =
       this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
 

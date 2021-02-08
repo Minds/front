@@ -23,6 +23,21 @@
         "
       ></m-sort-selector>
     </div>
+    <div class="m-firehose__tagSelector">
+      <input class="m-firehose__tagInput" (keyup.enter)="addTag()" #tagInput />
+      <m-button
+        class="m-firehose__tagSubmitButton"
+        (click)="addTag()"
+        [size]="'xsmall'"
+        >Submit</m-button
+      >
+      <span
+        class="m-firehose__tag"
+        *ngFor="let tag of hashtags$ | async"
+        (click)="removeTag(tag)"
+        >#{{ tag }}</span
+      >
+    </div>
     <m-activity
       *ngIf="entity"
       [entity]="entity"

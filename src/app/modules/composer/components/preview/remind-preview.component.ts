@@ -63,6 +63,9 @@ export class RemindPreviewComponent {
     activity.instance.displayOptions = {
       showToolbar: false,
       showComments: false,
+      showPostMenu: false,
+      showPinnedBadge: false,
+      showMetrics: false,
     };
 
     activity.changeDetectorRef.detectChanges();

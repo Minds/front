@@ -36,18 +36,12 @@ export class TagsPipe implements PipeTransform {
           return `${
             m.match[1]
           }<a href="/all;query=${m.match[2].toLowerCase()}">#${m.match[2]}</a>`;
-        } else if (this.featureService.has('navigation')) {
-          return `${
-            m.match[1]
-          }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}">#${
-            m.match[2]
-          }</a>`; // TODO: make these link locally
         }
         return `${
           m.match[1]
-        }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=7d">#${
+        }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}">#${
           m.match[2]
-        }</a>`;
+        }</a>`; // TODO: make these link locally
       },
     },
     at: {

@@ -60,7 +60,7 @@ export class GroupsSidebarMarkersComponent
     private featuresService: FeaturesService,
     private configs: ConfigsService
   ) {
-    this.hasNewNavigation = featuresService.has('navigation');
+    this.hasNewNavigation = true;
     this.cdnUrl = configs.get('cdn_url');
   }
 

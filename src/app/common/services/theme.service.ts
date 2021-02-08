@@ -90,9 +90,7 @@ export class ThemeService {
     } else if (this.setup) {
       this.renderer.addClass(this.dom.body, 'm-theme-in-transition');
     }
-    if (this.features.has('navigation')) {
-      this.renderer.addClass(this.dom.body, 'm-theme__2020');
-    }
+    this.renderer.addClass(this.dom.body, 'm-theme__2020');
     if (this.isDark$.value) {
       this.renderer.removeClass(this.dom.body, 'm-theme__light');
       this.renderer.addClass(this.dom.body, 'm-theme__dark');
