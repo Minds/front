@@ -44,14 +44,6 @@
   style="max-width:740px"
   *ngIf="blog.guid"
 >
-  <ng-container *ngIf="false">
-    <google-ad
-      *ngIf="!session.getLoggedInUser().plus && blog.monetized && index == 0"
-      type="responsive"
-      location="top"
-    ></google-ad>
-  </ng-container>
-
   <div class="mdl-grid" style="width:100%">
     <div class="mdl-cell mdl-cell--12-col">
       <h1 class="m-blog--title">{{blog.title}}</h1>
@@ -112,7 +104,7 @@
 
   <m-wire--lock-screen
     [(entity)]="blog"
-    *ngIf="blog.paywall"
+    *ngIf="blog.wire_threshold"
     #lockScreen
   ></m-wire--lock-screen>
 

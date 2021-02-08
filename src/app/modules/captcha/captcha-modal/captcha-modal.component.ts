@@ -32,13 +32,14 @@ export interface OptType {
       <div class="m-captcha__body">
         <m-captcha name="captcha" [(ngModel)]="captcha"> </m-captcha>
         <div class="m-captcha__submitButtonContainer">
-          <button
+          <m-button
             class="m-captcha__submitButton"
-            (click)="onCaptchaSubmit()"
+            [color]="'blue'"
+            (onAction)="onCaptchaSubmit()"
             data-cy="data-minds-captcha-modal-submit"
           >
             Submit
-          </button>
+          </m-button>
         </div>
       </div>
     </div>
