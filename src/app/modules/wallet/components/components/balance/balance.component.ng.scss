@@ -4,10 +4,15 @@
   position: relative;
   display: inline-block;
 
-  .m-walletBalance__brief {
+  .m-walletBalance__bubble {
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
     }
+    display: inline-block;
+    border-radius: 50px;
+  }
+
+  .m-walletBalance__brief {
     display: inline-block;
     padding: 10px 20px;
     border-radius: 50px;
@@ -26,6 +31,17 @@
         background-color: themed($m-borderColor--primary);
       }
     }
+  }
+
+  .m-walletBalance__address {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      border-left: 1px solid themed($m-borderColor--primary);
+    }
+    display: inline-block;
+    padding: 0 15px;
+    height: 40px;
+    vertical-align: top;
   }
 
   .m-walletBalance__expanded {

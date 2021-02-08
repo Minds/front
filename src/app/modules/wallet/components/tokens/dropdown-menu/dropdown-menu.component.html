@@ -1,0 +1,28 @@
+<m-dropdownMenu
+  triggerClass="m-walletTokensDropdown__menuButton"
+  menuClass="m-walletTokensDropdown__menu"
+  [anchorPosition]="{ top: '0', left: '0' }"
+  [menu]="menu"
+>
+  <m-icon iconId="more_vert"></m-icon>
+</m-dropdownMenu>
+
+<ng-template #menu>
+  <ul>
+    <li (click)="onTransferTokensClick($event)">
+      <span>Transfer On-chain</span>
+    </li>
+    <li (click)="onPurchaseTokensClick($event)">
+      <span>Purchase tokens</span>
+    </li>
+    <li *ngIf="address$ | async" (click)="copyAddressToClipboard($event)">
+      <span>Copy address to clipboard</span>
+      <span #addressEl class="m-walletTokensDropdown__copyToClipboardContent">{{
+        address$ | async
+      }}</span>
+    </li>
+    <li *ngIf="canDisconnect$ | async" (click)="onDisconnectClick($event)">
+      <span>Disconnect Wallet</span>
+    </li>
+  </ul>
+</ng-template>

@@ -33,7 +33,37 @@
           currency="eth"
         ></m-wallet__currencyValue>
       </ng-container>
+      <ng-container m-walletBalance__address>
+        <ng-container *ngIf="isConnected; else connectWalletEl">
+          <div class="m-walletBalanceAddress__inner">
+            <span>{{ truncatedOnchainAddress }}</span>
+            <m-tooltip icon="check_circle">Your address is verified</m-tooltip>
+          </div>
+        </ng-container>
+        <ng-template #connectWalletEl>
+          <div
+            class="m-walletBalanceAddress__inner--connect"
+            (click)="connectWallet($event)"
+            *ngIf="isConnected === false"
+          >
+            <span *ngIf="!wallet.receiver.address">Connect Wallet</span>
+            <span *ngIf="wallet.receiver.address">Reconnect Wallet</span>
+            <m-tooltip icon="add_circle"
+              >Connect your address to start earnings rewards</m-tooltip
+            >
+          </div>
+
+          <div
+            class="m-walletBalanceAddress__inner--connect"
+            *ngIf="isConnected !== false"
+          >
+            <span>...</span>
+          </div>
+        </ng-template>
+      </ng-container>
     </m-wallet__balance>
+
+    <m-walletTokens__dropdownMenu></m-walletTokens__dropdownMenu>
   </ng-container>
 
   <ng-template #walletV2>
