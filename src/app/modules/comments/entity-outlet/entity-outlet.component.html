@@ -13,7 +13,7 @@
 <!-- -------------------- -->
 <div
   class="m-commentsEntityOutlet__topBar"
-  *ngIf="!activityService.displayOptions.isFeed"
+  *ngIf="count > 0 && !activityService.displayOptions.isFeed"
 >
   <div class="m-commentsEntityOutlet__header">
     <span class="m-commentsEntityOutlet__title" (click)="toggleComments()"
@@ -33,13 +33,13 @@
 <!-- -------------------- -->
 <!-- START CONVERSATION -->
 <!-- -------------------- -->
-<div
+<!-- <div
   class="m-comments__startConversation"
   *ngIf="count < 1 && !showOnlyPoster"
   i18n="@@MINDS__COMMENTS__START_CONVERSATION"
 >
   <span>Start the conversation!</span>
-</div>
+</div> -->
 <!-- -------------------- -->
 
 <ng-container *ngIf="showOnlyPoster">
