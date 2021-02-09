@@ -11,7 +11,7 @@ import { UniswapAction } from './uniswap-modal.service';
   selector: 'm-uniswap__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'uniswap-modal.component.html',
-  styleUrls: ['./uniswap-modal.component.scss'],
+  styleUrls: ['./uniswap-modal.component.ng.scss'],
 })
 export class UniswapModalComponent {
   private baseUrl = 'https://app.uniswap.org/#';

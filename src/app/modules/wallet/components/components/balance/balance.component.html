@@ -1,0 +1,16 @@
+<div class="m-walletBalance__bubble">
+  <div
+    class="m-walletBalance__brief"
+    [class.m-walletBalance__brief--canExpand]="canExpand"
+  >
+    <ng-content select="[m-walletBalance__brief]"></ng-content>
+  </div>
+
+  <div class="m-walletBalance__address" #addressRef [hidden]="!hasAddress">
+    <ng-content select="[m-walletBalance__address]"></ng-content>
+  </div>
+</div>
+
+<div class="m-walletBalance__expanded" #expandedRef [hidden]="!expanded">
+  <ng-content select="[m-walletBalance__expanded]"></ng-content>
+</div>

@@ -4,6 +4,7 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
+  Input,
 } from '@angular/core';
 
 /**
@@ -27,6 +28,11 @@ export class DragAndDropDirective {
   @Output() onFileDropped = new EventEmitter<any>();
 
   /**
+   * Disable drag and drop via input.
+   */
+  @Input() disabled: boolean = false;
+
+  /**
    * Dynamically set opacity
    */
   @HostBinding('style.opacity') protected opacity = '1';
@@ -37,7 +43,10 @@ export class DragAndDropDirective {
   @HostListener('dragover', ['$event']) onDragOver(event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.opacity = '0.8';
+
+    if (!this.disabled) {
+      this.opacity = '0.8';
+    }
   }
 
   /**
@@ -46,7 +55,10 @@ export class DragAndDropDirective {
   @HostListener('dragleave', ['$event']) public onDragLeave(event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.opacity = '1';
+
+    if (!this.disabled) {
+      this.opacity = '1';
+    }
   }
 
   /**
@@ -56,10 +68,13 @@ export class DragAndDropDirective {
   @HostListener('drop', ['$event']) public ondrop(event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.opacity = '1';
-    let files = event.dataTransfer.files;
-    if (files.length > 0) {
-      this.onFileDropped.emit(files[0]);
+
+    if (!this.disabled) {
+      this.opacity = '1';
+      let files = event.dataTransfer.files;
+      if (files.length > 0) {
+        this.onFileDropped.emit(files[0]);
+      }
     }
   }
 }

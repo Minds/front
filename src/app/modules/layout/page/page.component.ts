@@ -13,8 +13,6 @@ import { Router } from '@angular/router';
   styleUrls: ['page.component.ng.scss'],
 })
 export class PageComponent implements OnInit {
-  useNewNavigation: boolean = false;
-
   showOnboarding: boolean = false;
 
   isSidebarVisible: boolean = true;
@@ -30,8 +28,6 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.useNewNavigation = this.featuresService.has('navigation');
-
     this.isSidebarVisible = this.navigationService.container
       ? !this.navigationService.container.hidden
       : true;
@@ -63,10 +59,6 @@ export class PageComponent implements OnInit {
   }
 
   hasMarkersSidebar() {
-    return (
-      this.session.isLoggedIn() &&
-      !this.isProDomain &&
-      !this.featuresService.has('navigation')
-    );
+    return this.session.isLoggedIn() && !this.isProDomain && false;
   }
 }

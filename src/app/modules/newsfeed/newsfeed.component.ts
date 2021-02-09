@@ -45,8 +45,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   boostFeed: boolean = false;
 
-  showPlusButton: boolean = true;
-
   subscribed: boolean = false;
 
   tag: string = null;
@@ -75,7 +73,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected context: ContextService,
     protected newsfeedService: NewsfeedService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
+    this.newNavigation = true;
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 
@@ -98,11 +96,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       this.hashtag = params.hashtag || null;
       this.all = Boolean(params.all);
     });
-
-    const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
-    if (showPlusButton != null) {
-      this.showPlusButton = false;
-    }
   }
 
   ngOnInit() {
@@ -147,7 +140,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   }
 
   hidePlusButton(event) {
-    this.showPlusButton = false;
     localStorage.setItem('newsfeed:hide-plus-button', 'true');
     event.preventDefault();
     event.stopPropagation();

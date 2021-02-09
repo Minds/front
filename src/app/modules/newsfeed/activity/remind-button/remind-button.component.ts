@@ -80,8 +80,12 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     const entity = this.service.entity$.getValue();
     this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
     this.composerService.remind$.next(entity);
-    await this.composerService.post();
-
+    try {
+      await this.composerService.post();
+    } catch (e) {
+      this.toasterService.error(e);
+      return;
+    }
     // Update the counter
     this.incrementCounter();
 

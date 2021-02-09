@@ -284,7 +284,7 @@ export class SettingsV2Component implements OnInit {
     protected toasterService: FormToastService,
     public featuresService: FeaturesService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
+    this.newNavigation = true;
     this.hasYoutubeFeature = this.featuresService.has('yt-importer');
   }
 

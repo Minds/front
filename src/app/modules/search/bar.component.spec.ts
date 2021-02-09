@@ -85,7 +85,6 @@ describe('SearchBarComponent', () => {
     comp = fixture.componentInstance;
 
     featuresServiceMock.mock('top-feeds', false);
-    featuresServiceMock.mock('navigation', false);
 
     fixture.detectChanges();
 
@@ -144,10 +143,13 @@ describe('SearchBarComponent', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith([
-      '/newsfeed/global/top',
-      { query: 'test', period: '30d' },
-    ]);
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
+      queryParams: {
+        q: 'test',
+        f: undefined,
+        t: undefined,
+      },
+    });
   }));
 
   it('should search with container id', fakeAsync(() => {
@@ -158,10 +160,13 @@ describe('SearchBarComponent', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith([
-      '/newsfeed/global/top',
-      { query: 'test', period: '30d' },
-    ]);
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/discovery/search'], {
+      queryParams: {
+        q: 'test',
+        f: undefined,
+        t: undefined,
+      },
+    });
   }));
 
   it('should search when pressing enter', () => {

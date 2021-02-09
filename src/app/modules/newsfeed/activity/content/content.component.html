@@ -202,12 +202,6 @@
   </div>
 </ng-container>
 <!-- ----------------------------------- -->
-<!--QUOTE MESSAGE -->
-<!-- ----------------------------------- -->
-<ng-container *ngIf="!hideText && isModal && (service.isQuote$ | async)">
-  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container>
-</ng-container>
-<!-- ----------------------------------- -->
 <!-- TEMPLATE: TRANSLATION -->
 <!-- ----------------------------------- -->
 <ng-template #translation>
