@@ -18,6 +18,7 @@ export class MarketingComponent implements OnInit, OnDestroy {
   @Input() pageTitle: string = '';
   @Input() showBottombar: boolean = true;
   @Input() forceBackground: boolean = true;
+  @Input() useFullWidth: boolean = true;
 
   constructor(
     protected metaService: MetaService,
@@ -30,7 +31,11 @@ export class MarketingComponent implements OnInit, OnDestroy {
       this.metaService.setTitle(this.pageTitle);
     }
 
-    this.pageLayoutService.useFullWidth();
+    if (this.useFullWidth) {
+      this.pageLayoutService.useFullWidth();
+    } else {
+      this.pageLayoutService.cancelFullWidth();
+    }
 
     this.navigationService.toggleMarketingPages(
       true,

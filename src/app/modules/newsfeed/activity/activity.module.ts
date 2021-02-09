@@ -24,6 +24,14 @@ import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.compon
 import { ActivityMetricsComponent } from './metrics/metrics.component';
 import { ActivityRemindComponent } from './remind/remind.component';
 import { ActivityPaywallComponent } from './paywall/paywall.component';
+import { CodeHighlightModule } from '../../code-highlight/code-highlight.module';
+import { ActivityModalComponent } from './modal/modal.component';
+import { ActivityModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
+import { ActivityModalPagerComponent } from './modal/pager/pager.component';
+import { ActivityModalCreatorService } from './modal/modal-creator.service';
+import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metrics.component';
+import { ActivityRemindButtonComponent } from './remind-button/remind-button.component';
+import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
 
 @NgModule({
   imports: [
@@ -40,6 +48,7 @@ import { ActivityPaywallComponent } from './paywall/paywall.component';
     LegacyModule, // For remind button
     PostMenuModule,
     WireModule,
+    CodeHighlightModule,
   ],
   declarations: [
     ActivityComponent,
@@ -51,8 +60,14 @@ import { ActivityPaywallComponent } from './paywall/paywall.component';
     ActivityMetricsComponent,
     ActivityRemindComponent,
     ActivityPaywallComponent,
+    ActivityModalComponent,
+    ActivityModalTitleOverlayComponent,
+    ActivityModalPagerComponent,
+    ActivityMinimalMetricsComponent,
+    ActivityRemindButtonComponent,
+    ActivityModalQuoteComponent,
   ],
-  providers: [],
-  exports: [ActivityComponent],
+  providers: [ActivityModalCreatorService],
+  exports: [ActivityComponent, ActivityRemindButtonComponent],
 })
 export class ActivityModule {}

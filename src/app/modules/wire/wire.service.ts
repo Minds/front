@@ -4,6 +4,7 @@ import { WireContractService } from '../blockchain/contracts/wire-contract.servi
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { BTCService } from '../payments/btc/btc.service';
+import { FormToastService } from '../../common/services/form-toast.service';
 
 export type PayloadType =
   | 'onchain'
@@ -31,7 +32,8 @@ export class WireService {
     private wireContract: WireContractService,
     private tokenContract: TokenContractService,
     private web3Wallet: Web3WalletService,
-    private btcService: BTCService
+    private btcService: BTCService,
+    private toast: FormToastService
   ) {}
 
   async submitWire(wire: WireStruc) {
@@ -43,8 +45,6 @@ export class WireService {
 
     switch (wire.payloadType) {
       case 'onchain':
-        await this.web3Wallet.ready();
-
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
@@ -83,8 +83,6 @@ export class WireService {
         break;
 
       case 'eth':
-        await this.web3Wallet.ready();
-
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
@@ -96,9 +94,9 @@ export class WireService {
         await this.web3Wallet.sendTransaction({
           from: await this.web3Wallet.getCurrentWallet(),
           to: payload.receiver,
-          gasPrice: this.web3Wallet.EthJS.toWei(2, 'Gwei'),
-          gas: 21000,
-          value: this.web3Wallet.EthJS.toWei(wire.amount, 'ether').toString(),
+          gasPrice: this.web3Wallet.toWei(2, 'gwei'),
+          gasLimit: 21000,
+          value: this.web3Wallet.toWei(wire.amount, 'ether').toString(),
           data: '0x',
         });
         break;
@@ -132,6 +130,10 @@ export class WireService {
       this.wireSent.next(wire);
       return { done: true };
     } catch (e) {
+      if (e.message) {
+        this.toast.error(e.message);
+      }
+
       if (e && e.stage === 'transaction') {
         throw new Error(
           'Sorry, your payment failed. Please, try again or use another card'

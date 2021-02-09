@@ -67,7 +67,7 @@ describe('ChannelBadgesComponent', () => {
     badge = getCurrentBadge();
 
     expect(badge).not.toBeNull();
-    expect(badge.nativeElement.textContent).toContain('Plus');
+    expect(badge.nativeElement.textContent).toContain('Minds+');
   });
 
   it('should show admin badge only if the user is an admin', () => {

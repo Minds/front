@@ -1,0 +1,71 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  width: 710px;
+  max-height: 100%;
+  margin: 0 40px;
+
+  @media screen and (max-width: 710px) {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    m-phoneinput {
+      margin-bottom: 32px;
+      @include m-theme() {
+        box-shadow: 0px 1px 4px themed($m-borderColor--primary);
+      }
+    }
+
+    input:not(.m-phoneInput__input) {
+      padding: 11px 10px;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+        box-shadow: 0px 1px 4px themed($m-borderColor--primary);
+      }
+    }
+
+    input,
+    minds-country-input {
+      width: 100%;
+    }
+
+    minds-country-input {
+      select {
+        height: 40px;
+
+        @include m-theme() {
+          box-shadow: 0px 1px 4px themed($m-borderColor--primary);
+          background: themed($m-bgColor--secondary);
+        }
+      }
+    }
+
+    m-date__dropdowns {
+      justify-content: flex-start;
+    }
+
+    .m-walletForm__row--input {
+      margin-bottom: 16px;
+    }
+
+    .m-walletForm__row--label {
+      font-weight: 400;
+      font-size: 15px;
+      margin-bottom: 8px;
+
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+
+    .m-walletForm__buttonsContainer {
+      margin-top: 32px;
+    }
+
+    .m-walletForm__field--checkbox {
+      margin-top: 60px;
+    }
+  }
+}

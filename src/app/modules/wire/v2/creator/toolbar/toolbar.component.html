@@ -28,12 +28,13 @@
     </div>
   </div>
 
-  <m-shadowboxSubmitButton
+  <m-button
     class="m-wireCreatorToolbar__send"
     [disabled]="disabled | async"
     [saving]="service.inProgress$ | async"
-    (click)="onSubmitClick($event)"
+    (onAction)="onSubmitClick($event)"
     data-cy="wire-v2-send"
+    color="blue"
   >
     <ng-container
       *ngIf="!(service.isUpgrade$ | async) && !(service.supportTier$ | async)"
@@ -56,13 +57,20 @@
       *ngIf="service.isUpgrade$ | async"
       i18n="@@WIRE_CREATOR_TOOLBAR__SUBMIT_UPGRADE"
     >
-      Upgrade to Minds<ng-container
-        *ngIf="(service.upgradeType$ | async) === 'plus'"
-        >+</ng-container
+      <ng-container
+        *ngIf="!(service.upgradeCanHaveTrial$ | async); else startTrialTxt"
       >
-      <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
-        Pro</ng-container
-      >
+        Upgrade to Minds<ng-container
+          *ngIf="(service.upgradeType$ | async) === 'plus'"
+          >+</ng-container
+        >
+        <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
+          Pro</ng-container
+        >
+      </ng-container>
+      <ng-template #startTrialTxt>
+        Start free trial
+      </ng-template>
     </ng-container>
 
     <ng-container
@@ -71,5 +79,5 @@
     >
       Join Membership
     </ng-container>
-  </m-shadowboxSubmitButton>
+  </m-button>
 </div>

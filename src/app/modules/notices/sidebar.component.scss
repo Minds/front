@@ -43,7 +43,7 @@
   list-style: none;
   overflow: hidden;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -103,7 +103,7 @@
 
 .m-noticesSidebarList__item {
   @include m-theme() {
-    border-bottom: 1px solid themed($m-grey-50);
+    border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
   &:last-of-type {

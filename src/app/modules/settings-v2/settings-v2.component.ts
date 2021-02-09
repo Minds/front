@@ -84,6 +84,10 @@ export class SettingsV2Component implements OnInit {
             id: 'password',
           },
           {
+            label: $localize`:@@SETTINGS__ACCOUNT__BOOST__LABEL:Boosted Content`,
+            id: 'boosted-content',
+          },
+          {
             label: $localize`:@@SETTINGS__ACCOUNT__NSFW__LABEL:NSFW Content`,
             id: 'nsfw-content',
           },
@@ -142,10 +146,6 @@ export class SettingsV2Component implements OnInit {
           id: 'security',
         },
         items: [
-          {
-            label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
-            id: 'two-factor',
-          },
           {
             label: $localize`:@@SETTINGS__SECURITY__SESSIONS__LABEL:Sessions`,
             id: 'sessions',
@@ -284,7 +284,7 @@ export class SettingsV2Component implements OnInit {
     protected toasterService: FormToastService,
     public featuresService: FeaturesService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
+    this.newNavigation = true;
     this.hasYoutubeFeature = this.featuresService.has('yt-importer');
   }
 
@@ -348,7 +348,15 @@ export class SettingsV2Component implements OnInit {
 
     this.setProRoutes();
     this.setSecondaryPane();
-    this.loadSettings();
+    this.loadSettings().then(() => {
+      if (this.settingsService.settings$.getValue().has2fa) {
+        const mfaMenuItem = {
+          label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
+          id: 'two-factor',
+        };
+        this.secondaryMenus.security[0].items.splice(0, 0, mfaMenuItem);
+      }
+    });
   }
 
   setProRoutes() {

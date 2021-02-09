@@ -10,7 +10,10 @@
           >Minds+</a
         >
       </div>
-      <div class="m-tabs__tab">
+      <div
+        class="m-tabs__tab"
+        *ngIf="(hasSupportTiers$ | async) || !features.has('plus-2020')"
+      >
         <a
           [ngClass]="{ 'm-tabs__tab--selected': type === 'membership' }"
           (click)="type = 'membership'"
@@ -18,14 +21,14 @@
           >Memberships</a
         >
       </div>
-      <div class="m-tabs__tab">
+      <!-- <div class="m-tabs__tab">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': type === 'custom' }"
           (click)="type = 'custom'"
           data-cy="monetize-membership-custom-tab"
           >Custom</a
         >
-      </div>
+      </div> -->
     </div>
   </div>
   <m-composer__monetizeV2__plus

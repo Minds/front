@@ -11,7 +11,7 @@ minds-button-user-dropdown,
     border-radius: 2px;
     text-transform: uppercase;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
       color: themed($m-grey-800);
     }
 
@@ -54,7 +54,9 @@ minds-button-subscribe {
 
       &.m-subscribeButton__subscribed {
         & > i {
-          color: #5dbac0;
+          @include m-theme() {
+            color: themed($m-link);
+          }
         }
       }
     }
@@ -157,13 +159,13 @@ minds-button-remind {
   width: 100vw;
   height: 100vh;
   cursor: default;
-  // pointer-events: none;
+  z-index: 1;
 }
 
 minds-button-comment a,
 minds-button-remind a {
   @include m-theme() {
-    color: themed($m-blue-grey-500);
+    color: themed($m-textColor--secondary);
   }
 }
 
@@ -171,7 +173,7 @@ minds-button-comment > a,
 minds-button-remind > a {
   &:hover {
     @include m-theme() {
-      color: themed($m-blue-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 }

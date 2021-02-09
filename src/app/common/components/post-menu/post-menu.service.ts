@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EmbedServiceV2 } from '../../../services/embedV2.service';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -8,9 +9,12 @@ import { MindsUser } from '../../../interfaces/entities';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
+import { ConfigsService } from '../../services/configs.service';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
 import { FormToastService } from '../../services/form-toast.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { FeaturesService } from '../../../services/features.service';
+import { StackableModalService } from '../../../services/ux/stackable-modal.service';
 
 @Injectable()
 export class PostMenuService {
@@ -37,7 +41,11 @@ export class PostMenuService {
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
     private dialogService: DialogService,
-    protected formToastService: FormToastService
+    protected formToastService: FormToastService,
+    private features: FeaturesService,
+    private stackableModal: StackableModalService,
+    private configs: ConfigsService,
+    public embedService: EmbedServiceV2
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -232,6 +240,26 @@ export class PostMenuService {
     }
   }
 
+  async setSeed(seed: boolean): Promise<void> {
+    try {
+      const uri = `api/v1/admin/seed/${this.entity.ownerObj.guid}/`;
+      if (seed) {
+        await this.client.post(uri);
+        this.formToastService.success(
+          `${this.entity.ownerObj.name} is now a seed.`
+        );
+      } else {
+        await this.client.delete(uri);
+        this.formToastService.success(
+          `${this.entity.ownerObj.name} is no longer a seed.`
+        );
+      }
+    } catch (e) {
+      this.formToastService.error('Unable to make this channel a seed.');
+      throw e;
+    }
+  }
+
   async block(): Promise<void> {
     this.isBlocked$.next(true);
     try {
@@ -292,16 +320,24 @@ export class PostMenuService {
       .toPromise();
   }
 
-  openShareModal(): void {
-    this.overlayModal
-      .create(ShareModalComponent, this.entity.url, {
-        class: 'm-overlay-modal--medium m-overlayModal__share',
-      })
-      .present();
+  async openShareModal(): Promise<void> {
+    const data = {
+      url: this.entity.url,
+      embedCode:
+        this.entity.custom_type === 'video' &&
+        this.embedService.getIframeFromObject(this.entity),
+    };
+    const opts = { class: 'm-overlay-modal--medium m-overlayModal__share' };
+
+    await this.stackableModal
+      .present(ShareModalComponent, data, opts)
+      .toPromise();
   }
 
-  openReportModal(): void {
-    this.overlayModal.create(ReportCreatorComponent, this.entity).present();
+  async openReportModal(): Promise<void> {
+    await this.stackableModal
+      .present(ReportCreatorComponent, this.entity)
+      .toPromise();
   }
 
   /**

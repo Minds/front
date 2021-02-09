@@ -2,6 +2,7 @@ import { NgZone, RendererFactory2, PLATFORM_ID, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
+import { EmbedServiceV2 } from './embedV2.service';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -19,7 +20,7 @@ import { Navigation } from './navigation';
 import { WalletService } from './wallet';
 import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
-import { EmbedService } from './embed';
+import { EmbedService } from './embed.service';
 import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
 import { LoginReferrerService } from './login-referrer.service';
@@ -147,6 +148,7 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: Sidebar._,
   },
   EmbedService,
+  EmbedServiceV2,
   {
     provide: GoogleChartsLoader,
     useFactory: GoogleChartsLoader._,
@@ -197,7 +199,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: BlockListService,
     useFactory: BlockListService._,
-    deps: [Client, Session, Storage],
+    deps: [Client, Session, Storage, RecentService],
   },
   {
     provide: EntitiesService,

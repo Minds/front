@@ -9,45 +9,68 @@
         class="m-channel__narrowBrief"
       ></m-channelAbout__brief>
 
-      <div
-        *ngIf="service.username$ | async as username"
-        class="m-channel__tabs m-tabs__container"
-      >
-        <div class="m-tabs__tab">
-          <a
-            [class.m-tabs__tab--selected]="
-              ['activities', 'images', 'videos', 'blogs'].includes(
-                view$ | async
-              )
-            "
-            [routerLink]="['/', username, '']"
-            i18n="@@COMMON__FEED"
-            >Feed</a
-          >
-        </div>
+      <div class="m-channel__toolbar">
+        <div
+          *ngIf="service.username$ | async as username"
+          class="m-channel__tabs m-tabs__container"
+        >
+          <div class="m-tabs__tab">
+            <a
+              [class.m-tabs__tab--selected]="
+                ['activities', 'images', 'videos', 'blogs'].includes(
+                  view$ | async
+                )
+              "
+              [routerLink]="['/', username, '']"
+              i18n="@@COMMON__FEED"
+              >Feed</a
+            >
+          </div>
 
-        <div class="m-tabs__tab" *mIfFeature="'paywall-2020'">
-          <a
-            [routerLink]="['/', username, 'shop']"
-            routerLinkActive="m-tabs__tab--selected"
-            [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-            i18n="@@COMMON__SHOP__MEMBERSHIPS"
-            >Memberships</a
-          >
-        </div>
+          <div class="m-tabs__tab" *mIfFeature="'paywall-2020'">
+            <a
+              [routerLink]="['/', username, 'shop']"
+              routerLinkActive="m-tabs__tab--selected"
+              [routerLinkActiveOptions]="{
+                __change_detection_hack__: username
+              }"
+              i18n="@@COMMON__SHOP__MEMBERSHIPS"
+              >Memberships</a
+            >
+          </div>
 
-        <div class="m-tabs__tab">
-          <a
-            [routerLink]="['/', username, 'about']"
-            [class.m-tabs__tab--selected]="
-              ['about', 'subscribers', 'subscriptions', 'groups'].includes(
-                view$ | async
-              )
-            "
-            i18n="@@COMMON__ABOUT"
-            >About</a
-          >
+          <div class="m-tabs__tab">
+            <a
+              [routerLink]="['/', username, 'about']"
+              [class.m-tabs__tab--selected]="
+                ['about', 'subscribers', 'subscriptions', 'groups'].includes(
+                  view$ | async
+                )
+              "
+              i18n="@@COMMON__ABOUT"
+              data-cy="data-minds-channel-about-button"
+              >About</a
+            >
+          </div>
         </div>
+        <ng-container *mIfFeature="'channel-grid'">
+          <div class="m-channel__feedLayoutToggle" *ngIf="isFeedView">
+            <a
+              [routerLink]="['.']"
+              [queryParams]="{ layout: 'list' }"
+              class="m-channelFeedLayoutBtn"
+              [class.m-channelFeedLayoutBtn--selected]="layout === 'list'"
+              ><i class="material-icons">list</i></a
+            >
+            <a
+              [routerLink]="['.']"
+              [queryParams]="{ layout: 'grid' }"
+              class="m-channelFeedLayoutBtn"
+              [class.m-channelFeedLayoutBtn--selected]="layout === 'grid'"
+              ><i class="material-icons">view_module</i></a
+            >
+          </div>
+        </ng-container>
       </div>
 
       <ng-container [ngSwitch]="view$ | async">
@@ -70,6 +93,7 @@
         <m-channelList__groups *ngSwitchCase="'groups'"></m-channelList__groups>
         <m-channel__feed
           [view]="view$ | async"
+          [layout]="layout"
           *ngSwitchDefault
         ></m-channel__feed>
       </ng-container>

@@ -6,7 +6,7 @@
   padding: 12px;
   margin-bottom: 16px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   m-sort-selector {
@@ -33,13 +33,13 @@
     .mdl-textfield__input {
       outline: none;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
       border-radius: 6px;
     }
   }
 
-  .m-search-bar-suggestions-list {
+  .m-searchBarSuggestions {
     width: 100%;
     margin-top: 1px;
     border-radius: 6px;
@@ -48,7 +48,7 @@
       box-shadow: 1px 1px 1px rgba(themed($m-black), 0.26);
     }
 
-    .m-search-bar-suggestions-suggestion {
+    .m-searchBarSuggestions__suggestion {
       padding: 16px 8px;
 
       &:last-child {

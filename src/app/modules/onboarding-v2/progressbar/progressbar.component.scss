@@ -86,7 +86,7 @@ m-onboarding__progressbar {
 
         .m-onboardingProgressbarItem__selector {
           @include m-theme() {
-            background-color: themed($m-aqua);
+            background-color: themed($m-blue);
           }
         }
       }

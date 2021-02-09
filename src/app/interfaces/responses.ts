@@ -9,10 +9,12 @@ export interface MindsChannelResponse extends MindsResponse {
   status: string;
   message: string;
   channel: MindsUser;
+  require_login?: boolean;
 }
 
 export interface MindsBlogResponse extends MindsResponse {
   blog: any;
+  require_login?: boolean;
 }
 
 export interface MindsBlogListResponse extends MindsResponse {

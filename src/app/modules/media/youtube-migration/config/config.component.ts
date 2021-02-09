@@ -120,6 +120,13 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Returning false prevent the checkbox being clicked multiple times
+   */
+  onAutoImportCheckboxClick(e: MouseEvent) {
+    if (this.inProgress) return false;
+  }
+
   get autoImport() {
     return this.form.get('autoImport');
   }

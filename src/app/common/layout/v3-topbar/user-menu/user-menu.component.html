@@ -13,7 +13,7 @@
 
   <ul
     class="m-dropdown__list m-userMenu__dropdown mdl-shadow--3dp"
-    [hidden]="!isOpen"
+    [hidden]="!(service.isOpen$ | async)"
   >
     <li
       class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__username"
@@ -89,35 +89,23 @@
       </a>
     </li>
 
-    <ng-container *mIfFeature="'helpdesk'; else supportPages">
-      <li
-        class="m-dropdownList__item m-userMenuDropdown__item"
-        (click)="closeMenu()"
-      >
-        <a routerLink="/help">
-          <span i18n="@@COMMON__HELP">Help</span>
-        </a>
-      </li>
-    </ng-container>
-    <ng-template #supportPages>
-      <li
-        class="m-dropdownList__item m-userMenuDropdown__item"
-        (click)="closeMenu()"
-      >
-        <a routerLink="/faq">
-          <span i18n="@@COMMON__FAQ">FAQ</span>
-        </a>
-      </li>
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/settings">
+        <span i18n="@@COMMON__SETTINGS">Settings</span>
+      </a>
+    </li>
 
-      <li
-        class="m-dropdownList__item m-userMenuDropdown__item"
-        (click)="closeMenu()"
-      >
-        <a routerLink="/groups/profile/100000000000000681">
-          <span i18n="@@COMMON__HELP_AND_SUPPORT">Help &amp; Support</span>
-        </a>
-      </li>
-    </ng-template>
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/help">
+        <span i18n="@@COMMON__HELP">Help</span>
+      </a>
+    </li>
 
     <li
       class="m-dropdownList__item m-userMenuDropdown__item"
@@ -140,10 +128,19 @@
       <ng-container
         *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
       >
-        <a *ngIf="link.routerLink" [routerLink]="link.routerLink">
+        <a
+          *ngIf="link.routerLink"
+          [routerLink]="link.routerLink"
+          (click)="closeMenu()"
+        >
           {{ link.label }}
         </a>
-        <a *ngIf="link.href" [href]="link.href" target="_blank">
+        <a
+          *ngIf="link.href"
+          [href]="link.href"
+          target="_blank"
+          (click)="closeMenu()"
+        >
           {{ link.label }}
         </a>
         <span> · </span>
@@ -162,4 +159,8 @@
   </ul>
 </div>
 
-<div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isOpen"></div>
+<div
+  class="minds-bg-overlay"
+  (click)="closeMenu()"
+  [hidden]="!(service.isOpen$ | async)"
+></div>

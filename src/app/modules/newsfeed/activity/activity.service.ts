@@ -1,4 +1,4 @@
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { MindsGroup, MindsUser } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
 import { Injectable, EventEmitter } from '@angular/core';
@@ -15,15 +15,23 @@ export type ActivityDisplayOptions = {
   showToolbar: boolean;
   showBoostMenuOptions: boolean;
   showEditedTag: boolean;
-  showVisibiltyState: boolean;
+  showVisibilityState: boolean;
   showTranslation: boolean;
   fixedHeight: boolean;
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
+  isModal: boolean;
+  minimalMode: boolean; // For grid layouts
+  bypassMediaModal: boolean; // Go to media page instead
+  showPostMenu: boolean; // Can be hidden for things like previews
+  showPinnedBadge: boolean; // show pinned badge if a post is pinned
+  showMetrics?: boolean; // sub counts
+  sidebarMode: boolean; // activity is a sidebar suggestion
 };
 
 export type ActivityEntity = {
   guid: string;
   remind_object?: Object;
+  remind_users?: Array<MindsUser>;
   ownerObj: MindsUser;
   containerObj: MindsGroup | null;
   message: string;
@@ -45,8 +53,16 @@ export type ActivityEntity = {
   url?: string;
   urn?: string;
   boosted_guid?: string;
-  content_type?: string;
+  activity_type?: string; // all blogs are rich-embeds
+  content_type?: string; // blogs and rich-embeds are separate
   paywall_unlocked?: boolean;
+  permaweb_id?: string;
+  type?: string;
+  description?: string; // xml for inline rich-embeds
+  excerpt?: string; // for blogs
+  remind_deleted?: boolean;
+  pinned?: boolean; // pinned to top of channel
+  subtype?: string;
 };
 
 // Constants of blocks
@@ -61,6 +77,12 @@ export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
+
+// Constants for grid layout
+export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
+
+// Constants for content-specific displays
+export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 300;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
@@ -81,7 +103,7 @@ export class ActivityService {
   );
 
   /**
-   * Subject for Activity's canDelete property, w
+   * Subject for Activity's canDelete property
    */
   canDeleteOverride$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -117,6 +139,7 @@ export class ActivityService {
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
       return (
+        entity.nsfw &&
         entity.nsfw.length > 0 &&
         !isConsented &&
         !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
@@ -192,11 +215,20 @@ export class ActivityService {
   isBoost$: Observable<boolean> = this.entity$.pipe();
 
   /**
+   * If the post is a quote this will emit true
+   */
+  isQuote$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity && !!entity.remind_object;
+    })
+  );
+
+  /**
    * If the post is a remind this will emit true
    */
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      return entity && !!entity.remind_object;
+      return entity && entity.subtype && entity.subtype === 'remind';
     })
   );
 
@@ -221,6 +253,11 @@ export class ActivityService {
     ACTIVITY_FIXED_HEIGHT_HEIGHT
   );
 
+  /**
+   * Called when this post is deleted
+   */
+  onDelete$: Subject<boolean> = new Subject();
+
   displayOptions: ActivityDisplayOptions = {
     autoplayVideo: true,
     showOwnerBlock: true,
@@ -229,10 +266,17 @@ export class ActivityService {
     showToolbar: true,
     showBoostMenuOptions: false,
     showEditedTag: false,
-    showVisibiltyState: false,
+    showVisibilityState: false,
     showTranslation: false,
+    showPostMenu: true,
+    showPinnedBadge: true,
+    showMetrics: true,
     fixedHeight: false,
     fixedHeightContainer: false,
+    isModal: false,
+    minimalMode: false,
+    bypassMediaModal: false,
+    sidebarMode: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -252,8 +296,12 @@ export class ActivityService {
    */
   setEntity(entity): ActivityService {
     if (entity.type !== 'activity') entity = this.patchForeignEntity(entity);
+
     if (!entity.content_type) {
-      entity.content_type = getActivityContentType(entity);
+      entity.content_type = getActivityContentType(entity, true, true);
+    }
+    if (!entity.activity_type) {
+      entity.activity_type = getActivityContentType(entity);
     }
     this.entity$.next(entity);
     return this;
@@ -296,6 +344,10 @@ export class ActivityService {
         entity.custom_data = {
           thumbnail_src: entity.thumbnail_src,
         };
+        if (entity.height || entity.width) {
+          entity.custom_data.height = entity.height;
+          entity.custom_data.width = entity.width;
+        }
         break;
       case 'album':
         // Not supported

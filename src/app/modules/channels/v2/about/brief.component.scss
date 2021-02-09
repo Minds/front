@@ -54,6 +54,12 @@ m-channelAbout__brief {
       > * + * {
         margin-left: 0.35em;
       }
+
+      &.m-channelAboutBriefStats__item--subs {
+        span {
+          cursor: pointer;
+        }
+      }
     }
 
     .m-channelAboutBriefStatsItem__label,

@@ -25,6 +25,7 @@
                   class="form-control"
                   data-minds="autoImport"
                   [readonly]="inProgress || !init"
+                  (click)="onAutoImportCheckboxClick($event)"
                 />
                 <span class="m-form__customInput__checkbox"></span>
               </label>
@@ -41,7 +42,7 @@
   </div>
   <div class="m-settingsV2__desc m-youtubeMigration__desc">
     <p>
-      <ng-container i18n="@@YOUTUBE_MIGRATOR__STATUS">Status:</ng-container>
+      <ng-container i18n="@@YOUTUBE_MIGRATOR__STATUS">Status: </ng-container>
       <span i18n="@@YOUTUBE_MIGRATOR__CONNECTED">Connected</span>
     </p>
     <p i18n="@@YOUTUBE_MIGRATOR__SIMPLY_DISCONNECT_YOUTUBE_ACCOUNT">

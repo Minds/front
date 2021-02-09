@@ -27,6 +27,20 @@ export class PlusService {
     return Boolean(this.cachedResponse.can_be_cancelled);
   }
 
+  async hasSubscription(): Promise<boolean> {
+    if (!this.cachedResponse) {
+      await this.isActive();
+    }
+    return Boolean(this.cachedResponse.has_subscription);
+  }
+
+  async expires(): Promise<number> {
+    if (!this.cachedResponse) {
+      await this.isActive();
+    }
+    return Number(this.cachedResponse.expires) || 0;
+  }
+
   async disable(): Promise<boolean> {
     await this.client.delete('api/v1/plus/subscription');
     return true;

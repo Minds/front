@@ -32,11 +32,17 @@
             class="m-v3Topbar__logo--bulb"
           />
           <img
-            [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
+            *ngIf="!(isDarkTheme$ | async)"
+            [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+            class="m-v3Topbar__logo--full"
+          />
+          <img
+            *ngIf="isDarkTheme$ | async"
+            [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
         </a>
-
+        <m-canaryFlag></m-canaryFlag>
         <div
           class="m-v3TopbarNav__item m-v3TopbarNav__item--hamburger"
           (click)="toggleSidebarNav()"
@@ -50,11 +56,11 @@
       class="m-pageLayout__pane--main"
       style="display:flex; flex-direction: row;"
     >
-      <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile">
+      <div class="m-v3Topbar__middleColumn">
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </div>
 
-      <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
+      <div class="m-v3Topbar__spacer"></div>
 
       <div class="m-v3Topbar__rightColumn">
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
@@ -70,7 +76,7 @@
 
             <a
               class="m-v3TopbarLoginWrapper__joinMindsNow"
-              routerLink="/register"
+              (click)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
             >
@@ -78,12 +84,9 @@
             </a>
           </div>
         </ng-container>
-        <ng-container *ngIf="isMobile">
-          <ng-container *ngTemplateOutlet="searchBar"></ng-container>
-        </ng-container>
 
         <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
-          <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
+          <div class="m-v3Topbar__spacer"></div>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>
           <m-usermenu__v3

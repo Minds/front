@@ -14,26 +14,28 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
-import { Subject, Subscription, BehaviorSubject } from 'rxjs';
+import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
   MonetizationSubjectValue,
   NsfwSubjectValue,
+  RemindSubjectValue,
   TagsSubjectValue,
 } from '../../services/composer.service';
 import {
   FileUploadComponent,
   FileUploadSelectEvent,
 } from '../../../../common/components/file-upload/file-upload.component';
-import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { MonetizeComponent } from '../popup/monetize/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 /**
  * Toolbar component. Interacts directly with the service.
@@ -42,14 +44,15 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'm-composer__toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'toolbar.component.html',
+  styleUrls: ['toolbar.component.ng.scss'],
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * On Post event emitter
    */
-  @Output('onPost') onPostEmitter: EventEmitter<
-    ButtonComponentAction
-  > = new EventEmitter<ButtonComponentAction>();
+  @Output('onPost') onPostEmitter: EventEmitter<MouseEvent> = new EventEmitter<
+    MouseEvent
+  >();
 
   /**
    * Is the composer in a modal?
@@ -91,6 +94,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public legacyPaywallEnabled: boolean = false;
 
+  remind$: Observable<RemindSubjectValue> = this.service.remind$;
+
   /**
    * Constructor
    * @param service
@@ -102,6 +107,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected service: ComposerService,
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
+    protected toaster: FormToastService,
+    protected features: FeaturesService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -286,6 +293,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   async onMonetizeClick($event?: MouseEvent): Promise<void> {
+    if (
+      this.features.has('permaweb') &&
+      this.service.postToPermaweb$.getValue()
+    ) {
+      this.toaster.warn('You cannot monetize permaweb posts');
+      return;
+    }
     await this.popup
       .create(MonetizeComponent)
       .present()
@@ -316,10 +330,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Emits post event
-   * @param buttonComponentAction
+   * @param $event
    */
-  onPost(buttonComponentAction: ButtonComponentAction): void {
-    this.onPostEmitter.emit(buttonComponentAction);
+  onPost($event: MouseEvent): void {
+    this.onPostEmitter.emit($event);
   }
 
   /**

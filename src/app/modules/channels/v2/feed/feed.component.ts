@@ -6,17 +6,22 @@ import {
   Inject,
   PLATFORM_ID,
   OnInit,
+  ChangeDetectorRef,
+  Injector,
 } from '@angular/core';
 import { FeedService } from './feed.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { tap } from 'rxjs/operators';
 import { Session } from '../../../../services/session';
+import { ThemeService } from '../../../../common/services/theme.service';
+import { ModalService } from '../../../composer/components/modal/modal.service';
+import { ComposerService } from '../../../composer/services/composer.service';
+import { catchError, take } from 'rxjs/operators';
 
 /**
  * Channel feed component
@@ -25,9 +30,19 @@ import { Session } from '../../../../services/session';
   selector: 'm-channel__feed',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'feed.component.html',
-  providers: [FeedService, FeedsService],
+  styleUrls: ['feed.component.ng.scss'],
+  providers: [FeedService, FeedsService, ComposerService],
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
+  private subscriptions: Subscription[] = [];
+
+  isGrid: boolean = false;
+
+  @Input('layout') set _layout(layout: string) {
+    this.isGrid = layout === 'grid';
+    this.detectChanges();
+  }
+
   /**
    * Parses the view onto the current feed/type
    * @param view
@@ -39,31 +54,23 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       case 'images':
       case 'videos':
       case 'blogs':
-        this.feed.sort$.next('latest');
-        this.feed.type$.next(view);
+        this.feedService.sort$.next('latest');
+        this.feedService.type$.next(view);
         break;
 
       case 'scheduled':
-        this.feed.sort$.next('scheduled');
-        this.feed.type$.next('activities');
+        this.feedService.sort$.next('scheduled');
+        this.feedService.type$.next('activities');
         break;
 
       default:
         // TODO: Warning / error / redirect?
-        this.feed.sort$.next('latest');
-        this.feed.type$.next('activities');
+        this.feedService.sort$.next('latest');
+        this.feedService.type$.next('activities');
     }
   }
 
-  /**
-   * Subscription to channel's GUID
-   */
-  protected guidSubscription: Subscription;
-
-  /**
-   * Listening for new posts.
-   */
-  private feedsUpdatedSubscription: Subscription;
+  feed: Object[] = [];
 
   /**
    * Constructor
@@ -72,29 +79,56 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * @param router
    */
   constructor(
-    public feed: FeedService,
+    public feedService: FeedService,
     public service: ChannelsV2Service,
     protected router: Router,
+    protected route: ActivatedRoute,
     public feedsUpdate: FeedsUpdateService,
     private session: Session,
+    protected cd: ChangeDetectorRef,
+    private themesService: ThemeService,
+    private composerModal: ModalService,
+    private injector: Injector,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
-      this.guidSubscription = this.service.guid$.subscribe(guid =>
-        this.feed.guid$.next(guid)
+      this.subscriptions.push(
+        this.service.guid$.subscribe(guid => this.feedService.guid$.next(guid))
       );
     }
   }
 
+  /**
+   * True if current theme is dark.
+   * @returns { Observable<boolean> } - true if theme is dark, else false.
+   */
+  get isDarkTheme$(): Observable<boolean> {
+    return this.themesService.isDark$;
+  }
+
+  /**
+   * Determines whether current channel is users own channel.
+   * @returns { boolean } - True if user owns channel.
+   */
+  get isOwnedChannel(): boolean {
+    return (
+      this.session.getLoggedInUser().guid === this.service.guid$.getValue()
+    );
+  }
+
   ngOnInit() {
-    this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
-      newPost => {
+    this.subscriptions.push(
+      this.feedService.service.feed.subscribe(feed => {
+        this.feed = feed;
+      }),
+      this.feedsUpdate.postEmitter.subscribe(newPost => {
         if (
-          this.feed.guid$.getValue() === this.session.getLoggedInUser().guid
+          this.feedService.guid$.getValue() ===
+          this.session.getLoggedInUser().guid
         ) {
           this.prepend(newPost);
         }
-      }
+      })
     );
   }
 
@@ -105,7 +139,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
     // TODO: Increment scheduled count https://gitlab.com/minds/front/-/issues/3127
     // if (activity.time_created > Date.now() / 1000) { // and route is actually on a channel.
-    // this.feed.scheduledCount$ = this.feed.scheduledCount$.pipe(
+    // this.feedService.scheduledCount$ = this.feedService.scheduledCount$.pipe(
     //   map(count => count++)
     // );
     // }
@@ -117,9 +151,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     };
 
     // Todo: Move to FeedsService
-    this.feed.service.rawFeed.next([
+    this.feedService.service.rawFeed.next([
       ...[feedItem],
-      ...this.feed.service.rawFeed.getValue(),
+      ...this.feedService.service.rawFeed.getValue(),
     ]);
   }
 
@@ -127,11 +161,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * Destroy lifecycle hook
    */
   ngOnDestroy(): void {
-    if (this.guidSubscription) {
-      this.guidSubscription.unsubscribe();
-    }
-    if (this.feedsUpdatedSubscription) {
-      this.feedsUpdatedSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -141,6 +172,63 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   onTypeChange(type: FeedFilterType) {
     const filter = type !== 'activities' ? type : '';
-    this.router.navigate(['/', this.service.username$.getValue(), filter]);
+    this.router.navigate(['/', this.service.username$.getValue(), filter], {
+      preserveQueryParams: true,
+    });
+  }
+
+  /**
+   * Either opens composer modal or opens blogs
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async onFirstPostButtonClick(): Promise<void> {
+    this.subscriptions.push(
+      this.feedService.type$
+        .pipe(
+          take(1),
+          catchError(error => {
+            console.error(error);
+            return of(null);
+          })
+        )
+        .subscribe((filter: FeedFilterType) => {
+          if (filter === 'blogs') {
+            this.router.navigate(['/blog/v2/edit/new']);
+            return;
+          }
+          this.openComposerModal();
+        })
+    );
+  }
+
+  /**
+   * Open composer modal
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async openComposerModal(): Promise<void> {
+    try {
+      await this.composerModal
+        .setInjector(this.injector)
+        .present()
+        .toPromise();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
+  /**
+   * Determines whether to show infinite scroll.
+   * @returns true if infinite scroll should be shown.
+   */
+  public showInfiniteScroll(): boolean {
+    return (
+      this.feedService.service.inProgress.getValue() ||
+      this.feedService.service.rawFeed.getValue().length > 0
+    );
   }
 }

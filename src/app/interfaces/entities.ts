@@ -30,14 +30,15 @@ export interface MindsBlogEntity {
   time_published?: number;
   access_id?: number;
   license?: string;
-  allow_comments: boolean;
+  allow_comments?: boolean;
   custom_meta?: {
     title: string;
     description: string;
     author: string;
   };
-  perma_url: string;
-  thumbnail: string;
+  perma_url?: string;
+  thumbnail?: string;
+  editor_version?: string;
 }
 
 export interface Message {}
@@ -75,6 +76,7 @@ export interface MindsUser {
     master: string;
   };
   blocked?: boolean;
+  blocked_by?: boolean;
   carousels?: any[] | boolean;
   city?: string;
   social_profiles?: KeyVal[];
@@ -130,6 +132,8 @@ export interface MindsUser {
   enabled?: string | boolean;
   not_found?: boolean;
   email?: string;
+  seed?: boolean;
+  require_login?: boolean;
 }
 
 export interface MindsGroup {

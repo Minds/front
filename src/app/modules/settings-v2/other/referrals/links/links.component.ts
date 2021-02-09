@@ -6,6 +6,8 @@ import isMobile from '../../../../../helpers/is-mobile';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 
 @Component({
   selector: 'm-settingsV2__referralsLinks',
@@ -28,11 +30,17 @@ export class SettingsV2ReferralsLinksComponent implements OnInit, OnDestroy {
   registerUrlFocused: boolean = false;
   referrerParamFocused: boolean = false;
 
+  cashWalletSubscription: Subscription;
+  hasBank: boolean = false;
+
+  init: boolean = false;
+
   constructor(
     public session: Session,
     private overlayModal: OverlayModalService,
     protected featuresService: FeaturesService,
     protected router: Router,
+    protected walletService: WalletV2Service,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -47,6 +55,17 @@ export class SettingsV2ReferralsLinksComponent implements OnInit, OnDestroy {
       encodeURI(this.siteUrl) +
       encodeURIComponent('register' + this.referrerParam);
     this.encodedRegisterMessage = 'Join%20me%20on%20Minds%20%f0%9f%92%a1%20';
+
+    this.getCashWallet();
+  }
+  async getCashWallet(): Promise<void> {
+    const account = await this.walletService.loadStripeAccount();
+
+    if (account && account.hasBank) {
+      this.hasBank = true;
+    }
+
+    this.init = true;
   }
 
   // Only show Messenger/Whatsapp share buttons if mobile or tablet
@@ -148,6 +167,10 @@ export class SettingsV2ReferralsLinksComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     clearTimeout(this.registerUrlTimeout);
     clearTimeout(this.referrerParamTimeout);
+
+    if (this.cashWalletSubscription) {
+      this.cashWalletSubscription.unsubscribe();
+    }
   }
 
   closeModal() {

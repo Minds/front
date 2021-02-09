@@ -1,5 +1,1 @@
-<ng-container *ngIf="service.showJoinButton$ | async">
-  <m-shadowboxSubmitButton (click)="onClick()" i18n="@@M_PRO__JOIN_NOW"
-    >JOIN NOW</m-shadowboxSubmitButton
-  ></ng-container
->
+<m-button (onAction)="onClick()" i18n="@@M_PRO__JOIN_NOW">JOIN NOW</m-button>

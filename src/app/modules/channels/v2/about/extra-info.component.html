@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="m-channelAbout__field">
+  <div class="m-channelAbout__field" *ngIf="hasBadges(channel)">
     <div class="m-channelAboutField__label" i18n="@@COMMON__BADGES">Badges</div>
     <div class="m-channelAboutField__content">
       <m-channel--badges [user]="channel"></m-channel--badges>
@@ -56,7 +56,11 @@
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n="@@COMMON_SUBSCRIBERS">
+    <div
+      class="m-channelAboutField__label m-channelAboutField__label--subs"
+      i18n="@@COMMON_SUBSCRIBERS"
+      [routerLink]="['/', this.service.username$ | async, 'subscribers']"
+    >
       Subscribers
     </div>
     <div class="m-channelAboutField__content">
@@ -67,7 +71,11 @@
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n="@@COMMON__SUBSCRIPTIONS">
+    <div
+      class="m-channelAboutField__label  m-channelAboutField__label--subs"
+      i18n="@@COMMON__SUBSCRIPTIONS"
+      [routerLink]="['/', this.service.username$ | async, 'subscriptions']"
+    >
       Subscriptions
     </div>
     <div class="m-channelAboutField__content">

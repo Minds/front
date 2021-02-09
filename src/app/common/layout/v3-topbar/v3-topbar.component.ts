@@ -19,6 +19,9 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-v3topbar',
@@ -55,7 +58,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected topbarService: TopbarService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    public pageLayoutService: PageLayoutService
+    public pageLayoutService: PageLayoutService,
+    private featuresService: FeaturesService,
+    private authModal: AuthModalService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -172,5 +177,28 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     if (this.router$) {
       this.router$.unsubscribe();
     }
+  }
+
+  async onJoinNowClick() {
+    if (this.featuresService.has('onboarding-october-2020')) {
+      try {
+        await this.authModal.open();
+      } catch (e) {
+        if (e === 'DismissedModalException') {
+          return; // modal dismissed, do nothing
+        }
+        console.error(e);
+      }
+      return;
+    }
+    this.router.navigate(['/register']);
+  }
+
+  /**
+   * True if current theme is dark.
+   * @returns { Observable<boolean> } - true if theme is dark, else false.
+   */
+  get isDarkTheme$(): Observable<boolean> {
+    return this.themeService.isDark$;
   }
 }

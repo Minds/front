@@ -11,7 +11,7 @@ minds-notification.mdl-card {
 
   &:not(.mdl-shadow--2dp) {
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
@@ -183,7 +183,12 @@ m-notifications--topbar-toggle {
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: 998;
+  }
+
+  .m-tooltip--bubble {
+    position: absolute;
+    right: -40px;
+    top: 28px;
   }
 }
 

@@ -1,6 +1,6 @@
 @import 'defaults.scss';
 
-.m-channelShop__memberships {
+:host {
   padding: 20px 0;
 
   .m-channelShopMemberships__header {
@@ -8,7 +8,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 20 40px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20 24px;
+    }
   }
 
   .m-channelShopMemberships__title {
@@ -41,6 +45,19 @@
         font-size: 15px;
       }
 
+      &.m-channelShopMembershipsTitle__headline--no-memberships {
+        padding: 20px;
+        width: 100%;
+        border-radius: 2px;
+        text-align: center;
+        margin: 10px 0;
+
+        @include m-theme() {
+          border: 1px dashed themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+      }
+
       a {
         font-weight: normal;
         font-style: italic;
@@ -62,9 +79,16 @@
     font-size: 16px;
     cursor: pointer;
     margin-left: 20px;
+    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-textColor--secondary);
+    }
+
+    &:hover {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
 
     &.m-channelShopMemberships__headerAction--small {
@@ -84,6 +108,13 @@
 
       &:last-child {
         margin-right: 0;
+      }
+    }
+  }
+  ::ng-deep {
+    m-carousel {
+      [class*='m-carousel__overflowScrollButton--'] {
+        top: 27%;
       }
     }
   }

@@ -191,7 +191,7 @@ m-pro--channel-login {
 
         &::placeholder {
           @include m-theme() {
-            color: themed($m-grey-800);
+            color: themed($m-textColor--secondary);
           }
         }
       }
@@ -238,7 +238,7 @@ m-pro--channel-login {
         font-size: 12px;
         box-shadow: none !important;
         @include m-theme() {
-          border: 1px solid themed($m-grey-50);
+          border: 1px solid themed($m-borderColor--primary);
         }
       }
 

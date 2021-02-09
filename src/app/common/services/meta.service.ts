@@ -8,6 +8,7 @@ import { DOCUMENT } from '@angular/common';
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
 export const MIN_METRIC_FOR_ROBOTS = 5;
+const DEFAULT_META_AUTHOR = 'Minds';
 
 @Injectable()
 export class MetaService {
@@ -193,6 +194,22 @@ export class MetaService {
     return this;
   }
 
+  setAuthor(value: string): MetaService {
+    this.metaService.updateTag({
+      property: 'author',
+      content: value,
+    });
+    return this;
+  }
+
+  setOgAuthor(value: string): MetaService {
+    this.metaService.updateTag({
+      property: 'og:author',
+      content: value,
+    });
+    return this;
+  }
+
   reset(
     data: {
       title?: string;
@@ -201,6 +218,8 @@ export class MetaService {
       ogImage?: string;
       robots?: string;
       canonicalUrl?: string;
+      author?: string;
+      ogAuthor?: string;
     } = {}
   ): void {
     this.setTitle(data.title || '')
@@ -208,6 +227,8 @@ export class MetaService {
       .setOgType('website')
       .setOgUrl(data.ogUrl || this.location.path())
       .setOgImage(data.ogImage || null, { width: 0, height: 0 })
+      .setAuthor(data.author || DEFAULT_META_AUTHOR)
+      .setOgAuthor(data.ogAuthor || DEFAULT_META_AUTHOR)
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false)

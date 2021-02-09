@@ -10,12 +10,6 @@ m-settingsV2 {
     }
   }
 
-  m-draggableList {
-    @include m-theme {
-      box-shadow: none;
-    }
-  }
-
   .m-settingsV2 {
     display: flex;
     font-weight: 300;
@@ -168,12 +162,15 @@ m-settingsV2 {
     }
 
     .m-formWrapper .m-form__fieldsContainer {
-      input,
-      select,
-      textarea,
-      label.m-form__colorPreview {
-        @include m-theme() {
-          box-shadow: none;
+      .m-form__row--label label {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 400;
+
+        > m-tooltip {
+          font-size: 15px;
+          line-height: 20px;
+          font-weight: 300;
         }
       }
     }
@@ -254,5 +251,9 @@ m-settingsV2 {
       justify-content: center;
       align-items: center;
     }
+  }
+
+  .m-tooltip--bubble {
+    width: 30vw;
   }
 }

@@ -53,12 +53,12 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
-import { MindsButton } from './components/button/button.component';
+import { MindsButton } from './components/button-v1/button-v1.component';
 import { OverlayModalComponent } from './components/overlay-modal/overlay-modal.component';
 
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
-import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
+import { AdminActionsButtonComponent } from './components/button-v1/admin-actions/admin-actions.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
@@ -96,11 +96,9 @@ import { AndroidAppDownloadComponent } from './components/android-app-download-b
 import { SwitchComponent } from './components/switch/switch.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { BoostedContentService } from './services/boosted-content.service';
 import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
-import { SettingsService } from '../modules/settings/settings.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
@@ -120,7 +118,7 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
-import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
+import { ButtonComponent } from './components/button/button.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
@@ -134,7 +132,7 @@ import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
-import { HorizontalFeedService } from './services/horizontal-feed.service';
+import { RelatedContentService } from './services/related-content.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
@@ -150,7 +148,6 @@ import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component'
 import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { IconComponent } from './components/icon/icon.component';
-import { ButtonComponent } from './components/button-v2/button.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { AttachmentApiService } from './api/attachment-api.service';
 import { ApiService } from './api/api.service';
@@ -165,19 +162,22 @@ import {
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 import { SidebarNavigationSubnavDirective } from './layout/sidebar/subnav.directive';
-import { OnboardingReminderComponent } from './components/onboarding-reminder/reminder.component';
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
-import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
-import { FeedsUpdateService } from './services/feeds-update.service';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { UserMenuService } from './layout/v3-topbar/user-menu/user-menu.service';
 import { PoweredByComponent } from './components/powered-by/powered-by.component';
+import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-ellipsis.component';
+import { MarkedDirective } from './directives/marked.directive';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
+import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
 
 const routes: Routes = [
   {
@@ -296,11 +296,10 @@ const routes: Routes = [
     DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
-    ShadowboxSubmitButtonComponent,
+    ButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -310,7 +309,6 @@ const routes: Routes = [
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,
-    ButtonComponent,
     OverlayComponent,
     DropdownMenuComponent,
     CalendarComponent,
@@ -328,6 +326,11 @@ const routes: Routes = [
     ClientMetaDirective,
     CarouselComponent,
     PoweredByComponent,
+    LoadingEllipsisComponent,
+    MarkedDirective,
+    DragAndDropDirective,
+    ConfirmV2Component,
+    CanaryFlagComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -424,12 +427,11 @@ const routes: Routes = [
     DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
-    ShadowboxSubmitButtonComponent,
+    ButtonComponent,
     ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -439,7 +441,6 @@ const routes: Routes = [
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,
-    ButtonComponent,
     OverlayComponent,
     DropdownMenuComponent,
     CalendarComponent,
@@ -456,6 +457,10 @@ const routes: Routes = [
     ClientMetaDirective,
     CarouselComponent,
     PoweredByComponent,
+    LoadingEllipsisComponent,
+    MarkedDirective,
+    DragAndDropDirective,
+    ConfirmV2Component,
   ],
   providers: [
     SiteService,
@@ -479,30 +484,6 @@ const routes: Routes = [
     NSFWSelectorCreatorService,
     NSFWSelectorConsumerService,
     {
-      provide: BoostedContentService,
-      useFactory: (
-        client,
-        session,
-        entitiesService,
-        blockListService,
-        settingsService
-      ) =>
-        new BoostedContentService(
-          client,
-          session,
-          entitiesService,
-          blockListService,
-          settingsService
-        ),
-      deps: [
-        Client,
-        Session,
-        EntitiesService,
-        BlockListService,
-        SettingsService,
-      ],
-    },
-    {
       provide: FeaturedContentService,
       useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
@@ -521,12 +502,12 @@ const routes: Routes = [
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,
     },
-    HorizontalFeedService,
+    RelatedContentService,
     RegexService,
     ApiService,
     AttachmentApiService,
-    FeedsUpdateService,
     ClientMetaService,
+    UserMenuService,
   ],
 })
 export class CommonModule {}

@@ -19,8 +19,10 @@ import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
+import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -28,8 +30,7 @@ import { Session } from '../../../../services/session';
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService, Session],
 })
-export class MindsVideoPlayerComponent
-  implements OnChanges, OnDestroy, OnChanges {
+export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -47,6 +48,12 @@ export class MindsVideoPlayerComponent
   @Output() dimensions: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * Controls events
+   */
+  @Output() onControlsShown: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onControlsHidden: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
    * Autoplay (if set to false, then placeholder will be displayed)
    * calling .play() will override this
    */
@@ -55,6 +62,8 @@ export class MindsVideoPlayerComponent
       this.service.playable = true;
     }
   }
+
+  @Input() embedded?: boolean = false;
 
   /**
    * This is the video player component
@@ -106,11 +115,13 @@ export class MindsVideoPlayerComponent
     this.cd.detectChanges();
   });
 
+  private timerSubscription: Subscription;
+
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
-    private session: Session,
     private cd: ChangeDetectorRef,
+    public autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -125,7 +136,12 @@ export class MindsVideoPlayerComponent
   }
 
   ngOnDestroy(): void {
-    this.onReadySubscription.unsubscribe();
+    if (this.onReadySubscription) {
+      this.onReadySubscription.unsubscribe();
+    }
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
     //this.autoplayService.unregisterPlayer(this);
   }
 
@@ -149,12 +165,20 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
-  get sources$(): BehaviorSubject<VideoSource> {
+  get sources$(): BehaviorSubject<VideoSource[]> {
     return this.service.sources$;
   }
 
   get status(): string {
     return this.service.status;
+  }
+
+  get isModal(): boolean {
+    return this.service.isModal;
+  }
+
+  get awaitingTranscode(): Observable<boolean> {
+    return this.service.awaitingTranscode();
   }
 
   onPlayed(event: Plyr.PlyrEvent): void {
@@ -295,5 +319,22 @@ export class MindsVideoPlayerComponent
         video.load();
       } catch (err) {}
     }
+  }
+
+  onEnded($event: any): void {
+    this.autoProgress.next();
+  }
+
+  /**
+   * Called on Plyr seek.
+   */
+  onSeeking(): void {
+    this.timerSubscription = this.autoProgress.timer$
+      .pipe(take(1))
+      .subscribe(timer => {
+        if (timer > 0) {
+          this.autoProgress.cancel();
+        }
+      });
   }
 }

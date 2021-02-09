@@ -12,13 +12,13 @@
     </ng-container>
 
     <div class="m-juryDutySessionSummons__buttons" *ngIf="!accepted">
-      <button class="m-btn m-btn--slim m-btn--action" (click)="accept()">
+      <m-button color="blue" size="small" (onAction)="accept()">
         Accept
-      </button>
-      <button class="m-btn m-btn--slim" (click)="decline()">
+      </m-button>
+      <m-button size="small" (onAction)="decline()">
         <span>Decline - </span>
         <span class="countdown">{{ expires | timediff: true }}</span>
-      </button>
+      </m-button>
     </div>
 
     <div

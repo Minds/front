@@ -105,7 +105,8 @@
                 [readonly]="service.inProgress$ | async"
                 [disabled]="
                   (service.isEditing$ | async) ||
-                  !(service.canReceiveTokens$ | async)
+                  !(service.canReceiveTokens$ | async) ||
+                  !(service.canReceiveUsd$ | async)
                 "
               />
               <span class="m-form__customInput__checkbox"></span>
@@ -136,7 +137,7 @@
           >
           <m-tooltip
             ><span m-tooltip--anchor>𝒊</span>
-            <ng-container
+            <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_BENEFIT_DESCRIPTION"
               >Add a short description of what your supporters will get for
               joining this tier.</ng-container
             >
@@ -158,9 +159,11 @@
         *ngIf="!(service.canReceiveUsd$ | async)"
       >
         <i class="material-icons">warning</i>
-        <span
+        <span i18n="@@CHANNELS_SHOP_MEMBERSHIPS_CONNECT_YOUR_BANK"
           >Important!
-          <a routerLink="/wallet/canary/cash/settings">Connect your bank A/C</a>
+          <a routerLink="/wallet/cash/settings" target="_blank"
+            >Connect your bank A/C</a
+          >
           to receive USD payments</span
         >
       </div>
@@ -169,24 +172,24 @@
         *ngIf="!(service.canReceiveTokens$ | async)"
       >
         <i class="material-icons">warning</i>
-        <span
-          ><a routerLink="/wallet/canary/tokens/settings"
+        <span i18n="@@CHANNELS_SHOP_MEMBERSHIPS_ADD_RECEIVER_ADDRESS"
+          ><a routerLink="/wallet/tokens/settings" target="_blank"
             >Add receiver address</a
           >
-          to receive tokens payments</span
+          and verify your uniqueness to receive tokens payments</span
         >
       </div>
     </div>
 
     <div class="m-form__buttonsContainer">
-      <m-shadowboxSubmitButton
+      <m-button
         [disabled]="!(service.canSave$ | async)"
         [saving]="service.inProgress$ | async"
-        (click)="save()"
+        (onAction)="save()"
         i18n="@@CHANNELS_SHOP_MEMBERSHIPS_EDIT_SAVE"
       >
         Save Tier
-      </m-shadowboxSubmitButton>
+      </m-button>
     </div>
   </div>
 </div>

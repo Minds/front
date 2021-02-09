@@ -10,7 +10,7 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { ChannelShopMembershipsEditService } from './edit.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Subscription } from 'rxjs';
-import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 
 @Component({
   selector: 'm-channelShopMemberships__edit',

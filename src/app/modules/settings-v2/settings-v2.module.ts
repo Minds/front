@@ -26,7 +26,6 @@ import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-cont
 import { SettingsV2ShareButtonsComponent } from './account/share-buttons/share-buttons.component';
 import { MindsFormsModule } from '../forms/forms.module';
 import { SettingsV2Service } from './settings-v2.service';
-import { SettingsModule } from '../settings/settings.module';
 import { SettingsV2PaymentMethodsComponent } from './billing/payment-methods/payment-methods.component';
 import { SettingsV2RecurringPaymentsComponent } from './billing/recurring-payments/recurring-payments.component';
 import { SettingsV2ReportedContentComponent } from './other/reported-content/reported-content.component';
@@ -35,7 +34,7 @@ import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers
 import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
 import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
-import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
+import { WalletV2Service } from '../wallet/components/wallet-v2.service';
 import { ProModule } from '../pro/pro.module';
 import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
 import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
@@ -58,6 +57,10 @@ import { SettingsV2ReferralsComponent } from './other/referrals/referrals.compon
 import { LanguageModule } from '../language/language.module';
 import { SettingsV2I18nHack } from './settings-i18n-hack.component';
 import { SettingsV2HeaderComponent } from './settings-header.component';
+import { SettingsV2BoostedContentComponent } from './account/boosted-content/boosted-content.component';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { SettingsTwoFactorComponent } from '../settings/two-factor/two-factor.component';
+import { SettingsReportedContentComponent } from '../settings/reported-content/reported-content.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -116,6 +119,16 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Password',
               description: 'Change account password.',
               id: 'password',
+            },
+          },
+          {
+            path: 'boosted-content',
+            component: SettingsV2BoostedContentComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Boosted Content',
+              description: 'Control how boosted content is displayed.',
+              id: 'boosted-content',
             },
           },
           {
@@ -442,12 +455,12 @@ const SETTINGS_V2_ROUTES: Routes = [
     PaymentsModule,
     WireModule,
     MindsFormsModule,
-    SettingsModule,
-    //WalletV2Module,
+    // WalletV2Module,
     ProModule,
     YoutubeMigrationModule,
     ReferralsV2Module,
     LanguageModule,
+    NewsfeedModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -479,8 +492,13 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2AutoplayVideosComponent,
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
+    SettingsV2BoostedContentComponent,
+
+    // These need moving to settings folder
+    SettingsTwoFactorComponent,
+    SettingsReportedContentComponent,
   ],
-  providers: [SettingsV2Service],
+  providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],
 })
 export class SettingsV2Module {}

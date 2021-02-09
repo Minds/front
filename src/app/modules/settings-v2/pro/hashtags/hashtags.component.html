@@ -3,7 +3,7 @@
     class="m-settingsV2__headerLabel"
     i18n="@@SETTINGS__PRO__HASHTAGS__LABEL"
   >
-    Theme
+    Hashtags
   </div>
   <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__HASHTAGS__DESCRIPTION">
     Set up your category filter hashtags.
@@ -76,13 +76,14 @@
     </div>
   </div>
   <div class="m-form__buttonsContainer">
-    <m-shadowboxSubmitButton
+    <m-button
+      color="blue"
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="submit()"
+      (onAction)="submit()"
       i18n="@@PRO_HASHTAGS__SAVE_HASHTAGS"
     >
       Save Hashtags
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>

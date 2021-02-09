@@ -1,11 +1,17 @@
 <ng-container *ngIf="!inProgress; else inProgressSpinner">
-  <div *ngIf="!active; else cancelButton">
+  <div
+    *ngIf="
+      !active || userIsPro || (active && !hasSubscription);
+      else cancelButton
+    "
+  >
     <div class="m-plusSubscriptionPlan__toggleContainer">
       <div class="m-plusSubscriptionPlan__toggle">
         <span i18n="@@PLUS_SUBSCRIPTION_OPTION__YEARLY">Yearly</span>
         <span
           ><m-toggle
-            [(mModel)]="interval"
+            [mModel]="interval"
+            (mModelChange)="setInterval($event)"
             leftValue="yearly"
             rightValue="monthly"
           ></m-toggle
@@ -17,13 +23,18 @@
         <span i18n="@@PLUS_SUBSCRIPTION_OPTION__USD">USD</span>
         <span
           ><m-toggle
-            [(mModel)]="currency"
+            [mModel]="currency"
+            (mModelChange)="setCurrency($event)"
             leftValue="usd"
             rightValue="tokens"
           ></m-toggle
         ></span>
         <span i18n="@@PLUS_SUBSCRIPTION_OPTION__TOKENS">Tokens</span>
       </div>
+    </div>
+
+    <div class="m-plusSubscriptionPlan__trial" *ngIf="canHaveTrial">
+      <h4>Start your free trial for 7 days</h4>
     </div>
 
     <div class="m-plusSubscriptionPlan__pricing">
@@ -43,28 +54,50 @@
       </span>
     </div>
 
-    <div>
-      <button
-        class="mf-button mf-button--alt"
-        [disabled]="inProgress || criticalError"
-        (click)="enable()"
+    <div class="m-plusSubscription__button">
+      <m-button
+        color="blue"
+        [disabled]="upgradeButtonDisabled || inProgress || criticalError"
+        (onAction)="enable()"
         i18n="@@PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS"
       >
-        Upgrade to Plus
-      </button>
+        <ng-container *ngIf="!canHaveTrial; else startTrialTxt">
+          Upgrade to Minds+
+        </ng-container>
+        <ng-template #startTrialTxt>
+          Start free trial
+        </ng-template>
+      </m-button>
+      <div
+        class="m-plusSubscriptionButton__notice"
+        *ngIf="upgradeButtonDisabled"
+      >
+        <ng-container
+          i18n="@@PLUS_SUBSCRIPTION__DISABLED_BECAUSE_PRO_MESSAGE"
+          *ngIf="userIsPro; else cancelledButNotExpired"
+          >Minds+ is already included with your subscription to Minds
+          Pro</ng-container
+        ><ng-template #cancelledButNotExpired
+          ><ng-container
+            *ngIf="expiryString"
+            i18n="@@PLUS_SUBSCRIPTION__DISABLED_BECAUSE_CANCELLED"
+            >You still have Minds+ until {{ expiryString }}.</ng-container
+          ></ng-template
+        >
+      </div>
     </div>
   </div>
 
   <ng-template #cancelButton>
-    <div>
-      <button
-        class="mf-button mf-button--destructive"
-        [disabled]="!canBeCancelled || inProgress || criticalError"
-        (click)="disable()"
+    <div class="m-plusSubscription__button">
+      <m-button
+        color="red"
+        [disabled]="inProgress || criticalError"
+        (onAction)="disable()"
         i18n="@@PLUS_SUBSCRIPTION__CANCEL_PLUS"
       >
-        Cancel Plus
-      </button>
+        Cancel Minds+
+      </m-button>
     </div>
   </ng-template>
 </ng-container>

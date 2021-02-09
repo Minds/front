@@ -1,4 +1,4 @@
-@import 'defaults';
+@import 'defaults.scss';
 @import 'themes';
 
 m-body {
@@ -34,10 +34,10 @@ $layoutRightFullWidth: 310px;
 
 // 3 columns at full width
 $layoutMax3ColWidth: $layoutMainFullWidth + $layoutSidebarFullWidth +
-  $layoutRightFullWidth + $layoutTotalPadding; // 1172px
+  $layoutRightFullWidth + $layoutTotalPadding; // 1220px
 // 3 columns at reduced left sidebar
 $layoutMin3ColWidth: $layoutMainFullWidth + $layoutSidebarSmallWidth +
-  $layoutRightFullWidth + $layoutTotalPadding; // 1000px;
+  $layoutRightFullWidth + $layoutTotalPadding; // 1040px;
 
 $layoutMax2ColWidth: $layoutMin3ColWidth - 1px;
 $layoutMax2ColFixedWidth: 700px; // This value is when the main column will start to shrink

@@ -1,6 +1,9 @@
 m-chartV2 {
-  display: block;
+  // new stacking context
   position: relative;
+  z-index: 0;
+
+  display: block;
 }
 .js-plotly-plot,
 .plot-container {
@@ -33,11 +36,12 @@ m-chartV2 {
   pointer-events: none;
   border-radius: 3px;
   font-size: 12px;
-  z-index: 9999999999;
+  z-index: 2;
+
   opacity: 0;
   transition: opacity 0.2s ease-in;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
     color: themed($m-grey-300);
   }

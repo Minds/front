@@ -1,0 +1,19 @@
+@import 'defaults.scss';
+
+:host {
+  .m-groupReview__item {
+    margin-bottom: 20px;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-groups-feed--review-actions {
+    padding: 20px 0;
+    text-align: right;
+
+    > button {
+      margin-left: 20px;
+    }
+  }
+}

@@ -12,11 +12,11 @@ m-tooltip {
 }
 
 .m-tooltip--bubble {
+  @include z-index(tooltip);
   position: absolute;
   font-size: 13px;
   padding: 12px;
   border-radius: 3px;
-  z-index: 999;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
   letter-spacing: 1.4px;
@@ -26,8 +26,10 @@ m-tooltip {
   text-align: left;
   text-transform: none;
   @include m-theme() {
-    color: themed($m-white);
-    background-color: themed($m-grey-900);
+    color: themed($m-textColor--primary);
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
+    box-shadow: 0 2px 4px 0 rgba(themed($m-black), 0.2);
   }
 
   &.m-tooltip--bubble--anchor-bottom {

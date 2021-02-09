@@ -49,6 +49,7 @@
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           [pattern]="alphanumericPattern"
+          data-cy="data-minds-register-username-input"
         />
       </div>
       <div
@@ -91,6 +92,7 @@
           [placeholder]="showLabels ? '' : 'Email'"
           i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
           [class.m-input--hide-placeholder]="showLabels"
+          data-cy="data-minds-register-email-input"
         />
       </div>
       <div
@@ -125,6 +127,7 @@
             (blur)="onPasswordBlur()"
             (ngModelChange)="popover.show(); popover.checkRules($event)"
             [class.m-input--hide-placeholder]="showLabels"
+            data-cy="data-minds-register-password-input-1"
           />
         </div>
       </m-popover>
@@ -153,6 +156,7 @@
           readonly
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
+          data-cy="data-minds-register-password-input-2"
         />
       </div>
       <div
@@ -194,7 +198,7 @@
   <div class="m-layout__row m-register__actions">
     <div class="m-register__checkboxes">
       <m-formInput__checkbox formControlName="exclusive_promotions">
-        Receive exclusive promotions from Minds
+        Receive exclusive token rewards and info
       </m-formInput__checkbox>
 
       <m-formInput__checkbox
@@ -208,28 +212,29 @@
 
     <div class="m-layout__spacer"></div>
 
-    <button
-      class="m-btn m-btn--action"
-      (click)="register($event)"
-      [disabled]="!this.form.valid || inProgress"
+    <m-button
+      color="blue"
+      (onAction)="register($event)"
+      [saving]="inProgress"
+      [disabled]="!this.form.valid"
       *ngIf="!showBigButton"
     >
       <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
         Signup
       </ng-container>
-    </button>
+    </m-button>
 
-    <m-shadowboxSubmitButton
+    <m-button
       *ngIf="showBigButton"
-      type="button"
       [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
       [saving]="inProgress"
-      (click)="register($event)"
+      color="blue"
+      (onAction)="register($event)"
     >
       <ng-container i18n="@@FORMS__REGISTER__JOIN_NOW_ACTION">
         Join Now
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: Register -->

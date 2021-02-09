@@ -44,15 +44,13 @@
   border: none;
   height: 75px;
   width: 100%;
-  z-index: 9999;
-  transform: translateZ(0);
 
   .m-v3TopbarTop__inner {
     height: 100%;
   }
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
@@ -127,13 +125,13 @@
           padding: 0 20px;
         }
 
-        @media screen and(max-width: $m-grid-max-mobile) {
+        @media screen and(max-width: $layoutMin2ColWidth) {
           // width: 20px;
           transition: width ease-in-out 0.2s;
           padding: 0;
 
           &.is-focused {
-            // width: 270px;
+            width: 270px;
           }
         }
 
@@ -168,21 +166,6 @@
       .mdl-textfield__label {
         display: none;
       }
-
-      .m-search-bar-suggestions-list {
-        left: 0;
-        right: 0;
-        top: 75px;
-        width: 100%;
-        border-radius: 0;
-        border: 0;
-        box-sizing: content-box;
-        @include m-theme() {
-          box-shadow: none;
-          border-bottom: 1px solid themed($m-borderColor--primary);
-          border-right: 1px solid themed($m-borderColor--primary);
-        }
-      }
     }
   }
 
@@ -199,7 +182,7 @@
       font-family: 'Roboto', sans-serif;
       cursor: pointer;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-blue);
         color: themed($m-blue);
       }
@@ -262,7 +245,28 @@
 .m-v3Topbar__nav {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
+
+  @media screen and (max-width: $layoutMax3ColWidth) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  m-canaryFlag > span {
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      display: flex;
+      z-index: -1;
+      margin-left: unset !important;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
 }
 
 .m-v3TopbarNav__item {
@@ -320,12 +324,20 @@
     cursor: pointer;
     transition: opacity 0.5s ease;
 
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      margin: 0;
+    }
+
     @media screen and (max-width: $max-mobile) {
       display: none;
     }
 
     .m-v3Topbar__logo--bulb {
       height: 36px;
+      transform: translateY(
+        4px
+      ); // overlap effect while still retaining flexbox.
+
       //display: none;
       @media screen and (min-width: $layoutMax3ColWidth) {
         display: none;
@@ -427,7 +439,7 @@
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-blue);
       color: themed($m-blue);
     }
@@ -450,11 +462,9 @@
   padding: 0;
   border: none;
   min-height: 75px;
-  z-index: 9999;
-  transform: translateZ(0);
   @include m-theme() {
-    background-color: themed($m-white);
-    border-top: 1px solid themed($m-grey-50);
+    background-color: themed($m-bgColor--primary);
+    border-top: 1px solid themed($m-borderColor--primary);
   }
 
   @media screen and (max-width: 480px) {
@@ -477,7 +487,7 @@
     width: 1px;
 
     .m-notifications--toaster {
-      z-index: 500;
+      @include z-index(toast);
       position: relative;
       top: 50px;
       right: 350px;

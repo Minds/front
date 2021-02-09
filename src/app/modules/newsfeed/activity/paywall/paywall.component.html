@@ -1,25 +1,7 @@
-<!-- <div class="m-activityContent__fixedHeightSpacer"></div>
-
-<div class="m-activityPaywall__container">
-  <i class="material-icons m-activityNsfwConsent__icon">attach_usd</i>
-
-  <h2 class="m-activityPaywall__title">10 TOKENS</h2>
-  <h3 class="m-activityPaywall__reasons">{{ reasonsLabel$ | async }}</h3>
-
-  <button
-    class="m-activityNsfwConsent__button"
-    (click)="onConsentedClick($event)"
-  >
-    I am over 18 years of age
-  </button>
-</div>
-
-<div class="m-activityContent__fixedHeightSpacer"></div> -->
-
 <m-wire--lock-screen
   *ngIf="service.entity$ | async as entity"
   [entity]="entity"
   (entityChange)="onEntityUpdated($event)"
   [mediaHeight]="mediaHeight"
-  [showLegacyPaywall]="false"
+  [minimalMode]="service.displayOptions.minimalMode"
 ></m-wire--lock-screen>

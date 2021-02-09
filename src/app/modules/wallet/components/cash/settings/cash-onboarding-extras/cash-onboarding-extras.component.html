@@ -1,0 +1,192 @@
+<div
+  class="m-walletCashOnboardingExtras"
+  *ngIf="account"
+  class="m-walletButtonLayout--buttonOffsetRight"
+>
+  <p
+    class="m-walletSecondaryText--desc"
+    i18n="@@CASH_ONBOARD_EXTRAS__WE_NEED_ADDITIONAL_INFO_TEXT"
+  >
+    We need some additional information before we can verify your account.
+  </p>
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PHOTO ID ----------------------------->
+  <!-- -------------------------------------------- -->
+  <ng-container
+    *ngIf="account.requirement.indexOf('individual.verification.document') > -1"
+  >
+    <div class="m-walletForm__field--file">
+      <!-- <div class="m-walletForm__row--label">
+        <label for="photoId" i18n>Photo ID</label>
+      </div> -->
+      <div class="m-walletSettings__row--input">
+        <input
+          type="file"
+          #file
+          name="photoId"
+          (change)="uploadDocument(file, 'document')"
+          accept="image/*"
+          style="display: none;"
+        />
+      </div>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-button
+        (onAction)="file.click()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        i18n="@@CASH_ONBOARD_EXTRAS__UPLOAD_PHOTO_ID"
+        color="blue"
+        >Upload Photo ID</m-button
+      >
+    </div>
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+  </ng-container>
+
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PROOF OF ADDRESS --------------------->
+  <!-- -------------------------------------------- -->
+  <ng-container
+    *ngIf="
+      account.requirement.indexOf(
+        'individual.verification.additional_document'
+      ) > -1
+    "
+  >
+    <div class="m-walletForm__field--file">
+      <!-- <div class="m-walletForm__row--label">
+        <label for="proofOfAddress" i18n>Proof of Address</label>
+      </div> -->
+      <div class="m-walletSettings__row--input">
+        <input
+          type="file"
+          #file
+          name="proofOfAddress"
+          (change)="uploadDocument(file, 'additional_document')"
+          accept="image/*"
+          style="display: none;"
+        />
+      </div>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-button
+        (onAction)="file.click()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        i18n="@@CASH_ONBOARD_EXTRAS__UPLOAD_PROOF_OF_ADDRESS"
+        color="blue"
+        >Upload Proof of Address</m-button
+      >
+    </div>
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+  </ng-container>
+
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PHONE NUMBER ------------------------->
+  <!-- -------------------------------------------- -->
+  <ng-container *ngIf="account.requirement.indexOf('individual.phone') > -1">
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletForm__row--label">
+        <label for="phoneNumber" i18n="@@COMMON__PHONE_NUMBER"
+          >Phone Number</label
+        >
+      </div>
+      <div class="m-walletForm__row--input">
+        <m-phoneInput
+          #phone
+          id="phoneNumber"
+          name="phoneNumber"
+          class="form-control"
+          data-minds="phoneNumber"
+          initCountryCode="account.country"
+          [allowedCountries]="allowedCountries"
+        >
+        </m-phoneInput>
+      </div>
+    </div>
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-button
+        (onAction)="updateField('phone', phone.value)"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        i18n="@@CASH_ONBOARD_EXTRAS__SAVE"
+        color="blue"
+        >Save</m-button
+      >
+    </div>
+  </ng-container>
+
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PERSONAL ID-- ------------------------>
+  <!-- -------------------------------------------- -->
+  <ng-container
+    *ngIf="account.requirement.indexOf('individual.id_number') > -1"
+  >
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletForm__row--label">
+        <label
+          for="personalIdNumber"
+          i18n="@@CASH_ONBOARDING__EXTRAS__PERSONAL_ID_TEXT"
+          >Personal ID / Social Security Number (SSN) / National Insurance
+          Number</label
+        >
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          #personalIdNumber
+          id="personalIdNumber"
+          name="personalIdNumber"
+          class="form-control"
+          data-minds="personalIdNumber"
+        />
+      </div>
+    </div>
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-button
+        (onAction)="updateField('id_number', personalIdNumber.value)"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        i18n="@@COMMON__SAVE"
+        color="blue"
+        >Save</m-button
+      >
+    </div>
+  </ng-container>
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - TOS CHECKBOX ------------------------->
+  <!-- -------------------------------------------- -->
+  <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
+    <div class="m-walletForm__field--checkbox">
+      <div class="m-walletSettings__row--input">
+        <m-formInput__checkbox
+          i18n="@@CASH_ONBOARD_EXTRAS__READ_AGREE_STRIPE_TOS_TEXT"
+        >
+          I have read and agree to the
+          <a href="https://stripe.com/legal" target="_blank">
+            Stripe Services Agreement
+          </a>
+        </m-formInput__checkbox>
+      </div>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-button
+        (onAction)="acceptTos()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        i18n="@@COMMON__SAVE"
+        color="blue"
+        >Save</m-button
+      >
+    </div>
+  </ng-container>
+</div>

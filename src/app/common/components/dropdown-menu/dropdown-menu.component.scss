@@ -19,7 +19,7 @@ m-dropdownMenu {
 
   .m-dropdownMenu__menu {
     display: none;
-    z-index: 10010;
+    @include z-index(modal);
 
     @media screen and (min-width: $max-mobile + 1) {
       display: block;
@@ -48,7 +48,7 @@ m-dropdownMenu {
 
       @include m-theme() {
         border-color: themed($m-borderColor--primary);
-        background: themed($m-bgColor--secondary);
+        background: themed($m-bgColor--primary);
       }
 
       @include m-on-theme(light) {
@@ -74,7 +74,7 @@ m-dropdownMenu {
 
           &:hover,
           &:active {
-            background: themed($m-bgColor--primary);
+            background: themed($m-bgColor--secondary);
           }
         }
 
@@ -103,8 +103,6 @@ m-dropdownMenu {
   }
 
   > m-overlay {
-    z-index: 10000;
-
     @media screen and (max-width: $max-mobile) {
       @include m-on-theme(light) {
         background: rgba(255, 255, 255, 0.85);

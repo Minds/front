@@ -1,7 +1,5 @@
 <div class="minds-list">
-  <ng-container>
-    <m-composer></m-composer>
-  </ng-container>
+  <m-composer></m-composer>
 
   <div class="m-feeds-sorted__query">
     <span>Showing Boosts</span>
@@ -10,30 +8,14 @@
   <ng-container
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
   >
-    <ng-container *mIfFeature="'navigation'; else legacyActivity">
-      <m-activity
-        *ngIf="activity$ | async as activity"
-        [entity]="activity"
-        [displayOptions]="{
-          showOnlyCommentsInput: true
-        }"
-        [slot]="i + 1"
-      ></m-activity>
-    </ng-container>
-    <ng-template #legacyActivity>
-      <minds-activity
-        *ngIf="activity$ | async as activity"
-        [object]="activity"
-        [boostToggle]="activity.boostToggle"
-        [boost]="boostFeed"
-        [showBoostMenuOptions]="boostFeed"
-        (deleted)="delete($event)"
-        [slot]="i + 1"
-        class="mdl-card m-border item"
-        [attr.data-minds-activity-guid]="activity.guid"
-      >
-      </minds-activity>
-    </ng-template>
+    <m-activity
+      *ngIf="activity$ | async as activity"
+      [entity]="activity"
+      [displayOptions]="{
+        showOnlyCommentsInput: true
+      }"
+      [slot]="i + 1"
+    ></m-activity>
   </ng-container>
   <infinite-scroll
     distance="25%"

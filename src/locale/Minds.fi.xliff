@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="fil">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="fi">
     <body>
       <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html">
         <source>Groups</source>

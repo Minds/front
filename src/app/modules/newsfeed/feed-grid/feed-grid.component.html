@@ -3,10 +3,12 @@
     [entity]="entity"
     *ngIf="entity$ | async as entity"
     [displayOptions]="{
-      showComments: true,
-      showOnlyCommentsInput: true,
-      v2: true,
-      autoplayVideo: false
+      minimalMode: true,
+      showComments: false,
+      autoplayVideo: false,
+      showToolbar: false,
+      bypassMediaModal: true,
+      showOwnerBlock: entity.subtype === 'remind'
     }"
     (deleted)="delete($event)"
     [slot]="i"

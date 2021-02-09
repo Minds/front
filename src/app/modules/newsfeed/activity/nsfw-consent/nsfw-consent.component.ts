@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
@@ -37,6 +37,10 @@ export class ActivityNsfwConsentComponent {
       return '';
     })
   );
+
+  @HostBinding('class.m-activityNsfwConsent--minimalMode') get minimalMode() {
+    return this.service.displayOptions.minimalMode;
+  }
 
   constructor(public service: ActivityService) {}
 

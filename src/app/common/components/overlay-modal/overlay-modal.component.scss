@@ -1,10 +1,38 @@
+@import 'defaults.scss';
+
+m-overlay-modal {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  overflow: overlay !important;
+  @include z-index(modal);
+
+  .m-overlay-modal--backdrop {
+    @include m-theme() {
+      background-color: themed($m-overlay);
+    }
+  }
+}
+
+.m-overlay-modal--wrapper {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+}
+
 .m-overlay-modal {
+  z-index: 2;
+
   &:not(.m-overlayModal--media) {
     position: fixed;
     right: 2vw;
     left: 2vw;
     margin: auto;
-    z-index: 9999999;
 
     top: 50%;
     max-height: 98vh;
@@ -26,6 +54,36 @@
     @include m-theme() {
       color: themed($m-grey-700);
       background: none rgba(themed($m-white), 0.95);
+    }
+
+    &.m-overlayModal--media {
+      position: static;
+      min-height: 100%;
+      display: table;
+      height: 100% !important;
+      table-layout: fixed;
+      width: 100%;
+
+      .m-overlay-modal--close {
+        line-height: normal;
+        opacity: 0.6;
+        position: fixed;
+        right: 8px;
+        top: 8px;
+        transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1);
+        padding: 4px;
+        @include m-theme() {
+          background-color: rgba(themed($m-white-always), 0);
+          color: themed($m-grey-300);
+        }
+        i.material-icons {
+          font-size: 28px;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
 
     &.m-overlayModal--remind {
@@ -80,7 +138,7 @@
       max-width: 480px;
       padding: 16px;
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
     }
 
@@ -126,7 +184,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 99999999;
+  z-index: 3;
 
   display: inline-block;
   padding: 10px;
@@ -171,9 +229,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 9999998;
+  z-index: 1;
   @include m-theme() {
-    background-color: rgba(themed($m-black-always), 0.5);
+    background-color: themed($m-overlay);
   }
 }
 

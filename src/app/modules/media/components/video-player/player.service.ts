@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Client } from '../../../../services/api';
 import isMobile from '../../../../helpers/is-mobile';
 import { Session } from '../../../../services/session';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { map } from 'rxjs/operators';
 
 export type VideoSource = {
   id: string;
@@ -22,12 +23,16 @@ export class VideoPlayerService implements OnDestroy {
   /**
    * @var BehaviorSubject<VideoSource>
    */
-  sources$: BehaviorSubject<VideoSource> = new BehaviorSubject<VideoSource>({
-    id: null,
-    type: null,
-    size: 0,
-    src: null,
-  });
+  sources$: BehaviorSubject<VideoSource[]> = new BehaviorSubject<VideoSource[]>(
+    [
+      {
+        id: null,
+        type: null,
+        size: 0,
+        src: null,
+      },
+    ]
+  );
 
   /**
    * @var string
@@ -66,7 +71,6 @@ export class VideoPlayerService implements OnDestroy {
 
   constructor(
     private client: Client,
-    private session: Session,
     private overlayModalService: OverlayModalService
   ) {
     this.setShouldPlayInModal(true);
@@ -146,5 +150,17 @@ export class VideoPlayerService implements OnDestroy {
    */
   async recordPlay(): Promise<void> {
     // TODO
+  }
+
+  /**
+   * Check whether the video's are still awaiting transcode.
+   * @returns { Observable<boolean> } true if video has no sources and is not failed.
+   */
+  awaitingTranscode(): Observable<boolean> {
+    return this.sources$.pipe(
+      map((sources: VideoSource[]) => {
+        return this.status !== 'failed' && sources.length < 1;
+      })
+    );
   }
 }

@@ -2,10 +2,10 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { WireModalService } from '../../../wire/wire-modal.service';
 import { ProChannelService } from '../channel.service';
 import { MindsUser } from '../../../../interfaces/entities';
-import { Subscription } from 'rxjs';
 import { WireEventType, WireEvent } from '../../../wire/v2/wire-v2.service';
 import { Session } from '../../../../services/session';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-pro__joinButton',
@@ -17,7 +17,8 @@ export class JoinButtonComponent {
     private session: Session,
     public service: ProChannelService,
     private authModal: AuthModalService,
-    private wireModal: WireModalService
+    private wireModal: WireModalService,
+    private toaster: FormToastService
   ) {}
 
   onClick() {
@@ -29,7 +30,7 @@ export class JoinButtonComponent {
   }
 
   /**
-   * Complete the auth modal separately from wire modal so we can subscribe
+   * Even though the pay modal has a built in auth trigger, we complete the auth modal separately here so we can subscribe
    * new/existing users to channels that haven't set up support tiers
    */
   async authorize(): Promise<void> {
@@ -56,12 +57,15 @@ export class JoinButtonComponent {
         this.subscribe();
         this.service.userIsMember$.next(true);
       }
+    } else {
+      this.subscribe();
+      this.toaster.success(
+        `You've subscribed to ${this.service.currentChannel.name}`
+      );
     }
   }
 
   subscribe(): void {
-    if (this.service.userIsSubscribed$.getValue()) {
-      this.service.subscribe();
-    }
+    this.service.subscribe();
   }
 }

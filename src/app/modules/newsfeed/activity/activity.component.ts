@@ -21,11 +21,16 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ActivityEntity,
 } from './activity.service';
-import { Subscription, Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import {
+  Subscription,
+  Observable,
+  BehaviorSubject,
+  combineLatest,
+  Subject,
+} from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { map } from 'rxjs/operators';
 import { FeaturesService } from '../../../services/features.service';
 import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
@@ -42,6 +47,8 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
   ],
   host: {
     class: 'm-border',
+    '[class.m-activity--minimalMode]':
+      'this.service.displayOptions.minimalMode',
   },
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -71,7 +78,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() canRecordAnalytics: boolean = true;
 
-  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleted: Subject<boolean> = this.service.onDelete$;
 
   @HostBinding('class.m-activity--boost')
   isBoost = false;
@@ -88,9 +95,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('style.height')
   heightPx: string;
 
+  @HostBinding('class.m-activity--minimalRemind')
+  isMinimalRemind: boolean = false;
+
   heightSubscription: Subscription;
-  contentType: string;
-  isPaywall2020: boolean = false;
+  remindSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -107,7 +116,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
     this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
-    this.isPaywall2020 = this.featuresService.has('paywall-2020');
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;
@@ -117,6 +125,14 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+    this.remindSubscription = this.service.isRemind$.subscribe(isRemind => {
+      if (isRemind && this.service.displayOptions.minimalMode) {
+        this.service.displayOptions.showOwnerBlock = true;
+        this.isMinimalRemind = true;
+      } else {
+        this.isMinimalRemind = false;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -158,6 +174,10 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   delete() {
-    this.deleted.emit(this.service.entity$.value);
+    this.deleted.next(this.service.entity$.value);
+  }
+
+  get isPaywall2020(): boolean {
+    return this.featuresService.has('paywall-2020');
   }
 }

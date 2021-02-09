@@ -1,0 +1,6 @@
+<ng-container *ngIf="tag && !alreadySubscribed">
+  <div class="m-discovery__tagWidget">
+    <m-discovery__tagButton [tag]="{ value: tag }"></m-discovery__tagButton>
+    <span>#{{ tag }}</span>
+  </div>
+</ng-container>

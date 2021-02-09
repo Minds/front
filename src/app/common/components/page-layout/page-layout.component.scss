@@ -23,12 +23,8 @@ m-pageLayout {
       }
     }
     .m-tooltip--bubble {
-      z-index: 99;
+      @include z-index(tooltip);
       font-size: 11px;
-      @include m-theme() {
-        color: themed($m-white);
-        background-color: themed($m-blue);
-      }
     }
   }
 }
@@ -38,7 +34,7 @@ m-sidebarMenu {
   width: 245px;
   padding-left: 20px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 }
 .m-pageLayout__main {

@@ -148,12 +148,18 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.channelService.getRouterLink('groups');
   }
 
-  get proSettingsLink() {
-    return [`/settings/pro_canary/${this.username}`];
+  get settingsLink() {
+    const path = this.channelService.isOwner$.getValue()
+      ? `/settings/pro_canary/${this.username}`
+      : '/settings/billing/recurring-payments';
+    return [path];
   }
 
-  get proSettingsHref() {
-    return this.site.baseUrl + `settings/pro_canary/${this.username}`;
+  get settingsHref() {
+    const path = this.channelService.isOwner$.getValue()
+      ? `settings/pro_canary/${this.username}`
+      : 'settings/billing/recurring-payments';
+    return this.site.baseUrl + path;
   }
 
   get isProDomain() {
@@ -300,7 +306,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.supportTiers.setEntityGuid(this.channel.guid);
       this.bindCssVariables();
+      if (this.session.getLoggedInUser().guid === this.channel.guid) {
+        this.channelService.isOwner$.next(true);
+      }
       this.setSplash();
+      this.setSubscribed();
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
@@ -330,7 +340,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.reload(this.username);
 
+      this.supportTiers.refresh();
       this.setSplash();
+      this.setSubscribed();
       this.shouldOpenWireModal();
     } catch (e) {
       console.error(e);
@@ -347,6 +359,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       !this.currentUser &&
         this.channel.pro_settings.splash &&
         this.site.isProDomain
+    );
+  }
+
+  setSubscribed(): void {
+    this.channelService.userIsSubscribed$.next(
+      this.channel.subscribed || false
     );
   }
 

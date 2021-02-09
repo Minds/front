@@ -13,7 +13,6 @@ import { BoostConsoleType } from '../console.component';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 
 /**
  * The component for the boost console.
@@ -32,7 +31,6 @@ export class BoostConsoleBooster {
 
   feed$: Observable<BehaviorSubject<Object>[]>;
   componentRef;
-  componentInstance: PosterComponent;
   inProgress = true;
   loaded = false;
   noContent = true;
@@ -55,7 +53,6 @@ export class BoostConsoleBooster {
       this.type = <BoostConsoleType>segments[0].path;
       this.load(true);
       this.loaded = true;
-      this.loadPoster();
     });
   }
 
@@ -119,33 +116,4 @@ export class BoostConsoleBooster {
    * Detaches change detector on destroy
    */
   ngOnDestroy = () => this.cd.detach();
-
-  /**
-   * Loads the poster component if there are no activities loaded.
-   * @returns {boolean} success.
-   */
-  loadPoster() {
-    this.feedsService.feed.subscribe(feed => {
-      if (feed.length > 0 && !this.inProgress && this.loaded) {
-        try {
-          this.poster.clear();
-          this.componentRef.clear();
-          this.noContent = true;
-          return false;
-        } catch (e) {
-          return false;
-        }
-      }
-
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        PosterComponent
-      );
-      this.componentRef = this.poster.createComponent(componentFactory);
-      this.componentInstance = this.componentRef.instance;
-      this.componentInstance.load.subscribe(() => {
-        this.load();
-      });
-      return true;
-    });
-  }
 }

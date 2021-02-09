@@ -13,22 +13,25 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-settingsV2Pro__cancel',
   templateUrl: './cancel.component.html',
+  styleUrls: ['./cancel.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2ProCancelComponent implements OnInit, OnDestroy {
+export class SettingsV2ProCancelComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
-  proSettingsSubscription: Subscription;
   protected paramMap$: Subscription;
   user: string | null = null;
   error: string = '';
 
   isActive: boolean = false;
+  hasSubscription: boolean = false;
+  expires: number = 0;
 
   constructor(
     protected cd: ChangeDetectorRef,
@@ -47,18 +50,34 @@ export class SettingsV2ProCancelComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.proSettingsSubscription = this.proService.proSettings$.subscribe(
-      (settings: any) => {
-        this.isActive = settings.is_active;
-        this.detectChanges();
-      }
-    );
+    this.load();
+    this.detectChanges();
+  }
 
+  async load() {
+    this.inProgress = true;
+    this.error = '';
+    this.detectChanges();
+
+    try {
+      this.isActive = await this.proService.isActive();
+      this.hasSubscription = await this.proService.hasSubscription();
+      this.expires = await this.proService.expires();
+    } catch (e) {
+      this.error = (e && e.message) || 'Unknown error';
+      this.toasterService.error('Error: ' + this.error);
+    }
+
+    this.inProgress = false;
     this.init = true;
+
     this.detectChanges();
   }
 
   async cancelSubscription() {
+    if (!this.isActive || (this.isActive && !this.hasSubscription)) {
+      return;
+    }
     this.dialogService.confirm(
       'Are you sure you want to cancel your Pro subscription?'
     );
@@ -75,14 +94,18 @@ export class SettingsV2ProCancelComponent implements OnInit, OnDestroy {
     }
   }
 
+  get expiryString(): string {
+    if (this.expires * 1000 <= Date.now()) {
+      return '';
+    }
+
+    return moment(this.expires * 1000)
+      .local()
+      .format('h:mma [on] MMM Do, YYYY');
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy() {
-    if (this.proSettingsSubscription) {
-      this.proSettingsSubscription.unsubscribe();
-    }
   }
 }

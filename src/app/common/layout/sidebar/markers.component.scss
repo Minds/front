@@ -4,12 +4,12 @@
   top: 52px;
   right: 0;
   position: fixed;
-  z-index: 999;
+  z-index: 1;
   width: 48px;
   height: calc(100% - 52px);
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and(max-width: $min-desktop) {
@@ -18,7 +18,7 @@
     width: 100%;
     overflow-y: hidden;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-50);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 

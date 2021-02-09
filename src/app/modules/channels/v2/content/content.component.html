@@ -21,6 +21,18 @@
     </div>
   </ng-template>
 
+  <ng-template [ngSwitchCase]="'require-login'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">error_outline</i>
+      <h3
+        class="m-channelContent__primaryText"
+        i18n="@@CHANNEL_CONTENT__SORRY_CHANNEL_DOES_NOT_EXIST"
+      >
+        Sorry, you need to be logged in to view this channel
+      </h3>
+    </div>
+  </ng-template>
+
   <ng-container *ngIf="!session.isAdmin()">
     <ng-template [ngSwitchCase]="'banned'">
       <div class="m-channelContent__wrapper">
@@ -76,13 +88,12 @@
       >
         This channel is NSFW
       </h3>
-      <button
-        class="m-channelContent__confirmButton"
-        (click)="content.forceNsfwContent$.next(true)"
+      <m-button
+        (onAction)="content.forceNsfwContent$.next(true)"
         i18n="@@CHANNEL_CONTENT__I_AM_OVER_18"
       >
         I am 18 or over
-      </button>
+      </m-button>
     </div>
   </ng-template>
 

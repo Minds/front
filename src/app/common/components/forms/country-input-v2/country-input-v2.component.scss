@@ -1,5 +1,8 @@
 m-countryInput {
+  // new stacking context
   position: relative;
+  z-index: 0;
+
   display: inline-flex;
   margin-bottom: $minds-padding;
   flex-grow: 1;
@@ -21,7 +24,7 @@ m-countryInput {
     flex-flow: row nowrap;
     align-items: center;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-borderColor--primary);
     }
     * {
@@ -68,7 +71,7 @@ m-countryInput {
     border-bottom-left-radius: 6px;
     outline: 0;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     .m-countryInput__selectedCountryName {
@@ -101,8 +104,8 @@ m-countryInput {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     @include m-theme() {
-      background-color: themed($m-white);
-      border-left: 1px solid themed($m-grey-50);
+      background-color: themed($m-bgColor--primary);
+      border-left: 1px solid themed($m-borderColor--primary);
     }
     &:focus {
       outline: none;
@@ -129,7 +132,7 @@ m-countryInput {
     border-bottom-right-radius: 2px;
     @include m-theme() {
       box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-blue);
       border-top: none;
     }
@@ -181,12 +184,12 @@ m-countryInput {
     background-color: transparent;
     margin-top: 0;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-100);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
   &.country:not(:last-child) {
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-50);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 
@@ -232,7 +235,7 @@ m-countryInput {
 //     width: 100%;
 //     font-family: 'Roboto', Helvetica, sans-serif;
 //     @include m-theme() {
-//       border: 1px solid themed($m-grey-100);
+//       border: 1px solid themed($m-borderColor--primary);
 //     }
 //   }
 // }

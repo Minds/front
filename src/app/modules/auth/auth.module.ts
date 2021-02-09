@@ -16,12 +16,17 @@ import { LogoutComponent } from './logout.component';
 import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MarketingModule } from '../marketing/marketing.module';
+import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    data: { title: 'Login', description: 'Login to Minds or create a channel' },
+    data: {
+      title: 'Login',
+      description: 'Login to Minds or create a channel',
+      ogImage: '/assets/logos/placeholder.jpg',
+    },
   },
   { path: 'logout/all', component: LogoutComponent },
   { path: 'logout', component: LogoutComponent },

@@ -6,23 +6,23 @@
       name="viewport"
       content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <link rel="icon" type="image/svg" href="/en/assets/logos/bulb.svg" />
+    <link rel="icon" type="image/svg" href="/static/en/assets/logos/bulb.svg" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/en/assets/logos/bulb-apple-touch-icon.png"
+      href="/static/en/assets/logos/bulb-apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/en/assets/logos/bulb-32x32.png"
+      href="/static/en/assets/logos/bulb-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="/en/assets/logos/bulb-16x16.png"
+      href="/static/en/assets/logos/bulb-16x16.png"
     />
     <link
       rel="preload"
@@ -31,16 +31,74 @@
       type="font/woff2"
       crossorigin
     />
+    <style type="text/css">
+      .m-app__loadingContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        animation: fadein 2s;
+        animation-iteration-count: infinite;
+      }
 
+      .m-app__loadingLogo {
+        max-width: 60px;
+      }
+
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
     <title>Minds</title>
   </head>
   <body class="m-theme__light">
     <!-- The app component created in app.ts -->
-    <m-app></m-app>
+    <m-app>
+      <div class="m-app__loadingContainer">
+        <img
+          class="m-app__loadingLogo"
+          src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
+        />
+      </div>
+    </m-app>
 
     <script>
       function module() {} // Fixes undefined module function in SystemJS bundle
     </script>
+
+    <!-- Snowplow starts plowing -->
+    <script type="text/javascript">
+      (function(p, l, o, w, i, n, g) {
+        if (!p[i]) {
+          p.GlobalSnowplowNamespace = p.GlobalSnowplowNamespace || [];
+          p.GlobalSnowplowNamespace.push(i);
+          p[i] = function() {
+            (p[i].q = p[i].q || []).push(arguments);
+          };
+          p[i].q = p[i].q || [];
+          n = l.createElement(o);
+          g = l.getElementsByTagName(o)[0];
+          n.async = 1;
+          n.src = w;
+          g.parentNode.insertBefore(n, g);
+        }
+      })(
+        window,
+        document,
+        'script',
+        '//cdn-assets.minds.com/ma/ma-2.14.0.js',
+        'snowplow'
+      );
+    </script>
+    <!-- Snowplow stops plowing -->
 
     <!-- shims:js -->
     <!-- endinject -->

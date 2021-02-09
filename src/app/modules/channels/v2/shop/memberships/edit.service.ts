@@ -3,7 +3,7 @@ import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, switchAll, take, tap } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
-import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Injectable()
@@ -66,11 +66,10 @@ export class ChannelShopMembershipsEditService {
   readonly canSave$: Observable<boolean> = combineLatest([
     this.name$,
     this.usd$,
-    this.canReceiveUsd$,
   ]).pipe(
-    map(([name, usd, canReceiveUsd]): boolean =>
-      Boolean(name && usd && usd > 0 && canReceiveUsd)
-    )
+    map(([name, usd]): boolean => {
+      return Boolean(name && usd && usd > 0);
+    })
   );
 
   /**
@@ -103,9 +102,12 @@ export class ChannelShopMembershipsEditService {
   reset(): void {
     this.name$.next('');
     this.usd$.next(0);
-    this.hasTokens$.next(false);
     this.description$.next('');
     this.original$.next(null);
+
+    // force true if cannot receive - template disables user change.
+    this.hasTokens$.next(this.canReceiveUsd$.getValue() ? false : true);
+
     this.inProgress$.next(false);
   }
 

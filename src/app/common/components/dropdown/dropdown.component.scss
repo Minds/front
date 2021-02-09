@@ -73,12 +73,15 @@
 }
 
 .m-dropdown {
+  // new stacking context
+  position: relative;
+  z-index: 2;
+
   .m-dropdown--list,
   .m-dropdown__list {
     width: 150px;
     border-radius: 3px;
     position: absolute;
-    z-index: 1000;
     top: 0;
     right: 0;
     overflow: visible;
@@ -96,7 +99,7 @@
     .m-dropdownList__item {
       padding: 8px;
       @include m-theme() {
-        border-bottom: 1px solid themed($m-grey-50);
+        border-bottom: 1px solid themed($m-borderColor--primary);
       }
 
       &.m-dropdown--list--item--selected,
@@ -127,7 +130,10 @@
 // v2 specific
 
 .m-dropdown--v2 {
+  // new stacking context
   position: relative;
+  z-index: 4;
+
   .m-dropdown__list {
     width: 180px;
     border-radius: $m-borderRadius;
@@ -135,14 +141,13 @@
 
     box-sizing: border-box;
     position: absolute;
-    z-index: 1000;
     top: 0;
     right: 0;
     overflow: visible;
     display: block;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--secondary);
     }
 
     .m-dropdownList__item {
@@ -162,7 +167,7 @@
       &:hover {
         @include m-theme() {
           color: themed($m-textColor--secondary);
-          background-color: themed($m-bgColor--tertiary);
+          background-color: themed($m-bgColor--secondaryAlt);
         }
       }
 

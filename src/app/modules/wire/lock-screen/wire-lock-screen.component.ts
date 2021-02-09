@@ -14,7 +14,6 @@ import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { WireModalService } from '../wire-modal.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
-import { FeaturesService } from '../../../services/features.service';
 import { WireEventType } from '../v2/wire-v2.service';
 import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
@@ -24,6 +23,7 @@ export type PaywallType = 'plus' | 'tier' | 'custom';
   moduleId: module.id,
   selector: 'm-wire--lock-screen',
   templateUrl: 'wire-lock-screen.component.html',
+  styleUrls: ['wire-lock-screen.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WireLockScreenComponent implements OnInit {
@@ -32,7 +32,7 @@ export class WireLockScreenComponent implements OnInit {
 
   @Input() preview: any;
   @Input() mediaHeight: number | null = null;
-  @Input() showLegacyPaywall: boolean = true;
+  @Input() minimalMode: boolean = false;
 
   init: boolean = false;
   showSubmittedInfo: boolean = false;
@@ -43,8 +43,6 @@ export class WireLockScreenComponent implements OnInit {
   messageTopOffset: string = '50px';
   isCustom: boolean = false;
 
-  @HostBinding('class.m-wire--lock-screen-2020')
-  isPaywall2020: boolean = false;
   readonly plusSupportTierUrn: string;
 
   constructor(
@@ -54,7 +52,6 @@ export class WireLockScreenComponent implements OnInit {
     private wireModal: WireModalService,
     private signupModal: SignupModalService,
     private configs: ConfigsService,
-    private featuresService: FeaturesService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private authModal: AuthModalService
   ) {
@@ -70,26 +67,22 @@ export class WireLockScreenComponent implements OnInit {
       this.hasTeaser = true;
     }
 
-    if (this.featuresService.has('paywall-2020') && !this.showLegacyPaywall) {
-      this.isPaywall2020 = true;
-
-      if (this.mediaHeight) {
-        if (this.mediaHeight === 0) {
-          this.mediaHeight = 410;
-        }
-        this.messageTopOffset = `${this.mediaHeight / 2}px`;
+    if (this.mediaHeight) {
+      if (this.mediaHeight === 0) {
+        this.mediaHeight = 410;
       }
-
-      if (
-        this.entity.wire_threshold &&
-        this.entity.wire_threshold.support_tier &&
-        !this.entity.wire_threshold.support_tier.public
-      ) {
-        this.isCustom = true;
-      }
-
-      this.init = true;
+      this.messageTopOffset = `${this.mediaHeight / 2}px`;
     }
+
+    if (
+      this.entity.wire_threshold &&
+      this.entity.wire_threshold.support_tier &&
+      !this.entity.wire_threshold.support_tier.public
+    ) {
+      this.isCustom = true;
+    }
+
+    this.init = true;
 
     this.detectChanges();
   }
@@ -159,7 +152,8 @@ export class WireLockScreenComponent implements OnInit {
       })
       .subscribe(payEvent => {
         if (payEvent.type === WireEventType.Completed) {
-          this.wireSubmitted();
+          // this.wireSubmitted();
+          this.unlock(); // TODO: check onchain wires don't get stuck in a loop?
         }
       });
   }
@@ -185,37 +179,6 @@ export class WireLockScreenComponent implements OnInit {
 
   isOwner() {
     return this.entity.ownerObj.guid === this.session.getLoggedInUser().guid;
-  }
-
-  /**
-   * legacy (not paywall-2020)
-   */
-  getBackground() {
-    if (!this.entity) {
-      return;
-    }
-
-    if (this.entity._preview) {
-      return `url(${this.entity.ownerObj.merchant.exclusive._backgroundPreview})`;
-    }
-
-    if (
-      !this.entity.ownerObj ||
-      !this.entity.ownerObj.merchant ||
-      !this.entity.ownerObj.merchant.exclusive ||
-      !this.entity.ownerObj.merchant.exclusive.background
-    ) {
-      return null;
-    }
-
-    let image =
-      this.configs.get('cdn_assets_url') +
-      'fs/v1/paywall/preview/' +
-      this.entity.ownerObj.guid +
-      '/' +
-      this.entity.ownerObj.merchant.exclusive.background;
-
-    return `url(${image})`;
   }
 
   get isPlus(): boolean {

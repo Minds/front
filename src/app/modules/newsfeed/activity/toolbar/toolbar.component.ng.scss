@@ -1,0 +1,125 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0 25px 16px;
+  padding-top: $minds-padding * 2;
+  box-sizing: border-box;
+  text-align: center;
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+    background-color: themed($m-bgColor--primary);
+  }
+
+  ::ng-deep > * {
+    margin-right: 22px;
+
+    > a,
+    ::ng-deep .m-activityRemindButton__icon {
+      line-height: 18px;
+      cursor: pointer;
+
+      i.material-icons {
+        font-size: 18px;
+      }
+
+      i.material-icons,
+      .minds-counter {
+        vertical-align: middle;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      &.selected {
+        i.material-icons,
+        .minds-counter {
+          @include m-theme() {
+            color: themed($m-blue);
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep minds-button-comment {
+    cursor: pointer;
+    .selected i.material-icons,
+    .selected .minds-counter {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  :last-child {
+    margin-right: 0;
+  }
+
+  ::ng-deep m-wire-button {
+    .m-wire-button {
+      border: 0 !important;
+      padding: 0;
+      height: auto;
+      > .ion-icon {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      > * {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-icon__assetsFile {
+        margin-right: 5px;
+      }
+      span {
+        margin-left: 0;
+        font-weight: 500;
+      }
+    }
+  }
+
+  ::ng-deep .m-boostButton {
+    width: auto;
+    height: auto;
+    min-width: unset;
+    border-radius: 0;
+    text-transform: unset;
+    padding: 0;
+    margin-left: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.7px;
+    cursor: pointer;
+    line-height: normal;
+
+    m-icon {
+      margin-left: 4px;
+      vertical-align: middle;
+
+      i {
+        font-size: 20px !important; // Override for fixed height.
+      }
+    }
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &,
+    &:hover {
+      @include m-theme() {
+        border: 0;
+      }
+    }
+  }
+
+  .m-activity--fixedHeight & {
+    z-index: 1;
+  }
+}

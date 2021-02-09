@@ -10,6 +10,7 @@ import {
   Input,
   ViewChild,
   ElementRef,
+  Injector,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -25,10 +26,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
-import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 
 @Component({
   selector: 'minds-card-comment',
@@ -97,6 +98,8 @@ export class CommentComponent implements OnChanges {
     private timeDiffService: TimeDiffService,
     protected featuresService: FeaturesService,
     protected toasterService: FormToastService,
+    private activityModalCreator: ActivityModalCreatorService,
+    private injector: Injector,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -355,18 +358,6 @@ export class CommentComponent implements OnChanges {
   }
 
   openModal() {
-    this.comment.modal_source_url = this.router.url;
-
-    this.overlayModal
-      .create(
-        MediaModalComponent,
-        {
-          entity: this.comment,
-        },
-        {
-          class: 'm-overlayModal--media',
-        }
-      )
-      .present();
+    this.activityModalCreator.create(this.comment, this.injector);
   }
 }

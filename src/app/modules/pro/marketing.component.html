@@ -291,14 +291,13 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button
-            class="mf-button mf-button--alt"
-            (click)="scrollToTop()"
+          <m-button
+            color="blue"
+            (onAction)="scrollToTop()"
             data-cy="data-minds-pro-upgrade-button"
-            i18n="@@MARKETING_PRO__UPGRADE_TO_PRO"
           >
-            Upgrade to Pro
-          </button>
+            <span i18n="@@MARKETING_PRO__UPGRADE_TO_PRO">Upgrade to Pro</span>
+          </m-button>
         </div>
       </div>
     </div>

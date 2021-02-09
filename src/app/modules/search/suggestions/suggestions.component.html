@@ -1,138 +1,87 @@
 <div
-  class="m-search-bar-suggestions-list"
-  [class.m-searchBar--newDesign]="newNavigation"
-  [hidden]="disabled || !active"
+  class="m-searchBarSuggestions"
   (mousedown)="mousedown($event)"
   *ngIf="session.isLoggedIn()"
+  [hidden]="hidden"
 >
-  <ng-container *ngIf="!q">
-    <ng-container *ngIf="newNavigation; else oldSuggestions">
-      <div class="m-searchBar__toolbar">
-        <span
-          class="m-searchBarSuggestions__searchHistory"
-          i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY"
-        >
-          Search History
-        </span>
-        <span
-          class="m-searchBarSuggestions__clearHistory"
-          (click)="clearHistory()"
-          i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY"
-        >
-          Clear History
-        </span>
-      </div>
+  <m-loadingEllipsis *ngIf="inProgress"></m-loadingEllipsis>
 
-      <ng-container *ngFor="let suggestion of recent">
+  <!-- IF SEARCH BAR IS EMPTY, DISPLAY RECENTS FROM LOCAL STORAGE -->
+  <ng-container *ngIf="!q && recent && recent.length > 0">
+    <!-- <div class="m-searchBar__toolbar">
+      <span i18n="@@SEARCH_SUGGESTIONS__SEARCH_HISTORY">
+        Search History
+      </span>
+      <span
+        class="m-searchBarSuggestions__clearResults"
+        (click)="clearHistory()"
+        i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY"
+      >
+        Clear History
+      </span>
+    </div> -->
+
+    <ng-container *ngFor="let suggestion of recent">
+      <a
+        class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--text"
+        *ngIf="suggestion.type === 'text'"
+        [routerLink]="['/discovery/search']"
+        [queryParams]="{ q: suggestion.value, f: 'top', t: 'all' }"
+      >
+        <div><i class="material-icons">search</i></div>
+        <span>{{ suggestion.value }}</span>
+      </a>
+      <ng-container
+        *ngIf="suggestion.type === 'user'"
+        [ngTemplateOutlet]="channelSuggestion"
+        [ngTemplateOutletContext]="{ suggestion: suggestion }"
+      ></ng-container>
+      <a
+        class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--publisher"
+        *ngIf="suggestion.type === 'group'"
+        [routerLink]="['/groups/profile/', suggestion.guid]"
+      >
+        <img src="{{ cdnUrl }}fs/v1/avatars/{{ suggestion.guid }}/small" />
+        <span>{{ suggestion.name }}</span>
+      </a>
+    </ng-container>
+  </ng-container>
+
+  <!-- IF SEARCH BAR HAS QUERY INPUT
+    SHOW SUGGESTED CHANNELS API RESPONSE -->
+  <ng-container *ngIf="q && !inProgress">
+    <ng-container *ngIf="suggestions.length > 0">
+      <ng-container
+        *ngFor="let suggestion of suggestions"
+        [ngTemplateOutlet]="channelSuggestion"
+        [ngTemplateOutletContext]="{ suggestion: suggestion }"
+      >
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="noResults"
+      ><div class="m-searchBarSuggestions__noResults">
+        <span
+          >We couldn't find any channels that match <b>{{ q }}</b></span
+        >
         <a
-          class="m-search-bar-suggestions-suggestion"
           [routerLink]="['/discovery/search']"
-          [queryParams]="{ q: suggestion, f: 'top', t: 'all' }"
+          [queryParams]="{ q: q, f: 'top', t: 'all' }"
+          >See discovery results instead</a
         >
-          {{ suggestion }}
-        </a>
-      </ng-container>
+      </div>
     </ng-container>
-
-    <ng-template #oldSuggestions>
-      <ng-container *ngFor="let suggestion of recent">
-        <a
-          class="m-search-bar-suggestions-suggestion"
-          *ngIf="suggestion.type == 'user'"
-          [routerLink]="['/', suggestion.username]"
-        >
-          <img src="{{ cdnUrl }}icon/{{ suggestion.guid }}/small" />
-          @{{ suggestion.username }}
-        </a>
-        <a
-          class="m-search-bar-suggestions-suggestion"
-          *ngIf="suggestion.type == 'group'"
-          [routerLink]="['/groups/profile/', suggestion.guid]"
-        >
-          <img src="{{ cdnUrl }}fs/v1/avatars/{{ suggestion.guid }}/small" />
-          {{ suggestion.name }}
-        </a>
-      </ng-container>
-    </ng-template>
   </ng-container>
-
-  <ng-container *ngIf="q">
-    <a
-      class="m-search-bar-suggestions-suggestion"
-      *ngFor="let suggestion of suggestions"
-      [routerLink]="['/', suggestion.username]"
-    >
-      <img src="{{ cdnUrl }}icon/{{ suggestion.guid }}/small" /> @{{
-        suggestion.username
-      }}
-    </a>
-  </ng-container>
-
-  <ng-container *mIfFeature="'top-feeds'; else oldSearch">
-    <!-- <ng-container *ngIf="q && currentContext">
-      <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
-        [routerLink]="['/newsfeed/global', { query: q, type: currentContext.product, id: currentContext.entity.id }]"
-      >
-        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
-      </a>
-
-      <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.product"
-        [routerLink]="['/newsfeed/global', { query: q, type: currentContext.product }]"
-      >
-        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
-      </a>
-    </ng-container>-->
-    <a
-      class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context"
-      *ngIf="!newNavigation && q"
-      [routerLink]="['/newsfeed/global/top', { query: q }]"
-    >
-      <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b>
-      <span>{{ q }}</span>
-    </a>
-  </ng-container>
-
-  <ng-template #oldSearch>
-    <ng-container *ngIf="q && currentContext">
-      <a
-        class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context"
-        *ngIf="currentContext.entity"
-        [routerLink]="[
-          '/search',
-          {
-            q: q,
-            ref: 'top-suggestion-id',
-            type: currentContext.product,
-            id: currentContext.entity.id
-          }
-        ]"
-      >
-        <b i18n="@@SEARCH_CONTEXT_COLON">
-          Search {{ currentContext.entity.label }}:
-        </b>
-        <span>{{ q }}</span>
-      </a>
-
-      <a
-        class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context"
-        *ngIf="currentContext.product"
-        [routerLink]="[
-          '/search',
-          { q: q, ref: 'top-suggestion', type: currentContext.product }
-        ]"
-      >
-        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b>
-        <span>{{ q }}</span>
-      </a>
-    </ng-container>
-
-    <a
-      class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context"
-      *ngIf="q"
-      [routerLink]="['/search', { q: q, ref: 'top' }]"
-    >
-      <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b>
-      <span>{{ q }}</span>
-    </a>
-  </ng-template>
 </div>
+
+<ng-template #channelSuggestion let-suggestion="suggestion">
+  <a
+    class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--publisher"
+    [routerLink]="['/', suggestion.username]"
+  >
+    <img src="{{ cdnUrl }}icon/{{ suggestion.guid }}/small" />
+    <div>
+      <span>{{ suggestion.name }}</span>
+      <span>@{{ suggestion.username }}</span>
+    </div>
+  </a>
+</ng-template>

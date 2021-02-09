@@ -13,12 +13,12 @@ m-analytics__search {
     }
     input {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid rgba(themed($m-black), 0.12);
       }
       &::placeholder {
         @include m-theme() {
-          color: themed($m-grey-200);
+          color: themed($m-textColor--secondary);
           font-weight: 400;
           letter-spacing: normal;
         }
@@ -105,7 +105,7 @@ m-analytics__search {
   //     position: fixed;
   //     top: 50px;
   //     width: 100%;
-  //     z-index: 500;
+  //     z-index: 1;
   //     @include m-theme() {
   //       background-color: rgba(themed($m-grey-50), 0.8);
   //     }

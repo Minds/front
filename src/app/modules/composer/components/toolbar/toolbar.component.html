@@ -9,10 +9,13 @@
       (attachment$ | async) ? 'm-composerToolbar__item--active' : ''
     ]"
     [hidden]="!canEditMetadata"
-    [disabled]="!!(attachment$ | async) || (isPosting$ | async)"
+    [disabled]="
+      !!(attachment$ | async) || (isPosting$ | async) || (isEditing$ | async)
+    "
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
     data-cy="upload-button"
+    *ngIf="!(remind$ | async)"
     #fileUploadComponent
   >
     <m-icon
@@ -37,20 +40,18 @@
   </a>
 
   <a
-    *ngIf="!legacyPaywallEnabled"
+    *ngIf="!legacyPaywallEnabled && !(remind$ | async)"
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     (click)="onMonetizeClick($event)"
     data-cy="monetize-button"
   >
-    <m-icon
-      class="m-composerToolbarItem__icon"
+    <i
+      class="m-composerToolbarItem__icon m-composerToolbarItem__icon--monetize material-icons"
       [class.m-animation__shimmer--icon]="showShimmer"
-      from="assets-file"
-      iconId="assets/icons/wire.svg"
-      [sizeFactor]="25"
-    ></m-icon>
+      >attach_money</i
+    >
     <span
       class="m-composerToolbarItem__label"
       [class.m-animation__shimmer--text]="showShimmer"
@@ -78,23 +79,32 @@
   <span class="m-composerToolbar__itemSpacer"></span>
 
   <m-button
-    class="m-composerToolbar__action"
+    class="m-composerToolbar__action m-composerToolbar__action--post"
     [disabled]="
-      (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
+      !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
     "
+    [saving]="(inProgress$ | async) || (isPosting$ | async)"
     [dropdown]="postButtonDropdown"
     [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
     (onAction)="onPost($event)"
+    size="small"
+    color="blue"
     data-cy="post-button"
   >
-    <ng-container
+    <span
       *ngIf="!(isEditing$ | async); else isEditingButtonText"
       i18n="verb|@@COMMON__POST"
-      >Post</ng-container
+      >Post</span
     >
     <ng-template #isEditingButtonText
-      ><ng-container i18n="@@COMMON__SAVE">Save</ng-container></ng-template
+      ><span i18n="@@COMMON__SAVE">Save</span></ng-template
     >
+    <span
+      class="m-composerToolbarAction__disabledOverlay"
+      *ngIf="
+        !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
+      "
+    ></span>
   </m-button>
 </div>
 

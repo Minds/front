@@ -8,8 +8,8 @@
   @include m-theme() {
     background: linear-gradient(
       to bottom,
-      rgba(themed($m-bgColor--secondary), 0) 0%,
-      rgba(themed($m-bgColor--secondary), 1) 50%
+      rgba(themed($m-bgColor--primary), 0) 0%,
+      rgba(themed($m-bgColor--primary), 1) 50%
     );
   }
 
@@ -19,6 +19,8 @@
     letter-spacing: 2px;
     font-size: 12px;
     cursor: pointer;
+    min-height: 20px;
+    display: inline-block;
     font-family: 'Roboto', Helvetica, sans-serif;
   }
 }
@@ -26,6 +28,21 @@
 .m-readMoreButton--v2 {
   text-align: center;
   box-sizing: border-box;
+
+  &.showOnlyFadeout {
+    cursor: pointer;
+    @include m-theme() {
+      background: linear-gradient(
+        to bottom,
+        rgba(themed($m-bgColor--primary), 0) 0%,
+        rgba(themed($m-bgColor--primary), 0.4) 30%,
+        rgba(themed($m-bgColor--primary), 1) 70%
+      );
+    }
+    span {
+      opacity: 0;
+    }
+  }
 
   > span {
     color: #1b85d6 !important;

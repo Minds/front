@@ -14,7 +14,8 @@ export type ChannelContentState =
   | 'banned'
   | 'disabled'
   | 'blocked'
-  | 'nsfw';
+  | 'nsfw'
+  | 'require-login';
 
 /**
  * Exception content state triggers (used in channel container)
@@ -23,6 +24,7 @@ export enum TRIGGER_EXCEPTION {
   NOT_FOUND = 'ChannelNotFoundException',
   DISABLED = 'ChannelDisabledException',
   BANNED = 'ChannelBannedException',
+  REQUIRE_LOGIN = 'RequireLoginException',
 }
 
 /**
@@ -94,6 +96,8 @@ export class ChannelContentService {
       ((channel.nsfw && channel.nsfw.length > 0) || channel.is_mature)
     ) {
       return 'nsfw';
+    } else if (channel.require_login) {
+      return 'require-login';
     }
 
     return null;

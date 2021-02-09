@@ -10,6 +10,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'm-activity__ownerBlock',
   templateUrl: 'owner-block.component.html',
+  styleUrls: ['./owner-block.component.ng.scss'],
 })
 export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   private entitySubscription: Subscription;
@@ -37,6 +38,11 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   @HostBinding('class.m-activity__ownerBlock--remind')
   get isRemindClassBinding(): boolean {
     return this.entity && !!this.entity.remind_object;
+  }
+
+  // Note: currenly ownerBlocks are only visible in minimalMode for reminds/quotes
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
   }
 
   get owner(): MindsUser {

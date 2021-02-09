@@ -12,7 +12,6 @@ import { Subscription, config } from 'rxjs';
 import { Session } from '../../../services/session';
 import { ProService } from '../pro.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { WirePaymentsCreatorComponent } from '../../wire/creator/payments/payments.creator.component';
 import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
 import {
   UpgradeOptionCurrency,
@@ -21,10 +20,13 @@ import {
 import currency from '../../../helpers/currency';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-pro--subscription',
   templateUrl: 'subscription.component.html',
+  styleUrls: ['subscription.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProSubscriptionComponent implements OnInit {
@@ -45,6 +47,10 @@ export class ProSubscriptionComponent implements OnInit {
   inProgress: boolean = false;
 
   active: boolean;
+
+  hasSubscription: boolean = false;
+
+  expires: number = 0;
 
   criticalError: boolean = false;
 
@@ -77,6 +83,7 @@ export class ProSubscriptionComponent implements OnInit {
         this.interval = params.i || 'yearly';
 
         if (params.c || params.i) {
+          this.setTokensToYearlyInterval();
           this.enable();
         }
       }
@@ -90,6 +97,8 @@ export class ProSubscriptionComponent implements OnInit {
 
     try {
       this.active = await this.service.isActive();
+      this.hasSubscription = await this.service.hasSubscription();
+      this.expires = await this.service.expires();
     } catch (e) {
       this.criticalError = true;
       this.error = (e && e.message) || 'Unknown error';
@@ -101,15 +110,6 @@ export class ProSubscriptionComponent implements OnInit {
   }
 
   async enable() {
-    if (!this.session.isLoggedIn()) {
-      localStorage.setItem(
-        'redirect',
-        `/pro?c=${this.currency}&i=${this.interval}`
-      );
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.inProgress = true;
     this.error = '';
     this.detectChanges();
@@ -117,18 +117,18 @@ export class ProSubscriptionComponent implements OnInit {
     try {
       this.overlayModal
         .create(
-          WirePaymentsCreatorComponent,
+          WireCreatorComponent,
           await this.wirePaymentHandlers.get('pro'),
           {
-            interval: this.interval,
-            currency: this.currency,
-            amount: this.upgrades.pro[this.interval][this.currency],
+            wrapperClass: 'm-modalV2__wrapper',
+            default: {
+              type: this.currency === 'usd' ? 'money' : 'tokens',
+              upgradeType: 'pro',
+              upgradeInterval: this.interval,
+            },
             onComplete: () => {
-              this.active = true;
-              this.session.getLoggedInUser().pro = true;
-              this.onEnable.emit(Date.now());
-              this.inProgress = false;
-              this.detectChanges();
+              this.paymentComplete();
+              this.overlayModal.dismiss();
             },
           }
         )
@@ -139,6 +139,7 @@ export class ProSubscriptionComponent implements OnInit {
         .present();
     } catch (e) {
       this.active = false;
+      this.hasSubscription = false;
       this.session.getLoggedInUser().pro = false;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
@@ -146,6 +147,17 @@ export class ProSubscriptionComponent implements OnInit {
     }
 
     this.detectChanges();
+  }
+
+  paymentComplete(): void {
+    this.active = true;
+    this.hasSubscription = true;
+    this.session.getLoggedInUser().plus = true;
+    this.onEnable.emit(Date.now());
+    this.inProgress = false;
+    this.detectChanges();
+
+    this.toasterService.success('Welcome to Minds Pro');
   }
 
   async disable() {
@@ -159,14 +171,12 @@ export class ProSubscriptionComponent implements OnInit {
 
     try {
       await this.service.disable();
-      this.active = false;
-      this.session.getLoggedInUser().pro = false;
+      this.hasSubscription = false;
       this.onDisable.emit(Date.now());
     } catch (e) {
-      this.active = true;
-      this.session.getLoggedInUser().pro = true;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
+      this.hasSubscription = true;
     }
 
     this.inProgress = false;
@@ -193,6 +203,33 @@ export class ProSubscriptionComponent implements OnInit {
         ),
         offerFrom: null,
       };
+    }
+  }
+
+  get expiryString(): string {
+    if (this.expires * 1000 <= Date.now()) {
+      return '';
+    }
+
+    return moment(this.expires * 1000)
+      .local()
+      .format('h:mma [on] MMM Do, YYYY');
+  }
+
+  setCurrency(currency: UpgradeOptionCurrency) {
+    this.currency = currency;
+    this.setTokensToYearlyInterval();
+  }
+
+  setInterval(interval: UpgradeOptionInterval) {
+    this.interval = interval;
+    this.setTokensToYearlyInterval();
+  }
+
+  setTokensToYearlyInterval() {
+    if (this.currency === 'tokens' && this.interval === 'monthly') {
+      this.interval = 'yearly';
+      this.toasterService.inform('Tokens can only be used on the yearly plan');
     }
   }
 

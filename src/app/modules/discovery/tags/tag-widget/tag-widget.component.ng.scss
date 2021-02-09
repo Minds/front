@@ -1,0 +1,51 @@
+@import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
+
+:host {
+  .m-discovery__tagWidget {
+    margin: $layoutTotalPadding / 2 $layoutTotalPadding 0;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      margin: $layoutTotalPadding / 2;
+      margin-bottom: 0;
+    }
+
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+
+    > span {
+      display: inline-block;
+      flex-grow: 1;
+      font-size: 24px;
+      line-height: 30px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    ::ng-deep {
+      m-discovery__tagButton {
+        margin-right: 20px;
+
+        @media screen and (max-width: $layoutMin3ColWidth) {
+          margin-right: 10px;
+        }
+
+        .m-discovery__tagButton {
+          height: 37px;
+          width: 37px;
+        }
+
+        i {
+          font-size: 23px !important;
+        }
+      }
+    }
+  }
+}

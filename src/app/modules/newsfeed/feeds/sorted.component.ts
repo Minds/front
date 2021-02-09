@@ -16,15 +16,12 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { CookieService } from '../../../common/services/cookie.service';
 import { ContextService } from '../../../services/context.service';
-import { SettingsService } from '../../settings/settings.service';
-import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { TopbarHashtagsService } from '../../hashtags/service/topbar.service';
-import { NewsfeedHashtagSelectorService } from '../services/newsfeed-hashtag-selector.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { FeaturesService } from '../../../services/features.service';
 import { isPlatformServer } from '@angular/common';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -46,13 +43,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   rating: number = 1;
 
   paramsSubscription: Subscription;
-  ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   selectionChangeSubscription: Subscription;
   hashtagFilterChangeSubscription: Subscription;
   query: string = '';
-
-  @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
     public client: Client,
@@ -63,11 +57,9 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected cookieService: CookieService,
     protected context: ContextService,
     protected session: Session,
-    protected settingsService: SettingsService,
+    protected settingsService: SettingsV2Service,
     protected overlayModal: OverlayModalService,
     protected newsfeedService: NewsfeedService,
-    protected topbarHashtagsService: TopbarHashtagsService,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
     public feedsService: FeedsService,
     protected featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -76,17 +68,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       this.rating = this.session.getLoggedInUser().boost_rating;
     }
 
-    this.ratingSubscription = settingsService.ratingChanged.subscribe(event => {
-      this.onRatingChanged(event);
-    });
-
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
-      () => {
-        this.load(true, true);
-      }
-    );
-
-    this.selectionChangeSubscription = this.topbarHashtagsService.selectionChange.subscribe(
       () => {
         this.load(true, true);
       }
@@ -129,40 +111,9 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.context.set('activity');
-
-    this.hashtagFilterChangeSubscription = this.newsfeedHashtagSelectorService.subscribe(
-      ({ type, value }) => {
-        switch (type) {
-          case 'single':
-            this.hashtag = value;
-            this.all = false;
-            this.query = '';
-            break;
-
-          case 'all':
-            this.hashtag = null;
-            this.all = true;
-            this.query = '';
-            break;
-
-          case 'preferred':
-            this.hashtag = null;
-            this.all = false;
-            this.query = '';
-            break;
-        }
-
-        this.updateSortRoute();
-      },
-      300
-    );
   }
 
   ngOnDestroy() {
-    if (this.ratingSubscription) {
-      this.ratingSubscription.unsubscribe();
-    }
-
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
@@ -173,10 +124,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     if (this.selectionChangeSubscription) {
       this.selectionChangeSubscription.unsubscribe();
-    }
-
-    if (this.hashtagFilterChangeSubscription) {
-      this.hashtagFilterChangeSubscription.unsubscribe();
     }
   }
 
@@ -252,12 +199,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
   prepend(activity: any) {
     this.prepended.unshift(activity);
-  }
-
-  onRatingChanged(rating) {
-    this.rating = rating;
-
-    this.load(true);
   }
 
   setSort(algorithm: string, period: string | null, customType: string | null) {

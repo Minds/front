@@ -8,11 +8,11 @@ m-sidebarWidget {
   box-sizing: border-box;
   padding: 0;
   padding-bottom: $sidebarSpacing;
-  border-radius: 4px;
+  border-radius: 2px;
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
-    border: 1px solid themed($m-borderColor--tertiary);
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
   }
 }
 

@@ -1,6 +1,23 @@
 m-channel__content {
   display: block;
 
+  &.m-channelContent--nsfw {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+
+    .m-channelContent--unavailable {
+      margin-top: 0;
+      padding-top: 1px;
+
+      @include m-theme() {
+        border-top: none;
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
   .m-channelContent--unavailable {
     margin: 5% 0 0;
     height: 100%;
@@ -43,21 +60,6 @@ m-channel__content {
         @include m-theme() {
           color: themed($m-link) !important;
         }
-      }
-    }
-
-    .m-channelContent__confirmButton {
-      background: transparent;
-      padding: 14px 30px;
-      border-radius: calc(1em + 40px);
-      font-size: 1.2em;
-      font-weight: 500;
-      line-height: calc(1em + 5px);
-      cursor: pointer;
-
-      @include m-theme() {
-        color: themed($m-black);
-        border: 1px solid themed($m-borderColor--primary);
       }
     }
   }

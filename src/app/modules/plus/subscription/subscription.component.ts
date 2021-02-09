@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { PlusService } from '../plus.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { WirePaymentsCreatorComponent } from '../../wire/creator/payments/payments.creator.component';
 import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
 import {
   UpgradeOptionCurrency,
@@ -25,10 +24,13 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
+import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-plus--subscription',
   templateUrl: 'subscription.component.html',
+  styleUrls: ['./subscription.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusSubscriptionComponent implements OnInit {
@@ -49,7 +51,11 @@ export class PlusSubscriptionComponent implements OnInit {
 
   active: boolean;
 
-  canBeCancelled: boolean;
+  hasSubscription: boolean = false;
+
+  expires: number = 0;
+
+  userIsPro: boolean = false;
 
   criticalError: boolean = false;
 
@@ -69,6 +75,9 @@ export class PlusSubscriptionComponent implements OnInit {
     private features: FeaturesService
   ) {
     this.upgrades = configs.get('upgrades');
+
+    const user = session.getLoggedInUser();
+    this.userIsPro = user && user.pro;
   }
 
   ngOnInit() {
@@ -84,6 +93,7 @@ export class PlusSubscriptionComponent implements OnInit {
         this.interval = params.i || 'yearly';
 
         if (params.c || params.i) {
+          this.setTokensToYearlyInterval();
           this.enable();
         }
       }
@@ -97,7 +107,8 @@ export class PlusSubscriptionComponent implements OnInit {
 
     try {
       this.active = await this.service.isActive();
-      this.canBeCancelled = await this.service.canBeCancelled();
+      this.hasSubscription = await this.service.hasSubscription();
+      this.expires = await this.service.expires();
     } catch (e) {
       this.criticalError = true;
       this.error = (e && e.message) || 'Unknown error';
@@ -109,14 +120,14 @@ export class PlusSubscriptionComponent implements OnInit {
   }
 
   async enable() {
-    if (!this.session.isLoggedIn()) {
-      localStorage.setItem(
-        'redirect',
-        `/plus?c=${this.currency}&i=${this.interval}`
-      );
-      this.router.navigate(['/login']);
-      return;
-    }
+    // if (!this.session.isLoggedIn()) {
+    //   localStorage.setItem(
+    //     'redirect',
+    //     `/plus?c=${this.currency}&i=${this.interval}`
+    //   );
+    //   this.router.navigate(['/login']);
+    //   return;
+    // }
 
     this.inProgress = true;
     this.error = '';
@@ -125,14 +136,18 @@ export class PlusSubscriptionComponent implements OnInit {
     try {
       this.overlayModal
         .create(
-          WirePaymentsCreatorComponent,
+          WireCreatorComponent,
           await this.wirePaymentHandlers.get('plus'),
           {
-            interval: this.interval,
-            currency: this.currency,
-            amount: this.upgrades.plus[this.interval][this.currency],
+            wrapperClass: 'm-modalV2__wrapper',
+            default: {
+              type: this.currency === 'usd' ? 'money' : 'tokens',
+              upgradeType: 'plus',
+              upgradeInterval: this.interval,
+            },
             onComplete: () => {
               this.paymentComplete();
+              this.overlayModal.dismiss();
             },
           }
         )
@@ -143,6 +158,7 @@ export class PlusSubscriptionComponent implements OnInit {
         .present();
     } catch (e) {
       this.active = false;
+      this.hasSubscription = false;
       this.session.getLoggedInUser().plus = false;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
@@ -154,10 +170,13 @@ export class PlusSubscriptionComponent implements OnInit {
 
   paymentComplete() {
     this.active = true;
+    this.hasSubscription = true;
     this.session.getLoggedInUser().plus = true;
     this.onEnable.emit(Date.now());
     this.inProgress = false;
     this.detectChanges();
+
+    this.toasterService.success('Welcome to Minds+');
   }
 
   async disable() {
@@ -171,14 +190,12 @@ export class PlusSubscriptionComponent implements OnInit {
 
     try {
       await this.service.disable();
-      this.active = false;
-      this.session.getLoggedInUser().plus = false;
+      this.hasSubscription = false;
       this.onDisable.emit(Date.now());
     } catch (e) {
-      this.active = true;
-      this.session.getLoggedInUser().plus = true;
       this.error = (e && e.message) || 'Unknown error';
       this.toasterService.error(this.error);
+      this.hasSubscription = true;
     }
 
     this.inProgress = false;
@@ -205,6 +222,46 @@ export class PlusSubscriptionComponent implements OnInit {
         ),
         offerFrom: null,
       };
+    }
+  }
+
+  get canHaveTrial(): boolean {
+    return (
+      this.currency === 'usd' &&
+      (this.upgrades.plus[this.interval].can_have_trial ||
+        !this.session.isLoggedIn())
+    );
+  }
+
+  get expiryString(): string {
+    if (this.expires * 1000 <= Date.now()) {
+      return '';
+    }
+
+    return moment(this.expires * 1000)
+      .local()
+      .format('h:mma [on] MMM Do, YYYY');
+  }
+
+  get upgradeButtonDisabled(): boolean {
+    const cancelledButNotExpired = !this.hasSubscription && this.active;
+    return this.userIsPro || cancelledButNotExpired;
+  }
+
+  setCurrency(currency: UpgradeOptionCurrency) {
+    this.currency = currency;
+    this.setTokensToYearlyInterval();
+  }
+
+  setInterval(interval: UpgradeOptionInterval) {
+    this.interval = interval;
+    this.setTokensToYearlyInterval();
+  }
+
+  setTokensToYearlyInterval() {
+    if (this.currency === 'tokens' && this.interval === 'monthly') {
+      this.interval = 'yearly';
+      this.toasterService.inform('Tokens can only be used on the yearly plan');
     }
   }
 

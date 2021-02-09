@@ -59,7 +59,7 @@
   box-sizing: border-box;
 
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: $max-mobile) {
@@ -89,6 +89,7 @@
   padding: 20px 40px;
   max-height: 420px;
   overflow-y: scroll;
+  overflow-y: overlay;
 }
 
 .m-modalV2__toolbar {

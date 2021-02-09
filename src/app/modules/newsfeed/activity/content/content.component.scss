@@ -58,13 +58,35 @@ m-activity__content {
       font-size: 28px;
     }
   }
+  &.m-activityContent__message--minimalMode {
+    &.m-activityContent__message--quote {
+      .m-activityContent__messageWrapper {
+        font-weight: 400;
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
+
+    .m-activityContent__messageWrapper {
+      padding: 16px $activity-padding-lr--minimalMode;
+    }
+    a {
+      font-weight: 400;
+    }
+  }
   .m-activityContent__messageWrapper {
     padding: 0px $activity-padding-lr 16px;
-  }
-}
 
-.m-activity--noOwnerBlock .m-activityContent__message {
-  padding-top: 16px;
+    .m-code-highlight {
+      overflow-x: auto;
+      font-size: 16px;
+
+      pre {
+        overflow-x: auto;
+      }
+    }
+  }
 }
 
 .m-activityContent__message,
@@ -78,7 +100,6 @@ m-activity__content {
 
   a {
     text-decoration: none;
-    // font-weight: 600;
     @include m-theme() {
       color: themed($m-blue);
     }
@@ -94,6 +115,22 @@ m-activity__content {
   margin: 0;
   .m-activityContent__descriptionWrapper {
     padding: 16px $activity-padding-lr;
+    &.m-activityContent__descriptionWrapper--minimalMode {
+      padding: 16px $activity-padding-lr--minimalMode;
+      > p {
+        line-height: 20px;
+      }
+      .m-activityContent__mediaTitle {
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 0px;
+      }
+      > p:not(.m-activityContent__mediaTitle) {
+        a {
+          font-weight: 400;
+        }
+      }
+    }
   }
   p {
     margin: 0;
@@ -105,14 +142,18 @@ m-activity__content {
 
 .m-activityContent__mediaTitle {
   &:not(.m-activityContent__mediaTitle--noDescription) {
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 25px;
+    margin-bottom: 10px;
   }
 }
 
 .m-activityContent__media--video {
   .m-videoPlayer__placeholder {
     padding-top: 56.25%;
-    height: 0;
+    height: 100%;
+    box-sizing: border-box;
   }
   &.isPaywall {
     .m-videoPlayer__placeholder {
@@ -145,17 +186,40 @@ m-activity__content {
   right: 0;
   height: calc(100% - 40px);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
   @include m-theme() {
     background: linear-gradient(
       to bottom,
-      rgba(themed($m-bgColor--secondary), 0.3) 0%,
-      rgba(themed($m-bgColor--secondary), 0.8) 30%,
-      rgba(themed($m-bgColor--secondary), 1) 70%
+      rgba(themed($m-bgColor--primary), 0) 0%,
+      rgba(themed($m-bgColor--primary), 0.3) 14%,
+      rgba(themed($m-bgColor--primary), 0.8) 44%,
+      rgba(themed($m-bgColor--primary), 1) 80%
     );
   }
 }
 
 .m-activityContent__media--richEmbed {
+  &.m-activityContent__mediaRichEmbed--minimalMode {
+    .meta {
+      padding: 20px $activity-padding-lr--minimalMode;
+      > * {
+        font-size: 15px;
+      }
+      h2 {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+      .m-blurb {
+        display: none;
+      }
+      .m-url {
+        @include m-theme() {
+          color: themed($m-textColor--secondary) !important;
+        }
+      }
+    }
+  }
   img {
     width: 100%;
     display: block;
@@ -176,7 +240,7 @@ m-activity__content {
     font-size: 15px;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-textColor--secondary) !important;
+      color: themed($m-textColor--primary) !important;
     }
   }
   .m-blurb {
@@ -187,7 +251,7 @@ m-activity__content {
     padding: 0;
     margin: 0;
     @include m-theme() {
-      color: themed($m-textColor--tertiary) !important;
+      color: themed($m-textColor--secondary) !important;
     }
   }
 
@@ -195,7 +259,7 @@ m-activity__content {
     position: relative;
     cursor: default;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
     .m-rich-embed--title {
       font-size: 18px;
@@ -220,24 +284,26 @@ m-activity__content {
   }
 
   // Fixed height remind workarounds
-  .m-activity--fixedHeight .m-activityContent__remind--hasMessage & {
-    .m-rich-embed-src {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 80px;
-      padding: 10px;
-      position: relative;
+  .m-activity--fixedHeight {
+    .m-activityContent__remind--hasMessage & {
+      .m-rich-embed-src {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 80px;
+        padding: 10px;
+        position: relative;
 
-      .thumbnail {
-        width: 30%;
-        img {
-          height: 80px;
-          border-radius: 4px;
+        .thumbnail {
+          width: 30%;
+          img {
+            height: 80px;
+            border-radius: 4px;
+          }
         }
-      }
-      .meta {
-        flex: 1;
+        .meta {
+          flex: 1;
+        }
       }
     }
   }
@@ -245,4 +311,30 @@ m-activity__content {
 
 .m-activityContent__remind {
   padding: 0 $activity-padding-lr 16px;
+
+  &.m-activityContent__remind--minimalMode {
+    padding: 0;
+    .m-activityContent__messageWrapper {
+      padding-top: 0;
+    }
+
+    m-activity__remind {
+      @include m-theme() {
+        border: none;
+      }
+      font-weight: 400;
+      a {
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.m-activity--minimalMode {
+  .m-activityContent--paywalledStatus {
+    padding-top: 30px;
+  }
+  .m-videoPlayer__placeholder i {
+    font-size: 70px;
+  }
 }

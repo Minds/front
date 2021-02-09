@@ -2,7 +2,7 @@ m-composer__popup {
   display: block;
   position: absolute;
   border-radius: 5px;
-  z-index: 99999999;
+  z-index: 1;
 
   &.m-composer__popup--open {
     display: block;
@@ -27,7 +27,7 @@ m-composer__popup {
   left: 0;
   right: 0;
   bottom: auto;
-  min-height: 477px;
+  min-height: 360px; // Why is this needed?
   max-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
@@ -36,7 +36,7 @@ m-composer__popup {
   transform: translateY(-50%);
 
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
+    background: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: $max-mobile) {
@@ -220,7 +220,7 @@ m-composer__popup {
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
-        background: themed($m-bgColor--secondary);
+        background: themed($m-bgColor--primary);
       }
     }
 
@@ -234,7 +234,7 @@ m-composer__popup {
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
-        background: themed($m-bgColor--secondary);
+        background: themed($m-bgColor--primary);
       }
 
       &[disabled] {

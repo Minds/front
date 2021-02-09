@@ -30,6 +30,18 @@
     }
   }
 
+  .m-upgrades__upgradeNowBtn {
+    display: block;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-left: 30px;
+      margin-bottom: 20px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+
   m-upgrades__upgradeOptions {
     margin-bottom: 110px;
 

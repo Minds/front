@@ -41,7 +41,7 @@
     class="m-shadowboxHeaderTab__value"
     *ngIf="tab?.isLocalCurrency && (tab.value || tab.value === 0)"
   >
-    {{ tab.value | number: '1.0-3' | currency: tab.label }}
+    {{ tab.value | currency: tab.label }}
   </div>
   <div
     class="m-shadowboxHeaderTab__value"

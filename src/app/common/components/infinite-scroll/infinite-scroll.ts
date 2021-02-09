@@ -15,36 +15,34 @@ import { Subscription } from 'rxjs';
   selector: 'infinite-scroll',
   template: `
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
-    <div
-      class="m-infinite-scroll-manual"
-      [class.m-infinite-scroll-manual__loadMore]="!iconOnly"
-      [class.mdl-color--blue-grey-200]="!iconOnly"
-      [class.mdl-color-text--blue-grey-500]="!iconOnly"
-      [hidden]="inProgress || !moreData"
-      (click)="manualLoad()"
-      *ngIf="!hideManual"
-    >
-      <ng-container
-        i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
-        *ngIf="!iconOnly"
-        >Click to load more</ng-container
-      >
 
-      <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_down</i>
-    </div>
-    <div
-      class="m-infinite-scroll-manual"
-      [class.m-infinite-scroll-manual__noMore]="!iconOnly"
-      [class.mdl-color--blue-grey-200]="!iconOnly"
-      [class.mdl-color-text--blue-grey-500]="!iconOnly"
-      [hidden]="moreData"
-      *ngIf="!hideManual"
-    >
-      <ng-container i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
-        >Nothing more to load</ng-container
+    <ng-container *ngIf="!iconOnly && !hideManual">
+      <m-button
+        *ngIf="!inProgress"
+        [disabled]="!moreData"
+        (onAction)="manualLoad()"
       >
-    </div>
+        <ng-container
+          i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
+          *ngIf="moreData"
+          >Load more</ng-container
+        >
+
+        <ng-container
+          i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
+          *ngIf="!moreData"
+          >Nothing more to load</ng-container
+        >
+      </m-button>
+    </ng-container>
+
+    <ng-container *ngIf="iconOnly && moreData && !inProgress">
+      <i class="material-icons" *ngIf="iconOnly" (click)="manualLoad()"
+        >keyboard_arrow_down</i
+      >
+    </ng-container>
   `,
+  styleUrls: ['./infinite-scroll.ng.scss'],
 })
 export class InfiniteScroll {
   @Input() on: any;

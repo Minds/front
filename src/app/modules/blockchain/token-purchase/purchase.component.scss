@@ -8,7 +8,7 @@ m-blockchain--purchase {
     opacity: 0.7;
 
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
   .m-purchase-sendWyre__errorContainer {
@@ -32,7 +32,7 @@ m-blockchain--purchase {
 
   @include m-theme() {
     background: themed($m-white);
-    color: themed($m-black);
+    color: themed($m-textColor--primary);
   }
 
   @media screen and (max-width: $m-grid-min-vp) {
@@ -56,7 +56,7 @@ m-blockchain--purchase {
       margin-right: 0.1em;
 
       @include m-theme() {
-        color: themed($m-grey-300);
+        color: themed($m-textColor--primary);
       }
     }
 
@@ -73,6 +73,9 @@ m-blockchain--purchase {
       width: 5em;
       text-align: right;
 
+      /* style as textfield for firefox **/
+      -moz-appearance: textfield;
+
       @media screen and (max-width: $m-grid-min-vp) {
         width: 4em;
       }
@@ -82,7 +85,7 @@ m-blockchain--purchase {
       }
 
       @include m-theme() {
-        color: themed($m-black);
+        background-color: themed($m-bgColor--primary);
         box-shadow: 0 1px 0 rgba(themed($m-black), 0.1);
 
         &:focus {
@@ -94,13 +97,7 @@ m-blockchain--purchase {
 
   .m-blockchainTokenPurchase__ethTotal {
     @include m-theme() {
-      color: themed($m-grey-300);
-    }
-
-    .m-blockchainTokenPurchaseEthTotal__value {
-      @include m-theme() {
-        color: themed($m-black);
-      }
+      color: themed($m-textColor--tertiary);
     }
   }
 }
@@ -110,10 +107,11 @@ m-blockchain--purchase {
   margin: 24px 0 0;
 
   @include m-theme() {
-    color: themed($m-grey-300);
+    color: themed($m-textColor--tertiary);
   }
 
   a {
     cursor: pointer;
+    text-decoration: none;
   }
 }

@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
 import { ThemeService } from '../../../services/theme.service';
-import { MockComponent } from '../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IfFeatureDirective } from '../../../directives/if-feature.directive';
 import { FeaturesService } from '../../../../services/features.service';
 import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
 import { themeServiceMock } from '../../../../mocks/common/services/theme.service-mock.spec';
 import { By } from '@angular/platform-browser';
+import { UserMenuService } from './user-menu.service';
+import { userMenuServiceMock } from './user-menu.service-mock.spec';
 
 describe('UserMenuV3Component', () => {
   let comp: UserMenuV3Component;
@@ -36,6 +38,7 @@ describe('UserMenuV3Component', () => {
           provide: ThemeService,
           useValue: themeServiceMock,
         },
+        { provide: UserMenuService, useValue: userMenuServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -45,7 +48,6 @@ describe('UserMenuV3Component', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    featuresServiceMock.mock('helpdesk', true);
     featuresServiceMock.mock('settings-referrals', true);
 
     fixture = TestBed.createComponent(UserMenuV3Component);

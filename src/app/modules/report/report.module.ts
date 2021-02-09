@@ -19,6 +19,7 @@ import { StrikesComponent } from './strikes/strikes.component';
 import { BannedService } from './banned/banned.service';
 import { BannedComponent } from './banned/banned.component';
 import { ModerationAppealComponent } from './console/appeal.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 @NgModule({
   imports: [
@@ -28,13 +29,14 @@ import { ModerationAppealComponent } from './console/appeal.component';
     CommonModule,
     LegacyModule,
     CommentsModule,
+    MarketingModule,
     RouterModule.forChild([
       //{ path: 'moderation',  redirectTo: '/content-policy' },
       {
         path: 'content-policy',
         component: ReportsMarketingComponent,
         data: {
-          title: 'The Jury System',
+          title: 'Content Policy',
           description:
             'The goal of Minds is to have fair, transparent and ethical moderation practices',
           ogImage: '/assets/photos/canyon.jpg',

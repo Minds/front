@@ -14,10 +14,10 @@
     justify-content: flex-end;
     align-items: center;
 
-    m-shadowboxSubmitButton {
+    m-button {
       margin-top: 8px;
       margin: 8px 0 0 18px;
-      .m-shadowboxSubmitButton {
+      .m-button {
         min-height: 42px;
         width: 100%;
       }
@@ -120,7 +120,7 @@
     padding: 18px 0 30px 0;
     hr {
       @include m-theme() {
-        color: themed($m-borderColor--secondary);
+        color: themed($m-borderColor--primary);
       }
     }
   }
@@ -167,14 +167,10 @@
 
         &.hasUnitLabel {
           align-items: center;
-          @include m-theme() {
-            box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-          }
           input {
             min-width: 0;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
-            box-shadow: none !important;
           }
           span {
             padding: 10px;
@@ -278,7 +274,7 @@
     min-height: 42px;
     appearance: none;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
@@ -332,7 +328,7 @@
       transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       @include m-theme() {
         color: themed($m-textColor--primary);
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
       }
       > div {
@@ -411,7 +407,6 @@
   input[type='file'] {
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
-      box-shadow: 0 0 0 0 rgba(themed($m-black), 0) !important;
       border: 1px solid rgba(themed($m-black), 0) !important;
     }
     &:focus {
@@ -441,7 +436,6 @@
     border-radius: 2px;
     transition: background-color 0.2s ease;
     @include m-theme() {
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       border: 1px solid themed($m-borderColor--primary);
     }
     input {
@@ -504,7 +498,6 @@
   select {
     border-radius: 2px;
     @include m-theme() {
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       border: 1px solid themed($m-borderColor--primary);
     }
     &:focus {
@@ -531,11 +524,11 @@
 
     @include m-theme() {
       color: themed($m-textColor--primary) !important;
-      background-color: themed($m-bgColor--secondary) !important;
+      background-color: themed($m-bgColor--primary) !important;
     }
     &::placeholder {
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -581,6 +574,16 @@
       margin: 0 20px 10px 0;
       padding-left: 40px;
     }
+    &[class*='disabled'] {
+      @include m-theme() {
+        color: rgba(themed($m-textColor--tertiary), 0.8);
+      }
+      .m-form__customInput__radio:after {
+        @include m-theme() {
+          border-color: rgba(themed($m-textColor--tertiary), 0.6) !important;
+        }
+      }
+    }
 
     input {
       position: absolute;
@@ -609,13 +612,13 @@
       width: 20px;
       transition: all 0.3s ease;
       @include m-theme() {
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primary);
         border: 1px solid themed($m-borderColor--primary);
       }
       &[class*='__checkbox'] {
         border-radius: 2px;
         @include m-theme() {
-          background-color: themed($m-bgColor--secondary);
+          background-color: themed($m-bgColor--primary);
         }
         &:after {
           left: 7px;
@@ -632,7 +635,7 @@
       &[class*='__radio'] {
         border-radius: 50%;
         @include m-theme() {
-          background-color: themed($m-grey-50);
+          background-color: themed($m-borderColor--primary);
         }
         &:after {
           border-radius: 50%;
@@ -667,7 +670,7 @@
     @media screen and (max-width: $max-mobile) {
       width: 100%;
     }
-    m-shadowboxSubmitButton {
+    m-button {
       margin: 8px 0 0 18px;
       &:first-child {
         margin-left: 0px;
@@ -676,7 +679,7 @@
       @media screen and (max-width: $max-mobile) {
         width: 100%;
         margin: 8px 0 0 0;
-        .m-shadowboxSubmitButton {
+        .m-button {
           width: 100%;
         }
       }
@@ -701,10 +704,6 @@
       margin-left: 12px;
       font-weight: 300;
       letter-spacing: 1px;
-      @include m-theme() {
-        background-color: themed($m-blue);
-        color: themed($m-white);
-      }
     }
   }
   ////////////////////////////////////////////
@@ -778,7 +777,7 @@
   font-size: 14px;
   width: 100%;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--primary) !important;
     color: rgba(themed($m-textColor--primary), 0.87) !important;
   }

@@ -1,0 +1,124 @@
+m-walletBalance--cash {
+  display: block;
+  max-width: 680px;
+  > * {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 20px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+  .m-walletBalance--cash__colContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+  }
+
+  .m-walletBalance--cash__colTitle {
+    position: relative;
+    margin-top: 8px;
+    m-tooltip {
+      position: relative;
+      margin-left: 4px;
+      .m-tooltip {
+        margin: 0;
+      }
+    }
+    .m-tooltip--bubble {
+      bottom: 18px;
+      margin-left: 12px;
+      min-width: 100px;
+    }
+    &:first-child {
+      .m-tooltip--bubble {
+        min-width: 200px;
+      }
+    }
+  }
+  .m-walletBalance--cash__col:last-child {
+    .m-walletBalance--cash__colTitle {
+      .m-tooltip--bubble {
+        position: absolute;
+        min-width: 140px;
+        right: -64px;
+      }
+    }
+  }
+
+  .m-walletBalance--cash__col {
+    max-width: 200px;
+    margin: 0 18px 16px 0;
+    .m-walletBalance--cash__colTitle {
+      font-size: 16px;
+      line-height: 21px;
+      min-width: 78px;
+    }
+
+    .m-walletBalance--cash__colVal--int {
+      font-size: 24px;
+      line-height: 32px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    .m-walletBalance--cash__colVal--frac {
+      font-size: 17px;
+      line-height: 23px;
+    }
+    .m-walletBalance--cash__colSubtitle {
+      p,
+      a {
+        font-size: 13px;
+        line-height: 15px;
+      }
+      p {
+        margin: 4px 0 0 0;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      p:first-child {
+        margin-top: 12px;
+      }
+      a {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .m-walletBalance--cash__colValWrapper {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 500;
+    margin-top: 8px;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  // ONBOARDING NOTICE ///////////////////////////
+  .m-walletBalance---cash__onboardingNotice {
+    margin-bottom: 30px;
+    padding: 20px 23px;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    p {
+      font-size: 13px;
+      line-height: 18px;
+      margin: 0;
+    }
+    a {
+      font-size: 14px;
+      line-height: 19px;
+      margin: 0 0 3px 0;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

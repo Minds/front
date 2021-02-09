@@ -1,0 +1,26 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingsV2__plusFeatureTag {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    display: inline-block;
+    margin-left: 15px;
+    @include m-theme() {
+      color: themed($m-amber-dark);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      margin-left: 4px;
+    }
+  }
+
+  .m-formWrapper .m-form__fieldsContainer {
+    [class*='m-form__field'] {
+      &:not(:last-child) {
+        margin-bottom: 50px;
+      }
+    }
+  }
+}

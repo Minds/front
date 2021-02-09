@@ -1,3 +1,9 @@
+<div class="m-app__loadingContainer" *ngIf="!ready">
+  <img
+    class="m-app__loadingLogo"
+    src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
+  />
+</div>
 <ng-container m-clientMeta *ngIf="ready">
   <ng-container *ngIf="!isProDomain">
     <m-topbarwrapper></m-topbarwrapper>

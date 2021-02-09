@@ -1,0 +1,10 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep {
+    m-button {
+      display: inline-block;
+      margin-right: 0;
+    }
+  }
+}

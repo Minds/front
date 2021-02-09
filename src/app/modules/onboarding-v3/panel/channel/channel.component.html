@@ -1,0 +1,53 @@
+<m-loadingSpinner [inProgress]="preloading$ | async"></m-loadingSpinner>
+
+<form
+  *ngIf="!(preloading$ | async)"
+  [formGroup]="form"
+  class="m-onboardingChannel__form"
+>
+  <label
+    class="m-onboardingChannel__label"
+    i18n="@@ONBOARDING_CHANNEL__DISPLAY_NAME"
+    >Display Name</label
+  >
+  <input
+    class="m-onboardingChannel__input"
+    formControlName="name"
+    placeholder="e.g. John Smith"
+    data-cy="data-minds-onboarding-channel-name"
+  />
+
+  <label
+    class="m-onboardingChannel__label"
+    i18n="about me section|@@ONBOARDING_CHANNEL__BIO"
+    >Bio</label
+  >
+  <textarea
+    class="m-onboardingChannel__textarea"
+    formControlName="bio"
+    data-cy="data-minds-onboarding-channel-bio"
+  ></textarea>
+
+  <label class="m-onboardingChannel__label" i18n="@@ONBOARDING_CHANNEL__AVATAR"
+    >Avatar</label
+  >
+  <div
+    class="m-onboardingChannel__avatarContainer"
+    [ngStyle]="{ backgroundImage: avatarSrc$ | async }"
+  >
+    <label
+      for="channel-v2-edit-avatar"
+      class="m-onboardingChannel__avatarLabel"
+    >
+      <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+      <input
+        id="channel-v2-edit-avatar"
+        type="file"
+        accept="image/*"
+        (change)="uploadAvatar(avatarFile)"
+        #avatarFile
+        data-cy="data-minds-onboarding-channel-avatar"
+      />
+    </label>
+  </div>
+</form>

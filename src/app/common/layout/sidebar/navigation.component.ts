@@ -23,7 +23,13 @@ import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
-
+import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
+import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
+import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
+import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
+import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
@@ -42,6 +48,7 @@ export class SidebarNavigationComponent
   groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
+  showLabels: boolean = false;
 
   settingsLink: string = '/settings';
 
@@ -65,7 +72,13 @@ export class SidebarNavigationComponent
     @Inject(PLATFORM_ID) private platformId: Object,
     private featuresService: FeaturesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userMenu: UserMenuService,
+    private buyTokensModalService: BuyTokensModalService,
+    private web3WalletService: Web3WalletService,
+    private uniswapModalService: UniswapModalService,
+    private earnModalService: EarnModalService,
+    private overlayModal: OverlayModalService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -91,9 +104,7 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
-    if (this.featuresService.has('navigation')) {
-      this.settingsLink = '/settings';
-    }
+    this.settingsLink = '/settings';
   }
 
   ngAfterViewInit() {
@@ -141,6 +152,22 @@ export class SidebarNavigationComponent
     }
   }
 
+  async buyTokens() {
+    this.toggle();
+    await this.web3WalletService.getCurrentWallet(true);
+    await this.buyTokensModalService.open();
+  }
+
+  async openEarnModal() {
+    this.toggle();
+    await this.earnModalService.open();
+  }
+
+  async openBoostModal() {
+    const creator = this.overlayModal.create(BoostCreatorComponent, this.user);
+    creator.present();
+  }
+
   setVisible(value: boolean): void {
     this.hidden = !value;
 
@@ -153,14 +180,24 @@ export class SidebarNavigationComponent
     }
   }
 
+  /**
+   * Closes the user menu if it's open
+   */
+  onSidebarNavClick(): void {
+    this.userMenu.isOpen$.next(false);
+  }
+
   @HostListener('window:resize')
   onResize() {
-    if (window.innerWidth > 1000) {
+    this.showLabels = window.innerWidth >= 1220 ? true : false;
+
+    if (window.innerWidth > 1040) {
       this.layoutMode = 'desktop';
-    } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {
+    } else if (window.innerWidth >= 480) {
       this.layoutMode = 'tablet';
     } else {
       this.layoutMode = 'phone';
+      this.showLabels = true;
     }
 
     if (this.layoutMode !== 'phone') {
@@ -168,7 +205,7 @@ export class SidebarNavigationComponent
     }
 
     if (this.groupsSidebar) {
-      this.groupsSidebar.showLabels = this.layoutMode !== 'tablet';
+      this.groupsSidebar.showLabels = this.showLabels;
     }
   }
 }

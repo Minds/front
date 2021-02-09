@@ -5,7 +5,7 @@
   cursor: pointer;
   flex-direction: column;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-blog--tile-thumbnail-wrapper {

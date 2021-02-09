@@ -26,12 +26,12 @@
     </div>
 
     <div class="mdl-card__supporting-text m-signup-buttons">
-      <button class="m-btn m-btn--action m-btn--slim" (click)="do('login')">
+      <m-button (onAction)="do('login')" size="small" color="blue">
         Login
-      </button>
-      <button class="m-btn m-btn--action m-btn--slim" (click)="do('register')">
+      </m-button>
+      <m-button (onAction)="do('register')" size="small" color="blue">
         Register
-      </button>
+      </m-button>
     </div>
 
     <div class="mdl-card__supporting-text m-modal-signup-apps">

@@ -1,5 +1,8 @@
 m-composer {
+  // new stacking context
   position: relative;
+  z-index: 0;
+
   display: block;
   margin-bottom: 16px;
   // padding: 29px 0 34px;
@@ -7,8 +10,8 @@ m-composer {
   box-sizing: border-box;
 
   @include m-theme() {
-    background: themed($m-bgColor--secondary);
-    border: 1px solid themed($m-borderColor--tertiary);
+    background: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
   }
 
   @media screen and (max-width: $max-mobile) {
@@ -37,6 +40,6 @@ m-composer {
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 10;
+    z-index: 1;
   }
 }

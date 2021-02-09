@@ -16,10 +16,8 @@ import { RecentService } from '../../../services/ux/recent';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
-import { GroupsProfileLegacyFeed } from './feed/legacy';
 import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
-import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { filter, map, startWith, throttle } from 'rxjs/operators';
@@ -63,10 +61,6 @@ export class GroupsProfile {
   socketRoomName: string;
   newConversationMessages: boolean = false;
 
-  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector')
-  hashtagsSelector: HashtagsSelectorComponent;
-
   private reviewCountInterval: any;
   private socketSubscription: any;
   private videoChatActiveSubscription;
@@ -96,7 +90,7 @@ export class GroupsProfile {
     private pageLayoutService: PageLayoutService,
     protected toasterService: FormToastService
   ) {
-    this.hasNewNavigation = featuresService.has('navigation');
+    this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
@@ -291,9 +285,11 @@ export class GroupsProfile {
     if (!this.group) {
       return;
     }
-    this.recent
-      .store('recent', this.group, entry => entry.guid == this.group.guid)
-      .splice('recent', 50);
+    this.recent.storeSuggestion(
+      'publisher',
+      this.group,
+      entry => entry.guid === this.group.guid
+    );
   }
 
   filterToDefaultView() {
@@ -364,8 +360,7 @@ export class GroupsProfile {
   }
 
   canDeactivate() {
-    if (!this.feed) return true;
-    return this.feed.canDeactivate();
+    return true;
   }
 
   joinCommentsSocketRoom(keepAlive: boolean = false) {

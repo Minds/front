@@ -22,7 +22,6 @@ import { CommonModule } from '../../common/common.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { LegacyModule } from '../legacy/legacy.module';
-import { BlogModule } from '../blogs/blog.module';
 import { GroupsModule } from '../groups/groups.module';
 import { FormsModule } from '@angular/forms';
 import { CommentsModule } from '../comments/comments.module';
@@ -44,7 +43,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     LegacyModule,
-    BlogModule,
     GroupsModule,
     CommentsModule,
     ActivityModule,

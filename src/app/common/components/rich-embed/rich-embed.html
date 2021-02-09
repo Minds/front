@@ -1,9 +1,14 @@
-<!-- TYPE: SRC ------------------------------->
+<!-- ----------------------------------- -->
+<!-- TYPE: SRC -->
+<!-- ----------------------------------- -->
 <div
   class="m-rich-embed-src"
   *ngIf="src && type == 'src'"
   [ngClass]="{ 'm-has-inline-embed': hasInlineContentLoaded() }"
 >
+  <!-- ----------------------------------- -->
+  <!-- MEDIA -->
+  <!-- ----------------------------------- -->
   <a
     [href]="src.perma_url"
     class="thumbnail"
@@ -13,30 +18,37 @@
     rel="noopener nofollow ugc"
     *ngIf="src.thumbnail_src || inlineEmbed"
   >
-    <div
-      class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
-      *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
-      [mdl]
-    ></div>
-
+    <!-- ----------------------------------- -->
+    <!-- LOADING ANIMATION -->
+    <!-- ----------------------------------- -->
+    <ng-container *ngIf="!_isModal">
+      <div
+        class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
+        *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
+        [mdl]
+      ></div>
+    </ng-container>
+    <!-- ---- -->
     <img
       *ngIf="!cropImage && (src.thumbnail_src || !inlineEmbed)"
       [hidden]="hasInlineContentLoaded()"
       [src]="src.thumbnail_src"
       (error)="src.thumbnail_src = null"
     />
+    <!-- ---- -->
     <div
       class="m-rich-embed-thumbnail-wrapper"
       *ngIf="cropImage && (src.thumbnail_src || !inlineEmbed)"
       [hidden]="hasInlineContentLoaded()"
       [ngStyle]="{ 'background-image': 'url(' + src.thumbnail_src + ')' }"
     ></div>
+    <!-- ---- -->
     <div
       class="m-rich-embed-thumbnail-wrapper m-rich-embed-thumbnail-placeholder"
       *ngIf="!src.thumbnail_src"
       [hidden]="hasInlineContentLoaded()"
     ></div>
-
+    <!-- ---- -->
     <div
       *ngIf="!embeddedInline && inlineEmbed"
       class="m-rich-embed-action-overlay"
@@ -47,11 +59,15 @@
         >file_download</i
       >
     </div>
+    <!-- ---- -->
 
     <div *ngIf="hasInlineContentLoaded()" [class]="inlineEmbed.className">
       <div [outerHTML]="inlineEmbed.html"></div>
     </div>
   </a>
+  <!-- ----------------------------------- -->
+  <!-- TITLE/BLURB -->
+  <!-- ----------------------------------- -->
   <a
     [href]="src.perma_url"
     target="_blank"
@@ -72,8 +88,11 @@
     <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
   </a>
 </div>
-<!-- TYPE: PREVIEW ------------------------------->
-<!-- (Currently used in comments) ---------------->
+<!-- ----------------------------------- -->
+<!-- TYPE: PREVIEW -->
+<!-- (Currently used in comments) -->
+<!-- ----------------------------------- -->
+
 <div class="m-rich-embed-preview" *ngIf="preview && type == 'preview'">
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img src="{{preview.thumbnail}}" />

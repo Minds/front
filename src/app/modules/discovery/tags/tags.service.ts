@@ -11,6 +11,8 @@ export type DiscoveryTag = any;
 export class DiscoveryTagsService {
   tags$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   trending$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+  foryou$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+  activityRelated$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   other$: Observable<DiscoveryTag[]> = combineLatest(
     this.tags$,
     this.trending$
@@ -58,7 +60,7 @@ export class DiscoveryTagsService {
   ) {}
 
   // TODOPLUS add optional 'plus' bool input
-  async loadTags(refresh = false) {
+  async loadTags(refresh = false, entityGuid = null) {
     this.inProgress$.next(true);
 
     if (isPlatformServer(this.platformId)) return;
@@ -67,11 +69,45 @@ export class DiscoveryTagsService {
       this.tags$.next([]);
       this.trending$.next(null);
       this.remove$.next([]);
+      this.activityRelated$.next(null);
     }
-    const response: any = await this.client.get('api/v3/discovery/tags');
-    this.inProgress$.next(false);
-    this.tags$.next(response.tags);
-    this.trending$.next(response.trending);
+
+    let endpoint = 'api/v3/discovery/tags',
+      params = entityGuid ? { entity_guid: entityGuid } : {};
+
+    try {
+      const response: any = await this.client.get(endpoint, params);
+
+      this.tags$.next(response.tags);
+      this.trending$.next(response.trending);
+
+      this.foryou$.next(
+        response.for_you
+          ? response.for_you.map(tag => {
+              return {
+                value: tag.hashtag,
+                posts_count: tag.volume,
+                selected: tag.selected,
+              };
+            })
+          : response.default
+      );
+
+      this.activityRelated$.next(
+        response.activity_related
+          ? response.activity_related.map(tag => {
+              return {
+                value: tag.hashtag,
+                posts_count: tag.volume,
+                selected: tag.selected,
+              };
+            })
+          : null
+      );
+    } catch (err) {
+    } finally {
+      this.inProgress$.next(false);
+    }
   }
 
   addTag(tag: DiscoveryTag): void {
@@ -89,6 +125,16 @@ export class DiscoveryTagsService {
 
     this.tags$.next(selected);
     this.remove$.next([...this.remove$.value, tag]);
+  }
+
+  async addSingleTag(tag: DiscoveryTag): Promise<boolean> {
+    this.addTag(tag);
+    return await this.saveTags();
+  }
+
+  async removeSingleTag(tag: DiscoveryTag): Promise<boolean> {
+    this.removeTag(tag);
+    return await this.saveTags();
   }
 
   async saveTags(): Promise<boolean> {

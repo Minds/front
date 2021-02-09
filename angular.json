@@ -24,6 +24,9 @@
           "fr": {
             "translation": "src/locale/Minds.fr.xliff"
           },
+          "hi": {
+            "translation": "src/locale/Minds.hi.xliff"
+          },
           "it": {
             "translation": "src/locale/Minds.it.xliff"
           },
@@ -79,6 +82,7 @@
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
+              "node_modules/highlight.js/styles/github.css",
               "src/main.css"
             ],
             "scripts": [
@@ -202,6 +206,85 @@
               ],
               "sourceMap": false,
               "optimization": true
+            }
+          }
+        }
+      }
+    },
+    "minds-embed": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/embed",
+            "index": "src/app/modules/embed/embed.html",
+            "baseHref": "/embed-static/",
+            "main": "src/app/modules/embed/main.ts",
+            "tsConfig": "src/app/modules/embed/tsconfig.json",
+            "polyfills": "src/polyfills.ts",
+            "extractCss": true,
+            "aot": true,
+            "outputHashing": "bundles",
+            "localize": ["en"],
+            "assets": ["src/favicon.ico"],
+            "styles": ["node_modules/plyr/dist/plyr.css", "src/main.css"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/stylesheets"]
+            }
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "localize": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "minds-embed:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "minds-embed:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "minds-embed:build:hmr"
             }
           }
         }

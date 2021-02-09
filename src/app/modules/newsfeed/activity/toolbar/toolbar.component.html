@@ -1,10 +1,8 @@
 <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
 <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
 
-<minds-button-remind
-  [object]="entity"
-  *ngIf="allowReminds"
-></minds-button-remind>
+<m-activity__remindButton *ngIf="allowReminds"> </m-activity__remindButton>
+
 <minds-button-comment
   [object]="entity"
   (click)="toggleComments()"
@@ -28,7 +26,7 @@
     class="m-btn m-btn--slim m-boostButton"
     (click)="openBoostModal($event)"
   >
-    <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
     <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
+    <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
   </button>
 </ng-container>

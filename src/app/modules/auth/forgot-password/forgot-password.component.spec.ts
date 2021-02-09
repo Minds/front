@@ -24,6 +24,7 @@ import { Client } from '../../../services/api/client';
 import { MockDirective, MockService } from '../../../utils/mock';
 import { RegexService } from '../../../common/services/regex.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 @Component({
   selector: '',
@@ -44,13 +45,13 @@ describe('ForgotPasswordComponent', () => {
 
   function getContinueButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.m-forgot-password--step-1 button')
+      By.css('.m-forgot-password--step-1 m-button button')
     );
   }
 
   function getResetButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.m-forgot-password--step-3 button')
+      By.css('.m-forgot-password--step-3 m-button button')
     );
   }
 
@@ -68,6 +69,7 @@ describe('ForgotPasswordComponent', () => {
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         BlankComponent,
         ForgotPasswordComponent,
+        ButtonComponent,
       ],
       imports: [
         RouterTestingModule.withRoutes([

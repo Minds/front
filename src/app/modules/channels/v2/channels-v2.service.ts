@@ -51,6 +51,11 @@ export class ChannelsV2Service {
   readonly rating$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 
   /**
+   * Seed status
+   */
+  readonly seed$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+
+  /**
    * Tokens the channel received in the last period
    */
   readonly tokens$: Observable<number>;
@@ -248,6 +253,7 @@ export class ChannelsV2Service {
     this.email$.next(channel ? channel.email : null);
     this.nsfw$.next(channel ? channel.nsfw : []);
     this.rating$.next(channel ? channel.rating : 1);
+    this.seed$.next(channel ? channel.seed : null);
     return this;
   }
 }

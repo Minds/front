@@ -1,3 +1,4 @@
+<m-emailConfirmation></m-emailConfirmation>
 <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
   <div
     class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
@@ -18,24 +19,13 @@
 
   <div class="minds-list">
     <ng-container *ngFor="let preActivity of prepended">
-      <ng-container *mIfFeature="'navigation'; else legacyActivity">
-        <m-activity
-          [entity]="preActivity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true
-          }"
-        ></m-activity>
-      </ng-container>
-      <ng-template #legacyActivity>
-        <minds-activity
-          [object]="preActivity"
-          [boostToggle]="preActivity.boostToggle"
-          (deleted)="delete(preActivity)"
-          [showRatingToggle]="true"
-          class="mdl-card m-border item"
-          [attr.minds-data-activity-guid]="preActivity.guid"
-        ></minds-activity>
-      </ng-template>
+      <m-activity
+        [entity]="preActivity"
+        [displayOptions]="{
+          showOnlyCommentsInput: true
+        }"
+        (deleted)="delete(preActivity)"
+      ></m-activity>
     </ng-container>
 
     <ng-container *mIfFeature="'boost-rotator'">
@@ -54,28 +44,15 @@
         [slot]="i + 1"
       ></m-featured-content>
 
-      <ng-container *mIfFeature="'navigation'; else legacyActivity">
-        <m-activity
-          *ngIf="activity$ | async as activity"
-          [entity]="activity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true
-          }"
-          [slot]="i + 1"
-        ></m-activity>
-      </ng-container>
-      <ng-template #legacyActivity>
-        <minds-activity
-          *ngIf="activity$ | async as activity"
-          class="mdl-card m-border item"
-          [object]="activity"
-          [boostToggle]="activity.boostToggle"
-          (deleted)="delete($event)"
-          [showRatingToggle]="true"
-          [slot]="i + 1"
-          [attr.data-minds-activity-guid]="activity.guid"
-        ></minds-activity>
-      </ng-template>
+      <m-activity
+        *ngIf="activity$ | async as activity"
+        [entity]="activity"
+        [displayOptions]="{
+          showOnlyCommentsInput: true
+        }"
+        [slot]="i + 1"
+        (deleted)="delete(activity)"
+      ></m-activity>
     </ng-container>
 
     <infinite-scroll

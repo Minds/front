@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { WireService } from '../../wire.service';
 import { WireV2Service } from '../wire-v2.service';
-import { WalletV2Service } from '../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../wallet/components/wallet-v2.service';
 import { SupportTiersService } from '../support-tiers.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -95,7 +95,9 @@ export class WireCreatorComponent implements OnDestroy {
       if (defaultValues.upgradeType) {
         this.service.setIsUpgrade(true);
         this.service.setUpgradeType(defaultValues.upgradeType);
-        this.service.setUpgradeInterval('yearly');
+        this.service.setUpgradeInterval(
+          defaultValues.upgradeInterval || 'yearly'
+        );
         return;
       }
       this.service.setAmount(parseFloat(defaultValues.min || '0'));
@@ -110,7 +112,7 @@ export class WireCreatorComponent implements OnDestroy {
   constructor(
     public service: WireV2Service,
     public supportTiers: SupportTiersService,
-    configs: ConfigsService,
+    private configs: ConfigsService,
     private cd: ChangeDetectorRef,
     private session: Session,
     private authModal: AuthModalService
@@ -125,9 +127,13 @@ export class WireCreatorComponent implements OnDestroy {
     if (!this.session.isLoggedIn()) {
       this.authModal
         .open()
-        .then(() => {
+        .then(async () => {
           this.isLoggedIn = this.session.isLoggedIn();
           this.service.wallet.getTokenAccounts();
+          await this.configs.loadFromRemote();
+          // We do this to prompt the trial to display
+          this.service.upgradeType$.next(this.service.upgradeType$.value);
+          this.service.upgrades = this.configs.get('upgrades');
           this.cd.markForCheck();
           this.cd.detectChanges();
         })

@@ -64,6 +64,10 @@ m-helpdesk--questions {
     @include m-theme() {
       color: themed($m-grey-800);
     }
+
+    img {
+      max-width: 100%;
+    }
   }
 
   .m-helpdeskQuestions__goBack {
@@ -102,9 +106,9 @@ m-helpdesk--questions {
       flex-grow: 1;
       padding: 16px 16px 16px 36px;
       @include m-theme() {
-        border-color: themed($m-grey-50);
+        border-color: themed($m-borderColor--primary);
         color: themed($m-grey-800);
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
     }
   }
@@ -151,7 +155,7 @@ m-helpdesk--questions {
       &.m-helpdesk--search-autocomplete--result-highlight {
         font-weight: 400;
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-black);
         }
       }
@@ -170,7 +174,7 @@ m-helpdesk--questions {
     cursor: pointer;
     padding: $minds-padding * 2;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     img {
@@ -213,13 +217,13 @@ m-helpdesk--questions {
 }
 
 .m-helpdeskQuestions__question {
-  //background-color: themed($m-white);
+  //background-color: themed($m-bgColor--primary);
   padding: $minds-padding;
 }
 
 .m-helpdeskQuestions__question--full {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
@@ -235,7 +239,7 @@ m-helpdesk--questions {
   text-align: left;
   position: relative;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   ul,
@@ -244,7 +248,7 @@ m-helpdesk--questions {
     padding: 0;
     list-style: none;
     @include m-theme() {
-      border-top: 1px solid themed($m-grey-50);
+      border-top: 1px solid themed($m-borderColor--primary);
     }
 
     .m-helpdeskQuestions__editIcon {

@@ -1,0 +1,45 @@
+<button
+  class="m-button"
+  (click)="emitAction($event)"
+  [type]="type"
+  [disabled]="disabled"
+  [ngClass]="{
+    'm-button--saving': saving,
+    'm-button--grey': color === 'grey',
+    'm-button--blue': color === 'blue',
+    'm-button--red': color === 'red',
+    'm-button--xsmall': size === 'xsmall',
+    'm-button--small': size === 'small',
+    'm-button--medium': size === 'medium',
+    'm-button--large': size === 'large',
+    'm-button--overlay': overlay,
+    'm-button--iconOnly': iconOnly,
+    'm-button--dropdown': !!dropdown,
+    'm-pulsating--small': pulsating
+  }"
+>
+  <div *ngIf="!saving" class="m-button__text--unsaved" #buttonTextContainer>
+    <ng-content></ng-content>
+  </div>
+  <div
+    *ngIf="saving"
+    class="m-button__text--saving"
+    [style.width]="buttonTextWidth + 'px'"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <m-dropdownMenu
+    *ngIf="dropdown"
+    [menu]="dropdown"
+    [anchorPosition]="dropdownAnchorPosition"
+    triggerClass="m-button__dropdownArrow"
+    menuClass="m-button__dropdownMenu"
+    data-cy="button-dropdown-action"
+    #dropdownMenuComponent
+    (click)="$event.preventDefault(); $event.stopPropagation()"
+  >
+    <m-icon from="ion" iconId="arrow-down-b"></m-icon>
+  </m-dropdownMenu>
+</button>

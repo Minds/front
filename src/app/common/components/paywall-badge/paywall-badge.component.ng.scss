@@ -1,0 +1,62 @@
+@import 'defaults.scss';
+
+:host {
+  cursor: default;
+
+  .m-paywallBadge {
+    z-index: 3;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 3px;
+    padding: 4px 5px;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 500;
+    @include m-theme() {
+      color: themed($m-white-always);
+      background-color: themed($m-textColor--secondary);
+      box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
+    }
+    &.topRightPosition {
+      position: absolute;
+      top: 12px;
+      right: 24px;
+      display: flex;
+    }
+
+    &.iconOnly {
+      padding: 4px 4px;
+      i {
+        margin: 0 -1 0 0;
+      }
+    }
+    &.isPlus {
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary) !important;
+        color: themed($m-textColor--primary) !important;
+        border: 1px solid (themed($m-link));
+        box-shadow: none !important;
+      }
+      > .m-paywallBadge__tierName {
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
+
+    > .m-paywallBadge__tierName {
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-textColor--primary) !important;
+      }
+      margin-right: 0;
+    }
+    i {
+      font-size: 11px;
+      line-height: 12px;
+      margin-right: 3px;
+      margin-left: -2px;
+    }
+  }
+}

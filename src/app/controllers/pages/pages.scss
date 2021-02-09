@@ -7,7 +7,7 @@ m-pages {
 .m-pages {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   h1 {

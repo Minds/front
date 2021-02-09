@@ -26,8 +26,9 @@ import { contextServiceMock } from '../../../../tests/context-service-mock.spec'
 import { ContextService } from '../../../services/context.service';
 import { AnalyticsService } from '../../../services/analytics';
 import { analyticsServiceMock } from '../../../../tests/analytics-service-mock.spec';
-import { ActivityService } from '../../../common/services/activity.service';
-import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
+import { ActivityService as CommentsActivityService } from '../../../common/services/activity.service';
+import { activityServiceMock as commentsActivityServiceMock } from '../../../../tests/activity-service-mock.spec';
+import { ActivityService } from '../../newsfeed/activity/activity.service';
 import { By } from '@angular/platform-browser';
 import { MetaService } from '../../../common/services/meta.service';
 import { metaServiceMock } from '../../notifications/notification.service.spec';
@@ -35,6 +36,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
+import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
@@ -56,7 +58,11 @@ describe('Blog view component', () => {
       declarations: [BlogView, SafePipe], // declare the test component
       imports: [NgCommonModule, RouterTestingModule],
       providers: [
-        { provide: ActivityService, useValue: activityServiceMock },
+        {
+          provide: CommentsActivityService,
+          useValue: commentsActivityServiceMock,
+        },
+        ActivityService,
         { provide: AnalyticsService, useValue: analyticsServiceMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: Client, useValue: clientMock },
@@ -66,6 +72,7 @@ describe('Blog view component', () => {
         { provide: MetaService, useValue: metaServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FeaturesService, useValue: MockService(FeaturesService) },
         { provide: FormToastService, useValue: MockService(FormToastService) },
         {
           provide: ClientMetaService,
@@ -74,7 +81,9 @@ describe('Blog view component', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })
-      .overrideProvider(ActivityService, { useValue: activityServiceMock })
+      .overrideProvider(CommentsActivityService, {
+        useValue: commentsActivityServiceMock,
+      })
       .compileComponents(); // compile template and css
   }));
 
@@ -96,7 +105,7 @@ describe('Blog view component', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have an instance of m-social-icons if the owner has it enabled', () => {
+  xit('should have an instance of m-social-icons if the logged in user has it enabled', () => {
     let socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
 
     expect(socialIcons).not.toBeNull();

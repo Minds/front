@@ -29,7 +29,7 @@ minds-form-fb-register {
     width: 100%;
     -webkit-appearance: none;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
     }
   }
 }

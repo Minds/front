@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  .m-aux__hero {
+    background-image: url('../../../assets/photos/night-sky.jpg');
+    h1 {
+      @media screen and (max-width: $max-mobile) {
+        font-size: 3em;
+      }
+    }
+  }
+}

@@ -89,6 +89,11 @@
     @media screen and (max-width: $max-mobile) {
       .m-register__actions {
         flex-direction: column;
+
+        m-button {
+          margin-top: 10px;
+          min-width: unset;
+        }
       }
     }
   }

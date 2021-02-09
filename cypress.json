@@ -3,5 +3,13 @@
   "requestTimeout": 120000,
   "responseTimeout": 120000,
   "pageLoadTimeout": 120000,
-  "defaultCommandTimeout": 15000
+  "defaultCommandTimeout": 120000,
+  "integrationFolder": "./cypress-tests/integration",
+  "fixturesFolder": "./cypress-tests/fixtures",
+  "pluginsFile": "cypress-tests/plugins/index.js",
+  "supportFile": "cypress-tests/support/index.js",
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
 }

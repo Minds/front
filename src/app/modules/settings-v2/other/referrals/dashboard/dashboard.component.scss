@@ -29,7 +29,6 @@ m-settingsV2__referralsDashboard {
         }
       }
       .m-tooltip--bubble {
-        z-index: 9999;
         bottom: auto;
         @media screen and (max-width: $max-mobile) {
           top: -56px;
@@ -50,6 +49,9 @@ m-settingsV2__referralsDashboard {
           @include m-theme() {
             color: themed($m-textColor--secondary) !important;
           }
+        }
+        > * {
+          overflow: visible;
         }
         .m-settingsV2__referralsDashboard__rewardsCol {
           .m-tooltip {
@@ -147,10 +149,6 @@ m-settingsV2__referralsDashboard {
           display: flex;
           justify-content: center;
           align-items: center;
-          @include m-theme() {
-            border-color: themed($m-blue);
-            color: themed($m-blue);
-          }
 
           span {
             padding-left: 0;
@@ -158,18 +156,9 @@ m-settingsV2__referralsDashboard {
           &:focus {
             outline: 0;
           }
-          &:active {
-            @include m-theme() {
-              border-color: themed($m-blue-light);
-              color: themed($m-blue-light);
-            }
-          }
+
           &.m-settingsV2__referralsDashboard__pingButton--disabled {
             cursor: default;
-            @include m-theme() {
-              border-color: rgba(themed($m-textColor--tertiary), 0.7);
-              color: rgba(themed($m-textColor--tertiary), 0.7);
-            }
           }
 
           .m-settingsV2__referralsDashboard__pingIcon {

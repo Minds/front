@@ -15,6 +15,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 @Component({
   selector: 'm-groups-profile__review',
   templateUrl: 'review.component.html',
+  styleUrls: ['./review.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupsProfileReviewComponent implements OnInit {

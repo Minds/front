@@ -17,6 +17,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { MockService } from '../../utils/mock';
+import { ButtonComponent } from '../../common/components/button/button.component';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -39,26 +40,32 @@ describe('GroupsJoinButton', () => {
   }
 
   function getJoinButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('.m-btn--join-group'));
+    return fixture.debugElement.queryAll(By.css('.m-groupsJoinButton__join'));
   }
 
   function getAcceptAndDeclineButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('span > .m-btn'));
+    return fixture.debugElement.queryAll(
+      By.css('.m-groupsJoinButton__verdict')
+    );
   }
 
   function getLeaveButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-btn.subscribed'));
+    return fixture.debugElement.query(By.css('.m-groupsJoinButton__leave'));
   }
 
   function getCancelRequestButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-btn.awaiting'));
+    return fixture.debugElement.query(By.css('.m-groupsJoinButton__cancel'));
   }
 
   /** /Helpers */
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SignupOnActionModalMock, GroupsJoinButton],
+      declarations: [
+        SignupOnActionModalMock,
+        GroupsJoinButton,
+        ButtonComponent,
+      ],
       imports: [RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },

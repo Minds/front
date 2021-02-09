@@ -34,7 +34,7 @@
     width: 100%;
     text-align: center;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     ins {

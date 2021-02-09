@@ -1,0 +1,79 @@
+@import 'defaults.scss';
+
+:host {
+  .m-earnModal__body {
+    max-height: none !important;
+    overflow-y: auto !important;
+    padding: 40px;
+  }
+
+  .m-earnModal__block {
+    display: inline-flex;
+    align-items: flex-start;
+    flex-direction: row;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 20px;
+    border-style: solid;
+    border-width: 1px;
+
+    @include m-theme() {
+      border-color: themed($m-borderColor--primary);
+    }
+    .m-earnModalBlock__icon {
+      align-self: flex-start;
+      margin-left: 5px;
+    }
+  }
+
+  .m-earnModal__block--anchor {
+    text-decoration: none;
+  }
+
+  .m-earnModalBlock__title {
+    display: block;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 5px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-earnModalBlock__text {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 0;
+    font-weight: 400;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-earnModal__blockContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+
+    @media screen and (max-width: $max-mobile) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .m-earningBlock__comingSoon {
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--secondary);
+    }
+    font-size: 11px;
+    vertical-align: middle;
+    padding: 5px;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+}

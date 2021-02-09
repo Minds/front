@@ -46,7 +46,7 @@ minds-media-thumbnail-selector {
     padding: 8px;
     text-align: left;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
     .m-thumbnail-selector--thumbnails--title {
       text-transform: uppercase;

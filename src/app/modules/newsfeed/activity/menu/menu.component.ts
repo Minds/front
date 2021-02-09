@@ -16,6 +16,7 @@ import { ComposerService } from '../../../composer/services/composer.service';
 import { ModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-activity__menu',
@@ -36,7 +37,8 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private composer: ComposerService,
     private composerModal: ModalService,
     private injector: Injector,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    private toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -114,6 +116,15 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
               this.service.setEntity(activity);
             }
           });
+
+        break;
+      case 'undo-remind':
+        try {
+          await this.client.delete(`api/v3/newsfeed/${this.entity.urn}`);
+          this.deleted.emit();
+        } catch (e) {
+          this.toasterService.error(e.message);
+        }
 
         break;
       case 'delete':

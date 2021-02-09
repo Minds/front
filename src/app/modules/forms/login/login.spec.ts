@@ -17,6 +17,9 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockDirective, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -76,7 +79,7 @@ describe('LoginForm', () => {
   }
 
   function getTwoFactorLoginButton() {
-    return fixture.debugElement.query(By.css('.m-login__2fa > button'));
+    return fixture.debugElement.query(By.css('.m-login-2fa > m-button button'));
   }
 
   beforeEach(async(() => {
@@ -84,12 +87,15 @@ describe('LoginForm', () => {
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         LoginForm,
+        ButtonComponent,
       ], // declare the test component
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FeaturesService, useValue: MockService(FeaturesService) },
+        { provide: AuthModalService, useValue: MockService(AuthModalService) },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -105,7 +111,9 @@ describe('LoginForm', () => {
     loginForm = fixture.debugElement.query(By.css('form.m-login-box'));
     username = fixture.debugElement.query(By.css('#username'));
     password = fixture.debugElement.query(By.css('#password'));
-    loginButton = fixture.debugElement.query(By.css('.m-btn--login'));
+    loginButton = fixture.debugElement.query(
+      By.css('.m-login__button--login button')
+    );
     errorMessage = fixture.debugElement.query(By.css('.m-error-box'));
 
     session = comp.session;
@@ -133,7 +141,7 @@ describe('LoginForm', () => {
 
   it("should have 'migrate from facebook' button", () => {
     expect(
-      fixture.debugElement.query(By.css('.m-fb-login-button'))
+      fixture.debugElement.query(By.css('.m-fb-login-button button'))
     ).toBeDefined();
   });
 

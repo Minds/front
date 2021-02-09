@@ -7,6 +7,7 @@ $layout-sidebar-width: 80px;
   display: none;
 }
 m-topbar {
+  @include z-index(topbar);
   position: fixed;
   top: 0;
   left: 0;
@@ -25,14 +26,13 @@ m-topbar {
   border: none;
   min-height: $layout-header-height;
   max-height: 1000px;
-  z-index: 9999;
 
   transform: translateZ(0);
 
   @include m-theme() {
     color: themed($m-grey-500);
-    background-color: themed($m-white);
-    border-bottom: 1px solid themed($m-grey-50);
+    background-color: themed($m-bgColor--primary);
+    border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
   .m-topbar--row {
@@ -46,7 +46,7 @@ m-topbar {
     //margin-right: 16px;
     text-align: center;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
 
     img {
@@ -118,7 +118,7 @@ m-topbar {
       border-radius: 50%;
       max-height: 30px;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 

@@ -1,0 +1,25 @@
+<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+<m-sidebarWidget *ngIf="entities.length" [title]="'More from ' + headerName">
+  <div class="m-sidebarWidget__body">
+    <div
+      class="m-newsfeedActivitySuggestion__item"
+      *ngFor="let entity of entities; let i = index"
+    >
+      <a [routerLink]="['/newsfeed', entity.entity_guid || entity.guid]">
+        <m-newsfeed__entity
+          [entity]="entity"
+          [displayOptions]="{
+            minimalMode: true,
+            showComments: false,
+            autoplayVideo: false,
+            showToolbar: false,
+            bypassMediaModal: true,
+            showOwnerBlock: entity.subtype === 'remind',
+            sidebarMode: true
+          }"
+          [slot]="i"
+        ></m-newsfeed__entity>
+      </a>
+    </div>
+  </div>
+</m-sidebarWidget>

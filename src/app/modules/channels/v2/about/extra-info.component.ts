@@ -58,4 +58,19 @@ export class ChannelAboutExtraInfoComponent {
 
     return new Date(parts[0], parts[1] - 1, parts[2], 0, 0, 0);
   }
+
+  /**
+   * Determine whether to show the badges field
+   */
+  hasBadges(channel: any): boolean {
+    const c = channel;
+    return (
+      c.pro ||
+      c.plus ||
+      c.is_admin ||
+      c.verified ||
+      c.founder ||
+      (c.onchain_booster && c.onchain_booster * 1000 > Date.now())
+    );
+  }
 }

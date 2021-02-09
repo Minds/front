@@ -1,0 +1,11 @@
+<m-button
+  class="m-discovery__tagButton"
+  (mouseenter)="hovering = true"
+  (mouseleave)="hovering = false; recentlyToggled = false"
+  (onAction)="tag.selected ? removeTag() : addTag()"
+  [color]="tag.selected ? 'blue' : 'grey'"
+  size="xsmall"
+  iconOnly="true"
+>
+  <i class="material-icons">{{ icon }}</i>
+</m-button>

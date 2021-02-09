@@ -7,13 +7,17 @@ import {
 import { AuthModalComponent } from './auth-modal.component';
 import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
+import { FeaturesService } from '../../../services/features.service';
+import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 
 @Injectable()
 export class AuthModalService {
   constructor(
     private compiler: Compiler,
     private injector: Injector,
-    private stackableModal: StackableModalService
+    private stackableModal: StackableModalService,
+    private features: FeaturesService,
+    private onboardingV3: OnboardingV3Service
   ) {}
 
   async open(
@@ -34,10 +38,23 @@ export class AuthModalService {
       .present(AuthModalComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
         formDisplay: opts.formDisplay,
-        onComplete: (user: MindsUser) => {
+        onComplete: async (user: MindsUser) => {
           onSuccess$.next(user);
           onSuccess$.complete(); // Ensures promise can be called below
           this.stackableModal.dismiss();
+
+          if (
+            this.features.has('onboarding-october-2020') &&
+            opts.formDisplay === 'register'
+          ) {
+            try {
+              await this.onboardingV3.open();
+            } catch (e) {
+              if (e === 'DismissedModalException') {
+                return; // modal dismissed, do nothing
+              }
+            }
+          }
         },
         onDismissIntent: () => {
           this.stackableModal.dismiss();
@@ -47,7 +64,7 @@ export class AuthModalService {
 
     // Modal was closed before login completed
     if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
-      throw 'Dismissed modal';
+      throw 'DismissedModalException';
     }
 
     return onSuccess$.toPromise();

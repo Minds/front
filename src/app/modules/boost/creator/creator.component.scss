@@ -355,7 +355,7 @@
       &.m-boost--creator-autocomplete--result-highlight {
         font-weight: 400;
         @include m-theme() {
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
           color: themed($m-black);
         }
       }
@@ -390,29 +390,6 @@
     align-items: center;
     margin-top: 40px;
 
-    .m-boost--creator-button {
-      font-size: 14px;
-      letter-spacing: 2.33px;
-      appearance: none;
-      padding: 8px 32px;
-      background: none;
-      border-radius: 0;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-      text-transform: uppercase;
-      cursor: pointer;
-      @include m-theme() {
-        color: themed($m-grey-600);
-        border: 1px solid themed($m-grey-600);
-      }
-
-      &[disabled] {
-        cursor: default;
-        opacity: 0.35;
-      }
-    }
-
     .m-boost--creator-button-back {
       margin-right: 8px;
     }
@@ -420,7 +397,6 @@
     .m-boost--creator--submit-label,
     .m-boost--creator--submit-error {
       margin-left: $minds-padding;
-      font-size: 16px;
 
       > span,
       > i {
@@ -470,7 +446,7 @@
     min-width: 440px;
     @include m-theme() {
       background-color: rgba(themed($m-black), 0.1);
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -510,7 +486,7 @@
     .m-payments--saved-card-item {
       @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
-        border: 1px solid themed($m-grey-100);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
@@ -566,20 +542,6 @@
     .m-checkout--secure {
       @include m-theme() {
         color: rgba(themed($m-black), 0.8);
-      }
-    }
-    button {
-      padding: 12px;
-      -webkit-appearance: none;
-      border: 0;
-      font-size: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-radius: 3px;
-      cursor: pointer;
-      @include m-theme() {
-        background-color: rgba(themed($m-black), 0.5);
-        color: themed($m-white);
       }
     }
   }
@@ -733,7 +695,7 @@
 
     &:after {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
     }
   }
@@ -787,10 +749,6 @@
     }
   }
 
-  .m-checkout-confirm button {
-    @extend .m-boost--creator-button;
-  }
-
   .m-checkout-loading {
     text-align: center;
 
@@ -811,7 +769,7 @@
       &:focus {
         @include m-theme() {
           color: themed($m-black);
-          background-color: themed($m-white);
+          background-color: themed($m-bgColor--primary);
         }
       }
     }

@@ -16,6 +16,7 @@ import { ApiService } from '../../../../../../../../common/api/api.service';
 import { Subscription } from 'rxjs';
 import { ComposerService } from '../../../../../../services/composer.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ComposerMonetizeV2Service } from '../monetize.service';
 
 @Component({
   selector: 'm-composer__monetizeV2__memberships',
@@ -27,7 +28,6 @@ export class ComposerMonetizeV2MembershipsComponent
   hasSupportTiers: boolean = false;
   supportTiers: SupportTier[] = [];
   plusTierUrn: string = '';
-  userGuid;
   form;
   init: boolean = false;
 
@@ -43,7 +43,8 @@ export class ComposerMonetizeV2MembershipsComponent
     protected api: ApiService,
     private service: ComposerService,
     private supportTiersService: SupportTiersService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected monetizeService: ComposerMonetizeV2Service
   ) {}
 
   ngOnInit(): void {
@@ -51,10 +52,7 @@ export class ComposerMonetizeV2MembershipsComponent
       urn: new FormControl('none'),
     });
 
-    this.userGuid = this.session.getLoggedInUser().guid;
-    this.supportTiersService.setEntityGuid(this.userGuid);
-
-    this.supportTiersSubscription = this.supportTiersService.list$.subscribe(
+    this.supportTiersSubscription = this.monetizeService.supportTiers$.subscribe(
       tiers => {
         if (tiers) {
           this.supportTiers = tiers;
@@ -81,6 +79,7 @@ export class ComposerMonetizeV2MembershipsComponent
       this.service.monetization$.getValue();
 
     if (!monetization) {
+      this.urn.setValue('none');
       return;
     }
     if (monetization.support_tier && monetization.support_tier.urn) {

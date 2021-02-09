@@ -14,6 +14,7 @@ import { ChannelEditComponent } from './edit/edit.component';
 import { ChannelActionsComponent } from './actions/actions.component';
 import { ChannelActionsSubscribeComponent } from './actions/subscribe.component';
 import { ChannelActionsEditComponent } from './actions/edit.component';
+import { ChannelActionsProButtonComponent } from './actions/pro-button.component';
 import { ChannelActionsMessageComponent } from './actions/message.component';
 import { ChannelActionsWireComponent } from './actions/wire.component';
 import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
@@ -35,6 +36,7 @@ import { ModalsModule } from '../../modals/modals.module';
 import { DiscoverySharedModule } from '../../discovery/discovery-shared.module';
 import { ChannelActionsBoostComponent } from './actions/boost.component';
 import { ChannelShopLazyComponent } from './shop/shop-lazy.component';
+import { ComposerModule } from '../../composer/composer.module';
 
 /**
  * Generally available components
@@ -53,6 +55,7 @@ const INTERNAL_COMPONENTS = [
   ChannelActionsComponent,
   ChannelActionsSubscribeComponent,
   ChannelActionsEditComponent,
+  ChannelActionsProButtonComponent,
   ChannelActionsMessageComponent,
   ChannelActionsWireComponent,
   ChannelActionsBoostComponent,
@@ -90,6 +93,7 @@ const PROVIDERS = [ChannelEditModalService];
     HashtagsModule,
     ModalsModule,
     DiscoverySharedModule,
+    ComposerModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

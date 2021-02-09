@@ -10,14 +10,14 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
 import { isPlatformServer } from '@angular/common';
+import { SettingsV2Service } from '../settings-v2/settings-v2.service';
 
 @Component({
   selector: 'm-ads-boost',
   inputs: ['handler', 'limit'],
   template: `
-    <h3 class="m-newsfeedSidebar__header">
+    <h3 class="m-newsfeedSidebar__header" *ngIf="boosts.length > 0">
       <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
@@ -28,35 +28,24 @@ import { isPlatformServer } from '@angular/common';
     class: 'm-ad-block m-ad-block-boosts',
   },
 })
-export class BoostAds implements OnInit, OnDestroy {
+export class BoostAds implements OnInit {
   handler: string = 'content';
   limit: number = 2;
   offset: string = '';
   boosts: Array<any> = [];
   rating: number = 2;
 
-  ratingSubscription: Subscription;
-
   constructor(
     public client: Client,
     public session: Session,
     private storage: Storage,
-    private settingsService: SettingsService,
+    private settingsService: SettingsV2Service,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
-    this.ratingSubscription = this.settingsService.ratingChanged.subscribe(
-      rating => {
-        this.onRatingChanged(rating);
-      }
-    );
     this.fetch();
-  }
-
-  ngOnDestroy() {
-    this.ratingSubscription.unsubscribe();
   }
 
   fetch() {
@@ -78,12 +67,5 @@ export class BoostAds implements OnInit, OnDestroy {
         if (response['load-next'])
           this.storage.set('boost:offset:sidebar', response['load-next']);
       });
-  }
-
-  onRatingChanged(rating: number) {
-    this.rating = rating;
-    this.storage.destroy('boost:offset:sidebar');
-    this.offset = '';
-    this.fetch();
   }
 }

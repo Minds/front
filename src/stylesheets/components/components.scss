@@ -8,7 +8,7 @@
   box-sizing: border-box;
   border-radius: 3px;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   img {
@@ -31,7 +31,7 @@
     //align-items: center;
     @include m-theme() {
       color: themed($m-white);
-      background-color: rgba(themed($m-black), 0.5);
+      background-color: themed($m-overlay);
     }
 
     i {
@@ -63,13 +63,13 @@
   width: 150px;
   border-radius: 4px;
   position: absolute;
-  z-index: 1000;
+  z-index: 1;
   top: 8px;
   right: 8px;
   overflow: visible;
   display: block;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
     box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
       0 3px 1px -2px rgba(themed($m-black), 0.2),
       0 1px 5px 0 rgba(themed($m-black), 0.12);
@@ -81,7 +81,7 @@
     line-height: 32px;
     height: 32px;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-50);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
     padding: 0 8px;
   }
@@ -141,7 +141,7 @@
 
     &.overlay--0-6 {
       @include m-theme() {
-        background-color: rgba(themed($m-black-always), 0.65);
+        background-color: themed($m-overlay);
       }
     }
   }
@@ -215,7 +215,7 @@ m-channel--carousel {
     position: absolute;
     top: 8px;
     right: 8px;
-    z-index: 998;
+    // z-index: 998;
 
     button {
       font-size: 23px;
@@ -227,7 +227,7 @@ m-channel--carousel {
     position: absolute;
     top: 8px;
     right: 80px;
-    z-index: 998;
+    // z-index: 998;
     i {
       margin-top: 2px;
     }
@@ -235,7 +235,7 @@ m-channel--carousel {
 
   > i {
     top: 50%;
-    z-index: 999;
+    // z-index: 999;
     position: absolute;
     font-size: 60px !important;
     cursor: pointer;
@@ -440,17 +440,16 @@ minds-graph-line {
   left: 0;
   bottom: auto;
   right: auto;
-  z-index: 999995;
+  @include z-index(tooltip);
   width: 330px;
   padding-bottom: $minds-padding;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 
 .m-bubble-popup {
   position: fixed;
-  z-index: 999995;
   user-select: none;
 }
 
@@ -460,7 +459,7 @@ minds-emoji .m-bubble-popup {
   border-radius: 3px;
   user-select: none;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   .m-emoji-selector-title {
@@ -472,7 +471,7 @@ minds-emoji .m-bubble-popup {
     font-size: 11px;
     font-weight: bold;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-50);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
     .m-emoji-selector-close {
@@ -525,9 +524,9 @@ minds-tooltip .m-bubble-popup {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99990;
+  // z-index: 99990;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 
   &.m-ribbon-right {
@@ -627,7 +626,7 @@ svg.m-facebook-icon {
     top: 0;
     width: 100%;
     left: 0;
-    z-index: 10;
+    @include z-index(announcement);
   }
 }
 
@@ -717,7 +716,7 @@ m-text-input--autocomplete-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    // z-index: 1000;
     float: left;
     min-width: 160px;
     padding: 5px 0;
@@ -729,7 +728,7 @@ m-text-input--autocomplete-menu {
     border-radius: 4px;
 
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid rgba(themed($m-black), 0.15);
       box-shadow: 0 6px 12px rgba(themed($m-black), 0.175);
     }

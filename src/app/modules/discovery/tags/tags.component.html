@@ -1,32 +1,10 @@
-<div class="m-tabs__container">
-  <div class="m-tabs__tab">
-    <a
-      routerLink="../overview"
-      routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ reload: false }"
-      data-cy="discovery-tab-link-overview"
-      i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
-      >Just for you</a
-    >
-  </div>
-  <div class="m-tabs__tab">
-    <a
-      routerLink="./"
-      routerLinkActive="m-tabs__tab--selected"
-      i18n="@@DISCOVERY_TAGS__DISCOVERY_BY_TAGS"
-      >Discover by tags</a
-    >
-  </div>
-  <div class="m-layout__spacer"></div>
-  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
-</div>
-
+<m-discovery__tabs></m-discovery__tabs>
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
-<section class="m-discoveryTags__section">
-  <div class="m-discoveryTags__sectionHeader">
-    <h3 i18n="@@DISCOVERY_TAGS__YOUR_TAGS">Your Tags</h3>
-  </div>
+<section
+  class="m-discoveryTags__section"
+  *ngIf="(route.params | async)?.type === 'your'"
+>
   <ul
     class="m-discoveryTags__list m-discoveryTags__list--user"
     data-cy="discovery-tags-section--user"
@@ -60,10 +38,10 @@
   </ul>
 </section>
 
-<section class="m-discoveryTags__section">
-  <div class="m-discoveryTags__sectionHeader">
-    <h3 i18n="@@DISCOVERY_TAGS__TRENDING_TAGS">Trending Tags</h3>
-  </div>
+<section
+  class="m-discoveryTags__section"
+  *ngIf="(route.params | async)?.type === 'trending'"
+>
   <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
     <li class="m-discoveryTrends__trend" *ngFor="let tag of trending$ | async">
       <a

@@ -1,17 +1,11 @@
 <div class="m-composerPopup__content m-formWrapper">
-  <p
-    class="m-composerPopup__subtitle"
-    i18n="@@COMPOSER__MONETIZE_PLUS_SUBHEADER"
-  >
-    Earn revenue for your creations
-  </p>
-
-  <ng-container *ngIf="isPro"
+  <ng-container *ngIf="isPlus"
     ><p
       class="m-form__row--label m-composerPopup__text"
       i18n="@@COMPOSER__MONETIZE_PLUS__POOL_DESC"
     >
-      Submit this post to the Minds+ pool and earn potential revenue.
+      Submit this post to Minds+ members only and earn a share of our revenue
+      based on how it performs.
     </p>
 
     <div class="m-composerPopup__checkbox">
@@ -52,21 +46,21 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!isPro"
+  <ng-container *ngIf="!isPlus"
     ><p
       class="m-composerPopup__text"
       i18n="@@COMPOSER__MONETIZE_PLUS__NOT_PRO_DESC"
     >
-      You’ll need to upgrade to Minds Pro in order to submit your post to the
+      You’ll need to upgrade to Minds+ in order to submit your post to the
       Minds+ content pool. You will earn revenue based on the performance of the
       content.
     </p>
-    <m-shadowboxSubmitButton
-      (click)="openProUpgradeModal()"
+    <m-button
+      (onAction)="openPlusUpgradeModal()"
       i18n="@@COMPOSER__MONETIZE_PLUS_UPGRADE_TO_PRO"
     >
-      Upgrade to Minds Pro
-    </m-shadowboxSubmitButton>
+      Upgrade to Minds+
+    </m-button>
   </ng-container>
 </div>
 <div class="m-composerPopup__action">
@@ -78,14 +72,14 @@
     Posts in the Minds+ pool cannot be removed
   </p>
 
-  <m-shadowboxSubmitButton
-    *ngIf="isPro"
+  <m-button
+    *ngIf="isPlus"
     type="button"
-    (click)="save()"
+    (onAction)="save()"
     [disabled]="!canSave"
     i18n="@@COMMON__SAVE"
     data-cy="monetize-save-button"
   >
     Save
-  </m-shadowboxSubmitButton>
+  </m-button>
 </div>

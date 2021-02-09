@@ -60,7 +60,21 @@ m-upgrades__upgradeOptions {
     padding: 40px 60px 60px;
 
     @include m-theme() {
-      background-color: lighten(themed($m-grey-50), 5%);
+      background-color: lighten(themed($m-borderColor--primary), 5%);
+    }
+
+    .m-upgradesUpgradeOptionsPlan__row {
+      ul li {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      &.m-upgradesUpgradeOptionsPlan__row--last {
+        margin-top: 50px;
+        @media screen and (max-width: $m-grid-min-vp) {
+          margin-top: 10px;
+        }
+      }
     }
 
     @media screen and (max-width: $m-grid-min-vp) {
@@ -136,7 +150,7 @@ m-upgrades__upgradeOptions {
 
       &.m-upgradesUpgradeOptionsPlan__description {
         @include m-theme() {
-          color: themed($m-grey-600);
+          color: themed($m-textColor--secondary);
         }
       }
     }
@@ -155,7 +169,13 @@ m-upgrades__upgradeOptions {
       font-size: 14px;
       line-height: 19px;
       cursor: pointer;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 0.5;
 
+      :hover {
+        text-decoration: underline;
+      }
       @include m-theme() {
         color: themed($m-blue);
       }
@@ -168,14 +188,14 @@ m-upgrades__upgradeOptions {
       margin-bottom: 0;
 
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--secondary);
       }
 
       span {
         font-size: 24px;
 
         @include m-theme() {
-          color: themed($m-black);
+          color: themed($m-textColor--primary);
         }
       }
     }
@@ -191,7 +211,14 @@ m-upgrades__upgradeOptions {
     }
 
     .m-upgradesUpgradeOptionsPlan__action {
+      display: block;
       margin-top: 25px;
+      button {
+        width: 66%;
+        @media screen and (max-width: $m-grid-min-vp) {
+          width: 100%;
+        }
+      }
     }
   }
 }

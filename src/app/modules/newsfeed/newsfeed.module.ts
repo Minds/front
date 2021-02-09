@@ -14,24 +14,18 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
-import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
-import { NewsfeedTopComponent } from './feeds/top.component';
 import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
 import { NewsfeedBoostComponent } from './feeds/boost.component';
 import { NewsfeedService } from './services/newsfeed.service';
-import { NewsfeedBoostService } from './newsfeed-boost.service';
-import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
-import { PosterModule } from './poster/poster.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
 import { NewsfeedSortedComponent } from './feeds/sorted.component';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
-import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
 import { ActivityModule } from './activity/activity.module';
@@ -39,6 +33,9 @@ import { FeedGridComponent } from './feed-grid/feed-grid.component';
 import { ComposerModule } from '../composer/composer.module';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { LanguageModule } from '../language/language.module';
+import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
+import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
+import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.component';
 
 const routes: Routes = [
   {
@@ -46,10 +43,10 @@ const routes: Routes = [
     component: NewsfeedComponent,
     children: [
       { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
-      { path: 'suggested', component: NewsfeedTopComponent },
+      { path: 'suggested', redirectTo: 'subscriptions' },
       { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
-      { path: 'global/:algorithm', component: NewsfeedSortedComponent },
+      { path: 'global/:algorithm', redirectTo: 'subscriptions' },
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       {
         path: 'subscriptions',
@@ -87,23 +84,21 @@ const routes: Routes = [
     ModalsModule,
     MindsFormsModule,
     AdsModule,
-    PosterModule,
     HashtagsModule,
     SuggestionsModule,
     NoticesModule,
     SearchModule,
-    ReferralsModule,
     ActivityModule,
     ComposerModule,
     DiscoverySharedModule,
     LanguageModule,
+    OnboardingV3Module,
+    LiquiditySpotModule,
   ],
   declarations: [
-    NewsfeedDropdownComponent,
     NewsfeedComponent,
     NewsfeedSingleComponent,
     NewsfeedBoostRotatorComponent,
-    NewsfeedTopComponent,
     NewsfeedSubscribedComponent,
     NewsfeedBoostComponent,
     NewsfeedTagsComponent,
@@ -111,14 +106,10 @@ const routes: Routes = [
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
     FeedGridComponent,
+    NewsfeedActivitySuggestionsComponent,
   ],
-  providers: [
-    NewsfeedService,
-    NewsfeedBoostService,
-    NewsfeedHashtagSelectorService,
-  ],
+  providers: [NewsfeedService],
   exports: [
-    NewsfeedDropdownComponent,
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,

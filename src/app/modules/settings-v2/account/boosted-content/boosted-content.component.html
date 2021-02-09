@@ -1,0 +1,231 @@
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__BOOSTED_CONTENT__LABEL"
+  >
+    Boost
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__BOOSTED_CONTENT__DESCRIPTION"
+  >
+    Control how boost works across the site. Learn more about
+    <a routerLink="/boost">boost</a>.
+  </div>
+</m-settingsV2__header>
+
+<form *ngIf="init" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <!-- ------------------------------------ -->
+    <!-- ENABLE BOOST -->
+    <!-- ------------------------------------ -->
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n="@@BOOSTED_CONTENT__ENABLE"
+          >View Boosted Content
+          <span class="m-settingsV2__plusFeatureTag"
+            >Minds+ Feature</span
+          ></label
+        >
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n="@@BOOSTED_CONTENT__ENABLE_TOOLTIP"
+            >Minds+ users may hide Boosts from their newsfeed</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <label
+          for="boost_on"
+          class="m-form__customInputWrapper__radio"
+          [ngClass]="{
+            'm-form__customInputWrapper__radio--disabled readonly': !plus
+          }"
+        >
+          <ng-container i18n="@@COMMON__ENABLE">Enable</ng-container>
+          <input
+            type="radio"
+            id="boost_on"
+            name="disabled_boost"
+            [value]="false"
+            formControlName="disabled_boost"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label
+          for="boost_off"
+          class="m-form__customInputWrapper__radio"
+          [ngClass]="{
+            'm-form__customInputWrapper__radio--disabled readonly': !plus
+          }"
+          (click)="clickedDisableBoost($event)"
+        >
+          <ng-container i18n="@@COMMON__DISABLE">Disable</ng-container>
+          <input
+            type="radio"
+            id="boost_off"
+            name="disabled_boost"
+            [value]="true"
+            formControlName="disabled_boost"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+    <!-- ------------------------------------ -->
+    <!-- AUTO-ROTATION -->
+    <!-- ------------------------------------ -->
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n="@@BOOSTED_CONTENT__AUTOROTATE">Boost Auto-rotation</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n="@@BOOSTED_CONTENT__AUTOROTATE_TOOLTIP"
+            >Enable/disable the Boost box on top of your feed from
+            self-rotating</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <label for="rotate_on" class="m-form__customInputWrapper__radio">
+          <ng-container i18n="@@COMMON__ENABLE">Enable</ng-container>
+          <input
+            type="radio"
+            id="rotate_on"
+            [value]="true"
+            name="boost_autorotate"
+            formControlName="boost_autorotate"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label for="rotate_off" class="m-form__customInputWrapper__radio">
+          <ng-container i18n="@@COMMON__DISABLE">Disable</ng-container>
+          <input
+            type="radio"
+            id="rotate_off"
+            [value]="false"
+            name="boost_autorotate"
+            formControlName="boost_autorotate"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+    <!-- ------------------------------------ -->
+    <!-- OPEN CONTENT -->
+    <!-- ------------------------------------ -->
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n="@@BOOSTED_CONTENT__RATING">Open Content</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n="@@BOOSTED_CONTENT__RATING_TOOLTIP"
+            >Open may contain controversial content. By selecting Open, you
+            acknowledge that you are willing to see controversial
+            content.</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <label for="open_on" class="m-form__customInputWrapper__radio">
+          <ng-container i18n="@@COMMON__ENABLE">Enable</ng-container>
+          <input
+            type="radio"
+            id="open_on"
+            [value]="2"
+            name="boost_rating"
+            formControlName="boost_rating"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label for="open_off" class="m-form__customInputWrapper__radio">
+          <ng-container i18n="@@COMMON__DISABLE">Disable</ng-container>
+          <input
+            type="radio"
+            id="open_off"
+            [value]="1"
+            name="boost_rating"
+            formControlName="boost_rating"
+            [readonly]="inProgress"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+    <!-- ------------------------------------ -->
+    <!-- LIQUIDITY SPOT CONTENT -->
+    <!-- ------------------------------------ -->
+    <div class="m-form__field--radio" *mIfFeature="'liquidity-spot'">
+      <div class="m-form__row--label">
+        <label i18n="@@BOOSTED_CONTENT__LIQUIDITY_SPOT">Liquidity Spot</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n="@@BOOSTED_CONTENT__LIQUIDITY_SPOT_TOOLTIP"
+            >Minds Token liquidity providers are rewarded with boosted ad space
+            relative to their % of the liquidity pool.</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <label
+          for="liquidity_spot_opt_in"
+          class="m-form__customInputWrapper__radio"
+        >
+          <ng-container i18n="@@COMMON__ENABLE">Opt-in</ng-container>
+          <input
+            type="radio"
+            id="liquidity_spot_opt_in"
+            [value]="0"
+            name="liquidity_spot_opt_out"
+            formControlName="liquidity_spot_opt_out"
+            class="form-control"
+            [readonly]="inProgress"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label
+          for="liquidity_spot_opt_out"
+          class="m-form__customInputWrapper__radio"
+        >
+          <ng-container i18n="@@COMMON__DISABLE">Opt-out</ng-container>
+          <input
+            type="radio"
+            id="liquidity_spot_opt_out"
+            [value]="1"
+            name="liquidity_spot_opt_out"
+            formControlName="liquidity_spot_opt_out"
+            [readonly]="inProgress"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ------------------------------------ -->
+  <!-- SUBMIT -->
+  <!-- ------------------------------------ -->
+  <div class="m-form__buttonsContainer">
+    <m-button
+      color="blue"
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (onAction)="submit()"
+      i18n="@@BOOSTED_CONTENT__SAVE_BOOST SETTINGS"
+    >
+      Save Boost Settings
+    </m-button>
+  </div>
+</form>

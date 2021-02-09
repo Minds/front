@@ -2,24 +2,27 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
-import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-canary',
   templateUrl: 'page.component.html',
+  styleUrls: [
+    './page.component.ng.scss',
+    '../aux-pages/aux-pages.component.ng.scss',
+  ],
 })
 export class CanaryPageComponent {
   user;
+  buttonHovering: boolean = false;
+  inProgress: boolean = false;
 
   constructor(
     private session: Session,
     private client: Client,
-    private router: Router,
-    private pageLayoutService: PageLayoutService
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.pageLayoutService.useFullWidth();
     this.user = this.session.getLoggedInUser();
     this.load();
   }
@@ -32,7 +35,7 @@ export class CanaryPageComponent {
 
   async turnOn() {
     if (!this.user) return this.router.navigate(['/login']);
-
+    this.inProgress = true;
     this.user.canary = true;
     await this.client.put('api/v2/canary');
     window.location.reload();
@@ -40,6 +43,7 @@ export class CanaryPageComponent {
 
   async turnOff() {
     this.user.canary = false;
+    this.inProgress = true;
     await this.client.delete('api/v2/canary');
 
     window.location.reload();

@@ -5,7 +5,8 @@
         <span i18n="@@PRO_SUBSCRIPTION__YEARLY">Yearly</span>
         <span
           ><m-toggle
-            [(mModel)]="interval"
+            [mModel]="interval"
+            (mModelChange)="setInterval($event)"
             leftValue="yearly"
             rightValue="monthly"
           ></m-toggle
@@ -17,7 +18,8 @@
         <span i18n="@@PRO_SUBSCRIPTION__USD">USD</span>
         <span
           ><m-toggle
-            [(mModel)]="currency"
+            [mModel]="currency"
+            (mModelChange)="setCurrency($event)"
             leftValue="usd"
             rightValue="tokens"
           ></m-toggle
@@ -43,61 +45,48 @@
       </span>
     </div>
 
-    <div>
-      <ng-container *mIfFeature="'purchase-pro'; else comingSoon">
-        <div class="m-proSubscription__button">
-          <button
-            class="mf-button mf-button--alt"
-            [disabled]="active || inProgress || criticalError"
-            (click)="enable()"
-            i18n="@@PRO_SUBSCRIPTION__UPGRADE_TO_PRO"
+    <div class="m-proSubscription__buttonsContainer">
+      <div class="m-proSubscription__button">
+        <m-button
+          color="blue"
+          [disabled]="active || inProgress || criticalError"
+          (onAction)="enable()"
+        >
+          <span i18n="@@PRO_SUBSCRIPTION__UPGRADE_TO_PRO">Upgrade to Pro</span>
+        </m-button>
+        <div class="m-proSubscriptionButton__notice" *ngIf="active">
+          <span
+            i18n="@@PRO_SUBSCRIPTION__DISABLED_BECAUSE_CANCELLED"
+            *ngIf="!hasSubscription"
+            >You still have Minds Pro until {{ expiryString }}.</span
           >
-            Upgrade to Pro
-          </button>
-          <div class="m-proSubscription__alreadyAMemberNotice" *ngIf="active">
+          <ng-container *ngIf="hasSubscription">
             <span i18n="@@PRO_SUBSCRIPTION__ALREADY_PRO_MEMBER"
               >You're already a Pro member.</span
             >
             <a
               [routerLink]="[
-                '/pro',
+                '/settings',
+                'pro_canary',
                 session.getLoggedInUser().username,
-                'settings',
-                'subscription'
+                'cancel'
               ]"
               i18n="@@PRO_SUBSCRIPTION__MANAGE_MEMBERSHIP"
             >
               Manage membership.
             </a>
-          </div>
+          </ng-container>
         </div>
-        <button
-          class="mf-button mf-button--alt"
-          *ngIf="session.getLoggedInUser() && !active"
+      </div>
+      <m-button color="blue" *ngIf="session.getLoggedInUser() && !active">
+        <a
           [routerLink]="[
             '/pro/' + session.getLoggedInUser().username + '/settings'
           ]"
           i18n="@@PRO_SUBSCRIPTION__TRY_PRO"
+          >Try Pro</a
         >
-          Try Pro
-        </button>
-      </ng-container>
-      <ng-template #comingSoon>
-        <button class="mf-button mf-button--alt" i18n="@@COMMON__COMING_SOON">
-          Coming soon
-        </button>
-      </ng-template>
-      <p
-        class="m-marketing__subText"
-        i18n="@@PRO_SUBSCRIPTION__BY_PURCHASING_PRO_AGREE"
-      >
-        By purchasing Pro you agree to
-        <a
-          href="https://cdn-assets.minds.com/pro-terms-27-11-2019.pdf"
-          target="_blank"
-          >Terms &amp; Conditions</a
-        >.
-      </p>
+      </m-button>
     </div>
   </div>
 </ng-container>

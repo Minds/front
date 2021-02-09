@@ -1,7 +1,6 @@
 @import 'defaults';
 
 m-notifications--flyout {
-  z-index: 999;
   width: 320px;
   position: absolute;
   top: 24px;
@@ -77,7 +76,7 @@ m-notifications--flyout {
 
     &.m-notificationsFlyout--newNavigation {
       @include m-theme() {
-        background-color: themed($m-bgColor--secondary);
+        background-color: themed($m-bgColor--primary);
       }
     }
   }
@@ -96,7 +95,7 @@ m-notifications--flyout {
         margin-bottom: 0;
         padding: 16px 8px;
         @include m-theme() {
-          border-bottom: 1px solid themed($m-grey-50);
+          border-bottom: 1px solid themed($m-borderColor--primary);
         }
 
         .body {
@@ -128,7 +127,7 @@ m-notifications--flyout {
     text-align: center;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
 
     a {

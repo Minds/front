@@ -12,13 +12,6 @@ import {
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -28,7 +21,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../common/services/related-content.service';
 import { ShareModalComponent } from '../../modals/share/share';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
@@ -40,6 +33,8 @@ import {
   StackableModalState,
   StackableModalEvent,
 } from '../../../services/ux/stackable-modal.service';
+import { MediumFadeAnimation, SlowFadeAnimation } from '../../../animations';
+import isFullscreen, { toggleFullscreen } from '../../../helpers/fullscreen';
 
 export type MediaModalParams = {
   entity: any;
@@ -49,31 +44,10 @@ export type MediaModalParams = {
   selector: 'm-media--modal',
   templateUrl: 'modal.component.html',
   animations: [
-    // Fade media in after load
-    trigger('slowFade', [
-      state(
-        'in',
-        style({
-          opacity: 1,
-        })
-      ),
-      state(
-        'out',
-        style({
-          opacity: 0,
-        })
-      ),
-      transition('out => in', [animate('600ms')]),
-      transition('in => out', [animate('0ms')]),
-    ]),
     // Fade overlay in/out
-    trigger('fastFade', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
-    ]),
+    MediumFadeAnimation,
+    // Fade media in after load
+    SlowFadeAnimation,
   ],
   providers: [ActivityService],
 })
@@ -129,6 +103,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     hasPrev: false,
     hasNext: false,
   };
+
   canToggleMatureVideoOverlay: boolean = true;
 
   isTranslatable: boolean = false;
@@ -146,7 +121,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.setEntity(params.entity);
 
     if (this.features.has('modal-pager')) {
-      this.horizontalFeed.setBaseEntity(params.entity);
+      this.relatedContent.setBaseEntity(params.entity);
     }
   }
 
@@ -195,7 +170,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private location: Location,
     private site: SiteService,
     private featureService: FeaturesService,
-    private horizontalFeed: HorizontalFeedService,
+    private relatedContent: RelatedContentService,
     private features: FeaturesService,
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
@@ -251,16 +226,16 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // -- Initialize Horizontal Feed service context
 
     if (this.features.has('modal-pager')) {
-      this.modalPager$ = this.horizontalFeed
+      this.modalPager$ = this.relatedContent
         .onChange()
         .subscribe(async change => {
           this.modalPager = {
-            hasNext: await this.horizontalFeed.hasNext(),
-            hasPrev: await this.horizontalFeed.hasPrev(),
+            hasNext: await this.relatedContent.hasNext(),
+            hasPrev: await this.relatedContent.hasPrev(),
           };
         });
 
-      this.horizontalFeed.setContext('container');
+      this.relatedContent.setContext('container');
     }
 
     // -- Load entity
@@ -706,55 +681,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   @HostListener('document:MSFullscreenChange', ['$event'])
   onFullscreenChange(event) {
     this.calculateDimensions();
-    if (
-      !document.fullscreenElement &&
-      !document['webkitFullscreenElement'] &&
-      !document['mozFullScreenElement'] &&
-      !document['msFullscreenElement']
-    ) {
-      this.isFullscreen = false;
-    } else {
-      this.isFullscreen = true;
-    }
+    this.isFullscreen = isFullscreen();
   }
 
   toggleFullscreen() {
-    const elem = document.querySelector('.m-mediaModal__stageWrapper');
     this.fullscreenHovering = false;
     this.calculateDimensions();
 
-    // If fullscreen is not already enabled
-    if (
-      !document['fullscreenElement'] &&
-      !document['webkitFullscreenElement'] &&
-      !document['mozFullScreenElement'] &&
-      !document['msFullscreenElement']
-    ) {
-      // Request full screen
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem['webkitRequestFullscreen']) {
-        elem['webkitRequestFullscreen']();
-      } else if (elem['mozRequestFullScreen']) {
-        elem['mozRequestFullScreen']();
-      } else if (elem['msRequestFullscreen']) {
-        elem['msRequestFullscreen']();
-      }
-      this.isFullscreen = true;
-      return;
-    }
-
-    // If fullscreen is already enabled, exit it
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document['webkitExitFullscreen']) {
-      document['webkitExitFullscreen']();
-    } else if (document['mozCancelFullScreen']) {
-      document['mozCancelFullScreen']();
-    } else if (document['msExitFullscreen']) {
-      document['msExitFullscreen']();
-    }
-    this.isFullscreen = false;
+    const el = document.querySelector('.m-mediaModal__stageWrapper');
+    this.isFullscreen = toggleFullscreen(el);
   }
 
   // * KEYBOARD SHORTCUTS * --------------------------------------------------------------------------
@@ -873,7 +808,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const modalSourceUrl = this.entity.modal_source_url || '';
-    const response = await this.horizontalFeed.next();
+    const response = await this.relatedContent.next();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity, {
@@ -893,7 +828,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const modalSourceUrl = this.entity.modal_source_url || '';
-    const response = await this.horizontalFeed.prev();
+    const response = await this.relatedContent.prev();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity, {
@@ -916,7 +851,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   }
 
   async openShareModal(): Promise<void> {
-    const data = this.site.baseUrl + this.pageUrl.substr(1);
+    const data = {
+      url: this.site.baseUrl + this.pageUrl.substr(1),
+    };
     const opts = {
       class: 'm-overlayModal__share m-overlay-modal--medium',
     };

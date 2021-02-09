@@ -13,24 +13,24 @@
     />
 
     <label for="m-blockchainTokenPurchase__amountInput" i18n="@@COMMON__TOKENS"
-      >Tokens</label
+      >tokens</label
     >
   </div>
 
   <div class="m-blockchainTokenPurchase__ethTotal" ngPreserveWhitespaces>
     <span class="m-blockchainTokenPurchaseEthTotal__value">{{ amount }}</span>
-    Eth
+    ETH
   </div>
 
   <div class="m-blockchainTokenPurchase__action">
-    <button
-      class="mf-button"
+    <m-button
+      color="blue"
       [disabled]="!tokens"
-      (click)="purchase(); $event.preventDefault()"
+      (onAction)="purchase(); $event.preventDefault()"
       i18n="verb|@@COMMON__BUY"
     >
       Buy
-    </button>
+    </m-button>
   </div>
 </div>
 
@@ -43,7 +43,7 @@
   </span>
   |
   <a (click)="purchaseEth(); $event.preventDefault()" i18n="@@COMMON__BUY_ETH"
-    >Buy Eth</a
+    >Buy ETH</a
   >
 </div>
 

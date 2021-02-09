@@ -8,7 +8,7 @@ m-group--sidebar-markers {
       letter-spacing: 1.83px;
       text-transform: uppercase;
       @include m-theme() {
-        color: rgba(themed($m-black), 0.3);
+        color: themed($m-textColor--tertiary);
       }
 
       @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMin2ColWidth) {
@@ -53,12 +53,12 @@ m-group--sidebar-markers {
           &.m-groupSidebarMarkersList__item--newGroup,
           &.m-groupSidebarMarkersList__item--discoverGroups {
             @include m-theme() {
-              color: themed($m-grey-200);
+              color: themed($m-textColor--tertiary);
             }
 
             i.material-icons {
               @include m-theme() {
-                color: themed($m-grey-500);
+                color: themed($m-textColor--secondary);
               }
             }
           }
@@ -198,7 +198,7 @@ m-group--sidebar-markers {
     height: 48px;
     position: relative;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-50);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
     @media screen and(max-width: $min-desktop) {
@@ -206,7 +206,7 @@ m-group--sidebar-markers {
 
       &:not(:last-child) {
         @include m-theme() {
-          border-right: 1px solid themed($m-grey-50);
+          border-right: 1px solid themed($m-borderColor--primary);
         }
       }
     }
@@ -230,7 +230,7 @@ m-group--sidebar-markers {
       justify-content: center;
       border-radius: 50%;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
         // Account for misalignment caused by 1px border.
         transform: translateX(-1px);
       }
@@ -242,7 +242,7 @@ m-group--sidebar-markers {
       border-radius: 50%;
       vertical-align: middle;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 

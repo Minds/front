@@ -65,24 +65,13 @@
     ></m-inline-editor>
 
     <div class="m-form-actions">
-      <button
-        class="m-button m-button--submit"
-        (click)="save(page)"
-        [hidden]="status == 'saving'"
-      >
+      <m-button color="blue" (click)="save(page)" [saving]="status == 'saving'">
         Save &amp; Publish
-      </button>
-      <button
-        class="m-button m-button--submit"
-        (click)="false"
-        [hidden]="status != 'saving'"
-      >
-        Saving
-      </button>
+      </m-button>
 
-      <button class="m-button m-button--delete" (click)="delete(page)">
+      <m-button color="red" (onAction)="delete(page)">
         Delete
-      </button>
+      </m-button>
     </div>
   </div>
 
@@ -108,27 +97,17 @@
     </div>
 
     <div class="m-form-actions">
-      <button
-        class="mdl-button mdl-button--colored mdl-button--raised"
-        (click)="save(page, false)"
-        [hidden]="status == 'saving'"
+      <m-button
+        color="blue"
+        (onAction)="save(page, false)"
+        [saving]="status == 'saving'"
       >
         Save & Publish
-      </button>
-      <button
-        class="mdl-button mdl-button--colored mdl-button--raised"
-        (click)="false"
-        [hidden]="status != 'saving'"
-      >
-        Saving
-      </button>
+      </m-button>
 
-      <button
-        class="mdl-button mdl-button--colored m-button--delete"
-        (click)="delete(page)"
-      >
+      <m-button color="red" (onAction)="delete(page)">
         Delete
-      </button>
+      </m-button>
     </div>
   </div>
 </div>

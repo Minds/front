@@ -126,35 +126,20 @@
       font-size: 13px;
       letter-spacing: 1px;
       @include m-theme() {
-        border: 1px solid themed($m-grey-50);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
     button {
-      text-transform: uppercase;
-
-      appearance: none;
-      padding: 12px 16px;
-      font-size: 13px;
-      letter-spacing: 2.5px;
-      background: none;
       float: right;
       margin: 8px 0;
-      @include m-theme() {
-        border: 1px solid themed($m-grey-100);
-        color: themed($m-grey-400);
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
     }
   }
 
   .m-report-console--appeal-note {
     padding: 16px;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
     p {

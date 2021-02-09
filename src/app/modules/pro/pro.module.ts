@@ -12,7 +12,6 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { ProChannelListComponent } from './channel/list/list.component';
 import { ProTileComponent } from './channel/tiles/media/tile.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
-import { ProSettingsComponent } from './settings/settings.component';
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { WireModule } from '../wire/wire.module';
@@ -31,10 +30,7 @@ import { SubscribeButtonComponent } from './channel/subscribe-button/subscribe-b
 import { SearchBoxComponent } from './channel/search-box/search-box.component';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
 import { NewsfeedSingleComponent } from '../newsfeed/single/single.component';
-import { MediaViewComponent } from '../media/view/view.component';
-import { MediaEditComponent } from '../media/edit/edit.component';
 import { BlogViewInfinite } from '../blogs/view/infinite';
-import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ModalsModule } from '../modals/modals.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
@@ -62,7 +58,6 @@ const routes: Routes = [
         redirectTo: ':username/settings/general',
         pathMatch: 'full',
       },
-      { path: ':username/settings/:tab', component: ProSettingsComponent },
       {
         path: ':username',
         component: ProChannelComponent,
@@ -112,11 +107,7 @@ export const PRO_DOMAIN_ROUTES = [
       },
       {
         path: 'media/:guid',
-        component: MediaViewComponent,
-      },
-      {
-        path: 'media/edit/:guid',
-        component: MediaEditComponent,
+        redirectTo: 'newsfeed/:guid',
       },
       {
         path: 'blog/view/:guid/:title',
@@ -125,11 +116,6 @@ export const PRO_DOMAIN_ROUTES = [
       {
         path: 'blog/view/:guid',
         component: BlogViewInfinite,
-      },
-      {
-        path: 'blog/edit/:guid',
-        component: BlogEdit,
-        canDeactivate: [CanDeactivateGuardService],
       },
       {
         path: 'blog/:slugid',
@@ -167,7 +153,6 @@ export const PRO_DOMAIN_ROUTES = [
   providers: [ProService],
   declarations: [
     ProMarketingComponent,
-    ProSettingsComponent,
     ProSubscriptionComponent,
     ProTileComponent,
     ProChannelHomeComponent,

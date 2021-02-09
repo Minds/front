@@ -1,6 +1,10 @@
 @import 'defaults';
 
 .m-group__grid {
+  // new stacking context
+  position: relative;
+  z-index: 0;
+
   display: flex;
   flex-direction: row;
 
@@ -13,7 +17,7 @@
     min-width: 33%;
     width: 33%;
     @include m-theme() {
-      border-left: 1px solid themed($m-grey-50);
+      border-left: 1px solid themed($m-borderColor--primary);
     }
   }
 
@@ -30,7 +34,8 @@
     top: 55px;
     right: 60px;
     display: block;
-    z-index: 99;
+    z-index: 1;
+    cursor: pointer;
 
     @media screen and (max-width: $min-desktop) {
       right: 8px;
@@ -69,7 +74,7 @@
   max-width: 780px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 
   minds-groups-settings-button.m-button {
@@ -144,6 +149,7 @@
   }
 
   .m-groupInfo__actionButtons {
+    margin-top: 10px;
     display: inline-flex;
 
     @media screen and (max-width: 700px) {
@@ -226,7 +232,7 @@ m-groups--profile .m-group__grid header {
   padding: 8px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
 }
 

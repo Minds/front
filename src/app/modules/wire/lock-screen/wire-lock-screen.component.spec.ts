@@ -25,6 +25,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('WireLockScreenComponent', () => {
   let comp: WireLockScreenComponent;
@@ -46,7 +47,7 @@ describe('WireLockScreenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, WireLockScreenComponent], // declare the test component
+      declarations: [MaterialMock, WireLockScreenComponent, ButtonComponent], // declare the test component
       imports: [],
       providers: [
         { provide: Client, useValue: clientMock },
@@ -72,7 +73,6 @@ describe('WireLockScreenComponent', () => {
             },
           }),
         },
-        { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: AuthModalService, useValue: MockService(AuthModalService) },
       ],
     }).compileComponents(); // compile template and css
@@ -80,8 +80,6 @@ describe('WireLockScreenComponent', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
-    featuresServiceMock.mock('paywall-2020', false);
-
     fixture = TestBed.createComponent(WireLockScreenComponent);
 
     comp = fixture.componentInstance; // LoginForm test instance

@@ -1,20 +1,10 @@
-import { TopicsOnboardingComponent } from './topics/topics.component';
-import { SubscriptionsOnboardingComponent } from './subscriptions/subscriptions.component';
-import { ChannelSetupOnboardingComponent } from './channel/channel.component';
-import { TokenRewardsOnboardingComponent } from './rewards/rewards.component';
 import { EventEmitter } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { FeaturesService } from '../../../services/features.service';
 
 export class ChannelOnboardingService {
-  slides = [
-    TopicsOnboardingComponent,
-    SubscriptionsOnboardingComponent,
-    // GroupsOnboardingComponent,
-    ChannelSetupOnboardingComponent,
-    TokenRewardsOnboardingComponent,
-  ];
+  slides = [];
 
   currentSlide: number = 0;
   completed: boolean = false;

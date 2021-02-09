@@ -1,4 +1,11 @@
 m-translate {
+  &.m-translate--minimalMode {
+    .m-translate__hasNav2020 {
+      > * {
+        padding: 10px $activity-padding-lr--minimalMode;
+      }
+    }
+  }
   .m-translate__hasNav2020 {
     > * {
       padding: 10px $activity-padding-lr;
@@ -12,7 +19,7 @@ m-translate {
       padding: 10px 0 0 0 !important;
       margin: 0 !important;
       @include m-theme() {
-        border-top: 1px solid themed($m-borderColor--tertiary);
+        border-top: 1px solid themed($m-borderColor--primary);
       }
     }
     .m-translation-wrapper {
@@ -116,8 +123,8 @@ m-translate {
     padding: $minds-padding;
     font-size: 12px;
     @include m-theme() {
-      border: 1px solid themed($m-grey-100);
-      background-color: themed($m-white);
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
       color: rgba(themed($m-black), 0.87);
     }
   }

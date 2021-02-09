@@ -41,6 +41,11 @@ export class OverlayModalComponent implements AfterViewInit, OnDestroy {
   isMediaModal: boolean = false;
   stackable: boolean = false;
 
+  /**
+   * Dismiss modal when route changes.
+   */
+  public dismissOnRouteChange: boolean = true;
+
   private routerSubscription: Subscription;
 
   @ViewChild(DynamicHostDirective, { static: true })
@@ -74,7 +79,9 @@ export class OverlayModalComponent implements AfterViewInit, OnDestroy {
     this.routerSubscription = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(data => {
-        this.dismiss();
+        if (this.dismissOnRouteChange) {
+          this.dismiss();
+        }
       });
   }
 
@@ -83,6 +90,10 @@ export class OverlayModalComponent implements AfterViewInit, OnDestroy {
      * Remove possible existing modal component refs, etc. before creating a new one
      */
     this.dismiss();
+
+    if (opts && 'dismissOnRouteChange' in opts) {
+      this.dismissOnRouteChange = opts.dismissOnRouteChange;
+    }
 
     opts = {
       class: '',

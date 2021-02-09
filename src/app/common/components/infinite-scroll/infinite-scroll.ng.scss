@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+
+  .material-icons {
+    cursor: pointer;
+  }
+
+  ::ng-deep m-button {
+    display: block;
+    padding: 20px 0;
+  }
+}

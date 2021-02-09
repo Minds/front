@@ -4,6 +4,7 @@ import { YoutubeMigrationService } from '../youtube-migration.service';
 @Component({
   selector: 'm-youtubeMigration__videoList',
   templateUrl: './video-list.component.html',
+  styleUrls: ['./video-list.component.ng.scss'],
 })
 export class YoutubeMigrationVideoListComponent {
   @Input() videos: any;
@@ -11,21 +12,7 @@ export class YoutubeMigrationVideoListComponent {
 
   constructor(protected youtubeService: YoutubeMigrationService) {}
 
-  playRequested(video: any): void {
-    this.requestPlay.emit({ video: video });
-  }
-
-  cancel(video: any): void {
-    const videoId = video.video_id;
-    this.youtubeService.cancelImport(videoId);
-    // video.status = this.youtubeService.getVideoStatus(videoId);
-    video.status = null;
-  }
-
-  import(video: any): void {
-    const videoId = video.video_id;
-    this.youtubeService.import(videoId);
-    // video.status = this.youtubeService.getVideoStatus(videoId);
-    video.status = 'queued';
+  playRequested(e): void {
+    this.requestPlay.emit({ video: e.video });
   }
 }

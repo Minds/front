@@ -34,7 +34,6 @@ import { MindsFormsModule } from './modules/forms/forms.module';
 import { LegacyModule } from './modules/legacy/legacy.module';
 import { ModalsModule } from './modules/modals/modals.module';
 import { PaymentsModule } from './modules/payments/payments.module';
-import { ThirdPartyNetworksModule } from './modules/third-party-networks/third-party-networks.module';
 import { TranslateModule } from './modules/translate/translate.module';
 import { OnboardingModule } from './modules/onboarding/onboarding.module';
 import { NotificationModule } from './modules/notifications/notification.module';
@@ -42,7 +41,6 @@ import { NotificationModule } from './modules/notifications/notification.module'
 import { GroupsModule } from './modules/groups/groups.module';
 import { PostMenuModule } from './common/components/post-menu/post-menu.module';
 import { BanModule } from './modules/ban/ban.module';
-import { BlogModule } from './modules/blogs/blog.module';
 import { SearchModule } from './modules/search/search.module';
 import { MessengerModule } from './modules/messenger/messenger.module';
 import { NewsfeedModule } from './modules/newsfeed/newsfeed.module';
@@ -59,6 +57,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 //import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
+import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 
 import * as Sentry from '@sentry/browser';
 import { CookieModule } from '@gorniv/ngx-universal';
@@ -104,7 +103,6 @@ export class SentryErrorHandler implements ErrorHandler {
     ReportModule,
     I18nModule,
     BanModule,
-    ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,
     ModalsModule,
@@ -114,7 +112,6 @@ export class SentryErrorHandler implements ErrorHandler {
     OnboardingV2Module,
     NotificationModule,
     GroupsModule,
-    BlogModule,
     PostMenuModule,
     SearchModule,
     MessengerModule,
@@ -131,6 +128,7 @@ export class SentryErrorHandler implements ErrorHandler {
     IssuesModule,
     //ChannelsModule,
     UpgradesModule,
+    CodeHighlightModule,
     SharedModule,
 
     //last due to :username route

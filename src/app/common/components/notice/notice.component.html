@@ -11,11 +11,11 @@
   >
 </div>
 <ng-container *ngIf="cookiesEnabled">
-  <button class="m-btn m-btn--slim" (click)="dismiss()">Ok</button>
+  <m-button (onAction)="dismiss()">Ok</m-button>
 </ng-container>
 
 <ng-container *ngIf="!cookiesEnabled">
-  <button class="m-btn m-btn--slim" (click)="toggleCookies(true)">
+  <m-button (onAction)="toggleCookies(true)">
     Enable
-  </button>
+  </m-button>
 </ng-container>

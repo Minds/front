@@ -15,10 +15,12 @@ import {
 } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-newsfeed--single',
   templateUrl: 'single.component.html',
+  styleUrls: ['single.component.ng.scss'],
 })
 export class NewsfeedSingleComponent {
   readonly cdnAssetsUrl: string;
@@ -42,7 +44,8 @@ export class NewsfeedSingleComponent {
     protected featuresService: FeaturesService,
     private metaService: MetaService,
     configs: ConfigsService,
-    private headersService: HeadersService
+    private headersService: HeadersService,
+    private authModalService: AuthModalService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -103,22 +106,14 @@ export class NewsfeedSingleComponent {
           case 'image':
           case 'video':
           case 'album':
-            if (!this.featuresService.has('navigation')) {
-              this.router.navigate(['/media', this.activity.guid], {
-                replaceUrl: true,
-              });
-            }
             break;
           case 'blog':
-            if (!this.featuresService.has('navigation')) {
-              this.router.navigate(['/blog/view', this.activity.guid], {
-                replaceUrl: true,
-              });
-            }
             break;
         }
 
         this.updateMeta();
+
+        if (this.activity.require_login) this.openLoginModal();
 
         this.inProgress = false;
 
@@ -166,6 +161,16 @@ export class NewsfeedSingleComponent {
     return fakeEmitter;
   }
 
+  async openLoginModal(): Promise<void> {
+    this.error = 'You must be logged in to see this post';
+    this.headersService.setCode(401);
+    try {
+      await this.authModalService.open();
+      this.activity.require_login = false;
+      this.error = null;
+    } catch {}
+  }
+
   private updateMeta(): void {
     const activity = this.activity.remind_object || this.activity;
 
@@ -180,7 +185,10 @@ export class NewsfeedSingleComponent {
     } else {
       description = activity.blurb || '';
     }
-    description += `. Subscribe to @${activity.ownerObj.username} on Minds`;
+    if (description) {
+      description += `. `;
+    }
+    description += `Subscribe to @${activity.ownerObj.username} on Minds`;
 
     this.metaService
       .setTitle(title)
@@ -211,6 +219,6 @@ export class NewsfeedSingleComponent {
   }
 
   get showLegacyActivity(): boolean {
-    return this.editing || !this.featuresService.has('navigation');
+    return this.editing;
   }
 }

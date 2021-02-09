@@ -1,40 +1,193 @@
-<div class="m-pageLayout__container m-channel__feed">
-  <div class="m-channelFeed__list" m-pageLayout__pane="main">
-    <m-feedFilter
-      class="m-channelFeedList__filter"
-      [options]="['type']"
-      [type]="feed.type$ | async"
-      (typeChange)="onTypeChange($event)"
-    >
-      <ng-container *ngIf="service.isOwner$">
-        <a
-          *ngIf="feed.scheduledCount$ | async as scheduledCount"
-          class="m-channelFeedListFilter__scheduled"
-          [routerLink]="['/', service.username$ | async, 'scheduled']"
-        >
-          Scheduled <strong>{{ scheduledCount }}</strong>
-        </a>
+<div
+  class="m-pageLayout__container m-channel__feed"
+  [ngClass]="{ 'm-channel__feed--grid': isGrid }"
+>
+  <div class="m-channelFeed__body" m-pageLayout__pane="main">
+    <!-- ----------------------------------------- -->
+    <!-- TOOLBAR -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__toolbar">
+      <m-feedFilter
+        class="m-channelFeed__filter"
+        [options]="['type']"
+        [type]="feedService.type$ | async"
+        (typeChange)="onTypeChange($event)"
+      >
+        <ng-container *ngIf="service.isOwner$ && !isGrid">
+          <a
+            *ngIf="feedService.scheduledCount$ | async as scheduledCount"
+            class="m-channelFeedFilter__scheduled"
+            [routerLink]="['/', service.username$ | async, 'scheduled']"
+          >
+            <m-tooltip [anchor]="'bottom'" icon="alarm">
+              <ng-container i18n="@@M__CHANNEL_FEED__SCHEDULED_TOOLTIP">
+                Scheduled posts
+              </ng-container>
+            </m-tooltip>
+            <span>{{ scheduledCount }}</span>
+          </a>
+        </ng-container>
+      </m-feedFilter>
+    </div>
+
+    <!-- ----------------------------------------- -->
+    <!-- LAYOUT : GRID  -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__grid" *ngIf="isGrid">
+      <m-feedGrid
+        [maxColumns]="3"
+        [entities]="feed"
+        [isProSite]="false"
+        (deleted)="feedService.onDelete($event)"
+      >
+      </m-feedGrid>
+    </div>
+
+    <!-- ----------------------------------------- -->
+    <!-- LAYOUT : LIST  -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__list" *ngIf="!isGrid">
+      <ng-container *ngIf="feed?.length > 0">
+        <m-composer *ngIf="service.isOwner$ | async"></m-composer>
+        <div class="m-channelFeedList__entities">
+          <m-newsfeed__entity
+            *ngFor="let entity of feed; let i = index"
+            [entity]="entity | async"
+            [slot]="i + 1"
+            (deleted)="feedService.onDelete($event)"
+          ></m-newsfeed__entity>
+        </div>
       </ng-container>
-    </m-feedFilter>
+    </div>
 
-    <div class="m-channelFeedList__entities">
-      <m-newsfeed__entity
-        *ngFor="let entity of feed.service.feed | async; let i = index"
-        [entity]="entity | async"
-        [slot]="i + 1"
-        (deleted)="feed.onDelete($event)"
-      ></m-newsfeed__entity>
+    <ng-container
+      *ngIf="showInfiniteScroll()"
+      [ngTemplateOutlet]="infiniteScroll"
+    ></ng-container>
 
-      <infinite-scroll
-        distance="25%"
-        (load)="feed.loadNext()"
-        [moreData]="feed.service.hasMore | async"
-        [inProgress]="feed.service.inProgress | async"
-      ></infinite-scroll>
+    <!-- ----------------------------------------- -->
+    <!-- LAYOUT : NO POSTS  -->
+    <!-- ----------------------------------------- -->
+    <div
+      *ngIf="
+        !(feedService.service.inProgress | async) &&
+        (feedService.service.feed | async)?.length < 1 &&
+        !isOwnedChannel
+      "
+      class="m-channelFeed__emptyFeedContainer"
+    >
+      <span
+        class="m-channelFeed__emptyFeedTitle"
+        i18n="@@M__CHANNEL_FEED__NO_CONTENT"
+        >No content</span
+      >
+      <ng-container [ngSwitch]="feedService.type$ | async">
+        <span
+          *ngSwitchCase="'images'"
+          class="m-channelFeed__emptyFeedSubtitle"
+          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_IMAGES"
+          >This channel hasn't posted an image yet</span
+        >
+        <span
+          *ngSwitchCase="'videos'"
+          class="m-channelFeed__emptyFeedSubtitle"
+          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_VIDEOS"
+          >This channel hasn't posted a video yet</span
+        >
+        <span
+          *ngSwitchCase="'blogs'"
+          class="m-channelFeed__emptyFeedSubtitle"
+          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_BLOGS"
+          >This channel hasn't posted a blog yet</span
+        >
+        <span
+          *ngSwitchCase="'activities'"
+          class="m-channelFeed__emptyFeedSubtitle"
+          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_ANYTHING"
+          >This channel hasn't posted anything yet</span
+        >
+        <!-- Catch issues with any future additions -->
+        <span
+          *ngSwitchCaseDefault
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
+          >Looks like you haven't posted any content of this type yet</span
+        >
+      </ng-container>
+    </div>
+
+    <div
+      *ngIf="
+        !(feedService.service.inProgress | async) &&
+        feed &&
+        feed?.length < 1 &&
+        isOwnedChannel
+      "
+      class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+    >
+      <ng-container [ngSwitch]="feedService.type$ | async">
+        <span
+          *ngSwitchCase="'images'"
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_IMAGES_YET"
+          >Looks like you haven't posted images yet</span
+        >
+        <span
+          *ngSwitchCase="'videos'"
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_VIDEOS_YET"
+          >Looks like you haven't posted videos yet</span
+        >
+        <span
+          *ngSwitchCase="'blogs'"
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_BLOGS_YET"
+          >Looks like you haven't posted blogs yet</span
+        >
+        <span
+          *ngSwitchCase="'activities'"
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_YET"
+          >Looks like you haven't posted yet</span
+        >
+        <!-- Catch issues with any future additions -->
+        <span
+          *ngSwitchCaseDefault
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
+          >Looks like you haven't posted any content of this type yet.</span
+        >
+      </ng-container>
+
+      <m-button
+        i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
+        (onAction)="onFirstPostButtonClick()"
+        color="blue"
+      >
+        Create your first post
+      </m-button>
     </div>
   </div>
 
-  <div class="m-channelFeed__sidebar" m-pageLayout__pane="right">
+  <!-- ----------------------------------------- -->
+  <!-- INFINITE SCROLL TEMPLATE  -->
+  <!-- ----------------------------------------- -->
+  <ng-template #infiniteScroll>
+    <infinite-scroll
+      distance="25%"
+      (load)="feedService.loadNext()"
+      [moreData]="feedService.service.hasMore | async"
+      [inProgress]="feedService.service.inProgress | async"
+    ></infinite-scroll
+  ></ng-template>
+  <!-- ----------------------------------------- -->
+  <!-- SIDEBAR  -->
+  <!-- ----------------------------------------- -->
+  <div
+    class="m-channelFeed__sidebar"
+    m-pageLayout__pane="right"
+    *ngIf="!isGrid"
+  >
     <div class="m-pageLayoutPane__inner">
       <m-channelAbout__brief></m-channelAbout__brief>
       <ng-container *mIfBrowser>
@@ -45,7 +198,9 @@
         </ng-container>
 
         <ng-template #wireRewardsBrief>
-          <m-channelShop__briefWireRewards></m-channelShop__briefWireRewards>
+          <m-channelShop__lazy
+            component="m-channelShop__briefWireRewards"
+          ></m-channelShop__lazy>
         </ng-template>
       </ng-container>
     </div>

@@ -69,7 +69,7 @@ m-draggableList {
     @include m-theme() {
       border: none;
       border-right: 1px solid themed($m-borderColor--primary);
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--primary);
     }
     &input {
       width: 0;

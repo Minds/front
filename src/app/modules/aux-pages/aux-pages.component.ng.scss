@@ -1,0 +1,195 @@
+@import 'defaults.scss';
+@import '../../common/layout/layout.scss';
+
+:host {
+  .m-aux__marketing,
+  .m-aux__marketing > * {
+    @include m-theme {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  .m-aux__marketing {
+    &:not(.m-aux__marketing--hasHero) {
+      padding-top: 30px;
+    }
+    @media screen and (min-width: $max-mobile + 1) {
+      @include m-theme {
+        border-right: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  ::ng-deep m-marketing {
+    .m-marketing__main {
+      max-width: 1280px;
+      margin: 0 40px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 0 30px;
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        opacity: 1;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 14px;
+        margin-top: 30px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      h3,
+      h4 {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      b,
+      strong {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      ol {
+        list-style-type: decimal;
+        ol {
+          list-style-type: lower-alpha;
+          ol {
+            list-style-type: lower-roman;
+          }
+        }
+      }
+
+      p,
+      li {
+        font-size: 17px;
+        line-height: 25px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      li {
+        margin-bottom: 16px;
+      }
+
+      a {
+        text-decoration: underline;
+      }
+      .m-aux__lastUpdated {
+        font-style: italic;
+        margin-top: 25px;
+        margin-bottom: 65px;
+      }
+    }
+
+    .m-aux__hero {
+      background-position: center right;
+      background-size: cover;
+      margin: 0 -40px 40px;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+      .m-aux__heroInner {
+        padding: 6em 40px;
+        font-size: 20px;
+
+        @media screen and (max-width: $layoutMax2ColWidth) {
+          font-size: 18px;
+        }
+        @media screen and (max-width: $max-mobile) {
+          font-size: 14px;
+        }
+
+        > * {
+          @media screen and (min-width: $layoutMax2ColWidth + 1) {
+            max-width: 70%;
+          }
+        }
+
+        h1 {
+          font-size: 4em;
+          letter-spacing: 0.01em;
+          line-height: 1.1em;
+          font-weight: 900;
+
+          @include m-theme() {
+            color: themed($m-white-always);
+          }
+
+          @media screen and (max-width: $max-mobile) {
+            font-weight: 600;
+          }
+        }
+        h2 {
+          font-size: 3.2em;
+          letter-spacing: 0.01em;
+          line-height: 1.1em;
+          font-weight: 900;
+          @include m-theme() {
+            color: themed($m-white-always);
+          }
+          @media screen and (max-width: $max-mobile) {
+            font-weight: 600;
+          }
+        }
+
+        h3 {
+          font-size: 1.6em;
+          letter-spacing: 0.005em;
+          line-height: 1.1em;
+
+          font-weight: 700;
+          @media screen and (max-width: $max-mobile) {
+            font-weight: 600;
+          }
+          @include m-theme() {
+            color: themed($m-white-always);
+          }
+        }
+
+        ::ng-deep m-button button {
+          margin-bottom: 0;
+          div {
+            font-weight: 600;
+            white-space: pre;
+          }
+        }
+      }
+    }
+
+    ::ng-deep {
+      m-aux__contact {
+        ul {
+          margin-top: -20px;
+          list-style-type: none;
+          padding-left: 0;
+        }
+      }
+
+      m-button button {
+        margin: 0 0 30px;
+
+        a {
+          text-decoration: none !important;
+          color: inherit !important;
+        }
+      }
+    }
+  }
+}

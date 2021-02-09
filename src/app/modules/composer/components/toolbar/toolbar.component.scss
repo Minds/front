@@ -29,7 +29,7 @@
 
     &.m-composerToolbar__item--active {
       @include m-theme() {
-        color: themed($m-btn--primary);
+        color: themed($m-link);
       }
     }
 
@@ -71,6 +71,11 @@
     @media screen and (max-width: 400px) {
       flex: initial;
     }
+  }
+
+  .m-composerToolbarItem__icon--monetize {
+    font-size: 20px;
+    margin-right: -5px;
   }
 
   .m-composerToolbarItem__icon + .m-composerToolbarItem__label {

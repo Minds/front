@@ -26,6 +26,7 @@ import {
   DiscoveryFeedsContentType,
   DiscoveryFeedsContentFilter,
 } from '../discovery/feeds/feeds.service';
+import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
 
 @Component({
   selector: 'm-search--bar',
@@ -46,6 +47,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   placeholder: string;
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
+  @ViewChild(SearchBarSuggestionsComponent)
+  suggestions: SearchBarSuggestionsComponent;
 
   @HostBinding('class.m-search--bar--default-sizes')
   @Input()
@@ -130,6 +133,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   focus() {
     this.active = true;
+
+    if (this.suggestions) this.suggestions.loadRecent();
+
+    // move cursor to end of input
+    const el = this.searchInput.nativeElement;
+    if (el) {
+      setTimeout(
+        () => (el.selectionStart = el.selectionEnd = this.q.length),
+        0
+      );
+    }
   }
 
   blur() {
@@ -137,23 +151,20 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    if (this.featureService.has('navigation')) {
-      this.router.navigate(['/discovery/search'], {
-        queryParams: { q: this.q, f: this.filter, t: this.type },
-      });
-    } else {
-      this.router.navigate([
-        '/newsfeed/global/top',
-        { query: this.q, period: '30d' },
-      ]);
-    }
+    this.router.navigate(['/discovery/search'], {
+      queryParams: { q: this.q, f: this.filter, t: this.type },
+    });
 
-    this.recentService.store('recent:text', this.q);
+    this.recentService.storeSuggestion(
+      'text',
+      { value: this.q },
+      entry => entry.value === this.q
+    );
   }
 
   @HostListener('keyup', ['$event'])
   keyup(e) {
-    if (e.keyCode === 13 && this.session.isLoggedIn()) {
+    if (e.keyCode === 13) {
       this.search();
       this.unsetFocus();
     }
@@ -208,8 +219,22 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   updatePlaceholder(): void {
     this.placeholder = $localize`:@@COMMON__SEARCH:Search Minds`;
-    if (window.innerWidth < 360) {
+    if (window.innerWidth < 550) {
       this.placeholder = $localize`:@@COMMON__SEARCH__SHORT:Search`;
+    }
+    if (window.innerWidth < 500) {
+      this.placeholder = '';
+    }
+  }
+
+  moveCursorToEnd(el) {
+    if (typeof el.selectionStart == 'number') {
+      el.selectionStart = el.selectionEnd = el.value.length;
+    } else if (typeof el.createTextRange != 'undefined') {
+      el.focus();
+      var range = el.createTextRange();
+      range.collapse(false);
+      range.select();
     }
   }
 }

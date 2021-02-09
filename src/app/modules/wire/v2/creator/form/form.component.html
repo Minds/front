@@ -9,7 +9,7 @@
     <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).tokens">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'tokens'"
-        (click)="service.setType('tokens')"
+        (click)="setType('tokens')"
         i18n="currency|@@COMMON__TOKENS"
         >Tokens</a
       >
@@ -18,7 +18,7 @@
     <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).usd">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'usd'"
-        (click)="service.setType('usd')"
+        (click)="setType('usd')"
         i18n="currency|@@COMMON__USD"
         >USD</a
       >
@@ -27,7 +27,7 @@
     <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).eth">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'eth'"
-        (click)="service.setType('eth')"
+        (click)="setType('eth')"
         i18n="currency|@@COMMON__ETH"
         >ETH</a
       >
@@ -36,7 +36,7 @@
     <div class="m-tabs__tab" *ngIf="(service.currencyOptions$ | async).btc">
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'btc'"
-        (click)="service.setType('btc')"
+        (click)="setType('btc')"
         i18ni18n="currency|@@COMMON__BTC"
         >BTC</a
       >
@@ -79,6 +79,19 @@
       </div>
     </div>
     <!-- ---------------------------------- -->
+    <!-- HEADER: UPGRADE START TRIAL -->
+    <!-- ---------------------------------- -->
+    <div
+      class="m-wireCreatorForm__fields"
+      *ngIf="service.upgradeCanHaveTrial$ | async"
+    >
+      <div class="m-wireCreatorForm__field">
+        <h4 class="m-wireCreatorForm__upgradeTrialHeader">
+          Start your free trial for 7 days
+        </h4>
+      </div>
+    </div>
+    <!-- ---------------------------------- -->
     <!-- TOGGLE: UPGRADE INTERVAL -->
     <!-- ---------------------------------- -->
     <div class="m-wireCreatorForm__fields" *ngIf="service.isUpgrade$ | async">
@@ -116,6 +129,7 @@
             [class.m-wireCreatorForm__intervalOption--selected]="
               (service.upgradeInterval$ | async) === 'monthly'
             "
+            *ngIf="(service.type$ | async) === 'usd'"
           >
             <div i18n="@@COMMON__MONTHLY">Monthly</div>
             <div>
@@ -272,7 +286,7 @@
         <!--------------------------->
         <!--SELECT BANK ACCOUNT/CARD-->
         <!--------------------------->
-        <div class="m-wireCreatorForm__field">
+        <div class="m-wireCreatorForm__field m-wireCreatorForm__field--card">
           <div
             class="m-wireCreatorForm__label"
             i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
@@ -322,12 +336,35 @@
           <m-tooltip class="m-wireCreatorFormRecurring__tooltip">
             <span m-tooltip--anchor>?</span>
             <ng-container i18n="@@WIRE_CREATOR_FORM__MONTHLY_PAYMENT_INFO">
-              Monthly recurrent payments may be cancelled at any point within in
+              Monthly recurrent payments may be cancelled at any point within
               your wallet.
             </ng-container>
           </m-tooltip>
         </label>
       </div>
     </div>
+    <!--------------------------->
+    <!-- DISCLAIMER : MONETIZATION TERMS -->
+    <!--------------------------->
+    <ng-container
+      *ngIf="service.isUpgrade$ | async"
+      i18n="@@WIRE_CREATOR_FORM__TERMS_DISCLAIMER"
+    >
+      <div class="m-wireCreatorForm__fields">
+        <div class="m-wireCreatorForm__field m-wireCreatorForm__label">
+          By purchasing
+          <ng-container *ngIf="(service.upgradeType$ | async) === 'plus'"
+            >Minds+</ng-container
+          >
+          <ng-container *ngIf="(service.upgradeType$ | async) === 'pro'">
+            Pro</ng-container
+          >
+          you agree to the
+          <a routerLink="/p/monetization-terms" target="_blank"
+            >Minds Monetization Terms</a
+          >.
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

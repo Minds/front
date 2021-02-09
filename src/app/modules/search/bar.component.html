@@ -18,7 +18,7 @@
     class="mdl-textfield__input"
     type="text"
     id="search"
-    autocomplete="chrome-off"
+    autocomplete="off"
     [placeholder]="placeholder"
     i18n-placeholder="@@COMMON__SEARCH"
     #searchInput
@@ -32,12 +32,12 @@
     close
   </i>
 
-  <m-search--bar-suggestions
+  <m-searchBar__suggestions
     (click)="unsetFocus()"
     [q]="q"
     [active]="active"
     [disabled]="suggestionsDisabled"
-  ></m-search--bar-suggestions>
+  ></m-searchBar__suggestions>
 </div>
 
 <!-- Hack because $localize doesn't work in ts files -->

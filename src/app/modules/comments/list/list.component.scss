@@ -13,7 +13,6 @@ m-comments__entityOutlet,
     padding: $minds-padding $minds-padding * 1.5;
     background-color: transparent;
     overflow: visible;
-    //border-bottom:1px solid themed($m-grey-100);
 
     .m-comment-message {
       white-space: pre-line;
@@ -129,8 +128,8 @@ m-comments__entityOutlet,
       text-align: left;
       margin: 0 0 $minds-padding;
       @include m-theme() {
-        background-color: themed($m-white);
-        border: 1px solid themed($m-grey-100);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       minds-rich-embed .m-rich-embed-src {
@@ -260,7 +259,7 @@ m-comments__entityOutlet,
     padding: $minds-padding ($minds-padding + 88px) $minds-padding
       $minds-padding * 2;
     @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 
@@ -277,7 +276,6 @@ m-comments__entityOutlet,
   .m-comments-composer .mdl-card__actions,
   .minds-editable-container .mdl-card__actions {
     position: absolute;
-    z-index: 250;
     width: auto;
     display: inline-block;
     padding: 0;
@@ -296,11 +294,11 @@ m-comments__entityOutlet,
         transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--secondary);
         }
         &:hover {
           @include m-theme() {
-            color: themed($m-textColor--secondary);
+            color: themed($m-textColor--tertiary);
           }
         }
       }
@@ -335,7 +333,7 @@ m-comments__entityOutlet,
       &:hover {
         i {
           @include m-theme() {
-            color: themed($m-textColor--secondary);
+            color: themed($m-textColor--tertiary);
           }
         }
       }
@@ -344,7 +342,7 @@ m-comments__entityOutlet,
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--secondary);
         }
       }
 
@@ -358,7 +356,7 @@ m-comments__entityOutlet,
         cursor: pointer;
         opacity: 0;
         @include m-theme() {
-          color: themed($m-grey-400);
+          color: themed($m-textColor--tertiary);
         }
       }
       input::-webkit-file-upload-button {
@@ -433,7 +431,7 @@ m-comments__entityOutlet,
   margin: ($minds-padding * 2) 0;
 
   @include m-theme() {
-    color: themed($m-grey-300);
+    color: themed($m-textColor--tertiary);
   }
 
   a {

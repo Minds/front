@@ -6,18 +6,18 @@
     class="mdl-card__supporting-text"
     *ngIf="!inProgress && telno && !waitingForCheck"
   >
-    <button
-      class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-      (click)="cancel()"
-    >
+    <m-button (onAction)="cancel()">
       <ng-container i18n="@@MINDS__SETTINGS__REMOVE_2FA_ACTION">
         Remove two factor
       </ng-container>
-    </button>
+    </m-button>
   </div>
 
   <!-- SETUP -->
-  <div class="mdl-card__supporting-text" *ngIf="!inProgress && !telno">
+  <div
+    class="mdl-card__supporting-text"
+    *ngIf="(!inProgress && !telno) || sendingSms"
+  >
     <div class="minds-settings-text">
       <ng-container>
         Your SMS number.
@@ -31,16 +31,18 @@
       ></m-phoneInput>
     </div>
     <p class="mdl-color-text--red">{{ error }}</p>
-    <div>
-      <button
-        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        (click)="setup()"
+    <div class="m-twoFactor__sendButtonWrapper">
+      <m-button
+        color="blue"
+        class="m-twoFactor__sendButton"
+        id="numberSendButton"
+        (onAction)="setup()"
         [disabled]="waitingForCheck"
       >
         <ng-container i18n="@@MINDS__SETTINGS__SETUP_ACTION">
           Setup
         </ng-container>
-      </button>
+      </m-button>
     </div>
   </div>
 
@@ -51,7 +53,7 @@
   >
     <div class="minds-settings-text" *ngIf="!sendingSms">
       <ng-container i18n="@@MINDS__SETTINGS__SENT_SMS_LABEL">
-        We sent an SMS to <b>{{ telno }}</b
+        We sent an SMS to +<b>{{ telno }}</b
         >. Enter the code below to complete your two factor setup.
       </ng-container>
     </div>
@@ -65,7 +67,7 @@
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
       <input class="mdl-textfield__input" type="text" #code />
       <label
-        class="mdl-textfield__label"
+        class="mdl-textfield__label m-twoFactor__codeInputLabel"
         for="twoFactorAuthentication"
         i18n="@@M__COMMON__ENTER_2FA_CODE"
       >
@@ -73,20 +75,14 @@
       </label>
     </div>
     <div>
-      <button
-        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        (click)="check(code.value)"
-      >
+      <m-button color="blue" size="xsmall" (onAction)="check(code.value)">
         <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
-      </button>
-      <button
-        class="mdl-button mdl-js-button mdl-button--raised "
-        (click)="check(code.value)"
-      >
+      </m-button>
+      <m-button size="xsmall" (onAction)="check(code.value)">
         <ng-container i18n="@@MINDS__SETTINGS__2FA_RETRY_ACTION">
           Retry
         </ng-container>
-      </button>
+      </m-button>
     </div>
   </div>
 </div>

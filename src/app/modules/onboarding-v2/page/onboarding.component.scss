@@ -23,7 +23,7 @@ m-onboarding {
   }
 
   @include m-theme() {
-    background-color: themed($m-body-bg);
+    background-color: themed($m-bgColor--primary);
   }
 
   &.m-onboarding__iosFallback {
@@ -87,7 +87,7 @@ m-onboarding {
       color: #9b9b9b;
 
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--primary);
       }
 
       &::before {
@@ -134,7 +134,7 @@ m-onboarding {
         margin-top: 0;
 
         @include m-theme() {
-          color: themed($m-grey-800);
+          color: themed($m-textColor--primary);
         }
       }
 
@@ -229,7 +229,7 @@ m-onboarding {
           margin-top: 0;
 
           @include m-theme() {
-            color: themed($m-grey-800);
+            color: themed($m-textColor--primary);
           }
         }
 
@@ -238,7 +238,7 @@ m-onboarding {
           display: flex;
           flex-direction: row;
           flex-flow: row wrap;
-          //background-color: themed($m-white);
+          //background-color: themed($m-bgColor--primary);
           max-width: 1280px;
           margin: auto;
 
@@ -259,7 +259,9 @@ m-onboarding {
 
                 &.m-groupsJoin__subscribed {
                   & > i {
-                    color: #5dbac0;
+                    @include m-theme() {
+                      color: themed($m-link);
+                    }
                   }
                 }
               }
@@ -327,7 +329,7 @@ m-onboarding {
                 height: 64px;
                 border-radius: 50%;
                 @include m-theme() {
-                  border: 1px solid themed($m-grey-50);
+                  border: 1px solid themed($m-borderColor--primary);
                 }
 
                 .overlay {
@@ -366,15 +368,15 @@ m-onboarding {
               z-index: 1;
 
               @include m-theme() {
-                background-color: themed($m-white);
-                border: 1px solid themed($m-grey-50);
+                background-color: themed($m-bgColor--primary);
+                border: 1px solid themed($m-borderColor--primary);
               }
 
               li {
                 padding: 8px 0;
                 cursor: pointer;
                 @include m-theme() {
-                  border-bottom: 1px solid themed($m-grey-50);
+                  border-bottom: 1px solid themed($m-borderColor--primary);
                 }
               }
             }
@@ -409,10 +411,9 @@ m-onboarding {
             line-height: 21px;
             padding-left: 8px;
             margin-bottom: 8px;
-            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
             @include m-theme() {
-              color: themed($m-grey-800);
+              color: themed($m-textColor--primary);
             }
 
             &:active,
@@ -432,7 +433,6 @@ m-onboarding {
               flex-grow: 1;
               display: flex;
               margin-bottom: 8px;
-              box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
               .m-phone-input--wrapper {
                 justify-content: flex-start;
@@ -449,10 +449,9 @@ m-onboarding {
 
                   font-size: 16px;
                   line-height: 21px;
-                  box-shadow: none;
 
                   @include m-theme() {
-                    color: themed($m-grey-800);
+                    color: themed($m-textColor--primary);
                   }
 
                   &:active,
@@ -490,118 +489,58 @@ m-onboarding {
 
           .m-onboarding__input {
             display: flex;
+            input {
+              outline: none;
+            }
           }
 
           .m-onboardingInput__saveButton {
-            height: 36px !important;
-            font-size: 16px !important;
-            padding: 4px 20px;
             margin-left: 8px;
-            cursor: pointer;
             width: auto !important;
             flex-shrink: 2;
-
-            @include m-theme() {
-              color: themed($m-aqua);
-            }
-
-            &.disabled {
-              cursor: not-allowed;
-              @include m-theme() {
-                color: themed($m-grey-100);
-              }
-            }
-          }
-
-          .m-onboardingInput__smallButton {
-            height: 36px !important;
-            font-size: 18px !important;
-            padding: 4px 8px;
-            margin-left: 8px;
-            cursor: pointer;
-            width: auto !important;
-            flex-shrink: 2;
-
-            @include m-theme() {
-              color: themed($m-aqua);
-            }
-
-            &.disabled {
-              cursor: not-allowed;
-              @include m-theme() {
-                color: themed($m-grey-100);
-              }
-            }
-
-            & > i.material-icons {
-              opacity: 1;
-            }
-          }
-        }
-
-        .m-onboarding__error {
-          font-size: 14px;
-          line-height: 19px;
-          margin-top: 3px;
-          text-align: right;
-          color: #d0021b;
-        }
-
-        m-tooltip {
-          margin-left: 10px;
-
-          .m-tooltip--anchored {
-            font-weight: bold;
-            font-size: 15px;
-            line-height: 18px;
-            letter-spacing: 0;
-
-            @include m-theme() {
-              color: themed($m-grey-700);
-            }
-          }
-
-          .m-tooltip--bubble {
-            background-color: #4a90e2;
-            font-size: 15px;
-            line-height: 18px;
           }
         }
       }
 
-      .m-onboarding__actionButtons {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        margin-top: 50px;
-        margin-bottom: 30px;
+      .m-onboarding__error {
+        font-size: 14px;
+        line-height: 19px;
+        margin-top: 3px;
+        text-align: right;
+        color: #d0021b;
+      }
 
-        & > *:not(:first-child) {
-          margin-left: 30px;
+      m-tooltip {
+        margin-left: 10px;
+
+        .m-tooltip--anchored {
+          font-weight: bold;
+          font-size: 15px;
+          line-height: 18px;
+          letter-spacing: 0;
         }
 
-        a {
-          cursor: pointer;
+        .m-tooltip--bubble {
+          font-size: 15px;
+          line-height: 18px;
         }
       }
     }
-  }
 
-  .mf-button--hollow {
-    border-color: #e7e7e7 !important;
-    color: #9b9b9b !important;
-    font-size: 16px !important;
-    line-height: 21px !important;
-    font-weight: 300 !important;
-    height: 56px !important;
-  }
+    .m-onboarding__actionButtons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 50px;
+      margin-bottom: 30px;
 
-  .mf-button--alt {
-    background-color: #5dbac0 !important;
-    border-color: #5dbac0 !important;
-    color: white !important;
-    font-size: 20px !important;
-    line-height: 26px !important;
-    height: 56px !important;
+      & > *:not(:first-child) {
+        margin-left: 15px;
+      }
+
+      a {
+        cursor: pointer;
+      }
+    }
   }
 }
