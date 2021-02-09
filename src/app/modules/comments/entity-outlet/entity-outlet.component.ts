@@ -70,6 +70,10 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     // this.router.routeReuseStrategy.shouldReuseRoute = future => {
     //   return false;
     // };
+
+    if (!this.activityService.displayOptions.isFeed) {
+      this.openFullComments();
+    }
   }
 
   ngOnDestroy() {
