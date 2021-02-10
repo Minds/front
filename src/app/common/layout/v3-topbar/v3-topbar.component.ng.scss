@@ -1,0 +1,16 @@
+@import 'defaults.scss';
+
+:host {
+  .m-v3Topbar__searchBox,
+  .m-v3Topbar__rightColumn {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+  .m-v3Topbar__middleColumn {
+    position: relative;
+  }
+  .m-v3Topbar__searchBox {
+    z-index: 2;
+  }
+}

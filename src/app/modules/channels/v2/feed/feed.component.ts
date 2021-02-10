@@ -150,6 +150,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       guid: activity.guid,
     };
 
+    // ojm do we remove this now? or reset the poll timer?
+    // ojm or newFeedPostsSevice.setLatestEntity(feedItem)?
     // Todo: Move to FeedsService
     this.feedService.service.rawFeed.next([
       ...[feedItem],

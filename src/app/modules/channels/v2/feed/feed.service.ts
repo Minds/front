@@ -8,6 +8,7 @@ import { distinctUntilChanged, map, switchAll, filter } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
 import { Router } from '@angular/router';
+import { NewPostsService } from '../../../../common/services/new-posts.service';
 
 /**
  * Feed component service, handles filtering and pagination
@@ -50,9 +51,19 @@ export class FeedService {
    */
   constructor(
     public service: FeedsService,
+    protected newPostsService: NewPostsService,
     protected api: ApiService,
     protected router: Router
   ) {
+    //ojm
+    // this.service.feed.subscribe(feed => {
+    //   const firstItem: any = feed[0];
+    //   if (firstItem) {
+    //     this.newPostsService.setTimestamp(firstItem.getValue().time_created);
+    //     console.log('ojm firstitm2', firstItem.getValue());
+    //   }
+    // });
+
     // Fetch when GUID or filter change
     this.filterChangeSubscription = combineLatest([
       this.guid$,
@@ -67,15 +78,20 @@ export class FeedService {
           return;
         }
 
-        const endpoint = `api/v2/feeds`;
         const guid = values[0];
         const sort = values[1] === 'scheduled' ? 'scheduled' : 'container';
         const type = values[2];
 
+        const endpoint = `api/v2/feeds/${sort}/${guid}/${type}`;
+
         this.service
-          .setEndpoint(`${endpoint}/${sort}/${guid}/${type}`)
+          .setEndpoint(endpoint)
           .setLimit(12)
           .fetch();
+
+        // ojm
+        // START POLLING
+        this.newPostsService.setEndpoint(endpoint).poll();
       });
 
     // Fetch scheduled count when GUID changes

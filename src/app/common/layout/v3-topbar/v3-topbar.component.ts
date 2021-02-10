@@ -26,6 +26,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'm-v3topbar',
   templateUrl: 'v3-topbar.component.html',
+  styleUrls: ['v3-topbar.component.ng.scss'],
 })
 export class V3TopbarComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string;

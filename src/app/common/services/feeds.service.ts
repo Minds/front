@@ -18,7 +18,7 @@ export class FeedsService implements OnDestroy {
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
   fallbackAt: number | null = null;
   fallbackAtIndex: BehaviorSubject<number | null> = new BehaviorSubject(null);
-  pageSize: Observable<number>;
+  pageSize: Observable<number>; // how many posts exist on the page
   pagingToken: string = '';
   canFetchMore: boolean = true;
   endpoint: string = '';
@@ -44,7 +44,9 @@ export class FeedsService implements OnDestroy {
 
     this.feed = this.rawFeed.pipe(
       tap(feed => {
-        if (feed.length) this.inProgress.next(true);
+        if (feed.length) {
+          this.inProgress.next(true);
+        }
       }),
       switchMap(async feed => {
         return feed.slice(0, await this.pageSize.pipe(first()).toPromise());
@@ -59,7 +61,6 @@ export class FeedsService implements OnDestroy {
         if (feed.length && this.fallbackAt) {
           for (let i = 0; i < feed.length; i++) {
             const entity: any = feed[i].getValue();
-
             if (
               entity &&
               entity.time_created &&
@@ -126,6 +127,8 @@ export class FeedsService implements OnDestroy {
    * @param { Object } params - parameters to be used.
    */
   setParams(params): FeedsService {
+    console.log('ojm setting params', params);
+
     this.params = params;
     if (!params.sync) {
       this.params.sync = 1;
@@ -147,6 +150,8 @@ export class FeedsService implements OnDestroy {
    * @param { boolean } cast - whether or not to set as_activities to true.
    */
   setCastToActivities(cast: boolean): FeedsService {
+    console.log('ojm setting castToActivities', cast);
+
     this.castToActivities = cast;
     return this;
   }
@@ -164,6 +169,8 @@ export class FeedsService implements OnDestroy {
    * Fetches the data.
    */
   fetch(): Promise<any> {
+    console.log('ojm FETCHING DATA;[endpoint]', this.endpoint);
+
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -198,6 +205,11 @@ export class FeedsService implements OnDestroy {
 
         if (response.entities.length) {
           this.fallbackAt = response['fallback_at'];
+          console.log(
+            'ojm FETCH RESPONSE, [endpoint]',
+            this.endpoint,
+            response
+          );
           this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];

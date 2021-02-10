@@ -178,6 +178,8 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { NewPostsButtonComponent } from './layout/v3-topbar/new-posts-button/new-posts-button.component';
+import { NewPostsService } from './services/new-posts.service';
 
 const routes: Routes = [
   {
@@ -331,6 +333,7 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    NewPostsButtonComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -461,6 +464,7 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    NewPostsButtonComponent,
   ],
   providers: [
     SiteService,
@@ -508,6 +512,7 @@ const routes: Routes = [
     AttachmentApiService,
     ClientMetaService,
     UserMenuService,
+    NewPostsService,
   ],
 })
 export class CommonModule {}

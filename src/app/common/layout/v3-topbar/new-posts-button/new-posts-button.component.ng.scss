@@ -1,0 +1,34 @@
+@import 'defaults.scss';
+
+:host {
+  position: absolute;
+  z-index: 1;
+  max-width: 175px;
+  min-width: 175px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0px;
+
+  .m-newPostsButton {
+    position: absolute;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 15px;
+    padding: 5px 15px 5px 13px;
+    display: flex;
+    align-items: center;
+
+    @include m-theme() {
+      background-color: themed($m-link);
+      color: themed($m-textColor--primary);
+    }
+
+    i {
+      opacity: 0.55;
+      font-size: 20px;
+      margin-right: 8px;
+    }
+  }
+}
