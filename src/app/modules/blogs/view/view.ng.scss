@@ -1,5 +1,7 @@
 @import 'defaults.scss';
 
+$banner-collapse-width: 720px;
+
 :host {
   @media screen and (max-width: $max-mobile) {
     .m-blog--title {
@@ -61,6 +63,12 @@
   }
 
   ::ng-deep {
+    m-wire--lock-screen {
+      @media screen and (max-width: $banner-collapse-width) {
+        height: 25vh;
+      }
+    }
+
     m-wire--lock-screen.m-wire--lock-screen-2020 {
       position: relative;
       z-index: 0;
