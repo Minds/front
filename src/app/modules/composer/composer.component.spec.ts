@@ -9,9 +9,8 @@ import { composerMockService } from '../../mocks/modules/composer/services/compo
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
-import { Storage } from '../../services/storage';
-import { ConfigsService } from '../../common/services/configs.service';
 import { BehaviorSubject } from 'rxjs';
+import { CookieService } from '@gorniv/ngx-universal';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -41,8 +40,7 @@ describe('Composer', () => {
           },
         },
         { provide: Router, useValue: MockService(Router) },
-        { provide: Storage, useValue: MockService(Storage) },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: CookieService, useValue: MockService(CookieService) },
       ],
     }).compileComponents();
   }));
