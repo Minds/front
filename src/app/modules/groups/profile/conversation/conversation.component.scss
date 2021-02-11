@@ -12,13 +12,15 @@
   .mdl-cell--8-col {
     flex: 1;
   }
+
+  .m-comment--compact {
+    padding: 5px 10px 20px 30px;
+  }
 }
 
 minds-groups-profile-conversation {
   position: fixed;
-  //right: 0;
   top: 52px;
-  //width: 100%;
   width: calc(33% - 12px); //1/3rd of screen
   display: block;
   margin-bottom: 0;
@@ -26,6 +28,18 @@ minds-groups-profile-conversation {
 
   @media screen and (max-width: 700px) {
     width: 100%;
+  }
+
+  @media screen and (min-width: 1221px) {
+    width: calc(30% - 12px);
+  }
+
+  &
+    > m-comments__tree
+    > m-comments__thread
+    > .m-comments__thread
+    > m-comment__poster {
+    margin: 0 0 40px 30px;
   }
 
   .m-group__chat,

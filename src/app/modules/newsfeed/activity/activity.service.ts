@@ -26,6 +26,7 @@ export type ActivityDisplayOptions = {
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
+  isFeed: boolean; // is the activity a part of a feed?
 };
 
 export type ActivityEntity = {
@@ -277,6 +278,7 @@ export class ActivityService {
     minimalMode: false,
     bypassMediaModal: false,
     sidebarMode: false,
+    isFeed: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

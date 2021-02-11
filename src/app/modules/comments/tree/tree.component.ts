@@ -9,6 +9,7 @@ import {
   Renderer2,
   OnInit,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -57,6 +58,7 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() showOnlyPoster: boolean = false;
+  @Input() compact: boolean = false;
 
   private shouldReuseRouteFn;
 

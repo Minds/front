@@ -148,39 +148,20 @@
               </m-activity__content>
 
               <!-- COMMENTS TREE -->
-              <div
-                class="m-activityModal__comments m-activityModal__comments--tree"
-                *ngIf="entity.guid"
-              >
+              <div class="m-activityModal__comments" *ngIf="entity.guid">
                 <ng-container *mIfBrowser>
                   <m-comments__entityOutlet
                     *ngIf="activityService.displayOptions.showComments"
                     [entity]="activityService.entity$ | async"
                     [canDelete]="activityService.canDelete$ | async"
-                    [showOnlyPoster]="false"
-                    [showOnlyTree]="true"
                     [fixedHeight]="false"
+                    [showOnlyPoster]="false"
+                    [compact]="true"
                   >
                   </m-comments__entityOutlet>
                 </ng-container>
               </div>
             </div>
-          </div>
-          <!-- COMMENTS POSTER -->
-          <div
-            class="m-activityModal__comments m-activityModal__comments--poster"
-            *ngIf="entity.guid"
-          >
-            <ng-container *mIfBrowser>
-              <m-comments__entityOutlet
-                *ngIf="activityService.displayOptions.showComments"
-                [entity]="activityService.entity$ | async"
-                [canDelete]="activityService.canDelete$ | async"
-                [showOnlyPoster]="true"
-                [fixedHeight]="false"
-              >
-              </m-comments__entityOutlet>
-            </ng-container>
           </div>
         </div>
       </div>
