@@ -1,4 +1,7 @@
-<div class="m-translate__hasNav2020">
+<div
+  class="m-translate__hasNav2020"
+  [ngClass]="{'m-translate__visible' : (translation.translated  || translationInProgress)}"
+>
   <hr *ngIf="(translation.translated  || translationInProgress)" />
 
   <!-- TRANSLATED MESSAGE  ----------------------- -->
@@ -14,7 +17,6 @@
     <div class="message" *ngIf="translation.body">
       <span [innerHtml]="translation.body | tags"></span>
     </div>
-
     <!-- TRANSLATED FROM + OPTIONS ----------------------- -->
     <div
       class="m-translation-label m-translate__translatedFrom"

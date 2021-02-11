@@ -25,6 +25,15 @@
   }
 
   ::ng-deep {
+    m-comments__entityOutlet {
+      .m-commentPoster {
+        margin: 0 20px;
+        width: 90%;
+      }
+    }
+  }
+
+  ::ng-deep {
     m-postmenu--v2 {
       .m-postMenu__button {
         padding: 0;
