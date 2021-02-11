@@ -8,10 +8,8 @@
       'm-composerToolbar__item',
       (attachment$ | async) ? 'm-composerToolbar__item--active' : ''
     ]"
-    [hidden]="!canEditMetadata"
-    [disabled]="
-      !!(attachment$ | async) || (isPosting$ | async) || (isEditing$ | async)
-    "
+    [hidden]="!canEditMetadata || (disableAttachments$ | async)"
+    [disabled]="!!(attachment$ | async) || (isPosting$ | async)"
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
     data-cy="upload-button"

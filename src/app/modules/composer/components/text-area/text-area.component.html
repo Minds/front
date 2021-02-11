@@ -42,6 +42,7 @@
       (ngModelChange)="onMessageChange($event)"
       (filePaste)="filePaste.emit($event)"
       m-attachment-paste
+      [disablePaste]="(disableAttachments$ | async) ? true : false"
       tabindex="0"
       data-cy="composer-textarea"
       mTextInputAutocomplete

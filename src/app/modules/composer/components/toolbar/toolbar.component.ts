@@ -261,6 +261,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * disableAttachments$ from service.
+   * @returns { Observable<boolean> } - true if attachments should be disabled.
+   */
+  get disableAttachments$(): Observable<boolean> {
+    return this.service.disableAttachments$;
+  }
+
+  /**
    * Emits the new attachment
    * @param $event
    */

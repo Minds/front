@@ -11,9 +11,13 @@ import {
   HostListener,
   AfterViewInit,
 } from '@angular/core';
-import { ComposerService } from '../../services/composer.service';
+import {
+  ComposerService,
+  RemindSubjectValue,
+} from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AutocompleteSuggestionsService } from '../../../suggestions/services/autocomplete-suggestions.service';
+import { Observable } from 'rxjs';
 
 /**
  * Composer message and title components.
@@ -89,6 +93,14 @@ export class TextAreaComponent implements AfterViewInit {
    */
   get isPosting$() {
     return this.service.isPosting$;
+  }
+
+  /**
+   * disableAttachments$ from service.
+   * @returns { Observable<boolean> } - true if attachments should be disabled.
+   */
+  get disableAttachments$(): Observable<boolean> {
+    return this.service.disableAttachments$;
   }
 
   ngAfterViewInit(): void {

@@ -410,6 +410,16 @@ export class ComposerService implements OnDestroy {
   protected payload: any = null;
 
   /**
+   * Whether attachments should be disabled.
+   * @returns { Observable<boolean> } true if attachments should be disabled.
+   */
+  get disableAttachments$(): Observable<boolean> {
+    return combineLatest([this.isEditing$, this.remind$]).pipe(
+      map(([isEditing, remind]) => isEditing || !!remind)
+    );
+  }
+
+  /**
    * Sets up data observable and its subscription
    *
    * @param api

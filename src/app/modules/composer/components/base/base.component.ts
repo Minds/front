@@ -145,6 +145,14 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * disableAttachments$ from service.
+   * @returns { Observable<boolean> } - true if attachments should be disabled.
+   */
+  get disableAttachments$(): Observable<boolean> {
+    return this.service.disableAttachments$;
+  }
+
+  /**
    * Focuses the main text area
    */
   focus() {

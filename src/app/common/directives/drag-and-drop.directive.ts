@@ -6,6 +6,7 @@ import {
   HostListener,
   Input,
 } from '@angular/core';
+import { FormToastService } from '../services/form-toast.service';
 
 /**
  * Drag and drop directive. Uses host listeners to listen for drag and drop events 
@@ -22,6 +23,8 @@ import {
   selector: '[m-dragAndDrop]',
 })
 export class DragAndDropDirective {
+  constructor(private toast: FormToastService) {}
+
   /**
    * Emits the dropped file.
    */
@@ -75,6 +78,8 @@ export class DragAndDropDirective {
       if (files.length > 0) {
         this.onFileDropped.emit(files[0]);
       }
+      return;
     }
+    this.toast.warn('Sorry, you cannot add content to this post.');
   }
 }

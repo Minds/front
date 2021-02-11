@@ -5,7 +5,7 @@
   "
   m-dragAndDrop
   (onFileDropped)="onAttachmentPaste($event)"
-  [disabled]="(remind$ | async) ? true : false"
+  [disabled]="(disableAttachments$ | async) ? true : false"
 >
   <div class="m-composerBase__container">
     <m-composer__titleBar
