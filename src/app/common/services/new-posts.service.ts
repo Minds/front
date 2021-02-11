@@ -9,7 +9,7 @@ export class NewPostsService implements OnDestroy {
   params: any = { sync: 1 };
   // timestamp: string | number; //ojm type?
   firstPost: any;
-  pollIntervalMs: number = 10000;
+  pollIntervalMs: number = 10000; // default is 10s
   pollTimer;
   fetchInProgress: boolean = false;
   mostRecentPostTs; // ojm type?
@@ -17,6 +17,12 @@ export class NewPostsService implements OnDestroy {
   newPostsAvailable$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(protected client: Client) {}
+
+  //ojm todo make FeatureFlag
+  public setPollIntervalMs(ms: number): NewPostsService {
+    this.pollIntervalMs = ms;
+    return this;
+  }
 
   public setEndpoint(endpoint: string): NewPostsService {
     console.log('ojm setting pollEndpoint', endpoint);
@@ -33,10 +39,10 @@ export class NewPostsService implements OnDestroy {
     return this;
   }
 
-  async poll(): Promise<void> {
-    this.firstPost = await this.fetchFirstPost();
+  public async poll(): Promise<void> {
+    await this.fetchFirstPost();
 
-    console.log('ojm FIRST POST2', this.firstPost);
+    console.log('ojm FIRST POST POLL', this.firstPost);
 
     if (
       !this.mostRecentPostTs &&
@@ -53,13 +59,14 @@ export class NewPostsService implements OnDestroy {
   }
 
   async checkForNewPosts(): Promise<void> {
-    const firstPost = await this.fetchFirstPost();
+    await this.fetchFirstPost();
 
-    console.log('ojm FIRST POST', firstPost);
+    console.log('ojm FIRST POST', this.firstPost);
 
-    if (firstPost && firstPost.time_created) {
-      if (firstPost.time_created > this.mostRecentPostTs) {
+    if (this.firstPost && this.firstPost.time_created) {
+      if (this.firstPost.time_created > this.mostRecentPostTs) {
         this.newPostsAvailable$.next(true);
+        this.mostRecentPostTs = this.firstPost.time_created;
         console.log(
           'ojm NEW POST AVAILABLE ---------------------------------------'
         );
@@ -67,7 +74,7 @@ export class NewPostsService implements OnDestroy {
     }
   }
 
-  async fetchFirstPost(): Promise<any> {
+  async fetchFirstPost(): Promise<void> {
     console.log('ojm Fetching first post');
     if (this.fetchInProgress || !this.endpoint) {
       console.log('ojm fail', this.fetchInProgress, this.endpoint);
@@ -76,45 +83,29 @@ export class NewPostsService implements OnDestroy {
     this.fetchInProgress = true;
     // const endpoint = this.endpoint; //ojm no need?
 
-    await this.client
-      .get(this.endpoint, {
+    try {
+      const response: any = await this.client.get(this.endpoint, {
         ...this.params,
         ...{
           limit: 1,
           // as_activities: this.castToActivities ? 1 : 0,
         },
-      })
-      .then((response: any) => {
-        console.log('ojm POLL RESPONSE', response);
-        // if (this.endpoint !== endpoint) {
-        //   // Avoid race conditions if endpoint changes
-        //   // ojm no need??
-        //   return;
-        // }
-
-        //ojm keep?
-        // if (!response.entities && response.activity) {
-        //   response.entities = response.activity;
-        // }
-
-        if (response.entities.length) {
-          console.log(
-            'ojm respomse.ent',
-            response.entities,
-            response.entities[0]
-          );
-          const firstPost = response.entities[0];
-          this.fetchInProgress = false;
-
-          return firstPost;
-          // ojm todo get first item ts??
-        }
-      })
-      .catch(e => {
-        console.log(e);
-        this.fetchInProgress = false;
-        return;
       });
+      this.fetchInProgress = false;
+      if (response && response.entities && response.entities.length) {
+        console.log(
+          'ojm response.ent NEW',
+          response.entities,
+          response.entities[0]
+        );
+        this.firstPost = response.entities[0].entity;
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+      this.fetchInProgress = false;
+    }
+    return;
   }
 
   reset(): void {

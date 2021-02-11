@@ -91,7 +91,11 @@ export class FeedService {
 
         // ojm
         // START POLLING
-        this.newPostsService.setEndpoint(endpoint).poll();
+        this.newPostsService
+          .setPollIntervalMs(5000) // ojm temp
+          // .setPollIntervalMs(60000) // poll every minute
+          .setEndpoint(endpoint)
+          .poll();
       });
 
     // Fetch scheduled count when GUID changes
