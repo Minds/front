@@ -22,7 +22,8 @@
       <m-activity
         [entity]="preActivity"
         [displayOptions]="{
-          showOnlyCommentsInput: true
+          showOnlyCommentsInput: true,
+          isFeed: true
         }"
         (deleted)="delete(preActivity)"
       ></m-activity>
@@ -49,7 +50,8 @@
           *ngIf="activity$ | async as activity"
           [entity]="activity"
           [displayOptions]="{
-            showOnlyCommentsInput: true
+            showOnlyCommentsInput: true,
+            isFeed: true
           }"
           [slot]="i + 1"
           (deleted)="delete(activity)"

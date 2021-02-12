@@ -20,6 +20,17 @@ m-activity {
       background: themed($m-bgColor--primary);
     }
   }
+
+  &
+    > m-comments__entityOutlet
+    > m-comments__tree
+    > m-comments__thread
+    > .m-comments__thread,
+  & > m-comments__entityOutlet {
+    & > m-comment__poster .m-commentPoster__wrapper {
+      margin: 10px;
+    }
+  }
 }
 
 .m-activity--fixedHeight {
