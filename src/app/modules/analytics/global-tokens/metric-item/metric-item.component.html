@@ -37,7 +37,7 @@
           <m-tooltip icon="info"></m-tooltip
         ></ng-template>
         <ng-template ngSwitchCase="Transactions\TransactionsUnique">
-          <span>Active users</span>
+          <span>Active token users</span>
           <m-tooltip icon="info"></m-tooltip>
         </ng-template>
         <ng-template ngSwitchCase="Rewards\EngagementScore">
@@ -132,12 +132,14 @@
       metric.id.indexOf('Rewards\\') !== 0
     "
   >
-    <span>
+    <span *ngIf="shouldShowOnchainBreakdown()">
       <label>On-chain</label>
       {{ metric.onchain | number: '1.0-2' }}
     </span>
-    <span>·</span>
-    <span>
+    <span *ngIf="shouldShowOffchainBreakdown() && shouldShowOnchainBreakdown()"
+      >·</span
+    >
+    <span *ngIf="shouldShowOffchainBreakdown()">
       <label>Off-chain</label>
       {{ metric.offchain | number: '1.0-2' }}
     </span>

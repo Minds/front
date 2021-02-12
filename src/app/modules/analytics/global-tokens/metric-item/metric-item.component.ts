@@ -8,4 +8,12 @@ import { Metric } from '../global-tokens.service';
 })
 export class AnalyticsGlobalTokensMetricItemComponent {
   @Input() metric: Metric;
+
+  shouldShowOnchainBreakdown(): boolean {
+    return parseInt(this.metric.onchain) !== 0;
+  }
+
+  shouldShowOffchainBreakdown(): boolean {
+    return parseInt(this.metric.offchain) !== 0;
+  }
 }
