@@ -39,20 +39,22 @@
     <ng-container
       *ngFor="let activity$ of feedsService.feed | async; let i = index"
     >
-      <m-featured-content
-        *ngIf="(i > 0 && i % 5 === 0) || i === 2"
-        [slot]="i + 1"
-      ></m-featured-content>
+      <div #feedListEl>
+        <m-featured-content
+          *ngIf="(i > 0 && i % 5 === 0) || i === 2"
+          [slot]="i + 1"
+        ></m-featured-content>
 
-      <m-activity
-        *ngIf="activity$ | async as activity"
-        [entity]="activity"
-        [displayOptions]="{
-          showOnlyCommentsInput: true
-        }"
-        [slot]="i + 1"
-        (deleted)="delete(activity)"
-      ></m-activity>
+        <m-activity
+          *ngIf="activity$ | async as activity"
+          [entity]="activity"
+          [displayOptions]="{
+            showOnlyCommentsInput: true
+          }"
+          [slot]="i + 1"
+          (deleted)="delete(activity)"
+        ></m-activity>
+      </div>
     </ng-container>
 
     <infinite-scroll

@@ -30,6 +30,7 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { NewPostsService } from '../../../common/services/new-posts.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -60,6 +61,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
+  showNewPostsIntentSubscription: Subscription;
+
+  @ViewChild('feedListEl') feedListEl;
 
   /**
    * Listening for new posts.
@@ -81,6 +85,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
+    protected newPostsService: NewPostsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -118,7 +123,33 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.showNewPostsIntentSubscription = this.newPostsService.showNewPostsIntent$.subscribe(
+      intent => {
+        if (intent) {
+          this.loadNewPosts();
+        }
+      }
+    );
+
     this.context.set('activity');
+  }
+
+  pollForNewPosts(): void {
+    this.newPostsService
+      .setEndpoint('api/v2/feeds/subscribed/activities')
+      .poll();
+  }
+
+  loadNewPosts(): void {
+    this.load(true, true);
+
+    if (this.feedListEl && this.feedListEl.nativeElement) {
+      this.feedListEl.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -126,12 +157,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.reloadFeedSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
     this.feedsUpdatedSubscription.unsubscribe();
+    this.showNewPostsIntentSubscription.unsubscribe();
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
     if (isPlatformServer(this.platformId)) return;
 
     this.loadFromService(refresh, forceSync);
+    this.pollForNewPosts();
   }
 
   loadNext() {

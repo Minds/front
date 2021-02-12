@@ -8,6 +8,7 @@ import {
   OnInit,
   ChangeDetectorRef,
   Injector,
+  ViewChild,
 } from '@angular/core';
 import { FeedService } from './feed.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,6 +23,7 @@ import { ThemeService } from '../../../../common/services/theme.service';
 import { ModalService } from '../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { catchError, take } from 'rxjs/operators';
+import { NewPostsService } from '../../../../common/services/new-posts.service';
 
 /**
  * Channel feed component
@@ -70,6 +72,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     }
   }
 
+  @ViewChild('feedToolbarEl') feedToolbarEl;
+
   feed: Object[] = [];
 
   /**
@@ -89,6 +93,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ModalService,
     private injector: Injector,
+    protected newPostsService: NewPostsService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -128,8 +133,25 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
         ) {
           this.prepend(newPost);
         }
+      }),
+      this.newPostsService.showNewPostsIntent$.subscribe(intent => {
+        if (intent) {
+          this.loadNewPosts();
+        }
       })
     );
+  }
+
+  loadNewPosts(): void {
+    const el = this.feedToolbarEl;
+    if (el && el.nativeElement) {
+      el.nativeElement.scrollIntoView({
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+
+    this.feedService.loadNewPosts();
   }
 
   prepend(activity: any) {
@@ -150,8 +172,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       guid: activity.guid,
     };
 
-    // ojm do we remove this now? or reset the poll timer?
-    // ojm or newFeedPostsSevice.setLatestEntity(feedItem)?
     // Todo: Move to FeedsService
     this.feedService.service.rawFeed.next([
       ...[feedItem],

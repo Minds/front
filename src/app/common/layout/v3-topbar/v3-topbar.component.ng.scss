@@ -10,7 +10,8 @@
   .m-v3Topbar__middleColumn {
     position: relative;
   }
-  .m-v3Topbar__searchBox {
+  .m-v3Topbar__searchBox,
+  .m-v3Topbar__rightColumn {
     z-index: 2;
   }
 }

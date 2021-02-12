@@ -1,7 +1,7 @@
 <div
   class="m-newPostsButton"
   (click)="scrollToNewPosts($event)"
-  [@slide]="active ? 'down' : 'up'"
+  [@slide]="(service.newPostsAvailable$ | async) ? 'down' : 'up'"
 >
   <i class="material-icons">refresh</i>
   <span class="m-legible">See newest posts</span>

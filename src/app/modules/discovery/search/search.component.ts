@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -15,6 +16,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { combineLatest, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
+import { NewPostsService } from '../../../common/services/new-posts.service';
 
 @Component({
   selector: 'm-discovery__search',
@@ -33,13 +35,16 @@ export class DiscoverySearchComponent {
   subscriptions: Subscription[];
   readonly cdnUrl: string;
 
+  @ViewChild('tabsEl') tabsEl;
+
   constructor(
     private route: ActivatedRoute,
     private service: DiscoveryFeedsService,
     private router: Router,
     configs: ConfigsService,
     private metaService: MetaService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected newPostsService: NewPostsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -86,7 +91,24 @@ export class DiscoverySearchComponent {
       this.inProgress$.subscribe(() => {
         this.detectChanges();
       }),
+      this.newPostsService.showNewPostsIntent$.subscribe(intent => {
+        if (intent) {
+          this.loadNewPosts();
+        }
+      }),
     ];
+  }
+
+  loadNewPosts(): void {
+    const el = this.tabsEl;
+    if (el && el.nativeElement) {
+      el.nativeElement.scrollIntoView({
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+
+    this.service.search(this.q);
   }
 
   setSeo() {

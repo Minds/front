@@ -512,7 +512,6 @@ const routes: Routes = [
     AttachmentApiService,
     ClientMetaService,
     UserMenuService,
-    NewPostsService,
   ],
 })
 export class CommonModule {}

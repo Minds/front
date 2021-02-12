@@ -4,6 +4,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 import { isPlatformServer } from '@angular/common';
 import { DiscoveryService } from '../discovery.service';
+import { NewPostsService } from '../../../common/services/new-posts.service';
 
 export type DiscoveryFeedsPeriod =
   | '12h'
@@ -37,11 +38,14 @@ export class DiscoveryFeedsService {
   );
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  readonly activityBasedAlgorithms = ['top', 'topV2', 'latest', 'plusFeed'];
+
   constructor(
     @Self() private feedsService: FeedsService,
     public nsfwService: NSFWSelectorConsumerService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private discoveryService: DiscoveryService
+    private discoveryService: DiscoveryService,
+    protected newPostsService: NewPostsService
   ) {
     this.nsfwService.build();
     this.nsfw$ = new BehaviorSubject(this.nsfwService.reasons);
@@ -58,34 +62,58 @@ export class DiscoveryFeedsService {
     }
 
     const type = this.type$.value;
+
+    const endpoint = `api/v2/feeds/global/${algorithm}/${type}`;
+    const params = {
+      all: this.filter$.value === 'trending' || isPlusPage ? 1 : 0,
+      period: this.period$.value,
+      nsfw: this.getNsfwString(),
+      period_fallback: 0,
+      plus: isPlusPage,
+      wire_support_tier_only: wireSupportTiersOnly,
+    };
+
     this.feedsService.clear();
     this.feedsService
-      .setEndpoint(`api/v2/feeds/global/${algorithm}/${type}`)
-      .setParams({
-        all: this.filter$.value === 'trending' || isPlusPage ? 1 : 0,
-        period: this.period$.value,
-        nsfw: this.getNsfwString(),
-        period_fallback: 0,
-        plus: isPlusPage,
-        wire_support_tier_only: wireSupportTiersOnly,
-      })
+      .setEndpoint(endpoint)
+      .setParams(params)
       .fetch();
+
+    this.pollForNewPosts(algorithm, endpoint, params);
   }
 
   async search(q: string): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     this.feedsService.clear();
+
+    const endpoint = 'api/v3/discovery/search';
+    const params = {
+      q,
+      period: this.period$.value,
+      algorithm: this.filter$.value,
+      nsfw: this.getNsfwString(),
+      type: this.type$.value,
+      plus: this.discoveryService.isPlusPage$.value,
+    };
+
     this.feedsService
-      .setEndpoint('api/v3/discovery/search')
-      .setParams({
-        q,
-        period: this.period$.value,
-        algorithm: this.filter$.value,
-        nsfw: this.getNsfwString(),
-        type: this.type$.value,
-        plus: this.discoveryService.isPlusPage$.value,
-      })
+      .setEndpoint(endpoint)
+      .setParams(params)
       .fetch();
+
+    this.pollForNewPosts(this.filter$.value, endpoint, params);
+  }
+
+  pollForNewPosts(algorithm: string, endpoint: string, params: any): void {
+    // Only poll for new posts when the feed consists of activities
+    if (this.activityBasedAlgorithms.includes(algorithm)) {
+      this.newPostsService
+        .setEndpoint(endpoint)
+        .setParams(params)
+        .poll();
+    } else {
+      this.newPostsService.reset();
+    }
   }
 
   loadMore(): void {

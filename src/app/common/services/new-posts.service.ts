@@ -2,30 +2,39 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { setInterval } from 'timers';
 import { Client } from '../../services/api';
+import { FeaturesService } from '../../services/features.service';
+import { Session } from '../../services/session';
 
-@Injectable()
+const DEFAULT_POLL_INTERVAL_MS: number = 10000; // default is 10s
+@Injectable({ providedIn: 'root' })
 export class NewPostsService implements OnDestroy {
   endpoint: string;
   params: any = { sync: 1 };
-  // timestamp: string | number; //ojm type?
   firstPost: any;
-  pollIntervalMs: number = 10000; // default is 10s
+  pollIntervalMs: number = DEFAULT_POLL_INTERVAL_MS;
   pollTimer;
   fetchInProgress: boolean = false;
-  mostRecentPostTs; // ojm type?
+  mostRecentPostTs;
 
-  newPostsAvailable$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public newPostsAvailable$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
+  public showNewPostsIntent$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
 
-  constructor(protected client: Client) {}
+  constructor(
+    protected client: Client,
+    protected featuresService: FeaturesService,
+    protected session: Session
+  ) {}
 
-  //ojm todo make FeatureFlag
   public setPollIntervalMs(ms: number): NewPostsService {
     this.pollIntervalMs = ms;
     return this;
   }
 
   public setEndpoint(endpoint: string): NewPostsService {
-    console.log('ojm setting pollEndpoint', endpoint);
     this.endpoint = endpoint;
     return this;
   }
@@ -40,10 +49,13 @@ export class NewPostsService implements OnDestroy {
   }
 
   public async poll(): Promise<void> {
+    this.reset();
+    // ojm todo uncomment once flag is ready
+    // if (!this.featuresService.has('new-posts')) {
+    //   return;
+    // }
+
     await this.fetchFirstPost();
-
-    console.log('ojm FIRST POST POLL', this.firstPost);
-
     if (
       !this.mostRecentPostTs &&
       this.firstPost &&
@@ -53,7 +65,6 @@ export class NewPostsService implements OnDestroy {
     }
 
     this.pollTimer = setInterval(() => {
-      console.log('ojm polltimer *-*-*-*-*-*');
       this.checkForNewPosts();
     }, this.pollIntervalMs);
   }
@@ -61,43 +72,41 @@ export class NewPostsService implements OnDestroy {
   async checkForNewPosts(): Promise<void> {
     await this.fetchFirstPost();
 
-    console.log('ojm FIRST POST', this.firstPost);
-
     if (this.firstPost && this.firstPost.time_created) {
-      if (this.firstPost.time_created > this.mostRecentPostTs) {
+      if (
+        this.mostRecentPostTs &&
+        this.firstPost.time_created > this.mostRecentPostTs
+      ) {
+        // ojm todo uncomment after testing
+        // && (this.session.getLoggedromInUser().guid !== this.firstPost.owner_guid)
         this.newPostsAvailable$.next(true);
         this.mostRecentPostTs = this.firstPost.time_created;
-        console.log(
-          'ojm NEW POST AVAILABLE ---------------------------------------'
-        );
       }
     }
   }
 
-  async fetchFirstPost(): Promise<void> {
-    console.log('ojm Fetching first post');
+  async fetchFirstPost(limit: number = 1): Promise<void> {
     if (this.fetchInProgress || !this.endpoint) {
-      console.log('ojm fail', this.fetchInProgress, this.endpoint);
       return;
     }
     this.fetchInProgress = true;
-    // const endpoint = this.endpoint; //ojm no need?
+    const endpoint = this.endpoint;
 
     try {
       const response: any = await this.client.get(this.endpoint, {
         ...this.params,
         ...{
           limit: 1,
-          // as_activities: this.castToActivities ? 1 : 0,
         },
       });
       this.fetchInProgress = false;
+
+      if (this.endpoint !== endpoint) {
+        // Avoid race conditions if endpoint changes
+        return;
+      }
+
       if (response && response.entities && response.entities.length) {
-        console.log(
-          'ojm response.ent NEW',
-          response.entities,
-          response.entities[0]
-        );
         this.firstPost = response.entities[0].entity;
         return;
       }
@@ -110,7 +119,11 @@ export class NewPostsService implements OnDestroy {
 
   reset(): void {
     this.cancelPoll();
+    this.pollIntervalMs = DEFAULT_POLL_INTERVAL_MS;
+    this.newPostsAvailable$.next(false);
+    this.showNewPostsIntent$.next(false);
     this.mostRecentPostTs = null;
+    this.firstPost = null;
   }
 
   cancelPoll(): void {

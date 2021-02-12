@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import {
   DiscoveryFeedsService,
@@ -7,6 +7,7 @@ import {
 import { Subscription, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { NewPostsService } from '../../../common/services/new-posts.service';
 
 @Component({
   selector: 'm-discovery__feedsList',
@@ -17,8 +18,14 @@ export class DiscoveryFeedsListComponent implements OnInit, OnDestroy {
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
   feedsSubscription: Subscription;
+  showNewPostsIntentSubscription: Subscription;
 
-  constructor(private service: DiscoveryFeedsService) {}
+  @ViewChild('feedEl') feedEl;
+
+  constructor(
+    private service: DiscoveryFeedsService,
+    protected newPostsService: NewPostsService
+  ) {}
 
   ngOnInit() {
     this.feedsSubscription = combineLatest(
@@ -30,10 +37,31 @@ export class DiscoveryFeedsListComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.service.load();
       });
+
+    this.showNewPostsIntentSubscription = this.newPostsService.showNewPostsIntent$.subscribe(
+      intent => {
+        if (intent) {
+          this.loadNewPosts();
+        }
+      }
+    );
+  }
+
+  loadNewPosts(): void {
+    const el = this.feedEl;
+    if (el && el.nativeElement) {
+      el.nativeElement.scrollIntoView({
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+
+    this.service.load();
   }
 
   ngOnDestroy() {
     this.feedsSubscription.unsubscribe();
+    this.showNewPostsIntentSubscription.unsubscribe();
   }
 
   loadMore() {

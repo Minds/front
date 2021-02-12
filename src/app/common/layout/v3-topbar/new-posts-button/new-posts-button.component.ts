@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { NewPostsService } from '../../../services/new-posts.service';
 
 @Component({
@@ -31,26 +32,21 @@ import { NewPostsService } from '../../../services/new-posts.service';
     ]),
   ],
 })
-export class NewPostsButtonComponent implements OnInit {
+export class NewPostsButtonComponent {
   scrollInProgress: boolean = false;
-  active: boolean = false;
+  newPostsAvailable: boolean = false;
 
   constructor(public service: NewPostsService) {}
-
-  ngOnInit(): void {
-    this.service.newPostsAvailable$.subscribe(newPostsAvailable => {
-      console.log('ojm active?', newPostsAvailable);
-      this.active = newPostsAvailable;
-
-      //ojm figure out how to prevent showing this if they're already at the top of the feed
-    });
-  }
 
   scrollToNewPosts(event: MouseEvent): void {
     if (this.scrollInProgress) return;
 
     this.scrollInProgress = true;
-    //ojm todo scroll?
+
+    // todo: switch to obs.pipe(skipWhile(val => val === false))
+    this.service.showNewPostsIntent$.next(true);
+    // reset intent directly afterwards
+    this.service.showNewPostsIntent$.next(false);
 
     this.service.newPostsAvailable$.next(false);
     this.scrollInProgress = false;

@@ -1,4 +1,4 @@
-<div class="m-discoveryFeeds__feed">
+<div class="m-discoveryFeeds__feed" #feedEl>
   <m-discovery__feedItem
     *ngFor="let entity$ of entities$ | async"
     [entity]="entity$ | async"

@@ -55,15 +55,6 @@ export class FeedService {
     protected api: ApiService,
     protected router: Router
   ) {
-    //ojm
-    // this.service.feed.subscribe(feed => {
-    //   const firstItem: any = feed[0];
-    //   if (firstItem) {
-    //     this.newPostsService.setTimestamp(firstItem.getValue().time_created);
-    //     console.log('ojm firstitm2', firstItem.getValue());
-    //   }
-    // });
-
     // Fetch when GUID or filter change
     this.filterChangeSubscription = combineLatest([
       this.guid$,
@@ -89,13 +80,7 @@ export class FeedService {
           .setLimit(12)
           .fetch();
 
-        // ojm
-        // START POLLING
-        this.newPostsService
-          .setPollIntervalMs(5000) // ojm temp
-          // .setPollIntervalMs(60000) // poll every minute
-          .setEndpoint(endpoint)
-          .poll();
+        this.pollForNewPosts(endpoint);
       });
 
     // Fetch scheduled count when GUID changes
@@ -106,6 +91,18 @@ export class FeedService {
       switchAll(),
       map(response => response.count)
     );
+  }
+
+  pollForNewPosts(endpoint: string): void {
+    this.newPostsService
+      .setPollIntervalMs(60000) // poll every minute
+      .setEndpoint(endpoint)
+      .poll();
+  }
+
+  loadNewPosts(): void {
+    this.service.clear();
+    this.service.fetch();
   }
 
   /**

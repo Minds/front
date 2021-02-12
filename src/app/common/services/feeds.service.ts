@@ -127,8 +127,6 @@ export class FeedsService implements OnDestroy {
    * @param { Object } params - parameters to be used.
    */
   setParams(params): FeedsService {
-    console.log('ojm setting params', params);
-
     this.params = params;
     if (!params.sync) {
       this.params.sync = 1;
@@ -150,8 +148,6 @@ export class FeedsService implements OnDestroy {
    * @param { boolean } cast - whether or not to set as_activities to true.
    */
   setCastToActivities(cast: boolean): FeedsService {
-    console.log('ojm setting castToActivities', cast);
-
     this.castToActivities = cast;
     return this;
   }
@@ -169,8 +165,6 @@ export class FeedsService implements OnDestroy {
    * Fetches the data.
    */
   fetch(): Promise<any> {
-    console.log('ojm FETCHING DATA;[endpoint]', this.endpoint);
-
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -205,11 +199,6 @@ export class FeedsService implements OnDestroy {
 
         if (response.entities.length) {
           this.fallbackAt = response['fallback_at'];
-          console.log(
-            'ojm FETCH RESPONSE, [endpoint]',
-            this.endpoint,
-            response
-          );
           this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
