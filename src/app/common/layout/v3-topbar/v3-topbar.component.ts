@@ -97,7 +97,16 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  toggleSidebarNav() {
+  /**
+   * Toggles sidebar navigation open.
+   * @param { void }
+   */
+  public toggleSidebarNav(): void {
+    // TODO: Remove redirect when we open the site to logged out.
+    if (!this.getCurrentUser()) {
+      this.redirectToLogin();
+      return;
+    }
     this.sidebarService.toggle();
   }
 
@@ -174,6 +183,14 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/register']);
+  }
+
+  /**
+   * Redirect to the login page.
+   * @returns { void }
+   */
+  private redirectToLogin(): void {
+    this.router.navigate(['/login']);
   }
 
   /**
