@@ -16,12 +16,29 @@ import { FormsModule } from '@angular/forms';
 import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
 import { AnalyticsBenchmarkComponent } from './v2/components/benchmark/benchmark.component';
 import { ChartV2Module } from './components/chart-v2/chart-v2.module';
+import { AnalyticsGlobalTokensComponent } from './global-tokens/global-tokens.component';
+import { AnalyticsGlobalTokensMetricItemComponent } from './global-tokens/metric-item/metric-item.component';
+import { WalletSharedModule } from '../wallet/wallet-shared.module';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard/traffic',
     pathMatch: 'full',
+  },
+  {
+    path: 'dashboard/token',
+    redirectTo: 'dashboard/token/supply',
+    pathMatch: 'full',
+  },
+  {
+    path: 'dashboard/token/:tabId',
+    component: AnalyticsGlobalTokensComponent,
+    data: {
+      title: 'Analytics',
+      description: 'Global Tokens dashboard',
+      ogImage: '/assets/photos/network.jpg',
+    },
   },
   {
     path: 'dashboard/:category',
@@ -43,6 +60,7 @@ const routes: Routes = [
     ChartV2Module,
     SearchModule,
     FormsModule,
+    WalletSharedModule,
   ],
   declarations: [
     AnalyticsDashboardComponent,
@@ -54,6 +72,8 @@ const routes: Routes = [
     AnalyticsSearchComponent,
     AnalyticsSearchSuggestionsComponent,
     AnalyticsBenchmarkComponent,
+    AnalyticsGlobalTokensComponent,
+    AnalyticsGlobalTokensMetricItemComponent,
   ],
   providers: [AnalyticsDashboardService],
 })
