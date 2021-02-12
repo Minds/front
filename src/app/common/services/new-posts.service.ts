@@ -75,10 +75,9 @@ export class NewPostsService implements OnDestroy {
     if (this.firstPost && this.firstPost.time_created) {
       if (
         this.mostRecentPostTs &&
-        this.firstPost.time_created > this.mostRecentPostTs
+        this.firstPost.time_created > this.mostRecentPostTs &&
+        this.session.getLoggedInUser().guid !== this.firstPost.owner_guid
       ) {
-        // ojm todo uncomment after testing
-        // && (this.session.getLoggedromInUser().guid !== this.firstPost.owner_guid)
         this.newPostsAvailable$.next(true);
         this.mostRecentPostTs = this.firstPost.time_created;
       }
