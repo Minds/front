@@ -1,0 +1,66 @@
+@import 'defaults.scss';
+
+:host {
+  .m-boostModalTabs__container {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 40px 40px 20px 40px;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostModalTabs__tabContainer {
+      font-size: 17px;
+      font-weight: 500;
+      margin-right: 20px;
+      padding-bottom: 5px;
+      cursor: pointer;
+
+      &.m-boostModalTabs__tabContainer--active {
+        font-weight: 700;
+
+        @include m-theme() {
+          border-bottom: 3px solid themed($m-blue);
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-boostModal__mainPanel {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin: 40px 40px 20px 40px;
+
+    .m-boostModal__mainPanelInputContainer {
+      display: flex;
+      flex-direction: column;
+
+      .m-boostModal__mainPanelInput + * {
+        margin-top: 20px;
+        display: block;
+      }
+    }
+
+    .m-boostModal__contentDescriptionContainer {
+      max-width: 30%;
+
+      .m-boostModal__mainPanelDescription {
+      }
+      h1 {
+        font-size: 18px;
+        margin-top: unset;
+        margin-bottom: 10px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  // m-boostModal__amountInput {
+  // }
+}

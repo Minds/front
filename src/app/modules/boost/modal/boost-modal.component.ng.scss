@@ -1,0 +1,47 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  .m-modalV2__inner {
+    min-width: 900px;
+
+    @media screen and (max-width: 900px) {
+      min-width: unset;
+      max-width: 100%;
+    }
+  }
+
+  .m-modalV2__header {
+    height: 150px;
+    background-size: cover;
+    box-sizing: border-box;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .m-modalV2Header__title {
+      font-size: 30px;
+      font-weight: 700;
+
+      @include m-theme() {
+        color: themed($m-white-always);
+      }
+    }
+  }
+
+  .m-modalV2__footer {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 40px 60px 40px;
+    align-items: center;
+
+    .m-onboardingModal__nextButton {
+      // margin: 20px 40px;
+    }
+  }
+}

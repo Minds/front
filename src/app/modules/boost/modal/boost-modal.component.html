@@ -1,0 +1,48 @@
+<div class="m-boostModal__container m-modalV2__inner">
+  <div class="m-modalV2__header" [ngStyle]="bannerSrc">
+    <h2 class="m-modalV2Header__title">
+      <ng-container *ngTemplateOutlet="boostSubjectText"></ng-container>
+    </h2>
+  </div>
+
+  <!-- Body -->
+
+  <m-boostModal__tabs></m-boostModal__tabs>
+
+  <div class="m-modalV2__footer">
+    <span i18n="@@BOOST_MODAL__"
+      >Become a <a href="/wallet" target="_blank">liquidity provider</a> for
+      automated boosting of your channel</span
+    >
+    <m-button
+      class="m-boostModal__boostButton"
+      [disabled]="disabled$ | async"
+      (onAction)="(null)"
+      [saving]="inProgress$ | async"
+      [size]="'medium'"
+      [color]="'blue'"
+    >
+      <ng-container *ngTemplateOutlet="boostSubjectText"></ng-container>
+    </m-button>
+  </div>
+</div>
+
+<ng-template #boostSubjectText>
+  <ng-container [ngSwitch]="subject$ | async">
+    <ng-container *ngSwitchCase="'post'" i18n="@@BOOST_MODAL__TITLE__POST">
+      Boost Post
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'channel'"
+      i18n="@@BOOST_MODAL__TITLE__CHANNEL"
+    >
+      Boost Channel
+    </ng-container>
+    <ng-container
+      *ngSwitchCaseDefault
+      i18n="action|@@BOOST_MODAL__TITLE__BOOST"
+    >
+      Boost
+    </ng-container>
+  </ng-container>
+</ng-template>

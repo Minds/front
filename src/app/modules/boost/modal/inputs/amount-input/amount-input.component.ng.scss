@@ -1,0 +1,67 @@
+@import 'defaults.scss';
+
+:host {
+  .m-boostModalAmount__container {
+    display: flex;
+    flex-flow: row wrap;
+    // margin: 0 40px;
+    // max-width: fit-content;
+
+    .m-boostModalAmount__inputContainer {
+      display: flex;
+      flex-flow: column nowrap;
+      max-width: 250px;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      label {
+        font-size: 14px;
+        font-weight: 400;
+        padding: 5px 10px 0 10px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      input {
+        font-size: 22px;
+        font-weight: 400;
+        background: none;
+        border: none;
+        padding: 5px 10px;
+
+        &:focus {
+          background: unset;
+          border: unset;
+          outline: none;
+        }
+
+        &:invalid {
+          box-shadow: none;
+        }
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      &.m-boostModalAmount__viewsInput {
+      }
+
+      &.m-boostModalAmount__tokensInput {
+      }
+    }
+  }
+
+  .m-boostModalAmount--error {
+    margin-top: 10px;
+    font-weight: 500;
+
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+}
