@@ -476,6 +476,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
   // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------
 
+  //
   /**
    * Toggles mature visibility.
    */

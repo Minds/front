@@ -111,7 +111,7 @@ $min-tablet-pro: 900px;
 
     .m-proChannel__topbar {
       grid-row: 2 / span 1;
-      padding: 16px 8vw;
+      padding: 20px;
 
       @media screen and (min-width: $max-mobile) and (max-width: $extra-wide-mobile) {
         flex-wrap: wrap;

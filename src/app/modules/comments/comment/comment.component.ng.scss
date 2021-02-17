@@ -70,7 +70,6 @@
         line-height: 20px;
         font-size: 15px;
         font-weight: 400;
-
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }

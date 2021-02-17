@@ -1,0 +1,136 @@
+@import 'defaults.scss';
+@import '../../../../common/layout/layout.scss';
+
+:host {
+  display: block;
+  padding: 20px;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  //
+
+  .m-analyticsGlobalTokensMetricItem__header {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .m-analyticsGlobalTokensMetricItem__label {
+    font-size: 17px;
+    line-height: 17px;
+    font-weight: 700;
+    margin: 0;
+    padding-bottom: 10px;
+    position: relative;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    span {
+      vertical-align: middle;
+    }
+
+    ::ng-deep m-tooltip {
+      margin-left: 10px;
+      vertical-align: middle;
+      i {
+        font-size: 15px;
+      }
+
+      .m-tooltip--bubble {
+        width: 200px;
+      }
+    }
+  }
+
+  .m-analyticsGlobalTokensMetricItem__comparative {
+    line-height: 0;
+    font-weight: 500;
+    font-size: 16px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    ::ng-deep m-icon {
+      vertical-align: middle;
+      width: 24px;
+
+      @include m-theme() {
+        color: themed($m-green);
+      }
+    }
+  }
+  .m-analyticsGlobalTokensMetricItem__comparative--negative {
+    ::ng-deep m-icon {
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+    }
+  }
+
+  .m-analyticsGlobalTokensMetricItemComparative__pct {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  //
+
+  .m-analyticsGlobalTokensMetricItem__value {
+    font-size: 26px;
+    font-weight: 700;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    ::ng-deep m-wallet__currencyValue {
+      span {
+        vertical-align: baseline;
+      }
+      .m-walletCurrencyValue__currency,
+      .m-walletCurrencyValue__usd {
+        font-size: 1.4rem;
+      }
+      .m-walletCurrencyValue__currency {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-walletCurrencyValue__usd {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-analyticsGlobalTokensMetricItem__breakdown {
+    margin-top: 15px;
+
+    span {
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-block;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      margin-right: 5px;
+    }
+    label {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}
