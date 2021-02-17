@@ -60,6 +60,7 @@ export class DiscoveryBoostFeedComponent implements OnInit {
         .setEndpoint('api/v2/boost/feed')
         .setParams({
           boostfeed: true,
+          force_boost_enabled: true,
         })
         .setLimit(6)
         .setOffset(0)
