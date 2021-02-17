@@ -476,12 +476,13 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
   // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------
 
-  //
   /**
    * Toggles mature visibility.
    */
   toggleMatureVisibility() {
     this.showMature = !this.showMature;
+
+    this.comment.mature_visibility = !this.comment.mature_visibility;
   }
 
   public getAvatarSrc(): Observable<string> {
