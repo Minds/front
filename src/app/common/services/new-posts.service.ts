@@ -50,10 +50,9 @@ export class NewPostsService implements OnDestroy {
 
   public async poll(): Promise<void> {
     this.reset();
-    // ojm todo uncomment once flag is ready
-    // if (!this.featuresService.has('new-posts')) {
-    //   return;
-    // }
+    if (!this.featuresService.has('new-posts')) {
+      return;
+    }
 
     await this.fetchFirstPost();
     if (
