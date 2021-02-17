@@ -63,7 +63,7 @@ export class HomepageV2Component implements OnInit {
       .setOgUrl('/')
       .setOgImage('/assets/logos/placeholder.jpg');
 
-    this.navigationService.setVisible(false);
+    this.navigationService.setVisible(true);
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
 
