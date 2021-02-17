@@ -32,6 +32,10 @@ export class EarnModalComponent {
     await this.uniswapModalService.open('add');
   }
 
+  openTransfer() {
+    alert('coming very soon');
+  }
+
   async openCompose() {
     this.onDismissIntent();
     this.composerModal

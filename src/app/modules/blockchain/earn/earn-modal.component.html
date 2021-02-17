@@ -1,87 +1,51 @@
 <m-concertColors__modal title="Earn Tokens with Minds">
   <div class="m-modalV2__body m-earnModal__body">
-    <div class="m-earnModal__blockContainer">
-      <div class="m-earnModal__block" (click)="openAddLiquidity()">
-        <div class="m-earnModalBlock__body">
-          <span class="m-earnModalBlock__title">Pool</span>
-          <p class="m-earnModalBlock__text">
-            Receive a multiplier on your daily token rewards by staking your
-            MINDS and the equivalent amount of ETH on Uniswap.
-          </p>
-        </div>
-        <ng-container *ngTemplateOutlet="icon"></ng-container>
-      </div>
-      <a
-        class="m-earnModal__block m-earnModal__block--anchor"
-        routerLink="wallet/canary/tokens/overview"
-      >
-        <div class="m-earnModalBlock__body">
-          <span class="m-earnModalBlock__title">Transfer</span>
-          <p class="m-earnModalBlock__text">
-            Receive a miltiplier on your daily token rewards by holding your
-            MINDS on-chain. The multiplier increases over time and as your
-            balance grows.
-          </p>
-        </div>
-        <ng-container *ngTemplateOutlet="icon"></ng-container>
-      </a>
-      <div class="m-earnModal__block" (click)="openCompose()">
-        <div class="m-earnModalBlock__body">
-          <span class="m-earnModalBlock__title">Create</span>
-          <p class="m-earnModalBlock__text">
-            Post content that receives engagement from the commuinity, such as
-            votes, comments, subcribers, tips or reminds. Upgrade to Minds+ or
-            Pro to unlock cash reaerds.
-          </p>
-        </div>
-        <ng-container *ngTemplateOutlet="icon"></ng-container>
-      </div>
+    <div class="m-earnModal__left">
+      <h2>Increase your token earnings</h2>
+      <ul>
+        <li (click)="openAddLiquidity()">
+          <m-icon iconId="add_circle_outline"></m-icon>
+          <span>Add liquidity</span>
+          <ng-container *ngTemplateOutlet="icon"></ng-container>
+        </li>
+        <li (click)="openTransfer()">
+          <m-icon iconId="swap_horiz"></m-icon>
+          <span>Transfer on-chain</span>
+          <ng-container *ngTemplateOutlet="icon"></ng-container>
+        </li>
+        <li (click)="openCompose()">
+          <m-icon iconId="add_box"></m-icon>
+          <span>Create content</span>
+          <ng-container *ngTemplateOutlet="icon"></ng-container>
+        </li>
+        <li routerLink="settings/other/referrals">
+          <m-icon iconId="group"></m-icon>
+          <span>Refer</span>
+          <ng-container *ngTemplateOutlet="icon"></ng-container>
+        </li>
+      </ul>
+    </div>
 
-      <a
-        class="m-earnModal__block m-earnModal__block--anchor"
-        routerLink="settings/other/referrals"
-      >
-        <div class="m-earnModalBlock__body">
-          <span class="m-earnModalBlock__title">Refer</span>
-          <p class="m-earnModalBlock__text">
-            Get your contacts to sign up for Minds through your referral link or
-            any of your content.
-          </p>
-        </div>
-        <ng-container *ngTemplateOutlet="icon"></ng-container>
-      </a>
-
-      <a
-        class="m-earnModal__block m-earnModal__block--anchor"
-        href="https://gitlab.com/minds"
-        target="_blank"
-      >
-        <div class="m-earnModalBlock__body">
-          <span class="m-earnModalBlock__title"
-            >Develop
-            <span class="m-earningBlock__comingSoon">Coming Soon</span></span
+    <div class="m-earnModal__right">
+      <h2>Resources</h2>
+      <ul>
+        <li><a routerLink="/rewards">How rewards are calculated</a></li>
+        <li><a routerLink="/tokens">How to use tokens</a></li>
+        <li><a routerLink="/wallet/tokens/rewards">Track your rewards</a></li>
+        <li>
+          <a routerLink="/analytics/dashboard/token/supply"
+            >View token analytics</a
           >
-          <p class="m-earnModalBlock__text">
-            Submit succesful merge requests or create Gitlab issues that result
-            in a succesful merge request.
-          </p>
-        </div>
-        <ng-container *ngTemplateOutlet="icon"></ng-container>
-      </a>
+        </li>
+      </ul>
 
-      <div class="m-earnModal__block">
-        <div class="m-earnModalBlock__body">
-          <span class="m-earnModalBlock__title"
-            >Curate
-            <span class="m-earningBlock__comingSoon">Coming Soon</span></span
-          >
-          <p class="m-earnModalBlock__text">
-            Help tag or report content through the Minds jury system. Bet tokens
-            on which channels will grow and gain trust.
-          </p>
-        </div>
-        <ng-container *ngTemplateOutlet="icon"></ng-container>
-      </div>
+      <br />
+
+      <h2>Unlock revenue-sharing</h2>
+      <ul>
+        <li><a routerLink="/plus">Upgrade to Minds+</a></li>
+        <li><a routerLink="/pro">Upgrade to Minds Pro</a></li>
+      </ul>
     </div>
   </div>
 </m-concertColors__modal>

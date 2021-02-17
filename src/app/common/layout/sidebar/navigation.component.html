@@ -140,6 +140,17 @@
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
             <a
+              routerLink="/analytics/dashboard/token"
+              (click)="toggle()"
+              i18n="@@ANALYTICS__TOKEN"
+              >Global Tokens</a
+            >
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a
               routerLink="/analytics/dashboard/engagement"
               (click)="toggle()"
               i18n="@@COMMON__ENGAGEMENT"
