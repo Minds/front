@@ -1,9 +1,10 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, Injector, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first, last, map } from 'rxjs/operators';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
+import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
 @Component({
@@ -26,7 +27,9 @@ export class WalletTokensDropdownMenu {
     private buyTokensService: BuyTokensModalService,
     private walletService: WalletV2Service,
     @Inject(DOCUMENT) private dom,
-    private toasterService: FormToastService
+    private toasterService: FormToastService,
+    private onchainTransferModal: OnchainTransferModalService,
+    private injector: Injector
   ) {}
 
   /**
@@ -34,7 +37,10 @@ export class WalletTokensDropdownMenu {
    * @param e
    */
   onTransferTokensClick(e: MouseEvent) {
-    alert("Olivia's modal will open here");
+    this.onchainTransferModal
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
   }
 
   /**
