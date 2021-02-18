@@ -186,6 +186,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    this.newPostsService.reset();
   }
 
   /**

@@ -158,6 +158,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.routerSubscription.unsubscribe();
     this.feedsUpdatedSubscription.unsubscribe();
     this.showNewPostsIntentSubscription.unsubscribe();
+    this.newPostsService.reset();
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {

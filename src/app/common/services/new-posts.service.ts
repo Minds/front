@@ -6,16 +6,19 @@ import { FeaturesService } from '../../services/features.service';
 import { Session } from '../../services/session';
 
 const DEFAULT_POLL_INTERVAL_MS: number = 10000; // default is 10s
+
+const DEFAULT_PARAMS: any = { sync: 1 };
 @Injectable({ providedIn: 'root' })
 export class NewPostsService implements OnDestroy {
   endpoint: string;
-  params: any = { sync: 1 };
+  params = DEFAULT_PARAMS;
   firstPost: any;
   pollIntervalMs: number = DEFAULT_POLL_INTERVAL_MS;
   pollTimer;
   fetchInProgress: boolean = false;
   mostRecentPostTs;
 
+  public polling$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public newPostsAvailable$: BehaviorSubject<boolean> = new BehaviorSubject(
     false
   );
@@ -49,11 +52,12 @@ export class NewPostsService implements OnDestroy {
   }
 
   public async poll(): Promise<void> {
-    this.reset();
+    this.prepareNewPoll();
     if (!this.featuresService.has('new-posts')) {
       return;
     }
 
+    this.polling$.next(true);
     await this.fetchFirstPost();
     if (
       !this.mostRecentPostTs &&
@@ -111,11 +115,18 @@ export class NewPostsService implements OnDestroy {
     } catch (e) {
       console.log(e);
       this.fetchInProgress = false;
+      this.polling$.next(false);
     }
     return;
   }
 
-  reset(): void {
+  public reset(): void {
+    this.params = DEFAULT_PARAMS;
+    this.endpoint = '';
+    this.prepareNewPoll();
+  }
+
+  prepareNewPoll(): void {
     this.cancelPoll();
     this.pollIntervalMs = DEFAULT_POLL_INTERVAL_MS;
     this.newPostsAvailable$.next(false);
@@ -125,6 +136,7 @@ export class NewPostsService implements OnDestroy {
   }
 
   cancelPoll(): void {
+    this.polling$.next(false);
     if (this.pollTimer) {
       clearInterval(this.pollTimer);
     }

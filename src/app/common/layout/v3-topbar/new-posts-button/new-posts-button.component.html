@@ -1,8 +1,10 @@
-<div
-  class="m-newPostsButton"
-  (click)="scrollToNewPosts($event)"
-  [@slide]="(service.newPostsAvailable$ | async) ? 'down' : 'up'"
->
-  <i class="material-icons">refresh</i>
-  <span class="m-legible">See newest posts</span>
-</div>
+<ng-container *ngIf="service.polling$ | async"
+  ><div
+    class="m-newPostsButton"
+    (click)="scrollToNewPosts($event)"
+    [@slide]="(service.newPostsAvailable$ | async) ? 'down' : 'up'"
+  >
+    <i class="material-icons">refresh</i>
+    <span class="m-legible">See newest posts</span>
+  </div>
+</ng-container>

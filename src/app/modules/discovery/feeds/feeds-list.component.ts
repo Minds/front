@@ -62,6 +62,7 @@ export class DiscoveryFeedsListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.feedsSubscription.unsubscribe();
     this.showNewPostsIntentSubscription.unsubscribe();
+    this.newPostsService.reset();
   }
 
   loadMore() {

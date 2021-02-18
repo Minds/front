@@ -123,6 +123,7 @@ export class DiscoverySearchComponent {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    this.newPostsService.reset();
   }
 
   loadMore() {
