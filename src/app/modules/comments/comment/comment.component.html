@@ -16,54 +16,79 @@
   </div>
 
   <div class="minds-body">
+    <!-- --OWNER ROW ----------------------------- -->
     <div class="m-comment__ownerRow">
       <div *ngIf="_compact" class="m-comment__avatarWrapper--compact">
         <ng-container *ngTemplateOutlet="avatar"></ng-container>
       </div>
       <div class="m-commentOwnerRow__text m-legible">
-        <div class="m-commentOwnerRow__owner">
-          <a [routerLink]="['/', comment.ownerObj.username]">
-            <span title="{{ comment.ownerObj.name }}"
-              >{{ comment.ownerObj.name }}
-            </span></a
-          >
-          <a [routerLink]="['/', comment.ownerObj.username]">
-            <span title="@{{ comment.ownerObj.name }}"
-              >@{{ comment.ownerObj.username }}</span
-            ><m-channel--badges
+        <ng-container *ngIf="!_compact">
+          <ng-container *ngTemplateOutlet="owner"></ng-container>
+          <ng-container *ngTemplateOutlet="metrics"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="_compact">
+          <div>
+            <ng-container *ngTemplateOutlet="owner"></ng-container>
+          </div>
+          <div>
+            <ng-container *ngTemplateOutlet="metrics"></ng-container>
+          </div>
+        </ng-container>
+
+        <ng-template #owner>
+          <a
+            class="m-commentOwnerRowItem__name"
+            [routerLink]="['/', comment.ownerObj.username]"
+            title="{{ comment.ownerObj.name }}"
+            >{{ comment.ownerObj.name }}</a
+          ><span class="m-commentOwnerRow__dot">·</span>
+          <a
+            class="m-commentOwnerRowItem__username"
+            [routerLink]="['/', comment.ownerObj.username]"
+            title="@{{ comment.ownerObj.username }}"
+            >@{{ comment.ownerObj.username
+            }}<m-channel--badges
               class="m-channel--badges-activity"
               [user]="comment.ownerObj"
               badges="[ 'admin', 'verified' ]"
             ></m-channel--badges
           ></a>
-        </div>
+        </ng-template>
 
-        <div class="m-commentOwnerRow__metrics">
+        <ng-template #metrics>
+          <span class="m-commentOwnerRow__dot" *ngIf="!_compact">·</span>
           <span
-            class="m-comment__timestamp"
+            class="m-comment__timestamp m-commentOwnerRowItem__timestamp"
             [title]="comment.time_created * 1000 | date: 'medium'"
             *ngIf="commentAge$ | async as commentAge"
             >{{ commentAge | friendlydatediff }}</span
           >
-          <span
-            *ngIf="comment.edited"
-            class="m-edited-text"
-            i18n="@@M__COMMON__EDITED"
-            >Edited</span
+          <ng-container *ngIf="comment.edited">
+            <span class="m-commentOwnerRow__dot">·</span>
+            <span
+              class="m-edited-text m-commentOwnerRowItem__edited"
+              i18n="@@M__COMMON__EDITED"
+              >Edited</span
+            ></ng-container
           >
-          <span
+          <ng-container
             *ngIf="
               attachment.isMature() &&
               comment.owner_guid === session.getLoggedInUser()?.guid
             "
-            title="Explicit"
-            ><i class="material-icons m-material-icons-inline m-redButton"
-              >explicit</i
-            >
-          </span>
-        </div>
+          >
+            <span class="m-commentOwnerRow__dot">·</span>
+            <span title="Mature content"
+              ><i
+                class="material-icons m-material-icons-inline m-commentOwnerRowItem__explicit"
+                >explicit</i
+              >
+            </span></ng-container
+          >
+        </ng-template>
       </div>
     </div>
+    <!-- ---------------------------------------- -->
 
     <div class="m-comment__matureScreen" *ngIf="comment.mature && !showMature">
       <span>This comment has been tagged as explicit</span>
@@ -110,10 +135,7 @@
             'm-mature-content-shown': attachment.isForcefullyShown(comment)
           }"
         >
-          <div
-            class="m-mature-overlay"
-            (click)="comment.mature_visibility = !comment.mature_visibility"
-          >
+          <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
             <span class="m-mature-overlay-note m-mature-overlay-note-smaller">
               <i
                 class="material-icons"
@@ -143,10 +165,7 @@
           }"
           *ngIf="comment.custom_type == 'video'"
         >
-          <div
-            class="m-mature-overlay"
-            (click)="comment.mature_visibility = !comment.mature_visibility"
-          >
+          <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
             <span class="m-mature-overlay-note">
               <i
                 class="material-icons"
@@ -177,10 +196,7 @@
           }"
           *ngIf="!editing && comment.custom_type == 'batch'"
         >
-          <div
-            class="m-mature-overlay"
-            (click)="comment.mature_visibility = !comment.mature_visibility"
-          >
+          <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
             <span class="m-mature-overlay-note">
               <i
                 class="material-icons"
@@ -330,7 +346,7 @@
                       "
                     >
                       <i class="material-icons">clear</i>
-                      <span i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                      <span i18n="@@M__COMMENT_ACTIONS__CANCEL_EDITING"
                         >Cancel editing</span
                       >
                     </div>
