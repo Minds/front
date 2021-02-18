@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import {
   ContributionMetric,
   WalletTokenRewardsService,
@@ -8,6 +8,7 @@ import { Observable, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
 import { map } from 'rxjs/operators';
+import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
 @Component({
@@ -87,6 +88,9 @@ export class WalletTokenRewardsComponent implements OnInit {
   constructor(
     private rewards: WalletTokenRewardsService,
     private uniswapModalService: UniswapModalService,
+    private earnModalService: EarnModalService,
+    protected injector: Injector,
+    protected onchainTransferModal: OnchainTransferModalService,
     private walletService: WalletV2Service
   ) {}
 
@@ -170,11 +174,14 @@ export class WalletTokenRewardsComponent implements OnInit {
   }
 
   /**
-   * Open the new withdraw modal
+   * Open the withdraw modal
    * @param e
    */
-  onTransferClick(e: MouseEvent) {
-    alert('This will open olivias modal changes');
+  async onTransferClick(e: MouseEvent) {
+    this.onchainTransferModal
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
   }
 
   /**
