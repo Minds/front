@@ -98,7 +98,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  toggleSidebarNav() {
+  /**
+   * Toggles sidebar navigation open.
+   * @param { void }
+   */
+  public toggleSidebarNav(): void {
     this.sidebarService.toggle();
   }
 
