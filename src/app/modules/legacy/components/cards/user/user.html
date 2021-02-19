@@ -34,7 +34,8 @@
 
 <minds-button-subscribe
   [user]="user"
-  *ngIf="user.guid != session.getLoggedInUser().guid"
+  *ngIf="user.guid != session.getLoggedInUser().guid || forceShowSubscribe"
+  [preventSubscription]="forceShowSubscribe"
 ></minds-button-subscribe>
 
 <div

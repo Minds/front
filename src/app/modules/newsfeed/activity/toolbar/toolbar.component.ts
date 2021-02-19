@@ -64,7 +64,7 @@ export class ActivityToolbarComponent {
   async openBoostModal(e: MouseEvent): Promise<void> {
     try {
       if (this.features.has('boost-modal-v2')) {
-        await this.boostModal.open('post');
+        await this.boostModal.open(this.entity);
         return;
       }
 

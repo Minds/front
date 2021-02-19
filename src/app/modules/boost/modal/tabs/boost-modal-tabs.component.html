@@ -42,7 +42,7 @@
   <!-- Content description -->
   <div class="m-boostModal__contentDescriptionContainer">
     <!-- Exterior switch varying depending on whether this is a channel or newsfeed boost -->
-    <h1 class="" [ngSwitch]="subject$ | async">
+    <h1 class="" [ngSwitch]="entityType$ | async">
       <ng-container *ngSwitchCase="'post'">
         <!-- Interior switch varying depending on which tab is active -->
         <ng-container [ngSwitch]="activeTab$ | async">
@@ -74,7 +74,7 @@
     <!-- Exterior switch varying depending on whether this is a channel or newsfeed boost -->
     <div
       class="m-boostModal__mainPanelDescription"
-      [ngSwitch]="subject$ | async"
+      [ngSwitch]="entityType$ | async"
     >
       <ng-container *ngSwitchCase="'post'">
         <!-- Interior switch varying depending on which tab is active -->
@@ -97,12 +97,17 @@
         </ng-container>
       </ng-container>
 
-      <div
-        *ngSwitchCase="'channel'"
-        i18n="@@BOOST_MODAL__PLACED_IN_NEWSFEED_SIDEBAR"
-      >
-        <span>Placement: Newsfeed Sidebar</span>
-        <div>[previewimgcard]</div>
+      <div *ngSwitchCase="'channel'">
+        <span
+          class="m-boostModal__channelPreview"
+          i18n="@@BOOST_MODAL__PLACED_IN_SIDEBAR"
+          >Placement: Newsfeed Sidebar</span
+        >
+        <minds-card
+          [object]="getLoggedInUser()"
+          class="mdl-card m-border"
+          [forceShowSubscribe]="true"
+        ></minds-card>
       </div>
 
       <span *ngSwitchCaseDefault i18n="@@BOOST_MODAL__BOOST_YOUR_CONTENT"

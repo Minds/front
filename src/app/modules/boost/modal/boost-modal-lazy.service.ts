@@ -4,30 +4,32 @@ import {
   LazyLoadingService,
   ModalLazyLoadService,
 } from '../../../common/services/modal-lazy-load.service';
+import { BoostableEntity } from './boost-modal.service';
 
-export type BoostSubject = 'channel' | 'post' | '';
-
+/**
+ * Lazy loads boost modal.
+ */
 @Injectable({ providedIn: 'root' })
 export class BoostModalLazyService implements LazyLoadingService {
   constructor(private lazyModal: ModalLazyLoadService) {}
   /**
    * Lazy load modules and open modal.
-   * @returns { Promise<any> }
+   * @param { BoostableEntity } entity - entity that can be boosted.
+   * @returns { Promise<any> } - awaitable.
    */
-  public async open(subject: BoostSubject = ''): Promise<any> {
+  public async open(entity: BoostableEntity = {}): Promise<any> {
     const { BoostModalLazyModule } = await import('./boost-modal-lazy.module');
     this.lazyModal
       .setComponent(BoostModalComponent)
       .setLazyModule(BoostModalLazyModule)
       .setOpts({
         wrapperClass: 'm-modalV2__wrapper',
-        subject: subject,
+        entity: entity,
         onSaveIntent: () => {
-          console.log('save');
+          this.lazyModal.dismiss();
         },
         onDismissIntent: () => {
-          console.log('dismissed');
-          // this.dismiss();
+          this.lazyModal.dismiss();
         },
       })
       .open();

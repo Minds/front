@@ -1,5 +1,3 @@
-export type UserSearchResponse = { status: string; entities: MindsUser[] };
-
 import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
@@ -9,7 +7,13 @@ import {
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, fromEvent, of, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  fromEvent,
+  of,
+  Subscription,
+} from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -17,11 +21,21 @@ import {
   filter,
   map,
   switchMap,
+  take,
 } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { MindsUser } from '../../../../../interfaces/entities';
+import { BoostModalService } from '../../boost-modal.service';
 
+/**
+ * Type-ahead search response from server.
+ */
+export type UserSearchResponse = { status: string; entities: MindsUser[] };
+
+/**
+ * Input for the target of a boost offer - drops down with suggestions from server.
+ */
 @Component({
   selector: 'm-boostModal__offer-target-input',
   template: `
@@ -41,7 +55,7 @@ import { MindsUser } from '../../../../../interfaces/entities';
     >
       <li
         *ngFor="let match of matches$ | async"
-        (click)="onMatchSelect($event, match.username)"
+        (click)="onMatchSelect(match)"
         class="m-boostOfferTarget__matchesListItem"
       >
         <img
@@ -64,22 +78,41 @@ import { MindsUser } from '../../../../../interfaces/entities';
 })
 export class BoostModalOfferTargetInputComponent implements AfterViewInit {
   private subscriptions: Subscription[] = [];
+
+  /**
+   * Type-ahead matches from server.
+   */
   public readonly matches$: BehaviorSubject<MindsUser[]> = new BehaviorSubject<
     MindsUser[]
   >([]);
+
+  /**
+   * Users username, held as the value in the components main input.
+   */
   public readonly username$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >('');
+
+  /**
+   * Force the suggestions dropdown to close.
+   */
   public readonly forceClose$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
 
+  /**
+   * Search-box input reference.
+   */
   @ViewChild('searchBox') searchBox: ElementRef;
 
+  /**
+   * CDN url
+   */
   readonly cdnUrl: string;
 
   constructor(
     private api: ApiService,
+    private service: BoostModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     configs: ConfigsService
   ) {
@@ -88,12 +121,18 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.subscriptions.push(
+      // New observable from input events on the search-box.
       fromEvent(this.searchBox.nativeElement, 'input')
         .pipe(
+          // map to vaLue from keyboard event
           map((e: KeyboardEvent) => (e.target as HTMLInputElement).value),
+          // effectively break if the char count is less than 2
           filter(text => text.length > 2),
+          // debounce request to throttle server requests
           debounceTime(10),
+          // if there is no change, do nothing.
           distinctUntilChanged(),
+          // replace outputted observable with the result of a server call for matches.
           switchMap(searchTerm =>
             this.api.get(`api/v2/search/suggest/user`, {
               q: searchTerm,
@@ -101,6 +140,7 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
               hydrate: 1,
             })
           ),
+          // on error.
           catchError(e => {
             console.error(e);
             return of([]);
@@ -114,18 +154,20 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
   }
 
-  public onMatchSelect($event: MouseEvent, username: string): void {
-    this.username$.next(username);
-    this.forceClose$.next(true);
-  }
-
+  /**
+   * On avatar click open the clicked users channel in a new tab..
+   * @param { MouseEvent } $event - the mouse event.
+   * @param { username } username - username who's channel we will navigate to.
+   * @returns { void }
+   */
   public onAvatarClick($event: MouseEvent, username: string): void {
+    // prevents default behavior of onMatchSelect
     $event.stopPropagation();
 
     if (isPlatformBrowser(this.platformId)) {
@@ -133,8 +175,50 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
     }
   }
 
-  public onUsernameChange($event, keepOpen: boolean = false) {
+  /**
+   * On match select, populate the targetUser$ in service and
+   * update class level username$ subject.
+   * @param { MindsUser } match - selected match.
+   * @returns { void }
+   */
+  public onMatchSelect(match: MindsUser): void {
+    this.username$.next(match.username);
+    this.service.targetUser$.next(match);
+    this.forceClose$.next(true); //ordering of these? cannot click from opt dropdown
+  }
+
+  /**
+   * On username change, update the target user in service and
+   * class level username$
+   * @param { string } $event - usernames string.
+   * @returns { void }
+   */
+  public onUsernameChange($event: string): void {
     this.forceClose$.next(false);
     this.username$.next($event);
+    this.setTargetUser();
+  }
+
+  /**
+   * Sets target user in service from current typed username.
+   */
+  private setTargetUser(): void {
+    this.subscriptions.push(
+      // with latest username and matches
+      combineLatest([this.username$, this.matches$])
+        .pipe(
+          take(1),
+          // map new value of observable.
+          map(([username, matches]) => {
+            // filter down matches to the one with a matching username, or an empty array
+            return matches.filter(match => {
+              return match.username === username;
+            })[0];
+          })
+        )
+        .subscribe(user => {
+          this.service.targetUser$.next(user);
+        })
+    );
   }
 }

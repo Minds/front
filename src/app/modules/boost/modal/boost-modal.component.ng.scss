@@ -40,8 +40,21 @@
     margin: 20px 40px 60px 40px;
     align-items: center;
 
-    .m-onboardingModal__nextButton {
-      // margin: 20px 40px;
+    .m-boostModal__footerText {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 15px;
+      font-weight: 400;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      &.m-boostModal__footerText--primary {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
     }
   }
 }

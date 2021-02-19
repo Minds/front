@@ -1,65 +1,74 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 import { LazyComponent } from '../../../common/services/modal-lazy-load.service';
+import { Session } from '../../../services/session';
 import {
   BoostModalService,
   BoostSubject,
   BoostTab,
 } from './boost-modal.service';
 
+/**
+ * Boost modal component. Designed to be lazy loaded in through stackable modal service.
+ */
 @Component({
   selector: 'm-boostModal',
   templateUrl: './boost-modal.component.html',
   styleUrls: ['./boost-modal.component.ng.scss'],
 })
-export class BoostModalComponent implements OnDestroy, OnInit, LazyComponent {
-  private subscriptions: Subscription[] = [];
+export class BoostModalComponent implements LazyComponent {
+  /**
+   * Asset url
+   */
+  public readonly cdnAssetsUrl: string;
 
-  public cdnAssetsUrl: string;
-
-  constructor(private service: BoostModalService, configs: ConfigsService) {
+  constructor(
+    private service: BoostModalService,
+    private session: Session,
+    private toast: FormToastService,
+    configs: ConfigsService
+  ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
-  ngOnInit(): void {
-    // this.subscriptions.push(
-    // );
-  }
-
-  ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+  /**
+   * Entity type from service
+   */
+  get entityType$(): Observable<BoostSubject> {
+    return this.service.entityType$;
   }
 
   /**
-   * Subject from service
+   * Is in progress
    */
-  get subject$(): BehaviorSubject<BoostSubject> {
-    return this.service.subject$;
-  }
+  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   /**
-   * inProgress from service
+   * progress should be disabled?
+   * @returns { Observable<boolean> } - true if should be disabled.
    */
-  get inProgress$(): BehaviorSubject<boolean> {
-    return this.service.inProgress$;
-  }
-
-  /**
-   * disabled from service
-   */
-  get disabled$(): BehaviorSubject<boolean> {
+  get disabled$(): Observable<boolean> {
     return this.service.disabled$;
   }
 
   /**
    * active tab from service.
+   * @returns { BehaviorSubject<BoostTab> } - get currently active tab from service.
    */
   get activeTab$(): BehaviorSubject<BoostTab> {
     return this.service.activeTab$;
+  }
+
+  /**
+   * Username from session.
+   * @returns { string } logged in user username.
+   */
+  get username(): string {
+    return this.session.getLoggedInUser().username;
   }
 
   /**
@@ -74,22 +83,43 @@ export class BoostModalComponent implements OnDestroy, OnInit, LazyComponent {
 
   /**
    * Sets modal options.
-   * @param onDismissIntent - set dismiss intent callback.
+   * @param { Function } onDismissIntent - set dismiss intent callback.
+   * @param { Function } onSaveIntent - set save intent callback.
+   * @param { BoostableEntity } entity - set entity that is the subject of the boost.
    */
-  set opts({ subject, onDismissIntent, onSaveIntent }) {
+  set opts({ onDismissIntent, onSaveIntent, entity }) {
     this.onDismissIntent = onDismissIntent || (() => {});
     this.onSaveIntent = onSaveIntent || (() => {});
-    this.service.subject$.next(subject || '');
+    this.service.entity$.next(entity || (() => {}));
   }
 
   /**
-   * Observable containing CSS object for banner src -
-   * if none present makes height shorter.
-   * @returns { Observable<object> } - css object intended for consumption by an ngStyle.
+   * Observable containing CSS object for banner src
+   * @returns { { backgroundImage: string } } - css object intended for consumption by an ngStyle.
    */
   get bannerSrc(): { backgroundImage: string } {
     return {
-      backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/galaxy.jpg')`,
+      backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/red-blue-gradient-banner.png')`,
     };
+  }
+
+  /**
+   * Submits boost and responds on response from server.
+   * @returns { Promise<void> } awaitable.
+   */
+  public async submitBoost(): Promise<void> {
+    this.inProgress$.next(true);
+    const response = await this.service.submitBoostAsync();
+
+    this.inProgress$.next(false);
+
+    if (
+      response &&
+      response.status !== undefined &&
+      response.status === 'success'
+    ) {
+      this.toast.success('Success! Your boost request is being processed.');
+      this.onSaveIntent();
+    }
   }
 }

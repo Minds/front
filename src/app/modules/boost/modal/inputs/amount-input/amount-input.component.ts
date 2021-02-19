@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { BoostModalService } from '../../boost-modal.service';
-
-// TODO: Source from server.
-const MAXIMUM_SINGLE_BOOST_VIEWS = 5000;
+import {
+  BoostModalService,
+  MAXIMUM_SINGLE_BOOST_IMPRESSIONS,
+  MINIMUM_SINGLE_BOOST_IMPRESSIONS,
+} from '../../boost-modal.service';
 
 @Component({
   selector: 'm-boostModal__amountInput',
@@ -17,11 +17,11 @@ const MAXIMUM_SINGLE_BOOST_VIEWS = 5000;
         <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS">Views</label>
         <input
           type="number"
-          [ngModel]="(views$ | async)?.toString()"
+          [ngModel]="impressions$ | async"
           (ngModelChange)="viewsValueChanged($event)"
           name="views"
-          formControlName="views"
-          min="100"
+          formControlName="impressions"
+          min="{{ minImpressions }}"
           value="1"
         />
       </div>
@@ -42,64 +42,115 @@ const MAXIMUM_SINGLE_BOOST_VIEWS = 5000;
     </div>
     <div class="m-boostModalAmount--error">
       <span
-        *ngIf="form.controls.views.errors?.max"
+        *ngIf="form?.controls.impressions.errors?.max"
         i18n="@@BOOST_MODAL__MAX_VIEWS_ERROR"
       >
-        Sorry, you may only boost for a maximum of {{ maxViews }} views at once.
+        Sorry, you may only boost for a maximum of {{ maxImpressions }} views at
+        once.
       </span>
 
       <span
-        *ngIf="form.controls.views.errors?.min"
+        *ngIf="form?.controls.impressions.errors?.min"
         i18n="@@BOOST_MODAL__MIN_VIEWS_ERROR"
       >
-        Sorry, you may only boost for a minimum of 100 views.</span
+        Sorry, you may only boost for a minimum of
+        {{ minImpressions }} views.</span
       >
     </div>
   `,
   styleUrls: ['./amount-input.component.ng.scss'],
 })
-export class BoostModalAmountInputComponent implements OnInit {
-  public readonly rate$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    1000
-  );
+export class BoostModalAmountInputComponent implements OnDestroy {
+  private subscriptions: Subscription[] = [];
+
+  /**
+   * Value of tokens.
+   */
   public readonly tokens$: BehaviorSubject<number> = new BehaviorSubject<
     number
   >(2.5);
-  public readonly views$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    2500
-  );
 
-  public maxViews = MAXIMUM_SINGLE_BOOST_VIEWS;
+  // max impressions.
+  public maxImpressions = MAXIMUM_SINGLE_BOOST_IMPRESSIONS;
+
+  // min impressions.
+  public minImpressions = MINIMUM_SINGLE_BOOST_IMPRESSIONS;
+
+  // amount input form
   public form: FormGroup;
 
+  constructor(
+    private service: BoostModalService,
+    private cd: ChangeDetectorRef
+  ) {}
+
+  /**
+   * Gets impressions subject from service.
+   * @returns { BehaviorSubject<number> } - impressions.
+   */
+  get impressions$(): BehaviorSubject<number> {
+    return this.service.impressions$;
+  }
+
+  /**
+   * Gets rate from service.
+   * @returns { BehaviorSubject<number> } - rate.
+   */
+  get rate$(): BehaviorSubject<number> {
+    return this.service.rate$;
+  }
+
   ngOnInit(): void {
-    const defaultViews = this.maxViews / 2;
-    const defaultTokens = defaultViews / this.rate$.getValue();
-    const maxTokens = this.maxViews / this.rate$.getValue();
+    this.subscriptions.push(
+      this.rate$.subscribe(rate => {
+        const defaultViews = this.maxImpressions / 2;
+        const defaultTokens = defaultViews / rate;
+        const maxTokens = this.maxImpressions / rate;
+        const minTokens = this.minImpressions / rate;
 
-    this.form = new FormGroup({
-      tokens: new FormControl(defaultTokens, {
-        validators: [
-          Validators.required,
-          Validators.max(maxTokens),
-          Validators.min(1),
-        ],
-      }),
-      views: new FormControl(defaultViews, {
-        validators: [
-          Validators.required,
-          Validators.max(this.maxViews),
-          Validators.min(100),
-        ],
-      }),
-    });
+        this.form = new FormGroup({
+          tokens: new FormControl(defaultTokens, {
+            validators: [
+              Validators.required,
+              Validators.max(maxTokens),
+              Validators.min(minTokens),
+            ],
+          }),
+          impressions: new FormControl(defaultViews, {
+            validators: [
+              Validators.required,
+              Validators.max(this.maxImpressions),
+              Validators.min(this.minImpressions),
+            ],
+          }),
+        });
+      })
+    );
   }
 
-  public viewsValueChanged($event): void {
+  ngOnDestroy(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  /**
+   * On views value changed, update tokens to match based on rate.
+   * @param { number } $event - views value.
+   * @returns { void }
+   */
+  public viewsValueChanged($event: number): void {
     this.tokens$.next($event / this.rate$.getValue());
+    this.cd.detectChanges();
   }
 
-  public tokensValueChanged($event): void {
-    this.views$.next($event * this.rate$.getValue());
+  /**
+   * On tokens value changed, update impressions to match based on rate.
+   * @param { number } $event - tokens value.
+   * @returns { void }
+   */
+  public tokensValueChanged($event: number): void {
+    this.impressions$.next($event * this.rate$.getValue());
+    this.cd.detectChanges();
   }
 }

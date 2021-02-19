@@ -31,7 +31,7 @@ const MODULES = [
 ];
 
 /**
- * Lazy loaded module
+ * Lazy loaded module.
  */
 @NgModule({
   imports: [...MODULES],
