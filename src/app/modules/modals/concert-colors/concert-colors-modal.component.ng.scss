@@ -7,11 +7,12 @@
 
 .m-concertColors__header {
   padding: 0 40px;
-  height: 150px;
+  height: 175px;
   display: flex;
   align-items: center;
   background-size: cover;
-  background-image: url('../../../../assets/photos/concert-color.png');
+  background-image: url('../../../../assets/photos/stargazing-2x.jpg');
+  background-position: bottom;
 }
 
 .m-concertColorsHeader__title {
@@ -21,10 +22,11 @@
 }
 
 .m-modalV2__inner {
-  max-width: $layoutMax2ColWidth;
-  margin: 20px 20px;
+  max-width: 900px;
+  margin: 20px 0;
 
   @media screen and (max-width: $max-mobile) {
     max-width: calc(100% - 20px);
+    margin: 10px;
   }
 }

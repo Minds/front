@@ -181,15 +181,6 @@
     </div>
   </ng-template>
   <m-walletModal
-    [showModal]="showTransferModal"
-    (closeModal)="showTransferModal = false"
-  >
-    <m-walletOnchainTransfer
-      *ngIf="wallet && showTransferModal"
-      (transferComplete)="transferComplete()"
-    ></m-walletOnchainTransfer>
-  </m-walletModal>
-  <m-walletModal
     [showModal]="showTokenModal"
     (closeModal)="showTokenModal = false"
   >

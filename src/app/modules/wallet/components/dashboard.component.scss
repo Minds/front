@@ -1,4 +1,5 @@
-m-walletDashboard {
+m-walletDashboard,
+.m-walletModal--v2 {
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
@@ -115,6 +116,10 @@ m-walletDashboard {
 
     @include m-theme() {
       color: themed($m-textColor--primary);
+    }
+    &[class*='--16'] {
+      font-size: 16px;
+      line-height: 20px;
     }
   }
 
