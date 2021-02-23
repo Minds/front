@@ -26,16 +26,18 @@
         started</span
       >
     </div>
-    <m-button
-      class="m-boostModal__boostButton"
-      [disabled]="disabled$ | async"
-      (onAction)="submitBoost()"
-      [saving]="inProgress$ | async"
-      [size]="'medium'"
-      [color]="'blue'"
-    >
-      <ng-container *ngTemplateOutlet="boostSubjectText"></ng-container>
-    </m-button>
+    <div class="m-boostModal__boostButtonContainer">
+      <m-button
+        class="m-boostModal__boostButton"
+        [disabled]="disabled$ | async"
+        (onAction)="submitBoost()"
+        [saving]="inProgress$ | async"
+        [size]="'medium'"
+        [color]="'blue'"
+      >
+        <ng-container *ngTemplateOutlet="boostSubjectText"></ng-container>
+      </m-button>
+    </div>
   </div>
 </div>
 

@@ -42,7 +42,7 @@
   <!-- Content description -->
   <div class="m-boostModal__contentDescriptionContainer">
     <!-- Exterior switch varying depending on whether this is a channel or newsfeed boost -->
-    <h1 class="" [ngSwitch]="entityType$ | async">
+    <h1 class="m-boostModal__tabTitle" [ngSwitch]="entityType$ | async">
       <ng-container *ngSwitchCase="'post'">
         <!-- Interior switch varying depending on which tab is active -->
         <ng-container [ngSwitch]="activeTab$ | async">

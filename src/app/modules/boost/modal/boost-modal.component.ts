@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
@@ -18,7 +18,7 @@ import {
   templateUrl: './boost-modal.component.html',
   styleUrls: ['./boost-modal.component.ng.scss'],
 })
-export class BoostModalComponent implements LazyComponent {
+export class BoostModalComponent implements LazyComponent, OnDestroy {
   /**
    * Asset url
    */
@@ -31,6 +31,10 @@ export class BoostModalComponent implements LazyComponent {
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
+
+  ngOnDestroy(): void {
+    this.service.reset();
   }
 
   /**

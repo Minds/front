@@ -23,6 +23,10 @@
     flex-direction: column;
     justify-content: center;
 
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 70px;
+    }
+
     .m-modalV2Header__title {
       font-size: 30px;
       font-weight: 700;
@@ -40,17 +44,42 @@
     margin: 20px 40px 60px 40px;
     align-items: center;
 
+    @media screen and (max-width: $max-mobile) {
+      flex-flow: column nowrap;
+      margin: 20px 0 20px 0;
+      overflow-x: hidden; // positioning of modal means border will go out of modal
+
+      .m-boostModal__boostButtonContainer {
+        margin-top: 20px;
+        width: 100%;
+        padding-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 40px;
+
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
+
     .m-boostModal__footerText {
       display: block;
       margin-bottom: 10px;
       font-size: 15px;
       font-weight: 400;
 
+      @media screen and (max-width: $max-mobile) {
+        margin: 0 20px;
+      }
+
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
 
       &.m-boostModal__footerText--primary {
+        margin-top: 10px;
+
         @include m-theme() {
           color: themed($m-textColor--primary);
         }

@@ -12,6 +12,10 @@
       flex-flow: column nowrap;
       max-width: 250px;
 
+      @media screen and (max-width: $min-tablet) {
+        max-width: 49%;
+      }
+
       @include m-theme() {
         border: 1px solid themed($m-borderColor--primary);
       }

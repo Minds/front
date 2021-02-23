@@ -1,11 +1,16 @@
 @import 'defaults.scss';
 
+$collapse-width: 830px;
+
 :host {
   .m-boostModalTabs__container {
     display: flex;
     flex-flow: row nowrap;
     margin: 40px 40px 20px 40px;
 
+    @media screen and (max-width: $max-mobile) {
+      margin: 40px 20px 20px 20px;
+    }
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
@@ -30,9 +35,17 @@
 
   .m-boostModal__mainPanel {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
     margin: 40px 40px 20px 40px;
+
+    @media screen and (max-width: $max-mobile) {
+      margin: 40px 20px 20px 20px;
+    }
+
+    @media screen and (max-width: $collapse-width) {
+      flex-flow: column-reverse;
+    }
 
     .m-boostModal__mainPanelInputContainer {
       display: flex;
@@ -47,14 +60,22 @@
     .m-boostModal__contentDescriptionContainer {
       width: 250px;
 
+      @media screen and (max-width: $collapse-width) {
+        width: 100%;
+      }
+
       .m-boostModal__mainPanelDescription {
+        @media screen and (max-width: $collapse-width) {
+          margin-bottom: 40px;
+        }
+
         .m-boostModal__channelPreview {
           margin-bottom: 20px;
           display: block;
         }
       }
 
-      h1 {
+      .m-boostModal__tabTitle {
         font-size: 18px;
         margin-top: unset;
         margin-bottom: 10px;
@@ -62,6 +83,10 @@
 
         @include m-theme() {
           color: themed($m-textColor--primary);
+        }
+
+        @media screen and (max-width: $collapse-width) {
+          display: none;
         }
       }
     }

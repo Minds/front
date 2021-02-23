@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
@@ -15,6 +15,14 @@ export const MAXIMUM_SINGLE_BOOST_IMPRESSIONS = 5000;
 
 // TODO: Source from server.
 export const MINIMUM_SINGLE_BOOST_IMPRESSIONS = 500;
+
+export const DEFAULT_BOOST_RATE = 1000;
+export const DEFAULT_ACTIVE_TAB = 'newsfeed';
+export const DEFAULT_PAYMENT_METHOD = 'onchain';
+export const DEFAULT_IMPRESSIONS = MAXIMUM_SINGLE_BOOST_IMPRESSIONS / 2;
+export const DEFAULT_ENTITY = { guid: '' };
+export const DEFAULT_TARGET_USER = null;
+export const DEFAULT_BALANCE = 0;
 
 /**
  * Subject of the boost, a channel or post.
@@ -128,10 +136,10 @@ export type PeerBoostPostResponse = {
  * Main service for boost modal. Handles logic involved in boost preparation and submission.
  */
 @Injectable({ providedIn: 'root' })
-export class BoostModalService {
+export class BoostModalService implements OnDestroy {
   // TODO: Get rate dynamically from server.
   public readonly rate$: BehaviorSubject<number> = new BehaviorSubject<number>(
-    1000
+    DEFAULT_BOOST_RATE
   );
 
   /**
@@ -139,49 +147,49 @@ export class BoostModalService {
    */
   public readonly activeTab$: BehaviorSubject<BoostTab> = new BehaviorSubject<
     BoostTab
-  >('newsfeed');
+  >(DEFAULT_ACTIVE_TAB);
 
   /**
    * Payment method, onchain or offchain.
    */
   public readonly paymentMethod$: BehaviorSubject<
     BoostPaymentMethod
-  > = new BehaviorSubject<BoostPaymentMethod>('onchain');
+  > = new BehaviorSubject<BoostPaymentMethod>(DEFAULT_PAYMENT_METHOD);
 
   /**
    * Target impressions of the boost.
    */
   public readonly impressions$: BehaviorSubject<number> = new BehaviorSubject<
     number
-  >(2500);
+  >(DEFAULT_IMPRESSIONS);
 
   /**
    * Entity being boosted.
    */
   public readonly entity$: BehaviorSubject<
     BoostableEntity
-  > = new BehaviorSubject<BoostableEntity>({ guid: '' });
+  > = new BehaviorSubject<BoostableEntity>(DEFAULT_ENTITY);
 
   /**
    * Target user for boost offers.
    */
   public targetUser$: BehaviorSubject<TargetUser> = new BehaviorSubject<
     TargetUser
-  >(null);
+  >(DEFAULT_TARGET_USER);
 
   /**
    * Users onchain balance. Populated via fetchBalance.
    */
   public readonly onchainBalance$: BehaviorSubject<
     number
-  > = new BehaviorSubject<number>(0);
+  > = new BehaviorSubject<number>(DEFAULT_BALANCE);
 
   /**
    * Users offchain balance. Populated via fetchBalance.
    */
   public readonly offchainBalance$: BehaviorSubject<
     number
-  > = new BehaviorSubject<number>(0);
+  > = new BehaviorSubject<number>(DEFAULT_BALANCE);
 
   /**
    * Is the subject a post or a channel
@@ -261,6 +269,10 @@ export class BoostModalService {
     private web3Wallet: Web3WalletService,
     private boostContract: BoostContractService
   ) {}
+
+  ngOnDestroy(): void {
+    this.reset();
+  }
 
   /**
    * Populates service level offchain and onchain balances, and returns observable
@@ -511,5 +523,20 @@ export class BoostModalService {
       impressions <= MAXIMUM_SINGLE_BOOST_IMPRESSIONS &&
       impressions >= MINIMUM_SINGLE_BOOST_IMPRESSIONS
     );
+  }
+
+  /**
+   * Resets local state to default values.
+   * @returns { void }
+   */
+  public reset(): void {
+    this.rate$.next(DEFAULT_BOOST_RATE);
+    this.activeTab$.next(DEFAULT_ACTIVE_TAB);
+    this.paymentMethod$.next(DEFAULT_PAYMENT_METHOD);
+    this.impressions$.next(DEFAULT_IMPRESSIONS);
+    this.entity$.next(DEFAULT_ENTITY);
+    this.targetUser$.next(DEFAULT_TARGET_USER);
+    this.onchainBalance$.next(DEFAULT_BALANCE);
+    this.offchainBalance$.next(DEFAULT_BALANCE);
   }
 }
