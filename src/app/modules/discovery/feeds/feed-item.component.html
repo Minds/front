@@ -61,7 +61,10 @@
     <ng-template ngSwitchDefault>
       <m-activity
         [entity]="entity"
-        [displayOptions]="{ showOnlyCommentsInput: !openComments }"
+        [displayOptions]="{
+          showOnlyCommentsInput: !openComments,
+          isFeed: true
+        }"
         (deleted)="onDelete($event)"
       ></m-activity>
     </ng-template>

@@ -1,0 +1,111 @@
+<div class="m-analyticsGlobalTokens__header">
+  <h1>Tokens</h1>
+  <div class="m-layout__spacer"></div>
+  <m-wallet__tokenPriceBadge></m-wallet__tokenPriceBadge>
+</div>
+
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a routerLink="../supply" routerLinkActive="m-tabs__tab--selected"
+      >Supply</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="../transactions" routerLinkActive="m-tabs__tab--selected"
+      >Transactions</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="../rewards" routerLinkActive="m-tabs__tab--selected"
+      >Rewards</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="../liquidity" routerLinkActive="m-tabs__tab--selected"
+      >Liquidity</a
+    >
+  </div>
+  <div class="m-layout__spacer"></div>
+
+  <a
+    routerLink="/wallet/tokens/rewards"
+    class="m-analyticsGlobalTokens__openWalletRewards"
+  >
+    <i class="material-icons">launch</i>
+    <span>Your rewards</span>
+  </a>
+</div>
+
+<m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
+
+<div class="m-analyticsGlobalTokens__metrics">
+  <ng-container *ngIf="activeTabId === 'supply'">
+    <ng-container *ngFor="let metric of supply$ | async">
+      <m-analyticsGlobalTokens__metricItem
+        [metric]="metric"
+      ></m-analyticsGlobalTokens__metricItem>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="activeTabId === 'transactions'">
+    <ng-container *ngFor="let metric of transactions$ | async">
+      <m-analyticsGlobalTokens__metricItem
+        [metric]="metric"
+      ></m-analyticsGlobalTokens__metricItem>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="activeTabId === 'liquidity'">
+    <ng-container *ngFor="let metric of liquidity$ | async">
+      <m-analyticsGlobalTokens__metricItem
+        [metric]="metric"
+      ></m-analyticsGlobalTokens__metricItem>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="activeTabId === 'rewards'">
+    <ng-container *ngFor="let metric of rewards$ | async">
+      <m-analyticsGlobalTokens__metricItem
+        [metric]="metric"
+      ></m-analyticsGlobalTokens__metricItem>
+    </ng-container>
+
+    <!-- Empty column-->
+    <div></div>
+
+    <div
+      class="m-analyticsGlobalTokens__infoCard"
+      *ngIf="!(inProgress$ | async)"
+    >
+      <h3>
+        <span>Emission breakdown</span>
+        <m-tooltip icon="info"
+          >A summary of how many tokens are rewarded each day and how they are
+          allocated</m-tooltip
+        >
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <td>Total</td>
+            <td>50,000 tokens per day</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Engagement</td>
+            <td>20,000 tokens</td>
+          </tr>
+          <tr>
+            <td>Holding</td>
+            <td>5,000 tokens</td>
+          </tr>
+          <tr>
+            <td>Liquidity</td>
+            <td>25,000 tokens</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>

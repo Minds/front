@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 :host {
+  position: relative;
+
   .m-composerToolbar__action--post {
     margin-top: -4px;
     ::ng-deep .m-button__text--unsaved > * {

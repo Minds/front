@@ -48,6 +48,6 @@ export class TokenPricesService {
     this.requested = true;
 
     this.minds = await this.minds$.toPromise();
-    this.eth = await this.minds$.toPromise();
+    this.eth = await this.eth$.toPromise();
   }
 }

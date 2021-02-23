@@ -130,11 +130,9 @@
 // v2 specific
 
 .m-dropdown--v2 {
-  // new stacking context
-  position: relative;
-  z-index: 4;
-
   .m-dropdown__list {
+    // new stacking context
+    z-index: 4;
     width: 180px;
     border-radius: $m-borderRadius;
     box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.2);

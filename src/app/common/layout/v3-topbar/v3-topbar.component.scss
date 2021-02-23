@@ -353,6 +353,8 @@
   }
 
   &.m-v3TopbarNav__item--hamburger {
+    cursor: pointer;
+
     @media screen and (min-width: $max-mobile) {
       display: none;
     }

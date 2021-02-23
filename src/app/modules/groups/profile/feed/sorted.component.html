@@ -48,7 +48,8 @@
         *ngIf="entity$ | async as entity"
         [entity]="patchEntity(entity)"
         [displayOptions]="{
-          showOnlyCommentsInput: true
+          showOnlyCommentsInput: true,
+          isFeed: true
         }"
         [slot]="i + 1"
         [canDelete]="group['is:owner'] || group['is:moderator']"

@@ -17,6 +17,27 @@ import { Session } from '../../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletPhoneVerificationComponent implements OnInit {
+  /**
+   * Completion intent
+   */
+  onComplete: (any) => any = () => {};
+
+  /**
+   * Dismiss intent
+   */
+  onDismissIntent: () => void = () => {};
+
+  /**
+   * Modal options
+   *
+   * @param onComplete
+   * @param onDismissIntent
+   */
+  set opts({ onComplete, onDismissIntent }) {
+    this.onComplete = onComplete || (() => {});
+    this.onDismissIntent = onDismissIntent || (() => {});
+  }
+
   inProgress = false;
   confirming = false;
   invalidNumber = false;
@@ -76,6 +97,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
         secret: this.form.value.secret,
       });
       this.phoneVerificationComplete.emit();
+      this.onComplete(true);
     } catch (e) {
       this.invalidCode = true;
     }
@@ -91,6 +113,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
     this.confirming = false;
     this.detectChanges();
   }
+
   onSubmit() {
     if (!this.inProgress) {
       this.confirming ? this.confirmCode() : this.validateNumber();

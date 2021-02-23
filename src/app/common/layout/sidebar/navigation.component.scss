@@ -156,9 +156,9 @@ m-sidebar--navigation {
   &:hover > a {
     cursor: pointer;
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-link);
       svg {
-        fill: themed($m-textColor--primary);
+        fill: themed($m-link);
       }
     }
   }

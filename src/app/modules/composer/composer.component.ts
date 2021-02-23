@@ -18,8 +18,7 @@ import { FormToastService } from '../../common/services/form-toast.service';
 import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { ConfigsService } from '../../common/services/configs.service';
-import { Storage } from '../../services/storage';
+import { CookieService } from '@gorniv/ngx-universal';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -99,8 +98,6 @@ export class ComposerComponent implements OnInit, OnDestroy {
 
   querySubscription: Subscription;
 
-  readonly siteUrl: string;
-
   /**
    * Constructor
    * @param modalService
@@ -117,12 +114,9 @@ export class ComposerComponent implements OnInit, OnDestroy {
     protected injector: Injector,
     protected session: Session,
     protected route: ActivatedRoute,
-    public storage: Storage,
-    public router: Router,
-    configs: ConfigsService
+    public cookieService: CookieService,
+    public router: Router
   ) {
-    this.siteUrl = configs.get('site_url');
-
     this.tooManyTagsSubscription = this.service.tooManyTags$.subscribe(
       value => {
         if (value) {
@@ -137,6 +131,11 @@ export class ComposerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.cookieService.get('intent-url')) {
+      this.onTriggerClick();
+      this.service.message$.next(this.cookieService.get('intent-url'));
+    }
+
     this.querySubscription = this.route.queryParamMap.subscribe(
       (params: ParamMap) => {
         if (params.has('intentUrl')) {
@@ -145,11 +144,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
             this.onTriggerClick();
             this.service.message$.next(intentUrl);
           } else {
-            this.storage.set(
-              'redirect',
-              `${this.siteUrl}?intentUrl=${intentUrl}`
-            );
-            this.router.navigate(['/login']);
+            this.cookieService.put('intent-url', intentUrl);
           }
         }
       }
@@ -196,13 +191,18 @@ export class ComposerComponent implements OnInit, OnDestroy {
 
     this.modalOpen = false;
 
-    // Cleanup intentUrl param
+    // Intent url cleanup
     if (this.route.snapshot.queryParamMap.get('intentUrl')) {
       this.router.navigate(['.'], {
         queryParams: {},
         relativeTo: this.route,
       });
     }
+
+    if (this.cookieService.get('intent-url')) {
+      this.cookieService.remove('intent-url');
+    }
+
     this.detectChanges();
   }
 

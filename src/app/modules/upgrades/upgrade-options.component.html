@@ -99,18 +99,18 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <m-button
-        color="blue"
-        class="m-upgradesUpgradeOptionsPlan__action"
-        *ngIf="!session.getLoggedInUser()?.plus"
-        ><a
-          routerLink="/plus"
-          [queryParams]="intervalCurrencyQueryParams"
-          data-cy="m-upgradeOptions__upgrade-to-plus-button"
-          i18n="@@COMMON__UPGRADE_TO_PLUS"
+      <a
+        routerLink="/plus"
+        [queryParams]="intervalCurrencyQueryParams"
+        data-cy="m-upgradeOptions__upgrade-to-plus-button"
+        i18n="@@COMMON__UPGRADE_TO_PLUS"
+        ><m-button
+          color="blue"
+          class="m-upgradesUpgradeOptionsPlan__action"
+          *ngIf="!session.getLoggedInUser()?.plus"
         >
           Upgrade to Minds+
-        </a></m-button
+        </m-button></a
       >
     </div>
 
@@ -197,31 +197,31 @@
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ng-container *mIfFeature="'purchase-pro'; else comingSoon">
-        <m-button
-          color="blue"
-          class="m-upgradesUpgradeOptionsPlan__action"
-          *ngIf="!session.getLoggedInUser()?.pro"
+        <a
+          routerLink="/pro"
+          [queryParams]="intervalCurrencyQueryParams"
+          data-cy="m-upgradeOptions__upgrade-to-pro-button"
+          i18n="@@COMMON__UPGRADE_TO_PRO"
         >
-          <a
-            routerLink="/pro"
-            [queryParams]="intervalCurrencyQueryParams"
-            data-cy="m-upgradeOptions__upgrade-to-pro-button"
-            i18n="@@COMMON__UPGRADE_TO_PRO"
+          <m-button
+            color="blue"
+            class="m-upgradesUpgradeOptionsPlan__action"
+            *ngIf="!session.getLoggedInUser()?.pro"
           >
             Upgrade to Pro
-          </a></m-button
+          </m-button></a
         >
       </ng-container>
       <ng-template #comingSoon>
-        <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
-          <a
-            routerLink="/pro"
-            data-cy="m-upgradeOptions__upgrade-to-pro-button"
-            i18n="@@COMMON__COMING_SOON"
-          >
+        <a
+          routerLink="/pro"
+          data-cy="m-upgradeOptions__upgrade-to-pro-button"
+          i18n="@@COMMON__COMING_SOON"
+        >
+          <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
             Coming soon
-          </a>
-        </m-button>
+          </m-button></a
+        >
       </ng-template>
     </div>
 
@@ -288,14 +288,13 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
-        <a
-          routerLink="/nodes"
-          data-cy="m-upgradeOptions__contact-us-nodes-button"
-          i18n="@@COMMON__CONTACT_US"
-        >
+      <a
+        routerLink="/nodes"
+        data-cy="m-upgradeOptions__contact-us-nodes-button"
+        i18n="@@COMMON__CONTACT_US"
+        ><m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
           Contact us
-        </a></m-button
+        </m-button></a
       >
     </div>
   </div>

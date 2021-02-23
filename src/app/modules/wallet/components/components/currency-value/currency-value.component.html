@@ -10,5 +10,5 @@
 >
 
 <span *ngIf="usd > 0" class="m-walletCurrencyValue__usd">
-  (<ng-container>$</ng-container>{{ usd | number: '1.2-2' }})
+  &middot; <ng-container>$</ng-container>{{ usd | number: '1.2-2' }}
 </span>
