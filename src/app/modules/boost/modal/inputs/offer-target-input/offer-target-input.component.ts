@@ -48,6 +48,7 @@ export type UserSearchResponse = { status: string; entities: MindsUser[] };
       class="m-boostOfferTarget__input"
       type="text"
       #searchBox
+      data-cy="data-minds-boost-modal-target-input"
     />
     <ul
       *ngIf="(matches$ | async)?.length > 0 && !(forceClose$ | async)"

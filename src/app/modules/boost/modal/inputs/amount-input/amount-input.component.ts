@@ -9,55 +9,7 @@ import {
 
 @Component({
   selector: 'm-boostModal__amountInput',
-  template: `
-    <div class="m-boostModalAmount__container" [formGroup]="form">
-      <div
-        class="m-boostModalAmount__inputContainer m-boostModalAmount__viewsInput"
-      >
-        <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS">Views</label>
-        <input
-          type="number"
-          [ngModel]="impressions$ | async"
-          (ngModelChange)="viewsValueChanged($event)"
-          name="views"
-          formControlName="impressions"
-          min="{{ minImpressions }}"
-          value="1"
-        />
-      </div>
-      <div
-        class="m-boostModalAmount__inputContainer m-boostModalAmount__tokensInput"
-      >
-        <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS">Tokens</label>
-        <input
-          type="number"
-          [ngModel]="(tokens$ | async).toString()"
-          (ngModelChange)="tokensValueChanged($event)"
-          name="tokens"
-          formControlName="tokens"
-          min="1"
-          value="1"
-        />
-      </div>
-    </div>
-    <div class="m-boostModalAmount--error">
-      <span
-        *ngIf="form?.controls.impressions.errors?.max"
-        i18n="@@BOOST_MODAL__MAX_VIEWS_ERROR"
-      >
-        Sorry, you may only boost for a maximum of {{ maxImpressions }} views at
-        once.
-      </span>
-
-      <span
-        *ngIf="form?.controls.impressions.errors?.min"
-        i18n="@@BOOST_MODAL__MIN_VIEWS_ERROR"
-      >
-        Sorry, you may only boost for a minimum of
-        {{ minImpressions }} views.</span
-      >
-    </div>
-  `,
+  templateUrl: './amount-input.component.html',
   styleUrls: ['./amount-input.component.ng.scss'],
 })
 export class BoostModalAmountInputComponent implements OnDestroy {

@@ -33,6 +33,7 @@ import {
       [ngModel]="paymentMethod$ | async"
       (ngModelChange)="paymentMethod$.next($event)"
       [ngStyle]="selectBackground$ | async"
+      data-cy="data-minds-boost-modal-method-select"
     >
       <option value="onchain">
         On-chain ({{ onchainBalance$ | async }} Tokens)
