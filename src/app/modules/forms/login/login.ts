@@ -60,7 +60,12 @@ export class LoginForm {
 
     this.usernameError = null;
 
-    const username = this.form.value.username.trim();
+    let username = this.form.value.username.trim();
+
+    // check for @ char at start, remove it if it is present.
+    if (username.charAt(0) === '@') {
+      username = username.substring(1);
+    }
 
     if (username === '') {
       if (this.showInlineErrors) {

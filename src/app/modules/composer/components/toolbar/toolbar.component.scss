@@ -48,18 +48,6 @@
     height: 34px;
   }
 
-  .m-composerToolbar__item {
-    margin-right: 25px;
-
-    @media screen and (max-width: $max-mobile) {
-      margin-right: 40px;
-    }
-
-    @media screen and (max-width: 400px) {
-      margin-right: 0;
-    }
-  }
-
   .m-composerToolbar__action {
     align-items: stretch;
     padding: 0;
