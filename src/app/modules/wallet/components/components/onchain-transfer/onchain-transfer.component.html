@@ -97,11 +97,19 @@
                 >
                   Transfer amount must be greater than zero
                 </p>
-                <p
-                  *ngIf="amount.errors?.max"
-                  i18n="@@WALLETV2_ONCHAIN_TRANSFER__NOT_ENOUGH_FUNDS"
-                >
-                  You don't have enough tokens to make this transfer
+                <p *ngIf="amount.errors?.max">
+                  <ng-container
+                    *ngIf="balanceIsLimit"
+                    i18n="@@WALLETV2_ONCHAIN_TRANSFER__NOT_ENOUGH_FUNDS"
+                  >
+                    You don't have enough tokens to make this
+                    transfer</ng-container
+                  >
+                  <ng-container
+                    *ngIf="!balanceIsLimit"
+                    i18n="@@WALLETV2_ONCHAIN_TRANSFER__LIMIT_EXCEEDED"
+                    >Transfer amount exceeds the daily limit</ng-container
+                  >
                 </p>
               </ng-container>
               <p
