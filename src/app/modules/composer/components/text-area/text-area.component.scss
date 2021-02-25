@@ -50,6 +50,10 @@ m-composer__textArea {
         color: themed($m-textColor--secondary);
       }
     }
+
+    &.m-composerTextarea__textArea--short {
+      height: 65px !important;
+    }
   }
 
   .m-composerTextarea__title {

@@ -33,6 +33,10 @@
       will-change: transform, margin-left, margin-right;
     }
   }
+
+  &.m-composer__progress--short {
+    margin: 0;
+  }
 }
 
 @keyframes m-composer__progress--runningProgress {

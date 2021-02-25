@@ -15,10 +15,11 @@ import {
   Input,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
+  ComposerSize,
   MonetizationSubjectValue,
   NsfwSubjectValue,
   RemindSubjectValue,
@@ -258,6 +259,22 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get showShimmer() {
     return this.isModal && !this.service.monetization$.getValue();
+  }
+
+  /**
+   * Composer size from service.
+   * @returns { BehaviorSubject<ComposerSize> } - Composer size.
+   */
+  get size$(): BehaviorSubject<ComposerSize> {
+    return this.service.size$;
+  }
+
+  /**
+   * Compact mode if size is compact and NOT in a modal.
+   * @returns { Observable<boolean> } - holds true if compact mode should be applied.
+   */
+  get isCompactMode$(): Observable<boolean> {
+    return this.size$.pipe(map(size => size === 'compact' && !this.isModal));
   }
 
   /**
