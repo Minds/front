@@ -3,6 +3,7 @@
   [class.m-composer__base--withPreview]="
     (attachmentPreview$ | async) || (richEmbedPreview$ | async)
   "
+  [class.m-composer__base--small]="isCompactMode$ | async"
   m-dragAndDrop
   (onFileDropped)="onAttachmentPaste($event)"
   [disabled]="(remind$ | async) ? true : false"
@@ -18,11 +19,13 @@
       <m-composer__progress
         [inProgress]="inProgress$ | async"
         [progress]="progress$ | async"
+        [compactMode]="isCompactMode$ | async"
       ></m-composer__progress>
 
       <m-composer__textArea
         [inputId]="textareaId"
         (filePaste)="onAttachmentPaste($event)"
+        [compactMode]="isCompactMode$ | async"
         #textAreaComponent
       ></m-composer__textArea>
 
