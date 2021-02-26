@@ -7,5 +7,8 @@ import { ConfigsService } from '../../common/services/configs.service';
   styleUrls: ['./branding.component.ng.scss'],
 })
 export class BrandingComponent {
-  constructor(public configs: ConfigsService) {}
+  readonly cdnAssetsUrl: string;
+  constructor(public configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 }
