@@ -58,3 +58,16 @@ $min-huge: 1280px;
 
 $layout-header-height: 64px;
 $layout-sidebar-width: 80px;
+
+// Media query mixins
+@mixin mobile-only {
+  @media screen and (max-width: $max-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media screen and (min-width: $max-mobile) and (max-width: $min-desktop) {
+    @content;
+  }
+}
