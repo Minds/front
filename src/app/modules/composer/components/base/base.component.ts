@@ -100,8 +100,10 @@ export class BaseComponent implements AfterViewInit {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
 
     this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
-      this.toasterService.error(error);
-      this.service.removeAttachment();
+      if (error) {
+        this.toasterService.error(error);
+        this.service.removeAttachment();
+      }
     });
   }
 
