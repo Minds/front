@@ -1,28 +1,305 @@
-<div class="m-marketing m-branding">
-  <div class="m-marketing--header">
-    <div class="m-marketing--header-inner">
-      <h1 i18n="@@BRANDING__TITLE">Branding</h1>
-      <h3 i18n="@@BRANDING__SUBTITLE">Logos, assets and styling guides</h3>
+<div class="m-branding">
+  <div class="m-branding__header">
+    <h1 i18n="@@BRANDING__TITLE">Branding</h1>
+    <p i18n="@@BRANDING__INTRO">
+      The following SVG and PNG files (licensed CC BY-SA) should be used for
+      print publications. Logos and trademarks should always be downloaded from
+      this page to ensure high quality. Downloads from other sites may not
+      conform to our standards and may result in improper display or use of our
+      protected logos and trademarks.
+    </p>
+
+    <p i18n="@@BRANDING__CONTACT">
+      Please contact <a href="mailto:info@minds.com">info@minds.com</a> should
+      you require further information.
+    </p>
+  </div>
+
+  <div class="m-branding__group">
+    <h2 i18n="@@BRANDING__LOGO__TITLE">Logo Downloads</h2>
+    <p i18n="@@BRANDING__LOGO__INTRO">
+      The logo is available in both PNG and SVG formats across both light and
+      dark modes as well as greyscale.
+    </p>
+
+    <div class="m-branding__grid">
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mindsLogoLight.svg"
+            width="80%"
+            alt=""
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsLogoLight.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsLogoLight.svg"
+            target="_blank"
+            ><i class="material-icons">get_app</i>SVG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem m-branding__gridItemDark">
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mindsLogoDark.svg"
+            width="80%"
+            alt=""
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsLogoDark.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsLogoDark.svg"
+            target="_blank"
+            ><i class="material-icons">get_app</i>SVG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mindsLogoBulbLight.svg"
+            width="90%"
+            alt=""
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsBulb.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsLogoBulbLight.svg"
+            target="_blank"
+            ><i class="material-icons">get_app</i>SVG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem m-branding__gridItemDark">
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mindsLogoBulbDark.svg"
+            width="90%"
+            alt=""
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsBulb.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mindsLogoBulbDark.svg"
+            target="_blank"
+            ><i class="material-icons">get_app</i>SVG</a
+          >
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="m-marketing--contents m-layout--row m-layout--wrap">
-    <div class="m-layout--cell">
-      <img
-        [src]="configs.get('cdn_assets_url') + 'assets/logos/logo.svg'"
-        download
-      />
-      <label i18n="@@BRANDING__FULL_LOGO_LABEL">Full Logo</label>
-    </div>
+  <div class="m-branding__group">
+    <h2 i18n="@@BRANDING__MOBILE__TITLE">Mobile Product Images</h2>
+    <p i18n="@@BRANDING__MOBILE__INTRO">
+      High resolution product images using the Minds app for iOS
+    </p>
 
-    <div class="m-layout--cell">
-      <img
-        [src]="configs.get('cdn_assets_url') + 'assets/logos/bulb.svg'"
-        download
-      />
-      <label i18n="@@BRANDING__BULB_LABEL">Bulb</label>
+    <div class="m-branding__grid">
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Newsfeed &middot; iOS
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mobileNewsfeedSmall.png"
+            width="80%"
+            alt="Minds Newsfeed - iOS"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mobileNewsfeedLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Discovery &middot; iOS
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mobileDiscoverySmall.png"
+            width="80%"
+            alt="Minds Discovery - iOS"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mobileDiscoveryLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Channel &middot; iOS
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mobileChannelSmall.png"
+            width="80%"
+            alt="Minds Channel - iOS"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mobileChannelLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Wallet &middot; iOS
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/mobileWalletSmall.png"
+            width="80%"
+            alt="Minds Wallet - iOS"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/mobileWalletLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-branding__group">
+    <h2 i18n="@@BRANDING__WEB__TITLE">Web Product Images</h2>
+    <p i18n="@@BRANDING__WEB__INTRO">
+      High resolution product images using minds.com
+    </p>
+
+    <div class="m-branding__grid">
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Newsfeed &middot; Web
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/webNewsfeedSmall.png"
+            width="80%"
+            alt="Minds Newsfeed - Web"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/webNewsfeedLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Discovery &middot; Web
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/webDiscoverySmall.png"
+            width="80%"
+            alt="Minds Discovery - Web"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/webDiscoveryLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Channel &middot; Web
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/webChannelSmall.png"
+            width="80%"
+            alt="Minds Channel - Web"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/webChannelLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
+
+      <div class="m-branding__gridItem">
+        <div class="m-branding__gridItemTitle">
+          Wallet &middot; Web
+        </div>
+        <div class="m-branding__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/branding/webWalletSmall.png"
+            width="80%"
+            alt="Minds Wallet - Web"
+          />
+        </div>
+
+        <div class="m-branding__gridItemActions">
+          <a
+            href="{{ cdnAssetsUrl }}assets/branding/webWalletLarge.png"
+            target="_blank"
+            ><i class="material-icons">get_app</i> PNG</a
+          >
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<m-footer></m-footer>

@@ -1,0 +1,142 @@
+@import 'defaults.scss';
+
+:host {
+  .m-walletModal {
+    padding: 0;
+    @media screen and (max-width: $max-mobile) {
+      width: 90vw;
+      max-width: 90vw;
+    }
+  }
+  .m-walletModal__banner {
+    position: relative;
+
+    .m-walletModal__bannerImage {
+      background-image: url('../../../../../../assets/photos/stargazing-2x.jpg');
+      background-size: cover;
+      height: 180px;
+
+      @media screen and (max-width: $min-tablet) {
+        height: 160px;
+        background-position-x: -40px;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        height: 140px;
+        background-position-x: -60px;
+      }
+    }
+
+    h2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 60px 70px 0 70px;
+      font-weight: 700;
+      font-size: 30;
+      margin: 0;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      @media screen and (max-width: $min-tablet) {
+        padding-left: 30px;
+      }
+      @media screen and (max-width: $max-mobile) {
+        padding: 30px 40px;
+        max-width: 140px;
+      }
+    }
+  }
+
+  .m-walletModal__content {
+    padding: 40px 70px 30px;
+
+    @media screen and (max-width: $min-tablet) {
+      padding: 30px 35px 30px;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20px 24px 30px;
+    }
+
+    .m-walletSecondaryText--desc {
+      margin-top: 5px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 20px 0 0;
+      }
+    }
+  }
+
+  .m-walletForm__row--label {
+    @media screen and (max-width: $max-mobile) {
+      flex-flow: row wrap;
+      label {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .m-walletOnchainTransfer__balanceWrapper {
+    span:last-child {
+      margin-left: 5px;
+    }
+  }
+
+  ::ng-deep m-button {
+    &.m-walletOnchainTransfer__transferButton {
+      @media screen and (max-width: $max-mobile) {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .m-walletOnchainTransfer__requirementsButtonsContainer {
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 30px;
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      display: flex;
+      flex-direction: column;
+    }
+    ::ng-deep m-button {
+      @media screen and (max-width: $min-tablet) {
+        margin-right: 0;
+        width: 100%;
+      }
+      &:first-child {
+        margin-right: 40px;
+        margin-bottom: 20px;
+      }
+
+      .m-button {
+        @media screen and (max-width: $min-tablet) {
+          width: 100%;
+        }
+
+        span {
+          font-size: 15px !important;
+        }
+        i {
+          font-size: 19px !important;
+          margin-right: 10px !important;
+        }
+      }
+      &.m-walletOnchainTransfer__requirement--complete {
+        .m-button {
+          span {
+            text-decoration: line-through;
+          }
+        }
+      }
+    }
+  }
+
+  .m-walletOnchainTransfer__balance {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}

@@ -10,10 +10,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { ComposerService } from './services/composer.service';
+import { ComposerService, ComposerSize } from './services/composer.service';
 import { ModalService } from './components/modal/modal.service';
 import { BaseComponent } from './components/base/base.component';
-import { TagsPipe } from '../../common/pipes/tags';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
@@ -35,6 +34,13 @@ export class ComposerComponent implements OnInit, OnDestroy {
    * Is this an embedded composer (i.e. no modal)
    */
   @Input() embedded: boolean = false;
+
+  /**
+   * Set composer size.
+   */
+  @Input() set size(size: ComposerSize) {
+    this.service.size$.next(size);
+  }
 
   /**
    * Input activity (for edits)

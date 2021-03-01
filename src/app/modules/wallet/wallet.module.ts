@@ -37,11 +37,12 @@ import { DefaultRedirectGuard } from './components/guards/default-redirect-guard
 import { TabStorageGuard } from './components/guards/tab-storage-guard.component';
 import { WalletToggleComponent } from './toggle.component';
 import { WalletBalanceComponent } from './components/components/balance/balance.component';
-import { WalletCurrencyValueComponent } from './components/components/currency-value/currency-value.component';
 import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
 import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
-import { MindsWalletTokenPriceBadgeComponent } from './components/components/token-price-badge/token-price-badge.component';
+import { OnchainTransferModalService } from './components/components/onchain-transfer/onchain-transfer.service';
+import { PhoneVerificationService } from './components/components/phone-verification/phone-verification.service';
 import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
+import { WalletSharedModule } from './wallet-shared.module';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -167,6 +168,7 @@ export const WALLET_ROUTES: Routes = [
     RouterModule,
     RouterModule.forChild(WALLET_ROUTES),
     ChartV2Module,
+    WalletSharedModule,
   ],
   declarations: [
     WalletDashboardComponent,
@@ -199,10 +201,8 @@ export const WALLET_ROUTES: Routes = [
     WalletToggleComponent,
     // V3 wallet
     WalletBalanceComponent,
-    WalletCurrencyValueComponent,
     WalletTokenRewardsComponent,
     WalletEarningsComponent,
-    MindsWalletTokenPriceBadgeComponent,
     WalletTokensDropdownMenu,
   ],
   exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
@@ -212,6 +212,8 @@ export const WALLET_ROUTES: Routes = [
     WalletTabHistoryService,
     DefaultRedirectGuard,
     TabStorageGuard,
+    OnchainTransferModalService,
+    PhoneVerificationService,
   ],
 })
 export class WalletModule {}

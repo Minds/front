@@ -34,6 +34,11 @@ export class TextAreaComponent implements AfterViewInit {
   @Input() inputId: string = '';
 
   /**
+   * Compact mode
+   */
+  @Input() compactMode: boolean = false;
+
+  /**
    * Emits pasted file
    */
   @Output()

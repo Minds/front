@@ -8,6 +8,7 @@ import {
   ViewRef,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
@@ -17,6 +18,27 @@ import { Session } from '../../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletPhoneVerificationComponent implements OnInit {
+  /**
+   * Completion intent
+   */
+  onComplete: (any) => any = () => {};
+
+  /**
+   * Dismiss intent
+   */
+  onDismissIntent: () => void = () => {};
+
+  /**
+   * Modal options
+   *
+   * @param onComplete
+   * @param onDismissIntent
+   */
+  set opts({ onComplete, onDismissIntent }) {
+    this.onComplete = onComplete || (() => {});
+    this.onDismissIntent = onDismissIntent || (() => {});
+  }
+
   inProgress = false;
   confirming = false;
   invalidNumber = false;
@@ -36,7 +58,8 @@ export class WalletPhoneVerificationComponent implements OnInit {
     protected session: Session,
     private fb: FormBuilder,
     protected client: Client,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private toast: FormToastService
   ) {}
 
   ngOnInit() {}
@@ -57,6 +80,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
       this.form.controls['secret'].setValue(response.secret);
       this.confirming = true;
     } catch (e) {
+      this.toast.error(e.message || e);
       this.invalidNumber = true;
       console.error(e.message);
     }
@@ -76,6 +100,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
         secret: this.form.value.secret,
       });
       this.phoneVerificationComplete.emit();
+      this.onComplete(true);
     } catch (e) {
       this.invalidCode = true;
     }
@@ -91,6 +116,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
     this.confirming = false;
     this.detectChanges();
   }
+
   onSubmit() {
     if (!this.inProgress) {
       this.confirming ? this.confirmCode() : this.validateNumber();

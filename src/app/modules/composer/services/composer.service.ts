@@ -173,6 +173,10 @@ export type LicenseSubjectValue = string;
  */
 export const DEFAULT_LICENSE_VALUE: LicenseSubjectValue = 'all-rights-reserved';
 
+export type ComposerSize = 'compact' | 'full';
+
+export const DEFAULT_COMPOSER_SIZE: ComposerSize = 'full';
+
 /**
  * Payload data object. Used to build the DTO
  */
@@ -368,6 +372,13 @@ export class ComposerService implements OnDestroy {
    * Tag count subject
    */
   readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  /**
+   * Size of composer
+   */
+  readonly size$: BehaviorSubject<ComposerSize> = new BehaviorSubject<
+    ComposerSize
+  >(DEFAULT_COMPOSER_SIZE);
 
   /**
    * URL in the message
