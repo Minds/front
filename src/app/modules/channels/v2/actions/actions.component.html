@@ -10,9 +10,11 @@
     <ng-container *ngIf="service.canInteract$ | async">
       <m-channelActions__wire></m-channelActions__wire>
 
-      <m-channelActions__message
-        *ngIf="service.isSubscribed$ | async"
-      ></m-channelActions__message>
+      <div class="m-hideOnSmall">
+        <m-channelActions__message
+          *ngIf="service.isSubscribed$ | async"
+        ></m-channelActions__message>
+      </div>
 
       <m-channelActions__subscribe
         *ngIf="!(service.isSubscribed$ | async)"

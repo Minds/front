@@ -314,3 +314,10 @@ body.m-theme-in-transition *:after {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+
+// Helper classes
+.m-hideOnSmall {
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
+}
