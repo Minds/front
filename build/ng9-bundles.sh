@@ -8,7 +8,7 @@ SERVER_PATH=${3:-dist/server}
 export NODE_OPTIONS="--max-old-space-size=4096"
 
 # Build
-npx gulp build.sass --deploy-url="/static/"
+npx gulp build.sass --deploy-url="/static/en/"
 npm run build -- --stats-json --outputPath=$BROWSER_PATH
 npm run build:embed -- --stats-json --outputPath=$EMBED_PATH
 npm run build:ssr -- --outputPath=$SERVER_PATH
