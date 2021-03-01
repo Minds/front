@@ -8,6 +8,7 @@ import {
   ViewRef,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
@@ -57,7 +58,8 @@ export class WalletPhoneVerificationComponent implements OnInit {
     protected session: Session,
     private fb: FormBuilder,
     protected client: Client,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private toast: FormToastService
   ) {}
 
   ngOnInit() {}
@@ -78,6 +80,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
       this.form.controls['secret'].setValue(response.secret);
       this.confirming = true;
     } catch (e) {
+      this.toast.error(e.message || e);
       this.invalidNumber = true;
       console.error(e.message);
     }

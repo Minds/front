@@ -33,7 +33,6 @@ m-walletModal {
   border-radius: 5px;
   z-index: 2;
   position: fixed;
-  transform: translateY(-50%);
   width: 70vw;
   max-width: 700px;
   max-height: 90vh;
@@ -41,7 +40,7 @@ m-walletModal {
   left: 2vw;
   margin: auto;
   box-sizing: border-box;
-  top: 50%;
+  top: 20%;
   overflow-y: auto;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   @include m-theme() {
