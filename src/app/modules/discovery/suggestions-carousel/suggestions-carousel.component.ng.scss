@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  .m-discoverySuggestionsCarousel__wrapper {
+    padding: 20px 0;
+
+    > span {
+      font-size: 16px;
+      line-height: 21px;
+      display: inline-block;
+      padding-bottom: 20px;
+      margin: 0 40px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    ::ng-deep {
+      .m-discoverySuggestionsCarousel__suggestions {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        .m-discoverySuggestionsCarousel__suggestion {
+          width: 200px;
+          min-width: 200px;
+          padding-right: 20px;
+
+          a {
+            padding: 0 !important;
+          }
+
+          &:first-child {
+            padding-left: 40px;
+          }
+        }
+      }
+    }
+  }
+}

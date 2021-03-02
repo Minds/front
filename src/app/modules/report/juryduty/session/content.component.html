@@ -17,13 +17,20 @@
     </div>
 
     <ng-container *ngIf="report.entity; else noEntity">
-      <minds-card
-        *ngIf="report.entity"
-        class=""
-        [object]="report.entity"
-        [flags]="{ hideToolbar: true }"
-        class="mdl-card m-border"
-      ></minds-card>
+      <m-channelCard
+        *ngIf="
+          report.entity.type && report.entity.type === 'user';
+          else notUser
+        "
+        [channel]="report.entity"
+      ></m-channelCard>
+      <ng-template #notUser
+        ><minds-card
+          [object]="report.entity"
+          [flags]="{ hideToolbar: true }"
+          class="mdl-card m-border"
+        ></minds-card
+      ></ng-template>
     </ng-container>
     <ng-template #noEntity>
       <p>The post could not be loaded. Please overturn the report</p>

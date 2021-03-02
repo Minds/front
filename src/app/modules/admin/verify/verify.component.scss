@@ -15,4 +15,11 @@
   m-button {
     margin-right: 10px;
   }
+
+  .m-channelCard {
+    @include m-theme() {
+      border: none;
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
 }

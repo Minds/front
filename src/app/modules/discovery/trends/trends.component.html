@@ -20,10 +20,22 @@
       [trend]="hero$ | async"
     ></m-discoveryTrends__listItem>
   </li>
-
-  <li *ngFor="let trend of trends$ | async" class="m-discoveryTrends__trend">
+  <li
+    *ngFor="let trend of trends$ | async | slice: 0:1"
+    class="m-discoveryTrends__trend"
+  >
+    <m-discoveryTrends__listItem [trend]="trend"></m-discoveryTrends__listItem>
+  </li>
+  <!-- ---------------------- -->
+  <m-discovery__suggestionsCarousel
+    class="m-discoveryTrends__trend"
+  ></m-discovery__suggestionsCarousel>
+  <!-- ---------------------- -->
+  <li
+    *ngFor="let trend of trends$ | async | slice: 1"
+    class="m-discoveryTrends__trend"
+  >
     <m-discoveryTrends__listItem [trend]="trend"></m-discoveryTrends__listItem>
   </li>
 </ul>
-
 <m-discovery__feedsList *ngIf="showPreferredFeed"></m-discovery__feedsList>

@@ -4,10 +4,10 @@
     class="mdl-cell mdl-cell--12-col"
   >
     <div class="mdl-card mdl-shadow--4dp m-admin--verify-requests">
-      <minds-card-user
-        [object]="request.user"
-        class="mdl-card mdl-shadow--2dp"
-      ></minds-card-user>
+      <m-channelCard
+        [channel]="request.user"
+        [showSubscribeButton]="false"
+      ></m-channelCard>
 
       <div class="m-admin--verify-requests-info">
         <p class="m-message">
