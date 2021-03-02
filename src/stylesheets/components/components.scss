@@ -442,9 +442,14 @@ minds-graph-line {
   right: auto;
   @include z-index(tooltip);
   width: 330px;
-  padding-bottom: $minds-padding;
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
+  }
+
+  m-channelCard .m-channelCard {
+    @include m-theme() {
+      border: none;
+    }
   }
 }
 

@@ -1,0 +1,31 @@
+<m-button
+  *ngIf="!_user.subscribed"
+  (onAction)="subscribe($event)"
+  size="xsmall"
+  color="blue"
+  [iconOnly]="iconOnly"
+  title="Subscribe"
+>
+  <i class="material-icons">
+    add
+  </i>
+  <span *ngIf="!iconOnly">
+    <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
+  </span>
+</m-button>
+<m-button
+  *ngIf="_user.subscribed"
+  (onAction)="unsubscribe($event)"
+  size="xsmall"
+  [iconOnly]="iconOnly"
+  title="Unsubscribe"
+>
+  <i class="material-icons">
+    close
+  </i>
+  <span *ngIf="!iconOnly">
+    <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
+      >Unsubscribe</ng-container
+    >
+  </span>
+</m-button>

@@ -1,8 +1,5 @@
 <ng-container *ngIf="entity$ | async as entity">
-  <minds-card
-    [object]="entity"
-    class="mdl-card m-border m-liquiditySpot__entity"
-  ></minds-card>
+  <m-channelCard [channel]="entity" featured="true"></m-channelCard>
 
   <div class="m-liquiditySpot__disclaimer">
     <m-tooltip icon="info" anchor="bottom">
