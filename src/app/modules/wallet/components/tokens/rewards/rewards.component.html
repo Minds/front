@@ -169,7 +169,9 @@
             Your score divided by the total network score
           </m-tooltip>
         </td>
-        <td colspan="3">{{ data.engagement.share_pct * 100 }}%</td>
+        <td colspan="3">
+          {{ data.engagement.share_pct * 100 | number: '1.0-3' }}%
+        </td>
       </tr>
       <tr>
         <td>
@@ -179,10 +181,12 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          {{ data.engagement.token_amount | number }} ({{
-            data.engagement.share_pct * 100
-          }}% of
-          {{ round(data.engagement.global_summary.token_amount) | number }})
+          {{ data.engagement.token_amount | number }}
+          <span class="m-walletTokenEarnings__supportingValues">
+            &middot;
+            {{ data.engagement.share_pct * 100 | number: '1.0-3' }}% of
+            {{ round(data.engagement.global_summary.token_amount) | number }}
+          </span>
         </td>
       </tr>
 
@@ -232,10 +236,12 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          {{ data.engagement.score }} points ({{
-            data.engagement.score / data.engagement.multiplier
-          }}
-          x {{ data.engagement.multiplier }})
+          {{ data.engagement.score }} points
+          <span class="m-walletTokenEarnings__supportingValues">
+            &middot;
+            {{ data.engagement.score / data.engagement.multiplier }} x
+            {{ data.engagement.multiplier }}
+          </span>
         </td>
       </tr>
     </tbody>
@@ -309,7 +315,9 @@
             Your score divided by the total network score
           </m-tooltip>
         </td>
-        <td colspan="3">{{ data.holding.share_pct * 100 }}%</td>
+        <td colspan="3">
+          {{ data.holding.share_pct * 100 | number: '1.0-3' }}%
+        </td>
       </tr>
       <tr>
         <td>
@@ -319,9 +327,12 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          {{ data.holding.token_amount | number }} ({{
-            data.holding.share_pct * 100
-          }}% of {{ round(data.holding.global_summary.token_amount) | number }})
+          {{ data.holding.token_amount | number }}
+          <span class="m-walletTokenEarnings__supportingValues">
+            &middot;
+            {{ data.holding.share_pct * 100 | number: '1.0-3' }}% of
+            {{ round(data.holding.global_summary.token_amount) | number }}
+          </span>
         </td>
       </tr>
 
@@ -437,7 +448,9 @@
             Your score divided by the total network score
           </m-tooltip>
         </td>
-        <td colspan="3">{{ data.liquidity.share_pct * 100 }}%</td>
+        <td colspan="3">
+          {{ data.liquidity.share_pct * 100 | number: '1.0-3' }}%
+        </td>
       </tr>
       <tr>
         <td>
@@ -447,10 +460,12 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          {{ data.liquidity.token_amount | number }} ({{
-            data.liquidity.share_pct * 100
-          }}% of
-          {{ round(data.liquidity.global_summary.token_amount) | number }})
+          {{ data.liquidity.token_amount | number }}
+          <span class="m-walletTokenEarnings__supportingValues">
+            &middot;
+            {{ data.liquidity.share_pct * 100 | number: '1.0-3' }}% of
+            {{ round(data.liquidity.global_summary.token_amount) | number }}
+          </span>
         </td>
       </tr>
 

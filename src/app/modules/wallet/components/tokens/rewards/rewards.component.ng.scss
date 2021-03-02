@@ -71,6 +71,13 @@
     }
   }
 
+  .m-walletTokenEarnings__supportingValues {
+    font-weight: 400;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
   .m-walletTokenEarnings__cta {
     font-size: 16px;
     font-weight: 500;
