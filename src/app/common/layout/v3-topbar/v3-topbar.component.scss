@@ -247,23 +247,8 @@
   flex-direction: row;
   align-items: flex-end;
 
-  @media screen and (max-width: $layoutMax3ColWidth) {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
   m-canaryFlag > span {
     @media screen and (max-width: $layoutMax3ColWidth) {
-      display: flex;
-      z-index: -1;
-      margin-left: unset !important;
-    }
-
-    @media screen and (max-width: $max-mobile) {
       display: none;
     }
   }
