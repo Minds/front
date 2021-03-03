@@ -53,6 +53,28 @@
         }
       }
     }
+    &.m-button--primary {
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+        background-color: themed($m-bgColor--primary);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+    &.m-button--secondary {
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+        background-color: themed($m-bgColor--secondary);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
     &.m-button--blue {
       @include m-theme() {
         border-color: themed($m-link);

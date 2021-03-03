@@ -30,7 +30,7 @@ export class ButtonComponent implements AfterViewInit {
   @Input() disabled: boolean = false;
   @Input() overlay: boolean = false;
   @Input() iconOnly: boolean = false;
-  @Input() color: 'blue' | 'grey' | 'red' = 'grey';
+  @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
   @Input() pulsating: boolean = false;
 
