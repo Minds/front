@@ -13,6 +13,7 @@ import { MarketingFeaturesComponent } from './features.component';
 import { MarketingComponent } from './marketing.component';
 import { MarketingFooterComponent } from './footer.component';
 import { MarketingAsFeaturedInComponent } from './as-featured-in.component';
+import { MarketingAsFeaturedInBlockchainComponent } from './as-featured-in-blockchain/as-featured-in-blockchain.component';
 import { LanguageModule } from '../language/language.module';
 
 @NgModule({
@@ -30,12 +31,14 @@ import { LanguageModule } from '../language/language.module';
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
+    MarketingAsFeaturedInBlockchainComponent,
   ],
   exports: [
     MarketingFeaturesComponent,
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
+    MarketingAsFeaturedInBlockchainComponent,
   ],
 })
 export class MarketingModule {}

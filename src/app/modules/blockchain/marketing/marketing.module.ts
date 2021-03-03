@@ -8,6 +8,11 @@ import { BlockchainModule } from '../blockchain.module';
 import { BlockchainMarketingTokenComponent } from './token.component';
 import { BlockchainMarketingRewardsComponent } from './rewards.component';
 import { MarketingModule } from '../../marketing/marketing.module';
+import { ComposerService } from '../../composer/services/composer.service';
+import { BlockchainMarketingTokenV2Component } from './v2/token.component';
+import { BlockchainMarketingRewardsV2Component } from './v2/rewards.component';
+import { OnchainTransferModalService } from '../../wallet/components/components/onchain-transfer/onchain-transfer.service';
+import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
 
 const routes: Routes = [
   {
@@ -51,9 +56,12 @@ const routes: Routes = [
     BlockchainModule,
     MarketingModule,
   ],
+  providers: [ComposerService, OnchainTransferModalService, WalletV2Service],
   declarations: [
     BlockchainMarketingTokenComponent,
     BlockchainMarketingRewardsComponent,
+    BlockchainMarketingTokenV2Component,
+    BlockchainMarketingRewardsV2Component,
   ],
 })
 export class BlockchainMarketingModule {}
