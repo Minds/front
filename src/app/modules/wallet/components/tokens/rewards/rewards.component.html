@@ -487,32 +487,83 @@
       <ng-container *ngIf="liquidityPositions$ | async as liquidityPositions">
         <tr>
           <td>
-            <span>Liquidity position</span>
+            <span>Provided Liquidity</span>
             <m-tooltip icon="info">
-              Your current liquidity position
+              The liquidity you have provided
             </m-tooltip>
           </td>
           <td colspan="3">
-            {{ liquidityPositions?.current_liquidity?.MINDS | number: '1.3-4' }}
-            tokens /
-            {{ liquidityPositions?.current_liquidity?.USD | number: '1.3-4' }}
-            USD
+            <m-wallet__currencyValue
+              [value]="liquidityPositions?.provided_liquidity?.USD"
+              currency="usd"
+            ></m-wallet__currencyValue>
           </td>
         </tr>
 
         <tr>
           <td>
-            <span>Liquidity yield</span>
+            <span>Current position</span>
+            <m-tooltip icon="info">
+              Your current liquidity position
+            </m-tooltip>
+          </td>
+          <td colspan="3">
+            <m-wallet__currencyValue
+              [value]="liquidityPositions?.current_liquidity?.USD"
+              currency="usd"
+            ></m-wallet__currencyValue>
+
+            <span
+              class="m-walletTokenEarnings__comparative"
+              [class.m-walletTokenEarnings__comparative--negative]="
+                liquidityPositions?.yield_liquidity?.USD < 0
+              "
+            >
+              <m-icon
+                [iconId]="
+                  liquidityPositions?.yield_liquidity?.USD > 0
+                    ? 'arrow_upwards'
+                    : 'arrow_downwards'
+                "
+              ></m-icon>
+              <m-wallet__currencyValue
+                [value]="liquidityPositions?.yield_liquidity?.USD"
+                currency="usd"
+              ></m-wallet__currencyValue>
+            </span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <span>Tokens Earned</span>
+            <m-tooltip icon="info">
+              The difference of tokens between what you provided and your
+              current position
+            </m-tooltip>
+          </td>
+          <td colspan="3">
+            <m-wallet__currencyValue
+              [value]="liquidityPositions?.yield_liquidity?.MINDS"
+              currency="tokens"
+            ></m-wallet__currencyValue>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <span>Yield</span>
             <m-tooltip icon="info">
               The difference between your provided liquidity and your current
               liquidity position
             </m-tooltip>
           </td>
           <td colspan="3">
-            {{ liquidityPositions?.yield_liquidity?.MINDS | number: '1.3-4' }}
-            tokens /
-            {{ liquidityPositions?.yield_liquidity?.USD | number: '1.3-4' }}
-            USD
+            {{
+              (liquidityPositions?.yield_liquidity?.USD /
+                liquidityPositions?.provided_liquidity?.USD) *
+                100 | number: '1.0-3'
+            }}%
           </td>
         </tr>
       </ng-container>
