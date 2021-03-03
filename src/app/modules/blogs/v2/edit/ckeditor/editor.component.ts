@@ -15,6 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { AttachmentService } from '../../../../../services/attachment';
 import { SiteService } from '../../../../../common/services/site.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 declare var require: any;
 
@@ -43,6 +44,7 @@ export class BlogEditorComponent {
     @Inject(PLATFORM_ID) protected platformId: Object,
     private attachment: AttachmentService,
     private site: SiteService,
+    private toast: FormToastService,
     public themeService: ThemeService
   ) {}
 
@@ -55,8 +57,15 @@ export class BlogEditorComponent {
       this.Editor = MindsEditor;
       this.Editor.config = {
         uploadHandler: async file => {
-          const response = this.attachment.upload(await file);
-          return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
+          try {
+            let _file = await file;
+            const response = await this.attachment.upload(_file);
+            return `${this.site.baseUrl}fs/v1/thumbnail/${response}/xlarge`;
+          } catch (e) {
+            this.toast.error(
+              'An error has occurred whilst uploading your media. Your embedded media may not be saved.'
+            );
+          }
         },
         isDark$: this.themeService.isDark$,
       };
