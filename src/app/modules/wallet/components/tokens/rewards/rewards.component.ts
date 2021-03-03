@@ -145,7 +145,7 @@ export class WalletTokenRewardsComponent implements OnInit {
    */
   get friendlyDate(): string {
     const d = new Date(this.getDate());
-    const m = moment(d.getTime());
+    const m = moment(this.getDate(), 'YYYY-MM-DD');
     return m.calendar(null, {
       sameDay: '[Today]',
       nextDay: '[Tomorrow]',
