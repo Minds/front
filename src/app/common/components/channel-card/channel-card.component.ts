@@ -23,6 +23,10 @@ export class ChannelCardComponent implements AfterViewInit {
   @Input() showDescription: boolean = true;
   @Input() showSubs: boolean = true;
   @Input() showSubscribeButton: boolean = true;
+
+  // disable subscription - allows for a user to preview their own card.
+  @Input() disableSubscribe: boolean = false;
+
   // @Input() showTags: boolean = false; // disabled
 
   // display a blue border
