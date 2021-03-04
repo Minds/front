@@ -1,0 +1,143 @@
+@import 'defaults.scss';
+
+:host {
+  .m-branding {
+    padding: 0 45px 100px 45px;
+
+    @include mobile-only {
+      padding: 0 23px;
+    }
+
+    @include tablet-only {
+      padding: 0 23px;
+    }
+
+    &__header {
+      h1 {
+        font-weight: bold;
+        font-size: 32px;
+
+        @include mobile-only {
+          margin-bottom: 10px;
+        }
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      p {
+        line-height: 1.4em;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &__group {
+      h2 {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 0;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      p {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &__grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    &__gridItem {
+      @include mobile-only {
+        width: calc(100% - 10px);
+        margin-bottom: 25px;
+      }
+
+      width: calc(50% - 10px);
+      background: map-get(map-get($themes, 'light'), 'm-bgColor--primary');
+      border-radius: 5px;
+      border: 1px solid
+        map-get(map-get($themes, 'light'), 'm-borderColor--primary');
+      margin-bottom: 20px;
+      color: map-get(map-get($themes, 'light'), 'm-textColor--secondary');
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &Title {
+        text-align: left;
+        width: calc(100% - 40px);
+        padding: 20px 20px 10px 20px;
+        color: map-get(map-get($themes, 'light'), 'm-textColor--secondary');
+      }
+
+      &Image {
+        padding: 25px 10px;
+        text-align: center;
+      }
+
+      &Actions {
+        width: 100%;
+        padding: 13px 0;
+        text-align: center;
+        border-top: 1px solid
+          map-get(map-get($themes, 'light'), 'm-borderColor--primary');
+        display: flex;
+        justify-content: center;
+
+        a {
+          color: map-get(map-get($themes, 'light'), 'm-textColor--secondary');
+          text-decoration: none;
+          padding: 0 7px;
+          align-self: center;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        i {
+          color: map-get(map-get($themes, 'light'), 'm-textColor--secondary');
+          font-size: 16px;
+          padding-right: 1px;
+          height: 100%;
+          vertical-align: middle;
+          padding-top: 1px;
+        }
+      }
+    }
+
+    &__gridItemDark {
+      background: map-get(map-get($themes, 'dark'), 'm-bgColor--primary');
+      border-color: map-get(map-get($themes, 'dark'), 'm-borderColor--primary');
+
+      .m-branding__gridItemActions {
+        border-top-color: map-get(
+          map-get($themes, 'dark'),
+          'm-borderColor--primary'
+        );
+
+        a {
+          color: map-get(map-get($themes, 'dark'), 'm-textColor--secondary');
+
+          i {
+            color: map-get(map-get($themes, 'dark'), 'm-textColor--secondary');
+          }
+        }
+      }
+    }
+  }
+}

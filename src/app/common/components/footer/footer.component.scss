@@ -1,8 +1,14 @@
 .m-footer {
   text-align: center;
+
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
-    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  a {
+    @include m-theme() {
+      color: themed($m-textColor--primary) !important;
+    }
   }
 
   img {

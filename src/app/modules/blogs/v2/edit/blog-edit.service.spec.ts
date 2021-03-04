@@ -13,6 +13,10 @@ export let toastServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
 
+export let preloadServiceMock = new (function() {
+  this.getValue = jasmine.createSpy('getValue').and.returnValue('');
+})();
+
 describe('BlogsEditService', () => {
   let service: BlogsEditService;
 
@@ -32,6 +36,7 @@ describe('BlogsEditService', () => {
       clientMock,
       siteServiceMock,
       toastServiceMock,
+      preloadServiceMock,
       composerMockService
     );
   });

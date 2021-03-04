@@ -15,10 +15,11 @@ import {
   Input,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
+  ComposerSize,
   MonetizationSubjectValue,
   NsfwSubjectValue,
   RemindSubjectValue,
@@ -47,6 +48,8 @@ import { FeaturesService } from '../../../../services/features.service';
   styleUrls: ['toolbar.component.ng.scss'],
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+
   /**
    * On Post event emitter
    */
@@ -85,11 +88,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Window resize event subscription
    */
-  protected windowResizeSubscription: Subscription;
-
-  /**
-   * Window resize event subscription
-   */
   protected attachmentSubscription: Subscription;
 
   public legacyPaywallEnabled: boolean = false;
@@ -117,15 +115,16 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnInit(): void {
-    this.windowResizeSubscription = this.windowResize$
-      .pipe(debounceTime(250))
-      .subscribe(() => this.calcNarrow());
-
-    this.attachmentSubscription = this.attachment$.subscribe(attachment => {
-      if (!attachment && this.fileUploadComponent) {
-        this.fileUploadComponent.reset();
-      }
-    });
+    this.subscriptions.push(
+      this.windowResize$
+        .pipe(debounceTime(250))
+        .subscribe(() => this.calcNarrow()),
+      (this.attachmentSubscription = this.attachment$.subscribe(attachment => {
+        if (!attachment && this.fileUploadComponent) {
+          this.fileUploadComponent.reset();
+        }
+      }))
+    );
 
     /**
      * Don't show the monetize button if a post has a
@@ -172,8 +171,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @internal
    */
   ngOnDestroy(): void {
-    this.windowResizeSubscription.unsubscribe();
     this.attachmentSubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -258,6 +259,22 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get showShimmer() {
     return this.isModal && !this.service.monetization$.getValue();
+  }
+
+  /**
+   * Composer size from service.
+   * @returns { BehaviorSubject<ComposerSize> } - Composer size.
+   */
+  get size$(): BehaviorSubject<ComposerSize> {
+    return this.service.size$;
+  }
+
+  /**
+   * Compact mode if size is compact and NOT in a modal.
+   * @returns { Observable<boolean> } - holds true if compact mode should be applied.
+   */
+  get isCompactMode$(): Observable<boolean> {
+    return this.size$.pipe(map(size => size === 'compact' && !this.isModal));
   }
 
   /**

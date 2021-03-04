@@ -1,14 +1,16 @@
-<div class="m-walletTokenPriceBadge__logo">
-  <img src="{{ cdnAssetsUrl }}assets/logos/bulb.svg" />
-</div>
+<a [href]="uniswapTokenUrl" target="_blank">
+  <div class="m-walletTokenPriceBadge__logo">
+    <img src="{{ cdnAssetsUrl }}assets/logos/bulb.svg" />
+  </div>
 
-<div class="m-walletTokenPriceBadge__amount">
-  1 <span class="m-walletTokenPriceBadgeAmount__currency">MINDS</span>
-</div>
+  <div class="m-walletTokenPriceBadge__amount">
+    1 <span class="m-walletTokenPriceBadgeAmount__currency">MINDS</span>
+  </div>
 
-<span class="m-walletTokenPriceBadge__equals">=</span>
+  <span class="m-walletTokenPriceBadge__equals">=</span>
 
-<div class="m-walletTokenPriceBadge__amount">
-  {{ minds$ | async | number: '1.2-4' }}
-  <span class="m-walletTokenPriceBadgeAmount__currency">USD</span>
-</div>
+  <div class="m-walletTokenPriceBadge__amount">
+    {{ minds$ | async | number: '1.2-4' }}
+    <span class="m-walletTokenPriceBadgeAmount__currency">USD</span>
+  </div>
+</a>

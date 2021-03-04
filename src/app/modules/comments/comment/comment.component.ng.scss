@@ -15,9 +15,17 @@
     .m-commentOwnerRow__text {
       flex-direction: column;
       align-items: flex-start;
+      max-width: calc(100% - 50px);
 
-      .m-comment__timestamp::before {
-        display: none;
+      > div {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .m-commentOwnerRowItem__name,
+      .m-commentOwnerRowItem__username {
+        max-width: 50%;
       }
     }
     .minds-body {
@@ -41,6 +49,7 @@
   }
 
   ::ng-deep .m-comment__ownerRow {
+    min-width: 100%;
     max-width: 100%;
     display: flex;
     align-items: center;
@@ -49,59 +58,65 @@
     .m-commentOwnerRow__text {
       display: flex;
       align-items: center;
-    }
+      max-width: 100%;
+      width: 100%;
 
-    .m-commentOwnerRow__owner,
-    .m-commentOwnerRow__metrics {
-      display: flex;
-      > a span,
-      span {
-        &::before {
-          content: '·';
-          margin: 0 5px;
-        }
-      }
-      &.m-commentOwnerRow__owner {
-        a:first-child span {
-          font-weight: 700;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-
-          &::before {
-            display: none;
-          }
-        }
-        a:last-child {
-          display: flex;
-        }
+      .m-commentOwnerRow__dot {
+        padding: 0 5px;
       }
 
-      > a,
-      span {
+      [class*='m-commentOwnerRowItem__'] {
         display: inline-block;
         line-height: 20px;
         font-size: 15px;
         font-weight: 400;
-        max-width: 100%;
-        white-space: nowrap;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
 
-        span {
-          overflow: hidden;
+        &.m-commentOwnerRowItem__name,
+        &.m-commentOwnerRowItem__username {
+          flex: auto 0 1;
+          max-width: 35%;
           white-space: nowrap;
+          overflow: hidden;
           text-overflow: ellipsis;
-          display: inline-block;
-          max-width: 100%;
+        }
+        &.m-commentOwnerRowItem__name {
+          font-weight: 700;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+        &.m-commentOwnerRowItem__username {
+          .m-channel--badges-activity {
+            vertical-align: text-top;
+            .m-channel--badges i {
+              padding-right: 3px;
+            }
+          }
+        }
+        &.m-commentOwnerRowItem__timestamp,
+        &.m-commentOwnerRowItem__edited,
+        &.m-commentOwnerRowItem__explicit {
+          flex: auto 0 0;
+        }
+        &.m-commentOwnerRowItem__explicit {
+          font-size: 18px;
+          @include m-theme() {
+            color: themed($m-red);
+          }
         }
       }
 
-      .m-channel--badges-activity {
-        vertical-align: unset;
-        margin-top: -1px;
+      // compensate for m-badges padding
+      .m-commentOwnerRowItem__username + .m-commentOwnerRow__dot {
+        padding-left: 1px;
       }
+    }
+
+    .m-comment__avatarWrapper--compact {
+      align-self: flex-start;
     }
   }
 
@@ -166,6 +181,7 @@
     vertical-align: middle;
     font-size: 16px;
     line-height: 20px;
+    white-space: pre-line;
   }
 
   .m-comment__attachment > * {

@@ -27,7 +27,10 @@
         <span>{{ trend.entity.time_created | friendlytime }}</span>
       </div>
     </div>
-    <img [src]="trend.entity.thumbnail_src" />
+    <img
+      [src]="trend.entity.thumbnail_src"
+      class="m-discoveryTrendListItem__image"
+    />
   </ng-container>
   <ng-container *ngIf="!trend.title">
     <div>

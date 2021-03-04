@@ -1,0 +1,88 @@
+<div
+  class="m-channelCard"
+  [ngClass]="{
+    'm-channelCard--medium': size === 'medium',
+    'm-channelCard--small': size === 'small',
+    'm-channelCard--featured': featured
+  }"
+  *ngIf="channel"
+  #channelCard
+>
+  <!-- --OWNER ROW ----------------------------- -->
+  <div class="m-channelCard__ownerRow m-legible">
+    <!-- AVATAR -->
+    <div class="minds-avatar">
+      <a [routerLink]="['/', channel.username]">
+        <img [src]="getAvatarSrc() | async" class="m-border" />
+      </a>
+    </div>
+    <!-- NAMES -->
+    <div class="m-channelCardOwnerRow__owner">
+      <div>
+        <a
+          class="m-channelCardOwnerRowItem__name"
+          [routerLink]="['/', channel.username]"
+          title="{{ channel.name }}"
+          >{{ channel.name }}</a
+        ><m-channel--badges
+          class="m-channel--badges-activity"
+          [user]="channel"
+          badges="[ 'admin', 'verified' ]"
+        ></m-channel--badges>
+      </div>
+      <div>
+        <a
+          class="m-channelCardOwnerRowItem__username"
+          [routerLink]="['/', channel.username]"
+          title="@{{ channel.username }}"
+          >@{{ channel.username }}</a
+        >
+      </div>
+    </div>
+    <!-- SUBSCRIBE BUTTON -->
+    <m-subscribeButton
+      [user]="channel"
+      [iconOnly]="btnIconOnly"
+    ></m-subscribeButton>
+  </div>
+  <!-- - SUBS ---------------------------- -->
+  <div
+    class="m-channelCard__subs"
+    *ngIf="
+      showSubs &&
+      (channel.subscribers_count || channel.subscriptions_count) &&
+      size !== 'small'
+    "
+  >
+    <a [routerLink]="['/', channel.username, 'subscribers']" class="m-legible"
+      ><span class="m-channelCardSubs__count">{{
+        channel.subscribers_count | abbr: 0
+      }}</span>
+      <span class="m-channelCardSubs__header">subscribers</span></a
+    >
+
+    <span class="m-channelCard__dot">·</span>
+    <a [routerLink]="['/', channel.username, 'subscriptions']" class="m-legible"
+      ><span class="m-channelCardSubs__count">{{
+        channel.subscriptions_count | abbr: 0
+      }}</span>
+      <span class="m-channelCardSubs__header">subscriptions</span></a
+    >
+  </div>
+  <!-- - TAGS (disabled) ---------------- -->
+  <!-- <div class="m-channelCard__tags" *ngIf="showTags && channel.tags.length">
+    <span *ngFor="let tag of channel.tags" [innerHTML]="'#' + tag | tags"
+      >#{{ tag }}</span
+    >
+  </div> -->
+  <!-- - DESC ---------------------------- -->
+  <div
+    class="m-channelCard__desc"
+    *ngIf="showDescription && channel.briefdescription"
+    m-read-more
+    maxHeightAllowed="60"
+  >
+    <p>{{ channel.briefdescription }}</p>
+    <m-read-more--button v2="true" showOnlyFadeout="true"></m-read-more--button>
+  </div>
+</div>

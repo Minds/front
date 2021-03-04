@@ -18,6 +18,9 @@ export class WalletCurrencyValueComponent {
   /** Removes the currency suffix */
   @Input() hideCurrency = false;
 
+  /** Decimals to show */
+  @Input() decimals: number = 2;
+
   get usd(): number {
     return this.value * this.exRate;
   }

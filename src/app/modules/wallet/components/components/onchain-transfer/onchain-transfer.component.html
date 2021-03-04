@@ -1,93 +1,154 @@
-<h2 i18n="@@WALLETV2_ONCHAIN_TRANSFER__ONCHAIN_TRANSFER">
-  On-Chain Transfer
-</h2>
-<div class="m-walletSecondaryText--desc">
-  <p
-    class="m-walletSecondaryText--16"
-    i18n="@@WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_REQUEST_UP_TO_X"
-  >
-    You can request to transfer up to
-    <span class="m-walletSecondaryText--16 m-walletSecondaryText--emphasis"
-      >{balance, plural, =1 {{{balance | number}} token} other
-      {{{balance | number}} tokens}}</span
-    >
-    from your rewards to your on-chain wallet below. You may only transfer once
-    per day.
-  </p>
-  <p
-    class="m-walletSecondaryText--15"
-    i18n="@@WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE"
-  >
-    Note: a small amount of ETH will be charged to cover the transaction fee.
-    Transfers go through an approval process and may take up to 72 hours to
-    complete.
-  </p>
-</div>
-<div *ngIf="!form" class="m-wallet__spinner m-wallet__spinner--tokenSettings">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-</div>
-<form
-  *ngIf="form"
-  [formGroup]="form"
-  class="m-walletButtonLayout--buttonInline"
->
-  <div class="m-walletForm__fieldsContainer">
-    <div class="m-walletForm__field--text stretchedField">
-      <div class="m-walletForm__row--label">
-        <label for="amount" i18n="@@COMMON__AMOUNT">Amount</label>
-      </div>
-      <div
-        class="m-walletForm__row--input"
-        [ngClass]="{
-          invalid: !isFormValid() || submitError
-        }"
-      >
-        <input
-          type="number"
-          id="amount"
-          name="amount"
-          formControlName="amount"
-          class="form-control"
-          required
-        />
-      </div>
-      <div class="m-walletForm__row--validation">
-        <ng-container *ngIf="!submitError && canTransfer">
-          <p
-            *ngIf="amount.errors?.required"
-            i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSFER_AMOUNT_REQUIRED"
-          >
-            Transfer amount required
-          </p>
-          <p
-            *ngIf="amount.errors?.moreThanZero && !amount.errors?.required"
-            i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSFER_MUST_BE_GREATER"
-          >
-            Transfer amount must be greater than zero
-          </p>
-          <p
-            *ngIf="amount.errors?.max"
-            i18n="@@WALLETV2_ONCHAIN_TRANSFER__NOT_ENOUGH_FUNDS"
-          >
-            You don't have enough tokens to make this transfer
-          </p>
-        </ng-container>
-        <p
-          *ngIf="!canTransfer"
-          i18n="@@WALLETV2_ONCHAIN_TRANSFER__ONLY_ONCE_PER_DAY"
-        >
-          You may only transfer once per day
-        </p>
-        <p *ngIf="submitError">{{ submitError }}</p>
-      </div>
-    </div>
+<div class="m-walletModal m-walletModal--v2 m-walletOnchainTransfer">
+  <div class="m-walletModal__banner">
+    <div class="m-walletModal__bannerImage"></div>
+    <h2 i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSFER_ONCHAIN">
+      Transfer On-chain
+    </h2>
   </div>
-  <m-button
-    [disabled]="!isFormValid() || loading"
-    [saving]="transferring"
-    (onAction)="submitError ? load() : onSubmit()"
-    color="blue"
-  >
-    {{ submitError ? 'Reset' : 'Transfer' }}
-  </m-button>
-</form>
+  <div class="m-walletModal__content">
+    <!-- -------------------------------------- -->
+    <ng-container *ngIf="!meetsRequirements">
+      <div class="m-walletSecondaryText--desc">
+        <p
+          class="m-walletPrimaryText--16"
+          i18n="@@WALLETV2_ONCHAIN_TRANSFER__REQUIREMENTS"
+        >
+          Please complete the following before transferring MINDS tokens
+          on-chain.
+        </p>
+      </div>
+      <div class="m-walletOnchainTransfer__requirementsButtonsContainer">
+        <m-button
+          (onAction)="openPhoneVerificationModal()"
+          size="large"
+          [disabled]="phoneVerified"
+          [ngClass]="{
+            'm-walletOnchainTransfer__requirement--complete': phoneVerified
+          }"
+          ><i class="material-icons">call</i
+          ><span>Phone Verification</span></m-button
+        >
+        <m-button
+          (onAction)="openPlusSubscriptionModal()"
+          size="large"
+          [disabled]="isPlus"
+          [ngClass]="{
+            'm-walletOnchainTransfer__requirement--complete': isPlus
+          }"
+          ><i class="material-icons">add_to_queue</i
+          ><span>Upgrade to Minds+</span></m-button
+        >
+      </div>
+    </ng-container>
+    <!-- -------------------------------------- -->
+    <ng-container *ngIf="meetsRequirements">
+      <div
+        *ngIf="!form"
+        class="m-wallet__spinner m-wallet__spinner--tokenSettings"
+      >
+        <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      </div>
+      <form
+        *ngIf="form"
+        [formGroup]="form"
+        class="m-walletButtonLayout--buttonInline"
+      >
+        <div class="m-walletForm__fieldsContainer">
+          <div class="m-walletForm__field--text stretchedField">
+            <div class="m-walletForm__row--label">
+              <label for="amount" i18n="@@COMMON__AMOUNT">Amount</label>
+              <div class="m-walletOnchainTransfer__balanceWrapper">
+                <span i18n="@@WALLETV2_ONCHAIN_TRANSFER__BALANCE">Balance</span
+                >:
+                <span class="m-walletOnchainTransfer__balance">{{
+                  balance | number
+                }}</span
+                ><span>MINDS</span>
+              </div>
+            </div>
+            <div
+              class="m-walletForm__row--input"
+              [ngClass]="{
+                invalid: !isFormValid() || submitError
+              }"
+            >
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                formControlName="amount"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="m-walletForm__row--validation">
+              <ng-container *ngIf="!submitError && canTransfer">
+                <p
+                  *ngIf="amount.errors?.required"
+                  i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSFER_AMOUNT_REQUIRED"
+                >
+                  Transfer amount required
+                </p>
+                <p
+                  *ngIf="
+                    amount.errors?.moreThanZero && !amount.errors?.required
+                  "
+                  i18n="@@WALLETV2_ONCHAIN_TRANSFER__TRANSFER_MUST_BE_GREATER"
+                >
+                  Transfer amount must be greater than zero
+                </p>
+                <p *ngIf="amount.errors?.max">
+                  <ng-container
+                    *ngIf="balanceIsLimit"
+                    i18n="@@WALLETV2_ONCHAIN_TRANSFER__NOT_ENOUGH_FUNDS"
+                  >
+                    You don't have enough tokens to make this
+                    transfer</ng-container
+                  >
+                  <ng-container
+                    *ngIf="!balanceIsLimit"
+                    i18n="@@WALLETV2_ONCHAIN_TRANSFER__LIMIT_EXCEEDED"
+                    >Transfer amount exceeds the daily limit</ng-container
+                  >
+                </p>
+              </ng-container>
+              <p
+                *ngIf="!canTransfer"
+                i18n="@@WALLETV2_ONCHAIN_TRANSFER__ONLY_ONCE_PER_DAY"
+              >
+                You may only transfer once per day
+              </p>
+              <p *ngIf="submitError">{{ submitError }}</p>
+            </div>
+          </div>
+        </div>
+        <m-button
+          class="m-walletOnchainTransfer__transferButton"
+          [disabled]="!isFormValid() || loading"
+          [saving]="transferring"
+          (onAction)="submitError ? load() : onSubmit()"
+          color="blue"
+        >
+          {{ submitError ? 'Reset' : 'Transfer' }}
+        </m-button>
+      </form>
+      <div class="m-walletSecondaryText--desc">
+        <p
+          class="m-walletSecondaryText"
+          i18n="@@WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_REQUEST_UP_TO_25000"
+        >
+          You can request to transfer up to 25,000 tokens from your rewards to
+          your on-chain wallet. You may only transfer once per day.
+        </p>
+        <p
+          class="m-walletSecondaryText"
+          i18n="@@WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE"
+        >
+          Note: a small amount of ETH will be charged to cover the transaction
+          fee. Transfers go through an approval process and may take up to 72
+          hours to complete.
+        </p>
+      </div>
+    </ng-container>
+  </div>
+</div>
