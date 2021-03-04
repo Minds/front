@@ -1,0 +1,96 @@
+@import 'defaults.scss';
+
+$collapse-width: 830px;
+
+:host {
+  .m-boostModalTabs__container {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 40px 40px 20px 40px;
+
+    @media screen and (max-width: $max-mobile) {
+      margin: 40px 20px 20px 20px;
+    }
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-boostModalTabs__tabContainer {
+      font-size: 17px;
+      font-weight: 500;
+      margin-right: 20px;
+      padding-bottom: 5px;
+      cursor: pointer;
+
+      &.m-boostModalTabs__tabContainer--active {
+        @include m-theme() {
+          border-bottom: 3px solid themed($m-blue);
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-boostModal__mainPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 40px 40px 20px 40px;
+
+    @media screen and (max-width: $max-mobile) {
+      margin: 40px 20px 20px 20px;
+    }
+
+    @media screen and (max-width: $collapse-width) {
+      flex-flow: column-reverse;
+    }
+
+    .m-boostModal__mainPanelInputContainer {
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (min-width: $collapse-width) {
+        width: 504px;
+      }
+
+      .m-boostModal__mainPanelInput + * {
+        margin-top: 30px;
+        display: block;
+      }
+    }
+
+    .m-boostModal__contentDescriptionContainer {
+      width: 250px;
+
+      @media screen and (max-width: $collapse-width) {
+        width: 100%;
+      }
+
+      .m-boostModal__mainPanelDescription {
+        @media screen and (max-width: $collapse-width) {
+          margin-bottom: 40px;
+        }
+
+        .m-boostModal__channelPreview {
+          margin-bottom: 20px;
+          display: block;
+        }
+      }
+
+      .m-boostModal__tabTitle {
+        font-size: 18px;
+        margin-top: unset;
+        margin-bottom: 10px;
+        font-weight: 700;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        @media screen and (max-width: $collapse-width) {
+          display: none;
+        }
+      }
+    }
+  }
+}

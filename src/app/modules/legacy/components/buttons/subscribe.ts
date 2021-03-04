@@ -28,6 +28,8 @@ export class SubscribeButton {
   @Input()
   iconsOnly: boolean = false;
 
+  @Input() preventSubscription: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -43,6 +45,11 @@ export class SubscribeButton {
   async subscribe(e): Promise<void> {
     e.preventDefault();
     e.stopPropagation();
+
+    if (this.preventSubscription) {
+      this.toasterService.warn('Unable to subscribe from here.');
+      return;
+    }
 
     if (!this.session.isLoggedIn()) {
       await this.authModal.open();
