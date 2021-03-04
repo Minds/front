@@ -36,7 +36,7 @@
       font-size: 30;
       margin: 0;
       @include m-theme() {
-        color: themed($m-textColor--primary);
+        color: themed($m-white-always);
       }
       @media screen and (max-width: $min-tablet) {
         padding-left: 30px;
