@@ -79,7 +79,9 @@ export class DiscoveryFeedsService {
       .setParams(params)
       .fetch();
 
-    this.pollForNewPosts(algorithm, endpoint, params);
+    if (algorithm === 'latest') {
+      this.pollForNewPosts(algorithm, endpoint, params);
+    }
   }
 
   async search(q: string): Promise<void> {
