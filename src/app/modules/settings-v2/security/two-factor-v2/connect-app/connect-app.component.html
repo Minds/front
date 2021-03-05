@@ -1,0 +1,45 @@
+<h4 class="m-twoFactor__connectAppHeader">1. Recovery codes</h4>
+<span class="m-twoFactor__connectAppSubheader"
+  >Scan the image above with the two-factor authentication app on your phone. If
+  you can’t use a QR code, enter this text code instead.</span
+>
+<span class="m-twoFactor__connectAppSubheader"
+  >We recommend using FreeOTP. However you may use other TOTP applications such
+  as Google Authenticator if you must :)</span
+>
+<div class="m-twoFactor__connectAppContainer">
+  <div class="m-twoFactor__connectAppTopContainer">
+    <div class="m-twoFactor__connectAppQRContainer">
+      <m-qr-code [data]="recoveryCode$ | async"></m-qr-code>
+    </div>
+  </div>
+  <div class="m-twoFactor__connectAppInputContainer">
+    <span class="m-twoFactor__connectAppInputTitle"
+      >Enter the six-digit code from the application</span
+    >
+    <span class="m-twoFactor__connectAppInputSubtitle"
+      >After scanning the barcode image, the app will display a six-digit code
+      that you can enter below.</span
+    >
+    <input
+      class="m-twoFactor__connectAppInput"
+      type="text"
+      [ngModel]="code$ | async"
+      (ngModelChange)="codeValueChanged($event)"
+      placeholder="Enter code"
+    />
+  </div>
+</div>
+<div class="m-twoFactor__connectAppButtonContainer">
+  <!--AND BACK-->
+  <span class="m-twoFactor__connectAppBackButton" (click)="backButtonClick()"
+    >Back</span
+  >
+  <m-button
+    [color]="'blue'"
+    [disabled]="disabled$ | async"
+    (onAction)="enableButtonClick()"
+  >
+    <ng-container>Enable</ng-container>
+  </m-button>
+</div>

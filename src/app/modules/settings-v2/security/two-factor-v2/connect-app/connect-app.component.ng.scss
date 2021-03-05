@@ -1,0 +1,105 @@
+@import 'defaults.scss';
+
+:host {
+  .m-twoFactor__connectAppHeader {
+    font-size: 20px;
+    font-weight: 500;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-twoFactor__connectAppSubheader {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 400;
+    margin-bottom: 20px;
+    display: block;
+    margin-bottom: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-twoFactor__connectAppContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    border-radius: 2px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    .m-twoFactor__connectAppTopContainer {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      margin: 20px 0 20px 0;
+
+      .m-twoFactor__connectAppQRContainer {
+        padding: 10px;
+        width: 200px;
+        height: 200px;
+        border-radius: 2px;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
+
+    .m-twoFactor__connectAppInputContainer {
+      padding: 0 20px 20px;
+
+      .m-twoFactor__connectAppInputTitle {
+        font-weight: 500;
+        font-size: 16px;
+        display: block;
+        margin-bottom: 10px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-twoFactor__connectAppInputSubtitle {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 1.2;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-twoFactor__connectAppInput {
+        display: block;
+        width: 100%;
+        border-radius: 2px;
+        margin-top: 10px;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-twoFactor__connectAppButtonContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-top: 40px;
+
+    .m-twoFactor__connectAppBackButton {
+      font-size: 16px;
+      line-height: 1.125;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

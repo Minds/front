@@ -61,6 +61,11 @@ import { SettingsV2BoostedContentComponent } from './account/boosted-content/boo
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { SettingsTwoFactorComponent } from '../settings/two-factor/two-factor.component';
 import { SettingsReportedContentComponent } from '../settings/reported-content/reported-content.component';
+import { SettingsTwoFactorV2BaseComponent } from './security/two-factor-v2/two-factor-v2-base.component';
+import { SettingsTwoFactorPasswordComponent } from './security/two-factor-v2/confirm-password/comfirm-password.component';
+import { SettingsTwoFactorV2RootComponent } from './security/two-factor-v2/root/root.component';
+import { SettingsTwoFactorRecoveryCodeComponent } from './security/two-factor-v2/recovery-codes/recovery-codes.component';
+import { SettingsTwoFactorConnectAppComponent } from './security/two-factor-v2/connect-app/connect-app.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -493,7 +498,11 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
     SettingsV2BoostedContentComponent,
-
+    SettingsTwoFactorV2BaseComponent,
+    SettingsTwoFactorPasswordComponent,
+    SettingsTwoFactorV2RootComponent,
+    SettingsTwoFactorRecoveryCodeComponent,
+    SettingsTwoFactorConnectAppComponent,
     // These need moving to settings folder
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
