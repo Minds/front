@@ -62,7 +62,7 @@ export type UserSearchResponse = { status: string; entities: MindsUser[] };
         <img
           class="m-boostOfferTarget__matchesListAvatar"
           (click)="onAvatarClick($event, match.username)"
-          src="{{ cdnUrl }}fs/v1/avatars/{{ match.guid }}/small"
+          src="{{ cdnUrl }}icon/{{ match.guid }}/small/{{ match.icontime }}"
         />
         <span
           class="m-boostOfferTarget__matchesListText m-boostOfferTarget__matchesListText--primary"

@@ -113,6 +113,14 @@
     }
   }
 
+  td.m-walletTokenEarnings__liquiditySpotPrompt {
+    padding: 15px 20px !important;
+
+    .m-walletTokenEarningsLiquiditySpotPrompt__cta {
+      text-transform: initial;
+    }
+  }
+
   m-tooltip {
     vertical-align: middle;
   }

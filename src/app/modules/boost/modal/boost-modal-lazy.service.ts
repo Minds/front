@@ -19,19 +19,26 @@ export class BoostModalLazyService implements LazyLoadingService {
    */
   public async open(entity: BoostableEntity = {}): Promise<any> {
     const { BoostModalLazyModule } = await import('./boost-modal-lazy.module');
-    this.lazyModal
-      .setComponent(BoostModalComponent)
-      .setLazyModule(BoostModalLazyModule)
-      .setOpts({
-        wrapperClass: 'm-modalV2__wrapper',
-        entity: entity,
-        onSaveIntent: () => {
-          this.lazyModal.dismiss();
-        },
-        onDismissIntent: () => {
-          this.lazyModal.dismiss();
-        },
-      })
-      .open();
+    try {
+      await this.lazyModal
+        .setComponent(BoostModalComponent)
+        .setLazyModule(BoostModalLazyModule)
+        .setOpts({
+          wrapperClass: 'm-modalV2__wrapper',
+          entity: entity,
+          onSaveIntent: () => {
+            this.lazyModal.dismiss();
+          },
+          onDismissIntent: () => {
+            this.lazyModal.dismiss();
+          },
+        })
+        .open();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // do nothing
+      }
+      console.error(e);
+    }
   }
 }
