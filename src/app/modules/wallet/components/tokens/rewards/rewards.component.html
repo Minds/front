@@ -534,7 +534,7 @@
           </td>
         </tr>
 
-        <tr>
+        <!-- <tr>
           <td>
             <span>Tokens Earned</span>
             <m-tooltip icon="info">
@@ -548,7 +548,7 @@
               currency="tokens"
             ></m-wallet__currencyValue>
           </td>
-        </tr>
+        </tr> -->
 
         <tr>
           <td>
@@ -586,6 +586,22 @@
               "
             ></ng-container>
           </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="4" class="m-walletTokenEarnings__liquiditySpotPrompt">
+          <a
+            routerLink="/settings/account/boosted-content"
+            class="m-walletTokenEarningsLiquiditySpotPrompt__cta"
+          >
+            <ng-container *ngIf="isOptedOutOfLiquiditySpot; else optOutLink"
+              >Opt-out of showing in liquidity spot</ng-container
+            >
+            <ng-template #optOutLink
+              >Opt-in to showing in liquidity spot</ng-template
+            >
+          </a>
         </td>
       </tr>
     </tbody>
