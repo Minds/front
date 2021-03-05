@@ -89,7 +89,7 @@
           <ng-container *ngSwitchCase="'offer'">
             <p i18n="@@BOOST_MODAL__">
               Your content will be shared to a specific channel in exchange for
-              USD or tokens.
+              tokens.
             </p>
             <p>
               The target channel can either accept or reject your boost request.
@@ -104,11 +104,12 @@
           i18n="@@BOOST_MODAL__PLACED_IN_SIDEBAR"
           >Placement: Newsfeed Sidebar</span
         >
-        <minds-card
-          [object]="getLoggedInUser()"
-          class="mdl-card m-border"
-          [forceShowSubscribe]="true"
-        ></minds-card>
+        <m-channelCard
+          [channel]="getLoggedInUser()"
+          [showDescription]="false"
+          [showSubs]="false"
+          [disableSubscribe]="true"
+        ></m-channelCard>
       </div>
 
       <span *ngSwitchCaseDefault i18n="@@BOOST_MODAL__BOOST_YOUR_CONTENT"
