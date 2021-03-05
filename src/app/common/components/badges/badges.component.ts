@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { ThemeService } from '../../services/theme.service';
+import { Subscription } from 'rxjs';
 
 export interface SocialProfileMeta {
   key: string;
@@ -29,11 +31,21 @@ export class ChannelBadgesComponent {
     'onchain_booster',
   ];
 
+  isDark: boolean = false;
+  themeSubscription: Subscription;
+
   constructor(
     public session: Session,
     private client: Client,
-    private router: Router
+    private router: Router,
+    protected themeService: ThemeService
   ) {}
+
+  ngOnInit(): void {
+    this.themeSubscription = this.themeService.isDark$.subscribe(
+      isDark => (this.isDark = isDark)
+    );
+  }
 
   shouldShowVerifiedBadge() {
     if (this.badges.indexOf('verified') === -1) {
@@ -97,5 +109,9 @@ export class ChannelBadgesComponent {
       this.user.onchain_booster * 1000 > Date.now() &&
       this.badges.indexOf('onchain_booster') > -1
     );
+  }
+
+  ngOnDestroy(): void {
+    this.themeSubscription.unsubscribe();
   }
 }
