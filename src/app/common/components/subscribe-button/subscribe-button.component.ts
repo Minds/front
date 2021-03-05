@@ -26,6 +26,9 @@ export class SubscribeButtonComponent {
 
   @Input() iconOnly: boolean = false;
 
+  // disable subscription - allows for a user to preview their own card.
+  @Input() disableSubscribe: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
