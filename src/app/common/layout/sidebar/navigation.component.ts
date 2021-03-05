@@ -170,7 +170,7 @@ export class SidebarNavigationComponent
 
   async openBoostModal() {
     this.toggle();
-    await this.boostModalService.open();
+    await this.boostModalService.open(this.session.getLoggedInUser());
   }
 
   async openComposeModal() {
