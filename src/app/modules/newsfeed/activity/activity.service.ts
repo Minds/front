@@ -48,6 +48,7 @@ export type ActivityEntity = {
   modal_source_url?: string;
   ephemeral?: boolean;
   nsfw: Array<number>;
+  nsfw_lock: Array<number>;
   paywall: boolean;
   impressions: number;
   boostToggle: boolean;

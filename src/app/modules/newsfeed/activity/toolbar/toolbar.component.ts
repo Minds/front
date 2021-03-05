@@ -9,6 +9,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -29,7 +30,8 @@ export class ActivityToolbarComponent {
     private overlayModalService: OverlayModalService,
     private stackableModal: StackableModalService,
     private boostModal: BoostModalLazyService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    private toast: FormToastService
   ) {}
 
   ngOnInit() {
@@ -63,6 +65,18 @@ export class ActivityToolbarComponent {
 
   async openBoostModal(e: MouseEvent): Promise<void> {
     try {
+      if (
+        this.entity?.ownerObj?.nsfw.length ||
+        this.entity?.ownerObj?.nsfw_lock.length
+      ) {
+        this.toast.error('You cannot boost from an NSFW channel.');
+        return;
+      }
+      if (this.entity?.nsfw.length || this.entity?.nsfw_lock.length) {
+        this.toast.error('You cannot boost NSFW content.');
+        return;
+      }
+
       if (this.features.has('boost-modal-v2')) {
         await this.boostModal.open(this.entity);
         return;
