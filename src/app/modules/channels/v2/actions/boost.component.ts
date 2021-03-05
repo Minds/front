@@ -28,8 +28,8 @@ export class ChannelActionsBoostComponent {
    */
   async onClick(e: MouseEvent): Promise<void> {
     if (
-      this.service.channel$.getValue()?.nsfw?.length ||
-      this.service.channel$.getValue()?.nsfw_lock?.length
+      this.service.channel$.getValue()?.nsfw.length ||
+      this.service.channel$.getValue()?.nsfw_lock.length
     ) {
       this.toast.error('You cannot boost an NSFW channel.');
       return;
