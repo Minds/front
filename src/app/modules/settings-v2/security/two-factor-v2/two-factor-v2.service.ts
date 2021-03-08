@@ -32,6 +32,18 @@ export type TwoFactorProtectionType = 'totp' | 'sms' | null;
  */
 @Injectable({ providedIn: 'root' })
 export class SettingsTwoFactorV2Service implements OnDestroy {
+  //TODO: UNSTUB
+  private readonly mockData =
+    'dff4d-e3b62 a7940-58cf9 bfbd7-757e5 93b14-c2e90 05233-724b1 0560f-87f28 3e539-9a4f3 ee6a2-4f6db 71e75-21909 bb1d9-9e5ca e2441-5142f a105d-7db8c 2486c-a7dfe 163cb-5b2f9 32332-09c32 1b378-454b1';
+
+  //TODO: UNSTUB
+  isEnabled$ = new BehaviorSubject<boolean>(false);
+
+  //TODO: UNSTUB
+  get enabled$(): Observable<boolean> {
+    return this.isEnabled$;
+  }
+
   protected subscriptions: Subscription[] = [];
 
   // Currently active panel.
@@ -49,22 +61,10 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
     boolean
   > = new BehaviorSubject<boolean>(false);
 
-  //TODO: UNSTUB
-  private readonly mockData =
-    'dff4d-e3b62 a7940-58cf9 bfbd7-757e5 93b14-c2e90 05233-724b1 0560f-87f28 3e539-9a4f3 ee6a2-4f6db 71e75-21909 bb1d9-9e5ca e2441-5142f a105d-7db8c 2486c-a7dfe 163cb-5b2f9 32332-09c32 1b378-454b1';
-
   // holds recovery code.
   public readonly recoveryCode$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >(this.mockData);
-
-  //TODO: UNSTUB
-  isEnabled$ = new BehaviorSubject<boolean>(false);
-
-  //TODO: UNSTUB
-  get enabled$(): Observable<boolean> {
-    return this.isEnabled$;
-  }
 
   constructor(private toast: FormToastService, router: Router) {
     this.subscriptions.push(

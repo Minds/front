@@ -23,6 +23,15 @@
     }
   }
 
+  .m-twoFactor__connectAppSubheader--link {
+    cursor: pointer;
+    text-decoration: underline;
+
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+
   .m-twoFactor__connectAppContainer {
     display: flex;
     flex-flow: column nowrap;

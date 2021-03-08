@@ -1,0 +1,30 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  .m-twoFactorSecret__title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 40px;
+    cursor: default;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-twoFactorSecret__code {
+    font-family: Courier, monospace;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

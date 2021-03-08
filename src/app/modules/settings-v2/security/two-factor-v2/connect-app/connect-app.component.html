@@ -5,7 +5,13 @@
   class="m-twoFactor__connectAppSubheader"
   i18n="@@2FA_CONNECT_APP__SUBHEADER"
   >Scan the image above with the two-factor authentication app on your phone. If
-  you can’t use a QR code, enter this text code instead.</span
+  you can’t use a QR code,
+  <span
+    (click)="onEnterTextCodeClick()"
+    class="m-twoFactor__connectAppSubheader--link"
+    >enter this text code</span
+  >
+  instead.</span
 >
 <span
   class="m-twoFactor__connectAppSubheader"

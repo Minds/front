@@ -67,6 +67,7 @@ import { SettingsTwoFactorV2RootComponent } from './security/two-factor-v2/root/
 import { SettingsTwoFactorRecoveryCodeComponent } from './security/two-factor-v2/recovery-codes/recovery-codes.component';
 import { SettingsTwoFactorConnectAppComponent } from './security/two-factor-v2/connect-app/connect-app.component';
 import { SettingsTwoFactorDisableComponent } from './security/two-factor-v2/confirm-disable/confirm-disable.component';
+import { SettingsTwoFactorCodePopupComponent } from './security/two-factor-v2/connect-app/code-popup/code-popup.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -505,6 +506,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsTwoFactorRecoveryCodeComponent,
     SettingsTwoFactorConnectAppComponent,
     SettingsTwoFactorDisableComponent,
+    SettingsTwoFactorCodePopupComponent,
     // These need moving to settings folder
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
