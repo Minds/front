@@ -6,9 +6,17 @@
   }
 
   i {
-    font-size: 32px;
+    font-size: 24px;
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+
+    transition: 0.15s color ease-out;
+
+    &:hover {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
   }
 }
