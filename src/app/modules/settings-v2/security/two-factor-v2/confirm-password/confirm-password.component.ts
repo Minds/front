@@ -102,7 +102,6 @@ export class SettingsTwoFactorPasswordComponent
             return;
           }
           this.password$.next(''); // clear password.
-          this.toast.error('Incorrect password. Please try again.');
         })
     );
   }

@@ -56,7 +56,9 @@ export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComp
       this.service.passwordConfirmed$.pipe(take(1)).subscribe(confirmed => {
         if (confirmed) {
           // TODO: Send code to server - let settings reload and display updated state.
-          this.service.activePanel$.next({ panel: 'root' });
+          this.service.reset();
+          // TODO: DEMO ONLY - REMOVE BELOW USE OBSERVABLE
+          this.service.isEnabled$.next(true);
           this.toast.success('Two-factor authentication enabled');
           return;
         }

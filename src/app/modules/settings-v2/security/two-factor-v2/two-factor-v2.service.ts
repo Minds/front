@@ -55,8 +55,11 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
   >(this.mockData);
 
   //TODO: UNSTUB
+  isEnabled$ = new BehaviorSubject<boolean>(false);
+
+  //TODO: UNSTUB
   get enabled$(): Observable<boolean> {
-    return of(true);
+    return this.isEnabled$;
   }
 
   constructor(private toast: FormToastService) {}
@@ -77,7 +80,8 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
 
   public disable2fa(): void {
     //TODO: Call disable mfa endpoint && CHECK LOCAL PASSWORDCONFIRMED
-
+    this.reset();
+    this.isEnabled$.next(false);
     this.toast.success('TODO: Disable MFA');
   }
 }
