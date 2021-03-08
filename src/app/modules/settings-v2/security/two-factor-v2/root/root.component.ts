@@ -22,10 +22,10 @@ export class SettingsTwoFactorV2RootComponent {
   }
 
   public onSMSClick(): void {
-    // this.service.activePanel$.next({
-    //   panel: "",
-    //   intent: "",
-    // });
+    this.service.activePanel$.next({
+      panel: 'sms',
+      // intent: "",
+    });
   }
 
   public onDisableIntegrationClick(): void {

@@ -12,7 +12,8 @@ export type TwoFactorSetupPanelName =
   | 'password'
   | 'recovery-code'
   | 'app-connect'
-  | 'disable';
+  | 'disable'
+  | 'sms';
 
 export type TwoFactorSetupIntent = 'view-recovery' | 'setup-app' | 'disable';
 

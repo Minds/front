@@ -118,7 +118,7 @@ export class SettingsTwoFactorPasswordComponent
     this.subscriptions.push(
       this.service.activePanel$.pipe(take(1)).subscribe(activePanel => {
         this.service.passwordConfirmed$.next(true);
-
+        this.password$.next('');
         switch (activePanel?.intent) {
           case 'view-recovery':
             //TODO: Show recovery panel
