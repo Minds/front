@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 
 export type TwoFactorSetupPanel = {
@@ -31,6 +32,8 @@ export type TwoFactorProtectionType = 'totp' | 'sms' | null;
  */
 @Injectable({ providedIn: 'root' })
 export class SettingsTwoFactorV2Service implements OnDestroy {
+  protected subscriptions: Subscription[] = [];
+
   // Currently active panel.
   public readonly activePanel$: BehaviorSubject<
     TwoFactorSetupPanel
@@ -63,7 +66,16 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
     return this.isEnabled$;
   }
 
-  constructor(private toast: FormToastService) {}
+  constructor(private toast: FormToastService, router: Router) {
+    this.subscriptions.push(
+      // reset state on router back - return user to root.
+      router.events.subscribe(val => {
+        if (val instanceof NavigationEnd) {
+          this.reset();
+        }
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     this.reset();
@@ -74,6 +86,10 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
    * @returns { void }
    */
   public reset(): void {
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+
     this.activePanel$.next(DEFAULT_TWO_FACTOR_START_PANEL);
     this.selectedProtectionType$.next(null);
     this.passwordConfirmed$.next(false);
