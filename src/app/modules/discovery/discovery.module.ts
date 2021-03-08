@@ -47,6 +47,9 @@ import { SuggestionsService } from '../suggestions/channel/channel-suggestions.s
             component: DiscoveryTrendsComponent,
             data: {
               title: 'Discovery / Overview',
+              ogImage: '/assets/og-images/discovery.png',
+              ogImageWidth: 400,
+              ogImageHeight: 76,
             },
           },
           {
