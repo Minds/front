@@ -18,7 +18,9 @@ export const routes = [
       title: 'Upgrade your social media experience',
       description:
         'Take your alternative social media to the next level and upgrade your Minds channel. Access exclusive content, build your own website, and make money for your work.',
-      ogImage: '/assets/marketing/upgrades-1.jpg',
+      ogImage: '/assets/og-images/upgrade.png',
+      ogImageWidth: 400,
+      ogImageHeight: 76,
     },
   },
 ];

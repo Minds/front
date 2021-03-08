@@ -60,8 +60,7 @@ export class HomepageV2Component implements OnInit {
         'An open source, community-owned social network dedicated to privacy, free speech, monetization and decentralization. Break free from big censorship, algorithms and surveillance and join the leading, unbiased alternative.'
       )
       .setCanonicalUrl('/')
-      .setOgUrl('/')
-      .setOgImage('/assets/logos/placeholder.jpg');
+      .setOgUrl('/');
 
     this.navigationService.setVisible(true);
     this.topbarService.toggleMarketingPages(true, false, false);

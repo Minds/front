@@ -9,6 +9,9 @@ const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
 export const MIN_METRIC_FOR_ROBOTS = 5;
 const DEFAULT_META_AUTHOR = 'Minds';
+const DEFAULT_OG_IMAGE = '/assets/og-images/default.png';
+const DEFAULT_OG_IMAGE_WIDTH = 400;
+const DEFAULT_OG_IMAGE_HEIGHT = 76;
 
 @Injectable()
 export class MetaService {
@@ -216,6 +219,8 @@ export class MetaService {
       description?: string;
       ogUrl?: string;
       ogImage?: string;
+      ogImageWidth?: number;
+      ogImageHeight?: number;
       robots?: string;
       canonicalUrl?: string;
       author?: string;
@@ -226,7 +231,17 @@ export class MetaService {
       .setDescription(data.description || DEFAULT_META_DESCRIPTION)
       .setOgType('website')
       .setOgUrl(data.ogUrl || this.location.path())
-      .setOgImage(data.ogImage || null, { width: 0, height: 0 })
+      .setOgImage(
+        data.ogImage || DEFAULT_OG_IMAGE,
+        data.ogImage
+          ? data.ogImageWidth && data.ogImageHeight
+            ? {
+                width: data.ogImageWidth,
+                height: data.ogImageHeight,
+              }
+            : null
+          : { width: DEFAULT_OG_IMAGE_WIDTH, height: DEFAULT_OG_IMAGE_HEIGHT }
+      )
       .setAuthor(data.author || DEFAULT_META_AUTHOR)
       .setOgAuthor(data.ogAuthor || DEFAULT_META_AUTHOR)
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
