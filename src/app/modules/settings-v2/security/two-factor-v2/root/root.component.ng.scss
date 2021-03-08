@@ -17,6 +17,20 @@
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
+
+      span {
+        border-radius: 3px;
+        font-weight: 700;
+        font-size: 14px;
+        margin-left: 10px;
+        padding: 5px 10px;
+        cursor: default;
+
+        @include m-theme() {
+          background-color: themed($m-textColor--secondary);
+          color: themed($m-bgColor--secondary);
+        }
+      }
     }
     .m-twoFactor__optionDescription {
       font-weight: 400;
@@ -27,7 +41,18 @@
         color: themed($m-textColor--secondary);
       }
     }
-    .m-twoFactor__optionButton {
+    .m-twoFactor__optionButtonContainer--dual {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+
+      ::ng-deep m-button {
+        @media screen and (max-width: $min-tablet) {
+          margin-bottom: 10px;
+        }
+      }
     }
+    // .m-twoFactor__optionButton {
+    // }
   }
 }

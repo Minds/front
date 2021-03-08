@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-twoFactorDisable__text {
+    margin-bottom: 40px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.2px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

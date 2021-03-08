@@ -16,7 +16,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
   selector: 'm-twoFactor__passwordConfirm',
   template: `
     <form class="m-twoFactor_passwordConfirmationForm" [formGroup]="form">
-      <label>Password</label>
+      <label i18n="@@2FA_PASSWORD_CONFIRM__PASSWORD">Password</label>
       <input
         type="password"
         name="password"
@@ -30,7 +30,9 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
         (onAction)="onConfirmClick()"
         [disabled]="disabled$ | async"
       >
-        <ng-container>Confirm</ng-container>
+        <ng-container i18n="@@2FA_PASSWORD_CONFIRM__CONFIRM"
+          >Confirm</ng-container
+        >
       </m-button>
     </form>
   `,
@@ -90,16 +92,16 @@ export class SettingsTwoFactorPasswordComponent
           }),
           catchError(e => {
             console.error(e);
-            this.toast.error('Sorry, an error has occurred. Please try again.');
+            this.toast.error('Incorrect password. Please try again.');
             return of(null);
           })
         )
         .subscribe(response => {
           if (response && response.status === 'success') {
-            this.service.activePanel$.next('recovery-code');
+            this.onSuccess();
             return;
           }
-          this.password$.next(''); // clear password
+          this.password$.next(''); // clear password.
           this.toast.error('Incorrect password. Please try again.');
         })
     );
@@ -111,5 +113,30 @@ export class SettingsTwoFactorPasswordComponent
    */
   public passwordValueChanged($event: string) {
     this.password$.next($event);
+  }
+
+  private onSuccess(): void {
+    this.subscriptions.push(
+      this.service.activePanel$.pipe(take(1)).subscribe(activePanel => {
+        this.service.passwordConfirmed$.next(true);
+
+        switch (activePanel?.intent) {
+          case 'view-recovery':
+            //TODO: Show recovery panel
+            this.service.activePanel$.next({
+              panel: 'recovery-code',
+              intent: 'view-recovery',
+            });
+            // this.toast.success("TODO: Recovery info");
+            break;
+          case 'setup-app':
+            this.service.activePanel$.next({ panel: 'recovery-code' });
+            break;
+          case 'disable':
+            this.service.activePanel$.next({ panel: 'disable' });
+            break;
+        }
+      })
+    );
   }
 }

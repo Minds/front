@@ -3,7 +3,10 @@ import { BehaviorSubject, fromEvent } from 'rxjs';
 import { take, throttleTime } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
+import {
+  SettingsTwoFactorV2Service,
+  TwoFactorSetupPanel,
+} from '../two-factor-v2.service';
 
 /**
  * Recovery code panel - this is to get the user to backup their seed.
@@ -11,43 +14,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
  */
 @Component({
   selector: 'm-twoFactor__recoveryCode',
-  template: `
-    <h4 class="m-twoFactor__recoveryCodeHeader">1. Recovery codes</h4>
-    <span class="m-twoFactor__recoveryCodeSubheader"
-      >Recovery codes are used to access your account in the event you cannot
-      receive two-factor authentication codes.</span
-    >
-    <div class="m-twoFactor__recoveryCodeContainer">
-      <div class="m-twoFactor__recoveryCodeInstructions">
-        Download, print, or copy your recovery codes before continuing
-        two-factor authentication setup below.
-      </div>
-      <div class="m-twoFactor__recoveryCodeBody" #recoveryCode>
-        {{ recoveryCode$ | async }}
-      </div>
-      <div class="m-twoFactor__recoveryCodeFooter">
-        <span class="m-twoFactor__recoveryCodeActionButton" #downloadButton
-          ><i class="material-icons">get_app</i> Download</span
-        >
-        <span class="m-twoFactor__recoveryCodeActionButton" #copyButton
-          ><i class="material-icons">content_copy</i> Copy</span
-        >
-        <p class="m-twoFactor__recoveryCodeFooterText">
-          Please make sure to store this information securely. If you lose it we
-          can not guarantee that you will regain access to your account.
-        </p>
-      </div>
-    </div>
-    <div class="m-twoFactor__recoveryCodeContinueButton">
-      <m-button
-        [color]="'blue'"
-        [disabled]="disabled$ | async"
-        (onAction)="continueButtonClick()"
-      >
-        <ng-container>Continue</ng-container>
-      </m-button>
-    </div>
-  `,
+  templateUrl: './recovery-codes.component.html',
   styleUrls: ['./recovery-codes.component.ng.scss'],
 })
 export class SettingsTwoFactorRecoveryCodeComponent
@@ -69,6 +36,14 @@ export class SettingsTwoFactorRecoveryCodeComponent
    */
   get recoveryCode$(): BehaviorSubject<string> {
     return this.service.recoveryCode$;
+  }
+
+  /**
+   * Get active panel from service.
+   * @returns { BehaviorSubject<TwoFactorSetupPanel> } active panel from service.
+   */
+  get activePanel$(): BehaviorSubject<TwoFactorSetupPanel> {
+    return this.service.activePanel$;
   }
 
   constructor(
@@ -105,7 +80,9 @@ export class SettingsTwoFactorRecoveryCodeComponent
    * @returns { void }
    */
   public continueButtonClick(): void {
-    this.service.activePanel$.next('app-connect');
+    this.service.activePanel$.next({
+      panel: 'app-connect',
+    });
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {
   SettingsTwoFactorV2Service,
@@ -13,7 +13,7 @@ import {
   templateUrl: './two-factor-v2-base.component.html',
   styleUrls: ['./two-factor-v2-base.component.ng.scss'],
 })
-export class SettingsTwoFactorV2BaseComponent implements OnInit {
+export class SettingsTwoFactorV2BaseComponent {
   constructor(private service: SettingsTwoFactorV2Service) {}
 
   // on browser back button, reset the service (so that it goes back to the root component fresh)
@@ -29,6 +29,4 @@ export class SettingsTwoFactorV2BaseComponent implements OnInit {
   get activePanel$(): BehaviorSubject<TwoFactorSetupPanel> {
     return this.service.activePanel$;
   }
-
-  ngOnInit() {}
 }

@@ -1,0 +1,66 @@
+<div class="m-twoFactor__optionContainer">
+  <h4 class="m-twoFactor__optionTitle">
+    <ng-container i18n="setup with app|@@MFA_SETTINGS_ROOT__APP"
+      >App</ng-container
+    >
+    <span *ngIf="enabled$ | async" i18n="is enabled@@MFA_SETTINGS_ROOT__ENABLED"
+      >Enabled</span
+    >
+  </h4>
+  <p i18n="@@MFA_SETTINGS_ROOT__USE_APP_WITH_PHONE">
+    Use an application on your phone to get a two-factor authentication code
+    when prompted.
+  </p>
+  <!-- Not Enabled! -->
+  <div
+    class="m-twoFactor__optionButtonContainer"
+    *ngIf="!(enabled$ | async); else enabled"
+  >
+    <m-button [color]="'blue'" (onAction)="onSetupAppClick()">
+      <ng-container i18n="@@MFA_SETTINGS_ROOT__SETUP_USING_AN_APP">
+        Setup using an app
+      </ng-container>
+    </m-button>
+  </div>
+  <!-- Is Enabled-->
+  <ng-template #enabled>
+    <div class="m-twoFactor__optionButtonContainer--dual">
+      <m-button
+        [color]="'grey'"
+        [size]="'small'"
+        (onAction)="onViewRecoveryClick()"
+      >
+        <ng-container i18n="@@MFA_SETTINGS_ROOT__VIEW_RECOVERY_CODES">
+          View recovery codes
+        </ng-container>
+      </m-button>
+      <m-button
+        [color]="'red'"
+        [size]="'small'"
+        (onAction)="onDisableIntegrationClick()"
+      >
+        <ng-container
+          i18n="disable 2fa|@@MFA_SETTINGS_ROOT__DISABLE_APP_INTERGRATION"
+        >
+          Disable app integration
+        </ng-container>
+      </m-button>
+    </div>
+  </ng-template>
+</div>
+
+<div class="m-twoFactor__optionContainer">
+  <h4 class="m-twoFactor__optionTitle" i18n="@@MFA_SETTINGS_ROOT__SMS">SMS</h4>
+  <p
+    class="m-twoFactor__optionDescription"
+    i18n="@@MFA_SETTINGS_ROOT__MINDS_WILL_SEND_SMS"
+  >
+    Minds will send you an SMS with a two-factor authentication code when
+    prompted.
+  </p>
+  <m-button class="m-twoFactor__optionButton" (onAction)="onSMSClick()">
+    <ng-container i18n="@@MFA_SETTINGS_ROOT__SETUP_USING_SMS">
+      Setup using SMS
+    </ng-container>
+  </m-button>
+</div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 
 /**
@@ -12,7 +14,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
   templateUrl: './connect-app.component.html',
   styleUrls: ['./connect-app.component.ng.scss'],
 })
-export class SettingsTwoFactorConnectAppComponent {
+export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComponent {
   /**
    * User entered code from auth app.
    */
@@ -38,15 +40,33 @@ export class SettingsTwoFactorConnectAppComponent {
     );
   }
 
-  constructor(private service: SettingsTwoFactorV2Service) {}
+  constructor(
+    private service: SettingsTwoFactorV2Service,
+    private toast: FormToastService
+  ) {
+    super();
+  }
 
   /**
    * Called on 'Enable' button click.
    * @returns { void }
    */
   public enableButtonClick(): void {
-    // TODO: Send code to server - let settings reload and display updated state.
-    this.service.activePanel$.next('root');
+    this.subscriptions.push(
+      this.service.passwordConfirmed$.pipe(take(1)).subscribe(confirmed => {
+        if (confirmed) {
+          // TODO: Send code to server - let settings reload and display updated state.
+          this.service.activePanel$.next({ panel: 'root' });
+          this.toast.success('Two-factor authentication enabled');
+          return;
+        }
+
+        this.service.activePanel$.next({
+          panel: 'password',
+          intent: 'setup-app',
+        });
+      })
+    );
   }
 
   /**
@@ -54,7 +74,7 @@ export class SettingsTwoFactorConnectAppComponent {
    * @returns { void }
    */
   public backButtonClick(): void {
-    this.service.activePanel$.next('recovery-code');
+    this.service.activePanel$.next({ panel: 'recovery-code' });
   }
 
   /**
