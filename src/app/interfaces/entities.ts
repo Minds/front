@@ -124,7 +124,7 @@ export interface MindsUser {
   };
   mode: ChannelMode;
   nsfw: Array<number>;
-  nsfw_lock: Array<number>;
+  nsfw_lock?: Array<number>;
   plus?: boolean;
   disable_autoplay_videos?: boolean;
   dob?: string;
