@@ -28,7 +28,7 @@ import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
       <m-button
         [color]="'blue'"
         (onAction)="onConfirmClick()"
-        [disabled]="disabled$ | async"
+        [saving]="inProgress$ | async"
       >
         <ng-container i18n="@@2FA_PASSWORD_CONFIRM__CONFIRM"
           >Confirm</ng-container
@@ -45,7 +45,14 @@ export class SettingsTwoFactorPasswordComponent
   public form: FormGroup;
 
   // password string from user
-  public password$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public readonly password$: BehaviorSubject<string> = new BehaviorSubject<
+    string
+  >('');
+
+  // is in progress
+  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   /**
    * Should progress be disabled?
@@ -79,6 +86,8 @@ export class SettingsTwoFactorPasswordComponent
    * @returns { void }
    */
   public onConfirmClick(): void {
+    this.inProgress$.next(true);
+
     this.subscriptions.push(
       this.password$
         .pipe(
@@ -91,12 +100,14 @@ export class SettingsTwoFactorPasswordComponent
             });
           }),
           catchError(e => {
+            this.inProgress$.next(false);
             console.error(e);
             this.toast.error('Incorrect password. Please try again.');
             return of(null);
           })
         )
         .subscribe(response => {
+          this.inProgress$.next(false);
           if (response && response.status === 'success') {
             this.onSuccess();
             return;
@@ -121,12 +132,10 @@ export class SettingsTwoFactorPasswordComponent
         this.password$.next('');
         switch (activePanel?.intent) {
           case 'view-recovery':
-            //TODO: Show recovery panel
             this.service.activePanel$.next({
               panel: 'recovery-code',
               intent: 'view-recovery',
             });
-            // this.toast.success("TODO: Recovery info");
             break;
           case 'setup-app':
             this.service.activePanel$.next({ panel: 'recovery-code' });

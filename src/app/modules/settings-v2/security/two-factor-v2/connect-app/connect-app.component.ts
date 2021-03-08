@@ -100,7 +100,9 @@ export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComp
     this.subscriptions.push(
       this.recoveryCode$.pipe(take(1)).subscribe(async (value: string) => {
         await this.stackableModal
-          .present(SettingsTwoFactorCodePopupComponent, null, { code: value })
+          .present(SettingsTwoFactorCodePopupComponent, null, {
+            code: value,
+          })
           .toPromise();
       })
     );

@@ -20,7 +20,7 @@ import {
       (onAction)="disable()"
       [disabled]="inProgress$ | async"
     >
-      <ng-container i18n="disable 2fa|@@2FA_PASSWORD__DISABLE_APP_INTERGRATION">
+      <ng-container i18n="disable 2fa|@@2FA_PASSWORD__DISABLE_APP_INTEGRATION">
         Disable app integration
       </ng-container>
     </m-button>

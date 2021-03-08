@@ -1,5 +1,7 @@
 @import 'defaults.scss';
 
+$modalWidth: 500px;
+
 :host {
   .m-twoFactor__connectAppHeader {
     font-size: 20px;
@@ -110,5 +112,13 @@
         color: themed($m-textColor--secondary);
       }
     }
+  }
+}
+
+::ng-deep .m-overlay-modal {
+  width: $modalWidth !important;
+
+  @media screen and (max-width: $modalWidth) {
+    width: 100% !important;
   }
 }
