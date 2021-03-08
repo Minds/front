@@ -185,7 +185,7 @@
             &:not(:read-only) {
               span {
                 @include m-theme() {
-                  border-color: themed($m-blue);
+                  border-color: themed($m-link);
                 }
               }
             }
@@ -503,7 +503,7 @@
     &:focus {
       &:not(:read-only) {
         @include m-theme() {
-          border-color: themed($m-blue);
+          border-color: themed($m-link);
         }
       }
     }
@@ -517,10 +517,12 @@
   select {
     font-size: 15px;
     line-height: 20px;
-    font-weight: 300;
+    font-weight: 400;
     width: 0;
     min-width: 0;
-    padding: 10px 20px;
+    padding: 10px 15px;
+
+    transition: border-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
     @include m-theme() {
       color: themed($m-textColor--primary) !important;
