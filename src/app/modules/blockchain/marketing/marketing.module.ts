@@ -27,7 +27,9 @@ const routes: Routes = [
         'Buy, Support, & Expand Your Audience with Social Media Cryptocurrency',
       description:
         'Buy Minds tokens to expand your reach, support your favorite channels, and unlock premium features on Minds.',
-      ogImage: '/assets/product-pages/token/token-1.jpg',
+      ogImage: '/assets/og-images/tokens.png',
+      ogImageWidth: 400,
+      ogImageHeight: 76,
       canonicalUrl: '/token',
     },
   },
@@ -41,7 +43,9 @@ const routes: Routes = [
     data: {
       title: 'Rewards',
       description: 'Earn tokens for your contributions to the network',
-      ogImage: '/assets/product-pages/rewards/rewards-1.jpg',
+      ogImage: '/assets/og-images/rewards.png',
+      ogImageWidth: 400,
+      ogImageHeight: 76,
     },
   },
 ];

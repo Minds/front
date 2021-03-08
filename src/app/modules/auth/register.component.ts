@@ -127,7 +127,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setPlaceholderMetaImage(): void {
-    this.metaService.setOgImage('/assets/logos/placeholder.jpg');
+    this.metaService.setOgImage('/assets/og-images/default.png');
   }
 
   registered() {

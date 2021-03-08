@@ -47,6 +47,9 @@ const routes: Routes = [
       title: 'YouTube Migration',
       description:
         'Link your accounts so that every new upload to YouTube also posts to Minds. Import your full video library to protect your content from unfair censorship and demonetization.',
+      ogImage: '/assets/og-images/youtube-migration.png',
+      ogImageWidth: 400,
+      ogImageHeight: 76,
     },
   },
 

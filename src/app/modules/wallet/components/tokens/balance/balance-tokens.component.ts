@@ -89,6 +89,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     protected onchainTransferModal: OnchainTransferModalService,
     private injector: Injector,
     protected connectWalletModalService: ConnectWalletModalService,
+    private phoneVerificationService: PhoneVerificationService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -179,6 +180,15 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
    * @param e
    */
   async connectWallet(e: MouseEvent): Promise<void> {
+    await this.phoneVerificationService.open();
+
+    if (!this.phoneVerificationService.phoneVerified$.getValue()) {
+      this.toasterService.error(
+        'You must verify your phone number before connecting your wallet'
+      );
+      return;
+    }
+
     await this.connectWalletModalService.open();
     this.isConnected = undefined;
     await this.walletService.loadOffchainAndReceiver();
