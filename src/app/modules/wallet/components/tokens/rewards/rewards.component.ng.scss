@@ -71,6 +71,38 @@
     }
   }
 
+  .m-walletTokenEarnings__supportingValues {
+    font-weight: 400;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-walletTokenEarnings__comparative {
+    ::ng-deep {
+      m-icon {
+        vertical-align: middle;
+        width: 24px;
+
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+      m-wallet__currencyValue {
+        font-weight: 400;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &.m-walletTokenEarnings__comparative--negative ::ng-deep m-icon {
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+    }
+  }
+
   .m-walletTokenEarnings__cta {
     font-size: 16px;
     font-weight: 500;
@@ -78,6 +110,14 @@
     cursor: pointer;
     @include m-theme() {
       color: themed($m-link);
+    }
+  }
+
+  td.m-walletTokenEarnings__liquiditySpotPrompt {
+    padding: 15px 20px !important;
+
+    .m-walletTokenEarningsLiquiditySpotPrompt__cta {
+      text-transform: initial;
     }
   }
 

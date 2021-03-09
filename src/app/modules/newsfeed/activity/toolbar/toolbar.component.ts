@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
+import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -25,7 +27,9 @@ export class ActivityToolbarComponent {
     public session: Session,
     private router: Router,
     private overlayModalService: OverlayModalService,
-    private stackableModal: StackableModalService
+    private stackableModal: StackableModalService,
+    private boostModal: BoostModalLazyService,
+    private features: FeaturesService
   ) {}
 
   ngOnInit() {
@@ -58,8 +62,17 @@ export class ActivityToolbarComponent {
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {
-    await this.stackableModal
-      .present(BoostCreatorComponent, this.entity)
-      .toPromise();
+    try {
+      if (this.features.has('boost-modal-v2')) {
+        await this.boostModal.open(this.entity);
+        return;
+      }
+
+      await this.stackableModal
+        .present(BoostCreatorComponent, this.entity)
+        .toPromise();
+    } catch (e) {
+      // do nothing.
+    }
   }
 }

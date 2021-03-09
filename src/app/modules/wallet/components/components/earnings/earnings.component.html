@@ -79,8 +79,8 @@
             <m-wallet__currencyValue
               [value]="
                 currencyType === 'tokens'
-                  ? (earningsGroup.amount_tokens | token)
-                  : earningsGroup.amount_usd
+                  ? (item.amount_tokens | token)
+                  : item.amount_usd
               "
               [currency]="currencyType"
             ></m-wallet__currencyValue>

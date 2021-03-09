@@ -1,0 +1,120 @@
+<div class="m-boostModalTabs__container" *ngIf="showTabs$ | async">
+  <div
+    class="m-boostModalTabs__tabContainer"
+    (click)="nextTab('newsfeed')"
+    [class.m-boostModalTabs__tabContainer--active]="
+      (activeTab$ | async) === 'newsfeed'
+    "
+  >
+    <span class="m-boostModalTabs__tab" i18n="@@BOOST_MODAL__TABS__NEWSFEED">
+      Newsfeed
+    </span>
+  </div>
+  <div
+    class="m-boostModalTabs__tabContainer"
+    (click)="nextTab('offer')"
+    [class.m-boostModalTabs__tabContainer--active]="
+      (activeTab$ | async) === 'offer'
+    "
+    data-cy="data-minds-boost-modal-offers-tab"
+  >
+    <span class="m-boostModalTabs__tab" i18n="@@BOOST_MODAL__TABS__NEWSFEED">
+      Offer
+    </span>
+  </div>
+</div>
+
+<div class="m-boostModal__mainPanel">
+  <!-- Amount input - shown regardless of active tab -->
+  <div class="m-boostModal__mainPanelInputContainer">
+    <m-boostModal__amountInput
+      class="m-boostModal__mainPanelInput"
+    ></m-boostModal__amountInput>
+
+    <m-boostModal__offer-target-input
+      *ngIf="(activeTab$ | async) === 'offer'"
+      class="m-boostModal__mainPanelInput"
+    ></m-boostModal__offer-target-input>
+
+    <m-boostModal__paymentMethodSelector
+      class="m-boostModal__mainPanelInput"
+    ></m-boostModal__paymentMethodSelector>
+  </div>
+  <!-- Content description -->
+  <div class="m-boostModal__contentDescriptionContainer">
+    <!-- Exterior switch varying depending on whether this is a channel or newsfeed boost -->
+    <h1 class="m-boostModal__tabTitle" [ngSwitch]="entityType$ | async">
+      <ng-container *ngSwitchCase="'post'">
+        <!-- Interior switch varying depending on which tab is active -->
+        <ng-container [ngSwitch]="activeTab$ | async">
+          <ng-container
+            *ngSwitchCase="'newsfeed'"
+            i18n="@@BOOST_MODAL__NEWSFEED_BOOST"
+            >Newsfeed</ng-container
+          >
+          <ng-container
+            *ngSwitchCase="'offer'"
+            i18n="@@BOOST_MODAL__BOOST_OFFER"
+            >Offers</ng-container
+          >
+        </ng-container>
+      </ng-container>
+
+      <!-- Channel Boosts -->
+      <ng-container
+        i18n="@@BOOST_MODAL__CHANNEL_BOOST_PREVIEW"
+        *ngSwitchCase="'channel'"
+      >
+        Boost Preview
+      </ng-container>
+      <ng-container i18n="@@BOOST_MODAL__BOOST" *ngSwitchCaseDefault>
+        Boost
+      </ng-container>
+    </h1>
+
+    <!-- Exterior switch varying depending on whether this is a channel or newsfeed boost -->
+    <div
+      class="m-boostModal__mainPanelDescription"
+      [ngSwitch]="entityType$ | async"
+    >
+      <ng-container *ngSwitchCase="'post'">
+        <!-- Interior switch varying depending on which tab is active -->
+        <ng-container [ngSwitch]="activeTab$ | async">
+          <p
+            *ngSwitchCase="'newsfeed'"
+            i18n="@@BOOST_MODAL__CONTENT_WILL_APPEAR_ACROSS_SITE"
+          >
+            Your content will appear in on newsfeeds across the site.
+          </p>
+          <ng-container *ngSwitchCase="'offer'">
+            <p i18n="@@BOOST_MODAL__">
+              Your content will be shared to a specific channel in exchange for
+              tokens.
+            </p>
+            <p>
+              The target channel can either accept or reject your boost request.
+            </p>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <div *ngSwitchCase="'channel'">
+        <span
+          class="m-boostModal__channelPreview"
+          i18n="@@BOOST_MODAL__PLACED_IN_SIDEBAR"
+          >Placement: Newsfeed Sidebar</span
+        >
+        <m-channelCard
+          [channel]="getLoggedInUser()"
+          [showDescription]="false"
+          [showSubs]="false"
+          [disableSubscribe]="true"
+        ></m-channelCard>
+      </div>
+
+      <span *ngSwitchCaseDefault i18n="@@BOOST_MODAL__BOOST_YOUR_CONTENT"
+        >Boost your content</span
+      >
+    </div>
+  </div>
+</div>

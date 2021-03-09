@@ -842,7 +842,11 @@ export class ComposerService implements OnDestroy {
     const payload = this.payload;
 
     // Clean up attachment ONLY if the new entity GUID is different from the original source, if any
-    if (payload.entity_guid && !this.isOriginalEntity(payload.entity_guid)) {
+    if (
+      payload &&
+      payload.entity_guid &&
+      !this.isOriginalEntity(payload.entity_guid)
+    ) {
       this.attachment.prune(payload.entity_guid);
     }
 

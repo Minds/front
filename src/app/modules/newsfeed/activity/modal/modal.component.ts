@@ -365,9 +365,17 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
           providedCustomHeight,
           providedWidth,
           providedHeight;
-        if (this.entity.custom_data && this.entity.custom_data.dimensions) {
-          providedCustomWidth = this.entity.custom_data.dimensions.width;
-          providedCustomHeight = this.entity.custom_data.dimensions.height;
+        if (this.entity.custom_data) {
+          if (this.entity.custom_data.dimensions) {
+            providedCustomWidth = this.entity.custom_data.dimensions.width;
+            providedCustomHeight = this.entity.custom_data.dimensions.height;
+          }
+          if (this.entity.custom_data.width) {
+            providedCustomWidth = this.entity.custom_data.width;
+          }
+          if (this.entity.custom_data.height) {
+            providedCustomHeight = this.entity.custom_data.height;
+          }
         }
         if (this.entity.width) providedWidth = this.entity.width;
         if (this.entity.height) providedHeight = this.entity.height;

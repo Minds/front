@@ -1,0 +1,212 @@
+@import 'defaults.scss';
+
+:host {
+  .m-channelCard {
+    padding: 15px 20px 25px 20px;
+    border-radius: $m-borderRadius;
+    font-size: 16px;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    &.m-channelCard--featured {
+      @include m-theme() {
+        border: 1px solid themed($m-link);
+      }
+    }
+
+    > * {
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+    }
+    .m-channelCard__subs {
+      display: flex;
+
+      a {
+        text-decoration: none;
+        font-weight: 400;
+      }
+      span {
+        font-size: 15;
+        padding-right: 4px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        &.m-channelCardSubs__count {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+
+    .m-channelCard__tags {
+      span {
+        font-size: 16px;
+        display: inline-block;
+        margin-right: 5px;
+      }
+      ::ng-deep a {
+        font-weight: 400;
+        text-decoration: none;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-channelCard__desc {
+      p {
+        line-height: 19px;
+        font-size: 16px;
+        margin: 0;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-channelCard__ownerRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .minds-avatar {
+      min-width: 40px;
+      min-height: 40px;
+      margin: 0 15px 0 0 !important;
+
+      img {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    .m-channelCardOwnerRow__owner {
+      max-width: 100%;
+      width: calc(100% - 185px);
+
+      > div {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .m-channelCardOwnerRowItem__name,
+      .m-channelCardOwnerRowItem__username {
+        font-weight: 400;
+        text-decoration: none;
+        flex: auto 0 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .m-channelCardOwnerRowItem__name {
+        font-weight: 500;
+        line-height: 21px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+        .m-channel--badges-activity {
+          vertical-align: text-top;
+          .m-channel--badges i {
+            padding-right: 3px;
+          }
+        }
+      }
+      .m-channelCardOwnerRowItem__username {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+    ::ng-deep {
+      m-subscribeButton {
+        flex: auto 0 0;
+      }
+    }
+  }
+
+  .m-channelCard--medium {
+    padding: 15px;
+
+    .m-channelCardOwnerRow__owner {
+      width: calc(100% - 100px);
+    }
+  }
+  .m-channelCard--small {
+    padding: 20px;
+
+    .m-channelCard__ownerRow {
+      flex-direction: column;
+
+      .m-channelCardOwnerRow__owner {
+        width: 100%;
+      }
+
+      .minds-avatar {
+        margin: 0 0 10px 0 !important;
+
+        min-width: 48px;
+        min-height: 48px;
+
+        img {
+          width: 46px;
+          height: 46px;
+        }
+      }
+
+      .m-channelCardOwnerRow__owner {
+        > div {
+          justify-content: center;
+          > a {
+            display: inline-block;
+          }
+        }
+      }
+
+      ::ng-deep {
+        m-subscribeButton {
+          margin: 15px 0 5px;
+        }
+      }
+    }
+    ::ng-deep {
+      m-button {
+        button {
+          margin-left: 0px;
+        }
+      }
+    }
+    .m-channelCard__subs {
+      justify-content: center;
+    }
+  }
+
+  ::ng-deep {
+    m-button {
+      margin-right: 0 !important;
+      button {
+        margin-left: 10px;
+      }
+    }
+
+    .m-readMoreButton--v2.showOnlyFadeout {
+      height: 0;
+
+      @include m-theme() {
+        background: linear-gradient(
+          to bottom,
+          rgba(themed($m-bgColor--primary), 0) 0%,
+          rgba(themed($m-bgColor--primary), 0.4) 40%,
+          rgba(themed($m-bgColor--primary), 1) 90%
+        );
+      }
+      > span {
+        display: none;
+      }
+    }
+  }
+}

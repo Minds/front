@@ -10,6 +10,7 @@ import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service
 import { map } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
+import { Session } from '../../../../../services/session';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -91,7 +92,8 @@ export class WalletTokenRewardsComponent implements OnInit {
     private earnModalService: EarnModalService,
     protected injector: Injector,
     protected onchainTransferModal: OnchainTransferModalService,
-    private walletService: WalletV2Service
+    private walletService: WalletV2Service,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -145,7 +147,7 @@ export class WalletTokenRewardsComponent implements OnInit {
    */
   get friendlyDate(): string {
     const d = new Date(this.getDate());
-    const m = moment(d.getTime());
+    const m = moment(this.getDate(), 'YYYY-MM-DD');
     return m.calendar(null, {
       sameDay: '[Today]',
       nextDay: '[Tomorrow]',
@@ -190,5 +192,12 @@ export class WalletTokenRewardsComponent implements OnInit {
    */
   onProvideLiquidityClick(e: MouseEvent) {
     this.uniswapModalService.open('add');
+  }
+
+  /**
+   * True if opted out of the liquidity spot
+   */
+  isOptedOutOfLiquiditySpot(): boolean {
+    return this.session.getLoggedInUser()?.liquidity_spot_opt_out;
   }
 }

@@ -66,7 +66,7 @@
     em {
       font-style: inherit;
       text-decoration: inherit;
-      white-space: nowrap;
+      white-space: break-spaces;
       position: relative;
 
       &::after {
@@ -155,6 +155,32 @@
 
       @include m-theme() {
         color: themed($m-grey-800);
+      }
+    }
+
+    ol {
+      padding: 0;
+      margin: 10px 0 30px 0px;
+
+      // strip list style away
+      list-style: none;
+      counter-reset: item;
+
+      li {
+        // replace list style with incrementing counter
+        counter-increment: item;
+        font-size: 17px;
+        font-weight: 400;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        // theme counter
+        &:before {
+          margin-right: 10px;
+          content: counter(item) '.';
+        }
       }
     }
 
@@ -287,6 +313,36 @@
 
       @include m-theme() {
         color: themed($m-grey-300);
+      }
+    }
+  }
+
+  .m-marketing__imageContainer {
+    // max height of wrapper is less than image so that page is not stretched.
+    max-height: 600px;
+    @media screen and (max-width: $m-grid-min-vp) {
+      transform: translateX(-50px);
+    }
+    @media screen and (max-width: $m-grid-max-mobile) {
+      transform: unset;
+    }
+    span {
+      // move background patterns in accordance with new position on desktop.
+      &::before {
+        @media screen and (min-width: $m-grid-min-vp) {
+          transform: translate(-45px, -200px) !important;
+        }
+      }
+
+      .m-marketing__image--tall {
+        @media screen and (min-width: $m-grid-min-vp) {
+          // push image up above parent container padding so that it "pops out".
+          transform: translate(-100px, -100px);
+
+          // force larger image dimensions.
+          height: 800px !important;
+          width: 600px !important;
+        }
       }
     }
   }

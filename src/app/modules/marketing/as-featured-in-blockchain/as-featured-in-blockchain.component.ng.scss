@@ -1,0 +1,65 @@
+@import 'defaults.scss';
+
+:host {
+  position: relative;
+
+  .m-marketing__asFeaturedIn {
+    min-width: 320px;
+    max-width: 1084px;
+    margin: 45px auto 80px;
+
+    .m-marketing__asFeaturedIn--noMargin & {
+      margin-bottom: 0;
+    }
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      &.m-grid {
+        display: block;
+        margin-bottom: 45px;
+      }
+
+      margin: 20px 0 50px;
+      padding: 0 12px;
+    }
+
+    .m-marketingAsFeaturedIn__title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @include m-theme() {
+        color: themed($m-grey-400);
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        text-align: center;
+        margin: 0 0 20px;
+      }
+    }
+
+    ul {
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: space-around;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      img {
+        &.m-markertingAsFeaturedIn__brandLogo--wide {
+          // height: 100px;
+          width: 100px;
+        }
+        &.m-markertingAsFeaturedIn__brandLogo--square {
+          width: 55px;
+          height: 55px;
+        }
+        @media screen and (max-width: $m-grid-min-vp) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

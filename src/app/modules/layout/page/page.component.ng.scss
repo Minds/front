@@ -5,6 +5,8 @@
     ::ng-deep {
       m-modal {
         @include z-index(modal--stackable);
+        display: block;
+        position: unset;
       }
     }
   }

@@ -78,6 +78,9 @@ const SETTINGS_V2_ROUTES: Routes = [
           isMenu: true,
           title: 'Account Settings',
           description: 'Configure your general account settings.',
+          ogImage: '/assets/og-images/settings.png',
+          ogImageWidth: 400,
+          ogImageHeight: 76,
         },
         children: [
           {

@@ -8,7 +8,8 @@
   }
 
   .m-liquiditySpot__disclaimer {
-    padding: 5px;
+    padding: 10px 5px;
+    cursor: pointer;
     * {
       vertical-align: middle;
     }
@@ -16,7 +17,7 @@
       i {
         font-size: 20px;
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-blue);
         }
       }
       .m-tooltip--bubble {
@@ -26,9 +27,9 @@
     > span {
       margin-left: 10px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 500;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-blue);
       }
     }
   }

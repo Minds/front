@@ -18,4 +18,11 @@ export class MindsWalletTokenPriceBadgeComponent {
   ) {
     this.cdnAssetsUrl = config.get('cdn_assets_url');
   }
+
+  get uniswapTokenUrl(): string {
+    return (
+      'https://info.uniswap.org/token/' +
+      this.config.get('blockchain').token.address
+    );
+  }
 }

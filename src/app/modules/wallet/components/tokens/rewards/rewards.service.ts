@@ -33,12 +33,14 @@ export class WalletTokenRewardsService {
         .pipe(
           map(response => {
             const metrics: ContributionMetric[] = [];
-            Object.keys(response.contributions[0].metrics).forEach(key => {
-              const metric = response.contributions[0].metrics[key];
-              metric.id = key;
-              metric.label = metric.metric; // MH: being lazy here - reward-popup.component.ts has the label breakdown
-              metrics.push(metric);
-            });
+            if (response.contributions.length > 0) {
+              Object.keys(response.contributions[0]?.metrics).forEach(key => {
+                const metric = response.contributions[0].metrics[key];
+                metric.id = key;
+                metric.label = metric.metric; // MH: being lazy here - reward-popup.component.ts has the label breakdown
+                metrics.push(metric);
+              });
+            }
             return metrics;
           })
         );
