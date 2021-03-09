@@ -46,27 +46,50 @@
     }
   }
 
+  .m-walletTokenEarnings__multiplier,
   .m-walletTokenEarnings__multiplierBarWrapper {
     display: inline-flex;
     align-items: center;
+  }
 
-    .m-walletTokenEarnings__multiplierBar {
-      margin-left: 20px;
-    }
+  .m-walletTokenEarnings__multiplier {
+    background-color: #444c55;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .m-walletTokenEarnings__multiplierBarWrapper,
+  .m-walletTokenEarningsMultiplier__secondary {
+    padding: 10px;
   }
 
   .m-walletTokenEarnings__multiplierBar {
-    width: 120px;
+    width: 90px;
     height: 15px;
     border-radius: 2px;
+    margin: 0 10px;
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }
 
     .m-walletTokenEarningsMultiplierBar__progress {
       height: 100%;
+      background-color: #a3c000;
+      // @include m-theme() {
+      //   background-color: themed($m-blue);
+      // }
+    }
+  }
+
+  .m-walletTokenEarningsMultiplier__secondary {
+    background-color: #555d67;
+    border-radius: 0 6px 6px 0;
+
+    > span:nth-of-type(2) {
       @include m-theme() {
-        background-color: themed($m-blue);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -75,6 +98,12 @@
     font-weight: 400;
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-walletTokenEarnings__multiplier ::ng-deep m-tooltip {
+    .m-tooltip--bubble {
+      width: 200px;
     }
   }
 
