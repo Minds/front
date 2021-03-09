@@ -22,17 +22,27 @@
     justify-content: stretch;
     margin-right: 50px;
 
+    @media screen and (max-width: $min-tablet) {
+      margin-right: 30px;
+    }
+
     &:last-child {
       margin-right: 0;
+    }
+
+    &.m-proSubscriptionPlan__toggle--hidden {
+      visibility: hidden;
     }
   }
 
   .m-proSubscriptionPlan__pricing {
     margin-bottom: 24px;
+    min-height: 55px;
 
     @media screen and (max-width: $min-tablet) {
       margin-bottom: 40px;
       text-align: center;
+      min-height: 75px;
     }
 
     .m-proSubscriptionPlanPricing__amount {
@@ -42,7 +52,7 @@
       line-height: 24px;
 
       @include m-theme() {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--secondary);
       }
 
       @media screen and (max-width: $min-tablet) {
@@ -53,7 +63,7 @@
         font-size: 24px;
 
         @include m-theme() {
-          color: themed($m-black);
+          color: themed($m-textColor--primary);
         }
       }
     }
@@ -73,16 +83,45 @@
         margin-left: 0;
       }
     }
+
+    .m-proSubscriptionPlanPricing__intervalDesc {
+      font-size: 16px;
+      line-height: 21px;
+      margin-top: 8px;
+      min-width: 170px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
   }
 
   .m-proSubscription__buttonsContainer {
     margin-bottom: 50px;
+    display: flex;
+
+    @media screen and (max-width: $min-tablet) {
+      align-items: center;
+      flex-direction: column;
+      ::ng-deep m-button {
+        margin-right: 0 !important;
+        margin-bottom: 10px !important;
+      }
+    }
   }
 
   .m-proSubscription__button {
     display: flex;
     align-items: center;
 
+    m-button {
+      margin-right: 0;
+    }
+
+    &:first-child {
+      m-button {
+        margin-right: 15px;
+      }
+    }
     @media screen and (max-width: $min-tablet) {
       flex-direction: column;
 
@@ -94,10 +133,6 @@
         margin-top: 20px;
         max-width: none;
       }
-    }
-
-    button {
-      margin-right: 20px;
     }
   }
   .m-proSubscriptionButton__notice {
@@ -120,6 +155,6 @@
 
   .m-button {
     margin-bottom: $minds-margin;
-    margin-right: $minds-margin;
+    margin-right: 15px;
   }
 }
