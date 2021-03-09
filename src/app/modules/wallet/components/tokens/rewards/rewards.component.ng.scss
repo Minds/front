@@ -53,9 +53,12 @@
   }
 
   .m-walletTokenEarnings__multiplier {
-    background-color: #444c55;
     border-radius: 6px;
-    color: #fff;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      color: themed($m-textColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
     font-weight: 500;
     font-size: 14px;
   }
@@ -71,7 +74,7 @@
     border-radius: 2px;
     margin: 0 10px;
     @include m-theme() {
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--secondary);
     }
 
     .m-walletTokenEarningsMultiplierBar__progress {
@@ -84,7 +87,9 @@
   }
 
   .m-walletTokenEarningsMultiplier__secondary {
-    background-color: #555d67;
+    @include m-theme() {
+      border-left: 1px solid themed($m-borderColor--primary);
+    }
     border-radius: 0 6px 6px 0;
 
     > span:nth-of-type(2) {
