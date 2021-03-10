@@ -1,0 +1,32 @@
+<span class="m-mfaAuth__subheader"
+  >Minds just sent a 6-digit authentication code to your registered phone
+  number.</span
+>
+
+<div class="m-mfaAuth__formContainer">
+  <label class="m-mfaAuth__inputLabel">Authentication code</label>
+  <input
+    [ngModel]="code$ | async"
+    (ngModelChange)="onCodeChange($event)"
+    class="m-mfaAuth__codeInput"
+    type="text"
+    placeholder="6 digit code"
+    max="999999"
+  />
+</div>
+
+<m-button
+  class="m-mfaAuth__verifyButton"
+  [color]="'blue'"
+  [disabled]="disabled$ | async"
+  [saving]="inProgress$ | async"
+  (onAction)="onVerifyClick()"
+>
+  <ng-container>Verify</ng-container>
+</m-button>
+
+<div class="m-mfaAuth__footerContainer">
+  <a class="m-mfaAuth__footerLink" (click)="onNotReceivedClick()"
+    >Did not receive authentication code</a
+  >
+</div>

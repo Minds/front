@@ -1,0 +1,37 @@
+<span class="m-mfaAuth__subheader"
+  >Open the two-factor authentication app on your device to view your
+  authentication code and verify your identity.</span
+>
+
+<div class="m-mfaAuth__formContainer">
+  <label class="m-mfaAuth__inputLabel">Authentication code</label>
+  <input
+    [ngModel]="code$ | async"
+    (ngModelChange)="onCodeChange($event)"
+    class="m-mfaAuth__codeInput"
+    type="text"
+    placeholder="6 digit code"
+    max="999999"
+  />
+</div>
+
+<m-button
+  class="m-mfaAuth__verifyButton"
+  [color]="'blue'"
+  [disabled]="disabled$ | async"
+  [saving]="inProgress$ | async"
+  (onAction)="onVerifyClick()"
+>
+  <ng-container>Verify</ng-container>
+</m-button>
+
+<div class="m-mfaAuth__footerContainer">
+  <span class="m-mfaAuth__footerTitle">Having problems?</span>
+  <a class="m-mfaAuth__footerLink" (click)="onRecoveryCodeClick()"
+    >Enter a two-factor recovery code?
+  </a>
+  <span class="m-mfaAuth__footerText"
+    >Please contact info@minds.com if you can’t access your recovery
+    codes.</span
+  >
+</div>

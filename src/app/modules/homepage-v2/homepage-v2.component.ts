@@ -18,6 +18,7 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
+import { MultiFactorLazyService } from '../auth/modal/multi-factor-auth/multi-factor-auth-lazy.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -31,6 +32,12 @@ export class HomepageV2Component implements OnInit {
   readonly headline = $localize`:@@HOMEPAGE_V2__TAKE_BACK_CONTROL:Take back control of your social media`;
   readonly description = $localize`:@@HOMEPAGE__V2__SUBHEADER:A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.`;
 
+  // TODO: REMOVE THIS, SERVICE BELOW AND TEMPLATE CHANGES - TESTING ONLY
+  test() {
+    // this.twoFactorModal.open('sms');
+    this.twoFactorModal.open('totp');
+  }
+
   constructor(
     public client: Client,
     public router: Router,
@@ -43,7 +50,8 @@ export class HomepageV2Component implements OnInit {
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private twoFactorModal: MultiFactorLazyService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
