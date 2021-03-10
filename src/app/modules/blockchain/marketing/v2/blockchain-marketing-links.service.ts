@@ -137,7 +137,7 @@ export class BlockchainMarketingLinksService {
    * @returns { BlockchainMarketingLinksService } - Chainable.
    */
   public navigateToTokenAnalytics(): BlockchainMarketingLinksService {
-    this.openInNewWindow('/analytics');
+    this.openInNewWindow('/analytics/dashboard/token/supply');
     return this;
   }
 
