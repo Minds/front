@@ -39,9 +39,9 @@ import { MarketingModule } from '../marketing/marketing.module';
           title: 'Content Policy',
           description:
             'The goal of Minds is to have fair, transparent and ethical moderation practices',
-          ogImage: '/assets/og-images/content-policy.png',
+          ogImage: '/assets/og-images/content-policy-v2.png',
           ogImageWidth: 400,
-          ogImageHeight: 76,
+          ogImageHeight: 400,
         },
       },
       {

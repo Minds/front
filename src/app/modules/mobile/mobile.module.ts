@@ -18,9 +18,9 @@ const routes: Routes = [
       title: 'Mobile App',
       description:
         'Download the Minds mobile app and use the leading alternative social media platform anywhere. Available on both iOS & Android.',
-      ogImage: '/assets/og-images/mobile.png',
+      ogImage: '/assets/og-images/mobile-v2.png',
       ogImageWidth: 400,
-      ogImageHeight: 76,
+      ogImageHeight: 400,
     },
   },
 ];
