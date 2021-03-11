@@ -7,8 +7,11 @@ import {
   ChangeDetectorRef,
   ElementRef,
 } from '@angular/core';
+import { take } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Session } from '../../../../../services/session';
+import { PhoneVerificationService } from '../../components/phone-verification/phone-verification.service';
 
 type TokenOnboardingStep = 'phone' | 'address';
 @Component({
@@ -16,7 +19,7 @@ type TokenOnboardingStep = 'phone' | 'address';
   templateUrl: './token-onboarding.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletTokenOnboardingComponent {
+export class WalletTokenOnboardingComponent extends AbstractSubscriberComponent {
   private _hasAddress: boolean;
   @Input() set hasAddress(value: boolean) {
     this._hasAddress = value;
@@ -49,7 +52,6 @@ export class WalletTokenOnboardingComponent {
     return this._dashboardView;
   }
 
-  showModal = false;
   activeStep: TokenOnboardingStep = 'phone';
   user;
 
@@ -59,13 +61,29 @@ export class WalletTokenOnboardingComponent {
   constructor(
     protected cd: ChangeDetectorRef,
     private toasterService: FormToastService,
+    private phoneVerificationService: PhoneVerificationService,
     protected session: Session
-  ) {}
+  ) {
+    super();
+  }
 
-  clickedPhoneStep() {
+  /**
+   * Fired on click to setup phone verification.
+   * @returns { Promise<void> }
+   */
+  public async clickedPhoneStep(): Promise<void> {
     if (!this.phoneVerified) {
-      this.activeStep = 'phone';
-      this.showModal = true;
+      const success = await this.phoneVerificationService.open();
+
+      this.subscriptions.push(
+        this.phoneVerificationService.phoneVerified$
+          .pipe(take(1))
+          .subscribe((verified: boolean) => {
+            if (verified) {
+              this.phoneVerificationComplete();
+            }
+          })
+      );
     }
     this.detectChanges();
   }
@@ -81,7 +99,7 @@ export class WalletTokenOnboardingComponent {
   phoneVerificationComplete() {
     this._phoneVerified = true;
     this.session.getLoggedInUser().rewards = true;
-    this.showModal = false;
+
     if (!this._hasAddress) {
       this.activeStep = 'address';
       this.detectChanges();
@@ -93,7 +111,7 @@ export class WalletTokenOnboardingComponent {
   addressSetupComplete() {
     this._hasAddress = true;
     this.session.getLoggedInUser().eth_wallet = true;
-    this.showModal = false;
+
     if (!this._phoneVerified) {
       this.activeStep = 'phone';
       this.detectChanges();
