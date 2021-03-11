@@ -30,7 +30,7 @@ export const DEFAULT_BALANCE = 0;
 /**
  * Subject of the boost, a channel or post.
  */
-export type BoostSubject = 'channel' | 'post' | '';
+export type BoostSubject = 'channel' | 'post' | 'blog' | '';
 
 /**
  * Selected tab, newsfeed or offer.
@@ -64,6 +64,7 @@ export type BoostWallet = {
 export type BoostableEntity = {
   guid?: string;
   type?: string;
+  subtype?: string;
   owner_guid?: string;
 };
 
@@ -207,6 +208,10 @@ export class BoostModalService implements OnDestroy {
   get entityType$(): Observable<BoostSubject> {
     return this.entity$.pipe(
       map(entity => {
+        if (entity.type === 'object' || entity.subtype === 'blog') {
+          return 'blog';
+        }
+
         if (entity.type === 'user') {
           return 'channel';
         }
@@ -504,9 +509,15 @@ export class BoostModalService implements OnDestroy {
       );
     }
 
+    let amount = tokens;
+    if (this.activeTab$.getValue() !== 'offer') {
+      const tokensFixRate = this.rate$.getValue() / 10000;
+      amount = Math.ceil(<number>tokens / tokensFixRate) / 10000;
+    }
+
     return {
       method: 'onchain',
-      txHash: await this.boostContract.create(guid, tokens * rate, checksum),
+      txHash: await this.boostContract.create(guid, amount, checksum),
       address: await this.web3Wallet.getCurrentWallet(true),
     };
   }

@@ -67,8 +67,11 @@
       >
         Boost Preview
       </ng-container>
-      <ng-container i18n="@@BOOST_MODAL__BOOST" *ngSwitchCaseDefault>
-        Boost
+      <ng-container
+        i18n="@@BOOST_MODAL__CHANNEL_BOOST_PREVIEW"
+        *ngSwitchCase="'blog'"
+      >
+        Boost Preview
       </ng-container>
     </h1>
 
@@ -110,6 +113,15 @@
           [showSubs]="false"
           [disableSubscribe]="true"
         ></m-channelCard>
+      </div>
+
+      <div *ngSwitchCase="'blog'">
+        <span
+          class="m-boostModal__channelPreview"
+          i18n="@@BOOST_MODAL__PLACED_IN_SIDEBAR"
+          >Placement: Newsfeed Sidebar</span
+        >
+        <minds-card [object]="entity$ | async" class="m-border"></minds-card>
       </div>
 
       <span *ngSwitchCaseDefault i18n="@@BOOST_MODAL__BOOST_YOUR_CONTENT"
