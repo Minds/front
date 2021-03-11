@@ -20,9 +20,9 @@ const routes: Routes = [
     data: {
       title: 'Branding',
       description: 'Logos, assets and styling guides',
-      ogImage: '/assets/og-images/branding.png',
+      ogImage: '/assets/og-images/branding-v2.png',
       ogImageWidth: 400,
-      ogImageHeight: 76,
+      ogImageHeight: 400,
     },
   },
 ];

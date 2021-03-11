@@ -20,9 +20,9 @@ const routes: Routes = [
     data: {
       title: 'Help Desk',
       description: 'Everything you need to know about Minds',
-      ogImage: '/assets/og-images/help.png',
+      ogImage: '/assets/og-images/help-v2.png',
       ogImageWidth: 400,
-      ogImageHeight: 76,
+      ogImageHeight: 400,
     },
   },
   {
