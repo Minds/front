@@ -62,7 +62,7 @@ export class MultiFactorAuthBaseComponent implements LazyComponent {
    */
   public getBannerSrc(): { backgroundImage: string } {
     return {
-      backgroundImage: `url('/assets/photos/banner2FA.jpg')`,
+      backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/banner2FA.jpg')`,
     };
   }
 }
