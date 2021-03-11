@@ -37,7 +37,7 @@ lint:
   image: cypress/browsers:node12.13.0-chrome80-ff74
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 6.2.0
+    CYPRESS_INSTALL_BINARY: 6.6.0
   script:
     - npm ci
     - >
