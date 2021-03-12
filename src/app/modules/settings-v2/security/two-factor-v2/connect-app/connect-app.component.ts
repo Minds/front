@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { Session } from '../../../../../services/session';
 import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
+import { SettingsV2Service } from '../../../settings-v2.service';
 import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 import { SettingsTwoFactorCodePopupComponent } from './code-popup/code-popup.component';
 
@@ -16,7 +18,9 @@ import { SettingsTwoFactorCodePopupComponent } from './code-popup/code-popup.com
   templateUrl: './connect-app.component.html',
   styleUrls: ['./connect-app.component.ng.scss'],
 })
-export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComponent {
+export class SettingsTwoFactorConnectAppComponent
+  extends AbstractSubscriberComponent
+  implements OnInit {
   /**
    * User entered code from auth app.
    */
@@ -28,6 +32,20 @@ export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComp
    */
   get recoveryCode$(): BehaviorSubject<string> {
     return this.service.recoveryCode$;
+  }
+
+  get recoveryCodeObject$(): Observable<string> {
+    const username = this.session.getLoggedInUser().username;
+
+    return this.service.recoveryCode$.pipe(
+      map((code: string) => {
+        return `otpauth://totp/Minds:${username}?secret=${code}&issuer=Minds`;
+      })
+    );
+  }
+
+  get inProgress$(): BehaviorSubject<boolean> {
+    return this.service.inProgress$;
   }
 
   /**
@@ -44,10 +62,15 @@ export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComp
 
   constructor(
     private service: SettingsTwoFactorV2Service,
-    private toast: FormToastService,
-    private stackableModal: StackableModalService
+    private session: Session,
+    private stackableModal: StackableModalService,
+    private settings: SettingsV2Service
   ) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.service.fetchNewSecret();
   }
 
   /**
@@ -55,22 +78,23 @@ export class SettingsTwoFactorConnectAppComponent extends AbstractSubscriberComp
    * @returns { void }
    */
   public enableButtonClick(): void {
+    this.inProgress$.next(true);
     this.subscriptions.push(
-      this.service.passwordConfirmed$.pipe(take(1)).subscribe(confirmed => {
-        if (confirmed) {
-          // TODO: Send code to server - let settings reload and display updated state.
-          this.service.reset();
-          // TODO: DEMO ONLY - REMOVE BELOW USE OBSERVABLE
-          this.service.isEnabled$.next(true);
-          this.toast.success('Two-factor authentication enabled');
-          return;
-        }
-
-        this.service.activePanel$.next({
-          panel: 'password',
-          intent: 'setup-app',
-        });
-      })
+      this.service.passwordConfirmed$
+        .pipe(take(1))
+        .subscribe(async confirmed => {
+          if (confirmed) {
+            const response = await this.settings.loadSettings(
+              this.session.getLoggedInUser().guid
+            );
+            this.toast.success('Two-factor authentication enabled');
+            this.inProgress$.next(false);
+            this.service.reset();
+            this.service.activePanel$.next({
+              panel: 'recovery-code',
+            });
+          }
+        })
     );
   }
 

@@ -18,7 +18,7 @@ export class SettingsTwoFactorV2RootComponent {
   constructor(private service: SettingsTwoFactorV2Service) {}
 
   get enabled$(): Observable<boolean> {
-    return this.service.enabled$;
+    return this.service.totpEnabled$;
   }
 
   public onSMSClick(): void {

@@ -4,6 +4,18 @@
   display: flex;
   flex-flow: column nowrap;
 
+  .m-twoFactor__confirmDisableInput {
+    margin-bottom: 40px;
+    display: block;
+    width: 100%;
+    border-radius: 2px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--primary);
+    }
+  }
+
   .m-twoFactorDisable__text {
     margin-bottom: 40px;
     font-size: 15px;

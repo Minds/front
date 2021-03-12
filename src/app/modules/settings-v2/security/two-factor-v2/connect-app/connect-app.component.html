@@ -1,5 +1,5 @@
 <h4 class="m-twoFactor__connectAppHeader" i18n="@@2FA_CONNECT_APP__HEADER">
-  2. Scan this barcode with your app
+  1. Scan this barcode with your app
 </h4>
 <span
   class="m-twoFactor__connectAppSubheader"
@@ -22,7 +22,15 @@
 <div class="m-twoFactor__connectAppContainer">
   <div class="m-twoFactor__connectAppTopContainer">
     <div class="m-twoFactor__connectAppQRContainer">
-      <m-qr-code [data]="recoveryCode$ | async"></m-qr-code>
+      <m-loadingSpinner
+        m-loadingSpinner
+        *ngIf="inProgress$ | async"
+        [inProgress]="true"
+      ></m-loadingSpinner>
+      <m-qr-code
+        *ngIf="!(inProgress$ | async) && (recoveryCode$ | async)"
+        [data]="recoveryCodeObject$ | async"
+      ></m-qr-code>
     </div>
   </div>
   <div class="m-twoFactor__connectAppInputContainer">

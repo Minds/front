@@ -138,7 +138,7 @@ export class SettingsTwoFactorPasswordComponent
             });
             break;
           case 'setup-app':
-            this.service.activePanel$.next({ panel: 'recovery-code' });
+            this.service.activePanel$.next({ panel: 'app-connect' });
             break;
           case 'disable':
             this.service.activePanel$.next({ panel: 'disable' });
