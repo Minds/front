@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   SettingsTwoFactorV2Service,
   TwoFactorProtectionType,
@@ -19,6 +19,10 @@ export class SettingsTwoFactorV2RootComponent {
 
   get enabled$(): Observable<boolean> {
     return this.service.totpEnabled$;
+  }
+
+  get inProgress$(): BehaviorSubject<boolean> {
+    return this.service.inProgress$;
   }
 
   public onSMSClick(): void {

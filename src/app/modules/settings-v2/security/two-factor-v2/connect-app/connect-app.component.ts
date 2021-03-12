@@ -64,6 +64,7 @@ export class SettingsTwoFactorConnectAppComponent
     private service: SettingsTwoFactorV2Service,
     private session: Session,
     private stackableModal: StackableModalService,
+    private toast: FormToastService,
     private settings: SettingsV2Service
   ) {
     super();
@@ -80,21 +81,18 @@ export class SettingsTwoFactorConnectAppComponent
   public enableButtonClick(): void {
     this.inProgress$.next(true);
     this.subscriptions.push(
-      this.service.passwordConfirmed$
-        .pipe(take(1))
-        .subscribe(async confirmed => {
-          if (confirmed) {
-            const response = await this.settings.loadSettings(
-              this.session.getLoggedInUser().guid
-            );
-            this.toast.success('Two-factor authentication enabled');
-            this.inProgress$.next(false);
-            this.service.reset();
-            this.service.activePanel$.next({
-              panel: 'recovery-code',
-            });
-          }
-        })
+      combineLatest([this.service.passwordConfirmed$, this.code$])
+        .pipe(
+          take(1),
+          map(([passwordConfirmed, code]) => {
+            if (!passwordConfirmed) {
+              this.toast.error('You must go back and provide your password.');
+              return;
+            }
+            this.service.submitCode(code);
+          })
+        )
+        .subscribe()
     );
   }
 

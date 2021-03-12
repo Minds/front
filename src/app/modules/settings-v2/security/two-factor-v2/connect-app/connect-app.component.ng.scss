@@ -54,9 +54,11 @@ $modalWidth: 500px;
         width: 200px;
         height: 200px;
         border-radius: 2px;
+        display: flex;
 
         @include m-theme() {
           border: 1px solid themed($m-borderColor--primary);
+          background-color: themed($m-white-always); // required for qr to work
         }
       }
     }

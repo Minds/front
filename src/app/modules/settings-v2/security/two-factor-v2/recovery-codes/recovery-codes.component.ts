@@ -80,8 +80,9 @@ export class SettingsTwoFactorRecoveryCodeComponent
    * @returns { void }
    */
   public continueButtonClick(): void {
+    this.service.reloadSettings();
     this.service.activePanel$.next({
-      panel: 'app-connect',
+      panel: 'root',
     });
   }
 

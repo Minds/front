@@ -1,4 +1,4 @@
-<div class="m-twoFactor__optionContainer">
+<div class="m-twoFactor__optionContainer" *ngIf="!(inProgress$ | async)">
   <h4 class="m-twoFactor__optionTitle">
     <ng-container i18n="setup with app|@@MFA_SETTINGS_ROOT__APP"
       >App</ng-container

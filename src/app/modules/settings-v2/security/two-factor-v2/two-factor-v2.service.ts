@@ -175,12 +175,17 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
         )
         .subscribe(val => {
           this.inProgress$.next(false);
-
           if (!val || val.status === 'error') {
             return;
           }
 
-          this.recoveryCode$.next(val);
+          this.recoveryCode$.next(
+            'TODO: Get recovery code from post response.'
+          );
+          this.toast.success('Two-factor authentication enabled');
+          this.activePanel$.next({
+            panel: 'recovery-code',
+          });
         })
     );
   }
@@ -189,7 +194,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
     this.inProgress$.next(true);
     this.subscriptions.push(
       this.api
-        .delete('api/v3/security/totp', {
+        .deleteWithPayload('api/v3/security/totp', {
           code: code,
         })
         .pipe(
@@ -209,10 +214,20 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
           if (!val || val.status === 'error') {
             return;
           }
-
           this.reset();
+          this.reloadSettings();
           this.activePanel$.next({ panel: 'root' });
         })
     );
+  }
+
+  /**
+   * Reload settings in settings service.
+   * @returns { void }
+   */
+  public reloadSettings(): void {
+    this.inProgress$.next(true);
+    this.settings.loadSettings(this.session.getLoggedInUser().guid);
+    this.inProgress$.next(false);
   }
 }

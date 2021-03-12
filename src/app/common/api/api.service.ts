@@ -128,6 +128,28 @@ export class ApiService {
     );
   }
 
+  /**
+   * Equivalent to delete(...) function, but passes data through as a payload
+   * rather than querystring.
+   *
+   * @param endpoint - endpoint to hit
+   * @param data - payload
+   * @param options - api options
+   * @returns Observable<ApiResponse> - api response
+   */
+  deleteWithPayload(
+    endpoint: string,
+    data: ApiRequestData = null,
+    options: ApiRequestOptions = {}
+  ): Observable<ApiResponse> {
+    return this.request(
+      ApiRequestMethod.DELETE,
+      this.baseUrl + endpoint,
+      data,
+      options
+    );
+  }
+
   upload(
     endpoint: string,
     data: ApiRequestData,
