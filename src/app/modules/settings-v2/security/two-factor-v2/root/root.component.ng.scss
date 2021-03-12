@@ -41,18 +41,10 @@
         color: themed($m-textColor--secondary);
       }
     }
-    .m-twoFactor__optionButtonContainer--dual {
+    .m-twoFactor__optionButtonContainer {
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-around;
-
-      ::ng-deep m-button {
-        @media screen and (max-width: $min-tablet) {
-          margin-bottom: 10px;
-        }
-      }
+      justify-content: flex-start;
     }
-    // .m-twoFactor__optionButton {
-    // }
   }
 }

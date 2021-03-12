@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, map, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
@@ -131,6 +131,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
         .get('api/v3/security/totp/new')
         .pipe(
           take(1),
+          throttleTime(2000),
           catchError(error => {
             console.error(error);
             this.toast.error(
@@ -164,6 +165,7 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
         })
         .pipe(
           take(1),
+          throttleTime(2000),
           catchError(error => {
             console.error(error);
             this.toast.error(
@@ -194,11 +196,17 @@ export class SettingsTwoFactorV2Service implements OnDestroy {
     this.inProgress$.next(true);
     this.subscriptions.push(
       this.api
-        .deleteWithPayload('api/v3/security/totp', {
-          code: code,
-        })
+        .delete(
+          'api/v3/security/totp',
+          {},
+          {},
+          {
+            code: code,
+          }
+        )
         .pipe(
           take(1),
+          throttleTime(2000),
           catchError(error => {
             console.error(error);
             this.toast.error(

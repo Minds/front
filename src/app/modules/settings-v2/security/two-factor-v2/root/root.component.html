@@ -24,16 +24,7 @@
   </div>
   <!-- Is Enabled-->
   <ng-template #enabled>
-    <div class="m-twoFactor__optionButtonContainer--dual">
-      <m-button
-        [color]="'grey'"
-        [size]="'small'"
-        (onAction)="onViewRecoveryClick()"
-      >
-        <ng-container i18n="@@MFA_SETTINGS_ROOT__VIEW_RECOVERY_CODES">
-          View recovery codes
-        </ng-container>
-      </m-button>
+    <div class="m-twoFactor__optionButtonContainer">
       <m-button
         [color]="'red'"
         [size]="'small'"

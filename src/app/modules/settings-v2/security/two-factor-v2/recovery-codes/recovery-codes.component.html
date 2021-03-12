@@ -1,34 +1,23 @@
-<ng-container
-  *ngIf="(activePanel$ | async)?.intent !== 'view-recovery'; else recoveryPanel"
+<h4 class="m-twoFactor__recoveryCodeHeader" i18n="@@2FA_RECOVERY_CODE__HEADER">
+  2. Recovery codes
+</h4>
+<span
+  class="m-twoFactor__recoveryCodeSubheader"
+  i18n="@@2FA_RECOVERY_CODE__RECOVERY_CODE_SUBHEADER"
+  >Recovery codes are used to access your account in the event you cannot
+  receive two-factor authentication codes.</span
 >
-  <h4
-    class="m-twoFactor__recoveryCodeHeader"
-    i18n="@@2FA_RECOVERY_CODE__HEADER"
-  >
-    2. Recovery codes
-  </h4>
-  <span
-    class="m-twoFactor__recoveryCodeSubheader"
-    i18n="@@2FA_RECOVERY_CODE__RECOVERY_CODE_SUBHEADER"
-    >Recovery codes are used to access your account in the event you cannot
-    receive two-factor authentication codes.</span
-  >
-  <ng-container [ngTemplateOutlet]="recoveryCodeContainer"></ng-container>
+<ng-container [ngTemplateOutlet]="recoveryCodeContainer"></ng-container>
 
-  <div class="m-twoFactor__recoveryCodeContinueButton">
-    <m-button
-      [color]="'blue'"
-      [disabled]="disabled$ | async"
-      (onAction)="continueButtonClick()"
-    >
-      <ng-container i18n="@@2FA_RECOVERY_CODE__CONTINUE">Continue</ng-container>
-    </m-button>
-  </div>
-</ng-container>
-
-<ng-template #recoveryPanel>
-  <ng-container [ngTemplateOutlet]="recoveryCodeContainer"></ng-container>
-</ng-template>
+<div class="m-twoFactor__recoveryCodeContinueButton">
+  <m-button
+    [color]="'blue'"
+    [disabled]="disabled$ | async"
+    (onAction)="continueButtonClick()"
+  >
+    <ng-container i18n="@@2FA_RECOVERY_CODE__CONTINUE">Continue</ng-container>
+  </m-button>
+</div>
 
 <ng-template #recoveryCodeContainer>
   <div class="m-twoFactor__recoveryCodeContainer">
