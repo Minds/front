@@ -94,6 +94,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   remind$: Observable<RemindSubjectValue> = this.service.remind$;
 
+  canSchedule$ = this.service.canSchedule$;
+
   /**
    * Constructor
    * @param service
