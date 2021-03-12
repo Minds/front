@@ -1,0 +1,25 @@
+<span class="m-mfaAuth__subheader"
+  >Enter one of your recovery codes in case you lost access to your mobile
+  device.</span
+>
+
+<div class="m-mfaAuth__formContainer">
+  <label class="m-mfaAuth__inputLabel">Recovery code</label>
+  <input
+    [ngModel]="code$ | async"
+    (ngModelChange)="onCodeChange($event)"
+    class="m-mfaAuth__codeInput"
+    type="text"
+    placeholder="6 digit code"
+  />
+</div>
+
+<m-button
+  class="m-mfaAuth__verifyButton"
+  [color]="'blue'"
+  [disabled]="disabled$ | async"
+  [saving]="inProgress$ | async"
+  (onAction)="onVerifyClick()"
+>
+  <ng-container>Verify</ng-container>
+</m-button>

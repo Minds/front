@@ -9,6 +9,7 @@ import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
+import { Session } from '../../../services/session';
 
 @Injectable()
 export class AuthModalService {
@@ -17,12 +18,17 @@ export class AuthModalService {
     private injector: Injector,
     private stackableModal: StackableModalService,
     private features: FeaturesService,
-    private onboardingV3: OnboardingV3Service
+    private onboardingV3: OnboardingV3Service,
+    private session: Session
   ) {}
 
   async open(
     opts: { formDisplay: string } = { formDisplay: 'register' }
   ): Promise<MindsUser> {
+    if (this.session.isLoggedIn()) {
+      return this.session.getLoggedInUser();
+    }
+
     const { AuthModalModule } = await import('./auth-modal.module');
 
     const moduleFactory = await this.compiler.compileModuleAsync(

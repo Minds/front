@@ -1,0 +1,25 @@
+@import 'defaults.scss';
+
+:host {
+  width: 600px;
+  display: flex;
+  flex-flow: column nowrap;
+  background: white;
+  z-index: 1;
+
+  .m-mfaBase__header {
+    font-weight: 700;
+    font-size: 24px;
+    padding: 40px;
+    height: 70px; // + 40px padding top and bottom
+    display: flex;
+    align-items: center;
+
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+  }
+  .m-mfaBase__panelContainer {
+    padding: 40px;
+  }
+}

@@ -69,6 +69,7 @@ interface WireRewards {
 export interface WireUpgradePricingOptions {
   monthly: number;
   yearly: number;
+  lifetime: number;
 }
 
 export interface WireCurrencyOptions {
@@ -122,6 +123,7 @@ const DEFAULT_UPGRADE_INTERVAL_VALUE: UpgradeOptionInterval = 'yearly';
 const DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS: WireUpgradePricingOptions = {
   monthly: 0,
   yearly: 0,
+  lifetime: 0,
 };
 
 /**
@@ -360,6 +362,8 @@ export class WireV2Service implements OnDestroy {
    */
   upgrades: any; // readonly removed as component reydrates post authModal login
 
+  handlers: any;
+
   userIsPlus: boolean;
   userIsPro: boolean;
 
@@ -380,6 +384,7 @@ export class WireV2Service implements OnDestroy {
     private toasterSevice: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
+    this.handlers = configs.get('handlers');
 
     const user = session.getLoggedInUser();
     this.userIsPlus = user && user.plus;
@@ -583,6 +588,13 @@ export class WireV2Service implements OnDestroy {
       this.recurring$.next(false);
     }
 
+    if (this.isUpgrade$.value) {
+      if (type === 'tokens') {
+        this.setUpgradeInterval('lifetime');
+      } else if (type === 'usd') {
+        this.setUpgradeInterval('yearly');
+      }
+    }
     this.setUpgradePricingOptions(type, this.upgradeType$.getValue());
 
     return this;
@@ -590,12 +602,19 @@ export class WireV2Service implements OnDestroy {
 
   /**
    * Sets whether the wire is paying for a channel upgrade
-   * and assumes the upgrade is recurring
+   * and assumes the upgrade is recurring only if interval is yearly/monthly
    * @param isUpgrade
    */
   setIsUpgrade(isUpgrade: boolean): WireV2Service {
     this.isUpgrade$.next(isUpgrade);
-    this.recurring$.next(true);
+    if (
+      this.upgradeInterval$.value === 'yearly' ||
+      this.upgradeInterval$.value === 'monthly'
+    ) {
+      this.recurring$.next(true);
+    } else {
+      this.recurring$.next(false);
+    }
 
     return this;
   }
@@ -637,13 +656,12 @@ export class WireV2Service implements OnDestroy {
     type: WireType,
     upgradeType: WireUpgradeType
   ): WireV2Service {
-    // Tokens can only be used on annual subscriptions
+    // Tokens can only be used on lifetime subscriptions
     if (
       this.type$.value === 'tokens' &&
-      this.upgradeInterval$.value === 'monthly'
+      this.upgradeInterval$.value !== 'lifetime'
     ) {
-      this.upgradeInterval$.next('yearly');
-      this.toasterSevice.inform('Tokens can only be used on the yearly plan');
+      this.upgradeInterval$.next('lifetime');
     }
 
     // If it's an upgrade, calculate the pricing options
@@ -654,6 +672,7 @@ export class WireV2Service implements OnDestroy {
       upgradePricingOptions = {
         monthly: this.upgrades[upgradeType]['monthly'][type],
         yearly: this.upgrades[upgradeType]['yearly'][type],
+        lifetime: this.upgrades[upgradeType]['lifetime'][type],
       };
       this.upgradePricingOptions$.next(upgradePricingOptions);
 
@@ -795,7 +814,15 @@ export class WireV2Service implements OnDestroy {
       case 'eth':
         if (data.type === 'tokens' && data.tokenType === 'offchain') {
           // Off-chain
-          if (data.wallet.loaded && data.amount > data.wallet.limits.wire) {
+          const isUpgrade =
+            data.entityGuid === this.handlers.pro ||
+            data.entityGuid === this.handlers.plus;
+
+          // Purchases of plus/pro are exempt from wire limits
+          const amountExceedsLimit =
+            !isUpgrade && data.amount > data.wallet.limits.wire;
+
+          if (data.wallet.loaded && amountExceedsLimit) {
             return invalid(
               `Cannot spend more than ${data.wallet.limits.wire} tokens today`,
               true
