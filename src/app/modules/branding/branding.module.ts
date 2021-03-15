@@ -12,6 +12,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
 import { BrandingComponent } from './branding.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
     LegacyModule,
     ModalsModule,
     MindsFormsModule,
+    MarketingModule,
   ],
   declarations: [BrandingComponent],
 })
