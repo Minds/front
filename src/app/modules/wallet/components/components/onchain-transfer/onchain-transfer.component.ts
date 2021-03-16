@@ -29,6 +29,7 @@ import {
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
 import { BigNumber } from 'ethers';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
+import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 
 @Component({
   moduleId: module.id,
@@ -63,6 +64,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   balanceIsLimit: boolean = true;
 
   constructor(
+    private buyTokensService: BuyTokensModalService,
     protected session: Session,
     protected client: Client,
     protected contract: WithdrawContractService,
@@ -227,6 +229,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   transferComplete(): void {
     this.toasterService.success('On-chain transfer complete');
     this.overlayModal.dismiss();
+  }
+
+  async onPurchaseTokensClick(e: MouseEvent): Promise<void> {
+    await this.buyTokensService.open();
   }
 
   ngOnDestroy(): void {

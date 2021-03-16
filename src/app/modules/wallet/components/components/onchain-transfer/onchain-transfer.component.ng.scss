@@ -64,9 +64,11 @@
         color: themed($m-alert);
       }
 
-      a {
+      span {
         @include m-theme() {
+          cursor: pointer;
           color: themed($m-link);
+          text-decoration: underline;
         }
       }
     }
