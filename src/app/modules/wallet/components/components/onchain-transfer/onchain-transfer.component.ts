@@ -41,6 +41,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   form;
   wallet;
   balance: number = 0;
+  ethBalance: number = 0;
   amountSubscription: Subscription;
 
   canTransfer = true; // whether the user can withdraw from wallet
@@ -93,10 +94,9 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.submitError = '';
     this.wallet = await this.walletService.wallet;
-
     this.balance = this.wallet.offchain.balance;
-
     this.balanceIsLimit = this.balance < this.transferLimit;
+    this.ethBalance = this.wallet.eth.balance;
 
     this.form = new FormGroup({
       amount: new FormControl(Math.min(this.balance, 1), {
