@@ -35,9 +35,9 @@ const routes: Routes = [
     data: {
       title: 'Register',
       description: 'Create a channel on Minds',
-      ogImage: '/assets/og-images/register-v2.png',
-      ogImageWidth: 400,
-      ogImageHeight: 400,
+      ogImage: '/assets/og-images/register-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
   {

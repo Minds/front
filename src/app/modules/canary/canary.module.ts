@@ -14,9 +14,9 @@ const routes: Routes = [
     data: {
       title: 'Canary',
       description: 'Receive the latest Minds features before everyone else',
-      ogImage: '/assets/og-images/canary-v2.png',
-      ogImageWidth: 400,
-      ogImageHeight: 400,
+      ogImage: '/assets/og-images/canary-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 ];
