@@ -5,31 +5,27 @@ m-tooltip {
   .m-tooltip--anchored {
     position: relative;
   }
-
-  img {
-    height: 24px;
-  }
 }
 
 .m-tooltip--bubble {
   @include z-index(tooltip);
   position: absolute;
-  font-size: 13px;
-  padding: 12px;
-  border-radius: 3px;
+  font-size: 14px;
+  padding: 12px 14px;
+  border-radius: 2px;
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  letter-spacing: 1.4px;
   max-width: 220px;
-  line-height: 18px;
+  line-height: 1.3em;
   white-space: normal;
   text-align: left;
   text-transform: none;
   @include m-theme() {
-    color: themed($m-textColor--primary);
-    background-color: themed($m-bgColor--primary);
-    border: 1px solid themed($m-borderColor--primary);
-    box-shadow: 0 2px 4px 0 rgba(themed($m-black), 0.2);
+    color: $white;
+    background: $blue;
+  }
+
+  ul {
+    line-height: 1.2em;
   }
 
   &:not(.m-tooltip--bubble--anchorV2) {

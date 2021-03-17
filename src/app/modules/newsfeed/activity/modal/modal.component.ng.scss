@@ -476,6 +476,12 @@ $modal-padding: 20px;
               background-color: transparent;
             }
           }
+          .minds-body {
+            max-width: 100%;
+          }
+        }
+        .m-commentToolbar__buttons .m-dropdown--v2 {
+          margin-right: 0;
         }
 
         .m-comment__ribbonBtn {
@@ -487,21 +493,13 @@ $modal-padding: 20px;
       .m-activityModal__comments {
         padding: 0 $modal-padding $modal-padding;
 
-        &.m-activityModal__comments--poster {
-          padding-top: 20px;
-          @include m-theme() {
-            border-top: 1px solid themed($m-borderColor--primary);
-            box-shadow: 0px -5px 30px 0px rgba(themed($m-black-always), 0.3);
-          }
-          .m-comment--poster,
-          .m-comment--poster > * {
-            padding: 0;
-          }
-          textarea {
-            max-height: 80%;
-          }
+        .m-commentsEntityOutlet__topBar {
+          margin-top: 15px;
+          margin-left: 0;
         }
-
+        m-comment__tree .m-comments__startConversation {
+          display: none;
+        }
         .m-comment__attachment {
           .mdl-card {
             @include m-theme() {
@@ -512,13 +510,6 @@ $modal-padding: 20px;
 
         [class*='m-commentsEntityOutlet__expand'] {
           display: none;
-        }
-        &.m-activityModal__comments--tree {
-          padding-top: $modal-padding;
-
-          .m-comment:first-child {
-            padding-top: 0;
-          }
         }
       }
     }
@@ -542,9 +533,6 @@ $modal-padding: 20px;
         .m-comments--start-conversation-label {
           display: none;
         }
-        m-comments__tree m-comment__poster {
-          display: none;
-        }
         .minds-comment {
           padding-left: 0 !important;
           padding-right: 0 !important;
@@ -552,6 +540,9 @@ $modal-padding: 20px;
         .m-comments-load-more {
           margin-top: -14px;
         }
+      }
+      .m-comments__viewMore {
+        margin-top: 0;
       }
     }
   }

@@ -127,7 +127,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setPlaceholderMetaImage(): void {
-    this.metaService.setOgImage('/assets/logos/placeholder.jpg');
+    this.metaService.setOgImage('/assets/og-images/default-v3.png');
   }
 
   registered() {
@@ -154,9 +154,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
     this.topbarService.toggleVisibility(true);
 
-    if (this.featuresService.has('navigation')) {
-      this.navigationService.setVisible(true);
-    }
+    this.navigationService.setVisible(true);
   }
 
   private navigateToRedirection() {

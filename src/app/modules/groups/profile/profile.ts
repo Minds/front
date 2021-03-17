@@ -90,7 +90,7 @@ export class GroupsProfile {
     private pageLayoutService: PageLayoutService,
     protected toasterService: FormToastService
   ) {
-    this.hasNewNavigation = featuresService.has('navigation');
+    this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 

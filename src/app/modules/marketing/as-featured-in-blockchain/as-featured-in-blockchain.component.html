@@ -1,0 +1,114 @@
+<!-- TODO: DARK MDOE AND LIGHT MODE -->
+<div class="m-grid m-marketing__asFeaturedIn">
+  <div class="m-grid__column-2 m-marketingAsFeaturedIn__title">
+    <ng-container *ngIf="!inThePress" i18n="@@AS_FEATURED_IN"
+      >As featured in</ng-container
+    >
+    <ng-container *ngIf="inThePress" i18n="@@MINDS_IN_THE_PRESS"
+      >Minds in the press</ng-container
+    >
+  </div>
+
+  <ul class="m-grid__column-10">
+    <li>
+      <a
+        href="https://www.coindesk.com/blockchain-social-network-minds-is-migrating-to-ethereum-for-launch"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--wide"
+          [src]="coinDeskLogoSrc"
+          alt="Coindesk"
+        />
+      </a>
+    </li>
+
+    <li>
+      <a
+        class="m-markertingAsFeaturedIn__brandLogo--square"
+        href="https://cointelegraph.com/news/overstocks-medici-ventures-invests-in-decentralized-social-network"
+        target="_blank"
+      >
+        <img [src]="coinTelegraphLogoSrc" alt="Coin Telegraph" />
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://techcrunch.com/2018/04/16/minds-aims-to-decentralize-the-social-network/"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--square"
+          [src]="cdnAssetsUrl + 'assets/marketing/techcrunch.png'"
+          alt="TechCrunch"
+        />
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="http://podcasts.joerogan.net/podcasts/bill-ottman"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--square"
+          [src]="cdnAssetsUrl + 'assets/marketing/joe-rogan.png'"
+          alt="The Joe Rogan Experience"
+        />
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://decrypt.co/45709/crypto-social-network-minds-uncensorable-arweave-permaweb"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--wide"
+          [src]="decryptLogoSrc"
+          alt="Decrypt"
+        />
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://news.bitcoin.com/big-techs-freedom-of-speech-purge-pushes-people-to-censorship-resistant-blockchain-social-media/"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--wide"
+          [src]="bitcoinDotComLogoSrc"
+          alt="Bitcoin dot com"
+        />
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://anthonypompliano.com/pomp-podcast/bill-ottman-founder-ceo-of-minds-an-entrepreneur-and-free-speech-activist-talks-crypto-and-censorship/"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--square"
+          [src]="cdnAssetsUrl + 'assets/marketing/pomp-podcast.png'"
+          alt="Pomp Podcast"
+        />
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://www.youtube.com/watch?t=12m47s&v=W056blSc9t0&feature=youtu.be"
+        target="_blank"
+      >
+        <img
+          class="m-markertingAsFeaturedIn__brandLogo--wide"
+          [src]="cdnAssetsUrl + 'assets/marketing/keiser-report.jpg'"
+          alt="Keiser Report"
+        />
+      </a>
+    </li>
+  </ul>
+</div>

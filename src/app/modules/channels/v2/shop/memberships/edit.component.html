@@ -105,7 +105,8 @@
                 [readonly]="service.inProgress$ | async"
                 [disabled]="
                   (service.isEditing$ | async) ||
-                  !(service.canReceiveTokens$ | async)
+                  !(service.canReceiveTokens$ | async) ||
+                  !(service.canReceiveUsd$ | async)
                 "
               />
               <span class="m-form__customInput__checkbox"></span>
@@ -175,7 +176,7 @@
           ><a routerLink="/wallet/tokens/settings" target="_blank"
             >Add receiver address</a
           >
-          to receive tokens payments</span
+          and verify your uniqueness to receive tokens payments</span
         >
       </div>
     </div>

@@ -1,0 +1,118 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  .m-analyticsGlobalTokens__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 40px 40px 20px 40px;
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-analyticsGlobalTokens__openWalletRewards {
+    text-decoration: none;
+    padding: 14px 0;
+
+    i,
+    span {
+      vertical-align: middle;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    span {
+      margin-left: 5px;
+      font-size: 15px;
+      font-weight: 400;
+    }
+    i {
+      font-size: 15px;
+    }
+  }
+
+  .m-analyticsGlobalTokens__metrics {
+    display: grid;
+    padding: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+
+  @media screen and (max-width: $layoutMin3ColWidth) {
+    .m-analyticsGlobalTokens__header,
+    .m-analyticsGlobalTokens__metrics {
+      padding: 20px;
+    }
+  }
+
+  @media screen and (max-width: $layoutMax2ColFixedWidth) {
+    .m-analyticsGlobalTokens__metrics {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .m-analyticsGlobalTokens__infoCard {
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    h3,
+    table {
+      padding: 20px;
+    }
+
+    h3 {
+      font-size: 17px;
+      line-height: 18px;
+      font-weight: 700;
+      margin: 0;
+      position: relative;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      ::ng-deep m-tooltip {
+        margin-left: 10px;
+        vertical-align: middle;
+        i {
+          font-size: 15px;
+        }
+      }
+    }
+
+    table {
+      text-align: left;
+      width: 100%;
+
+      thead td {
+        font-weight: 500;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      td {
+        font-size: 16px;
+        font-weight: 400;
+        width: 50%;
+        padding: 10px 0;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}

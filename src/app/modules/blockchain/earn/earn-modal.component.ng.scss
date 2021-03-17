@@ -4,76 +4,106 @@
   .m-earnModal__body {
     max-height: none !important;
     overflow-y: auto !important;
-    padding: 40px;
-  }
-
-  .m-earnModal__block {
-    display: inline-flex;
-    align-items: flex-start;
-    flex-direction: row;
-    cursor: pointer;
-    box-sizing: border-box;
-    padding: 20px;
-    border-style: solid;
-    border-width: 1px;
-
-    @include m-theme() {
-      border-color: themed($m-borderColor--primary);
-    }
-    .m-earnModalBlock__icon {
-      align-self: flex-start;
-      margin-left: 5px;
-    }
-  }
-
-  .m-earnModal__block--anchor {
-    text-decoration: none;
-  }
-
-  .m-earnModalBlock__title {
-    display: block;
-    font-size: 19px;
-    font-weight: 700;
-    margin-bottom: 5px;
-
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-    }
-  }
-
-  .m-earnModalBlock__text {
-    display: block;
-    font-size: 15px;
-    margin-bottom: 0;
-    font-weight: 400;
-
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
-
-  .m-earnModal__blockContainer {
-    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+
+    padding: 0;
+
+    > div {
+      padding: 40px 60px;
+    }
 
     @media screen and (max-width: $max-mobile) {
       grid-template-columns: repeat(1, 1fr);
+
+      > div {
+        padding: 40px 40px;
+      }
     }
   }
 
-  .m-earningBlock__comingSoon {
-    @include m-theme() {
-      border: 1px solid themed($m-borderColor--primary);
-      color: themed($m-textColor--secondary);
+  ::ng-deep m-concertColors__modal .m-concertColors__header {
+    padding: 0 60px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 40px;
     }
-    font-size: 11px;
-    vertical-align: middle;
-    padding: 5px;
-    vertical-align: middle;
-    border-radius: 5px;
-    margin-left: 10px;
+  }
+
+  .m-earnModal__left {
+    width: 320px;
+
+    @media screen and (max-width: $max-mobile) {
+      width: unset;
+    }
+
+    @include m-theme() {
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+    h2 {
+      font-size: 21px;
+      line-height: 28px;
+      font-weight: 700;
+      margin: 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      > * {
+        vertical-align: middle;
+      }
+      > m-icon {
+        margin-right: 10px;
+      }
+      > span {
+        flex: 1;
+      }
+    }
+  }
+
+  .m-earnModal__right {
+    h2 {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      font-size: 19px;
+      line-height: 25px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 30px;
+      a {
+        text-decoration: none;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
   }
 }

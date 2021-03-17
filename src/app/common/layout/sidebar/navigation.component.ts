@@ -9,6 +9,7 @@ import {
   PLATFORM_ID,
   ViewChild,
   OnDestroy,
+  Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -30,9 +31,12 @@ import { UniswapModalService } from '../../../modules/blockchain/token-purchase/
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
+import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
+  styleUrls: ['./navigation.component.ng.scss'],
 })
 export class SidebarNavigationComponent
   implements OnInit, AfterViewInit, OnDestroy {
@@ -76,9 +80,10 @@ export class SidebarNavigationComponent
     private userMenu: UserMenuService,
     private buyTokensModalService: BuyTokensModalService,
     private web3WalletService: Web3WalletService,
-    private uniswapModalService: UniswapModalService,
+    private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
-    private overlayModal: OverlayModalService
+    private composerModalService: ComposerModalService,
+    private injector: Injector
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -104,9 +109,7 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
-    if (this.featuresService.has('navigation')) {
-      this.settingsLink = '/settings';
-    }
+    this.settingsLink = '/settings';
   }
 
   ngAfterViewInit() {
@@ -166,8 +169,16 @@ export class SidebarNavigationComponent
   }
 
   async openBoostModal() {
-    const creator = this.overlayModal.create(BoostCreatorComponent, this.user);
-    creator.present();
+    this.toggle();
+    await this.boostModalService.open(this.session.getLoggedInUser());
+  }
+
+  async openComposeModal() {
+    this.toggle();
+    await this.composerModalService
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
   }
 
   setVisible(value: boolean): void {

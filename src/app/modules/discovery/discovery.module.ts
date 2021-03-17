@@ -30,7 +30,9 @@ import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
-import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.component';
+import { DiscoveryLatestFeedComponent } from './latest/latest.component';
+import { DiscoverySuggestionsCarouselComponent } from './suggestions-carousel/suggestions-carousel.component';
+import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 
 @NgModule({
   imports: [
@@ -45,6 +47,9 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
             component: DiscoveryTrendsComponent,
             data: {
               title: 'Discovery / Overview',
+              ogImage: '/assets/og-images/discovery-v3.png',
+              ogImageWidth: 1200,
+              ogImageHeight: 1200,
             },
           },
           {
@@ -80,7 +85,7 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
           },
           {
             path: 'memberships/feed',
-            component: DiscoveryMembershipsFeedComponent,
+            component: DiscoveryLatestFeedComponent,
             data: {
               title: 'Discovery / Memberships',
               memberships: true,
@@ -133,6 +138,14 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
                 data: { plus: true },
               },
               {
+                path: 'latest/feed',
+                component: DiscoveryLatestFeedComponent,
+                data: {
+                  title: 'Minds+ / Latest',
+                  plus: true,
+                },
+              },
+              {
                 path: 'search',
                 component: DiscoverySearchComponent,
                 data: { plus: true },
@@ -179,6 +192,7 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
     WirePaymentHandlersService,
     WireModalService,
     DiscoveryService,
+    SuggestionsService,
   ],
   declarations: [
     DiscoveryComponent,
@@ -196,7 +210,8 @@ import { DiscoveryMembershipsFeedComponent } from './memberships/memberships.com
     DiscoveryPlusUpgradeComponent,
     DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
-    DiscoveryMembershipsFeedComponent,
+    DiscoveryLatestFeedComponent,
+    DiscoverySuggestionsCarouselComponent,
   ],
   exports: [
     DiscoveryComponent,

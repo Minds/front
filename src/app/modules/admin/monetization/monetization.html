@@ -16,11 +16,11 @@
       class="mdl-card mdl-shadow--4dp m-report"
       *ngFor="let entity of entities; let i = index"
     >
-      <minds-card-user
-        [object]="entity"
-        class="mdl-card"
+      <m-channelCard
+        [channel]="entity"
         *ngIf="entity.type == 'user'"
-      ></minds-card-user>
+        [showSubscribeButton]="false"
+      ></m-channelCard>
       <minds-activity
         [object]="entity"
         class="mdl-card"

@@ -33,9 +33,11 @@
       </div>
     </div>
   </div>
+
   <div class="m-form__buttonsContainer">
     <m-button
       color="blue"
+      size="medium"
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (onAction)="submit()"

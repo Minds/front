@@ -1,0 +1,694 @@
+m-walletDashboard,
+.m-walletModal--v2 {
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+  display: block;
+  grid-area: content / span 2;
+
+  m-dashboardLayout {
+    min-height: 100%;
+    height: auto;
+    @include m-theme() {
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+    .m-tabs__container {
+      padding: 0 50px;
+      margin: 0 !important;
+      @media screen and (max-width: $min-tablet) {
+        padding: 0 40px;
+      }
+      @media screen and (max-width: $max-mobile) {
+        padding: 0 24px;
+      }
+    }
+    .m-tabs__tab > a {
+      @media screen and (max-width: $max-mobile) {
+        padding: 10px 7px;
+        margin: 0px 2px;
+        &:first-child {
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // COMMON //////////////////////////////////
+  ////////////////////////////////////////////
+
+  m-tooltip {
+    vertical-align: top;
+    .m-tooltip {
+      margin-left: 4px;
+      > i {
+        font-size: 11px;
+        @include m-theme() {
+          color: rgba(themed($m-textColor--secondary), 0.9);
+        }
+      }
+    }
+  }
+
+  .m-wallet__spinner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 150px;
+  }
+
+  m-button {
+    box-sizing: border-box;
+    display: inline-block;
+
+    .m-button {
+      box-sizing: border-box;
+      max-height: none;
+      min-height: 42px;
+      height: auto;
+      min-width: 105px;
+      font-weight: 300;
+      padding: 7px 15px;
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
+
+  .m-walletModal--confirmation {
+    & > p {
+      margin-top: none;
+    }
+    .m-walletForm__buttonsContainer {
+      justify-content: center;
+    }
+  }
+  ////////////////////////////////////////////
+  // TEXT ////////////////////////////////////
+  ////////////////////////////////////////////
+  h2 {
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 34px;
+    margin: 0 0 18px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  h4 {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 20px 0 20px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  [class*='m-walletPrimaryText'] {
+    font-size: 15px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+    &[class*='--16'] {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+
+  [class*='m-walletSecondaryText'] {
+    font-size: 14px;
+    line-height: 19px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    &[class*='--15'] {
+      font-size: 15px;
+      line-height: 19px;
+    }
+    &[class*='--16'] {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    &[class*='--desc'] {
+      margin-bottom: 40px;
+      position: relative;
+      m-tooltip {
+        .m-tooltip {
+          margin-left: 0;
+        }
+      }
+    }
+    &[class*='--label'] {
+      margin-bottom: 13px;
+    }
+    &[class*='--emphasis'] {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    &[class*='--error'] {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+    &[class*='--backButton'] {
+      margin-top: 40px;
+      display: inline-flex;
+      flex-flow: row nowrap;
+      align-items: baseline;
+      text-decoration: none !important;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      &:hover {
+        span {
+          text-decoration: underline;
+        }
+      }
+      i {
+        font-size: 14px;
+        font-weight: 300;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // HEADER TABS /////////////////////////////
+  ////////////////////////////////////////////
+  m-pagelayout {
+    @media screen and (max-width: $min-tablet) {
+      padding-top: 36px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding-top: 24px;
+    }
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+  m-shadowboxHeader {
+    min-height: 103px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $max-mobile) {
+      min-height: 85px;
+    }
+  }
+  .m-shadowboxHeader__wrapper {
+    height: 103px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $max-mobile) {
+      height: 85px;
+    }
+  }
+  .m-shadowboxHeaderTab {
+    width: 149px;
+    min-height: 103px;
+    max-height: 103px;
+    line-height: 21px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $max-mobile) {
+      width: 111px;
+      min-height: 85px;
+      max-height: 85px;
+      padding: 13px 15px 15px 20px;
+    }
+
+    .m-shadowboxHeaderTab__label {
+      margin-top: 6px;
+      font-size: 18px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 19px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+    .m-shadowboxHeaderTab__value {
+      font-weight: 300;
+      font-size: 16px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        font-size: 17px;
+        line-height: 23px;
+        margin-top: 2px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+  ////////////////////////////////////////////
+  // BALANCES  ///////////////////////////////
+  ////////////////////////////////////////////
+  .m-walletDashboardBalance__wrapper {
+    margin: 40px;
+    @media screen and (max-width: $min-tablet) {
+      margin: 40px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      margin: 20px;
+    }
+    m-tooltip {
+      .m-tooltip {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // VIEWS ///////////////////////////////////
+  ////////////////////////////////////////////
+  .m-walletDashboardViews__viewsContainer {
+    min-height: 100px;
+    padding: 40px 50px 60px 50px;
+    @media screen and (max-width: $min-tablet) {
+      padding: 30px 40px 30px 40px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      min-height: 0px;
+      padding: 24px;
+    }
+  }
+  .m-walletDashboardViews__view {
+    display: block;
+    padding-bottom: 50px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    margin: 50px 57px 0 57px;
+    @media screen and (max-width: $min-tablet) {
+      margin: 30px 36px 0 36px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      margin: 30px 16px 0 16px;
+    }
+  }
+
+  // m-walletChart {
+  //   .m-walletDashboardViews__view {
+  //     margin: 50px 0 0 0;
+  //   }
+  //   @media screen and (max-width: $min-tablet) {
+  //     margin: 30px 0 0 0;
+  //   }
+  // }
+
+  ////////////////////////////////////////////
+  // BUTTON LAYOUTS //////////////////////////
+  ////////////////////////////////////////////
+  .m-walletButtonLayout--buttonInline {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    m-button {
+      margin-top: 8px;
+      margin: 8px 0 0 18px;
+      .m-button {
+        min-height: 42px;
+        width: 100%;
+      }
+    }
+  }
+
+  .m-walletButtonLayout--buttonOffsetRight {
+    .stretchedField {
+      .m-walletForm__row--input {
+        flex-flow: row nowrap;
+      }
+      label,
+      input:not(.m-phoneInput__input),
+      minds-country-input,
+      m-phoneInput,
+      .m-walletForm__row--validation {
+        flex: 1 1 calc(100% - 160px);
+        min-width: calc(100% - 160px);
+        max-width: calc(100% - 160px);
+        @media screen and (max-width: $max-mobile) {
+          flex: 1 1 100%;
+          min-width: 100%;
+          max-width: 100%;
+        }
+      }
+      // @media screen and (max-width: $max-mobile) {
+      //   .m-phoneInput__input {
+      //     min-width: 0;
+      //   }
+      // }
+
+      // @media screen and (max-width: 500px) {
+      //   [class*='m-walletForm__row'] {
+      //     flex-flow: row wrap;
+      //     label,
+      //     input,
+      //     minds-country-input {
+      //       flex: 1 1 100%;
+      //       min-width: 100%;
+      //       max-width: 100%;
+      //     }
+      //     .m-phoneInput__input {
+      //       min-width: 0;
+      //     }
+      //   }
+      // }
+
+      .m-walletForm__row--validation {
+        justify-content: flex-end;
+        align-self: unset;
+      }
+    }
+    .m-walletForm__fieldsContainer {
+      margin-bottom: 38px;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      .m-walletForm__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+    }
+
+    & ~ .m-walletSecondaryText--backButton {
+      margin-top: 20px;
+    }
+  }
+
+  ////////////////////////////////////////////
+  // FORMS ///////////////////////////////////
+  ////////////////////////////////////////////
+  form {
+    margin: 0;
+    padding: 0;
+    &:not(.m-walletButtonLayout--buttonOffsetRight) {
+      .m-walletForm__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+    }
+  }
+
+  .m-walletForm__fieldGroupWrapper {
+    margin-top: 58px;
+  }
+
+  .m-walletForm__fieldsContainer {
+    flex: 1 1 auto;
+
+    .m-walletForm__row--input {
+      input {
+        @include m-theme() {
+          background-color: themed($m-bgColor--primary);
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  // Used for first/last name inputs
+  // .m-walletForm__fieldPairWrapper {
+  //   display: flex;
+  //   box-sizing: border-box;
+  //   flex-flow: row wrap;
+
+  //   [class*='m-walletForm__field'] {
+  //     flex: 1 0 auto;
+  //     min-width: 300px;
+  //     &:first-child {
+  //       margin-right: 19px;
+  //     }
+  //   }
+  // }
+
+  .m-walletForm__buttonsContainer {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    justify-content: flex-end;
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+    m-button {
+      margin: 8px 0 0 18px;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+        margin: 8px 0 0 0;
+        .m-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  [class*='m-walletForm__field'] {
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    m-tooltip {
+      margin-left: 10px;
+      .m-tooltip {
+        margin: 0;
+      }
+      .m-tooltip--bubble {
+        bottom: 18px;
+        margin-left: 12px;
+        font-weight: 400;
+      }
+    }
+  }
+  [class*='m-walletForm__row'] {
+    display: flex;
+    flex-flow: row wrap;
+    box-sizing: border-box;
+
+    &[class*='--label'] {
+      font-size: 15px;
+      line-height: 20px;
+      margin: 0 0 13px 0;
+      align-items: center;
+      flex-flow: row nowrap;
+      position: relative;
+      font-weight: 300;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    &[class*='--validation'] {
+      margin-top: 3px;
+      min-height: 22px;
+      p {
+        font-size: 14px;
+        line-height: 19px;
+        margin: 0;
+        font-weight: 300;
+        @include m-theme() {
+          color: themed($m-alert);
+        }
+      }
+    }
+  }
+  .stretchedField {
+    .m-walletForm__row--label m-tooltip {
+      margin-left: -12px;
+    }
+    .m-walletForm__row--input {
+      flex-flow: row nowrap;
+      &.invalid {
+        input,
+        .m-phoneInput__wrapper {
+          @include m-theme() {
+            border-color: themed($m-alert) !important;
+          }
+        }
+      }
+    }
+    .m-walletForm__row--validation {
+      align-self: flex-end;
+    }
+    label,
+    .m-walletForm__row--validation {
+      flex: 1 1 auto;
+      max-width: auto;
+    }
+    input {
+      flex: 1 1 100%;
+    }
+  }
+  input {
+    outline: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 300;
+    width: 0;
+    min-width: 0;
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: text;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  input:not(.m-phoneInput__input),
+  .m-phoneInput__wrapper,
+  minds-country-input select {
+    border-radius: 2px;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    &:focus {
+      &:not(:read-only) {
+        @include m-theme() {
+          border-color: themed($m-blue);
+        }
+      }
+    }
+  }
+
+  m-phoneInput {
+    margin-bottom: 0;
+    .m-phoneInput__wrapper {
+      width: 100%;
+      min-width: 240px;
+    }
+    .m-phoneInput__dialCode {
+      font-weight: 300;
+    }
+    .m-phoneInput__input {
+      font-size: 15px;
+      line-height: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-walletForm__field--checkbox {
+    m-formInput__checkbox {
+      .m-formInput__checkbox {
+        span,
+        label {
+          font-size: 14px;
+          line-height: 19px;
+        }
+      }
+    }
+  }
+
+  minds-country-input {
+    select {
+      outline: 0;
+      min-height: 42px;
+      padding: 10px 20px;
+      border-radius: 2px;
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 300;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
+      }
+    }
+    &::before {
+      margin: 3px 4px 0 0;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+
+  m-date__dropdowns {
+    .m-dateDropdowns__selectWrapper {
+      &:nth-child(1) {
+        min-width: 136px;
+        @media screen and (max-width: $max-mobile) {
+          min-width: 126px;
+        }
+      }
+      &:nth-child(2) {
+        min-width: 69px;
+        @media screen and (max-width: $max-mobile) {
+          min-width: 59px;
+        }
+      }
+      &:nth-child(3) {
+        min-width: 94px;
+        @media screen and (max-width: $max-mobile) {
+          min-width: 84px;
+        }
+      }
+      &::after {
+        margin: 3px 2px 0 0;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+
+    select {
+      outline: 0;
+      font-weight: 300;
+      height: 42px;
+      padding: 10px 20px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+      &:focus {
+        @include m-theme() {
+          border: 1px solid themed($m-blue);
+        }
+      }
+      @media screen and (max-width: $max-mobile) {
+        padding: 10px;
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // SETTINGS ////////////////////////////////
+  ////////////////////////////////////////////
+
+  .m-walletSettings {
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 19px;
+    }
+
+    .m-walletSettings__currentAddressContainer {
+      display: flex;
+      flex-flow: row wrap;
+      font-size: 15px;
+      line-height: 20px;
+
+      div {
+        margin: 0 18px 8px 0;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      a {
+        display: inline-block;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 300;
+      }
+    }
+  }
+}

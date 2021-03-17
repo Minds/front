@@ -1,161 +1,205 @@
 <div
-  class="m-comment m-comment--poster minds-block"
+  class="m-comment m-commentPoster"
+  [ngClass]="{ 'm-commentPoster--nested': parent.child_path }"
   *ngIf="!readonly && isLoggedIn"
 >
-  <div class="minds-avatar">
-    <a [routerLink]="['/', session.getLoggedInUser().username]">
-      <img [src]="getAvatar() | async" class="m-border" />
-    </a>
-  </div>
+  <div class="m-comments-composer m-commentPoster__wrapper">
+    <div class="m-commentPoster__avatar">
+      <a [routerLink]="['/', session.getLoggedInUser().username]">
+        <img [src]="getAvatar() | async" class="m-border" />
+      </a>
+    </div>
 
-  <div class="minds-body">
-    <div class="m-comments-composer">
-      <form (submit)="post($event)">
-        <ng-template
-          #itemTemplate
-          let-choice="choice"
-          let-selectChoice="selectChoice"
-        >
-          <m-post-autocomplete-item-renderer
-            [choice]="choice"
-            [selectChoice]="selectChoice"
-          ></m-post-autocomplete-item-renderer>
-        </ng-template>
-        <m-text-input--autocomplete-container>
-          <minds-textarea
-            #message="Textarea"
-            [(mModel)]="content"
-            [disabled]="
-              (ascendingInProgress || descendingInProgress) &&
-              attachment.hasFile()
-            "
-            (keyup)="getPostPreview(content)"
-            (keypress)="keypress($event)"
-            [placeholder]="
-              conversation ? 'Enter your message' : 'Write your comment'
-            "
-            (filePaste)="uploadAttachment($event)"
-            mTextInputAutocomplete
-            [findChoices]="suggestions.findSuggestions"
-            [getChoiceLabel]="suggestions.getChoiceLabel"
-            [itemTemplate]="itemTemplate"
-            [triggerCharacters]="['#', '@']"
-            tabindex="0"
-          ></minds-textarea>
-        </m-text-input--autocomplete-container>
-      </form>
-
-      <div
-        class="minds-comment-span mdl-color-text--red-500"
-        *ngIf="!canPost && triedToPost"
+    <form (submit)="post($event)" class="m-commentPoster__form">
+      <ng-template
+        #itemTemplate
+        let-choice="choice"
+        let-selectChoice="selectChoice"
       >
-        <ng-container i18n="@@M__COMMON__WAIT_UPLOAD"
-          >Please wait until the upload is complete.</ng-container
-        >
-      </div>
+        <m-post-autocomplete-item-renderer
+          [choice]="choice"
+          [selectChoice]="selectChoice"
+        ></m-post-autocomplete-item-renderer>
+      </ng-template>
+      <m-text-input--autocomplete-container>
+        <minds-textarea
+          #message="Textarea"
+          [(mModel)]="content"
+          [disabled]="
+            (ascendingInProgress || descendingInProgress) &&
+            attachment.hasFile()
+          "
+          (keyup)="getPostPreview(content)"
+          (keypress)="keypress($event)"
+          [placeholder]="
+            parent.child_path ? 'Add your reply' : 'Add your comment'
+          "
+          (filePaste)="uploadAttachment($event)"
+          mTextInputAutocomplete
+          [findChoices]="suggestions.findSuggestions"
+          [getChoiceLabel]="suggestions.getChoiceLabel"
+          [itemTemplate]="itemTemplate"
+          [triggerCharacters]="['#', '@']"
+          tabindex="0"
+        ></minds-textarea>
+      </m-text-input--autocomplete-container>
+    </form>
 
-      <div class="mdl-card__actions">
-        <!-- Overflow -->
-        <div class="m-comments-composer--overflow"></div>
-        <!-- Attachments -->
-        <div
-          class="attachment-button"
-          [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
-        >
-          <i class="material-icons">insert_photo</i>
-          <input
-            type="file"
-            id="file"
-            #file
-            name="attachment"
-            (change)="uploadFile(file, $event)"
-          />
-        </div>
+    <div
+      class="minds-comment-span mdl-color-text--red-500"
+      *ngIf="!canPost && triedToPost"
+    >
+      <ng-container i18n="@@M__COMMON__WAIT_UPLOAD"
+        >Please wait until the upload is complete.</ng-container
+      >
+    </div>
 
-        <a
-          class="m-mature-button"
-          (click)="attachment.toggleMature()"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          *ngIf="content.length || attachment.hasFile()"
-        >
-          <i
-            class="material-icons"
-            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-            >explicit</i
+    <!-- --------------------- -->
+    <!-- ACTIONS -->
+    <!-- --------------------- -->
+    <div class="mdl-card__actions m-commentPoster__actions">
+      <div>
+        <!-- Dropdown meatball -->
+        <div class="m-dropdown--v2">
+          <div
+            class="m-commentPoster__menuButton"
+            (click)="onMenuClick($event)"
           >
-        </a>
+            <i class="material-icons">more_vert</i>
+          </div>
+
+          <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
+            <!-- --------------------- -->
+            <!-- Attach a file-->
+            <!-- --------------------- -->
+            <li class="m-dropdownList__item">
+              <a class="attachment-button">
+                <i class="material-icons">insert_photo</i>
+                <span i18n="@@M__COMMENT_ACTIONS__ATTACH">Attach media</span>
+
+                <input
+                  type="file"
+                  id="file"
+                  #fileInput
+                  name="attachment"
+                  (change)="uploadFile(fileInput, $event)"
+                />
+              </a>
+            </li>
+            <!-- --------------------- -->
+            <!-- Mark as explicit -->
+            <!-- --------------------- -->
+            <li class="m-dropdownList__item">
+              <a (click)="attachment.toggleMature(); menuOpened$.next(false)">
+                <i
+                  class="material-icons"
+                  [ngClass]="{ 'mdl-color-text--red': attachment.isMature() }"
+                  >explicit</i
+                >
+                <span i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                  >Mark as explicit</span
+                >
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-bgOverlay--v2"
+          (click)="menuOpened$.next(false)"
+          *ngIf="menuOpened$ | async"
+        ></div>
+        <!-- --------------------- -->
+        <!-- Post  -->
+        <!-- --------------------- -->
 
         <a
-          class="m-post-button"
+          class="m-post-button m-commentPoster__postButton"
           (click)="post($event)"
           [ngClass]="{ 'm-button-disabled': !postEnabled() }"
-          *ngIf="content.length || attachment.hasFile()"
         >
           <i class="material-icons">send</i>
         </a>
-
-        <div
-          [class.hidden]="content.length < 140"
-          class="m-commentPoster__limit"
-          [class.m-commentPoster__limit--maxed]="content.length > 1500"
-        >
-          <span class="m-commentPosterLimit__inputed">
-            {{ content.length }}
-          </span>
-          <span> / 1500</span>
-        </div>
       </div>
+      <!-- --------------------- -->
+      <!-- Character count -->
+      <!-- --------------------- -->
 
-      <!-- Rich embed preview -->
-      <div class="post-preview" *ngIf="attachment.isRich()">
-        <div
-          class="mdl-spinner mdl-js-spinner is-active"
-          [mdl]
-          [hidden]="attachment.getMeta().title"
-        ></div>
-        <div
-          class="m-rich-embed mdl-shadow--2dp cf"
-          *ngIf="attachment.getMeta().title"
-        >
-          <minds-rich-embed [preview]="attachment.getMeta()"></minds-rich-embed>
-          <div class="attachment-preview-delete" (click)="resetPreview()">
-            <i class="material-icons">delete</i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Attachment preview -->
       <div
-        class="post-preview"
-        *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
-        (click)="removeAttachment(file)"
+        [class.hidden]="content.length < 140"
+        class="m-commentPoster__limit"
+        [class.m-commentPoster__limit--maxed]="content.length > 1500"
       >
-        <div
-          class="mdl-progress mdl-js-progress"
-          [mdlUpload]
-          [progress]="attachment.progress | async"
-          [hidden]="(attachment.progress | async) == 0"
-          [ngClass]="{ complete: (attachment.progress | async) == 100 }"
-        ></div>
-        <div
-          *ngIf="attachment.getMime() == 'video'"
-          class="attachment-preview video-placeholder mdl-color--blue-grey-600"
-        >
-          <i class="material-icons">videocam</i>
-        </div>
-        <img
-          *ngIf="attachment.getMime() != 'video'"
-          [src]="attachment.getPreview()"
-          class="attachment-preview mdl-shadow--2dp"
-        />
-        <div class="attachment-preview-delete">
-          <i class="material-icons">delete</i>
+        <span class="m-commentPosterLimit__inputed">
+          {{ content.length }}
+        </span>
+        <span> / 1500</span>
+      </div>
+      <!-- --------------------- -->
+    </div>
+  </div>
+  <!-- --------------------- -->
+  <!-- Rich embed preview -->
+  <!-- --------------------- -->
+
+  <div class="post-preview" *ngIf="attachment.isRich()">
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      [hidden]="attachment.getMeta().title"
+    ></div>
+    <div
+      class="m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed"
+    >
+      <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
+        <minds-rich-embed
+          [preview]="attachment.getMeta()"
+          [cropImage]="true"
+          [maxheight]="240"
+        ></minds-rich-embed>
+        <div class="attachment-preview-delete" (click)="resetPreview()">
+          <i class="material-icons">clear</i>
         </div>
       </div>
     </div>
   </div>
+  <!-- --------------------- -->
+  <!-- Attachment preview -->
+  <!-- --------------------- -->
+  <div
+    class="post-preview"
+    *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
+    (click)="removeAttachment(fileInput)"
+  >
+    <div
+      *ngIf="attachment.hasFile()"
+      class="mdl-progress mdl-js-progress"
+      [mdlUpload]
+      [progress]="attachment.progress | async"
+      [hidden]="(attachment.progress | async) == 0"
+      [ngClass]="{ complete: (attachment.progress | async) == 100 }"
+    ></div>
+    <div class="m-attachmentPreviewWrapper">
+      <div
+        *ngIf="attachment.getMime() == 'video'"
+        class="attachment-preview video-placeholder"
+      >
+        <i class="material-icons">videocam</i>
+      </div>
+      <img
+        *ngIf="attachment.getMime() != 'video'"
+        [src]="attachment.getPreview()"
+        class="attachment-preview"
+      />
+      <div *ngIf="attachment.hasFile()" class="attachment-preview-delete">
+        <i class="material-icons">clear</i>
+      </div>
+    </div>
+  </div>
+  <!-- --------------------- -->
 </div>
+<!-- --------------------- -->
+<!-- -Login notice ------- -->
+<!-- --------------------- -->
 
 <div
   class="m-comments--start-conversation-label"

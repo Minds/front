@@ -30,7 +30,7 @@ export class ButtonComponent implements AfterViewInit {
   @Input() disabled: boolean = false;
   @Input() overlay: boolean = false;
   @Input() iconOnly: boolean = false;
-  @Input() color: 'blue' | 'grey' | 'red' = 'grey';
+  @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
   @Input() pulsating: boolean = false;
 
@@ -60,6 +60,11 @@ export class ButtonComponent implements AfterViewInit {
     top: '100%',
     right: '0',
   };
+
+  /**
+   * Show the dropdown or not
+   */
+  @Input() showDropdownMenu = true;
 
   /**
    * Event emitter when actioning the button

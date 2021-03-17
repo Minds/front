@@ -1,0 +1,117 @@
+<m-concertColors__modal title="Phone Verification">
+  <div class="m-modalV2__body">
+    <div class="m-walletModal__desc">
+      <p class="m-walletPhoneVerification__disclaimer">
+        Before you can start earning or purchase tokens, it is important that we
+        can simply verify your uniqueness. The less tokens spammers take, the
+        more that are left for you! To learn about how we keep your data
+        private,
+        <a [href]="'/p/privacy'" target="_blank">click here</a>.
+      </p>
+    </div>
+    <form
+      [formGroup]="form"
+      class="m-formWrapper m-walletButtonLayout--buttonInline"
+    >
+      <div class="m-form__fieldsContainer">
+        <div class="m-form__field--text" *ngIf="!confirming">
+          <div class="m-form__row--label">
+            <label for="number" i18n="@@COMMON__MOBILE_PHONE_NUMBER"
+              >Mobile Phone Number</label
+            >
+            <m-tooltip icon="help">
+              <ng-container
+                i18n="@@PHONE_VERIFICATION__MINDS_WILL_NOT_STORE_TEXT"
+                >Minds will not store the number you provide. It will be hashed
+                using SHA-256 and combined with a salt key for privacy and
+                unique identification purposes. VOIP numbers are not
+                allowed.</ng-container
+              >
+            </m-tooltip>
+          </div>
+          <div class="m-form__row--input">
+            <m-phoneInput
+              formControlName="number"
+              [ngClass]="{ invalid: invalidNumber }"
+              name="number"
+              id="number"
+              ngDefaultControl
+            ></m-phoneInput>
+
+            <ng-container *ngTemplateOutlet="button"></ng-container>
+          </div>
+
+          <p class="m-walletPhoneVerification__privacyNote">
+            <ng-container i18n="@@PHONE_VERIFICATION__MINDS_WILL_NOT_STORE_TEXT"
+              >Minds will not store the number you provide. It will be hashed
+              using SHA-256 and combined with a salt key for privacy and unique
+              identification purposes. VOIP numbers are not
+              allowed.</ng-container
+            >
+          </p>
+        </div>
+        <div class="m-form__row--validation" *ngIf="invalidNumber">
+          <p i18n="@@PHONE_VERIFICATION__INVALID_PHONE_NUMBER">
+            Invalid phone number
+          </p>
+        </div>
+
+        <div class="m-form__field--text" *ngIf="confirming">
+          <div class="m-form__row--label">
+            <label for="code" i18n="@@PHONE_VERIFICATION__VERIFICATION_CODE"
+              >Verification Code</label
+            >
+            <m-tooltip icon="help">
+              <ng-container
+                i18n="@@PHONE_VERIFICATION__PLEASE_ENTER_CODE_TO_NUMBER"
+                >Please enter the code we just sent to +{{
+                  form.value.number
+                }}.</ng-container
+              >
+            </m-tooltip>
+          </div>
+          <div class="m-form__row--input" [ngClass]="{ invalid: invalidCode }">
+            <input
+              type="text"
+              id="code"
+              name="code"
+              formControlName="code"
+              class="form-control"
+              autofocus
+            />
+            <ng-container *ngTemplateOutlet="button"></ng-container>
+          </div>
+          <div class="m-form__row--validation" *ngIf="invalidCode">
+            <p i18n="@@PHONE_VERIFICATION__INVALID_VERIFICATION_CODE">
+              Invalid verification code
+            </p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="m-walletModal__footnote" *ngIf="confirming">
+      <p i18n="@@PHONE_VERIFICATION__CODE_SENT_TO">
+        Verification code sent to +{{ form.value.number }}
+      </p>
+      <p
+        class="m-walletSecondaryText"
+        i18n="@@PHONE_VERIFICATION__DIDNT_RECEIVE_IT_SEND_AGAIN"
+      >
+        Didn't receive it? <a (click)="validateNumber()">Send it again</a> or
+        <a (click)="changePhone()">change phone number</a>
+      </p>
+    </div>
+  </div>
+</m-concertColors__modal>
+
+<ng-template #button>
+  <m-button
+    [disabled]="inProgress"
+    [saving]="inProgress"
+    color="blue"
+    (onAction)="onSubmit()"
+  >
+    {{ !confirming ? 'Send Verification' : 'Verify Code' }}
+  </m-button>
+</ng-template>

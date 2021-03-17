@@ -24,7 +24,9 @@ const wireRoutes: Routes = [
     data: {
       title: 'Minds Pay (Wire)',
       description: 'Send and receive payments in USD, BTC, ETH and Tokens',
-      ogImage: '/assets/product-pages/pay/pay-1.jpg',
+      ogImage: '/assets/og-images/pay-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 ];

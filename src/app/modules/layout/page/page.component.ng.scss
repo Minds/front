@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  m-web3-modal {
+    ::ng-deep {
+      m-modal {
+        @include z-index(modal--stackable);
+        display: block;
+        position: unset;
+      }
+    }
+  }
+}

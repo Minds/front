@@ -1,0 +1,73 @@
+<div
+  class="m-boostModalAmount__container"
+  [formGroup]="form"
+  [ngClass]="{ isFocused: isFocused$ | async }"
+>
+  <!-- Views -->
+  <div
+    class="m-boostModalAmount__inputContainer m-boostModalAmount__viewsInput"
+    *ngIf="(activeTab$ | async) !== 'offer'"
+  >
+    <label i18n="@@BOOST_MODAL__AMOUNT__VIEWS" #impressionsLabel>Views</label>
+    <input
+      #impressionsInput
+      type="number"
+      [ngModel]="impressions$ | async"
+      (ngModelChange)="viewsValueChanged($event)"
+      name="views"
+      formControlName="impressions"
+      min="{{ minImpressions }}"
+      value="1"
+      data-cy="data-minds-boost-modal-views-input"
+    />
+  </div>
+
+  <!-- Tokens -->
+  <div
+    class="m-boostModalAmount__inputContainer m-boostModalAmount__tokensInput"
+    [ngClass]="{ fullWidth: (activeTab$ | async) === 'offer' }"
+  >
+    <label i18n="@@BOOST_MODAL__AMOUNT__TOKENS" #tokensLabel>Tokens</label>
+    <input
+      #tokensInput
+      type="number"
+      [ngModel]="tokens$ | async"
+      (ngModelChange)="tokensValueChanged($event)"
+      name="tokens"
+      formControlName="tokens"
+      min="1"
+      value="1"
+      data-cy="data-minds-boost-modal-tokens-input"
+    />
+  </div>
+</div>
+<div
+  class="m-boostModalAmount--error"
+  data-cy="data-minds-boost-modal-amount-error"
+>
+  <span
+    *ngIf="form?.controls.impressions?.errors?.max"
+    i18n="@@BOOST_MODAL__MAX_VIEWS_ERROR"
+  >
+    Sorry, you may only boost for a maximum of {{ maxImpressions }} views at
+    once.
+  </span>
+
+  <span
+    *ngIf="form?.controls.impressions?.errors?.min"
+    i18n="@@BOOST_MODAL__MIN_VIEWS_ERROR"
+  >
+    Sorry, you may only boost for a minimum of
+    {{ minImpressions }} views.</span
+  >
+
+  <span
+    *ngIf="
+      form?.controls.tokens?.errors?.min && (activeTab$ | async) === 'offer'
+    "
+    i18n="@@BOOST_MODAL__MIN_TOKENS_ERROR"
+  >
+    Sorry, you may only boost for a minimum of
+    {{ minTokens }} token{{ minTokens !== 1 ? 's' : null }}.</span
+  >
+</div>

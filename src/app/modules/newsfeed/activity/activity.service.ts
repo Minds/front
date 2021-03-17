@@ -22,6 +22,11 @@ export type ActivityDisplayOptions = {
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
   bypassMediaModal: boolean; // Go to media page instead
+  showPostMenu: boolean; // Can be hidden for things like previews
+  showPinnedBadge: boolean; // show pinned badge if a post is pinned
+  showMetrics?: boolean; // sub counts
+  sidebarMode: boolean; // activity is a sidebar suggestion
+  isFeed: boolean; // is the activity a part of a feed?
 };
 
 export type ActivityEntity = {
@@ -57,6 +62,8 @@ export type ActivityEntity = {
   description?: string; // xml for inline rich-embeds
   excerpt?: string; // for blogs
   remind_deleted?: boolean;
+  pinned?: boolean; // pinned to top of channel
+  subtype?: string;
 };
 
 // Constants of blocks
@@ -209,11 +216,20 @@ export class ActivityService {
   isBoost$: Observable<boolean> = this.entity$.pipe();
 
   /**
+   * If the post is a quote this will emit true
+   */
+  isQuote$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return entity && !!entity.remind_object;
+    })
+  );
+
+  /**
    * If the post is a remind this will emit true
    */
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      return entity && !!entity.remind_object;
+      return entity && entity.subtype && entity.subtype === 'remind';
     })
   );
 
@@ -253,11 +269,16 @@ export class ActivityService {
     showEditedTag: false,
     showVisibilityState: false,
     showTranslation: false,
+    showPostMenu: true,
+    showPinnedBadge: true,
+    showMetrics: true,
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
     minimalMode: false,
     bypassMediaModal: false,
+    sidebarMode: false,
+    isFeed: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

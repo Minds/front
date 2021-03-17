@@ -8,13 +8,15 @@
     'm-button--grey': color === 'grey',
     'm-button--blue': color === 'blue',
     'm-button--red': color === 'red',
+    'm-button--primary': color === 'primary',
+    'm-button--secondary': color === 'secondary',
     'm-button--xsmall': size === 'xsmall',
     'm-button--small': size === 'small',
     'm-button--medium': size === 'medium',
     'm-button--large': size === 'large',
     'm-button--overlay': overlay,
     'm-button--iconOnly': iconOnly,
-    'm-button--dropdown': !!dropdown,
+    'm-button--dropdown': !!dropdown && showDropdownMenu,
     'm-pulsating--small': pulsating
   }"
 >
@@ -31,7 +33,7 @@
     <span></span>
   </div>
   <m-dropdownMenu
-    *ngIf="dropdown"
+    *ngIf="dropdown && showDropdownMenu"
     [menu]="dropdown"
     [anchorPosition]="dropdownAnchorPosition"
     triggerClass="m-button__dropdownArrow"

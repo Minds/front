@@ -16,6 +16,7 @@ import {
   OnDestroy,
   AfterViewInit,
   Injector,
+  HostListener,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -28,7 +29,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
@@ -38,6 +39,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
+import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 
 @Component({
   selector: 'm-comment',
@@ -47,6 +49,7 @@ import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal
     '(keydown.esc)': 'editing = false',
   },
   templateUrl: 'comment.component.html',
+  styleUrls: ['comment.component.ng.scss'],
   providers: [
     AttachmentService,
     {
@@ -60,6 +63,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   editing: boolean = false;
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  content: string = '';
 
   @Input('entity') entity;
   @Input('parent') parent;
@@ -100,6 +104,19 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
 
   @Output() onReply = new EventEmitter();
 
+  menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  posterMenuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  // Compact view may be determined by input or window width
+  _compact: boolean = false;
+
+  @Input() set compact(value: boolean) {
+    this._compact = value;
+    if (!value) {
+      this.onResize();
+    }
+  }
+
   constructor(
     public session: Session,
     public client: Client,
@@ -117,7 +134,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     configs: ConfigsService,
     protected toasterService: FormToastService,
     private activityModalCreator: ActivityModalCreatorService,
-    private injector: Injector
+    private injector: Injector,
+    public suggestions: AutocompleteSuggestionsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -135,6 +153,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     if (this.session.getLoggedInUser().guid === this.comment.ownerObj.guid) {
       this.showMature = true;
     }
+
+    this.onResize();
   }
 
   ngAfterViewInit() {
@@ -158,6 +178,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     }
     this.comment = value;
     this.attachment.load(this.comment);
+    this.content = this.comment.description;
 
     this.isTranslatable = this.translationService.isTranslatable(this.comment);
   }
@@ -166,7 +187,14 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.editing = value;
   }
 
-  saveEnabled() {
+  @HostListener('window:resize')
+  onResize() {
+    if (window.innerWidth <= 480) {
+      this._compact = true;
+    }
+  }
+
+  canSave() {
     return (
       !this.inProgress &&
       this.canPost &&
@@ -175,8 +203,19 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     );
   }
 
+  keypress(e: KeyboardEvent) {
+    if (!e.shiftKey && e.charCode === 13) {
+      e.preventDefault();
+      this.applyAndSave(e);
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this.cancel(e);
+    }
+  }
+
   save() {
-    this.comment.description = this.comment.description.trim();
+    this.comment.description = this.content.trim();
 
     if (!this.comment.description && !this.attachment.has()) {
       return;
@@ -206,27 +245,23 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       });
   }
 
-  applyAndSave(control: any, e) {
-    e.preventDefault();
-
-    if (!this.saveEnabled()) {
+  applyAndSave(e) {
+    if (!this.canSave()) {
       this.triedToPost = true;
       return;
     }
 
-    this.comment.description = control.value;
+    this.comment.description = this.content;
     this.save();
   }
 
-  cancel(control: any, e) {
-    e.preventDefault();
-
+  cancel(e) {
     if (this.inProgress) {
       return;
     }
 
     this.editing = false;
-    control.value = this.comment.description;
+    this.content = this.comment.description;
   }
 
   delete() {
@@ -241,7 +276,20 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this._delete.next(true);
   }
 
-  uploadAttachment(file: HTMLInputElement) {
+  async uploadFile(fileInput: HTMLInputElement, event) {
+    if (fileInput.value) {
+      // this prevents IE from executing this code twice
+      try {
+        await this.uploadAttachment(fileInput);
+
+        fileInput.value = null;
+      } catch (e) {
+        fileInput.value = null;
+      }
+    }
+  }
+
+  uploadAttachment(file: HTMLInputElement | File) {
     this.canPost = false;
     this.triedToPost = false;
 
@@ -250,14 +298,20 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       .then(guid => {
         this.canPost = true;
         this.triedToPost = false;
-        file.value = null;
+        if (file instanceof HTMLInputElement) {
+          file.value = null;
+        }
       })
       .catch(e => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
-        file.value = null;
+        if (file instanceof HTMLInputElement) {
+          file.value = null;
+        }
       });
+
+    this.posterMenuOpened$.next(false);
   }
 
   removeAttachment(file: HTMLInputElement) {
@@ -284,6 +338,12 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     }
 
     this.attachment.preview(message.value);
+  }
+
+  resetPreview() {
+    this.canPost = true;
+    this.triedToPost = false;
+    this.attachment.resetRich();
   }
 
   translate($event: any = {}) {
@@ -344,8 +404,20 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.showReplies = !this.showReplies;
   }
 
+  onMenuClick(e: MouseEvent): void {
+    this.menuOpened$.next(true);
+  }
+
+  onPosterMenuClick(e: MouseEvent): void {
+    this.posterMenuOpened$.next(true);
+  }
+
+  toggleExplicit(e: MouseEvent): void {
+    this.attachment.toggleMature();
+    this.posterMenuOpened$.next(false);
+  }
+
   ngOnChanges(changes) {
-    //  console.log('[comment:card]: on changes', changes);
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
@@ -402,12 +474,16 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   openModal() {
     this.activityModalCreator.create(this.comment, this.injector);
   }
+  // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------
 
+  //
   /**
    * Toggles mature visibility.
    */
   toggleMatureVisibility() {
     this.showMature = !this.showMature;
+
+    this.comment.mature_visibility = !this.comment.mature_visibility;
   }
 
   public getAvatarSrc(): Observable<string> {

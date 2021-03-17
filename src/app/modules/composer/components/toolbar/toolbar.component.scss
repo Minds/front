@@ -46,17 +46,9 @@
 
   m-button.m-composerToolbar__action {
     height: 34px;
-  }
-
-  .m-composerToolbar__item {
-    margin-right: 25px;
-
-    @media screen and (max-width: $max-mobile) {
-      margin-right: 40px;
-    }
-
-    @media screen and (max-width: 400px) {
-      margin-right: 0;
+    > button {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
   }
 

@@ -27,6 +27,7 @@ import { TouchSequence } from 'selenium-webdriver';
 @Component({
   selector: 'm-comments__thread',
   templateUrl: 'thread.component.html',
+  styleUrls: ['thread.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CommentsService],
 })
@@ -40,6 +41,8 @@ export class CommentsThreadComponent implements OnInit {
   @Input() conversation: boolean = false;
   @Input() limit: number = 12;
   @Input() level = 0;
+  @Input() compact: boolean = false;
+  @Input() showReplies: boolean = true;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
     true
@@ -317,6 +320,10 @@ export class CommentsThreadComponent implements OnInit {
     this.comments[i].replies_count--;
     this.detectChanges();
     return true;
+  }
+
+  edited(i, e) {
+    // TODO
   }
 
   get isLoggedIn() {

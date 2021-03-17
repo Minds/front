@@ -5,28 +5,7 @@
 >
   <ng-container [ngSwitch]="entity.type">
     <ng-template ngSwitchCase="user">
-      <a [routerLink]="['/', entity.username]">
-        <div
-          class="m-discoveryFeedItem__avatar"
-          [style.background-image]="
-            'url(' + cdnUrl + 'icon/' + entity.guid + ')'
-          "
-        ></div>
-        <div class="m-discoveryFeedItem__body">
-          <h4>{{ entity.name }} (<u>@</u>{{ entity.username }})</h4>
-          <span>{{ entity.subscribers_count | number }} subscribers</span>
-          <p>
-            {{
-              entity.briefdescription.length > 140
-                ? (entity.briefdescription | slice: 0:140) + '..'
-                : entity.briefdescription
-            }}
-          </p>
-        </div>
-        <div class="m-discoveryFeedItem__actions">
-          <minds-button-subscribe [user]="entity"></minds-button-subscribe>
-        </div>
-      </a>
+      <m-channelCard [channel]="entity"></m-channelCard>
     </ng-template>
     <ng-template ngSwitchCase="group">
       <a [routerLink]="['/groups/profile/', entity.guid]">
@@ -61,7 +40,10 @@
     <ng-template ngSwitchDefault>
       <m-activity
         [entity]="entity"
-        [displayOptions]="{ showOnlyCommentsInput: !openComments }"
+        [displayOptions]="{
+          showOnlyCommentsInput: !openComments,
+          isFeed: true
+        }"
         (deleted)="onDelete($event)"
       ></m-activity>
     </ng-template>

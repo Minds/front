@@ -2,111 +2,119 @@
   class="m-comment minds-comment minds-block"
   [class.m-comment--error]="error"
   [class.m-comment--focused]="comment.focused"
+  [class.m-comment--compact]="_compact"
 >
-  <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
-    <a [routerLink]="['/', comment.ownerObj.username]">
-      <img [src]="getAvatarSrc() | async" class="m-border" />
-    </a>
-  </div>
-  <div class="minds-body">
-    <div class="m-comment__bubble">
-      <div class="m-commentBubble__username">
-        <a [routerLink]="['/', comment.ownerObj.username]">
-          <span title="{{ comment.ownerObj.name }}">{{
-            comment.ownerObj.name
-          }}</span>
-          <m-channel--badges
-            class="m-channel--badges-activity"
-            [user]="comment.ownerObj"
-            badges="[ 'admin', 'verified' ]"
-          ></m-channel--badges>
-        </a>
-      </div>
-      <a
-        class="m-mature-text-toggle"
-        (click)="toggleMatureVisibility()"
-        *ngIf="comment.mature"
-        [ngClass]="{ 'm-redButton': showMature }"
-      >
-        <i class="material-icons m-material-icons-inline">explicit</i>
+  <ng-template #avatar>
+    <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
+      <a [routerLink]="['/', comment.ownerObj.username]">
+        <img [src]="getAvatarSrc() | async" class="m-border" />
       </a>
+    </div>
+  </ng-template>
+  <div *ngIf="!_compact" class="m-comment__avatarWrapper">
+    <ng-container *ngTemplateOutlet="avatar"></ng-container>
+  </div>
 
+  <div class="minds-body">
+    <!-- --OWNER ROW ----------------------------- -->
+    <div class="m-comment__ownerRow">
+      <div *ngIf="_compact" class="m-comment__avatarWrapper--compact">
+        <ng-container *ngTemplateOutlet="avatar"></ng-container>
+      </div>
+      <div class="m-commentOwnerRow__text m-legible">
+        <ng-container *ngIf="!_compact">
+          <ng-container *ngTemplateOutlet="owner"></ng-container>
+          <ng-container *ngTemplateOutlet="metrics"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="_compact">
+          <div>
+            <ng-container *ngTemplateOutlet="owner"></ng-container>
+          </div>
+          <div>
+            <ng-container *ngTemplateOutlet="metrics"></ng-container>
+          </div>
+        </ng-container>
+
+        <ng-template #owner>
+          <a
+            class="m-commentOwnerRowItem__name"
+            [routerLink]="['/', comment.ownerObj.username]"
+            title="{{ comment.ownerObj.name }}"
+            >{{ comment.ownerObj.name }}</a
+          ><span class="m-commentOwnerRow__dot">·</span>
+          <a
+            class="m-commentOwnerRowItem__username"
+            [routerLink]="['/', comment.ownerObj.username]"
+            title="@{{ comment.ownerObj.username }}"
+            >@{{ comment.ownerObj.username
+            }}<m-channel--badges
+              class="m-channel--badges-activity"
+              [user]="comment.ownerObj"
+              badges="[ 'admin', 'verified' ]"
+            ></m-channel--badges
+          ></a>
+        </ng-template>
+
+        <ng-template #metrics>
+          <span class="m-commentOwnerRow__dot" *ngIf="!_compact">·</span>
+          <span
+            class="m-comment__timestamp m-commentOwnerRowItem__timestamp"
+            [title]="comment.time_created * 1000 | date: 'medium'"
+            *ngIf="commentAge$ | async as commentAge"
+            >{{ commentAge | friendlydatediff }}</span
+          >
+          <ng-container *ngIf="comment.edited">
+            <span class="m-commentOwnerRow__dot">·</span>
+            <span
+              class="m-edited-text m-commentOwnerRowItem__edited"
+              i18n="@@M__COMMON__EDITED"
+              >Edited</span
+            ></ng-container
+          >
+          <ng-container
+            *ngIf="
+              attachment.isMature() &&
+              comment.owner_guid === session.getLoggedInUser()?.guid
+            "
+          >
+            <span class="m-commentOwnerRow__dot">·</span>
+            <span title="Mature content"
+              ><i
+                class="material-icons m-material-icons-inline m-commentOwnerRowItem__explicit"
+                >explicit</i
+              >
+            </span></ng-container
+          >
+        </ng-template>
+      </div>
+    </div>
+    <!-- ---------------------------------------- -->
+
+    <div class="m-comment__matureScreen" *ngIf="comment.mature && !showMature">
+      <span>This comment has been tagged as explicit</span>
+      <span (click)="toggleMatureVisibility()">View comment</span>
+    </div>
+    <div
+      class="m-comment__messageWrapper"
+      m-read-more
+      [maxHeightAllowed]="120"
+      *ngIf="!comment.mature || showMature"
+    >
       <p
         [hidden]="editing"
-        class="m-commentBubble__message m-mature-message-content"
+        class="m-comment__message m-mature-message-content"
         [innerHtml]="comment.description || '' | tags | codeHighlight"
         [ngClass]="{ 'm-mature-text': comment.mature && !showMature }"
-        (click)="!showMature ? toggleMatureVisibility() : null"
       ></p>
-
-      <m-translate
-        [open]="translateToggle"
-        [entity]="comment"
-        (onTranslate)="translateToggle = false"
-        (onTranslateError)="translateToggle = false"
-        #translate
-      ></m-translate>
+      <m-read-more--button [v2]="true"></m-read-more--button>
     </div>
-
-    <button
-      class="m-comment__ribbonBtn"
-      [ngClass]="{ 'm-comment__ribbonBtn--collapsed': !toggle.value }"
-      (click)="toggle.value = !toggle.value"
-    >
-      <i class="material-icons">{{
-        !toggle.value ? 'more_vert' : 'keyboard_arrow_left'
-      }}</i>
-    </button>
-
-    <ul class="m-comment__ribbon" [hidden]="!toggle.value" #toggle>
-      <li
-        class="m-commentRibbon__item"
-        *ngIf="
-          comment.owner_guid == session.getLoggedInUser()?.guid ||
-          session.isAdmin() ||
-          canEdit
-        "
-        (click)="editing = !editing; toggle.value = false"
-        title="Edit"
-        i18n-title="@@M__ACTION__EDIT"
-      >
-        <i class="material-icons">edit</i>
-      </li>
-      <li
-        class="m-commentRibbon__item"
-        *ngIf="isTranslatable && !editing"
-        (click)="translateToggle = true; toggle.value = false"
-        title="Translate"
-        i18n-title="@@M__ACTION__TRANSLATE"
-      >
-        <i class="material-icons">public</i>
-      </li>
-      <li
-        class="m-commentRibbon__item"
-        *ngIf="
-          comment.owner_guid == session.getLoggedInUser()?.guid ||
-          session.isAdmin() ||
-          parent.owner_guid == session.getLoggedInUser()?.guid ||
-          canDelete
-        "
-        (click)="delete(); toggle.value = false"
-        title="Delete"
-        i18n-title="@@M__ACTION__DELETE"
-      >
-        <i class="material-icons">delete</i>
-      </li>
-      <li
-        class="m-commentRibbon__item"
-        *ngIf="
-          !editing && comment.owner_guid != session.getLoggedInUser()?.guid
-        "
-        (click)="showReport()"
-        title="Report"
-        i18n-title="verb|@@M__ACTION__REPORT"
-      >
-        <i class="material-icons">flag</i>
-      </li>
-    </ul>
+    <m-translate
+      [open]="translateToggle"
+      [entity]="comment"
+      (onTranslate)="translateToggle = false"
+      (onTranslateError)="translateToggle = false"
+      #translate
+    ></m-translate>
 
     <div class="m-comment__attachment">
       <div
@@ -120,17 +128,14 @@
       >
         <!-- Rich content -->
         <div
-          class="m-rich-embed m-border cf"
+          class="m-rich-embed cf"
           *ngIf="comment.perma_url && comment.title"
           [ngClass]="{
             'm-mature-content': attachment.shouldBeBlurred(comment),
             'm-mature-content-shown': attachment.isForcefullyShown(comment)
           }"
         >
-          <div
-            class="m-mature-overlay"
-            (click)="comment.mature_visibility = !comment.mature_visibility"
-          >
+          <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
             <span class="m-mature-overlay-note m-mature-overlay-note-smaller">
               <i
                 class="material-icons"
@@ -138,8 +143,8 @@
                 i18n-title="@@M__COMMON__MATURE_CONTENT"
                 >explicit</i
               >
-              <span i18n="@@M__COMMON__CONFIRM_18"
-                >Click to confirm you are 18+</span
+              <span i18n="@@M__COMMON__CONFIRM_EXPLICIT"
+                >Click to view explicit content</span
               >
             </span>
           </div>
@@ -160,10 +165,7 @@
           }"
           *ngIf="comment.custom_type == 'video'"
         >
-          <div
-            class="m-mature-overlay"
-            (click)="comment.mature_visibility = !comment.mature_visibility"
-          >
+          <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
             <span class="m-mature-overlay-note">
               <i
                 class="material-icons"
@@ -171,8 +173,8 @@
                 i18n-title="@@M__COMMON__MATURE_CONTENT"
                 >explicit</i
               >
-              <span i18n="@@M__COMMON__CONFIRM_18"
-                >Click to confirm you are 18+</span
+              <span i18n="@@M__COMMON__CONFIRM_EXPLICIT"
+                >Click to view explicit content</span
               >
             </span>
           </div>
@@ -194,10 +196,7 @@
           }"
           *ngIf="!editing && comment.custom_type == 'batch'"
         >
-          <div
-            class="m-mature-overlay"
-            (click)="comment.mature_visibility = !comment.mature_visibility"
-          >
+          <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
             <span class="m-mature-overlay-note">
               <i
                 class="material-icons"
@@ -205,8 +204,8 @@
                 i18n-title="@@M__COMMON__MATURE_CONTENT"
                 >explicit</i
               >
-              <span i18n="@@M__COMMON__CONFIRM_18"
-                >Click to confirm you are 18+</span
+              <span i18n="@@M__COMMON__CONFIRM_EXPLICIT"
+                >Click to view explicit content</span
               >
             </span>
           </div>
@@ -235,28 +234,41 @@
         </div>
       </div>
 
-      <!-- Edit mode -->
-
+      <!-- ---------------------------------------- -->
+      <!-- --EDIT MODE----------------------------- -->
+      <!-- ---------------------------------------- -->
       <ng-container *ngIf="editing">
-        <div class="minds-editable-container">
-          <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-          <textarea
-            class="mdl-card__supporting-text message"
-            name="description"
-            [ngModel]="comment.description"
-            #edit
-            [autoGrow]
-            (keydown.enter)="applyAndSave(edit, $event)"
-            (keydown.esc)="cancel(edit, $event)"
-            (keyup)="getPostPreview(edit)"
-            [disabled]="inProgress"
-          ></textarea>
-          <span
-            class="minds-comment-span m-comment__pressEscape"
-            *ngIf="canPost"
-            i18n="@@MINDS__CARDS__COMMENT__PRESS_ESC_TO_CANCEL"
-            >Press ESC to cancel</span
-          >
+        <div class="m-commentPoster__wrapper m-commentPoster__wrapper--editing">
+          <form (submit)="post($event)" class="m-commentPoster__form">
+            <ng-template
+              #itemTemplate
+              let-choice="choice"
+              let-selectChoice="selectChoice"
+            >
+              <m-post-autocomplete-item-renderer
+                [choice]="choice"
+                [selectChoice]="selectChoice"
+              ></m-post-autocomplete-item-renderer>
+            </ng-template>
+            <m-text-input--autocomplete-container>
+              <minds-textarea
+                #edit
+                name="description"
+                [(mModel)]="content"
+                [disabled]="inProgress"
+                (keypress)="keypress($event)"
+                (keyup)="getPostPreview(edit)"
+                (filePaste)="uploadAttachment($event)"
+                mTextInputAutocomplete
+                [findChoices]="suggestions.findSuggestions"
+                [getChoiceLabel]="suggestions.getChoiceLabel"
+                [itemTemplate]="itemTemplate"
+                [triggerCharacters]="['#', '@']"
+                tabindex="0"
+              ></minds-textarea>
+            </m-text-input--autocomplete-container>
+          </form>
+
           <div
             class="minds-comment-span mdl-color-text--red-500"
             *ngIf="!canPost && triedToPost"
@@ -265,153 +277,291 @@
               >Please wait until the upload is complete.</ng-container
             >
           </div>
+          <!-- --------------------- -->
+          <!-- ACTIONS -->
+          <!-- --------------------- -->
+          <div class="mdl-card__actions m-commentPoster__actions">
+            <div>
+              <!-- Dropdown meatball -->
+              <div class="m-dropdown--v2">
+                <div
+                  class="m-commentPoster__menuButton"
+                  (click)="onPosterMenuClick($event)"
+                >
+                  <i class="material-icons">more_vert</i>
+                </div>
 
-          <div class="mdl-card__actions">
-            <!-- Attachements -->
-            <div class="attachment-button">
-              <i
-                class="material-icons"
-                [ngClass]="{ 'mdl-color-text--grey-700': attachment.hasFile() }"
-                >insert_photo</i
+                <ul class="m-dropdown__list" *ngIf="posterMenuOpened$ | async">
+                  <!-- --------------------- -->
+                  <!-- Attach a file -->
+                  <!-- --------------------- -->
+                  <li class="m-dropdownList__item">
+                    <a class="attachment-button">
+                      <i class="material-icons">insert_photo</i>
+                      <span i18n="@@M__COMMENT_ACTIONS__ATTACH"
+                        >Attach media</span
+                      >
+                      <input
+                        type="file"
+                        id="file"
+                        #fileInput
+                        name="attachment"
+                        (change)="uploadFile(fileInput, $event)"
+                      />
+                    </a>
+                  </li>
+                  <!-- --------------------- -->
+                  <!-- Mark as explicit -->
+                  <!-- --------------------- -->
+                  <li class="m-dropdownList__item">
+                    <a (click)="toggleExplicit($event)">
+                      <i
+                        class="material-icons"
+                        [ngClass]="{
+                          'm-redButton': attachment.isMature()
+                        }"
+                        >explicit</i
+                      >
+                      <span
+                        *ngIf="!attachment.isMature()"
+                        i18n="@@M__COMMENT_ACTIONS__EXPLICIT"
+                        >Mark as explicit</span
+                      >
+                      <span
+                        *ngIf="attachment.isMature()"
+                        i18n="@@M__COMMENT_ACTIONS__REMOVE_EXPLICIT"
+                        >Remove explicit</span
+                      >
+                    </a>
+                  </li>
+                  <!-- --------------------- -->
+                  <!-- Cancel editing -->
+                  <!-- --------------------- -->
+                  <li
+                    class="m-dropdownList__item m-dropdownList__item--destructive"
+                  >
+                    <div
+                      (click)="
+                        cancel(edit, $event); posterMenuOpened$.next(false)
+                      "
+                    >
+                      <i class="material-icons">clear</i>
+                      <span i18n="@@M__COMMENT_ACTIONS__CANCEL_EDITING"
+                        >Cancel editing</span
+                      >
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="m-bgOverlay--v2"
+                (click)="posterMenuOpened$.next(false)"
+                *ngIf="posterMenuOpened$ | async"
+              ></div>
+              <!-- --------------------- -->
+              <!-- Post  -->
+              <!-- --------------------- -->
+              <a
+                class="m-post-button m-commentPoster__postButton"
+                (click)="applyAndSave(edit, $event)"
+                [ngClass]="{ 'm-button-disabled': !canSave() }"
               >
-              <input
-                type="file"
-                id="file"
-                #fileInput
-                name="attachment"
-                (change)="uploadAttachment(fileInput)"
-              />
+                <i class="material-icons">send</i>
+              </a>
             </div>
-
-            <a
-              class="m-mature-button"
-              (click)="attachment.toggleMature()"
-              title="Mature content"
-              i18n-title="@@M__COMMON__MATURE_CONTENT"
+            <!-- --------------------- -->
+            <!-- Character count -->
+            <!-- --------------------- -->
+            <div
+              [class.hidden]="comment.description.length < 140"
+              class="m-commentPoster__limit"
+              [class.m-commentPoster__limit--maxed]="
+                comment.description.length > 1500
+              "
             >
-              <i
-                class="material-icons"
-                [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-                >explicit</i
-              >
-            </a>
+              <span class="m-commentPosterLimit__inputed">
+                {{ comment.description.length }}
+              </span>
+              <span> / 1500</span>
+            </div>
+          </div>
+          <!-- --------------------- -->
+          <!-- END ACTIONS  -->
+          <!-- --------------------- -->
+        </div>
 
-            <a
-              class="m-post-button"
-              (click)="applyAndSave(edit, $event)"
-              [ngClass]="{ 'm-button-disabled': !saveEnabled() }"
-            >
-              <i class="material-icons">send</i>
-            </a>
+        <!-- --------------------- -->
+        <!-- Rich embed preview -->
+        <!-- --------------------- -->
+
+        <div class="post-preview" *ngIf="attachment.isRich()">
+          <div
+            class="mdl-spinner mdl-js-spinner is-active"
+            [mdl]
+            [hidden]="attachment.getMeta().title"
+          ></div>
+          <div
+            class="m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed"
+          >
+            <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
+              <minds-rich-embed
+                [preview]="attachment.getMeta()"
+                [cropImage]="true"
+                [maxheight]="240"
+              ></minds-rich-embed>
+              <div class="attachment-preview-delete" (click)="resetPreview()">
+                <i class="material-icons">clear</i>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="m-editable-attachment-container">
-          <!-- Attachment preview -->
+        <!-- --------------------- -->
+        <!-- Attachment preview -->
+        <!-- --------------------- -->
+        <div
+          class="post-preview"
+          *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
+          (click)="removeAttachment(fileInput)"
+        >
           <div
-            class="post-preview"
-            *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"
-            (click)="removeAttachment(fileInput)"
-          >
-            <div
-              class="mdl-progress mdl-js-progress"
-              [mdlUpload]
-              [progress]="attachment.getUploadProgress()"
-              [hidden]="attachment.getUploadProgress() == 0"
-              [ngClass]="{ complete: attachment.getUploadProgress() == 100 }"
-            ></div>
+            *ngIf="attachment.hasFile()"
+            class="mdl-progress mdl-js-progress"
+            [mdlUpload]
+            [progress]="attachment.progress | async"
+            [hidden]="(attachment.progress | async) == 0"
+            [ngClass]="{ complete: (attachment.progress | async) == 100 }"
+          ></div>
+          <div class="m-attachmentPreviewWrapper">
             <div
               *ngIf="attachment.getMime() == 'video'"
-              class="attachment-preview video-placeholder mdl-color--blue-grey-600"
+              class="attachment-preview video-placeholder"
             >
               <i class="material-icons">videocam</i>
             </div>
             <img
               *ngIf="attachment.getMime() != 'video'"
               [src]="attachment.getPreview()"
-              class="attachment-preview mdl-shadow--2dp"
+              class="attachment-preview"
             />
-            <div class="attachment-preview-delete">
-              <i class="material-icons">delete</i>
-            </div>
-          </div>
-
-          <!-- Rich embed preview -->
-          <div class="post-preview" *ngIf="attachment.isRich()">
-            <div
-              class="mdl-spinner mdl-js-spinner is-active"
-              [mdl]
-              [hidden]="attachment.getMeta().title"
-            ></div>
-            <div
-              class="m-rich-embed mdl-shadow--2dp cf"
-              *ngIf="attachment.getMeta().title"
-            >
-              <minds-rich-embed
-                [preview]="attachment.getMeta()"
-                [cropImage]="true"
-              ></minds-rich-embed>
+            <div *ngIf="attachment.hasFile()" class="attachment-preview-delete">
+              <i class="material-icons">clear</i>
             </div>
           </div>
         </div>
       </ng-container>
+      <!-- ---------------------------------------- -->
+      <!-- END EDIT MODE -------------------------- -->
+      <!-- ---------------------------------------- -->
     </div>
-
+    <!-- --------------------- -->
     <div class="m-comment__toolbar" *ngIf="comment?.guid">
-      <div class="m-commentToolbar__buttons" [hidden]="editing || hideToolbar">
+      <div
+        class="m-commentToolbar__buttons m-legible"
+        [hidden]="editing || hideToolbar"
+      >
         <minds-button-thumbs-up
+          class="m-commentToolbarButton"
           [object]="comment"
           [class.has-count]="comment['thumbs:up:count'] > 0"
         ></minds-button-thumbs-up>
-        <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
-        <span
-          class="m-clickable"
-          [class.selected]="comment.replies_count > 0"
+        <minds-button-thumbs-down
+          class="m-commentToolbarButton"
+          [object]="comment"
+        ></minds-button-thumbs-down>
+        <div
+          class="m-commentToolbarButton"
           (click)="toggleReplies()"
-          *ngIf="comment.can_reply"
+          *ngIf="comment.can_reply && session.isLoggedIn()"
         >
-          <i
-            *ngIf="
-              comment.replies_count > 0 ||
-              (activityService.allowComment$ | async)
-            "
-            class="material-icons"
-            >reply</i
+          <a
+            ><span *ngIf="activityService.allowComment$ | async">Reply</span></a
           >
-          <span *ngIf="comment.replies_count > 0"
-            >{{ comment.replies_count }} Replies</span
-          >
-          <span
-            *ngIf="
-              comment.replies_count <= 0 &&
-              (activityService.allowComment$ | async)
-            "
-            >Reply</span
-          >
-        </span>
+        </div>
       </div>
+      <div>
+        <!-- --------------------- -->
+        <!-- Meatball menu  -->
+        <!-- --------------------- -->
+        <div class="m-dropdown--v2" [hidden]="editing">
+          <div class="m-comment__menuButton" (click)="onMenuClick($event)">
+            <i class="material-icons">more_vert</i>
+          </div>
 
-      <span
-        [title]="comment.time_created * 1000 | date: 'medium'"
-        class="m-commentToolbar__timestamp"
-        *ngIf="commentAge$ | async as commentAge"
-        >{{ commentAge | friendlydatediff }}</span
-      >
-      <span
-        *ngIf="comment.edited"
-        class="m-edited-text"
-        i18n="@@M__COMMON__EDITED"
-        >edited</span
+          <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
+            <!-- Edit -->
+            <li
+              class="m-dropdownList__item"
+              *ngIf="
+                comment.owner_guid == session.getLoggedInUser()?.guid ||
+                session.isAdmin() ||
+                canEdit
+              "
+              (click)="editing = !editing; menuOpened$.next(false)"
+            >
+              <span i18n="@@M__ACTION__EDIT">Edit</span>
+            </li>
+            <!-- Translate -->
+            <li
+              class="m-dropdownList__item"
+              *ngIf="isTranslatable && !editing"
+              (click)="translateToggle = true; menuOpened$.next(false)"
+            >
+              <span i18n="@@M__ACTION__TRANSLATE">Translate</span>
+            </li>
+            <!-- Delete -->
+            <li
+              class="m-dropdownList__item m-dropdownList__item--destructive"
+              *ngIf="
+                comment.owner_guid == session.getLoggedInUser()?.guid ||
+                session.isAdmin() ||
+                parent.owner_guid == session.getLoggedInUser()?.guid ||
+                canDelete
+              "
+              (click)="delete(); menuOpened$.next(false)"
+            >
+              <span i18n="@@M__ACTION__DELETE">Delete</span>
+            </li>
+            <!-- Report -->
+            <li
+              class="m-dropdownList__item m-dropdownList__item--destructive"
+              *ngIf="
+                !editing &&
+                comment.owner_guid != session.getLoggedInUser()?.guid
+              "
+              (click)="showReport(); menuOpened$.next(false)"
+            >
+              <span i18n="verb|@@M__ACTION__REPORT">Report</span>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-bgOverlay--v2"
+          (click)="menuOpened$.next(false); posterMenuOpened$.next(false)"
+          *ngIf="(menuOpened$ | async) || (posterMenuOpened$ | async)"
+        ></div>
+      </div>
+    </div>
+    <div
+      class="m-comment__repliesToggle m-legible"
+      *ngIf="comment.replies_count > 0"
+    >
+      <span (click)="toggleReplies()"
+        ><ng-container *ngIf="!showReplies"
+          >View {{ comment.replies_count }}
+          {{ comment.replies_count > 1 ? 'replies' : 'reply' }}</ng-container
+        ><ng-container *ngIf="showReplies">Hide replies</ng-container></span
       >
     </div>
-
+    <!-- --------------------- -->
     <m-comments__thread
       [entity]="entity"
       [parent]="comment"
       [level]="level + 1"
       [canEdit]="canEdit"
       [canDelete]="canDelete"
-      *ngIf="showReplies && comment.can_reply"
+      [showReplies]="showReplies"
+      *ngIf="comment.can_reply && showReplies"
     >
     </m-comments__thread>
   </div>

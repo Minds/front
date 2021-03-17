@@ -97,25 +97,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  touchStart() {
-    this.isTouchScreen = true;
-  }
-
-  mouseEnter() {
-    if (this.session.isLoggedIn()) {
-      this.timeout = setTimeout(() => {
-        if (!this.isTouchScreen) {
-          this.themeService.toggleUserThemePreference();
-        }
-      }, 5000);
-    }
-  }
-
-  mouseLeave() {
-    clearTimeout(this.timeout);
-  }
-
-  toggleSidebarNav() {
+  /**
+   * Toggles sidebar navigation open.
+   * @param { void }
+   */
+  public toggleSidebarNav(): void {
     this.sidebarService.toggle();
   }
 

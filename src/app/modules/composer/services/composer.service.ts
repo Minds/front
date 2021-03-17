@@ -173,6 +173,10 @@ export type LicenseSubjectValue = string;
  */
 export const DEFAULT_LICENSE_VALUE: LicenseSubjectValue = 'all-rights-reserved';
 
+export type ComposerSize = 'compact' | 'full';
+
+export const DEFAULT_COMPOSER_SIZE: ComposerSize = 'full';
+
 /**
  * Payload data object. Used to build the DTO
  */
@@ -344,6 +348,15 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
+   * If we are editing and we have a scheduled value
+   */
+  readonly canSchedule$ = combineLatest([this.schedule$, this.isEditing$]).pipe(
+    map(([schedule, isEditing]) => {
+      return !isEditing || schedule * 1000 > Date.now();
+    })
+  );
+
+  /**
    * Are we currently moving part of this service's state to another place? (i.e. blog editor)
    */
   readonly isMovingContent$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -368,6 +381,13 @@ export class ComposerService implements OnDestroy {
    * Tag count subject
    */
   readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  /**
+   * Size of composer
+   */
+  readonly size$: BehaviorSubject<ComposerSize> = new BehaviorSubject<
+    ComposerSize
+  >(DEFAULT_COMPOSER_SIZE);
 
   /**
    * URL in the message
@@ -821,7 +841,11 @@ export class ComposerService implements OnDestroy {
     const payload = this.payload;
 
     // Clean up attachment ONLY if the new entity GUID is different from the original source, if any
-    if (payload.entity_guid && !this.isOriginalEntity(payload.entity_guid)) {
+    if (
+      payload &&
+      payload.entity_guid &&
+      !this.isOriginalEntity(payload.entity_guid)
+    ) {
       this.attachment.prune(payload.entity_guid);
     }
 

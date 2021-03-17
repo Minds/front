@@ -37,7 +37,7 @@ lint:
   image: cypress/browsers:node12.13.0-chrome80-ff74
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 6.0.1
+    CYPRESS_INSTALL_BINARY: 6.6.0
   script:
     - npm ci
     - >
@@ -49,7 +49,17 @@ lint:
         export PRODUCTION=false
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
-    - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
+    - echo "Preparing E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
+    - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/cypress-tests.git
+    - echo "Checking if branch exists..."
+    - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
+    - if [ $BRANCH_EXISTS == "1" ] ; then
+    -    echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..." 
+    -    cd ./cypress-tests
+    -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
+    -    cd ..
+    - fi;
+    - echo "Running Cypress"
     - >
       $(npm bin)/cypress run --browser chrome
       --parallel
@@ -57,7 +67,7 @@ lint:
       --ci-build-id $CI_PIPELINE_ID
       --group "minds-e2e"
       --key $CYPRESS_RECORD_ID
-      --config CYPRESS_baseUrl=$E2E_DOMAIN
+      --config baseUrl=$E2E_DOMAIN
       --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION,captcha_shared_key=$CYPRESS_shared_key
   artifacts:
     when: always

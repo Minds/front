@@ -24,7 +24,7 @@
       #messageEl
       m-read-more
       class="m-activityContent__message"
-      [class.m-activityContent__message--remind]="entity.remind_object"
+      [class.m-activityContent__message--quote]="entity.remind_object"
       [class.m-activityContent__message--richEmbed]="isRichEmbed"
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="shortStatus"
@@ -103,6 +103,7 @@
         !(service.shouldShowPaywall$ | async)
       "
       [style.height]="videoHeight"
+      [isModal]="isModal"
       [style.overflow]="videoHeight ? 'hidden' : null"
     ></m-videoPlayer--scrollaware>
 
@@ -184,7 +185,7 @@
 
 <ng-container *ngIf="!hideMedia">
   <div
-    *ngIf="service.isRemind$ | async"
+    *ngIf="service.isQuote$ | async"
     class="m-activityContent__remind"
     [class.m-activityContent__remind--hasMessage]="!!message"
     [class.m-activityContent__remind--minimalMode]="minimalMode"
@@ -199,12 +200,6 @@
     >
     </m-activity__remind>
   </div>
-</ng-container>
-<!-- ----------------------------------- -->
-<!--QUOTE MESSAGE -->
-<!-- ----------------------------------- -->
-<ng-container *ngIf="!hideText && isQuote && isModal">
-  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container>
 </ng-container>
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: TRANSLATION -->

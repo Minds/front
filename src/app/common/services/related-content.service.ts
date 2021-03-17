@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ActivityEntity } from '../../modules/newsfeed/activity/activity.service';
 import { Client } from '../../services/api/client';
 import { EntitiesService } from './entities.service';
 
@@ -50,6 +51,16 @@ interface RelatedContentChange {
 }
 
 /**
+ * Types of filter for feed, appended to end of v2/feeds/container URL.
+ */
+type FilterType = 'all' | 'videos' | 'activities';
+
+/**
+ * Default value for filter.
+ */
+const DEFAULT_FILTER_VALUE = 'activities';
+
+/**
  * This service allow retrieving entities to navigate through a horizontal feed whose entities will be loaded
  * one by one in specialized components.
  *
@@ -83,6 +94,11 @@ export class RelatedContentService {
   constructor(protected client: Client, protected entities: EntitiesService) {}
 
   /**
+   * Filter the feed by filter type.
+   */
+  private filter: FilterType = DEFAULT_FILTER_VALUE;
+
+  /**
    * Sets the current context and resets
    * @param context
    */
@@ -90,6 +106,14 @@ export class RelatedContentService {
     this.context = context;
     this.reset();
     return this;
+  }
+
+  /**
+   * Gets Base Entity
+   * @returns entity
+   */
+  getBaseEntity(): any {
+    return this.baseEntity;
   }
 
   /**
@@ -108,6 +132,15 @@ export class RelatedContentService {
    */
   setLimit(limit: number): RelatedContentService {
     this.limit = limit;
+    return this;
+  }
+
+  /**
+   * Sets filter to set class to request specific content types.
+   * @param { FilterType } filter - entity type to be returned by fetch.
+   */
+  setFilter(filter: FilterType): RelatedContentService {
+    this.filter = filter;
     return this;
   }
 
@@ -241,6 +274,29 @@ export class RelatedContentService {
   }
 
   /**
+   * Gets next fetched entity.
+   * @returns { ActivityEntity } - next fetched entity.
+   */
+  getNextEntity(): ActivityEntity {
+    try {
+      const index = this.cursor + 1;
+
+      if (index === 0) {
+        return this.baseEntity;
+      }
+
+      const entities =
+        index < 0 ? this.pools.prev.entities : this.pools.next.entities;
+
+      const entity = entities[Math.abs(index) - 1] || null;
+
+      return entity.entity;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
    * Internal method that fires a change event
    * @private
    */
@@ -293,7 +349,9 @@ export class RelatedContentService {
     const baseEntity = this.baseEntity;
     const baseEntityTimestamp = baseEntity.time_created * 1000;
     const guid = baseEntity.container_guid || baseEntity.owner_guid;
-    const endpoint = `api/v2/feeds/container/${guid}/activities`;
+
+    const filter = this.filter ? this.filter : 'activities';
+    const endpoint = `api/v2/feeds/container/${guid}/${filter}`;
 
     const params = {
       sync: 1,
@@ -385,7 +443,12 @@ export class RelatedContentService {
       cache: true,
     })) as any;
 
-    // don't return reminds or non-activities
+    // if video only feed, return
+    if (this.filter === 'videos') {
+      return response.entities.length ? response.entities : [];
+    }
+
+    // else, don't return reminds or non-activities
     if (response && response.entities && response.entities.length) {
       const responseEntities = response.entities.filter(
         e =>
@@ -394,8 +457,8 @@ export class RelatedContentService {
           (e.entity.entity_guid || e.entity.message)
       );
 
-      if (responseEntities.length) {
-        return responseEntities;
+      if (response.entities.length) {
+        return response.entities;
       }
     }
 

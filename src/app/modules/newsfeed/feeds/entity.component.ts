@@ -24,7 +24,7 @@ export class NewsfeedEntityComponent {
   @ViewChild(DynamicHostDirective)
   host: DynamicHostDirective;
   entity;
-  @Input() displayOptions = { v2: false };
+  @Input() displayOptions = { v2: false, isFeed: true };
 
   constructor(
     protected componentFactoryResolver: ComponentFactoryResolver,
