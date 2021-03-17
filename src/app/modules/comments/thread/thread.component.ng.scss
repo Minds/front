@@ -8,8 +8,14 @@
     }
   }
 
+  .m-comments__spinner {
+    display: block;
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+  }
+
   .m-comments__thread--topLevel {
-    margin-left: 4px;
     ::ng-deep {
       > m-comment {
         .m-comment {
