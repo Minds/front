@@ -119,6 +119,7 @@
 
   .m-plusSubscription__button {
     display: flex;
+    align-items: center;
     margin-bottom: 50px;
 
     @media screen and (max-width: $min-tablet) {
@@ -130,7 +131,7 @@
       }
 
       .m-plusSubscriptionButton__notice {
-        margin-top: 20px;
+        margin: 20px 0 0 0;
         max-width: none;
       }
     }
@@ -142,6 +143,7 @@
   .m-plusSubscriptionButton__notice {
     max-width: 175px;
     line-height: 20px;
+    margin-left: 10px;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

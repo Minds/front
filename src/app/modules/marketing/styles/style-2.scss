@@ -147,6 +147,9 @@
 
         @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
           width: 338px;
+          &.m-marketing__image--tall {
+            width: 348px;
+          }
         }
 
         @media screen and (max-width: $m-grid-max-mobile) {

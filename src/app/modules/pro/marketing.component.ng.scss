@@ -1,4 +1,7 @@
-m-pro__marketing {
+@import 'defaults.scss';
+@import '../../foundation/grid-values.scss';
+
+:host {
   grid-area: content / span 2;
 
   .m-pro__marketing {
