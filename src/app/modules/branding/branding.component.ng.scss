@@ -1,6 +1,12 @@
 @import 'defaults.scss';
 
 :host {
+  ::ng-deep {
+    m-marketing__footer {
+      margin-top: 0 !important;
+    }
+  }
+
   .m-branding {
     padding: 0 45px 100px 45px;
 
