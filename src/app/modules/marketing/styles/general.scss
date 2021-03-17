@@ -142,7 +142,7 @@
   }
 
   .m-marketing__links {
-    @media screen and (max-width: $m-grid-min-vp) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       text-align: center;
     }
 
@@ -344,6 +344,13 @@
           width: 600px !important;
         }
       }
+    }
+  }
+
+  @media screen and (max-width: $m-grid-max-mobile) {
+    .m-marketing__buttonWrapper {
+      display: flex;
+      justify-content: center;
     }
   }
 }
