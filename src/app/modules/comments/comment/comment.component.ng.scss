@@ -83,7 +83,7 @@
           text-overflow: ellipsis;
         }
         &.m-commentOwnerRowItem__name {
-          font-weight: 700;
+          font-weight: 600;
           @include m-theme() {
             color: themed($m-textColor--primary);
           }
@@ -164,7 +164,7 @@
   .m-comment__messageWrapper {
     ::ng-deep m-read-more--button {
       span {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 15px;
         text-transform: capitalize;
         letter-spacing: inherit;
@@ -203,10 +203,17 @@
 
     ::ng-deep {
       .m-commentToolbarButton {
-        margin-right: 30px;
+        margin-right: 20px;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         cursor: pointer;
+
+        transition: 0.15s color ease-out;
+
+        &:last-child {
+          margin-left: 10px;
+          margin-right: 0;
+        }
 
         > a {
           @include m-theme() {
@@ -237,7 +244,7 @@
           font-size: 15px;
           line-height: 20px;
           vertical-align: middle;
-          font-weight: 700;
+          font-weight: 500;
         }
       }
     }
@@ -248,7 +255,7 @@
     span {
       font-size: 15px;
       line-height: 20px;
-      font-weight: 700;
+      font-weight: 500;
       cursor: pointer;
       @include m-theme() {
         color: themed($m-link);
