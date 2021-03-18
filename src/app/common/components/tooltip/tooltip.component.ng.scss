@@ -26,7 +26,7 @@ $triangleLong: 10px;
       &.m-tooltip--bubble--anchor-left {
         top: 0;
         &::after {
-          top: 7%;
+          top: 5px;
           @include m-theme() {
             border-top: $triangleShort solid transparent;
             border-bottom: $triangleShort solid transparent;
@@ -36,29 +36,30 @@ $triangleLong: 10px;
 
       &.m-tooltip--bubble--anchor-right {
         left: 100%;
-        margin-left: 10px;
+        margin-left: 15px;
         &::after {
           right: 100%;
           @include m-theme() {
-            border-right: $triangleLong solid themed($m-bgColor--primary);
+            border-right: $triangleLong solid $blue;
           }
         }
       }
       &.m-tooltip--bubble--anchor-left {
         right: 100%;
-        margin-right: 10px;
+        margin-right: 15px;
         &::after {
           left: 100%;
           @include m-theme() {
-            border-left: $triangleLong solid themed($m-bgColor--primary);
+            border-left: $triangleLong solid $blue;
           }
         }
       }
 
       &.m-tooltip--bubble--anchor-bottom,
       &.m-tooltip--bubble--anchor-top {
+        left: -7px;
         &::after {
-          left: 7%;
+          left: 5px;
           @include m-theme() {
             border-left: $triangleShort solid transparent;
             border-right: $triangleShort solid transparent;
@@ -68,21 +69,21 @@ $triangleLong: 10px;
 
       &.m-tooltip--bubble--anchor-bottom {
         bottom: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         &::after {
           top: 100%;
           @include m-theme() {
-            border-top: $triangleLong solid themed($m-bgColor--primary);
+            border-top: $triangleLong solid $blue;
           }
         }
       }
       &.m-tooltip--bubble--anchor-top {
         top: 100%;
-        margin-top: 10px;
+        margin-top: 15px;
         &::after {
           bottom: 100%;
           @include m-theme() {
-            border-bottom: $triangleLong solid themed($m-bgColor--primary);
+            border-bottom: $triangleLong solid $blue;
           }
         }
       }

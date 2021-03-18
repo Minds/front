@@ -21,10 +21,10 @@ export class TooltipComponent implements OnInit {
   /**
    * AnchorV2 displays a triangle pointing toward the anchor el
    * Usage: <m-tooltip anchor="bottom" anchorV2="true">
-   * Note: anchorV2 overrides/cancels the 'useParentPosition' property
+   * Note: 'useParentPosition' property overrides/cancels anchorV2
    */
 
-  @Input() anchorV2: false;
+  @Input() anchorV2: boolean = false;
 
   public readonly cdnAssetsUrl: string;
 
@@ -38,9 +38,12 @@ export class TooltipComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.useParentPosition) {
+      this.anchorV2 = false;
+    }
     if (this.anchorV2) {
       if (!this.anchor) {
-        this.anchor = 'top';
+        this.anchor = 'bottom';
       }
 
       this.useParentPosition = false;

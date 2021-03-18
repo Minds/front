@@ -19,11 +19,15 @@
       > span {
         font-weight: 500;
       }
-      m-tooltip i {
-        font-size: 16px;
-        margin-left: 5px;
-        @include m-theme() {
-          color: themed($m-textColor--primary);
+      m-tooltip {
+        .m-tooltip {
+          margin-left: 10px;
+        }
+        i {
+          font-size: 16px;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
         }
       }
     }
