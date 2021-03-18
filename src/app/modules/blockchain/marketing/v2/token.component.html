@@ -182,11 +182,13 @@
             Coming soon: Connect your wallet to see if you qualify for a MINDS
             airdrop. You can read our blog to learn more about who qualifies.
           </p>
-          <m-button [color]="'blue'" (onAction)="airdropClick()"
-            ><ng-container i18n="@@MARKETING__CONNECT_WALLET"
-              >Connect Wallet</ng-container
-            ></m-button
-          >
+          <div class="m-marketing__buttonWrapper">
+            <m-button [color]="'blue'" (onAction)="airdropClick()"
+              ><ng-container i18n="@@MARKETING__CONNECT_WALLET"
+                >Connect Wallet</ng-container
+              ></m-button
+            >
+          </div>
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -294,7 +296,9 @@
             <ul>
               <li>
                 <a
-                  [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
+                  [href]="
+                    cdnAssetsUrl + 'assets/documents/Minds-Whitepaper-v2.pdf'
+                  "
                   target="_blank"
                 >
                   <span i18n="@@COMMON__DOWNLOAD_WHITEPAPER"

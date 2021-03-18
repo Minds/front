@@ -102,6 +102,7 @@
     [saving]="(inProgress$ | async) || (isPosting$ | async)"
     [dropdown]="postButtonDropdown"
     [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
+    [showDropdownMenu]="canSchedule$ | async"
     (onAction)="onPost($event)"
     [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
     [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
@@ -125,7 +126,7 @@
 </div>
 
 <ng-template #postButtonDropdown>
-  <ul>
+  <ul *ngIf="canSchedule$ | async">
     <li (click)="onSchedulerClick()">
       <span class="m-dropdownMenu__item">
         <m-icon iconId="alarm"></m-icon>

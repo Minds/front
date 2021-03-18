@@ -11,6 +11,7 @@ import {
   BehaviorSubject,
   combineLatest,
   fromEvent,
+  Observable,
   of,
   Subscription,
 } from 'rxjs';
@@ -51,8 +52,9 @@ export type UserSearchResponse = { status: string; entities: MindsUser[] };
       data-cy="data-minds-boost-modal-target-input"
     />
     <ul
-      *ngIf="(matches$ | async)?.length > 0 && !(forceClose$ | async)"
+      *ngIf="showPopout$ | async"
       class="m-boostOfferTarget__matchesList"
+      #matchesPopout
     >
       <li
         *ngFor="let match of matches$ | async"
@@ -62,7 +64,7 @@ export type UserSearchResponse = { status: string; entities: MindsUser[] };
         <img
           class="m-boostOfferTarget__matchesListAvatar"
           (click)="onAvatarClick($event, match.username)"
-          src="{{ cdnUrl }}fs/v1/avatars/{{ match.guid }}/small"
+          src="{{ cdnUrl }}icon/{{ match.guid }}/small/{{ match.icontime }}"
         />
         <span
           class="m-boostOfferTarget__matchesListText m-boostOfferTarget__matchesListText--primary"
@@ -72,6 +74,9 @@ export type UserSearchResponse = { status: string; entities: MindsUser[] };
           class="m-boostOfferTarget__matchesListText m-boostOfferTarget__matchesListText--secondary"
           >&nbsp;·&nbsp;@{{ match.username }}</span
         >
+      </li>
+      <li *ngIf="inProgress$ | async">
+        <m-loadingSpinner [inProgress]="true"></m-loadingSpinner>
       </li>
     </ul>
   `,
@@ -102,9 +107,29 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
   >(false);
 
   /**
+   * Holds true temporarily when matches popout has been clicked inside.
+   */
+  private clickedInside$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
+   * Whether a request is in progress.
+   */
+  private inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
    * Search-box input reference.
    */
   @ViewChild('searchBox') searchBox: ElementRef;
+
+  /**
+   * Matches popout - note this will be destroyed when there are no matches.
+   * Subscriptions will have to be set-up again on change and you should make sure that it exists before using.
+   */
+  @ViewChild('matchesPopout') matchesPopout: ElementRef;
 
   /**
    * CDN url
@@ -114,6 +139,7 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
   constructor(
     private api: ApiService,
     private service: BoostModalService,
+    private element: ElementRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     configs: ConfigsService
   ) {
@@ -130,17 +156,19 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
           // effectively break if the char count is less than 2
           filter(text => text.length > 2),
           // debounce request to throttle server requests
-          debounceTime(10),
+          debounceTime(100),
           // if there is no change, do nothing.
           distinctUntilChanged(),
           // replace outputted observable with the result of a server call for matches.
-          switchMap(searchTerm =>
-            this.api.get(`api/v2/search/suggest/user`, {
+          switchMap(searchTerm => {
+            this.inProgress$.next(true);
+            this.matches$.next([]);
+            return this.api.get(`api/v2/search/suggest/user`, {
               q: searchTerm,
               limit: 8,
               hydrate: 1,
-            })
-          ),
+            });
+          }),
           // on error.
           catchError(e => {
             console.error(e);
@@ -148,11 +176,72 @@ export class BoostModalOfferTargetInputComponent implements AfterViewInit {
           })
         )
         .subscribe((response: UserSearchResponse) => {
+          this.inProgress$.next(false);
           if (response.status === 'success' && response.entities.length > 0) {
             this.matches$.next(response.entities);
           }
-        })
+        }),
+
+      // ViewChild is destroyed in template *ngIf - reset this sub when matches popout shown.
+      this.showPopout$.subscribe(() => {
+        this.setupMatchesSubscription();
+      }),
+
+      // Using this and the subscription created above, force close if clicked outside of the target.
+      fromEvent(document, 'click', { capture: true }).subscribe($event => {
+        // push to back of queue so that interior event listener runs first.
+        setTimeout(() => {
+          if (!this.clickedInside$.getValue()) {
+            this.forceClose$.next(true);
+          }
+          this.clickedInside$.next(false);
+        }, 0);
+      })
     );
+  }
+
+  /**
+   * Whether popoout should be shown.
+   * @returns { Observable<boolean> } - true if popout should be shown
+   */
+  get showPopout$(): Observable<boolean> {
+    return combineLatest([
+      this.matches$,
+      this.forceClose$,
+      this.username$,
+      this.inProgress$,
+    ]).pipe(
+      take(1),
+      // map new value of observable.
+      map(([matches, forceClose, username, inProgress]) => {
+        return (
+          (matches.length > 0 || inProgress) &&
+          username.length > 2 &&
+          !forceClose
+        );
+      })
+    );
+  }
+
+  /**
+   * Subscribe to clicks in the matches popout window -
+   * stops event propagation and sets a temporary value to clickedInside$.
+   * Works in tandem with document click listener to tell whether a click is
+   * inside the matches sub-box or outside of it.
+   *
+   * @returns { void }
+   */
+  private setupMatchesSubscription(): void {
+    if (this.matchesPopout && this.matchesPopout.nativeElement) {
+      this.subscriptions.push(
+        fromEvent(this.matchesPopout.nativeElement, 'click').subscribe(
+          ($event: any) => {
+            $event.stopPropagation();
+            this.clickedInside$.next(true);
+          }
+        )
+      );
+    }
   }
 
   ngOnDestroy(): void {

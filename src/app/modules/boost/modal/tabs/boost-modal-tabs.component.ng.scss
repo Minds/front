@@ -75,6 +75,24 @@ $collapse-width: 830px;
           margin-bottom: 20px;
           display: block;
         }
+
+        // TODO: Replace with newer cards.
+        // Get rid of the ugly overrides.
+        ::ng-deep minds-card {
+          position: relative;
+
+          .m-action-tabs-fixed {
+            display: none; // hide thumbs up and down.
+          }
+
+          .m-title-block-with-actions {
+            bottom: 5px; // adjust bottom for missing action buttons
+          }
+
+          .minds-blog-thumbnail {
+            margin-bottom: 20px !important; // make container smaller
+          }
+        }
       }
 
       .m-boostModal__tabTitle {

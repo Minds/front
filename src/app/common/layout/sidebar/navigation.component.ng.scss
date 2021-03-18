@@ -1,17 +1,20 @@
-m-sidebar--navigation {
+@import 'defaults.scss';
+@import '../layout.scss';
+
+:host {
   @media screen and (max-width: $max-mobile) {
     display: none;
   }
+}
 
-  .m-pageLayout__container--fullWidth & {
-    display: none;
-    @media screen and (max-width: $layoutMax1ColWidth) {
-      display: block;
-    }
+.m-pageLayout__container--fullWidth :host {
+  display: none;
+  @media screen and (max-width: $layoutMax1ColWidth) {
+    display: block;
   }
 }
 
-.m-sidebarNavigation--opened {
+:host.m-sidebarNavigation--opened {
   display: block;
 
   .m-sidebarNavigation.m-sidebarNavigation--slide {
@@ -19,7 +22,7 @@ m-sidebar--navigation {
   }
 }
 
-.m-sidebarNavigation {
+:host .m-sidebarNavigation {
   @include z-index(sidebar);
   padding-top: 26px;
   min-width: 0;
@@ -133,10 +136,13 @@ m-sidebar--navigation {
 
     font-size: 17px;
     line-height: 44px;
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-      svg {
-        fill: themed($m-textColor--secondary);
+    :host &,
+    :host & ::ng-deep {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+        svg {
+          fill: themed($m-textColor--secondary);
+        }
       }
     }
 
@@ -155,10 +161,14 @@ m-sidebar--navigation {
   &.m-sidebarNavigation__item--active > a,
   &:hover > a {
     cursor: pointer;
-    @include m-theme() {
-      color: themed($m-link);
-      svg {
-        fill: themed($m-link);
+
+    :host &,
+    :host & ::ng-deep {
+      @include m-theme() {
+        color: themed($m-link);
+        svg {
+          fill: themed($m-link);
+        }
       }
     }
   }
@@ -210,9 +220,6 @@ m-sidebar--navigation {
     @media screen and (max-width: $layoutMax3ColWidth) {
       display: none;
 
-      .m-sidebarNavigation--slide & {
-        display: block;
-      }
       .m-sidebarNavigation__subnav {
         display: none;
       }
@@ -220,7 +227,13 @@ m-sidebar--navigation {
   }
 }
 
-.m-sidebarNavigation__subnav {
+.m-sidebarNavigation--slide .m-sidebarNavigationItem__text {
+  @media screen and (max-width: $layoutMax3ColWidth) {
+    display: block;
+  }
+}
+
+:host .m-sidebarNavigation__subnav {
   display: none;
   // position: relative;
   list-style: none;
@@ -250,21 +263,21 @@ m-sidebar--navigation {
     }
   }
 
-  .m-sidebarNavigation__item--active & {
-    @media screen and (min-width: $layoutMax3ColWidth) {
-      display: block;
-      position: relative;
-    }
-  }
-
   .m-sidebarNavigation__item a {
     padding-left: 48px;
     line-height: 32px;
   }
 }
 
+.m-sidebarNavigation__item--active .m-sidebarNavigation__subnav {
+  @media screen and (min-width: $layoutMax3ColWidth) {
+    display: block;
+    position: relative;
+  }
+}
+
 //.m-sidebarNavigation__item:not(.m-sidebarNavigation__item--active) {
-.m-sidebarNavigation__subnav--popover {
+:host .m-sidebarNavigation__subnav--popover {
   display: block;
   position: fixed;
 
@@ -285,4 +298,12 @@ m-sidebar--navigation {
     justify-content: left;
   }
 }
-//}
+
+.m-sidebarNavigation__item--compose ::ng-deep {
+  m-icon .m-icon__assetsFile {
+    background: url('../../../../assets/icons/compose.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+}

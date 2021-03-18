@@ -217,15 +217,15 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          <div class="m-walletTokenEarnings__multiplierBarWrapper">
-            <span>{{ data.engagement.multiplier }}</span>
-            <ng-container
-              *ngTemplateOutlet="
-                multiplierBar;
-                context: { $implicit: data.engagement.multiplier }
-              "
-            ></ng-container>
-          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              multiplierBar;
+              context: {
+                $implicit: data.engagement.multiplier,
+                timebased: false
+              }
+            "
+          ></ng-container>
         </td>
       </tr>
       <tr>
@@ -365,16 +365,12 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          <div class="m-walletTokenEarnings__multiplierBarWrapper">
-            {{ data.holding.multiplier | number: '1.0-4' }}
-
-            <ng-container
-              *ngTemplateOutlet="
-                multiplierBar;
-                context: { $implicit: data.holding.multiplier }
-              "
-            ></ng-container>
-          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              multiplierBar;
+              context: { $implicit: data.holding.multiplier, timebased: true }
+            "
+          ></ng-container>
         </td>
       </tr>
     </tbody>
@@ -534,7 +530,7 @@
           </td>
         </tr>
 
-        <tr>
+        <!-- <tr>
           <td>
             <span>Tokens Earned</span>
             <m-tooltip icon="info">
@@ -548,7 +544,7 @@
               currency="tokens"
             ></m-wallet__currencyValue>
           </td>
-        </tr>
+        </tr> -->
 
         <tr>
           <td>
@@ -576,16 +572,28 @@
           </m-tooltip>
         </td>
         <td colspan="3">
-          <div class="m-walletTokenEarnings__multiplierBarWrapper">
-            {{ data.liquidity.multiplier | number: '1.0-4' }}
+          <ng-container
+            *ngTemplateOutlet="
+              multiplierBar;
+              context: { $implicit: data.liquidity.multiplier, timebased: true }
+            "
+          ></ng-container>
+        </td>
+      </tr>
 
-            <ng-container
-              *ngTemplateOutlet="
-                multiplierBar;
-                context: { $implicit: data.liquidity.multiplier }
-              "
-            ></ng-container>
-          </div>
+      <tr>
+        <td colspan="4" class="m-walletTokenEarnings__liquiditySpotPrompt">
+          <a
+            routerLink="/settings/account/boosted-content"
+            class="m-walletTokenEarningsLiquiditySpotPrompt__cta"
+          >
+            <ng-container *ngIf="isOptedOutOfLiquiditySpot; else optOutLink"
+              >Opt-out of showing in liquidity spot</ng-container
+            >
+            <ng-template #optOutLink
+              >Opt-in to showing in liquidity spot</ng-template
+            >
+          </a>
         </td>
       </tr>
     </tbody>
@@ -600,11 +608,57 @@
 </ng-template>
 
 <!-- Reusable multiplier bar -->
-<ng-template #multiplierBar let-multiplier>
-  <div class="m-walletTokenEarnings__multiplierBar">
-    <div
-      class="m-walletTokenEarningsMultiplierBar__progress"
-      [style.width.%]="(multiplier / 3) * 100"
-    ></div>
+<ng-template #multiplierBar let-multiplier let-timebased="timebased">
+  <div class="m-walletTokenEarnings__multiplier">
+    <div class="m-walletTokenEarnings__multiplierBarWrapper">
+      <span>{{ multiplier | number: '1.1-4' }}</span>
+      <div class="m-walletTokenEarnings__multiplierBar">
+        <div
+          class="m-walletTokenEarningsMultiplierBar__progress"
+          [style.width.%]="(multiplier / 3) * 100"
+        ></div>
+      </div>
+      <span>3.0</span>
+    </div>
+
+    <m-tooltip anchor="bottom" *ngIf="timebased">
+      <div class="m-walletTokenEarningsMultiplier__secondary" m-tooltip--anchor>
+        <span>
+          {{ calculateDaysFromMultiplier(multiplier) | number: '1.0-0' }} days /
+        </span>
+        <span>365 days</span>
+      </div>
+
+      <ng-container>
+        The longer you stake tokens, the more the time multiplier will increase.
+        <br />
+        The maximum time multiplier is 3.0 (52 weeks)
+      </ng-container>
+    </m-tooltip>
+
+    <m-tooltip anchor="bottom" *ngIf="!timebased">
+      <div class="m-walletTokenEarningsMultiplier__secondary" m-tooltip--anchor>
+        <ng-container [ngSwitch]="multiplier">
+          <ng-template ngSwitchCase="1">Casual</ng-template>
+          <ng-template ngSwitchCase="2">Core</ng-template>
+          <ng-template ngSwitchCase="3">Hardcore</ng-template>
+        </ng-container>
+      </div>
+
+      <ng-container>
+        <p>
+          <b>Casual &middot; 1x</b> <br />
+          Active one day over the past seven days
+        </p>
+        <p>
+          <b>Core &middot; 2x</b> <br />
+          Active three days over the past seven days
+        </p>
+        <p>
+          <b>Hardcore &middot; 3x</b> <br />
+          Active six days over the past six days
+        </p>
+      </ng-container>
+    </m-tooltip>
   </div>
 </ng-template>

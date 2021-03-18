@@ -16,6 +16,8 @@ import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
+import { ThemeService } from '../../services/theme.service';
+import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
 
 describe('ChannelBadgesComponent', () => {
   let comp: ChannelBadgesComponent;
@@ -33,6 +35,7 @@ describe('ChannelBadgesComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
+        { provide: ThemeService, useValue: themeServiceMock },
       ],
     }).compileComponents();
   }));

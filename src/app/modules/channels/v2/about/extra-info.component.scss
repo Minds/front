@@ -49,10 +49,6 @@ m-channelAbout__extraInfo {
       padding: 0 10px 0 0;
       font-size: 15px;
       line-height: 20px;
-
-      @include m-theme() {
-        color: themed($m-textColor--primary) !important;
-      }
     }
   }
 }

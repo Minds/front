@@ -46,6 +46,10 @@
 
   m-button.m-composerToolbar__action {
     height: 34px;
+    > button {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
   }
 
   .m-composerToolbar__action {
