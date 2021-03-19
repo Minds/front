@@ -14,4 +14,7 @@ for dirname in $BROWSER_PATH/*; do
 
     echo "Deleting $dirname/assets";
     rm -rf $dirname/assets;
+
+    echo "Deleting $dirname/stats.json";
+    rm -rf $dirname/stats.json
 done
