@@ -17,4 +17,7 @@ for dirname in $BROWSER_PATH/*; do
 
     echo "Deleting $dirname/stats.json";
     rm -rf $dirname/stats.json
+
+    echo "Deleted $dirname/*.js.map"
+    rm -rf $dirname/*.js.map
 done
