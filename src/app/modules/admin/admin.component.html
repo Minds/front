@@ -47,31 +47,10 @@
       </a>
       <a
         class="m-topbar--navigation--item"
-        routerLink="/admin/programs"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Programs</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/payouts"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Payouts</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
         routerLink="/admin/withdrawals"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span>Withdrawals</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/tagcloud"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Tag Cloud</span>
       </a>
       <a
         class="m-topbar--navigation--item"
@@ -82,17 +61,10 @@
       </a>
       <a
         class="m-topbar--navigation--item"
-        routerLink="/admin/purchases"
+        routerLink="/admin/liquidity-providers"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span>Purchases</span>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/admin/reports-download"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span>Reports</span>
+        <span>Liquidity Providers</span>
       </a>
       <a
         class="m-topbar--navigation--item"
@@ -114,7 +86,6 @@
 <minds-admin-monetization
   *ngIf="filter == 'monetization'"
 ></minds-admin-monetization>
-<minds-admin-programs *ngIf="filter == 'programs'"></minds-admin-programs>
 <minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
 <m-admin-withdrawals *ngIf="filter == 'withdrawals'"></m-admin-withdrawals>
 <minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
@@ -125,3 +96,6 @@
   *ngIf="filter == 'reports-download'"
 ></m-admin--reports-download>
 <m-admin--features *ngIf="filter == 'features'"></m-admin--features>
+<m-admin__liquidityProvideers
+  *ngIf="filter === 'liquidity-providers'"
+></m-admin__liquidityProvideers>
