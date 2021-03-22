@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -20,6 +20,14 @@ export class SettingsTwoFactorComponent {
 
   inProgress: boolean = false;
   error: string = '';
+
+  // emits on save
+  @Output('saved') saved: EventEmitter<unknown> = new EventEmitter<unknown>();
+
+  // emits on sms mfa disabled
+  @Output('disabled') disabled: EventEmitter<unknown> = new EventEmitter<
+    unknown
+  >();
 
   constructor(
     public client: Client,
@@ -85,6 +93,7 @@ export class SettingsTwoFactorComponent {
       })
       .then((response: any) => {
         this.waitingForCheck = false;
+        this.saved.emit(true);
       })
       .catch((response: any) => {
         this.waitingForCheck = false;
@@ -111,6 +120,7 @@ export class SettingsTwoFactorComponent {
           });
           this.telno = null;
           this.error = '';
+          this.disabled.emit(true);
         },
       }
     );

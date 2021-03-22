@@ -195,32 +195,4 @@
 <!-- END: LOGIN -->
 
 <!-- START: TWOFACTOR -->
-<div class="minds-login-box m-login-box m-login-2fa" *ngIf="twofactorToken">
-  <div>
-    <h2 class="m-login-2fa__title" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">
-      Twofactor Login
-    </h2>
-  </div>
-
-  <span class="m-login-2fa__subtitle">
-    <ng-container i18n="@@FORMS__LOGIN__2FA_LOGIN_SMS_SENT">
-      We just sent you a text. Enter the code below to authenticate.
-    </ng-container>
-  </span>
-
-  <div class="m-login-mfa-input">
-    <input
-      #code
-      type="text"
-      id="code"
-      placeholder="Enter your code here"
-      i18n="@@M__COMMON__ENTER_2FA_CODE"
-      (keydown.enter)="twofactorAuth(code)"
-    />
-  </div>
-  <div></div>
-
-  <m-button color="blue" (onAction)="twofactorAuth(code)">
-    <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-  </m-button>
-</div>
+<m-multiFactorAuth *ngIf="!hideMFA" [embedded]="true"></m-multiFactorAuth>
