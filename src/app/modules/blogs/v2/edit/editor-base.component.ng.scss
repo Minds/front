@@ -7,6 +7,12 @@
       color: 1px solid themed($m-bgColor--primary);
     }
 
+    display: flex;
+    flex-direction: column;
+
+    // background: red;
+    height: calc(100vh - 76px);
+
     .m-blogEditor__bannerImageContainer {
       // new stacking context
       position: relative;
@@ -37,6 +43,10 @@
     }
 
     .m-blogEditor__container {
+      flex-grow: 1;
+      flex-shrink: 1;
+      // background: hotpink;
+
       padding: 40px 100px;
       @media screen and (max-width: $min-desktop) {
         padding: 20px 40px;
@@ -123,6 +133,12 @@
           font-weight: bold;
           resize: none;
           overflow: hidden;
+
+          &::placeholder {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
         }
       }
     }

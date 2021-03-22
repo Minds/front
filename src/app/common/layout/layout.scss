@@ -105,10 +105,14 @@ $layoutMin1ColWidth: 280px;
   min-width: $layoutMainFullWidth;
   width: 100%;
   min-height: 100%;
+  background: hotpink;
+  // min-height: calc(100vh - 74px);
 
   .m-pageLayout__pane--main {
     width: $layoutMainFullWidth;
     max-width: $layoutMainFullWidth;
+
+    background: olive;
 
     @media screen and (max-width: $layoutMax2ColFixedWidth) {
       width: auto;

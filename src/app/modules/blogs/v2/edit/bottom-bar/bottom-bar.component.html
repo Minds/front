@@ -78,6 +78,7 @@
       i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
       data-cy="data-minds-blog-editor-save-draft"
       *ngIf="!(service.published$ | async)"
+      size="small"
     >
       Save Draft
     </m-button>
@@ -88,6 +89,8 @@
       (onAction)="save()"
       i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
       data-cy="data-minds-blog-editor-publish"
+      size="small"
+      color="blue"
     >
       Publish
     </m-button>

@@ -16,7 +16,7 @@
   }
 
   .m-blog--footer {
-    margin-bottom: 50px;
+    // margin-bottom: 50px;
     .m-license-info {
       @include m-theme() {
         color: themed($m-textColor--tertiary);
@@ -74,6 +74,13 @@
       position: relative;
       z-index: 0;
     }
+
+    .ck.ck-editor__editable > .ck-placeholder::before {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
     .m-blog__body {
       padding: 0 $minds-padding;
 

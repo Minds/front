@@ -10,6 +10,8 @@
     flex-direction: column;
     padding: 50px 100px;
 
+    position: relative;
+
     @media screen and (max-width: $min-desktop) {
       padding: 30px 50px;
     }

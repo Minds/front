@@ -84,7 +84,7 @@
     <div class="m-blogEditor__titleContainer">
       <textarea
         class="m-blogEditor__titleInput"
-        placeholder="Title"
+        placeholder="Your article title"
         i18n-placeholder="@@BLOG_EDITOR__TITLE"
         [autoGrow]
         [ngModel]="service.title$ | async"
@@ -92,6 +92,7 @@
         maxlength="512"
         rows="1"
         data-cy="data-minds-blog-title-input"
+        autofocus
       ></textarea>
     </div>
 
