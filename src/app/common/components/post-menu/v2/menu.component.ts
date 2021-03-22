@@ -34,7 +34,8 @@ type Option =
   | 'block'
   | 'unblock'
   | 'allow-comments'
-  | 'disable-comments';
+  | 'disable-comments'
+  | 'download';
 
 @Component({
   selector: 'm-postMenu--v2',
@@ -49,6 +50,7 @@ export class PostMenuV2Component implements OnInit {
   @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
   @Input() canDelete: boolean = false;
   @Input() canEdit: boolean = false;
+  @Input() canDownload: boolean = false;
   @Input() isTranslatable: boolean = false;
   @Input() user: any;
 
@@ -102,6 +104,10 @@ export class PostMenuV2Component implements OnInit {
         user => user.guid === this.session.getLoggedInUser().guid
       ).length > 0
     );
+  }
+
+  shouldShowDownload(): boolean {
+    return this.options.indexOf('download') !== -1 && this.canDownload;
   }
 
   onButtonClick(e: MouseEvent): void {
