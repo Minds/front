@@ -9,9 +9,11 @@
 
     display: flex;
     flex-direction: column;
-
-    // background: red;
     height: calc(100vh - 76px);
+
+    .m-blogEditor__bodyContainer {
+      padding-bottom: 40px;
+    }
 
     .m-blogEditor__bannerImageContainer {
       // new stacking context
@@ -43,11 +45,12 @@
     }
 
     .m-blogEditor__container {
+      position: relative;
       flex-grow: 1;
       flex-shrink: 1;
-      // background: hotpink;
+      overflow-y: scroll;
 
-      padding: 40px 100px;
+      padding: 40px 100px 80px 40px;
       @media screen and (max-width: $min-desktop) {
         padding: 20px 40px;
       }

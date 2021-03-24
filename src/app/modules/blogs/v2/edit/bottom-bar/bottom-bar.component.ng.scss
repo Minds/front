@@ -10,8 +10,6 @@
     flex-direction: column;
     padding: 50px 100px;
 
-    position: relative;
-
     @media screen and (max-width: $min-desktop) {
       padding: 30px 50px;
     }
@@ -49,7 +47,7 @@
     bottom: 0px;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 20px 100px 60px 100px;
+    padding: 40px 100px 60px 100px;
 
     @media screen and (max-width: $min-desktop) {
       padding: unset;
