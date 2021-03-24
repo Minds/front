@@ -24,15 +24,10 @@ export class VideoPlayerService implements OnDestroy {
    * @var BehaviorSubject<VideoSource>
    */
   sources$: BehaviorSubject<VideoSource[]> = new BehaviorSubject<VideoSource[]>(
-    [
-      {
-        id: null,
-        type: null,
-        size: 0,
-        src: null,
-      },
-    ]
+    []
   );
+
+  isPlayable$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   /**
    * @var string
@@ -56,8 +51,6 @@ export class VideoPlayerService implements OnDestroy {
    * @var boolean
    */
   isModal = false;
-
-  playable = false;
 
   /**
    * Force playable
@@ -126,23 +119,6 @@ export class VideoPlayerService implements OnDestroy {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  /**
-   * Returns if the video is able to be played
-   * @return boolean
-   */
-  isPlayable(): boolean {
-    return this.playable;
-    // const user = this.session.getLoggedInUser();
-
-    // return (
-    //   (user.plus && !user.disable_autoplay_videos) ||
-    //   this.isModal || // Always playable in modal
-    //   !this.shouldPlayInModal || // Equivalent of asking to play inline
-    //   (this.overlayModalService.canOpenInModal() && !this.isModal) ||
-    //   this.forcePlayable
-    // ); // We can play in the modal and this isn't a modal
   }
 
   /**
