@@ -110,8 +110,6 @@ $layoutMin1ColWidth: 280px;
     width: $layoutMainFullWidth;
     max-width: $layoutMainFullWidth;
 
-    background: olive;
-
     @media screen and (max-width: $layoutMax2ColFixedWidth) {
       width: auto;
     }
