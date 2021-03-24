@@ -23,6 +23,14 @@
     border: 1px solid themed($m-borderColor--primary);
   }
 
+  transition: 0.125s border-color ease-out;
+
+  &:focus-within {
+    @include m-theme() {
+      border: 1px solid themed($m-link) !important;
+    }
+  }
+
   .m-commentPoster__avatar {
     flex-shrink: 0;
 

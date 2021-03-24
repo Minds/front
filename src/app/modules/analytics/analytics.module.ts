@@ -37,9 +37,9 @@ const routes: Routes = [
     data: {
       title: 'Analytics',
       description: 'Global Tokens dashboard',
-      ogImage: '/assets/og-images/analytics-v2.png',
-      ogImageWidth: 400,
-      ogImageHeight: 400,
+      ogImage: '/assets/og-images/analytics-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
   {
@@ -49,9 +49,9 @@ const routes: Routes = [
       title: 'Analytics',
       description:
         'Track your traffic, earnings, engagement and trending analytics',
-      ogImage: '/assets/og-images/analytics-v2.png',
-      ogImageWidth: 400,
-      ogImageHeight: 400,
+      ogImage: '/assets/og-images/analytics-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 ];

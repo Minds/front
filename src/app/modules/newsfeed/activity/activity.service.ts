@@ -188,6 +188,17 @@ export class ActivityService {
     })
   );
 
+  /** Only allow downloads of images s */
+  canDownload$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      let contentType = entity.content_type;
+      if (entity.activity_type && entity.activity_type === 'quote') {
+        contentType = getActivityContentType(entity.remind_object, true, true);
+      }
+      return contentType === 'image';
+    })
+  );
+
   /**
    * Only allow translation menu item if there is content to translate
    */

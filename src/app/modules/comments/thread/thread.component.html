@@ -10,6 +10,12 @@
   }"
   #scrollArea
 >
+  <m-loadingSpinner
+    [inProgress]="inProgress"
+    *ngIf="inProgress && comments?.length === 0"
+  >
+  </m-loadingSpinner>
+
   <!-- --------------------------------  -->
   <div class="m-comments__viewMore" *ngIf="loadPrevious && showReplies">
     <m-button
