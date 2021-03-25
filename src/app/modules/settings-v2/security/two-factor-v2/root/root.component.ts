@@ -74,16 +74,29 @@ export class SettingsTwoFactorV2RootComponent extends AbstractSubscriberComponen
    */
   public onSMSClick(): void {
     this.subscriptions.push(
-      this.totpEnabled$.pipe(take(1)).subscribe(totpEnabled => {
-        if (totpEnabled) {
-          this.toast.warn('You cannot currently enable both TOTP and SMS');
-          return;
-        }
-        this.service.activePanel$.next({
-          panel: 'password',
-          intent: 'sms',
-        });
-      })
+      combineLatest([this.totpEnabled$, this.smsEnabled$])
+        .pipe(
+          take(1),
+          map(([totpEnabled, smsEnabled]) => {
+            if (totpEnabled) {
+              this.toast.warn('You cannot currently enable both TOTP and SMS');
+              return;
+            }
+
+            this.service.activePanel$.next(
+              smsEnabled
+                ? {
+                    panel: 'sms',
+                    intent: 'disable',
+                  }
+                : {
+                    panel: 'password',
+                    intent: 'sms',
+                  }
+            );
+          })
+        )
+        .subscribe()
     );
   }
 
