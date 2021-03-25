@@ -8,7 +8,7 @@
     background: transparent;
   }
   .minds-avatar img {
-    width: 50px;
+    width: 40px;
     border-radius: 50%;
   }
   .minds-body {
@@ -19,7 +19,6 @@
       display: block;
       text-decoration: none;
       font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing: 1.25px;
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
@@ -27,10 +26,9 @@
     span {
       font-size: 11px;
       font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing: 1.25px;
       cursor: default;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -63,12 +61,10 @@
 
   .m-blog-container {
     h1.m-blog--title {
-      font-weight: 600;
-      font-size: 42px;
-      letter-spacing: 1.5px;
       font-family: 'Roboto', Helvetica, sans-serif;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+      font-weight: 600;
+      font-size: 38px;
+      line-height: 1.4em;
 
       @media only screen and (max-width: $min-tablet) {
         font-size: 24px;
