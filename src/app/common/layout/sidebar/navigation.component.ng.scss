@@ -126,16 +126,25 @@
 
 .m-sidebarNavigation__item {
   a {
+    .m-sidebarNavigationItem__icon {
+      width: 35px;
+      text-align: center;
+    }
+
+    .m-sidebarNavigationItem__text {
+      flex-grow: 1;
+      padding-left: 18px;
+    }
+
     display: flex;
-    //flex-direction: column;
     align-items: center;
     text-decoration: none;
     font-family: 'Roboto', Helvetica, sans-serif;
     padding: 4px 0;
-    font-weight: bold;
+    font-weight: 500;
 
-    font-size: 17px;
-    line-height: 44px;
+    font-size: 18px;
+    line-height: 37px;
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
@@ -196,13 +205,10 @@
     i.m-icon--hashtag,
     svg,
     img {
+      font-size: 23px;
       height: 23px;
       width: 24px;
     }
-  }
-
-  .m-sidebarNavigationItem__text {
-    margin-left: 24px;
   }
 
   .m-icon--hashtag {
@@ -300,6 +306,8 @@
 }
 
 .m-sidebarNavigation__item--compose ::ng-deep {
+  padding-bottom: 10px;
+
   m-icon .m-icon__assetsFile {
     background: url('../../../../assets/icons/compose.svg');
     background-repeat: no-repeat;
