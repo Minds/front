@@ -1,4 +1,5 @@
 import { Directive, Input, Optional, SkipSelf } from '@angular/core';
+import { ClientMetaDirectiveInterface } from '../../interfaces/client-meta.interface';
 import {
   ClientMetaData,
   ClientMetaService,
@@ -7,7 +8,7 @@ import {
 @Directive({
   selector: '[m-clientMeta]',
 })
-export class ClientMetaDirective {
+export class ClientMetaDirective implements ClientMetaDirectiveInterface {
   /**
    * Client meta input binding
    * @param clientMetaData

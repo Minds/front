@@ -3,7 +3,7 @@ import { Location, isPlatformServer } from '@angular/common';
 import hashCode from '../../helpers/hash-code';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
-import { ClientMetaDirective } from '../directives/client-meta.directive';
+import { ClientMetaDirectiveInterface } from '../../interfaces/client-meta.interface';
 
 /**
  * Client meta data structure
@@ -65,7 +65,7 @@ export class ClientMetaService {
    */
   async recordView(
     entity: any,
-    clientMetaDirective: ClientMetaDirective,
+    clientMetaDirective: ClientMetaDirectiveInterface,
     extraClientMetaData: Partial<ClientMetaData> = {}
   ) {
     if (isPlatformServer(this.platformId)) {
