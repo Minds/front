@@ -1,4 +1,6 @@
-m-popover {
+@import 'defaults.scss';
+
+:host {
   .m-popover__wrapper {
     position: relative;
     //margin-top: 1.5rem;
@@ -8,6 +10,7 @@ m-popover {
       margin-top: 2.2rem;
       opacity: 0;
       visibility: hidden;
+
       position: absolute;
       //left: -150px;
       transform: translate(0, 10px);
@@ -77,8 +80,34 @@ m-popover {
             @include m-theme() {
               color: themed($m-green);
             }
-            // check
-            content: '\e5ca';
+            content: 'check';
+          }
+
+          &.m-popover__rule--invalid::before {
+            font-family: 'Material Icons';
+            @include m-theme() {
+              color: themed($m-red-dark);
+            }
+            content: 'close';
+          }
+
+          &.m-popover__rule--risk {
+            position: relative;
+
+            ::ng-deep m-loadingSpinner {
+              position: relative;
+              .m-loadingSpinner__wrapper {
+                position: absolute;
+                left: -26px;
+                top: 2px;
+                display: inline-block;
+                padding: 0;
+                .m-loadingSpinner__container {
+                  height: 15px;
+                  width: 15px;
+                }
+              }
+            }
           }
         }
       }

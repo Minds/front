@@ -32,6 +32,24 @@
       >
         Doesn't have spaces
       </li>
+      <li
+        [class.m-popover__rule--checked]="riskCheck && !riskCheckInProgress"
+        [class.m-popover__rule--invalid]="riskAssessed && !riskCheck"
+        class="m-popover__rule--risk"
+      >
+        <m-loadingSpinner [inProgress]="riskCheckInProgress"></m-loadingSpinner>
+        <ng-container i18n="@@REGISTRATION_VALIDATOR__RISK">
+          Passes risk test
+        </ng-container>
+        <m-tooltip
+          ><span m-tooltip--anchor>?</span>
+          <ng-container i18n="@@REGISTRATION_VALIDATOR__RISK_INFO"
+            >This password has previously appeared in data breaches. This means
+            attackers can find this password online and try to access accounts
+            with it. Please use a more secure alternative.
+          </ng-container>
+        </m-tooltip>
+      </li>
     </ul>
   </div>
 </div>
