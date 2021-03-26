@@ -15,13 +15,15 @@ import { Router } from '@angular/router';
 import { Web3WalletService } from '../web3-wallet.service';
 import { GetMetamaskComponent } from '../metamask/getmetamask.component';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { TransactionOverlayInterface } from './transaction-overlay.interface';
 
 @Component({
   selector: 'm--blockchain--transaction-overlay',
   templateUrl: 'transaction-overlay.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TransactionOverlayComponent implements OnInit {
+export class TransactionOverlayComponent
+  implements OnInit, TransactionOverlayInterface {
   @HostBinding('hidden') _isHidden: boolean = true;
 
   message: string = '';

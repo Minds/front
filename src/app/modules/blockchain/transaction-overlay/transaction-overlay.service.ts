@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { TransactionOverlayComponent } from './transaction-overlay.component';
 import { Subscription } from 'rxjs';
+import { TransactionOverlayInterface } from './transaction-overlay.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionOverlayService {
-  private comp: TransactionOverlayComponent;
+  private comp: TransactionOverlayInterface;
 
-  setComponent(comp: TransactionOverlayComponent) {
+  setComponent(comp: TransactionOverlayInterface) {
     this.comp = comp;
   }
 
