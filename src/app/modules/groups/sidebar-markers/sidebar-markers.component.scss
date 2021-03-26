@@ -71,6 +71,7 @@ m-group--sidebar-markers {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow-x: hidden;
+            padding-left: 22px;
 
             @include m-theme() {
               color: themed($m-textColor--secondary);
