@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { EmailConfirmationComponent } from './email-confirmation.component';
 import { FormToastService } from '../../services/form-toast.service';
 
 /**
