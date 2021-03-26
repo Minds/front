@@ -6,7 +6,6 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
-import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 
 /**
  * API Class
