@@ -18,7 +18,7 @@ export class AuthModalService {
     private injector: Injector,
     private stackableModal: StackableModalService,
     private features: FeaturesService,
-    // private onboardingV3: OnboardingV3Service,
+    // private onboardingV3: OnboardingV3DynamicService,
     private session: Session
   ) {}
 

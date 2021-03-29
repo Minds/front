@@ -12,6 +12,7 @@ import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { catchError, take, tap } from 'rxjs/operators';
+import { OnboardingV3DynamicService } from '../onboarding-v3-dynamic.service';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -39,6 +40,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
 
   constructor(
     private onboarding: OnboardingV3Service,
+    private onboardingDynamicService: OnboardingV3DynamicService,
     private panel: OnboardingV3PanelService,
     private composerModal: ModalService,
     private injector: Injector,
@@ -133,8 +135,9 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
                 default:
                   this.panel.currentStep$.next(step);
                   try {
-                    await this.onboarding.open();
+                    await this.onboardingDynamicService.open();
                   } catch (e) {
+                    this.checkStepCompletion(step);
                     if (e === 'DismissedModalException') {
                       return;
                     }
@@ -149,9 +152,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     } catch (e) {
       if (e === 'DismissedModalException') {
         this.checkCompletion();
-        if (this.onboarding.loadOverrideSteps.indexOf(step) === -1) {
-          this.onboarding.load();
-        }
+        this.checkStepCompletion(step);
         return;
       }
       console.error(e);
@@ -173,6 +174,20 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
       this.onboarding.load();
       return;
     }
+  }
+
+  /**
+   * Check completion of a specific set, either reloading endpoint
+   * or marking complete and overriding
+   * @param { OnboardingStepName } step - step to check.
+   * @returns { void }
+   */
+  private checkStepCompletion(step: OnboardingStepName): void {
+    if (this.onboarding.loadOverrideSteps.indexOf(step) === -1) {
+      this.onboarding.load();
+      return;
+    }
+    this.onboarding.forceCompletion(step);
   }
 
   /**
