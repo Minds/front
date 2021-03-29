@@ -1,15 +1,13 @@
-import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
 import { FeaturesService } from '../../services/features.service';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-
-type TopbarComponentT = V3TopbarComponent;
+import { V3TopbarInterface } from './v3-topbar/v3-topbar.interface';
 
 @Injectable()
 export class TopbarService {
-  private container: TopbarComponentT;
+  private container: V3TopbarInterface;
 
   routerSubscription: Subscription;
 
@@ -25,7 +23,7 @@ export class TopbarService {
       });
   }
 
-  setContainer(container: TopbarComponentT) {
+  setContainer(container: V3TopbarInterface) {
     this.container = container;
 
     return this;
@@ -45,7 +43,7 @@ export class TopbarService {
 
   toggleSearchBar(visible: boolean): void {
     if (this.container) {
-      (<V3TopbarComponent>this.container).toggleSearchBar(visible);
+      (<V3TopbarInterface>this.container).toggleSearchBar(visible);
     }
   }
 }

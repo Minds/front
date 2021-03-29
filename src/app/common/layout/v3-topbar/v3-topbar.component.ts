@@ -22,12 +22,12 @@ import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
-
+import { V3TopbarInterface } from './v3-topbar.interface';
 @Component({
   selector: 'm-v3topbar',
   templateUrl: 'v3-topbar.component.html',
 })
-export class V3TopbarComponent implements OnInit, OnDestroy {
+export class V3TopbarComponent implements OnInit, OnDestroy, V3TopbarInterface {
   readonly cdnAssetsUrl: string;
   timeout;
   isTouchScreen = false;
