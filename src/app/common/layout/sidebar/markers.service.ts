@@ -1,13 +1,13 @@
-import { SidebarMarkersComponent } from './markers.component';
+import { SidebarMarkersInterface } from './markers.interface';
 
 export class SidebarMarkersService {
-  private container: SidebarMarkersComponent;
+  private container: SidebarMarkersInterface;
 
   static _() {
     return new SidebarMarkersService();
   }
 
-  setContainer(container: SidebarMarkersComponent) {
+  setContainer(container: SidebarMarkersInterface) {
     this.container = container;
 
     return this;

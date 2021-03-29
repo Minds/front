@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
-import { ReadMoreDirective } from './read-more.directive';
+import { ReadMoreDirectiveInterface } from './read-more.interface';
 
 @Component({
   selector: 'm-read-more--button',
@@ -63,7 +63,7 @@ export class ReadMoreButtonComponent {
         [klass: string]: any;
       };
 
-  content: ReadMoreDirective;
+  content: ReadMoreDirectiveInterface;
 
   constructor(private cd: ChangeDetectorRef) {}
 

@@ -1,7 +1,8 @@
 import { EventEmitter } from '@angular/core';
+import { TreeModelInterface } from './tree-model.interface';
 import { TreeNode } from './tree-node.model';
 
-export class TreeModel {
+export class TreeModel implements TreeModelInterface {
   nodes: Array<TreeNode> = [];
 
   hiddenNodes: TreeNode[] = [];

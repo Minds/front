@@ -16,6 +16,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { OverlayModalInterface } from './overlay-modal.interface';
 
 @Component({
   moduleId: module.id,
@@ -33,7 +34,8 @@ import { filter } from 'rxjs/operators';
     ]),
   ],
 })
-export class OverlayModalComponent implements AfterViewInit, OnDestroy {
+export class OverlayModalComponent
+  implements AfterViewInit, OnDestroy, OverlayModalInterface {
   hidden: boolean = true;
   class: string = '';
   wrapperClass: string = '';

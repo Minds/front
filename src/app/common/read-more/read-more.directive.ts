@@ -6,11 +6,12 @@ import {
   Input,
 } from '@angular/core';
 import { ReadMoreButtonComponent } from './button.component';
+import { ReadMoreDirectiveInterface } from './read-more.interface';
 
 @Directive({
   selector: '[m-read-more]',
 })
-export class ReadMoreDirective {
+export class ReadMoreDirective implements ReadMoreDirectiveInterface {
   _element: any;
   realHeight: any;
   expandable: boolean = false;

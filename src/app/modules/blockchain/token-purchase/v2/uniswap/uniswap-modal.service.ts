@@ -4,9 +4,8 @@ import {
   StackableModalEvent,
   StackableModalService,
 } from '../../../../../services/ux/stackable-modal.service';
+import { UniswapAction } from './uniswap-action.type';
 import { UniswapModalComponent } from './uniswap-modal.component';
-
-export type UniswapAction = 'swap' | 'add';
 
 @Injectable()
 export class UniswapModalService {

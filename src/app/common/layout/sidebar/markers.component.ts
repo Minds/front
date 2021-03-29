@@ -12,12 +12,14 @@ import { Session } from '../../../services/session';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-markers/sidebar-markers.component';
 import { SidebarMarkersService } from './markers.service';
+import { SidebarMarkersInterface } from './markers.interface';
 
 @Component({
   selector: 'm-sidebar--markers',
   templateUrl: 'markers.component.html',
 })
-export class SidebarMarkersComponent implements AfterViewInit {
+export class SidebarMarkersComponent
+  implements AfterViewInit, SidebarMarkersInterface {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   showMarkerSidebar = false;

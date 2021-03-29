@@ -1,11 +1,11 @@
-import { SidebarNavigationComponent } from './navigation.component';
+import { SidebarNavigationInterface } from './navigation.interface';
 import { EventEmitter } from '@angular/core';
 
 export class SidebarNavigationService {
-  container: SidebarNavigationComponent;
+  container: SidebarNavigationInterface;
   visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  setContainer(container: SidebarNavigationComponent): void {
+  setContainer(container: SidebarNavigationInterface): void {
     this.container = container;
   }
 

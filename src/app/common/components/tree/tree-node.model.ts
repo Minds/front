@@ -1,10 +1,10 @@
-import { TreeModel } from './tree.model';
+import { TreeModelInterface } from './tree-model.interface';
 
 export class TreeNode {
   id: string;
   label: string;
   children: Array<TreeNode> = [];
-  treeModel: TreeModel;
+  treeModel: TreeModelInterface;
   original: any;
   parent: TreeNode;
 
@@ -29,7 +29,7 @@ export class TreeNode {
     idField: string,
     labelField: string,
     childrenField: string,
-    treeModel: TreeModel,
+    treeModel: TreeModelInterface,
     parent: TreeNode = null
   ) {
     this.original = data;

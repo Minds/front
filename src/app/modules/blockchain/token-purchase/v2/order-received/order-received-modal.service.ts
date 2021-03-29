@@ -4,14 +4,8 @@ import {
   StackableModalEvent,
   StackableModalService,
 } from '../../../../../services/ux/stackable-modal.service';
+import { OrderData } from './order-data.interface';
 import { OrderReceivedModalComponent } from './order-received-modal.component';
-
-export interface OrderData {
-  paymentMethod: 'Card' | 'Bank';
-  tokenAmount: number;
-  paymentAmount: number;
-  currency: string;
-}
 
 @Injectable()
 export class OrderReceivedModalService {

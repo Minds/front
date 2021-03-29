@@ -5,7 +5,7 @@ import {
   SkipSelf,
 } from '@angular/core';
 import { ConfigsService } from '../../../../../common/services/configs.service';
-import { UniswapAction } from './uniswap-modal.service';
+import { UniswapAction } from './uniswap-action.type';
 
 @Component({
   selector: 'm-uniswap__modal',

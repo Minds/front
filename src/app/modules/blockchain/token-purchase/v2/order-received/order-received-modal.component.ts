@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { OrderData } from './order-received-modal.service';
+import { OrderData } from './order-data.interface';
 
 @Component({
   selector: 'm-orderReceived__modal',

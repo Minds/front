@@ -1,11 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
-
-import { OverlayModalComponent } from '../../common/components/overlay-modal/overlay-modal.component';
+import { OverlayModalInterface } from '../../common/components/overlay-modal/overlay-modal.interface';
 import isMobile from '../../helpers/is-mobile';
 
 @Injectable()
 export class OverlayModalService {
-  private container: OverlayModalComponent;
+  private container: OverlayModalInterface;
 
   private _onDidDismissFn: Function;
 
@@ -15,7 +14,7 @@ export class OverlayModalService {
     return new OverlayModalService();
   }
 
-  setContainer(container: OverlayModalComponent) {
+  setContainer(container: OverlayModalInterface) {
     this.container = container;
     return this;
   }
