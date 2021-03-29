@@ -19,12 +19,7 @@ describe('OnboardingV3Service', () => {
   });
 
   beforeEach(() => {
-    service = new OnboardingV3Service(
-      new (() => {})(),
-      new (() => {})(),
-      stackableModalMock,
-      apiMock
-    );
+    service = new OnboardingV3Service(apiMock);
   });
 
   it('should init', () => {

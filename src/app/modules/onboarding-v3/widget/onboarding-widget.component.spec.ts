@@ -8,6 +8,7 @@ import { featuresServiceMock } from '../../../../tests/features-service-mock.spe
 import { Injector } from '@angular/core';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
+import { OnboardingV3DynamicService } from '../onboarding-v3-dynamic.service';
 
 describe('OnboardingV3WidgetComponent', () => {
   let comp: OnboardingV3WidgetComponent;
@@ -29,6 +30,10 @@ describe('OnboardingV3WidgetComponent', () => {
         {
           provide: OnboardingV3Service,
           useValue: onboardingServiceMock,
+        },
+        {
+          provide: OnboardingV3DynamicService,
+          useValue: MockService(OnboardingV3DynamicService),
         },
         {
           provide: OnboardingV3PanelService,
