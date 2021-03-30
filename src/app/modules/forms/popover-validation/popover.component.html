@@ -1,6 +1,12 @@
 <div class="m-popover__wrapper">
   <ng-content></ng-content>
   <div class="m-popover__content" #content>
+    <i
+      class="m-popover__close material-icons"
+      *ngIf="isMobileOrTablet"
+      (click)="hide()"
+      >close</i
+    >
     <ul class="m-popover__rules">
       <li
         [class.m-popover__rule--checked]="lengthCheck"
@@ -34,20 +40,21 @@
       </li>
       <li
         [class.m-popover__rule--checked]="riskCheck && !riskCheckInProgress"
-        [class.m-popover__rule--invalid]="riskAssessed && !riskCheck"
+        [class.m-popover__rule--invalid]="
+          riskAssessed && !riskCheckInProgress && !riskCheck
+        "
         class="m-popover__rule--risk"
       >
         <m-loadingSpinner [inProgress]="riskCheckInProgress"></m-loadingSpinner>
-        <ng-container i18n="@@REGISTRATION_VALIDATOR__RISK">
+        <ng-container i18n="@@REGISTRATION_VALIDATOR__RISK_CHECK">
           Passes risk test
         </ng-container>
-        <m-tooltip
-          ><span m-tooltip--anchor>?</span>
+        <m-tooltip icon="help">
           <ng-container i18n="@@REGISTRATION_VALIDATOR__RISK_INFO"
-            >This password has previously appeared in data breaches. This means
-            attackers can find this password online and try to access accounts
-            with it. Please use a more secure alternative.
-          </ng-container>
+            >If this test has failed, the password you entered has been
+            previously exposed in data breaches and is not safe to use. Please
+            use a more secure alternative.</ng-container
+          >
         </m-tooltip>
       </li>
     </ul>

@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Client } from '../../../services/api';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-popover',
@@ -27,6 +28,7 @@ export class PopoverComponent {
 
   riskCheckInProgress: boolean = false;
   riskAssessed: boolean = false;
+  riskModalOpen: boolean = false;
 
   hidden: boolean = false;
 
@@ -60,23 +62,27 @@ export class PopoverComponent {
     this.detectChanges();
 
     if (this.synchronousChecksValid) {
-      await this.assessRisk(str);
-    } else {
-      this.riskCheckInProgress = false;
-      this.riskCheck = false;
-      this.change.emit(false);
+      // assess risk whenever all the other checks pass,
+      // even if risk was previously valid
+      this.riskCheck = await this.assessRisk(str);
+
+      if (!this.allChecksValid) {
+        this.change.emit(false);
+      } else {
+        // if everything is right, wait a bit and hide
+        setTimeout(() => this.hide(true), 500);
+        this.change.emit(true);
+      }
     }
     this.detectChanges();
   }
 
-  hideBecauseValid() {
-    // if everything is right, wait a bit and hide
-    this.change.emit(true);
-    setTimeout(() => this.hide(true), 500);
-  }
-
-  async assessRisk(password: string): Promise<void> {
+  async assessRisk(password: string): Promise<boolean> {
+    /**
+     * Don't show the check/cross until at least assessment has been made
+     * */
     this.riskAssessed = true;
+
     this.riskCheckInProgress = true;
     this.detectChanges();
 
@@ -87,23 +93,20 @@ export class PopoverComponent {
       }
     );
 
-    if (response && response.risk) {
-      this.riskCheck = !response.risk;
-    } else {
-      this.riskCheck = true;
-    }
-
+    const riskCheck = response && response.risk ? !response.risk : true;
     this.riskCheckInProgress = false;
     this.detectChanges();
 
-    if (this.riskCheck) {
-      this.hideBecauseValid();
-    }
+    return riskCheck;
   }
 
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  get isMobileOrTablet(): boolean {
+    return isMobileOrTablet();
   }
 
   get synchronousChecksValid(): boolean {
