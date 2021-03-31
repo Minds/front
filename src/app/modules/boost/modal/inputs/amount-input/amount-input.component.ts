@@ -117,6 +117,9 @@ export class BoostModalAmountInputComponent
         setTimeout(() => this.resetFocusListenerSubscriptions());
       })
     );
+
+    // Set focus impressions input
+    setTimeout(() => this.impressionsInput.nativeElement.focus(), 0);
   }
 
   ngOnDestroy(): void {
