@@ -3,7 +3,7 @@
   display: flex;
   flex-flow: row nowrap;
   margin: 0;
-  padding: 0 40px;
+  padding: 10px 40px 0 40px;
   list-style: none;
   @include m-theme() {
     border-bottom: 1px solid themed($m-borderColor--primary);
@@ -15,9 +15,11 @@
   @media screen and (max-width: $layoutMin3ColWidth) {
     padding: 0 20px;
   }
-  @media screen and (max-width: $max-mobile) {
+  @include mobile-only {
     margin-left: 0;
     margin-right: 0;
+
+    overflow-x: scroll;
   }
 }
 div.m-tabs__tab,
@@ -25,18 +27,18 @@ div.m-tabs__tab,
   > a {
     cursor: pointer;
     padding: 13px 0;
-    margin-right: 20px;
+    margin-right: 30px;
     box-sizing: border-box;
     display: block;
-    font-size: 15px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 400;
     line-height: 20px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     list-style: none;
     text-decoration: none;
 
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
       border-bottom: 3px solid transparent;
     }
     &.selected,
