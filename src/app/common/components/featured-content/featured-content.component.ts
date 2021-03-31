@@ -26,6 +26,7 @@ export class FeaturedContentComponent implements OnInit {
   entity: any;
 
   @Input() slot: number = -1;
+  @Input() displayOptions = { isFeed: true };
 
   @ViewChild(DynamicHostDirective)
   dynamicHost: DynamicHostDirective;
@@ -98,6 +99,7 @@ export class FeaturedContentComponent implements OnInit {
         component: ActivityComponent,
         injector: (componentRef, entity) => {
           componentRef.instance.entity = entity;
+          componentRef.instance.displayOptions = this.displayOptions ?? {};
           //componentRef.instance.slot = this.slot;
           componentRef.changeDetectorRef.detectChanges();
         },
