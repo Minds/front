@@ -2,6 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { MultiFactorAuthService } from './multi-factor-auth-service';
 
+let routerMock = new (function() {
+  this.navigate = jasmine.createSpy('navigate');
+})();
+
 export let toastServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
 })();
@@ -23,7 +27,11 @@ describe('MultiFactorAuthService', () => {
       providers: [],
     });
 
-    service = new MultiFactorAuthService(toastServiceMock, apiServiceMock);
+    service = new MultiFactorAuthService(
+      toastServiceMock,
+      apiServiceMock,
+      routerMock
+    );
   });
 
   afterEach(() => {
