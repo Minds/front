@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .m-twoFactor__confirmDisableInput {
+    margin-bottom: 40px;
+    display: block;
+    width: 100%;
+    border-radius: 2px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-twoFactorDisable__text {
+    margin-bottom: 40px;
+    font-size: 15px;
+    font-weight: 400;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  ::ng-deep m-settings--two-factor {
+    .m-border {
+      border: none !important; // override
+    }
+    .mdl-card__supporting-text {
+      padding: unset;
+    }
+  }
+}

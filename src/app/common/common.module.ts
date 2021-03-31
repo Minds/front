@@ -181,6 +181,7 @@ import { CanaryFlagComponent } from '../common/components/canary-flag/canary-fla
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 import { ChannelCardComponent } from './components/channel-card/channel-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
+import { DownloadActivityMediaService } from './services/download-activity-media.service';
 
 const routes: Routes = [
   {
@@ -517,6 +518,7 @@ const routes: Routes = [
     AttachmentApiService,
     ClientMetaService,
     UserMenuService,
+    DownloadActivityMediaService,
   ],
 })
 export class CommonModule {}

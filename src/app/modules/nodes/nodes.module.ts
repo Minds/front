@@ -14,9 +14,9 @@ const routes: Routes = [
     data: {
       title: 'Minds Nodes',
       description: 'Launch your own social networking app',
-      ogImage: '/assets/og-images/nodes-v2.png',
-      ogImageWidth: 400,
-      ogImageHeight: 400,
+      ogImage: '/assets/og-images/nodes-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 ];

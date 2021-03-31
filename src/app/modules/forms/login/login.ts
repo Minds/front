@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, NgZone, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
@@ -7,6 +14,9 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
+import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/multi-factor-auth-service';
+import { skip } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +24,7 @@ import { Router } from '@angular/router';
   templateUrl: 'login.html',
   styleUrls: ['./login.ng.scss'],
 })
-export class LoginForm {
+export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   @Input() showBigButton: boolean = false;
   @Input() showInlineErrors: boolean = false;
   @Input() showTitle: boolean = false;
@@ -25,6 +35,7 @@ export class LoginForm {
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
+  hideMFA: boolean = true;
   inProgress: boolean = false;
   referrer: string;
 
@@ -45,12 +56,25 @@ export class LoginForm {
     private userAvatarService: UserAvatarService,
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
+    private multiFactorAuth: MultiFactorAuthService,
     private router: Router
   ) {
+    super();
     this.form = fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+  }
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.multiFactorAuth.onSuccess$.pipe(skip(1)).subscribe(user => {
+        this.inProgress = false;
+        this.session.login(user);
+        this.userAvatarService.init();
+        this.done.next(user);
+      })
+    );
   }
 
   login() {
@@ -98,7 +122,7 @@ export class LoginForm {
     };
 
     this.client
-      .post('api/v1/authenticate', opts)
+      .post('api/v1/authenticate', opts, {}, true)
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
         this.inProgress = false;
@@ -112,20 +136,40 @@ export class LoginForm {
         if (!e) {
           this.errorMessage = 'LoginException::Unknown';
           this.session.logout();
-        } else if (e.status === 'failed') {
+        } else if (e.error.status === 'failed') {
           // incorrect login details
           this.errorMessage = 'LoginException::AuthenticationFailed';
           this.session.logout();
-        } else if (e.status === 'error') {
+        } else if (e.error.status === 'error') {
           if (
-            e.message === 'LoginException:BannedUser' ||
-            e.message === 'LoginException::AttemptsExceeded'
+            e.error.message === 'LoginException:BannedUser' ||
+            e.error.message === 'LoginException::AttemptsExceeded'
           ) {
             this.session.logout();
           }
+          // if 2fa required
+          if (
+            e.error.errorId ===
+            'Minds::Core::Security::TwoFactor::TwoFactorRequiredException'
+          ) {
+            // try to get sms key from header
+            const smsKey = e.headers.get('X-MINDS-SMS-2FA-KEY');
 
-          // two factor?
-          this.twofactorToken = e.message;
+            // set next panel and mfa service MFARequest.
+            this.multiFactorAuth.activePanel$.next(smsKey ? 'sms' : 'totp');
+            this.multiFactorAuth.setMFARequest({
+              secretKeyId: smsKey ?? null,
+              ...opts,
+            });
+
+            // show mfa form
+            this.hideLogin = true;
+            this.hideMFA = false;
+            return;
+          }
+
+          // two factor? TODO: Remove when totp-2021 feat flag retired.
+          this.twofactorToken = e.error.message;
           this.hideLogin = true;
         } else {
           this.errorMessage = 'LoginException::Unknown';

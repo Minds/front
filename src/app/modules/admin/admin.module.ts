@@ -26,6 +26,7 @@ import { GroupsModule } from '../groups/groups.module';
 import { FormsModule } from '@angular/forms';
 import { CommentsModule } from '../comments/comments.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { AdminLiquidityProvidersComponent } from './liquidity-providers/liquidity-providers.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,7 @@ const routes: Routes = [
     AdminWithdrawals,
     AdminReportsDownload,
     AdminFeaturesComponent,
+    AdminLiquidityProvidersComponent,
   ],
 })
 export class AdminModule {}

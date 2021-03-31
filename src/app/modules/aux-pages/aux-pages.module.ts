@@ -27,9 +27,9 @@ const AUX_ROUTES: Routes = [
           title: 'Privacy Policy',
           description:
             'This privacy policy is made available for remix under a Creative Commons Sharealike license. Your privacy is important to Minds, Inc. ...',
-          ogImage: '/assets/og-images/privacy-v2.png',
-          ogImageWidth: 400,
-          ogImageHeight: 400,
+          ogImage: '/assets/og-images/privacy-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {
@@ -39,9 +39,9 @@ const AUX_ROUTES: Routes = [
           title: 'DMCA',
           description:
             'If you believe that material available on our sites infringes on your copyright(s), please notify us by providing a DMCA notice...',
-          ogImage: '/assets/og-images/dmca-v2.png',
-          ogImageWidth: 400,
-          ogImageHeight: 400,
+          ogImage: '/assets/og-images/dmca-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {
@@ -51,9 +51,9 @@ const AUX_ROUTES: Routes = [
           title: 'Terms of Service',
           description:
             'We (the people who work with Minds) create free and open source software and run the Minds.com social network...',
-          ogImage: '/assets/og-images/terms-v2.png',
-          ogImageWidth: 400,
-          ogImageHeight: 400,
+          ogImage: '/assets/og-images/terms-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {
@@ -63,9 +63,9 @@ const AUX_ROUTES: Routes = [
           title: 'Contact',
           description:
             'Contact details for press, general enquiries and support, copyright and DMCA, security and vulnerabilities',
-          ogImage: '/assets/og-images/contact-v2.png',
-          ogImageWidth: 400,
-          ogImageHeight: 400,
+          ogImage: '/assets/og-images/contact-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {
@@ -75,9 +75,9 @@ const AUX_ROUTES: Routes = [
           title: 'Bill of Rights',
           description:
             'Minds is officially adopting the Manila Principles On Intermediary Liability, a digital bill of rights...',
-          ogImage: '/assets/og-images/bill-of-rights-v2.png',
-          ogImageWidth: 400,
-          ogImageHeight: 400,
+          ogImage: '/assets/og-images/bill-of-rights-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {
@@ -87,9 +87,9 @@ const AUX_ROUTES: Routes = [
           title: 'Minds Pro Terms of Service',
           description:
             'If  you  have  been  invited  to  or  joined  Minds  Pro  ("Minds Pro"),  and  your  participation  in  Minds Pro has  not  been  terminated,  then  the  following  terms  shall  apply.',
-          ogImage: '/assets/og-images/monetization-terms-v2.png',
-          ogImageWidth: 400,
-          ogImageHeight: 400,
+          ogImage: '/assets/og-images/monetization-terms-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {

@@ -69,6 +69,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       showOnlyCommentsInput: false,
       isModal: true,
       fixedHeight: false,
+      autoplayVideo: true,
     });
 
     // Prepare pager

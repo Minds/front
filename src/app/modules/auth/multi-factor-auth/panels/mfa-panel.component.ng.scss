@@ -1,0 +1,108 @@
+@import 'defaults.scss';
+
+@mixin unselectable {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+:host {
+  .m-mfaAuth__subheader {
+    font-size: 15px;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 30px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-mfaAuth__formContainer {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-mfaAuth__inputLabel {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 10px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    .m-mfaAuth__codeInput {
+      font-size: 16px;
+      font-weight: 400;
+      border-radius: 2px;
+      outline: none;
+      padding: 10px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-mfaAuth__verifyButton {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+
+  .m-mfaAuth__footerContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: column wrap;
+    @include unselectable;
+
+    &.m-mfaAuth__footerContainer--horizontal {
+      display: unset;
+      flex-flow: unset;
+
+      @media screen and (max-width: $min-tablet) {
+        margin-top: 20px;
+        display: block;
+      }
+
+      > * + * {
+        margin-left: 4px;
+      }
+    }
+
+    > * + * {
+      margin-top: 10px;
+    }
+    .m-mfaAuth__footerTitle {
+      font-size: 16px;
+      font-weight: 700;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+    .m-mfaAuth__footerLink {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.8;
+      text-decoration: underline;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+    .m-mfaAuth__footerText {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.8;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+}

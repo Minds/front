@@ -95,7 +95,11 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   async load() {
     this.loading = true;
     this.submitError = '';
-    this.wallet = await this.walletService.wallet;
+
+    await this.walletService.getTokenAccounts();
+
+    this.wallet = this.walletService.wallet;
+
     this.balance = this.wallet.offchain.balance;
     this.balanceIsLimit = this.balance < this.transferLimit;
     this.ethBalance = this.wallet.eth.balance;

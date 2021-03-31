@@ -12,6 +12,7 @@ import { Session } from '../../services/session';
   selector: 'm-pro__marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['marketing.component.ng.scss'],
 })
 export class ProMarketingComponent {
   readonly cdnAssetsUrl: string;

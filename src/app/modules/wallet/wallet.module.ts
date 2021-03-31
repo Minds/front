@@ -50,9 +50,9 @@ export const WALLET_ROUTES: Routes = [
     data: {
       title: 'Wallet',
       description: 'Manage all of your transactions and earnings on Minds',
-      ogImage: '/assets/og-images/wallet-v2.png',
-      ogImageWidth: 400,
-      ogImageHeight: 400,
+      ogImage: '/assets/og-images/wallet-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
     children: [
       {
