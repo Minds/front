@@ -44,6 +44,10 @@
       <m-featured-content
         *ngIf="(i > 0 && i % 5 === 0) || i === 2"
         [slot]="i + 1"
+        [displayOptions]="{
+          showOnlyCommentsInput: true,
+          isFeed: true
+        }"
       ></m-featured-content>
 
       <m-activity
