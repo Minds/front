@@ -16,7 +16,7 @@
     'm-button--large': size === 'large',
     'm-button--overlay': overlay,
     'm-button--iconOnly': iconOnly,
-    'm-button--dropdown': !!dropdown,
+    'm-button--dropdown': !!dropdown && showDropdownMenu,
     'm-pulsating--small': pulsating
   }"
 >
@@ -33,7 +33,7 @@
     <span></span>
   </div>
   <m-dropdownMenu
-    *ngIf="dropdown"
+    *ngIf="dropdown && showDropdownMenu"
     [menu]="dropdown"
     [anchorPosition]="dropdownAnchorPosition"
     triggerClass="m-button__dropdownArrow"

@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
 import {
+  BoostableEntity,
   BoostModalService,
   BoostSubject,
   BoostTab,
@@ -44,6 +45,9 @@ export class BoostModalTabsComponent {
     return this.service.entityType$;
   }
 
+  get entity$(): BehaviorSubject<BoostableEntity> {
+    return this.service.entity$;
+  }
   /**
    * On next tab click.
    * @param { BoostTab } - clicked tab.

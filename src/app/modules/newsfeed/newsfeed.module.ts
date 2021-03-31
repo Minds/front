@@ -55,9 +55,9 @@ const routes: Routes = [
         data: {
           title: 'Newsfeed',
           description: 'Posts from channels your subscribe to',
-          ogImage: '/assets/og-images/newsfeed.png',
-          ogImageWidth: 400,
-          ogImageHeight: 76,
+          ogImage: '/assets/og-images/newsfeed-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       {
@@ -67,9 +67,9 @@ const routes: Routes = [
         data: {
           title: 'Boost Feed',
           description: 'Posts that have been boosted on the network',
-          ogImage: '/assets/og-images/boost.png',
-          ogImageWidth: 400,
-          ogImageHeight: 76,
+          ogImage: '/assets/og-images/boost-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
       },
       { path: 'tag/:tag', component: NewsfeedTagsComponent },

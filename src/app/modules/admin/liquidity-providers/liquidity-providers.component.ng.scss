@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  .m-adminLiquidityPosition__list {
+    margin: auto;
+    max-width: 600px;
+    padding: 20px;
+  }
+
+  .m-adminLiquidityPositionList__item {
+    margin-bottom: 20px;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    ::ng-deep m-channelCard .m-channelCard {
+      border: none !important;
+    }
+  }
+
+  .m-adminLiquidityPositionListItem__info {
+    padding: 20px;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    .positive {
+      @include m-theme() {
+        color: themed($m-green);
+      }
+    }
+
+    .negative {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
+import { max } from 'bn.js';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -180,6 +181,8 @@ export class WalletTokenRewardsComponent implements OnInit {
    * @param e
    */
   async onTransferClick(e: MouseEvent) {
+    e.stopPropagation();
+
     this.onchainTransferModal
       .setInjector(this.injector)
       .present()
@@ -191,6 +194,8 @@ export class WalletTokenRewardsComponent implements OnInit {
    * @param e
    */
   onProvideLiquidityClick(e: MouseEvent) {
+    e.stopPropagation();
+
     this.uniswapModalService.open('add');
   }
 
@@ -199,5 +204,20 @@ export class WalletTokenRewardsComponent implements OnInit {
    */
   isOptedOutOfLiquiditySpot(): boolean {
     return this.session.getLoggedInUser()?.liquidity_spot_opt_out;
+  }
+
+  /**
+   * Returns the number of days from the current multiplier provided
+   * NOTE: this is only using tokenomicsV2.. changes the tokenomics manifest will need to be reflected here
+   * @param multiplier
+   */
+  calculateDaysFromMultiplier(multiplier: number): number {
+    const maxDays = 365;
+    const maxMultiplier = 3;
+    const minMultiplier = 1;
+    const multiplierRange = maxMultiplier - minMultiplier;
+    const dailyIncrement = multiplierRange / maxDays; // 0.0054794520
+
+    return (multiplier - minMultiplier) / dailyIncrement;
   }
 }

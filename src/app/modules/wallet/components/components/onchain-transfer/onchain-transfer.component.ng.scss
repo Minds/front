@@ -59,6 +59,20 @@
       padding: 20px 24px 30px;
     }
 
+    .m-walletAlertText {
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+
+      span {
+        @include m-theme() {
+          cursor: pointer;
+          color: themed($m-link);
+          text-decoration: underline;
+        }
+      }
+    }
+
     .m-walletSecondaryText--desc {
       margin-top: 5px;
 
@@ -77,8 +91,24 @@
     }
   }
 
+  .m-walletOnchainTransfer__separator {
+    padding: 0 4px 0 8px;
+  }
+
   .m-walletOnchainTransfer__balanceWrapper {
-    span:last-child {
+    &--alert {
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+
+      .m-walletOnchainTransfer__balance {
+        @include m-theme() {
+          color: themed($m-alert);
+        }
+      }
+    }
+
+    span {
       margin-left: 5px;
     }
   }

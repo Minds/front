@@ -6,6 +6,8 @@ import { WalletService } from '../../../../services/wallet';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
+import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 @Component({
   selector: 'minds-button-boost',
@@ -24,10 +26,21 @@ export class BoostButton {
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    private boostLazyModal: BoostModalLazyService,
+    private features: FeaturesService
   ) {}
 
-  boost() {
+  /**
+   * Open boost modal
+   * @returns { void }
+   */
+  public boost(): void {
+    if (this.features.has('boost-modal-v2')) {
+      this.boostLazyModal.open(this.object);
+      return;
+    }
+
     const creator = this.overlayModal.create(
       BoostCreatorComponent,
       this.object

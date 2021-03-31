@@ -166,18 +166,33 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   async onJoinNowClick() {
-    if (this.featuresService.has('onboarding-october-2020')) {
-      try {
-        await this.authModal.open();
-      } catch (e) {
-        if (e === 'DismissedModalException') {
-          return; // modal dismissed, do nothing
-        }
-        console.error(e);
+    try {
+      await this.authModal.open();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
       }
-      return;
+      console.error(e);
     }
-    this.router.navigate(['/register']);
+  }
+
+  /**
+   * Depending on enabled feature, either navigates to login
+   * or opens auth modal login panel.
+   * @returns { Promise<void> } - awaitable.
+   */
+  async onLoginClick(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+      if (this.router.url === '/') {
+        this.router.navigate(['/newsfeed/subscriptions']);
+      }
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
   }
 
   /**

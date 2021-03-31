@@ -9,9 +9,9 @@ const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
 export const MIN_METRIC_FOR_ROBOTS = 5;
 const DEFAULT_META_AUTHOR = 'Minds';
-const DEFAULT_OG_IMAGE = '/assets/og-images/default.png';
-const DEFAULT_OG_IMAGE_WIDTH = 400;
-const DEFAULT_OG_IMAGE_HEIGHT = 76;
+const DEFAULT_OG_IMAGE = '/assets/og-images/default-v3.png';
+const DEFAULT_OG_IMAGE_WIDTH = 1200;
+const DEFAULT_OG_IMAGE_HEIGHT = 1200;
 
 @Injectable()
 export class MetaService {

@@ -348,6 +348,15 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
+   * If we are editing and we have a scheduled value
+   */
+  readonly canSchedule$ = combineLatest([this.schedule$, this.isEditing$]).pipe(
+    map(([schedule, isEditing]) => {
+      return !isEditing || schedule * 1000 > Date.now();
+    })
+  );
+
+  /**
    * Are we currently moving part of this service's state to another place? (i.e. blog editor)
    */
   readonly isMovingContent$: BehaviorSubject<boolean> = new BehaviorSubject<

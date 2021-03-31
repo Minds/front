@@ -14,9 +14,9 @@ const routes: Routes = [
     data: {
       title: 'Jobs',
       description: 'Want to join the team? View our open positions.',
-      ogImage: '/assets/og-images/jobs.png',
-      ogImageWidth: 400,
-      ogImageHeight: 76,
+      ogImage: '/assets/og-images/jobs-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 ];

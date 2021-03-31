@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 import { ThemeService } from '../../../../../common/services/theme.service';
 import {
   BoostModalService,
@@ -46,10 +47,16 @@ import {
   styleUrls: ['./payment-method-selector.component.ng.scss'],
 })
 export class BoostModalPaymentMethodSelectorComponent implements OnInit {
+  // cdn url
+  private readonly cdnAssetsUrl: string;
+
   constructor(
     private service: BoostModalService,
-    private theme: ThemeService
-  ) {}
+    private theme: ThemeService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   async ngOnInit(): Promise<void> {
     // avoid having to pull in subscription OnDestroy hook.
@@ -89,12 +96,10 @@ export class BoostModalPaymentMethodSelectorComponent implements OnInit {
       map(isDark => {
         return isDark
           ? {
-              background:
-                "url('/assets/icons/arrow-drop-down-white.svg') 98% center no-repeat",
+              background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-white.svg') 98% center no-repeat`,
             }
           : {
-              background:
-                "url('/assets/icons/arrow-drop-down-black.svg') 98% center no-repeat",
+              background: `url('${this.cdnAssetsUrl}assets/icons/arrow-drop-down-black.svg') 98% center no-repeat`,
             };
       })
     );

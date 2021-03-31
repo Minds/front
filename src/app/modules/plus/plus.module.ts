@@ -19,9 +19,9 @@ const plusRoutes: Routes = [
       title: 'Minds Plus',
       description: `Support Minds and unlock features such as hiding ads, accessing exclusive content, receiving a badge and verifying your channel.`,
       canonicalUrl: '/plus',
-      ogImage: '/assets/og-images/plus.png',
-      ogImageWidth: 400,
-      ogImageHeight: 76,
+      ogImage: '/assets/og-images/plus-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 ];

@@ -62,6 +62,11 @@ export class ButtonComponent implements AfterViewInit {
   };
 
   /**
+   * Show the dropdown or not
+   */
+  @Input() showDropdownMenu = true;
+
+  /**
    * Event emitter when actioning the button
    */
   @Output() onAction: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
