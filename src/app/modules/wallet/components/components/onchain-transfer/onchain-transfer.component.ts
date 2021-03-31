@@ -29,6 +29,7 @@ import {
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
 import { BigNumber } from 'ethers';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
+import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 
 @Component({
   moduleId: module.id,
@@ -41,6 +42,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   form;
   wallet;
   balance: number = 0;
+  ethBalance: number = 0;
   amountSubscription: Subscription;
 
   canTransfer = true; // whether the user can withdraw from wallet
@@ -62,6 +64,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   balanceIsLimit: boolean = true;
 
   constructor(
+    private buyTokensService: BuyTokensModalService,
     protected session: Session,
     protected client: Client,
     protected contract: WithdrawContractService,
@@ -98,8 +101,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     this.wallet = this.walletService.wallet;
 
     this.balance = this.wallet.offchain.balance;
-
     this.balanceIsLimit = this.balance < this.transferLimit;
+    this.ethBalance = this.wallet.eth.balance;
 
     this.form = new FormGroup({
       amount: new FormControl(Math.min(this.balance, 1), {
@@ -230,6 +233,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   transferComplete(): void {
     this.toasterService.success('On-chain transfer complete');
     this.overlayModal.dismiss();
+  }
+
+  async onPurchaseTokensClick(e: MouseEvent): Promise<void> {
+    await this.buyTokensService.open();
   }
 
   ngOnDestroy(): void {

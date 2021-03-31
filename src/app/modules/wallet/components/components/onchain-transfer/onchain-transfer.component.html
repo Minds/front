@@ -57,9 +57,22 @@
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
               <label for="amount" i18n="@@COMMON__AMOUNT">Amount</label>
+              <div
+                class="m-walletOnchainTransfer__balanceWrapper"
+                [ngClass]="{
+                  'm-walletOnchainTransfer__balanceWrapper--alert':
+                    ethBalance === 0
+                }"
+              >
+                <span class="m-walletOnchainTransfer__balance">{{
+                  ethBalance | number
+                }}</span
+                ><span>ETH</span>
+              </div>
+              <div class="m-walletOnchainTransfer__separator">
+                &middot;
+              </div>
               <div class="m-walletOnchainTransfer__balanceWrapper">
-                <span i18n="@@WALLETV2_ONCHAIN_TRANSFER__BALANCE">Balance</span
-                >:
                 <span class="m-walletOnchainTransfer__balance">{{
                   balance | number
                 }}</span
@@ -124,7 +137,7 @@
         </div>
         <m-button
           class="m-walletOnchainTransfer__transferButton"
-          [disabled]="!isFormValid() || loading"
+          [disabled]="!isFormValid() || loading || ethBalance === 0"
           [saving]="transferring"
           (onAction)="submitError ? load() : onSubmit()"
           color="blue"
@@ -143,10 +156,22 @@
         <p
           class="m-walletSecondaryText"
           i18n="@@WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE"
+          *ngIf="ethBalance > 0"
         >
           Note: a small amount of ETH will be charged to cover the transaction
           fee. Transfers go through an approval process and may take up to 72
           hours to complete.
+        </p>
+
+        <p
+          class="m-walletSecondaryText m-walletAlertText"
+          i18n="@@WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE_NO_ETH"
+          *ngIf="ethBalance === 0"
+        >
+          Note: a small amount of ETH will be charged to cover the transaction
+          fee. You currently have a balance of 0 ETH -
+          <span (click)="onPurchaseTokensClick($event)">Add ETH</span> to
+          continue
         </p>
       </div>
     </ng-container>
