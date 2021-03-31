@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { catchError, map, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
@@ -81,7 +82,11 @@ export class MultiFactorAuthService implements OnDestroy {
     MFARequest
   > = new BehaviorSubject<MFARequest>(null);
 
-  constructor(private toast: FormToastService, private api: ApiService) {}
+  constructor(
+    private toast: FormToastService,
+    private api: ApiService,
+    private router: Router
+  ) {}
 
   ngOnDestroy() {
     for (let subscription of this.subscriptions) {
@@ -140,13 +145,40 @@ export class MultiFactorAuthService implements OnDestroy {
 
   /**
    * Call to validate code.
-   * TODO: Implement
    * @param { string } code - code for submission.
    * @returns { void }
    */
   public validateRecoveryCode(code: string): void {
-    this.toast.error(
-      'Validate recovery code not yet implemented! Code: ' + code
+    this.inProgress$.next(true);
+    this.subscriptions.push(
+      this.mfaRequest$
+        .pipe(
+          take(1),
+          throttleTime(2000),
+          switchMap((mfaRequest: MFARequest): any => {
+            return this.api.post('api/v3/security/totp/recovery', {
+              username: mfaRequest.username,
+              password: mfaRequest.password,
+              recovery_code: code,
+            });
+          }),
+          catchError(e => this.handleError(e))
+        )
+        .subscribe((response: any): void => {
+          this.inProgress$.next(false);
+
+          if (!response) {
+            return;
+          }
+
+          if (!response.matches) {
+            this.toast.error('Invalid recovery code');
+            return;
+          }
+
+          this.toast.success('Successfully recovered MFA. Please login again.');
+          this.router.navigate(['/']);
+        })
     );
   }
 

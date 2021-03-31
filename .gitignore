@@ -42,3 +42,4 @@ cypress/videos
 !/.prettierrc
 !.gitattributes
 !.gitkeep
+!/.nvmrc

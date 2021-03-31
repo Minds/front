@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { take, throttleTime } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, take, throttleTime } from 'rxjs/operators';
 import { MultiFactorAuthService } from '../../services/multi-factor-auth-service';
 import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.component';
 
@@ -26,5 +27,12 @@ export class MultiFactorAuthTOTPRecoveryComponent extends AbstractMFAFormCompone
         this.service.validateRecoveryCode(code);
       })
     );
+  }
+  /**
+   * Should be disabled.
+   * @returns { Observable<boolean> } - true if should be disabled.
+   */
+  get disabled$(): Observable<boolean> {
+    return this.code$.pipe(map((code: string) => code.length < 6));
   }
 }

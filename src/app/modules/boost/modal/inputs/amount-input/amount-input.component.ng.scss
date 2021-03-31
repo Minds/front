@@ -4,6 +4,7 @@
   .m-boostModalAmount__container {
     display: flex;
     flex-flow: row wrap;
+    border-radius: 2px;
 
     &.isFocused {
       @include m-theme() {

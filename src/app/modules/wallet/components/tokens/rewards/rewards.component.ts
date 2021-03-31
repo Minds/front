@@ -181,6 +181,8 @@ export class WalletTokenRewardsComponent implements OnInit {
    * @param e
    */
   async onTransferClick(e: MouseEvent) {
+    e.stopPropagation();
+
     this.onchainTransferModal
       .setInjector(this.injector)
       .present()
@@ -192,6 +194,8 @@ export class WalletTokenRewardsComponent implements OnInit {
    * @param e
    */
   onProvideLiquidityClick(e: MouseEvent) {
+    e.stopPropagation();
+
     this.uniswapModalService.open('add');
   }
 

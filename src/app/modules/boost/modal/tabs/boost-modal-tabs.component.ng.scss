@@ -31,6 +31,31 @@ $collapse-width: 830px;
     }
   }
 
+  .m-boostModal__channelCardContainer {
+    position: relative;
+    height: 35vh;
+    max-height: 600px;
+    min-height: 250px;
+    overflow-y: hidden;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      @include m-theme() {
+        background: linear-gradient(
+          180deg,
+          rgba(themed($m-bgColor--primary), 0) 0%,
+          rgba(themed($m-bgColor--primary), 1) 100%
+        );
+      }
+    }
+  }
+
   .m-boostModal__mainPanel {
     display: flex;
     flex-flow: row nowrap;

@@ -20,21 +20,19 @@
         routerLinkActiveOptions="{ exact: true }"
       >
         <a (click)="openComposeModal()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-icon
-                from="assets-file"
-                iconId="assets/icons/compose.svg"
-                [sizeFactor]="100"
-                m-tooltip--icon
-              ></m-icon>
-              <ng-container>Speak your mind</ng-container>
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <m-icon
+              from="assets-file"
+              iconId="assets/icons/compose.svg"
+              [sizeFactor]="40"
+              m-tooltip--icon
+            ></m-icon>
+            <ng-container>Speak your mind</ng-container>
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__COMPOSE">
             Compose
@@ -47,17 +45,15 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
         <a [routerLink]="['/newsfeed/subscriptions']" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              icon="home"
-              i18n="@@COMMON__NEWSFEED"
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              Newsfeed
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            icon="home"
+            i18n="@@COMMON__NEWSFEED"
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            Newsfeed
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__NEWSFEED">
             Newsfeed
@@ -71,16 +67,14 @@
         [routerLinkActiveOptions]="{ exact: plusPageActive }"
       >
         <a routerLink="/discovery" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <i class="m-icon--hashtag" m-tooltip--anchor>#</i>
-              <ng-container i18n="@@COMMON__DISCOVERY">Discovery</ng-container>
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <i class="m-icon--hashtag" m-tooltip--anchor>#</i>
+            <ng-container i18n="@@COMMON__DISCOVERY">Discovery</ng-container>
+          </m-tooltip>
 
           <span
             class="m-sidebarNavigationItem__text"
@@ -98,16 +92,14 @@
         *mIfFeature="'nav-plus-2020'"
       >
         <a routerLink="/discovery/plus" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <i class="material-icons" m-tooltip--anchor>add_to_queue</i>
-              <ng-container i18n="@@COMMON__MINDS+">Minds+</ng-container>
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <i class="material-icons" m-tooltip--anchor>add_to_queue</i>
+            <ng-container i18n="@@COMMON__MINDS+">Minds+</ng-container>
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+">
             Minds+
@@ -120,16 +112,14 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
         <a [routerLink]="['/wallet']" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-icon iconId="account_balance" m-tooltip--icon></m-icon>
-              <ng-container i18n="@@COMMON__WALLET">Wallet</ng-container>
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <m-icon iconId="account_balance" m-tooltip--icon></m-icon>
+            <ng-container i18n="@@COMMON__WALLET">Wallet</ng-container>
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__WALLET">
             Wallet
@@ -142,17 +132,15 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
         <a routerLink="/analytics" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              icon="insert_chart"
-              i18n="@@COMMON__ANALYTICS"
-              [enabled]="false"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              Analytics
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            icon="insert_chart"
+            i18n="@@COMMON__ANALYTICS"
+            [enabled]="false"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            Analytics
+          </m-tooltip>
           <span
             class="m-sidebarNavigationItem__text"
             i18n="@@COMMON__ANALYTICS"
@@ -227,16 +215,14 @@
         *mIfFeature="'earn-modal'"
       >
         <a (click)="openEarnModal()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <i class="material-icons" m-tooltip--anchor>attach_money</i>
-              <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <i class="material-icons" m-tooltip--anchor>attach_money</i>
+            <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN">
             Earn
@@ -251,18 +237,14 @@
         *mIfFeature="'buy-tokens-uniswap-transak'"
       >
         <a (click)="buyTokens()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
-              <ng-container i18n="@@COMMON__BUY_CRYPTO"
-                >Buy Crypto</ng-container
-              >
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
+            <ng-container i18n="@@COMMON__BUY_CRYPTO">Buy Crypto</ng-container>
+          </m-tooltip>
 
           <span
             class="m-sidebarNavigationItem__text"
@@ -280,16 +262,14 @@
         *mIfFeature="'boost-modal-v2'"
       >
         <a (click)="openBoostModal()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-icon iconId="trending_up" m-tooltip--icon></m-icon>
-              <ng-container>Boost your channel</ng-container>
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <m-icon iconId="trending_up" m-tooltip--icon></m-icon>
+            <ng-container>Boost your channel</ng-container>
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST">
             Boost
@@ -303,12 +283,10 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
         <a [routerLink]="['/' + user.username]" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <img
-              [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
-              alt=""
-            />
-          </span>
+          <img
+            [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+            alt=""
+          />
           <span class="m-sidebarNavigationItem__text">
             @{{ user.username }}
           </span>
@@ -320,17 +298,15 @@
         class="m-sidebarNavigation__item"
       >
         <a [routerLink]="[settingsLink]" (click)="toggle()">
-          <span class="m-sidebarNavigationItem__icon">
-            <m-tooltip
-              icon="more_horiz"
-              i18n="@@COMMON__SETTINGS"
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              Settings
-            </m-tooltip>
-          </span>
+          <m-tooltip
+            icon="more_horiz"
+            i18n="@@COMMON__SETTINGS"
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            Settings
+          </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS">
             Settings

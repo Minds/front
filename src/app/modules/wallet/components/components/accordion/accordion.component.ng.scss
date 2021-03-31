@@ -1,12 +1,69 @@
 @import 'defaults.scss';
 
 :host {
+  .m-walletTokenEarnings__accordion table {
+    tr td:nth-child(2) {
+      width: auto;
+    }
+
+    tr td:nth-child(3) {
+      @include mobile-only {
+        display: default;
+      }
+    }
+  }
+
+  .m-walletTokenRewards__accordion table {
+    tr td:nth-child(3) {
+      @include mobile-only {
+        display: none;
+      }
+    }
+  }
+
   table {
     width: 100%;
     border-collapse: collapse; /* Remove cell spacing */
 
+    tr td:first-child {
+      width: 45%;
+
+      @include mobile-only {
+        width: 60%;
+      }
+    }
+
+    tr td:nth-child(2) {
+      width: 20%;
+
+      @include mobile-only {
+        width: auto;
+      }
+    }
+
+    tr td:nth-child(3) {
+      width: 30%;
+    }
+
+    tr td:last-child {
+      width: 25px !important;
+    }
+
+    .m-walletTokenEarnings__header {
+      td {
+        padding: 15px 0;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+
+      tr td:last-child {
+        text-align: right;
+      }
+    }
+
     td {
-      padding: 15px 0;
+      padding: 10px 0;
       vertical-align: middle;
 
       &:first-of-type {
@@ -35,18 +92,20 @@
         color: themed($m-textColor--secondary);
       }
     }
-
-    i {
-      cursor: pointer;
-    }
   }
 
   .m-walletTokenEarnings__expanded {
     @include m-theme() {
       background-color: themed($m-bgColor--btnHover);
     }
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
+
+    tr:first-child td {
+      padding-top: 30px;
+    }
+
+    tr:last-child td {
+      padding-bottom: 30px;
+    }
 
     td {
       @include m-theme() {
@@ -55,7 +114,7 @@
       &:first-of-type {
         font-weight: 400;
         font-size: 16px;
-        padding: 0 20px;
+        padding: 0 20px 0 30px;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }

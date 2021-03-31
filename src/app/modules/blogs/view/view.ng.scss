@@ -49,6 +49,7 @@
 
   ::ng-deep {
     m-postmenu--v2 {
+      position: relative;
       .m-postMenu__button {
         padding: 0;
       }
@@ -88,6 +89,13 @@
       position: relative;
       z-index: 0;
     }
+
+    .ck.ck-editor__editable > .ck-placeholder::before {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
     .m-blog__body {
       padding: 0 $minds-padding;
 

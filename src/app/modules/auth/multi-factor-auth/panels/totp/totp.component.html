@@ -28,19 +28,18 @@
   <ng-container i18n="@@MFA_AUTH__VERIFY">Verify</ng-container>
 </m-button>
 
-<div class="m-mfaAuth__footerContainer" hidden>
+<div class="m-mfaAuth__footerContainer">
   <span class="m-mfaAuth__footerTitle" i18n="@@MFA_AUTH__HAVING_PROBLEMS"
     >Having problems?</span
   >
-  <!-- TODO: Uncomment when we add recovery flow for login form -->
-  <!-- <a
+  <a
     class="m-mfaAuth__footerLink"
     (click)="onRecoveryCodeClick()"
     i18n="@@MFA_AUTH__ENTER_ACCOUNT_RECOVERY_CODE"
     >Enter a two-factor recovery code?
-  </a> -->
-  <!-- <span class="m-mfaAuth__footerText" i18n="@@MFA_AUTH__CONTACT_IF_NO_ACCESS"
+  </a>
+  <span class="m-mfaAuth__footerText" i18n="@@MFA_AUTH__CONTACT_IF_NO_ACCESS"
     >Please contact info@minds.com if you can’t access your recovery
     codes.</span
-  > -->
+  >
 </div>

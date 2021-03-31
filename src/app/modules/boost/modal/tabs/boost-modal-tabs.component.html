@@ -107,6 +107,7 @@
           i18n="@@BOOST_MODAL__PLACED_IN_SIDEBAR"
           >Placement: Newsfeed Sidebar</span
         >
+
         <m-channelCard
           [channel]="getLoggedInUser()"
           [showDescription]="false"
@@ -121,7 +122,9 @@
           i18n="@@BOOST_MODAL__PLACED_IN_SIDEBAR"
           >Placement: Newsfeed Sidebar</span
         >
-        <minds-card [object]="entity$ | async" class="m-border"></minds-card>
+        <div class="m-boostModal__channelCardContainer">
+          <minds-card [object]="entity$ | async" class="m-border"></minds-card>
+        </div>
       </div>
 
       <span *ngSwitchCaseDefault i18n="@@BOOST_MODAL__BOOST_YOUR_CONTENT"
