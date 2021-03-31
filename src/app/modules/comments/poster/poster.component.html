@@ -31,6 +31,7 @@
           "
           (keyup)="getPostPreview(content)"
           (keypress)="keypress($event)"
+          (keydown)="keydown($event)"
           [placeholder]="
             parent.child_path ? 'Add your reply' : 'Add your comment'
           "

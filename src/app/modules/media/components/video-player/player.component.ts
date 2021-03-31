@@ -168,6 +168,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.autoProgress.cancel(); // hide autoplay window
+
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
