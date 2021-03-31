@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 :host {
+  position: sticky;
+  bottom: 0;
   @include m-theme() {
     color: themed($m-textColor--primary);
   }

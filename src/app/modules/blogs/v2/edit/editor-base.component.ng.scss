@@ -10,6 +10,8 @@
     display: flex;
     flex-direction: column;
     height: calc(100vh - 76px);
+    overflow-y: scroll;
+    @include hide-scrollbar;
 
     .m-blogEditor__bodyContainer {
       padding-bottom: 40px;
@@ -48,8 +50,6 @@
       position: relative;
       flex-grow: 1;
       flex-shrink: 1;
-      overflow-y: scroll;
-
       padding: 40px 100px 80px 100px;
       @media screen and (max-width: $min-desktop) {
         padding: 20px 40px;
