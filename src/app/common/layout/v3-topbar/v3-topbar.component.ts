@@ -168,6 +168,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onJoinNowClick() {
     try {
       await this.authModal.open();
+      this.router.navigate(['/newsfeed/subscriptions']);
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
