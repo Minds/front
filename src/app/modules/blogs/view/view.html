@@ -16,6 +16,11 @@
   *ngIf="blog"
   [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(blog), 'm-mature-content-shown': attachment.isForcefullyShown(blog) }"
 >
+  <m-wire--lock-screen
+    [(entity)]="blog"
+    *ngIf="blog.paywall"
+    #lockScreen
+  ></m-wire--lock-screen>
   <div
     class="m-mature-overlay"
     (click)="blog.mature_visibility = !blog.mature_visibility"
@@ -109,12 +114,6 @@
       [hidden]="!blog.description"
     ></div>
   </div>
-
-  <m-wire--lock-screen
-    [(entity)]="blog"
-    *ngIf="blog.paywall"
-    #lockScreen
-  ></m-wire--lock-screen>
 
   <!-- Additional block -->
   <div
