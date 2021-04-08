@@ -2,6 +2,11 @@
 
 :host {
   .m-blogEditor {
+    &__bannerEditorContainer {
+      flex-grow: 1;
+      overflow-y: scroll;
+    }
+
     @include m-theme() {
       border-right: 1px solid themed($m-borderColor--primary);
       color: 1px solid themed($m-bgColor--primary);
@@ -48,7 +53,6 @@
       position: relative;
       flex-grow: 1;
       flex-shrink: 1;
-      overflow-y: scroll;
 
       padding: 40px 100px 80px 100px;
       @media screen and (max-width: $min-desktop) {
