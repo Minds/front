@@ -136,12 +136,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.featuresService.has('ux-2020')) {
-      if (this.onboardingService.shouldShow()) {
-        this.router.navigate(['/onboarding']);
-        return;
-      }
-    }
+    // if (this.featuresService.has('ux-2020')) {
+    //   if (this.onboardingService.shouldShow()) {
+    //     this.router.navigate(['/onboarding']);
+    //     return;
+    //   }
+    // }
   }
 
   onSourceError() {
