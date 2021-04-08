@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { OnboardingV3ModalComponent } from './onboarding-modal.component';
 import { OnboardingStepName } from '../onboarding-v3.service';
@@ -26,20 +26,22 @@ describe('OnboardingV3ModalComponent', () => {
   let comp: OnboardingV3ModalComponent;
   let fixture: ComponentFixture<OnboardingV3ModalComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        OnboardingV3ModalComponent,
-        MockComponent({
-          selector: 'm-onboardingV3__tags',
-        }),
-      ],
-      providers: [
-        { provide: OnboardingV3PanelService, useValue: panelServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          OnboardingV3ModalComponent,
+          MockComponent({
+            selector: 'm-onboardingV3__tags',
+          }),
+        ],
+        providers: [
+          { provide: OnboardingV3PanelService, useValue: panelServiceMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     featuresServiceMock.mock('onboarding-october-2020', true);

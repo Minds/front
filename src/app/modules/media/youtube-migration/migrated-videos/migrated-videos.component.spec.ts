@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { YoutubeMigrationMigratedVideosComponent } from './migrated-videos.component';
 
@@ -6,7 +6,7 @@
 //   let component: YoutubeMigrationMigratedVideosComponent;
 //   let fixture: ComponentFixture<YoutubeMigrationMigratedVideosComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [YoutubeMigrationMigratedVideosComponent],
 //     }).compileComponents();

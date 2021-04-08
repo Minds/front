@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { SubscriptionTiersComponent } from './subscription-tiers.component';
 
@@ -6,7 +6,7 @@
 //   let component: SubscriptionTiersComponent;
 //   let fixture: ComponentFixture<SubscriptionTiersComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ SubscriptionTiersComponent ]
 //     })

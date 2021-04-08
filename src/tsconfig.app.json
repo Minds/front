@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "esNext",
+    "module": "es2020",
     "types": ["node"]
   },
   "exclude": [

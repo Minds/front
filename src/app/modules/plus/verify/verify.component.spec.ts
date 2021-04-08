@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -30,18 +30,20 @@ describe('PlusVerifyComponent', () => {
   let comp: PlusVerifyComponent;
   let fixture: ComponentFixture<PlusVerifyComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        PlusVerifyComponent,
-        TooltipComponentMock,
-        ModalMock,
-        ButtonComponent,
-      ],
-      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
-      providers: [{ provide: Client, useValue: clientMock }],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          PlusVerifyComponent,
+          TooltipComponentMock,
+          ModalMock,
+          ButtonComponent,
+        ],
+        imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
+        providers: [{ provide: Client, useValue: clientMock }],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

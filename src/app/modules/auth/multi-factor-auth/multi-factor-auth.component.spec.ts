@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockService } from '../../../utils/mock';
 import { MultiFactorAuthBaseComponent } from './multi-factor-auth.component';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -12,21 +12,23 @@ describe('MultiFactorAuthBaseComponent', () => {
   let comp: MultiFactorAuthBaseComponent;
   let fixture: ComponentFixture<MultiFactorAuthBaseComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MultiFactorAuthBaseComponent],
-      providers: [
-        {
-          provide: MultiFactorAuthService,
-          useValue: MockService(MultiFactorAuthService),
-        },
-        {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MultiFactorAuthBaseComponent],
+        providers: [
+          {
+            provide: MultiFactorAuthService,
+            useValue: MockService(MultiFactorAuthService),
+          },
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthBaseComponent);

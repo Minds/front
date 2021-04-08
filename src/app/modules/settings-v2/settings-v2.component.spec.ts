@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsV2Component } from './settings-v2.component';
 import { FormToastService } from '../../common/services/form-toast.service';
@@ -18,47 +18,55 @@ describe('SettingsV2Component', () => {
   let fixture: ComponentFixture<SettingsV2Component>;
   let router: Router;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'm-nestedMenu',
-          inputs: ['isNested', 'menus', 'parentRoute', 'disableActiveClass'],
-          outputs: ['itemSelected', 'clickedBack'],
-        }),
-        SettingsV2Component,
-      ],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: ProService, useValue: MockService(ProService, { get: {} }) },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
-      ],
-      imports: [
-        RouterTestingModule.withRoutes([
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'm-nestedMenu',
+            inputs: ['isNested', 'menus', 'parentRoute', 'disableActiveClass'],
+            outputs: ['itemSelected', 'clickedBack'],
+          }),
+          SettingsV2Component,
+        ],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
           {
-            path: 'settings',
-            children: [
-              {
-                path: 'account',
-                data: {
-                  isMenu: true,
-                },
-                component: SettingsV2Component,
-                children: [
-                  {
-                    path: '**',
-                    redirectTo: 'account',
-                  },
-                ],
-              },
-            ],
+            provide: ProService,
+            useValue: MockService(ProService, { get: {} }),
           },
-        ]),
-      ],
-    }).compileComponents();
-  }));
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+        imports: [
+          RouterTestingModule.withRoutes([
+            {
+              path: 'settings',
+              children: [
+                {
+                  path: 'account',
+                  data: {
+                    isMenu: true,
+                  },
+                  component: SettingsV2Component,
+                  children: [
+                    {
+                      path: '**',
+                      redirectTo: 'account',
+                    },
+                  ],
+                },
+              ],
+            },
+          ]),
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     router = TestBed.get(Router);

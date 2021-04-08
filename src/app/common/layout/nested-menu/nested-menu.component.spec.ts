@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NestedMenuComponent } from './nested-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,12 +8,14 @@ describe('NestedMenuComponent', () => {
   let component: NestedMenuComponent;
   let fixture: ComponentFixture<NestedMenuComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [NestedMenuComponent],
-      imports: [RouterTestingModule],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [NestedMenuComponent],
+        imports: [RouterTestingModule],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NestedMenuComponent);

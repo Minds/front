@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -391,49 +391,51 @@ describe('BoostCreatorComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MaterialSwitchMock,
-        AbbrPipe,
-        Scheduler,
-        TokenPipe,
-        StripeCheckoutMock,
-        CategoriesSelectorMock,
-        SelectedCategoriesMock,
-        CryptoTokenSymbolMock,
-        BlockchainCheckoutMock,
-        BoostCreatorComponent,
-        BoostPaymentMethodsMock,
-        BoostCategorySelectorMock,
-        BoostP2PSearchMock,
-        BoostCheckoutMock,
-        ButtonComponent,
-      ],
-      imports: [FormsModule, RouterTestingModule, CookieModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        BoostService,
-        { provide: Web3WalletService, useValue: web3WalletServiceMock },
-        OffchainPaymentService,
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: TokenContractService, useValue: tokenContractServiceMock },
-        {
-          provide: BoostContractService,
-          useValue: peerBoostContractServiceMock,
-        },
-        { provide: LocalWalletService, useValue: localWalletServiceMock },
-        {
-          provide: TransactionOverlayService,
-          useValue: transactionOverlayServiceMock,
-        },
-        Storage,
-        CookieService,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MaterialSwitchMock,
+          AbbrPipe,
+          Scheduler,
+          TokenPipe,
+          StripeCheckoutMock,
+          CategoriesSelectorMock,
+          SelectedCategoriesMock,
+          CryptoTokenSymbolMock,
+          BlockchainCheckoutMock,
+          BoostCreatorComponent,
+          BoostPaymentMethodsMock,
+          BoostCategorySelectorMock,
+          BoostP2PSearchMock,
+          BoostCheckoutMock,
+          ButtonComponent,
+        ],
+        imports: [FormsModule, RouterTestingModule, CookieModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          BoostService,
+          { provide: Web3WalletService, useValue: web3WalletServiceMock },
+          OffchainPaymentService,
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: TokenContractService, useValue: tokenContractServiceMock },
+          {
+            provide: BoostContractService,
+            useValue: peerBoostContractServiceMock,
+          },
+          { provide: LocalWalletService, useValue: localWalletServiceMock },
+          {
+            provide: TransactionOverlayService,
+            useValue: transactionOverlayServiceMock,
+          },
+          Storage,
+          CookieService,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

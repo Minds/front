@@ -31,7 +31,7 @@
 //     );
 //   }
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [MaterialMock, PhoneInputCountryV2Component], // declare the test component
 //       imports: [ReactiveFormsModule, FormsModule],

@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -54,46 +54,51 @@ describe('NewsfeedSingleComponent', () => {
   let comp: NewsfeedSingleComponent;
   let fixture: ComponentFixture<NewsfeedSingleComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MindsActivityMock,
-        NewsfeedSingleComponent,
-        MockComponent({
-          selector: 'm-social-icons',
-          inputs: ['url', 'title', 'embed'],
-        }),
-        MockComponent({
-          selector: 'm-activity',
-          inputs: ['entity', 'displayOptions', 'autoplayVideo'],
-        }),
-      ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Upload, useValue: uploadMock },
-        { provide: ContextService, useValue: contextServiceMock },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({ guid: 123 }),
-            snapshot: {
-              queryParamMap: convertToParamMap({}),
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MindsActivityMock,
+          NewsfeedSingleComponent,
+          MockComponent({
+            selector: 'm-social-icons',
+            inputs: ['url', 'title', 'embed'],
+          }),
+          MockComponent({
+            selector: 'm-activity',
+            inputs: ['entity', 'displayOptions', 'autoplayVideo'],
+          }),
+        ],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Upload, useValue: uploadMock },
+          { provide: ContextService, useValue: contextServiceMock },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              params: of({ guid: 123 }),
+              snapshot: {
+                queryParamMap: convertToParamMap({}),
+              },
+              queryParamMap: new BehaviorSubject(convertToParamMap({})),
             },
-            queryParamMap: new BehaviorSubject(convertToParamMap({})),
           },
-        },
-        { provide: MetaService, useValue: MockService(MetaService) },
-        { provide: EntitiesService, useValue: MockService(EntitiesService) },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: HeadersService, useValue: MockService(HeadersService) },
-        { provide: AuthModalService, useValue: MockService(AuthModalService) },
-      ],
-    }).compileComponents();
-  }));
+          { provide: MetaService, useValue: MockService(MetaService) },
+          { provide: EntitiesService, useValue: MockService(EntitiesService) },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: HeadersService, useValue: MockService(HeadersService) },
+          {
+            provide: AuthModalService,
+            useValue: MockService(AuthModalService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

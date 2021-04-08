@@ -1,6 +1,6 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -28,32 +28,34 @@ describe('NotificationsComponent', () => {
   let comp: NotificationsComponent;
   let fixture: ComponentFixture<NotificationsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        NotificationsComponent,
-        MockComponent({
-          selector: 'minds-notification',
-          inputs: ['notification', 'showElapsedTime'],
-        }),
-        MockComponent({
-          selector: 'infinite-scroll',
-          inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
-        }),
-        MockComponent({
-          selector: 'm-tooltip',
-        }),
-      ],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: NotificationService, useValue: notificationServiceMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          NotificationsComponent,
+          MockComponent({
+            selector: 'minds-notification',
+            inputs: ['notification', 'showElapsedTime'],
+          }),
+          MockComponent({
+            selector: 'infinite-scroll',
+            inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
+          }),
+          MockComponent({
+            selector: 'm-tooltip',
+          }),
+        ],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: NotificationService, useValue: notificationServiceMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

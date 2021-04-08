@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { SettingsV2SessionsComponent } from './sessions.component';
 
@@ -6,7 +6,7 @@
 //   let component: SettingsV2SessionsComponent;
 //   let fixture: ComponentFixture<SettingsV2SessionsComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [SettingsV2SessionsComponent],
 //     }).compileComponents();

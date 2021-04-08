@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AttachmentPreviewComponent } from './attachment-preview.component';
@@ -56,7 +56,6 @@ describe('Composer Attachment Preview', () => {
   });
 
   it('should set portrait for an image', () => {
-    console.log(this.service);
     const img = document.createElement('img');
     spyOnProperty(img, 'naturalWidth').and.returnValue(1000);
     spyOnProperty(img, 'naturalHeight').and.returnValue(2000);

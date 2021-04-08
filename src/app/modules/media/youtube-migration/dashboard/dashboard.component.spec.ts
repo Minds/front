@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { YoutubeMigrationDashboardComponent } from './dashboard.component';
 // import { Router } from '@angular/router';
 
@@ -10,7 +10,7 @@
 //   let component: YoutubeMigrationDashboardComponent;
 //   let fixture: ComponentFixture<YoutubeMigrationDashboardComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [YoutubeMigrationDashboardComponent],
 //       providers: [{ provide: Router, useValue: routerMock }],

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { GetMetamaskComponent } from './getmetamask.component';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -8,17 +8,19 @@ describe('GetMetamaskComponent', () => {
   let comp: GetMetamaskComponent;
   let fixture: ComponentFixture<GetMetamaskComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GetMetamaskComponent],
-      providers: [
-        {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [GetMetamaskComponent],
+        providers: [
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

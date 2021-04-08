@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { CommonModule } from '@angular/common';
 // import { YoutubeMigrationService } from '../youtube-migration.service';
 // import { MockService } from '../../../../utils/mock';
@@ -9,7 +9,7 @@
 //   let component: YoutubeMigrationConnectComponent;
 //   let fixture: ComponentFixture<YoutubeMigrationConnectComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [YoutubeMigrationConnectComponent],
 //       imports: [CommonModule],

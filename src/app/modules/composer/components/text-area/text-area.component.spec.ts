@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   MockComponent,
   MockService,
@@ -32,38 +32,40 @@ describe('Composer Text Area', () => {
     },
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [
-        MockDirective({
-          selector: 'mTextInputAutocomplete',
-          inputs: [
-            'triggerCharacters',
-            'findChoices',
-            'getChoiceLabel',
-            'itemTemplate',
-            'adjustForScrollOffset',
-          ],
-        }),
-        TextAreaComponent,
-        MockComponent({
-          selector: 'm-icon',
-          inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-      ],
-      providers: [
-        {
-          provide: ComposerService,
-          useValue: composerServiceMock,
-        },
-        {
-          provide: AutocompleteSuggestionsService,
-          useValue: MockService(AutocompleteSuggestionsService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [FormsModule],
+        declarations: [
+          MockDirective({
+            selector: 'mTextInputAutocomplete',
+            inputs: [
+              'triggerCharacters',
+              'findChoices',
+              'getChoiceLabel',
+              'itemTemplate',
+              'adjustForScrollOffset',
+            ],
+          }),
+          TextAreaComponent,
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['from', 'iconId', 'sizeFactor'],
+          }),
+        ],
+        providers: [
+          {
+            provide: ComposerService,
+            useValue: composerServiceMock,
+          },
+          {
+            provide: AutocompleteSuggestionsService,
+            useValue: MockService(AutocompleteSuggestionsService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

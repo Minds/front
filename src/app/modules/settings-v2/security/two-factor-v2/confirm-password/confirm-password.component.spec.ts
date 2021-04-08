@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
@@ -22,25 +22,27 @@ describe('SettingsTwoFactorPasswordComponent', () => {
   let comp: SettingsTwoFactorPasswordComponent;
   let fixture: ComponentFixture<SettingsTwoFactorPasswordComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SettingsTwoFactorPasswordComponent],
-      providers: [
-        {
-          provide: SettingsTwoFactorV2Service,
-          useValue: MockService(SettingsTwoFactorV2Service),
-        },
-        {
-          provide: ApiService,
-          useValue: apiServiceMock,
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SettingsTwoFactorPasswordComponent],
+        providers: [
+          {
+            provide: SettingsTwoFactorV2Service,
+            useValue: MockService(SettingsTwoFactorV2Service),
+          },
+          {
+            provide: ApiService,
+            useValue: apiServiceMock,
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorPasswordComponent);

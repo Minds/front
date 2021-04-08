@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { SettingsV2DisplayNameComponent } from './display-name.component';
 // import { Client } from '../../../../services/api';
@@ -13,7 +13,7 @@
 //   let component: SettingsV2DisplayNameComponent;
 //   let fixture: ComponentFixture<SettingsV2DisplayNameComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [SettingsV2DisplayNameComponent],
 //       providers: [

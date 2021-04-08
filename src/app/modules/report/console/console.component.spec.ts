@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -43,27 +43,29 @@ describe('ReportConsoleComponent', () => {
   let comp: ReportConsoleComponent;
   let fixture: ComponentFixture<ReportConsoleComponent>;
   let appeals: Array<any>;
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        InfiniteScrollMock,
-        MindsCardMock,
-        MindsCardCommentMock,
-        ReportConsoleComponent,
-      ], // declare the test component
-      imports: [FormsModule, RouterTestingModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        JurySessionService,
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          InfiniteScrollMock,
+          MindsCardMock,
+          MindsCardCommentMock,
+          ReportConsoleComponent,
+        ], // declare the test component
+        imports: [FormsModule, RouterTestingModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          JurySessionService,
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

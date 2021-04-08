@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { DeleteAccountComponent } from './delete-account.component';
 
@@ -6,7 +6,7 @@
 //   let component: DeleteAccountComponent;
 //   let fixture: ComponentFixture<DeleteAccountComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ DeleteAccountComponent ]
 //     })

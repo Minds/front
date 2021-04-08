@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupsProfileFilterSelector } from './filter-selector.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,15 +13,17 @@ describe('GroupsProfileFilterSelector', () => {
   let comp: GroupsProfileFilterSelector;
   let fixture: ComponentFixture<GroupsProfileFilterSelector>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GroupsProfileFilterSelector],
-      providers: [
-        { provide: VideoChatService, useValue: videoChatServiceMock },
-      ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [GroupsProfileFilterSelector],
+        providers: [
+          { provide: VideoChatService, useValue: videoChatServiceMock },
+        ],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupsProfileFilterSelector);

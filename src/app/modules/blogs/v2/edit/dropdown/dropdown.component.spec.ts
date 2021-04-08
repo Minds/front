@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlogEditorDropdownComponent } from './dropdown.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
@@ -28,15 +28,17 @@ describe('BlogEditorDropdownComponent', () => {
   let comp: BlogEditorDropdownComponent;
   let fixture: ComponentFixture<BlogEditorDropdownComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [BlogEditorDropdownComponent],
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: BlogsEditService, useValue: blogsEditServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [BlogEditorDropdownComponent],
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          { provide: BlogsEditService, useValue: blogsEditServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

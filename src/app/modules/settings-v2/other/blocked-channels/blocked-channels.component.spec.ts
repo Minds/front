@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { BlockedChannelsComponent } from './blocked-channels.component';
 
@@ -6,7 +6,7 @@
 //   let component: BlockedChannelsComponent;
 //   let fixture: ComponentFixture<BlockedChannelsComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ BlockedChannelsComponent ]
 //     })

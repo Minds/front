@@ -1,5 +1,5 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Client } from '../../services/api/client';
 import { By } from '@angular/platform-browser';
@@ -16,35 +16,37 @@ describe('NotificationsFlyoutComponent', () => {
   let comp: NotificationsFlyoutComponent;
   let fixture: ComponentFixture<NotificationsFlyoutComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent(
-          {
-            selector: 'minds-notifications',
-            inputs: [
-              'loadOnDemand',
-              'hidden',
-              'visible',
-              'useOwnScrollSource',
-              'showTabs',
-              'showShadows',
-              'showInfiniteScroll',
-              'showElapsedTime',
-            ],
-          },
-          ['onVisible']
-        ),
-        NotificationsFlyoutComponent,
-      ],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          MockComponent(
+            {
+              selector: 'minds-notifications',
+              inputs: [
+                'loadOnDemand',
+                'hidden',
+                'visible',
+                'useOwnScrollSource',
+                'showTabs',
+                'showShadows',
+                'showInfiniteScroll',
+                'showElapsedTime',
+              ],
+            },
+            ['onVisible']
+          ),
+          NotificationsFlyoutComponent,
+        ],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -20,16 +20,18 @@ describe('PhoneInputComponent', () => {
     return fixture.debugElement.query(By.css('input'));
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        PhoneInputComponent,
-        PhoneInputCountryComponent,
-      ], // declare the test component
-      imports: [ReactiveFormsModule, FormsModule],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          PhoneInputComponent,
+          PhoneInputCountryComponent,
+        ], // declare the test component
+        imports: [ReactiveFormsModule, FormsModule],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

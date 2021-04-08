@@ -20,7 +20,7 @@
 //     return fixture.debugElement.query(By.css('input'));
 //   }
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [
 //         MaterialMock,

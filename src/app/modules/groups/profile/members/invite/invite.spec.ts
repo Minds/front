@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -45,27 +45,32 @@ describe('GroupsProfileMembersInvite', () => {
     return fixture.debugElement.query(By.css('.m-search-inline > input'));
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        GroupsProfileMembersInvite,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: GroupsService, useValue: groupsServiceMock },
-        {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService, {
-            configs: { cdnUrl: 'http://dev.minds.io/' },
-          }),
-        },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          GroupsProfileMembersInvite,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: GroupsService, useValue: groupsServiceMock },
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService, {
+              configs: { cdnUrl: 'http://dev.minds.io/' },
+            }),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     fixture = TestBed.createComponent(GroupsProfileMembersInvite);

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
@@ -13,17 +13,19 @@ describe('SidebarWidgetComponent', () => {
   let component: SidebarWidgetComponent;
   let fixture: ComponentFixture<SidebarWidgetComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SidebarWidgetComponent],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: Client, useValue: clientMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SidebarWidgetComponent],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: Client, useValue: clientMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     sessionMock.user.dismissed_widgets = ['test-widget-id'];

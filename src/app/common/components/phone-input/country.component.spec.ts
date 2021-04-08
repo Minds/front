@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -31,12 +31,14 @@ describe('PhoneInputCountryComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MaterialMock, PhoneInputCountryComponent], // declare the test component
-      imports: [ReactiveFormsModule, FormsModule],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MaterialMock, PhoneInputCountryComponent], // declare the test component
+        imports: [ReactiveFormsModule, FormsModule],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

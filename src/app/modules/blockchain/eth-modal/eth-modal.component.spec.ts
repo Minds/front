@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlockchainEthModalComponent } from './eth-modal.component';
 import { MockService, MockComponent } from '../../../utils/mock';
 import { Web3WalletService } from '../web3-wallet.service';
@@ -25,52 +25,54 @@ describe('BlockchainEthModalComponent', () => {
     },
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        BlockchainEthModalComponent,
-        ButtonComponent,
-        MockComponent({
-          selector: 'm-modal',
-          inputs: [],
-        }),
-        MockComponent({
-          selector: 'input',
-          inputs: ['ngModel'],
-        }),
-      ],
-      providers: [
-        {
-          provide: Web3WalletService,
-          useValue: MockService(Web3WalletService),
-        },
-        {
-          provide: ChangeDetectorRef,
-          useValue: MockService(ChangeDetectorRef),
-        },
-        {
-          provide: SendWyreService,
-          useValue: sendWyreMock,
-        },
-        {
-          provide: Session,
-          useValue: sessionMock,
-        },
-        {
-          provide: SiteService,
-          useValue: siteServiceMock,
-        },
-        {
-          provide: ConfigsService,
-          useValue: configsServiceMock,
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          BlockchainEthModalComponent,
+          ButtonComponent,
+          MockComponent({
+            selector: 'm-modal',
+            inputs: [],
+          }),
+          MockComponent({
+            selector: 'input',
+            inputs: ['ngModel'],
+          }),
+        ],
+        providers: [
+          {
+            provide: Web3WalletService,
+            useValue: MockService(Web3WalletService),
+          },
+          {
+            provide: ChangeDetectorRef,
+            useValue: MockService(ChangeDetectorRef),
+          },
+          {
+            provide: SendWyreService,
+            useValue: sendWyreMock,
+          },
+          {
+            provide: Session,
+            useValue: sessionMock,
+          },
+          {
+            provide: SiteService,
+            useValue: siteServiceMock,
+          },
+          {
+            provide: ConfigsService,
+            useValue: configsServiceMock,
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
@@ -79,7 +81,7 @@ describe('BlockchainEthModalComponent', () => {
 
     comp = fixture.componentInstance;
 
-    this.hasMetamask = true;
+    comp.hasMetamask = true;
 
     spyOn(comp.session, 'getLoggedInUser').and.returnValue({
       eth_wallet: '0x00000000000000',

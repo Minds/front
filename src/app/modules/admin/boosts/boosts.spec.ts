@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -128,30 +128,32 @@ describe('AdminBoosts', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TokenPipe,
-        MindsCardVideoMock,
-        MindsCardImageMock,
-        MindsCardBlogMock,
-        MindsCardUserMock,
-        MindsActivityMock,
-        MindsCardGroupMock,
-        RejectionReasonModalMock,
-        MaterialMock,
-        MaterialSliderMock,
-        AdminBoosts,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ActivityService, useValue: activityServiceMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          TokenPipe,
+          MindsCardVideoMock,
+          MindsCardImageMock,
+          MindsCardBlogMock,
+          MindsCardUserMock,
+          MindsActivityMock,
+          MindsCardGroupMock,
+          RejectionReasonModalMock,
+          MaterialMock,
+          MaterialSliderMock,
+          AdminBoosts,
+          ButtonComponent,
+        ], // declare the test component
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ActivityService, useValue: activityServiceMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

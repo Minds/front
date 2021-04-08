@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -16,13 +16,15 @@ describe('CaptchaComponent', () => {
   let comp: CaptchaComponent;
   let fixture: ComponentFixture<CaptchaComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CaptchaComponent],
-      imports: [ReactiveFormsModule],
-      providers: [{ provide: Client, useValue: clientMock }],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CaptchaComponent],
+        imports: [ReactiveFormsModule],
+        providers: [{ provide: Client, useValue: clientMock }],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CaptchaComponent);

@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { RecurringPaymentsComponent } from './recurring-payments.component';
 
@@ -6,7 +6,7 @@
 //   let component: RecurringPaymentsComponent;
 //   let fixture: ComponentFixture<RecurringPaymentsComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ RecurringPaymentsComponent ]
 //     })

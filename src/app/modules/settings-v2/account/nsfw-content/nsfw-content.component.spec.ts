@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { NsfwContentComponent } from './nsfw-content.component';
 
@@ -6,7 +6,7 @@
 //   let component: NsfwContentComponent;
 //   let fixture: ComponentFixture<NsfwContentComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [NsfwContentComponent],
 //     }).compileComponents();

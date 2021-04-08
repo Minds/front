@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { CancelComponent } from './cancel.component';
 
@@ -6,7 +6,7 @@
 //   let component: CancelComponent;
 //   let fixture: ComponentFixture<CancelComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ CancelComponent ]
 //     })

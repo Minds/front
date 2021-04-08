@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WalletCashOnboardingExtrasComponent } from './cash-onboarding-extras.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,12 +8,14 @@ describe('WalletCashOnboardingExtrasComponent', () => {
   let component: WalletCashOnboardingExtrasComponent;
   let fixture: ComponentFixture<WalletCashOnboardingExtrasComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [WalletCashOnboardingExtrasComponent, ButtonComponent],
-      imports: [ReactiveFormsModule],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [WalletCashOnboardingExtrasComponent, ButtonComponent],
+        imports: [ReactiveFormsModule],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WalletCashOnboardingExtrasComponent);

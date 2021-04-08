@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -63,35 +63,40 @@ describe('ForgotPasswordComponent', () => {
     return fixture.debugElement.query(By.css('input#password2'));
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        BlankComponent,
-        ForgotPasswordComponent,
-        ButtonComponent,
-      ],
-      imports: [
-        RouterTestingModule.withRoutes([
-          { path: 'newsfeed', component: BlankComponent },
-        ]),
-        ReactiveFormsModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        {
-          provide: RegexService,
-          useValue: MockService(RegexService, {
-            getRegex: (string: string) => {
-              return { test: (string: string) => false };
-            },
-          }),
-        },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          BlankComponent,
+          ForgotPasswordComponent,
+          ButtonComponent,
+        ],
+        imports: [
+          RouterTestingModule.withRoutes([
+            { path: 'newsfeed', component: BlankComponent },
+          ]),
+          ReactiveFormsModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          {
+            provide: RegexService,
+            useValue: MockService(RegexService, {
+              getRegex: (string: string) => {
+                return { test: (string: string) => false };
+              },
+            }),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

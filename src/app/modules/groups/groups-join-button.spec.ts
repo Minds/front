@@ -1,6 +1,6 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { By } from '@angular/platform-browser';
@@ -59,21 +59,23 @@ describe('GroupsJoinButton', () => {
 
   /** /Helpers */
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        SignupOnActionModalMock,
-        GroupsJoinButton,
-        ButtonComponent,
-      ],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: GroupsService, useValue: MockService(GroupsService) },
-        { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          SignupOnActionModalMock,
+          GroupsJoinButton,
+          ButtonComponent,
+        ],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: GroupsService, useValue: MockService(GroupsService) },
+          { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupsJoinButton);

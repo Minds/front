@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ComposerComponent } from './composer.component';
 import { ComposerService } from './services/composer.service';
 import { MockComponent, MockService } from '../../utils/mock';
@@ -16,34 +16,39 @@ describe('Composer', () => {
   let comp: ComposerComponent;
   let fixture: ComponentFixture<ComposerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.overrideProvider(ComposerService, {
-      useValue: composerMockService,
-    });
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.overrideProvider(ComposerService, {
+        useValue: composerMockService,
+      });
 
-    TestBed.configureTestingModule({
-      declarations: [
-        ComposerComponent,
-        MockComponent({
-          selector: 'm-composer__base',
-          outputs: ['onPost'],
-        }),
-      ],
-      providers: [
-        { provide: ModalService, useValue: MockService(ModalService) },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
-        { provide: Session, useValue: sessionMock },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParamMap: new BehaviorSubject(convertToParamMap({})),
+      TestBed.configureTestingModule({
+        declarations: [
+          ComposerComponent,
+          MockComponent({
+            selector: 'm-composer__base',
+            outputs: ['onPost'],
+          }),
+        ],
+        providers: [
+          { provide: ModalService, useValue: MockService(ModalService) },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
           },
-        },
-        { provide: Router, useValue: MockService(Router) },
-        { provide: CookieService, useValue: MockService(CookieService) },
-      ],
-    }).compileComponents();
-  }));
+          { provide: Session, useValue: sessionMock },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              queryParamMap: new BehaviorSubject(convertToParamMap({})),
+            },
+          },
+          { provide: Router, useValue: MockService(Router) },
+          { provide: CookieService, useValue: MockService(CookieService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

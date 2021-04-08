@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { DomainComponent } from './domain.component';
 
@@ -6,7 +6,7 @@
 //   let component: DomainComponent;
 //   let fixture: ComponentFixture<DomainComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ DomainComponent ]
 //     })

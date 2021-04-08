@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MockComponent } from '../../../../utils/mock';
 import { ModalComponent } from './modal.component';
@@ -7,24 +7,26 @@ describe('Composer Modal', () => {
   let comp: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ModalComponent,
-        MockComponent({
-          selector: 'm-icon',
-          inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-        MockComponent(
-          {
-            selector: 'm-composer__base',
-            outputs: ['onPost'],
-          },
-          ['focus']
-        ),
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ModalComponent,
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['from', 'iconId', 'sizeFactor'],
+          }),
+          MockComponent(
+            {
+              selector: 'm-composer__base',
+              outputs: ['onPost'],
+            },
+            ['focus']
+          ),
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

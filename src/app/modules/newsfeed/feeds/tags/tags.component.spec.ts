@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -26,52 +26,54 @@ describe('NewsfeedTagsComponent', () => {
   let comp: NewsfeedTagsComponent;
   let fixture: ComponentFixture<NewsfeedTagsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MockComponent({
-          selector: 'm-newsfeed--boost-rotator',
-          inputs: ['interval', 'channel'],
-        }),
-        MockComponent({
-          selector: 'minds-activity',
-          inputs: [
-            'object',
-            'boostToggle',
-            'showRatingToggle',
-            'boost',
-            'showBoostMenuOptions',
-          ],
-          outputs: ['delete'],
-        }),
-        MockComponent({
-          selector: 'infinite-scroll',
-          inputs: ['inProgress', 'moreData', 'inProgress'],
-        }),
-        NewsfeedTagsComponent,
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: Navigation, useValue: navigationMock },
-        { provide: Upload, useValue: uploadMock },
-        { provide: Storage, useValue: storageMock },
-        { provide: ContextService, useValue: contextServiceMock },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({ tag: 'hashtag' }),
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MockComponent({
+            selector: 'm-newsfeed--boost-rotator',
+            inputs: ['interval', 'channel'],
+          }),
+          MockComponent({
+            selector: 'minds-activity',
+            inputs: [
+              'object',
+              'boostToggle',
+              'showRatingToggle',
+              'boost',
+              'showBoostMenuOptions',
+            ],
+            outputs: ['delete'],
+          }),
+          MockComponent({
+            selector: 'infinite-scroll',
+            inputs: ['inProgress', 'moreData', 'inProgress'],
+          }),
+          NewsfeedTagsComponent,
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: Navigation, useValue: navigationMock },
+          { provide: Upload, useValue: uploadMock },
+          { provide: Storage, useValue: storageMock },
+          { provide: ContextService, useValue: contextServiceMock },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              params: of({ tag: 'hashtag' }),
+            },
           },
-        },
-      ],
-    }).compileComponents();
-  }));
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
@@ -130,7 +132,6 @@ describe('NewsfeedTagsComponent', () => {
     fixture.detectChanges();
     expect(clientMock.get).toHaveBeenCalled();
     const call = clientMock.get.calls.mostRecent();
-    console.warn(comp);
     expect(call.args[0]).toBe('api/v2/entities/suggested/activities');
     expect(call.args[1]).toEqual({ limit: 12, offset: 0, hashtag: 'hashtag' });
     const list = fixture.debugElement.query(By.css('.minds-list'));

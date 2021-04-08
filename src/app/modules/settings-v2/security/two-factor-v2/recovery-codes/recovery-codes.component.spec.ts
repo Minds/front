@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
@@ -15,29 +15,31 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
   let comp: SettingsTwoFactorRecoveryCodeComponent;
   let fixture: ComponentFixture<SettingsTwoFactorRecoveryCodeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SettingsTwoFactorRecoveryCodeComponent],
-      providers: [
-        {
-          provide: SettingsTwoFactorV2Service,
-          useValue: MockService(SettingsTwoFactorV2Service),
-        },
-        {
-          provide: Session,
-          useValue: sessionMock,
-        },
-        {
-          provide: StackableModalService,
-          useValue: MockService(StackableModalService),
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SettingsTwoFactorRecoveryCodeComponent],
+        providers: [
+          {
+            provide: SettingsTwoFactorV2Service,
+            useValue: MockService(SettingsTwoFactorV2Service),
+          },
+          {
+            provide: Session,
+            useValue: sessionMock,
+          },
+          {
+            provide: StackableModalService,
+            useValue: MockService(StackableModalService),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorRecoveryCodeComponent);

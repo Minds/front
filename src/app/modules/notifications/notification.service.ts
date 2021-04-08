@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   EventEmitter,
   Inject,
+  Injectable,
   OnDestroy,
   PLATFORM_ID,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
 
+@Injectable()
 export class NotificationService implements OnDestroy {
   socketSubscriptions: any = {
     notification: null,

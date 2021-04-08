@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -124,32 +124,34 @@ describe('BoostConsoleComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        DateSelectorComponentMock,
-        TooltipComponentMock,
-        BoostConsoleBoosterMock,
-        ThirdPartyNetworksFacebookMock,
-        BoostConsoleNetworkListMock,
-        BoostConsoleP2PListMock,
-        BoostConsolePublisherMock,
-        BoostConsoleComponent,
-      ],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({ type: 'newsfeed' }),
-            snapshot: { params: { type: 'newsfeed' } },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          DateSelectorComponentMock,
+          TooltipComponentMock,
+          BoostConsoleBoosterMock,
+          ThirdPartyNetworksFacebookMock,
+          BoostConsoleNetworkListMock,
+          BoostConsoleP2PListMock,
+          BoostConsolePublisherMock,
+          BoostConsoleComponent,
+        ],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              params: of({ type: 'newsfeed' }),
+              snapshot: { params: { type: 'newsfeed' } },
+            },
           },
-        },
-        BoostService,
-      ],
-    }).compileComponents();
-  }));
+          BoostService,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

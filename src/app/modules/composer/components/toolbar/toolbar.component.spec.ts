@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToolbarComponent } from './toolbar.component';
 import { ComposerService, ComposerSize } from '../../services/composer.service';
@@ -52,44 +52,46 @@ describe('Composer Toolbar', () => {
     present: { toPromise: () => {} },
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ToolbarComponent,
-        ButtonComponent,
-        MockComponent(
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ToolbarComponent,
+          ButtonComponent,
+          MockComponent(
+            {
+              selector: 'm-file-upload',
+              inputs: ['wrapperClass', 'disabled'],
+              outputs: ['onSelect'],
+            },
+            ['reset']
+          ),
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['from', 'iconId', 'sizeFactor'],
+          }),
+        ],
+        providers: [
           {
-            selector: 'm-file-upload',
-            inputs: ['wrapperClass', 'disabled'],
-            outputs: ['onSelect'],
+            provide: ComposerService,
+            useValue: composerServiceMock,
           },
-          ['reset']
-        ),
-        MockComponent({
-          selector: 'm-icon',
-          inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-      ],
-      providers: [
-        {
-          provide: ComposerService,
-          useValue: composerServiceMock,
-        },
-        {
-          provide: PopupService,
-          useValue: popupServiceMock,
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-        {
-          provide: FeaturesService,
-          useValue: MockService(FeaturesService),
-        },
-      ],
-    }).compileComponents();
-  }));
+          {
+            provide: PopupService,
+            useValue: popupServiceMock,
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+          {
+            provide: FeaturesService,
+            useValue: MockService(FeaturesService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

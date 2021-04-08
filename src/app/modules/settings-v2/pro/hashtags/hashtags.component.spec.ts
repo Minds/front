@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { HashtagsComponent } from './hashtags.component';
 
@@ -6,7 +6,7 @@
 //   let component: HashtagsComponent;
 //   let fixture: ComponentFixture<HashtagsComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ HashtagsComponent ]
 //     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -40,27 +40,29 @@ describe('BlogCard', () => {
   let comp: BlogCard;
   let fixture: ComponentFixture<BlogCard>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ExcerptPipe,
-        ThumbsUpMock,
-        ThumbsDownMock,
-        CommentsMock,
-        BlogCard,
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: AttachmentService, useValue: attachmentServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ExcerptPipe,
+          ThumbsUpMock,
+          ThumbsDownMock,
+          CommentsMock,
+          BlogCard,
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: AttachmentService, useValue: attachmentServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

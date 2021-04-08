@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockService } from '../../../../../utils/mock';
 import { MultiFactorAuthService } from '../../services/multi-factor-auth-service';
 import { MultiFactorAuthSMSComponent } from './sms.component';
@@ -7,17 +7,19 @@ describe('MultiFactorAuthSMSComponent', () => {
   let comp: MultiFactorAuthSMSComponent;
   let fixture: ComponentFixture<MultiFactorAuthSMSComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MultiFactorAuthSMSComponent],
-      providers: [
-        {
-          provide: MultiFactorAuthService,
-          useValue: MockService(MultiFactorAuthService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MultiFactorAuthSMSComponent],
+        providers: [
+          {
+            provide: MultiFactorAuthService,
+            useValue: MockService(MultiFactorAuthService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthSMSComponent);

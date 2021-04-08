@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { take } from 'rxjs/operators';
 import { FormToastService } from '../../../../../../common/services/form-toast.service';
 import { MockService } from '../../../../../../utils/mock';
@@ -9,21 +9,23 @@ describe('SettingsTwoFactorDisableTOTPComponent', () => {
   let comp: SettingsTwoFactorDisableTOTPComponent;
   let fixture: ComponentFixture<SettingsTwoFactorDisableTOTPComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SettingsTwoFactorDisableTOTPComponent],
-      providers: [
-        {
-          provide: SettingsTwoFactorV2Service,
-          useValue: MockService(SettingsTwoFactorV2Service),
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SettingsTwoFactorDisableTOTPComponent],
+        providers: [
+          {
+            provide: SettingsTwoFactorV2Service,
+            useValue: MockService(SettingsTwoFactorV2Service),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorDisableTOTPComponent);

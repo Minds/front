@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
@@ -37,18 +37,20 @@ describe('TokenCompletedOnboardingComponent', () => {
   let comp: TokenCompletedOnboardingComponent;
   let fixture: ComponentFixture<TokenCompletedOnboardingComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [TokenCompletedOnboardingComponent],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-        { provide: Router, useValue: RouterTestingModule },
-        { provide: Session, useValue: sessionMock },
-        { provide: Storage, useValue: storageMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [TokenCompletedOnboardingComponent],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
+          { provide: Router, useValue: RouterTestingModule },
+          { provide: Session, useValue: sessionMock },
+          { provide: Storage, useValue: storageMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

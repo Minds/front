@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TooltipComponentMock } from '../../../../../mocks/common/components/tooltip/tooltip.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -8,12 +8,14 @@ describe('AnalyticsBenchmarkComponent', () => {
   let component: AnalyticsBenchmarkComponent;
   let fixture: ComponentFixture<AnalyticsBenchmarkComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [AnalyticsBenchmarkComponent, TooltipComponentMock],
-      // schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [AnalyticsBenchmarkComponent, TooltipComponentMock],
+        // schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyticsBenchmarkComponent);

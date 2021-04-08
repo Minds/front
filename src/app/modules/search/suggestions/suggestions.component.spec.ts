@@ -3,7 +3,7 @@
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -50,26 +50,28 @@ describe('SearchBarSuggestionsComponent', () => {
     { type: 'text', value: 'test20' },
   ];
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [IfFeatureDirective, SearchBarSuggestionsComponent],
-      imports: [
-        NgCommonModule,
-        RouterTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        // CommonModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: RecentService, useValue: recentServiceMock },
-        { provide: ContextService, useValue: contextServiceMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: ConfigsService, useValue: { get: key => null } },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [IfFeatureDirective, SearchBarSuggestionsComponent],
+        imports: [
+          NgCommonModule,
+          RouterTestingModule,
+          FormsModule,
+          ReactiveFormsModule,
+          // CommonModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: RecentService, useValue: recentServiceMock },
+          { provide: ContextService, useValue: contextServiceMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: ConfigsService, useValue: { get: key => null } },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

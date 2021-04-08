@@ -1,5 +1,5 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   Component,
   EventEmitter,
@@ -86,47 +86,49 @@ let scrollServiceMock = new (function() {
 describe('PostMenuComponent', () => {
   let comp: PostMenuComponent;
   let fixture: ComponentFixture<PostMenuComponent>;
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MindsModalMock,
-        ModalShareMock,
-        ModalConfirmMock,
-        ModalReportMock,
-        PostMenuComponent,
-      ], // declare the test component
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: SignupModalService, useValue: scrollServiceMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ActivityService, useValue: activityServiceMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: Storage, useValue: storageMock },
-        {
-          provide: BlockListService,
-          useFactory: () => {
-            return BlockListService._(
-              clientMock,
-              sessionMock,
-              storageMock,
-              recentServiceMock
-            );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MindsModalMock,
+          ModalShareMock,
+          ModalConfirmMock,
+          ModalReportMock,
+          PostMenuComponent,
+        ], // declare the test component
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          { provide: SignupModalService, useValue: scrollServiceMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ActivityService, useValue: activityServiceMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: Storage, useValue: storageMock },
+          {
+            provide: BlockListService,
+            useFactory: () => {
+              return BlockListService._(
+                clientMock,
+                sessionMock,
+                storageMock,
+                recentServiceMock
+              );
+            },
           },
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-        {
-          provide: EmbedServiceV2,
-          useValue: MockService(EmbedServiceV2),
-        },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents(); // compile template and css
-  }));
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+          {
+            provide: EmbedServiceV2,
+            useValue: MockService(EmbedServiceV2),
+          },
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

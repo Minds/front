@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { Client } from '../../../../services/api';
 // import { clientMock } from '../../../../../tests/client-mock.spec';
 // import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -13,7 +13,7 @@
 //   let component: SettingsV2EmailAddressComponent;
 //   let fixture: ComponentFixture<SettingsV2EmailAddressComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [SettingsV2EmailAddressComponent],
 //       providers: [

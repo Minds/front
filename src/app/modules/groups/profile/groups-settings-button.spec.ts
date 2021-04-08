@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -41,36 +41,38 @@ describe('GroupsSettingsButton', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({
-          selector: 'm-modal',
-          template: '<ng-content></ng-content>',
-          inputs: ['open'],
-          outputs: ['closed'],
-        }),
-        MockComponent({
-          selector: 'm-nsfw-selector',
-          inputs: ['selected'],
-          outputs: ['selected'],
-        }),
-        GroupsSettingsButton,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        { provide: GroupsService, useValue: groupsServiceMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          MockComponent({
+            selector: 'm-modal',
+            template: '<ng-content></ng-content>',
+            inputs: ['open'],
+            outputs: ['closed'],
+          }),
+          MockComponent({
+            selector: 'm-nsfw-selector',
+            inputs: ['selected'],
+            outputs: ['selected'],
+          }),
+          GroupsSettingsButton,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          { provide: GroupsService, useValue: groupsServiceMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { ReportedContentComponent } from './reported-content.component';
 
@@ -6,7 +6,7 @@
 //   let component: ReportedContentComponent;
 //   let fixture: ComponentFixture<ReportedContentComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ ReportedContentComponent ]
 //     })

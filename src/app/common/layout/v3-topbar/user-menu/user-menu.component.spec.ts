@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { UserMenuV3Component } from './user-menu.component';
@@ -20,28 +20,30 @@ describe('UserMenuV3Component', () => {
   let comp: UserMenuV3Component;
   let fixture: ComponentFixture<UserMenuV3Component>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'minds-avatar',
-          inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
-        }),
-        IfFeatureDirective,
-        UserMenuV3Component,
-      ],
-      imports: [FormsModule, RouterTestingModule, NgCommonModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        {
-          provide: ThemeService,
-          useValue: themeServiceMock,
-        },
-        { provide: UserMenuService, useValue: userMenuServiceMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'minds-avatar',
+            inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
+          }),
+          IfFeatureDirective,
+          UserMenuV3Component,
+        ],
+        imports: [FormsModule, RouterTestingModule, NgCommonModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          {
+            provide: ThemeService,
+            useValue: themeServiceMock,
+          },
+          { provide: UserMenuService, useValue: userMenuServiceMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
@@ -41,24 +41,26 @@ describe('TokenOnboardingComponent', () => {
   let comp: TokenOnboardingComponent;
   let fixture: ComponentFixture<TokenOnboardingComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [TokenOnboardingComponent],
-      imports: [FormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-        { provide: Session, useValue: sessionMock },
-        { provide: Router, useValue: RouterTestingModule },
-        { provide: Storage, useValue: storageMock },
-        { provide: TokenOnboardingService, useValue: tokenOnboardingService },
-        {
-          provide: ComponentFactoryResolver,
-          useValue: ComponentFactoryResolver,
-        },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [TokenOnboardingComponent],
+        imports: [FormsModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
+          { provide: Session, useValue: sessionMock },
+          { provide: Router, useValue: RouterTestingModule },
+          { provide: Storage, useValue: storageMock },
+          { provide: TokenOnboardingService, useValue: tokenOnboardingService },
+          {
+            provide: ComponentFactoryResolver,
+            useValue: ComponentFactoryResolver,
+          },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

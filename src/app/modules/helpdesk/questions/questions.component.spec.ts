@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,45 +22,47 @@ describe('QuestionsComponent', () => {
   let comp: QuestionsComponent;
   let fixture: ComponentFixture<QuestionsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        SafePipe,
-        QuestionsComponent,
-        MockComponent({
-          selector: 'm-helpdesk--questions--search',
-        }),
-        MockComponent({
-          selector: 'm-helpdesk--questions--related',
-          inputs: ['question'],
-        }),
-        MockComponent({
-          selector: 'm-helpdesk--questions--suggested',
-          inputs: ['type', 'question'],
-        }),
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: MetaService, useValue: MockService(MetaService) },
-        { provide: Client, useValue: clientMock },
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({ uuid: 'uuid1' }) },
-        },
-        {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService),
-        },
-        PageLayoutService,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          SafePipe,
+          QuestionsComponent,
+          MockComponent({
+            selector: 'm-helpdesk--questions--search',
+          }),
+          MockComponent({
+            selector: 'm-helpdesk--questions--related',
+            inputs: ['question'],
+          }),
+          MockComponent({
+            selector: 'm-helpdesk--questions--suggested',
+            inputs: ['type', 'question'],
+          }),
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: MetaService, useValue: MockService(MetaService) },
+          { provide: Client, useValue: clientMock },
+          {
+            provide: ActivatedRoute,
+            useValue: { params: of({ uuid: 'uuid1' }) },
+          },
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService),
+          },
+          PageLayoutService,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

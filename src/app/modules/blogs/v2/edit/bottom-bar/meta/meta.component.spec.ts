@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BlogEditorMetaComponent } from './meta.component';
 import { FormsModule } from '@angular/forms';
 import { clientMock } from '../../../../../../../tests/client-mock.spec';
@@ -14,31 +14,36 @@ describe('BlogEditorMetaComponent', () => {
   let comp: BlogEditorMetaComponent;
   let fixture: ComponentFixture<BlogEditorMetaComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [BlogEditorMetaComponent],
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: BlogsEditService, useValue: MockService(BlogsEditService) },
-        {
-          provide: SiteService,
-          useValue: MockService(SiteService, {
-            baseUrl: 'https://www.minds.com/',
-          }),
-        },
-        {
-          provide: Session,
-          useValue: MockService(Session, {
-            getLoggedInUser: () => {
-              return {
-                username: 'test',
-              };
-            },
-          }),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [BlogEditorMetaComponent],
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          {
+            provide: BlogsEditService,
+            useValue: MockService(BlogsEditService),
+          },
+          {
+            provide: SiteService,
+            useValue: MockService(SiteService, {
+              baseUrl: 'https://www.minds.com/',
+            }),
+          },
+          {
+            provide: Session,
+            useValue: MockService(Session, {
+              getLoggedInUser: () => {
+                return {
+                  username: 'test',
+                };
+              },
+            }),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(async done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

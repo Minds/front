@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StickySidebarDirective } from './sticky-sidebar.directive';
 import { Component } from '@angular/core';
@@ -17,14 +17,16 @@ describe('StickySidebarDirective', () => {
   let component: TestStickySidebarDirectiveComponent;
   let fixture: ComponentFixture<TestStickySidebarDirectiveComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        StickySidebarDirective,
-        TestStickySidebarDirectiveComponent,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          StickySidebarDirective,
+          TestStickySidebarDirectiveComponent,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestStickySidebarDirectiveComponent);

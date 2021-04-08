@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
@@ -16,29 +16,31 @@ describe('SettingsTwoFactorConnectAppComponent', () => {
   let comp: SettingsTwoFactorConnectAppComponent;
   let fixture: ComponentFixture<SettingsTwoFactorConnectAppComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SettingsTwoFactorConnectAppComponent],
-      providers: [
-        {
-          provide: SettingsTwoFactorV2Service,
-          useValue: MockService(SettingsTwoFactorV2Service),
-        },
-        {
-          provide: Session,
-          useValue: sessionMock,
-        },
-        {
-          provide: StackableModalService,
-          useValue: MockService(StackableModalService),
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SettingsTwoFactorConnectAppComponent],
+        providers: [
+          {
+            provide: SettingsTwoFactorV2Service,
+            useValue: MockService(SettingsTwoFactorV2Service),
+          },
+          {
+            provide: Session,
+            useValue: sessionMock,
+          },
+          {
+            provide: StackableModalService,
+            useValue: MockService(StackableModalService),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorConnectAppComponent);

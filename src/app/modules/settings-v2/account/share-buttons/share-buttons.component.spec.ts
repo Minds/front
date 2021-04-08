@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { ShareButtonsComponent } from './share-buttons.component';
 
@@ -6,7 +6,7 @@
 //   let component: ShareButtonsComponent;
 //   let fixture: ComponentFixture<ShareButtonsComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [ ShareButtonsComponent ]
 //     })

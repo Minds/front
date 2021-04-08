@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { YoutubeMigrationConfigComponent } from './config.component';
 // import { Session } from '../../../../services/session';
@@ -17,7 +17,7 @@
 //   let component: YoutubeMigrationConfigComponent;
 //   let fixture: ComponentFixture<YoutubeMigrationConfigComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [YoutubeMigrationConfigComponent],
 //       imports: [ReactiveFormsModule, FormsModule, RouterTestingModule],

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { XhrFactory } from '@angular/common/http';
@@ -27,6 +27,7 @@ PlotlyModule.plotlyjs = {
 };
 
 // activate cookie for server-side rendering
+@Injectable()
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
     xhr2.prototype._restrictedHeaders.cookie = false;

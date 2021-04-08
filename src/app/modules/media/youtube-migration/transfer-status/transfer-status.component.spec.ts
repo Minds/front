@@ -1,4 +1,4 @@
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { YoutubeMigrationTransferStatusComponent } from './transfer-status.component';
 
@@ -6,7 +6,7 @@
 //   let component: YoutubeMigrationTransferStatusComponent;
 //   let fixture: ComponentFixture<YoutubeMigrationTransferStatusComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       declarations: [YoutubeMigrationTransferStatusComponent],
 //     }).compileComponents();

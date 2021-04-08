@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { MockService } from '../../../../../utils/mock';
 import {
@@ -12,17 +12,19 @@ describe('MultiFactorAuthTOTPComponent', () => {
   let comp: MultiFactorAuthTOTPComponent;
   let fixture: ComponentFixture<MultiFactorAuthTOTPComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MultiFactorAuthTOTPComponent],
-      providers: [
-        {
-          provide: MultiFactorAuthService,
-          useValue: MockService(MultiFactorAuthService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MultiFactorAuthTOTPComponent],
+        providers: [
+          {
+            provide: MultiFactorAuthService,
+            useValue: MockService(MultiFactorAuthService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiFactorAuthTOTPComponent);
