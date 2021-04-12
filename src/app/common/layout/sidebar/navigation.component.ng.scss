@@ -270,7 +270,7 @@
 }
 
 .m-sidebarNavigation__item--active .m-sidebarNavigation__subnav {
-  @media screen and (min-width: $layoutMax3ColWidth) {
+  @media screen and (min-width: $layoutMax3ColWidth + 1) {
     display: block;
     position: relative;
   }
