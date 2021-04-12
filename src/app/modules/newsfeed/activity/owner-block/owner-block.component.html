@@ -55,13 +55,10 @@
             {{ toReadableDate(entity.time_created) }}
           </span>
         </div>
-        <span
-          class="m-activityOwnerBlockPermalink__text--timestamp"
-          [title]="entity.time_created * 1000 | date: 'medium'"
+        <m-relativeTimeSpan
           *ngIf="!isScheduled()"
-        >
-          {{ entity.time_created * 1000 | friendlydatediff }}
-        </span>
+          [entity]="entity"
+        ></m-relativeTimeSpan>
         <span
           *ngIf="
             service.displayOptions.showEditedTag && (service.isEdited$ | async)
