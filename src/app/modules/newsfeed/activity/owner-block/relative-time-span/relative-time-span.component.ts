@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { BehaviorSubject, interval, Observable } from 'rxjs';
 import {
-  debounceTime,
   distinctUntilChanged,
   last,
   map,
@@ -73,8 +72,6 @@ export class ActivityRelativeTimeSpanComponent {
    */
   setupPauseableRelativeTime(): void {
     this.pauseableRelativeTimeAgo$ = this.isIntersecting$.pipe(
-      // Minor debouncing to catch rapid scrolls
-      debounceTime(100),
       // If not intersecting, output last emitted value, else, output live observable.
       switchMap(value =>
         !value ? this.relativeTimeAgo$.pipe(last()) : this.relativeTimeAgo$
