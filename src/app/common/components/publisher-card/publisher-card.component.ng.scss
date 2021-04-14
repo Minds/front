@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  .m-channelCard {
+  .m-publisherCard {
     padding: 15px 20px 25px 20px;
     border-radius: $m-borderRadius;
     font-size: 16px;
@@ -9,7 +9,7 @@
       border: 1px solid themed($m-borderColor--primary);
     }
 
-    &.m-channelCard--featured {
+    &.m-publisherCard--featured {
       @include m-theme() {
         border: 1px solid themed($m-link);
       }
@@ -20,7 +20,7 @@
         margin-top: 10px;
       }
     }
-    .m-channelCard__subs {
+    .m-publisherCard__subs {
       display: flex;
 
       a {
@@ -34,7 +34,7 @@
           color: themed($m-textColor--secondary);
         }
 
-        &.m-channelCardSubs__count {
+        &.m-publisherCardSubs__count {
           @include m-theme() {
             color: themed($m-textColor--primary);
           }
@@ -42,7 +42,7 @@
       }
     }
 
-    .m-channelCard__tags {
+    .m-publisherCard__tags {
       span {
         font-size: 16px;
         display: inline-block;
@@ -57,7 +57,7 @@
       }
     }
 
-    .m-channelCard__desc {
+    .m-publisherCard__desc {
       p {
         line-height: 19px;
         font-size: 16px;
@@ -69,7 +69,7 @@
     }
   }
 
-  .m-channelCard__ownerRow {
+  .m-publisherCard__ownerRow {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -85,7 +85,7 @@
       }
     }
 
-    .m-channelCardOwnerRow__owner {
+    .m-publisherCardOwnerRow__owner {
       max-width: 100%;
       width: calc(100% - 185px);
 
@@ -94,8 +94,8 @@
         justify-content: flex-start;
       }
 
-      .m-channelCardOwnerRowItem__name,
-      .m-channelCardOwnerRowItem__username {
+      .m-publisherCardOwnerRowItem__name,
+      .m-publisherCardOwnerRowItem__username {
         font-weight: 400;
         text-decoration: none;
         flex: auto 0 1;
@@ -103,7 +103,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .m-channelCardOwnerRowItem__name {
+      .m-publisherCardOwnerRowItem__name {
         font-weight: 500;
         line-height: 21px;
         @include m-theme() {
@@ -116,7 +116,7 @@
           }
         }
       }
-      .m-channelCardOwnerRowItem__username {
+      .m-publisherCardOwnerRowItem__username {
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
@@ -129,20 +129,20 @@
     }
   }
 
-  .m-channelCard--medium {
+  .m-publisherCard--medium {
     padding: 15px;
 
-    .m-channelCardOwnerRow__owner {
+    .m-publisherCardOwnerRow__owner {
       width: calc(100% - 100px);
     }
   }
-  .m-channelCard--small {
+  .m-publisherCard--small {
     padding: 20px;
 
-    .m-channelCard__ownerRow {
+    .m-publisherCard__ownerRow {
       flex-direction: column;
 
-      .m-channelCardOwnerRow__owner {
+      .m-publisherCardOwnerRow__owner {
         width: 100%;
       }
 
@@ -158,7 +158,7 @@
         }
       }
 
-      .m-channelCardOwnerRow__owner {
+      .m-publisherCardOwnerRow__owner {
         > div {
           justify-content: center;
           > a {
@@ -180,7 +180,7 @@
         }
       }
     }
-    .m-channelCard__subs {
+    .m-publisherCard__subs {
       justify-content: center;
     }
   }

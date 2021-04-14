@@ -67,6 +67,8 @@ export class SidebarNavigationComponent
 
   routerSubscription: Subscription;
 
+  matrixFeature: boolean = false;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -109,6 +111,8 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
+    this.matrixFeature = this.featuresService.has('matrix');
+
     this.settingsLink = '/settings';
   }
 
@@ -131,6 +135,9 @@ export class SidebarNavigationComponent
   }
 
   createGroupsSideBar() {
+    if (this.matrixFeature) {
+      return;
+    }
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
         GroupsSidebarMarkersComponent
       ),

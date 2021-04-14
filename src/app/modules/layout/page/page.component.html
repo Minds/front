@@ -27,7 +27,13 @@
 </ng-container>
 
 <ng-container *mIfBrowser>
-  <m-messenger *ngIf="session.isLoggedIn() && !isProDomain"></m-messenger>
+  <m-messenger
+    *ngIf="
+      session.isLoggedIn() &&
+      !isProDomain &&
+      (messengerService.showLegacyMessenger$ | async)
+    "
+  ></m-messenger>
 </ng-container>
 
 <m-hovercard-popup></m-hovercard-popup>

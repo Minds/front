@@ -70,6 +70,8 @@ import { SettingsTwoFactorDisableTOTPComponent } from './security/two-factor-v2/
 import { SettingsTwoFactorDisableSMSComponent } from './security/two-factor-v2/confirm-disable/sms/confirm-disable-sms.component';
 
 import { SettingsTwoFactorCodePopupComponent } from './security/two-factor-v2/connect-app/code-popup/code-popup.component';
+import { SettingsV2MessengerComponent } from './account/messenger/messenger.component';
+import { MessengerModule } from '../messenger/messenger.module';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -190,6 +192,17 @@ const SETTINGS_V2_ROUTES: Routes = [
               id: 'toaster-notifications',
             },
           },
+          {
+            path: 'messenger',
+            component: SettingsV2MessengerComponent,
+            data: {
+              title: 'Messenger',
+              description:
+                'Choose whether you want to see the legacy messenger.',
+              id: 'messenger',
+            },
+          },
+
           { path: '**', redirectTo: 'account' },
         ],
       },
@@ -474,6 +487,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     ReferralsV2Module,
     LanguageModule,
     NewsfeedModule,
+    MessengerModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -517,6 +531,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     // These need moving to settings folder
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
+    SettingsV2MessengerComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

@@ -108,12 +108,12 @@
           >Placement: Newsfeed Sidebar</span
         >
 
-        <m-channelCard
-          [channel]="getLoggedInUser()"
+        <m-publisherCard
+          [publisher]="getLoggedInUser()"
           [showDescription]="false"
           [showSubs]="false"
           [disableSubscribe]="true"
-        ></m-channelCard>
+        ></m-publisherCard>
       </div>
 
       <div *ngSwitchCase="'blog'">

@@ -1,5 +1,5 @@
 <ng-container *ngIf="entity$ | async as entity">
-  <m-channelCard [channel]="entity" featured="true"></m-channelCard>
+  <m-publisherCard [publisher]="entity" featured="true"></m-publisherCard>
 
   <div class="m-liquiditySpot__disclaimer" (click)="onClick($event)">
     <m-tooltip icon="info" anchor="bottom">
