@@ -42,6 +42,7 @@ export class SidebarNavigationComponent
   implements OnInit, AfterViewInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  readonly chatUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -89,6 +90,7 @@ export class SidebarNavigationComponent
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.chatUrl = this.configs.get('matrix')?.chat_url;
     this.service.setContainer(this);
     this.getUser();
 

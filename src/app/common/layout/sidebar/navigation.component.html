@@ -133,7 +133,7 @@
           class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
         >
-          <a href="https://chat.minds.com/" target="chat" (click)="toggle()">
+          <a [href]="chatUrl" target="chat" (click)="toggle()">
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
