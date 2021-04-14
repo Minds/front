@@ -1,6 +1,9 @@
 @import 'defaults.scss';
 
 :host {
+  header {
+    position: relative;
+  }
   .m-blog-header {
     padding-bottom: 20px;
     margin-bottom: 20px;

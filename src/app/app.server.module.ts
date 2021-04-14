@@ -16,6 +16,8 @@ import {
   HeadersService,
   ServerHeadersService,
 } from './common/services/headers.service';
+import { HlsjsPlyrDriver } from './modules/media/components/video-player/hls-driver';
+import { DefaultPlyrDriver } from 'ngx-plyr';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -45,6 +47,10 @@ export const SERVER_PROVIDERS = [
   {
     provide: HeadersService,
     useClass: ServerHeadersService,
+  },
+  {
+    provide: HlsjsPlyrDriver,
+    useClass: DefaultPlyrDriver,
   },
 ];
 

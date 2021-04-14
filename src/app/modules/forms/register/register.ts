@@ -22,6 +22,7 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
+import { PASSWORD_VALIDATOR } from '../password-validator';
 
 @Component({
   selector: 'minds-form-register',
@@ -77,7 +78,7 @@ export class RegisterForm {
           ],
         ],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required],
+        password: ['', [Validators.required, PASSWORD_VALIDATOR]],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
         exclusive_promotions: [true],

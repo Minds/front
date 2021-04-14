@@ -131,6 +131,17 @@
           />
         </div>
       </m-popover>
+      <div
+        class="m-register__error"
+        [style.visibility]="showError('password') ? 'visible' : 'hidden'"
+      >
+        <ng-container
+          *ngIf="this.form.get('password').errors?.invalidPassword"
+          i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_PASSWORD"
+        >
+          Invalid password
+        </ng-container>
+      </div>
     </div>
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"
@@ -157,6 +168,7 @@
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           data-cy="data-minds-register-password-input-2"
+          [class.ng-invalid]="this.form.errors?.passwordConfirming"
         />
       </div>
       <div

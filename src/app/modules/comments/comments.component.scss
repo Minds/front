@@ -152,7 +152,8 @@
 }
 .m-attachmentPreviewWrapper {
   position: relative;
-  max-width: 50%;
+  display: flex;
+  justify-content: center;
 
   &.m-attachmentPreviewWrapper--richEmbed {
     max-width: 100%;
@@ -161,6 +162,12 @@
   .attachment-preview {
     max-width: 100%;
     cursor: pointer;
+
+    width: 100%;
+    max-height: 200px;
+    height: 200px;
+    -o-object-fit: cover;
+    object-fit: cover;
   }
 
   .post-preview {

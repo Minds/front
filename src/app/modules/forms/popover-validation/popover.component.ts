@@ -7,6 +7,13 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import {
+  PASSWORD_VALIDATOR_LENGTH_CHECK,
+  PASSWORD_VALIDATOR_MIXED_CASE_CHECK,
+  PASSWORD_VALIDATOR_NUMBERS_CHECK,
+  PASSWORD_VALIDATOR_SPACES_CHECK,
+  PASSWORD_VALIDATOR_SPECIAL_CHAR_CHECK,
+} from '../password-validator';
 
 @Component({
   selector: 'm-popover',
@@ -42,12 +49,11 @@ export class PopoverComponent {
   }
 
   checkRules(str: string): void {
-    this.lengthCheck = str.length >= 8;
-    this.specialCharCheck = /[^a-zA-Z\d]/.exec(str) !== null;
-    this.mixedCaseCheck =
-      /[a-z]/.exec(str) !== null && /[A-Z]/.exec(str) !== null;
-    this.numbersCheck = /\d/.exec(str) !== null;
-    this.spacesCheck = /\s/.exec(str) === null;
+    this.lengthCheck = PASSWORD_VALIDATOR_LENGTH_CHECK(str);
+    this.specialCharCheck = PASSWORD_VALIDATOR_SPECIAL_CHAR_CHECK(str);
+    this.mixedCaseCheck = PASSWORD_VALIDATOR_MIXED_CASE_CHECK(str);
+    this.numbersCheck = PASSWORD_VALIDATOR_NUMBERS_CHECK(str);
+    this.spacesCheck = PASSWORD_VALIDATOR_SPACES_CHECK(str);
 
     // if everything is right, wait a bit and hide
     if (
