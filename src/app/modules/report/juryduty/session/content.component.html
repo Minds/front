@@ -17,13 +17,13 @@
     </div>
 
     <ng-container *ngIf="report.entity; else noEntity">
-      <m-channelCard
+      <m-publisherCard
         *ngIf="
           report.entity.type && report.entity.type === 'user';
           else notUser
         "
-        [channel]="report.entity"
-      ></m-channelCard>
+        [publisher]="report.entity"
+      ></m-publisherCard>
       <ng-template #notUser
         ><minds-card
           [object]="report.entity"

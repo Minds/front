@@ -15,7 +15,7 @@ import { HovercardService } from '../../../../services/hovercard';
       (mouseenter)="hovercardService.stick(hovercardService.data.guid)"
       (mouseleave)="hide(hovercardService.data.guid)"
     >
-      <m-channelCard [channel]="hovercardService.data"></m-channelCard>
+      <m-publisherCard [publisher]="hovercardService.data"></m-publisherCard>
     </div>
   `,
 })

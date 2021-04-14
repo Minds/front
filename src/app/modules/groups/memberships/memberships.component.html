@@ -1,0 +1,63 @@
+<div class="m-groupsMemberships">
+  <div class="m-groupsMemberships__header">
+    <h2>Groups</h2>
+    <div class="m-groupsMemberships__buttons">
+      <m-button size="small"
+        ><a routerLink="/groups/create"><span>Create group</span></a></m-button
+      >
+      <m-button size="small"
+        ><a routerLink="/discovery/suggestions/group"
+          ><span>Discover groups</span></a
+        ></m-button
+      >
+    </div>
+    <div class="m-groupsMemberships__menu m-dropdown--v2">
+      <button
+        class="m-groupsMembershipsMenu__icon"
+        (click)="menuOpened$.next(true)"
+      >
+        <i class="material-icons">more_vert</i>
+      </button>
+
+      <ul class="m-dropdown__list" *ngIf="menuOpened$ | async">
+        <li class="m-dropdownList__item">
+          <a routerLink="/groups/create"><span>Create group</span></a>
+        </li>
+        <li class="m-dropdownList__item">
+          <a routerLink="/discovery/suggestions/group"
+            ><span>Discover groups</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="groups.length">
+    <m-publisherCard *ngFor="let group of groups" [publisher]="group"
+      ><minds-groups-join-button
+        class="m-publisherCard__button"
+        *ngIf="
+          !group['is:creator'] || (session.isAdmin() && !group['is:invited'])
+        "
+        [group]="group"
+      ></minds-groups-join-button>
+    </m-publisherCard>
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="this.moreData"
+      [inProgress]="this.inProgress"
+    ></infinite-scroll>
+  </div>
+  <div *ngIf="!groups.length && !inProgress">
+    <p>
+      You aren't a member of any groups yet.
+      <a routerLink="/discovery/suggestions/groups">Discover groups</a>
+    </p>
+  </div>
+</div>
+<div
+  class="m-bgOverlay--v2"
+  (click)="menuOpened$.next(false)"
+  *ngIf="menuOpened$ | async"
+></div>
