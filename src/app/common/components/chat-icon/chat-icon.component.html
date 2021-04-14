@@ -1,0 +1,25 @@
+<ng-template #iconAndBubble>
+  <m-icon iconId="chat_bubble"></m-icon>
+  <div class="m-chatIcon__unreadBubble" *ngIf="unread > 0">
+    <span *ngIf="unread > 99">99+</span>
+    <span *ngIf="unread <= 99">{{ unread }}</span>
+  </div>
+</ng-template>
+<!-- -------------------- -->
+<!-- Sidebar nav -->
+<!-- -------------------- -->
+<div class="m-chatIcon" *ngIf="!floating; else floatView">
+  <ng-container *ngTemplateOutlet="iconAndBubble"></ng-container>
+</div>
+<!-- -------------------- -->
+<!-- Mobile web -->
+<!-- -------------------- -->
+<ng-template #floatView>
+  <ng-container *ngIf="unread > 0">
+    <div class="m-chatIcon m-chatIcon--floating">
+      <a href="https://chat.minds.com" target="chat">
+        <ng-container *ngTemplateOutlet="iconAndBubble"></ng-container>
+      </a>
+    </div>
+  </ng-container>
+</ng-template>
