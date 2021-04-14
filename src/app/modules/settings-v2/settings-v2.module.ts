@@ -295,7 +295,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             component: SettingsV2SessionsComponent,
             data: {
               title: 'Sessions',
-              description: 'Close all sessions with a single click.',
+              description:
+                'Manage the devices that have been granted access to your account',
               id: 'sessions',
             },
           },
