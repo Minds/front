@@ -7,30 +7,94 @@
   </div>
   <div
     class="m-settingsV2__desc"
-    i18n="@@SETTINGS__SECURITY__SESSIONS__DESCRIPTION"
+    i18n="@@SETTINGS__SECURITY__SESSIONS__DESCRIPTION_MGMT"
   >
-    Close all sessions with a single click.
+    Manage the devices that have been granted access to your account
   </div>
 </m-settingsV2__header>
 
 <div class="m-formLayout--buttonLeft">
   <div class="m-form__fieldsContainer">
-    <div class="m-form__field--checkbox stretchedField">
-      <div class="m-form__row--label">
-        <label i18n="@@SETTINGS__SESSIONS__YOU_CURRENTLY_HAVE_X_OPEN"
-          >You currently have {{ openSessions }} open {openSessions, plural, =1
-          {session} other {sessions}}.</label
-        >
-      </div>
+    <div *ngIf="!init" style="width:100%; text-align:center;">
+      <div
+        class="mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+        style="margin: 16px auto;"
+      ></div>
     </div>
+    <ng-container *ngIf="init">
+      <div class="m-settingsV2__table">
+        <ul>
+          <li class="m-settingsV2__tableHeader" *ngIf="sessions.length">
+            <div class="m-settingsV2__tableCol--left">
+              <span i18n="@@SETTINGS_V2_SESSIONS__DEVICES">Devices</span>
+            </div>
+            <div
+              class="m-settingsV2__tableCol--right"
+              i18n="@@SETTINGS_V2_SESSIONS__LAST_ACTIVE"
+            >
+              <span>Last Active</span
+              ><span class="m-settingsV2__tableItem__action"></span>
+            </div>
+          </li>
+          <li
+            *ngFor="let session of sessions; let i = index"
+            class="m-settingsV2__tableItem"
+          >
+            <div class="m-settingsV2__tableCol--left">
+              <div class="m-settingsV2__sessions__agent">
+                <span *ngIf="session.platform === 'browser'">Web browser</span>
+                <span *ngIf="session.platform === 'mobile'">Mobile app</span>
+              </div>
+              <div class="m-settingsV2__sessions__ip">
+                <span>{{ session.ip }}</span>
+              </div>
+            </div>
+            <div class="m-settingsV2__tableCol--right">
+              <span *ngIf="session.last_active > 0">{{
+                session.last_active * 1000 | friendlydatediff
+              }}</span>
+              <span *ngIf="session.last_active === 0">Unknown</span>
+              <div class="m-dropdown--v2">
+                <!-- <button > -->
+                <i (click)="onButtonClick(i)" class="material-icons"
+                  >more_vert</i
+                >
+                <!-- </button> -->
+
+                <ul
+                  class="m-dropdown__list"
+                  *ngIf="(menuOpened$ | async) === i"
+                >
+                  <li
+                    class="m-dropdownList__item"
+                    (click)="deleteSession(session)"
+                    i18n="@@SETTINGSV2_SESSIONS__REVOKE_ACCESS"
+                  >
+                    Revoke access
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="m-settingsV2__tableItem"></li>
+        </ul>
+      </div>
+    </ng-container>
   </div>
-  <div class="m-form__buttonsContainer">
+  <!-- <div class="m-form__buttonsContainer">
     <m-button
       color="red"
-      (onAction)="closeAllSessions()"
+      (onAction)="deleteAllSessions()"
       i18n="@@SETTINGSV2_SESSIONS__CLOSE_ALL_SESSIONS"
     >
       Close all sessions
     </m-button>
-  </div>
+  </div> -->
 </div>
+<div
+  class="m-bgOverlay--v2"
+  (click)="menuOpened$.next(false)"
+  *ngIf="(menuOpened$ | async) !== false"
+></div>
