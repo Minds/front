@@ -182,6 +182,7 @@ import { LaunchButtonComponent } from './components/launch-button/launch-button.
 import { ChannelCardComponent } from './components/channel-card/channel-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
 import { DownloadActivityMediaService } from './services/download-activity-media.service';
+import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 
 const routes: Routes = [
   {
@@ -338,6 +339,7 @@ const routes: Routes = [
     LaunchButtonComponent,
     ChannelCardComponent,
     SubscribeButtonComponent,
+    ChatIconComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -471,6 +473,7 @@ const routes: Routes = [
     LaunchButtonComponent,
     ChannelCardComponent,
     SubscribeButtonComponent,
+    ChatIconComponent,
   ],
   providers: [
     SiteService,
