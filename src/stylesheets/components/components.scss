@@ -446,7 +446,7 @@ minds-graph-line {
     background-color: themed($m-bgColor--primary);
   }
 
-  m-channelCard .m-channelCard {
+  m-publisherCard .m-publisherCard {
     @include m-theme() {
       border: none;
     }

@@ -99,6 +99,10 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__ACCOUNT__AUTOPLAY__LABEL:Autoplay Videos`,
             id: 'autoplay-videos',
           },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger`,
+            id: 'messenger',
+          },
         ],
       },
       {

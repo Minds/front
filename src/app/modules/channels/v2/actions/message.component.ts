@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MessengerConversationDockpanesService } from '../../../messenger/dockpanes/dockpanes.service';
 import { MessengerConversationBuilderService } from '../../../messenger/dockpanes/conversation-builder.service';
 import { ChannelsV2Service } from '../channels-v2.service';
+import { FeaturesService } from '../../../../services/features.service';
+import { ApiService } from '../../../../common/api/api.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * Message button (non-owner)
@@ -12,6 +15,8 @@ import { ChannelsV2Service } from '../channels-v2.service';
   templateUrl: 'message.component.html',
 })
 export class ChannelActionsMessageComponent {
+  inProgress = false;
+
   /**
    * Constructor
    * @param service
@@ -21,13 +26,33 @@ export class ChannelActionsMessageComponent {
   constructor(
     public service: ChannelsV2Service,
     protected dockpanes: MessengerConversationDockpanesService,
-    protected conversationBuilder: MessengerConversationBuilderService
+    protected conversationBuilder: MessengerConversationBuilderService,
+    protected api: ApiService,
+    protected configs: ConfigsService,
+    protected features: FeaturesService
   ) {}
 
   /**
    * Opens conversation pane
    */
-  message(): void {
+  async message(): Promise<void> {
+    if (this.features.has('matrix')) {
+      this.inProgress = true;
+      try {
+        const response = await this.api
+          .put('api/v3/matrix/room/' + this.service.channel$.getValue().guid)
+          .toPromise();
+        const roomId = response?.room?.id;
+        window.open(
+          this.configs.get('matrix')?.chat_url + '/#/room/' + roomId,
+          'chat'
+        );
+      } catch {
+      } finally {
+        this.inProgress = false;
+      }
+      return;
+    }
     this.dockpanes.open(
       this.conversationBuilder.buildConversation(
         this.service.channel$.getValue()

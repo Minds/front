@@ -17,7 +17,7 @@
 <ng-template #floatView>
   <ng-container *ngIf="unread > 0">
     <div class="m-chatIcon m-chatIcon--floating">
-      <a href="https://chat.minds.com" target="chat">
+      <a [href]="chatUrl" target="chat">
         <ng-container *ngTemplateOutlet="iconAndBubble"></ng-container>
       </a>
     </div>

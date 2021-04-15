@@ -3,13 +3,13 @@
     <span>Suggested Channels</span>
     <m-carousel>
       <div class="m-discoverySuggestionsCarousel__suggestions">
-        <m-channelCard
+        <m-publisherCard
           *ngFor="let suggestion of suggestions$ | async"
           class="m-discoverySuggestionsCarousel__suggestion m-carousel__item"
-          [channel]="suggestion.entity"
+          [publisher]="suggestion.entity"
           [showSubs]="false"
           [showDescription]="false"
-        ></m-channelCard>
+        ></m-publisherCard>
       </div>
     </m-carousel>
   </li>
