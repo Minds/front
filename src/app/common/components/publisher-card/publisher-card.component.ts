@@ -95,13 +95,13 @@ export class PublisherCardComponent implements AfterViewInit {
   }
 
   get feedUrl(): string {
-    return this.type === 'channel'
+    return this.type === 'user'
       ? `/${this.publisher.username}`
       : `/groups/profile/${this.publisher.guid}/feed`;
   }
 
   get subscribersUrl(): string {
-    return this.type === 'channel'
+    return this.type === 'user'
       ? `/${this.publisher.username}/subscribers`
       : `/groups/profile/${this.publisher.guid}/members`;
   }
@@ -110,7 +110,7 @@ export class PublisherCardComponent implements AfterViewInit {
     return (
       this.showSubs &&
       this.size !== 'small' &&
-      ((this.type === 'channel' &&
+      ((this.type === 'user' &&
         (this.publisher.subscribers_count ||
           this.publisher.subscriptions_count)) ||
         (this.type === 'group' && this.publisher['members:count']))
