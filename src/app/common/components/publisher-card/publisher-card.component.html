@@ -25,7 +25,7 @@
           title="{{ publisher.name }}"
           >{{ publisher.name }}</a
         ><m-channel--badges
-          *ngIf="type === 'channel'"
+          *ngIf="type === 'user'"
           class="m-publisher--badges-activity"
           [user]="publisher"
           badges="[ 'admin', 'verified' ]"
@@ -33,7 +33,7 @@
       </div>
       <div>
         <a
-          *ngIf="type === 'channel'"
+          *ngIf="type === 'user'"
           class="m-publisherCardOwnerRowItem__username"
           [routerLink]="['/', publisher.username]"
           title="@{{ publisher.username }}"
@@ -43,7 +43,7 @@
     </div>
     <!-- SUBSCRIBE BUTTON -->
     <m-subscribeButton
-      *ngIf="showSubscribeButton && type === 'channel'"
+      *ngIf="showSubscribeButton && type === 'user'"
       [user]="publisher"
       [iconOnly]="btnIconOnly"
       [disableSubscribe]="disableSubscribe"
@@ -53,7 +53,7 @@
   <!-- - SUBS ---------------------------- -->
   <div class="m-publisherCard__subs" *ngIf="shouldShowSubs">
     <a [routerLink]="subscribersUrl" class="m-legible">
-      <ng-container *ngIf="type === 'channel'"
+      <ng-container *ngIf="type === 'user'"
         ><span class="m-publisherCardSubs__count">{{
           publisher.subscribers_count | abbr: 0
         }}</span>
@@ -71,7 +71,7 @@
       ></a
     >
 
-    <ng-container *ngIf="type === 'channel'">
+    <ng-container *ngIf="type === 'user'">
       <span class="m-publisherCard__dot">·</span>
       <a
         [routerLink]="['/', publisher.username, 'subscriptions']"

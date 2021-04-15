@@ -42,14 +42,13 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
   async getSessions(): Promise<void> {
     this.init = false;
 
-    // ojm make sure the last_active in actual responses displays relative to local time
+    // TODO make sure the last_active displays relative to local time
 
     const response = <any>(
       await this.client.get('api/v3/sessions/common-sessions/all')
     );
 
     this.sessions = response.sessions;
-    console.log('ojm response', response, response[0]);
 
     this.init = true;
     this.detectChanges();
