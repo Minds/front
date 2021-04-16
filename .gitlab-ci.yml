@@ -17,7 +17,10 @@ variables:
   FF_USE_FASTZIP: "1"
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}_${CI_JOB_NAME}
+  key:
+    files:
+      - package.json
+    prefix: ${CI_JOB_NAME}
   paths:
     - node_modules/
 
