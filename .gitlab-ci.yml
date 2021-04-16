@@ -14,12 +14,18 @@ variables:
   CYPRESS_INSTALL_BINARY: "0" # Speeds up the install process
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  FF_USE_FASTZIP: "1"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
 test:
   image: circleci/node:13-browsers
   stage: test and build
   script:
-    - npm ci
+    - npm i
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 lint:
@@ -115,7 +121,7 @@ build:review:
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
-    - npm ci && npm install -g gulp-cli
+    - npm i && npm install -g gulp-cli
     - npm run postinstall
     - sh build/ng9-bundles.sh
     - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
@@ -137,7 +143,7 @@ build:production:bundles:
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
-    - npm ci && npm install -g gulp-cli
+    - npm i && npm install -g gulp-cli
     - npm run postinstall
     - sh build/ng9-bundles.sh
     - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
