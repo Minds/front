@@ -38,6 +38,10 @@
       }
     }
 
+    &.m-button--saving {
+      padding: 0 !important;
+    }
+
     ::ng-deep {
       a {
         text-decoration: none;

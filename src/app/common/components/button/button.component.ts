@@ -23,10 +23,11 @@ export class ButtonComponent implements AfterViewInit {
    */
   @Input() type: string = 'submit';
 
-  buttonTextWidth: number;
-  buttonTextHeight: number;
-  @ViewChild('buttonTextContainer')
-  buttonTextContainer: ElementRef;
+  buttonWidth: number;
+  buttonHeight: number;
+
+  @ViewChild('buttonContainer')
+  buttonContainer: ElementRef;
 
   @Input() disabled: boolean = false;
   @Input() overlay: boolean = false;
@@ -40,7 +41,7 @@ export class ButtonComponent implements AfterViewInit {
    */
   private _saving: boolean;
   @Input() set saving(value: boolean) {
-    if (value && !this.buttonTextWidth) {
+    if (value && !this.buttonWidth) {
       this.setSavingSize();
     }
     this._saving = value;
@@ -104,12 +105,12 @@ export class ButtonComponent implements AfterViewInit {
   }
 
   setSavingSize() {
-    if (this.buttonTextContainer && !this.saving) {
-      const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
-      this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
+    if (this.buttonContainer && !this.saving) {
+      const elWidth = this.buttonContainer.nativeElement.offsetWidth || 0;
+      this.buttonWidth = elWidth > 0 ? elWidth : this.buttonWidth;
 
-      const elHeight = this.buttonTextContainer.nativeElement.clientHeight || 0;
-      this.buttonTextHeight = elHeight > 0 ? elHeight : this.buttonTextHeight;
+      const elHeight = this.buttonContainer.nativeElement.offsetHeight || 0;
+      this.buttonHeight = elHeight > 0 ? elHeight : this.buttonHeight;
     }
   }
 
