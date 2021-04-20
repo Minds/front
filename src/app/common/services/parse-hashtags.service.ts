@@ -29,6 +29,11 @@ export class HashtagsFromStringService {
     );
   }
 
+  /**
+   * Parse cryptotags from a string, stripping away any leading $.
+   * @param { string } value - string to be parsed.
+   * @returns { string[] } - array of tags without leading $.
+   */
   public parseCryptoTagsFromString(value: string): string[] {
     if (!value) {
       return [];
