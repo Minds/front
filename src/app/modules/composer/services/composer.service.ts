@@ -364,6 +364,11 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
+   * Is group post subject
+   */
+  isGroupPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  /**
    * Too many tags subject
    */
   readonly tooManyTags$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -694,6 +699,9 @@ export class ComposerService implements OnDestroy {
    */
   setContainerGuid(containerGuid: string | null) {
     this.containerGuid = containerGuid || null;
+    if (containerGuid) {
+      this.isGroupPost$.next(true);
+    }
     return this;
   }
 
@@ -729,6 +737,7 @@ export class ComposerService implements OnDestroy {
     this.attachmentError$.next('');
     this.isEditing$.next(false);
     this.isMovingContent$.next(false);
+    this.isGroupPost$.next(false);
 
     // Reset preview (state + blob URL)
     this.setPreview(null);
@@ -823,6 +832,7 @@ export class ComposerService implements OnDestroy {
 
     if (typeof activity.container_guid !== 'undefined') {
       this.setContainerGuid(activity.containerGuid);
+      this.isGroupPost$.next(true);
     }
 
     this.isEditing$.next(true);
@@ -936,6 +946,7 @@ export class ComposerService implements OnDestroy {
     if (this.containerGuid) {
       // Override accessId if there's a container set
       accessId = this.containerGuid;
+      this.isGroupPost$.next(true);
     }
 
     this.payload = {
