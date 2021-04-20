@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { MessengerConversationDockpanesService } from '../../../messenger/dockpanes/dockpanes.service';
 import { MessengerConversationBuilderService } from '../../../messenger/dockpanes/conversation-builder.service';
 import { ChannelsV2Service } from '../channels-v2.service';
@@ -29,7 +33,8 @@ export class ChannelActionsMessageComponent {
     protected conversationBuilder: MessengerConversationBuilderService,
     protected api: ApiService,
     protected configs: ConfigsService,
-    protected features: FeaturesService
+    protected features: FeaturesService,
+    protected cd: ChangeDetectorRef
   ) {}
 
   /**
@@ -42,6 +47,10 @@ export class ChannelActionsMessageComponent {
         const response = await this.api
           .put('api/v3/matrix/room/' + this.service.channel$.getValue().guid)
           .toPromise();
+
+        this.inProgress = false;
+        this.detectChanges();
+
         const roomId = response?.room?.id;
         window.open(
           this.configs.get('matrix')?.chat_url + '/#/room/' + roomId,
@@ -50,6 +59,7 @@ export class ChannelActionsMessageComponent {
       } catch {
       } finally {
         this.inProgress = false;
+        this.detectChanges();
       }
       return;
     }
@@ -58,5 +68,10 @@ export class ChannelActionsMessageComponent {
         this.service.channel$.getValue()
       )
     );
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
