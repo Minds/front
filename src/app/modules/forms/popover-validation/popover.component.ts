@@ -13,7 +13,7 @@ import {
   PASSWORD_VALIDATOR_NUMBERS_CHECK,
   PASSWORD_VALIDATOR_SPACES_CHECK,
   PASSWORD_VALIDATOR_SPECIAL_CHAR_CHECK,
-} from '../password-validator';
+} from '../password.validator';
 
 @Component({
   selector: 'm-popover',

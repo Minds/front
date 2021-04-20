@@ -60,13 +60,13 @@
           *ngIf="this.form.get('username').errors?.minlength"
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_SHORT"
         >
-          Must be at least 4 characters long
+          Must be at least 4 characters long.
         </ng-container>
         <ng-container
           *ngIf="this.form.get('username').errors?.maxlength"
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_LONG"
         >
-          Cannot be longer than 128 characters
+          Cannot be longer than 128 characters.
         </ng-container>
         <ng-container
           *ngIf="this.form.get('username').errors?.pattern"
@@ -74,6 +74,12 @@
         >
           Usernames can only have letters, numbers or underscores. Special
           characters (e.g. @^%.) and spaces are not allowed.
+        </ng-container>
+        <ng-container
+          *ngIf="username.errors?.existingUsername"
+          i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TAKEN"
+        >
+          Username already taken.
         </ng-container>
       </div>
     </div>
