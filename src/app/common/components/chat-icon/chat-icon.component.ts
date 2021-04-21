@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Observable, Subscription, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Session } from '../../../services/session';
 import { Client } from '../../api/client.service';
 import { ConfigsService } from '../../services/configs.service';
+import { ChatIconService } from './chat-icon.service';
 
 @Component({
   selector: 'm-chatIcon',
@@ -11,12 +14,15 @@ import { ConfigsService } from '../../services/configs.service';
 export class ChatIconComponent implements OnInit {
   readonly chatUrl: string;
   inProgress = false;
-  unread: number = 0;
+  unread$: Observable<number> = this.chatIconService.unread$;
+
+  unread: number;
+  unreadSubscripton: Subscription;
 
   @Input() floating: boolean = false;
 
   constructor(
-    protected client: Client,
+    protected chatIconService: ChatIconService,
     protected session: Session,
     protected configs: ConfigsService
   ) {
@@ -25,18 +31,25 @@ export class ChatIconComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.session.getLoggedInUser()) {
-      this.getTotalUnread();
+      this.unreadSubscripton = this.unread$.subscribe(
+        unread => (this.unread = unread)
+      );
     }
   }
 
-  async getTotalUnread() {
-    this.inProgress = true;
+  ngOnDestroy() {
+    if (this.unreadSubscripton) {
+      this.unreadSubscripton.unsubscribe();
+    }
+  }
 
-    try {
-      const response: any = await this.client.get('api/v3/matrix/total-unread');
-      this.unread = response.total_unread;
-    } catch (e) {}
+  @HostListener('window:focus', ['$event'])
+  onWindowFocus(e: Event) {
+    this.chatIconService.startPolling();
+  }
 
-    this.inProgress = false;
+  @HostListener('window:blur', ['$event'])
+  onWindowBlur(e: Event) {
+    this.chatIconService.stopPolling();
   }
 }
