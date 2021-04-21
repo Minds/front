@@ -23,6 +23,7 @@ import * as Tracing from '@sentry/tracing';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
+import { SENTRY } from './src/app/common/services/diagnostics/diagnostics.service';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
@@ -141,7 +142,7 @@ export function app() {
         },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         // { provide: LOCALE_ID, useValue: locale },
-        { provide: 'SENTRY_NODE', useValue: Sentry },
+        { provide: SENTRY, useValue: Sentry },
       ],
     });
     res.send(html);
@@ -200,6 +201,7 @@ function getLocaleTranslations(locale: string): string {
   return require(`raw-loader!./src/locale/${fileName}`);
 }
 
+// TODO: move this into common diagnositcs
 function setupSentry(server): void {
   // Sentry
   Sentry.init({

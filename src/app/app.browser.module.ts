@@ -12,6 +12,10 @@ import {
   HeadersService,
   BrowserHeadersService,
 } from './common/services/headers.service';
+import {
+  DiagnosticsService,
+  BrowserDiagnosticsService,
+} from './common/services/diagnostics/browser-diagnostics.service';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -28,6 +32,7 @@ export class SentryErrorHandler implements ErrorHandler {
   bootstrap: [Minds],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: DiagnosticsService, useClass: BrowserDiagnosticsService },
     { provide: 'ORIGIN_URL', useValue: location.origin },
     { provide: 'QUERY_STRING', useValue: location.search || '' },
     {

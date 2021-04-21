@@ -22,7 +22,7 @@ import { BlockListService } from './common/services/block-list.service';
 import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
-import { DiagnosticsService } from './services/diagnostics.service';
+import { DiagnosticsService } from './common/services/diagnostics/diagnostics.service';
 import { SiteService } from './common/services/site.service';
 import { SsoService } from './common/services/sso.service';
 import { Subscription } from 'rxjs';

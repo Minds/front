@@ -19,6 +19,11 @@ import {
 import { HlsjsPlyrDriver } from './modules/media/components/video-player/hls-driver';
 import { DefaultPlyrDriver } from 'ngx-plyr';
 import * as Sentry from '@sentry/node';
+import {
+  DiagnosticsService,
+  ServerDiagnosticsService,
+} from './common/services/diagnostics/server-diagnostics.service';
+import { SENTRY } from './common/services/diagnostics/diagnostics.service';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -29,7 +34,7 @@ PlotlyModule.plotlyjs = {
 
 @Injectable()
 export class SentryServerErrorHandler implements ErrorHandler {
-  constructor(@Inject('SENTRY_NODE') private sentry) {}
+  constructor(@Inject(SENTRY) private sentry) {}
   handleError(error: Error) {
     this.sentry.captureException(error);
     console.error(error);
@@ -46,6 +51,7 @@ export class ServerXhr implements XhrFactory {
 
 export const SERVER_PROVIDERS = [
   { provide: ErrorHandler, useClass: SentryServerErrorHandler },
+  { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
   { provide: XhrFactory, useClass: ServerXhr },
   {
     provide: CookieService,
