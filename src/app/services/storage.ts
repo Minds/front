@@ -10,7 +10,7 @@ export class Storage {
   }
 
   get(key: string) {
-    if (isPlatformServer(this.platformId)) return;
+    if (isPlatformServer(this.platformId)) return null;
     try {
       return window.localStorage.getItem(key);
     } catch (err) {
