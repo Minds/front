@@ -91,7 +91,6 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
    * @param { KeyboardEvent } e - keyboard event.
    */
   keydown(e: KeyboardEvent) {
-    IsCommentingService;
     // set is typing state for other components to hook into.
     this.isCommentingService.isCommenting$.next(this.content.trim().length > 1);
   }
