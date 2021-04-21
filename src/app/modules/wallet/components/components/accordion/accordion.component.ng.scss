@@ -52,6 +52,24 @@
     .m-walletTokenEarnings__header {
       td {
         padding: 15px 0;
+
+        .m-walletTokenEarningsHeader__upgrade {
+          margin-left: 20px;
+          font-weight: 500;
+          font-size: 16px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+
+          a {
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            @include m-theme() {
+              color: themed($m-link);
+            }
+          }
+        }
       }
       &:hover {
         cursor: pointer;

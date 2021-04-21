@@ -45,11 +45,25 @@
     <ng-container *ngFor="let earningsGroup of earnings$ | async">
       <tbody>
         <tr
-          (click)="toggleRow(earningsGroup.id)"
           class="m-walletTokenEarnings__header"
+          *ngIf="!shouldHide(earningsGroup.id)"
         >
-          <td>{{ getFriendlyLabel(earningsGroup.id) }}</td>
           <td>
+            <span (click)="toggleRow(earningsGroup.id)">
+              {{ getFriendlyLabel(earningsGroup.id) }}
+            </span>
+            <span
+              *ngIf="shouldShowUpgradePrompt(earningsGroup.id)"
+              class="m-walletTokenEarningsHeader__upgrade"
+              >Upgrade to <a routerLink="/plus" *ngIf="!isPlus">Minds+</a>
+              <span *ngIf="!isPlus"> or </span>
+              <a routerLink="/pro">Pro</a></span
+            >
+          </td>
+          <td (click)="toggleRow(earningsGroup.id)">
+            {{ getFriendlyLabel(earningsGroup.id) }}
+          </td>
+          <td (click)="toggleRow(earningsGroup.id)">
             <m-wallet__currencyValue
               [value]="
                 currencyType === 'tokens'
@@ -59,7 +73,7 @@
               [currency]="currencyType"
             ></m-wallet__currencyValue>
           </td>
-          <td>
+          <td (click)="toggleRow(earningsGroup.id)">
             <ng-container
               *ngTemplateOutlet="
                 expandArrow;

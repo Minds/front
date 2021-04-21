@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Filter, Option } from '../../../../../interfaces/dashboard';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
+import { Session } from '../../../../../services/session';
 
 const SUM_AMOUNT = (arr, currencyType): number => {
   return arr.reduce((acc, item) => {
@@ -43,10 +44,16 @@ export class WalletEarningsComponent {
   currencyType: 'usd' | 'tokens';
   expandedRow: string;
 
+  isPro: boolean;
+  pro_method: 'usd' | 'tokens';
+  isPlus: boolean;
+  plus_method: 'usd' | 'tokens';
+
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private session: Session
   ) {
     this.filter.options = this.buildMonthOptions(6);
   }
@@ -79,6 +86,11 @@ export class WalletEarningsComponent {
         ? 'tokens'
         : 'usd';
     this.loadTransactions();
+    const user = this.session.getLoggedInUser();
+    this.isPlus = user.plus;
+    this.plus_method = user.plus_method;
+    this.isPro = user.pro;
+    this.pro_method = user.pro_method;
   }
 
   async loadTransactions(): Promise<void> {
@@ -157,5 +169,31 @@ export class WalletEarningsComponent {
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  shouldShowUpgradePrompt(earningsGroupId) {
+    return earningsGroupId === 'partner' && !this.isPro; //we don't ask for plus since if user is pro, it already includes plus, and if it is only plus, we show the prompt anyway
+  }
+
+  shouldHide(earningsGroupId) {
+    if (earningsGroupId !== 'partner') {
+      return false;
+    }
+
+    if (
+      this.currencyType === 'usd' &&
+      ((this.isPro && this.pro_method === 'tokens') ||
+        (this.isPlus && this.plus_method === 'tokens'))
+    ) {
+      return true;
+    }
+
+    if (
+      this.currencyType === 'tokens' &&
+      ((this.isPro && this.pro_method === 'usd') ||
+        (this.isPlus && this.plus_method === 'usd'))
+    ) {
+      return true;
+    }
   }
 }
