@@ -102,7 +102,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Storage,
     useFactory: Storage._,
-    deps: [],
+    deps: [PLATFORM_ID],
   },
   {
     provide: SessionsStorageService,

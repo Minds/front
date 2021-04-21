@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
@@ -13,10 +13,21 @@ import {
   BrowserHeadersService,
 } from './common/services/headers.service';
 
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  constructor() {}
+  handleError(error) {
+    // const eventId = Sentry.captureException(error.originalError || error);
+    // Sentry.showReportDialog({ eventId });
+    console.error(error);
+  }
+}
+
 @NgModule({
   imports: [MindsModule, CookieModule],
   bootstrap: [Minds],
   providers: [
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     { provide: 'ORIGIN_URL', useValue: location.origin },
     { provide: 'QUERY_STRING', useValue: location.search || '' },
     {
