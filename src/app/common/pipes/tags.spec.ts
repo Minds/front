@@ -288,7 +288,7 @@ describe('TagPipe', () => {
     const string = 'textstring$MINDS';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDS'
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
     );
   });
 
@@ -296,7 +296,7 @@ describe('TagPipe', () => {
     const string = 'textstring $MINDS';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDS'
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
     );
   });
 
@@ -304,7 +304,7 @@ describe('TagPipe', () => {
     const string = 'textstring [$MINDS';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDS'
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
     );
   });
 
@@ -312,7 +312,7 @@ describe('TagPipe', () => {
     const string = 'textstring ($MINDS)';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDS'
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
     );
   });
 
@@ -320,7 +320,7 @@ describe('TagPipe', () => {
     const string = 'textString $Minds';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDS'
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
     );
   });
 
@@ -328,10 +328,10 @@ describe('TagPipe', () => {
     const string = '$MINDS $MINDSTOKEN';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDS'
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
     );
     expect(transformedString).toContain(
-      '<a href="/discovery/search?f=top&t=all&q=%24MINDSTOKEN'
+      '<a href="/discovery/search?f=top&t=all&q=MINDSTOKEN'
     );
   });
 });
