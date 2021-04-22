@@ -68,6 +68,7 @@ lint:
     -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
     -    cd ..
     - fi;
+    - npm i
     - echo "Running Cypress"
     - >
       cypress run --browser chrome
