@@ -44,7 +44,6 @@ import { GlobalScrollService } from './ux/global-scroll.service';
 import { AuthService } from './auth.service';
 import { SiteService } from '../common/services/site.service';
 import { SessionsStorageService } from './session-storage.service';
-import { DiagnosticsService } from './diagnostics.service';
 import { FormToastService } from '../common/services/form-toast.service';
 import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
@@ -102,7 +101,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Storage,
     useFactory: Storage._,
-    deps: [],
+    deps: [PLATFORM_ID],
   },
   {
     provide: SessionsStorageService,
@@ -221,7 +220,6 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: StackableModalService._,
   },
   ThemeService,
-  DiagnosticsService,
   AuthService,
   FormToastService,
   MessengerService,

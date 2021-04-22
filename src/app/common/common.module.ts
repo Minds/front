@@ -182,6 +182,7 @@ import { LaunchButtonComponent } from './components/launch-button/launch-button.
 import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
 import { DownloadActivityMediaService } from './services/download-activity-media.service';
+import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 
 const routes: Routes = [
@@ -339,6 +340,7 @@ const routes: Routes = [
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
+    HotkeyScrollDirective,
     ChatIconComponent,
   ],
   exports: [
@@ -473,6 +475,7 @@ const routes: Routes = [
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
+    HotkeyScrollDirective,
     ChatIconComponent,
   ],
   providers: [

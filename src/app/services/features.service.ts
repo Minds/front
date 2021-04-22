@@ -17,10 +17,6 @@ export class FeaturesService {
   ) {}
 
   has(feature: string): boolean {
-    if (feature === 'matrix') {
-      return true;
-    }
-
     const features = this.configs.get('features');
 
     if (!features) return false;

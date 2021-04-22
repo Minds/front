@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as Sentry from '@sentry/browser';
-import { Session } from './session';
-import { environment } from '../../environments/environment';
-import { ConfigsService } from '../common/services/configs.service';
+import { Session } from '../../../services/session';
+import { environment } from '../../../../environments/environment';
+import { ConfigsService } from '../configs.service';
+import { DiagnosticsInterface } from './diagnostics.service';
+
+export { DiagnosticsService } from './diagnostics.service';
 
 @Injectable()
-export class DiagnosticsService {
+export class BrowserDiagnosticsService implements DiagnosticsInterface {
   readonly environment: string;
   constructor(protected session: Session, configs: ConfigsService) {
     this.environment = configs.get('environment');

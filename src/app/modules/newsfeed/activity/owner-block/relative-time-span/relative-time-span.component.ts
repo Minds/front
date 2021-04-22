@@ -1,4 +1,12 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
 import { BehaviorSubject, interval, Observable } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -58,7 +66,10 @@ export class ActivityRelativeTimeSpanComponent {
   // intersection observer to monitor intersection with viewport.
   private interceptionObserver: IntersectionObserver;
 
-  constructor(public datePipe: FriendlyDateDiffPipe) {}
+  constructor(
+    public datePipe: FriendlyDateDiffPipe,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
   ngAfterViewInit(): void {
     this.setupInterceptionObserver();
@@ -86,6 +97,11 @@ export class ActivityRelativeTimeSpanComponent {
    * @returns { void }
    */
   setupInterceptionObserver(): void {
+    // Will not work on SSR
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     let options = {
       root: null,
       rootMargin: '0px',
