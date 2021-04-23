@@ -106,7 +106,8 @@ export class ButtonComponent implements AfterViewInit {
   setSavingSize() {
     if (this.buttonTextContainer && !this.saving) {
       const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
-      this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
+      this.buttonTextWidth =
+        elWidth > 0 ? Math.max(elWidth, 40) : this.buttonTextWidth;
 
       const elHeight = this.buttonTextContainer.nativeElement.clientHeight || 0;
       this.buttonTextHeight = elHeight > 0 ? elHeight : this.buttonTextHeight;

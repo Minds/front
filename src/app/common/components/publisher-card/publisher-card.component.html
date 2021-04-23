@@ -11,7 +11,10 @@
   <!-- --OWNER ROW ----------------------------- -->
   <div class="m-publisherCard__ownerRow m-legible">
     <!-- AVATAR -->
-    <div class="minds-avatar">
+    <div
+      class="minds-avatar"
+      [ngClass]="{ 'm-publisherCardAvatar--hasMarker': publisher.hasMarker }"
+    >
       <a [routerLink]="feedUrl">
         <img [src]="getAvatarSrc() | async" class="m-border" />
       </a>
@@ -48,7 +51,10 @@
       [iconOnly]="btnIconOnly"
       [disableSubscribe]="disableSubscribe"
     ></m-subscribeButton>
-    <ng-content select=".m-publisherCard__button"></ng-content>
+    <ng-content
+      *ngIf="showSubscribeButton"
+      select=".m-publisherCard__button"
+    ></ng-content>
   </div>
   <!-- - SUBS ---------------------------- -->
   <div class="m-publisherCard__subs" *ngIf="shouldShowSubs">
@@ -96,7 +102,9 @@
     m-read-more
     maxHeightAllowed="60"
   >
-    <p>{{ publisher.briefdescription }}</p>
+    <p [innerHtml]="publisher.briefdescription | tags">
+      {{ publisher.briefdescription }}
+    </p>
     <m-read-more--button v2="true" showOnlyFadeout="true"></m-read-more--button>
   </div>
 </div>

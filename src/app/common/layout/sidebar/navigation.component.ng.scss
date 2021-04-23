@@ -35,6 +35,10 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 
+  > nav:first-child {
+    margin-bottom: 200px;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
