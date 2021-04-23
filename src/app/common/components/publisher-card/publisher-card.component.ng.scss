@@ -78,6 +78,21 @@
       min-width: 40px;
       min-height: 40px;
       margin: 0 15px 0 0 !important;
+      position: relative;
+
+      &.m-publisherCardAvatar--hasMarker::after {
+        border-radius: 50%;
+        display: block;
+        height: 11px;
+        width: 11px;
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        @include m-theme() {
+          background-color: themed($m-blue);
+        }
+      }
 
       img {
         width: 38px;
