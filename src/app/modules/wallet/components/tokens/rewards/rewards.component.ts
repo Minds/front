@@ -47,6 +47,11 @@ export class WalletTokenRewardsComponent implements OnInit {
   };
 
   /**
+   * Has pending transactions.
+   */
+  hasPending = false;
+
+  /**
    * The data for the rows
    * TODO: add types
    */
@@ -101,6 +106,7 @@ export class WalletTokenRewardsComponent implements OnInit {
     this.rewards.rewards$.subscribe(response => {
       this.total = response.total;
       this.data = response;
+      this.hasPending = response.has_pending ?? false;
     });
   }
 
