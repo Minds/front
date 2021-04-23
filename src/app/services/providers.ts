@@ -52,6 +52,7 @@ import { CookieService } from '../common/services/cookie.service';
 import { RedirectService } from '../common/services/redirect.service';
 import { StackableModalService } from './ux/stackable-modal.service';
 import { MessengerService } from '../modules/messenger/messenger.service';
+import { PlatformService } from '../common/services/platform.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -223,4 +224,5 @@ export const MINDS_PROVIDERS: any[] = [
   AuthService,
   FormToastService,
   MessengerService,
+  PlatformService,
 ];

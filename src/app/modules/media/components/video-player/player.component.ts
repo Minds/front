@@ -24,6 +24,7 @@ import { Session } from '../../../../services/session';
 import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
 import { map, take } from 'rxjs/operators';
 import { HlsjsPlyrDriver } from './hls-driver';
+import { PlatformService } from '../../../../common/services/platform.service';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -90,11 +91,13 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   showPlyr = false;
 
   /**
-   * Plyr driver detrmined by source types (detects hls)
+   * Plyr driver determined by source types (detects hls)
    */
   plyrDriver$: Observable<HlsjsPlyrDriver | null> = this.service.sources$.pipe(
     map(sources => {
-      if (
+      if (this.isIOS) {
+        return null;
+      } else if (
         sources[0].type === 'video/hls' &&
         isPlatformBrowser(this.platformId)
       ) {
@@ -126,6 +129,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     storage: { enabled: false },
   };
 
+  isIOS: boolean = false;
+
   /**
    * Flag that gets set to true in ngAfterViewInit
    */
@@ -143,10 +148,15 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
     public autoProgress: AutoProgressVideoService,
+    protected platformService: PlatformService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
+    this.platformService.isIOS$.subscribe(isIOS => {
+      this.isIOS = isIOS;
+    });
+
     this.subscriptions.push(
       combineLatest([
         this.service.isPlayable$,

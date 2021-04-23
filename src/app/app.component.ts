@@ -33,6 +33,7 @@ import { MetaService } from './common/services/meta.service';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Upload } from './services/api/upload';
 import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
+import { PlatformService } from './common/services/platform.service';
 
 @Component({
   selector: 'm-app',
@@ -77,7 +78,8 @@ export class Minds implements OnInit, OnDestroy {
     private metaService: MetaService,
     private configs: ConfigsService,
     private cd: ChangeDetectorRef,
-    private socketsService: SocketsService
+    private socketsService: SocketsService,
+    private platformService: PlatformService
   ) {
     this.name = 'Minds';
 
@@ -180,6 +182,8 @@ export class Minds implements OnInit, OnDestroy {
     this.themeService.setUp();
 
     this.socketsService.setUp();
+
+    this.platformService.setUp();
   }
 
   ngOnDestroy() {
