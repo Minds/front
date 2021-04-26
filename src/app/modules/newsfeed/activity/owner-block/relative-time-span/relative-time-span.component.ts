@@ -72,8 +72,13 @@ export class ActivityRelativeTimeSpanComponent {
   ) {}
 
   ngAfterViewInit(): void {
-    this.setupInterceptionObserver();
-    this.setupPauseableRelativeTime();
+    try {
+      this.setupInterceptionObserver();
+      this.setupPauseableRelativeTime();
+    } catch (e) {
+      // do nothing.
+    }
+
     // this.pauseableRelativeTimeAgo$.subscribe(val => {console.log("val", val)})
   }
 
