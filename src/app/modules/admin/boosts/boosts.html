@@ -71,11 +71,11 @@
       *ngFor="let boost of boosts; let i = index"
     >
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
-      <m-channelCard
-        [channel]="boost.entity"
+      <m-publisherCard
+        [publisher]="boost.entity"
         [showSubscribeButton]="false"
         *ngIf="boost.entity.type == 'user'"
-      ></m-channelCard>
+      ></m-publisherCard>
       <m-activity
         [entity]="boost.entity"
         *ngIf="boost.entity.type == 'activity'

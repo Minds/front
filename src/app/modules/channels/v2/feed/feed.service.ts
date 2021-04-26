@@ -1,13 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  EMPTY,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import {
   FeedFilterSort,
   FeedFilterType,
 } from '../../../../common/components/feed-filter/feed-filter.component';
-import { distinctUntilChanged, map, switchAll, filter } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  switchAll,
+  filter,
+  catchError,
+} from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
 import { Router } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 /**
  * Feed component service, handles filtering and pagination
@@ -51,7 +64,8 @@ export class FeedService {
   constructor(
     public service: FeedsService,
     protected api: ApiService,
-    protected router: Router
+    protected router: Router,
+    private toast: FormToastService
   ) {
     // Fetch when GUID or filter change
     this.filterChangeSubscription = combineLatest([
@@ -84,7 +98,13 @@ export class FeedService {
       filter(guid => !!guid),
       map(guid => this.api.get(`api/v2/feeds/scheduled/${guid}/count`)),
       switchAll(),
-      map(response => response.count)
+      map(response => response.count),
+      catchError(e => {
+        if (this.router.url.indexOf('/scheduled') !== -1) {
+          this.toast.error(e.message ?? e);
+        }
+        return EMPTY;
+      })
     );
   }
 

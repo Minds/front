@@ -2,9 +2,22 @@
 
 :host {
   .m-blogEditor {
+    &__bannerEditorContainer {
+      flex-grow: 1;
+      overflow-y: scroll;
+    }
+
     @include m-theme() {
       border-right: 1px solid themed($m-borderColor--primary);
       color: 1px solid themed($m-bgColor--primary);
+    }
+
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 76px);
+
+    .m-blogEditor__bodyContainer {
+      padding-bottom: 40px;
     }
 
     .m-blogEditor__bannerImageContainer {
@@ -37,7 +50,11 @@
     }
 
     .m-blogEditor__container {
-      padding: 40px 100px;
+      position: relative;
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      padding: 40px 100px 80px 100px;
       @media screen and (max-width: $min-desktop) {
         padding: 20px 40px;
       }
@@ -123,6 +140,12 @@
           font-weight: bold;
           resize: none;
           overflow: hidden;
+
+          &::placeholder {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
         }
       }
     }

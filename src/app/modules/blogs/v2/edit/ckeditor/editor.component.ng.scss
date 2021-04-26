@@ -5,6 +5,13 @@
     --ck-border-radius: 5px !important;
   }
 
+  // allow editor to scroll
+  .m-ck-editor-wrapper {
+    // background: hotpink !important;
+    // height: 60vh;
+    overflow-y: scroll;
+  }
+
   .ck-button {
     color: #7d7d82 !important; // m-theme() out of :host not working
   }

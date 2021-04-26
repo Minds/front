@@ -20,8 +20,6 @@ import { MessengerConversationBuilderService } from './dockpanes/conversation-bu
 
 import { Client } from '../../common/api/client.service';
 import { MessengerEncryptionService } from './encryption/encryption.service';
-import { Storage } from '../../services/storage';
-import { Session } from '../../services/session';
 
 @NgModule({
   imports: [

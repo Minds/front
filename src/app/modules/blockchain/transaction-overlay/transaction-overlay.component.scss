@@ -1,4 +1,8 @@
-m--blockchain--transaction-overlay {
+.m--blockchain--transaction-overlay--transparant {
+  background: none !important;
+}
+
+.m--blockchain--transaction-overlay {
   display: flex;
   justify-content: center;
   align-items: center;

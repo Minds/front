@@ -5,7 +5,7 @@
 >
   <ng-container [ngSwitch]="entity.type">
     <ng-template ngSwitchCase="user">
-      <m-channelCard [channel]="entity"></m-channelCard>
+      <m-publisherCard [publisher]="entity"></m-publisherCard>
     </ng-template>
     <ng-template ngSwitchCase="group">
       <a [routerLink]="['/groups/profile/', entity.guid]">

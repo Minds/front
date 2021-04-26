@@ -64,7 +64,10 @@
 
 <m-loadingSpinner [inProgress]="!data"></m-loadingSpinner>
 
-<div class="m-walletTokenEarnings__accordion" *ngIf="data">
+<div
+  class="m-walletTokenEarnings__accordion m-walletTokenRewards__accordion"
+  *ngIf="data"
+>
   <table>
     <!------------------------------
     !! Labels !!
@@ -82,7 +85,7 @@
     !! Total !!
     ------------------------------->
     <tbody>
-      <tr class="total">
+      <tr class="total m-walletTokenEarnings__header">
         <td>Total</td>
         <td>
           <m-wallet__currencyValue
@@ -106,7 +109,10 @@
     !! Engagement !!
     ------------------------------->
     <tbody>
-      <tr>
+      <tr
+        class="m-walletTokenEarnings__header"
+        (click)="toggleRow('engagement')"
+      >
         <td>
           <span>Engagement</span>
           <m-tooltip icon="info">
@@ -250,7 +256,7 @@
     !! Holding !!
     ------------------------------->
     <tbody>
-      <tr>
+      <tr class="m-walletTokenEarnings__header" (click)="toggleRow('holding')">
         <td>
           <span>Holding</span>
           <m-tooltip icon="info">
@@ -379,7 +385,10 @@
     !! Liquidity !!
     ------------------------------->
     <tbody>
-      <tr>
+      <tr
+        class="m-walletTokenEarnings__header"
+        (click)="toggleRow('liquidity')"
+      >
         <td>
           <span>Liquidity</span>
           <m-tooltip icon="info">
@@ -602,7 +611,7 @@
 
 <!-- Reusable row arrow arrow -->
 <ng-template #expandArrow let-rowId="rowId">
-  <i class="material-icons" (click)="toggleRow(rowId)">{{
+  <i class="material-icons">{{
     expandedRow === rowId ? 'expand_less' : 'expand_more'
   }}</i>
 </ng-template>

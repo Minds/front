@@ -34,6 +34,7 @@ import { ComposerModule } from '../composer/composer.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { GroupsProfile } from './profile/profile';
 import { GroupsCreator } from './create/create';
+import { GroupsMembershipsComponent } from './memberships/memberships.component';
 
 const routes: Routes = [
   {
@@ -57,7 +58,14 @@ const routes: Routes = [
       title: 'Create a group',
     },
   },
-  { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
+  {
+    path: 'groups/memberships',
+    component: GroupsMembershipsComponent,
+    data: {
+      title: 'Memberships',
+    },
+  },
+  { path: 'groups', redirectTo: '/groups/memberships', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -97,6 +105,7 @@ const routes: Routes = [
     GroupsSidebarMarkersComponent,
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
+    GroupsMembershipsComponent,
   ],
   exports: [
     GroupsProfile,

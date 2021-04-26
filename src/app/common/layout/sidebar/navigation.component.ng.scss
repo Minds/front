@@ -35,6 +35,10 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 
+  > nav:first-child {
+    margin-bottom: 200px;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -136,6 +140,11 @@
 
     font-size: 17px;
     line-height: 44px;
+
+    .m-sidebarNavigation__newWindowIcon {
+      display: none;
+    }
+
     :host &,
     :host & ::ng-deep {
       @include m-theme() {
@@ -158,6 +167,14 @@
     }
   }
 
+  &:hover > a {
+    .m-sidebarNavigation__newWindowIcon {
+      display: inline-block;
+      font-size: 12px;
+      margin-left: 100px;
+    }
+  }
+
   &.m-sidebarNavigation__item--active > a,
   &:hover > a {
     cursor: pointer;
@@ -168,6 +185,9 @@
         color: themed($m-link);
         svg {
           fill: themed($m-link);
+        }
+        .m-sidebarNavigation__newWindowIcon {
+          color: themed($m-textColor--secondary);
         }
       }
     }
@@ -227,9 +247,14 @@
   }
 }
 
-.m-sidebarNavigation--slide .m-sidebarNavigationItem__text {
+:host .m-sidebarNavigation--slide {
   @media screen and (max-width: $layoutMax3ColWidth) {
-    display: block;
+    .m-sidebarNavigationItem__text {
+      display: block;
+    }
+    .m-sidebarNavigationItem__text {
+      display: inline-block;
+    }
   }
 }
 
@@ -270,7 +295,7 @@
 }
 
 .m-sidebarNavigation__item--active .m-sidebarNavigation__subnav {
-  @media screen and (min-width: $layoutMax3ColWidth) {
+  @media screen and (min-width: $layoutMax3ColWidth + 1) {
     display: block;
     position: relative;
   }

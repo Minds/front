@@ -42,6 +42,10 @@
     padding: 0 15px;
     height: 40px;
     vertical-align: top;
+
+    @include mobile-only {
+      display: none;
+    }
   }
 
   .m-walletBalance__expanded {

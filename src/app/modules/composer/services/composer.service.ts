@@ -9,7 +9,7 @@ import { AttachmentPreviewResource, PreviewService } from './preview.service';
 import { VideoPoster } from './video-poster.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { SupportTier } from '../../wire/v2/support-tiers.service';
-import parseHashtagsFromString from '../../../helpers/parse-hashtags';
+import { HashtagsFromStringService } from '../../../common/services/parse-hashtags.service';
 
 /**
  * Message value type
@@ -364,6 +364,11 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
+   * Is group post subject
+   */
+  isGroupPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  /**
    * Too many tags subject
    */
   readonly tooManyTags$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -442,7 +447,8 @@ export class ComposerService implements OnDestroy {
     protected attachment: AttachmentService,
     protected richEmbed: RichEmbedService,
     protected preview: PreviewService,
-    protected feedsUpdate: FeedsUpdateService
+    protected feedsUpdate: FeedsUpdateService,
+    private hashtagsFromString: HashtagsFromStringService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -564,11 +570,22 @@ export class ComposerService implements OnDestroy {
         })
       ),
       tap(values => {
-        const bodyTags = parseHashtagsFromString(values.message).concat(
-          parseHashtagsFromString(values.title)
-        );
+        // get tags from title and body.
+        const bodyTags = this.hashtagsFromString
+          .parseHashtagsFromString(values.message)
+          .concat(
+            this.hashtagsFromString.parseHashtagsFromString(values.title)
+          );
 
-        const tagCount = bodyTags.length + values.tags.length;
+        // merge into one array.
+        const tags = [...bodyTags, ...values.tags];
+
+        // get unique tags.
+        const uniqueTags = tags.filter(function(item, pos) {
+          return tags.indexOf(item) == pos;
+        });
+
+        const tagCount = uniqueTags.length;
 
         this.tagCount$.next(tagCount);
 
@@ -682,6 +699,9 @@ export class ComposerService implements OnDestroy {
    */
   setContainerGuid(containerGuid: string | null) {
     this.containerGuid = containerGuid || null;
+    if (containerGuid) {
+      this.isGroupPost$.next(true);
+    }
     return this;
   }
 
@@ -717,6 +737,7 @@ export class ComposerService implements OnDestroy {
     this.attachmentError$.next('');
     this.isEditing$.next(false);
     this.isMovingContent$.next(false);
+    this.isGroupPost$.next(false);
 
     // Reset preview (state + blob URL)
     this.setPreview(null);
@@ -811,6 +832,7 @@ export class ComposerService implements OnDestroy {
 
     if (typeof activity.container_guid !== 'undefined') {
       this.setContainerGuid(activity.containerGuid);
+      this.isGroupPost$.next(true);
     }
 
     this.isEditing$.next(true);
@@ -924,6 +946,7 @@ export class ComposerService implements OnDestroy {
     if (this.containerGuid) {
       // Override accessId if there's a container set
       accessId = this.containerGuid;
+      this.isGroupPost$.next(true);
     }
 
     this.payload = {

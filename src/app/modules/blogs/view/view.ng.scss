@@ -1,6 +1,9 @@
 @import 'defaults.scss';
 
 :host {
+  header {
+    position: relative;
+  }
   .m-blog-header {
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -89,6 +92,13 @@
       position: relative;
       z-index: 0;
     }
+
+    .ck.ck-editor__editable > .ck-placeholder::before {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
     .m-blog__body {
       padding: 0 $minds-padding;
 

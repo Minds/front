@@ -22,7 +22,7 @@ import { SettingsV2Service } from '../settings-v2/settings-v2.service';
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
       <ng-container *ngIf="entity.type && entity.type === 'user'; else notUser">
-        <m-channelCard [channel]="entity"></m-channelCard
+        <m-publisherCard [publisher]="entity"></m-publisherCard
       ></ng-container>
       <ng-template #notUser>
         <minds-card [object]="entity" class="mdl-card m-border"></minds-card>

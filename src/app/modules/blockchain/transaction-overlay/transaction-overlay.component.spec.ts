@@ -46,24 +46,6 @@ describe('TransactionOverlayComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should have a title', () => {
-    expect(
-      fixture.debugElement.query(
-        By.css('.m--blockchain--transaction-overlay--title')
-      )
-    ).not.toBeNull();
-  });
-  it('note content on non-unlock modal should come from a variable', () => {
-    comp.comp = comp.COMP_LOCAL;
-    comp.message = 'Testing';
-    comp.detectChanges(); // For some reason we have to call this as well
-    fixture.detectChanges();
-    const note: DebugElement = fixture.debugElement.query(
-      By.css('.m--blockchain--transaction-overlay--note')
-    );
-    expect(note.nativeElement.textContent.trim()).toContain('Testing');
-  });
-
   xit("should have a link that says 'Having Issues?' that redirects to /coin page", () => {
     const havingIssues: DebugElement = fixture.debugElement.query(
       By.css('.m--blockchain--transaction-overlay--help > a')

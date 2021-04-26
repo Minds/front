@@ -44,7 +44,10 @@
 
     <ng-container *ngFor="let earningsGroup of earnings$ | async">
       <tbody>
-        <tr>
+        <tr
+          (click)="toggleRow(earningsGroup.id)"
+          class="m-walletTokenEarnings__header"
+        >
           <td>{{ getFriendlyLabel(earningsGroup.id) }}</td>
           <td>
             <m-wallet__currencyValue
