@@ -2,8 +2,24 @@
 
 :host {
   display: block;
-  .m-discoverySuggestionsCarousel__wrapper {
-    padding: 20px 0;
+  padding: 0;
+
+  .m-discoveryCardCarousel__wrapper {
+    padding: 30px 0 20px;
+
+    &.m-discoveryCardCarousel--suggestions {
+      padding-top: 20px;
+
+      ::ng-deep {
+        .m-discoveryCardCarousel__cards {
+          .m-discoveryCardCarousel__card {
+            &:first-child {
+              padding-left: 40px !important;
+            }
+          }
+        }
+      }
+    }
 
     > span {
       font-size: 16px;
@@ -16,12 +32,12 @@
       }
     }
     ::ng-deep {
-      .m-discoverySuggestionsCarousel__suggestions {
+      .m-discoveryCardCarousel__cards {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         flex-wrap: nowrap;
-        .m-discoverySuggestionsCarousel__suggestion {
+        .m-discoveryCardCarousel__card {
           width: 200px;
           min-width: 200px;
           padding-right: 20px;
@@ -32,6 +48,9 @@
 
           &:first-child {
             padding-left: 40px;
+            @media screen and (max-width: $max-mobile) {
+              padding-left: 20px;
+            }
           }
         }
       }

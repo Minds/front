@@ -53,9 +53,22 @@
 
   <div class="m-discoveryFeeds__feed">
     <m-discovery__feedItem
-      *ngFor="let entity$ of entities"
+      *ngFor="let entity$ of entities | slice: 0:2"
       [entity]="entity$ | async"
     ></m-discovery__feedItem>
+    <m-discovery__cardCarousel
+      *ngIf="filter === 'top' || filter === 'latest'"
+      type="search"
+      [q]="q"
+      class="m-discovery__feedItem"
+      [hidden]="!init"
+    ></m-discovery__cardCarousel>
+    <!-- ---------------------- -->
+    <m-discovery__feedItem
+      *ngFor="let entity$ of entities | slice: 2"
+      [entity]="entity$ | async"
+    ></m-discovery__feedItem>
+
     <infinite-scroll
       distance="25%"
       (load)="loadMore()"

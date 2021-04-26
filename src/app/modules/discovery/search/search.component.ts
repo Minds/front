@@ -32,6 +32,7 @@ export class DiscoverySearchComponent {
   hasMoreData$ = this.service.hasMoreData$;
   subscriptions: Subscription[];
   readonly cdnUrl: string;
+  init = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -80,6 +81,7 @@ export class DiscoverySearchComponent {
         this.setSeo();
 
         this.entities = entities;
+        this.init = true;
 
         this.detectChanges();
       }),
