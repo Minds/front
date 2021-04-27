@@ -102,6 +102,12 @@
       color: themed($m-textColor--primary);
     }
 
+    strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     > * {
       display: inline-block;
       vertical-align: middle;
