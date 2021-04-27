@@ -108,6 +108,10 @@ export class WalletTokenRewardsComponent implements OnInit {
       this.data = response;
       this.hasPending = response.has_pending ?? false;
     });
+
+    this.rewards.hasPending$.subscribe(hasPending => {
+      this.hasPending = hasPending;
+    });
   }
 
   /**

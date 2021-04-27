@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import * as moment from 'moment';
 
@@ -68,6 +68,35 @@ export class WalletTokenRewardsService {
         .startOf('day')
         .format('Y-M-D');
       return this.api.get('api/v3/rewards', { date });
+    })
+  );
+
+  /**
+   * Rewards for yesterday
+   */
+  yesterdayRewards$: Observable<any> = this.dateTs$.pipe(
+    switchMap(dateTs => {
+      const date = moment(dateTs * 1000)
+        .utc()
+        .startOf('day')
+        .subtract('1', 'day')
+        .format('Y-M-D');
+      return this.api.get('api/v3/rewards', { date });
+    })
+  );
+
+  /**
+   * True if user has pending transactions from yesterday in any category.
+   */
+  hasPending$: Observable<boolean> = this.yesterdayRewards$.pipe(
+    map(res =>
+      [res.engagement, res.holding, res.liquidity].some(
+        entry => !entry.payout_tx
+      )
+    ),
+    catchError(e => {
+      console.error(e);
+      return EMPTY;
     })
   );
 
