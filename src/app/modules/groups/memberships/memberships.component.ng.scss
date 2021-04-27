@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 :host {
   .m-groupsMemberships {
-    margin: 30px 0 30px 30px;
+    margin: 30px;
     @media screen and (max-width: $max-mobile) {
       margin: 24px;
     }

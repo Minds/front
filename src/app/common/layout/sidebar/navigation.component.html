@@ -1,6 +1,7 @@
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+  [ngClass]="{ 'm-sidebarNavigation--matrixFeature': matrixFeature }"
   (click)="onSidebarNavClick()"
 >
   <nav>
@@ -326,7 +327,7 @@
       </li>
 
       <li
-        *ngIf="user"
+        *ngIf="user && !matrixFeature"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
