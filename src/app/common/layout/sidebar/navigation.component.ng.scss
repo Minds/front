@@ -35,8 +35,10 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  > nav:first-child {
-    margin-bottom: 200px;
+  &.m-sidebarNavigation--matrixFeature {
+    > nav:first-child {
+      margin-bottom: 200px;
+    }
   }
 
   &::-webkit-scrollbar {
