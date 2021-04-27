@@ -56,13 +56,18 @@
       *ngFor="let entity$ of entities | slice: 0:2"
       [entity]="entity$ | async"
     ></m-discovery__feedItem>
-    <m-discovery__cardCarousel
-      *ngIf="filter === 'top' || filter === 'latest'"
-      type="search"
-      [q]="q"
-      class="m-discovery__feedItem"
-      [hidden]="!init"
-    ></m-discovery__cardCarousel>
+    <!-- ---------------------- -->
+    <ng-container
+      *ngIf="!(inProgress$ | async) && !(cardCarouselInProgress$ | async)"
+      ><m-discovery__cardCarousel
+        *ngIf="
+          (cardCarouselService.searchCards$ | async) &&
+          (filter === 'top' || filter === 'latest')
+        "
+        type="search"
+        [q]="q"
+      ></m-discovery__cardCarousel>
+    </ng-container>
     <!-- ---------------------- -->
     <m-discovery__feedItem
       *ngFor="let entity$ of entities | slice: 2"

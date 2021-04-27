@@ -17,6 +17,7 @@ export type DiscoveryCardCarouselContentType = 'suggestions' | 'search';
 })
 export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
   cards: Array<any>;
+
   isPlusPageSubscription: Subscription;
   isPlusPage: boolean = false;
 
@@ -24,7 +25,6 @@ export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
   searchSubscription: Subscription;
 
   @Input() type: DiscoveryCardCarouselContentType = 'suggestions';
-  @Input() q: string;
 
   limit = 12;
   displayLimit = 6;
@@ -37,7 +37,7 @@ export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
     protected client: Client
   ) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.isPlusPageSubscription = this.discoveryService.isPlusPage$.subscribe(
       isPlusPage => {
         this.isPlusPage = isPlusPage;
@@ -47,18 +47,14 @@ export class DiscoveryCardCarouselComponent implements OnInit, OnDestroy {
     if (this.type === 'suggestions') {
       this.loadSuggestions();
     }
+
     if (this.type === 'search') {
-      this.loadSearch();
+      this.searchSubscription = this.cardCarouselService.searchCards$.subscribe(
+        searchCards => {
+          this.cards = searchCards;
+        }
+      );
     }
-  }
-
-  async loadSearch(): Promise<void> {
-    if (!this.q) {
-      console.error('q string required for search results');
-      return;
-    }
-
-    this.cards = await this.cardCarouselService.fetchSearch(this.q);
   }
 
   async loadSuggestions(): Promise<void> {
