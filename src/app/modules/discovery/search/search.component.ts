@@ -15,6 +15,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { combineLatest, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
+import { CardCarouselService } from '../card-carousel/card-carousel.service';
 
 @Component({
   selector: 'm-discovery__search',
@@ -30,6 +31,7 @@ export class DiscoverySearchComponent {
   entities: any[] = [];
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
+  cardCarouselInProgress$ = this.cardCarouselService.inProgress$;
   subscriptions: Subscription[];
   readonly cdnUrl: string;
 
@@ -39,7 +41,8 @@ export class DiscoverySearchComponent {
     private router: Router,
     configs: ConfigsService,
     private metaService: MetaService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public cardCarouselService: CardCarouselService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -74,6 +77,7 @@ export class DiscoverySearchComponent {
           //   });
           // } else {
           this.service.search(this.q);
+          this.cardCarouselService.search(this.q);
           // }
         }),
       this.entities$.subscribe(entities => {
@@ -84,6 +88,9 @@ export class DiscoverySearchComponent {
         this.detectChanges();
       }),
       this.inProgress$.subscribe(() => {
+        this.detectChanges();
+      }),
+      this.cardCarouselInProgress$.subscribe(() => {
         this.detectChanges();
       }),
     ];

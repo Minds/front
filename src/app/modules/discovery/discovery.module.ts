@@ -31,8 +31,9 @@ import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
-import { DiscoverySuggestionsCarouselComponent } from './suggestions-carousel/suggestions-carousel.component';
+import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
+import { CardCarouselService } from './card-carousel/card-carousel.service';
 
 @NgModule({
   imports: [
@@ -193,6 +194,7 @@ import { SuggestionsService } from '../suggestions/channel/channel-suggestions.s
     WireModalService,
     DiscoveryService,
     SuggestionsService,
+    CardCarouselService,
   ],
   declarations: [
     DiscoveryComponent,
@@ -211,7 +213,7 @@ import { SuggestionsService } from '../suggestions/channel/channel-suggestions.s
     DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
     DiscoveryLatestFeedComponent,
-    DiscoverySuggestionsCarouselComponent,
+    DiscoveryCardCarouselComponent,
   ],
   exports: [
     DiscoveryComponent,

@@ -95,8 +95,11 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   plyrDriver$: Observable<HlsjsPlyrDriver | null> = this.service.sources$.pipe(
     map(sources => {
       if (
-        sources[0].type === 'video/hls' &&
-        isPlatformBrowser(this.platformId)
+        sources[0].type === 'application/vnd.apple.mpegURL' &&
+        isPlatformBrowser(this.platformId) &&
+        !document
+          .createElement('video')
+          .canPlayType('application/vnd.apple.mpegURL')
       ) {
         return new HlsjsPlyrDriver(true);
       }
