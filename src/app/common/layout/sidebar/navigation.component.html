@@ -1,6 +1,7 @@
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+  [ngClass]="{ 'm-sidebarNavigation--matrixFeature': matrixFeature }"
   (click)="onSidebarNavClick()"
 >
   <nav>
