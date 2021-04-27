@@ -16,7 +16,10 @@
       [ngClass]="{ 'm-publisherCardAvatar--hasMarker': publisher.hasMarker }"
     >
       <a [routerLink]="feedUrl">
-        <img [src]="getAvatarSrc() | async" class="m-border" />
+        <div
+          class="m-publisherCardAvatarImg m-border"
+          [style.background-image]="'url(' + (getAvatarSrc() | async) + ')'"
+        ></div>
       </a>
     </div>
     <!-- NAMES -->
