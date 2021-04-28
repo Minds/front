@@ -44,14 +44,14 @@ export class NewsfeedActivitySuggestionsComponent {
     this.relatedContent.setContext('container');
     this.relatedContent.setBaseEntity(e);
 
-    await this.relatedContent.fetch();
+    try {
+      await this.relatedContent.fetch();
+      const pools = this.relatedContent.pools;
 
-    const pools = this.relatedContent.pools;
-
-    if (pools) {
-      this.collatePools(pools);
-    }
-
+      if (pools) {
+        this.collatePools(pools);
+      }
+    } catch (e) {}
     this.inProgress = false;
   }
 
