@@ -1,0 +1,25 @@
+<ng-container *ngIf="!isPlusPage"
+  ><div
+    class="m-discoveryCardCarousel__wrapper"
+    [ngClass]="{
+      'm-discoveryCardCarousel--suggestions': type === 'suggestions'
+    }"
+  >
+    <span
+      *ngIf="type === 'suggestions'"
+      i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS"
+      >Suggested Channels</span
+    >
+    <m-carousel *ngIf="cards && cards.length > 0">
+      <div class="m-discoveryCardCarousel__cards">
+        <m-publisherCard
+          *ngFor="let card of cards"
+          class="m-discoveryCardCarousel__card m-carousel__item"
+          [publisher]="card.entity"
+          [showSubs]="false"
+          [showDescription]="false"
+        ></m-publisherCard>
+      </div>
+    </m-carousel>
+  </div>
+</ng-container>

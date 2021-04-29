@@ -58,6 +58,8 @@ export class PublisherCardComponent implements AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
+    if (!this.publisherCardEl || !this.publisherCardEl.nativeElement) return;
+
     const publisherCardWidth = this.publisherCardEl.nativeElement.offsetWidth;
 
     if (publisherCardWidth <= 350) {

@@ -109,6 +109,7 @@ export class WalletTokenRewardsComponent implements OnInit {
    * @param date
    */
   onDateChange(date) {
+    date = this.adjustDateForUtc(date);
     this.date = new Date(date);
     this.total = { daily: null, all_time: null };
     this.data = null;
@@ -219,5 +220,16 @@ export class WalletTokenRewardsComponent implements OnInit {
     const dailyIncrement = multiplierRange / maxDays; // 0.0054794520
 
     return (multiplier - minMultiplier) / dailyIncrement;
+  }
+
+  /**
+   * Convert date so that day remains the same when converting to UTC.
+   * @param { Date } date - date to adjust.
+   * @returns { Date } - adjusted date.
+   */
+  private adjustDateForUtc(date): Date {
+    return new Date(
+      date.getTime() + Math.abs(date.getTimezoneOffset() * 1000 * 60)
+    );
   }
 }

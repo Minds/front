@@ -69,8 +69,6 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
       if (!markers) return;
 
       for (let i in this.groups) {
-        console.log('ojm markers', markers);
-
         this.groups[i].hasMarker =
           markers.filter(
             marker =>
@@ -79,8 +77,6 @@ export class GroupsMembershipsComponent implements OnInit, OnDestroy {
               marker.marker !== 'gathering-heartbeat'
           ).length > 0;
       }
-
-      console.log('ojm groups', this.groups);
     });
   }
 }
