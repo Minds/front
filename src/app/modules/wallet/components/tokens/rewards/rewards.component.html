@@ -18,7 +18,13 @@
 </div>
 
 <!-- Shows only if is today -->
-<div class="m-walletTokenEarnings__estimates" *ngIf="showEstimates$ | async">
+<div
+  class="m-walletTokenEarnings__estimates"
+  *ngIf="showEstimates$ | async"
+  [ngClass]="{
+    'm-walletTokenEarnings__estimates--hiddenCount': hasPending$ | async
+  }"
+>
   <div class="m-walletTokenEarningsEstimates__item">
     <div class="m-walletTokenEarningsEstimatesItem__label">
       <span>Today's estimate</span>
@@ -27,14 +33,22 @@
       </m-tooltip>
     </div>
     <div class="m-walletTokenEarningsEstimatesItem__amount">
-      <m-wallet__currencyValue
-        [value]="total.daily"
-        hideCurrency="true"
-        currency="tokens"
-      ></m-wallet__currencyValue>
+      <ng-container *ngIf="!(hasPending$ | async); else pending">
+        <m-wallet__currencyValue
+          [value]="total.daily"
+          hideCurrency="true"
+          currency="tokens"
+        ></m-wallet__currencyValue>
+      </ng-container>
+      <ng-template #pending>
+        Calculating...
+      </ng-template>
     </div>
   </div>
-  <div class="m-walletTokenEarningsEstimates__item">
+  <div
+    class="m-walletTokenEarningsEstimates__item"
+    *ngIf="!(hasPending$ | async)"
+  >
     <div class="m-walletTokenEarningsEstimatesItem__label">
       <span>Next payout</span>
       <m-tooltip icon="info">

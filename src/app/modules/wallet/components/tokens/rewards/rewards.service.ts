@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import * as moment from 'moment';
 
@@ -44,7 +44,8 @@ export class WalletTokenRewardsService {
             return metrics;
           })
         );
-    })
+    }),
+    catchError(e => this.handleApiError(e))
   );
 
   /**
@@ -55,7 +56,8 @@ export class WalletTokenRewardsService {
       return this.api.get('api/v3/blockchain/liquidity-positions', {
         timestamp: dateTs,
       });
-    })
+    }),
+    catchError(e => this.handleApiError(e))
   );
 
   /**
@@ -68,7 +70,35 @@ export class WalletTokenRewardsService {
         .startOf('day')
         .format('Y-M-D');
       return this.api.get('api/v3/rewards', { date });
-    })
+    }),
+    catchError(e => this.handleApiError(e))
+  );
+
+  /**
+   * Rewards for yesterday
+   */
+  yesterdayRewards$: Observable<any> = this.dateTs$.pipe(
+    switchMap(dateTs => {
+      const date = moment(dateTs * 1000)
+        .utc()
+        .startOf('day')
+        .subtract('1', 'day')
+        .format('Y-M-D');
+      return this.api.get('api/v3/rewards', { date });
+    }),
+    catchError(e => this.handleApiError(e))
+  );
+
+  /**
+   * True if user has pending transactions from yesterday in any category.
+   */
+  hasPending$: Observable<boolean> = this.yesterdayRewards$.pipe(
+    map(res =>
+      [res.engagement, res.holding, res.liquidity].some(
+        entry => !entry.payout_tx
+      )
+    ),
+    catchError(e => this.handleApiError(e))
   );
 
   constructor(private api: ApiService) {}
@@ -92,5 +122,15 @@ export class WalletTokenRewardsService {
         .startOf('day')
         .format('X')
     );
+  }
+
+  /**
+   * Handle errors from API.
+   * @param { any } e - error
+   * @returns { Observable<never> } RXJS EMPTY;
+   */
+  private handleApiError(e: any): Observable<never> {
+    console.error(e);
+    return EMPTY;
   }
 }
