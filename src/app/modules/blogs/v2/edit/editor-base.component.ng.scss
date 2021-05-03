@@ -27,8 +27,13 @@
 
       img {
         width: 100%;
+
+        // Switch height here depending on date/time
+
+        // Address issue here:
         max-height: 60vh;
         height: 60vh;
+
         object-fit: cover;
       }
 
@@ -46,6 +51,24 @@
         > * {
           margin-left: 10px;
         }
+      }
+    }
+
+    .wide-banner {
+      img {
+        @include mobile-only {
+          height: 33.258vw;
+        }
+
+        @media screen and (max-width: 700px) {
+          height: calc(33.258vw);
+        }
+
+        @media screen and (max-width: 1040px) {
+          height: 200px;
+        }
+
+        height: 300px;
       }
     }
 
@@ -136,7 +159,7 @@
           font-weight: 500;
           outline: none;
           font-family: 'Roboto';
-          font-size: 42px;
+          font-size: 26px;
           font-weight: bold;
           resize: none;
           overflow: hidden;

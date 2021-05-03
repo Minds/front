@@ -13,7 +13,7 @@ import { FeaturesService } from '../../../../services/features.service';
   selector: 'minds-button-boost',
   inputs: ['object'],
   template: `
-    <m-button color="blue" (onAction)="boost()">
+    <m-button size="small" color="blue" (onAction)="boost()">
       <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
     </m-button>
   `,
