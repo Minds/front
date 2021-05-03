@@ -6,6 +6,7 @@
 
   .minds-avatar {
     background: transparent;
+    margin-left: 0;
   }
   .minds-avatar img {
     width: 40px;
@@ -56,18 +57,53 @@
           height: 25vh;
         }
       }
+
+      .wide-banner {
+        @include mobile-only {
+          height: 33.258vw;
+        }
+
+        @media screen and (max-width: 700px) {
+          height: calc(33.258vw);
+        }
+
+        @media screen and (max-width: 1040px) {
+          height: 200px;
+        }
+
+        height: 300px;
+      }
+    }
+  }
+
+  .m-blog__InteractionBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    @include mobile-only {
+      flex-direction: column;
     }
   }
 
   .m-blog-container {
+    @media only screen and (max-width: 1040px) {
+      padding: 0 20px;
+    }
+
     h1.m-blog--title {
       font-family: 'Roboto', Helvetica, sans-serif;
       font-weight: 600;
-      font-size: 38px;
-      line-height: 1.4em;
+      font-size: 26px;
+      line-height: 1.3em;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
 
       @media only screen and (max-width: $min-tablet) {
-        font-size: 24px;
+        font-size: 21px;
+        line-height: 1.2em;
       }
     }
     .minds-blog-body {
@@ -113,6 +149,7 @@ m-blog-view {
   padding-top: 0;
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
+    border-right: 1px solid themed($m-borderColor--primary);
   }
 
   header {
@@ -155,6 +192,13 @@ m-blog-view {
   }
 
   .m-actions-block {
+    @include mobile-only {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 20px 20px 30px 20px;
+    }
+
     & > * {
       margin-right: 12px;
     }
@@ -239,7 +283,6 @@ minds-blog-edit {
 // remove this from here soon
 .minds-blog-subscribe {
   background: transparent;
-  padding: 8px 16px;
   font-size: 12px;
   border-radius: 2px;
   text-transform: uppercase;
@@ -260,7 +303,6 @@ minds-blog-edit {
   }
 
   .m-additional-block m-wire-threshold-input {
-    font-size: 16px;
     flex-shrink: 0;
   }
   .m-additional-block m-wire-threshold-input i {
@@ -327,7 +369,6 @@ minds-card-blog {
   }
 
   .m-owner-block {
-    padding: 16px;
     display: flex;
     position: absolute;
     bottom: 0;
@@ -347,7 +388,6 @@ minds-card-blog {
   .m-blog--image-caption {
     display: inline-block;
     text-align: center;
-    font-size: 16px;
     font-style: italic;
     @include m-theme() {
       color: themed($m-grey-600);
@@ -418,4 +458,12 @@ minds-blog-edit {
       }
     }
   }
+}
+
+.m-blog__subHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0 0 0;
 }

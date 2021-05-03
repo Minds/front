@@ -58,6 +58,9 @@ export class BlogView implements OnInit, OnDestroy {
   visible: boolean = false;
   index: number = 0;
 
+  // confirm - date below needs to align with deployment
+  wideBannerDate: number = 1219178617;
+
   scroll_listener;
 
   menuOptions: Array<string> = [
@@ -78,6 +81,7 @@ export class BlogView implements OnInit, OnDestroy {
 
   @Input('blog') set _blog(value: MindsBlogEntity) {
     this.blog = value;
+
     this.activityService.setEntity(value);
     setTimeout(() => {
       this.calculateLockScreenHeight();
@@ -298,6 +302,13 @@ export class BlogView implements OnInit, OnDestroy {
       this.blog.ownerObj.guid == this.session.getLoggedInUser().guid ||
       this.session.isAdmin()
     );
+  }
+
+  /**
+   * Returns if blog owner
+   */
+  get isOwner(): boolean {
+    return this.blog.ownerObj.guid == this.session.getLoggedInUser().guid;
   }
 
   private updateMeta(): void {
