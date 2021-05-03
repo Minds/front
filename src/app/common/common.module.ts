@@ -14,6 +14,7 @@ import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
+import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -211,6 +212,7 @@ const routes: Routes = [
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+    TopbarWalletBalance,
 
     // V2 Layout
     V3TopbarComponent,
@@ -349,6 +351,7 @@ const routes: Routes = [
     TopbarComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+    TopbarWalletBalance,
 
     // V3 Layout
     V3TopbarComponent,

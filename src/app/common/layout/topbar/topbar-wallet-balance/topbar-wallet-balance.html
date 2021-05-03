@@ -1,0 +1,13 @@
+<div
+  class="m-topbar-wallet-balance"
+  (click)="navigateWallet()"
+  *ngIf="tokenBalance >= 0 && usdBalance >= 0"
+>
+  <div class="m-topbar-wallet-balance__tokens">
+    <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
+    {{ formatTokens(tokenBalance) }}
+  </div>
+  <div class="m-topbar-wallet-balance__usd">
+    ${{ formatUSD(usdBalance) }}
+  </div>
+</div>

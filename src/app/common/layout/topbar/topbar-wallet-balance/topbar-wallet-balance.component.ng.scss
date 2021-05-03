@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  .m-topbar-wallet-balance {
+    display: flex;
+    cursor: pointer;
+    transition: all 0.07s ease-in;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    border-radius: 20px;
+    font-size: 13px;
+    padding: 2px;
+
+    &:hover {
+      @include m-theme() {
+        border: 1px solid themed($m-textColor--secondary) !important;
+      }
+    }
+
+    &__tokens {
+      display: flex;
+      align-items: center;
+      border-radius: 20px;
+
+      @include m-theme() {
+        background: themed($m-borderColor--primary);
+      }
+
+      padding: 0 7px;
+
+      span {
+        font-size: 12px;
+        padding-left: 3px;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      ::ng-deep {
+        .m-icon__custom svg {
+          margin: 1px 4px 1px 1px;
+          width: 16px;
+        }
+      }
+    }
+
+    &__usd {
+      padding: 0 7px;
+
+      @include mobile-only {
+        display: none;
+      }
+    }
+  }
+}
