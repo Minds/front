@@ -2,7 +2,7 @@
 
 :host {
   .m-button {
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     position: relative;
     cursor: pointer;
     padding: 10px 20px;
@@ -130,15 +130,28 @@
         }
       }
     }
+    ///////////////////////////////////////////////////
+    &.m-button--saving {
+      display: flex;
+      justify-content: space-around;
+    }
 
     ///////////////////////////////////////////////////
+
+    .m-button__text--saving {
+      span {
+        margin: 0 4px !important;
+      }
+    }
+
     &.m-button--xsmall,
     &.m-button--small {
       .m-button__text--saving {
         span {
-          height: 6px;
-          width: 6px;
-          margin: 0 4px;
+          height: 6px !important;
+          width: 6px !important;
+          min-height: 6px !important;
+          min-width: 6px !important;
         }
       }
     }
@@ -155,12 +168,18 @@
           font-size: 18px;
         }
       }
+      &.m-button--saving {
+        &:not(.m-button--iconOnly) {
+          min-width: 70px;
+        }
+      }
     }
 
     // Small
 
     &.m-button--small {
       padding: 10px 20px;
+      min-width: 80px;
 
       & > * {
         font-size: 16px;
@@ -190,7 +209,7 @@
 
     &.m-button--large {
       padding: 14px 30px;
-      min-width: 100px;
+      min-width: 110px;
 
       & > * {
         font-size: 20px;
@@ -273,6 +292,8 @@
         display: inline-block;
         height: 8px;
         width: 8px;
+        min-height: 8px;
+        min-width: 8px;
         margin: 0 6px;
         border-radius: 50%;
         animation-name: blink;
