@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { Observable, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
@@ -45,6 +45,11 @@ export class WalletTokenRewardsComponent implements OnInit {
     daily: null,
     all_time: null,
   };
+
+  /**
+   * Has pending transactions.
+   */
+  public readonly hasPending$ = this.rewards.hasPending$.pipe(shareReplay(1));
 
   /**
    * The data for the rows
