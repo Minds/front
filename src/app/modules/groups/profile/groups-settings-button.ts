@@ -43,14 +43,14 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         *ngIf="group['is:owner'] && group.videoChatDisabled"
         (click)="toggleVideoChat(true)"
       >
-        Enable Gathering
+        Enable gathering
       </li>
       <li
         class="mdl-menu__item"
         *ngIf="group['is:owner'] && !group.videoChatDisabled"
         (click)="toggleVideoChat(false)"
       >
-        Disable Gathering
+        Disable gathering
       </li>
 
       <li
@@ -92,7 +92,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         (click)="toggleConversation(true); showMenu = false"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_CONVERSATION"
       >
-        Enable Conversation
+        Enable conversation
       </li>
       <li
         class="mdl-menu__item"
@@ -103,7 +103,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         (click)="toggleConversation(false); showMenu = false"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_CONVERSATION"
       >
-        Disable Conversation
+        Disable conversation
       </li>
 
       <!-- Member functions -->
@@ -113,7 +113,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         (click)="mute()"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
       >
-        Disable Notifications
+        Disable notifications
       </li>
       <li
         class="mdl-menu__item"
@@ -121,7 +121,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         (click)="unmute()"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
       >
-        Enable Notifications
+        Enable notifications
       </li>
 
       <!-- admin functions -->
@@ -131,7 +131,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         (click)="setExplicit(true)"
         i18n="@@M__ACTION__SET_EXPLICIT"
       >
-        Set Explicit
+        Set explicit
       </li>
       <li
         class="mdl-menu__item"
@@ -139,7 +139,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         (click)="setExplicit(false)"
         i18n="@@M__ACTION__REMOVE_EXPLICIT"
       >
-        Remove Explicit
+        Remove explicit
       </li>
       <li
         class="mdl-menu__item"
@@ -156,7 +156,7 @@ import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
         data-cy="data-minds-group-dropdown-delete"
       >
-        Delete Group
+        Delete group
       </li>
 
       <li
