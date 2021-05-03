@@ -22,6 +22,7 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
 
@@ -175,7 +176,9 @@ export class RegisterForm {
   }
 
   onPasswordBlur() {
-    this.popover.hide();
+    if (!isMobileOrTablet()) {
+      this.popover.hide();
+    }
   }
 
   onPopoverChange(valid: boolean) {
