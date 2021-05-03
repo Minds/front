@@ -29,6 +29,7 @@ import { ActivityEntity } from '../../activity.service';
       class="m-relativeTime__span"
       [title]="entity.time_created * 1000 | date: 'medium'"
       #relativeTimeSpan
+      *mIfBrowser
     >
       {{ pauseableRelativeTimeAgo$ | async }}
     </span>
