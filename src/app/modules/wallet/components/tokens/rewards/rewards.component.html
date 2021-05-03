@@ -17,6 +17,14 @@
   ></m-date-selector>
 </div>
 
+<m-button
+  color="blue"
+  (onAction)="joinRewards($event)"
+  *ngIf="isConnected === false"
+>
+  Join Rewards
+</m-button>
+
 <!-- Shows only if is today -->
 <div class="m-walletTokenEarnings__estimates" *ngIf="showEstimates$ | async">
   <div class="m-walletTokenEarningsEstimates__item">

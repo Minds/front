@@ -46,19 +46,6 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   showTokenModal = false;
   protected updateTimer$;
 
-  isConnected$: Observable<boolean> = this.walletService.wallet$.pipe(
-    skipWhile(wallet => wallet.receiver.address === undefined),
-    map(wallet => !!wallet.receiver.address),
-    switchMap(hasAddress => {
-      if (!hasAddress) {
-        return of(false);
-      }
-      return this.api
-        .get('api/v3/blockchain/unique-onchain')
-        .pipe(map(response => response.unique));
-    })
-  );
-
   /**
    * Snapshot of isConnected observable
    */
@@ -122,7 +109,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.isConnected$.subscribe(
+      this.connectWalletModalService.isConnected$.subscribe(
         isConnected => (this.isConnected = isConnected)
       )
     );
@@ -180,18 +167,8 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
    * @param e
    */
   async connectWallet(e: MouseEvent): Promise<void> {
-    await this.phoneVerificationService.open();
-
-    if (!this.phoneVerificationService.phoneVerified$.getValue()) {
-      this.toasterService.error(
-        'You must verify your phone number before connecting your wallet'
-      );
-      return;
-    }
-
-    await this.connectWalletModalService.open();
-    this.isConnected = undefined;
-    await this.walletService.loadOffchainAndReceiver();
+    const onComplete = () => (this.isConnected = undefined);
+    await this.connectWalletModalService.joinRewards(onComplete);
   }
 
   get truncatedOnchainAddress(): string {
