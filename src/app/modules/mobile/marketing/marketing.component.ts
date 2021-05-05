@@ -40,6 +40,9 @@ export class MobileMarketingComponent {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
+  }
+
+  loadReleases() {
     this.load();
   }
 
