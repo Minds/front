@@ -14,10 +14,13 @@ export const caseInsensitiveRouteMatcher = (path: string) => {
   return (url: UrlSegment[]): UrlMatchResult | null =>
     url.some((urlSegment: UrlSegment) => urlSegment.path.toLowerCase() === path)
       ? {
-          consumed: url.map(urlSegment => ({
-            ...urlSegment,
-            path: urlSegment.path.toLowerCase(),
-          } as UrlSegment)),
+          consumed: url.map(
+            urlSegment =>
+              ({
+                ...urlSegment,
+                path: urlSegment.path.toLowerCase(),
+              } as UrlSegment)
+          ),
         }
       : null;
 };
