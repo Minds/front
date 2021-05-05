@@ -95,7 +95,7 @@ export class WalletTokenRewardsService {
   hasPending$: Observable<boolean> = this.yesterdayRewards$.pipe(
     map(res =>
       [res.engagement, res.holding, res.liquidity].some(
-        entry => !entry.payout_tx
+        entry => !entry.payout_tx && entry.score > 0
       )
     ),
     catchError(e => this.handleApiError(e))
