@@ -111,7 +111,7 @@ export class PostMenuService {
 
     try {
       const response: any = await this.client.get(
-        `api/v2/notifications/follow/${this.entity.guid}`
+        `api/v3/notifications/follow?entity_guid=${this.entity.guid}`
       );
       this.isFollowing$.next(!!response.postSubscription.following);
     } catch (e) {
@@ -147,7 +147,10 @@ export class PostMenuService {
 
     try {
       const response: any = await this.client.put(
-        `api/v2/notifications/follow/${this.entity.guid}`
+        'api/v3/notifications/follow',
+        {
+          entity_guid: this.entity.guid,
+        }
       );
 
       if (response.done) {
@@ -167,9 +170,9 @@ export class PostMenuService {
     this.isFollowing$.next(false);
 
     try {
-      const response: any = this.client.delete(
-        `api/v2/notifications/follow/${this.entity.guid}`
-      );
+      const response: any = this.client.delete('api/v3/notifications/follow', {
+        entity_guid: this.entity.guid,
+      });
 
       if (response.done) {
         return;

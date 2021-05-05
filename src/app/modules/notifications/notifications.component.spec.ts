@@ -63,7 +63,7 @@ describe('NotificationsComponent', () => {
     fixture = TestBed.createComponent(NotificationsComponent);
     clientMock.response = {};
 
-    clientMock.response[`api/v1/notifications/all`] = {
+    clientMock.response[`api/v3/notifications/list`] = {
       status: 'success',
       notifications: [
         {
@@ -132,13 +132,13 @@ describe('NotificationsComponent', () => {
     fixture.detectChanges();
 
     const call = clientMock.get.calls.mostRecent();
-    expect(call.args[0]).toBe('api/v1/notifications/all');
+    expect(call.args[0]).toBe('api/v3/notifications/list');
   });
 
   it('should load notifications using the proper endpoint', () => {
     fixture.detectChanges();
     const call = clientMock.get.calls.mostRecent();
-    expect(call.args[0]).toBe('api/v1/notifications/all');
+    expect(call.args[0]).toBe('api/v3/notifications/list');
     const notifications = fixture.debugElement.queryAll(
       By.css('minds-notification')
     );

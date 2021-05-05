@@ -102,7 +102,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this.inProgress = true;
 
     this.client
-      .get(`api/v1/notifications/${this._filter}`, {
+      .get('api/v3/notifications/list', {
+        filter: this._filter,
         limit: this.limit,
         offset: this.offset,
       })

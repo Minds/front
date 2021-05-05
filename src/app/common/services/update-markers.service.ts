@@ -24,9 +24,7 @@ export class UpdateMarkersService {
 
   get() {
     return this.http
-      .get('api/v2/notifications/markers', {
-        type: 'group',
-      })
+      .get('api/v3/notifications/markers?type=group')
       .pipe(map((response: any) => response.markers));
   }
 
@@ -81,7 +79,7 @@ export class UpdateMarkersService {
     if (!opts.marker) throw 'marker must be set';
 
     if (!opts.noReply) {
-      this.http.post('api/v2/notifications/markers/read', opts).subscribe(
+      this.http.post('api/v3/notifications/markers/read', opts).subscribe(
         res => null,
         err => console.warn(err)
       );

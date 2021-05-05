@@ -55,7 +55,9 @@ export class VideoChatService {
   }
 
   public async heartBeat(key: string) {
-    await this.client.put(`api/v2/notifications/markers/heartbeat/${key}`);
+    await this.client.put('api/v3/notifications/markers/heartbeat', {
+      entity_guid: key,
+    });
   }
 
   private async getRoomName(entity: any) {

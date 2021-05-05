@@ -64,7 +64,7 @@ export class NotificationService implements OnDestroy {
         this.increment();
 
         this.client
-          .get(`api/v1/notifications/single/${guid}`)
+          .get(`api/v3/notifications/single?guid=${guid}`)
           .then((response: any) => {
             if (response.notification) {
               this.onReceive.next(response.notification);
@@ -108,7 +108,7 @@ export class NotificationService implements OnDestroy {
       return;
     }
 
-    this.client.get('api/v1/notifications/count', {}).then((response: any) => {
+    this.client.get('api/v3/notifications/count').then((response: any) => {
       this.count = response.count;
       this.sync();
     });

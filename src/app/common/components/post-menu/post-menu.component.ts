@@ -105,7 +105,7 @@ export class PostMenuComponent implements OnInit {
     this.detectChanges();
 
     this.client
-      .get(`api/v2/notifications/follow/${this.entity.guid}`)
+      .get(`api/v3/notifications/follow?entity_guid=${this.entity.guid}`)
       .then((response: any) => {
         this.asyncFollowInProgress = false;
         this.asyncFollow = true;
@@ -123,7 +123,9 @@ export class PostMenuComponent implements OnInit {
     this.entity['is:following'] = true;
 
     this.client
-      .put(`api/v2/notifications/follow/${this.entity.guid}`)
+      .put('api/v3/notifications/follow', {
+        entity_guid: this.entity.guid,
+      })
       .then((response: any) => {
         if (response.done) {
           this.entity['is:following'] = true;
@@ -145,7 +147,9 @@ export class PostMenuComponent implements OnInit {
     this.entity['is:following'] = false;
 
     this.client
-      .delete(`api/v2/notifications/follow/${this.entity.guid}`)
+      .delete('api/v3/notifications/follow', {
+        entity_guid: this.entity.guid,
+      })
       .then((response: any) => {
         if (response.done) {
           this.entity['is:following'] = false;
