@@ -6,6 +6,7 @@ import {
 } from '../../../../modules/wallet/components/wallet-v2.service';
 import { Subscription } from 'rxjs';
 import { TokenPricesService } from '../../../../modules/wallet/components/components/currency-value/token-prices.service';
+import { ConnectWalletModalService } from '../../../../modules/blockchain/connect-wallet/connect-wallet-modal.service';
 
 @Component({
   selector: 'm-topbar-walletBalance',
@@ -18,12 +19,20 @@ export class TopbarWalletBalance {
   tokenBalance: any;
   tokenPrice: number;
 
+  /**
+   * Snapshot of isConnected observable
+   */
+  isConnected: boolean;
+
   protected walletBalance: Subscription;
   protected tokenValue: Subscription;
+  protected connectedWallet: Subscription;
 
   constructor(
     private walletService: WalletV2Service,
     private tokenPricesService: TokenPricesService,
+    protected connectWalletModalService: ConnectWalletModalService,
+
     private router: Router
   ) {}
 
@@ -44,6 +53,10 @@ export class TopbarWalletBalance {
         this.tokenBalance = wallet.tokens.balance;
         this.calculateUSD();
       }
+    );
+
+    this.connectedWallet = this.connectWalletModalService.isConnected$.subscribe(
+      isConnected => (this.isConnected = isConnected)
     );
   }
 
@@ -73,8 +86,18 @@ export class TopbarWalletBalance {
     this.router.navigate(['/wallet/tokens/rewards']);
   }
 
+  /**
+   * Connect wallet
+   * @param e
+   */
+  async connectWallet(e: MouseEvent): Promise<void> {
+    const onComplete = () => (this.isConnected = undefined);
+    await this.connectWalletModalService.joinRewards(onComplete);
+  }
+
   ngOnDestroy() {
     this.tokenValue.unsubscribe();
     this.walletBalance.unsubscribe();
+    this.connectedWallet.unsubscribe();
   }
 }
