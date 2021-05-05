@@ -1,4 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { time } from 'console';
 import {
   combineLatest,
@@ -41,7 +42,10 @@ export class ChatIconService implements OnDestroy {
     switchMap(() => this._unread$)
   );
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   /**
    * Start polling for the total unread
@@ -49,6 +53,8 @@ export class ChatIconService implements OnDestroy {
    */
   startPolling(): void {
     if (this.pollingSubscription) return;
+    if (isPlatformServer(this.platformId)) return;
+
     this.loadCount(); // Works better if we kick off (for window on focus events)
     this.pollingSubscription = this.interval$.subscribe(() => {
       this.loadCount();
