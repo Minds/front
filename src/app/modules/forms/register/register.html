@@ -20,7 +20,8 @@
   *ngIf="showTitle"
   i18n="@@REGISTER__ALREADY__HAVE__ACOUNT__LINK"
 >
-  Already have an account? <a [routerLink]="'/login'">Login</a>
+  Already have an account?
+  <a [routerLink]="'/login'" queryParamsHandling="merge">Login</a>
 </span>
 
 <!-- START: Register -->

@@ -200,17 +200,17 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
    * @returns { void }
    */
   public async onJoinNowClick(): Promise<void> {
-    if (this.featuresService.has('onboarding-october-2020')) {
-      try {
-        await this.authModal.open();
-      } catch (e) {
-        if (e === 'DismissedModalException') {
-          return; // modal dismissed, do nothing
-        }
-        console.error(e);
-      }
-      return;
-    }
-    this.router.navigate(['/register']);
+    // if (this.featuresService.has('onboarding-october-2020')) {
+    //   try {
+    //     await this.authModal.open();
+    //   } catch (e) {
+    //     if (e === 'DismissedModalException') {
+    //       return; // modal dismissed, do nothing
+    //     }
+    //     console.error(e);
+    //   }
+    //   return;
+    // }
+    this.router.navigate(['/register'], { queryParamsHandling: 'merge' });
   }
 }
