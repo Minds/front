@@ -21,7 +21,7 @@ export class MindsWalletTokenPriceBadgeComponent {
 
   get uniswapTokenUrl(): string {
     return (
-      'https://info.uniswap.org/token/' +
+      'https://v2.info.uniswap.org/token/' +
       this.config.get('blockchain').token.address
     );
   }
