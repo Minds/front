@@ -4,7 +4,7 @@
   .m-blogEditor {
     &__bannerEditorContainer {
       flex-grow: 1;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     @include m-theme() {
@@ -56,19 +56,19 @@
 
     .wide-banner {
       img {
-        @include mobile-only {
-          height: 33.258vw;
-        }
-
         @media screen and (max-width: 700px) {
-          height: calc(33.258vw);
+          height: calc(50vw);
         }
 
-        @media screen and (max-width: 1040px) {
-          height: 200px;
+        @include mobile-only {
+          height: 55vw;
         }
 
-        height: 300px;
+        @media screen and (min-width: 700px) and (max-width: 1040px) {
+          height: 344px;
+        }
+
+        height: 500px;
       }
     }
 
@@ -106,6 +106,16 @@
 
             i {
               margin-right: 4px;
+            }
+
+            span {
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+
+              font-weight: 400;
+              font-size: 13px;
+              padding-left: 15px;
             }
 
             @media screen and (max-width: $min-desktop) {

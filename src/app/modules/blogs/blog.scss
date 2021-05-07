@@ -14,8 +14,17 @@
   }
   .minds-body {
     padding-left: 8px;
-    display: table-cell;
+    display: flex;
     vertical-align: middle;
+
+    @media screen and (max-width: 700px) {
+      flex-direction: column;
+
+      span {
+        padding-left: 0 !important;
+      }
+    }
+
     a {
       display: block;
       text-decoration: none;
@@ -28,6 +37,7 @@
       font-size: 11px;
       font-family: 'Roboto', Helvetica, sans-serif;
       cursor: default;
+      padding-left: 10px;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
@@ -49,6 +59,22 @@
     height: auto;
 
     minds-banner {
+      .wide-banner {
+        @media screen and (max-width: 700px) {
+          height: calc(50vw);
+        }
+
+        @include mobile-only {
+          height: 55vw;
+        }
+
+        @media screen and (min-width: 700px) and (max-width: 1040px) {
+          height: 344px !important;
+        }
+
+        height: 500px;
+      }
+
       .minds-banner {
         max-height: 60vh;
         height: 60vh;
@@ -57,22 +83,6 @@
           height: 25vh;
         }
       }
-
-      .wide-banner {
-        @include mobile-only {
-          height: 33.258vw;
-        }
-
-        @media screen and (max-width: 700px) {
-          height: calc(33.258vw);
-        }
-
-        @media screen and (max-width: 1040px) {
-          height: 200px;
-        }
-
-        height: 300px;
-      }
     }
   }
 
@@ -80,6 +90,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 20px 0;
 
     @include mobile-only {
       flex-direction: column;

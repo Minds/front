@@ -58,8 +58,7 @@ export class BlogView implements OnInit, OnDestroy {
   visible: boolean = false;
   index: number = 0;
 
-  // confirm - date below needs to align with deployment
-  wideBannerDate: number = 1219178617;
+  wideBannerDate: number = 1620000000;
 
   scroll_listener;
 
