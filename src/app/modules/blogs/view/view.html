@@ -38,7 +38,7 @@
   <minds-banner
     [src]="blog.thumbnail_src"
     [object]="blog"
-    [wideBanner]="blog.time_published > wideBannerDate"
+    [wideBanner]="blog.time_published > wideBannerDate || blog.time_published == ''"
     *ngIf="blog.header_bg"
   ></minds-banner>
 </header>
