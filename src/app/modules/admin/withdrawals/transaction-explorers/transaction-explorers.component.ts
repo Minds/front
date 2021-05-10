@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 export type Explorer = 'etherscan' | 'bloxy' | 'tenderly';
 
@@ -17,18 +18,18 @@ export type Address = {
     <div class="m-txExplorers__container">
       <img
         (click)="onClick('etherscan')"
-        src="/assets/icons/etherscan.svg"
+        [src]="this.cdnAssetsUrl + 'assets/icons/etherscan.svg'"
         class="m-txExplorers__icon"
       />
       <img
         (click)="onClick('bloxy')"
-        src="/assets/icons/bloxy.svg"
+        [src]="this.cdnAssetsUrl + 'assets/icons/bloxy.svg'"
         class="m-txExplorers__icon"
       />
       <img
         *ngIf="address?.type === 'txid'"
         (click)="onClick('tenderly')"
-        src="/assets/icons/tenderly.png"
+        [src]="this.cdnAssetsUrl + 'assets/icons/tenderly.png'"
         class="m-txExplorers__icon"
       />
     </div>
@@ -38,7 +39,11 @@ export type Address = {
 export class AdminTransactionExplorersComponent {
   @Input() address: Address = null;
 
-  constructor() {}
+  public readonly cdnAssetsUrl: string;
+
+  constructor(configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   public onClick(type: Explorer) {
     let url = '';
