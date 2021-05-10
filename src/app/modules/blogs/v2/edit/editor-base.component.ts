@@ -31,6 +31,8 @@ export class BlogEditorV2Component implements OnInit, OnDestroy {
   private paramsSubscription: Subscription;
   private errorSubscription: Subscription;
 
+  wideBannerDate: number = 1620000000;
+
   @ViewChild('inlineEditor')
   inlineEditor: InlineEditorComponent;
 

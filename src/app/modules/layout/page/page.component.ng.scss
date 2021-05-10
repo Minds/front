@@ -10,4 +10,10 @@
       }
     }
   }
+
+  & > ::ng-deep m-chatIcon {
+    @media screen and (min-width: $max-mobile + 1) {
+      display: none;
+    }
+  }
 }

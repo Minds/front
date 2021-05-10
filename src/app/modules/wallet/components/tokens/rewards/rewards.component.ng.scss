@@ -30,6 +30,16 @@
     margin: 20px 0;
     max-width: 600px;
 
+    &.m-walletTokenEarnings__estimates--hiddenCount {
+      justify-content: start;
+
+      @media screen and (min-width: $max-mobile) {
+        > * + * {
+          margin-left: 100px;
+        }
+      }
+    }
+
     @include mobile-only {
       flex-direction: column;
     }
@@ -173,5 +183,9 @@
 
   m-tooltip {
     vertical-align: middle;
+  }
+
+  m-button {
+    margin-left: 20px;
   }
 }

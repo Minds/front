@@ -7,6 +7,7 @@ import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
+import { FormToastService } from '../../common/services/form-toast.service';
 
 type Address = string;
 
@@ -24,7 +25,8 @@ export class Web3WalletService {
     protected transactionOverlay: TransactionOverlayService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService,
-    private web3modalService: Web3ModalService
+    private web3modalService: Web3ModalService,
+    private toast: FormToastService
   ) {
     this.config = this.configs.get('blockchain');
   }
@@ -155,7 +157,7 @@ export class Web3WalletService {
         await connectedContract.estimateGas[method](...params, { value })
       ).toHexString();
     } catch (e) {
-      console.log(e);
+      this.handleEstimateGasError(e);
       gasLimit = BigNumber.from(15000000).toHexString();
     }
 
@@ -261,6 +263,25 @@ export class Web3WalletService {
     return 'Local Interface';
   }
 
+  /**
+   * Handles errors on estimateGas failure.
+   * @param {code?: string} e - error object.
+   * @returns { void }
+   */
+  private handleEstimateGasError(e: { code?: string }): void {
+    if (e?.code && e.code.indexOf('UNPREDICTABLE_GAS_LIMIT') > -1) {
+      this.toast.error(
+        'Unable to predict gas limit. Falling back to high limit - excess gas will be returned.'
+      );
+    } else if (e?.code && e.code.indexOf('INSUFFICIENT_FUNDS') > -1) {
+      this.toast.error(
+        'Unable to predict gas limit as you do not have sufficient Ether.'
+      );
+    } else {
+      console.error(e);
+    }
+  }
+
   // Service provider
 
   static _(
@@ -268,14 +289,16 @@ export class Web3WalletService {
     transactionOverlay: TransactionOverlayService,
     platformId: Object,
     configs: ConfigsService,
-    web3modalService: Web3ModalService
+    web3modalService: Web3ModalService,
+    toast: FormToastService
   ) {
     return new Web3WalletService(
       localWallet,
       transactionOverlay,
       platformId,
       configs,
-      web3modalService
+      web3modalService,
+      toast
     );
   }
 }

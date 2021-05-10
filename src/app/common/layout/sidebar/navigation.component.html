@@ -1,6 +1,7 @@
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+  [ngClass]="{ 'm-sidebarNavigation--matrixFeature': matrixFeature }"
   (click)="onSidebarNavClick()"
 >
   <nav>
@@ -126,6 +127,33 @@
           </span>
         </a>
       </li>
+
+      <ng-container *mIfFeature="'matrix'">
+        <li
+          *ngIf="user"
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        >
+          <a [href]="chatUrl" target="chat" (click)="toggle()">
+            <m-tooltip
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+            >
+              <m-chatIcon m-tooltip--icon></m-chatIcon>
+              <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
+            </m-tooltip>
+
+            <span class="m-sidebarNavigationItem__text">
+              <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
+              <m-icon
+                iconId="open_in_new"
+                class="m-sidebarNavigation__newWindowIcon"
+              ></m-icon>
+            </span>
+          </a>
+        </li>
+      </ng-container>
 
       <li
         class="m-sidebarNavigation__item"
@@ -278,7 +306,28 @@
       </li>
 
       <li
-        *ngIf="user"
+        *mIfFeature="'matrix'"
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        routerLinkActiveOptions="{ exact: true }"
+      >
+        <a [routerLink]="['/groups/memberships']" (click)="toggle()">
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <i class="material-icons" m-tooltip--anchor>group</i>
+            <ng-container i18n="@@COMMON__GROUPS">Groups</ng-container>
+          </m-tooltip>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS">
+            Groups
+          </span>
+        </a>
+      </li>
+
+      <li
+        *ngIf="user && !matrixFeature"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
@@ -316,7 +365,7 @@
     </ul>
   </nav>
 
-  <div class="m-sidebar--groups" [hidden]="!user">
+  <div class="m-sidebar--groups" [hidden]="!user || matrixFeature">
     <ng-template dynamic-host></ng-template>
   </div>
 </div>

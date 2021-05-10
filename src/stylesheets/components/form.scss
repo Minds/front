@@ -220,6 +220,7 @@
   // Includes textareas as well as inputs ////
   ////////////////////////////////////////////
   input[type='text'],
+  input[type='time'],
   input[type='email'],
   input[type='number'],
   input[type='password'] {
@@ -510,6 +511,7 @@
   }
 
   input[type='text'],
+  input[type='time'],
   input[type='email'],
   input[type='password'],
   input[type='number'],

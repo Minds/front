@@ -4,14 +4,15 @@ import {
   WalletTokenRewardsService,
 } from './rewards.service';
 import * as moment from 'moment';
-import { Observable, timer } from 'rxjs';
+import { Observable, of, Subscription, timer } from 'rxjs';
 import { UniswapModalService } from '../../../../blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../../blockchain/earn/earn-modal.service';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
 import { max } from 'bn.js';
+import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
 
 @Component({
   selector: 'm-wallet__tokenRewards',
@@ -45,6 +46,11 @@ export class WalletTokenRewardsComponent implements OnInit {
     daily: null,
     all_time: null,
   };
+
+  /**
+   * Has pending transactions.
+   */
+  public readonly hasPending$ = this.rewards.hasPending$.pipe(shareReplay(1));
 
   /**
    * The data for the rows
@@ -87,6 +93,16 @@ export class WalletTokenRewardsComponent implements OnInit {
   /** Breakdown of relative dates liquidity */
   liquidityPositions$: Observable<any> = this.rewards.liquidityPositions$;
 
+  /**
+   * Snapshot of isConnected observable
+   */
+  isConnected: boolean;
+
+  /**
+   * Subscriptions
+   */
+  subscriptions: Subscription[] = [];
+
   constructor(
     private rewards: WalletTokenRewardsService,
     private uniswapModalService: UniswapModalService,
@@ -94,7 +110,8 @@ export class WalletTokenRewardsComponent implements OnInit {
     protected injector: Injector,
     protected onchainTransferModal: OnchainTransferModalService,
     private walletService: WalletV2Service,
-    private session: Session
+    private session: Session,
+    protected connectWalletModalService: ConnectWalletModalService
   ) {}
 
   ngOnInit() {
@@ -102,6 +119,12 @@ export class WalletTokenRewardsComponent implements OnInit {
       this.total = response.total;
       this.data = response;
     });
+
+    this.subscriptions.push(
+      this.connectWalletModalService.isConnected$.subscribe(
+        isConnected => (this.isConnected = isConnected)
+      )
+    );
   }
 
   /**
@@ -109,6 +132,7 @@ export class WalletTokenRewardsComponent implements OnInit {
    * @param date
    */
   onDateChange(date) {
+    date = this.adjustDateForUtc(date);
     this.date = new Date(date);
     this.total = { daily: null, all_time: null };
     this.data = null;
@@ -172,7 +196,7 @@ export class WalletTokenRewardsComponent implements OnInit {
       return;
     }
 
-    const uniswapUrl = 'https://info.uniswap.org/account/';
+    const uniswapUrl = 'https://v2.info.uniswap.org/account/';
     return uniswapUrl + address;
   }
 
@@ -219,5 +243,21 @@ export class WalletTokenRewardsComponent implements OnInit {
     const dailyIncrement = multiplierRange / maxDays; // 0.0054794520
 
     return (multiplier - minMultiplier) / dailyIncrement;
+  }
+
+  async joinRewards(e: MouseEvent) {
+    const onComplete = () => (this.isConnected = undefined);
+    await this.connectWalletModalService.joinRewards(onComplete);
+  }
+
+  /**
+   * Convert date so that day remains the same when converting to UTC.
+   * @param { Date } date - date to adjust.
+   * @returns { Date } - adjusted date.
+   */
+  private adjustDateForUtc(date): Date {
+    return new Date(
+      date.getTime() + Math.abs(date.getTimezoneOffset() * 1000 * 60)
+    );
   }
 }

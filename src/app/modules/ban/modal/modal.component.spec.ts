@@ -129,7 +129,7 @@ describe('BanModalComponent', () => {
       By.css('.m-report-creator--subjects-subject')
     );
     expect(subjectList).not.toBeNull();
-    expect(subjectListInputs.length).toBe(12);
+    expect(subjectListInputs.length).toBe(13);
   });
 
   it('once a item is clicked submit shouldnt be disabled', () => {

@@ -4,7 +4,7 @@
   [type]="type"
   [disabled]="disabled"
   [ngClass]="{
-    'm-button--saving': saving,
+    'm-button--saving': _saving,
     'm-button--grey': color === 'grey',
     'm-button--blue': color === 'blue',
     'm-button--red': color === 'red',
@@ -20,13 +20,14 @@
     'm-pulsating--small': pulsating
   }"
 >
-  <div *ngIf="!saving" class="m-button__text--unsaved" #buttonTextContainer>
+  <div *ngIf="!_saving" class="m-button__text--unsaved" #buttonTextContainer>
     <ng-content></ng-content>
   </div>
   <div
-    *ngIf="saving"
+    *ngIf="_saving"
     class="m-button__text--saving"
     [style.width]="buttonTextWidth + 'px'"
+    [style.height]="buttonTextHeight + 'px'"
   >
     <span></span>
     <span></span>

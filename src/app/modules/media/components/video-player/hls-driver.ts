@@ -1,4 +1,3 @@
-import * as Hls from 'hls.js';
 import {
   PlyrDriver,
   PlyrDriverCreateParams,
@@ -12,7 +11,7 @@ export class HlsjsPlyrDriver implements PlyrDriver {
   /**
    * HLS library
    */
-  hls = new Hls();
+  hls;
 
   /**
    * Reference of the plyr object we have created/are dealing with
@@ -27,7 +26,10 @@ export class HlsjsPlyrDriver implements PlyrDriver {
   /** */
   availableQualities$: Subject<number[]> = new Subject();
 
-  constructor(private autoload: boolean) {}
+  constructor(private autoload: boolean) {
+    const Hls = require('hls.js');
+    this.hls = new Hls();
+  }
 
   create(params: PlyrDriverCreateParams) {
     this.hls.attachMedia(params.videoElement);
@@ -57,15 +59,15 @@ export class HlsjsPlyrDriver implements PlyrDriver {
       this.loaded = true;
       this.hls.loadSource(src);
 
-      this.hls.on('hlsMediaAttaching', e => {
-        console.log(e);
-      });
+      // this.hls.on('hlsMediaAttaching', e => {
+      //   console.log(e);
+      // });
 
-      this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        var availableQualities = this.hls.levels.map(l => l.height);
+      // this.hls.on(hls.Events.MANIFEST_PARSED, () => {
+      //   var availableQualities = this.hls.levels.map(l => l.height);
 
-        this.availableQualities$.next(availableQualities);
-      });
+      //   this.availableQualities$.next(availableQualities);
+      // });
     }
   }
 }

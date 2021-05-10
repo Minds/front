@@ -36,6 +36,7 @@ import { LanguageModule } from '../language/language.module';
 import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
 import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.component';
+import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 
 const routes: Routes = [
   {
@@ -100,6 +101,7 @@ const routes: Routes = [
     LanguageModule,
     OnboardingV3Module,
     LiquiditySpotModule,
+    MessengerV2Module,
   ],
   declarations: [
     NewsfeedComponent,

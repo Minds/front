@@ -1,9 +1,16 @@
 @import 'defaults.scss';
 
 :host {
+  header {
+    position: relative;
+  }
   .m-blog-header {
-    padding-bottom: 20px;
+    padding-bottom: 0;
     margin-bottom: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    margin: 0 0 20px 0;
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
@@ -97,7 +104,10 @@
     }
 
     .m-blog__body {
-      padding: 0 $minds-padding;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      font-family: 'Roboto', Helvetica, sans-serif;
 
       a {
         text-decoration: none;
@@ -142,7 +152,6 @@
       ul,
       ol {
         font-size: 16px;
-        font-family: Roboto, Helvetica, Arial, sans-serif;
         font-weight: 400;
         line-height: 30px;
 
@@ -152,14 +161,12 @@
       }
 
       p {
-        font-family: 'Roboto', Helvetica, sans-serif;
-
         margin-bottom: 0.5em;
         font-weight: 400;
         font-style: normal;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.4em;
-        margin: 15px 0;
+        margin: 5px 0 15px 0;
 
         @include m-theme() {
           color: themed($m-textColor--secondary);
@@ -167,6 +174,13 @@
 
         a {
           font-weight: normal;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
 
@@ -179,8 +193,13 @@
         margin: 30px 0;
       }
 
-      h2 {
-        margin: 30px 0 10px 0;
+      h2,
+      h3 {
+        @include mobile-only {
+          font-size: 22px;
+        }
+
+        margin: 0 0 10px 0;
         font-size: 28px;
       }
 
@@ -202,11 +221,10 @@
 
       ul,
       ol {
-        margin: 17px 0;
+        margin: 15px 0;
 
         li {
-          margin-bottom: 0.5em;
-          font-size: 17px;
+          font-size: 16px;
         }
       }
 

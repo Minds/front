@@ -5,7 +5,9 @@
   <i class="material-icons">repeat</i>
   <span>Reminded by </span>
   <ng-container *ngFor="let reminder of entity.remind_users; let i = index">
-    <a [routerLink]="['/', reminder.username]">{{ reminder.name }}</a>
+    <a [routerLink]="['/', reminder.username]">
+      {{ reminder.name | excerpt: 50 }}
+    </a>
   </ng-container>
 </div>
 
@@ -55,13 +57,10 @@
             {{ toReadableDate(entity.time_created) }}
           </span>
         </div>
-        <span
-          class="m-activityOwnerBlockPermalink__text--timestamp"
-          [title]="entity.time_created * 1000 | date: 'medium'"
+        <m-relativeTimeSpan
           *ngIf="!isScheduled()"
-        >
-          {{ entity.time_created * 1000 | friendlydatediff }}
-        </span>
+          [entity]="entity"
+        ></m-relativeTimeSpan>
         <span
           *ngIf="
             service.displayOptions.showEditedTag && (service.isEdited$ | async)

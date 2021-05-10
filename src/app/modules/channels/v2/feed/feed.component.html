@@ -49,12 +49,17 @@
     <div class="m-channelFeed__list" *ngIf="!isGrid">
       <ng-container *ngIf="feed?.length > 0">
         <m-composer *ngIf="service.isOwner$ | async"></m-composer>
-        <div class="m-channelFeedList__entities">
+        <div
+          class="m-channelFeedList__entities"
+          m-hotkeyScroll
+          [anchors]="feedViewChildren"
+        >
           <m-newsfeed__entity
             *ngFor="let entity of feed; let i = index"
             [entity]="entity | async"
             [slot]="i + 1"
             (deleted)="feedService.onDelete($event)"
+            #feedViewChildren
           ></m-newsfeed__entity>
         </div>
       </ng-container>

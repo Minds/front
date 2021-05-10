@@ -11,15 +11,24 @@ stages:
   - cleanup
 
 variables:
-  CYPRESS_INSTALL_BINARY: 0 # Speeds up the install process
+  CYPRESS_INSTALL_BINARY: "0" # Speeds up the install process
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  FF_USE_FASTZIP: "1"
+
+cache:
+  key:
+    files:
+      - package.json
+    prefix: ${CI_JOB_NAME}
+  paths:
+    - node_modules/
 
 test:
   image: circleci/node:13-browsers
   stage: test and build
   script:
-    - npm ci
+    - npm i
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 lint:
@@ -37,9 +46,9 @@ lint:
   image: cypress/browsers:node12.13.0-chrome80-ff74
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 6.6.0
+    CYPRESS_INSTALL_BINARY: "6.6.0"
   script:
-    - npm ci
+    - npm i -g cypress
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
@@ -61,7 +70,7 @@ lint:
     - fi;
     - echo "Running Cypress"
     - >
-      $(npm bin)/cypress run --browser chrome
+      cypress run --browser chrome
       --parallel
       --record
       --ci-build-id $CI_PIPELINE_ID
@@ -80,19 +89,19 @@ lint:
       - cache/Cypress
 
 qa:sandbox:
-  parallel: 8
+  parallel: 2
   allow_failure: false
   except:
     - /^master$/
     - feat/1732-block-refactor
   <<: *cypress_tests
 
-qa:production:
-  parallel: 8
-  allow_failure: true
-  only:
-    - /^master$/
-  <<: *cypress_tests
+# qa:production:
+#   parallel: 1
+#   allow_failure: true
+#   only:
+#     - /^master$/
+#   <<: *cypress_tests
 
 # qa:manual:
 #   stage: qa
@@ -115,7 +124,7 @@ build:review:
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
-    - npm ci && npm install -g gulp-cli
+    - npm i && npm install -g gulp-cli
     - npm run postinstall
     - sh build/ng9-bundles.sh
     - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
@@ -137,7 +146,7 @@ build:production:bundles:
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
-    - npm ci && npm install -g gulp-cli
+    - npm i && npm install -g gulp-cli
     - npm run postinstall
     - sh build/ng9-bundles.sh
     - sh build/ng9-remove-locale-assets.sh # Remove assets from locales

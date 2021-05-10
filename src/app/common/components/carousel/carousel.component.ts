@@ -82,7 +82,6 @@ export class CarouselComponent implements AfterViewInit {
   checkOverflow() {
     // assumes all metrics are equal width
     if (!this.container) {
-      console.warn('m-carousel could not find container');
       return;
     }
 

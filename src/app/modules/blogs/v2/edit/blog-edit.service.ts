@@ -80,6 +80,10 @@ export class BlogsEditService {
 
   readonly accessId$: BehaviorSubject<string> = this.composerService.accessId$;
 
+  readonly timeCreated$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    0
+  );
+
   readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >('');
@@ -183,6 +187,7 @@ export class BlogsEditService {
       this.canPost$.next(true);
       this.guid$.next(guid);
       this.published$.next(blog.published);
+      this.timeCreated$.next(blog.time_created);
       this.accessId$.next(blog.access_id);
       this.schedule$.next(blog.time_created);
       this.savedContent$.next(blog.description);
@@ -233,6 +238,9 @@ export class BlogsEditService {
     this.canPost$.next(true);
     this.guid$.next('');
     this.published$.next(0);
+
+    this.timeCreated$.next(0);
+
     this.accessId$.next(DEFAULT_ACCESS_ID_VALUE);
     this.schedule$.next(null);
     this.savedContent$.next('');

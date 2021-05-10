@@ -323,7 +323,16 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;
-        file.value = '';
+
+        // reset fields indicating that an attachment is present.
+        this.comment.attachment = null;
+        this.comment.perma_url = '';
+        this.comment.title = '';
+        this.comment.custom_type = null;
+
+        if (file && file.value) {
+          file.value = '';
+        }
       })
       .catch(e => {
         console.error(e);

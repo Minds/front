@@ -42,6 +42,7 @@ export class SidebarNavigationComponent
   implements OnInit, AfterViewInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  readonly chatUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -67,6 +68,8 @@ export class SidebarNavigationComponent
 
   routerSubscription: Subscription;
 
+  matrixFeature: boolean = false;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -87,6 +90,7 @@ export class SidebarNavigationComponent
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.chatUrl = this.configs.get('matrix')?.chat_url;
     this.service.setContainer(this);
     this.getUser();
 
@@ -108,6 +112,8 @@ export class SidebarNavigationComponent
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
     }
+
+    this.matrixFeature = this.featuresService.has('matrix');
 
     this.settingsLink = '/settings';
   }
@@ -131,6 +137,9 @@ export class SidebarNavigationComponent
   }
 
   createGroupsSideBar() {
+    if (this.matrixFeature) {
+      return;
+    }
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
         GroupsSidebarMarkersComponent
       ),

@@ -60,6 +60,33 @@
     }
   }
 
+  .m-register__error,
+  .m-register__formError {
+    font-size: 14px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-red) !important;
+    }
+  }
+
+  .ng-invalid.ng-dirty {
+    &:not(:focus) {
+      @include m-theme() {
+        border-color: themed($m-red) !important;
+      }
+    }
+  }
+
+  .m-register__formError {
+    margin-top: 20px;
+  }
+
+  .m-register__error {
+    margin-top: 3px;
+    text-align: right;
+  }
+
   .mdl-checkbox {
     padding-top: 5px;
   }

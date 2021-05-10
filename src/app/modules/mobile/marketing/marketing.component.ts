@@ -23,6 +23,7 @@ export class MobileMarketingComponent {
 
   releases: any[] = [];
   inProgress: boolean = false;
+  showReleases: boolean = false;
   error: string;
   latestRelease: any = {
     href: null,
@@ -41,6 +42,10 @@ export class MobileMarketingComponent {
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
     this.load();
+  }
+
+  toggleReleases() {
+    this.showReleases = !this.showReleases;
   }
 
   /**

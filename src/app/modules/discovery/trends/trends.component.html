@@ -27,9 +27,10 @@
     <m-discoveryTrends__listItem [trend]="trend"></m-discoveryTrends__listItem>
   </li>
   <!-- ---------------------- -->
-  <m-discovery__suggestionsCarousel
+  <m-discovery__cardCarousel
+    type="suggestions"
     class="m-discoveryTrends__trend"
-  ></m-discovery__suggestionsCarousel>
+  ></m-discovery__cardCarousel>
   <!-- ---------------------- -->
   <li
     *ngFor="let trend of trends$ | async | slice: 1"

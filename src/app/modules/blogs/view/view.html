@@ -16,6 +16,11 @@
   *ngIf="blog"
   [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(blog), 'm-mature-content-shown': attachment.isForcefullyShown(blog) }"
 >
+  <m-wire--lock-screen
+    [(entity)]="blog"
+    *ngIf="blog.paywall"
+    #lockScreen
+  ></m-wire--lock-screen>
   <div
     class="m-mature-overlay"
     (click)="blog.mature_visibility = !blog.mature_visibility"
@@ -33,10 +38,9 @@
   <minds-banner
     [src]="blog.thumbnail_src"
     [object]="blog"
+    [wideBanner]="blog.time_published > wideBannerDate || blog.time_published == ''"
     *ngIf="blog.header_bg"
   ></minds-banner>
-
-  <m-paywallBadge [entity]="blog" [showTierName]="true"></m-paywallBadge>
 </header>
 
 <div
@@ -52,55 +56,66 @@
     ></google-ad>
   </ng-container>
 
+  <div class="m-blog__subHeader">
+    <div class="m-blog__badgeContainer">
+      <m-paywallBadge
+        [entity]="blog"
+        [showTierName]="true"
+        [topRightPosition]="false"
+      ></m-paywallBadge>
+    </div>
+    <m-subscribeButton
+      *ngIf="!isOwner"
+      [user]="blog.ownerObj"
+    ></m-subscribeButton>
+  </div>
+
   <div class="mdl-grid m-blog-header" style="width:100%;">
-    <div class="mdl-cell mdl-cell--12-col">
+    <div class="">
       <h1 class="m-blog--title">{{blog.title}}</h1>
     </div>
 
     <!-- Owner box -->
-    <div class="mdl-cell mdl-cell--5-col minds-blog-ownerblock">
-      <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
-        <a [routerLink]="['/', blog.ownerObj.username]">
-          <img
-            src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
-            class="mdl-shadow--2dp"
-          />
-        </a>
+    <div class="m-blog__InteractionBar">
+      <div class="minds-blog-ownerblock">
+        <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
+          <a [routerLink]="['/', blog.ownerObj.username]">
+            <img
+              src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+              class="mdl-shadow--2dp"
+            />
+          </a>
+        </div>
+        <div class="minds-body">
+          <a [routerLink]="['/', blog.ownerObj.username]"
+            >{{blog.ownerObj.name}}</a
+          >
+          <span *ngIf="blog.time_published || blog.time_created"
+            >{{ (blog.time_published ? blog.time_published : blog.time_created)
+            * 1000 | date: 'medium'}}</span
+          >
+        </div>
       </div>
-      <div class="minds-body">
-        <a [routerLink]="['/', blog.ownerObj.username]"
-          >{{blog.ownerObj.name}}</a
+      <div class="m-actions-block" *ngIf="showActions">
+        <minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
+        <minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
+        <m-activity__remindButton></m-activity__remindButton>
+
+        <m-postMenu--v2
+          [entity]="blog"
+          [canDelete]="canDelete"
+          [isTranslatable]="false"
+          [mediaModal]="false"
+          [options]="menuOptions"
+          (optionSelected)="menuOptionSelected($event)"
+          data-cy="data-minds-post-menu-button"
         >
-        <span *ngIf="blog.time_published || blog.time_created"
-          >{{ (blog.time_published ? blog.time_published : blog.time_created) *
-          1000 | date: 'medium'}}</span
-        >
+        </m-postMenu--v2>
       </div>
-    </div>
-    <div class="mdl-cell mdl-cell--7-col m-actions-block" *ngIf="showActions">
-      <div class="mdl-layout-spacer"></div>
-      <m-postMenu--v2
-        [entity]="blog"
-        [canDelete]="canDelete"
-        [isTranslatable]="false"
-        [mediaModal]="false"
-        [options]="menuOptions"
-        (optionSelected)="menuOptionSelected($event)"
-        data-cy="data-minds-post-menu-button"
-      >
-      </m-postMenu--v2>
-
-      <m-activity__remindButton></m-activity__remindButton>
-
-      <minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
-      <minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
     </div>
   </div>
 
-  <div
-    style="width:100%; padding:8px; position:relative;"
-    *ngIf="!blog.paywall"
-  >
+  <div style="width:100%; position:relative;" *ngIf="!blog.paywall">
     <div
       m-code-highlight
       class="mdl-cell mdl-cell--12-col minds-blog-body m-blog__body"
@@ -109,12 +124,6 @@
       [hidden]="!blog.description"
     ></div>
   </div>
-
-  <m-wire--lock-screen
-    [(entity)]="blog"
-    *ngIf="blog.paywall"
-    #lockScreen
-  ></m-wire--lock-screen>
 
   <!-- Additional block -->
   <div
