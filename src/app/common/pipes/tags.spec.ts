@@ -283,4 +283,55 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a href="ftp://s.com"');
     expect(transformedString).toContain('<a href="mailto:name@mail.com"');
   });
+
+  it('should transform when $ in the middle ', () => {
+    const string = 'textstring$MINDS';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
+    );
+  });
+
+  it('should transform when $ preceded by space ', () => {
+    const string = 'textstring $MINDS';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
+    );
+  });
+
+  it('should transform when $ preceded by [] ', () => {
+    const string = 'textstring [$MINDS';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
+    );
+  });
+
+  it('should transform when $ preceded by () ', () => {
+    const string = 'textstring ($MINDS)';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
+    );
+  });
+
+  it('should transform uppercase text following $ to lower case ', () => {
+    const string = 'textString $Minds';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
+    );
+  });
+
+  it("should correctly parse $'s when duplicates substrings present", () => {
+    const string = '$MINDS $MINDSTOKEN';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDS'
+    );
+    expect(transformedString).toContain(
+      '<a href="/discovery/search?f=top&t=all&q=MINDSTOKEN'
+    );
+  });
 });
