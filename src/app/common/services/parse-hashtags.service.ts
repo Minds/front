@@ -30,6 +30,27 @@ export class HashtagsFromStringService {
   }
 
   /**
+   * Parse cryptotags from a string, stripping away any leading $.
+   * @param { string } value - string to be parsed.
+   * @returns { string[] } - array of tags without leading $.
+   */
+  public parseCryptoTagsFromString(value: string): string[] {
+    if (!value) {
+      return [];
+    }
+
+    value = this.stripUrls(value);
+
+    return (
+      value.match(this.regex.getRegex('crypto'))?.map(tag => {
+        tag = tag.trim();
+
+        return tag.charAt(0) === '#' ? tag.substr(1) : tag;
+      }) ?? []
+    );
+  }
+
+  /**
    * Strip urls.
    * @param value dirty url.
    * @returns { string } url cleaned of URLs

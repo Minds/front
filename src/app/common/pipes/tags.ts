@@ -44,6 +44,21 @@ export class TagsPipe implements PipeTransform {
         }</a>`; // TODO: make these link locally
       },
     },
+    crypto: {
+      rule: this.regexService.getRegex('crypto'),
+      replace: m => {
+        if (this.siteService.isProDomain) {
+          return `${
+            m.match[1]
+          }<a href="/all;query=${m.match[2].toUpperCase()}">#${m.match[2]}</a>`;
+        }
+        return `${
+          m.match[1]
+        }<a href="/discovery/search?f=top&t=all&q=${m.match[2].toUpperCase()}" class="m-legible">$${
+          m.match[2]
+        }</a>`; // TODO: make these link locally
+      },
+    },
     at: {
       rule: this.regexService.getRegex('at'),
       replace: m => {
@@ -109,6 +124,7 @@ export class TagsPipe implements PipeTransform {
     this.parse('url', value);
     this.parse('mail', value);
     this.parse('hash', value);
+    this.parse('crypto', value);
     this.parse('at', value);
 
     if (this.results.length === 0) {
