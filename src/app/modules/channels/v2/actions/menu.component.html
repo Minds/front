@@ -63,6 +63,12 @@
         </span>
       </li>
 
+      <li (click)="plusAdminToggle()" *ngIf="!(service.channel$ | async)?.pro">
+        <span class="m-dropdownMenu__item">
+          {{ !(service.channel$ | async)?.plus ? 'Make Plus' : 'Remove Plus' }}
+        </span>
+      </li>
+
       <ng-container *ngIf="service.isExplicit$ | async">
         <li (click)="setExplicit(false)">
           <span

@@ -37,6 +37,7 @@ import { DiscoverySharedModule } from '../../discovery/discovery-shared.module';
 import { ChannelActionsBoostComponent } from './actions/boost.component';
 import { ChannelShopLazyComponent } from './shop/shop-lazy.component';
 import { ComposerModule } from '../../composer/composer.module';
+import { ChannelAdminConfirmationComponent } from './actions/admin-confirmation/admin-confirmation.component';
 
 /**
  * Generally available components
@@ -61,6 +62,7 @@ const INTERNAL_COMPONENTS = [
   ChannelActionsBoostComponent,
   ChannelActionsMenuButtonComponent,
   ChannelActionsMenuComponent,
+  ChannelAdminConfirmationComponent,
   ChannelEditBioComponent,
   ChannelEditInfoComponent,
   ChannelEditHashtagsComponent,
