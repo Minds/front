@@ -185,7 +185,12 @@ export class AdminBoosts {
 
   onKeyPress(e: KeyboardEvent) {
     //If an input is focused, disregard.
-    if (document.activeElement.tagName === 'INPUT') {
+    if (
+      document.activeElement.tagName === 'INPUT' ||
+      (e.target as Element)?.localName === 'input' ||
+      (e.target as Element)?.localName === 'textarea' ||
+      (e.target as any).isContentEditable
+    ) {
       return;
     }
     e.stopPropagation();
