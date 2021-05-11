@@ -268,15 +268,6 @@
               ></minds-textarea>
             </m-text-input--autocomplete-container>
           </form>
-
-          <div
-            class="minds-comment-span mdl-color-text--red-500"
-            *ngIf="!canPost && triedToPost"
-          >
-            <ng-container i18n="@@M__COMMON__WAIT_UPLOAD"
-              >Please wait until the upload is complete.</ng-container
-            >
-          </div>
           <!-- --------------------- -->
           <!-- ACTIONS -->
           <!-- --------------------- -->
@@ -394,6 +385,14 @@
         <!-- Rich embed preview -->
         <!-- --------------------- -->
 
+        <div
+          class="minds-comment-span mdl-color-text--red-500"
+          *ngIf="!canPost && triedToPost"
+        >
+          <ng-container i18n="@@M__COMMON__WAIT_UPLOAD"
+            >Please wait until the upload is complete.</ng-container
+          >
+        </div>
         <div class="post-preview" *ngIf="attachment.isRich()">
           <div
             class="mdl-spinner mdl-js-spinner is-active"

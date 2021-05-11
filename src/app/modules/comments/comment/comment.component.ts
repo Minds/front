@@ -234,6 +234,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
           this._saved.next({
             comment: response.comment,
           });
+          this.comment = response.comment;
         }
         this.comment.edited = true;
       })
