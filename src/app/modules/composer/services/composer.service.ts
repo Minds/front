@@ -577,8 +577,14 @@ export class ComposerService implements OnDestroy {
             this.hashtagsFromString.parseHashtagsFromString(values.title)
           );
 
+        const cryptoTags = this.hashtagsFromString
+          .parseCryptoTagsFromString(values.message)
+          .concat(
+            this.hashtagsFromString.parseCryptoTagsFromString(values.title)
+          );
+
         // merge into one array.
-        const tags = [...bodyTags, ...values.tags];
+        const tags = [...bodyTags, ...values.tags, ...cryptoTags];
 
         // get unique tags.
         const uniqueTags = tags.filter(function(item, pos) {
