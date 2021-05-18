@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+
+  .m-tabs__container {
+    padding: 0 20px;
+
+    > .m-tabs__tab {
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li:not(:last-of-type) {
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-notificationsList__empty {
+    padding: 20px;
+    text-align: center;
+    margin: 20px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      border: 1px dashed themed($m-borderColor--primary);
+    }
+  }
+}

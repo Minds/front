@@ -1,0 +1,99 @@
+<ng-container *ngIf="notification; else ghostView">
+  <div class="m-notifications__notification">
+    <div class="m-notificationsNotification__avatar">
+      <a [routerLink]="['/', notification.from.username]">
+        <img [src]="avatarUrl" />
+      </a>
+
+      <ng-container *ngTemplateOutlet="avatarTypeBubbleTag"></ng-container>
+    </div>
+    <div class="m-notificationsNotification__body">
+      <a
+        [routerLink]="['/', notification.from.username]"
+        class="m-notificationsNotificationBody__label--from"
+        >{{ notification.from.name }}</a
+      >
+
+      <!-- Merged froms -->
+      <span
+        *ngIf="notification.merged_count === 1 && notification.merged_from[0]"
+      >
+        and
+        <a [routerLink]="['/', notification.merged_from[0].username]">{{
+          notification.merged_from[0].name
+        }}</a>
+      </span>
+      <span *ngIf="notification.merged_count > 1">
+        and {{ notification.merged_count }} others</span
+      >
+
+      {{ verb }}
+      <!-- eg. commented on-->
+      {{ adjective }}
+      <!-- eg. your, 'Mark's'-->
+
+      <a [routerLink]="nounLink">
+        {{ noun }}
+        <!-- eg. post-->
+      </a>
+    </div>
+    <div class="m-notificationsNotification__timestamp">
+      <span>{{
+        notification.created_timestamp * 1000 | friendlydatediff: '':false
+      }}</span>
+    </div>
+  </div>
+
+  <m-newsfeed__entity
+    *ngIf="notification.entity?.type !== 'comment'"
+    [entity]="notification.entity"
+    [displayOptions]="{
+      minimalMode: true,
+      showComments: false,
+      autoplayVideo: false,
+      showToolbar: false,
+      bypassMediaModal: true,
+      showOwnerBlock: notification.entity.subtype === 'remind',
+      isFeed: true
+    }"
+  ></m-newsfeed__entity>
+
+  <div
+    class="m-notificationNotification__commentPreview"
+    *ngIf="notification.entity?.type === 'comment'"
+  >
+    <p>{{ notification.entity?.description }}</p>
+  </div>
+</ng-container>
+
+<ng-template #avatarTypeBubbleTag>
+  <div class="m-notificationsNotificationAvatar__typeBubbleTag">
+    <ng-container [ngSwitch]="notification.type">
+      <ng-template ngSwitchCase="vote_up">
+        <m-icon iconId="thumb_up"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="vote_down">
+        <m-icon iconId="thumb_down"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="comment">
+        <m-icon iconId="chat_bubble"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="tag">
+        <m-icon iconId="face"></m-icon>
+      </ng-template>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #ghostView>
+  <div
+    class="m-notifications__notification m-notifications__notification--ghost"
+  >
+    <div class="m-notificationsNotification__avatar">
+      <img />
+    </div>
+    <div class="m-notificationsNotification__body">
+      <span></span>
+    </div>
+  </div>
+</ng-template>

@@ -4,7 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'friendlydatediff',
 })
 export class FriendlyDateDiffPipe implements PipeTransform {
-  transform(value: string | number, reference: string | number = null): any {
+  transform(
+    value: string | number,
+    reference: string | number = null,
+    displaySuffix: boolean = true
+  ): any {
     if (!value) {
       return value;
     }
@@ -17,8 +21,10 @@ export class FriendlyDateDiffPipe implements PipeTransform {
 
     const dateValue = new Date(<string>value);
 
+    const suffix = displaySuffix ? ' ago' : '';
+
     if (dateValue >= referenceDate) {
-      return '0s ago';
+      return '0s' + suffix;
     }
 
     let differenceMs = referenceDate.getTime() - dateValue.getTime();
@@ -30,25 +36,25 @@ export class FriendlyDateDiffPipe implements PipeTransform {
     let years = Math.floor(weeks / 52);
 
     if (years > 0) {
-      return `${years}y ago`;
+      return `${years}y ${suffix}`;
     }
 
     if (weeks > 0) {
-      return `${weeks}w ago`;
+      return `${weeks}w ${suffix}`;
     }
 
     if (days > 0) {
-      return `${days}d ago`;
+      return `${days}d ${suffix}`;
     }
 
     if (hours > 0) {
-      return `${hours}h ago`;
+      return `${hours}h ${suffix}`;
     }
 
     if (minutes > 0) {
-      return `${minutes}m ago`;
+      return `${minutes}m ${suffix}`;
     }
 
-    return `${seconds}s ago`;
+    return `${seconds}s ${suffix}`;
   }
 }

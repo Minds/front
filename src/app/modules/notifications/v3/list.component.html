@@ -1,0 +1,39 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab" (click)="setFilter('')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === ''">All</a>
+  </div>
+  <div class="m-tabs__tab" (click)="setFilter('tags')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'">Mentions</a>
+  </div>
+</div>
+
+<ul>
+  <li *ngFor="let notification of list">
+    <m-notifications__notification
+      [notification]="notification"
+    ></m-notifications__notification>
+  </li>
+
+  <ng-container *ngIf="inProgress$ | async">
+    <li *ngFor="let i of [null, null]">
+      <m-notifications__notification></m-notifications__notification>
+    </li>
+  </ng-container>
+</ul>
+
+<infinite-scroll
+  *ngIf="list.length > 0 && !(inProgress$ | async) && nextPagingToken"
+  distance="25%"
+  (load)="loadNext()"
+  [moreData]="true"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
+
+<div
+  class="m-notificationsList__empty"
+  *ngIf="list.length === 0 && !(inProgress$ | async)"
+>
+  <span *ngIf="(filter$ | async) === ''">You have no notifications</span>
+  <span *ngIf="(filter$ | async) === 'tags'">You have no mentions</span>
+</div>

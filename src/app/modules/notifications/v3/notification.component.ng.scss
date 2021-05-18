@@ -1,0 +1,130 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  padding: 20px;
+  position: relative;
+
+  .m-notifications__notification {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+  .m-notificationsNotification__avatar,
+  .m-notificationsNotification__body {
+    //padding: 20px;
+  }
+  .m-notificationsNotification__avatar {
+    position: relative;
+    padding-right: 20px;
+    img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--contrast);
+      }
+    }
+
+    .m-notificationsNotificationAvatar__typeBubbleTag {
+      border-radius: 50%;
+      // width: 20px;
+      // height: 20px;
+      position: absolute;
+      top: 24px;
+      right: 15px;
+      padding: 4px;
+      @include m-theme() {
+        background-color: themed($m-link);
+      }
+
+      ::ng-deep m-icon i {
+        font-size: 12px !important;
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
+  }
+  .m-notificationsNotification__body {
+    flex: 1;
+    line-height: 18px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      text-decoration: none;
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+  .m-notificationsNotification__timestamp {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      text-decoration: none;
+    }
+    font-size: 14px;
+    margin-left: 20px;
+  }
+
+  ::ng-deep m-newsfeed__entity {
+    .m-activity__minimalMetrics {
+      display: none;
+    }
+  }
+
+  .m-notificationNotification__commentPreview p {
+    margin: 0;
+    font-size: 15px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  // Ghost view
+
+  .m-notifications__notification--ghost {
+    animation-name: ghostPulse;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+
+    .m-notificationsNotification__avatar img {
+      @include m-theme() {
+        background-color: themed($m-bgColor--contrast);
+      }
+    }
+    .m-notificationsNotification__body span {
+      border-radius: 2px;
+
+      width: 75%;
+      height: 20px;
+      display: block;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--contrast);
+      }
+    }
+  }
+
+  @keyframes ghostPulse {
+    0% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 0.1;
+    }
+  }
+}

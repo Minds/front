@@ -1,0 +1,49 @@
+@import 'defaults.scss';
+
+:host {
+  &.v3 {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    min-width: 320px;
+    max-width: 450px;
+    width: 50vw;
+    right: -70px;
+    top: 40px;
+    max-height: calc(100vh - 72px);
+
+    &::before,
+    &::after {
+      content: ' ';
+      position: absolute;
+      pointer-events: none;
+      bottom: 100%;
+      right: 70px;
+      width: 0;
+      height: 0;
+      border: solid transparent;
+    }
+    &::after {
+      @include m-theme() {
+        border-color: rgba(themed($m-bgColor--primary), 0);
+        border-bottom-color: themed($m-bgColor--primary);
+      }
+      border-width: 10px;
+      margin-left: 10px;
+    }
+    &::before {
+      @include m-theme() {
+        border-color: rgba(themed($m-borderColor--primary), 0);
+        border-bottom-color: themed($m-borderColor--primary);
+      }
+      border-width: 12px;
+      margin-right: -2px;
+    }
+  }
+
+  .m-notificationsFlyout__scrollable {
+    max-height: calc(100vh - 72px);
+    overflow: scroll;
+  }
+}

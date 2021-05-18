@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
   moduleId: module.id,
   selector: 'm-notifications--flyout',
   templateUrl: 'flyout.component.html',
+  styleUrls: ['./flyout.component.ng.scss'],
 })
 export class NotificationsFlyoutComponent implements OnDestroy {
   @Input() visible: boolean = false;
@@ -24,6 +25,9 @@ export class NotificationsFlyoutComponent implements OnDestroy {
 
   @HostBinding('class.m-notificationsFlyout--newDesign')
   newNavigation: boolean = false;
+
+  @HostBinding('class.v3') v3: boolean;
+
   routerSubscription: Subscription = null;
 
   constructor(
@@ -38,6 +42,10 @@ export class NotificationsFlyoutComponent implements OnDestroy {
     });
   }
 
+  ngOnInit() {
+    this.v3 = this.featuresService.has('notifications-v3');
+  }
+
   ngOnDestroy(): void {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
@@ -49,6 +57,8 @@ export class NotificationsFlyoutComponent implements OnDestroy {
   }
 
   toggleLoad() {
-    this.notificationList.onVisible();
+    if (this.notificationList) {
+      this.notificationList.onVisible();
+    }
   }
 }
