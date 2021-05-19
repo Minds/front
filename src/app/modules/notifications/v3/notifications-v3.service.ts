@@ -10,7 +10,10 @@ import {
   Subject,
 } from 'rxjs';
 import {
+  debounce,
+  debounceTime,
   distinctUntilChanged,
+  last,
   map,
   scan,
   startWith,
@@ -23,10 +26,12 @@ import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { MindsUser } from '../../../interfaces/entities';
 
 export type Notification = {
+  urn: string;
   uuid: string;
   entity: any;
   from: MindsUser;
   data: any[];
+  read: boolean;
 };
 
 @Injectable()
@@ -61,6 +66,7 @@ export class NotificationsV3Service {
    * The raw list of notifications
    */
   rawList$ = combineLatest([this.filter$, this.pagingToken$]).pipe(
+    debounceTime(100), // Hack to prevent first cancelled call
     tap(_ => this.inProgress$.next(true)),
     switchMap(([filter, pagingToken]) => this.apiRequest(filter, pagingToken)),
     tap(response => {
@@ -91,5 +97,17 @@ export class NotificationsV3Service {
 
   async loadNext(pagingToken: string) {
     this.pagingToken$.next(pagingToken);
+  }
+
+  /**
+   * Mark the notification as read
+   */
+  async markAsRead(notification: Notification): Promise<void> {
+    if (!notification.read) {
+      await this.api
+        .put('api/v3/notifications/read/' + notification.urn)
+        .pipe(last())
+        .toPromise();
+    }
   }
 }

@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   EventEmitter,
   Inject,
+  Injectable,
   OnDestroy,
   PLATFORM_ID,
 } from '@angular/core';
@@ -12,7 +13,9 @@ import { Session } from '../../services/session';
 import { MetaService } from '../../common/services/meta.service';
 import { Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
+import { FeaturesService } from '../../services/features.service';
 
+@Injectable()
 export class NotificationService implements OnDestroy {
   socketSubscriptions: any = {
     notification: null,
@@ -23,31 +26,14 @@ export class NotificationService implements OnDestroy {
 
   private updateNotificationCountSubscription: Subscription;
 
-  static _(
-    session: Session,
-    client: Client,
-    sockets: SocketsService,
-    metaService: MetaService,
-    platformId: Object,
-    site: SiteService
-  ) {
-    return new NotificationService(
-      session,
-      client,
-      sockets,
-      metaService,
-      platformId,
-      site
-    );
-  }
-
   constructor(
     public session: Session,
     public client: Client,
     public sockets: SocketsService,
     public metaService: MetaService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    protected site: SiteService
+    protected site: SiteService,
+    protected featuresService: FeaturesService
   ) {
     if (!this.site.isProDomain) {
       this.listen();
@@ -108,10 +94,21 @@ export class NotificationService implements OnDestroy {
       return;
     }
 
-    this.client.get('api/v1/notifications/count', {}).then((response: any) => {
-      this.count = response.count;
-      this.sync();
-    });
+    if (this.featuresService.has('notifications-v3')) {
+      this.client
+        .get('api/v3/notifications/unread-count', {})
+        .then((response: any) => {
+          this.count = response.count;
+          this.sync();
+        });
+    } else {
+      this.client
+        .get('api/v1/notifications/count', {})
+        .then((response: any) => {
+          this.count = response.count;
+          this.sync();
+        });
+    }
   }
 
   /**

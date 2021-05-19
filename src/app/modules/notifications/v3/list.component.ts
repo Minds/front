@@ -11,7 +11,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Session } from '../../../services/session';
-import { NotificationsV3Service } from './notifications-v3.service';
+import { NotificationService } from '../notification.service';
+import {
+  NotificationsV3Service,
+  Notification,
+} from './notifications-v3.service';
 
 @Component({
   selector: 'm-notifications__list',
@@ -34,6 +38,7 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
   constructor(
     public session: Session,
     private service: NotificationsV3Service,
+    private v1Service: NotificationService,
     public route: ActivatedRoute,
     public el: ElementRef
   ) {}
@@ -46,22 +51,44 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
     this.nextPagingTokenSubscription = this.nextPagingToken$.subscribe(
       nextPagingToken => (this.nextPagingToken = nextPagingToken)
     );
+
+    this.resetCounter();
   }
 
+  /**
+   * Cleanup subscriptions
+   */
   ngOnDestroy() {
     this.listSubscription.unsubscribe();
     this.nextPagingTokenSubscription.unsubscribe();
   }
 
+  /**
+   * Load from the next paging token
+   */
   loadNext(): void {
     this.service.loadNext(this.nextPagingToken);
   }
 
+  /**
+   * Set the filter ('' is all, 'tags' is mentions)
+   * @param filter
+   */
   setFilter(filter: string): void {
     this.list = [];
     this.service.requestListAt$.next(Date.now());
     this.nextPagingToken = '';
     this.service.pagingToken$.next('');
     this.filter$.next(filter);
+
+    // Reset the counter too
+    this.resetCounter();
+  }
+
+  /**
+   * Resets the topbar counter
+   */
+  protected resetCounter(): void {
+    this.v1Service.clear();
   }
 }

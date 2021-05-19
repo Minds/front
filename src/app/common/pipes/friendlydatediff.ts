@@ -21,10 +21,10 @@ export class FriendlyDateDiffPipe implements PipeTransform {
 
     const dateValue = new Date(<string>value);
 
-    const suffix = displaySuffix ? ' ago' : '';
+    const suffix = displaySuffix ? 'ago' : '';
 
     if (dateValue >= referenceDate) {
-      return '0s' + suffix;
+      return '0s ' + suffix;
     }
 
     let differenceMs = referenceDate.getTime() - dateValue.getTime();

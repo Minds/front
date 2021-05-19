@@ -1,4 +1,13 @@
-import { Component, Input, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import {
+  Component,
+  Input,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
 
@@ -14,16 +23,26 @@ import { NotificationsV3Service } from './notifications-v3.service';
 export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   @Input() notification;
 
+  interceptionObserver: IntersectionObserver;
+
   constructor(
     public session: Session,
-    private service: NotificationsV3Service,
     public route: ActivatedRoute,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private el: ElementRef,
+    private service: NotificationsV3Service,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.detectIntersecting();
+  }
 
-  ngOnDestroy() {}
+  ngOnDestroy(): void {
+    if (this.interceptionObserver) {
+      this.interceptionObserver.disconnect();
+    }
+  }
 
   get verb(): string {
     switch (this.notification.type) {
@@ -35,10 +54,17 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
         return 'commented on';
       case 'tag':
         return 'tagged you in';
+      case 'remind':
+        return 'reminded';
+      case 'quote':
+        return 'quoted';
     }
   }
 
   get adjective(): string {
+    if (this.notification.type === 'quote') {
+      return 'your';
+    }
     return this.notification.entity?.owner_guid ==
       this.session.getLoggedInUser().guid
       ? 'your'
@@ -49,6 +75,8 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     switch (this.notification.entity?.type) {
       case 'comment':
         return 'comment';
+      case 'object':
+        return this.notification.entity?.subtype;
       default:
         return 'post';
     }
@@ -61,6 +89,22 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
       default:
         return ['/newsfeed', this.notification.entity.guid];
     }
+  }
+
+  get nounLinkParams(): Object | null {
+    if (this.notification.type === 'comment') {
+      return {
+        focusedCommentUrn: this.notification.data.comment_urn,
+      };
+    }
+
+    if (this.notification.entity?.type === 'comment') {
+      return {
+        focusedCommentUrn: this.notification.entity.urn,
+      };
+    }
+
+    return null;
   }
 
   /**
@@ -78,5 +122,31 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     return (
       this.configs.get('cdn_url') + 'icon/' + fromGuid + '/medium/' + iconTime
     );
+  }
+
+  /**
+   * Will mark as read if intersecting
+   */
+  protected detectIntersecting(): void {
+    if (!this.notification) return;
+    if (isPlatformServer(this.platformId)) return;
+
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0,
+    };
+
+    this.interceptionObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          console.log(entry.isIntersecting);
+          this.service.markAsRead(this.notification);
+        });
+      },
+      options
+    );
+
+    this.interceptionObserver.observe(this.el.nativeElement);
   }
 }

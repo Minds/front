@@ -43,20 +43,7 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
     NotificationsV3ListComponent,
     NotificationsV3NotificationComponent,
   ],
-  providers: [
-    {
-      provide: NotificationService,
-      useFactory: NotificationService._,
-      deps: [
-        Session,
-        Client,
-        SocketsService,
-        MetaService,
-        PLATFORM_ID,
-        SiteService,
-      ],
-    },
-  ],
+  providers: [NotificationService],
   exports: [
     NotificationsFlyoutComponent,
     NotificationsComponent,

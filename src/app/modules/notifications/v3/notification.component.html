@@ -32,7 +32,7 @@
       {{ adjective }}
       <!-- eg. your, 'Mark's'-->
 
-      <a [routerLink]="nounLink">
+      <a [routerLink]="nounLink" [queryParams]="nounLinkParams">
         {{ noun }}
         <!-- eg. post-->
       </a>
@@ -42,6 +42,26 @@
         notification.created_timestamp * 1000 | friendlydatediff: '':false
       }}</span>
     </div>
+    <span
+      class="m-notificationsNotification__readIndicator"
+      *ngIf="!notification.read"
+    ></span>
+  </div>
+
+  <div
+    class="m-notificationNotification__commentPreview"
+    *ngIf="notification.type === 'comment' && notification.data.comment_excerpt"
+  >
+    <p>{{ notification.data.comment_excerpt }}</p>
+    <p *ngIf="notification.entity">&nbsp;</p>
+    <!-- spacer if there is a notifcation below -->
+  </div>
+
+  <div
+    class="m-notificationNotification__commentPreview"
+    *ngIf="notification.entity?.type === 'comment'"
+  >
+    <p>{{ notification.entity?.description }}</p>
   </div>
 
   <m-newsfeed__entity
@@ -57,13 +77,6 @@
       isFeed: true
     }"
   ></m-newsfeed__entity>
-
-  <div
-    class="m-notificationNotification__commentPreview"
-    *ngIf="notification.entity?.type === 'comment'"
-  >
-    <p>{{ notification.entity?.description }}</p>
-  </div>
 </ng-container>
 
 <ng-template #avatarTypeBubbleTag>
