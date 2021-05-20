@@ -74,7 +74,7 @@ export class ThemeService {
   emitThemePreference(): void {
     const shouldBeDark: boolean =
       this.session.isLoggedIn() &&
-      this.session.getLoggedInUser().theme === 'dark';
+      this.session.getLoggedInUser().theme !== 'light';
     this.isDark$.next(shouldBeDark);
   }
 
