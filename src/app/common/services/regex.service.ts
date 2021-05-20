@@ -25,9 +25,7 @@ export class RegexService {
         '([^&]|\\b|^)', // Start of string, and word bounday. Not if preceeded by & symbol
         '\\$', //
         '([',
-        '\\wÀ-ÿ', // All Latin words + accented characters
-        '\\u0E00-\\u0E7F', // Unicode range for Thai
-        '\\u2460-\\u9FBB', // Unicode range for Japanese but may be overly zealous
+        'A-Za-z',
         ']+)',
       ].join(''),
       'gim' // Global, Case insensitive, Multiline

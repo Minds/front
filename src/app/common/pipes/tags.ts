@@ -54,7 +54,7 @@ export class TagsPipe implements PipeTransform {
         }
         return `${
           m.match[1]
-        }<a href="/discovery/search?f=top&t=all&q=${m.match[2].toUpperCase()}" class="m-legible">$${
+        }<a href="/discovery/search?f=top&t=all&q=%24${m.match[2].toUpperCase()}" class="m-legible">$${
           m.match[2]
         }</a>`; // TODO: make these link locally
       },
