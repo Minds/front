@@ -65,7 +65,7 @@
   </div>
 
   <m-newsfeed__entity
-    *ngIf="notification.entity?.type !== 'comment'"
+    *ngIf="notification.entity && notification.entity?.type !== 'comment'"
     [entity]="notification.entity"
     [displayOptions]="{
       minimalMode: true,

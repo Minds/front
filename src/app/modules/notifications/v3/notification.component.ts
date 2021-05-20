@@ -87,7 +87,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
       case 'comment':
         return ['/newsfeed/', this.notification.entity.entity_guid]; // TODO make this have the focused query param
       default:
-        return ['/newsfeed', this.notification.entity.guid];
+        return ['/newsfeed', this.notification.entity?.guid];
     }
   }
 
