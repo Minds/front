@@ -29,7 +29,7 @@
 
       {{ verb }}
       <!-- eg. commented on-->
-      {{ adjective }}
+      {{ pronoun }}
       <!-- eg. your, 'Mark's'-->
 
       <a [routerLink]="nounLink" [queryParams]="nounLinkParams">
@@ -99,6 +99,9 @@
       </ng-template>
       <ng-template ngSwitchCase="quote">
         <m-icon iconId="create"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="subscribe">
+        <m-icon iconId="person"></m-icon>
       </ng-template>
     </ng-container>
   </div>

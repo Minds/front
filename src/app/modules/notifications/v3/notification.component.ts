@@ -58,12 +58,17 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
         return 'reminded';
       case 'quote':
         return 'quoted';
+      case 'subscribe':
+        return 'subscribed to';
     }
   }
 
-  get adjective(): string {
+  get pronoun(): string {
     if (this.notification.type === 'quote') {
       return 'your';
+    }
+    if (this.notification.type === 'subscribe') {
+      return '';
     }
     return this.notification.entity?.owner_guid ==
       this.session.getLoggedInUser().guid
@@ -77,6 +82,8 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
         return 'comment';
       case 'object':
         return this.notification.entity?.subtype;
+      case 'user':
+        return 'you';
       default:
         return 'post';
     }
