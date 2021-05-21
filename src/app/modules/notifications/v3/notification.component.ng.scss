@@ -42,7 +42,7 @@
       }
 
       ::ng-deep m-icon i {
-        font-size: 12px !important;
+        font-size: 0.75em !important;
         @include m-theme() {
           color: themed($m-white-always);
         }
