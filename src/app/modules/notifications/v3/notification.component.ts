@@ -147,7 +147,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     this.interceptionObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
-          console.log(entry.isIntersecting);
+          // console.log(entry.isIntersecting);
           this.service.markAsRead(this.notification);
         });
       },

@@ -35,6 +35,8 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
   listSubscription: Subscription;
   list = [];
 
+  @Input() scrollSource: boolean;
+
   constructor(
     public session: Session,
     private service: NotificationsV3Service,

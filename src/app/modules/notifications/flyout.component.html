@@ -1,6 +1,12 @@
 <ng-container *mIfFeature="'notifications-v3'; else v2">
-  <div class="m-notificationsFlyout__scrollable" *ngIf="visible">
-    <m-notifications__list></m-notifications__list>
+  <div
+    class="m-notificationsFlyout__scrollable"
+    *ngIf="visible"
+    #scrollableArea
+  >
+    <m-notifications__list
+      [scrollSource]="scrollableArea"
+    ></m-notifications__list>
   </div>
 </ng-container>
 <ng-template #v2>
