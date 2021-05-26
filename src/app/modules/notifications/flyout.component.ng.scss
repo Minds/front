@@ -45,5 +45,6 @@
   .m-notificationsFlyout__scrollable {
     max-height: calc(100vh - 72px);
     overflow: scroll;
+    @include hide-scrollbar;
   }
 }
