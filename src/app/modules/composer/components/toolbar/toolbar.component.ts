@@ -15,7 +15,7 @@ import {
   Input,
 } from '@angular/core';
 import { Subject, Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import {
   AttachmentSubjectValue,
   ComposerService,
@@ -37,6 +37,7 @@ import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 
 /**
  * Toolbar component. Interacts directly with the service.
@@ -125,7 +126,33 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!attachment && this.fileUploadComponent) {
           this.fileUploadComponent.reset();
         }
-      }))
+      })),
+      this.service.attachmentError$
+        .pipe(distinctUntilChanged())
+        .subscribe(async error => {
+          if (!error) return;
+
+          if (this.isModal) {
+            if (error.codes) {
+              const component = AttachmentErrorComponent;
+              component.prototype.error = error;
+
+              try {
+                await this.popup
+                  .create(component)
+                  .present()
+                  .toPromise();
+              } catch (e) {
+                console.error(e);
+              }
+              return;
+            }
+
+            this.toaster.error(
+              error.message ?? 'An unexpected error has occurred'
+            );
+          }
+        })
     );
 
     /**

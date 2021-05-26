@@ -103,7 +103,6 @@ export class BaseComponent implements AfterViewInit {
 
     this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
       if (error) {
-        this.toasterService.error(error);
         this.service.removeAttachment();
       }
     });
