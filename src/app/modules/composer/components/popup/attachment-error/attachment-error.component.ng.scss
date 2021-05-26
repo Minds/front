@@ -1,0 +1,52 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 0px 100px;
+  justify-content: center;
+
+  @media screen and (max-width: $max-mobile) {
+    margin: 0 50px;
+  }
+  .m-attachmentError__title {
+    font-size: 24px;
+    font-weight: 700;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-attachmentError__message {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-attachmentError__divider {
+    margin-top: 40px;
+  }
+
+  .m-attachmentError__seeMoreSpan {
+    font-size: 15px;
+    font-weight: 400;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+
+  .m-attachmentError__continueButton {
+    margin-top: 20px;
+  }
+}

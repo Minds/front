@@ -1,6 +1,18 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  Subscription,
+} from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
@@ -10,6 +22,10 @@ import { VideoPoster } from './video-poster.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { SupportTier } from '../../wire/v2/support-tiers.service';
 import { HashtagsFromStringService } from '../../../common/services/parse-hashtags.service';
+import {
+  AttachmentValidationPayload,
+  AttachmentValidatorService,
+} from './attachment-validator.service';
 
 /**
  * Message value type
@@ -329,9 +345,9 @@ export class ComposerService implements OnDestroy {
   /**
    * Attachment error subject (state)
    */
-  readonly attachmentError$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly attachmentError$: BehaviorSubject<
+    AttachmentValidationPayload
+  > = new BehaviorSubject<AttachmentValidationPayload>(null);
 
   /**
    * Post-ability check subject (state)
@@ -448,7 +464,8 @@ export class ComposerService implements OnDestroy {
     protected richEmbed: RichEmbedService,
     protected preview: PreviewService,
     protected feedsUpdate: FeedsUpdateService,
-    private hashtagsFromString: HashtagsFromStringService
+    private hashtagsFromString: HashtagsFromStringService,
+    private attachmentValidator: AttachmentValidatorService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -492,11 +509,26 @@ export class ComposerService implements OnDestroy {
       this.attachment$.pipe(
         // Only react to attachment changes from previous values (string -> File -> null -> File -> ...)
         distinctUntilChanged(),
-
+        // emit bundled attachment validator and observable file.
+        switchMap(file => {
+          return combineLatest(
+            of(file),
+            this.attachmentValidator.validate(file)
+          );
+        }),
+        // if invalid, abort, else return file.
+        map(([file, validator]) => {
+          if (validator && !validator.isValid) {
+            this.removeAttachment();
+            this.attachmentError$.next(validator);
+            return;
+          }
+          return file;
+        }),
         // On every attachment change:
         tap(file => {
-          // - Reset attachment error string
-          this.attachmentError$.next('');
+          // - Reset attachment error
+          this.attachmentError$.next(null);
 
           // - Set the preview based the current value (Blob URL or empty)
           this.setPreview(file);
@@ -510,10 +542,10 @@ export class ComposerService implements OnDestroy {
 
           // - Handle errors and update attachmentErrors subject
           e => {
-            console.error('Composer:Attachment', e); // Ensure Sentry knows
-            this.attachmentError$.next(
-              (e && e.message) || 'There was an issue uploading your file'
-            );
+            this.attachmentError$.next({
+              isValid: false,
+              message: e.message ?? 'An unexpected error has occurred',
+            });
           }
         ),
 
@@ -740,7 +772,7 @@ export class ComposerService implements OnDestroy {
     this.inProgress$.next(false);
     this.progress$.next(0);
     this.isPosting$.next(false);
-    this.attachmentError$.next('');
+    this.attachmentError$.next(null);
     this.isEditing$.next(false);
     this.isMovingContent$.next(false);
     this.isGroupPost$.next(false);

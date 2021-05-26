@@ -1,0 +1,50 @@
+<h4 class="m-attachmentError__title">Video Upload</h4>
+<span *ngIf="error.codes.indexOf('Video:MaxLengthExceeded') > -1">
+  <ng-container *ngIf="isPlusOrPro; else notPlusOrPro">
+    <ng-container i18n="@@COMPOSER_ATTACHMENT_ERROR__MAX_DURATION_PLUS"
+      >The maximum video duration is
+    </ng-container>
+    {{ error.maxLengthPlus / 60 }}
+    <ng-container i18n="unit of time|@@COMMON__MINUTES">minutes</ng-container>
+  </ng-container>
+  <ng-template #notPlusOrPro>
+    <p>
+      <ng-container i18n="@@COMPOSER_ATTACHMENT_ERROR__MAX_DURATION_NON_PLUS"
+        >The maximum video duration is </ng-container
+      >{{ error.maxLength / 60 }}
+      <ng-container i18n="unit of time|@@COMMON__MINUTES">minutes</ng-container>
+    </p>
+    <p>
+      <ng-container i18n="@@COMPOSER_ATTACHMENT_ERROR__MAX_DURATION_UPGRADE"
+        >Upgrade to Minds+ or Minds Pro to upload videos up to </ng-container
+      >{{ error.maxLengthPlus / 60 }}
+      <ng-container i18n="unit of time|@@COMMON__MINUTES">minutes</ng-container>
+    </p>
+  </ng-template>
+</span>
+
+<span *ngIf="error.codes.indexOf('Video:MaxSizeExceeded') > -1">
+  <ng-container i18n="@@COMPOSER_ATTACHMENT_ERROR__MAX_FILE_SIZE_IS">
+    The max file size for video uploads is
+  </ng-container>
+  {{ error.maxFileSize | filesize }}
+</span>
+
+<hr class="m-attachmentError__divider" />
+<span class="m-attachmentError__seeMoreSpan"
+  >See
+  <a
+    href="https://www.minds.com/help/question/dc52a015-270f-44cf-bf97-acdeadbae0da"
+    target="_blank"
+    >more information</a
+  >
+  on uploads</span
+>
+<m-button
+  (onAction)="onContinueClick()"
+  class="m-attachmentError__continueButton"
+>
+  <ng-container i18n="@@COMMON__CONTINUE">
+    Continue
+  </ng-container>
+</m-button>
