@@ -21,6 +21,8 @@ describe('Composer Toolbar', () => {
     subscribe: { unsubscribe: () => {} },
   });
 
+  const attachmentError$ = new BehaviorSubject<any>(null);
+
   const isEditing$ = jasmine.createSpyObj('isEditing$', {
     next: () => {},
     getValue: () => false,
@@ -36,12 +38,19 @@ describe('Composer Toolbar', () => {
   const size$ = new BehaviorSubject<ComposerSize>('full');
 
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['attachment$', 'isEditing$', 'monetization$', 'size$'],
+    has: [
+      'attachment$',
+      'isEditing$',
+      'monetization$',
+      'size$',
+      'attachmentError$',
+    ],
     props: {
       attachment$: { get: () => attachment$ },
       isEditing$: { get: () => isEditing$ },
       monetization$: { get: () => monetization$ },
       size$: { get: () => size$ },
+      attachmentError$: { get: () => attachmentError$ },
     },
   });
 

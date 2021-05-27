@@ -37,13 +37,6 @@
       (onPost)="onPost($event)"
       [isModal]="isModal"
     ></m-composer__toolbar>
-
-    <div
-      class="m-composerBase__error"
-      *ngIf="attachmentError$ | async as lastError"
-    >
-      {{ lastError }}
-    </div>
   </div>
 
   <m-composer__popup #popupComponent></m-composer__popup>
