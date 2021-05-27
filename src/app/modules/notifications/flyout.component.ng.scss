@@ -14,6 +14,16 @@
     top: 40px;
     max-height: calc(100vh - 72px);
 
+    @media screen and (max-width: $min-tablet) {
+      right: -25px;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      top: 75px;
+      width: 85vw;
+      min-width: 85vw;
+    }
+
     &::before,
     &::after {
       content: ' ';
@@ -24,6 +34,12 @@
       width: 0;
       height: 0;
       border: solid transparent;
+      @media screen and (max-width: $min-tablet) {
+        right: 25px;
+      }
+      @media screen and (max-width: $max-mobile) {
+        right: 45px;
+      }
     }
     &::after {
       @include m-theme() {
