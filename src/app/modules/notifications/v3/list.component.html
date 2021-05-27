@@ -3,7 +3,7 @@
     <a [class.m-tabs__tab--selected]="(filter$ | async) === ''">All</a>
   </div>
   <div class="m-tabs__tab" (click)="setFilter('tags')">
-    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'">Mentions</a>
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'">Tags</a>
   </div>
 </div>
 
@@ -36,5 +36,5 @@
   *ngIf="list.length === 0 && !(inProgress$ | async)"
 >
   <span *ngIf="(filter$ | async) === ''">You have no notifications</span>
-  <span *ngIf="(filter$ | async) === 'tags'">You have no mentions</span>
+  <span *ngIf="(filter$ | async) === 'tags'">You have no tags</span>
 </div>

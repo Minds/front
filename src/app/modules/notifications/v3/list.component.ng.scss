@@ -8,11 +8,15 @@
   }
 
   .m-tabs__container {
-    padding: 0 20px;
+    padding: 0;
 
     > .m-tabs__tab {
       flex: 1;
       text-align: center;
+
+      a {
+        margin-right: 0;
+      }
     }
   }
 
