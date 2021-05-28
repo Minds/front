@@ -72,6 +72,7 @@ import { SettingsTwoFactorDisableSMSComponent } from './security/two-factor-v2/c
 import { SettingsTwoFactorCodePopupComponent } from './security/two-factor-v2/connect-app/code-popup/code-popup.component';
 import { SettingsV2MessengerComponent } from './account/messenger/messenger.component';
 import { MessengerModule } from '../messenger/messenger.module';
+import { SettingsV2ProfileComponent } from './account/profile/profile.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -95,13 +96,12 @@ const SETTINGS_V2_ROUTES: Routes = [
         },
         children: [
           {
-            path: 'display-name',
-            component: SettingsV2DisplayNameComponent,
-            canDeactivate: [CanDeactivateGuardService],
+            path: 'profile',
+            component: SettingsV2ProfileComponent,
             data: {
-              title: 'Display Name',
-              description: 'Customize your display name.',
-              id: 'display-name',
+              title: 'Profile',
+              description: 'Customize your profile.',
+              id: 'profile',
             },
           },
           {
@@ -528,6 +528,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsTwoFactorDisableSMSComponent,
     SettingsTwoFactorDisableTOTPComponent,
     SettingsTwoFactorCodePopupComponent,
+    SettingsV2ProfileComponent,
     // These need moving to settings folder
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
