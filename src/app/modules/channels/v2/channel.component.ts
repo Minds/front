@@ -172,10 +172,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
         this.layout = params.get('layout');
         this.detectChanges();
       }
-
-      if (params.has('editing') && JSON.parse(params.get('editing'))) {
-        this.channelEditIntent.edit();
-      }
     });
 
     // update seo on navigation events

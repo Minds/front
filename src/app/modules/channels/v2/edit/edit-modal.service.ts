@@ -3,8 +3,6 @@ import { Observable } from 'rxjs';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ChannelEditComponent } from './edit.component';
 import { MindsUser } from '../../../../interfaces/entities';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Session } from '../../../../services/session';
 
 /**
  * Help showing Edit modal and handling its response
@@ -20,12 +18,7 @@ export class ChannelEditModalService {
    * Constructor
    * @param overlayModal
    */
-  constructor(
-    protected overlayModal: OverlayModalService,
-    protected router: Router,
-    protected route: ActivatedRoute,
-    protected session: Session
-  ) {}
+  constructor(protected overlayModal: OverlayModalService) {}
 
   /**
    * Sets the calling component's injector for DI.
@@ -45,11 +38,6 @@ export class ChannelEditModalService {
       throw new Error(
         "You need to set the caller component's dependency injector before calling .present()"
       );
-    }
-
-    if (channel.guid !== this.session.getLoggedInUser().guid) {
-      this.removeQueryParams();
-      throw new Error('You may only edit your own channel');
     }
 
     return new Observable<any>(subscriber => {
@@ -85,19 +73,7 @@ export class ChannelEditModalService {
         if (modalOpen) {
           this.dismiss();
         }
-        this.removeQueryParams();
       };
-    });
-  }
-
-  removeQueryParams(): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        editing: null,
-      },
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
     });
   }
 

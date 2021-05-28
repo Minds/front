@@ -68,8 +68,8 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__ACCOUNT__PROFILE__LABEL:Profile`,
-            id: 'profile',
+            label: $localize`:@@SETTINGS__ACCOUNT__DISPLAYNAME__LABEL:Display Name`,
+            id: 'display-name',
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__EMAIL__LABEL:Email Address`,
