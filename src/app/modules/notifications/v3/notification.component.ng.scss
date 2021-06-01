@@ -12,6 +12,9 @@
     margin-bottom: 20px;
     font-size: 15px;
   }
+  .m-notifications__notification--noPreview {
+    margin-bottom: 0;
+  }
   .m-notificationsNotification__avatar,
   .m-notificationsNotification__body {
     //padding: 20px;

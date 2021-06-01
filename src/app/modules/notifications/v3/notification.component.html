@@ -1,5 +1,8 @@
 <ng-container *ngIf="notification; else ghostView">
-  <div class="m-notifications__notification">
+  <div
+    class="m-notifications__notification"
+    [class.m-notifications__notification--noPreview]="!entity"
+  >
     <div class="m-notificationsNotification__avatar">
       <a [routerLink]="['/', notification.from.username]">
         <img [src]="avatarUrl" />
@@ -67,11 +70,7 @@
   </div>
 
   <m-newsfeed__entity
-    *ngIf="
-      notification.entity &&
-      notification.entity?.type !== 'comment' &&
-      notification.entity?.type !== 'user'
-    "
+    *ngIf="entity && entity?.type !== 'comment' && entity?.type !== 'user'"
     [entity]="entity"
     [displayOptions]="{
       minimalMode: true,
@@ -111,6 +110,15 @@
       </ng-template>
       <ng-template ngSwitchCase="group_queue_add">
         <m-icon iconId="people"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="group_queue_approve">
+        <m-icon iconId="people"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="token_rewards_summary">
+        <m-icon iconId="account_balance"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="wire_received">
+        <m-icon iconId="attach_money"></m-icon>
       </ng-template>
     </ng-container>
   </div>
