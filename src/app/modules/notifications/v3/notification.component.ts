@@ -48,7 +48,11 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   }
 
   get showFrom(): boolean {
-    if (['group_queue_add'].indexOf(this.notification.type) > -1) {
+    if (
+      ['group_queue_add', 'token_rewards_summary'].indexOf(
+        this.notification.type
+      ) > -1
+    ) {
       return false;
     }
     return true;
@@ -86,6 +90,14 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
         return 'declined'; // Friendlier than REJECTED
       case 'boost_rejected':
         return 'is unable to approve';
+      case 'token_rewards_summary':
+        return (
+          'You earned ' +
+          this.notification.data.tokens_formatted +
+          ' tokens ($' +
+          this.notification.data.usd_formatted +
+          ') in rewards yesterday 🚀'
+        );
     }
   }
 
@@ -114,6 +126,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
         }
       case 'subscribe':
       case 'group_queue_add':
+      case 'token_rewards_summary':
         return '';
     }
 
@@ -127,6 +140,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     switch (this.notification.type) {
       case 'wire_received':
       case 'group_queue_add':
+      case 'token_rewards_summary':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':
@@ -200,8 +214,10 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   /**
    * Returns the entity object
    */
-  get entity(): Object {
+  get entity(): Object | null {
     switch (this.notification.type) {
+      case 'token_rewards_summary':
+        return null;
       case 'boost_peer_request':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
