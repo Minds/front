@@ -8,24 +8,26 @@
       <ng-container *ngTemplateOutlet="avatarTypeBubbleTag"></ng-container>
     </div>
     <div class="m-notificationsNotification__body">
-      <a
-        [routerLink]="['/', notification.from.username]"
-        class="m-notificationsNotificationBody__label--from"
-        >{{ notification.from.name }}</a
-      >
+      <ng-container *ngIf="showFrom">
+        <a
+          [routerLink]="['/', notification.from.username]"
+          class="m-notificationsNotificationBody__label--from"
+          >{{ notification.from.name }}</a
+        >
 
-      <!-- Merged froms -->
-      <span
-        *ngIf="notification.merged_count === 1 && notification.merged_from[0]"
-      >
-        and
-        <a [routerLink]="['/', notification.merged_from[0].username]">{{
-          notification.merged_from[0].name
-        }}</a>
-      </span>
-      <span *ngIf="notification.merged_count > 1">
-        and {{ notification.merged_count }} others</span
-      >
+        <!-- Merged froms -->
+        <span
+          *ngIf="notification.merged_count === 1 && notification.merged_from[0]"
+        >
+          and
+          <a [routerLink]="['/', notification.merged_from[0].username]">{{
+            notification.merged_from[0].name
+          }}</a>
+        </span>
+        <span *ngIf="notification.merged_count > 1">
+          and {{ notification.merged_count }} others</span
+        >
+      </ng-container>
 
       {{ verb }}
       <!-- eg. commented on-->
@@ -65,8 +67,12 @@
   </div>
 
   <m-newsfeed__entity
-    *ngIf="notification.entity && notification.entity?.type !== 'comment'"
-    [entity]="notification.entity"
+    *ngIf="
+      notification.entity &&
+      notification.entity?.type !== 'comment' &&
+      notification.entity?.type !== 'user'
+    "
+    [entity]="entity"
     [displayOptions]="{
       minimalMode: true,
       showComments: false,
@@ -102,6 +108,9 @@
       </ng-template>
       <ng-template ngSwitchCase="subscribe">
         <m-icon iconId="person"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="group_queue_add">
+        <m-icon iconId="people"></m-icon>
       </ng-template>
     </ng-container>
   </div>

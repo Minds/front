@@ -7,8 +7,10 @@ import {
   OnDestroy,
   Inject,
   PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { utils } from 'ethers';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 import { Session } from '../../../services/session';
@@ -19,6 +21,7 @@ import { NotificationsV3Service } from './notifications-v3.service';
   templateUrl: 'notification.component.html',
   styleUrls: ['./notification.component.ng.scss'],
   providers: [NotificationsV3Service],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   @Input() notification;
@@ -44,6 +47,13 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     }
   }
 
+  get showFrom(): boolean {
+    if (['group_queue_add'].indexOf(this.notification.type) > -1) {
+      return false;
+    }
+    return true;
+  }
+
   get verb(): string {
     switch (this.notification.type) {
       case 'vote_up':
@@ -60,16 +70,53 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
         return 'quoted';
       case 'subscribe':
         return 'subscribed to';
+      case 'group_queue_add':
+        return 'Your post is awaiting approval from the group administrators';
+      case 'group_queue_approve':
+        return 'approved';
+      case 'group_queue_reject':
+        return 'rejected';
+      case 'wire_received':
+        return 'paid';
+      case 'boost_peer_request':
+        return 'sent you';
+      case 'boost_peer_accepted':
+        return 'accepted';
+      case 'boost_peer_rejected':
+        return 'declined'; // Friendlier than REJECTED
+      case 'boost_rejected':
+        return 'is unable to approve';
     }
   }
 
   get pronoun(): string {
-    if (this.notification.type === 'quote') {
-      return 'your';
+    switch (this.notification.type) {
+      case 'quote':
+        return 'your';
+      case 'boost_peer_request':
+        return 'a';
+      case 'boost_peer_accepted':
+      case 'boost_peer_rejected':
+        return 'your';
+      case 'wire_received':
+        switch (this.notification.data.method) {
+          case 'tokens':
+            return (
+              'you ' +
+              utils.formatEther(this.notification.data.amount) +
+              ' ' +
+              this.notification.data.method
+            );
+          case 'usd':
+            const cents = this.notification.data.amount;
+            const usd = Math.round(this.notification.data.amount / 100);
+            return 'you $' + usd;
+        }
+      case 'subscribe':
+      case 'group_queue_add':
+        return '';
     }
-    if (this.notification.type === 'subscribe') {
-      return '';
-    }
+
     return this.notification.entity?.owner_guid ==
       this.session.getLoggedInUser().guid
       ? 'your'
@@ -77,6 +124,17 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   }
 
   get noun(): string {
+    switch (this.notification.type) {
+      case 'wire_received':
+      case 'group_queue_add':
+        return '';
+      case 'boost_peer_request':
+      case 'boost_peer_accepted':
+      case 'boost_peer_rejected':
+        return 'boost offer';
+      case 'boost_rejected':
+        return 'boost';
+    }
     switch (this.notification.entity?.type) {
       case 'comment':
         return 'comment';
@@ -90,6 +148,14 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   }
 
   get nounLink() {
+    switch (this.notification.type) {
+      case 'boost_peer_request':
+        return ['/boost/console/offers/history/inbox'];
+      case 'boost_peer_accepted':
+      case 'boost_peer_rejected':
+        return ['/boost/console/offers/history/outbox'];
+    }
+
     switch (this.notification.entity?.type) {
       case 'comment':
         return ['/newsfeed/', this.notification.entity.entity_guid]; // TODO make this have the focused query param
@@ -132,6 +198,19 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Returns the entity object
+   */
+  get entity(): Object {
+    switch (this.notification.type) {
+      case 'boost_peer_request':
+      case 'boost_peer_accepted':
+      case 'boost_peer_rejected':
+        return this.notification.entity.entity;
+    }
+    return this.notification.entity;
+  }
+
+  /**
    * Will mark as read if intersecting
    */
   protected detectIntersecting(): void {
@@ -147,7 +226,6 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     this.interceptionObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
-          // console.log(entry.isIntersecting);
           this.service.markAsRead(this.notification);
         });
       },
