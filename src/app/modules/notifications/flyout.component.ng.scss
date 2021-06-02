@@ -3,7 +3,7 @@
 :host {
   &.v3 {
     @include m-theme() {
-      background-color: themed($m-bgColor--primaryAlt);
+      background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-borderColor--primary);
       box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
     }
