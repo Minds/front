@@ -1,0 +1,49 @@
+@import 'defaults.scss';
+
+:host {
+  .m-updateModal__body {
+    padding: 40px 50px 30px 50px;
+    overflow: auto;
+    max-height: 65%;
+    max-height: 65vh;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 30px !important;
+    }
+
+    h3 {
+      font-weight: 600;
+      font-size: 24px;
+      padding: 0;
+      margin: 0 0 30px 0;
+      line-height: 30px;
+    }
+
+    p,
+    li {
+      font-size: 16px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+  .m-updateModal__footer {
+    padding: 30px 50px;
+    display: flex;
+    justify-content: flex-end;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      box-shadow: 0 0px 20px -5px rgba(themed($m-black-always), 0.7);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 30px !important;
+    }
+  }
+}

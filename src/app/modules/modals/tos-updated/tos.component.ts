@@ -6,6 +6,10 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-modal--tos-updated',
   templateUrl: 'tos.component.html',
+  styleUrls: [
+    'tos.component.ng.scss',
+    '../../../common/components/modal/modal.component.ng.scss',
+  ],
 })
 export class TOSUpdatedModal {
   user;
@@ -38,7 +42,7 @@ export class TOSUpdatedModal {
     }
   }
 
-  close(e) {
+  close() {
     this.updateUser();
     this.showModal = false;
   }
