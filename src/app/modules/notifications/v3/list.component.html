@@ -32,12 +32,13 @@
 </ul>
 
 <infinite-scroll
-  *ngIf="list.length > 0 && !(inProgress$ | async) && nextPagingToken"
+  *ngIf="list.length > 0 && nextPagingToken"
   distance="25%"
   (load)="loadNext()"
   [moreData]="true"
   [scrollSource]="scrollSource"
   [inProgress]="inProgress$ | async"
+  [hidden]="inProgress$ | async"
 >
 </infinite-scroll>
 
