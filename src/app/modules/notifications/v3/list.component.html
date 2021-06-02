@@ -1,12 +1,26 @@
 <div class="m-tabs__container">
   <div class="m-tabs__tab" (click)="setFilter('')">
-    <a [class.m-tabs__tab--selected]="(filter$ | async) === ''">All</a>
+    <a
+      [class.m-tabs__tab--selected]="(filter$ | async) === ''"
+      i18n="@@COMMON__ALL"
+      >All</a
+    >
   </div>
   <div class="m-tabs__tab" (click)="setFilter('tags')">
-    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'">Mentions</a>
+    <a
+      [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'"
+      i18n="@@M__NOTIFICATIONS__MENTIONS"
+      >Mentions</a
+    >
   </div>
 </div>
 
+<m-newNotificationsButton
+  (loadNew)="reload($event)"
+  [ngClass]="{
+    'm-newNotificationsButton--fixed': _scrolledPastTabs
+  }"
+></m-newNotificationsButton>
 <ul>
   <li *ngFor="let notification of list">
     <m-notifications__notification

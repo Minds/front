@@ -2,9 +2,9 @@ import {
   Component,
   Input,
   ElementRef,
-  ViewChild,
   OnInit,
   OnDestroy,
+  HostBinding,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -37,10 +37,17 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
 
   @Input() scrollSource: boolean;
 
+  @HostBinding('class.m-notifications__list--scrolledPastTabs')
+  _scrolledPastTabs: boolean = false;
+
+  @Input() set scrolledPastTabs(value: boolean) {
+    this._scrolledPastTabs = value;
+  }
+
   constructor(
     public session: Session,
     private service: NotificationsV3Service,
-    private v1Service: NotificationService,
+    public v1Service: NotificationService,
     public route: ActivatedRoute,
     public el: ElementRef
   ) {}
@@ -85,6 +92,10 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
 
     // Reset the counter too
     this.resetCounter();
+  }
+
+  reload($event): void {
+    this.setFilter('');
   }
 
   /**

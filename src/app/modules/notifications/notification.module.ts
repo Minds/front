@@ -21,6 +21,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { NotificationsV3ListComponent } from './v3/list.component';
 import { NotificationsV3NotificationComponent } from './v3/notification.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { NewNotificationsButtonComponent } from './v3/new-notifications-button/new-notifications-button.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
     // V3
     NotificationsV3ListComponent,
     NotificationsV3NotificationComponent,
+    NewNotificationsButtonComponent,
   ],
   providers: [NotificationService],
   exports: [

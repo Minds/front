@@ -2,18 +2,31 @@
 
 :host {
   display: block;
+  position: relative;
 
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
 
+  &.m-notifications__list--scrolledPastTabs {
+    position: static;
+  }
+
   .m-tabs__container {
     padding: 0 20px;
+    position: relative;
+    z-index: 2;
 
     > .m-tabs__tab {
       flex: 1;
       text-align: center;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
     }
+  }
+  .m-notificationsList__listWrapper {
+    position: relative;
   }
 
   ul {
