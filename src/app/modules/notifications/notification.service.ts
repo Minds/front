@@ -11,7 +11,7 @@ import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
 import { MetaService } from '../../common/services/meta.service';
-import { Subscription, timer } from 'rxjs';
+import { BehaviorSubject, Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
 import { FeaturesService } from '../../services/features.service';
 
@@ -23,6 +23,9 @@ export class NotificationService implements OnDestroy {
   onReceive: EventEmitter<any> = new EventEmitter();
   notificationPollTimer;
   count: number = 0;
+
+  // used in V3 notifications
+  public count$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   private updateNotificationCountSubscription: Subscription;
 
@@ -115,6 +118,7 @@ export class NotificationService implements OnDestroy {
    * Sync Notifications to the topbar Counter
    */
   sync() {
+    this.count$.next(this.count);
     this.metaService.setCounter(this.count);
   }
 
