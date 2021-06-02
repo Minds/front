@@ -11,6 +11,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Session } from '../../../services/session';
+import {
+  GlobalScrollService,
+  ScrollSubscription,
+} from '../../../services/ux/global-scroll.service';
 import { NotificationService } from '../notification.service';
 import {
   NotificationsV3Service,
@@ -35,21 +39,20 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
   listSubscription: Subscription;
   list = [];
 
-  @Input() scrollSource: boolean;
+  scrollSubscriptions: [ScrollSubscription, Subscription];
+
+  @Input() scrollSource: any;
 
   @HostBinding('class.m-notifications__list--scrolledPastTabs')
-  _scrolledPastTabs: boolean = false;
-
-  @Input() set scrolledPastTabs(value: boolean) {
-    this._scrolledPastTabs = value;
-  }
+  hasScrolledPastTabs: boolean = false;
 
   constructor(
     public session: Session,
     private service: NotificationsV3Service,
     public v1Service: NotificationService,
     public route: ActivatedRoute,
-    public el: ElementRef
+    public el: ElementRef,
+    private scrollService: GlobalScrollService
   ) {}
 
   ngOnInit() {
@@ -61,6 +64,15 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
       nextPagingToken => (this.nextPagingToken = nextPagingToken)
     );
 
+    this.scrollSubscriptions = this.scrollService.listen(
+      this.scrollSource,
+      () => {
+        if (this.scrollSource) {
+          this.hasScrolledPastTabs = this.scrollSource.scrollTop > 50;
+        }
+      }
+    );
+
     this.resetCounter();
   }
 
@@ -70,6 +82,11 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.listSubscription.unsubscribe();
     this.nextPagingTokenSubscription.unsubscribe();
+
+    this.scrollService.unListen(
+      this.scrollSubscriptions[0],
+      this.scrollSubscriptions[1]
+    );
   }
 
   /**

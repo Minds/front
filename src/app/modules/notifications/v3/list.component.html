@@ -7,18 +7,14 @@
     >
   </div>
   <div class="m-tabs__tab" (click)="setFilter('tags')">
-    <a
-      [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'"
-      i18n="@@M__NOTIFICATIONS__MENTIONS"
-      >Mentions</a
-    >
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'">Tags</a>
   </div>
 </div>
 
 <m-newNotificationsButton
   (loadNew)="reload($event)"
   [ngClass]="{
-    'm-newNotificationsButton--fixed': _scrolledPastTabs
+    'm-newNotificationsButton--fixed': hasScrolledPastTabs
   }"
 ></m-newNotificationsButton>
 <ul>
@@ -50,5 +46,5 @@
   *ngIf="list.length === 0 && !(inProgress$ | async)"
 >
   <span *ngIf="(filter$ | async) === ''">You have no notifications</span>
-  <span *ngIf="(filter$ | async) === 'tags'">You have no mentions</span>
+  <span *ngIf="(filter$ | async) === 'tags'">You have no tags</span>
 </div>

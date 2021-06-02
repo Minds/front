@@ -1,15 +1,14 @@
 <div
-  *ngIf="(v1Service.count$ | async) > 0"
+  *ngIf="count > 0"
   class="m-newNotificationsButton"
   (click)="loadNewNotifications($event)"
 >
   <i class="material-icons">refresh</i>
   <span class="m-legible"
-    >{{ v1Service.count$ | async }}
+    >{{ count }}
     <ng-container i18n="@@M__NOTIFICATIONS__NEW">new </ng-container>
     <ng-container i18n="@@M__NOTIFICATIONS__NOTIFICATION"
-      >{ v1Service.count$ | async, plural, =1 {notification} other
-      {notifications} }</ng-container
+      >{ count, plural, =1 {notification} other {notifications} }</ng-container
     >
   </span>
 </div>

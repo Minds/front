@@ -6,7 +6,6 @@ import {
   ViewChild,
   HostBinding,
   OnDestroy,
-  ElementRef,
 } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { FeaturesService } from '../../services/features.service';
@@ -24,16 +23,12 @@ export class NotificationsFlyoutComponent implements OnDestroy {
 
   @ViewChild('notifications', { static: true }) notificationList: any;
 
-  @ViewChild('scrollableArea', { static: false }) scrollableArea: ElementRef;
-
   @HostBinding('class.m-notificationsFlyout--newDesign')
   newNavigation: boolean = false;
 
   @HostBinding('class.v3') v3: boolean;
 
   routerSubscription: Subscription = null;
-
-  scrolledPastTabs: boolean = false;
 
   constructor(
     private featuresService: FeaturesService,
@@ -45,16 +40,6 @@ export class NotificationsFlyoutComponent implements OnDestroy {
         this.close(); // close flyout on route change.
       }
     });
-  }
-
-  /**
-   * Listen to scroll, fix new notifs button
-   */
-  onScroll($event) {
-    if (this.scrollableArea && this.scrollableArea.nativeElement) {
-      this.scrolledPastTabs =
-        this.scrollableArea.nativeElement.scrollTop > 50 ? true : false;
-    }
   }
 
   ngOnInit() {

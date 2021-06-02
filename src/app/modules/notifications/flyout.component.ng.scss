@@ -3,15 +3,26 @@
 :host {
   &.v3 {
     @include m-theme() {
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--primaryAlt);
       border: 1px solid themed($m-borderColor--primary);
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
     }
     min-width: 320px;
-    max-width: 450px;
+    max-width: 500px;
     width: 50vw;
     right: -70px;
     top: 40px;
     max-height: calc(100vh - 72px);
+
+    @media screen and (max-width: $min-tablet) {
+      right: -25px;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      top: 75px;
+      width: 85vw;
+      min-width: 85vw;
+    }
 
     &::before,
     &::after {
@@ -23,11 +34,17 @@
       width: 0;
       height: 0;
       border: solid transparent;
+      @media screen and (max-width: $min-tablet) {
+        right: 25px;
+      }
+      @media screen and (max-width: $max-mobile) {
+        right: 45px;
+      }
     }
     &::after {
       @include m-theme() {
         border-color: rgba(themed($m-bgColor--primary), 0);
-        border-bottom-color: themed($m-bgColor--primary);
+        border-bottom-color: themed($m-bgColor--primaryAlt);
       }
       border-width: 10px;
       margin-left: 10px;

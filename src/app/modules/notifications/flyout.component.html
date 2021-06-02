@@ -2,12 +2,10 @@
   <div
     class="m-notificationsFlyout__scrollable"
     *ngIf="visible"
-    (scroll)="onScroll($event)"
     #scrollableArea
   >
     <m-notifications__list
       [scrollSource]="scrollableArea"
-      [scrolledPastTabs]="scrolledPastTabs"
     ></m-notifications__list>
   </div>
 </ng-container>
