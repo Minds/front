@@ -70,7 +70,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadComponent();
+    if (!this.featuresService.has('notifications-v3')) {
+      this.loadComponent();
+    }
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
