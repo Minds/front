@@ -46,9 +46,8 @@ lint:
   image: cypress/browsers:node12.13.0-chrome80-ff74
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: "6.6.0"
+    CYPRESS_INSTALL_BINARY: "7.4.0"
   script:
-    - npm i -g cypress
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
@@ -62,15 +61,15 @@ lint:
     - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/cypress-tests.git
     - echo "Checking if branch exists..."
     - BRANCH_EXISTS=$(git ls-remote --heads https://www.gitlab.com/minds/cypress-tests $CI_BUILD_REF_NAME | wc -l)
+    - cd ./cypress-tests
     - if [ $BRANCH_EXISTS == "1" ] ; then
     -    echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..." 
-    -    cd ./cypress-tests
     -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
-    -    cd ..
     - fi;
+    - npm i
     - echo "Running Cypress"
     - >
-      cypress run --browser chrome
+      ./node_modules/.bin/cypress run --browser chrome
       --parallel
       --record
       --ci-build-id $CI_PIPELINE_ID
