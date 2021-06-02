@@ -1,9 +1,15 @@
 @import 'defaults.scss';
 
 :host {
-  display: block;
-  padding: 20px;
-  position: relative;
+  display: contents;
+
+  .m-notification__wrapperLink {
+    text-decoration: inherit;
+    font-weight: inherit;
+    display: block;
+    padding: 20px;
+    position: relative;
+  }
 
   .m-notifications__notification {
     display: flex;
