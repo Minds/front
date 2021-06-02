@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { utils } from 'ethers';
+import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 import { Session } from '../../../services/session';
@@ -21,7 +22,7 @@ import { NotificationsV3Service } from './notifications-v3.service';
   selector: 'm-notifications__notification',
   templateUrl: 'notification.component.html',
   styleUrls: ['./notification.component.ng.scss'],
-  providers: [NotificationsV3Service],
+  providers: [NotificationsV3Service, ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {

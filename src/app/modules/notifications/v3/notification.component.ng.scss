@@ -96,6 +96,24 @@
     }
   }
 
+  ::ng-deep m-comment {
+    .m-comment__avatarWrapper,
+    .m-comment__ownerRow,
+    .m-comment__toolbar {
+      display: none !important;
+    }
+    img {
+      max-width: 100%;
+      max-height: 300px;
+    }
+    a {
+      text-decoration: none;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+
   .m-notificationNotification__commentPreview p {
     margin: 0;
     font-size: 15px;

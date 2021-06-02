@@ -61,13 +61,15 @@
     <p *ngIf="notification.entity">&nbsp;</p>
     <!-- spacer if there is a notifcation below -->
   </div>
-
+  <!-- 
   <div
     class="m-notificationNotification__commentPreview"
     *ngIf="notification.entity?.type === 'comment'"
   >
     <p>{{ notification.entity?.description }}</p>
-  </div>
+  </div> -->
+
+  <m-comment [comment]="entity" *ngIf="entity?.type === 'comment'"></m-comment>
 
   <m-newsfeed__entity
     *ngIf="entity && entity?.type !== 'comment' && entity?.type !== 'user'"

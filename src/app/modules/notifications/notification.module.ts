@@ -22,6 +22,7 @@ import { NotificationsV3ListComponent } from './v3/list.component';
 import { NotificationsV3NotificationComponent } from './v3/notification.component';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { NewNotificationsButtonComponent } from './v3/new-notifications-button/new-notifications-button.component';
+import { CommentsModule } from '../comments/comments.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { NewNotificationsButtonComponent } from './v3/new-notifications-button/n
       { path: 'notifications', component: NotificationsComponent },
     ]),
     NewsfeedModule, // For m-newsfeed__entity
+    CommentsModule, // For m-comment
   ],
   declarations: [
     NotificationsFlyoutComponent,
