@@ -7,6 +7,7 @@ import {
   OnDestroy,
   Inject,
   PLATFORM_ID,
+  ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -34,6 +35,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     private configs: ConfigsService,
     private el: ElementRef,
     private service: NotificationsV3Service,
+    private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -242,7 +244,9 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     this.interceptionObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
-          this.service.markAsRead(this.notification);
+          if (entry.isIntersecting) {
+            this.service.markAsRead(this.notification);
+          }
         });
       },
       options
