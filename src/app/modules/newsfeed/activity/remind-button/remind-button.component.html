@@ -5,9 +5,6 @@
     (click)="onButtonClick($event)"
   >
     <i class="material-icons">repeat</i>
-    <span class="minds-counter" *ngIf="remindCount$ | async">{{
-      remindCount$ | async
-    }}</span>
   </button>
 
   <ul class="m-dropdown__list" *ngIf="isOpened$ | async">

@@ -64,6 +64,8 @@ export type ActivityEntity = {
   remind_deleted?: boolean;
   pinned?: boolean; // pinned to top of channel
   subtype?: string;
+  reminds?: number; // count of reminds
+  quotes?: number; // count of quotes
 };
 
 // Constants of blocks

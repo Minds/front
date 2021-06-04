@@ -4,6 +4,7 @@ import {
   Component,
   DoCheck,
   OnChanges,
+  Input,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -24,7 +25,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
       <i class="material-icons">thumb_up</i>
       <span
         class="minds-counter"
-        *ngIf="object['thumbs:up:count'] > 0"
+        *ngIf="object['thumbs:up:count'] > 0 && !iconOnly"
         data-cy="data-minds-thumbs-up-counter"
         >{{ object['thumbs:up:count'] | number }}</span
       >
@@ -45,6 +46,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     owner_guid: null,
     'thumbs:up:user_guids': [],
   };
+
+  @Input() iconOnly = false;
 
   constructor(
     public session: Session,

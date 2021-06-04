@@ -9,6 +9,8 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
+import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -29,7 +31,8 @@ export class ActivityToolbarComponent {
     private overlayModalService: OverlayModalService,
     private stackableModal: StackableModalService,
     private boostModal: BoostModalLazyService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    private interactionsModalService: InteractionsModalService
   ) {}
 
   ngOnInit() {
@@ -74,5 +77,12 @@ export class ActivityToolbarComponent {
     } catch (e) {
       // do nothing.
     }
+  }
+
+  async openInteractions(type: InteractionType) {
+    const guid = this.entity.entity_guid
+      ? this.entity.entity_guid
+      : this.entity.guid;
+    await this.interactionsModalService.open(type, guid);
   }
 }
