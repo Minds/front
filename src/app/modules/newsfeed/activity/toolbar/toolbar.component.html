@@ -5,7 +5,9 @@
     (click)="openInteractions('votes-up')"
   >
     <span>{{ entity['thumbs:up:count'] }}</span>
-    <span>up-votes</span>
+    <span
+      >{ entity['thumbs:up:count'], plural, =1 {up-vote} other {up-votes}}</span
+    >
   </div>
 
   <div
@@ -14,7 +16,10 @@
     (click)="openInteractions('votes-down')"
   >
     <span>{{ entity['thumbs:down:count'] }}</span>
-    <span>down-votes</span>
+    <span
+      >{ entity['thumbs:down:count'], plural, =1 {down-vote} other
+      {down-votes}}</span
+    >
   </div>
 
   <div
@@ -23,7 +28,7 @@
     (click)="openInteractions('reminds')"
   >
     <span>{{ entity.reminds }}</span>
-    <span>reminds</span>
+    <span>{ entity.reminds, plural, =1 {remind} other {reminds}}</span>
   </div>
 
   <div
@@ -32,7 +37,7 @@
     (click)="openInteractions('quotes')"
   >
     <span>{{ entity.quotes }}</span>
-    <span>quotes</span>
+    <span>{ entity.quotes, plural, =1 {quote} other {quotes}}</span>
   </div>
 </div>
 
