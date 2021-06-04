@@ -81,7 +81,7 @@ export class ActivityToolbarComponent {
 
   async openInteractions(type: InteractionType) {
     const guid =
-      this.entity.entity_guid && type !== 'quotes'
+      this.entity.entity_guid && type !== 'quotes' && type !== 'reminds'
         ? this.entity.entity_guid
         : this.entity.guid;
     await this.interactionsModalService.open(type, guid);
