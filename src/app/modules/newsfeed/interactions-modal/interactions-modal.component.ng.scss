@@ -6,6 +6,8 @@
     min-height: 300px;
 
     padding: 20px 0;
+
+    @include hide-scrollbar;
   }
 
   ul {
