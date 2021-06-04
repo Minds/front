@@ -231,7 +231,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   }
 
   transferComplete(): void {
-    this.toasterService.success('On-chain transfer complete');
+    this.toasterService.success('On-chain transfer request submitted.');
     this.overlayModal.dismiss();
   }
 
