@@ -37,7 +37,7 @@ export class WalletSettingsBTCComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       addressInput: new FormControl('', {
-        validators: [Validators.required, this.validateAddressFormat],
+        validators: [this.validateAddressFormat],
       }),
     });
     this.load();
@@ -60,6 +60,10 @@ export class WalletSettingsBTCComponent implements OnInit {
   }
 
   validateAddressFormat(control: AbstractControl) {
+    if (control.value.length === 0) {
+      return null;
+    }
+
     // This allows for some false positives because bech32 format allows for longer length
     // but will catch some negatives so is better than nothing
     if (
