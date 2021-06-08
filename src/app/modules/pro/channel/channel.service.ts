@@ -15,6 +15,7 @@ import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WireModalService } from '../../wire/wire-modal.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { map } from 'rxjs/operators';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 export type RouterLinkToType =
   | 'home'
@@ -79,7 +80,8 @@ export class ProChannelService implements OnDestroy {
     protected router: Router,
     protected site: SiteService,
     protected analytics: AnalyticsService,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private toasterService: FormToastService
   ) {
     this.listen();
 
@@ -262,6 +264,9 @@ export class ProChannelService implements OnDestroy {
       this.currentChannel.subscribed = false;
       this.currentChannel.subscribers_count -= 1;
       this.userIsSubscribed$.next(false);
+      this.toasterService.error(
+        e.message || "You can't subscribe to this user"
+      );
     }
   }
 

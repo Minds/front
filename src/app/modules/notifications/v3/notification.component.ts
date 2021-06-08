@@ -52,7 +52,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
 
   get showFrom(): boolean {
     if (
-      ['group_queue_add', 'token_rewards_summary'].indexOf(
+      ['group_queue_add', 'token_rewards_summary', 'report_actioned'].indexOf(
         this.notification.type
       ) > -1
     ) {
@@ -101,6 +101,13 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
           this.notification.data.usd_formatted +
           ') in rewards yesterday 🚀'
         );
+      case 'report_actioned':
+        return (
+          'Your ' +
+          (this.notification.entity?.type === 'comment' ? 'comment' : 'post') +
+          ' was ' +
+          this.notification.data.action
+        );
     }
   }
 
@@ -130,6 +137,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
       case 'subscribe':
       case 'group_queue_add':
       case 'token_rewards_summary':
+      case 'report_actioned':
         return '';
     }
 
@@ -144,6 +152,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
       case 'wire_received':
       case 'group_queue_add':
       case 'token_rewards_summary':
+      case 'report_actioned':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':

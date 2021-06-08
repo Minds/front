@@ -70,7 +70,7 @@
       <p *ngIf="notification.entity">&nbsp;</p>
       <!-- spacer if there is a notifcation below -->
     </div>
-    <!-- 
+    <!--
     <div
       class="m-notificationNotification__commentPreview"
       *ngIf="notification.entity?.type === 'comment'"
@@ -134,6 +134,9 @@
       </ng-template>
       <ng-template ngSwitchCase="wire_received">
         <m-icon iconId="attach_money"></m-icon>
+      </ng-template>
+      <ng-template ngSwitchCase="report_actioned">
+        <m-icon iconId="warning"></m-icon>
       </ng-template>
     </ng-container>
   </div>
