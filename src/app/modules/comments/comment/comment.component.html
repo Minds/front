@@ -90,7 +90,10 @@
     </div>
     <!-- ---------------------------------------- -->
 
-    <div class="m-comment__matureScreen" *ngIf="comment.mature && !showMature">
+    <div
+      class="m-comment__matureScreen"
+      *ngIf="comment.mature && !shouldShowMatureContent()"
+    >
       <span>This comment has been tagged as explicit</span>
       <span (click)="toggleMatureVisibility()">View comment</span>
     </div>
@@ -98,13 +101,15 @@
       class="m-comment__messageWrapper"
       m-read-more
       [maxHeightAllowed]="120"
-      *ngIf="!comment.mature || showMature"
+      *ngIf="!comment.mature || shouldShowMatureContent()"
     >
       <p
         [hidden]="editing"
         class="m-comment__message m-mature-message-content"
         [innerHtml]="comment.description || '' | tags | codeHighlight"
-        [ngClass]="{ 'm-mature-text': comment.mature && !showMature }"
+        [ngClass]="{
+          'm-mature-text': comment.mature && !shouldShowMatureContent()
+        }"
       ></p>
       <m-read-more--button [v2]="true"></m-read-more--button>
     </div>
