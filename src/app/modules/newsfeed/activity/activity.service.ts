@@ -13,6 +13,7 @@ export type ActivityDisplayOptions = {
   showComments: boolean;
   showOnlyCommentsInput: boolean;
   showToolbar: boolean;
+  showInteractions: boolean;
   showBoostMenuOptions: boolean;
   showEditedTag: boolean;
   showVisibilityState: boolean;
@@ -278,6 +279,7 @@ export class ActivityService {
     showComments: true,
     showOnlyCommentsInput: true,
     showToolbar: true,
+    showInteractions: false,
     showBoostMenuOptions: false,
     showEditedTag: false,
     showVisibilityState: false,

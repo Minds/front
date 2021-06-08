@@ -1,4 +1,7 @@
-<div class="m-activityToolbar__metrics">
+<div
+  class="m-activityToolbar__metrics"
+  *ngIf="service.displayOptions.showInteractions"
+>
   <div
     class="m-activityToolbarMetrics__metric"
     *ngIf="entity['thumbs:up:count'] > 0"
@@ -44,18 +47,18 @@
 <div class="m-activityToolbar__actions">
   <minds-button-thumbs-up
     [object]="entity"
-    iconOnly="true"
+    [iconOnly]="service.displayOptions.showInteractions"
   ></minds-button-thumbs-up>
   <minds-button-thumbs-down
     [object]="entity"
-    iconOnly="true"
+    [iconOnly]="service.displayOptions.showInteractions"
   ></minds-button-thumbs-down>
 
   <m-activity__remindButton *ngIf="allowReminds"> </m-activity__remindButton>
 
   <minds-button-comment
     [object]="entity"
-    iconOnly="true"
+    [iconOnly]="service.displayOptions.showInteractions"
     (click)="toggleComments()"
     *ngIf="
       !service.displayOptions.showComments ||

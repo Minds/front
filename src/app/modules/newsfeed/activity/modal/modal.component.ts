@@ -67,6 +67,7 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
     this.activityService.setDisplayOptions({
       showOnlyCommentsInput: false,
+      showInteractions: true,
       isModal: true,
       fixedHeight: false,
       autoplayVideo: true,

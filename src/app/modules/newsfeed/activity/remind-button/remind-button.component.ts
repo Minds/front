@@ -18,6 +18,10 @@ import { StackableModalService } from '../../../../services/ux/stackable-modal.s
 export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  count$: Observable<number> = this.service.entity$.pipe(
+    map(entity => entity.reminds + entity.quotes)
+  );
+
   constructor(
     public service: ActivityService,
     private injector: Injector,

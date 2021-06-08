@@ -382,6 +382,11 @@ $modal-padding: 20px;
           display: none;
         }
 
+        .m-activityToolbar__metrics,
+        .m-activityToolbar__actions {
+          padding: 20px 0;
+        }
+
         minds-button-comment {
           > a > span {
             padding-right: 0;
