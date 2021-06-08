@@ -131,6 +131,22 @@ export class WireService {
       });
 
       this.wireSent.next(wire);
+      if (response && response.status && response.status === 'success') {
+        const isMembership =
+          wire.recurring &&
+          (!wire.recurringInterval || wire.recurringInterval === 'monthly');
+
+        console.log(
+          'ojm wire',
+          wire.recurring,
+          wire.recurringInterval,
+          isMembership
+        );
+        const message = isMembership
+          ? 'Recurring payment submitted successfully'
+          : 'Wire submitted successfully';
+        this.toast.success(message);
+      }
       return { done: true };
     } catch (e) {
       if (e.message) {

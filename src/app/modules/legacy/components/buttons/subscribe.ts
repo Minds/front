@@ -69,7 +69,9 @@ export class SubscribeButton {
       })
       .catch(e => {
         this._user.subscribed = false;
-        this.toasterService.error("You can't subscribe to this user.");
+        this.toasterService.error(
+          e.message || "You can't subscribe to this user"
+        );
       });
   }
 

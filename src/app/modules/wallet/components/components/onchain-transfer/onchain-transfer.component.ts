@@ -162,6 +162,9 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
         if (response.done) {
           this.transferComplete();
+          this.toasterService.success(
+            'Your on-chain transfer request is pending review. Please allow up to 72 hours for processing'
+          );
         } else {
           this.submitError = 'Server error';
         }
