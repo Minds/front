@@ -56,6 +56,8 @@ export class InteractionsModalComponent {
         return 'Reminds';
       case 'quotes':
         return 'Quote posts';
+      case 'subscribers':
+        return 'Recent subscribers';
     }
   }
 

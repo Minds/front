@@ -16,6 +16,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 import { Session } from '../../../services/session';
+import { InteractionsModalService } from '../../newsfeed/interactions-modal/interactions-modal.service';
 import { NotificationsV3Service } from './notifications-v3.service';
 
 @Component({
@@ -37,6 +38,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     private el: ElementRef,
     private service: NotificationsV3Service,
     private cd: ChangeDetectorRef,
+    private interactionsModalService: InteractionsModalService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -47,6 +49,17 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.interceptionObserver) {
       this.interceptionObserver.disconnect();
+    }
+  }
+
+  async onClick(e: MouseEvent) {
+    if (this.notification.type === 'subscribe') {
+      e.preventDefault();
+      e.stopPropagation();
+      await this.interactionsModalService.open(
+        'subscribers',
+        this.session.getLoggedInUser().guid
+      );
     }
   }
 
@@ -180,6 +193,8 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
         return ['/boost/console/offers/history/outbox'];
+      case 'subscribe':
+        return ['/' + this.notification.from.username];
     }
 
     switch (this.notification.entity?.type) {

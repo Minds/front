@@ -22,7 +22,12 @@ import {
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 
-export type InteractionType = 'votes-up' | 'votes-down' | 'reminds' | 'quotes';
+export type InteractionType =
+  | 'votes-up'
+  | 'votes-down'
+  | 'reminds'
+  | 'quotes'
+  | 'subscribers';
 
 @Injectable()
 export class InteractionsModalDataService {
@@ -135,6 +140,14 @@ export class InteractionsModalDataService {
           'next-page': pagingToken,
           quote_guid: entityGuid,
         });
+      case 'subscribers':
+        return this.api.get(
+          `api/v3/subscriptions/graph/${entityGuid}/subscribers`,
+          {
+            limit: 24,
+            from_timestamp: pagingToken,
+          }
+        );
     }
   }
 
