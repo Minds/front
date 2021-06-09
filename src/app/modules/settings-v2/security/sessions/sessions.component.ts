@@ -11,6 +11,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { SettingsV2Service } from '../../settings-v2.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-settingsV2__sessions',
@@ -32,7 +33,8 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
     protected router: Router,
     private session: Session,
     protected settingsService: SettingsV2Service,
-    protected client: Client
+    protected client: Client,
+    private toast: FormToastService
   ) {}
 
   ngOnInit() {
@@ -65,7 +67,11 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
 
     if (response && response.status === 'success') {
       this.getSessions();
+      return;
     }
+
+    this.toast.error(response.message ?? 'An unknown error has occurred');
+    this.init = false;
   }
 
   onButtonClick(i): void {
