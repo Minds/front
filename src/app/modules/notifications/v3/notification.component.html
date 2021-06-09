@@ -1,5 +1,6 @@
 <ng-container *ngIf="notification; else ghostView">
   <a
+    #notificationWrapper
     class="m-notification__wrapperLink"
     [routerLink]="nounLink"
     [queryParams]="nounLinkParams"

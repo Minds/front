@@ -9,6 +9,8 @@ import {
   PLATFORM_ID,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { utils } from 'ethers';
@@ -26,8 +28,11 @@ import { NotificationsV3Service } from './notifications-v3.service';
   providers: [NotificationsV3Service, ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
+export class NotificationsV3NotificationComponent
+  implements AfterViewInit, OnDestroy {
   @Input() notification;
+
+  @ViewChild('notificationWrapper') notificationWrapper: ElementRef;
 
   interceptionObserver: IntersectionObserver;
 
@@ -42,7 +47,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.detectIntersecting();
   }
 
@@ -263,7 +268,7 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 1.0,
+      threshold: 0,
     };
 
     this.interceptionObserver = new IntersectionObserver(
@@ -277,6 +282,6 @@ export class NotificationsV3NotificationComponent implements OnInit, OnDestroy {
       options
     );
 
-    this.interceptionObserver.observe(this.el.nativeElement);
+    this.interceptionObserver.observe(this.notificationWrapper.nativeElement);
   }
 }
