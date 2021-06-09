@@ -105,8 +105,15 @@
   ::ng-deep m-comment {
     .m-comment__avatarWrapper,
     .m-comment__ownerRow,
-    .m-comment__toolbar {
+    .m-comment__toolbar,
+    .m-comment__repliesToggle {
       display: none !important;
+    }
+    .m-comment {
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+      padding: 20px;
     }
     img {
       max-width: 100%;

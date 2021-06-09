@@ -86,6 +86,9 @@ export class NotificationsV3NotificationComponent
       case 'vote_down':
         return 'voted down';
       case 'comment':
+        if (this.notification.data.is_reply) {
+          return 'replied to';
+        }
         return 'commented on';
       case 'tag':
         return 'tagged you in';
