@@ -49,9 +49,9 @@ export class InteractionsModalComponent {
   get title(): string {
     switch (this.type) {
       case 'votes-up':
-        return 'Up-Votes';
+        return 'Upvotes';
       case 'votes-down':
-        return 'Down-Votes';
+        return 'Downvotes';
       case 'reminds':
         return 'Reminds';
       case 'quotes':
