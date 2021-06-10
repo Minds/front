@@ -41,14 +41,15 @@ export class SettingsV2PushNotificationsV3Component
 
   // text to accompany option - manually add if adding more opts.
   private subtextMap = {
-    votes: 'Get notified when your comment is upvoted.',
+    votes: 'Get notified when your post or comment is upvoted.',
     tags: 'When you are tagged in a post or comment.',
-    subscriptions: 'When a new user subscribes to you.',
-    comments: 'When a user comments on your post.',
-    reminds: 'When your content is reminded.',
-    boosts: 'Notifications on boost performancy and management.',
+    subscriptions: 'When a channel subscribes to you.',
+    comments:
+      'When a channel comments on your post or replies to your comment.',
+    reminds: 'When your post is reminded.',
+    boosts: 'Notifications on boost performance and management.',
     tokens: 'Earnings, rewards and payout notifications.',
-    wires: 'When you receive a wire.',
+    wires: 'When you receive a payment.',
     chats: 'When you receive chat requests.',
     groups: 'Activity in your groups.',
     reports: 'Progress on your reports.',

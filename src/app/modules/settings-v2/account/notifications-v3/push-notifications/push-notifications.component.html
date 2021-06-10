@@ -47,9 +47,14 @@
       rightValue="on"
     ></m-toggle>
     <div class="m-pushNotifSettings__optionContainerLabels">
-      <span class="m-pushNotifSettings__optionTitle">{{
-        option.notificationGroup | titlecase
-      }}</span>
+      <span class="m-pushNotifSettings__optionTitle">
+        <ng-container [ngSwitch]="option.notificationGroup">
+          <ng-template ngSwitchCase="wires">Pay</ng-template>
+          <ng-template ngSwitchDefault>{{
+            option.notificationGroup | titlecase
+          }}</ng-template>
+        </ng-container></span
+      >
       <span class="m-pushNotifSettings__optionSubtext" *ngIf="option.subtext">{{
         option.subtext
       }}</span>
