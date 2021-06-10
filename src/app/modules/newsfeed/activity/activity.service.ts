@@ -191,14 +191,15 @@ export class ActivityService {
     })
   );
 
-  /** Only allow downloads of images s */
+  /** Only allow downloads of images and videos */
   canDownload$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       let contentType = entity.content_type;
       if (entity.activity_type && entity.activity_type === 'quote') {
         contentType = getActivityContentType(entity.remind_object, true, true);
       }
-      return contentType === 'image';
+
+      return contentType === 'image' || contentType === 'video';
     })
   );
 
