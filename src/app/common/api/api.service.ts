@@ -201,7 +201,7 @@ export class ApiService {
       )
       .pipe(
         map(response => {
-          if (!response || !response.status || response.status !== 'success') {
+          if (!response || (response.status && response.status !== 'success')) {
             throw new Error(
               (response && response.message) || 'Internal server error'
             );

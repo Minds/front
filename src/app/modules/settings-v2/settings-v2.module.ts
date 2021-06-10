@@ -72,6 +72,8 @@ import { SettingsTwoFactorDisableSMSComponent } from './security/two-factor-v2/c
 import { SettingsTwoFactorCodePopupComponent } from './security/two-factor-v2/connect-app/code-popup/code-popup.component';
 import { SettingsV2MessengerComponent } from './account/messenger/messenger.component';
 import { MessengerModule } from '../messenger/messenger.module';
+import { SettingsV2PushNotificationsV3Component } from './account/notifications-v3/push-notifications/push-notifications.component';
+import { SettingsV2EmailNotificationsV3Component } from './account/notifications-v3/email-notifications-v3/email-notifications-v3.component';
 import { SettingsV2ProfileComponent } from './account/profile/profile.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
@@ -181,6 +183,28 @@ const SETTINGS_V2_ROUTES: Routes = [
               description:
                 'Control what email notifications you receive, and when.',
               id: 'email-notifications',
+            },
+          },
+          {
+            path: 'push-notifications',
+            component: SettingsV2PushNotificationsV3Component,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Push Notifications',
+              description:
+                'Control what push notifications you receive, and when.',
+              id: 'push-notifications',
+            },
+          },
+          {
+            path: 'email-notifications-v2',
+            component: SettingsV2EmailNotificationsV3Component,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Email Notifications',
+              description:
+                'Control what push notifications you receive, and when.',
+              id: 'email-notifications-v2',
             },
           },
           {
@@ -498,6 +522,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2LanguageComponent,
     SettingsV2PasswordComponent,
     SettingsV2EmailNotificationsComponent,
+    SettingsV2EmailNotificationsV3Component,
+    SettingsV2PushNotificationsV3Component,
     SettingsV2NsfwContentComponent,
     SettingsV2ShareButtonsComponent,
     SettingsV2PaymentMethodsComponent,
