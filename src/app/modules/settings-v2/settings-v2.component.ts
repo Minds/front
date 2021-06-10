@@ -110,16 +110,7 @@ export class SettingsV2Component implements OnInit {
           label: $localize`:@@SETTINGS__NOTIFICATIONS__HEADER__LABEL:Notifications`,
           id: 'notifications',
         },
-        items: [
-          {
-            label: $localize`:@@SETTINGS__NOTIFICATIONS__EMAIL__LABEL:Email`,
-            id: 'email-notifications',
-          },
-          {
-            label: $localize`:@@SETTINGS__NOTIFICATIONS__POPOVERS__LABEL:Popovers`,
-            id: 'toaster-notifications',
-          },
-        ],
+        items: [],
       },
       {
         header: {
@@ -354,9 +345,53 @@ export class SettingsV2Component implements OnInit {
       this.secondaryMenus.other.splice(0, 0, referralsMenuItem);
     }
 
+    this.addNotificationsMenuItems();
+
     this.setProRoutes();
     this.setSecondaryPane();
     this.loadSettings();
+  }
+
+  /**
+   * Adds released notification menu items depending
+   * on notifications-v3 feat flag.
+   * @returns { void }
+   */
+  private addNotificationsMenuItems(): void {
+    let menuItems = [];
+    if (this.featuresService.has('notifications-v3')) {
+      menuItems = [
+        {
+          label: 'Push Notifications',
+          id: 'push-notifications',
+          route: null,
+          shouldShow: null,
+        },
+        {
+          label: 'Email Notifications',
+          id: 'email-notifications-v2',
+          route: null,
+          shouldShow: null,
+        },
+      ];
+    } else {
+      menuItems = [
+        {
+          label: 'Email Notifications',
+          id: 'email-notifications',
+        },
+        {
+          label: 'Popovers',
+          id: 'toaster-notifications',
+        },
+      ];
+    }
+
+    this.secondaryMenus.account
+      .filter(item => {
+        return item.header.id === 'notifications';
+      })[0]
+      .items.push(...menuItems);
   }
 
   setProRoutes() {
