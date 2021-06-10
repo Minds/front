@@ -29,13 +29,11 @@ export class DownloadActivityMediaService {
     let src;
 
     /**
-     * Only download images
-     * TODO: enable videos
+     * Only download images and videos
      */
-    // if (this.entity.content_type === 'video') {
-    //   src = `${this.siteUrl}api/v2/media/video/${this.entity.entity_guid}`;
-    // } else
-    if (
+    if (this.entity.content_type === 'video') {
+      src = this.entity.src['720.mp4'];
+    } else if (
       this.entity.content_type === 'image' &&
       this.entity.custom_data &&
       this.entity.custom_data[0]
