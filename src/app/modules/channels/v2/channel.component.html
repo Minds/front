@@ -60,15 +60,29 @@
               [queryParams]="{ layout: 'list' }"
               class="m-channelFeedLayoutBtn"
               [class.m-channelFeedLayoutBtn--selected]="layout === 'list'"
-              ><i class="material-icons">list</i></a
             >
+              <m-tooltip
+                icon="list"
+                [anchor]="'right'"
+                [useParentPosition]="true"
+              >
+                List view
+              </m-tooltip>
+            </a>
             <a
               [routerLink]="['.']"
               [queryParams]="{ layout: 'grid' }"
               class="m-channelFeedLayoutBtn"
               [class.m-channelFeedLayoutBtn--selected]="layout === 'grid'"
-              ><i class="material-icons">view_module</i></a
             >
+              <m-tooltip
+                icon="view_module"
+                [anchor]="'right'"
+                [useParentPosition]="true"
+              >
+                Gallery view
+              </m-tooltip>
+            </a>
           </div>
         </ng-container>
       </div>
