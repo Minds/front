@@ -427,6 +427,15 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.posterMenuOpened$.next(false);
   }
 
+  /**
+   * True if mature content should be shown
+   * Does NOT check whether comment IS mature.
+   * @returns { boolean } - true if mature comment and content should be shown.
+   */
+  shouldShowMatureContent(): boolean {
+    return this.showMature || this.attachment.isForcefullyShown(this.comment);
+  }
+
   ngOnChanges(changes) {
     this.cd.markForCheck();
     this.cd.detectChanges();
