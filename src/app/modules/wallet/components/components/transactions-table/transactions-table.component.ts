@@ -16,6 +16,7 @@ export class WalletTransactionsTableComponent {
     token: 'Purchase',
     withdraw: 'On-Chain Transfer',
     'offchain:boost': 'Off-Chain Boost',
+    'offchain:Pro Payout': 'Earnings Payout',
     boost: 'On-Chain Boost',
     pro_earning: 'Pro Earnings',
     payout: 'Transfer to Bank Account',
