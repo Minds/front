@@ -97,7 +97,7 @@ export class NotificationsV3NotificationComponent
       case 'quote':
         return 'quoted';
       case 'subscribe':
-        return 'subscribed to';
+        return 'subscribed to you';
       case 'group_queue_add':
         return 'Your post is awaiting approval from the group administrators';
       case 'group_queue_approve':
@@ -181,6 +181,8 @@ export class NotificationsV3NotificationComponent
         return 'boost offer';
       case 'boost_rejected':
         return 'boost';
+      case 'subscribe':
+        return '';
     }
     switch (this.notification.entity?.type) {
       case 'comment':
