@@ -185,6 +185,8 @@ import { SubscribeButtonComponent } from './components/subscribe-button/subscrib
 import { DownloadActivityMediaService } from './services/download-activity-media.service';
 import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
+import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
+import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 
 const routes: Routes = [
   {
@@ -344,6 +346,7 @@ const routes: Routes = [
     SubscribeButtonComponent,
     HotkeyScrollDirective,
     ChatIconComponent,
+    PublisherSearchModalComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -480,6 +483,7 @@ const routes: Routes = [
     SubscribeButtonComponent,
     HotkeyScrollDirective,
     ChatIconComponent,
+    PublisherSearchModalComponent,
   ],
   providers: [
     SiteService,
@@ -528,6 +532,7 @@ const routes: Routes = [
     ClientMetaService,
     UserMenuService,
     DownloadActivityMediaService,
+    PublisherSearchModalService,
   ],
 })
 export class CommonModule {}

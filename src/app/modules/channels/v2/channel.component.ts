@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
@@ -20,6 +21,7 @@ import { RecentService } from '../../../services/ux/recent';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 
 /**
  * Views
@@ -128,7 +130,9 @@ export class ChannelComponent implements OnInit, OnDestroy {
     @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
     protected clientMetaService: ClientMetaService,
     protected cd: ChangeDetectorRef,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    protected injector: Injector,
+    protected publisherSearchModal: PublisherSearchModalService
   ) {}
 
   /**
@@ -152,6 +156,12 @@ export class ChannelComponent implements OnInit, OnDestroy {
           }
         }
       }
+    });
+
+    this.viewSubscription = this.view$.subscribe(view => {
+      this.isFeedView = ['activities', 'images', 'videos', 'blogs'].includes(
+        view
+      );
     });
 
     // Initialize SEO
@@ -217,6 +227,19 @@ export class ChannelComponent implements OnInit, OnDestroy {
           `${user.name} has blocked you. You will not be able to interact with them.`
         );
       }
+    }
+  }
+
+  /**
+   * Opens search modal
+   */
+  async openSearchModal(event): Promise<void> {
+    const query = await this.publisherSearchModal
+      .present(this.injector, this.currentChannel)
+      .toPromise();
+
+    if (query) {
+      this.service.query$.next(query);
     }
   }
 

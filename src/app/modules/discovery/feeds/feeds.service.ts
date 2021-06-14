@@ -30,11 +30,13 @@ export class DiscoveryFeedsService {
   hasMoreData$ = this.feedsService.hasMore;
 
   filter$: BehaviorSubject<string> = new BehaviorSubject('preferred');
+  query$: BehaviorSubject<string> = new BehaviorSubject('');
   nsfw$: BehaviorSubject<any[]>;
   period$: BehaviorSubject<string> = new BehaviorSubject('relevant');
   type$: BehaviorSubject<DiscoveryFeedsContentType> = new BehaviorSubject(
     'all'
   );
+
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -75,6 +77,7 @@ export class DiscoveryFeedsService {
   async search(q: string): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     this.feedsService.clear();
+
     this.feedsService
       .setEndpoint('api/v3/discovery/search')
       .setParams({
@@ -94,6 +97,11 @@ export class DiscoveryFeedsService {
 
   setFilter(filter: DiscoveryFeedsContentFilter): DiscoveryFeedsService {
     this.filter$.next(filter);
+    return this;
+  }
+
+  setQuery(query: string): DiscoveryFeedsService {
+    this.query$.next(query);
     return this;
   }
 

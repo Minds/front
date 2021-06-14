@@ -35,6 +35,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { GroupsProfile } from './profile/profile';
 import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
+import { GroupsSearchService } from './profile/feed/search.service';
 
 const routes: Routes = [
   {
@@ -122,6 +123,6 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,
   ],
-  providers: [CanDeactivateGroupService],
+  providers: [CanDeactivateGroupService, GroupsSearchService],
 })
 export class GroupsModule {}
