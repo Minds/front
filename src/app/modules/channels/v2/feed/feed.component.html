@@ -31,6 +31,20 @@
     </div>
 
     <!-- ----------------------------------------- -->
+    <!-- SEARCH QUERY DISPLAY -->
+    <!-- ----------------------------------------- -->
+    <div class="m-channelFeed__searchDisplay" *ngIf="service.query$ | async">
+      <span i18n="@@M__CHANNEL_FEED__SEARCH_RESULTS_FOR"
+        >Search results for:
+      </span>
+      <span class="m-channelFeedSearch__query"
+        >"{{ service.query$ | async }}" ·
+      </span>
+      <a i18n="@@M__CHANNEL_FEED__CLEAR" (click)="service.query$.next('')"
+        >Clear</a
+      >
+    </div>
+    <!-- ----------------------------------------- -->
     <!-- LAYOUT : GRID  -->
     <!-- ----------------------------------------- -->
     <div class="m-channelFeed__grid" *ngIf="isGrid">
@@ -73,105 +87,130 @@
     <!-- ----------------------------------------- -->
     <!-- LAYOUT : NO POSTS  -->
     <!-- ----------------------------------------- -->
-    <div
-      *ngIf="
-        !(feedService.service.inProgress | async) &&
-        (feedService.service.feed | async)?.length < 1 &&
-        !isOwnedChannel
-      "
-      class="m-channelFeed__emptyFeedContainer"
-    >
-      <span
-        class="m-channelFeed__emptyFeedTitle"
-        i18n="@@M__CHANNEL_FEED__NO_CONTENT"
-        >No content</span
+    <ng-container *ngIf="!(service.query$ | async)">
+      <div
+        *ngIf="
+          !(feedService.service.inProgress | async) &&
+          (feedService.service.feed | async)?.length < 1 &&
+          !isOwnedChannel
+        "
+        class="m-channelFeed__emptyFeedContainer"
       >
-      <ng-container [ngSwitch]="feedService.type$ | async">
         <span
-          *ngSwitchCase="'images'"
-          class="m-channelFeed__emptyFeedSubtitle"
-          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_IMAGES"
-          >This channel hasn't posted an image yet</span
-        >
-        <span
-          *ngSwitchCase="'videos'"
-          class="m-channelFeed__emptyFeedSubtitle"
-          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_VIDEOS"
-          >This channel hasn't posted a video yet</span
-        >
-        <span
-          *ngSwitchCase="'blogs'"
-          class="m-channelFeed__emptyFeedSubtitle"
-          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_BLOGS"
-          >This channel hasn't posted a blog yet</span
-        >
-        <span
-          *ngSwitchCase="'activities'"
-          class="m-channelFeed__emptyFeedSubtitle"
-          i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_ANYTHING"
-          >This channel hasn't posted anything yet</span
-        >
-        <!-- Catch issues with any future additions -->
-        <span
-          *ngSwitchCaseDefault
           class="m-channelFeed__emptyFeedTitle"
-          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
-          >Looks like you haven't posted any content of this type yet</span
+          i18n="@@M__CHANNEL_FEED__NO_CONTENT"
+          >No content</span
         >
-      </ng-container>
-    </div>
+        <ng-container [ngSwitch]="feedService.type$ | async">
+          <span
+            *ngSwitchCase="'images'"
+            class="m-channelFeed__emptyFeedSubtitle"
+            i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_IMAGES"
+            >This channel hasn't posted an image yet</span
+          >
+          <span
+            *ngSwitchCase="'videos'"
+            class="m-channelFeed__emptyFeedSubtitle"
+            i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_VIDEOS"
+            >This channel hasn't posted a video yet</span
+          >
+          <span
+            *ngSwitchCase="'blogs'"
+            class="m-channelFeed__emptyFeedSubtitle"
+            i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_BLOGS"
+            >This channel hasn't posted a blog yet</span
+          >
+          <span
+            *ngSwitchCase="'activities'"
+            class="m-channelFeed__emptyFeedSubtitle"
+            i18n="@@M__CHANNEL_FEED__CHANNEL_NOT_POSTED_ANYTHING"
+            >This channel hasn't posted anything yet</span
+          >
+          <!-- Catch issues with any future additions -->
+          <span
+            *ngSwitchCaseDefault
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
+            >Looks like you haven't posted any content of this type yet</span
+          >
+        </ng-container>
+      </div>
 
-    <div
-      *ngIf="
-        !(feedService.service.inProgress | async) &&
-        feed &&
-        feed?.length < 1 &&
-        isOwnedChannel
-      "
-      class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
-    >
-      <ng-container [ngSwitch]="feedService.type$ | async">
-        <span
-          *ngSwitchCase="'images'"
-          class="m-channelFeed__emptyFeedTitle"
-          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_IMAGES_YET"
-          >Looks like you haven't posted images yet</span
-        >
-        <span
-          *ngSwitchCase="'videos'"
-          class="m-channelFeed__emptyFeedTitle"
-          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_VIDEOS_YET"
-          >Looks like you haven't posted videos yet</span
-        >
-        <span
-          *ngSwitchCase="'blogs'"
-          class="m-channelFeed__emptyFeedTitle"
-          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_BLOGS_YET"
-          >Looks like you haven't posted blogs yet</span
-        >
-        <span
-          *ngSwitchCase="'activities'"
-          class="m-channelFeed__emptyFeedTitle"
-          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_YET"
-          >Looks like you haven't posted yet</span
-        >
-        <!-- Catch issues with any future additions -->
-        <span
-          *ngSwitchCaseDefault
-          class="m-channelFeed__emptyFeedTitle"
-          i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
-          >Looks like you haven't posted any content of this type yet.</span
-        >
-      </ng-container>
-
-      <m-button
-        i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
-        (onAction)="onFirstPostButtonClick()"
-        color="blue"
+      <div
+        *ngIf="
+          !(feedService.service.inProgress | async) &&
+          feed &&
+          feed?.length < 1 &&
+          isOwnedChannel
+        "
+        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
       >
-        Create your first post
-      </m-button>
-    </div>
+        <ng-container [ngSwitch]="feedService.type$ | async">
+          <span
+            *ngSwitchCase="'images'"
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_IMAGES_YET"
+            >Looks like you haven't posted images yet</span
+          >
+          <span
+            *ngSwitchCase="'videos'"
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_VIDEOS_YET"
+            >Looks like you haven't posted videos yet</span
+          >
+          <span
+            *ngSwitchCase="'blogs'"
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_BLOGS_YET"
+            >Looks like you haven't posted blogs yet</span
+          >
+          <span
+            *ngSwitchCase="'activities'"
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED_YET"
+            >Looks like you haven't posted yet</span
+          >
+          <!-- Catch issues with any future additions -->
+          <span
+            *ngSwitchCaseDefault
+            class="m-channelFeed__emptyFeedTitle"
+            i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
+            >Looks like you haven't posted any content of this type yet.</span
+          >
+        </ng-container>
+
+        <m-button
+          i18n="@@M__CHANNEL_FEED__CREATE_YOUR_FIRST_POST"
+          (onAction)="onFirstPostButtonClick()"
+          color="blue"
+        >
+          Create your first post
+        </m-button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="service.query$ | async">
+      <div
+        *ngIf="
+          !(feedService.service.inProgress | async) && feed && feed?.length < 1
+        "
+        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+      >
+        <span
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__NO_RESULTS"
+          >No results for "{{ service.query$ | async }}"</span
+        >
+
+        <m-button
+          i18n="@@M__CHANNEL_FEED__CLEAR_SEARCH"
+          (onAction)="service.query$.next('')"
+          color="blue"
+        >
+          Clear search
+        </m-button>
+      </div>
+    </ng-container>
   </div>
 
   <!-- ----------------------------------------- -->
