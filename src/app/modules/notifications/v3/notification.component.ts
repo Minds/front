@@ -129,6 +129,8 @@ export class NotificationsV3NotificationComponent
           ' was ' +
           this.notification.data.action
         );
+      case 'chat_invite':
+        return 'sent you a message on Minds Chat. ';
     }
   }
 
@@ -155,6 +157,7 @@ export class NotificationsV3NotificationComponent
             const usd = Math.round(this.notification.data.amount / 100);
             return 'you $' + usd;
         }
+      case 'chat_invite':
       case 'subscribe':
       case 'group_queue_add':
       case 'token_rewards_summary':
@@ -181,6 +184,7 @@ export class NotificationsV3NotificationComponent
         return 'boost offer';
       case 'boost_rejected':
         return 'boost';
+      case 'chat_invite':
       case 'subscribe':
         return '';
     }
