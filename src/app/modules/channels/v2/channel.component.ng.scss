@@ -63,28 +63,16 @@
       }
     }
 
-    .m-channel__feedLayoutToggle {
+    .m-channel__searchBtnWrapper {
       margin-right: 32px;
       display: flex;
       align-items: center;
-      @media screen and (max-width: $max-mobile) {
-        display: none;
-      }
 
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
-
-      .m-channelFeedLayoutBtn {
+      .m-channelSearchBtn {
         text-decoration: none;
         display: inline-block;
         cursor: pointer;
         margin-left: 10px;
-        @include m-theme() {
-          color: themed($m-textColor--tertiary);
-        }
-      }
-      .m-channelFeedLayoutBtn--selected {
         @include m-theme() {
           color: themed($m-textColor--primary);
         }

@@ -37,6 +37,34 @@
       }
     }
 
+    .m-channelFeed__searchDisplay {
+      padding: 25px 20px 0 20px;
+
+      @media screen and (min-width: $layoutMin3ColWidth + 1) {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      span {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        &.m-channelFeedSearch__query {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+      a {
+        cursor: pointer;
+        font-weight: 400;
+        text-decoration: underline;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+
     .m-channelFeed__grid {
       padding-top: 40px;
       padding-bottom: 40px;

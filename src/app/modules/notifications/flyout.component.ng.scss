@@ -60,12 +60,13 @@
   }
 
   .m-notificationsFlyout__scrollable {
-    max-height: calc(100vh - 72px);
+    max-height: calc(100vh - 122px); // 72px + 50px top margin
     overflow: scroll;
     overscroll-behavior: contain; // not supported in all browsers
     overflow-x: hidden;
     box-sizing: border-box;
     padding-bottom: 60px; // Height of view all
+    margin-top: 50px;
 
     &::-webkit-scrollbar {
       width: 10px;
