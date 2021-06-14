@@ -7,7 +7,9 @@
   >
     <div
       class="m-notifications__notification"
-      [class.m-notifications__notification--noPreview]="!entity"
+      [class.m-notifications__notification--noPreview]="
+        !entity || entity.type === 'user'
+      "
       (click)="onClick($event)"
     >
       <div class="m-notificationsNotification__avatar">

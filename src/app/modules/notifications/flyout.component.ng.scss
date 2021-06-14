@@ -44,7 +44,7 @@
     &::after {
       @include m-theme() {
         border-color: rgba(themed($m-bgColor--primary), 0);
-        border-bottom-color: themed($m-bgColor--primaryAlt);
+        border-bottom-color: themed($m-bgColor--primary);
       }
       border-width: 10px;
       margin-left: 10px;
@@ -63,6 +63,37 @@
     max-height: calc(100vh - 72px);
     overflow: scroll;
     overscroll-behavior: contain; // not supported in all browsers
-    @include hide-scrollbar;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding-bottom: 60px; // Height of view all
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      @include m-theme() {
+        background-color: rgba(themed($m-borderColor--primary), 0.35);
+      }
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      height: 40px;
+      @include m-theme() {
+        background-color: themed($m-bgColor--contrast);
+      }
+    }
+  }
+
+  .m-notificationsFlyout__bottomContainer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+    a {
+      font-size: 15px;
+    }
   }
 }

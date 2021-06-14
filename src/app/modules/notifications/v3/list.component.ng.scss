@@ -2,21 +2,23 @@
 
 :host {
   display: block;
-  position: relative;
+  position: static;
 
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
 
-  &.m-notifications__list--scrolledPastTabs {
-    position: static;
-  }
+  // &.m-notifications__list--scrolledPastTabs {
+  //   position: static;
+  // }
 
   .m-tabs__container {
     padding: 0 20px;
-    position: relative;
+    position: absolute;
     z-index: 2;
     padding: 0;
+    width: 100%;
+    top: 0;
 
     > .m-tabs__tab {
       flex: 1;
@@ -28,6 +30,10 @@
       a {
         margin-right: 0;
       }
+
+      ::ng-deep m-tooltip i {
+        font-size: 21px;
+      }
     }
   }
   .m-notificationsList__listWrapper {
@@ -37,7 +43,7 @@
   ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 50px 0 0 0;
   }
 
   li:not(:last-of-type) {
