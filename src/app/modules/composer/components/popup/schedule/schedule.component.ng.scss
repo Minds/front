@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+
+:host {
+  .m-composerPopup__field {
+    input {
+      outline: 0;
+      &:focus {
+        @include m-theme() {
+          border: 1px solid themed($m-link);
+        }
+      }
+    }
+    .m-composerPopup__input--invalid {
+      @include m-theme() {
+        border: 1px solid themed($m-red) !important;
+      }
+    }
+    .m-composerPopupField__error {
+      display: block;
+      max-width: 152px;
+      font-size: 13px;
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+  }
+
+  input[type='time'] {
+    font-family: 'Roboto', Helvetica, sans-serif;
+  }
+}
