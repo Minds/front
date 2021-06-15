@@ -58,13 +58,20 @@ export class NotificationsV3NotificationComponent
   }
 
   async onClick(e: MouseEvent) {
-    if (this.notification.type === 'subscribe') {
-      e.preventDefault();
-      e.stopPropagation();
-      await this.interactionsModalService.open(
-        'subscribers',
-        this.session.getLoggedInUser().guid
-      );
+    switch (this.notification.type) {
+      case 'chat_invite':
+        e.preventDefault();
+        e.stopPropagation();
+        window.open('https://chat.minds.com', '_blank');
+        break;
+      case 'subscribe':
+        e.preventDefault();
+        e.stopPropagation();
+        await this.interactionsModalService.open(
+          'subscribers',
+          this.session.getLoggedInUser().guid
+        );
+        break;
     }
   }
 
@@ -184,9 +191,10 @@ export class NotificationsV3NotificationComponent
         return 'boost offer';
       case 'boost_rejected':
         return 'boost';
-      case 'chat_invite':
       case 'subscribe':
         return '';
+      case 'chat_invite':
+        return 'Sign in now to view it.';
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -209,6 +217,8 @@ export class NotificationsV3NotificationComponent
         return ['/boost/console/offers/history/outbox'];
       case 'subscribe':
         return ['/' + this.notification.from.username];
+      case 'chat_invite':
+        return '';
     }
 
     switch (this.notification.entity?.type) {
