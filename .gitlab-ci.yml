@@ -248,10 +248,10 @@ prepare:production:sentry:
 ################
 
 .cleanup_review: &cleanup_review
-  image: minds/helm-eks:latest
+  image: minds/aws-helm:latest
   script:
     - aws eks update-kubeconfig --name=sandbox
-    - helm del --purge $CI_BUILD_REF_SLUG
+    - helm del $CI_BUILD_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
@@ -267,7 +267,7 @@ prepare:production:sentry:
 
 review:start:
   stage: review
-  image: minds/helm-eks:latest
+  image: minds/aws-helm:latest
   script:
     - aws eks update-kubeconfig --name=sandbox
     - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
@@ -276,8 +276,9 @@ review:start:
       --reuse-values \
       --set front.image.repository=$CI_REGISTRY_IMAGE/server \
       --set-string front.image.tag=$CI_PIPELINE_ID \
-      --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN \
-      --set elasticsearch.clusterName=$CI_BUILD_REF_SLUG--elasticsearch \
+      --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+      --set cdn_domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+      --set siteUrl=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN/
       --wait \
       $CI_BUILD_REF_SLUG \
       ./helm-charts/minds"
