@@ -90,7 +90,7 @@ export class NotificationsV3Service {
   apiRequest(filter: string, pagingToken: string): Observable<ApiResponse> {
     return this.api.get('api/v3/notifications/list', {
       filter,
-      limit: 24,
+      limit: 12,
       offset: pagingToken,
     });
   }
