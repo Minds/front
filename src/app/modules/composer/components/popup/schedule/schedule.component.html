@@ -24,12 +24,22 @@
         </div>
 
         <div class="m-composerPopup__field">
-          <label i18n="@@COMMON__TIME">Time (24-hour)</label>
+          <label i18n="@@COMMON__TIME__24_HR">Time (24-hour)</label>
           <input
             type="time"
             [ngModel]="state.time"
             (ngModelChange)="onTimeChange($event)"
+            maxlength="5"
+            [ngClass]="{
+              'm-composerPopup__input--invalid': hasError()
+            }"
           />
+          <span
+            *ngIf="hasError()"
+            class="m-composerPopupField__error"
+            i18n="@@M__COMPOSER_SCHEDULE__TIME_ERROR"
+            >Time must be in the future and 24-hr format (e.g. 18:05)</span
+          >
         </div>
 
         <div class="m-composerPopup__field">
@@ -43,7 +53,7 @@
   <div class="m-composerPopup__action">
     <m-button
       class="m-composerPopup__save"
-      [disabled]="!canSave()"
+      [disabled]="hasError() || !this.state"
       (onAction)="save()"
       data-cy="schedule-save-button"
       i18n="@@COMMON__SAVE"
