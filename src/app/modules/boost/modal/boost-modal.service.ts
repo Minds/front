@@ -66,6 +66,7 @@ export type BoostableEntity = {
   type?: string;
   subtype?: string;
   owner_guid?: string;
+  time_created?: number | string;
 };
 
 /**
@@ -226,35 +227,34 @@ export class BoostModalService implements OnDestroy {
   get disabled$(): Observable<boolean> {
     // combine latest values of all relevant observables
     return combineLatest([
-      this.activeTab$,
-      this.paymentMethod$,
-      this.impressions$,
-      this.tokens$,
-      this.targetUser$,
-      this.onchainBalance$,
-      this.offchainBalance$,
-      this.rate$,
+      /**
+       * Workaround for typescript imposed limit
+       * of 8 params in combineLatest.
+       */
+      combineLatest([
+        this.activeTab$,
+        this.paymentMethod$,
+        this.impressions$,
+        this.tokens$,
+        this.targetUser$,
+      ]),
+      combineLatest([
+        this.onchainBalance$,
+        this.offchainBalance$,
+        this.rate$,
+        this.entity$,
+      ]),
     ]).pipe(
       map(
         ([
-          activeTab,
-          paymentMethod,
-          impressions,
-          tokens,
-          targetUser,
-          onchainBalance,
-          offchainBalance,
-          rate,
-        ]: [
-          BoostTab,
-          BoostPaymentMethod,
-          number,
-          number,
-          MindsUser,
-          number,
-          number,
-          number
+          [activeTab, paymentMethod, impressions, tokens, targetUser],
+          [onchainBalance, offchainBalance, rate, entity],
         ]) => {
+          // disabled if scheduled post
+          if (this.isScheduled(entity)) {
+            return true;
+          }
+
           // set balance depending on payment method.
           const balance =
             paymentMethod === 'onchain' ? onchainBalance : offchainBalance;
@@ -583,6 +583,15 @@ export class BoostModalService implements OnDestroy {
    */
   private hasValidBid(tokens: number): boolean {
     return tokens >= MINIMUM_BOOST_OFFER_TOKENS;
+  }
+
+  /**
+   * Returns true if entity is scheduled.
+   * @param { BoostableEntity } entity - entity to check
+   * @returns { boolean } - true if entity is scheduled.
+   */
+  private isScheduled(entity: BoostableEntity): boolean {
+    return Number(entity.time_created) * 1000 > Date.now();
   }
 
   /**
