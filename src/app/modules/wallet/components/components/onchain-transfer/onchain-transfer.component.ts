@@ -102,15 +102,16 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
     this.balance = this.wallet.offchain.balance;
     this.balanceIsLimit = this.balance < this.transferLimit;
+
+    const maxAmount = this.balanceIsLimit ? this.balance : this.transferLimit;
+
     this.ethBalance = this.wallet.eth.balance;
 
     this.form = new FormGroup({
-      amount: new FormControl(Math.min(this.balance, 1), {
+      amount: new FormControl(maxAmount, {
         validators: [
           Validators.required,
-          Validators.max(
-            this.balanceIsLimit ? this.balance : this.transferLimit
-          ),
+          Validators.max(maxAmount),
           Validators.min(0),
           this.validateMoreThanZero,
         ],
