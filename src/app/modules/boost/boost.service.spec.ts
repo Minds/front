@@ -48,7 +48,7 @@ describe('BoostService', () => {
     expect(clientMock.get).toHaveBeenCalled();
     const args = clientMock.get.calls.mostRecent().args;
     expect(args[0]).toBe('api/v2/boost/newsfeed/');
-    expect(args[1]).toEqual({ limit: 12, offset: '' });
+    expect(args[1]).toEqual({ limit: 12, offset: '', remote: '' });
   }));
 
   it('should accept a usd p2p boost', fakeAsync(() => {
