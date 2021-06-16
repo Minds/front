@@ -87,6 +87,7 @@
         (delete)="delete(i)"
         (saved)="edited(i, $event)"
         (onReply)="reply($event.comment)"
+        [poster]="poster"
       ></m-comment>
     </ng-container>
   </ng-container>
@@ -118,6 +119,7 @@
     </m-button>
   </div>
   <m-comment__poster
+    #poster
     *ngIf="activityService.allowComment$ | async"
     [guid]="guid"
     [parent]="parent"
