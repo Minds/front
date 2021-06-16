@@ -62,7 +62,10 @@ export class NotificationsV3NotificationComponent
       case 'chat_invite':
         e.preventDefault();
         e.stopPropagation();
-        window.open('https://chat.minds.com', '_blank');
+        window.open(
+          `https://chat.minds.com/#/room/${this.notification.data.room_id}`,
+          '_blank'
+        );
         break;
       case 'subscribe':
         e.preventDefault();
