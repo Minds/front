@@ -47,6 +47,7 @@ export class CommentsThreadComponent implements OnInit {
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
     true
   );
+  @ViewChild('poster') poster;
 
   @Input() scrollable: boolean = false;
   @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;

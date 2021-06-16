@@ -476,7 +476,7 @@
         <div
           class="m-commentToolbarButton"
           (click)="toggleReplies()"
-          *ngIf="comment.can_reply && session.isLoggedIn()"
+          *ngIf="session.isLoggedIn()"
         >
           <a
             ><span *ngIf="activityService.allowComment$ | async">Reply</span></a

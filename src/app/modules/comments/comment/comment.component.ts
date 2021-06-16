@@ -102,6 +102,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
 
+  @Input() poster: any;
+
   @Output() onReply = new EventEmitter();
 
   menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -410,7 +412,22 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.overlayModal.create(ReportCreatorComponent, this.comment).present();
   }
 
-  toggleReplies() {
+  /**
+   * Toggles showReplies - or in the event this is a level 2 comment
+   * append target username to comment poster.
+   * @returns { void }
+   */
+  public toggleReplies(): void {
+    if (this.level === 2 && this.poster) {
+      const targetTag = `@${this.comment.ownerObj.username}`;
+
+      if (this.poster.content.indexOf(targetTag) === -1) {
+        this.poster.content = `${targetTag} ${this.poster.content}`;
+        this.poster.detectChanges();
+      }
+
+      return;
+    }
     this.showReplies = !this.showReplies;
   }
 
