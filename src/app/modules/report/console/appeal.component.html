@@ -28,14 +28,13 @@
         i18n="@@REPORT__CONSOLE__APPEAL_COMPOSER_PLACEHOLDER"
       ></textarea>
 
-      <button
-        class="m-moderationAppeal__button"
-        [disabled]="appeal.inProgress"
-        (click)="sendAppeal()"
+      <m-button
+        [saving]="appeal.inProgress"
+        (onAction)="sendAppeal()"
         i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
       >
         Appeal
-      </button>
+      </m-button>
     </div>
     <div class="m-moderationAppeal__appealNote" *ngIf="appeal.note">
       <b>Appeal Note: </b>
@@ -64,8 +63,7 @@
         View parent and its comment thread
       </a>
     </div>
-    <minds-card-comment [object]="appeal.report.entity" class="mdl-card">
-    </minds-card-comment>
+    <m-comment [comment]="appeal.report.entity" class="mdl-card"></m-comment>
   </div>
 
   <div *ngIf="!appeal.report.entity" class="m-comment-wrapper">

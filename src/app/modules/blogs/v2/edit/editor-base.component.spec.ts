@@ -12,6 +12,7 @@ import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { composerMockService } from '../../../../mocks/modules/composer/services/composer.service.mock';
 import { ComposerService } from '../../../composer/services/composer.service';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
 
 const content$ = new BehaviorSubject<string>('');
 
@@ -37,7 +38,7 @@ describe('BlogEditorV2Component', () => {
       useValue: composerMockService,
     });
     TestBed.configureTestingModule({
-      declarations: [BlogEditorV2Component],
+      declarations: [BlogEditorV2Component, ButtonComponent],
       imports: [RouterTestingModule],
       providers: [
         {

@@ -1,49 +1,40 @@
 <ng-container *ngIf="group">
   <div class="minds-list">
     <div>
-      <minds-activity
+      <div
+        class="m-groupReview__item"
         *ngFor="let entity of entities; let i = index"
-        class="mdl-card item"
-        [object]="entity"
-        [canDelete]="group['is:owner'] || group['is:moderator']"
-        (deleted)="delete(entity)"
-        [hideTabs]="true"
-        [attr.data-minds-activity-guid]="entity.guid"
       >
-        <!-- Menu Actions -->
-
-        <li
-          post-menu
-          class="mdl-menu__item"
-          *ngIf="group['is:owner']"
-          (click)="removePrompt(entity?.ownerObj)"
-          i18n="@@GROUPS__PROFILE__FEED__REMOVE_USER"
+        <m-activity
+          [entity]="entity"
+          [canDelete]="group['is:owner'] || group['is:moderator']"
+          (deleted)="delete(entity)"
+          [attr.data-minds-activity-guid]="entity.guid"
         >
-          Remove user
-        </li>
+        </m-activity>
 
         <!-- Review -->
 
         <div bottom-content class="m-groups-feed--review-actions">
-          <button
-            class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500"
-            (click)="approve(entity, i)"
+          <m-button
+            color="blue"
+            (onAction)="approve(entity, i)"
             i18n="@@COMMON__APPROVE"
           >
             Approve
-          </button>
+          </m-button>
 
-          <button
-            class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red-500"
-            (click)="reject(entity, i)"
+          <m-button
+            color="red"
+            (onAction)="reject(entity, i)"
             i18n="@@COMMON__REJECT"
           >
             Reject
-          </button>
+          </m-button>
         </div>
 
         <!-- / -->
-      </minds-activity>
+      </div>
 
       <infinite-scroll
         distance="25%"

@@ -14,6 +14,7 @@ import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
+import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -53,12 +54,12 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
-import { MindsButton } from './components/button/button.component';
+import { MindsButton } from './components/button-v1/button-v1.component';
 import { OverlayModalComponent } from './components/overlay-modal/overlay-modal.component';
 
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
-import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
+import { AdminActionsButtonComponent } from './components/button-v1/admin-actions/admin-actions.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from '../services/attachment';
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
@@ -118,7 +119,7 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
-import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
+import { ButtonComponent } from './components/button/button.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
@@ -132,7 +133,7 @@ import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
-import { HorizontalFeedService } from './services/horizontal-feed.service';
+import { RelatedContentService } from './services/related-content.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
@@ -148,7 +149,6 @@ import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component'
 import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { IconComponent } from './components/icon/icon.component';
-import { ButtonComponent } from './components/button-v2/button.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { AttachmentApiService } from './api/attachment-api.service';
 import { ApiService } from './api/api.service';
@@ -163,12 +163,10 @@ import {
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 import { SidebarNavigationSubnavDirective } from './layout/sidebar/subnav.directive';
-import { OnboardingReminderComponent } from './components/onboarding-reminder/reminder.component';
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
-import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
 import { ClientMetaDirective } from './directives/client-meta.directive';
@@ -182,6 +180,14 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { AppPromptComponent } from './components/app-prompt/app-prompt.component';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
+import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
+import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
+import { DownloadActivityMediaService } from './services/download-activity-media.service';
+import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
+import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
+import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
+import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 
 const routes: Routes = [
   {
@@ -209,6 +215,7 @@ const routes: Routes = [
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+    TopbarWalletBalance,
 
     // V2 Layout
     V3TopbarComponent,
@@ -300,11 +307,10 @@ const routes: Routes = [
     DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
-    ShadowboxSubmitButtonComponent,
+    ButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -314,7 +320,6 @@ const routes: Routes = [
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,
-    ButtonComponent,
     OverlayComponent,
     DropdownMenuComponent,
     CalendarComponent,
@@ -338,6 +343,12 @@ const routes: Routes = [
     ConfirmV2Component,
     AppPromptComponent,
     CanaryFlagComponent,
+    LaunchButtonComponent,
+    PublisherCardComponent,
+    SubscribeButtonComponent,
+    HotkeyScrollDirective,
+    ChatIconComponent,
+    PublisherSearchModalComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -345,6 +356,7 @@ const routes: Routes = [
     TopbarComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+    TopbarWalletBalance,
 
     // V3 Layout
     V3TopbarComponent,
@@ -434,12 +446,11 @@ const routes: Routes = [
     DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
-    ShadowboxSubmitButtonComponent,
+    ButtonComponent,
     ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -449,7 +460,6 @@ const routes: Routes = [
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,
-    ButtonComponent,
     OverlayComponent,
     DropdownMenuComponent,
     CalendarComponent,
@@ -471,6 +481,12 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     AppPromptComponent,
+    LaunchButtonComponent,
+    PublisherCardComponent,
+    SubscribeButtonComponent,
+    HotkeyScrollDirective,
+    ChatIconComponent,
+    PublisherSearchModalComponent,
   ],
   providers: [
     SiteService,
@@ -512,12 +528,14 @@ const routes: Routes = [
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,
     },
-    HorizontalFeedService,
+    RelatedContentService,
     RegexService,
     ApiService,
     AttachmentApiService,
     ClientMetaService,
     UserMenuService,
+    DownloadActivityMediaService,
+    PublisherSearchModalService,
   ],
 })
 export class CommonModule {}

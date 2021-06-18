@@ -3,28 +3,30 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { Session } from '../../../../services/session';
 import { SortedService } from './sorted.service';
 import { Client } from '../../../../services/api/client';
 import { GroupsService } from '../../groups.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
 import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { GroupsSearchService } from './search.service';
 
 @Component({
   selector: 'm-group-profile-feed__sorted',
   providers: [SortedService, FeedsService],
   templateUrl: 'sorted.component.html',
+  styleUrls: ['sorted.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupProfileFeedSortedComponent implements OnInit {
+export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
   group: any;
 
   @Input('group') set _group(group: any) {
@@ -65,13 +67,14 @@ export class GroupProfileFeedSortedComponent implements OnInit {
 
   viewScheduled: boolean = false;
 
-  @ViewChild('poster') protected poster: PosterComponent;
-
   @ViewChild('composer') private composer: ComposerComponent;
 
   scheduledCount: number = 0;
 
   feed$: Observable<BehaviorSubject<Object>[]>;
+
+  groupsSearchQuerySubscription: Subscription;
+  query: string = '';
 
   constructor(
     protected service: GroupsService,
@@ -80,12 +83,26 @@ export class GroupProfileFeedSortedComponent implements OnInit {
     protected session: Session,
     protected router: Router,
     protected client: Client,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    public groupsSearch: GroupsSearchService
   ) {}
 
   ngOnInit() {
     this.initialized = true;
     this.load(true);
+
+    this.groupsSearchQuerySubscription = this.groupsSearch.query$.subscribe(
+      query => {
+        this.query = query;
+        this.load(true);
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.groupsSearchQuerySubscription) {
+      this.groupsSearchQuerySubscription.unsubscribe();
+    }
   }
 
   async load(refresh: boolean = false) {
@@ -105,6 +122,22 @@ export class GroupProfileFeedSortedComponent implements OnInit {
     }
 
     try {
+      if (this.query) {
+        this.viewScheduled = false;
+        endpoint = 'api/v2/feeds/container';
+
+        const params: any = {
+          period: '1y',
+          all: 1,
+          query: this.query,
+          sync: 1,
+          force_public: 1,
+        };
+        this.feedsService.setParams(params);
+      } else {
+        this.feedsService.setParams({ query: '' });
+      }
+
       this.feedsService
         .setEndpoint(`${endpoint}/${this.group.guid}/${this.type}`)
         .setLimit(12)
@@ -179,27 +212,11 @@ export class GroupProfileFeedSortedComponent implements OnInit {
 
   //
 
-  protected v1CanDeactivate(): boolean {
-    if (!this.poster || !this.poster.attachment) {
-      return true;
-    }
-
-    const progress = this.poster.attachment.getUploadProgress();
-
-    if (progress > 0 && progress < 100) {
-      return confirm('Your file is still uploading. Are you sure?');
-    }
-
-    return true;
-  }
-
   canDeactivate(): boolean | Promise<boolean> {
     if (this.composer) {
       return this.composer.canDeactivate();
     }
-
-    // Check v1 Poster component
-    return this.v1CanDeactivate();
+    return true;
   }
 
   /**

@@ -138,8 +138,8 @@
 
   <a
     class="m-login__joinTheConversation"
-    [routerLink]="['/register']"
     *ngIf="showTitle"
+    (click)="onJoinNowClick()"
     i18n="@@LOGIN__JOIN_MINDS_NOW"
   >
     Join Minds Now
@@ -167,59 +167,32 @@
 
     <div class="m-login__spacer" *ngIf="showBigButton"></div>
 
-    <button
-      class="m-btn m-btn--action m-btn--login"
-      (click)="login()"
-      [disabled]="inProgress"
+    <m-button
+      class="m-login__button--login"
+      color="blue"
+      (onAction)="login()"
+      [saving]="inProgress"
       *ngIf="!showBigButton"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-    </button>
-    <m-shadowboxSubmitButton
+    </m-button>
+    <m-button
+      class="m-login__button--login"
       *ngIf="showBigButton"
       type="button"
-      [disabled]="inProgress"
       [saving]="inProgress"
-      (click)="login()"
+      (onAction)="login()"
+      color="blue"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">
         Login
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: LOGIN -->
 
 <!-- START: TWOFACTOR -->
-<div class="minds-login-box m-login-box m-login__2fa" *ngIf="twofactorToken">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">
-      Twofactor Login
-    </h2>
-  </div>
-
-  <div class="mdl-card__supporting-text">
-    <ng-container i18n="@@FORMS__LOGIN__2FA_LOGIN_SMS_SENT">
-      We just sent you a text. Enter the code below to authenticate.
-    </ng-container>
-  </div>
-
-  <div class="m-login-mfa-input">
-    <input
-      #code
-      class="mdl-textfield__input"
-      type="text"
-      id="code"
-      placeholder="Enter your code here"
-      i18n="@@M__COMMON__ENTER_2FA_CODE"
-      (keydown.enter)="twofactorAuth(code)"
-    />
-  </div>
-  <div></div>
-
-  <button class="m-btn m-btn--action" (click)="twofactorAuth(code)">
-    <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-  </button>
-</div>
+<m-multiFactorAuth *ngIf="!hideMFA" [embedded]="true"></m-multiFactorAuth>

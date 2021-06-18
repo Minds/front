@@ -6,15 +6,18 @@ import {
   Injector,
   Input,
   OnDestroy,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { ComposerService } from './services/composer.service';
+import { ComposerService, ComposerSize } from './services/composer.service';
 import { ModalService } from './components/modal/modal.service';
 import { BaseComponent } from './components/base/base.component';
-import { TagsPipe } from '../../common/pipes/tags';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Subscription } from 'rxjs';
+import { Session } from '../../services/session';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { CookieService } from '@gorniv/ngx-universal';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer
@@ -26,11 +29,18 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'composer.component.html',
 })
-export class ComposerComponent implements OnDestroy {
+export class ComposerComponent implements OnInit, OnDestroy {
   /**
    * Is this an embedded composer (i.e. no modal)
    */
   @Input() embedded: boolean = false;
+
+  /**
+   * Set composer size.
+   */
+  @Input() set size(size: ComposerSize) {
+    this.service.size$.next(size);
+  }
 
   /**
    * Input activity (for edits)
@@ -92,6 +102,8 @@ export class ComposerComponent implements OnDestroy {
 
   protected tooManyTagsSubscription: Subscription;
 
+  querySubscription: Subscription;
+
   /**
    * Constructor
    * @param modalService
@@ -105,7 +117,11 @@ export class ComposerComponent implements OnDestroy {
     protected formToast: FormToastService,
     protected service: ComposerService /* NOTE: Used for DI. DO NOT REMOVE OR CHANGE !!! */,
     protected cd: ChangeDetectorRef,
-    protected injector: Injector
+    protected injector: Injector,
+    protected session: Session,
+    protected route: ActivatedRoute,
+    public cookieService: CookieService,
+    public router: Router
   ) {
     this.tooManyTagsSubscription = this.service.tooManyTags$.subscribe(
       value => {
@@ -120,6 +136,26 @@ export class ComposerComponent implements OnDestroy {
     );
   }
 
+  ngOnInit(): void {
+    if (this.cookieService.get('intent-url')) {
+      this.onTriggerClick();
+      this.service.message$.next(this.cookieService.get('intent-url'));
+    }
+
+    this.querySubscription = this.route.queryParamMap.subscribe(
+      (params: ParamMap) => {
+        if (params.has('intentUrl')) {
+          const intentUrl = params.get('intentUrl');
+          if (this.session.isLoggedIn()) {
+            this.onTriggerClick();
+            this.service.message$.next(intentUrl);
+          } else {
+            this.cookieService.put('intent-url', intentUrl);
+          }
+        }
+      }
+    );
+  }
   /**
    * Component destroy hook
    */
@@ -127,15 +163,18 @@ export class ComposerComponent implements OnDestroy {
     this.destroyed = true;
     this.tooManyTagsSubscription.unsubscribe();
     this.modalService.dismiss();
+    this.querySubscription.unsubscribe();
   }
 
   /**
    * Opens the modal when the placeholder is clicked
    * @param $event
    */
-  async onTriggerClick($event: MouseEvent) {
+  async onTriggerClick($event?: MouseEvent) {
     this.modalOpen = true;
     this.detectChanges();
+
+    //
 
     try {
       const $event = await this.modalService
@@ -157,6 +196,19 @@ export class ComposerComponent implements OnDestroy {
     }
 
     this.modalOpen = false;
+
+    // Intent url cleanup
+    if (this.route.snapshot.queryParamMap.get('intentUrl')) {
+      this.router.navigate(['.'], {
+        queryParams: {},
+        relativeTo: this.route,
+      });
+    }
+
+    if (this.cookieService.get('intent-url')) {
+      this.cookieService.remove('intent-url');
+    }
+
     this.detectChanges();
   }
 

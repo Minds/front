@@ -9,29 +9,19 @@ import { VideoModule } from '../media/components/video/video.module';
 import { ModalsModule } from '../modals/modals.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { BoostModule } from '../boost/boost.module';
-import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-networks.module';
 import { WireModule } from '../wire/wire.module';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
-import { Activity } from './components/cards/activity/activity';
-import { AlbumCard } from './components/cards/object/album/album';
-import { ImageCard } from './components/cards/object/image/image';
-import { VideoCard } from './components/cards/object/video/video';
-import { Remind } from './components/cards/remind/remind';
 import { UserCard } from './components/cards/user/user';
 
 import { BoostButton } from './components/buttons/boost';
 import { CommentButton } from './components/buttons/comment';
-import { FeatureButton } from './components/buttons/feature';
-import { MonetizeButton } from './components/buttons/monetize';
-import { RemindButton } from './components/buttons/remind';
 import { SubscribeButton } from './components/buttons/subscribe';
 import { UserDropdownButton } from './components/buttons/user-dropdown';
 
 import { MindsBanner } from './components/banner/banner';
 import { MindsFatBanner } from './components/banner/fat';
 
-import { ActivityPreview } from './components/cards/activity/preview';
 import { SocialIcons } from './components/social-icons/social-icons';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
@@ -53,7 +43,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     PaymentsModule,
     ModalsModule,
     BoostModule,
-    ThirdPartyNetworksModule,
     WireModule,
     PostMenuModule,
     CommentsModule,
@@ -61,19 +50,10 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     CodeHighlightModule,
   ],
   declarations: [
-    Activity,
-    ActivityPreview,
-    AlbumCard,
-    ImageCard,
-    VideoCard,
-    Remind,
     UserCard,
     HovercardPopup,
     BoostButton,
     CommentButton,
-    FeatureButton,
-    MonetizeButton,
-    RemindButton,
     SubscribeButton,
     UserDropdownButton,
 
@@ -85,19 +65,10 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     CarouselComponent,
   ],
   exports: [
-    Activity,
-    ActivityPreview,
-    AlbumCard,
-    ImageCard,
-    VideoCard,
-    Remind,
     UserCard,
 
     BoostButton,
     CommentButton,
-    FeatureButton,
-    MonetizeButton,
-    RemindButton,
     SubscribeButton,
     UserDropdownButton,
 

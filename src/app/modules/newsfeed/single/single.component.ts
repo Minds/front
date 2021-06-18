@@ -20,6 +20,7 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 @Component({
   selector: 'm-newsfeed--single',
   templateUrl: 'single.component.html',
+  styleUrls: ['single.component.ng.scss'],
 })
 export class NewsfeedSingleComponent {
   readonly cdnAssetsUrl: string;
@@ -105,18 +106,8 @@ export class NewsfeedSingleComponent {
           case 'image':
           case 'video':
           case 'album':
-            if (!this.featuresService.has('navigation')) {
-              this.router.navigate(['/media', this.activity.guid], {
-                replaceUrl: true,
-              });
-            }
             break;
           case 'blog':
-            if (!this.featuresService.has('navigation')) {
-              this.router.navigate(['/blog/view', this.activity.guid], {
-                replaceUrl: true,
-              });
-            }
             break;
         }
 
@@ -228,6 +219,6 @@ export class NewsfeedSingleComponent {
   }
 
   get showLegacyActivity(): boolean {
-    return this.editing || !this.featuresService.has('navigation');
+    return this.editing;
   }
 }

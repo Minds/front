@@ -20,7 +20,8 @@
   *ngIf="showTitle"
   i18n="@@REGISTER__ALREADY__HAVE__ACOUNT__LINK"
 >
-  Already have an account? <a [routerLink]="'/login'">Login</a>
+  Already have an account?
+  <a [routerLink]="'/login'" queryParamsHandling="merge">Login</a>
 </span>
 
 <!-- START: Register -->
@@ -49,6 +50,7 @@
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           [pattern]="alphanumericPattern"
+          data-cy="data-minds-register-username-input"
         />
       </div>
       <div
@@ -59,13 +61,13 @@
           *ngIf="this.form.get('username').errors?.minlength"
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_SHORT"
         >
-          Must be at least 4 characters long
+          Must be at least 4 characters long.
         </ng-container>
         <ng-container
           *ngIf="this.form.get('username').errors?.maxlength"
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_LONG"
         >
-          Cannot be longer than 128 characters
+          Cannot be longer than 128 characters.
         </ng-container>
         <ng-container
           *ngIf="this.form.get('username').errors?.pattern"
@@ -73,6 +75,12 @@
         >
           Usernames can only have letters, numbers or underscores. Special
           characters (e.g. @^%.) and spaces are not allowed.
+        </ng-container>
+        <ng-container
+          *ngIf="username.errors?.existingUsername"
+          i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TAKEN"
+        >
+          Username already taken.
         </ng-container>
       </div>
     </div>
@@ -91,6 +99,7 @@
           [placeholder]="showLabels ? '' : 'Email'"
           i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
           [class.m-input--hide-placeholder]="showLabels"
+          data-cy="data-minds-register-email-input"
         />
       </div>
       <div
@@ -125,9 +134,21 @@
             (blur)="onPasswordBlur()"
             (ngModelChange)="popover.show(); popover.checkRules($event)"
             [class.m-input--hide-placeholder]="showLabels"
+            data-cy="data-minds-register-password-input-1"
           />
         </div>
       </m-popover>
+      <div
+        class="m-register__error"
+        [style.visibility]="showError('password') ? 'visible' : 'hidden'"
+      >
+        <ng-container
+          *ngIf="this.form.get('password').errors?.invalidPassword"
+          i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_PASSWORD"
+        >
+          Invalid password
+        </ng-container>
+      </div>
     </div>
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"
@@ -153,6 +174,8 @@
           readonly
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
+          data-cy="data-minds-register-password-input-2"
+          [class.ng-invalid]="this.form.errors?.passwordConfirming"
         />
       </div>
       <div
@@ -194,7 +217,7 @@
   <div class="m-layout__row m-register__actions">
     <div class="m-register__checkboxes">
       <m-formInput__checkbox formControlName="exclusive_promotions">
-        Receive exclusive promotions from Minds
+        Receive exclusive token rewards and info
       </m-formInput__checkbox>
 
       <m-formInput__checkbox
@@ -208,28 +231,29 @@
 
     <div class="m-layout__spacer"></div>
 
-    <button
-      class="m-btn m-btn--action"
-      (click)="register($event)"
-      [disabled]="!this.form.valid || inProgress"
+    <m-button
+      color="blue"
+      (onAction)="register($event)"
+      [saving]="inProgress"
+      [disabled]="!this.form.valid"
       *ngIf="!showBigButton"
     >
       <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
         Signup
       </ng-container>
-    </button>
+    </m-button>
 
-    <m-shadowboxSubmitButton
+    <m-button
       *ngIf="showBigButton"
-      type="button"
       [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
       [saving]="inProgress"
-      (click)="register($event)"
+      color="blue"
+      (onAction)="register($event)"
     >
       <ng-container i18n="@@FORMS__REGISTER__JOIN_NOW_ACTION">
         Join Now
       </ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </form>
 <!-- END: Register -->

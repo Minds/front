@@ -37,6 +37,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     { label: 'Terms', routerLink: ['/p/terms'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },
     { label: 'Contact', routerLink: ['/p/contact'] },
+    { label: 'Branding', routerLink: ['/branding'] },
   ];
   maxFooterLinks = 5;
 

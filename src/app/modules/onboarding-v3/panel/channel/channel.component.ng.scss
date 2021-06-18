@@ -1,0 +1,84 @@
+@import 'defaults.scss';
+
+:host {
+  .m-onboardingChannel__form {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 20px 40px;
+
+    .m-onboardingChannel__label {
+      font-size: 15px;
+      font-weight: 400;
+      margin-bottom: 8px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-onboardingChannel__input,
+    .m-onboardingChannel__textArea {
+      border-radius: 2;
+      padding: 10px 16px;
+      margin-bottom: 32px;
+      outline: none !important;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+
+        &:focus {
+          border-color: themed($m-blue);
+        }
+      }
+    }
+
+    .m-onboardingChannel__avatarContainer {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: none no-repeat center center rgba(0, 0, 0, 0.1);
+      background-size: cover;
+
+      display: flex;
+      justify-content: flex-end;
+      @media screen and (max-width: $max-mobile) {
+        left: 20px;
+        width: 60px;
+        height: 60px;
+      }
+
+      .m-onboardingChannel__avatarLabel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+        margin: -5px;
+
+        @include m-theme() {
+          color: themed($m-bgColor--secondary);
+          background-color: rgba(themed($m-textColor--primary), 0.6);
+        }
+
+        > m-icon {
+          font-size: 22px;
+        }
+
+        > input[type='file'] {
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          width: 1px;
+          height: 1px;
+          opacity: 0.01;
+        }
+      }
+    }
+  }
+}

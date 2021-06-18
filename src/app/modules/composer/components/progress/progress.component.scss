@@ -16,7 +16,7 @@
       height: 100%;
 
       @include m-theme() {
-        background-color: themed($m-btn--primary);
+        background-color: themed($m-link);
       }
     }
   }
@@ -32,6 +32,10 @@
       transform: translateZ(0); // 3D
       will-change: transform, margin-left, margin-right;
     }
+  }
+
+  &.m-composer__progress--short {
+    margin: 0;
   }
 }
 

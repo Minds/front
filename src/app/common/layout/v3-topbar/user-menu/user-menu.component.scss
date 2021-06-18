@@ -55,6 +55,27 @@ m-usermenu__v3 {
           padding-top: 26px;
           padding-bottom: 8px;
 
+          overflow-x: hidden;
+          position: relative;
+
+          &:after {
+            position: absolute;
+            display: block;
+            content: '';
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 100%;
+            @include m-theme() {
+              background: linear-gradient(
+                90deg,
+                rgba(themed($m-bgColor--secondary), 0) 0%,
+                rgba(themed($m-bgColor--secondary), 1) 80%,
+                rgba(themed($m-bgColor--secondary), 1) 100%
+              );
+            }
+          }
+
           > a {
             font-size: 18px;
             font-weight: bold;

@@ -1,3 +1,4 @@
-<a class="m-button-v2 m-button-v2--iconOnly" (click)="message()">
-  <m-icon iconId="chat_bubble" [sizeFactor]="0"></m-icon>
-</a>
+<m-button (onAction)="message()" iconOnly="true" overlay="true">
+  <m-icon *ngIf="!inProgress" iconId="chat_bubble" [sizeFactor]="0"></m-icon>
+  <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+</m-button>

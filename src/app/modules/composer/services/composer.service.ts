@@ -1,6 +1,18 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  Subscription,
+} from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
@@ -9,7 +21,11 @@ import { AttachmentPreviewResource, PreviewService } from './preview.service';
 import { VideoPoster } from './video-poster.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { SupportTier } from '../../wire/v2/support-tiers.service';
-import parseHashtagsFromString from '../../../helpers/parse-hashtags';
+import { HashtagsFromStringService } from '../../../common/services/parse-hashtags.service';
+import {
+  AttachmentValidationPayload,
+  AttachmentValidatorService,
+} from './attachment-validator.service';
 
 /**
  * Message value type
@@ -173,6 +189,10 @@ export type LicenseSubjectValue = string;
  */
 export const DEFAULT_LICENSE_VALUE: LicenseSubjectValue = 'all-rights-reserved';
 
+export type ComposerSize = 'compact' | 'full';
+
+export const DEFAULT_COMPOSER_SIZE: ComposerSize = 'full';
+
 /**
  * Payload data object. Used to build the DTO
  */
@@ -325,9 +345,9 @@ export class ComposerService implements OnDestroy {
   /**
    * Attachment error subject (state)
    */
-  readonly attachmentError$: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('');
+  readonly attachmentError$: BehaviorSubject<
+    AttachmentValidationPayload
+  > = new BehaviorSubject<AttachmentValidationPayload>(null);
 
   /**
    * Post-ability check subject (state)
@@ -344,11 +364,25 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
+   * If we are editing and we have a scheduled value
+   */
+  readonly canSchedule$ = combineLatest([this.schedule$, this.isEditing$]).pipe(
+    map(([schedule, isEditing]) => {
+      return !isEditing || schedule * 1000 > Date.now();
+    })
+  );
+
+  /**
    * Are we currently moving part of this service's state to another place? (i.e. blog editor)
    */
   readonly isMovingContent$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  /**
+   * Is group post subject
+   */
+  isGroupPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   /**
    * Too many tags subject
@@ -368,6 +402,13 @@ export class ComposerService implements OnDestroy {
    * Tag count subject
    */
   readonly tagCount$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  /**
+   * Size of composer
+   */
+  readonly size$: BehaviorSubject<ComposerSize> = new BehaviorSubject<
+    ComposerSize
+  >(DEFAULT_COMPOSER_SIZE);
 
   /**
    * URL in the message
@@ -422,7 +463,9 @@ export class ComposerService implements OnDestroy {
     protected attachment: AttachmentService,
     protected richEmbed: RichEmbedService,
     protected preview: PreviewService,
-    protected feedsUpdate: FeedsUpdateService
+    protected feedsUpdate: FeedsUpdateService,
+    private hashtagsFromString: HashtagsFromStringService,
+    private attachmentValidator: AttachmentValidatorService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -466,11 +509,26 @@ export class ComposerService implements OnDestroy {
       this.attachment$.pipe(
         // Only react to attachment changes from previous values (string -> File -> null -> File -> ...)
         distinctUntilChanged(),
-
+        // emit bundled attachment validator and observable file.
+        switchMap(file => {
+          return combineLatest(
+            of(file),
+            this.attachmentValidator.validate(file)
+          );
+        }),
+        // if invalid, abort, else return file.
+        map(([file, validator]) => {
+          if (validator && !validator.isValid) {
+            this.removeAttachment();
+            this.attachmentError$.next(validator);
+            return;
+          }
+          return file;
+        }),
         // On every attachment change:
         tap(file => {
-          // - Reset attachment error string
-          this.attachmentError$.next('');
+          // - Reset attachment error
+          this.attachmentError$.next(null);
 
           // - Set the preview based the current value (Blob URL or empty)
           this.setPreview(file);
@@ -484,10 +542,10 @@ export class ComposerService implements OnDestroy {
 
           // - Handle errors and update attachmentErrors subject
           e => {
-            console.error('Composer:Attachment', e); // Ensure Sentry knows
-            this.attachmentError$.next(
-              (e && e.message) || 'There was an issue uploading your file'
-            );
+            this.attachmentError$.next({
+              isValid: false,
+              message: e.message ?? 'An unexpected error has occurred',
+            });
           }
         ),
 
@@ -544,11 +602,28 @@ export class ComposerService implements OnDestroy {
         })
       ),
       tap(values => {
-        const bodyTags = parseHashtagsFromString(values.message).concat(
-          parseHashtagsFromString(values.title)
-        );
+        // get tags from title and body.
+        const bodyTags = this.hashtagsFromString
+          .parseHashtagsFromString(values.message)
+          .concat(
+            this.hashtagsFromString.parseHashtagsFromString(values.title)
+          );
 
-        const tagCount = bodyTags.length + values.tags.length;
+        const cryptoTags = this.hashtagsFromString
+          .parseCryptoTagsFromString(values.message)
+          .concat(
+            this.hashtagsFromString.parseCryptoTagsFromString(values.title)
+          );
+
+        // merge into one array.
+        const tags = [...bodyTags, ...values.tags, ...cryptoTags];
+
+        // get unique tags.
+        const uniqueTags = tags.filter(function(item, pos) {
+          return tags.indexOf(item) == pos;
+        });
+
+        const tagCount = uniqueTags.length;
 
         this.tagCount$.next(tagCount);
 
@@ -662,6 +737,9 @@ export class ComposerService implements OnDestroy {
    */
   setContainerGuid(containerGuid: string | null) {
     this.containerGuid = containerGuid || null;
+    if (containerGuid) {
+      this.isGroupPost$.next(true);
+    }
     return this;
   }
 
@@ -694,9 +772,10 @@ export class ComposerService implements OnDestroy {
     this.inProgress$.next(false);
     this.progress$.next(0);
     this.isPosting$.next(false);
-    this.attachmentError$.next('');
+    this.attachmentError$.next(null);
     this.isEditing$.next(false);
     this.isMovingContent$.next(false);
+    this.isGroupPost$.next(false);
 
     // Reset preview (state + blob URL)
     this.setPreview(null);
@@ -791,6 +870,7 @@ export class ComposerService implements OnDestroy {
 
     if (typeof activity.container_guid !== 'undefined') {
       this.setContainerGuid(activity.containerGuid);
+      this.isGroupPost$.next(true);
     }
 
     this.isEditing$.next(true);
@@ -821,7 +901,11 @@ export class ComposerService implements OnDestroy {
     const payload = this.payload;
 
     // Clean up attachment ONLY if the new entity GUID is different from the original source, if any
-    if (payload.entity_guid && !this.isOriginalEntity(payload.entity_guid)) {
+    if (
+      payload &&
+      payload.entity_guid &&
+      !this.isOriginalEntity(payload.entity_guid)
+    ) {
       this.attachment.prune(payload.entity_guid);
     }
 
@@ -900,6 +984,7 @@ export class ComposerService implements OnDestroy {
     if (this.containerGuid) {
       // Override accessId if there's a container set
       accessId = this.containerGuid;
+      this.isGroupPost$.next(true);
     }
 
     this.payload = {

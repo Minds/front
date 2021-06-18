@@ -6,14 +6,15 @@ import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.se
 import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { Router } from '@angular/router';
+import { Storage } from '../../../services/storage';
+import { MessengerService } from '../../messenger/messenger.service';
 
 @Component({
   selector: 'm-page',
   templateUrl: 'page.component.html',
+  styleUrls: ['page.component.ng.scss'],
 })
 export class PageComponent implements OnInit {
-  useNewNavigation: boolean = false;
-
   showOnboarding: boolean = false;
 
   isSidebarVisible: boolean = true;
@@ -25,12 +26,12 @@ export class PageComponent implements OnInit {
     private onboardingService: ChannelOnboardingService,
     private site: SiteService,
     public pageLayoutService: PageLayoutService,
-    private router: Router
+    private router: Router,
+    private storage: Storage,
+    private messengerService: MessengerService
   ) {}
 
   ngOnInit() {
-    this.useNewNavigation = this.featuresService.has('navigation');
-
     this.isSidebarVisible = this.navigationService.container
       ? !this.navigationService.container.hidden
       : true;
@@ -55,6 +56,8 @@ export class PageComponent implements OnInit {
     this.onboardingService.onOpen.subscribe(async () => {
       this.showOnboarding = await this.onboardingService.showModal(true);
     });
+
+    this.messengerService.setupLegacyMessengerVisibility();
   }
 
   get isProDomain() {
@@ -62,10 +65,6 @@ export class PageComponent implements OnInit {
   }
 
   hasMarkersSidebar() {
-    return (
-      this.session.isLoggedIn() &&
-      !this.isProDomain &&
-      !this.featuresService.has('navigation')
-    );
+    return this.session.isLoggedIn() && !this.isProDomain && false;
   }
 }

@@ -3,12 +3,14 @@
     <div
       class="m-channelHeaderBanner__background"
       [ngStyle]="bannerBackgroundImageCss(channel)"
+      data-cy="data-minds-channel-banner"
     ></div>
 
     <minds-avatar
       class="m-channelHeaderBanner__avatar"
       [object]="channel"
       [editMode]="false"
+      data-cy="data-minds-channel-avatar"
     ></minds-avatar>
 
     <ng-content></ng-content>
@@ -24,10 +26,15 @@
         *ngIf="channel.guid"
         class="m-channelHeaderInfoName__badges"
         [user]="channel"
-        [badges]="['admin', 'verified', 'plus']"
+        [badges]="['admin', 'verified', 'plus', 'founder']"
       ></m-channel--badges>
     </h1>
 
-    <h2 class="m-channelHeaderInfo__username">@{{ channel.username }}</h2>
+    <span class="m-channelHeaderInfo__username">
+      @{{ channel.username }}
+      <span *ngIf="shouldShowSubscribesToYou(channel)">
+        Subscribes to you
+      </span>
+    </span>
   </div>
 </div>

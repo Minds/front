@@ -70,26 +70,29 @@
   </div>
 
   <div class="m-blogEditor__saveButtons">
-    <m-shadowboxSubmitButton
+    <m-button
       class="m-blogEditor__saveDraftButton m-blogEditor__saveButton"
       [disabled]="!(service.canPost$ | async)"
       [saving]="service.inProgress$ | async"
-      (click)="save(true)"
+      (onAction)="save(true)"
       i18n="@@BLOGS_EDITOR__SAVE_DRAFT"
       data-cy="data-minds-blog-editor-save-draft"
       *ngIf="!(service.published$ | async)"
+      size="small"
     >
       Save Draft
-    </m-shadowboxSubmitButton>
-    <m-shadowboxSubmitButton
+    </m-button>
+    <m-button
       class="m-blogEditor__saveButton"
       [disabled]="!(service.canPost$ | async)"
       [saving]="service.inProgress$ | async"
-      (click)="save()"
+      (onAction)="save()"
       i18n="@@BLOGS_EDITOR__PUBLISH_BLOG"
       data-cy="data-minds-blog-editor-publish"
+      size="small"
+      color="blue"
     >
       Publish
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </div>

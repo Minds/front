@@ -1,0 +1,69 @@
+<div class="m-walletTransactions">
+  <div *ngIf="!init" class="m-wallet__spinner">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+  <ng-container *ngIf="init">
+    <div class="m-walletTransactions__filter">
+      <m-dropdownSelector
+        [filter]="filter"
+        [inlineLabel]="true"
+        (selectionMade)="filterSelected($event)"
+      >
+      </m-dropdownSelector>
+    </div>
+    <ng-template #firstRow>
+      <tr
+        class="m-walletTransactionsTable__row--top m-walletTransactionsTable__row--hasIcon"
+      >
+        <td
+          class="m-walletTransactionsTable__row--date"
+          i18n="@@WALLET_V2_TXS_TOKENS__UPCOMING"
+        >
+          Upcoming
+        </td>
+        <td
+          class="m-walletTransactionsTable__typeWrapper containsPopover"
+          style="position: relative"
+          (mouseenter)="showRewardsPopup = true"
+          (mouseleave)="showRewardsPopup = false"
+        >
+          <i class="material-icons">star_border</i
+          ><span i18n="@@WALLET_V2_TXS_TOKENS__TODAYS_DAILY_REWARDS"
+            >Today's Daily Rewards</span
+          >
+          <m-walletRewardsPopup
+            [timestamp]="startOfToday"
+            *ngIf="showRewardsPopup"
+          ></m-walletRewardsPopup>
+        </td>
+      </tr>
+      <tr class="m-walletTransactionsTable__row--spacer"></tr>
+    </ng-template>
+    <ng-container *ngIf="transactions.length !== 0">
+      <m-walletTransactionsTable
+        currency="tokens"
+        [transactions]="transactions"
+        [filterApplied]="filterApplied"
+      >
+        <!-- <ng-container *ngTemplateOutlet="firstRow"></ng-container> -->
+      </m-walletTransactionsTable>
+      <infinite-scroll
+        distance="25%"
+        (load)="loadTransactions(false)"
+        [moreData]="moreData"
+        [inProgress]="inProgress"
+      ></infinite-scroll>
+    </ng-container>
+    <div
+      class="m-walletTransactions__noTxNotice"
+      *ngIf="transactions.length === 0"
+    >
+      <p *ngIf="!filterApplied" i18n="@@WALLET_V2_TXS_TOKENS__NO_TOKEN_TX_YET">
+        You don't have any token transactions yet.
+      </p>
+      <p *ngIf="filterApplied" i18n="@@WALLET_V2_TXS_TOKENS__NO_X_TX_YET">
+        You don't have any {{ typeLabel | lowercase }} transactions yet.
+      </p>
+    </div>
+  </ng-container>
+</div>

@@ -55,12 +55,12 @@
       Minds+ content pool. You will earn revenue based on the performance of the
       content.
     </p>
-    <m-shadowboxSubmitButton
-      (click)="openPlusUpgradeModal()"
+    <m-button
+      (onAction)="openPlusUpgradeModal()"
       i18n="@@COMPOSER__MONETIZE_PLUS_UPGRADE_TO_PRO"
     >
       Upgrade to Minds+
-    </m-shadowboxSubmitButton>
+    </m-button>
   </ng-container>
 </div>
 <div class="m-composerPopup__action">
@@ -72,14 +72,16 @@
     Posts in the Minds+ pool cannot be removed
   </p>
 
-  <m-shadowboxSubmitButton
+  <m-button
     *ngIf="isPlus"
     type="button"
-    (click)="save()"
+    (onAction)="save()"
     [disabled]="!canSave"
     i18n="@@COMMON__SAVE"
     data-cy="monetize-save-button"
+    size="small"
+    color="blue"
   >
     Save
-  </m-shadowboxSubmitButton>
+  </m-button>
 </div>

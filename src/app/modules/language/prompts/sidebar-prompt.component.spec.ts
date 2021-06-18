@@ -19,6 +19,7 @@ import {
 import { ApiService } from '../../../common/api/api.service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('LanguageSidebarPromptComponent', () => {
   let component: LanguageSidebarPromptComponent;
@@ -26,7 +27,11 @@ describe('LanguageSidebarPromptComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LanguageSidebarPromptComponent, SidebarWidgetComponent],
+      declarations: [
+        LanguageSidebarPromptComponent,
+        SidebarWidgetComponent,
+        ButtonComponent,
+      ],
       imports: [RouterTestingModule, CookieModule],
       providers: [
         { provide: Session, useValue: sessionMock },

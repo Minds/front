@@ -19,8 +19,11 @@ import { VideoPlayerService, VideoSource } from './player.service';
 import * as Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
+import { AutoProgressVideoService } from '../video/auto-progress-overlay/auto-progress-video.service';
+import { map, take } from 'rxjs/operators';
+import { HlsjsPlyrDriver } from './hls-driver';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -57,7 +60,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   @Input() set autoplay(autoplay: boolean) {
     if (autoplay) {
-      this.service.playable = true;
+      this.service.isPlayable$.next(true);
     }
   }
 
@@ -80,6 +83,29 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   @ViewChild(PlyrComponent) set _player(player: PlyrComponent) {
     this.player = player;
   }
+
+  /**
+   * If the plyr component should be displayed
+   */
+  showPlyr = false;
+
+  /**
+   * Plyr driver detrmined by source types (detects hls)
+   */
+  plyrDriver$: Observable<HlsjsPlyrDriver | null> = this.service.sources$.pipe(
+    map(sources => {
+      if (
+        sources[0].type === 'application/vnd.apple.mpegURL' &&
+        isPlatformBrowser(this.platformId) &&
+        !document
+          .createElement('video')
+          .canPlayType('application/vnd.apple.mpegURL')
+      ) {
+        return new HlsjsPlyrDriver(true);
+      }
+      return null;
+    })
+  );
 
   /**
    * Options for Plyr to use
@@ -108,17 +134,34 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   protected init: boolean = false;
 
-  onReadySubscription: Subscription = this.service.onReady$.subscribe(() => {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-  });
+  subscriptions: Subscription[] = [
+    this.service.onReady$.subscribe(() => {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }),
+  ];
 
   constructor(
     public elementRef: ElementRef,
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
+    public autoProgress: AutoProgressVideoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  ngOnInit() {
+    this.subscriptions.push(
+      combineLatest([
+        this.service.isPlayable$,
+        this.service.sources$,
+      ]).subscribe(([isPlayable, sources]) => {
+        this.showPlyr =
+          isPlatformBrowser(this.platformId) &&
+          isPlayable &&
+          sources.length > 0;
+      })
+    );
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -131,18 +174,17 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onReadySubscription.unsubscribe();
-    //this.autoplayService.unregisterPlayer(this);
+    this.autoProgress.cancel(); // hide autoplay window
+
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   @Input('guid')
   set guid(guid: string) {
     const oldGuid = this.service.guid;
     this.service.setGuid(guid);
-
-    if (isPlatformBrowser(this.platformId) && oldGuid !== guid) {
-      this.service.load();
-    }
   }
 
   @Input('isModal')
@@ -163,20 +205,20 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     return this.service.status;
   }
 
+  get isModal(): boolean {
+    return this.service.isModal;
+  }
+
   get awaitingTranscode(): Observable<boolean> {
     return this.service.awaitingTranscode();
   }
 
+  /**
+   * Plyr call when play event is emitted
+   * @param event
+   */
   onPlayed(event: Plyr.PlyrEvent): void {
     // console.log('played', event);
-  }
-
-  /**
-   * If the component is in a playable state
-   * @return boolean
-   */
-  isPlayable(): boolean {
-    return isPlatformBrowser(this.platformId) && this.service.isPlayable();
   }
 
   /**
@@ -186,7 +228,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   onPlaceholderClick(e: MouseEvent): void {
     // If we have a player, then play
-    if (this.player && this.isPlayable) {
+    if (this.player && this.service.isPlayable$.getValue()) {
       this.play({ muted: false, hideControls: false });
       return;
     }
@@ -196,7 +238,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
       return this.mediaModalRequested.next();
     }
 
-    this.service.playable = true;
+    this.service.isPlayable$.next(true);
   }
 
   unmute(): void {
@@ -221,7 +263,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     this.options.muted = opts.muted;
     this.options.hideControls = opts.hideControls;
 
-    this.service.playable = true;
+    this.service.isPlayable$.next(true);
 
     if (this.player) {
       try {
@@ -239,10 +281,10 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   pause(): void {
     if (this.player) {
       this.player.player.pause();
-    }
 
-    // Clean up sources
-    this.removeSources();
+      // Clean up sources
+      this.removeSources();
+    }
   }
 
   isPlaying(): boolean {
@@ -284,9 +326,6 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   onPlay(): void {}
 
   removeSources() {
-    // if we're not autoplaying, we need to set the src attribute to ''
-    this.service.playable = false;
-
     const sources = this.elementRef.nativeElement.getElementsByTagName(
       'source'
     );
@@ -305,5 +344,25 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
         video.load();
       } catch (err) {}
     }
+
+    // if we're not autoplaying, we need to set the src attribute to ''
+    this.service.isPlayable$.next(false);
+  }
+
+  onEnded($event: any): void {
+    this.autoProgress.next();
+  }
+
+  /**
+   * Called on Plyr seek.
+   */
+  onSeeking(): void {
+    this.subscriptions.push(
+      this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
+        if (timer > 0) {
+          this.autoProgress.cancel();
+        }
+      })
+    );
   }
 }

@@ -30,10 +30,7 @@ import { SubscribeButtonComponent } from './channel/subscribe-button/subscribe-b
 import { SearchBoxComponent } from './channel/search-box/search-box.component';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
 import { NewsfeedSingleComponent } from '../newsfeed/single/single.component';
-import { MediaViewComponent } from '../media/view/view.component';
-import { MediaEditComponent } from '../media/edit/edit.component';
 import { BlogViewInfinite } from '../blogs/view/infinite';
-import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ModalsModule } from '../modals/modals.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
@@ -67,7 +64,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: ProChannelHomeComponent,
+            redirectTo: 'feed',
+            pathMatch: 'full',
           },
           {
             path: 'login',
@@ -94,7 +92,8 @@ export const PRO_DOMAIN_ROUTES = [
     children: [
       {
         path: '',
-        component: ProChannelHomeComponent,
+        redirectTo: 'feed',
+        pathMatch: 'full',
       },
       {
         path: 'login',
@@ -110,11 +109,7 @@ export const PRO_DOMAIN_ROUTES = [
       },
       {
         path: 'media/:guid',
-        component: MediaViewComponent,
-      },
-      {
-        path: 'media/edit/:guid',
-        component: MediaEditComponent,
+        redirectTo: 'newsfeed/:guid',
       },
       {
         path: 'blog/view/:guid/:title',
@@ -123,11 +118,6 @@ export const PRO_DOMAIN_ROUTES = [
       {
         path: 'blog/view/:guid',
         component: BlogViewInfinite,
-      },
-      {
-        path: 'blog/edit/:guid',
-        component: BlogEdit,
-        canDeactivate: [CanDeactivateGuardService],
       },
       {
         path: 'blog/:slugid',

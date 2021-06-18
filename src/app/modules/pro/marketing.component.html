@@ -44,10 +44,14 @@
       </div>
 
       <div
-        class="m-grid__column-5 m-grid__column-5--tablet m-grid__column-12--mobile m-marketing__image"
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image m-marketing__imageContainer"
       >
         <span>
-          <img [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-1.jpg'" />
+          <img
+            [src]="cdnAssetsUrl + 'assets/product-pages/pro/mobile-pro.png'"
+            class="m-marketing__image--tall"
+            alt="Minds pro"
+          />
         </span>
       </div>
     </div>
@@ -72,25 +76,13 @@
             i18n="@@MARKETING_PRO__RECEIVE_TIPS_SUBSCRIPTION"
           >
             Receive tips and subscription payments in USD, Bitcoin, Ether or
-            Minds Tokens. Earn money for driving pageviews, referring active
-            users and sales.
+            Minds Tokens. Earn a revenue-share for driving pageviews and
+            referring new users to Minds.
+            <br /><br />
+            If you pay for your membership in tokens, you are only eligible to
+            be paid out in tokens. If you pay in cash, you are eligible to be
+            paid out in cash or tokens.
           </p>
-
-          <ul class="m-marketing__points">
-            <li i18n="@@MARKETING_PRO__COST_PER_PAGEVIEW_SECTION">
-              $1 for every 1,000 pageviews on your content (increases to $5
-              between 100K and 1M pageviews/month)
-            </li>
-
-            <li i18n="@@MARKETING_PRO__REFERRED_SECTION">
-              $0.10 for every referred active user
-            </li>
-
-            <li i18n="@@MARKETING_PRO__COMMISION_SECTION">
-              25% commission on all referred sales of Pro or
-              <a routerLink="/tokens">Minds Tokens</a>
-            </li>
-          </ul>
 
           <a
             class="m-marketing__subText"
@@ -152,10 +144,6 @@
             <li i18n="@@MARKETING_PRO__TRACK_ALL_ANALYTICS">
               Track all of your analytics
             </li>
-
-            <li i18n="@@MARKETING_PRO__CUSTOM_SUPPORT_FROM_TEAM">
-              Custom support from the Minds team
-            </li>
           </ul>
         </div>
         <div
@@ -164,7 +152,7 @@
           <span>
             <img
               class="m-marketing__image--1"
-              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-5.jpg'"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-3.jpg'"
             />
 
             <img
@@ -183,26 +171,24 @@
         <div
           class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n="@@MARKETING_PRO__REGAIN_CONTROL_BUSINESS">
-            Regain control of your business online
+          <h2 i18n="@@MARKETING_PRO__REGAIN_YOUR_FREEDOM">
+            Regain your freedom
           </h2>
 
           <p
             class="m-marketing__description"
-            i18n="@@MARKETING_PRO__TIRED_DEMONETIZATION_SECTION"
+            i18n="@@MARKETING_PRO__TIRED_DEMONETIZATION_SOCIAL"
           >
-            Tired of demonetization, censorship and unfair treatment from
-            traditional social networks? Minds offers a fully transparent,
-            privacy-focused platform with no bias, hidden algorithms or
-            censorship.
+            Tired of the manipulation and unfair treatment from traditional
+            social networks?
           </p>
 
           <p
             class="m-marketing__description"
-            i18n="@@MARKETING_PRO__LEVERAGE_BLOCKCHAIN_SECTION"
+            i18n="@@MARKETING_PRO__TRANSPARENT_NO_BIAS"
           >
-            Leverage the blockchain and crypto payments to eliminate the
-            middleman and maintain autonomy over your revenue streams.
+            Minds offers a fully transparent, privacy-focused platform with no
+            bias, hidden algorithms or censorship.
           </p>
         </div>
         <div
@@ -212,6 +198,63 @@
             <img
               class="m-marketing__image--1"
               [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-4.jpg'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5  -->
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n="@@MARKETING_PRO__SUSTAINABLE_REV_MODEL">
+            A sustainable revenue model for everyone.
+          </h2>
+
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PRO__WE_ARE_YOU"
+          >
+            We are you. We are sharing our revenue with you to directly
+            compensate for contributions to the network. As a community-owned
+            company, it is essential to keep everyone's incentives aligned and
+            inspired.
+          </p>
+
+          <p
+            class="m-marketing__description"
+            i18n="@@MARKETING_PRO__HEALTHY_ECOSYSTEM"
+          >
+            The more traffic and revenue that you drive, the more you earn and
+            the healthier the ecosystem becomes.
+          </p>
+          <div class="m-marketing__buttonWrapper">
+            <m-button color="blue"
+              ><a routerLink="/upgrades"
+                ><ng-container i18n="@@MARKETING_PRO__LEARN_ABOUT_UPGRADES"
+                  >Learn about upgrades</ng-container
+                ></a
+              ></m-button
+            >
+          </div>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/pro/liquidity-rewards.png'
+              "
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-5-ux.png'"
             />
           </span>
         </div>
@@ -248,8 +291,8 @@
         <div
           class="m-grid__column-4 m-grid__column-4--tablet m-grid__column-12--mobile m-marketing__body"
         >
-          <h3 i18n="@@MARKETING_PRO__UNLOCK_ALL_PRO_FEATURES">
-            Unlock all Plus features
+          <h3 i18n="@@MARKETING_PRO__UNLOCK_ALL_PLUS_FEATURES">
+            Unlock all Minds+ features
           </h3>
 
           <p
@@ -264,8 +307,8 @@
             <a
               routerLink="/plus"
               target="_blank"
-              i18n="@@MARKETING_PRO__LEARN_ABOUT_PLUS"
-              >Learn About Plus</a
+              i18n="@@MARKETING_PRO__LEARN_ABOUT_MINDS_PLUS"
+              >Learn About Minds+</a
             >
           </p>
         </div>
@@ -291,14 +334,13 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <button
-            class="mf-button mf-button--alt"
-            (click)="scrollToTop()"
+          <m-button
+            color="blue"
+            (onAction)="scrollToTop()"
             data-cy="data-minds-pro-upgrade-button"
-            i18n="@@MARKETING_PRO__UPGRADE_TO_PRO"
           >
-            Upgrade to Pro
-          </button>
+            <span i18n="@@MARKETING_PRO__UPGRADE_TO_PRO">Upgrade to Pro</span>
+          </m-button>
         </div>
       </div>
     </div>

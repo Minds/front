@@ -14,10 +14,10 @@
     justify-content: flex-end;
     align-items: center;
 
-    m-shadowboxSubmitButton {
+    m-button {
       margin-top: 8px;
       margin: 8px 0 0 18px;
-      .m-shadowboxSubmitButton {
+      .m-button {
         min-height: 42px;
         width: 100%;
       }
@@ -185,7 +185,7 @@
             &:not(:read-only) {
               span {
                 @include m-theme() {
-                  border-color: themed($m-blue);
+                  border-color: themed($m-link);
                 }
               }
             }
@@ -220,6 +220,7 @@
   // Includes textareas as well as inputs ////
   ////////////////////////////////////////////
   input[type='text'],
+  input[type='time'],
   input[type='email'],
   input[type='number'],
   input[type='password'] {
@@ -503,13 +504,14 @@
     &:focus {
       &:not(:read-only) {
         @include m-theme() {
-          border-color: themed($m-blue);
+          border-color: themed($m-link);
         }
       }
     }
   }
 
   input[type='text'],
+  input[type='time'],
   input[type='email'],
   input[type='password'],
   input[type='number'],
@@ -517,10 +519,12 @@
   select {
     font-size: 15px;
     line-height: 20px;
-    font-weight: 300;
+    font-weight: 400;
     width: 0;
     min-width: 0;
-    padding: 10px 20px;
+    padding: 10px 15px;
+
+    transition: border-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
     @include m-theme() {
       color: themed($m-textColor--primary) !important;
@@ -670,7 +674,7 @@
     @media screen and (max-width: $max-mobile) {
       width: 100%;
     }
-    m-shadowboxSubmitButton {
+    m-button {
       margin: 8px 0 0 18px;
       &:first-child {
         margin-left: 0px;
@@ -679,7 +683,7 @@
       @media screen and (max-width: $max-mobile) {
         width: 100%;
         margin: 8px 0 0 0;
-        .m-shadowboxSubmitButton {
+        .m-button {
           width: 100%;
         }
       }

@@ -4,6 +4,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    margin-bottom: 15px;
 
     @media screen and (max-width: $max-mobile) {
       flex-direction: column;
@@ -98,7 +99,7 @@
 
       &.m-calendarGridDate--selected {
         @include m-theme() {
-          color: themed($m-btn--primaryText);
+          color: themed($m-white-always);
         }
 
         a::after {
@@ -114,7 +115,7 @@
           border-radius: 50%;
 
           @include m-theme() {
-            background: themed($m-btn--primary);
+            background: themed($m-link);
           }
         }
       }
@@ -157,6 +158,7 @@
       input[type='text'],
       input[type='number'],
       input[type='password'],
+      input[type='time'],
       input[type='email'] {
         width: 167px;
       }

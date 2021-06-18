@@ -5,13 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SearchHybridListComponent } from './list/hybrid.component';
-import { SearchSimpleListComponent } from './list/simple.component';
 import { SearchBarSuggestionsComponent } from './suggestions/suggestions.component';
 import { SearchBarComponent } from './bar.component';
-import { SearchComponent } from './search.component';
 
-const searchRoutes: Routes = [{ path: 'search', component: SearchComponent }];
+const searchRoutes: Routes = [{ path: 'search', redirectTo: 'discovery' }];
 
 @NgModule({
   imports: [
@@ -21,19 +18,8 @@ const searchRoutes: Routes = [{ path: 'search', component: SearchComponent }];
     RouterModule.forChild(searchRoutes),
     CommonModule,
   ],
-  declarations: [
-    SearchHybridListComponent,
-    SearchSimpleListComponent,
-    SearchBarSuggestionsComponent,
-    SearchBarComponent,
-    SearchComponent,
-  ],
+  declarations: [SearchBarSuggestionsComponent, SearchBarComponent],
   providers: [],
-  exports: [
-    SearchHybridListComponent,
-    SearchSimpleListComponent,
-    SearchBarSuggestionsComponent,
-    SearchBarComponent,
-  ],
+  exports: [SearchBarSuggestionsComponent, SearchBarComponent],
 })
 export class SearchModule {}

@@ -11,4 +11,15 @@
   .m-admin--verify-requests-cta {
     padding: 16px;
   }
+
+  m-button {
+    margin-right: 10px;
+  }
+
+  .m-publisherCard {
+    @include m-theme() {
+      border: none;
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
 }

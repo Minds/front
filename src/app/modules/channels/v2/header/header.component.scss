@@ -88,7 +88,6 @@
   .m-channelHeaderInfoName__badges {
     i.material-icons {
       font-size: 18px;
-      padding: 0 0 0 6px;
     }
   }
 
@@ -99,9 +98,19 @@
     font-size: 16px;
     line-height: 21px;
     font-weight: normal;
+    display: block;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+
+    span {
+      font-size: 14px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+      }
     }
   }
 }

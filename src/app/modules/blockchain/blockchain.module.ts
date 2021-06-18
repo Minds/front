@@ -4,14 +4,11 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 
 import { CommonModule } from '../../common/common.module';
 
-import { WalletComponent } from '../wallet/wallet.component';
-import { BlockchainConsoleComponent } from './console/console.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.component';
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
-import { BlockchainTdeBuyComponent } from './tde-buy/tde-buy.component';
 import { Web3WalletService } from './web3-wallet.service';
 import { TokenContractService } from './contracts/token-contract.service';
 import { BoostContractService } from './contracts/boost-contract.service';
@@ -20,25 +17,20 @@ import { WithdrawContractService } from './contracts/withdraw-contract.service';
 import { TokenDistributionEventService } from './contracts/token-distribution-event.service';
 import { LocalWalletService } from './local-wallet.service';
 import { OffchainPaymentService } from './offchain-payment.service';
-import { Client } from '../../services/api/client';
 import { GetMetamaskComponent } from './metamask/getmetamask.component';
 import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
 import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
 import { BlockchainPurchaseComponent } from './token-purchase/purchase.component';
+import { BlockchainPurchaseV2Component } from './token-purchase/v2/purchase/purchase.component';
 import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
+import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
+import { createWeb3ModalConfig } from '../../helpers/web3modal-configuration';
+import { BuyTokensModalService } from './token-purchase/v2/buy-tokens-modal.service';
+import { BuyTokensModalModule } from './token-purchase/v2/buy-tokens-modal.module';
 
-const cryptoRoutes: Routes = [
-  {
-    path: 'wallet/crypto',
-    component: WalletComponent,
-    children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: BlockchainConsoleComponent },
-    ],
-  },
-];
+const cryptoRoutes: Routes = [];
 
 @NgModule({
   imports: [
@@ -48,33 +40,24 @@ const cryptoRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     ModalsModule,
+    Web3ModalModule,
+    BuyTokensModalModule,
   ],
   declarations: [
-    BlockchainConsoleComponent,
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
-    BlockchainTdeBuyComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,
     BlockchainMarketingOnboardComponent,
     BlockchainPurchaseComponent,
+    BlockchainPurchaseV2Component,
   ],
   providers: [
     {
       provide: LocalWalletService,
       useFactory: LocalWalletService._,
       deps: [TransactionOverlayService],
-    },
-    {
-      provide: Web3WalletService,
-      useFactory: Web3WalletService._,
-      deps: [
-        LocalWalletService,
-        TransactionOverlayService,
-        PLATFORM_ID,
-        ConfigsService,
-      ],
     },
     TokenContractService,
     WireContractService,
@@ -83,15 +66,17 @@ const cryptoRoutes: Routes = [
     TokenDistributionEventService,
     OffchainPaymentService,
     SendWyreService,
+    BuyTokensModalService,
   ],
   exports: [
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
-    BlockchainTdeBuyComponent,
     GetMetamaskComponent,
     BlockchainEthModalComponent,
     BlockchainPurchaseComponent,
+    BlockchainPurchaseV2Component,
+    Web3ModalModule,
   ],
 })
 export class BlockchainModule {}

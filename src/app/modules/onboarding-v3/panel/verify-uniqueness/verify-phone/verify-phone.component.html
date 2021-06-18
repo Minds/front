@@ -1,0 +1,130 @@
+<ng-container *ngIf="(verificationStep$ | async) === 'InputNumberStep'">
+  <form class="m-onboardingPhone__formContainer" [formGroup]="form">
+    <div class="m-onboardingPhone__leftContainer">
+      <div class="m-onboardingPhone__labelContainer">
+        <label
+          class="m-onboardingPhone__label"
+          i18n="@@ONBOARDING_VERIFY_PHONE__MOBILE_PHONE_NUMBERS"
+          >Mobile Phone Number</label
+        >
+        <m-tooltip
+          icon="info"
+          class="m-onboardingUniqueness__tooltip"
+          i18n="@@ONBOARDING_VERIFY_PHONE__INPUT_YOUR_NUMBER"
+        >
+          <span>Input your phone number</span>
+        </m-tooltip>
+      </div>
+      <m-phoneInput
+        formControlName="number"
+        class="m-onboardingPhone__numberInput"
+        name="number"
+        id="number"
+        ngDefaultControl
+      ></m-phoneInput>
+    </div>
+    <div class="m-onboardingPhone__submitButtonContainer">
+      <div style="height: 50%;"><!-- Spacer --></div>
+      <m-button
+        [disabled]="inProgress$ | async"
+        class="m-onboardingPhone__sendButton"
+        (click)="onSend()"
+        [size]="'small'"
+        [color]="'blue'"
+        i18n="@@ONBOARDING_VERIFY_PHONE__SEND_VERIFICATION_CODE"
+      >
+        <span>Send verification code</span>
+      </m-button>
+    </div>
+    <!-- Friend finder checkbox -->
+    <!-- <div class="m-onboardingPhone__allowFriendFindingContainer">
+      <input formControlName="friendFinding" type="checkbox" />
+      <span class="m-onboardingPhone__allowFriendFindingSpan"
+        >Allow my friends to find me</span
+      >
+    </div> -->
+  </form>
+  <span
+    class="m-onboardingPhone__footnoteSpan"
+    i18n="@@ONBOARDING_VERIFY_PHONE__MINDS_DONT_STORE_NUMBER"
+  >
+    Note: Minds does not store the phone numbers you provide. The numbers are
+    hashed using SHA-256 and combined with a salt key for privacy and security
+    purposes.
+  </span>
+</ng-container>
+<ng-container *ngIf="(verificationStep$ | async) === 'ConfirmCodeStep'">
+  <form class="m-onboardingPhone__formContainer" [formGroup]="form">
+    <div class="m-onboardingPhone__leftContainer">
+      <div class="m-onboardingPhone__labelContainer">
+        <label
+          class="m-onboardingPhone__label m-onboardingPhone__label--tertiaryColor"
+          i18n="@@ONBOARDING_VERIFY_PHONE__VERIFICATION_CODE"
+        >
+          Verification Code
+        </label>
+      </div>
+      <input
+        type="text"
+        formControlName="code"
+        class="m-onboardingPhone__numberInput m-onboardingPhone__codeInput"
+        name="code"
+        id="code"
+        ngDefaultControl
+      />
+    </div>
+    <div class="m-onboardingPhone__submitButtonContainer">
+      <div><!-- Spacer --></div>
+      <m-button
+        [saving]="inProgress$ | async"
+        class="m-onboardingPhone__sendButton"
+        (click)="onCodeSubmit()"
+        [size]="'small'"
+        [color]="'blue'"
+        i18n="@@ONBOARDING_VERIFY_PHONE__CONFIRM_CODE"
+      >
+        Confirm code
+      </m-button>
+    </div>
+  </form>
+  <span class="m-onboardingPhone__notice">
+    <span i18n="@@ONBOARDING_VERIFY_PHONE__WE_JUST_SENT_CODE_TO"
+      >We just send a verification code to
+    </span>
+    +{{ form.get('number').value }}.
+  </span>
+  <span
+    class="m-onboardingPhone__footnoteSpan m-onboardingPhone__footnoteSpan--mediumFont"
+  >
+    <span i18n="@@ONBOARDING_VERIFY_PHONE__DIDNT_RECEIVE_IT"
+      >Didn’t receive it?
+    </span>
+    <span
+      *ngIf="(retryTimer$ | async) < 1"
+      class="m-onboardingPhone__footnoteSpan--link"
+      (click)="onSend()"
+      i18n="@@ONBOARDING_VERIFY_PHONE__SEND_IT_AGAIN"
+    >
+      Send it again
+    </span>
+    <ng-container *ngIf="(retryTimer$ | async) > 0">
+      <span i18n="@@ONBOARDING_VERIFY_PHONE__SEND_IT_AGAIN_IN">
+        Send it again in
+      </span>
+      {{ retryTimer$ | async }}
+      <span i18n="unit of time|@@ONBOARDING_VERIFY_PHONE__SECONDS">
+        seconds
+      </span>
+    </ng-container>
+    <span i18n="resend code OR change number|@@ONBOARDING_VERIFY_PHONE__OR">
+      or
+    </span>
+    <span
+      class="m-onboardingPhone__footnoteSpan--link"
+      (click)="onChangeNumberClick()"
+      i18n="@@ONBOARDING_VERIFY_PHONE__CHANGE_PHONE_NUMBER"
+    >
+      change phone number
+    </span>
+  </span>
+</ng-container>

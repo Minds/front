@@ -15,33 +15,44 @@ export class ReadMoreDirective {
   realHeight: any;
   expandable: boolean = false;
   @ContentChild(ReadMoreButtonComponent) button;
-  @Input() maxHeightAllowed: number;
+  _maxHeightAllowed: number;
 
   constructor(private element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
   }
 
-  ngAfterViewInit() {
-    if (!this.maxHeightAllowed) {
-      this.maxHeightAllowed = 320;
-    }
+  @Input() set maxHeightAllowed(value: number) {
+    this._maxHeightAllowed = value;
+    this.hideIfNeeded();
+  }
 
+  ngAfterViewInit() {
+    if (!this._maxHeightAllowed) {
+      this._maxHeightAllowed = 320;
+      this.hideIfNeeded();
+    }
+  }
+
+  hideIfNeeded(): void {
     setTimeout(() => {
       this.realHeight = this._element.clientHeight;
+
       if (this.button && !this.button.content) {
         this.button.content = this;
       }
 
-      if (this.realHeight > this.maxHeightAllowed) {
-        this._element.style.maxHeight = this.maxHeightAllowed + 'px';
+      if (this.realHeight > this._maxHeightAllowed) {
+        this._element.style.maxHeight = this._maxHeightAllowed + 'px';
         this._element.style.position = 'relative';
         this._element.style.overflow = 'hidden';
         setTimeout(() => {
           this.expandable = true;
           this.detectChanges();
-        }, 1);
+        }, 0);
+      } else {
+        this.expand();
       }
-    }, 1);
+    }, 0);
   }
 
   expand() {

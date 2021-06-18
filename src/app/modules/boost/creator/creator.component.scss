@@ -390,29 +390,6 @@
     align-items: center;
     margin-top: 40px;
 
-    .m-boost--creator-button {
-      font-size: 14px;
-      letter-spacing: 2.33px;
-      appearance: none;
-      padding: 8px 32px;
-      background: none;
-      border-radius: 0;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-      text-transform: uppercase;
-      cursor: pointer;
-      @include m-theme() {
-        color: themed($m-grey-600);
-        border: 1px solid themed($m-grey-600);
-      }
-
-      &[disabled] {
-        cursor: default;
-        opacity: 0.35;
-      }
-    }
-
     .m-boost--creator-button-back {
       margin-right: 8px;
     }
@@ -420,7 +397,6 @@
     .m-boost--creator--submit-label,
     .m-boost--creator--submit-error {
       margin-left: $minds-padding;
-      font-size: 16px;
 
       > span,
       > i {
@@ -566,20 +542,6 @@
     .m-checkout--secure {
       @include m-theme() {
         color: rgba(themed($m-black), 0.8);
-      }
-    }
-    button {
-      padding: 12px;
-      -webkit-appearance: none;
-      border: 0;
-      font-size: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-radius: 3px;
-      cursor: pointer;
-      @include m-theme() {
-        background-color: rgba(themed($m-black), 0.5);
-        color: themed($m-white);
       }
     }
   }
@@ -785,10 +747,6 @@
         outline: 2px solid themed($m-white);
       }
     }
-  }
-
-  .m-checkout-confirm button {
-    @extend .m-boost--creator-button;
   }
 
   .m-checkout-loading {

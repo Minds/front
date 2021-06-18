@@ -36,18 +36,27 @@ export class TagsPipe implements PipeTransform {
           return `${
             m.match[1]
           }<a href="/all;query=${m.match[2].toLowerCase()}">#${m.match[2]}</a>`;
-        } else if (this.featureService.has('navigation')) {
-          return `${
-            m.match[1]
-          }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}">#${
-            m.match[2]
-          }</a>`; // TODO: make these link locally
         }
         return `${
           m.match[1]
-        }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=7d">#${
+        }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}" class="m-legible">#${
           m.match[2]
-        }</a>`;
+        }</a>`; // TODO: make these link locally
+      },
+    },
+    crypto: {
+      rule: this.regexService.getRegex('crypto'),
+      replace: m => {
+        if (this.siteService.isProDomain) {
+          return `${
+            m.match[1]
+          }<a href="/all;query=${m.match[2].toUpperCase()}">#${m.match[2]}</a>`;
+        }
+        return `${
+          m.match[1]
+        }<a href="/discovery/search?f=top&t=all&q=%24${m.match[2].toUpperCase()}" class="m-legible">$${
+          m.match[2]
+        }</a>`; // TODO: make these link locally
       },
     },
     at: {
@@ -115,6 +124,7 @@ export class TagsPipe implements PipeTransform {
     this.parse('url', value);
     this.parse('mail', value);
     this.parse('hash', value);
+    this.parse('crypto', value);
     this.parse('at', value);
 
     if (this.results.length === 0) {

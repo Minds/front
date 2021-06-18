@@ -85,47 +85,4 @@ describe('BoostConsoleBooster', () => {
     expect(list).not.toBeNull();
     expect(list.nativeElement.children.length).toBe(1);
   });
-
-  it("should have a poster if the user hasn't posted anything yet", () => {
-    comp.feed$ = of([]);
-    fixture.detectChanges();
-
-    comp.feed$.subscribe(feed => expect(feed.length).toBe(0));
-
-    const title = fixture.debugElement.query(
-      By.css('.m-boost-console-booster--content h3')
-    );
-    expect(title).not.toBeNull();
-    expect(title.nativeElement.textContent).toContain(
-      "You have no content yet. Why don't you post something?"
-    );
-
-    const poster = fixture.debugElement.query(
-      By.css('.m-boost-console-booster--content > div:nth-child(3)')
-    );
-    expect(poster).not.toBeNull();
-  });
-
-  it('should not have a poster if the user has posted content', () => {
-    comp.feed$ = of([
-      BehaviorSubject.create({ id: 1 }),
-      BehaviorSubject.create({ id: 2 }),
-    ]);
-    fixture.detectChanges();
-
-    comp.feed$.subscribe(feed => expect(feed.length).toBe(2));
-
-    const title = fixture.debugElement.query(
-      By.css('.m-boost-console-booster--content h3')
-    );
-    expect(title).toBeDefined();
-    expect(title.nativeElement.textContent).toContain(
-      "You have no content yet. Why don't you post something?"
-    );
-
-    const poster = fixture.debugElement.query(
-      By.css('.m-boost-console-booster--content > div:nth-child(3)')
-    );
-    expect(poster).toBeDefined();
-  });
 });

@@ -5,6 +5,6 @@ export default function currency(value: number, type: Currency) {
     case 'tokens':
       return `${value.toLocaleString()} tokens`;
     case 'usd':
-      return `$ ${value.toLocaleString()}`;
+      return `$${value.toLocaleString()}`;
   }
 }

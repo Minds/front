@@ -1,0 +1,18 @@
+<span
+  class="m-onboardingTags__header"
+  i18n="@@ONBOARDING_TAGS__SELECT_ATLEAST_THREE_INFORMATION"
+>
+  You must select at least three tags that are of interest to you. This will
+  allow you to discover relevant content.
+</span>
+
+<div class="m-onboardingTags__tagContainer">
+  <span
+    class="m-onboardingTags__tag"
+    *ngFor="let tag of tags$ | async"
+    (click)="toggleTag(tag.value)"
+    [ngClass]="{ 'm-onboardingTags__tag--selected': tag.selected }"
+  >
+    {{ tag.value | titlecase }}
+  </span>
+</div>

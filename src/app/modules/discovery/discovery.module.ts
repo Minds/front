@@ -30,6 +30,10 @@ import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
+import { DiscoveryLatestFeedComponent } from './latest/latest.component';
+import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
+import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
+import { CardCarouselService } from './card-carousel/card-carousel.service';
 
 @NgModule({
   imports: [
@@ -44,6 +48,9 @@ import { FeedsService } from '../../common/services/feeds.service';
             component: DiscoveryTrendsComponent,
             data: {
               title: 'Discovery / Overview',
+              ogImage: '/assets/og-images/discovery-v3.png',
+              ogImageWidth: 1200,
+              ogImageHeight: 1200,
             },
           },
           {
@@ -75,6 +82,14 @@ import { FeedsService } from '../../common/services/feeds.service';
             component: DiscoveryBoostFeedComponent,
             data: {
               title: 'Discovery / Boosted',
+            },
+          },
+          {
+            path: 'memberships/feed',
+            component: DiscoveryLatestFeedComponent,
+            data: {
+              title: 'Discovery / Memberships',
+              memberships: true,
             },
           },
           {
@@ -124,6 +139,14 @@ import { FeedsService } from '../../common/services/feeds.service';
                 data: { plus: true },
               },
               {
+                path: 'latest/feed',
+                component: DiscoveryLatestFeedComponent,
+                data: {
+                  title: 'Minds+ / Latest',
+                  plus: true,
+                },
+              },
+              {
                 path: 'search',
                 component: DiscoverySearchComponent,
                 data: { plus: true },
@@ -170,6 +193,8 @@ import { FeedsService } from '../../common/services/feeds.service';
     WirePaymentHandlersService,
     WireModalService,
     DiscoveryService,
+    SuggestionsService,
+    CardCarouselService,
   ],
   declarations: [
     DiscoveryComponent,
@@ -187,6 +212,8 @@ import { FeedsService } from '../../common/services/feeds.service';
     DiscoveryPlusUpgradeComponent,
     DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
+    DiscoveryLatestFeedComponent,
+    DiscoveryCardCarouselComponent,
   ],
   exports: [
     DiscoveryComponent,

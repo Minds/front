@@ -7,19 +7,6 @@
   >
     <div class="m-plusSubscriptionPlan__toggleContainer">
       <div class="m-plusSubscriptionPlan__toggle">
-        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__YEARLY">Yearly</span>
-        <span
-          ><m-toggle
-            [mModel]="interval"
-            (mModelChange)="setInterval($event)"
-            leftValue="yearly"
-            rightValue="monthly"
-          ></m-toggle
-        ></span>
-        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__MONTHLY">Monthly</span>
-      </div>
-
-      <div class="m-plusSubscriptionPlan__toggle">
         <span i18n="@@PLUS_SUBSCRIPTION_OPTION__USD">USD</span>
         <span
           ><m-toggle
@@ -31,6 +18,23 @@
         ></span>
         <span i18n="@@PLUS_SUBSCRIPTION_OPTION__TOKENS">Tokens</span>
       </div>
+      <div
+        class="m-plusSubscriptionPlan__toggle"
+        [ngClass]="{
+          'm-plusSubscriptionPlan__toggle--hidden': currency !== 'usd'
+        }"
+      >
+        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__YEARLY">Yearly</span>
+        <span
+          ><m-toggle
+            [mModel]="interval"
+            (mModelChange)="setInterval($event)"
+            leftValue="yearly"
+            rightValue="monthly"
+          ></m-toggle
+        ></span>
+        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__MONTHLY">Monthly</span>
+      </div>
     </div>
 
     <div class="m-plusSubscriptionPlan__trial" *ngIf="canHaveTrial">
@@ -38,27 +42,54 @@
     </div>
 
     <div class="m-plusSubscriptionPlan__pricing">
-      <span
-        class="m-plusSubscriptionPlanPricing__amount"
-        i18n="@@PLUS_SUBSCRIPTION__PER_MONTH"
-      >
-        <span>{{ pricing.amount }}</span> per month
-      </span>
+      <ng-container *ngIf="currency === 'usd'">
+        <div>
+          <span
+            class="m-plusSubscriptionPlanPricing__amount"
+            i18n="@@PLUS_SUBSCRIPTION__PER_MONTH"
+          >
+            <span>{{ pricing.amount }}</span> per month
+          </span>
 
-      <span
-        class="m-plusSubscriptionPlanPricing__offer"
-        *ngIf="pricing.offerFrom"
-        i18n="@@PLUS_SUBSCRIPTION__PER_MONTH"
-      >
-        <span>{{ pricing.offerFrom }}</span> per month
-      </span>
+          <span
+            class="m-plusSubscriptionPlanPricing__offer"
+            *ngIf="pricing.offerFrom"
+            i18n="@@PLUS_SUBSCRIPTION__PER_MONTH"
+          >
+            <span>{{ pricing.offerFrom }}</span> per month
+          </span>
+        </div>
+        <div
+          class="m-plusSubscriptionPlanPricing__intervalDesc"
+          *ngIf="interval === 'yearly'"
+        >
+          <span i18n="@@PLUS_SUBSCRIPTION__BILLED_ANNUALLY">
+            Billed annually at {{ pricing.annualAmount }}
+          </span>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="currency === 'tokens'">
+        <div>
+          <span
+            class="m-plusSubscriptionPlanPricing__amount"
+            i18n="@@PLUS_SUBSCRIPTION__MINDS_AMOUNT"
+          >
+            <span>{{ pricing.amount | number }}</span> MINDS
+          </span>
+        </div>
+        <div class="m-plusSubscriptionPlanPricing__intervalDesc">
+          <span i18n="@@PLUS_SUBSCRIPTION__LIFETIME_MEMBERSHIP">
+            Lifetime membership!
+          </span>
+        </div>
+      </ng-container>
     </div>
 
     <div class="m-plusSubscription__button">
-      <button
-        class="mf-button mf-button--alt"
+      <m-button
+        color="blue"
         [disabled]="upgradeButtonDisabled || inProgress || criticalError"
-        (click)="enable()"
+        (onAction)="enable()"
         i18n="@@PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS"
       >
         <ng-container *ngIf="!canHaveTrial; else startTrialTxt">
@@ -67,7 +98,7 @@
         <ng-template #startTrialTxt>
           Start free trial
         </ng-template>
-      </button>
+      </m-button>
       <div
         class="m-plusSubscriptionButton__notice"
         *ngIf="upgradeButtonDisabled"
@@ -90,14 +121,14 @@
 
   <ng-template #cancelButton>
     <div class="m-plusSubscription__button">
-      <button
-        class="mf-button mf-button--destructive"
+      <m-button
+        color="red"
         [disabled]="inProgress || criticalError"
-        (click)="disable()"
+        (onAction)="disable()"
         i18n="@@PLUS_SUBSCRIPTION__CANCEL_PLUS"
       >
         Cancel Minds+
-      </button>
+      </m-button>
     </div>
   </ng-template>
 </ng-container>

@@ -7,11 +7,8 @@
       <a href="https://gitlab.com/minds/front/issues" target="_blank">here</a>
     </p>
     <m-dynamic-form [fields]="fields" #reportform></m-dynamic-form>
-    <m-shadowboxSubmitButton
-      (click)="submit(reportform)"
-      [disabled]="submiting"
-    >
+    <m-button (onAction)="submit(reportform)" [disabled]="submiting">
       Submit
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </div>

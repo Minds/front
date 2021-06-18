@@ -5,6 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import { ReadMoreDirective } from './read-more.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-read-more--button',
@@ -25,7 +26,10 @@ import { ReadMoreDirective } from './read-more.directive';
           [class.showOnlyFadeout]="showOnlyFadeout"
           (click)="expandIfShowingOnlyFadeout()"
         >
-          <span (click)="content.expand()" i18n="@@COMMON__SEE_MORE__ACTION"
+          <span
+            (click)="onExpandClick()"
+            i18n="@@COMMON__SEE_MORE__ACTION"
+            class="m-readMoreButtonV2__text"
             ><ng-container>See More</ng-container></span
           >
         </div>
@@ -48,6 +52,9 @@ import { ReadMoreDirective } from './read-more.directive';
 export class ReadMoreButtonComponent {
   @Input() v2 = false;
 
+  // When set, forces see more to redirect.
+  @Input() redirectUrl: string = '';
+
   // Don't show the "see more" text
   @Input() showOnlyFadeout: boolean = false;
 
@@ -62,7 +69,7 @@ export class ReadMoreButtonComponent {
 
   content: ReadMoreDirective;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private router: Router) {}
 
   expandIfShowingOnlyFadeout($event: MouseEvent) {
     if (!this.showOnlyFadeout) {
@@ -71,6 +78,18 @@ export class ReadMoreButtonComponent {
     if ($event) {
       $event.stopPropagation();
       $event.preventDefault();
+    }
+    this.content.expand();
+  }
+
+  /**
+   * Callback executed when expand (see more / read more) is clicked.
+   * @returns void
+   */
+  public onExpandClick(): void {
+    if (this.redirectUrl.length > 0) {
+      this.cd.detach();
+      this.router.navigate([this.redirectUrl]);
     }
     this.content.expand();
   }

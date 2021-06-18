@@ -17,6 +17,12 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockDirective, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { ButtonComponent } from '../../../common/components/button/button.component';
+import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/multi-factor-auth-service';
+import { BehaviorSubject } from 'rxjs';
+import { MindsUser } from '../../../interfaces/entities';
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -76,20 +82,40 @@ describe('LoginForm', () => {
   }
 
   function getTwoFactorLoginButton() {
-    return fixture.debugElement.query(By.css('.m-login__2fa > button'));
+    return fixture.debugElement.query(By.css('.m-login-2fa > m-button button'));
   }
+
+  const onSuccess$ = new BehaviorSubject<MindsUser>(null);
+
+  const activePanel$ = new BehaviorSubject<string>('');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         LoginForm,
+        ButtonComponent,
       ], // declare the test component
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FeaturesService, useValue: MockService(FeaturesService) },
+        { provide: AuthModalService, useValue: MockService(AuthModalService) },
+        {
+          provide: MultiFactorAuthService,
+          useValue: MockService(MultiFactorAuthService, {
+            has: ['onSuccess$', 'activePanel$'],
+            props: {
+              onSuccess$: { get: () => onSuccess$ },
+              activePanel$: { get: () => activePanel$ },
+            },
+            setMFAReqest: feature => {
+              return true;
+            },
+          }),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -105,7 +131,9 @@ describe('LoginForm', () => {
     loginForm = fixture.debugElement.query(By.css('form.m-login-box'));
     username = fixture.debugElement.query(By.css('#username'));
     password = fixture.debugElement.query(By.css('#password'));
-    loginButton = fixture.debugElement.query(By.css('.m-btn--login'));
+    loginButton = fixture.debugElement.query(
+      By.css('.m-login__button--login button')
+    );
     errorMessage = fixture.debugElement.query(By.css('.m-error-box'));
 
     session = comp.session;
@@ -133,7 +161,7 @@ describe('LoginForm', () => {
 
   it("should have 'migrate from facebook' button", () => {
     expect(
-      fixture.debugElement.query(By.css('.m-fb-login-button'))
+      fixture.debugElement.query(By.css('.m-fb-login-button button'))
     ).toBeDefined();
   });
 
@@ -142,7 +170,13 @@ describe('LoginForm', () => {
   });
 
   it('should spawn error message on incorrect credentials', fakeAsync(() => {
-    login({ status: 'failed' });
+    login({
+      status: 'error',
+      error: {
+        status: 'failed',
+        message: 'FAIL',
+      },
+    });
 
     tick();
     fixture.detectChanges();
@@ -245,74 +279,9 @@ describe('LoginForm', () => {
     });
   }));
 
-  it('login form should hide and two-factor form should appear', fakeAsync(() => {
-    login({ status: 'error', code: '403', message: 'imaprettymessage' });
-
-    expect(loginForm.nativeElement.hidden).toBeTruthy();
-
-    expect(getTwoFactorForm().nativeElement.hidden).toBeFalsy();
-  }));
-
-  it('should spawn error message when incorrect code is written', fakeAsync(() => {
-    login({ status: 'error', code: '403', message: 'imaprettymessage' });
-
-    twoFactorLogin({ status: 'error', message: 'Could not verify.' });
-
-    expect(errorMessage.nativeElement.hidden).toBeFalsy();
-  }));
-
   it('should spawn error message when an email is entered as a username', fakeAsync(() => {
     username.nativeElement.value = 'test@minds.com';
     login({ status: 'error' }, 'test@minds.com');
     expect(errorMessage.nativeElement.hidden).toBeFalsy();
-  }));
-
-  it('should login successfully', fakeAsync(() => {
-    login({ status: 'error', code: '403', message: 'imaprettymessage' });
-
-    session.login['calls'].reset();
-
-    twoFactorLogin({
-      status: 'success',
-      user: {
-        guid: '726889378877546822',
-        type: 'user',
-        subtype: false,
-        time_created: '1498679876',
-        time_updated: false,
-        container_guid: '0',
-        owner_guid: '0',
-        site_guid: false,
-        access_id: '2',
-        name: 'name',
-        username: 'username',
-        language: 'en',
-        icontime: false,
-        legacy_guid: false,
-        featured_id: false,
-        banned: 'no',
-        website: false,
-        briefdescription: false,
-        dob: false,
-        gender: false,
-        city: false,
-        merchant: false,
-        boostProPlus: false,
-        fb: false,
-        mature: 0,
-        monetized: false,
-        signup_method: false,
-        social_profiles: [],
-        feature_flags: false,
-        subscribed: false,
-        subscriber: false,
-        subscribers_count: 3,
-        subscriptions_count: 1,
-        impressions: 0,
-        boost_rating: '2',
-      },
-    });
-
-    expect(session.login).toHaveBeenCalled();
   }));
 });

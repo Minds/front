@@ -7,7 +7,6 @@ import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
-import { PosterComponent } from '../poster/poster.component';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 
@@ -29,8 +28,6 @@ export class NewsfeedBoostComponent {
   paramsSubscription: Subscription;
 
   boostFeed: boolean = false;
-
-  @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
     public client: Client,

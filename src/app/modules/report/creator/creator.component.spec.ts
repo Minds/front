@@ -31,6 +31,7 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 /* tslint:disable */
 @Directive({
@@ -57,6 +58,7 @@ describe('ReportCreatorComponent', () => {
         MaterialSwitchMock,
         AbbrPipe,
         ReportCreatorComponent,
+        ButtonComponent,
       ], // declare the test component
       imports: [FormsModule],
       providers: [
@@ -105,7 +107,7 @@ describe('ReportCreatorComponent', () => {
 
   xit('should have a disabled send button and get the guid from the object', () => {
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__submit m-button button')
     );
     expect(button.properties.disabled).toBe(true);
   });
@@ -118,7 +120,7 @@ describe('ReportCreatorComponent', () => {
       By.css('.m-reportCreatorSubjects__subject')
     );
     expect(subjectList).not.toBeNull();
-    expect(subjectListInputs.length).toBe(12);
+    expect(subjectListInputs.length).toBe(13);
   });
 
   it('once a item is clicked submit shouldnt be disabled', () => {
@@ -126,7 +128,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__submit m-button button')
     );
     expect(comp.subject.value).toEqual(4);
     expect(button.properties.disabled).toBe(false);
@@ -137,7 +139,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const next = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--next')
+      By.css('.m-reportCreator__submit--next m-button button')
     );
     expect(next).not.toBeNull();
     next.nativeElement.click();
@@ -149,7 +151,7 @@ describe('ReportCreatorComponent', () => {
     fixture.detectChanges();
 
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__submit m-button button')
     );
     expect(button.properties.disabled).toBe(false);
   });
@@ -165,7 +167,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__button--submit button')
     );
     expect(button.properties.disabled).toBe(false);
     button.nativeElement.click();
@@ -197,7 +199,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__button--submit button')
     );
     expect(button.properties.disabled).toBe(false);
     button.nativeElement.click();
@@ -229,7 +231,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--submit')
+      By.css('.m-reportCreator__button--submit button')
     );
     expect(button.properties.disabled).toBe(false);
     button.nativeElement.click();
@@ -269,7 +271,7 @@ describe('ReportCreatorComponent', () => {
     item.nativeElement.click();
     fixture.detectChanges();
     const next = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--next')
+      By.css('.m-reportCreator__button--next button')
     );
     expect(next).not.toBeNull();
     next.nativeElement.click();
@@ -277,7 +279,7 @@ describe('ReportCreatorComponent', () => {
     expect(comp.next).toBe(true);
     fixture.detectChanges();
     const button = fixture.debugElement.query(
-      By.css('.m-reportCreator__button--close')
+      By.css('.m-reportCreator__button--close button')
     );
     expect(button).not.toBeNull();
     button.nativeElement.click();

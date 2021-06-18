@@ -7,7 +7,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { WalletV2Service } from '../../../../wallet/v2/wallet-v2.service';
+import { WalletV2Service } from '../../../../wallet/components/wallet-v2.service';
 
 @Component({
   selector: 'm-settingsV2__referralsLinks',

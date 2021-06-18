@@ -59,8 +59,13 @@ m-activity__content {
     }
   }
   &.m-activityContent__message--minimalMode {
-    &.m-activityContent__message--remind {
-      display: none;
+    &.m-activityContent__message--quote {
+      .m-activityContent__messageWrapper {
+        font-weight: 400;
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+      }
     }
 
     .m-activityContent__messageWrapper {
@@ -181,12 +186,14 @@ m-activity__content {
   right: 0;
   height: calc(100% - 40px);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
   @include m-theme() {
     background: linear-gradient(
       to bottom,
-      rgba(themed($m-bgColor--primary), 0.3) 0%,
-      rgba(themed($m-bgColor--primary), 0.8) 30%,
-      rgba(themed($m-bgColor--primary), 1) 70%
+      rgba(themed($m-bgColor--primary), 0) 0%,
+      rgba(themed($m-bgColor--primary), 0.3) 14%,
+      rgba(themed($m-bgColor--primary), 0.8) 44%,
+      rgba(themed($m-bgColor--primary), 1) 80%
     );
   }
 }
@@ -233,7 +240,7 @@ m-activity__content {
     font-size: 15px;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-textColor--secondary) !important;
+      color: themed($m-textColor--primary) !important;
     }
   }
   .m-blurb {
@@ -244,7 +251,7 @@ m-activity__content {
     padding: 0;
     margin: 0;
     @include m-theme() {
-      color: themed($m-textColor--tertiary) !important;
+      color: themed($m-textColor--secondary) !important;
     }
   }
 

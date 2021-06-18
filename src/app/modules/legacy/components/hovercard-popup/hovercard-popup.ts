@@ -15,7 +15,7 @@ import { HovercardService } from '../../../../services/hovercard';
       (mouseenter)="hovercardService.stick(hovercardService.data.guid)"
       (mouseleave)="hide(hovercardService.data.guid)"
     >
-      <minds-card-user [object]="hovercardService.data"></minds-card-user>
+      <m-publisherCard [publisher]="hovercardService.data"></m-publisherCard>
     </div>
   `,
 })

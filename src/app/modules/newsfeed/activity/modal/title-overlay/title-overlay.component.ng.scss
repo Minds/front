@@ -9,6 +9,7 @@
     right: 0;
     text-align: left;
     top: 0;
+    min-height: 25px;
     @include m-theme() {
       background: linear-gradient(
         rgba(themed($m-black-always), 0.5),
@@ -79,7 +80,7 @@
     cursor: pointer;
     padding: 5px;
     position: absolute;
-    right: 20px;
+    right: 15px;
     top: 20px;
 
     .m-activityModal__fullscreenButton {

@@ -17,6 +17,7 @@ import { RejectionReasonModalComponent } from './rejection-reason-modal.componen
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { CommonModule as NgCommonModule } from '@angular/common';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
 
 @Component({
   selector: 'm-modal',
@@ -33,12 +34,18 @@ describe('RejectionReasonModalComponent', () => {
   let confirmButton: DebugElement;
 
   function getNoButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-modal-reasons--no-button'));
+    return fixture.debugElement.query(
+      By.css('.m-modal-reasons--no-button button')
+    );
   }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MindsModalMock, RejectionReasonModalComponent], // declare the test component
+      declarations: [
+        MindsModalMock,
+        RejectionReasonModalComponent,
+        ButtonComponent,
+      ], // declare the test component
       imports: [NgCommonModule, FormsModule],
     }).compileComponents(); // compile template and css
   }));
@@ -85,7 +92,7 @@ describe('RejectionReasonModalComponent', () => {
     comp.noButton = 'No';
 
     confirmButton = fixture.debugElement.query(
-      By.css('.m-modal-confirm-buttons > button:first-child')
+      By.css('.m-modal-confirm-buttons > m-button:first-child button')
     );
 
     fixture.detectChanges();

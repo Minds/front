@@ -35,14 +35,15 @@
           </li>
         </ul>
 
-        <div
-          class="mf-button m-upgradesUpgradeOptionsPlan__action m-upgrades__upgradeNowBtn"
-          (click)="upgradeNow(); $event.preventDefault()"
+        <m-button
+          class="m-upgradesUpgradeOptionsPlan__action m-upgrades__upgradeNowBtn"
+          (onAction)="upgradeNow(); $event.preventDefault()"
           data-cy="m-upgrades__upgrade-now-button"
           i18n="@@COMMON__UPGRADE_NOW"
+          color="blue"
         >
           Upgrade Now
-        </div>
+        </m-button>
       </div>
 
       <div

@@ -200,9 +200,10 @@
           Messenger yet.
         </p>
         <p>
-          <button
-            class="mdl-button mdl-button--raised mdl-button--colored"
-            (click)="invite()"
+          <m-button
+            size="xsmall"
+            color="blue"
+            (onAction)="invite()"
             [disabled]="invited"
           >
             <span
@@ -215,7 +216,7 @@
               i18n="@@MESSENGER__CONVERSATION__INVITED_STATE"
               >Invited</span
             >
-          </button>
+          </m-button>
         </p>
       </div>
     </div>

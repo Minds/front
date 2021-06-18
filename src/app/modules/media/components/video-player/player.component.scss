@@ -1,10 +1,19 @@
 @import 'defaults.scss';
 
+.plyr {
+  display: block;
+}
+
 .plyr video {
   height: 100%;
 }
-.plyr--video.plyr--stopped .plyr__controls {
-  display: none;
+.plyr--video.plyr--stopped {
+  .plyr__controls {
+    display: none;
+  }
+  .plyr__control {
+    display: none;
+  }
 }
 
 [class*='m-videoPlayer__notice'] {

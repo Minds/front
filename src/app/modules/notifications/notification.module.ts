@@ -18,15 +18,23 @@ import { NotificationService } from './notification.service';
 import { NotificationsToasterComponent } from './toaster.component';
 import { SiteService } from '../../common/services/site.service';
 import { MetaService } from '../../common/services/meta.service';
+import { NotificationsV3ListComponent } from './v3/list.component';
+import { NotificationsV3NotificationComponent } from './v3/notification.component';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { NewNotificationsButtonComponent } from './v3/new-notifications-button/new-notifications-button.component';
+import { CommentsModule } from '../comments/comments.module';
 
 @NgModule({
   imports: [
     NgCommonModule,
     CommonModule,
     RouterModule.forChild([
+      { path: 'notifications/v3', component: NotificationsV3ListComponent },
       { path: 'notifications/:filter', component: NotificationsComponent },
       { path: 'notifications', component: NotificationsComponent },
     ]),
+    NewsfeedModule, // For m-newsfeed__entity
+    CommentsModule, // For m-comment
   ],
   declarations: [
     NotificationsFlyoutComponent,
@@ -34,21 +42,12 @@ import { MetaService } from '../../common/services/meta.service';
     NotificationComponent,
     NotificationsTopbarToggleComponent,
     NotificationsToasterComponent,
+    // V3
+    NotificationsV3ListComponent,
+    NotificationsV3NotificationComponent,
+    NewNotificationsButtonComponent,
   ],
-  providers: [
-    {
-      provide: NotificationService,
-      useFactory: NotificationService._,
-      deps: [
-        Session,
-        Client,
-        SocketsService,
-        MetaService,
-        PLATFORM_ID,
-        SiteService,
-      ],
-    },
-  ],
+  providers: [NotificationService],
   exports: [
     NotificationsFlyoutComponent,
     NotificationsComponent,

@@ -14,95 +14,9 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 
 @Component({
   selector: 'minds-groups-join-button',
-
   inputs: ['_group: group'],
   outputs: ['membership'],
-  template: `
-    <ng-container *ngIf="iconsOnly; else normalView">
-      <div
-        class="m-groupsJoin__subscribe"
-        (click)="join()"
-        *ngIf="
-          !group['is:banned'] &&
-          !group['is:awaiting'] &&
-          !group['is:invited'] &&
-          !group['is:member']
-        "
-      >
-        <i class="material-icons">
-          add
-        </i>
-      </div>
-
-      <div
-        class="m-groupsJoin__subscribed"
-        (click)="leave()"
-        *ngIf="group['is:member']"
-      >
-        <i class="material-icons">
-          check
-        </i>
-      </div>
-    </ng-container>
-
-    <ng-template #normalView>
-      <button
-        class="m-btn m-btn--slim m-btn--join-group"
-        *ngIf="
-          !group['is:banned'] &&
-          !group['is:awaiting'] &&
-          !group['is:invited'] &&
-          !group['is:member']
-        "
-        (click)="join()"
-        i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION"
-      >
-        <ng-container *ngIf="!inProgress">Join</ng-container>
-        <ng-container *ngIf="inProgress">Joining</ng-container>
-      </button>
-      <span *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
-        <button
-          class="m-btn m-btn--slim m-btn--action"
-          (click)="accept()"
-          i18n="@@M__ACTION__ACCEPT"
-        >
-          Accept
-        </button>
-        <button
-          class="m-btn m-btn--slim m-btn--action"
-          (click)="decline()"
-          i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
-        >
-          Decline
-        </button>
-      </span>
-      <button
-        class="m-btn m-btn--slim subscribed "
-        *ngIf="group['is:member']"
-        (click)="leave()"
-        i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
-      >
-        Leave
-      </button>
-      <button
-        class="m-btn m-btn--slim awaiting"
-        *ngIf="group['is:awaiting']"
-        (click)="cancelRequest()"
-        i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
-      >
-        Cancel request
-      </button>
-      <m-modal-signup-on-action
-        [open]="showModal"
-        (closed)="join(); showModal = false"
-        action="join a group"
-        i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
-        [overrideOnboarding]="true"
-        *ngIf="!session.isLoggedIn()"
-      >
-      </m-modal-signup-on-action>
-    </ng-template>
-  `,
+  templateUrl: './groups-join-button.html',
 })
 export class GroupsJoinButton {
   showModal: boolean = false;
@@ -194,9 +108,12 @@ export class GroupsJoinButton {
    */
   leave() {
     event.preventDefault();
+    this.inProgress = true;
+
     this.service
       .leave(this.group)
       .then(() => {
+        this.inProgress = false;
         this.group['is:member'] = false;
         this.membership.next({
           member: false,
@@ -204,6 +121,7 @@ export class GroupsJoinButton {
       })
       .catch(e => {
         this.group['is:member'] = true;
+        this.inProgress = false;
       });
   }
 
@@ -213,17 +131,24 @@ export class GroupsJoinButton {
   accept() {
     this.group['is:member'] = true;
     this.group['is:invited'] = false;
+    this.inProgress = true;
 
-    this.service.acceptInvitation(this.group).then((done: boolean) => {
-      this.group['is:member'] = done;
-      this.group['is:invited'] = !done;
+    this.service
+      .acceptInvitation(this.group)
+      .then((done: boolean) => {
+        this.inProgress = false;
+        this.group['is:member'] = done;
+        this.group['is:invited'] = !done;
 
-      if (done) {
-        this.membership.next({
-          member: true,
-        });
-      }
-    });
+        if (done) {
+          this.membership.next({
+            member: true,
+          });
+        }
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 
   /**
@@ -231,22 +156,36 @@ export class GroupsJoinButton {
    */
   cancelRequest() {
     this.group['is:awaiting'] = false;
+    this.inProgress = true;
 
-    this.service.cancelRequest(this.group).then((done: boolean) => {
-      this.group['is:awaiting'] = !done;
-    });
+    this.service
+      .cancelRequest(this.group)
+      .then((done: boolean) => {
+        this.inProgress = false;
+        this.group['is:awaiting'] = !done;
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 
   /**
    * Decline joining a group
    */
   decline() {
+    this.inProgress = true;
     this.group['is:member'] = false;
     this.group['is:invited'] = false;
 
-    this.service.declineInvitation(this.group).then((done: boolean) => {
-      this.group['is:member'] = false;
-      this.group['is:invited'] = !done;
-    });
+    this.service
+      .declineInvitation(this.group)
+      .then((done: boolean) => {
+        this.inProgress = false;
+        this.group['is:member'] = false;
+        this.group['is:invited'] = !done;
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 }

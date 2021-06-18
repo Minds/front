@@ -44,7 +44,7 @@
 
   <!-- referral ping -->
   <ng-template ngSwitchCase="referral_ping">
-    <a [routerLink]="['/wallet/tokens/contributions']">
+    <a [routerLink]="['/settings/other/referrals']">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_PING">
         Free tokens are waiting for you! Once you join the rewards program by
         setting up your Minds wallet, both you and
@@ -58,7 +58,7 @@
 
   <!-- referral pending -->
   <ng-template ngSwitchCase="referral_pending">
-    <a [routerLink]="['/wallet/tokens/referrals']">
+    <a [routerLink]="['/settings/other/referrals']">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_PENDING">
         You have a pending referral!
         <span class="pseudo-link mdl-color-text--blue-grey-400">{{
@@ -72,7 +72,7 @@
 
   <!-- referral complete -->
   <ng-template ngSwitchCase="referral_complete">
-    <a [routerLink]="['/wallet/tokens/referrals']">
+    <a [routerLink]="['/settings/other/referrals']">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_COMPLETE">
         You've earned tokens for the completed referral of
         <span class="pseudo-link mdl-color-text--blue-grey-400">{{
@@ -224,6 +224,9 @@
                 ? ['/' + notification.entityObj.route]
                 : ['/blog/view', notification.entityObj.guid]
             "
+            [queryParams]="{
+              focusedCommentUrn: notification.params?.focusedCommentUrn
+            }"
           >
             <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
               {{ notification.fromObj.name }} commented on
@@ -969,7 +972,7 @@
   <ng-template ngSwitchCase="boost_rejected">
     <a
       [routerLink]="
-        notification.entityObj.type == 'activity'
+        notification.entityObj?.type == 'activity'
           ? ['/newsfeed', notification.entityObj.guid]
           : ['/boost/console/content']
       "
@@ -1466,7 +1469,7 @@
 
   <!-- Programs (queued) -->
   <ng-template ngSwitchCase="program_queued">
-    <a routerLink="/wallet">
+    <a routerLink="/wallet/cash">
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PROGRAM_QUEUED"
           >Your application for {{ notification.params.program }} program is
@@ -1478,7 +1481,7 @@
 
   <!-- Programs (accepted) -->
   <ng-template ngSwitchCase="program_accepted">
-    <a routerLink="/wallet">
+    <a routerLink="/wallet/cash">
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PROGRAM_ACCEPTED"
           >Your application for {{ notification.params.program }} program was
@@ -1490,7 +1493,7 @@
 
   <!-- Programs (declined) -->
   <ng-template ngSwitchCase="program_declined">
-    <a routerLink="/wallet">
+    <a routerLink="/wallet/cash">
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PROGRAM_DECLINED"
           >Your application for {{ notification.params.program }} program was
@@ -1502,7 +1505,7 @@
 
   <!-- Payouts (queued) -->
   <ng-template ngSwitchCase="payout_queued">
-    <a routerLink="/wallet/ledger">
+    <a routerLink="/wallet/cash/earnings">
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PAYOUT_QUEUED"
           >Your payment request for
@@ -1515,7 +1518,7 @@
 
   <!-- Payouts (accepted) -->
   <ng-template ngSwitchCase="payout_accepted">
-    <a routerLink="/wallet/ledger">
+    <a routerLink="/wallet/cash/earnings">
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PAYOUT_ACCEPTED"
           >Your payment request for
@@ -1528,7 +1531,7 @@
 
   <!-- Payouts (declined) -->
   <ng-template ngSwitchCase="payout_declined">
-    <a routerLink="/wallet/ledger">
+    <a routerLink="/wallet/cash/earnings">
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PAYOUT_DECLINED"
           >Your payment request for
@@ -1777,21 +1780,16 @@
   <ng-template ngSwitchCase="contributions"></ng-template>
 
   <ng-template ngSwitchCase="rewards_summary">
-    <a target="_blank" routerLink="/wallet/tokens/contributions">
-      <p
-        i18n="
-
-          @@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY
-
-        "
-      >
-        You earned {{ notification.params.amount }} tokens today.
+    <a target="_blank" routerLink="/wallet/tokens/transactions">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__SUMMARY">
+        🚀 You earned {{ notification.params.amount }} tokens yesterday. Nice
+        job!
       </p>
     </a>
   </ng-template>
 
   <ng-template ngSwitchCase="rewards_reminder">
-    <a target="_blank" routerLink="/wallet/tokens/contributions">
+    <a target="_blank" routerLink="/wallet/tokens/transactions">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_LEFT">
         You have {{ notification.params.left }} left to earn tokens today!
       </p>

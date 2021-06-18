@@ -12,9 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api/client';
-import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
@@ -22,6 +20,7 @@ import * as BN from 'bn.js';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -67,6 +66,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
     protected overlayModal: OverlayModalService,
+    protected web3modalService: Web3ModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,
     public session: Session,
@@ -151,21 +151,13 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   async purchase() {
     await this.load();
-    if (this.session.isLoggedIn()) {
-      if (await this.web3Wallet.isLocal()) {
-        const action = await this.web3Wallet.setupMetamask();
-        switch (action) {
-          case GetMetamaskComponent.ACTION_CREATE:
-            this.router.navigate(['/wallet']);
-            this.inProgress = false;
-            this.overlayModal.dismiss();
-            return;
-        }
-      }
-      this.showPledgeModal = true;
-    } else {
+
+    if (!this.session.isLoggedIn()) {
       this.showLoginModal = true;
+    } else {
+      this.showPledgeModal = true;
     }
+
     this.detectChanges();
   }
 

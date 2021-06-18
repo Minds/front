@@ -145,6 +145,12 @@ export const REASONS: Array<any> = [
     label: 'Token manipulation',
     hasMore: false,
   },
+  {
+    value: 17,
+    label: 'Security',
+    hasMore: true,
+    reasons: [{ value: 1, label: 'Hacked account' }],
+  },
   //{ value: 11,
   //  label: 'Another reason',
   //  hasMore: true,
@@ -183,6 +189,11 @@ export const READABLE_REASONS: Array<any> = [
   { value: 13, label: 'Malware' },
   { value: 15, label: 'Trademark infringement' },
   { value: 16, label: 'Token manipulation' },
+  {
+    value: 17,
+    label: 'Security',
+    reasons: [{ value: 1, label: 'Hacked account' }],
+  },
 ];
 
 export const REPORT_ACTIONS = {

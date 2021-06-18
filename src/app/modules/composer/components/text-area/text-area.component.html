@@ -51,6 +51,7 @@
       [itemTemplate]="itemTemplate"
       [adjustForScrollOffset]="true"
       (input)="resizeMessageHeight()"
+      [class.m-composerTextarea__textArea--short]="compactMode"
       #messageInput
     >
     </textarea>

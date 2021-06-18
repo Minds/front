@@ -19,20 +19,43 @@
           {{ headline }}
         </h2>
 
-        <p class="m-marketing__description" i18n="@@HOMEPAGE__V2__SUBHEADER">
-          A place to have open conversations and bring people together. Free
-          your mind and get paid for creating content, driving traffic and
-          referring friends.
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE__V2__FREE_YOUR_MIND_HEADER"
+        >
+          Free your mind and get paid for creating content, driving traffic and
+          referring friends. A place to have open conversations and bring people
+          together.
         </p>
 
-        <button
-          class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
-          (click)="navigate()"
-          *mExperiment="'Homepage121119'; bucket: 'base'"
-          i18n
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE__V2__TAKE_BACK_CONTROL_SUBHEADER"
         >
-          Join Minds Now
-        </button>
+          Take back control of your social media!
+        </p>
+
+        <ng-container *mIfFeature="'!onboarding-october-2020'">
+          <m-button
+            class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
+            (click)="register()"
+            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+          >
+            Join Minds Now
+          </m-button>
+        </ng-container>
+        <ng-container *mIfFeature="'onboarding-october-2020'">
+          <m-button
+            class="m-homepage__joinButton--blueOutline"
+            (click)="register()"
+            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+            data-cy="data-minds-homepage-join-button-main"
+            color="blue"
+            size="large"
+          >
+            Join Minds Now
+          </m-button>
+        </ng-container>
 
         <div class="m-homepage__appButtons">
           <a [href]="siteUrl + 'mobile'" target="_blank">
@@ -47,20 +70,32 @@
         </div>
       </div>
 
-      <div
-        class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__registerForm"
-      >
-        <minds-form-register
-          [showTitle]="true"
-          [showBigButton]="true"
-          [showPromotions]="false"
-          [showLabels]="true"
-          [showInlineErrors]="true"
-          (done)="registered()"
-          #registerForm
+      <ng-container *mIfFeature="'!onboarding-october-2020'">
+        <div
+          class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__registerForm"
         >
-        </minds-form-register>
-      </div>
+          <minds-form-register
+            [showTitle]="true"
+            [showBigButton]="true"
+            [showPromotions]="false"
+            [showLabels]="true"
+            [showInlineErrors]="true"
+            (done)="registered()"
+            #registerForm
+          >
+          </minds-form-register>
+        </div>
+      </ng-container>
+      <ng-container *mIfFeature="'onboarding-october-2020'">
+        <div
+          class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__phoneImageContainer"
+        >
+          <img
+            class="m-homepage__phoneImage"
+            [src]="cdnAssetsUrl + 'assets/homepage/phone1x.png'"
+          />
+        </div>
+      </ng-container>
     </div>
   </div>
 
@@ -235,13 +270,26 @@
           </h3>
 
           <div class="m-marketing__actionButtons">
-            <button
-              class="mf-button mf-button--alt m-homepage__joinButton"
-              (click)="navigate()"
-              i18n
-            >
-              Join Minds Now
-            </button>
+            <ng-container *mIfFeature="'!onboarding-october-2020'">
+              <m-button
+                class="mf-button mf-button--alt m-homepage__joinButton"
+                (click)="register()"
+                i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+              >
+                Join Minds Now
+              </m-button>
+            </ng-container>
+            <ng-container *mIfFeature="'onboarding-october-2020'">
+              <m-button
+                class="m-homepage__joinButton--blueOutline"
+                (click)="register()"
+                i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+                color="blue"
+                pulsating="true"
+              >
+                Join Minds Now
+              </m-button>
+            </ng-container>
           </div>
         </div>
       </div>

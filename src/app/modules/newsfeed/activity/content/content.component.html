@@ -24,12 +24,14 @@
       #messageEl
       m-read-more
       class="m-activityContent__message"
-      [class.m-activityContent__message--remind]="entity.remind_object"
+      [class.m-activityContent__message--quote]="entity.remind_object"
+      [class.m-activityContent__message--richEmbed]="isRichEmbed"
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
-      [class.m-activityContent__message--short]="message.length <= 300"
+      [class.m-activityContent__message--short]="shortStatus"
       [class.m-activityContent__message--minimalMode]="minimalMode"
       [maxHeightAllowed]="maxMessageHeight"
-      *ngIf="message"
+      *ngIf="message?.length >= 1"
+      (click)="onMessageClick($event)"
     >
       <div class="m-activityContent__messageWrapper">
         <span [innerHtml]="message | tags | codeHighlight"></span>
@@ -40,6 +42,7 @@
           "
           [v2]="true"
           [showOnlyFadeout]="minimalMode"
+          [redirectUrl]="getRedirectUrl()"
         ></m-read-more--button>
       </div>
       <!-- ----------------------------------- -->
@@ -51,8 +54,8 @@
   </ng-container>
 </ng-template>
 <!-- Message usually goes above rich-embed preview -->
-<ng-container *ngIf="!minimalMode"
-  ><ng-container *ngTemplateOutlet="messageTemplate"></ng-container
+<ng-container *ngIf="isMessageAbovePreview">
+  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
 ></ng-container>
 <!-- ----------------------------------- -->
 <!-- RICH EMBED / BLOG -->
@@ -77,9 +80,9 @@
     ></div>
   </div>
   <!-- ----------------------------------- -->
-  <!-- Message goes below rich-embed preview in minimal mode-->
-  <ng-container *ngIf="minimalMode"
-    ><ng-container *ngTemplateOutlet="messageTemplate"></ng-container
+  <!-- Message goes below rich-embed preview in minimal mode and modal-->
+  <ng-container *ngIf="!isMessageAbovePreview">
+    <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
   ></ng-container>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->
@@ -101,6 +104,8 @@
         !(service.shouldShowPaywall$ | async)
       "
       [style.height]="videoHeight"
+      [isModal]="isModal"
+      [style.overflow]="videoHeight ? 'hidden' : null"
     ></m-videoPlayer--scrollaware>
 
     <div class="m-activityContent__fixedHeightSpacer"></div>
@@ -108,7 +113,7 @@
   <!-- ----------------------------------- -->
   <!-- IMAGE -->
   <!-- ----------------------------------- -->
-  <div class="m-activityContent__media--image" *ngIf="isImage">
+  <div class="m-activityContent__media--image" #imageEl *ngIf="isImage">
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
@@ -136,6 +141,7 @@
     m-read-more
     *ngIf="mediaDescription || mediaTitle"
     [maxHeightAllowed]="maxDescHeight"
+    (click)="onMessageClick($event)"
   >
     <div
       class="m-activityContent__descriptionWrapper"
@@ -149,12 +155,14 @@
       ></p>
       <p
         *ngIf="mediaDescription && !hideMediaDescription"
+        class="m-activityContent__mediaDescriptionText"
         [innerHtml]="mediaDescription | tags"
       ></p>
       <m-read-more--button
         *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
         [v2]="true"
         [showOnlyFadeout]="minimalMode"
+        [redirectUrl]="getRedirectUrl()"
       ></m-read-more--button>
     </div>
     <!-- ----------------------------------- -->
@@ -176,13 +184,14 @@
     not have permission to view it.</span
   >
 </div>
+
 <ng-container *ngIf="!hideMedia">
   <div
+    *ngIf="service.isQuote$ | async"
     class="m-activityContent__remind"
     [class.m-activityContent__remind--hasMessage]="!!message"
     [class.m-activityContent__remind--minimalMode]="minimalMode"
     #remindContainerEl
-    *ngIf="service.isRemind$ | async"
   >
     <m-activity__remind
       [parentService]="service"
@@ -199,16 +208,18 @@
 <!-- ----------------------------------- -->
 <ng-template #translation>
   <!-- (onTranslateInit)="propagateTranslation($event)" -->
-  <m-translate
-    *mIfBrowser
-    [open]="service.displayOptions.showTranslation"
-    [entity]="entity"
-    [translateEvent]="translateEvent"
-    (onTranslate)="(service.displayOptions.showTranslation === false)"
-    (onTranslateError)="(service.displayOptions.showTranslation === false)"
-    [class.m-translate--minimalMode]="minimalMode"
-    #translate
-  ></m-translate>
+  <ng-container *mIfBrowser>
+    <m-translate
+      *ngIf="service.displayOptions.showTranslation"
+      [open]="service.displayOptions.showTranslation"
+      [entity]="entity"
+      [translateEvent]="translateEvent"
+      (onTranslate)="onTranslate($event)"
+      (onTranslateError)="onTranslate($event)"
+      [class.m-translate--minimalMode]="minimalMode"
+      #translate
+    ></m-translate>
+  </ng-container>
 </ng-template>
 
 <!-- ----------------------------------- -->

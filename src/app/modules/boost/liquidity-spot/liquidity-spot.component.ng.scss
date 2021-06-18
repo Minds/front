@@ -1,0 +1,36 @@
+@import 'defaults.scss';
+
+:host {
+  .m-liquiditySpot__entity {
+    @include m-theme() {
+      border-color: themed($m-blue);
+    }
+  }
+
+  .m-liquiditySpot__disclaimer {
+    padding: 10px 5px;
+    cursor: pointer;
+    * {
+      vertical-align: middle;
+    }
+    ::ng-deep > m-tooltip {
+      i {
+        font-size: 20px;
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+      .m-tooltip--bubble {
+        width: 200px;
+      }
+    }
+    > span {
+      margin-left: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+}

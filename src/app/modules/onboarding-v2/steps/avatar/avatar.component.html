@@ -34,37 +34,27 @@
   />
 
   <div class="m-onboarding__actionButtons">
-    <button
-      class="mf-button mf-button--hollow"
-      (click)="cancel()"
-      *ngIf="cropping"
-      i18n="@@COMMON_CANCEL"
-    >
+    <m-button (onAction)="cancel()" *ngIf="cropping" i18n="@@COMMON_CANCEL">
       Cancel
-    </button>
-    <button
-      class="mf-button mf-button--hollow"
-      (click)="skip()"
-      *ngIf="!cropping"
-      i18n="@@COMMON__SKIP"
-    >
+    </m-button>
+    <m-button (onAction)="skip()" *ngIf="!cropping" i18n="@@COMMON__SKIP">
       Skip
-    </button>
-    <button
-      class="mf-button mf-button--alt"
-      (click)="uploadPhoto()"
+    </m-button>
+    <m-button
+      color="blue"
+      (onAction)="uploadPhoto()"
       *ngIf="!cropping"
       i18n="@@COMMON__UPLOAD_A_PHOTO"
     >
       Upload a Photo
-    </button>
-    <button
-      class="mf-button mf-button--alt"
-      (click)="continue()"
+    </m-button>
+    <m-button
+      color="blue"
+      (onAction)="continue()"
       *ngIf="cropping"
       i18n="@@COMMON__FINISH"
     >
       Finish
-    </button>
+    </m-button>
   </div>
 </div>

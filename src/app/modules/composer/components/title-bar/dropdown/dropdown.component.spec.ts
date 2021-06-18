@@ -6,6 +6,7 @@ import { FeaturesService } from '../../../../../services/features.service';
 import { Session } from '../../../../../services/session';
 import { PopupService } from '../../popup/popup.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ButtonComponent } from '../../../../../common/components/button/button.component';
 
 describe('Composer Title Bar Dropdown', () => {
   let comp: ComposerTitleBarDropdownComponent;
@@ -29,6 +30,7 @@ describe('Composer Title Bar Dropdown', () => {
     TestBed.configureTestingModule({
       declarations: [
         ComposerTitleBarDropdownComponent,
+        ButtonComponent,
         MockComponent({
           selector: 'm-dropdownMenu',
           inputs: ['menu', 'triggerClass', 'menuClass', 'anchorPosition'],

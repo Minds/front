@@ -20,8 +20,6 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { Client } from '../../services/api/client';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
-import { onboardingServiceMock } from '../../mocks/modules/onboarding/onboarding.service.mock.spec';
-import { OnboardingService } from '../onboarding/onboarding.service';
 import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup-modal-service.mock';
 import { SignupModalService } from '../modals/signup/service';
 import { By } from '@angular/platform-browser';
@@ -95,7 +93,6 @@ describe('LoginComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-        { provide: OnboardingService, useValue: onboardingServiceMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
         Storage,
         CookieService,

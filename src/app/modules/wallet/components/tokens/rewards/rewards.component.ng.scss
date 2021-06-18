@@ -1,0 +1,191 @@
+@import 'defaults.scss';
+
+:host {
+  .m-walletTokenEarnings__dateSelector {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 400;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-walletTokenEarningsDateSelector__label {
+      margin-right: 60px;
+    }
+  }
+
+  .m-walletTokenEarnings__estimates {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 0;
+    max-width: 600px;
+
+    &.m-walletTokenEarnings__estimates--hiddenCount {
+      justify-content: start;
+
+      @media screen and (min-width: $max-mobile) {
+        > * + * {
+          margin-left: 100px;
+        }
+      }
+    }
+
+    @include mobile-only {
+      flex-direction: column;
+    }
+
+    .m-walletTokenEarningsEstimates__item {
+      @include mobile-only {
+        padding: 7px 0;
+      }
+    }
+
+    .m-walletTokenEarningsEstimatesItem__label {
+      font-size: 16px;
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    .m-walletTokenEarningsEstimatesItem__amount {
+      font-size: 17px;
+      font-weight: 700;
+      padding: 10px 0;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-walletTokenEarnings__multiplier,
+  .m-walletTokenEarnings__multiplierBarWrapper {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .m-walletTokenEarnings__multiplier {
+    border-radius: 6px;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      color: themed($m-textColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .m-walletTokenEarnings__multiplierBarWrapper,
+  .m-walletTokenEarningsMultiplier__secondary {
+    padding: 10px;
+
+    @include mobile-only {
+      padding: 5px;
+    }
+  }
+
+  .m-walletTokenEarnings__multiplierBar {
+    width: 90px;
+    height: 15px;
+    border-radius: 2px;
+    margin: 0 10px;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+
+    .m-walletTokenEarningsMultiplierBar__progress {
+      height: 100%;
+      background-color: #a3c000;
+    }
+
+    @include mobile-only {
+      width: 40px;
+    }
+  }
+
+  .m-walletTokenEarningsMultiplier__secondary {
+    @include m-theme() {
+      border-left: 1px solid themed($m-borderColor--primary);
+    }
+    border-radius: 0 6px 6px 0;
+
+    > span:nth-of-type(2) {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-walletTokenEarnings__supportingValues {
+    font-weight: 400;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-walletTokenEarnings__multiplier ::ng-deep m-tooltip {
+    .m-tooltip--bubble {
+      width: 200px;
+    }
+  }
+
+  .m-walletTokenEarnings__comparative {
+    ::ng-deep {
+      m-icon {
+        vertical-align: middle;
+        width: 24px;
+
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+      m-wallet__currencyValue {
+        font-weight: 400;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &.m-walletTokenEarnings__comparative--negative ::ng-deep m-icon {
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+    }
+  }
+
+  .m-walletTokenEarnings__cta {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 15px;
+    cursor: pointer;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+
+  td.m-walletTokenEarnings__liquiditySpotPrompt {
+    padding: 15px 20px !important;
+
+    .m-walletTokenEarningsLiquiditySpotPrompt__cta {
+      text-transform: initial;
+    }
+  }
+
+  m-tooltip {
+    vertical-align: middle;
+  }
+
+  m-button {
+    margin-left: 20px;
+  }
+}

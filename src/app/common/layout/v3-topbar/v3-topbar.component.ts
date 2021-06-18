@@ -19,7 +19,9 @@ import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
-import { Subscription } from 'rxjs';
+import { FeaturesService } from '../../../services/features.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-v3topbar',
@@ -46,9 +48,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   router$;
 
-  themeSubscription: Subscription;
-  isDarkTheme: boolean = false;
-
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -59,7 +58,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected topbarService: TopbarService,
     protected router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    public pageLayoutService: PageLayoutService
+    public pageLayoutService: PageLayoutService,
+    private featuresService: FeaturesService,
+    private authModal: AuthModalService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -69,7 +70,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadComponent();
+    if (!this.featuresService.has('notifications-v3')) {
+      this.loadComponent();
+    }
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
@@ -96,35 +99,16 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  touchStart() {
-    this.isTouchScreen = true;
-  }
-
-  mouseEnter() {
-    if (this.session.isLoggedIn()) {
-      this.timeout = setTimeout(() => {
-        if (!this.isTouchScreen) {
-          this.themeService.toggleUserThemePreference();
-        }
-      }, 5000);
-    }
-  }
-
-  mouseLeave() {
-    clearTimeout(this.timeout);
-  }
-
-  toggleSidebarNav() {
+  /**
+   * Toggles sidebar navigation open.
+   * @param { void }
+   */
+  public toggleSidebarNav(): void {
     this.sidebarService.toggle();
   }
 
   private listen() {
     this.setOnAuthPages(this.router.url);
-
-    this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
-      this.isDarkTheme = isDark;
-      this.detectChanges();
-    });
 
     this.router$ = this.router.events.subscribe(
       (navigationEvent: NavigationEnd) => {
@@ -181,5 +165,48 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     if (this.router$) {
       this.router$.unsubscribe();
     }
+  }
+
+  async onJoinNowClick() {
+    try {
+      await this.authModal.open();
+      this.doRedirect();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
+  }
+
+  /**
+   * Depending on enabled feature, either navigates to login
+   * or opens auth modal login panel.
+   * @returns { Promise<void> } - awaitable.
+   */
+  async onLoginClick(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+      this.doRedirect();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
+  }
+
+  doRedirect(): void {
+    if (this.router.url === '/') {
+      this.router.navigate(['/newsfeed/subscriptions']);
+    }
+  }
+
+  /**
+   * True if current theme is dark.
+   * @returns { Observable<boolean> } - true if theme is dark, else false.
+   */
+  get isDarkTheme$(): Observable<boolean> {
+    return this.themeService.isDark$;
   }
 }

@@ -90,13 +90,18 @@ $linkedin: #0071a1;
 $themes: (
   light: (
     m-textColor--primary: #43434d,
+    m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
+    m-bgColor--primaryInverted: #242a30,
+    m-bgColor--primaryDarkAlways: #242a30,
     m-bgColor--primaryAlt: #e7edf3,
     m-bgColor--secondary: #f6f7f7,
     m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
+    m-bgColor--btnHover: #f0f3f7,
+    m-bgColor--btnActive: #dadfe5,
     m-borderColor--primary: #d3dbe3,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
@@ -105,8 +110,6 @@ $themes: (
     m-link: #1b85d6,
     m-link--hover: #0052a3,
     m-positive: #95c064,
-    m-btn--primary: #5dbac0,
-    m-btn--primaryText: #ffffff,
     // legacy colors
       m-grey-950: $grey-950,
     m-grey-900: $grey-900,
@@ -150,7 +153,6 @@ $themes: (
     m-black-always: $black,
     m-white: $white,
     m-white-always: $white,
-    m-body-bg: #f8f8f8,
     m-marketing-bg-gradient-start: #f9fafc,
     m-marketing-bg-colored-gradient-start: #f6eded,
     m-marketing-bg-colored-gradient-end: #f5f5fe,
@@ -164,13 +166,18 @@ $themes: (
   ),
   dark: (
     m-textColor--primary: #ffffff,
+    m-textColor--primaryInverted: #43434d,
     m-textColor--secondary: #b8c1ca,
     m-textColor--tertiary: #797b82,
     m-bgColor--primary: #242a30,
+    m-bgColor--primaryInverted: #ffffff,
+    m-bgColor--primaryDarkAlways: #242a30,
     m-bgColor--primaryAlt: #1e242a,
     m-bgColor--secondary: #1a2025,
     m-bgColor--secondaryAlt: #232b31,
     m-bgColor--contrast: #d8d8d8,
+    m-bgColor--btnHover: #343c44,
+    m-bgColor--btnActive: #48525b,
     m-borderColor--primary: #414c57,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #3a3f41,
@@ -179,8 +186,6 @@ $themes: (
     m-link: #1b85d6,
     m-link--hover: #4eb8ff,
     m-positive: #95c064,
-    m-btn--primary: #5dbac0,
-    m-btn--primaryText: #ffffff,
     // legacy colors
       m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
@@ -210,7 +215,6 @@ $themes: (
     m-black-always: $black,
     m-white: #202527,
     m-white-always: $white,
-    m-body-bg: lighten(#080808, $percent),
     m-marketing-bg-gradient-start: #202527,
     m-marketing-bg-colored-gradient-start: #4e5965,
     m-marketing-bg-colored-gradient-end: #58565c,
@@ -271,7 +275,6 @@ $m-black: 'm-black';
 $m-black-always: 'm-black-always';
 $m-white: 'm-white';
 $m-white-always: 'm-white-always';
-$m-body-bg: 'm-body-bg';
 $m-marketing-bg-gradient-start: 'm-marketing-bg-gradient-start';
 $m-marketing-bg-colored-gradient-start: 'm-marketing-bg-colored-gradient-start';
 $m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
@@ -300,13 +303,18 @@ $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
 
 $m-textColor--primary: 'm-textColor--primary';
+$m-textColor--primaryInverted: 'm-textColor--primaryInverted';
 $m-textColor--secondary: 'm-textColor--secondary';
 $m-textColor--tertiary: 'm-textColor--tertiary';
 $m-bgColor--primary: 'm-bgColor--primary';
+$m-bgColor--primaryInverted: 'm-bgColor--primaryInverted';
+$m-bgColor--primaryDarkAlways: 'm-bgColor--primaryDarkAlways';
 $m-bgColor--primaryAlt: 'm-bgColor--primaryAlt';
 $m-bgColor--secondary: 'm-bgColor--secondary';
 $m-bgColor--secondaryAlt: 'm-bgColor--secondaryAlt';
 $m-bgColor--contrast: 'm-bgColor--contrast';
+$m-bgColor--btnHover: 'm-bgColor--btnHover';
+$m-bgColor--btnActive: 'm-bgColor--btnActive';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';
@@ -315,8 +323,6 @@ $m-alert: 'm-alert';
 $m-link: 'm-link';
 $m-link--hover: 'm-link--hover';
 $m-positive: 'm-positive';
-$m-btn--primary: 'm-btn--primary';
-$m-btn--primaryText: 'm-btn--primaryText';
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;

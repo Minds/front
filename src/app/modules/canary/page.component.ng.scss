@@ -4,25 +4,4 @@
   .m-aux__hero {
     background-image: url('../../../assets/photos/canary.jpg');
   }
-  .m-canary__groupLink {
-    display: inline-block;
-    text-transform: none;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 16px;
-    margin: 8px 0 20px;
-    padding: 8px 12px;
-    font-weight: 500;
-    letter-spacing: 0.4;
-    &:hover {
-      transform: scale(1.03);
-    }
-    &:active {
-      transform: scale(1.01);
-    }
-    @include m-theme() {
-      border: 1px solid themed($m-blue);
-    }
-  }
 }

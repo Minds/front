@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as BN from 'bn.js';
+import { BigNumber } from 'ethers';
 
 import { Web3WalletService } from '../web3-wallet.service';
 
@@ -8,16 +8,14 @@ export class WithdrawContractService {
   protected instance: any;
 
   constructor(protected web3Wallet: Web3WalletService) {
-    console.log('withdraw contract called');
     this.load();
   }
 
   async load() {
-    await this.web3Wallet.ready();
-
-    this.instance = this.web3Wallet.eth
-      .contract(this.web3Wallet.config.withdraw.abi, '0x')
-      .at(this.web3Wallet.config.withdraw.address);
+    this.instance = this.web3Wallet.getContract(
+      this.web3Wallet.config.withdraw.address,
+      this.web3Wallet.config.withdraw.abi
+    );
 
     this.contract();
   }
@@ -37,9 +35,9 @@ export class WithdrawContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.toWei(
         gasPriceGwei,
-        'Gwei'
+        'gwei'
       );
     }
 
@@ -48,21 +46,24 @@ export class WithdrawContractService {
 
   // Withdraw
 
-  async request(guid: string | number, amount: number, message: string = '') {
+  async request(guid: string | number, amount: string, message: string = '') {
     await this.contract(); //wait for instance to get correct info
-    const tokens = amount / 10 ** 18;
+
+    const tokens = this.web3Wallet.fromWei(BigNumber.from(amount), 'ether');
+
     const gasLimit = 67839; //TODO: make this dynamic
-    const gas = new BN(this.instance.defaultTxObject.gasPrice).mul(
-      new BN(gasLimit)
+    const gas = BigNumber.from(this.instance.defaultTxObject.gasPrice).mul(
+      BigNumber.from(gasLimit)
     );
-    const gasEther = this.web3Wallet.EthJS.fromWei(gas, 'ether');
+
+    const gasEther = this.web3Wallet.fromWei(gas, 'ether');
 
     let tx = await this.web3Wallet.sendSignedContractMethodWithValue(
       await this.contract(),
       'request',
-      [guid, amount],
-      gas.clone(),
-      `Request a withdrawal of ${tokens} Minds Tokens. ${gasEther} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. ${message}`.trim()
+      [guid, amount.toString()],
+      gas.toString(),
+      `Request a withdrawal of ${tokens} Minds Tokens. ~${gasEther.toString()} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. ${message}`.trim()
     );
 
     return {

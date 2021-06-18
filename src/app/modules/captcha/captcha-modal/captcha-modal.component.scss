@@ -18,16 +18,9 @@
       justify-content: flex-end;
 
       .m-captcha__submitButton {
-        border-radius: 2em;
         padding: 10px 20px;
         font-size: 15px;
         cursor: pointer;
-
-        @include m-theme() {
-          background-color: themed($m-btn--primary);
-          border: 1px solid themed($m-borderColor--primary);
-          color: themed($m-white-always);
-        }
       }
     }
   }

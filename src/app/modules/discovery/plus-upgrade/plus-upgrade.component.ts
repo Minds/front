@@ -11,6 +11,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-discovery__plusUpgrade',
   templateUrl: './plus-upgrade.component.html',
+  styleUrls: ['./plus-upgrade.component.ng.scss'],
   providers: [ComposerService],
 })
 export class DiscoveryPlusUpgradeComponent implements OnInit {

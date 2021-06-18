@@ -7,8 +7,6 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
-import * as ethAccount from 'ethjs-account';
-import * as Eth from 'ethjs';
 import * as BN from 'bn.js';
 
 import { TransactionOverlayService } from './transaction-overlay.service';
@@ -124,7 +122,10 @@ export class TransactionOverlayComponent implements OnInit {
     this.data.tx = Object.assign({}, tx);
 
     if (typeof this.data.tx.gasPrice !== 'undefined') {
-      this.data.tx.gasPrice = Eth.fromWei(this.data.tx.gasPrice, 'Gwei');
+      this.data.tx.gasPrice = this.web3Wallet.fromWei(
+        this.data.tx.gasPrice,
+        'gwei'
+      );
     }
 
     if (typeof this.data.tx.gas === 'undefined') {
@@ -139,7 +140,7 @@ export class TransactionOverlayComponent implements OnInit {
 
     let tx = Object.assign({}, this.data.tx);
 
-    tx.gasPrice = Eth.toWei(tx.gasPrice, 'Gwei');
+    tx.gasPrice = this.web3Wallet.toWei(tx.gasPrice, 'gwei');
 
     return tx;
   }
@@ -158,7 +159,7 @@ export class TransactionOverlayComponent implements OnInit {
         privateKey = `0x${privateKey}`;
       }
 
-      ethAccount.privateToAccount(privateKey);
+      this.web3Wallet.privateKeyToAccount(privateKey);
     } catch (e) {
       return false;
     }
@@ -257,7 +258,7 @@ export class TransactionOverlayComponent implements OnInit {
           privateKey = `0x${privateKey}`;
         }
 
-        if (ethAccount.privateToAccount(privateKey)) {
+        if (this.web3Wallet.privateKeyToAccount(privateKey)) {
           this.data.unlock.privateKey = privateKey;
           this.detectChanges();
         }
@@ -295,7 +296,7 @@ export class TransactionOverlayComponent implements OnInit {
   async checkTokenBalance(passedTokenDelta) {
     const tokenDelta = new BN(passedTokenDelta);
 
-    if (tokenDelta.gte('0') || !this.data.tx.from) {
+    if (tokenDelta.gte(new BN('0')) || !this.data.tx.from) {
       return;
     }
 
@@ -306,7 +307,7 @@ export class TransactionOverlayComponent implements OnInit {
 
       this.balance = balance.toString(10);
 
-      if (balance.add(tokenDelta).lt('0')) {
+      if (balance.add(tokenDelta).lt(new BN('0'))) {
         this.reject('Not enough tokens to complete this transaction');
       }
     } catch (e) {
@@ -316,7 +317,7 @@ export class TransactionOverlayComponent implements OnInit {
 
   async getEthBalance() {
     try {
-      const balance = await this.web3Wallet.getBalance(this.data.tx.from);
+      const balance = await this.web3Wallet.getBalance();
       this.ethBalance = balance ? balance : '0';
     } catch (e) {
       console.error(e);

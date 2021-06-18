@@ -12,11 +12,14 @@ import { BehaviorSubject, of } from 'rxjs';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { SERVER_PROVIDERS } from '../../../app.server.module';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { SENTRY } from '../../../common/services/diagnostics/diagnostics.service';
 import { MetaService } from '../../../common/services/meta.service';
+import { RelatedContentService } from '../../../common/services/related-content.service';
 import { Client } from '../../../services/api/client';
 import { MockService } from '../../../utils/mock';
 import { siteServiceMock } from '../../notifications/notification.service.spec';
 import { EmbedModule } from '../embed.module';
+import * as Sentry from '@sentry/browser';
 
 import { EmbeddedVideoComponent } from './embedded-video.component';
 
@@ -220,6 +223,10 @@ describe('EmbeddedVideoComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: MetaService, useValue: metaServiceMock },
         {
+          provide: RelatedContentService,
+          useValue: MockService(RelatedContentService),
+        },
+        {
           provide: ConfigsService,
           useValue: configsServiceMock,
         },
@@ -243,6 +250,10 @@ describe('EmbeddedVideoComponent', () => {
         {
           provide: 'QUERY_STRING',
           useFactory: () => '',
+        },
+        {
+          provide: SENTRY,
+          useValue: Sentry,
         },
       ],
       imports: [EmbedModule],

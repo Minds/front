@@ -21,42 +21,39 @@
   ></div>
 </div>
 <ng-container *ngIf="init">
-  <div class="m-settingsV2__paymentMethods__cards">
+  <div class="m-settingsV2__table">
     <ul>
-      <li
-        class="m-settingsV2__paymentMethods__card--headerRow"
-        *ngIf="cards.length"
-      >
-        <div class="m-settingsV2__paymentMethods__card__col--left">
+      <li class="m-settingsV2__tableHeader" *ngIf="cards.length">
+        <div class="m-settingsV2__tableCol--left">
           <span i18n="@@SETTINGS_V2_PAYMENT_METHODS__YOUR_CARDS"
             >Your Cards</span
           >
         </div>
         <div
-          class="m-settingsV2__paymentMethods__card__col--right"
+          class="m-settingsV2__tableCol--right"
           i18n="@@SETTINGS_V2_PAYMENT_METHODS__EXPIRES"
         >
           <span>Expires</span
-          ><span class="m-settingsV2__paymentMethods__card__remove"></span>
+          ><span class="m-settingsV2__tableItem__action"></span>
         </div>
       </li>
       <li
         *ngFor="let card of cards; let i = index"
-        class="m-settingsV2__paymentMethods__card"
+        class="m-settingsV2__tableItem"
       >
-        <div class="m-settingsV2__paymentMethods__card__col--left">
-          <span class="m-settingsV2__paymentMethods__card__type"
+        <div class="m-settingsV2__tableCol--left">
+          <span class="m-settingsV2__tableItem__type"
             >{{ card.card_brand | titlecase }} ****{{ card.card_last4 }}</span
           >
         </div>
-        <div class="m-settingsV2__paymentMethods__card__col--right">
+        <div class="m-settingsV2__tableCol--right">
           <span
-            class="m-settingsV2__paymentMethods__card__expiry"
+            class="m-settingsV2__paymentMethods__expiry"
             [ngClass]="{ expired: cardExpired(card.card_expires) }"
             >{{ card.card_expires }}</span
           >
           <a
-            class="m-settingsV2__paymentMethods__card__remove"
+            class="m-settingsV2__tableItem__action"
             (click)="removeCard(i)"
             i18n="@@M__ACTION__REMOVE"
             >Remove <span>card</span></a
@@ -64,9 +61,7 @@
         </div>
       </li>
 
-      <li
-        class="m-settingsV2__paymentMethods__card m-settingsV2__paymentMethods__card__add"
-      >
+      <li class="m-settingsV2__tableItem m-settingsV2__paymentMethods__add">
         <a (click)="addNewCard()"
           ><ng-container
             *ngIf="!cards.length"

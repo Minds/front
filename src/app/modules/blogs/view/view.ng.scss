@@ -1,6 +1,20 @@
 @import 'defaults.scss';
 
 :host {
+  header {
+    position: relative;
+  }
+  .m-blog-header {
+    padding-bottom: 0;
+    margin-bottom: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    margin: 0 0 20px 0;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
   @media screen and (max-width: $max-mobile) {
     .m-blog--title {
       font-size: 32px;
@@ -16,7 +30,14 @@
   }
 
   .m-blog--footer {
-    margin-bottom: 50px;
+    margin: 30px 0;
+    padding: 20px 0;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
     .m-license-info {
       @include m-theme() {
         color: themed($m-textColor--tertiary);
@@ -25,7 +46,17 @@
   }
 
   ::ng-deep {
+    m-comments__entityOutlet {
+      .m-commentPoster {
+        margin: 0 20px;
+        width: 90%;
+      }
+    }
+  }
+
+  ::ng-deep {
     m-postmenu--v2 {
+      position: relative;
       .m-postMenu__button {
         padding: 0;
       }
@@ -65,25 +96,55 @@
       position: relative;
       z-index: 0;
     }
+
+    .ck.ck-editor__editable > .ck-placeholder::before {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
     .m-blog__body {
-      padding: 0 $minds-padding;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      font-family: 'Roboto', Helvetica, sans-serif;
 
       a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
         @include m-theme() {
-          color: themed($m-grey-950);
+          color: themed($m-link);
         }
       }
+
       img {
         max-width: 100%;
         height: auto;
+        margin: 50px 0;
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
       }
 
       ul {
         list-style: disc;
+        margin: 30px 0;
+        a {
+          font-weight: 400;
+        }
       }
 
       ol {
         list-style: decimal;
+        margin: 30px 0;
+
+        a {
+          font-weight: 400;
+        }
       }
 
       br,
@@ -91,12 +152,11 @@
       ul,
       ol {
         font-size: 16px;
-        font-family: Roboto, Helvetica, Arial, sans-serif;
         font-weight: 400;
         line-height: 30px;
 
         @include m-theme() {
-          color: rgba(themed($m-black), 0.84);
+          color: themed($m-textColor--secondary);
         }
       }
 
@@ -104,16 +164,23 @@
         margin-bottom: 0.5em;
         font-weight: 400;
         font-style: normal;
-        font-size: 21px;
-        line-height: 1.58;
-        letter-spacing: 0.5px;
-        letter-spacing: -0.003em;
-        font-family: 'Roboto', Helvetica, sans-serif;
-        margin-top: 29px;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        line-height: 1.4em;
+        margin: 5px 0 15px 0;
+
         @include m-theme() {
-          color: rgba(themed($m-black), 0.84);
+          color: themed($m-textColor--secondary);
+        }
+
+        a {
+          font-weight: normal;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
 
@@ -123,6 +190,17 @@
       h4,
       h5 {
         font-weight: 600;
+        margin: 30px 0;
+      }
+
+      h2,
+      h3 {
+        @include mobile-only {
+          font-size: 22px;
+        }
+
+        margin: 0 0 10px 0;
+        font-size: 28px;
       }
 
       figcaption {
@@ -143,11 +221,19 @@
 
       ul,
       ol {
-        margin: 18px 0;
+        margin: 15px 0;
 
         li {
-          margin-bottom: 0.5em;
-          font-size: 21px;
+          font-size: 16px;
+        }
+      }
+
+      figure.image {
+        @media screen and (max-width: $max-mobile) {
+          margin-block-start: 0;
+          margin-block-end: 0;
+          margin-inline-start: 0;
+          margin-inline-end: 0;
         }
       }
 

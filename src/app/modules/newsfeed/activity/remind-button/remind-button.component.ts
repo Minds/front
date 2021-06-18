@@ -15,10 +15,11 @@ import { StackableModalService } from '../../../../services/ux/stackable-modal.s
   styleUrls: ['./remind-button.component.ng.scss'],
   providers: [ComposerService],
 })
-export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
+export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  remindCount$: Observable<number> = this.service.entity$.pipe(
-    map(entity => entity.reminds)
+
+  count$: Observable<number> = this.service.entity$.pipe(
+    map(entity => entity.reminds + entity.quotes)
   );
 
   constructor(
@@ -80,8 +81,12 @@ export class ActiviyRemindButtonComponent implements OnInit, OnDestroy {
     const entity = this.service.entity$.getValue();
     this.composerService.reset(); // Avoid dirty data https://gitlab.com/minds/engine/-/issues/1792
     this.composerService.remind$.next(entity);
-    await this.composerService.post();
-
+    try {
+      await this.composerService.post();
+    } catch (e) {
+      this.toasterService.error(e);
+      return;
+    }
     // Update the counter
     this.incrementCounter();
 

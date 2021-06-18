@@ -70,14 +70,15 @@
   <div class="m-modalV2__toolbar">
     <div class="m-layout__spacer"></div>
 
-    <m-shadowboxSubmitButton
+    <m-button
+      color="blue"
       [saving]="saving$ | async"
-      (click)="onSave($event)"
+      (onAction)="onSave($event)"
       data-cy="discovery-settings-save-button"
     >
       <ng-container i18n="@@DISCOVERY_SETTINGS__SAVE_TAGS"
         >Save Tags</ng-container
       >
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </div>

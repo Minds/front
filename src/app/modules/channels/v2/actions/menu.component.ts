@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { PostMenuService } from '../../../../common/components/post-menu/post-menu.service';
 import { ActivityService } from '../../../../common/services/activity.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
-
+import { ChannelAdminConfirmationService } from './admin-confirmation/admin-confirmation.service';
+import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 export interface ProToggleResponse {
   status?: string;
 }
@@ -19,7 +20,8 @@ export interface ProToggleResponse {
   templateUrl: 'menu.component.html',
   providers: [PostMenuService, ActivityService],
 })
-export class ChannelActionsMenuComponent {
+export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
+  implements OnInit {
   /**
    * Constructor
    * @param service
@@ -34,8 +36,31 @@ export class ChannelActionsMenuComponent {
     protected postMenu: PostMenuService,
     protected router: Router,
     private client: Client,
+    private adminConfirmation: ChannelAdminConfirmationService,
     activity: ActivityService
-  ) {}
+  ) {
+    super();
+  }
+
+  ngOnInit() {
+    this.subscriptions.push(
+      this.adminConfirmation.completed$.subscribe(payload => {
+        if (payload) {
+          let channel = this.service.channel$.getValue();
+          const nextState = payload.action === 'make' ? true : false;
+
+          if (payload.type === 'plus') {
+            channel.plus = nextState;
+          }
+          if (payload.type === 'pro') {
+            channel.pro = nextState;
+          }
+
+          this.service.load(channel);
+        }
+      })
+    );
+  }
 
   /**
    * Subscribe to the user
@@ -90,7 +115,7 @@ export class ChannelActionsMenuComponent {
 
   viewLedger() {
     this.router.navigate([
-      '/wallet/canary/tokens/transactions',
+      '/wallet/tokens/transactions',
       { remote: this.service.channel$.getValue().username },
     ]);
   }
@@ -99,6 +124,17 @@ export class ChannelActionsMenuComponent {
     this.router.navigate([
       '/admin/withdrawals',
       { user: this.service.channel$.getValue().username },
+    ]);
+  }
+
+  /**
+   * Links to relevant remote boost page
+   * @param { 'newsfeed' | 'content' } type - page.
+   */
+  public viewBoosts(type: 'newsfeed' | 'content'): void {
+    this.router.navigate([
+      `/boost/console/${type}/history`,
+      { remote: this.service.channel$.getValue().username },
     ]);
   }
 
@@ -193,24 +229,27 @@ export class ChannelActionsMenuComponent {
    * @returns { Promise<void> } -awaitable.
    */
   async proAdminToggle(): Promise<void> {
-    const channel = { ...this.service.channel$.getValue() };
-    const value = !channel.pro;
-    const method = value ? 'put' : 'delete';
+    const channel = this.service.channel$.getValue();
 
-    try {
-      const response = (await this.client[method](
-        `api/v2/admin/pro/${channel.guid}`
-      )) as ProToggleResponse;
+    this.adminConfirmation.toggle(
+      'pro',
+      channel.pro ? 'remove' : 'make',
+      channel.guid
+    );
+  }
 
-      if (!response || response.status !== 'success') {
-        throw new Error('Invalid server response');
-      }
+  /**
+   * Allows an admin to toggle the plus state of a user.
+   * @returns { Promise<void> } - awaitable.
+   */
+  async plusAdminToggle(): Promise<void> {
+    const channel = this.service.channel$.getValue();
 
-      channel.pro = value;
-      this.service.channel$.next(channel);
-    } catch (e) {
-      console.error(e);
-    }
+    this.adminConfirmation.toggle(
+      'plus',
+      channel.plus ? 'remove' : 'make',
+      channel.guid
+    );
   }
 
   /**

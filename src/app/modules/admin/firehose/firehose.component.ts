@@ -1,16 +1,25 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { NewsfeedHashtagSelectorService } from '../../newsfeed/services/newsfeed-hashtag-selector.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
+import { skip } from 'rxjs/operators';
+
 @Component({
   moduleId: module.id,
   selector: 'minds-admin-firehose',
   templateUrl: 'firehose.component.html',
+  styleUrls: ['./firehose.component.ng.scss'],
 })
 export class AdminFirehoseComponent implements OnInit, OnDestroy {
   entities: Array<any> = [];
@@ -20,17 +29,26 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   period = 'all';
   customType = 'activities';
   plus = false;
-  hashtag: string | null = null;
   all = false;
   paramsSubscription: Subscription;
   timeout: any = null;
 
+  /**
+   * Feed will return a union of posts containing these hashtags.
+   */
+  public hashtags$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
+    []
+  );
+
+  /**
+   * Reference to tag input.
+   */
+  @ViewChild('tagInput') input: ElementRef;
+
   constructor(
-    private session: Session,
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
     private overlayModal: OverlayModalService,
     protected activityService: ActivityService
   ) {
@@ -40,17 +58,17 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
       this.customType = params['type'] || 'activities';
       this.plus = params['plus'] || false;
 
-      if (typeof params['hashtag'] !== 'undefined') {
-        this.hashtag = params['hashtag'] || null;
+      if (typeof params['hashtags'] !== 'undefined') {
+        this.hashtags$.next([...params['hashtags'].split(',')]);
         this.all = false;
       } else if (typeof params['all'] !== 'undefined') {
-        this.hashtag = null;
+        this.hashtags$.next([]);
         this.all = true;
       } else if (params['query']) {
         this.all = true;
         this.updateSortRoute();
       } else {
-        this.hashtag = null;
+        this.hashtags$.next([]);
         this.all = false;
       }
 
@@ -64,6 +82,42 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
       this.entity = null;
       this.load();
     });
+
+    // load feed on hashtag change skipping first emission (on load).
+    this.hashtags$.pipe(skip(1)).subscribe(hashtags => {
+      this.load();
+    });
+  }
+
+  /**
+   * Adds the current value of this.input (viewchild) to the hashtags$ subject array.
+   * @returns { void }
+   */
+  public addTag(): void {
+    let value = this.input.nativeElement.value;
+    if (value) {
+      if (value.charAt(0) === '#') {
+        value = value.substring(1);
+      }
+      this.hashtags$.next([
+        ...this.hashtags$.getValue(),
+        this.input.nativeElement.value,
+      ]);
+      this.input.nativeElement.value = '';
+      this.updateSortRoute();
+    }
+  }
+
+  /**
+   * Removes a given tag from hashtags subject array.
+   * @param { string } tag - tag value - do not add a #.
+   * @returns { void }
+   */
+  public removeTag(tag: string): void {
+    this.hashtags$.next([
+      ...this.hashtags$.getValue().filter(hashtag => hashtag !== tag),
+    ]);
+    this.updateSortRoute();
   }
 
   ngOnInit() {}
@@ -77,7 +131,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
 
   public async load() {
     this.inProgress = true;
-    const hashtags = this.hashtag ? encodeURIComponent(this.hashtag) : '';
+    const hashtags = this.hashtags$.getValue();
     const period = this.period || '';
     const all = this.all ? '1' : '';
 
@@ -179,9 +233,10 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
       params.type = this.customType;
     }
 
-    if (this.hashtag) {
-      params.hashtag = this.hashtag;
+    if (this.hashtags$.getValue().length > 0) {
+      params.hashtags = this.hashtags$.getValue().join(',');
     }
+
     if (this.plus) {
       params.plus = this.plus;
     } else if (this.all) {

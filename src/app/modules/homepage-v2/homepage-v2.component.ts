@@ -17,6 +17,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { AuthModalService } from '../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -41,7 +42,8 @@ export class HomepageV2Component implements OnInit {
     private metaService: MetaService,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private authModal: AuthModalService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -58,10 +60,9 @@ export class HomepageV2Component implements OnInit {
         'An open source, community-owned social network dedicated to privacy, free speech, monetization and decentralization. Break free from big censorship, algorithms and surveillance and join the leading, unbiased alternative.'
       )
       .setCanonicalUrl('/')
-      .setOgUrl('/')
-      .setOgImage('/assets/logos/placeholder.jpg');
+      .setOgUrl('/');
 
-    this.navigationService.setVisible(false);
+    this.navigationService.setVisible(true);
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
 
@@ -96,7 +97,23 @@ export class HomepageV2Component implements OnInit {
     this.router.navigate(['/' + this.session.getLoggedInUser().username]);
   }
 
-  navigate() {
+  /**
+   * Call to register the user
+   * depending on feat flag will route to /register or open auth modal.
+   * @returns { void }
+   */
+  public async register(): Promise<void> {
+    if (this.featuresService.has('onboarding-october-2020')) {
+      try {
+        await this.authModal.open();
+      } catch (e) {
+        if (e === 'DismissedModalException') {
+          return; // modal dismissed, do nothing
+        }
+        console.error(e);
+      }
+      return;
+    }
     this.router.navigate(['/register']);
   }
 

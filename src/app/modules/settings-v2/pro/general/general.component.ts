@@ -88,7 +88,10 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
       this.formSubmitted.emit({ formSubmitted: true });
       this.form.markAsPristine();
     } catch (e) {
-      this.formSubmitted.emit({ formSubmitted: false, error: e });
+      this.formSubmitted.emit({
+        formSubmitted: false,
+        error: e.message || 'An unknown error has occurred',
+      });
     } finally {
       this.inProgress = false;
       this.detectChanges();

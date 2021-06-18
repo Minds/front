@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 import { NewCardModalComponent } from './new-card-modal.component';
 
@@ -8,7 +9,7 @@ describe('NewCardModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NewCardModalComponent],
+      declarations: [NewCardModalComponent, ButtonComponent],
     }).compileComponents();
   }));
 

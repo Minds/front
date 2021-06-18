@@ -102,12 +102,12 @@
   <div class="m-modalV2__toolbar">
     <div class="m-layout__spacer"></div>
 
-    <m-shadowboxSubmitButton
+    <m-button
       [saving]="saving$ | async"
-      (click)="onSave($event)"
+      (onAction)="onSave($event)"
       data-cy="discovery-feeds-settings-save-button"
     >
       <ng-container i18n="@@COMMON__SAVE">Save</ng-container>
-    </m-shadowboxSubmitButton>
+    </m-button>
   </div>
 </div>

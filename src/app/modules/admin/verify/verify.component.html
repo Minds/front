@@ -4,10 +4,10 @@
     class="mdl-cell mdl-cell--12-col"
   >
     <div class="mdl-card mdl-shadow--4dp m-admin--verify-requests">
-      <minds-card-user
-        [object]="request.user"
-        class="mdl-card mdl-shadow--2dp"
-      ></minds-card-user>
+      <m-publisherCard
+        [publisher]="request.user"
+        [showSubscribeButton]="false"
+      ></m-publisherCard>
 
       <div class="m-admin--verify-requests-info">
         <p class="m-message">
@@ -20,21 +20,13 @@
       </div>
 
       <div class="m-admin--verify-requests-cta">
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
-          (click)="verify(i)"
-          [disabled]="inProgress"
-        >
+        <m-button color="blue" (onAction)="verify(i)" [saving]="inProgress">
           Verify
-        </button>
+        </m-button>
 
-        <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
-          (click)="reject(i)"
-          [disabled]="inProgress"
-        >
+        <m-button (onAction)="reject(i)" color="red" [saving]="inProgress">
           Reject
-        </button>
+        </m-button>
       </div>
     </div>
   </div>

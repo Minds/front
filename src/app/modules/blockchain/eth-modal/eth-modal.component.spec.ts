@@ -10,6 +10,7 @@ import { Session } from '../../../services/session';
 import { siteServiceMock } from '../../notifications/notification.service.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('BlockchainEthModalComponent', () => {
   let comp: BlockchainEthModalComponent;
@@ -28,6 +29,7 @@ describe('BlockchainEthModalComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         BlockchainEthModalComponent,
+        ButtonComponent,
         MockComponent({
           selector: 'm-modal',
           inputs: [],

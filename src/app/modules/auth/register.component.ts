@@ -8,7 +8,6 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
-import { OnboardingService } from '../onboarding/onboarding.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
@@ -59,10 +58,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
-    private onboarding: OnboardingService,
     public navigation: NavigationService,
     private navigationService: SidebarNavigationService,
-    configs: ConfigsService,
+    private configs: ConfigsService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
@@ -99,6 +97,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       } else {
         this.setPlaceholderMetaImage();
       }
+      if (params['redirectUrl']) {
+        this.redirectTo = decodeURI(params['redirectUrl']);
+      }
     });
 
     this.metaService.setTitle('Register');
@@ -129,7 +130,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setPlaceholderMetaImage(): void {
-    this.metaService.setOgImage('/assets/logos/placeholder.jpg');
+    this.metaService.setOgImage('/assets/og-images/default-v3.png');
   }
 
   registered() {
@@ -144,8 +145,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return;
       }
     }
-
-    this.router.navigate(['/' + this.session.getLoggedInUser().username]);
   }
 
   onSourceError() {
@@ -158,9 +157,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
     this.topbarService.toggleVisibility(true);
 
-    if (this.featuresService.has('navigation')) {
-      this.navigationService.setVisible(true);
-    }
+    this.navigationService.setVisible(true);
   }
 
   private navigateToRedirection() {
@@ -176,6 +173,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.router.navigate([uri[0]], extras);
+    // If this is an api redirect, we need to redirect outside of angular router
+    if (uri[0].indexOf(this.configs.get('site_url') + 'api/') === 0) {
+      window.location.href = this.redirectTo;
+    } else {
+      this.router.navigate([uri[0]], extras);
+    }
   }
 }

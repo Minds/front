@@ -1,5 +1,5 @@
 <ng-template #searchBar>
-  <div class="m-v3Topbar__searchBox" *ngIf="showSearchBar">
+  <div class="m-v3Topbar__searchBox">
     <ng-content select="[search]"></ng-content>
   </div>
 </ng-template>
@@ -23,21 +23,18 @@
           routerLink="/"
           title="Home"
           i18n-title="@@COMMON__HOME"
-          (touchstart)="touchStart()"
-          (mouseenter)="mouseEnter()"
-          (mouseleave)="mouseLeave()"
         >
           <img
             [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
             class="m-v3Topbar__logo--bulb"
           />
           <img
-            *ngIf="!isDarkTheme"
+            *ngIf="!(isDarkTheme$ | async)"
             [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
           <img
-            *ngIf="isDarkTheme"
+            *ngIf="isDarkTheme$ | async"
             [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
@@ -56,7 +53,7 @@
       class="m-pageLayout__pane--main"
       style="display:flex; flex-direction: row;"
     >
-      <div class="m-v3Topbar__middleColumn">
+      <div class="m-v3Topbar__middleColumn" *ngIf="showSearchBar">
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </div>
 
@@ -67,7 +64,7 @@
           <div class="m-v3TopbarContainer__loginWrapper">
             <a
               class="m-v3TopbarLoginWrapper__login"
-              routerLink="/login"
+              (click)="onLoginClick()"
               title="Login"
               i18n-title="@@COMMON__LOGIN"
             >
@@ -76,7 +73,7 @@
 
             <a
               class="m-v3TopbarLoginWrapper__joinMindsNow"
-              routerLink="/register"
+              (click)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
             >

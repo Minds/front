@@ -9,6 +9,7 @@ import {
   PLATFORM_ID,
   ViewChild,
   OnDestroy,
+  Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -24,15 +25,24 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
-
+import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
+import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
+import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
+import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
+import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
+  styleUrls: ['./navigation.component.ng.scss'],
 })
 export class SidebarNavigationComponent
   implements OnInit, AfterViewInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  readonly chatUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -58,6 +68,8 @@ export class SidebarNavigationComponent
 
   routerSubscription: Subscription;
 
+  matrixFeature: boolean = false;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -68,10 +80,17 @@ export class SidebarNavigationComponent
     private featuresService: FeaturesService,
     private route: ActivatedRoute,
     private router: Router,
-    private userMenu: UserMenuService
+    private userMenu: UserMenuService,
+    private buyTokensModalService: BuyTokensModalService,
+    private web3WalletService: Web3WalletService,
+    private boostModalService: BoostModalLazyService,
+    private earnModalService: EarnModalService,
+    private composerModalService: ComposerModalService,
+    private injector: Injector
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.chatUrl = this.configs.get('matrix')?.chat_url;
     this.service.setContainer(this);
     this.getUser();
 
@@ -94,9 +113,9 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
-    if (this.featuresService.has('navigation')) {
-      this.settingsLink = '/settings';
-    }
+    this.matrixFeature = this.featuresService.has('matrix');
+
+    this.settingsLink = '/settings';
   }
 
   ngAfterViewInit() {
@@ -118,6 +137,9 @@ export class SidebarNavigationComponent
   }
 
   createGroupsSideBar() {
+    if (this.matrixFeature) {
+      return;
+    }
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
         GroupsSidebarMarkersComponent
       ),
@@ -142,6 +164,30 @@ export class SidebarNavigationComponent
     if (this.layoutMode === 'phone') {
       this.isOpened = !this.isOpened;
     }
+  }
+
+  async buyTokens() {
+    this.toggle();
+    await this.web3WalletService.getCurrentWallet(true);
+    await this.buyTokensModalService.open();
+  }
+
+  async openEarnModal() {
+    this.toggle();
+    await this.earnModalService.open();
+  }
+
+  async openBoostModal() {
+    this.toggle();
+    await this.boostModalService.open(this.session.getLoggedInUser());
+  }
+
+  async openComposeModal() {
+    this.toggle();
+    await this.composerModalService
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
   }
 
   setVisible(value: boolean): void {

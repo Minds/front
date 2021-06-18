@@ -45,6 +45,7 @@ import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CookieModule, CookieService } from '@gorniv/ngx-universal';
 import { Storage } from '../../../services/storage';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 /* tslint:disable */
 @Component({
@@ -369,7 +370,15 @@ describe('BoostCreatorComponent', () => {
   function getSubmitButton(): DebugElement {
     return fixture.debugElement.query(
       By.css(
-        '.m-boost--creator--submit .m-boost--creator-button.m-boost--creator-button--submit'
+        '.m-boost--creator--submit .m-boost--creator-button.m-boost--creator-button--submit button'
+      )
+    );
+  }
+
+  function getBoostButton(): DebugElement {
+    return fixture.debugElement.query(
+      By.css(
+        '.m-boost--creator-section-submit .m-boost--creator-button--boost button'
       )
     );
   }
@@ -377,7 +386,7 @@ describe('BoostCreatorComponent', () => {
   function getNextButton(): DebugElement {
     return fixture.debugElement.query(
       By.css(
-        '.m-boost--creator-section-submit .m-boost--creator--submit button.m-boost--creator-button'
+        '.m-boost--creator-section-submit .m-boost--creator--submit m-button.m-boost--creator-button-next button'
       )
     );
   }
@@ -400,6 +409,7 @@ describe('BoostCreatorComponent', () => {
         BoostCategorySelectorMock,
         BoostP2PSearchMock,
         BoostCheckoutMock,
+        ButtonComponent,
       ],
       imports: [FormsModule, RouterTestingModule, CookieModule],
       providers: [
@@ -464,7 +474,9 @@ describe('BoostCreatorComponent', () => {
       By.css('section.m-boost--creator-section-submit')
     );
     boostSubmitButton = fixture.debugElement.query(
-      By.css('.m-boost--creator--submit > button.m-boost--creator-button')
+      By.css(
+        '.m-boost--creator--submit > button.m-boost--creator-button button'
+      )
     );
 
     fixture.detectChanges();
@@ -718,7 +730,7 @@ describe('BoostCreatorComponent', () => {
 
     boostComponent.boost.nonce = 'nonce';
     fixture.detectChanges();
-    expect(getSubmitButton().nativeElement.disabled).toBeFalsy();
+    expect(getBoostButton().nativeElement.disabled).toBeFalsy();
   });
 
   it('clicking on "boost" should submit the boost', fakeAsync(() => {
@@ -752,7 +764,7 @@ describe('BoostCreatorComponent', () => {
     expect(boostComponent.canSubmit()).toBeTruthy();
     expect(boostComponent.inProgress).toBeFalsy();
 
-    getSubmitButton().nativeElement.click();
+    getBoostButton().nativeElement.click();
     fixture.detectChanges();
     tick();
     jasmine.clock().tick(10);
@@ -770,157 +782,6 @@ describe('BoostCreatorComponent', () => {
       guid: null,
       impressions: 1000,
       paymentMethod: 'nonce',
-      priority: null,
-    });
-    tick(3000); // timeout for dismissal
-    discardPeriodicTasks();
-  }));
-
-  it('should fail submitting an "onchain" boost if wallet is unavailable', fakeAsync(() => {
-    web3WalletServiceMock.unavailable = true;
-    boostComponent.object = {
-      type: 'activity',
-      guid: '123',
-      owner_guid: '789',
-    };
-    boostComponent.syncAllowedTypes();
-
-    boostComponent.boost.currency = 'onchain';
-    fixture.detectChanges();
-
-    clientMock.get.calls.reset();
-
-    clientMock.response[
-      `api/v2/boost/prepare/${boostComponent.object.guid}`
-    ] = {
-      status: 'success',
-      guid: '456',
-      checksum: 'checksum',
-    };
-
-    getSubmitButton().nativeElement.click();
-    fixture.detectChanges();
-    tick();
-    jasmine.clock().tick(10);
-
-    expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe(
-      `api/v2/boost/prepare/${boostComponent.object.guid}`
-    );
-
-    //it first waits for the wallet to be ready
-    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
-    expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
-
-    expect(boostComponent.error).toContain(
-      'No Ethereum wallets available on your browser.'
-    );
-  }));
-
-  it('should fail submitting an "onchain" boost if wallet is locked', fakeAsync(() => {
-    web3WalletServiceMock.unavailable = false;
-    web3WalletServiceMock.locked = true;
-
-    boostComponent.object = {
-      type: 'activity',
-      guid: '123',
-      owner_guid: '789',
-    };
-    boostComponent.syncAllowedTypes();
-
-    boostComponent.boost.currency = 'onchain';
-    fixture.detectChanges();
-    tick();
-    jasmine.clock().tick(10);
-
-    clientMock.response[
-      `api/v2/boost/prepare/${boostComponent.object.guid}`
-    ] = {
-      status: 'success',
-      guid: '456',
-      checksum: 'checksum',
-    };
-
-    clientMock.get.calls.reset();
-
-    getSubmitButton().nativeElement.click();
-    fixture.detectChanges();
-    tick();
-    jasmine.clock().tick(10);
-
-    expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe(
-      `api/v2/boost/prepare/${boostComponent.object.guid}`
-    );
-
-    //it first waits for the wallet to be ready
-    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
-    expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
-
-    expect(boostComponent.error).toContain(
-      'Your Ethereum wallet is locked or connected to another network.'
-    );
-  }));
-
-  it('should submit an "onchain" boost', fakeAsync(() => {
-    web3WalletServiceMock.unavailable = false;
-    web3WalletServiceMock.locked = false;
-    boostComponent.object = {
-      type: 'activity',
-      guid: '123',
-      owner_guid: '789',
-    };
-    boostComponent.syncAllowedTypes();
-
-    boostComponent.boost.currency = 'onchain';
-    fixture.detectChanges();
-    tick();
-    jasmine.clock().tick(10);
-
-    clientMock.get.calls.reset();
-
-    clientMock.response[
-      `api/v2/boost/prepare/${boostComponent.object.guid}`
-    ] = {
-      status: 'success',
-      guid: '456',
-      checksum: 'checksum',
-    };
-
-    clientMock.get.calls.reset();
-    clientMock.post.calls.reset();
-
-    spyOn(boostComponent, 'submit').and.callThrough();
-
-    getSubmitButton().nativeElement.click();
-    fixture.detectChanges();
-    tick();
-    jasmine.clock().tick(10);
-
-    expect(boostComponent.submit).toHaveBeenCalled();
-
-    expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe(
-      `api/v2/boost/prepare/${boostComponent.object.guid}`
-    );
-
-    //it first waits for the wallet to be ready
-    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
-
-    expect(boostComponent.canSubmit()).toBeTruthy();
-    expect(boostComponent.inProgress).toBeFalsy();
-
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toBe(
-      `api/v2/boost/${boostComponent.object.type}/${boostComponent.object.guid}/${boostComponent.object.owner_guid}`
-    );
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
-      bidType: 'tokens',
-      categories: [],
-      checksum: 'checksum',
-      guid: '456',
-      impressions: 1000,
-      paymentMethod: { method: 'onchain', txHash: 'hash', address: '0x123' },
       priority: null,
     });
     tick(3000); // timeout for dismissal
@@ -957,7 +818,7 @@ describe('BoostCreatorComponent', () => {
 
     spyOn(boostComponent, 'submit').and.callThrough();
 
-    getSubmitButton().nativeElement.click();
+    getBoostButton().nativeElement.click();
     fixture.detectChanges();
     tick();
     jasmine.clock().tick(10);

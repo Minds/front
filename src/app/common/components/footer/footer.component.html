@@ -8,20 +8,18 @@
         <a
           *ngIf="pagesService.isInternalLink(page.path)"
           [routerLink]="['/' + page.path]"
-          class="mdl-color-text--blue-grey-100"
           >{{ page.title }}</a
         >
         <a
           *ngIf="!pagesService.isInternalLink(page.path)"
           [href]="page.path"
           target="_blank"
-          class="mdl-color-text--blue-grey-100"
           >{{ page.title }}</a
         >
       </li>
     </ul>
     <span class="copyright" i18n="@@M__COMMON__COPYRIGHT_YEAR"
-      >&#169; Minds {{ '2020' }}</span
+      >&#169; Minds {{ '2021' }}</span
     >
   </section>
 </div>

@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   OnInit,
   OnDestroy,
+  Input,
 } from '@angular/core';
 
 import { Client } from '../../../../services/api';
@@ -28,14 +29,17 @@ import { ActivityService } from '../../../../common/services/activity.service';
       >
         speaker_notes_off
       </i>
-      <span class="minds-counter" *ngIf="object['comments:count'] > 0">{{
-        object['comments:count'] | number
-      }}</span>
+      <span
+        class="minds-counter"
+        *ngIf="object['comments:count'] > 0 && !iconOnly"
+        >{{ object['comments:count'] | number }}</span
+      >
     </a>
   `,
 })
 export class CommentButton implements OnInit, OnDestroy {
   object;
+  @Input() iconOnly = false;
 
   constructor(
     public client: Client,

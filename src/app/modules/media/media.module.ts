@@ -15,13 +15,6 @@ import { WireModule } from '../wire/wire.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 import { VideoModule } from './components/video/video.module';
 
-import { MediaVideosTileComponent } from './videos/tile.component';
-import { MediaImagesTileComponent } from './images/tile.component';
-import { MediaViewComponent } from './view/view.component';
-import { MediaEditComponent } from './edit/edit.component';
-import { MediaTheatreComponent } from './view/views/theatre.component';
-import { MediaGridComponent } from './view/views/grid.component';
-import { MediaViewRecommendedComponent } from './view/recommended/recommended.component';
 import { MediaModalComponent } from './modal/modal.component';
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
@@ -44,9 +37,8 @@ const routes: Routes = [
     pathMatch: 'full',
   },
 
-  { path: 'media/edit/:guid', component: MediaEditComponent },
-  { path: 'media/:container/:guid', component: MediaViewComponent },
-  { path: 'media/:guid', component: MediaViewComponent },
+  { path: 'media/:container/:guid', redirectTo: 'newsfeed/:guid' },
+  { path: 'media/:guid', redirectTo: 'newsfeed/:guid' },
 
   {
     path: 'youtube-migration',
@@ -55,13 +47,15 @@ const routes: Routes = [
       title: 'YouTube Migration',
       description:
         'Link your accounts so that every new upload to YouTube also posts to Minds. Import your full video library to protect your content from unfair censorship and demonetization.',
+      ogImage: '/assets/og-images/youtube-migration-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
   },
 
   /* Legacy routes */
-  { path: 'archive/view/:container/:guid', component: MediaViewComponent },
-  { path: 'archive/view/:guid', component: MediaViewComponent },
-  { path: 'archive/edit/:guid', component: MediaEditComponent },
+  { path: 'archive/view/:container/:guid', redirectTo: 'newsfeed/:guid' },
+  { path: 'archive/view/:guid', redirectTo: 'newsfeed/:guid' },
 ];
 
 @NgModule({
@@ -82,16 +76,6 @@ const routes: Routes = [
     //BlogModule,
     TranslateModule,
   ],
-  declarations: [
-    MediaVideosTileComponent,
-    MediaImagesTileComponent,
-    MediaEditComponent,
-    MediaViewComponent,
-    MediaTheatreComponent,
-    MediaGridComponent,
-    MediaViewRecommendedComponent,
-    ThumbnailSelectorComponent,
-    MediaModalComponent,
-  ],
+  declarations: [ThumbnailSelectorComponent, MediaModalComponent],
 })
 export class MediaModule {}

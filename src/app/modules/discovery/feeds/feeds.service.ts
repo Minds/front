@@ -30,11 +30,13 @@ export class DiscoveryFeedsService {
   hasMoreData$ = this.feedsService.hasMore;
 
   filter$: BehaviorSubject<string> = new BehaviorSubject('preferred');
+  query$: BehaviorSubject<string> = new BehaviorSubject('');
   nsfw$: BehaviorSubject<any[]>;
   period$: BehaviorSubject<string> = new BehaviorSubject('relevant');
   type$: BehaviorSubject<DiscoveryFeedsContentType> = new BehaviorSubject(
     'all'
   );
+
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -50,10 +52,11 @@ export class DiscoveryFeedsService {
   async load(): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     const isPlusPage: boolean = this.discoveryService.isPlusPage$.value;
+    const wireSupportTiersOnly: boolean = this.discoveryService.isWireSupportPage$.getValue();
     let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
 
     if (isPlusPage) {
-      algorithm = 'plusFeed'; // Temporary, need to make backend sorting algo for plus
+      algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
     }
 
     const type = this.type$.value;
@@ -66,6 +69,7 @@ export class DiscoveryFeedsService {
         nsfw: this.getNsfwString(),
         period_fallback: 0,
         plus: isPlusPage,
+        wire_support_tier_only: wireSupportTiersOnly,
       })
       .fetch();
   }
@@ -73,6 +77,7 @@ export class DiscoveryFeedsService {
   async search(q: string): Promise<void> {
     if (isPlatformServer(this.platformId)) return;
     this.feedsService.clear();
+
     this.feedsService
       .setEndpoint('api/v3/discovery/search')
       .setParams({
@@ -92,6 +97,11 @@ export class DiscoveryFeedsService {
 
   setFilter(filter: DiscoveryFeedsContentFilter): DiscoveryFeedsService {
     this.filter$.next(filter);
+    return this;
+  }
+
+  setQuery(query: string): DiscoveryFeedsService {
+    this.query$.next(query);
     return this;
   }
 

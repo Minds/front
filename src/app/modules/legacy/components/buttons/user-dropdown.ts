@@ -7,6 +7,7 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
 import { ReportCreatorComponent } from '../../../report/creator/creator.component';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../common/services/block-list.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -248,7 +249,8 @@ export class UserDropdownButton {
     public client: Client,
     public overlayService: OverlayModalService,
     public router: Router,
-    protected blockListService: BlockListService
+    protected blockListService: BlockListService,
+    private toasterService: FormToastService
   ) {}
 
   /**
@@ -295,6 +297,9 @@ export class UserDropdownButton {
       this.user.subscribed = true;
     } catch (e) {
       this.user.subscribed = false;
+      this.toasterService.error(
+        e.message || "You can't subscribe to this user"
+      );
     }
 
     this.userChanged.emit(this.user);

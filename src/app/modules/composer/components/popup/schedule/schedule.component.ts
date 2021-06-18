@@ -5,6 +5,7 @@ import {
   Output,
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
+import { isSafari } from '../../../../../helpers/is-safari';
 
 /**
  * Composer's Schedule popup modal
@@ -13,6 +14,7 @@ import { ComposerService } from '../../../services/composer.service';
   selector: 'm-composer__schedule',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'schedule.component.html',
+  styleUrls: ['schedule.component.ng.scss'],
 })
 export class ScheduleComponent {
   /**
@@ -44,6 +46,11 @@ export class ScheduleComponent {
   readonly dateTimeFormatOptions: Intl.ResolvedDateTimeFormatOptions = new Intl.DateTimeFormat(
     'default'
   ).resolvedOptions();
+
+  /**
+   * Validation error
+   */
+  error: boolean = false;
 
   /**
    * Constructor. Initializes state, min and max dates
@@ -153,20 +160,29 @@ export class ScheduleComponent {
   /**
    * Check if can be saved (state is valid)
    */
-  canSave(): boolean {
-    if (!this.state || !this.getParsedTime()) {
-      // Invalid state
-      return false;
+  hasError(): boolean {
+    const formatError = !this.getParsedTime();
+    const futureError = Math.floor(Date.now() / 1000) >= this.buildTimestamp();
+
+    // We only need to show errors for safari because it doesn't support input[type=time]
+    if (isSafari()) {
+      this.error = formatError || futureError;
     }
 
-    return Math.floor(Date.now() / 1000) < this.buildTimestamp();
+    console.log('ojm error', formatError, futureError);
+
+    if (formatError || futureError) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
    * Emits the internal state to the composer service and attempts to dismiss the modal
    */
   save(): void {
-    if (!this.canSave()) {
+    if (!this.state || this.hasError()) {
       return;
     }
 

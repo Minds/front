@@ -27,6 +27,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 @Component({
   selector: 'minds-card-video',
@@ -105,25 +106,25 @@ describe('AdminBoosts', () => {
 
   function getAcceptButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--accept-button')
+      By.css('.boost .m-admin-boosts--accept-button button')
     );
   }
 
   function getOpenButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--open-button')
+      By.css('.boost .m-admin-boosts--open-button button')
     );
   }
 
   function getRejectButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--reject-button')
+      By.css('.boost .m-admin-boosts--reject-button button')
     );
   }
 
   function getETagButton(): DebugElement {
     return fixture.debugElement.query(
-      By.css('.boost .m-admin-boosts--e-tag-button')
+      By.css('.boost .m-admin-boosts--e-tag-button button')
     );
   }
 
@@ -141,6 +142,7 @@ describe('AdminBoosts', () => {
         MaterialMock,
         MaterialSliderMock,
         AdminBoosts,
+        ButtonComponent,
       ], // declare the test component
       imports: [RouterTestingModule, NgCommonModule, FormsModule],
       providers: [
@@ -317,7 +319,7 @@ describe('AdminBoosts', () => {
     expect(getAcceptButton()).not.toBeNull();
   });
 
-  it('accept button should call accept(...) with false as a second parameter (nsfw)', () => {
+  it('accept button should call accept(...) with false as a second parameter (nsfw)', fakeAsync(() => {
     fixture.detectChanges();
 
     const button: DebugElement = getAcceptButton();
@@ -325,11 +327,12 @@ describe('AdminBoosts', () => {
     spyOn(comp, 'accept').and.stub();
 
     button.nativeElement.click();
+    tick();
     fixture.detectChanges();
 
     expect(comp.accept).toHaveBeenCalled();
     //expect(comp.accept.calls.mostRecent().args[1]).toBe(false);
-  });
+  }));
 
   it('boost should have an Open button', () => {
     fixture.detectChanges();

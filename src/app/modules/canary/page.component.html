@@ -7,11 +7,13 @@
       <div class="m-aux__heroInner">
         <h1>Canary</h1>
         <h3>Receive the latest Minds features before everyone else</h3>
-        <m-shadowboxSubmitButton
-          (click)="user.canary ? turnOff() : turnOn()"
+        <m-button
+          (onAction)="user.canary ? turnOff() : turnOn()"
           (mouseenter)="buttonHovering = true"
           (mouseleave)="buttonHovering = false"
           [saving]="inProgress"
+          overlay="true"
+          size="large"
         >
           <ng-container *ngIf="!user.canary">
             Join
@@ -19,7 +21,7 @@
           <ng-container *ngIf="user.canary">
             {{ buttonHovering ? '  Disable  ' : 'Enabled' }}
           </ng-container>
-        </m-shadowboxSubmitButton>
+        </m-button>
       </div>
     </div>
     <p>
@@ -28,20 +30,13 @@
       you can help test our newest features so we can work out any issues before
       rolling them out to everyone.
     </p>
-    <a
-      class="m-canary__groupLink"
-      routerLink="/groups/profile/1003662081932754944/feed"
-    >
-      See the Canaries group
-    </a>
-    <h2>Latest Experiments</h2>
-    <ul class="m-canaryExperiments__list">
-      <li>
-        Upgrade to Angular 9 - 5th June 2020
-        <a href="https://gitlab.com/minds/front/-/merge_requests/981"
-          >(front!918)</a
-        >
-      </li>
-    </ul>
+    <m-button color="blue">
+      <a
+        class="m-canary__groupLink"
+        routerLink="/groups/profile/1003662081932754944/feed"
+      >
+        See the Canaries group
+      </a>
+    </m-button>
   </div>
 </m-marketing>

@@ -47,7 +47,7 @@
     bottom: 0px;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 20px 100px 60px 100px;
+    padding: 40px 100px 60px 100px;
 
     @media screen and (max-width: $min-desktop) {
       padding: unset;
@@ -93,7 +93,7 @@
           i,
           span {
             @include m-theme() {
-              color: themed($m-btn--primary);
+              color: themed($m-link);
             }
           }
         }
@@ -120,15 +120,6 @@
         button {
           margin-right: 8px;
           background-color: unset;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-            border: 1px solid themed($m-borderColor--primary);
-
-            &:active,
-            &:hover {
-              background-color: themed($m-bgColor--primary);
-            }
-          }
         }
       }
 

@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 describe('PlusVerifyComponent', () => {
   let comp: PlusVerifyComponent;
@@ -31,7 +32,12 @@ describe('PlusVerifyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PlusVerifyComponent, TooltipComponentMock, ModalMock],
+      declarations: [
+        PlusVerifyComponent,
+        TooltipComponentMock,
+        ModalMock,
+        ButtonComponent,
+      ],
       imports: [RouterTestingModule, FormsModule, ReactiveFormsModule],
       providers: [{ provide: Client, useValue: clientMock }],
     }).compileComponents();

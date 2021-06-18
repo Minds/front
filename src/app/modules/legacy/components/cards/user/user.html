@@ -34,12 +34,10 @@
 
 <minds-button-subscribe
   [user]="user"
-  *ngIf="user.guid != session.getLoggedInUser().guid"
+  *ngIf="user.guid != session.getLoggedInUser().guid || forceShowSubscribe"
+  [preventSubscription]="forceShowSubscribe"
 ></minds-button-subscribe>
-<minds-button-boost
-  [object]="user"
-  *ngIf="user.guid == session.getLoggedInUser().guid"
-></minds-button-boost>
+
 <div
   class="minds-usercard-buttons"
   [ngClass]="{ 'has-feature-button': session.isAdmin() }"

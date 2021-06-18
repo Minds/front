@@ -5,7 +5,6 @@ import { ActivityService, ActivityEntity } from '../activity.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import * as moment from 'moment';
 
 @Component({
   selector: 'm-activity__ownerBlock',
@@ -40,8 +39,7 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity && !!this.entity.remind_object;
   }
 
-  // Note: currenly ownerBlocks are only visible in minimalMode for reminds
-  @HostBinding('class.m-activity__ownerBlock--minimalMode')
+  // Note: currenly ownerBlocks are only visible in minimalMode for reminds/quotes
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }

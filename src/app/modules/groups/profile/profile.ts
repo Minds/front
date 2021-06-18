@@ -5,6 +5,7 @@ import {
   ViewChild,
   Inject,
   PLATFORM_ID,
+  Injector,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -16,10 +17,8 @@ import { RecentService } from '../../../services/ux/recent';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
-import { GroupsProfileLegacyFeed } from './feed/legacy';
 import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
-import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { filter, map, startWith, throttle } from 'rxjs/operators';
@@ -32,10 +31,13 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SiteService } from '../../../common/services/site.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
+import { GroupsSearchService } from './feed/search.service';
 
 @Component({
   selector: 'm-groups--profile',
   templateUrl: 'profile.html',
+  styleUrls: ['profile.component.ng.scss'],
   providers: [ActivityService],
 })
 export class GroupsProfile {
@@ -62,10 +64,6 @@ export class GroupsProfile {
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
-
-  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector')
-  hashtagsSelector: HashtagsSelectorComponent;
 
   private reviewCountInterval: any;
   private socketSubscription: any;
@@ -94,9 +92,12 @@ export class GroupsProfile {
     featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private pageLayoutService: PageLayoutService,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    private injector: Injector,
+    protected publisherSearchModal: PublisherSearchModalService,
+    protected groupsSearch: GroupsSearchService
   ) {
-    this.hasNewNavigation = featuresService.has('navigation');
+    this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
@@ -366,8 +367,7 @@ export class GroupsProfile {
   }
 
   canDeactivate() {
-    if (!this.feed) return true;
-    return this.feed.canDeactivate();
+    return true;
   }
 
   joinCommentsSocketRoom(keepAlive: boolean = false) {
@@ -496,6 +496,19 @@ export class GroupsProfile {
       .setOgImage(
         `${this.site.baseUrl}fs/v1/banners/${this.group.guid}/0/${this.group.banner}`
       );
+  }
+
+  /**
+   * Opens search modal
+   */
+  async openSearchModal(event): Promise<void> {
+    const query = await this.publisherSearchModal
+      .present(this.injector, this.group)
+      .toPromise();
+
+    if (query) {
+      this.groupsSearch.query$.next(query);
+    }
   }
 
   detectChanges() {

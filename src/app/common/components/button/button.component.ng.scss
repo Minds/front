@@ -1,0 +1,373 @@
+@import 'defaults.scss';
+
+:host {
+  .m-button {
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 999px;
+    outline: 0;
+    font-weight: 500;
+    background-clip: padding-box;
+    white-space: nowrap;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: rgba(themed($m-black-always), 0);
+    }
+
+    &.m-button--iconOnly {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(1em + 16px);
+      height: calc(1em + 16px);
+      min-width: 0 !important;
+      padding: 0 !important;
+
+      ::ng-deep i {
+        font-size: 0.9em !important;
+      }
+
+      .m-button__text--unsaved {
+        ::ng-deep i {
+          margin-right: 0 !important;
+        }
+      }
+    }
+
+    ::ng-deep {
+      a {
+        text-decoration: none;
+        font-weight: inherit;
+      }
+    }
+
+    ///////////////////////////////////////////////////
+
+    // Normal button
+
+    &.m-button--grey {
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+    &.m-button--primary {
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+        background-color: themed($m-bgColor--primary);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+    &.m-button--secondary {
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+        background-color: themed($m-bgColor--secondary);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+      }
+    }
+    &.m-button--blue {
+      @include m-theme() {
+        border-color: themed($m-link);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-link);
+        }
+      }
+    }
+
+    // Warning button
+
+    &.m-button--red {
+      @include m-theme() {
+        border-color: themed($m-alert);
+      }
+      &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+        @include m-theme() {
+          border-color: themed($m-alert);
+        }
+      }
+    }
+    &:not(.m-button--overlay) {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+    &.m-button--overlay {
+      @include m-theme() {
+        background-color: rgba(themed($m-black-always), 0.4);
+        color: themed($m-white-always);
+      }
+      &:not(.m-button--blue):not(.m-button--red) {
+        @include m-theme() {
+          border-color: rgba(themed($m-white-always), 0.5);
+        }
+        &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
+          @include m-theme() {
+            border-color: rgba(themed($m-white-always), 0.5);
+          }
+        }
+      }
+    }
+    ///////////////////////////////////////////////////
+    &.m-button--saving {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    ///////////////////////////////////////////////////
+
+    .m-button__text--saving {
+      span {
+        margin: 0 4px !important;
+      }
+    }
+
+    &.m-button--xsmall,
+    &.m-button--small {
+      .m-button__text--saving {
+        span {
+          height: 6px !important;
+          width: 6px !important;
+          min-height: 6px !important;
+          min-width: 6px !important;
+        }
+      }
+    }
+    ///////////////////////////////////////////////////
+
+    // Extra Small
+
+    &.m-button--xsmall {
+      padding: 8px 13px;
+
+      & > * {
+        font-size: 14px;
+        ::ng-deep i {
+          font-size: 18px;
+        }
+      }
+      &.m-button--saving {
+        &:not(.m-button--iconOnly) {
+          min-width: 70px;
+        }
+      }
+    }
+
+    // Small
+
+    &.m-button--small {
+      padding: 10px 20px;
+      min-width: 80px;
+
+      & > * {
+        font-size: 16px;
+
+        ::ng-deep i {
+          font-size: 20px;
+        }
+      }
+    }
+
+    // Medium
+
+    &.m-button--medium {
+      padding: 12px 25px;
+      min-width: 100px;
+
+      & > * {
+        font-size: 18px;
+
+        ::ng-deep i {
+          font-size: 22px;
+        }
+      }
+    }
+
+    // Large
+
+    &.m-button--large {
+      padding: 14px 30px;
+      min-width: 110px;
+
+      & > * {
+        font-size: 20px;
+
+        ::ng-deep i {
+          font-size: 24px;
+        }
+      }
+    }
+
+    ///////////////////////////////////////////////////
+    &:not(:disabled) {
+      &:not(.m-button--overlay) {
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--btnHover);
+          }
+        }
+        &:active {
+          @include m-theme() {
+            background-color: themed($m-bgColor--btnActive);
+          }
+        }
+      }
+      &.m-button--overlay {
+        &:hover {
+          @include m-theme() {
+            background-color: rgba(themed($m-black-always), 0.7);
+          }
+        }
+        &:active {
+          @include m-theme() {
+            background-color: rgba(themed($m-black-always), 0.9);
+          }
+        }
+      }
+    }
+
+    ///////////////////////////////////////////////////
+    &:disabled,
+    &[disabled] {
+      cursor: default !important;
+      &:not(.m-button--saving) {
+        opacity: 0.6;
+      }
+    }
+    ///////////////////////////////////////////////////
+    .m-button__text--unsaved {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+
+      ::ng-deep {
+        i {
+          margin-right: 4px;
+        }
+        a {
+          color: inherit !important;
+        }
+      }
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      m-button {
+        min-width: 50%;
+      }
+    }
+    ///////////////////////////////////////////////////
+    .m-button__text--saving {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        @include m-theme() {
+          // Color of the animated circles
+          background-color: themed($m-textColor--primary);
+        }
+        display: inline-block;
+        height: 8px;
+        width: 8px;
+        min-height: 8px;
+        min-width: 8px;
+        margin: 0 6px;
+        border-radius: 50%;
+        animation-name: blink;
+        animation-duration: 1.4s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+        &:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        &:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+      }
+    }
+
+    //////////////////////////////////////
+
+    &.m-button--dropdown {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      min-width: 100px;
+
+      > *:not(.m-button__text--saving) {
+        height: 100%;
+      }
+
+      ::ng-deep {
+        > div span:first-child {
+          display: inline-block;
+          margin: 0 10px;
+        }
+      }
+
+      .m-button__text--unsaved {
+        width: 100%;
+      }
+
+      &:disabled {
+        .m-dropdownMenu__trigger {
+          cursor: not-allowed;
+        }
+      }
+
+      ::ng-deep .m-button__dropdownArrow {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 0 15px 0 12px;
+        border-left: 1px solid;
+        font-size: 9px; /* m-icon is 135% this size */
+      }
+    }
+  }
+  ///////////////////////////////////////////////////
+
+  &button {
+    outline: 0;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(0.95);
+    }
+  }
+}

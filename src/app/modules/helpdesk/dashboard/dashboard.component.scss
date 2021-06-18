@@ -117,20 +117,8 @@ m-helpdesk--dashboard {
   display: flex;
   align-items: flex-start;
 
-  & > .m-btn {
-    margin: 0 $minds-padding;
-    text-decoration: none;
-    display: inline-block;
-    box-sizing: border-box;
-    line-height: 1.25;
-    @include m-theme() {
-      color: themed($m-white-always);
-      border-color: rgba(themed($m-white-always), 0.7);
-    }
-
-    @media screen and(max-width: $min-tablet) {
-      height: auto;
-    }
+  m-button {
+    margin-right: 10px;
   }
 }
 

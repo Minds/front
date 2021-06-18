@@ -1,9 +1,16 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  Optional,
+} from '@angular/core';
 import { ActivityModalService } from '../modal.service';
 import { ActivityService } from '../../activity.service';
-import { HorizontalFeedService } from '../../../../../common/services/horizontal-feed.service';
+import { RelatedContentService } from '../../../../../common/services/related-content.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { MediumFadeAnimation } from '../../../../../animations';
+import { AutoProgressVideoService } from '../../../../../modules/media/components/video/auto-progress-overlay/auto-progress-video.service';
 
 @Component({
   selector: 'm-activity__modalPager',
@@ -14,6 +21,7 @@ import { MediumFadeAnimation } from '../../../../../animations';
 export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   protected modalPagerSubscription: Subscription;
   protected asyncEntitySubscription: Subscription;
+  protected autoProgressSubscription: Subscription;
 
   modalPager = {
     hasPrev: false,
@@ -23,7 +31,8 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityModalService,
     public activityService: ActivityService,
-    private horizontalFeed: HorizontalFeedService
+    @Optional() private autoProgress: AutoProgressVideoService,
+    private relatedContent: RelatedContentService
   ) {}
 
   ngOnInit(): void {
@@ -31,16 +40,29 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
      * Whenever user clicks a pager button,
      * recalculate whether or not to display pager buttons
      */
-    this.modalPagerSubscription = this.horizontalFeed
+    this.modalPagerSubscription = this.relatedContent
       .onChange()
       .subscribe(async change => {
         this.modalPager = {
-          hasNext: await this.horizontalFeed.hasNext(),
-          hasPrev: await this.horizontalFeed.hasPrev(),
+          hasNext: await this.relatedContent.hasNext(),
+          hasPrev: await this.relatedContent.hasPrev(),
         };
       });
 
-    this.horizontalFeed.setContext('container');
+    if (this.autoProgress) {
+      /** Trigger next video */
+      this.autoProgressSubscription = this.autoProgress.goNext$.subscribe(
+        (val: boolean) => {
+          this.goToNext();
+        }
+      );
+
+      if (this.relatedContent.getBaseEntity().custom_type === 'video') {
+        this.relatedContent.setFilter('videos');
+      }
+    }
+
+    this.relatedContent.setContext('container');
   }
 
   ngOnDestroy(): void {
@@ -51,6 +73,9 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
     }
     if (this.asyncEntitySubscription) {
       this.asyncEntitySubscription.unsubscribe();
+    }
+    if (this.autoProgressSubscription) {
+      this.autoProgressSubscription.unsubscribe();
     }
   }
 
@@ -80,14 +105,22 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.autoProgress) {
+      this.autoProgress.cancel();
+    }
+
     this.service.loading$.next(true);
 
-    const response = await this.horizontalFeed.next();
+    const response = await this.relatedContent.next();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);
     } else {
       this.service.loading$.next(false);
+    }
+
+    if (this.autoProgress) {
+      this.autoProgress.updateNextEntity();
     }
   }
 
@@ -100,14 +133,22 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.autoProgress) {
+      this.autoProgress.cancel();
+    }
+
     this.service.loading$.next(true);
 
-    const response = await this.horizontalFeed.prev();
+    const response = await this.relatedContent.prev();
 
     if (response && response.entity) {
       this.setAsyncEntity(response.entity);
     } else {
       this.service.loading$.next(false);
+    }
+
+    if (this.autoProgress) {
+      this.autoProgress.updateNextEntity();
     }
   }
 

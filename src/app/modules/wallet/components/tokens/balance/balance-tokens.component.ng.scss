@@ -1,0 +1,34 @@
+@import 'defaults.scss';
+
+:host {
+  .m-walletBalance__address--connect {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  ::ng-deep .m-walletBalance__address {
+    div[class*='m-walletBalanceAddress__inner'] {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 40px;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      > span {
+        font-weight: 500;
+      }
+      m-tooltip i {
+        font-size: 16px;
+        margin-left: 5px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+    .m-walletBalanceAddress__inner--connect {
+      cursor: pointer;
+    }
+  }
+}

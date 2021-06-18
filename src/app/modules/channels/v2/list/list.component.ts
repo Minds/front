@@ -41,4 +41,20 @@ export class ChannelListComponent {
   search(): void {
     this.onSearchEmitter.emit(this.query);
   }
+
+  /**
+   * Loads next elements in feed.
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async loadNext(): Promise<void> {
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      (this.feedsService.offset.getValue() ||
+        this.feedsService.offset.getValue() === 0)
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
+    }
+    this.feedsService.loadMore();
+  }
 }

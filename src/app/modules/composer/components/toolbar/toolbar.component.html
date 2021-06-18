@@ -1,6 +1,7 @@
 <div
   class="m-composer__toolbar"
   [class.m-composer__toolbar--narrow]="narrow"
+  [class.m-composer__toolbar--small]="isCompactMode$ | async"
   #toolbarWrapper
 >
   <m-file-upload
@@ -9,7 +10,10 @@
       (attachment$ | async) ? 'm-composerToolbar__item--active' : ''
     ]"
     [hidden]="!canEditMetadata"
-    [disabled]="!!(attachment$ | async) || (isPosting$ | async)"
+    [disabled]="
+      !!(attachment$ | async) || (isPosting$ | async) || (isEditing$ | async)
+    "
+    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (onSelect)="onAttachmentSelect($event)"
     accept="image/*,video/*,video/mp4,video/x-m4v"
     data-cy="upload-button"
@@ -30,11 +34,17 @@
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="(nsfw$ | async)?.length"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onNsfwClick($event)"
     data-cy="nsfw-button"
   >
     <m-icon class="m-composerToolbarItem__icon" iconId="explicit"></m-icon>
-    <span class="m-composerToolbarItem__label" i18n="@@COMMON__NSFW">NSFW</span>
+    <span
+      class="m-composerToolbarItem__label"
+      i18n="@@COMMON__NSFW"
+      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+      >NSFW</span
+    >
   </a>
 
   <a
@@ -42,6 +52,7 @@
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onMonetizeClick($event)"
     data-cy="monetize-button"
   >
@@ -53,6 +64,7 @@
     <span
       class="m-composerToolbarItem__label"
       [class.m-animation__shimmer--text]="showShimmer"
+      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
       i18n="@@COMMON__MONETIZE"
       >Monetize</span
     >
@@ -62,6 +74,7 @@
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="(tags$ | async)?.length"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    [class.m-composerToolbar__item--small]="isCompactMode$ | async"
     (click)="onTagsClick($event)"
     data-cy="tags-button"
   >
@@ -71,34 +84,49 @@
       iconId="#"
       [sizeFactor]="25"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n="@@COMMON__TAGS">Tags</span>
+    <span
+      class="m-composerToolbarItem__label"
+      [class.composerToolbarItem__label--hidden]="isCompactMode$ | async"
+      i18n="@@COMMON__TAGS"
+      >Tags</span
+    >
   </a>
 
   <span class="m-composerToolbar__itemSpacer"></span>
 
   <m-button
-    class="m-composerToolbar__action"
+    class="m-composerToolbar__action m-composerToolbar__action--post"
     [disabled]="
-      (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
+      !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
     "
+    [saving]="(inProgress$ | async) || (isPosting$ | async)"
     [dropdown]="postButtonDropdown"
     [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
+    [showDropdownMenu]="canSchedule$ | async"
     (onAction)="onPost($event)"
+    [size]="(isCompactMode$ | async) ? 'xsmall' : 'small'"
+    [color]="(isCompactMode$ | async) ? 'grey' : 'blue'"
     data-cy="post-button"
   >
-    <ng-container
+    <span
       *ngIf="!(isEditing$ | async); else isEditingButtonText"
       i18n="verb|@@COMMON__POST"
-      >Post</ng-container
+      >Post</span
     >
     <ng-template #isEditingButtonText
-      ><ng-container i18n="@@COMMON__SAVE">Save</ng-container></ng-template
+      ><span i18n="@@COMMON__SAVE">Save</span></ng-template
     >
+    <span
+      class="m-composerToolbarAction__disabledOverlay"
+      *ngIf="
+        !(canPost$ | async) || (inProgress$ | async) || (isPosting$ | async)
+      "
+    ></span>
   </m-button>
 </div>
 
 <ng-template #postButtonDropdown>
-  <ul>
+  <ul *ngIf="canSchedule$ | async">
     <li (click)="onSchedulerClick()">
       <span class="m-dropdownMenu__item">
         <m-icon iconId="alarm"></m-icon>

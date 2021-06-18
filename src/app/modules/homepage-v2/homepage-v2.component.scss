@@ -392,23 +392,29 @@ m-homepage__v2 {
     }
   }
 
-  .m-homepage__joinButton {
-    font-size: 20px;
-    line-height: 26px;
-    width: 230px;
-    height: 60px;
-    margin: 60px 0;
-    @include m-theme() {
-      background: themed($m-aqua);
-      border-color: themed($m-aqua) !important;
-    }
+  .m-homepage__phoneImageContainer {
+    @include z-index(body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 
-    @media screen and (max-width: $m-grid-max-mobile) {
-      width: 100%;
-    }
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 35%;
+      right: -50%;
+      width: 500px;
+      height: 500px;
+      background: url('http://localhost:4200//assets/marketing/deco_2.svg')
+        no-repeat;
+      z-index: -1; // we need to layer this manually behind the phone image
 
-    &.m-homepage__joinButton--first {
-      margin: 22px 0 0 0;
+      @media screen and (max-width: $m-grid-max-mobile) {
+        content: initial;
+        display: none;
+      }
     }
   }
 

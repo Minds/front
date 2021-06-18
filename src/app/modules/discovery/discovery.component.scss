@@ -50,23 +50,30 @@
   m-paywallBadge .m-paywallBadge {
     margin-right: 10px;
   }
-  span {
-    margin-right: 4px;
-    font-weight: 400;
-    &::after {
-      content: '·';
-      margin-left: 4px;
-      font-weight: 800;
+
+  .m-discoveryTrendListItem__supportingText--below {
+    span {
+      margin-right: 4px;
+      font-weight: 400;
+      &::after {
+        content: '·';
+        margin-left: 4px;
+        font-weight: 800;
+      }
+      &:last-child::after {
+        display: none;
+      }
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
     }
-    &:last-of-type()::after {
+
+    .m-paywallBadge span::after {
       display: none;
-    }
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
     }
   }
 
-  img {
+  img.m-discoveryTrendListItem__image {
     width: 100px;
     height: 100px;
     object-fit: cover;

@@ -196,7 +196,7 @@ export class FeedsService implements OnDestroy {
           response.entities = response.users;
         }
 
-        if (response.entities.length) {
+        if (response.entities?.length) {
           this.fallbackAt = response['fallback_at'];
           this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));

@@ -17,31 +17,38 @@
     </div>
 
     <ng-container *ngIf="report.entity; else noEntity">
-      <minds-card
-        *ngIf="report.entity"
-        class=""
-        [object]="report.entity"
-        [flags]="{ hideToolbar: true }"
-        class="mdl-card m-border"
-      ></minds-card>
+      <m-publisherCard
+        *ngIf="
+          report.entity.type && report.entity.type === 'user';
+          else notUser
+        "
+        [publisher]="report.entity"
+      ></m-publisherCard>
+      <ng-template #notUser
+        ><minds-card
+          [object]="report.entity"
+          [flags]="{ hideToolbar: true }"
+          class="mdl-card m-border"
+        ></minds-card
+      ></ng-template>
     </ng-container>
     <ng-template #noEntity>
       <p>The post could not be loaded. Please overturn the report</p>
     </ng-template>
 
     <div class="m-juryDutySessionContent__options">
-      <button class="m-btn m-btn--slim" (click)="uphold()">
+      <m-button (onAction)="uphold()">
         <ng-container *ngIf="report.is_appeal; else upholdLabel"
           >Reject Appeal</ng-container
         >
         <ng-template #upholdLabel>Uphold Report</ng-template>
-      </button>
-      <button class="m-btn m-btn--slim" (click)="overturn()">
+      </m-button>
+      <m-button (onAction)="overturn()">
         <ng-container *ngIf="report.is_appeal; else overturnLabel"
           >Accept Appeal</ng-container
         >
         <ng-template #overturnLabel>Overturn Report</ng-template>
-      </button>
+      </m-button>
     </div>
   </ng-container>
 

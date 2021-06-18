@@ -36,6 +36,7 @@ import {
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 /* tslint:disable */
 
 describe('ConfirmPasswordCreatorComponent', () => {
@@ -50,6 +51,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
         AbbrPipe,
         TokenPipe,
         ConfirmPasswordModalComponent,
+        ButtonComponent,
       ], // declare the test component
       imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
       providers: [

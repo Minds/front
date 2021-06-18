@@ -5,15 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
-import { ChannelsModule } from '../channels/channels.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
-import {
-  GroupsCreator,
-  GroupsListComponent,
-  GroupsProfile,
-} from './list.component';
 import { GroupsJoinButton } from './groups-join-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
@@ -21,7 +15,6 @@ import { GroupsCardUserActionsButton } from './profile/card-user-actions-button'
 import { GroupsSettingsButton } from './profile/groups-settings-button';
 import { GroupsProfileMembers } from './profile/members/members';
 import { GroupsProfileRequests } from './profile/requests/requests';
-import { GroupsProfileLegacyFeed } from './profile/feed/legacy';
 import { GroupsProfileConversation } from './profile/conversation/conversation.component';
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
@@ -39,6 +32,10 @@ import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { ComposerModule } from '../composer/composer.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { GroupsProfile } from './profile/profile';
+import { GroupsCreator } from './create/create';
+import { GroupsMembershipsComponent } from './memberships/memberships.component';
+import { GroupsSearchService } from './profile/feed/search.service';
 
 const routes: Routes = [
   {
@@ -62,8 +59,14 @@ const routes: Routes = [
       title: 'Create a group',
     },
   },
-  { path: 'groups/:filter', component: GroupsListComponent },
-  { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
+  {
+    path: 'groups/memberships',
+    component: GroupsMembershipsComponent,
+    data: {
+      title: 'Memberships',
+    },
+  },
+  { path: 'groups', redirectTo: '/groups/memberships', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -75,7 +78,6 @@ const routes: Routes = [
     CommonModule,
     CommentsModule,
     LegacyModule,
-    //ChannelsModule,
     ModalsModule,
     HashtagsModule,
     TextInputAutocompleteModule,
@@ -85,7 +87,6 @@ const routes: Routes = [
     ActivityModule,
   ],
   declarations: [
-    GroupsListComponent,
     GroupsProfile,
     GroupsCreator,
     GroupsJoinButton,
@@ -95,7 +96,6 @@ const routes: Routes = [
     GroupsProfileMembers,
     GroupProfileFeedComponent,
     GroupProfileFeedSortedComponent,
-    GroupsProfileLegacyFeed,
     GroupsProfileRequests,
     GroupsSettingsButton,
     GroupsProfileConversation,
@@ -106,9 +106,9 @@ const routes: Routes = [
     GroupsSidebarMarkersComponent,
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
+    GroupsMembershipsComponent,
   ],
   exports: [
-    GroupsListComponent,
     GroupsProfile,
     GroupsCreator,
     GroupsJoinButton,
@@ -116,7 +116,6 @@ const routes: Routes = [
     GroupsCard,
     GroupsCardUserActionsButton,
     GroupsProfileMembers,
-    GroupsProfileLegacyFeed,
     GroupsProfileRequests,
     GroupsSettingsButton,
     GroupsProfileConversation,
@@ -124,6 +123,6 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,
   ],
-  providers: [CanDeactivateGroupService],
+  providers: [CanDeactivateGroupService, GroupsSearchService],
 })
 export class GroupsModule {}

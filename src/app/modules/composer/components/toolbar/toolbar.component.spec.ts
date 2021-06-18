@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ToolbarComponent } from './toolbar.component';
-import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
-import { ComposerService } from '../../services/composer.service';
+import { ComposerService, ComposerSize } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { MonetizeComponent } from '../popup/monetize/monetize.component';
@@ -10,6 +9,8 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { ButtonComponent } from '../../../../common/components/button/button.component';
+import { BehaviorSubject } from 'rxjs';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -19,6 +20,8 @@ describe('Composer Toolbar', () => {
     next: () => {},
     subscribe: { unsubscribe: () => {} },
   });
+
+  const attachmentError$ = new BehaviorSubject<any>(null);
 
   const isEditing$ = jasmine.createSpyObj('isEditing$', {
     next: () => {},
@@ -32,12 +35,22 @@ describe('Composer Toolbar', () => {
     subscribe: { unsubscribe: () => {} },
   });
 
+  const size$ = new BehaviorSubject<ComposerSize>('full');
+
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['attachment$', 'isEditing$', 'monetization$'],
+    has: [
+      'attachment$',
+      'isEditing$',
+      'monetization$',
+      'size$',
+      'attachmentError$',
+    ],
     props: {
       attachment$: { get: () => attachment$ },
       isEditing$: { get: () => isEditing$ },
       monetization$: { get: () => monetization$ },
+      size$: { get: () => size$ },
+      attachmentError$: { get: () => attachmentError$ },
     },
   });
 
@@ -52,6 +65,7 @@ describe('Composer Toolbar', () => {
     TestBed.configureTestingModule({
       declarations: [
         ToolbarComponent,
+        ButtonComponent,
         MockComponent(
           {
             selector: 'm-file-upload',
@@ -63,11 +77,6 @@ describe('Composer Toolbar', () => {
         MockComponent({
           selector: 'm-icon',
           inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-        MockComponent({
-          selector: 'm-button',
-          inputs: ['disabled', 'dropdown', 'dropdownAnchorPosition'],
-          outputs: ['onAction'],
         }),
       ],
       providers: [
@@ -161,14 +170,5 @@ describe('Composer Toolbar', () => {
     comp.onSchedulerClick();
     expect(popupServiceMock.create).toHaveBeenCalledWith(ScheduleComponent);
     expect(popupServiceMock.present).toHaveBeenCalled();
-  });
-
-  it('should emit on post', () => {
-    spyOn(comp.onPostEmitter, 'emit');
-    fixture.detectChanges();
-
-    const action: ButtonComponentAction = { type: 'mock' };
-    comp.onPost(action);
-    expect(comp.onPostEmitter.emit).toHaveBeenCalledWith(action);
   });
 });

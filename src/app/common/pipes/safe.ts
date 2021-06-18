@@ -15,6 +15,19 @@ export class SafePipe {
 }
 
 @Pipe({
+  name: 'safeUrl',
+})
+export class SafeUrlPipe {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(value: string) {
+    if (!value) return value;
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(value);
+  }
+}
+
+@Pipe({
   name: 'safeStyle',
 })
 export class SafeStylePipe {

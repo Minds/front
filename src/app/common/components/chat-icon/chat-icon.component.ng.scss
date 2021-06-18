@@ -1,0 +1,71 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  .m-chatIcon {
+    position: relative;
+    max-width: 23px;
+    display: inline-block;
+
+    .m-chatIcon__unreadBubble {
+      position: absolute;
+      top: -9px;
+      right: -9px;
+      border-radius: 11px;
+      padding: 0 4px;
+      height: 16px;
+      min-width: 9px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include m-theme() {
+        background-color: themed($m-alert);
+      }
+
+      span {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 2px;
+        font-weight: 700;
+
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
+  }
+
+  .m-chatIcon--floating {
+    display: block;
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+
+    @include z-index(messenger);
+
+    > a {
+      height: 42px;
+      width: 42px;
+      border-radius: 50%;
+      display: flex;
+      position: relative;
+
+      justify-content: center;
+      align-items: center;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primaryInverted);
+        color: themed($m-textColor--primaryInverted);
+        box-shadow: 0 1px 10px 0 rgba(themed($m-black-always), 0.3);
+      }
+    }
+    ::ng-deep i {
+      font-size: 19px;
+      margin-top: 2px;
+    }
+    .m-chatIcon__unreadBubble {
+      top: -5px;
+      right: -4px;
+    }
+  }
+}
