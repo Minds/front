@@ -21,7 +21,7 @@ export class NotificationsFlyoutComponent implements OnDestroy {
   @Input() visible: boolean = false;
   @Output('close') closeEvt: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('notifications', { static: true }) notificationList: any;
+  @ViewChild('notifications', { static: false }) notificationList: any;
 
   @HostBinding('class.m-notificationsFlyout--newDesign')
   newNavigation: boolean = false;
