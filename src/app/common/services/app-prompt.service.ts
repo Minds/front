@@ -84,13 +84,13 @@ export class AppPromptService implements OnDestroy {
    * @returns { boolean } true if platform has app available.
    */
   public hasAvailableApp(): boolean {
-    console.log('checking if has app'); //TODO: Diagnostics - remove
+    // console.log('checking if has app'); //TODO: Diagnostics - remove
     if (!isPlatformBrowser(this.platformId)) {
       return false;
     }
-    console.log('this.platformId.toString()', this.platformId.toString()); //TODO: Diagnostics - remove
-    console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
-    console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
+    // console.log('this.platformId.toString()', this.platformId.toString()); //TODO: Diagnostics - remove
+    // console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
+    // console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
     return isMobileOrTablet();
   }
 
@@ -99,18 +99,18 @@ export class AppPromptService implements OnDestroy {
    * @returns { void }
    */
   public setPlatform(): void {
-    console.log('ua ' + navigator.userAgent);
-    console.log('setting platform...'); //TODO: Diagnostics - remove
+    // console.log('ua ' + navigator.userAgent);
+    // console.log('setting platform...'); //TODO: Diagnostics - remove
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
     if (/iPad|iPhone|iPod/i.test(navigator.userAgent)) {
-      console.log('>>>>>>.is iOS'); //TODO: Diagnostics - remove
+      // console.log('>>>>>>.is iOS'); //TODO: Diagnostics - remove
       this.platform$.next('iphone');
       return;
     }
     if (/android/i.test(navigator.userAgent)) {
-      console.log('>>>>>>is android'); //TODO: Diagnostics - remove
+      // console.log('>>>>>>is android'); //TODO: Diagnostics - remove
       this.platform$.next('android');
     }
   }
@@ -133,20 +133,25 @@ export class AppPromptService implements OnDestroy {
             try {
               switch (platform) {
                 case 'iphone':
+                  // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
+                  (window as any).location = 'mindsapp://';
+
+                  var now = new Date().valueOf();
                   setTimeout(function() {
-                    console.log('timeout fn iphone'); //TODO: Diagnostics - remove
-                    window.location.href =
+                    if (new Date().valueOf() - now > 100) return;
+                    (window as any).location =
                       'https://itunes.apple.com/us/app/minds-com/id961771928';
                   }, 25);
-                  window.location.href = 'mindsapp://';
                   break;
                 case 'android':
-                  window.location.replace('mindsapp:// ');
-                  setTimeout(
-                    (window.location.href =
-                      'https://play.google.com/store/apps/details?id=com.minds.mobile'),
-                    500
-                  );
+                  (window as any).location = 'mindsapp://';
+
+                  var now = new Date().valueOf();
+                  setTimeout(function() {
+                    if (new Date().valueOf() - now > 100) return;
+                    (window as any).location =
+                      'https://play.google.com/store/apps/details?id=com.minds.mobile';
+                  }, 25);
                   break;
                 default:
                   this.state$.next('dismissed');
