@@ -134,14 +134,13 @@ export class AppPromptService implements OnDestroy {
               switch (platform) {
                 case 'iphone':
                   // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
-                  (window as any).location = 'mindsapp://';
-
                   var now = new Date().valueOf();
                   setTimeout(function() {
                     if (new Date().valueOf() - now > 100) return;
                     (window as any).location =
                       'https://itunes.apple.com/us/app/minds-com/id961771928';
                   }, 25);
+                  (window as any).location = 'mindsapp://';
                   break;
                 case 'android':
                   (window as any).location = 'mindsapp://';
