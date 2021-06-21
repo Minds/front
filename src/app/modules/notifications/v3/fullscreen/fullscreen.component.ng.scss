@@ -1,0 +1,7 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep .m-tabs__container {
+    position: relative !important;
+  }
+}

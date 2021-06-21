@@ -63,15 +63,16 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
     this.nextPagingTokenSubscription = this.nextPagingToken$.subscribe(
       nextPagingToken => (this.nextPagingToken = nextPagingToken)
     );
-
-    this.scrollSubscriptions = this.scrollService.listen(
-      this.scrollSource,
-      () => {
-        if (this.scrollSource) {
-          this.hasScrolledPastTabs = this.scrollSource.scrollTop > 50;
+    if (this.scrollSource) {
+      this.scrollSubscriptions = this.scrollService.listen(
+        this.scrollSource,
+        () => {
+          if (this.scrollSource) {
+            this.hasScrolledPastTabs = this.scrollSource.scrollTop > 50;
+          }
         }
-      }
-    );
+      );
+    }
 
     this.resetCounter();
   }
@@ -83,10 +84,12 @@ export class NotificationsV3ListComponent implements OnInit, OnDestroy {
     this.listSubscription.unsubscribe();
     this.nextPagingTokenSubscription.unsubscribe();
 
-    this.scrollService.unListen(
-      this.scrollSubscriptions[0],
-      this.scrollSubscriptions[1]
-    );
+    if (this.scrollSubscriptions && this.scrollSubscriptions.length) {
+      this.scrollService.unListen(
+        this.scrollSubscriptions[0],
+        this.scrollSubscriptions[1]
+      );
+    }
   }
 
   /**

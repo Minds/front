@@ -23,13 +23,17 @@ import { NotificationsV3NotificationComponent } from './v3/notification.componen
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { NewNotificationsButtonComponent } from './v3/new-notifications-button/new-notifications-button.component';
 import { CommentsModule } from '../comments/comments.module';
+import { NotificationsV3ListFullscreenComponent } from './v3/fullscreen/fullscreen.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
     CommonModule,
     RouterModule.forChild([
-      { path: 'notifications/v3', component: NotificationsV3ListComponent },
+      {
+        path: 'notifications/v3',
+        component: NotificationsV3ListFullscreenComponent,
+      },
       { path: 'notifications/:filter', component: NotificationsComponent },
       { path: 'notifications', component: NotificationsComponent },
     ]),
@@ -44,6 +48,7 @@ import { CommentsModule } from '../comments/comments.module';
     NotificationsToasterComponent,
     // V3
     NotificationsV3ListComponent,
+    NotificationsV3ListFullscreenComponent,
     NotificationsV3NotificationComponent,
     NewNotificationsButtonComponent,
   ],
