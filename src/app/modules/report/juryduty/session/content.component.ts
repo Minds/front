@@ -1,7 +1,5 @@
-import { Component, Input, Inject, PLATFORM_ID } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
 import { JurySessionService } from './session.service';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-juryDutySession__content',
@@ -11,10 +9,7 @@ export class JuryDutySessionContentComponent {
   @Input() report;
   decided: boolean = false;
 
-  constructor(
-    private sessionService: JurySessionService,
-    @Inject(PLATFORM_ID) protected platformId: Object
-  ) {}
+  constructor(private sessionService: JurySessionService) {}
 
   getReasonString(report) {
     return this.sessionService.getReasonString(report);
@@ -38,13 +33,8 @@ export class JuryDutySessionContentComponent {
    * @returns { Promise<void> }
    */
   async overturn() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-    if (confirm('Are you sure?')) {
-      this.decided = true;
-      await this.sessionService.overturn(this.report);
-    }
+    this.decided = true;
+    await this.sessionService.overturn(this.report);
   }
 
   /**
@@ -52,12 +42,7 @@ export class JuryDutySessionContentComponent {
    * @returns { Promise<void> }
    */
   async uphold(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-    if (confirm('Are you sure?')) {
-      this.decided = true;
-      await this.sessionService.uphold(this.report);
-    }
+    this.decided = true;
+    await this.sessionService.uphold(this.report);
   }
 }
