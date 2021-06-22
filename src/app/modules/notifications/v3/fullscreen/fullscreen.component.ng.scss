@@ -4,4 +4,19 @@
   ::ng-deep .m-tabs__container {
     position: relative !important;
   }
+
+  ::ng-deep m-ads-boost {
+    padding: 20px 40px;
+
+    h3 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 0 8px;
+
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+  }
 }
