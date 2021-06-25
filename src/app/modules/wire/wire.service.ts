@@ -136,12 +136,6 @@ export class WireService {
           wire.recurring &&
           (!wire.recurringInterval || wire.recurringInterval === 'monthly');
 
-        console.log(
-          'ojm wire',
-          wire.recurring,
-          wire.recurringInterval,
-          isMembership
-        );
         const message = isMembership
           ? 'Recurring payment submitted successfully'
           : 'Wire submitted successfully';

@@ -7,6 +7,7 @@ import {
   Subscription,
 } from 'rxjs';
 import {
+  FeedFilterDateRange,
   FeedFilterSort,
   FeedFilterType,
 } from '../../../../common/components/feed-filter/feed-filter.component';
@@ -16,6 +17,7 @@ import {
   switchAll,
   filter,
   catchError,
+  debounceTime,
 } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
@@ -23,8 +25,11 @@ import { Router } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { ChannelsV2Service } from '../channels-v2.service';
 
+// Compare objs
+const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
+
 /**
- * Feed component service, handles filtering and pagination
+ * Channel feed component service, handles filtering and pagination
  */
 @Injectable()
 export class FeedService {
@@ -46,6 +51,16 @@ export class FeedService {
   readonly type$: BehaviorSubject<FeedFilterType> = new BehaviorSubject<
     FeedFilterType
   >('activities');
+
+  /**
+   * Date range state
+   */
+  dateRange$: BehaviorSubject<FeedFilterDateRange> = new BehaviorSubject<
+    FeedFilterDateRange
+  >({
+    fromDate: null,
+    toDate: null,
+  });
 
   /**
    * Scheduled count observable
@@ -75,11 +90,11 @@ export class FeedService {
       this.sort$,
       this.type$,
       this.channelsService.query$,
+      this.dateRange$,
     ])
-      .pipe(distinctUntilChanged((a, b) => a.join(':') === b.join(':')))
+      .pipe(distinctUntilChanged(deepDiff))
       .subscribe(values => {
         this.service.clear();
-
         if (!values[0] || !values[1] || !values[2]) {
           return;
         }
@@ -89,21 +104,28 @@ export class FeedService {
         let sort = values[1] === 'scheduled' ? 'scheduled' : 'container';
         const type = values[2];
         const query = values[3];
+        const dateRange = values[4];
 
-        if (query) {
-          sort = 'container';
+        const dateRangeEnabled = !!dateRange.fromDate && !!dateRange.toDate;
 
-          const params: any = {
-            period: '1y',
-            all: 1,
-            query: query,
-            sync: 1,
-            force_public: 1,
-          };
-          this.service.setParams(params);
-        } else {
-          this.service.setParams({ query: '' });
+        const params: any = {
+          query: query ? query : '',
+        };
+
+        if (dateRangeEnabled) {
+          params['from_timestamp'] = dateRange.fromDate;
+          params['to_timestamp'] = dateRange.toDate;
         }
+
+        // Don't allow using search or date filters for scheduled posts
+        if (query || dateRangeEnabled) {
+          params['all'] = 1;
+          params['period'] = 'all';
+        }
+
+        sort = 'container';
+
+        this.service.setParams(params);
 
         this.service
           .setEndpoint(`${endpoint}/${sort}/${guid}/${type}`)
@@ -126,6 +148,16 @@ export class FeedService {
       })
     );
   }
+
+  /**
+   * Whether or not date range filter is enabled
+   */
+  dateRangeEnabled$: Observable<boolean> = this.dateRange$.pipe(
+    distinctUntilChanged(deepDiff),
+    map((dateRange: FeedFilterDateRange) => {
+      return !!dateRange.fromDate && !!dateRange.toDate;
+    })
+  );
 
   /**
    * Service cleanup
