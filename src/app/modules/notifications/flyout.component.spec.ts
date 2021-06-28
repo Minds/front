@@ -99,7 +99,7 @@ describe('NotificationsFlyoutComponent', () => {
     comp.visible = true;
     // push fake router event
     const event = new NavigationStart(1, '/');
-    TestBed.get(Router).events.next(event);
+    TestBed.inject(Router).events.next(event);
 
     expect(comp.closeEvt.emit).toHaveBeenCalled();
   });

@@ -61,7 +61,7 @@ describe('SettingsV2Component', () => {
   }));
 
   beforeEach(() => {
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
     featuresServiceMock.mock('yt-importer', true);
 
     clientMock.response = [];

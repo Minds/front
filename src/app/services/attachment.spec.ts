@@ -43,13 +43,13 @@ describe('Service: Attachment Service', () => {
 
     clientMock.response[`/api/v1/newsfeed/preview`] = { status: 'success' };
 
-    httpMock = TestBed.get(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
     service = new AttachmentService(
       sessionMock,
       clientMock,
       uploadMock,
       httpMock,
-      TestBed.get(ConfigsService)
+      TestBed.inject(ConfigsService)
     );
 
     clientMock.get.calls.reset();
