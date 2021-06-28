@@ -150,7 +150,18 @@
     }
   }
 
+  .m-publisherCard--large {
+    .m-publisherCard__inner {
+      max-height: 141px;
+      overflow: hidden;
+    }
+  }
+
   .m-publisherCard--medium {
+    .m-publisherCard__inner {
+      max-height: 131px;
+      overflow: hidden;
+    }
     padding: 15px;
 
     .m-publisherCardOwnerRow__owner {
@@ -158,6 +169,10 @@
     }
   }
   .m-publisherCard--small {
+    .m-publisherCard__inner {
+      max-height: 151px;
+      overflow: hidden;
+    }
     padding: 20px;
 
     .m-publisherCard__ownerRow {
