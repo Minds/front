@@ -44,7 +44,6 @@
     "@nguniversal/builders": "~9.1.1",
     "@nguniversal/common": "~9.1.1",
     "@nguniversal/express-engine": "~9.1.1",
-    "@nguniversal/module-map-ngfactory-loader": "~8.2.6",
     "@nguniversal/socket-engine": "~9.1.1",
     "@sentry/browser": "^5.27.3",
     "@sentry/node": "^6.3.0",
