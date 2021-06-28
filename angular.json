@@ -316,7 +316,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "m",
-      "styleext": "ng.scss"
+      "style": "ng.scss"
     },
     "@schematics/angular:directive": {
       "prefix": "m"
