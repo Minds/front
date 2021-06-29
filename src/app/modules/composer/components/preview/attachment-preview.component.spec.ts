@@ -62,7 +62,6 @@ describe('Composer Attachment Preview', () => {
   });
 
   it('should set portrait for an image', () => {
-    console.log(this.service);
     const img = document.createElement('img');
     spyOnProperty(img, 'naturalWidth').and.returnValue(1000);
     spyOnProperty(img, 'naturalHeight').and.returnValue(2000);

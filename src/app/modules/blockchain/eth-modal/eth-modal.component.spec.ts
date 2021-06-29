@@ -79,7 +79,7 @@ describe('BlockchainEthModalComponent', () => {
 
     comp = fixture.componentInstance;
 
-    this.hasMetamask = true;
+    comp.hasMetamask = true;
 
     spyOn(comp.session, 'getLoggedInUser').and.returnValue({
       eth_wallet: '0x00000000000000',

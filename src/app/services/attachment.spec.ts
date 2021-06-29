@@ -205,6 +205,6 @@ describe('Service: Attachment Service', () => {
   it('should discard changes if request array has been cleared', fakeAsync(() => {
     service.preview('https://github.com/releases');
     tick(1000);
-    expect(this.meta).toBeFalsy();
+    expect(service.meta).toBeFalsy();
   }));
 });
