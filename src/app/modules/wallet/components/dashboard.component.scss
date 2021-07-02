@@ -13,13 +13,22 @@ m-walletDashboard,
       border-right: 1px solid themed($m-borderColor--primary);
     }
     .m-tabs__container {
+      overflow-x: auto;
       padding: 0 50px;
       margin: 0 !important;
+
       @media screen and (max-width: $min-tablet) {
         padding: 0 40px;
       }
+
       @media screen and (max-width: $max-mobile) {
         padding: 0 24px;
+      }
+
+      @include horizontal-scroll;
+
+      .m-tabs__tab {
+        white-space: nowrap;
       }
     }
     .m-tabs__tab > a {
