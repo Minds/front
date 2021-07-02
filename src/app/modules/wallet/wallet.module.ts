@@ -41,6 +41,7 @@ import { WalletEarningsComponent } from './components/components/earnings/earnin
 import { OnchainTransferModalService } from './components/components/onchain-transfer/onchain-transfer.service';
 import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
 import { WalletSharedModule } from './wallet-shared.module';
+import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -93,6 +94,10 @@ export const WALLET_ROUTES: Routes = [
           {
             path: 'settings',
             component: WalletSettingsTokensComponent,
+          },
+          {
+            path: 'transfers',
+            component: WalletOnchainTransfersSummaryComponent,
           },
         ],
       },
@@ -191,6 +196,7 @@ export const WALLET_ROUTES: Routes = [
     WalletCashOnboardingComponent,
     WalletCashOnboardingExtrasComponent,
     WalletCashBankFormComponent,
+    WalletOnchainTransfersSummaryComponent,
     // MH fixed:
     WalletV2TokensComponent,
     WalletV2CashComponent,
