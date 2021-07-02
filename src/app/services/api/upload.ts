@@ -64,14 +64,20 @@ export class Upload {
           progress(100);
           resolve(JSON.parse(this.response));
         } else {
-          self.onError.next({
-            error: { ...JSON.parse(this.response) },
-            status: this.status,
-          });
-          if (this.status === 504) {
-            reject('error:gateway-timeout');
-          } else {
-            reject(JSON.parse(this.response));
+          try {
+            self.onError.next({
+              error: { ...JSON.parse(this.response) },
+              status: this.status,
+            });
+            if (this.status === 504) {
+              reject('error:gateway-timeout');
+            } else {
+              reject(JSON.parse(this.response));
+            }
+          } catch (e) {
+            // Likely unable to parse JSON from response.
+            // Reject with user friendly error.
+            reject('An unknown error has occurred during upload');
           }
         }
       };
