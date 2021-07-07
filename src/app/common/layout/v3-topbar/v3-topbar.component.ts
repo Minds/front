@@ -170,7 +170,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onJoinNowClick() {
     try {
       await this.authModal.open();
-      this.doRedirect();
+      this.doOnboardingRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
@@ -199,6 +199,13 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   doRedirect(): void {
     if (this.router.url === '/') {
       this.router.navigate(['/newsfeed/subscriptions']);
+    }
+  }
+
+  doOnboardingRedirect(): void {
+    if (this.router.url === '/') {
+      console.log('router url is /');
+      this.router.navigate(['/onboarding']);
     }
   }
 
