@@ -84,7 +84,7 @@ export class ChannelListConnectionsComponent implements OnDestroy {
             .setCastToActivities(false)
             .setExportUserCounts(true)
             .setLimit(12)
-            .setOffset(0)
+            .setOffset(12)
             .setEndpoint(endpoint)
             .setParams({
               q: searchQuery,
