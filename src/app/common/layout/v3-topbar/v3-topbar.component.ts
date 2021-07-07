@@ -196,15 +196,22 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Redirect to newsfeed only if user is currently on root page.
+   * @returns { void }
+   */
   doRedirect(): void {
     if (this.router.url === '/') {
       this.router.navigate(['/newsfeed/subscriptions']);
     }
   }
 
+  /**
+   * Redirect to onboarding only if user is currently on root page.
+   * @returns { void }
+   */
   doOnboardingRedirect(): void {
     if (this.router.url === '/') {
-      console.log('router url is /');
       this.router.navigate(['/onboarding']);
     }
   }
