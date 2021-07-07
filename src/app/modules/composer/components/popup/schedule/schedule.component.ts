@@ -162,7 +162,9 @@ export class ScheduleComponent {
    */
   hasError(): boolean {
     const formatError = !this.getParsedTime();
-    const futureError = Math.floor(Date.now() / 1000) >= this.buildTimestamp();
+    // 5 minutes in the future.
+    const futureError =
+      Math.floor(Date.now() / 1000) + 300 >= this.buildTimestamp();
 
     // We only need to show errors for safari because it doesn't support input[type=time]
     if (isSafari()) {
