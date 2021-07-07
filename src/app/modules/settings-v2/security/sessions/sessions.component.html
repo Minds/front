@@ -45,6 +45,7 @@
               <div class="m-settingsV2__sessions__agent">
                 <span *ngIf="session.platform === 'browser'">Web browser</span>
                 <span *ngIf="session.platform === 'app'">Mobile app</span>
+                <span *ngIf="session.platform === 'matrix'">Chat</span>
               </div>
               <div class="m-settingsV2__sessions__ip">
                 <span>{{ session.ip }}</span>
