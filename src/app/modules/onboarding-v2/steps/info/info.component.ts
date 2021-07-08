@@ -8,7 +8,7 @@ import {
 import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Client } from '../../../../services/api';
-import { PhoneVerificationComponent } from './phone-input/input.component';
+// import { PhoneVerificationComponent } from './phone-input/input.component';
 import * as moment from 'moment';
 import { OnboardingV2Service } from '../../service/onboarding.service';
 import { DateDropdownsComponent } from '../../../../common/components/date-dropdowns/date-dropdowns.component';
@@ -40,8 +40,8 @@ export class InfoStepComponent implements OnInit, OnDestroy {
 
   cities: Array<any> = [];
 
-  @ViewChild('phoneVerification')
-  phoneVerification: PhoneVerificationComponent;
+  // @ViewChild('phoneVerification')
+  // phoneVerification: PhoneVerificationComponent;
 
   @ViewChild('dateDropdowns')
   dateDropdowns: DateDropdownsComponent;
@@ -178,7 +178,7 @@ export class InfoStepComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.phoneVerification.reset();
+    // this.phoneVerification.reset();
     this.inProgress = false;
     this.locationError = null;
     this.dateOfBirthError = null;
@@ -199,40 +199,40 @@ export class InfoStepComponent implements OnInit, OnDestroy {
     this.tooltipAnchor = window.innerWidth <= 480 ? 'top' : 'left';
   }
 
-  canContinue() {
-    return this.validatePhone() && this.isDateValid();
+  canContinue(): boolean {
+    return this.isDateValid();
   }
 
-  private validatePhone(): boolean {
-    if (this.phoneVerification) {
-      if (this.phoneVerification.confirmed) {
-        return true;
-      }
-      // if we're confirming the phone or the phone input is dirty
-      if (
-        this.phoneVerification.confirming ||
-        (this.phoneVerification.input && this.phoneVerification.input.dirty)
-      ) {
-        return false;
-      }
-    }
-    return true;
-  }
+  // private validatePhone(): boolean {
+  //   if (this.phoneVerification) {
+  //     if (this.phoneVerification.confirmed) {
+  //       return true;
+  //     }
+  //     // if we're confirming the phone or the phone input is dirty
+  //     if (
+  //       this.phoneVerification.confirming ||
+  //       (this.phoneVerification.input && this.phoneVerification.input.dirty)
+  //     ) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
 
-  private isDateValid() {
+  private isDateValid(): boolean {
     return this.dateOfBirthChanged
       ? moment().diff(moment(this.date), 'years') >= 13
       : true;
   }
 
   private validate(): boolean {
-    if (
-      !this.phoneVerification.confirmed &&
-      this.phoneVerification.input.dirty
-    ) {
-      this.phoneVerification.error = 'verify:phonenumber';
-      return false;
-    }
+    // if (
+    //   !this.phoneVerification.confirmed &&
+    //   this.phoneVerification.input.dirty
+    // ) {
+    //   this.phoneVerification.error = 'verify:phonenumber';
+    //   return false;
+    // }
     if (!this.isDateValid()) {
       this.ageError = true;
       return false;
