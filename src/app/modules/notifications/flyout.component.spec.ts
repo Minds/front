@@ -53,6 +53,7 @@ describe('NotificationsFlyoutComponent', () => {
     jasmine.clock().install();
 
     featuresServiceMock.mock('navigation', false);
+    featuresServiceMock.mock('notifications-v3', false);
 
     fixture = TestBed.createComponent(NotificationsFlyoutComponent);
     clientMock.response = {};
@@ -74,12 +75,12 @@ describe('NotificationsFlyoutComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('Should use the onvisible method', () => {
-    const notifications = fixture.debugElement.query(
-      By.css('minds-notifications')
-    );
-    expect(notifications).not.toBeNull();
-  });
+  // it('Should use the onvisible method', () => {
+  //   const notifications = fixture.debugElement.query(
+  //     By.css('minds-notifications')
+  //   );
+  //   expect(notifications).not.toBeNull();
+  // });
 
   it('Should emit close evt', () => {
     spyOn(comp.closeEvt, 'emit').and.callThrough();
@@ -88,10 +89,10 @@ describe('NotificationsFlyoutComponent', () => {
     expect(comp.closeEvt.emit).toHaveBeenCalled();
   });
 
-  it('Should call onVisible', () => {
-    comp.toggleLoad();
-    expect(comp.notificationList.onVisible).toHaveBeenCalled();
-  });
+  // it('Should call onVisible', () => {
+  //   comp.toggleLoad();
+  //   expect(comp.notificationList.onVisible).toHaveBeenCalled();
+  // });
 
   it('Should subscribe to router', () => {
     spyOn(comp.closeEvt, 'emit').and.callThrough();

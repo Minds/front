@@ -66,7 +66,10 @@ export class ScrollAwareVideoPlayerComponent
     if (isPlatformServer(this.platformId)) return;
 
     if (this.el.nativeElement) {
-      if (this.scrollService.isVisible(this.el.nativeElement, 50)) {
+      if (
+        this.scrollService.isVisible(this.el.nativeElement, 50) ||
+        this.isModal
+      ) {
         if (!this.isInViewport) this.onEnterViewport();
       } else {
         if (this.isInViewport) this.onExitViewport();

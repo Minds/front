@@ -511,6 +511,16 @@ export class ActivityContentComponent
     this.service.displayOptions.showTranslation === false;
   }
 
+  /**
+   * Gets URL to redirect.
+   * @returns { string } - equals '' if url is not needed.
+   */
+  getRedirectUrl(): string {
+    return this.service.displayOptions.fixedHeight
+      ? `/newsfeed/${this.entity.guid}`
+      : '';
+  }
+
   onImageError(e: Event): void {}
 
   get maxMessageHeight(): number {

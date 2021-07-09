@@ -18,12 +18,17 @@ export class BoostService {
   load(
     type: string,
     filter: string,
-    { limit, offset }: { limit?: number; offset?: string } = {}
+    {
+      limit,
+      offset,
+      remote,
+    }: { limit?: number; offset?: string; remote?: string } = {}
   ): Promise<{ boosts; loadNext }> {
     return this.client
       .get(`api/v2/boost/${type}/${filter}`, {
         limit: limit || 12,
         offset: offset || '',
+        remote: remote || '',
       })
       .then(({ boosts, 'load-next': loadNext }) => {
         return {

@@ -34,6 +34,7 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
 import { RouterModule } from '@angular/router';
 import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdown/dropdown.component';
 import { RemindPreviewComponent } from './components/preview/remind-preview.component';
+import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
 /**
  * Exported components
  */
@@ -45,6 +46,7 @@ const COMPONENTS = [
   TagsComponent,
   ScheduleComponent,
   PermawebTermsComponent,
+  AttachmentErrorComponent,
   ComposerTopbarButtonComponent,
   ComposerMonetizeV2Component,
   ComposerMonetizeV2PlusComponent,

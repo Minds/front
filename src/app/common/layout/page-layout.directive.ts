@@ -26,17 +26,17 @@ export class PageLayoutPaneDirective implements OnInit, OnDestroy {
 
   @HostBinding('class.m-pageLayout__pane--left')
   get isLeft(): boolean {
-    return this.pane === 'left' && this.featuresService.has('navigation');
+    return this.pane === 'left';
   }
 
   @HostBinding('class.m-pageLayout__pane--main')
   get isMain(): boolean {
-    return this.pane === 'main' && this.featuresService.has('navigation');
+    return this.pane === 'main';
   }
 
   @HostBinding('class.m-pageLayout__pane--right')
   get isRight() {
-    return this.pane === 'right' && this.featuresService.has('navigation');
+    return this.pane === 'right';
   }
 
   constructor(

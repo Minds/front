@@ -28,6 +28,15 @@
     >
       Share
     </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="shouldShowDownload()"
+      (click)="onSelectedOption('download')"
+      i18n="@@COMMON__POST_MENU__DOWNLOAD"
+    >
+      Download
+    </li>
+
     <ng-container *ngIf="service.canPin$ | async">
       <li
         class="m-dropdownList__item"

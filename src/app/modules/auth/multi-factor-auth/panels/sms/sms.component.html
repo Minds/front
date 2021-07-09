@@ -1,0 +1,48 @@
+<span class="m-mfaAuth__subheader" i18n="@@MFA_AUTH__SENT_SMS_CODE"
+  >Minds just sent a 6-digit authentication code to your registered phone
+  number.</span
+>
+
+<div class="m-mfaAuth__formContainer">
+  <label class="m-mfaAuth__inputLabel" i18n="@@MFA_AUTH__AUTHENTICATION_CODE"
+    >Authentication code</label
+  >
+  <input
+    [ngModel]="code$ | async"
+    (ngModelChange)="onCodeChange($event)"
+    (keyup.enter)="onVerifyClick()"
+    class="m-mfaAuth__codeInput"
+    type="text"
+    inputmode="numeric"
+    placeholder="6 digit code"
+    max="999999"
+  />
+</div>
+
+<m-button
+  class="m-mfaAuth__verifyButton"
+  [color]="'blue'"
+  [disabled]="disabled$ | async"
+  [saving]="inProgress$ | async"
+  (onAction)="onVerifyClick()"
+>
+  <ng-container>Verify</ng-container>
+</m-button>
+
+<div class="m-mfaAuth__footerContainer m-mfaAuth__footerContainer--horizontal">
+  <span class="m-mfaAuth__footerText" i18n="@@MFA_AUTH__DID_NOT_RECEIVE"
+    >Did not receive authentication code?</span
+  >
+  <a
+    class="m-mfaAuth__footerLink"
+    (click)="resendSMSTimer()"
+    *ngIf="(timer$ | async) <= 0; else wait"
+    i18n="@@MFA_AUTH__RESEND"
+    >Resend</a
+  >
+  <ng-template #wait>
+    <span class="m-mfaAuth__footerText"
+      >Please wait {{ timer$ | async }} seconds.</span
+    >
+  </ng-template>
+</div>

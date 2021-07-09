@@ -28,7 +28,7 @@
 <!-- Outlets -->
 
 <ng-container *ngIf="!hidden">
-  <ng-container *mIfFeature="'navigation'; else legacyNavigation">
+  <ng-container>
     <m-sidebarWidget title="Notices">
       <div class="m-sidebarWidget__body m-sidebarWidget__body--noPadding">
         <ng-container *ngTemplateOutlet="noticesBody"></ng-container>
@@ -42,20 +42,4 @@
       </a>
     </m-sidebarWidget>
   </ng-container>
-  <ng-template #legacyNavigation>
-    <div class="m-notices__sidebar">
-      <h3 class="m-newsfeedSidebar__header">
-        <span>Notices</span>
-        <i (click)="hide()" class="material-icons">close</i>
-      </h3>
-      <ng-container *ngTemplateOutlet="noticesBody"></ng-container>
-      <span
-        class="m-notices__loadMore"
-        (click)="showAll()"
-        *ngIf="displayLimit === 3"
-      >
-        Show more
-      </span>
-    </div>
-  </ng-template>
 </ng-container>

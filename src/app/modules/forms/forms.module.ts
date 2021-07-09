@@ -13,6 +13,7 @@ import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { PopoverComponent } from './popover-validation/popover.component';
+import { MultiFactorAuthLazyModule } from '../auth/multi-factor-auth/multi-factor-auth-lazy.module';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { PopoverComponent } from './popover-validation/popover.component';
     ReactiveFormsModule,
     CaptchaModule,
     ExperimentsModule,
+    MultiFactorAuthLazyModule,
   ],
   declarations: [
     LoginForm,

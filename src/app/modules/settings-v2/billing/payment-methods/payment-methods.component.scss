@@ -18,7 +18,22 @@ m-settingsV2__paymentMethods {
     }
   }
 
-  .m-settingsV2__paymentMethods__cards {
+  .m-settingsV2__paymentMethods__expiry {
+    &.expired {
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+    }
+  }
+
+  .m-settingsV2__paymentMethods__add {
+    span {
+      display: block;
+      margin-top: 34px;
+    }
+  }
+
+  .m-settingsV2__table {
     ul {
       margin: 0;
     }
@@ -30,7 +45,7 @@ m-settingsV2__paymentMethods {
       padding: 0;
     }
 
-    .m-settingsV2__paymentMethods__card {
+    .m-settingsV2__tableItem {
       align-items: flex-start;
       > div {
         > * {
@@ -39,7 +54,7 @@ m-settingsV2__paymentMethods {
       }
     }
 
-    .m-settingsV2__paymentMethods__card--headerRow {
+    .m-settingsV2__tableHeader {
       align-items: flex-end;
       padding-bottom: 6px;
       @include m-theme() {
@@ -53,8 +68,8 @@ m-settingsV2__paymentMethods {
       }
     }
 
-    .m-settingsV2__paymentMethods__card,
-    .m-settingsV2__paymentMethods__card--headerRow {
+    .m-settingsV2__tableItem,
+    .m-settingsV2__tableHeader {
       display: flex;
       flex-flow: row nowrap;
       margin: 20px 0;
@@ -79,14 +94,14 @@ m-settingsV2__paymentMethods {
       }
     }
 
-    .m-settingsV2__paymentMethods__card__col--right {
+    .m-settingsV2__tableCol--right {
       > * {
         &:first-child {
           margin-right: 10px;
         }
       }
     }
-    .m-settingsV2__paymentMethods__card__remove {
+    .m-settingsV2__tableItem__action {
       box-sizing: border-box;
       min-width: 90px;
       margin-right: 0;
@@ -97,21 +112,6 @@ m-settingsV2__paymentMethods {
         min-width: 68px;
         span {
           display: none;
-        }
-      }
-    }
-
-    .m-settingsV2__paymentMethods__card__add {
-      span {
-        display: block;
-        margin-top: 34px;
-      }
-    }
-
-    .m-settingsV2__paymentMethods__card__expiry {
-      &.expired {
-        @include m-theme() {
-          color: themed($m-alert);
         }
       }
     }

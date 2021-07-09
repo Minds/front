@@ -39,6 +39,7 @@ enum Views {
 @Component({
   selector: 'm-walletSettings--tokens',
   templateUrl: './settings-tokens.component.html',
+  styleUrls: ['./settings-tokens.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletSettingsTokensComponent
@@ -294,75 +295,6 @@ export class WalletSettingsTokensComponent
   changeProvider() {
     this.display = null;
     this.web3Wallet.resetProvider();
-  }
-
-  async validate(): Promise<void> {
-    this.isVerified = undefined;
-
-    await this.web3Wallet.getCurrentWallet(true);
-
-    const msg = JSON.stringify({
-      user_guid: this.session.getLoggedInUser().guid,
-      unix_ts: Math.round(Date.now() / 1000),
-    });
-
-    // Non-metamask wallet require hashed byte messages, for some unknown reason
-    const msgHash = ethers.utils.hashMessage(msg);
-    const msgHashBytes = ethers.utils.arrayify(msgHash);
-
-    // Non-metamask wallets will only have correct signature if msgHashBytes are used.
-    const msgToSign =
-      this.web3Wallet.getSigner().provider.connection.url === 'metamask'
-        ? msg
-        : msgHashBytes;
-
-    const signature = await this.web3Wallet.getSigner().signMessage(msgToSign);
-
-    try {
-      const response = await (<any>this.client.post(
-        'api/v3/blockchain/unique-onchain/validate',
-        {
-          signature,
-          payload: msg,
-          address: this.currentAddress,
-        }
-      ));
-
-      if (response.status === 'success') {
-        this.isVerified = true;
-        this.toasterService.success('Your address is now verified');
-      }
-    } catch (err) {
-      this.isVerified = false;
-      this.toasterService.error(err?.message);
-    }
-
-    this.detectChanges();
-  }
-
-  async unValidate(): Promise<void> {
-    this.isVerified = undefined;
-
-    try {
-      const response = await (<any>this.client.delete(
-        'api/v3/blockchain/unique-onchain/validate',
-        {
-          address: this.currentAddress,
-        }
-      ));
-
-      if (response.status === 'success') {
-        this.isVerified = false;
-        this.toasterService.success(
-          'Your address verification has been removed'
-        );
-      }
-    } catch (err) {
-      this.isVerified = true;
-      this.toasterService.error(err.message);
-    }
-
-    this.detectChanges();
   }
 
   detectChanges() {

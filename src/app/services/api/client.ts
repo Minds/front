@@ -113,7 +113,12 @@ export class Client {
   /**
    * Return a POST request
    */
-  post(endpoint: string, data: Object = {}, options: Object = {}) {
+  post(
+    endpoint: string,
+    data: Object = {},
+    options: Object = {},
+    fullError = false
+  ) {
     return new Promise((resolve, reject) => {
       this.http
         .post(
@@ -142,7 +147,7 @@ export class Client {
               return reject(err);
             }
             if (err.status !== 200) {
-              return reject(err.error);
+              return reject(fullError ? err : err.error);
             }
           }
         );

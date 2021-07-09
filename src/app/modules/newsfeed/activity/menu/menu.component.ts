@@ -17,6 +17,7 @@ import { ModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { DownloadActivityMediaService } from '../../../../common/services/download-activity-media.service';
 
 @Component({
   selector: 'm-activity__menu',
@@ -38,7 +39,8 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private composerModal: ModalService,
     private injector: Injector,
     public translationService: TranslationService,
-    private toasterService: FormToastService
+    private toasterService: FormToastService,
+    public downloadActivityMediaService: DownloadActivityMediaService
   ) {}
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           'block',
           'rating',
           'allow-comments',
+          'download',
         ];
       } else {
         return [
@@ -84,6 +87,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
           'block',
           'rating',
           'allow-comments',
+          'download',
         ];
       }
     } else {
@@ -98,6 +102,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         'block',
         'rating',
         'allow-comments',
+        'download',
       ];
     }
   }
@@ -137,6 +142,9 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         break;
       case 'translate':
         this.service.displayOptions.showTranslation = true;
+        break;
+      case 'download':
+        this.downloadActivityMediaService.download(this.entity);
         break;
     }
   }

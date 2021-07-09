@@ -1,0 +1,34 @@
+<!-- Embedded mode -->
+<ng-container *ngIf="embedded" [ngSwitch]="activePanel$ | async">
+  <m-multiFactorAuth__totp
+    *ngSwitchCase="'totp'"
+    (onVerify)="onSaveIntent()"
+  ></m-multiFactorAuth__totp>
+  <m-multiFactorAuth__sms
+    *ngSwitchCase="'sms'"
+    (onVerify)="onSaveIntent()"
+  ></m-multiFactorAuth__sms>
+  <m-multiFactorAuth__totpRecovery
+    *ngSwitchCase="'totp-recovery'"
+  ></m-multiFactorAuth__totpRecovery>
+</ng-container>
+
+<!-- NOT embedded mode -->
+<ng-container *ngIf="!embedded">
+  <div class="m-mfaBase__header" [ngStyle]="getBannerSrc()">
+    Login to Minds
+  </div>
+  <div class="m-mfaBase__panelContainer" [ngSwitch]="activePanel$ | async">
+    <m-multiFactorAuth__totp
+      *ngSwitchCase="'totp'"
+      (onVerify)="onSaveIntent()"
+    ></m-multiFactorAuth__totp>
+    <m-multiFactorAuth__sms
+      *ngSwitchCase="'sms'"
+      (onVerify)="onSaveIntent()"
+    ></m-multiFactorAuth__sms>
+    <m-multiFactorAuth__totpRecovery
+      *ngSwitchCase="'totp-recovery'"
+    ></m-multiFactorAuth__totpRecovery>
+  </div>
+</ng-container>

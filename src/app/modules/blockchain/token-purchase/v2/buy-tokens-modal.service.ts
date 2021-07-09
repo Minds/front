@@ -4,6 +4,7 @@ import {
   StackableModalEvent,
   StackableModalService,
 } from '../../../../services/ux/stackable-modal.service';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { BuyTokensModalComponent } from './buy-tokens-modal.component';
 
 @Injectable()
@@ -11,10 +12,13 @@ export class BuyTokensModalService {
   constructor(
     private stackableModal: StackableModalService,
     private compiler: Compiler,
-    private injector: Injector
+    private injector: Injector,
+    private authModalService: AuthModalService
   ) {}
 
   async open(): Promise<any> {
+    await this.authModalService.open();
+
     const { BuyTokensModalModule } = await import('./buy-tokens-modal.module');
 
     const moduleFactory = await this.compiler.compileModuleAsync(

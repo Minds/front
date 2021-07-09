@@ -8,6 +8,7 @@ import {
   Output,
   EventEmitter,
   TemplateRef,
+  AfterViewChecked,
 } from '@angular/core';
 import { AnchorPosition } from '../../../services/ux/anchor-position';
 import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
@@ -17,35 +18,33 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.ng.scss'],
 })
-export class ButtonComponent implements AfterViewInit {
+export class ButtonComponent implements AfterViewChecked {
   /**
    * Button type
    */
   @Input() type: string = 'submit';
 
   buttonTextWidth: number;
+  buttonTextHeight: number;
   @ViewChild('buttonTextContainer')
   buttonTextContainer: ElementRef;
 
   @Input() disabled: boolean = false;
   @Input() overlay: boolean = false;
   @Input() iconOnly: boolean = false;
-  @Input() color: 'blue' | 'grey' | 'red' = 'grey';
+  @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
   @Input() pulsating: boolean = false;
 
   /**
    * Handles width for buttons that are not visible onInit
    */
-  private _saving: boolean;
+  _saving: boolean = false;
   @Input() set saving(value: boolean) {
     if (value && !this.buttonTextWidth) {
-      this.setSavingWidth();
+      this.setSavingSize();
     }
     this._saving = value;
-  }
-  get saving(): boolean {
-    return this._saving;
   }
 
   /**
@@ -60,6 +59,11 @@ export class ButtonComponent implements AfterViewInit {
     top: '100%',
     right: '0',
   };
+
+  /**
+   * Show the dropdown or not
+   */
+  @Input() showDropdownMenu = true;
 
   /**
    * Event emitter when actioning the button
@@ -87,20 +91,23 @@ export class ButtonComponent implements AfterViewInit {
 
   constructor() {}
 
-  ngAfterViewInit() {
-    this.setSavingWidth();
+  ngAfterViewChecked() {
+    this.setSavingSize();
   }
 
   // Prevent button width from shrinking during saving animation
   @HostListener('window:resize')
   resize() {
-    this.setSavingWidth();
+    this.setSavingSize();
   }
 
-  setSavingWidth() {
-    if (this.buttonTextContainer && !this.saving) {
+  setSavingSize() {
+    if (this.buttonTextContainer && !this._saving) {
       const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
       this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
+
+      const elHeight = this.buttonTextContainer.nativeElement.clientHeight || 0;
+      this.buttonTextHeight = elHeight > 0 ? elHeight : this.buttonTextHeight;
     }
   }
 
@@ -108,6 +115,9 @@ export class ButtonComponent implements AfterViewInit {
    * Emits the action to the parent using the exported interface
    */
   emitAction($event: MouseEvent) {
+    if (!this.buttonTextWidth) {
+      this.setSavingSize();
+    }
     if (this.disabled) {
       $event.preventDefault();
       $event.stopPropagation();

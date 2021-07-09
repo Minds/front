@@ -45,7 +45,8 @@ export class TransakService {
     let transak = new transakSDK({
       apiKey: this.apiKey || '4fcd6904-706b-4aff-bd9d-77422813bbb7',
       environment: this.environment || 'STAGING',
-      defaultCryptoCurrency: 'ETH',
+      defaultCryptoCurrency: 'MINDS',
+      defaultCryptoAmount: 1000,
       walletAddress: address,
       themeColor: '000000',
       hostURL: window.location.origin,

@@ -200,6 +200,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
           if (formattedTx.superType === 'reward') {
             formattedTx.showRewardsPopup = false;
+            formattedTx.rewardType = tx?.reward_type;
           }
 
           if (formattedTx.superType === 'wire') {

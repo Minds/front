@@ -22,8 +22,11 @@ export class ReadMoreDirective {
   }
 
   @Input() set maxHeightAllowed(value: number) {
-    this._maxHeightAllowed = value;
-    this.hideIfNeeded();
+    if (this._maxHeightAllowed !== value) {
+      this._maxHeightAllowed = value;
+      this._element.style.maxHeight = null;
+      this.hideIfNeeded();
+    }
   }
 
   ngAfterViewInit() {

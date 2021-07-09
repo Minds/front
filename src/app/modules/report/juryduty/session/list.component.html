@@ -1,6 +1,6 @@
 <ul class="m-juryDutySession__list">
   <li
-    *ngFor="let report of reports; let i = index"
+    *ngFor="let report of reports$ | async; let i = index"
     class="m-juryDutySessionList__item"
   >
     <div class="m-layout__row">
@@ -17,7 +17,13 @@
     </div>
   </li>
 </ul>
-
-<p *ngIf="!inProgress && reports.length === 0">
+<infinite-scroll
+  distance="25%"
+  (load)="loadMore()"
+  [moreData]="hasNext && !(inProgress$ | async)"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>
+<p *ngIf="!(inProgress$ | async) && (reports$ | async).length === 0">
   Nothing to review
 </p>

@@ -7,6 +7,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   moduleId: module.id,
   selector: 'm-admin-withdrawals',
   templateUrl: 'withdrawals.component.html',
+  styleUrls: ['./withdrawals.component.ng.scss'],
 })
 export class AdminWithdrawals {
   withdrawals: any[] = [];

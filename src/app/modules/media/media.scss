@@ -604,12 +604,3 @@ m-media--grid {
 .m-media-content--button-boost {
   padding-left: $minds-padding;
 }
-
-.m-comment__attachment {
-  img,
-  minds-video,
-  m-video {
-    max-width: 50%;
-    cursor: pointer;
-  }
-}

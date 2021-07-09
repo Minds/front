@@ -132,7 +132,7 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       },
       {
         ids: ['channel'],
-        route: '/' + entity.name,
+        route: '/' + entity.username,
       },
     ];
 

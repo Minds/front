@@ -8,6 +8,7 @@
       type="text"
       class="form-control"
       name="displayName"
+      [maxlength]="maxNameLength"
       [ngModel]="service.displayName$ | async"
       (ngModelChange)="service.displayName$.next($event)"
       data-cy="data-minds-channel-display-name"

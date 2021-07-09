@@ -23,8 +23,9 @@ import { AutocompleteSuggestionsService } from '../../suggestions/services/autoc
 import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { IsCommentingService } from './is-commenting.service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -44,6 +45,9 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     any
   > = new EventEmitter();
   @Output('posted') posted$: EventEmitter<any> = new EventEmitter();
+
+  menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   content: string = '';
   triedToPost: boolean = false;
   comments: Array<any> = []; // TODO: remove this
@@ -51,6 +55,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   maxLength: number = 1500;
   loggedInSubscription: Subscription;
+  editing: boolean = false;
 
   constructor(
     public session: Session,
@@ -63,7 +68,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private userAvatar: UserAvatarService,
     private cd: ChangeDetectorRef,
     private configs: ConfigsService,
-    private authModalService: AuthModalService
+    private authModalService: AuthModalService,
+    private isCommentingService: IsCommentingService
   ) {}
 
   ngOnInit() {
@@ -78,6 +84,15 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     if (this.loggedInSubscription) {
       this.loggedInSubscription.unsubscribe();
     }
+  }
+
+  /**
+   * Fires before keypress function, includes backspace event.
+   * @param { KeyboardEvent } e - keyboard event.
+   */
+  keydown(e: KeyboardEvent) {
+    // set is typing state for other components to hook into.
+    this.isCommentingService.isCommenting$.next(this.content.trim().length > 1);
   }
 
   keypress(e: KeyboardEvent) {
@@ -123,6 +138,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     this.optimisticPost$.next(comment);
 
     this.attachment.reset();
+    this.isCommentingService.reset();
     this.content = '';
 
     this.detectChanges();
@@ -154,6 +170,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   async uploadFile(fileInput: HTMLInputElement, event) {
     if (fileInput.value) {
       // this prevents IE from executing this code twice
+      this.isCommentingService.isCommenting$.next(true);
       try {
         await this.uploadAttachment(fileInput);
 
@@ -193,6 +210,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
         this.detectChanges();
       });
 
+    this.menuOpened$.next(false);
     this.detectChanges();
   }
 
@@ -246,12 +264,13 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     } catch (e) {}
   }
 
+  onMenuClick(e: MouseEvent): void {
+    this.menuOpened$.next(true);
+    this.detectChanges();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  ngOnChanges(changes) {
-    //  console.log('[comment:list]: on changes', changes);
   }
 }

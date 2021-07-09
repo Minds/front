@@ -1,0 +1,100 @@
+@import 'defaults.scss';
+
+:host {
+  .m-twoFactor__recoveryCodeHeader {
+    font-size: 20px;
+    weight: 500;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  .m-twoFactor__recoveryCodeSubheader {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 400;
+    margin-bottom: 20px;
+    display: block;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+  .m-twoFactor__recoveryCodeContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    border-radius: 2px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-twoFactor__recoveryCodeInstructions {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 400;
+      padding: 20px 40px;
+
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-twoFactor__recoveryCodeBody {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.375;
+      padding: 20px;
+      text-align: center;
+      word-break: break-all;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background-color: themed($m-bgColor--secondary);
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-twoFactor__recoveryCodeFooter {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 400;
+      padding: 20px 40px;
+
+      .m-twoFactor__recoveryCodeActionButton {
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        margin-right: 20px;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        i {
+          font-size: 20px;
+          margin-right: 5px;
+        }
+      }
+      .m-twoFactor__recoveryCodeFooterText {
+        margin-top: 20px;
+        font-size: 15px;
+        line-height: 1.2;
+        font-weight: 400;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+
+  .m-twoFactor__recoveryCodeContinueButton {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+  }
+}

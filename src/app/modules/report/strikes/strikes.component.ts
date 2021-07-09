@@ -25,9 +25,8 @@ export class StrikesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.featuresService.has('navigation')) {
-      this.hasNewNav = true;
-    }
+    this.hasNewNav = true;
+
     this.load();
   }
 

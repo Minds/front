@@ -11,9 +11,16 @@ import { TransakService } from './transak.service';
 import { OrderReceivedModalService } from './order-received/order-received-modal.service';
 import { OrderReceivedModalComponent } from './order-received/order-received-modal.component';
 import { ModalsModule } from '../../../modals/modals.module';
+import { WalletSharedModule } from '../../../wallet/wallet-shared.module';
 
 @NgModule({
-  imports: [NgCommonModule, CommonModule, FormsModule, ModalsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    FormsModule,
+    ModalsModule,
+    WalletSharedModule,
+  ],
   declarations: [BuyTokensModalComponent, OrderReceivedModalComponent],
   exports: [BuyTokensModalComponent, OrderReceivedModalComponent],
   providers: [TransakService, OrderReceivedModalService],

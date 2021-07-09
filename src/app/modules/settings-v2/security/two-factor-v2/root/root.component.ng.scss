@@ -1,0 +1,50 @@
+@import 'defaults.scss';
+
+:host {
+  .m-twoFactor__optionContainer {
+    border-radius: 2px;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    .m-twoFactor__optionTitle {
+      font-size: 19px;
+      font-weight: 700;
+      margin-top: 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      span {
+        border-radius: 3px;
+        font-weight: 700;
+        font-size: 14px;
+        margin-left: 10px;
+        padding: 5px 10px;
+        cursor: default;
+
+        @include m-theme() {
+          background-color: themed($m-textColor--secondary);
+          color: themed($m-bgColor--secondary);
+        }
+      }
+    }
+    .m-twoFactor__optionDescription {
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.2;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    .m-twoFactor__optionButtonContainer {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+    }
+  }
+}

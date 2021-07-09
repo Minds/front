@@ -1,0 +1,104 @@
+@import 'defaults.scss';
+
+:host {
+  max-width: 720px;
+
+  .m-walletPhoneVerification__disclaimer {
+    font-size: 16px;
+  }
+
+  .m-walletModal__footnote {
+    p {
+      font-size: 16px;
+      &:first-child {
+        margin-bottom: 18px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+    a {
+      cursor: pointer;
+    }
+  }
+
+  .m-walletPhoneVerification__privacyNote {
+    margin-top: 20px;
+    line-height: 20px;
+  }
+
+  .m-formWrapper {
+    margin-bottom: 0;
+  }
+
+  .m-form__field--text {
+    margin-bottom: 0;
+  }
+
+  .m-form__row--label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    ::ng-deep m-tooltip {
+      margin-left: 10px;
+      i {
+        font-size: 15px;
+      }
+      .m-tooltip--bubble {
+        max-width: 350px;
+      }
+    }
+  }
+
+  .m-form__row--input {
+    align-items: center;
+
+    input {
+      min-width: 200px;
+    }
+  }
+
+  ::ng-deep m-phoneInput {
+    .m-phoneInput__countryList {
+      max-height: 84px;
+    }
+    .m-phoneInput__wrapper {
+      @media screen and (max-width: $max-mobile) {
+        min-width: 200px;
+      }
+    }
+  }
+
+  m-button {
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 771px) {
+    .stretchedField {
+      .m-form__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+          width: 174px;
+        }
+      }
+      [class*='m-form__row'] {
+        &:not(.m-phoneInput__wrapper) {
+          flex-flow: row wrap;
+          label,
+          input {
+            flex: 1 1 100%;
+            max-width: 100%;
+            &:not(.m-phoneInput__input) {
+              min-width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,7 +7,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { WireV2Service } from '../../wire-v2.service';
-import { SupportTier, SupportTiersService } from '../../support-tiers.service';
+import {
+  SupportTier,
+  SupportTierCurrency,
+  SupportTiersService,
+} from '../../support-tiers.service';
 import { PaymentsSelectCard } from '../../../../payments/select-card/select-card.component';
 import { Observable, combineLatest, Subscription } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
@@ -39,6 +43,14 @@ export class WireCreatorSupportTierConfirmationComponent {
       return supportTiers[type];
     })
   );
+
+  /**
+   * Payment types as array of support tier currencies e.g. ['usd', 'tokens']
+   * @returns { Observable<SupportTierCurrency[]> } - payment types.
+   */
+  public readonly paymentTypes$: Observable<
+    SupportTierCurrency[]
+  > = this.supportTiersService.getPaymentTypes$(this.service.supportTier$);
 
   typeChangeSubscription: Subscription;
 

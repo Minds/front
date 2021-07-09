@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Session } from '../../../../../services/session';
 import { Client } from '../../../../../services/api';
@@ -14,6 +14,7 @@ export class UserCard {
   readonly cdnUrl: string;
   avatarSize: string = 'medium';
   bannerSrc: string;
+  forceShowSubscribe: boolean = false;
 
   constructor(
     public session: Session,

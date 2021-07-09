@@ -7,6 +7,9 @@ import {
   ViewChild,
   Injector,
   SkipSelf,
+  ViewChildren,
+  QueryList,
+  ElementRef,
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -20,7 +23,6 @@ import {
 
 import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { MindsActivityObject } from '../../../interfaces/entities';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { FeaturesService } from '../../../services/features.service';
@@ -67,6 +69,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   private feedsUpdatedSubscription: Subscription;
 
   @ViewChild('composer') private composer: ComposerComponent;
+  @ViewChildren('feedViewChildren', { read: ElementRef })
+  feedViewChildren: QueryList<ElementRef>;
 
   constructor(
     public client: Client,

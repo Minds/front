@@ -4,17 +4,25 @@ import {
   Component,
   HostListener,
   ViewChild,
+  Inject,
+  Injectable,
+  PLATFORM_ID,
 } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
+import { isPlatformServer } from '@angular/common';
 
 const noOp = () => {};
-
+@Injectable()
 @Component({
   selector: 'm-composer__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'modal.component.html',
 })
 export class ModalComponent implements AfterViewInit {
+  resizeEvent;
+
+  constructor(@Inject(PLATFORM_ID) private platformId) {}
+
   @ViewChild('baseComponent', { static: true }) baseComponent: BaseComponent;
 
   onPost: (any) => any = noOp;
@@ -30,6 +38,20 @@ export class ModalComponent implements AfterViewInit {
   set opts({ onPost, onDismissIntent }) {
     this.onPost = onPost || noOp;
     this.onDismissIntent = onDismissIntent || noOp;
+  }
+
+  ngOnInit(): void {
+    if (isPlatformServer(this.platformId)) return;
+
+    try {
+      this.resizeEvent = (window as any).visualViewport.addEventListener(
+        'resize',
+        () => {
+          this.setViewportHeight();
+        }
+      );
+      this.setViewportHeight();
+    } catch (error) {}
   }
 
   /**
@@ -72,5 +94,16 @@ export class ModalComponent implements AfterViewInit {
     this.onDismissIntent();
 
     return true;
+  }
+
+  setViewportHeight(): void {
+    if (isPlatformServer(this.platformId)) return;
+
+    let vh = (window as any).visualViewport.height;
+    document.documentElement.style.setProperty('--mobileVH', `${vh}px`);
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.resizeEvent);
   }
 }

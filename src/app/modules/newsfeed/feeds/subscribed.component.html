@@ -13,16 +13,18 @@
   <ng-container>
     <m-composer
       [activity]="message ? { message: message } : undefined"
+      [size]="'compact'"
       #composer
     ></m-composer>
   </ng-container>
 
-  <div class="minds-list">
+  <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
     <ng-container *ngFor="let preActivity of prepended">
       <m-activity
         [entity]="preActivity"
         [displayOptions]="{
-          showOnlyCommentsInput: true
+          showOnlyCommentsInput: true,
+          isFeed: true
         }"
         (deleted)="delete(preActivity)"
       ></m-activity>
@@ -32,6 +34,7 @@
       <ng-container *mIfBrowser>
         <m-newsfeed--boost-rotator
           *ngIf="showBoostRotator"
+          #feedViewChildren
         ></m-newsfeed--boost-rotator>
       </ng-container>
     </ng-container>
@@ -42,16 +45,22 @@
       <m-featured-content
         *ngIf="(i > 0 && i % 5 === 0) || i === 2"
         [slot]="i + 1"
+        [displayOptions]="{
+          showOnlyCommentsInput: true,
+          isFeed: true
+        }"
+        #feedViewChildren
       ></m-featured-content>
-
       <m-activity
         *ngIf="activity$ | async as activity"
         [entity]="activity"
         [displayOptions]="{
-          showOnlyCommentsInput: true
+          showOnlyCommentsInput: true,
+          isFeed: true
         }"
         [slot]="i + 1"
         (deleted)="delete(activity)"
+        #feedViewChildren
       ></m-activity>
     </ng-container>
 

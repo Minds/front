@@ -1,0 +1,71 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab" (click)="setFilter('')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === ''">
+      <m-tooltip icon="list" anchor="top">All notifications</m-tooltip>
+    </a>
+  </div>
+  <div class="m-tabs__tab" (click)="setFilter('tags')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'tags'">
+      <m-tooltip icon="local_offer" anchor="top">Tags</m-tooltip>
+    </a>
+  </div>
+  <div class="m-tabs__tab" (click)="setFilter('comments')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'comments'">
+      <m-tooltip icon="chat_bubble" anchor="top">Comments</m-tooltip>
+    </a>
+  </div>
+  <div class="m-tabs__tab" (click)="setFilter('subscriptions')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'subscriptions'">
+      <m-tooltip icon="people" anchor="top">Subscribers</m-tooltip>
+    </a>
+  </div>
+  <div class="m-tabs__tab" (click)="setFilter('votes')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'votes'">
+      <m-tooltip icon="thumb_up" anchor="top">Votes</m-tooltip>
+    </a>
+  </div>
+  <div class="m-tabs__tab" (click)="setFilter('reminds')">
+    <a [class.m-tabs__tab--selected]="(filter$ | async) === 'reminds'">
+      <m-tooltip icon="repeat" anchor="top">Reminds / Quotes</m-tooltip>
+    </a>
+  </div>
+</div>
+
+<m-newNotificationsButton
+  (loadNew)="reload($event)"
+  [ngClass]="{
+    'm-newNotificationsButton--fixed': hasScrolledPastTabs
+  }"
+></m-newNotificationsButton>
+<ul>
+  <li *ngFor="let notification of list">
+    <m-notifications__notification
+      [notification]="notification"
+    ></m-notifications__notification>
+  </li>
+
+  <ng-container *ngIf="inProgress$ | async">
+    <li *ngFor="let i of [null, null]">
+      <m-notifications__notification></m-notifications__notification>
+    </li>
+  </ng-container>
+</ul>
+
+<infinite-scroll
+  *ngIf="list.length > 0 && nextPagingToken"
+  distance="25%"
+  (load)="loadNext()"
+  [moreData]="true"
+  [scrollSource]="scrollSource"
+  [inProgress]="inProgress$ | async"
+  [hidden]="inProgress$ | async"
+>
+</infinite-scroll>
+
+<div
+  class="m-notificationsList__empty"
+  *ngIf="list.length === 0 && !(inProgress$ | async)"
+>
+  <span *ngIf="(filter$ | async) === ''">You have no notifications</span>
+  <span *ngIf="(filter$ | async) === 'tags'">You have no tags</span>
+</div>

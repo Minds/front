@@ -1,0 +1,9 @@
+@import 'defaults.scss';
+
+:host {
+  .m-txExplorers__icon {
+    width: 20px;
+    margin: 5px;
+    cursor: pointer;
+  }
+}

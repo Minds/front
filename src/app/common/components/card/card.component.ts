@@ -30,6 +30,7 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
   providers: [ActivityService],
 })
 export class MindsCard implements AfterViewInit {
+  @Input() forceShowSubscribe = false;
   @ViewChild(DynamicHostDirective, { static: true })
   cardHost: DynamicHostDirective;
 
@@ -146,6 +147,7 @@ export class MindsCard implements AfterViewInit {
       (<GroupsCard>this.componentInstance).group = this.object;
     } else if (this.object.type === 'user') {
       this.componentInstance.object = this.object;
+      this.componentInstance.forceShowSubscribe = this.forceShowSubscribe;
     } else if (this.object.subtype === 'blog') {
       (<BlogCard>this.componentInstance)._blog = this.object;
     } else if (this.object.type === 'comment') {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 
@@ -7,6 +7,7 @@ import { Client } from '../../../../services/api';
   inputs: [
     '_object: object',
     '_src: src',
+    // '_name: name',
     '_top: top',
     'overlay',
     '_editMode: editMode',
@@ -14,7 +15,11 @@ import { Client } from '../../../../services/api';
   ],
   outputs: ['added'],
   template: `
-    <div class="minds-banner" *ngIf="!editing">
+    <div
+      class="minds-banner"
+      *ngIf="!editing"
+      [ngClass]="{ 'wide-banner': wideBanner }"
+    >
       <div
         class="minds-banner-img m-banner--img-cover"
         [style.backgroundImage]="src ? 'url(' + src + ')' : null"
@@ -25,6 +30,7 @@ import { Client } from '../../../../services/api';
     <div
       *ngIf="editing"
       class="minds-banner minds-banner-editing m-banner--img-cover"
+      [ngClass]="{ 'wide-banner': wideBanner }"
       [style.backgroundImage]="src ? 'url(' + src + ')' : null"
     >
       <div class="overlay" [hidden]="file">
@@ -67,6 +73,9 @@ export class MindsBanner {
   src: string = '';
   originalSrc: string = '';
   index: number = 0;
+  // name: string = '';
+
+  @Input() wideBanner: boolean;
 
   file: any;
   startY: number = 0;
@@ -80,6 +89,7 @@ export class MindsBanner {
   set _object(value: any) {
     if (!value) return;
     this.object = value;
+
     this.originalSrc = this.src =
       '/fs/v1/banners/' +
       this.object.guid +
@@ -101,6 +111,10 @@ export class MindsBanner {
   set _editMode(value: boolean) {
     this.editing = value;
   }
+
+  // set _name(value: any) {
+  //   this.name = value;
+  // }
 
   add(e) {
     if (!this.editing) return;

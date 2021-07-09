@@ -108,9 +108,12 @@ export class GroupsJoinButton {
    */
   leave() {
     event.preventDefault();
+    this.inProgress = true;
+
     this.service
       .leave(this.group)
       .then(() => {
+        this.inProgress = false;
         this.group['is:member'] = false;
         this.membership.next({
           member: false,
@@ -118,6 +121,7 @@ export class GroupsJoinButton {
       })
       .catch(e => {
         this.group['is:member'] = true;
+        this.inProgress = false;
       });
   }
 
@@ -127,17 +131,24 @@ export class GroupsJoinButton {
   accept() {
     this.group['is:member'] = true;
     this.group['is:invited'] = false;
+    this.inProgress = true;
 
-    this.service.acceptInvitation(this.group).then((done: boolean) => {
-      this.group['is:member'] = done;
-      this.group['is:invited'] = !done;
+    this.service
+      .acceptInvitation(this.group)
+      .then((done: boolean) => {
+        this.inProgress = false;
+        this.group['is:member'] = done;
+        this.group['is:invited'] = !done;
 
-      if (done) {
-        this.membership.next({
-          member: true,
-        });
-      }
-    });
+        if (done) {
+          this.membership.next({
+            member: true,
+          });
+        }
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 
   /**
@@ -145,22 +156,36 @@ export class GroupsJoinButton {
    */
   cancelRequest() {
     this.group['is:awaiting'] = false;
+    this.inProgress = true;
 
-    this.service.cancelRequest(this.group).then((done: boolean) => {
-      this.group['is:awaiting'] = !done;
-    });
+    this.service
+      .cancelRequest(this.group)
+      .then((done: boolean) => {
+        this.inProgress = false;
+        this.group['is:awaiting'] = !done;
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 
   /**
    * Decline joining a group
    */
   decline() {
+    this.inProgress = true;
     this.group['is:member'] = false;
     this.group['is:invited'] = false;
 
-    this.service.declineInvitation(this.group).then((done: boolean) => {
-      this.group['is:member'] = false;
-      this.group['is:invited'] = !done;
-    });
+    this.service
+      .declineInvitation(this.group)
+      .then((done: boolean) => {
+        this.inProgress = false;
+        this.group['is:member'] = false;
+        this.group['is:invited'] = !done;
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 }

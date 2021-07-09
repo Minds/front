@@ -5,6 +5,7 @@ import { socketMock } from '../../../tests/socket-mock.spec';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { SiteService } from '../../common/services/site.service';
 import { EventEmitter, PLATFORM_ID } from '@angular/core';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 
 export let siteServiceMock = new (function() {
   var pro = () => null;
@@ -33,7 +34,8 @@ describe('NotificationService', () => {
       socketMock,
       metaServiceMock,
       PLATFORM_ID,
-      siteServiceMock
+      siteServiceMock,
+      featuresServiceMock
     );
     clientMock.response = {};
   });

@@ -60,6 +60,14 @@ export class TitleBarComponent {
   }
 
   /**
+   * Container GUID from service.
+   * @returns { string } container_guid from service.
+   */
+  get containerGuid(): string {
+    return this.service.getContainerGuid();
+  }
+
+  /**
    * Clicked Create Blog trigger
    */
   onCreateBlogClick() {

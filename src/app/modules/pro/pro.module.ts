@@ -64,7 +64,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: ProChannelHomeComponent,
+            redirectTo: 'feed',
+            pathMatch: 'full',
           },
           {
             path: 'login',
@@ -91,7 +92,8 @@ export const PRO_DOMAIN_ROUTES = [
     children: [
       {
         path: '',
-        component: ProChannelHomeComponent,
+        redirectTo: 'feed',
+        pathMatch: 'full',
       },
       {
         path: 'login',

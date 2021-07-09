@@ -9,41 +9,34 @@
   (overscroll)="overscrollHandler($event)"
   #scrollArea
 >
-  <div
-    class="mdl-color-text--blue-grey-500 m-comments-load-more"
-    (click)="load()"
-    [ngClass]="{ 'm-disabled': descendingInProgress }"
-    *ngIf="moreDescendingData || !loaded"
-  >
-    <span *ngIf="descendingInProgress">
-      <i class="material-icons">autorenew</i>
-      <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS"
-        >Loading&hellip;</ng-container
-      >
-    </span>
-    <span *ngIf="!descendingInProgress && !loaded">
-      <i class="material-icons">update</i>
-      <ng-container *ngIf="!error"
-        ><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION"
-          >Load</ng-container
-        ></ng-container
-      >
-      <ng-container *ngIf="error"
-        ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
-          >Try again</ng-container
-        ></ng-container
-      >
-    </span>
-    <span *ngIf="!descendingInProgress && loaded">
-      <i class="material-icons">update</i>
-      <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
-        >Load earlier</ng-container
-      >
-    </span>
+  <div class="m-comments__viewMore" *ngIf="moreDescendingData || !loaded">
+    <m-button
+      (onAction)="load()"
+      [saving]="descendingInProgress"
+      overlay="true"
+      size="xsmall"
+    >
+      <span *ngIf="!descendingInProgress && !loaded">
+        <ng-container *ngIf="!error"
+          ><ng-container i18n="@@MINDS__COMMENTS__VIEW_MORE_ACTION"
+            >View more</ng-container
+          ></ng-container
+        >
+        <ng-container *ngIf="error"
+          ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
+            >Try again</ng-container
+          ></ng-container
+        >
+      </span>
+      <span *ngIf="!descendingInProgress && loaded">
+        <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
+          >Load earlier</ng-container
+        >
+      </span>
+    </m-button>
   </div>
-
-  <p
-    class="m-comments--start-conversation-label"
+  <div
+    class="m-comments__startConversation"
     *ngIf="
       !descendingInProgress &&
       !ascendingInProgress &&
@@ -54,51 +47,47 @@
     "
     i18n="@@MINDS__COMMENTS__START_CONVERSATION"
   >
-    Start the conversation!
-  </p>
-
+    <span>Start the conversation!</span>
+  </div>
   <div class="m-layout--spacer"></div>
-  <minds-card-comment
+  <m-comment
     *ngFor="let comment of comments; let i = index"
-    [object]="comment"
+    [comment]="comment"
     [parent]="parent"
     [canEdit]="canEdit"
     (delete)="delete(i)"
     (saved)="edited(i, $event)"
     (onReply)="reply($event.comment)"
-  ></minds-card-comment>
+  ></m-comment>
 
   <div
-    class="mdl-color-text--blue-grey-500 m-comments-load-more"
-    (click)="load(false, false)"
-    [ngClass]="{ 'm-disabled': ascendingInProgress }"
+    class="m-comments__viewMore"
     *ngIf="moreAscendingData && focusedCommentGuid"
   >
-    <span *ngIf="ascendingInProgress">
-      <i class="material-icons">autorenew</i>
-      <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS"
-        >Loading&hellip;</ng-container
-      >
-    </span>
-    <span *ngIf="!ascendingInProgress && !loaded">
-      <i class="material-icons">update</i>
-      <ng-container *ngIf="!error"
-        ><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION"
-          >Load</ng-container
-        ></ng-container
-      >
-      <ng-container *ngIf="error"
-        ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
-          >Try again</ng-container
-        ></ng-container
-      >
-    </span>
-    <span *ngIf="!ascendingInProgress && loaded">
-      <i class="material-icons">update</i>
-      <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
-        >Load later</ng-container
-      >
-    </span>
+    <m-button
+      (onAction)="load(false, false)"
+      [saving]="ascendingInProgress"
+      overlay="true"
+      size="xsmall"
+    >
+      <span *ngIf="!ascendingInProgress && !loaded">
+        <ng-container *ngIf="!error"
+          ><ng-container i18n="@@MINDS__COMMENTS__VIEW_MORE_ACTION"
+            >View more</ng-container
+          ></ng-container
+        >
+        <ng-container *ngIf="error"
+          ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
+            >Try again</ng-container
+          ></ng-container
+        >
+      </span>
+      <span *ngIf="!ascendingInProgress && loaded">
+        <ng-container i18n="@@MINDS__COMMENTS__LOAD_LATER_ACTION"
+          >Load later</ng-container
+        >
+      </span>
+    </m-button>
   </div>
 </div>
 

@@ -1,4 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { last } from 'rxjs/operators';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { Session } from '../../../../services/session';
+import { PhoneVerificationService } from '../../../wallet/components/components/phone-verification/phone-verification.service';
 import { OrderReceivedModalService } from './order-received/order-received-modal.service';
 import { TransakService } from './transak.service';
 import { UniswapModalService } from './uniswap/uniswap-modal.service';
@@ -18,7 +22,10 @@ export class BuyTokensModalComponent {
   constructor(
     private transakService: TransakService,
     private uniswapModalService: UniswapModalService,
-    private orderReceivedModalService: OrderReceivedModalService
+    private orderReceivedModalService: OrderReceivedModalService,
+    private session: Session,
+    private phoneVerificationService: PhoneVerificationService,
+    private toasterService: FormToastService
   ) {}
 
   canContinue() {
@@ -34,6 +41,19 @@ export class BuyTokensModalComponent {
   }
 
   async openPaymentModal() {
+    if (!this.session.getLoggedInUser().rewards) {
+      await this.phoneVerificationService.open();
+
+      const hasPhoneNumber = this.phoneVerificationService.phoneVerified$.getValue();
+
+      if (!hasPhoneNumber) {
+        this.toasterService.error(
+          'You must confirm your phone number in order to purchase tokens'
+        );
+        return;
+      }
+    }
+
     if (this.paymentMethod === 'crypto') {
       await this.uniswapModalService.open();
     } else {

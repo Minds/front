@@ -125,10 +125,7 @@
             >View parent and its comment thread</a
           >
         </div>
-        <minds-card-comment
-          [object]="report.entityObj"
-          class="mdl-card"
-        ></minds-card-comment>
+        <m-comment [comment]="report.entityObj" class="mdl-card"></m-comment>
       </div>
       <div *ngIf="!report.entityObj" class="m-comment-wrapper">
         <div class="m-admin-reports--comment-note">

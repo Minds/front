@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 /**
  * Date and time picker / selector.
@@ -41,6 +47,8 @@ export class DateSelectorComponent {
   @Input() i18n?: string; // i18n string to accompany tooltip text.
   @Input() tooltipIcon?: string; // tooltip icon.
   @Input() tooltipText?: string; // tooltip text.
+
+  @ViewChild('dt') dateTimePicker;
 
   protected _date: any;
 
@@ -85,5 +93,9 @@ export class DateSelectorComponent {
    */
   public onDateChange(newDate: number): void {
     this.dateChange.emit(newDate);
+  }
+
+  public open(e: MouseEvent): void {
+    this.dateTimePicker.open();
   }
 }

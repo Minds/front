@@ -11,7 +11,7 @@ import { UniswapAction } from './uniswap-modal.service';
   selector: 'm-uniswap__modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'uniswap-modal.component.html',
-  styleUrls: ['./uniswap-modal.component.scss'],
+  styleUrls: ['./uniswap-modal.component.ng.scss'],
 })
 export class UniswapModalComponent {
   private baseUrl = 'https://app.uniswap.org/#';
@@ -24,10 +24,19 @@ export class UniswapModalComponent {
     const mindsTokenAddress = this.configService.get('blockchain').token
       .address;
 
+    const useV2 = true;
+
     if (this.action === 'swap') {
       this.iframeUrl = `${this.baseUrl}/${this.action}?outputCurrency=${mindsTokenAddress}`;
+      if (useV2) {
+        this.iframeUrl += '&use=v2';
+      }
     } else {
-      this.iframeUrl = this.iframeUrl = `${this.baseUrl}/${this.action}/ETH/${mindsTokenAddress}`;
+      if (useV2) {
+        this.iframeUrl = `${this.baseUrl}/${this.action}/v2/ETH/${mindsTokenAddress}`;
+      } else {
+        this.iframeUrl = `${this.baseUrl}/${this.action}/ETH/${mindsTokenAddress}`;
+      }
     }
   }
 

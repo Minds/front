@@ -22,6 +22,9 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 import { PopoverComponent } from '../popover-validation/popover.component';
 import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { PASSWORD_VALIDATOR } from '../password.validator';
+import { UsernameValidator } from '../username.validator';
 
 @Component({
   selector: 'minds-form-register',
@@ -44,7 +47,6 @@ export class RegisterForm {
   hideLogin: boolean = false;
   inProgress: boolean = false;
   captcha: string;
-  takenUsername: boolean = false;
   usernameValidationTimeout: any;
   passwordFieldValid: boolean = false;
 
@@ -64,7 +66,8 @@ export class RegisterForm {
     fb: FormBuilder,
     public zone: NgZone,
     private experiments: ExperimentsService,
-    private routerHistoryService: RouterHistoryService
+    private routerHistoryService: RouterHistoryService,
+    private usernameValidator: UsernameValidator
   ) {
     this.form = fb.group(
       {
@@ -75,9 +78,10 @@ export class RegisterForm {
             Validators.minLength(4),
             Validators.maxLength(128),
           ],
+          [this.usernameValidator.existingUsernameValidator()],
         ],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required],
+        password: ['', [Validators.required, PASSWORD_VALIDATOR]],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
         exclusive_promotions: [true],
@@ -161,36 +165,8 @@ export class RegisterForm {
       });
   }
 
-  validateUsername() {
-    if (this.form.value.username) {
-      this.client
-        .get('api/v1/register/validate/' + this.form.value.username)
-        .then((data: any) => {
-          if (data.exists) {
-            this.form.controls.username.setErrors({ exists: true });
-            this.errorMessage = data.message;
-            this.takenUsername = true;
-          } else {
-            this.takenUsername = false;
-            this.errorMessage = '';
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
-  }
-
   setCaptcha(code) {
     this.form.patchValue({ captcha: code });
-  }
-
-  validationTimeoutHandler() {
-    clearTimeout(this.usernameValidationTimeout);
-    this.usernameValidationTimeout = setTimeout(
-      this.validateUsername.bind(this),
-      500
-    );
   }
 
   onPasswordFocus() {
@@ -200,10 +176,16 @@ export class RegisterForm {
   }
 
   onPasswordBlur() {
-    this.popover.hide();
+    if (!isMobileOrTablet()) {
+      this.popover.hide();
+    }
   }
 
   onPopoverChange(valid: boolean) {
     this.passwordFieldValid = !valid;
+  }
+
+  get username() {
+    return this.form.get('username');
   }
 }

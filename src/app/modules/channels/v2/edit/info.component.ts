@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelEditService } from './edit.service';
 import { LocationTypeaheadResponse } from '../location-typeahead/location-typeahead.component';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 /**
  * About Info accordion pane component
@@ -11,11 +12,15 @@ import { LocationTypeaheadResponse } from '../location-typeahead/location-typeah
   templateUrl: 'info.component.html',
 })
 export class ChannelEditInfoComponent {
+  public maxNameLength: number;
+
   /**
    * Constructor
    * @param service
    */
-  constructor(public service: ChannelEditService) {}
+  constructor(public service: ChannelEditService, configs: ConfigsService) {
+    this.maxNameLength = configs.get('max_name_length') ?? 50;
+  }
 
   /**
    * Sets the location

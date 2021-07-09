@@ -19,7 +19,7 @@ export interface WireStruc {
   payloadType: PayloadType | null;
   guid: any;
   recurring: boolean;
-  recurringInterval?: 'once' | 'monthly' | 'yearly' | null;
+  recurringInterval?: 'once' | 'monthly' | 'yearly' | 'lifetime' | null;
   payload: any;
 }
 
@@ -124,10 +124,23 @@ export class WireService {
         method: payload.method,
         amount: wire.amount,
         recurring: wire.recurring,
-        recurring_interval: wire.recurringInterval,
+        recurring_interval:
+          wire.recurringInterval === 'lifetime'
+            ? 'once'
+            : wire.recurringInterval,
       });
 
       this.wireSent.next(wire);
+      if (response && response.status && response.status === 'success') {
+        const isMembership =
+          wire.recurring &&
+          (!wire.recurringInterval || wire.recurringInterval === 'monthly');
+
+        const message = isMembership
+          ? 'Recurring payment submitted successfully'
+          : 'Wire submitted successfully';
+        this.toast.success(message);
+      }
       return { done: true };
     } catch (e) {
       if (e.message) {

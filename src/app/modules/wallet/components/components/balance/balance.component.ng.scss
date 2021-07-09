@@ -1,0 +1,105 @@
+@import 'defaults.scss';
+
+:host {
+  position: relative;
+  display: inline-block;
+
+  .m-walletBalance__bubble {
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    display: inline-block;
+    border-radius: 50px;
+  }
+
+  .m-walletBalance__brief {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: default;
+
+    &.m-walletBalance__brief--canExpand {
+      cursor: pointer;
+    }
+  }
+
+  &.m-wallet__balance--primary {
+    .m-walletBalance__brief {
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-walletBalance__address {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      border-left: 1px solid themed($m-borderColor--primary);
+    }
+    display: inline-block;
+    padding: 0 15px;
+    height: 40px;
+    vertical-align: top;
+
+    @include mobile-only {
+      display: none;
+    }
+  }
+
+  .m-walletBalance__expanded {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    &::before,
+    &::after {
+      content: ' ';
+      position: absolute;
+      pointer-events: none;
+      bottom: 100%;
+      left: 20%;
+      width: 0;
+      height: 0;
+
+      border: solid transparent;
+    }
+    &::after {
+      @include m-theme() {
+        border-color: rgba(themed($m-bgColor--primary), 0);
+        border-bottom-color: themed($m-bgColor--primary);
+      }
+      border-width: 10px;
+      margin-left: -10px;
+    }
+    &::before {
+      @include m-theme() {
+        border-color: rgba(themed($m-borderColor--primary), 0);
+        border-bottom-color: themed($m-borderColor--primary);
+      }
+      border-width: 12px;
+      margin-left: -12px;
+    }
+
+    width: 100%;
+    position: absolute;
+    padding: 20px;
+    margin-top: 12px;
+
+    ::ng-deep {
+      h4 {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+      }
+      .m-layout__spacer {
+        height: 10px;
+      }
+    }
+  }
+}

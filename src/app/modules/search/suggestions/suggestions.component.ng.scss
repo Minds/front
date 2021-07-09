@@ -13,6 +13,7 @@
     width: 100%;
     overflow: scroll;
     overflow: overlay;
+    @include vertical-scroll;
 
     padding: 16px 0;
     margin: 0;

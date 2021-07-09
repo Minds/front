@@ -11,6 +11,7 @@ import { AddressExcerptPipe } from './address-excerpt';
 import { TimediffPipe } from './timediff.pipe';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
 import { AsyncStatePipe } from './async-state.pipe';
+import { FileSizePipe } from './filesize';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -28,4 +29,5 @@ export const MINDS_PIPES = [
   FriendlyDateDiffPipe,
   SafeStylePipe,
   AsyncStatePipe,
+  FileSizePipe,
 ];

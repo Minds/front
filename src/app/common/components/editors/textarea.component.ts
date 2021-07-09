@@ -15,7 +15,7 @@ declare var tinymce;
   template: `
     <div
       #editor
-      class="m-editor"
+      class="m-editor m-legible"
       [ngClass]="{ 'm-editor-disabled': disabled }"
       [attr.contenteditable]="!disabled ? 'true' : null"
       (keyup)="change()"
@@ -25,9 +25,11 @@ declare var tinymce;
       m-attachment-paste
       tabindex="0"
     ></div>
-    <span *ngIf="placeholder && model.length === 0" class="m-placeholder">{{
-      placeholder
-    }}</span>
+    <span
+      *ngIf="placeholder && model.length === 0"
+      class="m-placeholder m-legible"
+      >{{ placeholder }}</span
+    >
   `,
   exportAs: 'Textarea',
 })

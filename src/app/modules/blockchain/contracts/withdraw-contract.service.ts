@@ -8,7 +8,6 @@ export class WithdrawContractService {
   protected instance: any;
 
   constructor(protected web3Wallet: Web3WalletService) {
-    console.log('withdraw contract called');
     this.load();
   }
 
@@ -47,10 +46,11 @@ export class WithdrawContractService {
 
   // Withdraw
 
-  async request(guid: string | number, amount: number, message: string = '') {
+  async request(guid: string | number, amount: string, message: string = '') {
     await this.contract(); //wait for instance to get correct info
 
-    const tokens = amount / 10 ** 18;
+    const tokens = this.web3Wallet.fromWei(BigNumber.from(amount), 'ether');
+
     const gasLimit = 67839; //TODO: make this dynamic
     const gas = BigNumber.from(this.instance.defaultTxObject.gasPrice).mul(
       BigNumber.from(gasLimit)

@@ -14,6 +14,7 @@ import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
+import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -178,6 +179,14 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
+import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
+import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
+import { DownloadActivityMediaService } from './services/download-activity-media.service';
+import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
+import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
+import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
+import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 
 const routes: Routes = [
   {
@@ -205,6 +214,7 @@ const routes: Routes = [
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+    TopbarWalletBalance,
 
     // V2 Layout
     V3TopbarComponent,
@@ -331,6 +341,12 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    LaunchButtonComponent,
+    PublisherCardComponent,
+    SubscribeButtonComponent,
+    HotkeyScrollDirective,
+    ChatIconComponent,
+    PublisherSearchModalComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -338,6 +354,7 @@ const routes: Routes = [
     TopbarComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+    TopbarWalletBalance,
 
     // V3 Layout
     V3TopbarComponent,
@@ -461,6 +478,12 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    LaunchButtonComponent,
+    PublisherCardComponent,
+    SubscribeButtonComponent,
+    HotkeyScrollDirective,
+    ChatIconComponent,
+    PublisherSearchModalComponent,
   ],
   providers: [
     SiteService,
@@ -508,6 +531,8 @@ const routes: Routes = [
     AttachmentApiService,
     ClientMetaService,
     UserMenuService,
+    DownloadActivityMediaService,
+    PublisherSearchModalService,
   ],
 })
 export class CommonModule {}

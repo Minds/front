@@ -33,10 +33,13 @@ m-onboarding__progressbar {
     h2.m-onboardingProgressbar__stepName {
       font-size: 28px;
       line-height: 37px;
-      color: #4a4a4a;
       text-align: center;
       margin-bottom: 7px;
       padding: 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
 
     .m-onboardingProgressbar_item--mobile {
@@ -81,7 +84,9 @@ m-onboarding__progressbar {
 
       &.m-onboardingProgressbar__item--selected {
         span:nth-child(2) {
-          color: #4a4a4a;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
 
         .m-onboardingProgressbarItem__selector {

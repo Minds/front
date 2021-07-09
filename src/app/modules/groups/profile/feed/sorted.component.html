@@ -26,6 +26,24 @@
         (onChange)="setFilter($event.customType)"
       ></m-sort-selector>
     </div>
+    <!-- ----------------------------------------- -->
+    <!-- SEARCH QUERY DISPLAY -->
+    <!-- ----------------------------------------- -->
+    <div
+      class="m-groupSorted__searchDisplay"
+      *ngIf="groupsSearch.query$ | async"
+    >
+      <span i18n="@@M__GROUP_SORTED__SEARCH_RESULTS_FOR"
+        >Search results for:
+      </span>
+      <span class="m-groupSortedSearch__query"
+        >"{{ groupsSearch.query$ | async }}" ·
+      </span>
+      <a i18n="@@M__GROUP_FEED__CLEAR" (click)="groupsSearch.query$.next('')"
+        >Clear</a
+      >
+    </div>
+    <!-- ----------------------------------------- -->
     <ng-container
       *ngIf="
         isActivityFeed() &&
@@ -48,7 +66,8 @@
         *ngIf="entity$ | async as entity"
         [entity]="patchEntity(entity)"
         [displayOptions]="{
-          showOnlyCommentsInput: true
+          showOnlyCommentsInput: true,
+          isFeed: true
         }"
         [slot]="i + 1"
         [canDelete]="group['is:owner'] || group['is:moderator']"

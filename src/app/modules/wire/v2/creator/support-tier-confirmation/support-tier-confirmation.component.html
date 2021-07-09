@@ -2,7 +2,9 @@
   <div class="m-wireCreatorSupportTierConfirmation__titleRow m-layout__row">
     <h3>Join a membership</h3>
     <div class="m-layout__spacer"></div>
-    <m-wireCreator__currencyToggle></m-wireCreator__currencyToggle>
+    <m-wireCreator__currencyToggle
+      *ngIf="(paymentTypes$ | async)?.length > 1"
+    ></m-wireCreator__currencyToggle>
   </div>
 
   <div class="m-form__field--select" *ngIf="!(service.inProgress$ | async)">

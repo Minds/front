@@ -1,4 +1,24 @@
 <ul class="m-channel--badges">
+  <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
+    <m-tooltip
+      icon="verified_user"
+      [iconClass]="{ selected: user.verified }"
+      i18n="Verified as user status@@COMMON__BADGES__VERIFIED"
+    >
+      Verified
+    </m-tooltip>
+  </li>
+
+  <li *ngIf="user.is_admin && badges.indexOf('admin') > -1">
+    <m-tooltip
+      icon="verified_user"
+      [iconClass]="{ admin__badge: user.is_admin }"
+      i18n="Admin as user status@@COMMON__BADGES__ADMIN"
+    >
+      Admin
+    </m-tooltip>
+  </li>
+
   <li
     *ngIf="user.plus && !user.pro && badges.indexOf('plus') > -1"
     routerLink="/plus"
@@ -14,31 +34,19 @@
 
   <li *ngIf="user.pro && badges.indexOf('plus') > -1" routerLink="/pro">
     <m-tooltip
-      icon="business_center"
-      iconClass="selected"
+      iconSrc="{{ cdnAssetsUrl }}assets/badges/proDark.svg"
       i18n="@@COMMON__BADGES__PRO"
+      *ngIf="isDark"
     >
       Pro
     </m-tooltip>
-  </li>
 
-  <li *ngIf="user.is_admin && badges.indexOf('admin') > -1">
     <m-tooltip
-      icon="verified_user"
-      [iconClass]="{ admin__badge: user.is_admin }"
-      i18n="Admin as user status@@COMMON__BADGES__ADMIN"
+      iconSrc="{{ cdnAssetsUrl }}assets/badges/proLight.svg"
+      i18n="@@COMMON__BADGES__PRO"
+      *ngIf="!isDark"
     >
-      Admin
-    </m-tooltip>
-  </li>
-
-  <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
-    <m-tooltip
-      icon="verified_user"
-      [iconClass]="{ selected: user.verified }"
-      i18n="Verified as user status@@COMMON__BADGES__VERIFIED"
-    >
-      Verified
+      Pro
     </m-tooltip>
   </li>
 
@@ -48,7 +56,6 @@
   >
     <m-tooltip
       icon="flight_takeoff"
-      [iconClass]="{ selected: user.founder }"
       i18n="Founder as user status@@COMMON__BADGES__FOUNDER"
     >
       Founder
@@ -61,7 +68,6 @@
   >
     <m-tooltip
       icon="flight_takeoff"
-      [iconClass]="{ selected: user.founder }"
       i18n="Founder as user status@@COMMON__BADGES__FOUNDER"
     >
       Founder
@@ -69,10 +75,7 @@
   </li>
 
   <li *ngIf="showOnchainBadge()" routerLink="/tokens">
-    <m-tooltip
-      icon="link"
-      [iconClass]="{ selected: true }"
-      i18n="@@BADGES__BOOSTER"
+    <m-tooltip icon="link" i18n="@@BADGES__BOOSTER"
       >Boosted OnChain in the last 7 days</m-tooltip
     >
   </li>

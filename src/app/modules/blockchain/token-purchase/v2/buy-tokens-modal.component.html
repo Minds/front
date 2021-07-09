@@ -42,6 +42,17 @@
       </span>
     </div>
 
+    <div
+      class="m-buyTokensBody__uniswapWarning"
+      *ngIf="paymentMethod === 'card'"
+    >
+      <i class="material-icons">info</i>
+      <span
+        >Customers in the US can only purchase ETH with USD, and then use ETH to
+        swap for Minds Tokens via Uniswap.</span
+      >
+    </div>
+
     <div class="m-buyTokensBody__termsCheck">
       <input id="terms-check" type="checkbox" [(ngModel)]="terms" />
       <label

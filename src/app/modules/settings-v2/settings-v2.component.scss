@@ -163,8 +163,6 @@ m-settingsV2 {
 
     .m-formWrapper .m-form__fieldsContainer {
       .m-form__row--label label {
-        font-size: 18px;
-        line-height: 24px;
         font-weight: 400;
 
         > m-tooltip {
@@ -255,5 +253,89 @@ m-settingsV2 {
 
   .m-tooltip--bubble {
     width: 30vw;
+  }
+
+  .m-settingsV2__table {
+    ul {
+      margin: 0;
+    }
+
+    ul,
+    li {
+      list-style: none;
+      cursor: default;
+      padding: 0;
+    }
+
+    .m-settingsV2__tableItem {
+      align-items: flex-start;
+      > div {
+        > * {
+          margin: 0;
+        }
+      }
+    }
+
+    .m-settingsV2__tableHeader {
+      align-items: flex-end;
+      padding-bottom: 6px;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+
+      > div:last-child {
+        > span {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .m-settingsV2__tableItem,
+    .m-settingsV2__tableHeader {
+      display: flex;
+      flex-flow: row nowrap;
+      margin: 20px 0;
+
+      > div {
+        &:first-child {
+          flex: 3 1 250px;
+          > span {
+            margin-left: 8px;
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+        }
+        &:last-child {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          align-items: center;
+          flex: 2 1 auto;
+        }
+      }
+    }
+
+    .m-settingsV2__tableCol--right {
+      > * {
+        &:first-child {
+          margin-right: 10px;
+        }
+      }
+    }
+    .m-settingsV2__tableItem__action {
+      box-sizing: border-box;
+      min-width: 90px;
+      margin-right: 0;
+      span {
+        display: inline;
+      }
+      @media screen and (max-width: $max-mobile) {
+        min-width: 68px;
+        span {
+          display: none;
+        }
+      }
+    }
   }
 }

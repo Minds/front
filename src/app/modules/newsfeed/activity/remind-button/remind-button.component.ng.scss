@@ -1,6 +1,7 @@
 @import 'defaults.scss';
 
 :host {
+  position: relative;
   .m-dropdown--v2 {
     z-index: 4;
   }

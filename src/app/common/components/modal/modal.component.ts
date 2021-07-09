@@ -11,10 +11,10 @@ import { Component, EventEmitter } from '@angular/core';
     <div class="m-modal__wrapper">
       <div class="m-modal-bg" (click)="close($event)"></div>
       <div class="m-modal-container">
-        <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card">
           <ng-content></ng-content>
           <div
-            class="mdl-card__menu"
+            class="mdl-card__menu m-modal__close"
             (click)="close($event)"
             *ngIf="allowClose"
           >
@@ -24,6 +24,7 @@ import { Component, EventEmitter } from '@angular/core';
       </div>
     </div>
   `,
+  styleUrls: ['modal.component.ng.scss'],
 })
 export class Modal {
   allowClose: boolean = true;

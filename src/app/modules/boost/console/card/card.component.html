@@ -74,10 +74,23 @@
     *ngIf="type != 'p2p' || !isIncoming()"
     class="m-boost-card--manager-item m-boost-card--state"
   >
-    <i class="material-icons">hourglass_empty</i>
-    {{ boost.state }}
+    <ng-container *ngIf="boost.state === 'revoked'">
+      <m-tooltip
+        icon="hourglass_empty"
+        class="m-boost-card--manager-item__tooltip"
+      >
+        <span i18n="@@BOOST__CONSOLE__CARD__REFUNDED_TIME">
+          Refunded
+        </span>
+        <span>: {{ boost.revoked_timestamp | date: 'short' }}</span>
+      </m-tooltip>
+      {{ boost.state }}
+    </ng-container>
+    <ng-container *ngIf="boost.state !== 'revoked'">
+      <i class="material-icons">hourglass_empty</i>
+      {{ boost.state }}
+    </ng-container>
   </div>
-
   <!-- Facebook crosspost -->
   <div
     *ngIf="boost.postToFacebook"

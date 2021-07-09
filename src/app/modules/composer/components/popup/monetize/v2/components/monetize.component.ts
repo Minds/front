@@ -36,6 +36,8 @@ export class ComposerMonetizeV2Component implements OnInit {
 
   isEditingPlus: boolean = false;
 
+  isGroupPost: boolean = false;
+
   plusTierUrn: string = '';
 
   /**
@@ -84,6 +86,11 @@ export class ComposerMonetizeV2Component implements OnInit {
       this.type = pendingMonetization.type || 'plus';
       return;
     }
+
+    this.service.isGroupPost$.subscribe(is => {
+      this.isGroupPost = is;
+      this.type = is ? 'membership' : 'plus';
+    });
   }
 
   setType(tier) {

@@ -90,9 +90,11 @@ $linkedin: #0071a1;
 $themes: (
   light: (
     m-textColor--primary: #43434d,
+    m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
+    m-bgColor--primaryInverted: #242a30,
     m-bgColor--primaryDarkAlways: #242a30,
     m-bgColor--primaryAlt: #e7edf3,
     m-bgColor--secondary: #f6f7f7,
@@ -164,9 +166,11 @@ $themes: (
   ),
   dark: (
     m-textColor--primary: #ffffff,
+    m-textColor--primaryInverted: #43434d,
     m-textColor--secondary: #b8c1ca,
     m-textColor--tertiary: #797b82,
     m-bgColor--primary: #242a30,
+    m-bgColor--primaryInverted: #ffffff,
     m-bgColor--primaryDarkAlways: #242a30,
     m-bgColor--primaryAlt: #1e242a,
     m-bgColor--secondary: #1a2025,
@@ -299,9 +303,11 @@ $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
 
 $m-textColor--primary: 'm-textColor--primary';
+$m-textColor--primaryInverted: 'm-textColor--primaryInverted';
 $m-textColor--secondary: 'm-textColor--secondary';
 $m-textColor--tertiary: 'm-textColor--tertiary';
 $m-bgColor--primary: 'm-bgColor--primary';
+$m-bgColor--primaryInverted: 'm-bgColor--primaryInverted';
 $m-bgColor--primaryDarkAlways: 'm-bgColor--primaryDarkAlways';
 $m-bgColor--primaryAlt: 'm-bgColor--primaryAlt';
 $m-bgColor--secondary: 'm-bgColor--secondary';

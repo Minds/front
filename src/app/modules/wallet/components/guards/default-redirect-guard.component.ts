@@ -28,7 +28,7 @@ export class DefaultRedirectGuard implements CanActivate {
     }
 
     // default redirect
-    this.router.navigateByUrl('/wallet/cash/earnings');
+    this.router.navigateByUrl('/wallet/tokens/rewards');
     return true;
   }
 }

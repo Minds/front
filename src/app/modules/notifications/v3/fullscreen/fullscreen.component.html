@@ -1,0 +1,16 @@
+<div class="m-pageLayout__container">
+  <div class="m-pageLayout__pane--main">
+    <m-notifications__list></m-notifications__list>
+  </div>
+  <div class="m-pageLayout__pane--right">
+    <m-ads-boost
+      limit="8"
+      *ngIf="
+        !(
+          session.getLoggedInUser().plus &&
+          session.getLoggedInUser().disabled_boost
+        )
+      "
+    ></m-ads-boost>
+  </div>
+</div>

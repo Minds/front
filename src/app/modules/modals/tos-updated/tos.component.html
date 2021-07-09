@@ -1,26 +1,33 @@
-<m-modal [open]="true" (closed)="close($event)" *ngIf="showModal">
-  <div class="m-tos-updated--body">
-    <h3>Update</h3>
+<m-modal
+  [open]="true"
+  (closed)="close($event)"
+  *ngIf="showModal"
+  class="m-updateModal"
+>
+  <div class="m-tos-updated--body m-updateModal__body">
+    <h3>Terms of service update</h3>
     <p i18n="@@MODALS__TOS-UPDATED__TOS_UPDATED_PARAGRAPH">
       We've recently updated our
-      <a href="{{ site_url }}p/terms" target="_blank">Terms of Service</a> to
-      reflect the changes to our network with the launch of the Jury System.
+      <a href="{{ siteUrl }}p/terms" target="_blank" class="m-legible"
+        >Terms of Service</a
+      >
+      to reflect the changes to our network with the launch of the Jury System.
       These changes are being implemented to ensure a balance of power between
       Minds, Inc. and the community. The following is a brief summary of what
       has changed:
     </p>
     <ul>
-      <li>
+      <li class="m-legible">
         Creation of a separate
-        <a href="{{ site_url }}content-policy" target="_blank"
+        <a href="{{ siteUrl }}content-policy" target="_blank" class="m-legible"
           >Content Policy</a
         >
         document for more clarity
       </li>
-      <li>
+      <li class="m-legible">
         Clarification of licensing specifications and restrictions
       </li>
-      <li>
+      <li class="m-legible">
         Clarification of terminology and overall grammatical improvements
       </li>
     </ul>
@@ -28,8 +35,8 @@
       Please also note that your continued use of Minds serves as acceptance of
       these new terms and policies. Thank you.
     </p>
-    <p>
-      <a class="m-btn m-btn--action m-btn--slim" (click)="close($event)">Ok</a>
-    </p>
+  </div>
+  <div class="m-tos-updated--footer m-updateModal__footer">
+    <m-button color="blue" (onAction)="close()">Accept</m-button>
   </div>
 </m-modal>

@@ -11,7 +11,10 @@
 
   <div
     *ngIf="
-      !(isEditing$ | async) && !(attachment$ | async) && !(remind$ | async)
+      !(isEditing$ | async) &&
+      !(attachment$ | async) &&
+      !(remind$ | async) &&
+      !containerGuid
     "
     class="m-composerTitleBar__createBlogTrigger"
     [hidden]="isPosting$ | async"

@@ -94,13 +94,14 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
       this.channel = response.channel;
 
-      const shouldRedirectToProHandler =
-        this.showPro &&
-        !this.site.isProDomain &&
-        this.channel.pro_published &&
-        !this.isOwner &&
-        !this.isAdmin &&
-        this.proEnabled;
+      // disabled for https://gitlab.com/minds/front/-/issues/4379
+      const shouldRedirectToProHandler = false;
+      // this.showPro &&
+      // !this.site.isProDomain &&
+      // this.channel.pro_published &&
+      // !this.isOwner &&
+      // !this.isAdmin &&
+      // this.proEnabled;
 
       // NOTE: Temporary workaround until channel component supports children routes
       if (shouldRedirectToProHandler) {
@@ -165,6 +166,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   get proEnabled() {
-    return this.features.has('pro');
+    // disabled for https://gitlab.com/minds/front/-/issues/4379
+    return false; //this.features.has('pro');
   }
 }

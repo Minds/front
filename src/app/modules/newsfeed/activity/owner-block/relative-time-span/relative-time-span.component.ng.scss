@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  .m-relativeTime__span {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: normal;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

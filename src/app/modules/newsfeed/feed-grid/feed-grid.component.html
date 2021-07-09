@@ -8,7 +8,8 @@
       autoplayVideo: false,
       showToolbar: false,
       bypassMediaModal: true,
-      showOwnerBlock: entity.subtype === 'remind'
+      showOwnerBlock: entity.subtype === 'remind',
+      isFeed: true
     }"
     (deleted)="delete($event)"
     [slot]="i"

@@ -84,7 +84,9 @@ export class PostMenuService {
       this.entityOwner.subscribed = true;
     } catch (e) {
       this.entityOwner.subscribed = false;
-      this.formToastService.error("You can't subscribe to this user.");
+      this.formToastService.error(
+        e.message || "You can't subscribe to this user"
+      );
     }
   }
 

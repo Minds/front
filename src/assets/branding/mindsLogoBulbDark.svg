@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="62px" height="75px" viewBox="0 0 62 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bulb copy</title>
+    <g id="Existing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01-Web-Large-[Dark]" transform="translate(-1032.000000, -701.000000)" fill-rule="nonzero">
+            <g id="bulb-copy" transform="translate(1032.000000, 701.000000)">
+                <g id="Group-5" transform="translate(21.000000, 59.000000)">
+                    <path d="M4.95049504,8.3902439 L4.55445544,14.0487805 L4.95049504,8.3902439 Z" id="Triangle-3" fill="#656565"></path>
+                    <polygon id="Triangle-3" fill="#656565" points="0 12.097561 5 8 10 16"></polygon>
+                    <polygon id="Triangle-3" fill="#787778" points="0 0 0 12.097561 5 8"></polygon>
+                    <polygon id="Triangle-3" fill="#5C5C5C" points="15 8 10 16 20 12.097561"></polygon>
+                    <polygon id="Triangle-3" fill="#787778" points="20 12.097561 15 8 20 0"></polygon>
+                    <polygon id="Triangle-3" fill="#4A4A4A" points="0 0 20 0 10 16"></polygon>
+                </g>
+                <g id="Group">
+                    <polygon id="Triangle-3" fill="#FED12F" points="22.3465347 20.2416918 43.6864686 29.1480363 28.3861386 41.4954683"></polygon>
+                    <polygon id="Triangle-3" fill="#FED12F" points="38.4521452 5.26283988 50.5313531 17.8126888 43.6864686 29.1480363"></polygon>
+                    <polygon id="Triangle-3" fill="#FED12F" points="20.3333333 58.4984894 42.4785479 52.021148 40.4653465 58.4984894"></polygon>
+                    <polygon id="Triangle-3" fill="#FED12F" points="18.320132 52.021148 28.3861386 41.4954683 20.3333333 58.4984894"></polygon>
+                    <polygon id="Triangle-3" fill="#FED12F" points="10.2673267 17.8126888 22.3465347 5.26283988 22.3465347 20.2416918"></polygon>
+                    <polygon id="Triangle-3" fill="#FFF3CB" points="28.3861386 41.4954683 42.4785479 52.021148 43.6864686 29.1480363"></polygon>
+                    <polygon id="Triangle-3" fill="#FFF3CB" transform="translate(18.513263, 40.990373) rotate(140.000000) translate(-18.513263, -40.990373) " points="11.2748701 34.2572844 23.8681179 49.3162947 25.751655 32.6644504"></polygon>
+                    <polygon id="Triangle-3" fill="#FFDD63" transform="translate(37.808596, 18.335541) rotate(-53.000000) translate(-37.808596, -18.335541) " points="26.9809749 7.13414003 48.6362165 10.9821544 32.7107449 29.5369411"></polygon>
+                    <polygon id="Triangle-3" fill="#FFEDAC" transform="translate(22.693392, 34.415697) rotate(-53.000000) translate(-22.693392, -34.415697) " points="11.5822725 25.7169259 33.804512 25.6085551 20.4652158 43.2228391"></polygon>
+                    <polygon id="Triangle-3" fill="#FFDD63" transform="translate(29.887967, 54.115944) rotate(-53.000000) translate(-29.887967, -54.115944) " points="20.6377885 49.1227558 39.063304 45.3213383 39.138146 62.910549"></polygon>
+                    <polygon id="Triangle-3" fill="#FFDD63" transform="translate(43.082508, 40.584592) rotate(-53.000000) translate(-43.082508, -40.584592) " points="33.5853962 46.984939 52.5796203 34.1842453 50.3129966 45.9754733"></polygon>
+                    <polygon id="Triangle-3" fill="#FFDD63" transform="translate(11.267071, 25.805347) rotate(-53.000000) translate(-11.267071, -25.805347) " points="0.15595139 31.4138795 17.0486302 20.1968137 22.3781909 31.3055086"></polygon>
+                    <polygon id="Triangle-3" fill="#FEE382" transform="translate(51.135314, 27.933535) rotate(-53.000000) translate(-51.135314, -27.933535) " points="45.6825427 22.7155279 58.8547079 21.3603133 43.4159191 34.5067561"></polygon>
+                    <polygon id="Triangle-3" fill="#FEF1C0" transform="translate(29.457341, 10.164144) rotate(160.000000) translate(-29.457341, -10.164144) " points="19.3286445 11.6934593 39.586037 3.12638586 34.4629678 17.2019025"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

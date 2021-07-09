@@ -1,0 +1,12 @@
+<h4>Confirm Admin Action</h4>
+<select
+  *ngIf="(action$ | async) === 'make'"
+  (change)="onSelectChange($event.target.value)"
+>
+  <option value="month">Month</option>
+  <option value="year">Year</option>
+  <option value="life">Life</option>
+</select>
+<div class="m-channelAdminConfirmation_footer">
+  <m-button (onAction)="confirmClick()">Confirm</m-button>
+</div>

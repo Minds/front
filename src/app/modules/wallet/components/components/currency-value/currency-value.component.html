@@ -1,0 +1,15 @@
+<span *ngIf="currency === 'usd'">$</span>
+
+<span>{{ value | number: '1.0-' + decimals }} </span>
+
+<span
+  class="m-walletCurrencyValue__currency"
+  class="m-walletCurrencyValue__currency--{{ currency }}"
+  *ngIf="!hideCurrency && currency !== 'usd'"
+  >{{ currency }}</span
+>
+
+<span *ngIf="usd > 0" class="m-walletCurrencyValue__usd">
+  &middot; <ng-container>$</ng-container
+  >{{ usd | number: '1.' + decimals + '-' + decimals }}
+</span>

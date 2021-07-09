@@ -1,6 +1,7 @@
 m-walletModal {
   position: relative;
   @include z-index(modal);
+
   .m-walletModal__container {
     display: block;
     position: fixed;
@@ -25,87 +26,86 @@ m-walletModal {
       background-color: themed($m-overlay);
     }
   }
+}
 
-  .m-walletModal {
-    padding: 56px 65px;
-    border-radius: 5px;
-    z-index: 2;
-    position: fixed;
-    transform: translateY(-50%);
-    width: 70vw;
-    max-width: 700px;
-    max-height: 90vh;
-    right: 2vw;
-    left: 2vw;
-    margin: auto;
-    box-sizing: border-box;
-    top: 50%;
-    overflow-y: auto;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    @include m-theme() {
-      box-shadow: 0 0 15px rgba(themed($m-black-always), 0.1);
-      background-color: themed($m-bgColor--primary);
-      color: themed($m-textColor--secondary);
-    }
-
-    a {
-      text-decoration: underline;
-      cursor: pointer;
-      display: inline-block;
-      font-weight: 300;
-    }
-    @media screen and (max-width: $min-tablet) {
-      padding: 46px 50px;
-      max-width: 80vw;
-      width: 80vw;
-      max-height: 90vh;
-    }
-    @media screen and (max-width: $max-mobile) {
-      max-width: 90vw;
-      max-height: 95vh;
-      padding: 46px 24px;
-    }
+.m-walletModal {
+  padding: 56px 65px;
+  border-radius: 5px;
+  z-index: 2;
+  position: fixed;
+  width: 70vw;
+  max-width: 700px;
+  max-height: 90vh;
+  right: 2vw;
+  left: 2vw;
+  margin: auto;
+  box-sizing: border-box;
+  top: 20%;
+  overflow-y: auto;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  @include m-theme() {
+    box-shadow: 0 0 15px rgba(themed($m-black-always), 0.1);
+    background-color: themed($m-bgColor--primary);
+    color: themed($m-textColor--secondary);
   }
 
-  .m-walletSecondaryText--desc {
-    margin-bottom: 30px;
-  }
-
-  [class*='m-walletModal__footnote'] {
-    margin: 10px 0 11px 0;
-    font-size: 15px;
-    line-height: 20px;
-  }
-
-  .m-walletModal__close {
-    z-index: 3;
-    line-height: normal;
+  a {
+    text-decoration: underline;
     cursor: pointer;
-    box-sizing: border-box;
-    position: fixed;
-    height: 53px;
-    width: 53px;
-    right: 25px;
-    top: 25px;
-    padding: 4px;
     display: inline-block;
-    cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    font-weight: 300;
+  }
+  @media screen and (max-width: $min-tablet) {
+    padding: 46px 50px;
+    max-width: 80vw;
+    width: 80vw;
+    max-height: 90vh;
+  }
+  @media screen and (max-width: $max-mobile) {
+    max-width: 90vw;
+    max-height: 95vh;
+    padding: 46px 24px;
+  }
+}
 
-    i {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -25%;
-      transform: translate(-50%);
-      font-size: 28px;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-        text-shadow: 0 0 2px rgba(themed($m-black-always), 0.2);
-      }
+.m-walletSecondaryText--desc {
+  margin-bottom: 30px;
+}
+
+[class*='m-walletModal__footnote'] {
+  margin: 10px 0 11px 0;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.m-walletModal__close {
+  z-index: 3;
+  line-height: normal;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: fixed;
+  height: 53px;
+  width: 53px;
+  right: 25px;
+  top: 25px;
+  padding: 4px;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -25%;
+    transform: translate(-50%);
+    font-size: 28px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      text-shadow: 0 0 2px rgba(themed($m-black-always), 0.2);
     }
-    &:hover {
-      transform: scale(1.1);
-    }
+  }
+  &:hover {
+    transform: scale(1.1);
   }
 }

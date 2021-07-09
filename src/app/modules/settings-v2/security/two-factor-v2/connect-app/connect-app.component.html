@@ -1,0 +1,71 @@
+<h4 class="m-twoFactor__connectAppHeader" i18n="@@2FA_CONNECT_APP__HEADER">
+  1. Scan this barcode with your app
+</h4>
+<span
+  class="m-twoFactor__connectAppSubheader"
+  i18n="@@2FA_CONNECT_APP__SUBHEADER"
+  >Scan the image above with the two-factor authentication app on your phone. If
+  you can’t use a QR code,
+  <span
+    (click)="onEnterTextCodeClick()"
+    class="m-twoFactor__connectAppSubheader--link"
+    >enter this text code</span
+  >
+  instead.</span
+>
+<span
+  class="m-twoFactor__connectAppSubheader"
+  i18n="@@2FA_CONNECT_APP_SECOND_SUBHEADER"
+  >We recommend using FreeOTP. However you may use other TOTP applications such
+  as Google Authenticator.</span
+>
+<div class="m-twoFactor__connectAppContainer">
+  <div class="m-twoFactor__connectAppTopContainer">
+    <div class="m-twoFactor__connectAppQRContainer">
+      <m-loadingSpinner
+        *ngIf="inProgress$ | async"
+        [inProgress]="true"
+      ></m-loadingSpinner>
+      <m-qr-code
+        *ngIf="!(inProgress$ | async) && (secret$ | async)"
+        [data]="secretObject$ | async"
+      ></m-qr-code>
+    </div>
+  </div>
+  <div class="m-twoFactor__connectAppInputContainer">
+    <span
+      class="m-twoFactor__connectAppInputTitle"
+      i18n="@@2FA_CONNECT_APP_ENTER_SIX_DIGITS"
+      >Enter the six-digit code from the application</span
+    >
+    <span
+      class="m-twoFactor__connectAppInputSubtitle"
+      i18n="@@2FA_CONNECT_APP__AFTER_SCANNING_BARCODE"
+      >After scanning the barcode image, the app will display a six-digit code
+      that you can enter below.</span
+    >
+    <input
+      class="m-twoFactor__connectAppInput"
+      type="text"
+      (keyup.enter)="enableButtonClick()"
+      [ngModel]="code$ | async"
+      (ngModelChange)="codeValueChanged($event)"
+      placeholder="Enter code"
+    />
+  </div>
+</div>
+<div class="m-twoFactor__connectAppButtonContainer">
+  <span
+    class="m-twoFactor__connectAppBackButton"
+    (click)="backButtonClick()"
+    i18n="go back|@@2FA_CONNECT_APP__BACK"
+    >Back</span
+  >
+  <m-button
+    [color]="'blue'"
+    [disabled]="disabled$ | async"
+    (onAction)="enableButtonClick()"
+  >
+    <ng-container i18n="@@2FA_CONNECT_APP__DONE_BUTTON">Done</ng-container>
+  </m-button>
+</div>

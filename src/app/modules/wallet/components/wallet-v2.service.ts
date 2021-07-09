@@ -81,7 +81,7 @@ export class WalletV2Service {
       label: 'Receiver',
       unit: 'tokens',
       balance: 0,
-      address: null,
+      address: undefined,
     },
     cash: {
       label: 'Cash',
@@ -460,6 +460,14 @@ export class WalletV2Service {
     }
 
     return splitBalance;
+  }
+
+  async removeOnchainAddress(): Promise<void> {
+    this.wallet.receiver.address = '';
+    this.wallet$.next(this.wallet);
+    await (<any>(
+      this.client.delete('api/v3/blockchain/unique-onchain/validate')
+    ));
   }
 
   async isVerified(): Promise<boolean> {

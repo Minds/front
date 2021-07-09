@@ -3,7 +3,10 @@ m-onboarding__hashtagsStep {
     margin: 0 0 35px !important;
     font-weight: normal !important;
     line-height: 21px !important;
-    color: #4a4a4a !important;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary) !important;
+    }
   }
 
   ul.m-hashtags__list {

@@ -8,16 +8,18 @@
 
   li {
     display: flex;
-    //flex: 1;
     flex-direction: column;
     align-items: center;
-    //padding: 16px;
     cursor: pointer;
+    padding: 0 4px;
   }
 
   i {
     font-size: 24px;
-    padding: 0 4px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
 
     &.admin__badge {
       @include m-theme() {

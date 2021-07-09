@@ -1,0 +1,55 @@
+@import 'defaults.scss';
+
+:host {
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+  border-radius: 30px;
+  padding: 5px 10px;
+  align-self: center;
+  display: flex;
+  align-items: center;
+
+  > a {
+    display: contents;
+    text-decoration: none;
+  }
+
+  .m-walletTokenPriceBadge__logo {
+    border-radius: 50%;
+    background-color: white;
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: scale-down;
+    }
+  }
+
+  .m-walletTokenPriceBadge__equals {
+    margin: 0 5px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-walletTokenPriceBadge__amount {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+    font-weight: 500;
+  }
+
+  .m-walletTokenPriceBadgeAmount__currency {
+    font-weight: 400;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

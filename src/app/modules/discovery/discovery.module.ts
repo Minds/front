@@ -31,6 +31,9 @@ import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
 import { FeedsService } from '../../common/services/feeds.service';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
+import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
+import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
+import { CardCarouselService } from './card-carousel/card-carousel.service';
 
 @NgModule({
   imports: [
@@ -45,6 +48,9 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
             component: DiscoveryTrendsComponent,
             data: {
               title: 'Discovery / Overview',
+              ogImage: '/assets/og-images/discovery-v3.png',
+              ogImageWidth: 1200,
+              ogImageHeight: 1200,
             },
           },
           {
@@ -187,6 +193,8 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
     WirePaymentHandlersService,
     WireModalService,
     DiscoveryService,
+    SuggestionsService,
+    CardCarouselService,
   ],
   declarations: [
     DiscoveryComponent,
@@ -205,6 +213,7 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
     DiscoveryBoostFeedComponent,
     DiscoveryTabsComponent,
     DiscoveryLatestFeedComponent,
+    DiscoveryCardCarouselComponent,
   ],
   exports: [
     DiscoveryComponent,

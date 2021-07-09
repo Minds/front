@@ -40,7 +40,7 @@ export class Translate {
     source: '',
   };
   translationInProgress: boolean;
-  hasNav2020: boolean = false;
+  hasNav2020: boolean = true;
 
   constructor(
     public translationService: TranslationService,
@@ -84,7 +84,6 @@ export class Translate {
   ngOnInit() {
     this.languagesInProgress = true;
 
-    this.hasNav2020 = this.featuresService.has('navigation');
     this.translationService
       .getLanguages()
       .then((languages: any[]) => {

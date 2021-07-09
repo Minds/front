@@ -91,6 +91,7 @@ export interface MindsUser {
   activity_count?: number;
   supporters_count?: number;
   subscribers_count?: number;
+  subscriber?: boolean;
   subscriptions_count?: number;
   impressions?: number;
   subscribed?: boolean;

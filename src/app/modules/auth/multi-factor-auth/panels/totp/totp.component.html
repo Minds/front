@@ -1,0 +1,46 @@
+<span class="m-mfaAuth__subheader" i18n="@@MFA_AUTH__OPEN_2FA_APP_ON_DEVICE"
+  >Open the two-factor authentication app on your device to view your
+  authentication code and verify your identity.</span
+>
+
+<div class="m-mfaAuth__formContainer">
+  <label class="m-mfaAuth__inputLabel" i18n="@@MFA_AUTH__AUTHENTICATION_CODE"
+    >Authentication code</label
+  >
+  <input
+    [ngModel]="code$ | async"
+    (ngModelChange)="onCodeChange($event)"
+    (keyup.enter)="onVerifyClick()"
+    class="m-mfaAuth__codeInput"
+    type="text"
+    inputmode="numeric"
+    placeholder="6 digit code"
+    max="999999"
+  />
+</div>
+
+<m-button
+  class="m-mfaAuth__verifyButton"
+  [color]="'blue'"
+  [disabled]="disabled$ | async"
+  [saving]="inProgress$ | async"
+  (onAction)="onVerifyClick()"
+>
+  <ng-container i18n="@@MFA_AUTH__VERIFY">Verify</ng-container>
+</m-button>
+
+<div class="m-mfaAuth__footerContainer">
+  <span class="m-mfaAuth__footerTitle" i18n="@@MFA_AUTH__HAVING_PROBLEMS"
+    >Having problems?</span
+  >
+  <a
+    class="m-mfaAuth__footerLink"
+    (click)="onRecoveryCodeClick()"
+    i18n="@@MFA_AUTH__ENTER_ACCOUNT_RECOVERY_CODE"
+    >Enter a two-factor recovery code?
+  </a>
+  <span class="m-mfaAuth__footerText" i18n="@@MFA_AUTH__CONTACT_IF_NO_ACCESS"
+    >Please contact info@minds.com if you can’t access your recovery
+    codes.</span
+  >
+</div>

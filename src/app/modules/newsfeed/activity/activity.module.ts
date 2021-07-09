@@ -32,6 +32,7 @@ import { ActivityModalCreatorService } from './modal/modal-creator.service';
 import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metrics.component';
 import { ActivityRemindButtonComponent } from './remind-button/remind-button.component';
 import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
+import { ActivityRelativeTimeSpanComponent } from './owner-block/relative-time-span/relative-time-span.component';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
     ActivityMinimalMetricsComponent,
     ActivityRemindButtonComponent,
     ActivityModalQuoteComponent,
+    ActivityRelativeTimeSpanComponent,
   ],
   providers: [ActivityModalCreatorService],
   exports: [ActivityComponent, ActivityRemindButtonComponent],

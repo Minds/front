@@ -14,8 +14,17 @@
       </p>
     </div>
 
-    <m-blockchain--purchase
-      class="m-upgradesBuyTokens__purchase"
-    ></m-blockchain--purchase>
+    <m-button
+      *mIfFeature="'buy-tokens-uniswap-transak'; else legacyPurchase"
+      (onAction)="openBuyTokens($event)"
+      overlay="true"
+      >Buy tokens</m-button
+    >
+
+    <ng-template #legacyPurchase>
+      <m-blockchain--purchase
+        class="m-upgradesBuyTokens__purchase"
+      ></m-blockchain--purchase>
+    </ng-template>
   </div>
 </div>

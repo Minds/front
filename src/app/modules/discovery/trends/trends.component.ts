@@ -14,10 +14,11 @@ import {
   map,
   debounceTime,
 } from 'rxjs/operators';
-import { Subscription, combineLatest, Observable } from 'rxjs';
+import { Subscription, combineLatest, Observable, BehaviorSubject } from 'rxjs';
 import { FastFadeAnimation } from '../../../animations';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
 
 @Component({
   selector: 'm-discovery__trends',
@@ -41,7 +42,8 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private discoveryService: DiscoveryTrendsService,
-    private discoveryFeedsService: DiscoveryFeedsService
+    private discoveryFeedsService: DiscoveryFeedsService,
+    protected suggestionsService: SuggestionsService
   ) {}
 
   ngOnInit() {

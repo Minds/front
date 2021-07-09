@@ -91,8 +91,8 @@
       box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
         0 3px 1px -2px rgba(themed($m-black), 0.2),
         0 1px 5px 0 rgba(themed($m-black), 0.12);
-      background-color: themed($m-bgColor--secondary);
       border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--secondary);
     }
 
     .m-dropdown--list--item,
@@ -106,7 +106,6 @@
       .m-dropdownList__item--selected {
         @include m-theme() {
           color: themed($m-white);
-          background-color: themed($m-blue);
         }
       }
     }
@@ -130,25 +129,29 @@
 // v2 specific
 
 .m-dropdown--v2 {
-  // new stacking context
-  position: relative;
-  z-index: 4;
-
   .m-dropdown__list {
+    // new stacking context
+    z-index: 4;
     width: 180px;
     border-radius: $m-borderRadius;
-    box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.2);
+
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+
+    @include m-theme() {
+      background: themed($m-bgColor--primary) !important;
+    }
+
+    padding-top: 5px;
+    padding-bottom: 5px;
 
     box-sizing: border-box;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 10px;
     overflow: visible;
     display: block;
-
-    @include m-theme() {
-      background-color: themed($m-bgColor--secondary);
-    }
 
     .m-dropdownList__item {
       box-sizing: border-box;
@@ -159,15 +162,16 @@
       cursor: pointer;
 
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
-        border-bottom: 1px solid themed($m-borderColor--primary);
+        color: themed($m-textColor--secondary);
       }
+
+      transition: 0.1s background-color ease-out;
 
       &.m-dropdownList__item--selected,
       &:hover {
         @include m-theme() {
-          color: themed($m-textColor--secondary);
-          background-color: themed($m-bgColor--secondaryAlt);
+          background: themed($m-bgColor--secondary) !important;
+          color: themed($m-textColor--primary);
         }
       }
 

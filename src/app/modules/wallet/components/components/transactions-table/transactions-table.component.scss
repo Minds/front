@@ -172,6 +172,10 @@ m-walletTransactionsTable {
 
   .m-walletTransactionsTable__typeWrapper--reward {
     position: relative;
+
+    > span {
+      text-transform: capitalize;
+    }
   }
 }
 .m-walletTransactions__noTxNotice {

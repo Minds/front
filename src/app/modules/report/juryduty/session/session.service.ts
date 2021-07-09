@@ -7,7 +7,10 @@ export class JurySessionService {
   constructor(private client: Client) {}
 
   async getList(opts) {
-    return await this.client.get('api/v2/moderation/jury/' + opts.juryType);
+    let queryString = opts.offset ? `?offset=${opts.offset}&limit=12` : '';
+    return await this.client.get(
+      'api/v2/moderation/jury/' + opts.juryType + queryString
+    );
   }
 
   async getReport(urn) {

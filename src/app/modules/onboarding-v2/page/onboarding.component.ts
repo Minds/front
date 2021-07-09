@@ -43,7 +43,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private pageLayoutService: PageLayoutService
   ) {
-    this.newNavigation = this.featuresService.has('navigation');
+    this.newNavigation = true;
     this.routerSubscription = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(data => {
@@ -79,11 +79,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     );
 
     this.closeSubscription = this.onboardingService.close.subscribe(() => {
-      if (this.featuresService.has('navigation')) {
-        this.router.navigate(['/newsfeed']);
-      } else {
-        this.router.navigate(['/newsfeed/global/top']);
-      }
+      this.router.navigate(['/newsfeed']);
     });
 
     this.route.url.subscribe(() => {

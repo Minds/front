@@ -3,6 +3,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
+import { Session } from '../../../../services/session';
 
 @Component({
   selector: 'm-channel__header',
@@ -20,7 +21,11 @@ export class ChannelHeaderComponent {
    * @param service
    * @param configs
    */
-  constructor(public service: ChannelsV2Service, configs: ConfigsService) {
+  constructor(
+    public service: ChannelsV2Service,
+    configs: ConfigsService,
+    private session: Session
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
@@ -38,5 +43,11 @@ export class ChannelHeaderComponent {
     return {
       backgroundImage: `url(${this.cdnUrl}${bannerUrl})`,
     };
+  }
+
+  shouldShowSubscribesToYou(channel: MindsUser) {
+    return (
+      channel.guid !== this.session.getLoggedInUser().guid && channel.subscriber
+    );
   }
 }

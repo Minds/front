@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Inject, Injectable, NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { XhrFactory } from '@angular/common/http';
@@ -16,6 +16,14 @@ import {
   HeadersService,
   ServerHeadersService,
 } from './common/services/headers.service';
+import { HlsjsPlyrDriver } from './modules/media/components/video-player/hls-driver';
+import { DefaultPlyrDriver } from 'ngx-plyr';
+import * as Sentry from '@sentry/node';
+import {
+  DiagnosticsService,
+  ServerDiagnosticsService,
+} from './common/services/diagnostics/server-diagnostics.service';
+import { SENTRY } from './common/services/diagnostics/diagnostics.service';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -23,6 +31,15 @@ PlotlyModule.plotlyjs = {
     // This simply satisfies the isValid() error
   },
 };
+
+@Injectable()
+export class SentryServerErrorHandler implements ErrorHandler {
+  constructor(@Inject(SENTRY) private sentry) {}
+  handleError(error: Error) {
+    this.sentry.captureException(error);
+    console.error(error);
+  }
+}
 
 // activate cookie for server-side rendering
 export class ServerXhr implements XhrFactory {
@@ -33,6 +50,8 @@ export class ServerXhr implements XhrFactory {
 }
 
 export const SERVER_PROVIDERS = [
+  { provide: ErrorHandler, useClass: SentryServerErrorHandler },
+  { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
   { provide: XhrFactory, useClass: ServerXhr },
   {
     provide: CookieService,
@@ -45,6 +64,10 @@ export const SERVER_PROVIDERS = [
   {
     provide: HeadersService,
     useClass: ServerHeadersService,
+  },
+  {
+    provide: HlsjsPlyrDriver,
+    useClass: DefaultPlyrDriver,
   },
 ];
 

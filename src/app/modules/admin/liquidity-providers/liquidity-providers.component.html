@@ -1,0 +1,20 @@
+<div class="m-adminLiquidityPosition__list">
+  <div class="m-adminLiquidityPositionList__item" *ngFor="let user of users">
+    <m-publisherCard
+      [publisher]="user"
+      [showSubscribeButton]="false"
+    ></m-publisherCard>
+
+    <div class="m-adminLiquidityPositionListItem__info">
+      <div>
+        <b>Liquidity spot: </b>
+        <span class="positive" *ngIf="user.liquidity_spot_opt_out == 0"
+          >Enabled</span
+        >
+        <span class="negative" *ngIf="user.liquidity_spot_opt_out != 0"
+          >Disabled</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

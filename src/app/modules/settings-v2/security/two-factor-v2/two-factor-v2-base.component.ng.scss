@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingsV2__desc {
+    margin: 20px 0 40px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

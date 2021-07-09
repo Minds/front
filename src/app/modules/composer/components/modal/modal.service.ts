@@ -1,4 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ModalComponent } from './modal.component';
@@ -18,7 +19,11 @@ export type ComposerData = {
 export class ModalService {
   protected injector: Injector;
 
-  constructor(protected overlayModal: OverlayModalService) {}
+  constructor(
+    protected overlayModal: OverlayModalService,
+    protected router: Router,
+    protected route: ActivatedRoute
+  ) {}
 
   /**
    * Sets the calling component's injector for DI.
@@ -62,6 +67,7 @@ export class ModalService {
           )
           .onDidDismiss(() => {
             modalOpen = false;
+
             subscriber.complete();
           })
           .present();

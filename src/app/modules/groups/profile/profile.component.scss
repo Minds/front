@@ -87,6 +87,16 @@
       font-size: 18px;
       padding: 14px 8px;
 
+      transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      &:hover {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
       i {
         font-size: 18px;
       }
@@ -163,7 +173,7 @@
     position: absolute;
     top: 8px;
     left: 126px;
-    width: calc(100% - 180px);
+    width: calc(100% - 200px);
 
     @media screen and (max-width: 700px) {
       .m-groupMemberPreviews__member {

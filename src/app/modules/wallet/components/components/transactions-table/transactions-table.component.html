@@ -19,14 +19,13 @@
                 (mouseenter)="tx.showRewardsPopup = true"
                 (mouseleave)="tx.showRewardsPopup = false"
               >
-                <i class="material-icons">star_border</i
-                ><span i18n="@@WALLETV2_TX_TABLE__MINDS_REWARD"
-                  >Minds Reward</span
-                >
-                <m-walletRewardsPopup
+                <i class="material-icons">star_border</i>
+                <span>{{ tx?.rewardType }} Reward</span>
+
+                <!-- <m-walletRewardsPopup
                   *ngIf="tx.showRewardsPopup"
                   [timestamp]="tx.timestamp"
-                ></m-walletRewardsPopup>
+                ></m-walletRewardsPopup> -->
               </div>
             </ng-template>
 

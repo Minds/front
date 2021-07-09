@@ -8,6 +8,7 @@ import {
   Output,
   OnInit,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -27,6 +28,7 @@ import { ActivityService } from '../../newsfeed/activity/activity.service';
 @Component({
   selector: 'm-comments__entityOutlet',
   templateUrl: 'entity-outlet.component.html',
+  styleUrls: ['entity-outlet.component.ng.scss'],
   providers: [
     AttachmentService,
     {
@@ -49,10 +51,8 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   @Input() canDelete: boolean = false;
   @Input() fixedHeight = false;
   @Input() showOnlyPoster = true;
-  @Input() showOnlyTree = false;
+  @Input() compact = false;
   optimisticList: Array<any> = [];
-
-  // private shouldReuseRouteFn;
 
   constructor(
     public session: Session,
@@ -62,7 +62,7 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     private router: Router,
     private cd: ChangeDetectorRef,
     public legacyActivityService: ActivityServiceCommentsLegacySupport,
-    private activityService: ActivityService
+    public activityService: ActivityService
   ) {}
 
   ngOnInit() {
@@ -70,6 +70,10 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     // this.router.routeReuseStrategy.shouldReuseRoute = future => {
     //   return false;
     // };
+
+    if (!this.activityService.displayOptions.isFeed) {
+      this.openFullComments();
+    }
   }
 
   ngOnDestroy() {
@@ -103,6 +107,16 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   onOptimisticPost(comment): void {
     if (this.fixedHeight) return;
     this.optimisticList.push(comment);
+  }
+
+  toggleComments(): void {
+    if (this.count > 0) {
+      if (this.showOnlyPoster) {
+        this.openFullComments();
+      } else {
+        this.closeFullComments();
+      }
+    }
   }
 
   openFullComments(): void {

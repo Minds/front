@@ -58,3 +58,60 @@ $min-huge: 1280px;
 
 $layout-header-height: 64px;
 $layout-sidebar-width: 80px;
+
+// Media query mixins
+@mixin mobile-only {
+  @media screen and (max-width: $max-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media screen and (min-width: $max-mobile) and (max-width: $min-desktop) {
+    @content;
+  }
+}
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin vertical-scroll {
+  &::-webkit-scrollbar {
+    width: 10px !important;
+    @include m-theme() {
+      background-color: rgba(themed($m-borderColor--primary), 0.35);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--contrast);
+    }
+  }
+}
+
+@mixin horizontal-scroll {
+  &::-webkit-scrollbar {
+    height: 10px !important;
+    @include m-theme() {
+      background-color: rgba(themed($m-borderColor--primary), 0.35);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--contrast);
+    }
+  }
+}

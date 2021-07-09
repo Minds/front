@@ -122,11 +122,11 @@ describe('GroupsSettingsButton', () => {
     const unmute = getMenuItem(2);
 
     expect(mute).not.toBeNull();
-    expect(mute.nativeElement.textContent).toContain('Disable Notifications');
+    expect(mute.nativeElement.textContent).toContain('Disable notifications');
     expect(mute.nativeElement.hidden).toBeFalsy();
 
     expect(unmute).not.toBeNull();
-    expect(unmute.nativeElement.textContent).toContain('Enable Notifications');
+    expect(unmute.nativeElement.textContent).toContain('Enable notifications');
     expect(unmute.nativeElement.hidden).toBeTruthy();
 
     mute.nativeElement.click();
@@ -202,7 +202,7 @@ describe('GroupsSettingsButton', () => {
 
     const deleteGroup = getMenuItem(5);
     expect(deleteGroup).not.toBeNull();
-    expect(deleteGroup.nativeElement.textContent).toContain('Delete Group');
+    expect(deleteGroup.nativeElement.textContent).toContain('Delete group');
 
     group['is:creator'] = false;
     comp._group = group;

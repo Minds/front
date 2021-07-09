@@ -183,6 +183,7 @@
     display: flex;
     flex-direction: row;
     font-size: 21px;
+    margin-bottom: 15px;
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
@@ -212,13 +213,21 @@
       }
       > div:first-child {
         font-size: 17px;
-        margin-bottom: 4px;
+        margin-bottom: 10px;
+        font-weight: 500;
       }
-      > div:last-child {
+      .m-wireCreatorFormIntervalOption__pricing {
         span:last-child {
           @include m-theme() {
             color: themed($m-textColor--secondary);
           }
+        }
+      }
+      .m-wireCreatorFormIntervalOption__desc {
+        font-size: 15px;
+        margin-top: 5px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
         }
       }
     }

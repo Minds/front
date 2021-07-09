@@ -12,8 +12,6 @@ export class SettingsReportedContentComponent implements OnInit {
   constructor(protected featuresService: FeaturesService) {}
 
   ngOnInit() {
-    if (this.featuresService.has('navigation')) {
-      this.hasNewNav = true;
-    }
+    this.hasNewNav = true;
   }
 }

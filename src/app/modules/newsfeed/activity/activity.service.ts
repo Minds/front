@@ -13,6 +13,7 @@ export type ActivityDisplayOptions = {
   showComments: boolean;
   showOnlyCommentsInput: boolean;
   showToolbar: boolean;
+  showInteractions: boolean;
   showBoostMenuOptions: boolean;
   showEditedTag: boolean;
   showVisibilityState: boolean;
@@ -26,6 +27,7 @@ export type ActivityDisplayOptions = {
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
+  isFeed: boolean; // is the activity a part of a feed?
 };
 
 export type ActivityEntity = {
@@ -63,6 +65,8 @@ export type ActivityEntity = {
   remind_deleted?: boolean;
   pinned?: boolean; // pinned to top of channel
   subtype?: string;
+  reminds?: number; // count of reminds
+  quotes?: number; // count of quotes
 };
 
 // Constants of blocks
@@ -187,6 +191,17 @@ export class ActivityService {
     })
   );
 
+  /** Only allow downloads of images s */
+  canDownload$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      let contentType = entity.content_type;
+      if (entity.activity_type && entity.activity_type === 'quote') {
+        contentType = getActivityContentType(entity.remind_object, true, true);
+      }
+      return contentType === 'image';
+    })
+  );
+
   /**
    * Only allow translation menu item if there is content to translate
    */
@@ -264,6 +279,7 @@ export class ActivityService {
     showComments: true,
     showOnlyCommentsInput: true,
     showToolbar: true,
+    showInteractions: false,
     showBoostMenuOptions: false,
     showEditedTag: false,
     showVisibilityState: false,
@@ -277,6 +293,7 @@ export class ActivityService {
     minimalMode: false,
     bypassMediaModal: false,
     sidebarMode: false,
+    isFeed: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -326,7 +343,9 @@ export class ActivityService {
   private patchForeignEntity(entity): ActivityEntity {
     switch (entity.subtype) {
       case 'image':
-        entity.message = entity.description;
+        if (!entity.message) {
+          entity.message = entity.description;
+        }
         entity.entity_guid = entity.guid;
         entity.custom_type = 'batch';
         entity.custom_data = [
@@ -338,7 +357,9 @@ export class ActivityService {
         ];
         break;
       case 'video':
-        entity.message = entity.description;
+        if (!entity.message) {
+          entity.message = entity.description;
+        }
         entity.custom_type = 'video';
         entity.entity_guid = entity.guid;
         entity.custom_data = {

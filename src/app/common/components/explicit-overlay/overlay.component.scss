@@ -7,11 +7,12 @@
   left: 0;
   width: 100%;
   height: calc(100% - 53px);
+  user-select: none;
+  @include z-index(splash);
   @include m-theme() {
     color: themed($m-grey-900);
     background-color: rgba(themed($m-white), 0.99);
   }
-  user-select: none;
 
   .m-channel--explicit-overlay--content {
     max-width: 1280px;

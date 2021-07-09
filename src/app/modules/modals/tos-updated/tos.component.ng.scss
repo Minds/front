@@ -1,0 +1,15 @@
+@import 'defaults.scss';
+
+:host {
+  .m-updateModal {
+    @media screen and (min-width: $min-desktop) {
+      .m-modal-container {
+        min-width: auto;
+        width: 800px;
+      }
+    }
+  }
+  .m-modal__close {
+    display: none !important;
+  }
+}

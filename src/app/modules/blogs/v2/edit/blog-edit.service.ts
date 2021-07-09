@@ -8,7 +8,7 @@
  */
 
 import { Injectable, Self, Inject } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 // import { MonetizationSubjectValue } from '../../../composer/services/composer.service';
 import { Upload, Client } from '../../../../services/api';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ import {
   MonetizationSubjectValue,
   DEFAULT_ACCESS_ID_VALUE,
 } from '../../../composer/services/composer.service';
+import { BlogPreloadService } from './blog-preload.service';
 
 export interface MetaData {
   title: string;
@@ -79,6 +80,10 @@ export class BlogsEditService {
 
   readonly accessId$: BehaviorSubject<string> = this.composerService.accessId$;
 
+  readonly timeCreated$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    0
+  );
+
   readonly metaDescription$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >('');
@@ -131,13 +136,24 @@ export class BlogsEditService {
     protected client: Client,
     protected site: SiteService,
     private toaster: FormToastService,
+    private preload: BlogPreloadService,
     @Self() @Inject(ComposerService) private composerService: ComposerService
   ) {
-    this.contentSubscription = this.content$
+    this.contentSubscription = combineLatest([
+      this.content$,
+      this.preload.message$,
+    ])
       .pipe(
         distinctUntilChanged(),
-        tap(content => {
-          // console.log(`contentPipe | setting canPost ${content.length > 0}`);
+        tap(([content, preloadMessage]: [string, string]) => {
+          // if preload message is set, set content to message
+          if (preloadMessage) {
+            this.content$.next(preloadMessage);
+            // clear preloaded message
+            this.preload.clear();
+          }
+
+          // set canPost$ true if content length greater than 0.
           this.canPost$.next(content.length > 0);
         })
       )
@@ -171,6 +187,7 @@ export class BlogsEditService {
       this.canPost$.next(true);
       this.guid$.next(guid);
       this.published$.next(blog.published);
+      this.timeCreated$.next(blog.time_created);
       this.accessId$.next(blog.access_id);
       this.schedule$.next(blog.time_created);
       this.savedContent$.next(blog.description);
@@ -221,6 +238,9 @@ export class BlogsEditService {
     this.canPost$.next(true);
     this.guid$.next('');
     this.published$.next(0);
+
+    this.timeCreated$.next(0);
+
     this.accessId$.next(DEFAULT_ACCESS_ID_VALUE);
     this.schedule$.next(null);
     this.savedContent$.next('');

@@ -10,6 +10,11 @@ export class ProgressComponent {
 
   @Input() progress: number = 0;
 
+  /**
+   * Compact mode
+   */
+  @Input() compactMode: boolean = false;
+
   get progressPct() {
     return (this.progress || 0) * 100;
   }

@@ -10,9 +10,7 @@
       else isProChannel
     "
   >
-    <ng-container *mIfFeature="'channels'">
-      <m-channel-v2 [channel]="channel" #v2ChannelComponent></m-channel-v2>
-    </ng-container>
+    <m-channel-v2 [channel]="channel" #v2ChannelComponent></m-channel-v2>
   </ng-container>
   <ng-template #isProChannel>
     <m-pro--channel #proChannelComponent></m-pro--channel>

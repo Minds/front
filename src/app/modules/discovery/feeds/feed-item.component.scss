@@ -8,7 +8,17 @@
     padding: 20px;
   }
 
-  &.m-discovery__feedItem--user,
+  &.m-discovery__feedItem--user {
+    padding-bottom: 0;
+    @include m-theme() {
+      border-bottom: none;
+    }
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      padding-bottom: 0;
+    }
+  }
+
   &.m-discovery__feedItem--group {
     a {
       display: flex;
@@ -30,6 +40,9 @@
         background-color: themed($m-textColor--secondary);
       }
     }
+  }
+  &.m-discovery__feedItem--user,
+  &.m-discovery__feedItem--group {
     .m-discoveryFeedItem__body {
       flex: 1;
       h4 {

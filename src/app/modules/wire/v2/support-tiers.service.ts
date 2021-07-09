@@ -129,4 +129,33 @@ export class SupportTiersService {
         return supportTierCurrency;
     }
   }
+
+  /**
+   * Gets payment types as array.
+   * @param { BehaviorSubject<SupportTier> } supportTier$ - observable support tier to check.
+   * @returns { Observable<SupportTierCurrency[]> } - array of support tier currencies ['usd', 'tokens'] etc.
+   */
+  public getPaymentTypes$(
+    supportTier$: BehaviorSubject<SupportTier>
+  ): Observable<SupportTierCurrency[]> {
+    return combineLatest([supportTier$, this.groupedList$]).pipe(
+      map(([supportTier, groupedList]) => {
+        let arr: SupportTierCurrency[] = [];
+        if (
+          groupedList.tokens.filter(val => val.urn === supportTier.urn)
+            ?.length > 0
+        ) {
+          arr.push('tokens');
+        }
+
+        if (
+          groupedList.usd.filter(val => val.urn === supportTier.urn)?.length > 0
+        ) {
+          arr.push('usd');
+        }
+
+        return arr;
+      })
+    );
+  }
 }

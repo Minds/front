@@ -1,0 +1,32 @@
+@import 'defaults.scss';
+
+:host {
+  width: 500px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  @include z-index(body);
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    background-color: themed($m-bgColor--primary);
+  }
+
+  select {
+    font-size: 14pt;
+    outline: none;
+    border-radius: 2px;
+    padding: 10px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .m-channelAdminConfirmation_footer {
+    text-align: right;
+    margin: 20px 0 10px 0;
+  }
+}

@@ -9,6 +9,7 @@ import { ChannelEditService } from './edit.service';
   selector: 'm-channelEdit__hashtags',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'hashtags.component.html',
+  styleUrls: ['hashtags.component.ng.scss'],
 })
 export class ChannelEditHashtagsComponent {
   /**

@@ -23,6 +23,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
+import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-settingsV2__password',
@@ -136,7 +137,9 @@ export class SettingsV2PasswordComponent implements OnInit {
   }
 
   onNewPasswordBlur() {
-    this.popover.hide();
+    if (!isMobileOrTablet()) {
+      this.popover.hide();
+    }
   }
 
   onPopoverChange(valid: boolean) {

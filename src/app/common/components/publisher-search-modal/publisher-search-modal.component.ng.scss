@@ -1,0 +1,79 @@
+@import 'defaults.scss';
+
+:host {
+  z-index: inherit;
+
+  .m-publisherSearchModal {
+    max-width: 600px;
+    padding: 40px 40px 50px;
+    border-radius: $m-borderRadius;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 24px;
+      margin: 20vh 0;
+    }
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      box-shadow: 0 0 15px 0 rgba(themed($m-black-always), 0.1);
+    }
+  }
+
+  .m-publisherSearchModal__desc {
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    margin-bottom: 0;
+    max-width: 400px;
+    align-self: center;
+    text-align: center;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-publisherSearch__bar {
+    width: 100%;
+    position: relative;
+
+    .m-publisherSearchBar__icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 15px;
+      font-size: 24px;
+      z-index: 1;
+      cursor: pointer;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    input {
+      width: 100%;
+      height: 55px;
+      font-size: 18px;
+      outline: none;
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
+        color: themed($m-textColor--primary);
+      }
+      &::placeholder {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    input,
+    label {
+      padding: 10px 10px 10px 20px;
+      box-sizing: border-box;
+    }
+  }
+}

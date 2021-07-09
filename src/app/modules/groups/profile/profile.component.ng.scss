@@ -1,0 +1,33 @@
+@import 'defaults.scss';
+
+:host {
+  .m-group__searchBtnWrapper {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 3px;
+    right: 25px;
+    padding: 10px;
+
+    .m-groupSearchBtn {
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 10px;
+
+      i {
+        font-size: 22px;
+        transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+}

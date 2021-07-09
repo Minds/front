@@ -1,0 +1,47 @@
+@import 'defaults.scss';
+
+:host {
+  z-index: 1;
+  display: block;
+  width: 100%;
+
+  &.m-newNotificationsButton--fixed {
+    .m-newNotificationsButton {
+      top: 0px;
+    }
+  }
+
+  .m-newNotificationsButton {
+    z-index: 1;
+    position: absolute;
+    max-width: 200px;
+    min-width: 200px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 15px;
+    padding: 5px 0;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primaryInverted);
+      color: themed($m-textColor--primaryInverted);
+    }
+
+    i {
+      font-size: 20px;
+      margin-right: 8px;
+    }
+
+    span {
+      font-weight: 600;
+    }
+  }
+}

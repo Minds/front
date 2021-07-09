@@ -56,6 +56,11 @@ export class ChannelsV2Service {
   readonly seed$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   /**
+   * Search query
+   */
+  readonly query$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  /**
    * Tokens the channel received in the last period
    */
   readonly tokens$: Observable<number>;
@@ -227,6 +232,8 @@ export class ChannelsV2Service {
    * @param channel
    */
   load(channel: MindsUser | string): void {
+    this.query$.next('');
+
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
 
