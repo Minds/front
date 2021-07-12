@@ -1,7 +1,152 @@
 @import 'defaults.scss';
 
 :host {
-  .m-aux__hero {
-    background-image: url('../../../../assets/product-pages/rewards/rewards-4.jpg');
+  ::ng-deep {
+    m-marketing__footer {
+      margin-top: 0 !important;
+    }
+  }
+
+  .m-jobs {
+    &__wrapper {
+      padding: 20px 45px 40px 45px;
+
+      @include mobile-only {
+        padding: 0 23px;
+      }
+
+      @include tablet-only {
+        padding: 0 23px;
+      }
+    }
+
+    &__button {
+      outline: none;
+      background: none;
+      font-weight: 500;
+      padding: 5px 10px;
+      border: 1px solid white;
+      border-radius: 50%;
+      color: 30px;
+    }
+
+    &__header {
+      h1 {
+        font-weight: bold;
+        font-size: 32px;
+        opacity: 1;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+
+        @include mobile-only {
+          margin-bottom: 10px;
+        }
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      p {
+        line-height: 1.4em;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &__images {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+
+      div {
+        flex-grow: 1;
+        margin-bottom: 20px;
+
+        img {
+          border-radius: 5px;
+        }
+      }
+    }
+
+    &__group {
+      h2 {
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 0;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &__subTitle {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      font-size: 24px;
+      font-weight: 600;
+      margin: 25px 0 5px 0;
+    }
+
+    &__job {
+      border-radius: 5px;
+      display: flex;
+      margin-bottom: 20px;
+
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      @include mobile-only {
+        flex-direction: column;
+      }
+
+      &--description {
+        flex-grow: 1;
+        align-self: center;
+        padding: 18px 20px;
+
+        @include mobile-only {
+          padding: 18px 0;
+          width: 90%;
+        }
+
+        h3 {
+          font-size: 17px;
+          font-weight: 500;
+          margin: 0;
+          line-height: 18px;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        span {
+          font-size: 14px;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      &--actions {
+        padding: 0 20px;
+        align-self: center;
+        display: flex;
+        gap: 10px;
+
+        @include mobile-only {
+          padding: 10px 0;
+          width: 90%;
+        }
+      }
+    }
   }
 }
