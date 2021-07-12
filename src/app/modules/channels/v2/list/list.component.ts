@@ -43,7 +43,7 @@ export class ChannelListComponent {
   }
 
   /**
-   * Loads next elements in feed.
+   * Loads the next elements in feed.
    * @returns { Promise<void> } - awaitable.
    */
   public async loadNext(): Promise<void> {
