@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
@@ -9,28 +8,22 @@ import { ConfigsService } from '../../../common/services/configs.service';
   styleUrls: ['marketing.component.ng.scss'],
 })
 export class JobsMarketingComponent {
-  user;
-
-  constructor(
-    private session: Session,
-    public configs: ConfigsService,
-    private http: HttpClient
-  ) {}
+  constructor(public configs: ConfigsService, private http: HttpClient) {}
 
   gotoLink(link) {
     console.log(`Go to -> ${link}`);
   }
 
   ngOnInit() {
-    this.user = this.session.getLoggedInUser();
-
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      'Basic a3A0dlN2NDgxeTFtMi9jMGg1NG5xRFZMU28zcWdpNGk2UmZRRUtIS2Nsb210RytWOg=='
-    );
+    const options = {
+      headers: new HttpHeaders().append(
+        'Authorization',
+        `Basic ${btoa('kp4vSv481y1m2/c0h54nqDVLSo3qgi4i6RfQEKHKclomtG+V:')}`
+      ),
+    };
 
     this.http
-      .get('https://api.lever.co/v1/postings', { headers })
+      .get('https://api.lever.co/v1/postings', options)
       .subscribe(data => {
         console.log('data', data);
         // this.postings = data;
