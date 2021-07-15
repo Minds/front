@@ -2,7 +2,6 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
-import { LocalWalletService } from './local-wallet.service';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -21,7 +20,6 @@ export class Web3WalletService {
   protected _web3LoadAttempt: number = 0;
 
   constructor(
-    protected localWallet: LocalWalletService,
     protected transactionOverlay: TransactionOverlayService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService,
@@ -285,7 +283,6 @@ export class Web3WalletService {
   // Service provider
 
   static _(
-    localWallet: LocalWalletService,
     transactionOverlay: TransactionOverlayService,
     platformId: Object,
     configs: ConfigsService,
@@ -293,7 +290,6 @@ export class Web3WalletService {
     toast: FormToastService
   ) {
     return new Web3WalletService(
-      localWallet,
       transactionOverlay,
       platformId,
       configs,
