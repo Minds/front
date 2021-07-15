@@ -4,11 +4,11 @@ import { Component, Input } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -53,28 +53,30 @@ describe('SearchBarComponent', () => {
 
   // Setup
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        SearchBarSuggestionsMock,
-        SearchBarComponent,
-      ],
-      imports: [
-        NgCommonModule,
-        RouterTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SharedModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: ContextService, useValue: contextServiceMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: RecentService, useValue: recentServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          SearchBarSuggestionsMock,
+          SearchBarComponent,
+        ],
+        imports: [
+          NgCommonModule,
+          RouterTestingModule,
+          FormsModule,
+          ReactiveFormsModule,
+          SharedModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: ContextService, useValue: contextServiceMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: RecentService, useValue: recentServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

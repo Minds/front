@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
@@ -89,36 +89,41 @@ describe('LoginForm', () => {
 
   const activePanel$ = new BehaviorSubject<string>('');
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        LoginForm,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: FeaturesService, useValue: MockService(FeaturesService) },
-        { provide: AuthModalService, useValue: MockService(AuthModalService) },
-        {
-          provide: MultiFactorAuthService,
-          useValue: MockService(MultiFactorAuthService, {
-            has: ['onSuccess$', 'activePanel$'],
-            props: {
-              onSuccess$: { get: () => onSuccess$ },
-              activePanel$: { get: () => activePanel$ },
-            },
-            setMFAReqest: feature => {
-              return true;
-            },
-          }),
-        },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          LoginForm,
+          ButtonComponent,
+        ], // declare the test component
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: FeaturesService, useValue: MockService(FeaturesService) },
+          {
+            provide: AuthModalService,
+            useValue: MockService(AuthModalService),
+          },
+          {
+            provide: MultiFactorAuthService,
+            useValue: MockService(MultiFactorAuthService, {
+              has: ['onSuccess$', 'activePanel$'],
+              props: {
+                onSuccess$: { get: () => onSuccess$ },
+                activePanel$: { get: () => activePanel$ },
+              },
+              setMFAReqest: feature => {
+                return true;
+              },
+            }),
+          },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

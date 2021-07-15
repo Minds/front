@@ -171,8 +171,6 @@ export class ScheduleComponent {
       this.error = formatError || futureError;
     }
 
-    console.log('ojm error', formatError, futureError);
-
     if (formatError || futureError) {
       return true;
     } else {

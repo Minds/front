@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,30 +24,32 @@ describe('RegisterComponent', () => {
   let comp: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'minds-form-register',
-          template: '',
-          inputs: ['referrer'],
-          outputs: ['done'],
-        }),
-        RegisterComponent,
-        IfFeatureDirective,
-      ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: SignupModalService, useValue: signupModalServiceMock },
-        { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: TopbarService, useValue: MockService(TopbarService) },
-        PageLayoutService,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'minds-form-register',
+            template: '',
+            inputs: ['referrer'],
+            outputs: ['done'],
+          }),
+          RegisterComponent,
+          IfFeatureDirective,
+        ],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: SignupModalService, useValue: signupModalServiceMock },
+          { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: TopbarService, useValue: MockService(TopbarService) },
+          PageLayoutService,
+        ],
+      }).compileComponents();
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

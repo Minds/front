@@ -17,7 +17,7 @@ import { FormToastService } from '../../common/services/form-toast.service';
 import { Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { CookieService } from '@gorniv/ngx-universal';
+import { CookieService } from '../../common/services/cookie.service';
 
 /**
  * Wrapper component for composer. It can hold an embedded base composer

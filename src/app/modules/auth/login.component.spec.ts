@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   Component,
   DebugElement,
@@ -70,49 +70,51 @@ describe('LoginComponent', () => {
   let comp: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MindsFormLoginMock,
-        MindsFormRegisterMock,
-        LoginComponent,
-        IfFeatureDirective,
-        MarketingFooterComponent,
-        MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
-        MockComponent({ selector: 'm-language__bar' }),
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-        CookieModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-        { provide: SignupModalService, useValue: signupModalServiceMock },
-        Storage,
-        CookieService,
-        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: TopbarService, useValue: MockService(TopbarService) },
-        {
-          provide: SidebarNavigationService,
-          useValue: MockService(SidebarNavigationService),
-        },
-        {
-          provide: 'QUERY_STRING',
-          useValue: null,
-        },
-        RedirectService,
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        PageLayoutService,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MindsFormLoginMock,
+          MindsFormRegisterMock,
+          LoginComponent,
+          IfFeatureDirective,
+          MarketingFooterComponent,
+          MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
+          MockComponent({ selector: 'm-language__bar' }),
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+          CookieModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
+          { provide: SignupModalService, useValue: signupModalServiceMock },
+          Storage,
+          CookieService,
+          { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: TopbarService, useValue: MockService(TopbarService) },
+          {
+            provide: SidebarNavigationService,
+            useValue: MockService(SidebarNavigationService),
+          },
+          {
+            provide: 'QUERY_STRING',
+            useValue: null,
+          },
+          RedirectService,
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          PageLayoutService,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

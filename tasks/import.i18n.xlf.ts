@@ -77,11 +77,11 @@ function transform(source, outputTemplate) {
 // MAIN
 
 export = () => cb => {
-  if (!argv.input) {
+  if (!argv['input']) {
     return cb(`Missing --input argument`);
   }
 
-  const inputFile = join(APP_ROOT, argv.input);
+  const inputFile = join(APP_ROOT, argv['input']);
 
   if (!existsSync(inputFile)) {
     return cb(`"${inputFile}" does not exist`);
