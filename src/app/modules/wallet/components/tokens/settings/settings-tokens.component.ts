@@ -21,7 +21,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
-import { LocalWalletService } from '../../../../blockchain/local-wallet.service';
 import { BlockchainService } from '../../../../blockchain/blockchain.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../../utils/browser';
@@ -71,7 +70,6 @@ export class WalletSettingsTokensComponent
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
-    protected localWallet: LocalWalletService,
     protected blockchain: BlockchainService,
     protected web3Wallet: Web3WalletService,
     protected walletService: WalletV2Service,
@@ -123,26 +121,6 @@ export class WalletSettingsTokensComponent
     }
 
     this.detectChanges();
-  }
-
-  async createAddress() {
-    this.error = '';
-    try {
-      this.inProgress = true;
-      this.detectChanges();
-
-      this.generatedAccount = await this.localWallet.create(false);
-      await this.blockchain.setWallet({
-        address: this.generatedAccount.address,
-      });
-      this.currentAddress = this.generatedAccount.address;
-    } catch (e) {
-      console.error(e);
-      this.error = e.message;
-    } finally {
-      this.inProgress = false;
-      this.detectChanges();
-    }
   }
 
   async downloadPrivateKey() {
