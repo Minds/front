@@ -37,7 +37,6 @@ import { tokenContractServiceMock } from '../../../../tests/token-contract-servi
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { peerBoostContractServiceMock } from '../../../../tests/peer-boost-contract-service-mock.spec';
 import { transactionOverlayServiceMock } from '../../../../tests/transaction-overlay-service-mock.spec';
-import { LocalWalletService } from '../../blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../../blockchain/transaction-overlay/transaction-overlay.service';
 import { localWalletServiceMock } from '../../../../tests/local-wallet-service-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
@@ -425,7 +424,6 @@ describe('BoostCreatorComponent', () => {
             provide: BoostContractService,
             useValue: peerBoostContractServiceMock,
           },
-          { provide: LocalWalletService, useValue: localWalletServiceMock },
           {
             provide: TransactionOverlayService,
             useValue: transactionOverlayServiceMock,
