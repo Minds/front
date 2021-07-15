@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
@@ -20,34 +20,38 @@ import { ApiService } from '../../../common/api/api.service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 
 describe('LanguageSidebarPromptComponent', () => {
   let component: LanguageSidebarPromptComponent;
   let fixture: ComponentFixture<LanguageSidebarPromptComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        LanguageSidebarPromptComponent,
-        SidebarWidgetComponent,
-        ButtonComponent,
-      ],
-      imports: [RouterTestingModule, CookieModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: Client, useValue: clientMock },
-        CookieService,
-        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
-        LanguageService,
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        {
-          provide: ApiService,
-          useValue: MockService(ApiService, {}),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          LanguageSidebarPromptComponent,
+          SidebarWidgetComponent,
+          ButtonComponent,
+          IfFeatureDirective,
+        ],
+        imports: [RouterTestingModule, CookieModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: Client, useValue: clientMock },
+          CookieService,
+          { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+          LanguageService,
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          {
+            provide: ApiService,
+            useValue: MockService(ApiService, {}),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     featuresServiceMock.mock('language-prompts', true);

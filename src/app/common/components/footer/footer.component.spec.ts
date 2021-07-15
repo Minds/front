@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
 import { PagesService } from '../../services/pages.service';
@@ -9,24 +9,26 @@ describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        FooterComponent,
-        MockComponent({
-          selector: 'a',
-          inputs: ['routerLink'],
-        }),
-      ],
-      providers: [
-        {
-          provide: NavigationService,
-          useValue: MockService(NavigationService),
-        },
-        { provide: PagesService, useValue: MockService(PagesService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          FooterComponent,
+          MockComponent({
+            selector: 'a',
+            inputs: ['routerLink'],
+          }),
+        ],
+        providers: [
+          {
+            provide: NavigationService,
+            useValue: MockService(NavigationService),
+          },
+          { provide: PagesService, useValue: MockService(PagesService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FooterComponent);

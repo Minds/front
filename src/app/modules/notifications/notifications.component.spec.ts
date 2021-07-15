@@ -1,12 +1,18 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 import { Client } from '../../services/api/client';
 import { By } from '@angular/platform-browser';
@@ -24,36 +30,52 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { TimeDiffService } from '../../services/timediff.service';
 import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
 
+@Component({
+  selector: '',
+  template: '',
+})
+class BlankComponent {
+  @Input() referrer: string;
+  @Output() done: EventEmitter<any> = new EventEmitter<any>();
+}
+
 describe('NotificationsComponent', () => {
   let comp: NotificationsComponent;
   let fixture: ComponentFixture<NotificationsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        NotificationsComponent,
-        MockComponent({
-          selector: 'minds-notification',
-          inputs: ['notification', 'showElapsedTime'],
-        }),
-        MockComponent({
-          selector: 'infinite-scroll',
-          inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
-        }),
-        MockComponent({
-          selector: 'm-tooltip',
-        }),
-      ],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: NotificationService, useValue: notificationServiceMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          NotificationsComponent,
+          BlankComponent,
+          MockComponent({
+            selector: 'minds-notification',
+            inputs: ['notification', 'showElapsedTime'],
+          }),
+          MockComponent({
+            selector: 'infinite-scroll',
+            inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
+          }),
+          MockComponent({
+            selector: 'm-tooltip',
+          }),
+        ],
+        imports: [
+          RouterTestingModule.withRoutes([
+            { path: 'login', component: BlankComponent },
+          ]),
+        ],
+        providers: [
+          { provide: NotificationService, useValue: notificationServiceMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

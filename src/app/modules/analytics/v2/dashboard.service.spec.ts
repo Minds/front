@@ -6,7 +6,7 @@ describe('AnalyticsDashboardService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   xit('should be created', () => {
-    const service: AnalyticsDashboardService = TestBed.get(
+    const service: AnalyticsDashboardService = TestBed.inject(
       AnalyticsDashboardService
     );
     expect(service).toBeTruthy();

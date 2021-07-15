@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/embed",
     "baseUrl": "./",
-    "module": "esNext",
+    "module": "es2020",
     "types": ["node"]
   },
   "include": [

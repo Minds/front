@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { RichEmbedPreviewComponent } from './rich-embed-preview.component';
 import { MediaProxyService } from '../../../../common/services/media-proxy.service';
@@ -9,19 +9,21 @@ describe('Composer Rich Embed Preview', () => {
 
   let mediaProxyMock;
 
-  beforeEach(async(() => {
-    mediaProxyMock = MockService(MediaProxyService);
+  beforeEach(
+    waitForAsync(() => {
+      mediaProxyMock = MockService(MediaProxyService);
 
-    TestBed.configureTestingModule({
-      declarations: [RichEmbedPreviewComponent],
-      providers: [
-        {
-          provide: MediaProxyService,
-          useValue: mediaProxyMock,
-        },
-      ],
-    }).compileComponents();
-  }));
+      TestBed.configureTestingModule({
+        declarations: [RichEmbedPreviewComponent],
+        providers: [
+          {
+            provide: MediaProxyService,
+            useValue: mediaProxyMock,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

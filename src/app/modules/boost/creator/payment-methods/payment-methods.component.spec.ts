@@ -1,10 +1,10 @@
 ///<reference path="../../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component, DebugElement, EventEmitter, Input } from '@angular/core';
@@ -128,30 +128,32 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        TooltipComponentMock,
-        AddressExcerptPipe,
-        TokenPipe,
-        BoostCreatorPaymentMethodsComponent,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        BoostService,
-        { provide: Web3WalletService, useValue: web3WalletServiceMock },
-        {
-          provide: TransactionOverlayService,
-          useValue: transactionOverlayServiceMock,
-        },
-        { provide: LocalWalletService, useValue: localWalletServiceMock },
-        { provide: TokenContractService, useValue: tokenContractServiceMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          TooltipComponentMock,
+          AddressExcerptPipe,
+          TokenPipe,
+          BoostCreatorPaymentMethodsComponent,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          BoostService,
+          { provide: Web3WalletService, useValue: web3WalletServiceMock },
+          {
+            provide: TransactionOverlayService,
+            useValue: transactionOverlayServiceMock,
+          },
+          { provide: LocalWalletService, useValue: localWalletServiceMock },
+          { provide: TokenContractService, useValue: tokenContractServiceMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

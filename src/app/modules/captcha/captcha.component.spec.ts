@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { CaptchaComponent, Captcha } from './captcha.component';
@@ -16,13 +16,15 @@ describe('CaptchaComponent', () => {
   let comp: CaptchaComponent;
   let fixture: ComponentFixture<CaptchaComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CaptchaComponent],
-      imports: [ReactiveFormsModule],
-      providers: [{ provide: Client, useValue: clientMock }],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CaptchaComponent],
+        imports: [ReactiveFormsModule],
+        providers: [{ provide: Client, useValue: clientMock }],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CaptchaComponent);

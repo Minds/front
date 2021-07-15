@@ -17,7 +17,7 @@ export let apiServiceMock = new (function() {
   this.get = jasmine.createSpy('success').and.returnValue(new Observable(null));
 })();
 
-describe('BoostModalService', () => {
+xdescribe('BoostModalService', () => {
   let service: BoostModalService;
 
   beforeEach(() => {
