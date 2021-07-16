@@ -1,4 +1,4 @@
-image: minds/ci-front:latest
+image: minds/ci-front:14
 
 stages:
   - test and build
@@ -25,10 +25,11 @@ cache:
     - node_modules/
 
 test:
-  image: circleci/node:13-browsers
+  image: circleci/node:14-browsers
   stage: test and build
   script:
     - npm i
+    - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 lint:
@@ -43,7 +44,7 @@ lint:
 # QA Stage #
 ############
 .cypress_tests: &cypress_tests
-  image: cypress/browsers:node12.13.0-chrome80-ff74
+  image: cypress/browsers:node14.17.0-chrome88-ff89
   stage: qa
   variables:
     CYPRESS_INSTALL_BINARY: "7.4.0"
@@ -125,8 +126,8 @@ build:review:
   script:
     - npm i && npm install -g gulp-cli
     - npm run postinstall
-    - sh build/ng9-bundles.sh
-    - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
+    - sh build/ng-bundles.sh
+    - sh build/ng-remove-locale-assets.sh # Remove assets from locales
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -147,8 +148,8 @@ build:production:bundles:
   script:
     - npm i && npm install -g gulp-cli
     - npm run postinstall
-    - sh build/ng9-bundles.sh
-    - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
+    - sh build/ng-bundles.sh
+    - sh build/ng-remove-locale-assets.sh # Remove assets from locales
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:

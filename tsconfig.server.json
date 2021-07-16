@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist/server",
     "baseUrl": "./",
-    "module": "commonjs",
+    "target": "es2016",
     "types": ["node"]
   },
   "files": ["server.ts", "src/main.server.ts"],

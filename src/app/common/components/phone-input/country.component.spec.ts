@@ -1,8 +1,8 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
+  waitForAsync,
 } from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,12 +31,14 @@ describe('PhoneInputCountryComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MaterialMock, PhoneInputCountryComponent], // declare the test component
-      imports: [ReactiveFormsModule, FormsModule],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MaterialMock, PhoneInputCountryComponent], // declare the test component
+        imports: [ReactiveFormsModule, FormsModule],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

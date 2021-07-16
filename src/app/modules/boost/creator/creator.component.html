@@ -131,7 +131,7 @@
 
             <span class="m-boost--creator-wide-input--cost-value">
               <span *ngIf="boost.currency === 'usd'">{{
-                calcCharges(boost.currency) | currency: 'USD':true
+                calcCharges(boost.currency) | currency: 'USD':'symbol'
               }}</span>
               <span *ngIf="boost.currency !== 'usd'">{{
                 calcCharges(boost.currency) | number: '1.0-4'
@@ -223,7 +223,7 @@
             +
             <b i18n="currency|@@COMMON__USD__BOOST_CREATOR_WITH_AMOUNT"
               >{{
-                calcPriorityChargesPreview('usd') | currency: 'USD':true
+                calcPriorityChargesPreview('usd') | currency: 'USD':'symbol'
               }}
               USD</b
             >

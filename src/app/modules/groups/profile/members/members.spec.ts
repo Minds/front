@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { GroupsProfileMembers } from './members';
@@ -43,47 +43,49 @@ describe('GroupsProfileMembers', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'minds-groups-profile-members-invite',
-          template: '',
-          inputs: ['group'],
-          outputs: ['invited'],
-        }),
-        MockComponent({
-          selector: 'minds-card-user',
-          template: '<ng-content></ng-content>',
-          inputs: ['object'],
-        }),
-        MockComponent({
-          selector: 'minds-groups-card-user-actions-button',
-          template: '',
-          inputs: ['group', 'user'],
-        }),
-        MockDirective({
-          selector: 'infinite-scroll',
-          inputs: ['moreData', 'inProgress'],
-          outputs: ['load'],
-        }),
-
-        GroupsProfileMembers,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: MindsHttpClient, useValue: mindsHttpClientMock },
-        { provide: GroupsService, useValue: groupsServiceMock },
-        {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService, {
-            configs: { cdnUrl: 'http://dev.minds.io/' },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'minds-groups-profile-members-invite',
+            template: '',
+            inputs: ['group'],
+            outputs: ['invited'],
           }),
-        },
-      ],
-    }).compileComponents();
-  }));
+          MockComponent({
+            selector: 'minds-card-user',
+            template: '<ng-content></ng-content>',
+            inputs: ['object'],
+          }),
+          MockComponent({
+            selector: 'minds-groups-card-user-actions-button',
+            template: '',
+            inputs: ['group', 'user'],
+          }),
+          MockDirective({
+            selector: 'infinite-scroll',
+            inputs: ['moreData', 'inProgress'],
+            outputs: ['load'],
+          }),
+
+          GroupsProfileMembers,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: MindsHttpClient, useValue: mindsHttpClientMock },
+          { provide: GroupsService, useValue: groupsServiceMock },
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService, {
+              configs: { cdnUrl: 'http://dev.minds.io/' },
+            }),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     fixture = TestBed.createComponent(GroupsProfileMembers);

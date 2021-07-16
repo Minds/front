@@ -22,7 +22,7 @@ const AUTOPREFIXER_BROWSERS = [
 // --------------
 // Build SASS
 gulp.task('build.sass', done => {
-  const app_cdn = argv.deployUrl ? argv.deployUrl : '';
+  const app_cdn = argv['deployUrl'] ? argv['deployUrl'] : '';
   gulp
     .src(join(__dirname, 'src', 'stylesheets', 'main.scss'))
     .pipe(

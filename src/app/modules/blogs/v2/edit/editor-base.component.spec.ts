@@ -6,13 +6,14 @@ import { DialogService } from '../../../../common/services/confirm-leave-dialog.
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { BlogsEditService } from './blog-edit.service';
-import { MockService } from '../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../utils/mock';
 import { BlogEditorV2Component } from './editor-base.component';
 import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { composerMockService } from '../../../../mocks/modules/composer/services/composer.service.mock';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
+import { FormsModule } from '@angular/forms';
 
 const content$ = new BehaviorSubject<string>('');
 
@@ -38,8 +39,14 @@ describe('BlogEditorV2Component', () => {
       useValue: composerMockService,
     });
     TestBed.configureTestingModule({
-      declarations: [BlogEditorV2Component, ButtonComponent],
-      imports: [RouterTestingModule],
+      declarations: [
+        BlogEditorV2Component,
+        ButtonComponent,
+        MockComponent({ selector: 'm-blog__editor', inputs: ['content'] }),
+        MockComponent({ selector: 'm-blogEditor__bottomBar' }),
+        MockComponent({ selector: 'm-blogEditor__dropdown' }),
+      ],
+      imports: [RouterTestingModule, FormsModule],
       providers: [
         {
           provide: Session,
@@ -52,7 +59,6 @@ describe('BlogEditorV2Component', () => {
             },
           }),
         },
-        { provide: Router, useValue: MockService(Router) },
         { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
         { provide: DialogService, useValue: MockService(DialogService) },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },

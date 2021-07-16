@@ -1,6 +1,7 @@
 import { SidebarNavigationComponent } from './navigation.component';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
+@Injectable()
 export class SidebarNavigationService {
   container: SidebarNavigationComponent;
   visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();

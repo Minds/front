@@ -2,11 +2,11 @@
 
 import { DebugElement } from '@angular/core';
 import {
-  async,
   ComponentFixture,
   TestBed,
   tick,
   fakeAsync,
+  waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -58,21 +58,23 @@ describe('GroupsMembersModuleComponent', () => {
     ],
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MaterialSwitchMock,
-        Hovercard,
-        GroupsMembersModuleComponent,
-      ],
-      imports: [NgCommonModule, RouterTestingModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: HovercardService, useValue: hovercardServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MaterialSwitchMock,
+          Hovercard,
+          GroupsMembersModuleComponent,
+        ],
+        imports: [NgCommonModule, RouterTestingModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: HovercardService, useValue: hovercardServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

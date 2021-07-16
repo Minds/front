@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice.component';
@@ -30,27 +30,29 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
   let comp: BlockchainWalletAddressNoticeComponent;
   let fixture: ComponentFixture<BlockchainWalletAddressNoticeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'm-announcement',
-          template: '<ng-content></ng-content>',
-        }),
-        BlockchainWalletAddressNoticeComponent,
-      ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Web3WalletService, useValue: walletService },
-        { provide: BlockchainService, useValue: blockchainService },
-        { provide: Router, useValue: routerMock },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'm-announcement',
+            template: '<ng-content></ng-content>',
+          }),
+          BlockchainWalletAddressNoticeComponent,
+        ],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Web3WalletService, useValue: walletService },
+          { provide: BlockchainService, useValue: blockchainService },
+          { provide: Router, useValue: routerMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
@@ -205,65 +205,67 @@ describe('EmbeddedVideoComponent', () => {
     component = fixture.componentInstance;
   }
 
-  beforeEach(async(() => {
-    const configsServiceMock = MockService(ConfigsService, {
-      get: key => {
-        const config = {
-          site_url: 'https://minds.com/',
-          cdn_url: 'https://cdn.minds.com/',
-        };
-        return config[key];
-      },
-    });
+  beforeEach(
+    waitForAsync(() => {
+      const configsServiceMock = MockService(ConfigsService, {
+        get: key => {
+          const config = {
+            site_url: 'https://minds.com/',
+            cdn_url: 'https://cdn.minds.com/',
+          };
+          return config[key];
+        },
+      });
 
-    TestBed.configureTestingModule({
-      declarations: [EmbeddedVideoComponent],
-      providers: [
-        ...SERVER_PROVIDERS,
-        { provide: Client, useValue: clientMock },
-        { provide: MetaService, useValue: metaServiceMock },
-        {
-          provide: RelatedContentService,
-          useValue: MockService(RelatedContentService),
-        },
-        {
-          provide: ConfigsService,
-          useValue: configsServiceMock,
-        },
-        {
-          provide: REQUEST,
-          useValue: {},
-        },
-        {
-          provide: RESPONSE,
-          useValue: {},
-        },
-        {
-          provide: NgxRequest,
-          useValue: {},
-        },
-        {
-          provide: NgxResponse,
-          useValue: {},
-        },
-        { provide: 'ORIGIN_URL', useValue: location.origin },
-        {
-          provide: 'QUERY_STRING',
-          useFactory: () => '',
-        },
-        {
-          provide: SENTRY,
-          useValue: Sentry,
-        },
-      ],
-      imports: [EmbedModule],
-    });
+      TestBed.configureTestingModule({
+        declarations: [EmbeddedVideoComponent],
+        providers: [
+          ...SERVER_PROVIDERS,
+          { provide: Client, useValue: clientMock },
+          { provide: MetaService, useValue: metaServiceMock },
+          {
+            provide: RelatedContentService,
+            useValue: MockService(RelatedContentService),
+          },
+          {
+            provide: ConfigsService,
+            useValue: configsServiceMock,
+          },
+          {
+            provide: REQUEST,
+            useValue: {},
+          },
+          {
+            provide: RESPONSE,
+            useValue: {},
+          },
+          {
+            provide: NgxRequest,
+            useValue: {},
+          },
+          {
+            provide: NgxResponse,
+            useValue: {},
+          },
+          { provide: 'ORIGIN_URL', useValue: location.origin },
+          {
+            provide: 'QUERY_STRING',
+            useFactory: () => '',
+          },
+          {
+            provide: SENTRY,
+            useValue: Sentry,
+          },
+        ],
+        imports: [EmbedModule],
+      });
 
-    siteServiceMock.baseUrl = 'https://www.minds.com/';
-    siteServiceMock.cdnUrl = 'https://cdn.minds.com/';
+      siteServiceMock.baseUrl = 'https://www.minds.com/';
+      siteServiceMock.cdnUrl = 'https://cdn.minds.com/';
 
-    clientMock.response = CLIENT_RESPONSE;
-  }));
+      clientMock.response = CLIENT_RESPONSE;
+    })
+  );
 
   it('should create', () => {
     setup(null, null);

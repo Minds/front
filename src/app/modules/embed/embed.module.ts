@@ -36,7 +36,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     HttpClientModule,
     VideoModule,
     CookieModule.forRoot(),
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
   ],
   providers: [
     SiteService,

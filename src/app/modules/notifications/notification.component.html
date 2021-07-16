@@ -1509,8 +1509,8 @@
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PAYOUT_QUEUED"
           >Your payment request for
-          {{ notification.params.amount | currency: 'USD':true }} is awaiting
-          approval.</ng-container
+          {{ notification.params.amount | currency: 'USD':'symbol' }} is
+          awaiting approval.</ng-container
         >
       </p>
     </a>
@@ -1522,7 +1522,7 @@
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PAYOUT_ACCEPTED"
           >Your payment request for
-          {{ notification.params.amount | currency: 'USD':true }} was
+          {{ notification.params.amount | currency: 'USD':'symbol' }} was
           approved.</ng-container
         >
       </p>
@@ -1535,7 +1535,7 @@
       <p>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PAYOUT_DECLINED"
           >Your payment request for
-          {{ notification.params.amount | currency: 'USD':true }} was
+          {{ notification.params.amount | currency: 'USD':'symbol' }} was
           declined.</ng-container
         >
       </p>

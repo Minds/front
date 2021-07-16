@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,37 +18,39 @@ describe('BoostConsoleCard', () => {
   let comp: BoostConsoleCard;
   let fixture: ComponentFixture<BoostConsoleCard>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'minds-card',
-          template: '',
-          inputs: ['object', 'flags'],
-        }),
-        TokenPipe,
-        BoostConsoleCard,
-        ButtonComponent,
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-    })
-      .overrideComponent(BoostConsoleCard, {
-        set: {
-          providers: [
-            {
-              provide: BoostService,
-              useValue: boostServiceMock,
-            },
-          ],
-        },
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'minds-card',
+            template: '',
+            inputs: ['object', 'flags'],
+          }),
+          TokenPipe,
+          BoostConsoleCard,
+          ButtonComponent,
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
       })
-      .compileComponents();
-  }));
+        .overrideComponent(BoostConsoleCard, {
+          set: {
+            providers: [
+              {
+                provide: BoostService,
+                useValue: boostServiceMock,
+              },
+            ],
+          },
+        })
+        .compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

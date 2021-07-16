@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import {
   Component,
@@ -28,6 +28,9 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
+import { MockComponent } from '../../../utils/mock';
 
 @Component({
   selector: 'minds-card-video',
@@ -128,30 +131,37 @@ describe('AdminBoosts', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TokenPipe,
-        MindsCardVideoMock,
-        MindsCardImageMock,
-        MindsCardBlogMock,
-        MindsCardUserMock,
-        MindsActivityMock,
-        MindsCardGroupMock,
-        RejectionReasonModalMock,
-        MaterialMock,
-        MaterialSliderMock,
-        AdminBoosts,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ActivityService, useValue: activityServiceMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          TokenPipe,
+          MindsCardVideoMock,
+          MindsCardImageMock,
+          MindsCardBlogMock,
+          MindsCardUserMock,
+          MindsActivityMock,
+          MindsCardGroupMock,
+          RejectionReasonModalMock,
+          MaterialMock,
+          MaterialSliderMock,
+          AdminBoosts,
+          ButtonComponent,
+          MockComponent({
+            selector: 'm-activity',
+            inputs: ['entity'],
+          }),
+        ], // declare the test component
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ActivityService, useValue: activityServiceMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

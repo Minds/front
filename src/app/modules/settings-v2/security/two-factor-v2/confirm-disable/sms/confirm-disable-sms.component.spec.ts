@@ -1,7 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { clientMock } from '../../../../../../../tests/client-mock.spec';
+import { ButtonComponent } from '../../../../../../common/components/button/button.component';
 import { FormToastService } from '../../../../../../common/services/form-toast.service';
+import { Client } from '../../../../../../services/api';
+import { OverlayModalService } from '../../../../../../services/ux/overlay-modal';
 import { MockService } from '../../../../../../utils/mock';
+import { SettingsTwoFactorComponent } from '../../../../../settings/two-factor/two-factor.component';
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 
 import { SettingsTwoFactorDisableSMSComponent } from './confirm-disable-sms.component';
@@ -10,21 +16,36 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
   let comp: SettingsTwoFactorDisableSMSComponent;
   let fixture: ComponentFixture<SettingsTwoFactorDisableSMSComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [SettingsTwoFactorDisableSMSComponent],
-      providers: [
-        {
-          provide: SettingsTwoFactorV2Service,
-          useValue: MockService(SettingsTwoFactorV2Service),
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [FormsModule],
+        declarations: [
+          SettingsTwoFactorDisableSMSComponent,
+          SettingsTwoFactorComponent,
+          ButtonComponent,
+        ],
+        providers: [
+          {
+            provide: SettingsTwoFactorV2Service,
+            useValue: MockService(SettingsTwoFactorV2Service),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+          {
+            provide: Client,
+            useValue: clientMock,
+          },
+          {
+            provide: OverlayModalService,
+            useValue: MockService(OverlayModalService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsTwoFactorDisableSMSComponent);

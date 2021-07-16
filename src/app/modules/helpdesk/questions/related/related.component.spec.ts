@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -19,28 +19,30 @@ describe('RelatedQuestionsComponent', () => {
   let comp: RelatedQuestionsComponent;
   let fixture: ComponentFixture<RelatedQuestionsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        SafePipe,
-        RelatedQuestionsComponent,
-        MockComponent({
-          selector: 'minds-activity',
-          inputs: ['object'],
-        }),
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          SafePipe,
+          RelatedQuestionsComponent,
+          MockComponent({
+            selector: 'minds-activity',
+            inputs: ['object'],
+          }),
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

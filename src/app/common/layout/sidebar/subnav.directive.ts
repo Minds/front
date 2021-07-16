@@ -17,9 +17,9 @@ const MIN_FULL_NAV_WIDTH = 1172; // TODO make this a constant
 })
 export class SidebarNavigationSubnavDirective {
   parentEl: Element;
-  parentMouseEnterListener;
-  parentMouseLeaveListener;
-  parentMouseUpListener;
+  parentMouseEnterListener: () => void;
+  parentMouseLeaveListener: () => void;
+  parentMouseUpListener: () => void;
 
   @HostBinding('class.m-sidebarNavigation__subnav--popover')
   get shouldShowPopover() {
@@ -45,6 +45,7 @@ export class SidebarNavigationSubnavDirective {
   ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) return;
     this.parentEl = this.el.nativeElement.parentElement;
+
     this.parentMouseEnterListener = this.renderer.listen(
       this.parentEl,
       'mouseenter',
@@ -86,9 +87,10 @@ export class SidebarNavigationSubnavDirective {
   }
 
   ngOnDestroy() {
-    if (this.parentMouseEnterListener) this.parentMouseEnterListener.unlisten();
-    if (this.parentMouseLeaveListener) this.parentMouseLeaveListener.unlisten();
-    if (this.parentMouseUpListener) this.parentMouseUpListener.unlisten();
+    // renderer2 listeners return unlisten functions
+    if (this.parentMouseEnterListener) this.parentMouseEnterListener;
+    if (this.parentMouseLeaveListener) this.parentMouseLeaveListener;
+    if (this.parentMouseUpListener) this.parentMouseUpListener;
   }
 
   detectChanges() {

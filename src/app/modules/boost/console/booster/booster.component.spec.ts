@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -19,34 +19,39 @@ describe('BoostConsoleBooster', () => {
   let comp: BoostConsoleBooster;
   let fixture: ComponentFixture<BoostConsoleBooster>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({
-          selector: 'minds-card',
-          inputs: ['object', 'hostClass'],
-        }),
-        MockComponent({ selector: 'minds-button', inputs: ['object', 'type'] }),
-        MockDirective({
-          selector: 'infinite-scroll',
-          inputs: ['moreData', 'inProgress'],
-          outputs: ['load'],
-        }),
-        BoostConsoleBooster,
-      ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        {
-          provide: ActivatedRoute,
-          useValue: { parent: { url: of([{ path: 'newsfeed' }]) } },
-        },
-        { provide: FeedsService, useValue: feedsServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          MockComponent({
+            selector: 'minds-card',
+            inputs: ['object', 'hostClass', 'flags'],
+          }),
+          MockComponent({
+            selector: 'minds-button',
+            inputs: ['object', 'type'],
+          }),
+          MockDirective({
+            selector: 'infinite-scroll',
+            inputs: ['moreData', 'inProgress'],
+            outputs: ['load'],
+          }),
+          BoostConsoleBooster,
+        ],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          {
+            provide: ActivatedRoute,
+            useValue: { parent: { url: of([{ path: 'newsfeed' }]) } },
+          },
+          { provide: FeedsService, useValue: feedsServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

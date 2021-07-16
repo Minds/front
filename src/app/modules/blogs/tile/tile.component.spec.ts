@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,28 +11,34 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { AttachmentService } from '../../../services/attachment';
 import { attachmentServiceMock } from '../../../../tests/attachment-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 
 describe('BlogTileComponent', () => {
   let comp: BlogTileComponent;
   let fixture: ComponentFixture<BlogTileComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ExcerptPipe, BlogTileComponent],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: AttachmentService, useValue: attachmentServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ExcerptPipe,
+          BlogTileComponent,
+          MockComponent({ selector: 'm-safe-toggle', inputs: ['entity'] }),
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: AttachmentService, useValue: attachmentServiceMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

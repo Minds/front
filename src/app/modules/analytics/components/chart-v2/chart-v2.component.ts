@@ -467,6 +467,8 @@ export class ChartV2Component implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.themeSubscription.unsubscribe();
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 }

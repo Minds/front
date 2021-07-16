@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BlogEditorDropdownComponent } from './dropdown.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockService } from '../../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
@@ -28,15 +28,30 @@ describe('BlogEditorDropdownComponent', () => {
   let comp: BlogEditorDropdownComponent;
   let fixture: ComponentFixture<BlogEditorDropdownComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [BlogEditorDropdownComponent],
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: BlogsEditService, useValue: blogsEditServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          BlogEditorDropdownComponent,
+          MockComponent({
+            selector: 'm-composerTitleBar__dropdown',
+            inputs: ['anchorPosition'],
+          }),
+          MockComponent({
+            selector: 'm-dropdownMenu',
+            inputs: ['anchorPosition', 'menu'],
+          }),
+          MockComponent({
+            selector: 'm-icon',
+          }),
+        ],
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          { provide: BlogsEditService, useValue: blogsEditServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

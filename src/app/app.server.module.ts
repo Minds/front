@@ -42,6 +42,7 @@ export class SentryServerErrorHandler implements ErrorHandler {
 }
 
 // activate cookie for server-side rendering
+@Injectable()
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
     xhr2.prototype._restrictedHeaders.cookie = false;

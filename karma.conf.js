@@ -15,7 +15,10 @@ module.exports = function (config) {
     ],
     // webpack: { node: { fs: 'empty', } },
     client:{
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      // jasmine: {
+      //   random: false // run tests in the same order every time
+      // }
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
@@ -41,6 +44,10 @@ module.exports = function (config) {
         ],
       }
     },
-    singleRun: true
+    singleRun: true,
+		captureTimeout: 210000,
+    browserNoActivityTimeout: 210000,
+		browserDisconnectTimeout: 210000,
+    browserDisconnectTolerance: 3
   });
 };

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { TransactionOverlayComponent } from './transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay.service';
@@ -18,25 +18,27 @@ describe('TransactionOverlayComponent', () => {
   let comp: TransactionOverlayComponent;
   let fixture: ComponentFixture<TransactionOverlayComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialSwitchMock,
-        TransactionOverlayComponent,
-        GetMetamaskComponent,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        {
-          provide: TransactionOverlayService,
-          useValue: transactionOverlayService,
-        },
-        { provide: TokenContractService, useValue: TokenContractService },
-        { provide: Web3WalletService, useValue: web3WalletServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialSwitchMock,
+          TransactionOverlayComponent,
+          GetMetamaskComponent,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          {
+            provide: TransactionOverlayService,
+            useValue: transactionOverlayService,
+          },
+          { provide: TokenContractService, useValue: TokenContractService },
+          { provide: Web3WalletService, useValue: web3WalletServiceMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TransactionOverlayComponent);

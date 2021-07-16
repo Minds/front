@@ -2,7 +2,12 @@
  * @author Ben Hayward
  * @desc Spec tests for the thread component
  */
-import { async, ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { CommentsThreadComponent } from './thread.component';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { fakeAsync } from '@angular/core/testing';
@@ -20,7 +25,7 @@ import { SocketsService } from '../../../services/sockets';
 import { ActivityService } from '../../../common/services/activity.service';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
 
 let commentsServiceMock: any = MockService(CommentsService, {
   get: Promise.resolve(true),
@@ -30,56 +35,62 @@ describe('CommentsThreadComponent', () => {
   let comp: CommentsThreadComponent;
   let fixture: ComponentFixture<CommentsThreadComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'm-comment__poster',
-          inputs: [
-            'guid',
-            'routerLink',
-            'parent',
-            'entity',
-            'currentIndex',
-            'conversation',
-            'level',
-          ],
-        }),
-        MockComponent({
-          selector: 'm-comment',
-          inputs: [
-            'comment',
-            'entity',
-            'parent',
-            'level',
-            'canEdit',
-            'canDelete',
-            'showReplies',
-          ],
-          outputs: ['emitter', 'enabled'],
-        }),
-        MockComponent({
-          selector: 'div',
-          inputs: ['emitter', 'enabled'],
-        }),
-        CommentsThreadComponent,
-        CommentsScrollDirective,
-      ],
-      imports: [
-        RouterModule.forRoot([]),
-        HttpClientTestingModule,
-        HttpClientModule,
-      ],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: BlockListService, useValue: MockService(BlockListService) },
-        { provide: CommentsService, useValue: commentsServiceMock },
-        { provide: SocketsService, useValue: MockService(SocketsService) },
-        { provide: ActivityService, useValue: MockService(ActivityService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'm-comment__poster',
+            inputs: [
+              'guid',
+              'routerLink',
+              'parent',
+              'entity',
+              'currentIndex',
+              'conversation',
+              'level',
+            ],
+          }),
+          MockComponent({
+            selector: 'm-comment',
+            inputs: [
+              'comment',
+              'entity',
+              'parent',
+              'level',
+              'canEdit',
+              'canDelete',
+              'showReplies',
+            ],
+            outputs: ['emitter', 'enabled'],
+          }),
+          MockComponent({
+            selector: 'div',
+            inputs: ['emitter', 'enabled'],
+          }),
+          CommentsThreadComponent,
+          CommentsScrollDirective,
+          LoadingSpinnerComponent,
+        ],
+        imports: [
+          RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+          HttpClientTestingModule,
+          HttpClientModule,
+        ],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          {
+            provide: BlockListService,
+            useValue: MockService(BlockListService),
+          },
+          { provide: CommentsService, useValue: commentsServiceMock },
+          { provide: SocketsService, useValue: MockService(SocketsService) },
+          { provide: ActivityService, useValue: MockService(ActivityService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SettingsV2Component } from './settings-v2.component';
 import { FormToastService } from '../../common/services/form-toast.service';
@@ -12,57 +12,69 @@ import { ProService } from '../pro/pro.service';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { Router } from '@angular/router';
+import { LoadingSpinnerComponent } from '../../common/components/loading-spinner/loading-spinner.component';
 
 describe('SettingsV2Component', () => {
   let component: SettingsV2Component;
   let fixture: ComponentFixture<SettingsV2Component>;
   let router: Router;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'm-nestedMenu',
-          inputs: ['isNested', 'menus', 'parentRoute', 'disableActiveClass'],
-          outputs: ['itemSelected', 'clickedBack'],
-        }),
-        SettingsV2Component,
-      ],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: ProService, useValue: MockService(ProService, { get: {} }) },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
-      ],
-      imports: [
-        RouterTestingModule.withRoutes([
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'm-nestedMenu',
+            inputs: ['isNested', 'menus', 'parentRoute', 'disableActiveClass'],
+            outputs: ['itemSelected', 'clickedBack'],
+          }),
+          SettingsV2Component,
+          LoadingSpinnerComponent,
+        ],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
           {
-            path: 'settings',
-            children: [
-              {
-                path: 'account',
-                data: {
-                  isMenu: true,
-                },
-                component: SettingsV2Component,
-                children: [
-                  {
-                    path: '**',
-                    redirectTo: 'account',
-                  },
-                ],
-              },
-            ],
+            provide: ProService,
+            useValue: MockService(ProService, { get: {} }),
           },
-        ]),
-      ],
-    }).compileComponents();
-  }));
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+        imports: [
+          RouterTestingModule.withRoutes([
+            {
+              path: 'settings',
+              children: [
+                {
+                  path: 'account',
+                  data: {
+                    isMenu: true,
+                  },
+                  component: SettingsV2Component,
+                  children: [
+                    {
+                      path: '**',
+                      redirectTo: 'account',
+                    },
+                  ],
+                },
+              ],
+            },
+          ]),
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
     featuresServiceMock.mock('yt-importer', true);
+    featuresServiceMock.mock('settings-referrals', true);
+    featuresServiceMock.mock('notifications-v3', true);
 
     clientMock.response = [];
     clientMock.response[`api/v1/settings`] = {

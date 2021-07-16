@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LogoutComponent } from './logout.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { Client } from '../../services/api/client';
 import { Router } from '@angular/router';
+import { RegisterForm } from '../forms/register/register';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
@@ -17,17 +18,19 @@ xdescribe('LogoutComponent', () => {
   let comp: LogoutComponent;
   let fixture: ComponentFixture<LogoutComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [LogoutComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Router, useValue: routerMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [LogoutComponent, RegisterForm],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Router, useValue: routerMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {
