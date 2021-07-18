@@ -49,6 +49,15 @@
       Transactions
     </a>
   </li>
+  <li class="m-tabs__tab" *mIfFeature="'withdrawal-console'">
+    <a
+      routerLink="transfers"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__ONCHAIN__TRANSFERS"
+    >
+      On-chain transfers
+    </a>
+  </li>
   <li class="m-tabs__tab">
     <a
       routerLink="settings"

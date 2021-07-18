@@ -18,7 +18,7 @@ export class AttachmentService {
   readonly maxVideoFileSize: number;
   readonly maxVideoLength: number;
 
-  private meta: any = {};
+  public meta: any = {};
   private attachment: any = {};
 
   public progress: BehaviorSubject<number> = new BehaviorSubject(0);

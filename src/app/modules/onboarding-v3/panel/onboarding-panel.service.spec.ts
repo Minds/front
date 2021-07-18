@@ -11,7 +11,7 @@ let routerMock = new (function() {
 
 const tagsMock: any = MockService(OnboardingV3TagsService);
 
-describe('OnboardingV3PanelService', () => {
+xdescribe('OnboardingV3PanelService', () => {
   let service: OnboardingV3PanelService;
 
   beforeEach(() => {

@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,36 +34,38 @@ describe('HelpdeskDashboardComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        HelpdeskDashboardComponent,
-        ButtonComponent,
-        MockComponent({
-          selector: 'm-helpdesk--dashboard--all',
-        }),
-      ],
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        CommonModule,
-        FormsModule,
-      ],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({ uuid: 'uuid1' }) },
-        },
-        {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService),
-        },
-        PageLayoutService,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          HelpdeskDashboardComponent,
+          ButtonComponent,
+          MockComponent({
+            selector: 'm-helpdesk--dashboard--all',
+          }),
+        ],
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          CommonModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          {
+            provide: ActivatedRoute,
+            useValue: { params: of({ uuid: 'uuid1' }) },
+          },
+          {
+            provide: ConfigsService,
+            useValue: MockService(ConfigsService),
+          },
+          PageLayoutService,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

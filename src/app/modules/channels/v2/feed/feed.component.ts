@@ -184,7 +184,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   onTypeChange(type: FeedFilterType) {
     const filter = type !== 'activities' ? type : '';
     this.router.navigate(['/', this.service.username$.getValue(), filter], {
-      preserveQueryParams: true,
+      queryParamsHandling: 'preserve',
     });
   }
 

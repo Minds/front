@@ -57,6 +57,10 @@ export class AttachmentValidatorService {
   private loadVideo(file: File | Attachment): Promise<GlobalEventHandlers> {
     return new Promise((resolve, reject) => {
       try {
+        if (file.type === 'video/x-ms-wmv') {
+          throw new Error('Filetype cannot be loaded as a video element');
+        }
+
         let video = document.createElement('video');
         video.preload = 'metadata';
 
@@ -89,8 +93,6 @@ export class AttachmentValidatorService {
     if (/image\/.+/.test(file.type)) {
       return { isValid: true };
     } else if (/video\/.+/.test(file.type)) {
-      const video = await this.loadVideo(file);
-
       let payload = {
         isValid: true,
         codes: [],
@@ -102,6 +104,14 @@ export class AttachmentValidatorService {
       if (!this.isValidSize(file)) {
         payload.isValid = false;
         payload.codes.push('Video:MaxSizeExceeded');
+      }
+
+      let video = null;
+      try {
+        video = await this.loadVideo(file);
+      } catch (e) {
+        // if we cannot load it - return valid.
+        return payload;
       }
 
       if (!this.isValidLength(video)) {

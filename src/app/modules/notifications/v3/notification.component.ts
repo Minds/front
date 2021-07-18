@@ -104,6 +104,8 @@ export class NotificationsV3NotificationComponent
         return 'approved';
       case 'group_queue_reject':
         return 'rejected';
+      case 'group_invite':
+        return 'invited you to join';
       case 'wire_received':
         return 'paid';
       case 'boost_peer_request':
@@ -157,6 +159,7 @@ export class NotificationsV3NotificationComponent
         }
       case 'subscribe':
       case 'group_queue_add':
+      case 'group_invite':
       case 'token_rewards_summary':
       case 'report_actioned':
         return '';
@@ -174,6 +177,7 @@ export class NotificationsV3NotificationComponent
       case 'group_queue_add':
       case 'token_rewards_summary':
       case 'report_actioned':
+      case 'subscribe':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':
@@ -181,8 +185,6 @@ export class NotificationsV3NotificationComponent
         return 'boost offer';
       case 'boost_rejected':
         return 'boost';
-      case 'subscribe':
-        return '';
     }
     switch (this.notification.entity?.type) {
       case 'comment':
@@ -191,6 +193,8 @@ export class NotificationsV3NotificationComponent
         return this.notification.entity?.subtype;
       case 'user':
         return 'you';
+      case 'group':
+        return this.notification.entity.name;
       default:
         return 'post';
     }
@@ -205,6 +209,8 @@ export class NotificationsV3NotificationComponent
         return ['/boost/console/offers/history/outbox'];
       case 'subscribe':
         return ['/' + this.notification.from.username];
+      case 'group_invite':
+        return ['/groups/profile/' + this.notification.entity.guid];
     }
 
     switch (this.notification.entity?.type) {

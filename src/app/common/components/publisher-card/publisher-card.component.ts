@@ -4,7 +4,6 @@ import {
   ElementRef,
   HostListener,
   Input,
-  OnInit,
   ViewChild,
   Inject,
   PLATFORM_ID,
@@ -37,7 +36,7 @@ export class PublisherCardComponent implements AfterViewInit {
 
   readonly cdnUrl: string;
   btnIconOnly: boolean = false;
-  size: 'small' | 'medium' | 'large' = 'large';
+  size: 'small' | 'medium' | 'large' = 'medium';
 
   constructor(
     protected userAvatar: UserAvatarService,
@@ -50,7 +49,7 @@ export class PublisherCardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => this.onResize(), 0);
+      setTimeout(() => this.onResize());
     }
   }
 
@@ -117,5 +116,17 @@ export class PublisherCardComponent implements AfterViewInit {
           this.publisher.subscriptions_count)) ||
         (this.type === 'group' && this.publisher['members:count']))
     );
+  }
+
+  get maxHeight(): number {
+    switch (this.size) {
+      case 'small':
+        return 150;
+      case 'medium':
+        return 130;
+      case 'large':
+      default:
+        return 140;
+    }
   }
 }

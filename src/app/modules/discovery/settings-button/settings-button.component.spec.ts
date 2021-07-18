@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
@@ -17,26 +17,28 @@ describe('DiscoverySettingsButtonComponent', () => {
   let component: DiscoverySettingsButtonComponent;
   let fixture: ComponentFixture<DiscoverySettingsButtonComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DiscoverySettingsButtonComponent, TooltipComponent],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: Client, useValue: clientMock },
-        {
-          provide: DiscoveryTagsService,
-          useValue: MockService(DiscoveryTagsService),
-        },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        {
-          provide: DiscoveryFeedsService,
-          useValue: MockService(DiscoveryFeedsService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [DiscoverySettingsButtonComponent, TooltipComponent],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: Client, useValue: clientMock },
+          {
+            provide: DiscoveryTagsService,
+            useValue: MockService(DiscoveryTagsService),
+          },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          {
+            provide: DiscoveryFeedsService,
+            useValue: MockService(DiscoveryFeedsService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscoverySettingsButtonComponent);

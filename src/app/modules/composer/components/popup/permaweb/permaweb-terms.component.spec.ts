@@ -1,9 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { PermawebTermsComponent } from './permaweb-terms.component';
 import { ComposerService } from '../../../services/composer.service';
 import { By } from '@angular/platform-browser';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
+import { FormsModule } from '@angular/forms';
 
 describe('Permaweb Terms Component', () => {
   let comp: PermawebTermsComponent;
@@ -20,17 +21,20 @@ describe('Permaweb Terms Component', () => {
     },
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [PermawebTermsComponent, ButtonComponent],
-      providers: [
-        {
-          provide: ComposerService,
-          useValue: composerServiceMock,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [FormsModule],
+        declarations: [PermawebTermsComponent, ButtonComponent],
+        providers: [
+          {
+            provide: ComposerService,
+            useValue: composerServiceMock,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

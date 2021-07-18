@@ -155,7 +155,7 @@ $modal-padding: 20px;
           text-align: left;
           padding: $modal-padding $modal-padding * 3;
           @include m-theme() {
-            background-color: themed($m-bgColor--primary);
+            background-color: themed($m-bgColor--secondary);
           }
         }
       }
@@ -257,7 +257,11 @@ $modal-padding: 20px;
     height: auto;
     position: relative;
 
-    &:not(.m-activityModal__mediaWrapper--statusLong):not(.m-activityModal__mediaWrapper--quote) {
+    @include m-theme() {
+      background: themed($m-bgColor--secondary);
+    }
+
+    &:not(.m-activityModal__mediaWrapper--statusLong):not(.m-activityModal__mediaWrapper--quote):not(.m-activityModal__mediaWrapper--richEmbed) {
       ::ng-deep m-activity__content {
         position: absolute;
         top: 50%;

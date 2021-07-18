@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
@@ -17,22 +17,24 @@ describe('DiscoveryNoTagsPromptComponent', () => {
   let component: DiscoveryNoTagsPromptComponent;
   let fixture: ComponentFixture<DiscoveryNoTagsPromptComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DiscoveryNoTagsPromptComponent, ButtonComponent],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: Client, useValue: clientMock },
-        {
-          provide: DiscoveryTagsService,
-          useValue: MockService(DiscoveryTagsService),
-        },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [DiscoveryNoTagsPromptComponent, ButtonComponent],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: Client, useValue: clientMock },
+          {
+            provide: DiscoveryTagsService,
+            useValue: MockService(DiscoveryTagsService),
+          },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DiscoveryNoTagsPromptComponent);
