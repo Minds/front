@@ -15,7 +15,6 @@ import { BoostContractService } from './contracts/boost-contract.service';
 import { WireContractService } from './contracts/wire-contract.service';
 import { WithdrawContractService } from './contracts/withdraw-contract.service';
 import { TokenDistributionEventService } from './contracts/token-distribution-event.service';
-import { LocalWalletService } from './local-wallet.service';
 import { OffchainPaymentService } from './offchain-payment.service';
 import { GetMetamaskComponent } from './metamask/getmetamask.component';
 import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
@@ -54,11 +53,6 @@ const cryptoRoutes: Routes = [];
     BlockchainPurchaseV2Component,
   ],
   providers: [
-    {
-      provide: LocalWalletService,
-      useFactory: LocalWalletService._,
-      deps: [TransactionOverlayService],
-    },
     TokenContractService,
     WireContractService,
     WithdrawContractService,

@@ -67,43 +67,6 @@
 
     <ul class="m-token--onboarding--onchain-selections" *ngIf="display">
       <li>
-        <ng-container *ngIf="display === Views.CreateAddress">
-          <i class="material-icons">vpn_key</i>
-          <h4>
-            Create Address
-          </h4>
-
-          <p *ngIf="!generatedAccount">
-            We're generating a new wallet address and its private key. Ensure
-            you download and safely store the private key file. The address will
-            be set as your Receiver Address.
-          </p>
-
-          <p *ngIf="generatedAccount">
-            The address <b>{{ generatedAccount.address }}</b> was successfully
-            saved as your Receiver Address. Clicking the button below will
-            download its private key. Ensure you safely store the private key
-            file.
-          </p>
-
-          <div class="m-token--onboarding--onchain-selections--buttons">
-            <button
-              class="m-btn m-btn--slim m-btn--action"
-              *ngIf="generatedAccount"
-              [disabled]="inProgress"
-              (click)="downloadPrivateKey()"
-            >
-              Download
-            </button>
-
-            <div
-              *ngIf="inProgress"
-              class="mdl-spinner mdl-js-spinner is-active"
-              [mdl]
-            ></div>
-          </div>
-        </ng-container>
-
         <ng-container *ngIf="display === Views.ProvideAddress">
           <i class="material-icons">vpn_key</i>
           <h4>

@@ -23,7 +23,6 @@ import { TooltipComponentMock } from '../../../../mocks/common/components/toolti
 import { AddressExcerptPipe } from '../../../../common/pipes/address-excerpt';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { localWalletServiceMock } from '../../../../../tests/local-wallet-service-mock.spec';
-import { LocalWalletService } from '../../../blockchain/local-wallet.service';
 import { transactionOverlayServiceMock } from '../../../../../tests/transaction-overlay-service-mock.spec';
 import { TransactionOverlayService } from '../../../blockchain/transaction-overlay/transaction-overlay.service';
 
@@ -147,7 +146,6 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
             provide: TransactionOverlayService,
             useValue: transactionOverlayServiceMock,
           },
-          { provide: LocalWalletService, useValue: localWalletServiceMock },
           { provide: TokenContractService, useValue: tokenContractServiceMock },
           { provide: OverlayModalService, useValue: overlayModalServiceMock },
         ],
