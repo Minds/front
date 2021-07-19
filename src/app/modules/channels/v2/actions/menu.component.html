@@ -110,39 +110,6 @@
           Reindex
         </span>
       </li>
-
-      <li
-        *ngIf="(service.rating$ | async) === 2; else markAsOpenOption"
-        (click)="setRating(1)"
-      >
-        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MARK_AS_SAFE">
-          Mark as Safe
-        </span>
-      </li>
-      <ng-template #markAsOpenOption>
-        <li (click)="setRating(2)">
-          <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MARK_AS_OPEN">
-            Mark as Open
-          </span>
-        </li>
-      </ng-template>
-
-      <!-- Seed Channels -->
-      <li
-        *ngIf="!(service.seed$ | async); else removeSeed"
-        (click)="setSeed(true)"
-      >
-        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MAKE__SEED">
-          Add as Seed
-        </span>
-      </li>
-      <ng-template #removeSeed>
-        <li (click)="setSeed(false)">
-          <span class="m-dropdownMenu__item" i18n="@@M__ACTION__REMOVE__SEED">
-            Remove as Seed
-          </span>
-        </li>
-      </ng-template>
     </ng-container>
 
     <li
