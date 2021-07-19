@@ -120,6 +120,8 @@ export class FeedService {
           this.service.setFromTimestamp('');
         }
 
+        console.log('ojm chfeedSvc, daterangeenabld?', dateRangeEnabled);
+
         // Don't allow using search or date filters for scheduled posts
         if (query || dateRangeEnabled) {
           params['all'] = 1;
@@ -175,6 +177,7 @@ export class FeedService {
    * Load next batch of entities
    */
   loadNext() {
+    console.log('ojm LOADNEXT');
     if (
       this.service.canFetchMore &&
       !this.service.inProgress.getValue() &&

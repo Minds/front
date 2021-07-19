@@ -9,6 +9,9 @@ import { BlockListService } from './block-list.service';
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { switchMap, map, tap, first } from 'rxjs/operators';
 
+//ojm temp
+import * as moment from 'moment';
+
 /**
  * Enables the grabbing of data through observable feeds.
  */
@@ -180,12 +183,45 @@ export class FeedsService implements OnDestroy {
 
     const endpoint = this.endpoint;
 
+    let fromTimestamp = this.fromTimestamp;
+    if (this.pagingToken) {
+      if (!this.fromTimestamp || this.pagingToken >= this.fromTimestamp) {
+        fromTimestamp = this.pagingToken;
+      }
+    }
+
+    console.log('ojm FEEDS FETCH()', {
+      offset: this.offset.getValue(),
+      toTimestamp: this.params.to_timestamp,
+      pagingToken: this.pagingToken,
+      canFetchMore: this.canFetchMore,
+      // hasMore: this.hasMore,
+      fromTimestamp: fromTimestamp,
+    });
+    console.log(
+      'ojmFEEDS FETCH() pagingToken',
+      this.pagingToken,
+      moment(parseInt(this.pagingToken)).format('MMM DD YYYY, HH:')
+    );
+    console.log(
+      'ojmFEEDS FETCH() fromTimestamp',
+      this.fromTimestamp,
+
+      moment(parseInt(fromTimestamp)).format('MMM DD YYYY, HH:')
+    );
+    console.log(
+      'ojmFEEDS FETCH() toTimestamp',
+      this.params.to_timestamp,
+      moment(parseInt(this.params.to_timestamp)).format('MMM DD YYYY, HH:')
+    );
+
     return this.client
       .get(this.endpoint, {
         ...this.params,
         ...{
-          limit: 2,
-          // ojm limit: 150, // Over 12 scrolls
+          limit: 13,
+          // ojm
+          // limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: this.pagingToken ?? this.fromTimestamp,
@@ -213,6 +249,11 @@ export class FeedsService implements OnDestroy {
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
 
+          console.log(
+            'ojmFEEDS RESPONSE.load-next',
+            this.pagingToken,
+            moment(parseInt(this.pagingToken)).format('MMM DD YYYY, HH:')
+          );
           if (!this.pagingToken) {
             this.canFetchMore = false;
           }
