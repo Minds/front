@@ -12,11 +12,11 @@
       padding: 20px 45px 40px 45px;
 
       @include mobile-only {
-        padding: 0 23px;
+        padding: 0 23px 23px 23px;
       }
 
       @include tablet-only {
-        padding: 0 23px;
+        padding: 0 23px 23px 23px;
       }
     }
 
