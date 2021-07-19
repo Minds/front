@@ -113,8 +113,11 @@ export class FeedService {
         };
 
         if (dateRangeEnabled) {
-          params['from_timestamp'] = dateRange.fromDate;
+          // ojm does paging work within a date range??
+          this.service.setFromTimestamp(dateRange.fromDate);
           params['to_timestamp'] = dateRange.toDate;
+        } else {
+          this.service.setFromTimestamp('');
         }
 
         // Don't allow using search or date filters for scheduled posts
