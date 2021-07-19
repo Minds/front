@@ -14,8 +14,12 @@
           {{ request.description }}
         </p>
         <ul>
-          <li>{{ request.link1 }}</li>
-          <li>{{ request.link2 }}</li>
+          <li>
+            <a [href]="request.link1" target="_blank">{{ request.link1 }}</a>
+          </li>
+          <li>
+            <a [href]="request.link2" target="_blank">{{ request.link2 }}</a>
+          </li>
         </ul>
       </div>
 
