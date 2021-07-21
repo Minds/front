@@ -5,7 +5,6 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "target": "es2018",

@@ -2,7 +2,7 @@
  * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
  */
 import '@angular/localize/init';
-import 'zone.js/dist/zone-node';
+import 'zone.js/node';
 import { renderModule } from '@angular/platform-server';
 
 import { join } from 'path';

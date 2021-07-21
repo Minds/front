@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "preinstall": "git config core.hooksPath .git/hooks/",
-    "build": "ng build --prod",
+    "build": "ng build --configuration production",
     "prebuild:dev": "gulp build.sass --deploy-url=/",
     "build:dev": "ng build --watch=true --poll=1000",
     "preserve:dev": "gulp build.sass --deploy-url=http://localhost:4200/",
