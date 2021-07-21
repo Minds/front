@@ -14,6 +14,7 @@ export class JuryDutySessionListComponent extends AbstractSubscriberComponent {
 
   offset = null;
   hasNext = true;
+  count: number = 0;
 
   // subject holding reports.
   public readonly reports$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(
@@ -37,6 +38,8 @@ export class JuryDutySessionListComponent extends AbstractSubscriberComponent {
     let result: any = await this.sessionService.getList({
       juryType: this.juryType,
     });
+
+    this.count = result['count'];
     this.hasNext = result['has-next'];
     this.offset = result['load-next'];
     this.reports$.next(result.reports);
