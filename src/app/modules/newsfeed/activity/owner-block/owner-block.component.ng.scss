@@ -141,19 +141,21 @@
   }
 
   .m-activityOwnerBlock__permalink {
-    font-size: 14px;
-    line-height: 17px;
-    font-weight: normal;
+    .m-activityOwnerBlockPermalink__text {
+      font-size: 14px;
+      line-height: 17px;
+      font-weight: normal;
 
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
 
-    .material-icons {
-      //padding-right: 4px;
-      //font-size: 20px;
-      font-size: initial;
-      vertical-align: text-top;
+      .material-icons {
+        //padding-right: 4px;
+        //font-size: 20px;
+        font-size: initial;
+        vertical-align: text-top;
+      }
     }
   }
 
