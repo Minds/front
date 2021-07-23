@@ -51,6 +51,7 @@ describe('UserMenuV3Component', () => {
     jasmine.clock().install();
 
     featuresServiceMock.mock('settings-referrals', true);
+    featuresServiceMock.mock('helpdesk-2021', false);
 
     fixture = TestBed.createComponent(UserMenuV3Component);
 

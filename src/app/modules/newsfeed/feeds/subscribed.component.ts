@@ -32,6 +32,7 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -85,6 +86,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
+    private toast: FormToastService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -114,6 +116,30 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
 
       this.newUserPromo = !!params['newUser'];
+    });
+
+    // catch Zendesk errors and make them domain specific.
+    this.route.queryParams.subscribe(params => {
+      if (params.kind === 'error') {
+        if (
+          /User is invalid: External minds-guid:\d+ has already been taken/.test(
+            params.message
+          )
+        ) {
+          this.toast.error('Your email is already linked to a support account');
+          return;
+        }
+
+        if (
+          params.message ===
+          'Please use one of the options below to sign in to Zendesk.'
+        ) {
+          this.toast.error('Authentication method invalid');
+          return;
+        }
+
+        this.toast.error(params.message ?? 'An unknown error has occurred');
+      }
     });
 
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
