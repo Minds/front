@@ -102,9 +102,17 @@
       class="m-dropdownList__item m-userMenuDropdown__item"
       (click)="closeMenu()"
     >
-      <a routerLink="/help">
-        <span i18n="@@COMMON__HELP">Help</span>
-      </a>
+      <!--Endpoint handles authentication and redirection-->
+      <ng-container *mIfFeature="'helpdesk-2021'; else helpdeskLink">
+        <a href="/api/v3/helpdesk/zendesk">
+          <span i18n="@@COMMON__HELP">Help</span>
+        </a>
+      </ng-container>
+      <ng-template #helpdeskLink>
+        <a routerLink="/help">
+          <span i18n="@@COMMON__HELP">Help</span>
+        </a>
+      </ng-template>
     </li>
 
     <li
