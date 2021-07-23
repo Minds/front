@@ -19,7 +19,8 @@ export const rejectionReasons: Array<Reason> = [
   },
   { code: 7, label: 'Spam' },
   { code: 8, label: 'Appeals on Boost decisions' },
-  { code: 12, label: 'Onchain payment failed or High Boost backlog' },
   { code: 13, label: 'Original post removed' },
   { code: 14, label: 'High Boost backlog' },
+  { code: 15, label: 'Support Request' },
+  { code: 16, label: 'Onchain payment failed' },
 ];
