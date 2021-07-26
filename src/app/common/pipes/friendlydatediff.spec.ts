@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
+import * as moment from 'moment';
 
 describe('FriendlyDateDiff', () => {
   beforeEach(() => {
@@ -13,113 +14,97 @@ describe('FriendlyDateDiff', () => {
     expect(true).toBeTruthy();
   });
 
-  it('should transform a date with a 1 year difference', () => {
+  it('should transform into an absolute date with year when there is a difference of 1 year or greater', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date(2019, 1, 1);
-    let referenceDate: Date = new Date(2020, 1, 1);
 
-    let transformedDate = pipe.transform(
-      <any>testDate,
-      referenceDate.toISOString()
-    );
-    expect(transformedDate).toEqual('1y ago');
+    let testDate = moment()
+      .subtract(1, 'years')
+      .unix();
 
-    transformedDate = pipe.transform(<any>testDate, referenceDate.toString());
-    expect(transformedDate).toEqual('1y ago');
+    let result = moment()
+      .subtract(1, 'years')
+      .format('MMM D YYYY');
 
-    //As unix timestamp
-    transformedDate = pipe.transform(<any>testDate, referenceDate.getTime());
-    expect(transformedDate).toEqual('1y ago');
+    let transformedDate = pipe.transform(<any>testDate);
+    expect(transformedDate).toEqual(result);
   });
 
-  it('should transform a date with a 51 week difference', () => {
+  it('should transform into an absolute date without year when there is a difference of 1 day or greater', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date(2019, 1, 1);
-    let referenceDate: Date = new Date(2019, 12, 30);
 
-    let transformedDate = pipe.transform(
-      <any>testDate,
-      referenceDate.toISOString()
-    );
-    expect(transformedDate).toEqual('51w ago');
+    let testDate = moment()
+      .subtract(1, 'days')
+      .unix();
 
-    transformedDate = pipe.transform(<any>testDate, referenceDate.toString());
-    expect(transformedDate).toEqual('51w ago');
+    let result = moment()
+      .subtract(1, 'days')
+      .format('MMM D');
 
-    //As unix timestamp
-    transformedDate = pipe.transform(<any>testDate, referenceDate.getTime());
-    expect(transformedDate).toEqual('51w ago');
+    let transformedDate = pipe.transform(<any>testDate);
+    expect(transformedDate).toEqual(result);
   });
 
-  it('should transform a date with a 6 day difference', () => {
+  it('should transform into a relative time with a 23 hour difference', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date(2019, 1, 1);
-    let referenceDate: Date = new Date(2019, 1, 7);
 
-    let transformedDate = pipe.transform(
-      <any>testDate,
-      referenceDate.toISOString()
-    );
-    expect(transformedDate).toEqual('6d ago');
+    let testDate = moment()
+      .subtract(23, 'hours')
+      .unix();
 
-    transformedDate = pipe.transform(<any>testDate, referenceDate.toString());
-    expect(transformedDate).toEqual('6d ago');
+    let result = '23h';
 
-    //As unix timestamp
-    transformedDate = pipe.transform(<any>testDate, referenceDate.getTime());
-    expect(transformedDate).toEqual('6d ago');
+    let transformedDate = pipe.transform(<any>testDate);
+    expect(transformedDate).toEqual(result);
   });
 
-  it('should transform a date with a 23 hour difference', () => {
+  it('should transform into a relative time with a 1 minute difference', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date(2019, 1, 1);
-    let referenceDate: Date = new Date(2019, 1, 1, 23);
 
-    let transformedDate = pipe.transform(
-      <any>testDate,
-      referenceDate.toISOString()
-    );
-    expect(transformedDate).toEqual('23h ago');
+    let testDate = moment()
+      .subtract(1, 'minute')
+      .unix();
 
-    transformedDate = pipe.transform(<any>testDate, referenceDate.toString());
-    expect(transformedDate).toEqual('23h ago');
+    let result = '1m';
 
-    //As unix timestamp
-    transformedDate = pipe.transform(<any>testDate, referenceDate.getTime());
-    expect(transformedDate).toEqual('23h ago');
-  });
-
-  it('should transform a date with a 1 minute difference', () => {
-    let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date(2019, 1, 1, 0, 1);
-    let referenceDate: Date = new Date(2019, 1, 1, 0, 2);
-
-    let transformedDate = pipe.transform(
-      <any>testDate,
-      referenceDate.toISOString()
-    );
-    expect(transformedDate).toEqual('1m ago');
-
-    transformedDate = pipe.transform(<any>testDate, referenceDate.toString());
-    expect(transformedDate).toEqual('1m ago');
-
-    //As unix timestamp
-    transformedDate = pipe.transform(<any>testDate, referenceDate.getTime());
-    expect(transformedDate).toEqual('1m ago');
+    let transformedDate = pipe.transform(<any>testDate);
+    expect(transformedDate).toEqual(result);
   });
 
   it('should transform a date without a referenceDate and use the current time', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date();
+    let testDate = moment().unix();
     let transformedDate = pipe.transform(<any>testDate);
-    expect(transformedDate).toEqual('0s ago');
+    expect(transformedDate).toEqual('0s');
   });
 
-  it('should transform a date without a referenceDate and use the current time minus 1 year', () => {
+  it('should transform a date with a referenceDate', () => {
     let pipe = new FriendlyDateDiffPipe();
-    let testDate: Date = new Date();
-    testDate.setFullYear(testDate.getFullYear() - 1);
-    let transformedDate = pipe.transform(<any>testDate);
-    expect(transformedDate).toEqual('1y ago');
+    let testDate = moment('2017-07-19').unix();
+    let referenceDate = moment('2018-07-19').unix();
+    let transformedDate = pipe.transform(<any>testDate, referenceDate);
+    expect(transformedDate).toEqual('Jul 19 2017');
+  });
+
+  it('should transform number inputs', () => {
+    let pipe = new FriendlyDateDiffPipe();
+    let testDate = moment()
+      .subtract(2, 'minutes')
+      .unix();
+    let referenceDate = moment().unix();
+    let transformedDate = pipe.transform(<any>testDate, referenceDate);
+    expect(transformedDate).toEqual('2m');
+  });
+
+  it('should transform string inputs', () => {
+    let pipe = new FriendlyDateDiffPipe();
+    let testDate = moment()
+      .subtract(2, 'minutes')
+      .unix()
+      .toString();
+    let referenceDate = moment()
+      .unix()
+      .toString();
+    let transformedDate = pipe.transform(<any>testDate, referenceDate);
+    expect(transformedDate).toEqual('2m');
   });
 });

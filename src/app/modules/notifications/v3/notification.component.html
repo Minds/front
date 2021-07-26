@@ -54,9 +54,7 @@
         </a>
       </div>
       <div class="m-notificationsNotification__timestamp">
-        <span>{{
-          notification.created_timestamp * 1000 | friendlydatediff: '':false
-        }}</span>
+        <span>{{ notification.created_timestamp | friendlydatediff }}</span>
       </div>
       <span
         class="m-notificationsNotification__readIndicator"
