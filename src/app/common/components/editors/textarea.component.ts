@@ -33,7 +33,7 @@ declare var tinymce;
   `,
   exportAs: 'Textarea',
 })
-export class Textarea implements OnChanges {
+export class Textarea {
   @ViewChild('editor', { static: true }) editorControl: ElementRef;
 
   @Input('mModel') model: string = '';
@@ -82,23 +82,6 @@ export class Textarea implements OnChanges {
       this.insertTextAtCursor(text);
     }
   }
-
-  ngOnChanges(changes: any) {
-    if (
-      changes.model &&
-      this.getControlText() !== changes.model.currentValue &&
-      (changes.model.isFirstChange() ||
-        changes.model.previousValue !== changes.model.currentValue)
-    ) {
-      this.setControlText(this.model);
-    }
-
-    if (changes.disabled && changes.disabled.currentValue) {
-      this.blur();
-    }
-  }
-
-  //
 
   private insertTextAtCursor(text: string) {
     let sel, range, html;
