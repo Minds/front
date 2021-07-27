@@ -21,12 +21,18 @@ import { Client } from '../../../../services/api/client';
     <table>
       <tbody>
         <tr *ngFor="let item of data[type]">
-          <td [routerLink]="['/', item.user.guid]" target="_blank">
-            <img
-              class="m-admin--interactions--avatar"
-              src="/icon/{{ item.user.guid }}/medium/{{ item.user.icontime }}"
-            />
-            @{{ item.user.username }}
+          <td>
+            <a
+              [routerLink]="['/', item.user.username]"
+              target="_blank"
+              class="m-admin--interactions__channelLink"
+            >
+              <img
+                class="m-admin--interactions--avatar"
+                src="/icon/{{ item.user.guid }}/small/{{ item.user.icontime }}"
+              />
+              @{{ item.user.username }}
+            </a>
           </td>
           <td>{{ item.value }}</td>
         </tr>
