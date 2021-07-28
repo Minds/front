@@ -80,7 +80,7 @@ export class VideoAutoplayService implements OnDestroy {
 
   init(): void {
     this.scroll$ = this.scroll.listenForView().subscribe(() => {
-      this.checkVisibility();
+      // this.checkVisibility();
     });
   }
 

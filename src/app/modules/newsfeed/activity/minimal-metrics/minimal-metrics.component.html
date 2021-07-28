@@ -11,12 +11,12 @@
   <ng-container *ngIf="entity.time_created && (views$ | async)">
     ·
   </ng-container>
-  <a *ngIf="!isScheduled()" [href]="canonicalUrl" target="_blank">
+  <!-- <a *ngIf="!isScheduled()" [href]="canonicalUrl" target="_blank">
     <m-relativeTimeSpan
       class="m-activityMinimalMetrics__timestamp"
       [entity]="entity"
     ></m-relativeTimeSpan>
-  </a>
+  </a> -->
   <div
     *ngIf="isScheduled()"
     class="m-activityMinimalMetrics__timestamp--scheduled"

@@ -50,7 +50,7 @@ export class ScrollAwareVideoPlayerComponent
     this.scrollSubscription = this.scrollService
       .listenForView()
       .subscribe(() => {
-        this.onVisibilityCheck();
+        // this.onVisibilityCheck();
       });
   }
 

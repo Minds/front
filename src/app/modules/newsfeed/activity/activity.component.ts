@@ -156,7 +156,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
             })
           );
         });
-      this.elementVisibilityService.checkVisibility();
+      // this.elementVisibilityService.checkVisibility();
     }
   }
 

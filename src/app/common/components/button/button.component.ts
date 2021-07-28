@@ -102,13 +102,12 @@ export class ButtonComponent implements AfterViewChecked {
   }
 
   setSavingSize() {
-    if (this.buttonTextContainer && !this._saving) {
-      const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
-      this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
-
-      const elHeight = this.buttonTextContainer.nativeElement.clientHeight || 0;
-      this.buttonTextHeight = elHeight > 0 ? elHeight : this.buttonTextHeight;
-    }
+    // if (this.buttonTextContainer && !this._saving) {
+    //   const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
+    //   this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
+    //   const elHeight = this.buttonTextContainer.nativeElement.clientHeight || 0;
+    //   this.buttonTextHeight = elHeight > 0 ? elHeight : this.buttonTextHeight;
+    // }
   }
 
   /**

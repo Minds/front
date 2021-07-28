@@ -62,7 +62,7 @@ export class ElementVisibilityService implements OnDestroy {
       });
 
     this.scrollSubscription = this.scroll.listenForView().subscribe(() => {
-      this.checkVisibility();
+      // this.checkVisibility();
     });
   }
 
