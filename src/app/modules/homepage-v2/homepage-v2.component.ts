@@ -62,7 +62,7 @@ export class HomepageV2Component implements OnInit {
       .setCanonicalUrl('/')
       .setOgUrl('/');
 
-    this.navigationService.setVisible(true);
+    this.navigationService.setVisible(false);
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
 
