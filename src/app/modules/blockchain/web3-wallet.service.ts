@@ -1,7 +1,8 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
-import { Web3ModalService } from '@mindsorg/web3modal-angular';
+// import { Web3ModalService } from '@mindsorg/web3modal-angular'; ojm
+import { Web3ModalService } from '../../../../../../_minds/local_modules/web3modal-angular/projects/web3modal/src/lib/web3-modal/web3-modal.service';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';

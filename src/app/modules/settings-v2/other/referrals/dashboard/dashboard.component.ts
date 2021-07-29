@@ -7,7 +7,8 @@ import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
   templateUrl: 'dashboard.component.html',
 })
 export class SettingsV2ReferralsDashboardComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   referrals: Array<any> = [];
   offset: string = '';
   limit = 12;
@@ -15,7 +16,7 @@ export class SettingsV2ReferralsDashboardComponent
   inProgress = false;
   noInitResults = false;
   fewerResultsThanLimit = false;
-  timeoutIds: number[] = [];
+  timeoutIds: ReturnType<typeof setTimeout>[] = [];
 
   constructor(public client: Client) {}
 
@@ -69,7 +70,7 @@ export class SettingsV2ReferralsDashboardComponent
         this.referrals.push(...response.referrals);
         this.inProgress = false;
       })
-      .catch(e => {
+      .catch((e) => {
         this.moreData = false;
         this.inProgress = false;
       });
@@ -106,7 +107,7 @@ export class SettingsV2ReferralsDashboardComponent
         }
         throw new Error('Error: ping incomplete');
       })
-      .catch(e => {
+      .catch((e) => {
         referral.pingInProgress = false;
         // Do something else?
       });
@@ -119,6 +120,6 @@ export class SettingsV2ReferralsDashboardComponent
 
   ngOnDestroy() {
     // Clear any remaining timeouts
-    this.timeoutIds.forEach(id => clearTimeout(id));
+    this.timeoutIds.forEach((id) => clearTimeout(id));
   }
 }

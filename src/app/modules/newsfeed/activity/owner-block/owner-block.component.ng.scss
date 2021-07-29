@@ -9,12 +9,12 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: $activity-padding-lr;
-    padding-right: $activity-padding-lr / 2;
+    padding-right: $activity-padding-lr * 0.5;
     box-sizing: border-box;
 
     &.m-activity__ownerBlock--minimalMode {
       padding-left: $activity-padding-lr--minimalMode;
-      padding-right: $activity-padding-lr--minimalMode / 2;
+      padding-right: $activity-padding-lr--minimalMode * 0.5;
       .m-activityOwnerBlock__avatar {
         img {
           height: 35px;
@@ -133,7 +133,7 @@
 
   .m-activityOwnerBlock__remindIcon {
     font-size: 18px;
-    margin-right: $minds-margin / 2;
+    margin-right: $minds-margin * 0.5;
     vertical-align: middle;
     @include m-theme() {
       color: themed($m-link);

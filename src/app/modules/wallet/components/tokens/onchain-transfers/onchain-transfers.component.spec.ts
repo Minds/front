@@ -19,7 +19,7 @@ describe('WalletOnchainTransfersSummaryComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(WalletOnchainTransfersSummaryComponent);
     comp = fixture.componentInstance;
@@ -50,7 +50,7 @@ describe('WalletOnchainTransfersSummaryComponent', () => {
   });
 
   it('should open etherscan explorer', () => {
-    spyOn(window, 'open').and.returnValue(true);
+    // spyOn(window, 'open').and.returnValue(true); ojm
     comp.openExplorer('123');
     expect(window.open).toHaveBeenCalledWith(
       `https://etherscan.com/tx/123`,

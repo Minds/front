@@ -20,7 +20,8 @@ import * as BN from 'bn.js';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { Web3ModalService } from '@mindsorg/web3modal-angular';
+// import { Web3ModalService } from '@mindsorg/web3modal-angular'; ojm
+import { Web3ModalService } from '../../../../../../../_minds/local_modules/web3modal-angular/projects/web3modal/src/lib/web3-modal/web3-modal.service';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -81,7 +82,7 @@ export class BlockchainPurchaseComponent implements OnInit {
       this.amount = 0.25;
       this.detectChanges();
     });
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params.purchaseEth) {
         this.purchaseEth();
       }

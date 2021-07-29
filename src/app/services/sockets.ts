@@ -6,7 +6,7 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { Session } from './session';
-import * as io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { ConfigsService } from '../common/services/configs.service';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformServer } from '@angular/common';
@@ -40,8 +40,7 @@ export class SocketsService {
         this.socket.destroy();
       }
 
-      this.socket = io.connect(this.SOCKET_IO_SERVER, {
-        reconnect: true,
+      this.socket = io(this.SOCKET_IO_SERVER, {
         reconnection: true,
         timeout: 40000,
         autoConnect: false,
@@ -101,7 +100,7 @@ export class SocketsService {
       });
     });
 
-    this.socket.on('registered', guid => {
+    this.socket.on('registered', (guid) => {
       if (this.debug) console.log('[ws]::registered');
       this.nz.run(() => {
         this.registered = true;
@@ -183,7 +182,7 @@ export class SocketsService {
     }
 
     return this.subscriptions[name].subscribe({
-      next: args => {
+      next: (args) => {
         callback.apply(this, args);
       },
     });

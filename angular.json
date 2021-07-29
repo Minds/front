@@ -72,10 +72,10 @@
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "baseHref": "/static/",
+            "deployUrl": "http://localhost:4200/",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "extractCss": true,
             "localize": ["en"],
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
@@ -97,7 +97,10 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "progress": true,
+            "allowedCommonJsDependencies": ["stream", "os", "http", "https", "crypto", "util", "assert"],
+            "preserveSymlinks": true
           },
           "configurations": {
             "production": {
@@ -108,7 +111,6 @@
                 "scripts": true,
                 "styles": true
               },
-              "extractCss": true,
               "namedChunks": false,
               "localize": true,
               "extractLicenses": true,
@@ -234,10 +236,10 @@
             "outputPath": "dist/embed",
             "index": "src/app/modules/embed/embed.html",
             "baseHref": "/embed-static/",
+            "deployUrl": "http://localhost:4300/",
             "main": "src/app/modules/embed/main.ts",
             "tsConfig": "src/app/modules/embed/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "extractCss": true,
             "outputHashing": "bundles",
             "localize": ["en"],
             "assets": ["src/favicon.ico"],
@@ -261,7 +263,6 @@
                 "scripts": true,
                 "styles": true
               },
-              "extractCss": true,
               "namedChunks": false,
               "localize": true,
               "extractLicenses": true,
