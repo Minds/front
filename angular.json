@@ -99,7 +99,15 @@
             "optimization": false,
             "namedChunks": true,
             "progress": true,
-            "allowedCommonJsDependencies": ["stream", "os", "http", "https", "crypto", "util", "assert"],
+            "allowedCommonJsDependencies": [
+              "stream",
+              "os",
+              "http",
+              "https",
+              "crypto",
+              "util",
+              "assert"
+            ],
             "preserveSymlinks": true
           },
           "configurations": {
