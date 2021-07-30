@@ -3,6 +3,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
+// Routes that exclude reset on NavigationEnd.
+const EXCLUDE_RESET_ROUTES: string[] = ['/', '/login', '/register'];
+
 @Injectable()
 export class PageLayoutService {
   routerSubscription: Subscription;
@@ -15,8 +18,12 @@ export class PageLayoutService {
   constructor(private router: Router) {
     this.routerSubscription = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(data => {
-        this.reset();
+      .subscribe((navigationEnd: NavigationEnd) => {
+        if (
+          EXCLUDE_RESET_ROUTES.indexOf(navigationEnd.urlAfterRedirects) === -1
+        ) {
+          this.reset();
+        }
       });
   }
 
