@@ -32,7 +32,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
-    { label: 'Jobs', routerLink: ['/jobs'] },
+    { label: 'Careers', href: 'https://jobs.lever.co/minds' },
     { label: 'Status', href: 'https://status.minds.com/' },
     { label: 'Terms', routerLink: ['/p/terms'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },

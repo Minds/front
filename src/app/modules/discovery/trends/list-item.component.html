@@ -24,7 +24,7 @@
         <span *ngIf="trend.volume > 0"
           >{{ trend.volume }} channels discussing</span
         >
-        <span>{{ trend.entity.time_created | friendlytime }}</span>
+        <span>{{ trend.entity.time_created | friendlydatediff }}</span>
       </div>
     </div>
     <img

@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import * as moment from 'moment';
 
 @Pipe({
   name: 'friendlydatediff',
@@ -7,54 +8,55 @@ export class FriendlyDateDiffPipe implements PipeTransform {
   transform(
     value: string | number,
     reference: string | number = null,
-    displaySuffix: boolean = true
+    displaySuffix: boolean = false
   ): any {
     if (!value) {
       return value;
     }
 
-    let referenceDate = new Date();
+    if (typeof value === 'string') {
+      value = parseInt(value);
+    }
+
+    const suffix = displaySuffix ? ' ago' : '';
+
+    let afterDate = moment();
 
     if (reference) {
-      referenceDate = new Date(<string>reference);
+      if (typeof reference === 'string') {
+        reference = parseInt(reference);
+      }
+      afterDate = moment.unix(reference);
     }
 
-    const dateValue = new Date(<string>value);
+    let beforeDate = moment.unix(value);
 
-    const suffix = displaySuffix ? 'ago' : '';
+    const diffYears = afterDate.diff(beforeDate, 'years');
+    const diffDays = afterDate.diff(beforeDate, 'days');
+    const diffHours = afterDate.diff(beforeDate, 'hours');
+    const diffMins = afterDate.diff(beforeDate, 'minutes');
+    let diffSecs = afterDate.diff(beforeDate, 'seconds');
 
-    if (dateValue >= referenceDate) {
-      return '0s ' + suffix;
+    if (diffYears > 0) {
+      return beforeDate.format('MMM D YYYY');
     }
 
-    let differenceMs = referenceDate.getTime() - dateValue.getTime();
-    let seconds = Math.floor(differenceMs / 1000);
-    let minutes = Math.floor(seconds / 60);
-    let hours = Math.floor(minutes / 60);
-    let days = Math.floor(hours / 24);
-    let weeks = Math.floor(days / 7);
-    let years = Math.floor(weeks / 52);
-
-    if (years > 0) {
-      return `${years}y ${suffix}`;
+    if (diffDays > 0) {
+      return beforeDate.format('MMM D');
     }
 
-    if (weeks > 0) {
-      return `${weeks}w ${suffix}`;
+    if (diffHours > 0) {
+      return `${diffHours}h${suffix}`;
     }
 
-    if (days > 0) {
-      return `${days}d ${suffix}`;
+    if (diffMins > 0) {
+      return `${diffMins}m${suffix}`;
     }
 
-    if (hours > 0) {
-      return `${hours}h ${suffix}`;
+    if (diffSecs < 0) {
+      diffSecs = 0;
     }
 
-    if (minutes > 0) {
-      return `${minutes}m ${suffix}`;
-    }
-
-    return `${seconds}s ${suffix}`;
+    return `${diffSecs}s${suffix}`;
   }
 }

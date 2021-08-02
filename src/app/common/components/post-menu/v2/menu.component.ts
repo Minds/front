@@ -73,9 +73,8 @@ export class PostMenuV2Component implements OnInit {
       return false;
     }
     return (
-      (this.options.indexOf('edit') !== -1 &&
-        this.entity.owner_guid == this.session.getLoggedInUser().guid) ||
-      this.session.isAdmin()
+      this.options.indexOf('edit') !== -1 &&
+      this.entity.owner_guid == this.session.getLoggedInUser().guid
     );
   }
 

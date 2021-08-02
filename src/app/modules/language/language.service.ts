@@ -5,6 +5,7 @@ import { CookieService } from '../../common/services/cookie.service';
 import { ApiService } from '../../common/api/api.service';
 import { Session } from '../../services/session';
 import { ConfigsService } from '../../common/services/configs.service';
+import * as moment from 'moment';
 
 /**
  * Language list entry structure
@@ -120,6 +121,11 @@ export class LanguageService {
     serviceOnly: boolean = false
   ): Promise<boolean> {
     this.currentLanguage$.next(language);
+
+    // sets global moment locale
+    // if there is no corresponding locale file,
+    // it will default to 'en'
+    moment.locale(language);
 
     if (!serviceOnly) {
       if (this.session.isLoggedIn()) {
