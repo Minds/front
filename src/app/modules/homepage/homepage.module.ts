@@ -16,7 +16,15 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { HomepageV2Module } from '../homepage-v2/homepage.module';
 import { HomepageContainerComponent } from './container.component';
 
-const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
+const routes: Routes = [
+  {
+    path: '',
+    component: HomepageContainerComponent,
+    data: {
+      preventLayoutReset: true,
+    },
+  },
+];
 
 @NgModule({
   imports: [

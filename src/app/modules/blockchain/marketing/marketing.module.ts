@@ -31,6 +31,7 @@ const routes: Routes = [
       ogImageWidth: 1200,
       ogImageHeight: 1200,
       canonicalUrl: '/token',
+      preventLayoutReset: true,
     },
   },
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
       ogImage: '/assets/og-images/rewards-v3.png',
       ogImageWidth: 1200,
       ogImageHeight: 1200,
+      preventLayoutReset: true,
     },
   },
 ];

@@ -66,7 +66,7 @@ export class HomepageV2Component implements OnInit {
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
 
-    this.pageLayoutService.isFullWidth$.next(true);
+    this.pageLayoutService.useFullWidth();
     this.pageLayoutService.hasTopbarBackground$.next(false);
     this.pageLayoutService.hasTopbarBorder$.next(false);
   }

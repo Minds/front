@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.iosFallback = iOSVersion() !== null;
 
     this.navigationService.setVisible(false);
-    this.pageLayoutService.isFullWidth$.next(true);
+    this.pageLayoutService.useFullWidth();
 
     this.redirectTo = localStorage.getItem('redirect');
 

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
-
-// Routes that exclude reset on NavigationEnd.
-const EXCLUDE_RESET_ROUTES: string[] = ['/', '/login', '/register'];
 
 @Injectable()
 export class PageLayoutService {
@@ -15,13 +12,23 @@ export class PageLayoutService {
   hasTopbarBorder$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasTopbarBackground$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
+  // prevents layout reset on NavigationEnd event.
+  private preventLayoutReset: boolean = false;
+
   constructor(private router: Router) {
     this.routerSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe((navigationEnd: NavigationEnd) => {
-        if (
-          EXCLUDE_RESET_ROUTES.indexOf(navigationEnd.urlAfterRedirects) === -1
-        ) {
+      .pipe(
+        filter(e => e instanceof NavigationEnd || e instanceof ActivationStart)
+      )
+      .subscribe((event: NavigationEnd | ActivationStart) => {
+        // in ActivationStart event, check for preventLayoutReset in route data.
+        if (event instanceof ActivationStart) {
+          this.preventLayoutReset =
+            event.snapshot.data.preventLayoutReset ?? false;
+          return;
+        }
+        // wait till NavigationEnd to call reset, incase of url / state changes.
+        if (!this.preventLayoutReset) {
           this.reset();
         }
       });
@@ -32,6 +39,11 @@ export class PageLayoutService {
    * @return void
    */
   useFullWidth(): void {
+    // if we are preventing layout resets -
+    // do not use timeouts when setting to full width.
+    if (this.preventLayoutReset) {
+      this.isFullWidth$.next(true);
+    }
     setTimeout(() => this.isFullWidth$.next(true));
   }
 
@@ -57,6 +69,7 @@ export class PageLayoutService {
 
   reset(): void {
     setTimeout(() => {
+      this.preventLayoutReset = false;
       this.isFullWidth$.next(false);
       this.hasTopbarBorder$.next(true);
       this.hasTopbarBackground$.next(true);

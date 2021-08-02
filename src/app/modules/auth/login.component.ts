@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.iosFallback = iOSVersion() !== null;
 
     this.navigationService.setVisible(false);
-    this.pageLayoutService.isFullWidth$.next(true);
+    this.pageLayoutService.useFullWidth();
   }
 
   ngOnDestroy() {
