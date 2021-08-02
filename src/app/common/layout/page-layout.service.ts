@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Router, NavigationEnd, ActivationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class PageLayoutService {
@@ -15,7 +16,10 @@ export class PageLayoutService {
   // prevents layout reset on NavigationEnd event.
   private preventLayoutReset: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {
     this.routerSubscription = this.router.events
       .pipe(
         filter(e => e instanceof NavigationEnd || e instanceof ActivationStart)
@@ -23,12 +27,14 @@ export class PageLayoutService {
       .subscribe((event: NavigationEnd | ActivationStart) => {
         // in ActivationStart event, check for preventLayoutReset in route data.
         if (event instanceof ActivationStart) {
+          console.log('a8sx checking preventLayoutReset');
           this.preventLayoutReset =
             event.snapshot.data.preventLayoutReset ?? false;
           return;
         }
         // wait till NavigationEnd to call reset, incase of url / state changes.
-        if (!this.preventLayoutReset) {
+        if (!this.preventLayoutReset && !isPlatformServer(this.platformId)) {
+          console.log('a8sx resetting layout');
           this.reset();
         }
       });
@@ -41,8 +47,9 @@ export class PageLayoutService {
   useFullWidth(): void {
     // if we are preventing layout resets -
     // do not use timeouts when setting to full width.
-    if (this.preventLayoutReset) {
+    if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
       this.isFullWidth$.next(true);
+      return;
     }
     setTimeout(() => this.isFullWidth$.next(true));
   }

@@ -67,8 +67,8 @@ export class HomepageV2Component implements OnInit {
     this.topbarService.toggleSearchBar(false);
 
     this.pageLayoutService.useFullWidth();
-    this.pageLayoutService.hasTopbarBackground$.next(false);
-    this.pageLayoutService.hasTopbarBorder$.next(false);
+    this.pageLayoutService.removeTopbarBackground();
+    this.pageLayoutService.removeTopbarBorder();
   }
 
   ngOnDestroy() {
