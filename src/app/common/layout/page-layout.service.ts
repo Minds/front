@@ -27,14 +27,12 @@ export class PageLayoutService {
       .subscribe((event: NavigationEnd | ActivationStart) => {
         // in ActivationStart event, check for preventLayoutReset in route data.
         if (event instanceof ActivationStart) {
-          console.log('a8sx checking preventLayoutReset');
           this.preventLayoutReset =
             event.snapshot.data.preventLayoutReset ?? false;
           return;
         }
         // wait till NavigationEnd to call reset, incase of url / state changes.
         if (!this.preventLayoutReset && !isPlatformServer(this.platformId)) {
-          console.log('a8sx resetting layout');
           this.reset();
         }
       });
