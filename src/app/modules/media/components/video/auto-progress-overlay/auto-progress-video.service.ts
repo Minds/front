@@ -20,16 +20,14 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
   /**
    * Push a new value to trigger subscribers to play the next video instantly.
    */
-  public readonly goNext$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  public readonly goNext$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   /**
    * Holds the next entity to play.
    */
-  private readonly nextEntity$: BehaviorSubject<
-    ActivityEntity
-  > = new BehaviorSubject<ActivityEntity>(null);
+  private readonly nextEntity$: BehaviorSubject<ActivityEntity> =
+    new BehaviorSubject<ActivityEntity>(null);
 
   /**
    * Updates next entity observable in horizontal feed service
@@ -45,7 +43,7 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
    */
   public get nextTitle$(): Observable<string> {
     return this.nextEntity$.pipe(
-      map(entity => {
+      map((entity) => {
         if (!entity || !entity.title) return 'Untitled';
 
         if (entity.title.length > 100) {
@@ -63,7 +61,7 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
    */
   public get nextAuthor$(): Observable<string> {
     return this.nextEntity$.pipe(
-      map(entity => {
+      map((entity) => {
         return entity && entity.ownerObj.username
           ? entity.ownerObj.username
           : '';
@@ -77,7 +75,7 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
    */
   public get nextThumbnailSrc$(): Observable<string> {
     return this.nextEntity$.pipe(
-      map(entity => {
+      map((entity) => {
         return entity && entity.thumbnail_src ? entity.thumbnail_src : null;
       })
     );
@@ -87,6 +85,7 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
     private relatedContent: RelatedContentService,
     isCommentingService: IsCommentingService
   ) {
+    //ojm
     super();
 
     // if service detects that a user is typing, call to cancel.
@@ -132,13 +131,13 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
     seconds = 7;
 
     this.timer$ = timer(0, 1000).pipe(
-      scan(acc => --acc, seconds),
-      tap(x => {
+      scan((acc) => --acc, seconds),
+      tap((x) => {
         if (x === 0) {
           this.goNext$.next(true);
         }
       }),
-      takeWhile(x => x >= 0)
+      takeWhile((x) => x >= 0)
     );
     return this;
   }

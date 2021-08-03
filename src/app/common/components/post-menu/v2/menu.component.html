@@ -16,7 +16,7 @@
       class="m-dropdownList__item"
       *ngIf="shouldShowEdit()"
       (click)="onSelectedOption('edit')"
-      i18n="@@M__ACTION__EDIT"
+      i18n="@@M__ACTION__EDIT_POST"
     >
       Edit Post
     </li>
@@ -54,7 +54,7 @@
           options.indexOf('pin') !== -1 && (service.isPinned$ | async) === true
         "
         (click)="onSelectedOption('pin')"
-        i18n="@@M__ACTION__PIN"
+        i18n="@@M__ACTION__REMOVE_PIN"
       >
         Remove pin
       </li>
@@ -73,9 +73,8 @@
         class="m-dropdownList__item"
         *ngIf="service.showSubscribe$ | async"
         (click)="onSelectedOption('subscribe')"
-        i18n="@@M__ACTION__SUBSCRIBE"
       >
-        Subscribe
+        <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
       </li>
       <li
         class="m-dropdownList__item"
@@ -207,7 +206,7 @@
       class="m-dropdownList__item m-dropdownList__item--destructive"
       *ngIf="shouldShowDelete()"
       (click)="onSelectedOption('delete')"
-      i18n="@@M__ACTION__DELETE"
+      i18n="@@M__ACTION__DELETE_POST"
     >
       Delete Post
     </li>
@@ -219,7 +218,7 @@
         entity.owner_guid != session.getLoggedInUser().guid
       "
       (click)="onSelectedOption('report')"
-      i18n="Report as notify something@@M__ACTION__REPORT"
+      i18n="Report as notify something@@M__ACTION__REPORT_POST"
     >
       Report Post
     </li>

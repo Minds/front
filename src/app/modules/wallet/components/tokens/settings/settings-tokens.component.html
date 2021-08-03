@@ -17,9 +17,7 @@
     <ul class="m-walletSettings__tokenSetupOptionsContainer">
       <li class="m-walletSettings__tokenSetupOption--metamask">
         <div>
-          <h2>
-            Web3 Wallet
-          </h2>
+          <h2>Web3 Wallet</h2>
         </div>
         <ng-container *ngIf="hasExternal">
           <p i18n="@@WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_COINBASE_INFO">
@@ -42,9 +40,7 @@
       </li>
 
       <li class="m-walletSettings__tokenSetupOption--custom">
-        <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CUSTOM">
-          Custom
-        </h2>
+        <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CUSTOM">Custom</h2>
         <p i18n="@@WALLET_V2_SETTINGS_TOKENS__WALLET_ALT_INFO">
           You don’t need to use a Web3 Wallet provider. You can alternatively
           manage your own address.
@@ -73,9 +69,7 @@
     <!-- -------------------------------------------- -->
     <li *ngIf="display === Views.CreateAddress">
       <!-- Address not created yet -->
-      <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS">
-        Create Address
-      </h2>
+      <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS">Create Address</h2>
       <p
         *ngIf="!generatedAccount"
         class="m-walletSecondaryText--desc"
@@ -152,8 +146,9 @@
               <label
                 for="addressInput"
                 i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS"
-                >On-chain Address</label
               >
+                On-chain Address
+              </label>
               <m-tooltip icon="help">
                 <ng-container i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS_INFO"
                   >This address is where you will receive on-chain Minds tokens
@@ -218,9 +213,7 @@
     <!--- ADDRESS - CURRENT ---------------------------->
     <!-- -------------------------------------------- -->
     <li *ngIf="display === Views.CurrentAddress">
-      <h2 i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS">
-        On-Chain Address
-      </h2>
+      <h2 i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS">On-Chain Address</h2>
       <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
       <p

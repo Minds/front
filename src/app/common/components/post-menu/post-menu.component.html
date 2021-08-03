@@ -94,9 +94,8 @@
           entity.ownerObj.guid !== session.getLoggedInUser().guid)
       "
       (click)="subscribe()"
-      i18n="@@M__ACTION__SUBSCRIBE"
     >
-      Subscribe
+      <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
     </li>
     <li
       class="mdl-menu__item"
@@ -136,9 +135,8 @@
       entity.owner_guid != session.getLoggedInUser().guid
     "
     (click)="report()"
-    i18n="Report as notify something@@M__ACTION__REPORT"
   >
-    Report
+    <ng-container i18n="@@M__ACTION__REPORT">Report</ng-container>
   </li>
   <!-- NOTIFICATIONS -->
   <ng-container *ngIf="options.indexOf('follow') !== -1">
@@ -297,12 +295,12 @@
 <m-modal [open]="true" (closed)="onModalClose()" *ngIf="featureToggle">
   <div class="m-button-feature-modal">
     <select [(ngModel)]="featuredCategory">
-      <option value="not-selected" i18n="@@COMMON__POST_MENU__SELECT_CATEGORY"
-        >-- SELECT A CATEGORY --</option
-      >
-      <option *ngFor="let category of categories" [value]="category.id">{{
-        category.label
-      }}</option>
+      <option value="not-selected" i18n="@@COMMON__POST_MENU__SELECT_CATEGORY">
+        -- SELECT A CATEGORY --
+      </option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.label }}
+      </option>
     </select>
 
     <button class="mdl-button mdl-button--colored" (click)="feature()">

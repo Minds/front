@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnInit,
-  PLATFORM_ID,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -33,30 +27,31 @@ export class EmbeddedVideoComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private configs: ConfigsService,
     private metaService: MetaService,
-    public client: Client,
-    @Inject(PLATFORM_ID) private platformId: Object
+    public client: Client
   ) {}
 
   ngOnInit() {
     this.queryParamsSubscription = this.activatedRoute.queryParamMap.subscribe(
-      params => {
+      (params) => {
         this.autoplay = params.get('autoplay') === 'true' || false;
         this.detectChanges();
       }
     );
-    this.paramsSubscription = this.activatedRoute.paramMap.subscribe(params => {
-      this.guid = params.get('guid');
+    this.paramsSubscription = this.activatedRoute.paramMap.subscribe(
+      (params) => {
+        this.guid = params.get('guid');
 
-      /**
-       * Load entity and update metadata.
-       * This request must ideally be run on the
-       * server side and transferred to the client
-       * */
-      if (this.guid) {
-        this.load(this.guid);
+        /**
+         * Load entity and update metadata.
+         * This request must ideally be run on the
+         * server side and transferred to the client
+         * */
+        if (this.guid) {
+          this.load(this.guid);
+        }
+        this.detectChanges();
       }
-      this.detectChanges();
-    });
+    );
   }
 
   load(guid: string) {

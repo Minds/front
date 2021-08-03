@@ -1,5 +1,11 @@
 import { CookieService } from '../../common/services/cookie.service';
-import { PLATFORM_ID, Inject, forwardRef, EventEmitter } from '@angular/core';
+import {
+  PLATFORM_ID,
+  Inject,
+  forwardRef,
+  EventEmitter,
+  Injectable,
+} from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
@@ -11,6 +17,7 @@ import { EmailConfirmationService } from '../../common/components/email-confirma
 /**
  * API Class
  */
+@Injectable()
 export class Client {
   base: string = '/';
   onError: EventEmitter<any> = new EventEmitter<any>();
@@ -54,13 +61,13 @@ export class Client {
 
     return new Promise((resolve, reject) => {
       this.http.get(this.base + endpoint, this.buildOptions(options)).subscribe(
-        res => {
+        (res) => {
           var data: any = res;
           if (!data || data.status !== 'success') return reject(data);
 
           return resolve(data);
         },
-        err => {
+        (err) => {
           this.onError.next(err);
           if (err.data && !err.data()) {
             return reject(err || new Error('GET error'));
@@ -89,13 +96,13 @@ export class Client {
       this.http
         .get(this.base + endpoint, this.buildOptions(options, true))
         .subscribe(
-          res => {
+          (res) => {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
-          err => {
+          (err) => {
             this.onError.next(err);
             if (err.data && !err.data()) {
               return reject(err || new Error('GET error'));
@@ -127,13 +134,13 @@ export class Client {
           this.buildOptions(options)
         )
         .subscribe(
-          res => {
+          (res) => {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
-          err => {
+          (err) => {
             this.onError.next(err);
             if (err.data && !err.data()) {
               return reject(err || new Error('POST error'));
@@ -162,13 +169,13 @@ export class Client {
       this.http
         .post(url, JSON.stringify(data), this.buildOptions(options, true))
         .subscribe(
-          res => {
+          (res) => {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
-          err => {
+          (err) => {
             this.onError.next(err);
             if (err.data && !err.data()) {
               return reject(err || new Error('POST error'));
@@ -202,13 +209,13 @@ export class Client {
           this.buildOptions(options)
         )
         .subscribe(
-          res => {
+          (res) => {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
-          err => {
+          (err) => {
             this.onError.next(err);
             if (err.status === 401 && err.data().loggedin === false) {
               if (this.location.path() !== '/login') {
@@ -235,13 +242,13 @@ export class Client {
       this.http
         .delete(this.base + endpoint, this.buildOptions(options))
         .subscribe(
-          res => {
+          (res) => {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
-          err => {
+          (err) => {
             this.onError.next(err);
             if (err.status === 401 && err.error.loggedin === false) {
               if (this.location.path() !== '/login') {
@@ -261,7 +268,7 @@ export class Client {
 
   private buildParams(object: Object) {
     return Object.keys(object)
-      .map(k => {
+      .map((k) => {
         return encodeURIComponent(k) + '=' + encodeURIComponent(object[k]);
       })
       .join('&');

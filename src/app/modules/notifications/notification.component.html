@@ -228,11 +228,13 @@
               focusedCommentUrn: notification.params?.focusedCommentUrn
             }"
           >
-            <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
-              {{ notification.fromObj.name }} commented on
-              <span class="pseudo-link mdl-color-text--blue-grey-400">{{
-                notification.entityObj.title | excerpt
-              }}</span>
+            <p>
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y"
+                >{{ notification.fromObj.name }} commented on
+                <span class="pseudo-link mdl-color-text--blue-grey-400">{{
+                  notification.entityObj.title | excerpt
+                }}</span></ng-container
+              >
             </p>
           </a>
         </div>
@@ -270,9 +272,8 @@
                   !notification.entityObj.title
                 "
                 i18n="
-                   object belonging to
-                  user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT
-                "
+                  object belonging to
+                  user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT"
                 >{{ notification.entityObj.ownerObj.name }}'s
                 {{ notification.entityObj.subtype }}</span
               >
@@ -284,9 +285,8 @@
                   !notification.entityObj.title
                 "
                 i18n="
-                   object belonging to current
-                  user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
-                "
+                  object belonging to current
+                  user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
                 >your {{ notification.entityObj.subtype }}</span
               >
             </p>
@@ -305,8 +305,7 @@
             <p>
               <ng-container
                 i18n="
-                   @@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION
-                "
+                  @@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION"
                 *ngIf="notification.params?.is_reply"
               >
                 {{ notification.fromObj.name }} replied to your message in
@@ -329,7 +328,7 @@
           notification.entityObj.type != 'group'
         "
       >
-        <p style="font-style:italic">
+        <p style="font-style: italic">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__ERROR_VIEWING"
             >There was an error viewing this notification.</ng-container
           >
@@ -359,9 +358,8 @@
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
             i18n="
-               object belonging to current
-              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
-            "
+              object belonging to current
+              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
             >your {{ notification.entityObj.subtype }}</span
           >
         </p>
@@ -443,7 +441,7 @@
         [routerLink]="['/newsfeed', notification.entityObj.guid]"
         *ngIf="!notification.entityObj"
       >
-        <p style="font-style:italic">
+        <p style="font-style: italic">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__POST_DELETED"
             >This post was deleted.</ng-container
           >
@@ -473,9 +471,8 @@
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
             i18n="
-               object belonging to current
-              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
-            "
+              object belonging to current
+              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
             >your {{ notification.entityObj.subtype }}</span
           >
         </p>
@@ -496,8 +493,7 @@
         <p *ngIf="!notification.entityObj.title">
           <ng-container
             i18n="
-               @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY
-            "
+              @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY"
             >{{ notification.fromObj.name }} down voted
             <span class="pseudo-link mdl-color-text--blue-grey-400"
               >your activity</span
@@ -542,8 +538,7 @@
         >
           <p
             i18n="
-               @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION
-            "
+              @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION"
           >
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{
               notification.fromObj.name
@@ -561,7 +556,7 @@
         [routerLink]="['/newsfeed', notification.entityObj.guid]"
         *ngIf="!notification.entityObj"
       >
-        <p style="font-style:italic">
+        <p style="font-style: italic">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__POST_DELETED"
             >This post was deleted.</ng-container
           >
@@ -588,9 +583,8 @@
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
             i18n="
-               object belonging to current
-              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
-            "
+              object belonging to current
+              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
             >your {{ notification.entityObj.subtype }}</span
           >
           <ng-container *ngTemplateOutlet="remindQuote"></ng-container>
@@ -842,10 +836,7 @@
         >
         <ng-container
           i18n="
-
-            boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__AWAITING_APPROVAL
-
-          "
+            boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__AWAITING_APPROVAL"
         >
           is awaiting approval.</ng-container
         >
@@ -905,10 +896,7 @@
         >
         <ng-container
           i18n="
-
-            boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED_P2P__AWAITING_APPROVAL_BY
-
-          "
+            boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED_P2P__AWAITING_APPROVAL_BY"
         >
           is awaiting approval by
           <span class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1074,7 +1062,7 @@
             notification.entityObj.type !== 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST"
-          >your post.</span
+          >your post</span
         >
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1085,7 +1073,7 @@
             notification.entityObj.type === 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL"
-          >your channel.</span
+          >your channel</span
         >
         <ng-container
           i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__REFUNDED"
@@ -1343,8 +1331,7 @@
       <p>
         <ng-container
           i18n="
-             @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID
-          "
+            @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID"
           ><b>@{{ notification.from.username }}</b> accepted your bid
           of</ng-container
         >
@@ -1404,8 +1391,7 @@
       <p>
         <ng-container
           i18n="
-             @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID
-          "
+            @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID"
           ><b>@{{ notification.from.username }}</b> declined your bid
           of</ng-container
         >
@@ -1447,7 +1433,7 @@
             notification.entityObj.type !== 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST"
-          >your post.
+          >your post
         </span>
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1457,7 +1443,7 @@
             notification.entityObj.type === 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL"
-          >your channel.
+          >your channel
         </span>
         <ng-container
           i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__NOT_CHARGED"
@@ -1732,10 +1718,7 @@
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
             i18n="
-
-              @@NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_TITLE_BEEN
-
-            "
+              @@NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_TITLE_BEEN"
             >Your post {{ notification.entityObj.title }}</span
           >
           has been {{ notification.params.action }}
@@ -1768,7 +1751,7 @@
           notification.entityObj.type != 'activity'
         "
       >
-        <p style="font-style:italic">
+        <p style="font-style: italic">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__ERROR_VIEWING"
             >There was an error viewing this notification.</ng-container
           >

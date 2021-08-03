@@ -89,12 +89,8 @@ import { FormToastService } from '../../../../common/services/form-toast.service
       >
         E-mail Address
       </li>
-      <li
-        class="mdl-menu__item"
-        (click)="report(); showMenu = false"
-        i18n="@@M__ACTION__REPORT"
-      >
-        Report
+      <li class="mdl-menu__item" (click)="report(); showMenu = false">
+        <ng-container i18n="@@M__ACTION__REPORT">Report</ng-container>
       </li>
       <li
         class="mdl-menu__item"
@@ -112,7 +108,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
         (click)="setExplicit(false); showMenu = false"
         i18n="@@M__ACTION__REMOVE_EXPLICIT"
       >
-        Remove Explicit
+        Remove explicit
       </li>
       <li
         class="mdl-menu__item m-user-dropdown__item--nsfw"
@@ -429,7 +425,7 @@ export class UserDropdownButton {
   }
 
   async setNSFWLock(reasons: Array<{ label; value; selected }>) {
-    const nsfw = reasons.map(reason => reason.value);
+    const nsfw = reasons.map((reason) => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
     this.user.nsfw = nsfw;
     this.userChanged.emit(this.user);

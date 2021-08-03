@@ -93,7 +93,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    * Plyr driver detrmined by source types (detects hls)
    */
   plyrDriver$: Observable<HlsjsPlyrDriver | null> = this.service.sources$.pipe(
-    map(sources => {
+    map((sources) => {
       if (
         sources[0].type === 'application/vnd.apple.mpegURL' &&
         isPlatformBrowser(this.platformId) &&
@@ -326,9 +326,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
   onPlay(): void {}
 
   removeSources() {
-    const sources = this.elementRef.nativeElement.getElementsByTagName(
-      'source'
-    );
+    const sources =
+      this.elementRef.nativeElement.getElementsByTagName('source');
 
     // remove <source> from the DOM
     for (const source of sources) {
@@ -336,9 +335,8 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
     }
 
     // reload video so it frees up resources
-    const video: HTMLVideoElement = this.elementRef.nativeElement.getElementsByTagName(
-      'video'
-    )[0];
+    const video: HTMLVideoElement =
+      this.elementRef.nativeElement.getElementsByTagName('video')[0];
     if (video) {
       try {
         video.load();
@@ -358,7 +356,7 @@ export class MindsVideoPlayerComponent implements OnChanges, OnDestroy {
    */
   onSeeking(): void {
     this.subscriptions.push(
-      this.autoProgress.timer$.pipe(take(1)).subscribe(timer => {
+      this.autoProgress.timer$.pipe(take(1)).subscribe((timer) => {
         if (timer > 0) {
           this.autoProgress.cancel();
         }
