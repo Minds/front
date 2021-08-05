@@ -76,12 +76,9 @@
             <ng-container i18n="@@COMMON__DISCOVERY">Discovery</ng-container>
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            i18n="@@COMMON__DISCOVERY"
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__DISCOVERY"
+            >Discovery</span
           >
-            Discovery
-          </span>
         </a>
       </li>
 
@@ -101,9 +98,9 @@
             <ng-container i18n="@@COMMON__MINDS+">Minds+</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+">
-            Minds+
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+"
+            >Minds+</span
+          >
         </a>
       </li>
 
@@ -121,9 +118,9 @@
             <ng-container i18n="@@COMMON__WALLET">Wallet</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__WALLET">
-            Wallet
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__WALLET"
+            >Wallet</span
+          >
         </a>
       </li>
 
@@ -161,19 +158,15 @@
         <a routerLink="/analytics" (click)="toggle()">
           <m-tooltip
             icon="insert_chart"
-            i18n="@@COMMON__ANALYTICS"
             [enabled]="false"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
-            Analytics
+            <ng-container i18n="@@COMMON__ANALYTICS">Analytics</ng-container>
           </m-tooltip>
-          <span
-            class="m-sidebarNavigationItem__text"
-            i18n="@@COMMON__ANALYTICS"
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
+            >Analytics</span
           >
-            Analytics
-          </span>
         </a>
 
         <ul class="m-sidebarNavigation__subnav" m-sidebarNavigation__subnav>
@@ -251,9 +244,9 @@
             <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN">
-            Earn
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN"
+            >Earn</span
+          >
         </a>
       </li>
 
@@ -276,9 +269,8 @@
           <span
             class="m-sidebarNavigationItem__text"
             i18n="@@COMMON__BUY_CRYPTO"
+            >Buy Crypto</span
           >
-            Buy Crypto
-          </span>
         </a>
       </li>
 
@@ -352,13 +344,12 @@
             [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
+            >Settings</m-tooltip
           >
-            Settings
-          </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS">
-            Settings
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+            >Settings</span
+          >
         </a>
       </li>
     </ul>

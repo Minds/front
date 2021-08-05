@@ -23,9 +23,8 @@
       session.isAdmin()
     "
     (click)="selectOption('edit')"
-    i18n="@@M__ACTION__EDIT"
   >
-    Edit
+    <ng-container i18n="@@M__ACTION__EDIT">Edit</ng-container>
   </li>
   <li
     class="mdl-menu__item"
@@ -39,9 +38,8 @@
     class="mdl-menu__item"
     *ngIf="options.indexOf('translate') !== -1 && isTranslatable"
     (click)="selectOption('translate')"
-    i18n="@@M__ACTION__TRANSLATE"
   >
-    Translate
+    <ng-container i18n="@@M__ACTION__TRANSLATE">Translate</ng-container>
   </li>
   <!-- FEATURE -->
   <ng-container *ngIf="options.indexOf('feature') !== -1">
@@ -123,9 +121,8 @@
       canDelete
     "
     (click)="deleteToggle = true"
-    i18n="@@M__ACTION__DELETE"
   >
-    Delete
+    <ng-container i18n="@@M__ACTION__DELETE">Delete</ng-container>
   </li>
   <!-- REPORT -->
   <li

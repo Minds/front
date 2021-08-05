@@ -63,9 +63,8 @@
       class="m-dropdownList__item"
       *ngIf="options.indexOf('translate') !== -1 && isTranslatable"
       (click)="onSelectedOption('translate')"
-      i18n="@@M__ACTION__TRANSLATE"
     >
-      Translate
+      <ng-container i18n="@@M__ACTION__TRANSLATE">Translate</ng-container>
     </li>
     <!-- SUBSCRIBE -->
     <ng-container *ngIf="options.indexOf('subscribe') !== -1">

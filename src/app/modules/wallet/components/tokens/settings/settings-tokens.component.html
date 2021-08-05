@@ -85,9 +85,8 @@
         (onAction)="createAddress()"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS"
         color="blue"
+        >Create Address</m-button
       >
-        Create Address
-      </m-button>
       <!-- Address created -->
       <p
         *ngIf="generatedAccount"
@@ -143,11 +142,10 @@
         <div class="m-walletForm__fieldsContainer">
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
-              <label
-                for="addressInput"
-                i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS"
-              >
-                On-chain Address
+              <label for="addressInput">
+                <ng-container i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS"
+                  >On-Chain Address</ng-container
+                >
               </label>
               <m-tooltip icon="help">
                 <ng-container i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS_INFO"

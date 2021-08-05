@@ -39,19 +39,15 @@
     <ng-container
       *ngIf="!(service.isUpgrade$ | async) && !(service.supportTier$ | async)"
     >
+      <ng-container i18n="@@WIRE_CREATOR_TOOLBAR__SEND">
+        Send {{ service.amount$ | async | number: '1.0-6' }}</ng-container
+      >
+      <ng-container *ngTemplateOutlet="typeLabel"></ng-container>
       <ng-container
         *ngIf="service.recurring$ | async; else noRecurringLabel"
-        i18n="@@WIRE_CREATOR_TOOLBAR__SEND"
+        i18n="@@COMMON__MONTHLY"
+        >monthly</ng-container
       >
-        Send {{ service.amount$ | async | number: '1.0-6' }}
-        <ng-container *ngTemplateOutlet="typeLabel"></ng-container> monthly
-      </ng-container>
-      <ng-template #noRecurringLabel>
-        <ng-container i18n="@@WIRE_CREATOR_TOOLBAR__SEND">
-          Send {{ service.amount$ | async | number: '1.0-6' }}
-          <ng-container *ngTemplateOutlet="typeLabel"></ng-container>
-        </ng-container>
-      </ng-template>
     </ng-container>
     <ng-container
       *ngIf="service.isUpgrade$ | async"
@@ -68,9 +64,7 @@
           Pro</ng-container
         >
       </ng-container>
-      <ng-template #startTrialTxt>
-        Start free trial
-      </ng-template>
+      <ng-template #startTrialTxt> Start free trial </ng-template>
     </ng-container>
 
     <ng-container
