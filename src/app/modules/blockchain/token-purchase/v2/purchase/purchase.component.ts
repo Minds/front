@@ -18,8 +18,7 @@ import { Web3WalletService } from '../../../web3-wallet.service';
 import { TokenDistributionEventService } from '../../../contracts/token-distribution-event.service';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-// import { Web3ModalService } from '@mindsorg/web3modal-angular';
-import { Web3ModalService } from '../../../../../../../../../_minds/local_modules/web3modal-angular/projects/web3modal/src/lib/web3-modal/web3-modal.service';
+import { Web3ModalService } from '@mindsorg/web3modal-angular';
 import { BlockchainMarketingLinksService } from '../../../marketing/v2/blockchain-marketing-links.service';
 
 export type LaunchButtonType = 'analytics' | 'earn';

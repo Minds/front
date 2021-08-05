@@ -80,7 +80,7 @@
     "node-cache": "^5.1.2",
     "os-browserify": "^0.3.0",
     "plotly.js": "^2.2.1",
-    "plyr": "^3.6.8",
+    "plyr": "npm:@mindsorg/plyr@^3.8.0",
     "qrcodejs2": "0.0.2",
     "rxjs": "^6.6.0",
     "socket.io-client": "^4.1.3",
