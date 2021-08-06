@@ -5,7 +5,7 @@ import { ExperimentsService } from '../experiments/experiments.service';
   selector: 'm-homepagecontainer',
   template: `
     <m-discovery *ngIf="shouldRenderDiscoveryExperiment(); else homepageSplash">
-      <m-discovery__trends></m-discovery__trends>
+      <m-discovery__trends [showTabs]="false"></m-discovery__trends>
     </m-discovery>
     <ng-template #homepageSplash>
       <m-homepage__v2></m-homepage__v2>

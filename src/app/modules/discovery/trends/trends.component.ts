@@ -1,4 +1,10 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { DiscoveryTrendsService } from './trends.service';
 import {
   Router,
@@ -37,6 +43,8 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
   );
   routerEventsSubscription: Subscription;
   showPreferredFeed: boolean = false;
+
+  @Input() showTabs: boolean = true;
 
   constructor(
     private router: Router,

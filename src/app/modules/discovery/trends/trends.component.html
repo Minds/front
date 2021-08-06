@@ -1,4 +1,4 @@
-<m-discovery__tabs></m-discovery__tabs>
+<m-discovery__tabs *ngIf="showTabs"></m-discovery__tabs>
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
 <m-discovery__noTagsPrompt
@@ -11,6 +11,7 @@
   class="m-discovery__trends"
   @fastFade
   *ngIf="(trends$ | async).length > 0 || (hero$ | async)"
+  [ngClass]="{ noBorderTop: !showTabs }"
 >
   <li
     class="m-discoveryTrends__trend m-discoveryTrends__trend--hero"
