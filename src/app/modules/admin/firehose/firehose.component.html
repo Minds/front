@@ -1,61 +1,75 @@
 <div class="m-firehose m-page mdl-grid">
-  <div
-    class="m-firehose__moderatorAction m-firehose__moderatorAction--leftButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
-    (click)="reject()"
-    tabindex="0"
-  >
-    <i class="material-icons">highlight_off</i>
-  </div>
-  <div class="mdl-cell mdl-cell--10-col">
-    <div class="m-firehose__sort-container m-border">
-      <m-sort-selector
-        [algorithm]="algorithm"
-        [period]="period"
-        [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
-        showPlusFilter="true"
-        (onChange)="
-          setSort(
-            $event.algorithm,
-            $event.period,
-            $event.customType,
-            $event.plus
-          )
-        "
-      ></m-sort-selector>
+  <div class="m-firehose__topbarContainer mdl-cell mdl-cell--12-col">
+    <div class="mdl-cell mdl-cell--12-col">
+      <div class="m-firehose__sort-container m-border">
+        <m-sort-selector
+          [algorithm]="algorithm"
+          [period]="period"
+          [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
+          showPlusFilter="true"
+          (onChange)="
+            setSort(
+              $event.algorithm,
+              $event.period,
+              $event.customType,
+              $event.plus
+            )
+          "
+        ></m-sort-selector>
+        <div class="m-firehose__tagSelector">
+          <input
+            class="m-firehose__tagInput"
+            (keyup.enter)="addTag()"
+            #tagInput
+          />
+          <m-button
+            class="m-firehose__tagSubmitButton"
+            (click)="addTag()"
+            [size]="'xsmall'"
+            >Submit</m-button
+          >
+          <span
+            class="m-firehose__tag"
+            *ngFor="let tag of hashtags$ | async"
+            (click)="removeTag(tag)"
+            >#{{ tag }}</span
+          >
+        </div>
+      </div>
     </div>
-    <div class="m-firehose__tagSelector">
-      <input class="m-firehose__tagInput" (keyup.enter)="addTag()" #tagInput />
-      <m-button
-        class="m-firehose__tagSubmitButton"
-        (click)="addTag()"
-        [size]="'xsmall'"
-        >Submit</m-button
-      >
-      <span
-        class="m-firehose__tag"
-        *ngFor="let tag of hashtags$ | async"
-        (click)="removeTag(tag)"
-        >#{{ tag }}</span
-      >
-    </div>
-    <m-activity
-      *ngIf="entity"
-      [entity]="entity"
-      [attr.data-minds-activity-guid]="entity.guid"
-    ></m-activity>
   </div>
-  <div
-    class="m-firehose__moderatorAction m-firehose__moderatorAction--rightButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
-    (click)="accept()"
-    tabindex="1"
-  >
-    <i class="material-icons">check_circle</i>
-  </div>
-  <ng-container *ngIf="inProgress">
-    <div class="m-firehose__spinner mdl-cell mdl-cell--12-col">
+
+  <div class="m-firehose__entityFeed" *ngIf="(entities$ | async).length > 0">
+    <div
+      class="m-firehose__entityCard mdl-grid mdl-cell--12-col"
+      *ngFor="let entity of entities$ | async"
+    >
       <div
-        class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
-      ></div>
+        class="mdl-cell--1-col m-firehose__moderatorAction m-firehose__moderatorAction--leftButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
+        (click)="reject(entity)"
+        tabindex="0"
+      >
+        <i class="material-icons">highlight_off</i>
+      </div>
+      <m-activity
+        class="mdl-cell mdl-cell--10-col"
+        [entity]="entity"
+        [attr.data-minds-activity-guid]="entity.guid"
+      ></m-activity>
+      <div
+        class="mdl-cell--1-col m-firehose__moderatorAction m-firehose__moderatorAction--rightButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
+        (click)="accept(entity)"
+        tabindex="1"
+      >
+        <i class="material-icons">check_circle</i>
+      </div>
     </div>
-  </ng-container>
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [inProgress]="inProgress"
+    [moreData]="hasMore"
+  ></infinite-scroll>
 </div>

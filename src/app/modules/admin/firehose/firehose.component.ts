@@ -14,6 +14,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
 import { skip } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -21,9 +23,10 @@ import { skip } from 'rxjs/operators';
   templateUrl: 'firehose.component.html',
   styleUrls: ['./firehose.component.ng.scss'],
 })
-export class AdminFirehoseComponent implements OnInit, OnDestroy {
-  entities: Array<any> = [];
-  entity: any = null;
+export class AdminFirehoseComponent extends AbstractSubscriberComponent
+  implements OnInit, OnDestroy {
+  entities$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+
   inProgress = true;
   algorithm = 'latest';
   period = 'all';
@@ -31,7 +34,8 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   plus = false;
   all = false;
   paramsSubscription: Subscription;
-  timeout: any = null;
+  pagingToken: string = '';
+  hasMore: boolean = true;
 
   /**
    * Feed will return a union of posts containing these hashtags.
@@ -50,43 +54,45 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private overlayModal: OverlayModalService,
-    protected activityService: ActivityService
+    protected activityService: ActivityService,
+    private toast: FormToastService
   ) {
-    this.paramsSubscription = this.route.params.subscribe(params => {
-      this.algorithm = params['algorithm'] || 'latest';
-      this.period = params['period'] || '12h';
-      this.customType = params['type'] || 'activities';
-      this.plus = params['plus'] || false;
+    super();
+    this.subscriptions.push(
+      this.route.params.subscribe(params => {
+        this.algorithm = params['algorithm'] || 'latest';
+        this.period = params['period'] || '12h';
+        this.customType = params['type'] || 'activities';
+        this.plus = params['plus'] || false;
 
-      if (typeof params['hashtags'] !== 'undefined') {
-        this.hashtags$.next([...params['hashtags'].split(',')]);
-        this.all = false;
-      } else if (typeof params['all'] !== 'undefined') {
-        this.hashtags$.next([]);
-        this.all = true;
-      } else if (params['query']) {
-        this.all = true;
-        this.updateSortRoute();
-      } else {
-        this.hashtags$.next([]);
-        this.all = false;
-      }
+        if (typeof params['hashtags'] !== 'undefined') {
+          this.hashtags$.next([...params['hashtags'].split(',')]);
+          this.all = false;
+        } else if (typeof params['all'] !== 'undefined') {
+          this.hashtags$.next([]);
+          this.all = true;
+        } else if (params['query']) {
+          this.all = true;
+          this.updateSortRoute();
+        } else {
+          this.hashtags$.next([]);
+          this.all = false;
+        }
 
-      if (
-        this.algorithm !== 'top' &&
-        (this.customType === 'channels' || this.customType === 'groups')
-      ) {
-        this.algorithm = 'top';
-        this.updateSortRoute();
-      }
-      this.entity = null;
-      this.load();
-    });
-
-    // load feed on hashtag change skipping first emission (on load).
-    this.hashtags$.pipe(skip(1)).subscribe(hashtags => {
-      this.load();
-    });
+        if (
+          this.algorithm !== 'top' &&
+          (this.customType === 'channels' || this.customType === 'groups')
+        ) {
+          this.algorithm = 'top';
+          this.updateSortRoute();
+        }
+        this.load();
+      }),
+      // load feed on hashtag change skipping first emission (on load).
+      this.hashtags$.pipe(skip(1)).subscribe(hashtags => {
+        this.load();
+      })
+    );
   }
 
   /**
@@ -122,13 +128,6 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy() {
-    if (this.paramsSubscription) {
-      this.paramsSubscription.unsubscribe();
-    }
-    this.timeout = null;
-  }
-
   public async load() {
     this.inProgress = true;
     const hashtags = this.hashtags$.getValue();
@@ -142,27 +141,17 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
         period,
         all,
         plus: this.plus,
+        offset: this.pagingToken,
       });
-      this.entities = response.entities;
 
-      if (this.entities.length > 0) {
-        this.initializeEntity();
-        this.timeout = setTimeout(() => this.load(), 3600000);
-      }
-    } catch (exception) {
-      console.error(exception);
+      this.entities$.next([...this.entities$.getValue(), ...response.entities]);
+      this.pagingToken = response['load-next'];
+      this.hasMore = response['hasMore'];
+    } catch (e) {
+      console.error(e);
     }
 
     this.inProgress = false;
-  }
-
-  public initializeEntity() {
-    this.entity = null;
-    if (this.entities.length > 0) {
-      this.entity = this.entities.shift();
-    } else {
-      this.load();
-    }
   }
 
   public save(guid: number, reason: number = null, subreason: number = null) {
@@ -173,36 +162,30 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     return this.client.post('api/v2/admin/firehose/' + guid, data);
   }
 
-  public reject() {
+  public reject(entity: any): void {
     const options = {
       onReported: (guid, reason, subreason) => {
         this.save(guid, reason, subreason);
-        this.initializeEntity();
+
+        this.entities$.next(
+          this.entities$.getValue().filter(_entity => _entity !== entity)
+        );
+
+        this.toast.success('Successfully rejected');
       },
     };
 
-    this.overlayModal
-      .create(ReportCreatorComponent, this.entity, options)
-      .present();
+    this.overlayModal.create(ReportCreatorComponent, entity, options).present();
   }
 
-  public accept() {
-    this.save(this.entity.guid);
-    this.initializeEntity();
-  }
+  public accept(entity: any): void {
+    this.save(entity.guid);
 
-  @HostListener('document:keydown', ['$event'])
-  public onKeyPress(e) {
-    if (this.entity) {
-      switch (e.key) {
-        case 'ArrowLeft':
-          this.reject();
-          break;
-        case 'ArrowRight':
-          this.accept();
-          break;
-      }
-    }
+    this.entities$.next(
+      this.entities$.getValue().filter(_entity => _entity !== entity)
+    );
+
+    this.toast.success('Successfully approved');
   }
 
   public setSort(
