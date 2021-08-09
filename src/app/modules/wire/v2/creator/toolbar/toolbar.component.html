@@ -40,8 +40,8 @@
       *ngIf="!(service.isUpgrade$ | async) && !(service.supportTier$ | async)"
     >
       <ng-container i18n="@@WIRE_CREATOR_TOOLBAR__SEND">
-        Send {{ service.amount$ | async | number: '1.0-6' }}</ng-container
-      >
+        Send {{ service.amount$ | async | number: '1.0-6' }}
+      </ng-container>
       <ng-container *ngTemplateOutlet="typeLabel"></ng-container>
       <ng-container
         *ngIf="service.recurring$ | async; else noRecurringLabel"
