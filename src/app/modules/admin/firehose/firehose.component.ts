@@ -27,7 +27,7 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
   implements OnInit, OnDestroy {
   entities$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  inProgress = true;
+  inProgress = false;
   algorithm = 'latest';
   period = 'all';
   customType = 'activities';
@@ -36,6 +36,7 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
   paramsSubscription: Subscription;
   pagingToken: string = '';
   hasMore: boolean = true;
+  count: number = 0;
 
   /**
    * Feed will return a union of posts containing these hashtags.
@@ -129,6 +130,10 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
   ngOnInit() {}
 
   public async load() {
+    if (this.inProgress) {
+      return;
+    }
+
     this.inProgress = true;
     const hashtags = this.hashtags$.getValue();
     const period = this.period || '';
@@ -143,6 +148,11 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
         plus: this.plus,
         offset: this.pagingToken,
       });
+
+      // only set count on first call.
+      if (!this.entities$.getValue().length) {
+        this.count = response.count;
+      }
 
       this.entities$.next([...this.entities$.getValue(), ...response.entities]);
       this.pagingToken = response['load-next'];
@@ -171,6 +181,7 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
           this.entities$.getValue().filter(_entity => _entity !== entity)
         );
 
+        this.count--;
         this.toast.success('Successfully rejected');
       },
     };
@@ -185,6 +196,7 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
       this.entities$.getValue().filter(_entity => _entity !== entity)
     );
 
+    this.count--;
     this.toast.success('Successfully approved');
   }
 
