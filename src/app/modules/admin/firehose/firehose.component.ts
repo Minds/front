@@ -146,7 +146,7 @@ export class AdminFirehoseComponent extends AbstractSubscriberComponent
 
       this.entities$.next([...this.entities$.getValue(), ...response.entities]);
       this.pagingToken = response['load-next'];
-      this.hasMore = response['hasMore'];
+      this.hasMore = response['has-next'];
     } catch (e) {
       console.error(e);
     }
