@@ -138,4 +138,44 @@ export class AdminWithdrawals {
 
     this.inProgress = false;
   }
+
+  /**
+   * Add a missing withdrawal
+   * @param { string } txid - transaction id (txid).
+   * @returns { Promise<void> }
+   */
+  async addMissingWithdrawal(txid: string): Promise<void> {
+    this.inProgress = true;
+    try {
+      await this.client.post('api/v2/admin/rewards/withdrawals', {
+        action: 'missing',
+        txid: txid,
+      });
+      this.toasterService.success('Withdrawal resubmitted');
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
+  /**
+   * Attempt to repair withdrawal
+   * @param { any } request - request object.
+   * @returns { Promise<void> }
+   */
+  async repairWithdrawal(request: any): Promise<void> {
+    this.inProgress = true;
+    try {
+      await this.client.post('api/v2/admin/rewards/withdrawals', {
+        action: 'repair',
+        request_txid: request.tx,
+        user_guid: request.user_guid,
+        timestamp: request.timestamp,
+      });
+      this.toasterService.success('Withdrawal submitted for repair');
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
 }

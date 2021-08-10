@@ -10,6 +10,20 @@
     </ng-container>
   </div>
 
+  <div class="m-admin-withdrawals__transactionInputContainer" *ngIf="!user">
+    <input
+      class="m-admin-withdrawals__transactionInput"
+      type="text"
+      placeholder="Manually Add by Transaction ID"
+      #txInput
+    />
+    <m-button
+      class="m-admin-withdrawals__transactionInputButton"
+      (onAction)="addMissingWithdrawal(txInput.value)"
+      size="'small'"
+      >Submit</m-button
+    >
+  </div>
   <div
     class="m-admin-withdrawals__card"
     *ngFor="let request of withdrawals; let i = index"
@@ -152,6 +166,21 @@
             (onAction)="reject(request)"
           >
             Reject
+          </m-button>
+        </div>
+      </div>
+
+      <div
+        class="m-admin-withdrawalsCard__cell m-admin-withdrawalsCard__cell--actions"
+        *ngIf="request.status !== 'pending_approval'"
+      >
+        <div class="m-admin-withdrawalsCardCell__body">
+          <m-button
+            size="small"
+            [saving]="inProgress"
+            (onAction)="repairWithdrawal(request)"
+          >
+            Repair
           </m-button>
         </div>
       </div>
