@@ -172,12 +172,13 @@
 
       <div
         class="m-admin-withdrawalsCard__cell m-admin-withdrawalsCard__cell--actions"
-        *ngIf="request.status !== 'pending_approval'"
+        *ngIf="request.status === 'pending' || request.status === 'approved'"
       >
         <div class="m-admin-withdrawalsCardCell__body">
           <m-button
             size="small"
             [saving]="inProgress"
+            [disabled]="inProgress"
             (onAction)="repairWithdrawal(request)"
           >
             Repair

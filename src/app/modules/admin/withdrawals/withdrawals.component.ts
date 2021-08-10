@@ -165,6 +165,13 @@ export class AdminWithdrawals {
    */
   async repairWithdrawal(request: any): Promise<void> {
     this.inProgress = true;
+
+    if (!this.hasAdminConfirmation(request)) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
     try {
       await this.client.post('api/v2/admin/rewards/withdrawals', {
         action: 'repair',
@@ -177,5 +184,31 @@ export class AdminWithdrawals {
       this.toasterService.error(e.message);
     }
     this.inProgress = false;
+  }
+
+  /**
+   * Shows confirmation modal to admin, returns true if admin accepts.
+   * @param { any } request - request object.
+   * @returns { boolean } true if admin accepts, else false.
+   */
+  private hasAdminConfirmation(request): boolean {
+    let str;
+
+    switch (request.status) {
+      case 'pending':
+        str =
+          'The system will re-check the transaction is ready for approval. Check that the transaction has AT LEAST 20 CONFIRMATIONS. Do not run more than once';
+        break;
+      case 'approved':
+        str =
+          'Only run this if the completed_tx is registered with our system but not written to chain AND more than 72 hours has passed since the request - DO NOT run more than once';
+        break;
+      default:
+        this.toasterService.warn(
+          'Repair not yet implemented for ' + request.status
+        );
+        return false;
+    }
+    return confirm(str);
   }
 }
