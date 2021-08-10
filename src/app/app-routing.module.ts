@@ -19,6 +19,7 @@ import {
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
 } from './modules/blogs/blog.lazy';
+import { GovernanceModuleLazyRoutes } from './modules/governance/governance.lazy';
 
 const routes: Routes = [
   AnalyticsModuleLazyRoutes,
@@ -33,6 +34,7 @@ const routes: Routes = [
   AuxModuleLazyRoutes,
   BlogModuleLazyRoutes,
   BlogSlugModuleLazyRoutes,
+  GovernanceModuleLazyRoutes,
   // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
   { path: ':username', redirectTo: ':username/', pathMatch: 'full' },
   {

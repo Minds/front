@@ -1,0 +1,23 @@
+<div class="m-tabs__container">
+  <ng-container>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="/governance/latest"
+        [class.m-tabs__tab--selected]="isLinkActive('/governance/latest')"
+        [queryParams]="{ reload: false }"
+        data-cy="governance-tab-link-latest"
+        i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
+        >Proposals</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="/governance/enacted"
+        routerLinkActive="m-tabs__tab--selected"
+        data-cy="governance-tab-link-enacted"
+        i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
+        >Enacted</a
+      >
+    </div>
+  </ng-container>
+</div>

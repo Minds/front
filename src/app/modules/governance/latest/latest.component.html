@@ -1,0 +1,17 @@
+<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
+
+<div class="m-governance__card">
+  <div class="mdl-grid">
+    <div class="m-governance-total">
+      {{ totalProposals$ | async }} proposals
+    </div>
+    <div class="m-governance-button" routerLink="/governance/create">
+      Submit proposal
+    </div>
+  </div>
+
+  <m-governance__card
+    *ngFor="let proposal of proposals$ | async"
+    [card]="proposal"
+  ></m-governance__card>
+</div>

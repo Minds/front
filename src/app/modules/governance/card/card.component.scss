@@ -1,0 +1,84 @@
+@import 'defaults';
+@import 'themes';
+
+.m-governance__card-container {
+  padding: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
+  }
+  &:hover {
+    box-shadow: 0 0 11px #424a50;
+    transform: translateY(-4px);
+    .m-governance__card-arrow-container {
+      .m-governance__card-arrow-corner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        top: 0;
+        right: 0px;
+        border-radius: 0 0 0 32px;
+        @include m-theme() {
+          background-color: themed($m-blue);
+          border-color: themed($m-blue);
+        }
+      }
+
+      .m-governance__card-arrow {
+        display: flex;
+        margin-top: -4px;
+        margin-right: -4px;
+        color: white;
+        font-family: courier, sans;
+      }
+    }
+  }
+
+  h2 {
+    padding-left: 4px;
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+  }
+  .m-governance__card-arrow-container {
+    .m-governance__card-arrow-corner {
+      display: none;
+    }
+
+    .m-governance__card-arrow {
+      display: none;
+    }
+  }
+
+  .m-application-meta {
+    .m-governance__card-status {
+      max-width: 100px;
+      border: 1px solid;
+      padding: 6px 4px;
+      display: flex;
+      justify-content: center;
+      border-radius: 50px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      @include m-theme() {
+        border-color: themed($m-blue);
+      }
+    }
+  }
+}
