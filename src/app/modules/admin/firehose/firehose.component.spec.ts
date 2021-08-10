@@ -41,143 +41,127 @@ class MindsSortSelectorMockComponent {
 }
 
 xdescribe('AdminFirehose', () => {
-  let comp: AdminFirehoseComponent;
-  let fixture: ComponentFixture<AdminFirehoseComponent>;
-
-  function getMockActivities() {
-    return [
-      {
-        guid: 1,
-      },
-      {
-        guid: 2,
-      },
-      {
-        guid: 3,
-      },
-    ];
-  }
-
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          MindsActivityMockComponent,
-          AdminFirehoseComponent,
-          MindsSortSelectorMockComponent,
-          ButtonComponent,
-          MockComponent({
-            selector: 'm-activity',
-            inputs: ['entity'],
-          }),
-        ],
-        imports: [RouterTestingModule],
-        providers: [
-          { provide: Session, useValue: sessionMock },
-          { provide: Client, useValue: clientMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
-          { provide: ActivityService, useValue: activityServiceMock },
-        ],
-      }).compileComponents();
-    })
-  );
-
-  beforeEach(done => {
-    fixture = TestBed.createComponent(AdminFirehoseComponent);
-
-    comp = fixture.componentInstance;
-    comp.entities = getMockActivities();
-
-    fixture.detectChanges();
-
-    clientMock.response = {};
-    clientMock.response[`api/v2/admin/firehose/latest/activities`] = {
-      status: 'success',
-      entities: getMockActivities(),
-    };
-
-    if (fixture.isStable()) {
-      done();
-    } else {
-      fixture.whenStable().then(() => {
-        done();
-      });
-    }
-  });
-
-  it('should have a loading screen', () => {
-    comp.inProgress = true;
-    fixture.detectChanges();
-    expect(
-      fixture.debugElement.query(By.css('.m-firehose__spinner'))
-    ).not.toBeNull();
-  });
-
-  it('should hide a loading screen', () => {
-    comp.inProgress = false;
-    fixture.detectChanges();
-    expect(
-      fixture.debugElement.query(By.css('.m-firehose__spinner'))
-    ).toBeNull();
-  });
-
-  it('should initialize entities', () => {
-    comp.entities = getMockActivities();
-    expect(comp.entities.length).toEqual(3);
-    expect(comp.entities).not.toBeNull();
-    comp.initializeEntity();
-    expect(comp.entity).toEqual(getMockActivities()[0]);
-    expect(comp.entities.length).toEqual(2);
-  });
-
-  it('should save an accept activity', fakeAsync(() => {
-    clientMock.response['api/v2/admin/firehose/1'] = { status: 'success' };
-    comp.save(getMockActivities()[0].guid);
-    fixture.detectChanges();
-    tick();
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v2/admin/firehose/1'
-    );
-  }));
-
-  it('should save a reported activity', fakeAsync(() => {
-    clientMock.response['api/v2/admin/firehose/1'] = { status: 'success' };
-    comp.save(getMockActivities()[0].guid, 1, 1);
-    fixture.detectChanges();
-    tick();
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v2/admin/firehose/1'
-    );
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
-      reason: 1,
-      subreason: 1,
-    });
-  }));
-
-  it('should accept an activity', fakeAsync(() => {
-    spyOn(comp, 'save');
-    spyOn(comp, 'initializeEntity');
-    comp.accept();
-
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
-      'api/v2/admin/firehose/1'
-    );
-    expect(comp.save).toHaveBeenCalled();
-    expect(comp.initializeEntity).toHaveBeenCalled();
-  }));
-
-  it('should swipe left on left arrow keypress', () => {
-    spyOn(comp, 'reject').and.callThrough();
-    comp.onKeyPress({ key: 'ArrowLeft' });
-    expect(comp.reject).toHaveBeenCalled();
-  });
-
-  xit('should swipe right on right arrow keypress', () => {
-    spyOn(comp, 'accept').and.callThrough();
-    comp.onKeyPress({ key: 'ArrowRight' });
-    expect(comp.accept).toHaveBeenCalled();
-  });
+  // let comp: AdminFirehoseComponent;
+  // let fixture: ComponentFixture<AdminFirehoseComponent>;
+  // function getMockActivities() {
+  //   return [
+  //     {
+  //       guid: 1,
+  //     },
+  //     {
+  //       guid: 2,
+  //     },
+  //     {
+  //       guid: 3,
+  //     },
+  //   ];
+  // }
+  // beforeEach(
+  //   waitForAsync(() => {
+  //     TestBed.configureTestingModule({
+  //       declarations: [
+  //         MindsActivityMockComponent,
+  //         AdminFirehoseComponent,
+  //         MindsSortSelectorMockComponent,
+  //         ButtonComponent,
+  //         MockComponent({
+  //           selector: 'm-activity',
+  //           inputs: ['entity'],
+  //         }),
+  //       ],
+  //       imports: [RouterTestingModule],
+  //       providers: [
+  //         { provide: Session, useValue: sessionMock },
+  //         { provide: Client, useValue: clientMock },
+  //         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+  //         { provide: ActivityService, useValue: activityServiceMock },
+  //       ],
+  //     }).compileComponents();
+  //   })
+  // );
+  // beforeEach(done => {
+  //   fixture = TestBed.createComponent(AdminFirehoseComponent);
+  //   comp = fixture.componentInstance;
+  //   comp.entities = getMockActivities();
+  //   fixture.detectChanges();
+  //   clientMock.response = {};
+  //   clientMock.response[`api/v2/admin/firehose/latest/activities`] = {
+  //     status: 'success',
+  //     entities: getMockActivities(),
+  //   };
+  //   if (fixture.isStable()) {
+  //     done();
+  //   } else {
+  //     fixture.whenStable().then(() => {
+  //       done();
+  //     });
+  //   }
+  // });
+  // it('should have a loading screen', () => {
+  //   comp.inProgress = true;
+  //   fixture.detectChanges();
+  //   expect(
+  //     fixture.debugElement.query(By.css('.m-firehose__spinner'))
+  //   ).not.toBeNull();
+  // });
+  // it('should hide a loading screen', () => {
+  //   comp.inProgress = false;
+  //   fixture.detectChanges();
+  //   expect(
+  //     fixture.debugElement.query(By.css('.m-firehose__spinner'))
+  //   ).toBeNull();
+  // });
+  // it('should initialize entities', () => {
+  //   comp.entities = getMockActivities();
+  //   expect(comp.entities.length).toEqual(3);
+  //   expect(comp.entities).not.toBeNull();
+  //   comp.initializeEntity();
+  //   expect(comp.entity).toEqual(getMockActivities()[0]);
+  //   expect(comp.entities.length).toEqual(2);
+  // });
+  // it('should save an accept activity', fakeAsync(() => {
+  //   clientMock.response['api/v2/admin/firehose/1'] = { status: 'success' };
+  //   comp.save(getMockActivities()[0].guid);
+  //   fixture.detectChanges();
+  //   tick();
+  //   expect(clientMock.post).toHaveBeenCalled();
+  //   expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+  //     'api/v2/admin/firehose/1'
+  //   );
+  // }));
+  // it('should save a reported activity', fakeAsync(() => {
+  //   clientMock.response['api/v2/admin/firehose/1'] = { status: 'success' };
+  //   comp.save(getMockActivities()[0].guid, 1, 1);
+  //   fixture.detectChanges();
+  //   tick();
+  //   expect(clientMock.post).toHaveBeenCalled();
+  //   expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+  //     'api/v2/admin/firehose/1'
+  //   );
+  //   expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+  //     reason: 1,
+  //     subreason: 1,
+  //   });
+  // }));
+  // it('should accept an activity', fakeAsync(() => {
+  //   spyOn(comp, 'save');
+  //   spyOn(comp, 'initializeEntity');
+  //   comp.accept();
+  //   expect(clientMock.post).toHaveBeenCalled();
+  //   expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+  //     'api/v2/admin/firehose/1'
+  //   );
+  //   expect(comp.save).toHaveBeenCalled();
+  //   expect(comp.initializeEntity).toHaveBeenCalled();
+  // }));
+  // it('should swipe left on left arrow keypress', () => {
+  //   spyOn(comp, 'reject').and.callThrough();
+  //   comp.onKeyPress({ key: 'ArrowLeft' });
+  //   expect(comp.reject).toHaveBeenCalled();
+  // });
+  // xit('should swipe right on right arrow keypress', () => {
+  //   spyOn(comp, 'accept').and.callThrough();
+  //   comp.onKeyPress({ key: 'ArrowRight' });
+  //   expect(comp.accept).toHaveBeenCalled();
+  // });
 });
