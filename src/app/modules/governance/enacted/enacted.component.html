@@ -1,3 +1,7 @@
-<div>
-  Test enacted
-</div>
+<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
+
+<m-proposal-list
+  *ngIf="!(inProgress$ | async)"
+  [proposals]="proposals$ | async"
+  [total]="totalProposals$ | async"
+></m-proposal-list>

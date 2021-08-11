@@ -10,7 +10,7 @@ import {
 import { filter, pairwise, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'm-governance__latest',
+  selector: 'm-governance--latest',
   templateUrl: './latest.component.html',
 })
 export class GovernanceLatestComponent implements OnInit {
@@ -39,7 +39,5 @@ export class GovernanceLatestComponent implements OnInit {
           this.latestService.loadProposals();
         }
       });
-
-    console.log(this.proposals$);
   }
 }

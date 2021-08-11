@@ -1,0 +1,14 @@
+<div class="m-governance__card">
+  <div class="mdl-grid">
+    <!--    TODO: I think we should remove the total number of proposal -->
+    <div class="m-governance-total">{{ total }} proposals</div>
+    <div class="m-governance-button" routerLink="/governance/create">
+      Submit proposal
+    </div>
+  </div>
+
+  <m-governance__card
+    *ngFor="let proposal of proposals"
+    [proposal]="proposal"
+  ></m-governance__card>
+</div>

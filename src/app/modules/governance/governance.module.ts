@@ -13,6 +13,8 @@ import { GovernanceEnactedComponent } from './enacted/enacted.component';
 import { GovernanceLatestService } from './latest/latest.service';
 import { GovernanceCardComponent } from './card/card.component';
 import { GovernanceCreateComponent } from './create/create.component';
+import { ProposalListComponent } from './proposal-list/proposal-list.component';
+import { SnapshotService } from './snapshot.service';
 
 @NgModule({
   imports: [
@@ -46,13 +48,14 @@ import { GovernanceCreateComponent } from './create/create.component';
     LanguageModule,
     RouterModule,
   ],
-  providers: [GovernanceLatestService],
+  providers: [SnapshotService, GovernanceLatestService],
   declarations: [
     GovernanceComponent,
     GovernanceTabsComponent,
     GovernanceLatestComponent,
     GovernanceEnactedComponent,
     GovernanceCardComponent,
+    ProposalListComponent,
   ],
   exports: [
     GovernanceComponent,
