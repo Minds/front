@@ -43,8 +43,7 @@ export class PageLayoutService {
    * @return void
    */
   useFullWidth(): void {
-    // if we are preventing layout resets -
-    // do not use timeouts when setting to full width.
+    // if we are preventing layout resets - do not use timeouts.
     if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
       this.isFullWidth$.next(true);
       return;
@@ -53,22 +52,42 @@ export class PageLayoutService {
   }
 
   cancelFullWidth(): void {
+    if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
+      this.isFullWidth$.next(false);
+      return;
+    }
     setTimeout(() => this.isFullWidth$.next(false));
   }
 
   useTopbarBorder(): void {
+    if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
+      this.hasTopbarBorder$.next(true);
+      return;
+    }
     setTimeout(() => this.hasTopbarBorder$.next(true));
   }
 
   removeTopbarBorder(): void {
+    if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
+      this.hasTopbarBorder$.next(false);
+      return;
+    }
     setTimeout(() => this.hasTopbarBorder$.next(false));
   }
 
   useTopbarBackground(): void {
+    if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
+      this.hasTopbarBackground$.next(true);
+      return;
+    }
     setTimeout(() => this.hasTopbarBackground$.next(true));
   }
 
   removeTopbarBackground(): void {
+    if (this.preventLayoutReset || isPlatformServer(this.platformId)) {
+      this.hasTopbarBackground$.next(false);
+      return;
+    }
     setTimeout(() => this.hasTopbarBackground$.next(false));
   }
 
