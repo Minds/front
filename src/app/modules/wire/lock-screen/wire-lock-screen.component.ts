@@ -183,7 +183,7 @@ export class WireLockScreenComponent implements OnInit {
 
   get isPlus(): boolean {
     return (
-      this.entity.wire_threshold.support_tier.urn === this.plusSupportTierUrn
+      this.entity.wire_threshold.support_tier?.urn === this.plusSupportTierUrn
     );
   }
 
