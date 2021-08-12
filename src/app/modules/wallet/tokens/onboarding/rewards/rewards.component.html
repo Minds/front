@@ -26,7 +26,11 @@
       </button>
       <div
         *ngIf="inProgress"
-        class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active"
+        class="
+          m-token-join--form--inprogress
+          mdl-spinner mdl-js-spinner
+          is-active
+        "
         [mdl]
       ></div>
     </div>
@@ -54,13 +58,15 @@
       >
         Confirm
       </button>
-      <button class="m-btn m-btn--slim" (click)="cancel()">
-        Go Back
-      </button>
+      <button class="m-btn m-btn--slim" (click)="cancel()">Go Back</button>
 
       <div
         *ngIf="inProgress"
-        class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active"
+        class="
+          m-token-join--form--inprogress
+          mdl-spinner mdl-js-spinner
+          is-active
+        "
         [mdl]
       ></div>
     </div>

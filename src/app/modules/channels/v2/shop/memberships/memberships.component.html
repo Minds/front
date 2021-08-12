@@ -8,7 +8,10 @@
       >
         <div
           *ngIf="isDraft$ | async"
-          class="m-channelShopMembershipsTitle__headline m-channelShopMembershipsTitle__headline--small"
+          class="
+            m-channelShopMembershipsTitle__headline
+            m-channelShopMembershipsTitle__headline--small
+          "
           ngPreserveWhitespaces
         >
           <a i18n="@@CHANNELS_SHOP_MEMBERSHIPS_PUBLISH_TIERS">Publish Tiers</a>
@@ -23,7 +26,10 @@
           *ngIf="(supportTiers$ | async)?.length < 1; else shopHeadline"
         >
           <div
-            class="m-channelShopMembershipsTitle__headline m-channelShopMembershipsTitle__headline--no-memberships"
+            class="
+              m-channelShopMembershipsTitle__headline
+              m-channelShopMembershipsTitle__headline--no-memberships
+            "
             i18n="@@CHANNELS_SHOP_MEMBERSHIPS_TITLE_HEADLINE__NO_MEMBERSHIPS"
           >
             @{{ channel.username$ | async }} doesn't offer any memberships
@@ -46,7 +52,10 @@
     <ng-container *ngIf="channel.isOwner$ | async; else consumerHeader">
       <a
         (click)="openMembersModal($event)"
-        class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"
+        class="
+          m-channelShopMemberships__headerAction
+          m-channelShopMemberships__headerAction--small
+        "
       >
         <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_VIEW_SUPPORTERS"
           >View Supporters</ng-container
@@ -54,7 +63,10 @@
       </a>
       <a
         (click)="create()"
-        class="m-channelShopMemberships__headerAction m-channelShopMemberships__headerAction--small"
+        class="
+          m-channelShopMemberships__headerAction
+          m-channelShopMemberships__headerAction--small
+        "
       >
         <m-icon iconId="add" [sizeFactor]="0"></m-icon>
         <ng-container i18n="@@CHANNELS_SHOP_MEMBERSHIPS_NEW_TIER"

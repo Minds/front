@@ -1,8 +1,8 @@
-<div [hidden]="group || error" style="width:100%; text-align:center; ">
+<div [hidden]="group || error" style="width: 100%; text-align: center">
   <div
     class="mdl-spinner mdl-js-spinner is-active"
     [mdl]
-    style="margin: 16px auto;"
+    style="margin: 16px auto"
   ></div>
 </div>
 
@@ -73,7 +73,11 @@
 
         <!-- Name -->
         <div
-          class="m-groupInfo__name m-group-info-name mdl-color-text--blue-grey-800"
+          class="
+            m-groupInfo__name
+            m-group-info-name
+            mdl-color-text--blue-grey-800
+          "
         >
           <div [hidden]="editing || !group.name">
             <h1>
@@ -92,7 +96,7 @@
               >
               </minds-groups-join-button>
               <m-button
-                style="margin-left: 8;"
+                style="margin-left: 8"
                 (onAction)="videochat.activate(group)"
                 *ngIf="!group.videoChatDisabled && group['is:member']"
                 size="small"

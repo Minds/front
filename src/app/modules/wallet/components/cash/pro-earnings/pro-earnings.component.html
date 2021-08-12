@@ -17,7 +17,7 @@
     [inProgress]="inProgress"
   ></m-loadingSpinner>
 
-  <div *ngIf="payouts$ | async as payouts" style="margin-bottom: 40px;">
+  <div *ngIf="payouts$ | async as payouts" style="margin-bottom: 40px">
     <ng-container
       *ngTemplateOutlet="
         sectionHeader;
@@ -61,7 +61,10 @@
 
           <!-- Spacer, because CSS tables are weird -->
           <tr
-            class="m-walletProEarningsTable__item .m-walletProEarningsTable__item--spacer"
+            class="
+              m-walletProEarningsTable__item
+              .m-walletProEarningsTable__item--spacer
+            "
           ></tr>
 
           <!-- ROWS -->
@@ -74,7 +77,10 @@
 
           <!-- Spacer, because CSS tables are weird -->
           <tr
-            class="m-walletProEarningsTable__item m-walletProEarningsTable__item--spacer"
+            class="
+              m-walletProEarningsTable__item
+              m-walletProEarningsTable__item--spacer
+            "
           ></tr>
         </tbody>
       </table>

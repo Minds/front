@@ -8,7 +8,7 @@
   </minds-banner>
 </header>
 
-<div class="mdl-grid m-admin-pages" style="max-width:990px">
+<div class="mdl-grid m-admin-pages" style="max-width: 990px">
   <div class="mdl-cell mdl-cell--4-col">
     <ul class="m-content-sidebar-nav">
       <li class="m-content-sidebar-nav-item">
@@ -29,7 +29,11 @@
           {{p.title}}
           <i
             *ngIf="p.subtype == 'link'"
-            class="material-icons m-material-icons-inline-text mdl-color-text--blue-grey-300"
+            class="
+              material-icons
+              m-material-icons-inline-text
+              mdl-color-text--blue-grey-300
+            "
             >link</i
           >
         </a>
@@ -69,9 +73,7 @@
         Save &amp; Publish
       </m-button>
 
-      <m-button color="red" (onAction)="delete(page)">
-        Delete
-      </m-button>
+      <m-button color="red" (onAction)="delete(page)"> Delete </m-button>
     </div>
   </div>
 
@@ -105,9 +107,7 @@
         Save & Publish
       </m-button>
 
-      <m-button color="red" (onAction)="delete(page)">
-        Delete
-      </m-button>
+      <m-button color="red" (onAction)="delete(page)"> Delete </m-button>
     </div>
   </div>
 </div>

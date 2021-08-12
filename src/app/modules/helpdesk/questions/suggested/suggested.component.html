@@ -7,9 +7,7 @@
         [routerLink]="'/help/category/edit/' + category.uuid"
         *ngIf="session.isAdmin()"
       >
-        <i class="material-icons">
-          edit
-        </i>
+        <i class="material-icons"> edit </i>
       </a>
 
       <li
@@ -18,9 +16,7 @@
       >
         <a [routerLink]="['/help/question/', question.uuid]">
           <span>{{ question.question }}</span>
-          <i class="material-icons">
-            keyboard_arrow_right
-          </i>
+          <i class="material-icons"> keyboard_arrow_right </i>
         </a>
       </li>
     </ul>
@@ -36,9 +32,7 @@
       >
         <a [routerLink]="['/help/question/', question.uuid]">
           <span>{{ question.question }}</span>
-          <i class="material-icons">
-            keyboard_arrow_right
-          </i>
+          <i class="material-icons"> keyboard_arrow_right </i>
         </a>
       </li>
     </ul>

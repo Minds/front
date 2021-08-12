@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
-import { CommonModule } from '../../common/common.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { LanguageModule } from '../language/language.module';
@@ -13,9 +12,13 @@ import { GovernanceEnactedComponent } from './enacted/enacted.component';
 import { GovernanceLatestService } from './latest/latest.service';
 import { GovernanceCardComponent } from './card/card.component';
 import { GovernanceCreateComponent } from './create/create.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '../../common/common.module';
 
 @NgModule({
   imports: [
+    NgCommonModule,
+    CommonModule,
     RouterModule.forChild([
       {
         path: '',
@@ -37,10 +40,10 @@ import { GovernanceCreateComponent } from './create/create.component';
         ],
       },
     ]),
-    NgCommonModule,
-    CommonModule,
     SuggestionsModule,
     ActivityModule,
+    FormsModule,
+    ReactiveFormsModule,
     LegacyModule, // For subscribe button
     // GroupsModule,
     LanguageModule,
@@ -53,6 +56,7 @@ import { GovernanceCreateComponent } from './create/create.component';
     GovernanceLatestComponent,
     GovernanceEnactedComponent,
     GovernanceCardComponent,
+    GovernanceCreateComponent,
   ],
   exports: [
     GovernanceComponent,
@@ -60,6 +64,7 @@ import { GovernanceCreateComponent } from './create/create.component';
     GovernanceLatestComponent,
     GovernanceEnactedComponent,
     GovernanceCardComponent,
+    GovernanceCreateComponent,
   ],
 })
 export class GovernanceModule {}

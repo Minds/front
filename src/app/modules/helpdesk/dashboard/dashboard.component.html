@@ -7,9 +7,7 @@
         </h2>
         <h2 *ngIf="!session.isLoggedIn()">How can we help you?</h2>
         <div class="m-helpdesk__dashboardInput">
-          <i class="material-icons">
-            search
-          </i>
+          <i class="material-icons"> search </i>
           <input
             placeholder="Enter your question here"
             class="m-input m-border"
@@ -64,9 +62,7 @@
             </a></m-button
           >
           <m-button overlay="true">
-            <a routerLink="/issues/report">
-              Report a bug
-            </a>
+            <a routerLink="/issues/report"> Report a bug </a>
           </m-button>
         </div>
       </div>
@@ -80,9 +76,7 @@
             >
               <a [routerLink]="['/help/question/', question.uuid]">
                 <span>{{ question.question }}</span>
-                <i class="material-icons">
-                  keyboard_arrow_right
-                </i>
+                <i class="material-icons"> keyboard_arrow_right </i>
               </a>
             </li>
           </ul>
@@ -93,7 +87,7 @@
 
   <section
     class="m-layout__section m-helpdesk--dashboard--section"
-    style="padding-bottom: 0;"
+    style="padding-bottom: 0"
   >
     <div class="m-layout__inner" style="padding-top: 36px">
       <m-helpdesk--dashboard--all></m-helpdesk--dashboard--all>
@@ -102,14 +96,17 @@
 
   <section
     class="m-layout__section m-helpdesk--dashboard--section"
-    style="padding-bottom: 0;"
+    style="padding-bottom: 0"
     *ngIf="false"
   >
     <div class="m-layout__inner m-layout__row">
       <div class="m-layout__cell">
         <div class="m-helpdesk--dashboard--links">
           <div
-            class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--help-and-support"
+            class="
+              m-helpdesk--dashboard--big-item
+              m-helpdesk--dashboard--help-and-support
+            "
             (click)="router.navigate(['/groups/profile', '100000000000000681'])"
           >
             <img [src]="cdnAssetsUrl + 'assets/help-desk/chat.png'" />
@@ -126,7 +123,10 @@
           <hr />
 
           <div
-            class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--token-sales-and-enterprise"
+            class="
+              m-helpdesk--dashboard--big-item
+              m-helpdesk--dashboard--token-sales-and-enterprise
+            "
           >
             <img [src]="cdnAssetsUrl + 'assets/help-desk/briefcase.png'" />
             <div class="m-helpdesk--dashboard--big-item--text">

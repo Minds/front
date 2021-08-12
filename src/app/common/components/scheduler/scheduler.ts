@@ -12,9 +12,9 @@ import { Component, EventEmitter } from '@angular/core';
       (change)="onChange($event)"
       class="mdl-color-text--blue-grey-800 m-form-select"
     >
-      <option *ngFor="let d of dates; let i = index" [value]="i">{{
-        d.formatted
-      }}</option>
+      <option *ngFor="let d of dates; let i = index" [value]="i">
+        {{ d.formatted }}
+      </option>
     </select>
     <!-- Hour -->
     <select
@@ -23,9 +23,9 @@ import { Component, EventEmitter } from '@angular/core';
       (change)="onChange($event)"
       class="mdl-color-text--blue-grey-800 m-form-select"
     >
-      <option *ngFor="let h of hours; let i = index" [value]="i">{{
-        h.label
-      }}</option>
+      <option *ngFor="let h of hours; let i = index" [value]="i">
+        {{ h.label }}
+      </option>
     </select>
     <b>:</b>
     <!-- Minutes -->
@@ -35,9 +35,9 @@ import { Component, EventEmitter } from '@angular/core';
       (change)="onChange($event)"
       class="mdl-color-text--blue-grey-800 m-form-select"
     >
-      <option *ngFor="let m of minutes; let i = index" [value]="i">{{
-        m.label
-      }}</option>
+      <option *ngFor="let m of minutes; let i = index" [value]="i">
+        {{ m.label }}
+      </option>
     </select>
   `,
 })

@@ -2,8 +2,15 @@
   <!-- Angular has svg problems... -->
   <svg
     viewBox="0,0,100,100"
-    class="chart "
-    style="height:100px; width:100px; margin: 0 auto; transform: rotate(90deg); border-radius: 50%; display: block;"
+    class="chart"
+    style="
+      height: 100px;
+      width: 100px;
+      margin: 0 auto;
+      transform: rotate(90deg);
+      border-radius: 50%;
+      display: block;
+    "
   >
     <circle
       *ngFor="let s of segments"
@@ -13,7 +20,7 @@
       [attr.stroke-dasharray]="s.array"
       [attr.stroke-dashoffset]="s.offset"
       class="pie"
-      style="fill: transparent; stroke-width: 50px;"
+      style="fill: transparent; stroke-width: 50px"
     />
   </svg>
 </div>

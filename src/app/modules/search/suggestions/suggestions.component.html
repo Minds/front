@@ -23,7 +23,10 @@
 
     <ng-container *ngFor="let suggestion of recent">
       <a
-        class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--text"
+        class="
+          m-searchBarSuggestions__suggestion
+          m-searchBarSuggestions__suggestion--text
+        "
         *ngIf="suggestion.type === 'text'"
         [routerLink]="['/discovery/search']"
         [queryParams]="{ q: suggestion.value, f: 'top', t: 'all' }"
@@ -37,7 +40,10 @@
         [ngTemplateOutletContext]="{ suggestion: suggestion }"
       ></ng-container>
       <a
-        class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--publisher"
+        class="
+          m-searchBarSuggestions__suggestion
+          m-searchBarSuggestions__suggestion--publisher
+        "
         *ngIf="suggestion.type === 'group'"
         [routerLink]="['/groups/profile/', suggestion.guid]"
       >
@@ -75,7 +81,10 @@
 
 <ng-template #channelSuggestion let-suggestion="suggestion">
   <a
-    class="m-searchBarSuggestions__suggestion m-searchBarSuggestions__suggestion--publisher"
+    class="
+      m-searchBarSuggestions__suggestion
+      m-searchBarSuggestions__suggestion--publisher
+    "
     [routerLink]="['/', suggestion.username]"
   >
     <img src="{{ cdnUrl }}icon/{{ suggestion.guid }}/small" />

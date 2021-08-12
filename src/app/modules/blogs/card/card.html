@@ -1,7 +1,7 @@
 <a
   [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
   class="mdl-card__title minds-blog-thumbnail"
-  style="height:180px; margin-bottom:80px; background-size:cover;"
+  style="height: 180px; margin-bottom: 80px; background-size: cover"
   [ngStyle]="{background: 'url(' + blog.thumbnail_src + ') center center / cover'}"
   [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(blog) }"
 ></a>
@@ -13,7 +13,11 @@
 
 <!-- Owner block -->
 <div
-  class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block m-title-block-fixed m-title-block-with-actions"
+  class="
+    mdl-card__supporting-text
+    mdl-color-text--grey-600
+    m-title-block m-title-block-fixed m-title-block-with-actions
+  "
   *ngIf="blog.ownerObj && blog.ownerObj.username"
 >
   <a
