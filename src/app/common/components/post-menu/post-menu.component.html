@@ -297,12 +297,12 @@
 <m-modal [open]="true" (closed)="onModalClose()" *ngIf="featureToggle">
   <div class="m-button-feature-modal">
     <select [(ngModel)]="featuredCategory">
-      <option value="not-selected" i18n="@@COMMON__POST_MENU__SELECT_CATEGORY"
-        >-- SELECT A CATEGORY --</option
-      >
-      <option *ngFor="let category of categories" [value]="category.id">{{
-        category.label
-      }}</option>
+      <option value="not-selected" i18n="@@COMMON__POST_MENU__SELECT_CATEGORY">
+        -- SELECT A CATEGORY --
+      </option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.label }}
+      </option>
     </select>
 
     <button class="mdl-button mdl-button--colored" (click)="feature()">

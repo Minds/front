@@ -3,9 +3,7 @@
 <div class="m-page m-helpdesk__wrapper">
   <div class="m-page__sidebar">
     <a class="m-helpdeskQuestions__goBack" routerLink="/help">
-      <i class="material-icons">
-        keyboard_arrow_left
-      </i>
+      <i class="material-icons"> keyboard_arrow_left </i>
       <span>Back to Help Desk</span>
     </a>
 
@@ -26,14 +24,16 @@
     <div class="minds-spacer"></div>
 
     <div
-      class="m-border m-helpdeskQuestions__bigItem m-helpdeskQuestions__bigItem--help-and-support"
+      class="
+        m-border
+        m-helpdeskQuestions__bigItem
+        m-helpdeskQuestions__bigItem--help-and-support
+      "
       routerLink="/groups/profile/100000000000000681"
     >
       <img [src]="cdnAssetsUrl + 'assets/help-desk/chat.png'" />
       <div class="m-helpdeskQuestionsBigItem__text">
-        <h3 class="m-helpdeskQuestionsBigItem__title">
-          Help & Support Group
-        </h3>
+        <h3 class="m-helpdeskQuestionsBigItem__title">Help & Support Group</h3>
         <p class="m-helpdeskQuestionsBigItem__subtext">
           Get help from the wider Minds community
         </p>
@@ -43,7 +43,10 @@
 
   <div class="m-page--main">
     <div
-      class="m-helpdeskQuestions__question m-helpdeskQuestions__question--full m-border"
+      class="
+        m-helpdeskQuestions__question m-helpdeskQuestions__question--full
+        m-border
+      "
     >
       <h1>{{ question.question }}</h1>
       <div
@@ -54,14 +57,10 @@
           class="m-helpdeskQuestions__editIcon"
           [routerLink]="'/help/question/edit/' + question.uuid"
         >
-          <i class="material-icons">
-            edit
-          </i>
+          <i class="material-icons"> edit </i>
         </a>
         <a class="m-helpdeskQuestions__deleteIcon" (click)="delete()">
-          <i class="material-icons">
-            delete
-          </i>
+          <i class="material-icons"> delete </i>
         </a>
       </div>
       <p

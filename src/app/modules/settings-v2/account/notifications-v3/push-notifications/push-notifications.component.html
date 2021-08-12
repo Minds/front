@@ -15,7 +15,10 @@
 <m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(initializing$ | async)">
   <div
-    class="m-pushNotifSettings__optionContainer m-pushNotifSettings__optionContainer--horizontal"
+    class="
+      m-pushNotifSettings__optionContainer
+      m-pushNotifSettings__optionContainer--horizontal
+    "
     *ngIf="getToggle('all')"
   >
     <m-toggle
@@ -36,7 +39,10 @@
   </h5>
 
   <div
-    class="m-pushNotifSettings__optionContainer m-pushNotifSettings__optionContainer--horizontal"
+    class="
+      m-pushNotifSettings__optionContainer
+      m-pushNotifSettings__optionContainer--horizontal
+    "
     *ngFor="let option of getDynamicToggles()"
   >
     <m-toggle

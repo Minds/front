@@ -1,1 +1,360 @@
-<div>Test</div>
+<div class="m-governance__create-container">
+  <h2 class="m-modalV2Header__title" i18n="@@CREATE_GROUP__CREATE_GROUP">
+    Minds Token Grants Application
+  </h2>
+  <form
+    [formGroup]="form"
+    class="m-groupsCreate__form m-formWrapper m-formLayout--buttonRight"
+    (keydown.enter)="$event.preventDefault()"
+  >
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__NAME">Email Address</label>
+        </div>
+
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            class="form-control"
+            name="email"
+            formControlName="email"
+            data-cy="minds-groups-create-name-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__NAME">Minds Username</label>
+        </div>
+
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            formControlName="username"
+            data-cy="minds-groups-create-name-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__NAME">Full Name</label>
+        </div>
+
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            formControlName="name"
+            data-cy="minds-groups-create-name-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION">About You </label>
+          <div class="m-form__sublabel">
+            Tell us about yourself and your experience
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="experience"
+            formControlName="experience"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__NAME">Project Name</label>
+        </div>
+
+        <div class="m-form__row--input">
+          <input
+            type="text"
+            class="form-control"
+            name="project_name"
+            formControlName="project_name"
+            data-cy="minds-groups-create-name-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--radio">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__GROUP_TYPE">Focus Area</label>
+        </div>
+
+        <div class="m-form__row--input">
+          <label for="type_closed" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@CREATE_GROUP__CLOSED">Testing</ng-container>
+            <input
+              type="radio"
+              value="0"
+              id="type_closed"
+              name="area"
+              formControlName="area"
+              class="form-control"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+          <label for="type_open" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@CREATE_GROUP__OPEN">Bugs</ng-container>
+            <input
+              type="radio"
+              value="1"
+              name="area"
+              id="type_open"
+              formControlName="area"
+              class="form-control"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+          <label for="type_open" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@CREATE_GROUP__OPEN">Features</ng-container>
+            <input
+              type="radio"
+              value="2"
+              name="area"
+              id="type_open"
+              formControlName="area"
+              class="form-control"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+          <label for="type_open" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@CREATE_GROUP__OPEN">Community</ng-container>
+            <input
+              type="radio"
+              value="3"
+              name="area"
+              id="type_open"
+              formControlName="area"
+              class="form-control"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+          <label for="type_open" class="m-form__customInputWrapper__radio">
+            <ng-container i18n="@@CREATE_GROUP__OPEN">
+              Other (please elaborate below)</ng-container
+            >
+            <input
+              type="radio"
+              value="4"
+              name="area"
+              id="type_open"
+              formControlName="area"
+              class="form-control"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION">Project Description</label>
+          <div class="m-form__sublabel">What are you working on?</div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="project_description"
+            formControlName="project_description"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION">Relevant Links </label>
+          <div class="m-form__sublabel">
+            Any links for us to look at to help us understand?
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="links"
+            formControlName="links"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION"
+            >Project Goals and Success Factors
+          </label>
+          <div class="m-form__sublabel">
+            What is the goal of this project? How do you define whether this
+            project is successful?
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="goals"
+            formControlName="goals"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION"
+            >Project Roadmap and Milestones</label
+          >
+          <div class="m-form__sublabel">
+            How long do you estimate this will take? What milestones will be
+            reached to show progress towards the goal?
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="roadmap"
+            formControlName="roadmap"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION">Challenges</label>
+          <div class="m-form__sublabel">
+            Are you aware of any obstacles? How have you tackled these issues?
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="challenges"
+            formControlName="challenges"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION"
+            >Funding Request and Budget Breakdown
+          </label>
+          <div class="m-form__sublabel">
+            How much funding is needed over the course of the project scope?
+            Include a breakdown of how the funds will be used
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="funding"
+            formControlName="funding"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION"
+            >Additional Support Requests
+          </label>
+          <div class="m-form__sublabel">
+            Aside from a grant, are there any other resources you may need for
+            success?
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="additional_requests"
+            formControlName="additional_requests"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--text stretchedField">
+        <div class="m-form__row--label">
+          <label i18n="@@CREATE_GROUP__DESCRIPTION"
+            >Additional Information
+          </label>
+          <div class="m-form__sublabel">
+            Feel free to share any other information here that you think is
+            useful for us to know
+          </div>
+        </div>
+
+        <div class="m-form__row--input">
+          <textarea
+            class="form-control"
+            name="additional_info"
+            formControlName="additional_info"
+            data-cy="minds-groups-create-description-input"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form__buttonsContainer m-groupsCreate__buttonsContainer">
+      <m-button
+        type="button"
+        [saving]="inProgress"
+        [disabled]="!form.valid"
+        (onAction)="onSubmit($event)"
+        data-cy="minds-groups-create-submit"
+      >
+        Create
+      </m-button>
+    </div>
+  </form>
+</div>

@@ -2,13 +2,17 @@
   <div class="mdl-grid m-admin--reports-download--container">
     <div class="mdl-cell mdl-cell--12-col">
       <div
-        class="mdl-grid mdl-card mdl-shadow--4dp m-admin--reports-download-selector"
+        class="
+          mdl-grid mdl-card
+          mdl-shadow--4dp
+          m-admin--reports-download-selector
+        "
       >
         <span>Select Report:</span>
         <select [ngModel]="selectedReport" (ngModelChange)="setReport($event)">
-          <option *ngFor="let report of reports; let i = index" [value]="i"
-            >{{ report.name }}</option
-          >
+          <option *ngFor="let report of reports; let i = index" [value]="i">
+            {{ report.name }}
+          </option>
         </select>
       </div>
       <div class="mdl-card mdl-shadow--4dp m-border">

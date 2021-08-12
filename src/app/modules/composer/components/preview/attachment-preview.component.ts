@@ -33,9 +33,10 @@ export class AttachmentPreviewComponent
   /**
    * Orientation emitter, called when media loads
    */
-  @Output('onPortraitOrientation') onPortraitOrientationEmitter: EventEmitter<
+  @Output('onPortraitOrientation')
+  onPortraitOrientationEmitter: EventEmitter<boolean> = new EventEmitter<
     boolean
-  > = new EventEmitter<boolean>();
+  >();
 
   safeResourceUrl: SafeResourceUrl;
   safeVideoPosterUrl: SafeResourceUrl;

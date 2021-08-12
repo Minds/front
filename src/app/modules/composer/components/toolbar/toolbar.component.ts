@@ -72,9 +72,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Toolbar main <div> element
    */
-  @ViewChild('toolbarWrapper', { static: true }) toolbarWrapper: ElementRef<
-    HTMLDivElement
-  >;
+  @ViewChild('toolbarWrapper', { static: true })
+  toolbarWrapper: ElementRef<HTMLDivElement>;
 
   /**
    * Show narrow style

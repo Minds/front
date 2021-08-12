@@ -8,14 +8,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       [ngModel]="country"
       (ngModelChange)="country = $event; countryChange.next($event)"
     >
-      <option value="" disabled hidden
-        ><i i18n="@@M__COMMON__COUNTRY">Country</i></option
-      >
-      <option
-        *ngFor="let country of filteredCountries"
-        [value]="country.code"
-        >{{ country.name }}</option
-      >
+      <option value="" disabled hidden>
+        <i i18n="@@M__COMMON__COUNTRY">Country</i>
+      </option>
+      <option *ngFor="let country of filteredCountries" [value]="country.code">
+        {{ country.name }}
+      </option>
     </select>
   `,
 })

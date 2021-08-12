@@ -15,9 +15,7 @@
 
 <!-- NOT embedded mode -->
 <ng-container *ngIf="!embedded">
-  <div class="m-mfaBase__header" [ngStyle]="getBannerSrc()">
-    Login to Minds
-  </div>
+  <div class="m-mfaBase__header" [ngStyle]="getBannerSrc()">Login to Minds</div>
   <div class="m-mfaBase__panelContainer" [ngSwitch]="activePanel$ | async">
     <m-multiFactorAuth__totp
       *ngSwitchCase="'totp'"

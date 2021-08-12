@@ -7,7 +7,11 @@
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentAlgorithmProp('icon')"
-      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+      class="
+        material-icons
+        m-dropdown--label-icon
+        m-sort-selector--item-label-icon
+      "
       >{{ getCurrentAlgorithmProp('icon') }}</i
     >
 
@@ -25,7 +29,11 @@
       (click)="setAlgorithm(item.id); closeDropdowns()"
     >
       <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        class="
+          material-icons
+          m-dropdown--label-icon
+          m-sort-selector--item-label-icon
+        "
         *ngIf="item.icon"
         >{{ item.icon }}</i
       >
@@ -67,7 +75,11 @@
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentCustomTypeProp('icon')"
-      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+      class="
+        material-icons
+        m-dropdown--label-icon
+        m-sort-selector--item-label-icon
+      "
       >{{ getCurrentCustomTypeProp('icon') }}</i
     >
 
@@ -84,7 +96,11 @@
       (click)="setCustomType(item.id); closeDropdowns()"
     >
       <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        class="
+          material-icons
+          m-dropdown--label-icon
+          m-sort-selector--item-label-icon
+        "
         [title]="item.label"
         *ngIf="item.icon"
         >{{ item.icon }}</i
@@ -106,7 +122,11 @@
 >
   <label [ngClass]="[labelClass]">
     <i
-      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+      class="
+        material-icons
+        m-dropdown--label-icon
+        m-sort-selector--item-label-icon
+      "
       >add_to_queue</i
     >
     <span>Minds+</span>
@@ -119,7 +139,11 @@
       (click)="setPlus()"
     >
       <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        class="
+          material-icons
+          m-dropdown--label-icon
+          m-sort-selector--item-label-icon
+        "
         >add_to_queue</i
       >
       <span [className]="labelClass">Minds+</span>

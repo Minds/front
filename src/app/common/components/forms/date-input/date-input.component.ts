@@ -10,12 +10,12 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
         (ngModelChange)="selectedMonth = $event; build()"
         [disabled]="disabled"
       >
-        <option value=""
-          ><i i18n="@@COMMON__DATE_INPUT__MONTH_LABEL">Month</i></option
-        >
-        <option *ngFor="let month of months; let i = index" [value]="i + 1">{{
-          month
-        }}</option>
+        <option value="">
+          <i i18n="@@COMMON__DATE_INPUT__MONTH_LABEL">Month</i>
+        </option>
+        <option *ngFor="let month of months; let i = index" [value]="i + 1">
+          {{ month }}
+        </option>
       </select>
     </div>
     <div class="m-date-input--field">
@@ -24,15 +24,16 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
         (ngModelChange)="selectedDay = $event; build()"
         [disabled]="disabled"
       >
-        <option value=""
-          ><i i18n="@@COMMON__DATE_INPUT__DAY_LABEL">Day</i></option
-        >
+        <option value="">
+          <i i18n="@@COMMON__DATE_INPUT__DAY_LABEL">Day</i>
+        </option>
         <option
           *ngFor="let day of days"
           [value]="day"
           [disabled]="!isDayAvailable(day, selectedMonth)"
-          >{{ day }}</option
         >
+          {{ day }}
+        </option>
       </select>
     </div>
     <div class="m-date-input--field">
@@ -41,9 +42,9 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
         (ngModelChange)="selectedYear = $event; build()"
         [disabled]="disabled"
       >
-        <option value=""
-          ><i i18n="@@COMMON__DATE_INPUT__YEAR_LABEL">Year</i></option
-        >
+        <option value="">
+          <i i18n="@@COMMON__DATE_INPUT__YEAR_LABEL">Year</i>
+        </option>
         <option *ngFor="let year of years" [value]="year">{{ year }}</option>
       </select>
     </div>

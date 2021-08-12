@@ -29,9 +29,13 @@
         [ngModel]="shop.selected$ | async"
         (ngModelChange)="shop.select($event)"
       >
-        <option value="null" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
-          >Select Membership</option
+        <option
+          value="null"
+          disabled
+          i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
         >
+          Select Membership
+        </option>
 
         <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">
           <option

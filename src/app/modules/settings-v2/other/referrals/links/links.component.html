@@ -88,7 +88,10 @@
         <button
           i18n-title="@@M_REFERRALS__SHARE_BUTTON_TWITTER"
           title="Twitter"
-          class="m-settingsV2__referralsLinks__shareButton m-settingsV2__referralsLinks__shareButton--twitter"
+          class="
+            m-settingsV2__referralsLinks__shareButton
+            m-settingsV2__referralsLinks__shareButton--twitter
+          "
           (click)="openTwitter()"
         >
           <img [src]="cdnAssetsUrl + 'assets/icons/twitter.svg'" />
@@ -97,7 +100,10 @@
         <button
           i18n-title="@@M_REFERRALS__SHARE_BUTTON_FACEBOOK"
           title="Facebook"
-          class="m-settingsV2__referralsLinks__shareButton m-settingsV2__referralsLinks__shareButton--facebook"
+          class="
+            m-settingsV2__referralsLinks__shareButton
+            m-settingsV2__referralsLinks__shareButton--facebook
+          "
           (click)="openFacebook()"
         >
           <img [src]="cdnAssetsUrl + 'assets/icons/facebook.svg'" />
@@ -106,7 +112,10 @@
         <button
           i18n-title="@@M_REFERRALS__SHARE_BUTTON_MESSENGER"
           title="Messenger"
-          class="m-settingsV2__referralsLinks__shareButton m-settingsV2__referralsLinks__shareButton--messenger"
+          class="
+            m-settingsV2__referralsLinks__shareButton
+            m-settingsV2__referralsLinks__shareButton--messenger
+          "
           *ngIf="isMobileOrTablet()"
           (click)="openMessenger()"
         >
@@ -116,7 +125,10 @@
         <button
           i18n-title="@@M_REFERRALS__SHARE_BUTTON_Whatsapp"
           title="Whatsapp"
-          class="m-settingsV2__referralsLinks__shareButton m-settingsV2__referralsLinks__shareButton--whatsapp"
+          class="
+            m-settingsV2__referralsLinks__shareButton
+            m-settingsV2__referralsLinks__shareButton--whatsapp
+          "
           *ngIf="isMobileOrTablet()"
           (click)="openWhatsapp()"
         >
@@ -126,7 +138,10 @@
         <button
           i18n-title="@@M_REFERRALS__SHARE_BUTTON_SMS"
           title="SMS"
-          class="m-settingsV2__referralsLinks__shareButton m-settingsV2__referralsLinks__shareButton--sms"
+          class="
+            m-settingsV2__referralsLinks__shareButton
+            m-settingsV2__referralsLinks__shareButton--sms
+          "
           *ngIf="isMobile()"
           (click)="openSMS()"
         >
@@ -136,7 +151,10 @@
         <button
           i18n-title="@@M_REFERRALS__SHARE_BUTTON_EMAIL"
           title="Email"
-          class="m-settingsV2__referralsLinks__shareButton m-settingsV2__referralsLinks__shareButton--email"
+          class="
+            m-settingsV2__referralsLinks__shareButton
+            m-settingsV2__referralsLinks__shareButton--email
+          "
           (click)="openEmail()"
         >
           <img [src]="cdnAssetsUrl + 'assets/icons/email.svg'" />
@@ -144,7 +162,10 @@
       </div>
     </div>
     <div
-      class="m-settingsV2__referralsLinks__modalShow m-settingsV2__referralsLinks__modalButton"
+      class="
+        m-settingsV2__referralsLinks__modalShow
+        m-settingsV2__referralsLinks__modalButton
+      "
     >
       <m-button color="blue">
         <a [routerLink]="['/settings/other/referrals']" (click)="closeModal()">

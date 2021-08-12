@@ -17,7 +17,10 @@ function node_walk(node, func) {
  */
 export function getContentEditableCaretCoordinates(
   elem
-): { start: number; end: number } {
+): {
+  start: number;
+  end: number;
+} {
   var sel: any = window.getSelection();
   var cum_length = [0, 0];
 

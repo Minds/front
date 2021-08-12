@@ -1,0 +1,29 @@
+.m-governance__create-container {
+  padding: 20px 40px;
+  display: block;
+  position: relative;
+
+  .m-form__row--label {
+    display: grid !important;
+  }
+
+  .m-form__sublabel {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  .m-formWrapper [class*='m-form__customInputWrapper'][class*='__radio'] {
+    @media screen and (max-width: 720px) {
+      width: 100%;
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .m-groupsCreate__buttonsContainer {
+    margin: 0 !important;
+    flex-direction: row-reverse;
+  }
+}

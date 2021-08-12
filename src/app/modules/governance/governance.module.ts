@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
-import { CommonModule } from '../../common/common.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { LanguageModule } from '../language/language.module';
@@ -13,11 +12,15 @@ import { GovernanceEnactedComponent } from './enacted/enacted.component';
 import { GovernanceLatestService } from './latest/latest.service';
 import { GovernanceCardComponent } from './card/card.component';
 import { GovernanceCreateComponent } from './create/create.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '../../common/common.module';
 import { ProposalListComponent } from './proposal-list/proposal-list.component';
 import { SnapshotService } from './snapshot.service';
 
 @NgModule({
   imports: [
+    NgCommonModule,
+    CommonModule,
     RouterModule.forChild([
       {
         path: '',
@@ -39,10 +42,10 @@ import { SnapshotService } from './snapshot.service';
         ],
       },
     ]),
-    NgCommonModule,
-    CommonModule,
     SuggestionsModule,
     ActivityModule,
+    FormsModule,
+    ReactiveFormsModule,
     LegacyModule, // For subscribe button
     // GroupsModule,
     LanguageModule,
@@ -55,6 +58,7 @@ import { SnapshotService } from './snapshot.service';
     GovernanceLatestComponent,
     GovernanceEnactedComponent,
     GovernanceCardComponent,
+    GovernanceCreateComponent,
     ProposalListComponent,
   ],
   exports: [
@@ -63,6 +67,7 @@ import { SnapshotService } from './snapshot.service';
     GovernanceLatestComponent,
     GovernanceEnactedComponent,
     GovernanceCardComponent,
+    GovernanceCreateComponent,
   ],
 })
 export class GovernanceModule {}

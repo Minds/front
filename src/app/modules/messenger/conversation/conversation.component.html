@@ -106,16 +106,19 @@
       (previous)="load({ offset: offset, container: scrollArea })"
     >
       <div
-        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        class="
+          m-messenger--conversation-messages-notice
+          mdl-color-text--blue-grey-300
+        "
         *ngIf="chatNotice"
       >
         <span [innerHtml]="chatNotice"></span>
       </div>
-      <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
+      <div [hidden]="!inProgress" style="width: 100%; text-align: center">
         <div
           class="mdl-spinner mdl-js-spinner is-active"
           [mdl]
-          style="margin: 16px auto;"
+          style="margin: 16px auto"
         ></div>
       </div>
       <div
@@ -131,7 +134,11 @@
           [routerLink]="['/', message.owner.username]"
         />
         <div
-          class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
+          class="
+            m-messenger--conversation-message-bubble
+            mdl-color--blue-grey-50
+            mdl-color-text--blue-grey-700
+          "
           *ngIf="
             message.subtype != 'call_ended' && message.subtype != 'call_missed'
           "
@@ -139,7 +146,11 @@
         ></div>
         <!-- Call message -->
         <div
-          class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
+          class="
+            m-messenger--conversation-message-bubble
+            mdl-color--blue-grey-50
+            mdl-color-text--blue-grey-700
+          "
           *ngIf="message.subtype == 'call_ended'"
         >
           <ng-container i18n="@@MESSENGER__CONVERSATION__CALL_ENDED"
@@ -148,7 +159,11 @@
         </div>
         <!-- Call missed -->
         <div
-          class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
+          class="
+            m-messenger--conversation-message-bubble
+            mdl-color--blue-grey-50
+            mdl-color-text--blue-grey-700
+          "
           *ngIf="message.subtype == 'call_missed'"
         >
           <ng-container i18n="@@MESSENGER__CONVERSATION__MISSED_CALL"
@@ -168,7 +183,10 @@
         </div>
       </div>
       <div
-        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        class="
+          m-messenger--conversation-messages-notice
+          mdl-color-text--blue-grey-300
+        "
         *ngIf="blocked"
       >
         <span i18n="@@MESSENGER__CONVERSATION__YOU_HAVE_BLOCKED_THIS_CHAT"
@@ -176,7 +194,10 @@
         >
       </div>
       <div
-        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        class="
+          m-messenger--conversation-messages-notice
+          mdl-color-text--blue-grey-300
+        "
         *ngIf="!blocked && unavailable"
       >
         <span i18n="@@MESSENGER__CONVERSATION__THIS_CHAT_IS_NO_LONGER_AVAILABLE"
@@ -184,7 +205,10 @@
         >
       </div>
       <div
-        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        class="
+          m-messenger--conversation-messages-notice
+          mdl-color-text--blue-grey-300
+        "
         *ngIf="!blocked && invalid"
       >
         <span i18n="@@MESSENGER__CONVERSATION__AWAITING_OTHER_PARTY"
@@ -192,7 +216,10 @@
         >
       </div>
       <div
-        class="m-messenger--conversation-messages-invite mdl-color-text--blue-grey-500"
+        class="
+          m-messenger--conversation-messages-invite
+          mdl-color-text--blue-grey-500
+        "
         *ngIf="!blocked && invitable"
       >
         <p i18n="@@MESSENGER__CONVERSATION__NOT_USING_MESSENGER_YET">

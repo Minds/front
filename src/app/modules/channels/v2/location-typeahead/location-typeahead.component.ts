@@ -45,7 +45,8 @@ export class ChannelLocationTypeaheadComponent implements OnInit, OnDestroy {
   /**
    * Location change emitter
    */
-  @Output('locationChange') locationChangeEmitter: EventEmitter<
+  @Output('locationChange')
+  locationChangeEmitter: EventEmitter<
     LocationTypeaheadResponse
   > = new EventEmitter<LocationTypeaheadResponse>();
 

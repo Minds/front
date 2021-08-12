@@ -23,7 +23,11 @@
     <!-- ----------------------------------- -->
     <ng-container *ngIf="!_isModal">
       <div
-        class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
+        class="
+          mdl-progress mdl-js-progress
+          mdl-progress__indeterminate
+          m-html-loading
+        "
         *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
         [mdl]
       ></div>
@@ -76,15 +80,17 @@
     [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded(), 'm-richEmbed--paywalled' : isPaywalled && mediaSource === 'minds' }"
   >
     <h2
-      class="m-rich-embed--title mdl-card__title-text mdl-typography--font-medium"
+      class="
+        m-rich-embed--title
+        mdl-card__title-text
+        mdl-typography--font-medium
+      "
       *ngIf="src.title"
     >
       {{src.title | excerpt}}
     </h2>
     <p class="m-blurb" *ngIf="src.blurb">{{src.blurb | excerpt: '300'}}</p>
-    <p class="m-url">
-      {{src.perma_url | domain}}
-    </p>
+    <p class="m-url">{{src.perma_url | domain}}</p>
     <div class="m-activityContent__teaserFadeout" *ngIf="isPaywalled"></div>
   </a>
 </div>

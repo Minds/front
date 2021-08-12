@@ -47,7 +47,7 @@ export class SidebarMarkersComponent implements AfterViewInit {
   }
 
   checkSidebarVisibility(isLoggedIn) {
-    const showMarkerSidebar = isLoggedIn /*&& window.innerWidth >= 900*/;
+    const showMarkerSidebar = isLoggedIn; /*&& window.innerWidth >= 900*/
 
     if (showMarkerSidebar === this.showMarkerSidebar) {
       return;

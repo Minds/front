@@ -17,9 +17,7 @@
       Resend
     </span>
     <ng-container *ngIf="(retryTimer$ | async) > 0">
-      <span i18n="@@EMAIL_CONFIRMATION__RESEND_IN_X_SECONDS">
-        Resend in
-      </span>
+      <span i18n="@@EMAIL_CONFIRMATION__RESEND_IN_X_SECONDS"> Resend in </span>
       <span>
         {{ retryTimer$ | async }}
       </span>

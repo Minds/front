@@ -14,7 +14,7 @@
   <div class="m-videoPlayer__screen">
     <plyr
       *ngIf="(sources$ | async)?.length"
-      style="display: block; width: 100%; height: 100%;"
+      style="display: block; width: 100%; height: 100%"
       [plyrDriver]="plyrDriver$ | async"
       [plyrPoster]="service.poster$ | async"
       [plyrPlaysInline]="true"

@@ -28,9 +28,7 @@
     <ng-content select="[confirm-success-message]"></ng-content>
 
     <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
-      <m-button (onAction)="close($event)">
-        {{ dismissButton }}
-      </m-button>
+      <m-button (onAction)="close($event)"> {{ dismissButton }} </m-button>
     </div>
   </div>
 
@@ -41,9 +39,7 @@
     <ng-content select="[confirm-error-message]"></ng-content>
 
     <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
-      <m-button (onAction)="close($event)">
-        {{ dismissButton }}
-      </m-button>
+      <m-button (onAction)="close($event)"> {{ dismissButton }} </m-button>
     </div>
   </div>
 </m-modal>

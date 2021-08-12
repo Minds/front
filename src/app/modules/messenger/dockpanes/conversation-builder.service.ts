@@ -11,7 +11,11 @@ export class MessengerConversationBuilderService {
 
   public buildConversation(
     user: MindsUser
-  ): { guid: string; participants: MindsUser[]; open: boolean } {
+  ): {
+    guid: string;
+    participants: MindsUser[];
+    open: boolean;
+  } {
     return {
       guid: this.permutate(user),
       participants: [user],

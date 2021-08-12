@@ -7,9 +7,12 @@
 </h5>
 
 <ul class="m-groupSidebarMarkers__list m-scroll__thin" #list>
-  <li style="display:flex">
+  <li style="display: flex">
     <a
-      class="m-groupSidebarMarkersList__item m-groupSidebarMarkersList__item--newGroup"
+      class="
+        m-groupSidebarMarkersList__item
+        m-groupSidebarMarkersList__item--newGroup
+      "
       [routerLink]="['/groups/create']"
     >
       <m-tooltip
@@ -20,9 +23,7 @@
         <i class="material-icons" m-tooltip--anchor>add</i>
         <span i18n="@@M__COMMON__NEW_GROUP">New Group</span>
 
-        <ng-container i18n="@@M__COMMON__NEW_GROUP">
-          New Group
-        </ng-container>
+        <ng-container i18n="@@M__COMMON__NEW_GROUP"> New Group </ng-container>
       </m-tooltip>
       <span
         class="m-groupSidebarMarkersListItem__label"
@@ -36,7 +37,10 @@
 
   <li *ngIf="!inProgress && groups && groups.length > 0">
     <a
-      class="m-groupSidebarMarkersList__item  m-groupSidebarMarkersList__item--discoverGroups"
+      class="
+        m-groupSidebarMarkersList__item
+        m-groupSidebarMarkersList__item--discoverGroups
+      "
       [routerLink]="
         hasNewNavigation
           ? ['/discovery/suggestions/group']

@@ -28,7 +28,9 @@
     <m-paywallBadge [entity]="entity"></m-paywallBadge>
     <!-- FULLSCREEN -->
     <span
-      class="m-activityModal__overlayTitle m-activityModal__overlayTitle--fullscreen"
+      class="
+        m-activityModal__overlayTitle m-activityModal__overlayTitle--fullscreen
+      "
       *ngIf="service.isFullscreen$ | async"
     >
       <a
