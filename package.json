@@ -49,6 +49,7 @@
     "@sentry/browser": "^5.27.3",
     "@sentry/node": "^6.3.0",
     "@sentry/tracing": "^6.3.0",
+    "@snapshot-labs/snapshot.js": "0.1.11",
     "@transak/transak-sdk": "^1.0.25",
     "@types/express": "^4.17.11",
     "@types/hls.js": "^0.13.3",

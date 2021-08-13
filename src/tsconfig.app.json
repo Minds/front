@@ -5,7 +5,11 @@
     "baseUrl": "./",
     "module": "es2020",
     "types": ["node"],
-    "sourceMap": false
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "ajv": ["./typings/ajv.d.ts"]
+    }
   },
   "files": [
     "main.ts",
