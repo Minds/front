@@ -36,8 +36,9 @@ export class GovernanceLatestService {
           this.error$.next('');
         },
         err => {
-          this.proposals$.next(err.data);
-          this.totalProposals$.next(err.data.length);
+          this.proposals$.next([]);
+          this.totalProposals$.next(0);
+          this.error$.next(err.message);
         },
         () => this.inProgress$.next(false)
       );
