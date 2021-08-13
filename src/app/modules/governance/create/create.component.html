@@ -7,7 +7,7 @@
     class="m-groupsCreate__form m-formWrapper m-formLayout--buttonRight"
     (keydown.enter)="$event.preventDefault()"
   >
-    <div class="m-form__fieldsContainer">
+    <!-- <div class="m-form__fieldsContainer">
       <div class="m-form__field--text stretchedField">
         <div class="m-form__row--label">
           <label i18n="@@CREATE_GROUP__NAME">Email Address</label>
@@ -23,9 +23,9 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="m-form__fieldsContainer">
+    <!-- <div class="m-form__fieldsContainer">
       <div class="m-form__field--text stretchedField">
         <div class="m-form__row--label">
           <label i18n="@@CREATE_GROUP__NAME">Minds Username</label>
@@ -41,9 +41,9 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="m-form__fieldsContainer">
+    <!-- <div class="m-form__fieldsContainer">
       <div class="m-form__field--text stretchedField">
         <div class="m-form__row--label">
           <label i18n="@@CREATE_GROUP__NAME">Full Name</label>
@@ -59,7 +59,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="m-form__fieldsContainer">
       <div class="m-form__field--text stretchedField">
@@ -106,55 +106,55 @@
         </div>
 
         <div class="m-form__row--input">
-          <label for="type_closed" class="m-form__customInputWrapper__radio">
+          <label for="type_testing" class="m-form__customInputWrapper__radio">
             <ng-container i18n="@@CREATE_GROUP__CLOSED">Testing</ng-container>
             <input
               type="radio"
               value="0"
-              id="type_closed"
+              id="type_testing"
               name="area"
               formControlName="area"
               class="form-control"
             />
             <span class="m-form__customInput__radio"></span>
           </label>
-          <label for="type_open" class="m-form__customInputWrapper__radio">
+          <label for="type_bugs" class="m-form__customInputWrapper__radio">
             <ng-container i18n="@@CREATE_GROUP__OPEN">Bugs</ng-container>
             <input
               type="radio"
               value="1"
               name="area"
-              id="type_open"
+              id="type_bugs"
               formControlName="area"
               class="form-control"
             />
             <span class="m-form__customInput__radio"></span>
           </label>
-          <label for="type_open" class="m-form__customInputWrapper__radio">
+          <label for="type_features" class="m-form__customInputWrapper__radio">
             <ng-container i18n="@@CREATE_GROUP__OPEN">Features</ng-container>
             <input
               type="radio"
               value="2"
               name="area"
-              id="type_open"
+              id="type_features"
               formControlName="area"
               class="form-control"
             />
             <span class="m-form__customInput__radio"></span>
           </label>
-          <label for="type_open" class="m-form__customInputWrapper__radio">
+          <label for="type_community" class="m-form__customInputWrapper__radio">
             <ng-container i18n="@@CREATE_GROUP__OPEN">Community</ng-container>
             <input
               type="radio"
               value="3"
               name="area"
-              id="type_open"
+              id="type_community"
               formControlName="area"
               class="form-control"
             />
             <span class="m-form__customInput__radio"></span>
           </label>
-          <label for="type_open" class="m-form__customInputWrapper__radio">
+          <label for="type_other" class="m-form__customInputWrapper__radio">
             <ng-container i18n="@@CREATE_GROUP__OPEN">
               Other (please elaborate below)</ng-container
             >
@@ -162,7 +162,7 @@
               type="radio"
               value="4"
               name="area"
-              id="type_open"
+              id="type_other"
               formControlName="area"
               class="form-control"
             />

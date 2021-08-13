@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
-const SNAPSHOT_GRAPHQL_URL = 'https://hub.snapshot.page/graphql';
+const SNAPSHOT_GRAPHQL_URL = 'https://hub.snapshot.org/graphql';
 
 export interface SnapshotProposal {
   id: string;

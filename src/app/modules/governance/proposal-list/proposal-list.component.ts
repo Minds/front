@@ -7,7 +7,6 @@ import { SnapshotProposal } from '../snapshot.service';
   styleUrls: ['./proposal-list.component.scss'],
 })
 export class ProposalListComponent implements OnInit {
-  @Input() total: number;
   @Input() proposals: SnapshotProposal[];
 
   constructor() {}

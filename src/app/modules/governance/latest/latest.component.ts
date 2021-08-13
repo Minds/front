@@ -15,7 +15,6 @@ import { filter, pairwise, startWith } from 'rxjs/operators';
 })
 export class GovernanceLatestComponent implements OnInit {
   proposals$ = this.latestService.proposals$;
-  totalProposals$ = this.latestService.totalProposals$;
   inProgress$ = this.latestService.inProgress$;
   routerEventsSubscription: Subscription;
 

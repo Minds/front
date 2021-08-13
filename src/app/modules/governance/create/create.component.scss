@@ -25,5 +25,7 @@
   .m-groupsCreate__buttonsContainer {
     margin: 0 !important;
     flex-direction: row-reverse;
+    display: flex !important;
+    justify-content: flex-end;
   }
 }

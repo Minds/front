@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { Session } from '../../../services/session';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 @Component({
   selector: 'm-governance__create',
   templateUrl: './create.component.html',
@@ -10,23 +12,20 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 export class GovernanceCreateComponent implements OnInit {
   form: FormGroup;
   inProgress: boolean = false;
+  userData;
 
   constructor(
     private toasterService: FormToastService,
-    private router: Router
+    public session: Session,
+    private router: Router,
+    private settingsV2Service: SettingsV2Service
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.form = new FormGroup({
-      email: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      username: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      name: new FormControl('', {
-        validators: [Validators.required],
-      }),
+      email: new FormControl(''),
+      username: new FormControl(''),
+      name: new FormControl(''),
       experience: new FormControl(''),
       project_name: new FormControl('', {
         validators: [Validators.required],
@@ -43,6 +42,10 @@ export class GovernanceCreateComponent implements OnInit {
       additional_requests: new FormControl(''),
       additional_info: new FormControl(''),
     });
+
+    this.userData = await this.settingsV2Service.loadSettings(
+      this.session.getLoggedInUser().guid
+    );
   }
 
   async onSubmit(e) {
@@ -63,6 +66,10 @@ export class GovernanceCreateComponent implements OnInit {
       this.toasterService.error('Please, enter your experience');
       return;
     }
+
+    values.username = this.userData.username;
+    values.name = this.userData.name;
+    values.email = this.userData.email;
 
     this.inProgress = true;
 

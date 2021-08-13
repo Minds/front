@@ -6,7 +6,6 @@ import { SnapshotProposal, SnapshotService } from '../snapshot.service';
 @Injectable()
 export class GovernanceLatestService {
   proposals$: BehaviorSubject<SnapshotProposal[]> = new BehaviorSubject([]);
-  totalProposals$: BehaviorSubject<number> = new BehaviorSubject(0);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   error$: BehaviorSubject<string> = new BehaviorSubject('');
 
@@ -23,7 +22,6 @@ export class GovernanceLatestService {
     }
 
     this.proposals$.next([]);
-    this.totalProposals$.next(0);
     this.error$.next('');
 
     this.snapshot
@@ -32,12 +30,10 @@ export class GovernanceLatestService {
       .subscribe(
         proposals => {
           this.proposals$.next(proposals);
-          this.totalProposals$.next(proposals.length);
           this.error$.next('');
         },
         err => {
           this.proposals$.next(err.data);
-          this.totalProposals$.next(err.data.length);
         },
         () => this.inProgress$.next(false)
       );
