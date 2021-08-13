@@ -207,6 +207,8 @@ export class NotificationsV3NotificationComponent
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
         return ['/boost/console/offers/history/outbox'];
+      case 'token_rewards_summary':
+        return ['/wallet/tokens/rewards'];
       case 'subscribe':
         return ['/' + this.notification.from.username];
       case 'group_invite':
