@@ -1,6 +1,22 @@
-<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
+<div class="mdl-grid">
+  <m-governance--filter-selector
+    (filterBy)="filter($event)"
+  ></m-governance--filter-selector>
+  <!--    TODO: I think we should remove the total number of proposal -->
+  <div class="m-governance-button" routerLink="/governance/create">
+    Submit proposal
+  </div>
+</div>
 
 <m-proposal-list
   *ngIf="!(inProgress$ | async)"
   [proposals]="proposals$ | async"
 ></m-proposal-list>
+
+<infinite-scroll
+  distance="25%"
+  (load)="load()"
+  [moreData]="hasMoreData$ | async"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>

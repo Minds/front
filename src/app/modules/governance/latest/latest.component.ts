@@ -1,26 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { GovernanceLatestService } from './latest.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  Router,
-  ActivatedRoute,
-  RouterEvent,
-  NavigationEnd,
-} from '@angular/router';
+import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { filter, pairwise, startWith } from 'rxjs/operators';
+import { GovernanceService } from '../governance.service';
 
 @Component({
   selector: 'm-governance--latest',
   templateUrl: './latest.component.html',
 })
-export class GovernanceLatestComponent implements OnInit {
-  proposals$ = this.latestService.proposals$;
-  inProgress$ = this.latestService.inProgress$;
+export class GovernanceLatestComponent implements OnInit, OnDestroy {
+  proposals$ = this.governanceService.proposals$;
+  inProgress$ = this.governanceService.inProgress$;
+  hasMoreData$ = this.governanceService.hasMoreData$;
   routerEventsSubscription: Subscription;
+
+  current = 12;
+  currentFilter = '';
 
   constructor(
     private router: Router,
-    private latestService: GovernanceLatestService
+    private governanceService: GovernanceService
   ) {}
 
   ngOnInit() {
@@ -32,11 +31,38 @@ export class GovernanceLatestComponent implements OnInit {
         startWith('Initial call')
         // takeUntil(this.destroyed)
       )
-      .subscribe(() => {
+      .subscribe(async () => {
         if (!this.proposals$.getValue().length) {
           // if we say not to reload or nothing
-          this.latestService.loadProposals();
+          this.governanceService.load({ limit: 0, refresh: true, type: '' });
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.governanceService.reset();
+  }
+
+  load(): void {
+    if (this.inProgress$.value) return;
+    if (!this.hasMoreData$.value) return;
+    this.governanceService.load({
+      limit: this.current,
+      refresh: false,
+      type: this.currentFilter === '' ? '' : this.currentFilter,
+    });
+  }
+
+  filter(type: string): void {
+    this.governanceService.load({
+      limit: 0,
+      refresh: true,
+      type: type,
+    });
+    if (type !== '') {
+      this.currentFilter = type;
+    } else {
+      this.currentFilter = '';
+    }
   }
 }

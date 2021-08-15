@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import snapshot from '@snapshot-labs/snapshot.js';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
+import { Observable } from 'rxjs';
 
 const SNAPSHOT_GRAPHQL_URL = 'https://hub.snapshot.org/graphql';
 const MINDS_SPACE = 'mind.eth';
@@ -110,7 +111,7 @@ export class SnapshotService {
     return this.execQuery<{ proposals: SnapshotProposal[] }>(
       QUERY_GET_PROPOSAL_LIST,
       variables as any
-    ).pipe(map(response => response.proposals));
+    ).pipe(map(response => response));
   }
 
   getMindsProposals(variables: GetProposalsVariables) {

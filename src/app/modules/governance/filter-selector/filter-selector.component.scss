@@ -1,0 +1,9 @@
+m-governance--filter-selector {
+  margin-right: 7px;
+  .mdl-cell {
+    label {
+      text-transform: capitalize;
+      cursor: pointer;
+    }
+  }
+}

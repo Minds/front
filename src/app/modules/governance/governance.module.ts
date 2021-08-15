@@ -9,13 +9,14 @@ import { GovernanceComponent } from './governance.component';
 import { GovernanceTabsComponent } from './tabs/tabs.component';
 import { GovernanceLatestComponent } from './latest/latest.component';
 import { GovernanceEnactedComponent } from './enacted/enacted.component';
-import { GovernanceLatestService } from './latest/latest.service';
 import { GovernanceCardComponent } from './card/card.component';
 import { GovernanceCreateComponent } from './create/create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { ProposalListComponent } from './proposal-list/proposal-list.component';
 import { SnapshotService } from './snapshot.service';
+import { GovernanceService } from './governance.service';
+import { GovernanceFilterSelector } from './filter-selector/filter-selector.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,7 @@ import { SnapshotService } from './snapshot.service';
     LanguageModule,
     RouterModule,
   ],
-  providers: [SnapshotService, GovernanceLatestService],
+  providers: [SnapshotService, GovernanceService],
   declarations: [
     GovernanceComponent,
     GovernanceTabsComponent,
@@ -60,6 +61,7 @@ import { SnapshotService } from './snapshot.service';
     GovernanceCardComponent,
     GovernanceCreateComponent,
     ProposalListComponent,
+    GovernanceFilterSelector,
   ],
   exports: [
     GovernanceComponent,
@@ -68,6 +70,7 @@ import { SnapshotService } from './snapshot.service';
     GovernanceEnactedComponent,
     GovernanceCardComponent,
     GovernanceCreateComponent,
+    GovernanceFilterSelector,
   ],
 })
 export class GovernanceModule {}
