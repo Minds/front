@@ -316,10 +316,10 @@ review:stop:
     ## Update docker server container
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
-    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $ECR_REPOSITORY_URL:$IMAGE_LABEL
-    - docker push $ECR_REPOSITORY_URL:$IMAGE_LABEL
-    ## Deploy the new container in rolling restart
-    - aws ecs update-service --service=$ECS_SERVICE --force-new-deployment --region us-east-1 --cluster=$ECS_CLUSTER
+    # Update EKS role
+    - aws eks --region us-east-1 update-kubeconfig --name $AWS_EKS_CLUSTER_NAME --role-arn=$AWS_IAM_ROLE_ARN
+    # Update the image tags
+    - kubectl rollout restart deployment minds-front-$IMAGE_LABEL
     ## Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e $IMAGE_LABEL
   dependencies:
@@ -330,37 +330,18 @@ staging:fpm:
   stage: deploy:staging
   variables:
     IMAGE_LABEL: 'staging'
-    ECS_SERVICE: $ECS_APP_STAGING_SERVICE
   environment:
     name: staging
     url: https://www.minds.com # requires staging cookie
   only:
     refs:
       - master
-      - test/gitlab-ci
-      - feat/1732-block-refactor
-
-review:preprod:
-  <<: *deploy
-  stage: review
-  when: manual
-  allow_failure: true
-  variables:
-    IMAGE_LABEL: 'preprod'
-    ECS_SERVICE: $ECS_APP_PREPROD_SERVICE
-  environment:
-    name: preprod
-    url: https://www.minds.com # requires preprod cookie
-  only:
-    refs:
-      - epic/angular-9
 
 deploy:canary:
   <<: *deploy
   stage: deploy:canary
   variables:
     IMAGE_LABEL: 'canary'
-    ECS_SERVICE: $ECS_APP_CANARY_SERVICE
   environment:
     name: canary
     url: https://www.minds.com/?canary=1 # requires canary cookie
@@ -369,16 +350,12 @@ deploy:canary:
   only:
     refs:
       - master
-      - test/gitlab-ci
-      - epic/angular-9
-      - feat/1732-block-refactor
 
 deploy:production:
   <<: *deploy
   stage: deploy:production
   variables:
     IMAGE_LABEL: 'production'
-    ECS_SERVICE: $ECS_APP_PRODUCTION_SERVICE
   environment:
     name: production
     url: https://www.minds.com
@@ -399,6 +376,3 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
-      - production
-      - test/gitlab-ci
-      - feat/1732-block-refactor
