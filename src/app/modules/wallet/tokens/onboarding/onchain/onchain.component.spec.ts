@@ -141,9 +141,9 @@ xdescribe('TokenOnChainOnboardingComponent', () => {
     tick();
     comp.downloadPrivateKey();
     expect(comp.canProvideAddress()).toBeTruthy();
-    spyOn(window, 'open').and.callFake(function() {
-      return true;
-    });
+    // spyOn(window, 'open').and.callFake(function() {
+    //   return true;
+    // });ojm
     comp.downloadMetamask();
     tick();
     expect(comp.downloadingMetamask).toBeTruthy();

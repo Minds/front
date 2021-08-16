@@ -3,10 +3,10 @@
 
 :host {
   .m-discovery__tagWidget {
-    margin: $layoutTotalPadding / 2 $layoutTotalPadding 0;
+    margin: $layoutTotalPadding * 0.5 $layoutTotalPadding 0;
 
     @media screen and (max-width: $layoutMin3ColWidth) {
-      margin: $layoutTotalPadding / 2;
+      margin: $layoutTotalPadding * 0.5;
       margin-bottom: 0;
     }
 

@@ -1,10 +1,6 @@
 <div class="m-composer__popup" [hidden]="!open">
-  <div
-    class="m-composerPopup__close"
-    (click)="dismiss()"
-    i18n="@@COMMON__CLOSE"
-  >
-    Close
+  <div class="m-composerPopup__close" (click)="dismiss()">
+    <ng-container i18n="@@COMMON__CLOSE">Close</ng-container>
   </div>
 
   <ng-template dynamic-host></ng-template>

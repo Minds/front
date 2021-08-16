@@ -1,9 +1,6 @@
 <m-settingsV2__header>
-  <div
-    class="m-settingsV2__headerLabel"
-    i18n="@@SETTINGS__BILLING__METHOD__LABEL"
-  >
-    Payment Methods
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__BILLING__METHOD__LABEL">Payment Methods</span>
   </div>
   <div
     class="m-settingsV2__desc"
@@ -13,11 +10,11 @@
   </div>
 </m-settingsV2__header>
 
-<div *ngIf="!init" style="width:100%; text-align:center;">
+<div *ngIf="!init" style="width: 100%; text-align: center">
   <div
     class="mdl-spinner mdl-js-spinner is-active"
     [mdl]
-    style="margin: 16px auto;"
+    style="margin: 16px auto"
   ></div>
 </div>
 <ng-container *ngIf="init">
