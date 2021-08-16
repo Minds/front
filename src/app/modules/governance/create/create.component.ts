@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
+import { SnapshotService } from '../snapshot.service';
+
 @Component({
-  selector: 'm-governance__create',
+  selector: 'm-governance--create',
   templateUrl: './create.component.html',
 })
 export class GovernanceCreateComponent implements OnInit {
   form: FormGroup;
-  inProgress: boolean = false;
+  inProgress = false;
   userData;
 
   constructor(
     private toasterService: FormToastService,
     public session: Session,
     private router: Router,
-    private settingsV2Service: SettingsV2Service
+    private settingsV2Service: SettingsV2Service,
+    private snapshotService: SnapshotService
   ) {}
 
   async ngOnInit() {
@@ -74,12 +76,36 @@ export class GovernanceCreateComponent implements OnInit {
     this.inProgress = true;
 
     try {
-      console.log(values);
+      const start = this.formatDatetime(new Date().getTime());
+      const end = this.formatDatetime(new Date().getTime() + 3600 * 24 * 14);
+
+      await this.snapshotService.createProposal({
+        end,
+        start,
+        name: 'Test proposal from Proposal',
+        body: `
+          ## Project Description
+          ${values.project_description}
+
+          ## Roadmap
+          ${values.roadmap}
+
+          ## Funding
+          ${values.funding}
+
+          ## Experience
+          ${values.experience}
+        `.trim(),
+      });
       this.toasterService.success('proposal sent');
       this.router.navigate(['/governance/latest']);
     } catch (e) {
       this.inProgress = false;
       this.toasterService.error(e.message);
     }
+  }
+
+  private formatDatetime(time: number): number {
+    return Math.floor(time / 1000);
   }
 }
