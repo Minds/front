@@ -42,6 +42,12 @@
       }
     }
 
+    .m-publisherCard__subs,
+    .m-publisherCard__desc,
+    .m-publisherCard__tags {
+      margin-top: 15px;
+    }
+
     .m-publisherCard__tags {
       span {
         font-size: 16px;
@@ -150,6 +156,16 @@
     }
   }
 
+  .m-publisherCard--hovercard {
+    @include m-theme() {
+      border: none;
+    }
+    .m-publisherCard__inner {
+      max-height: 151px !important;
+      overflow: hidden;
+    }
+  }
+
   .m-publisherCard--large {
     .m-publisherCard__inner {
       max-height: 141px;
@@ -236,8 +252,8 @@
         background: linear-gradient(
           to bottom,
           rgba(themed($m-bgColor--primary), 0) 0%,
-          rgba(themed($m-bgColor--primary), 0.4) 40%,
-          rgba(themed($m-bgColor--primary), 1) 90%
+          rgba(themed($m-bgColor--primary), 0.7) 80%,
+          rgba(themed($m-bgColor--primary), 1) 99%
         );
       }
       > span {

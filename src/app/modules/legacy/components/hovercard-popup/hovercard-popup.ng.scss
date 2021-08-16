@@ -1,0 +1,78 @@
+@import 'defaults.scss';
+
+:host {
+  // display: none;
+
+  // &[data-show] {
+  //   display: block;
+  // }
+
+  .minds-avatar-hovercard {
+    position: absolute;
+    display: inline-block;
+
+    // top: 0;
+    // left: 0;
+    // bottom: auto;
+    // right: auto;
+    border-radius: $m-borderRadius;
+    @include z-index(tooltip);
+    width: 350px;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  ::ng-deep {
+    m-publisherCard {
+      .m-publisherCard__inner {
+        // ojm
+        // max-height: 175px !important;
+      }
+    }
+  }
+
+  //ojm
+  //   display: inline-block;
+  //   background: #ffffff;
+  //   color: #643045;
+  //   font-weight: bold;
+  //   padding: 5px 10px;
+  //   font-size: 13px;
+  //   border-radius: 4px;
+  // }
+
+  // .m-hovercardPopup__arrow,
+  // .m-hovercardPopup__arrow::before {
+  //   position: absolute;
+  //   width: 8px;
+  //   height: 8px;
+  //   background: inherit;
+  // }
+
+  // .m-hovercardPopup__arrow {
+  //   visibility: hidden;
+  // }
+
+  // .m-hovercardPopup__arrow::before {
+  //   visibility: visible;
+  //   content: '';
+  //   transform: rotate(45deg);
+  // }
+
+  // .m-hovercardPopup[data-popper-placement^='top'] > .m-hovercardPopup__arrow {
+  //   bottom: -4px;
+  // }
+
+  // .m-hovercardPopup[data-popper-placement^='bottom'] > .m-hovercardPopup__arrow {
+  //   top: -4px;
+  // }
+
+  // .m-hovercardPopup[data-popper-placement^='left'] > .m-hovercardPopup__arrow {
+  //   right: -4px;
+  // }
+
+  // .m-hovercardPopup[data-popper-placement^='right'] > .m-hovercardPopup__arrow {
+  //   left: -4px;
+  // }
+}

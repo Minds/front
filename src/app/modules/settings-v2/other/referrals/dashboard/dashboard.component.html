@@ -68,6 +68,12 @@
 
     <ng-container *ngFor="let referral of referrals">
       <ng-container *ngIf="referral.prospect">
+        <popper-content #popper>
+          <m-publisherCard
+            [publisher]="referral.prospect"
+            [isHovercard]="true"
+          ></m-publisherCard>
+        </popper-content>
         <div
           class="
             m-settingsV2__referralsDashboard__row
@@ -89,10 +95,13 @@
                   m-settingsV2__referralsDashboard__userAvatar
                   mdl-shadow--2dp
                 "
-                [hovercard]="referral.prospect.guid"
                 src="/icon/{{ referral.prospect.guid }}/small/{{
                   referral.prospect.icontime
                 }}"
+                [popper]="popper"
+                popperPlacement="bottom"
+                showDelay="500"
+                popperTrigger="hover"
               />
             </a>
             <a

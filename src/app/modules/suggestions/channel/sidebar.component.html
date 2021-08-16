@@ -24,18 +24,33 @@
     >
       <ng-container [ngSwitch]="suggestion.entity.type">
         <ng-template ngSwitchCase="user">
-          <a
-            [routerLink]="['/', suggestion.entity.username]"
-            [hovercard]="suggestion.entity.guid"
-            [hovercardAnchor]="['left', 'top']"
-          >
+          <a [routerLink]="['/', suggestion.entity.username]">
+            <popper-content #popper>
+              <m-publisherCard
+                [publisher]="suggestion.entity"
+                [isHovercard]="true"
+              ></m-publisherCard>
+            </popper-content>
+
             <div
               class="m-suggestionsSidebarListItem__avatar"
               [style.background-image]="
                 'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
               "
+              [popper]="popper"
+              popperPlacement="bottom"
+              showDelay="500"
+              popperTrigger="hover"
             ></div>
-            <div class="m-suggestionsSidebarListItem__body">
+            <!-- ojm [popperHideOnMouseLeave]="false"
+              [popperShowOnStart]="true" -->
+            <div
+              class="m-suggestionsSidebarListItem__body"
+              [popper]="popper"
+              popperPlacement="bottom"
+              showDelay="500"
+              popperTrigger="hover"
+            >
               <div [title]="suggestion.entity.briefdescription">
                 <h4>{{ suggestion.entity.name }}</h4>
                 <span>

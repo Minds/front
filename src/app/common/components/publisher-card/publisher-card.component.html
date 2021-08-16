@@ -4,7 +4,8 @@
     'm-publisherCard--large': size === 'large',
     'm-publisherCard--medium': size === 'medium',
     'm-publisherCard--small': size === 'small',
-    'm-publisherCard--featured': featured
+    'm-publisherCard--featured': featured,
+    'm-publisherCard--hovercard': _isHovercard
   }"
   *ngIf="publisher"
   #publisherCard
@@ -115,6 +116,7 @@
       <m-read-more--button
         v2="true"
         showOnlyFadeout="true"
+        clickDisabled="true"
       ></m-read-more--button>
     </div>
   </div>

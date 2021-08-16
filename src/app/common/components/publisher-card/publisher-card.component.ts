@@ -47,7 +47,18 @@ export class PublisherCardComponent implements AfterViewInit {
     this.cdnUrl = configs.get('cdn_url');
   }
 
+  private _isHovercard: boolean;
+  @Input() set isHovercard(value: boolean) {
+    this._isHovercard = value;
+    if (value) {
+      this.showSubs = true;
+    }
+  }
+
   ngAfterViewInit(): void {
+    if (this._isHovercard) {
+      console.log('ojm pubcard afterViewInit', this.publisher);
+    }
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => this.onResize());
     }
@@ -69,6 +80,15 @@ export class PublisherCardComponent implements AfterViewInit {
       }
     } else {
       this.size = 'large';
+    }
+
+    if (this._isHovercard) {
+      console.log(
+        'ojm pubcard onResize()',
+        this.size,
+        this.maxHeight,
+        publisherCardWidth
+      );
     }
 
     this.btnIconOnly = this.size === 'medium';

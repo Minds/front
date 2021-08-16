@@ -5,7 +5,21 @@
   [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
-    <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
+    <popper-content #popper>
+      <m-publisherCard
+        [publisher]="comment.ownerObj"
+        [isHovercard]="true"
+      ></m-publisherCard>
+    </popper-content>
+    <!-- ojm test -->
+    <div
+      class="minds-avatar"
+      [popper]="popper"
+      [popperTrigger]="'hover'"
+      [popperPlacement]="'bottom'"
+      [showDelay]="500"
+      [popperShowOnStart]="true"
+    >
       <a [routerLink]="['/', comment.ownerObj.username]">
         <img [src]="getAvatarSrc() | async" class="m-border" />
       </a>

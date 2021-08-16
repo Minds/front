@@ -15,8 +15,17 @@
   class="m-activity__ownerBlock"
   [ngClass]="{ 'm-activity__ownerBlock--minimalMode': minimalMode }"
 >
-  <div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
-    <a [routerLink]="['/', username]">
+  <popper-content #popper>
+    <m-publisherCard [publisher]="owner" [isHovercard]="true"></m-publisherCard>
+  </popper-content>
+  <div class="m-activityOwnerBlock__avatar">
+    <a
+      [routerLink]="['/', username]"
+      [popper]="popper"
+      popperPlacement="bottom"
+      showDelay="500"
+      popperTrigger="hover"
+    >
       <img [src]="avatarUrl" class="m-border" />
     </a>
     <div

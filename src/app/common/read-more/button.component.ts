@@ -55,6 +55,9 @@ export class ReadMoreButtonComponent {
   // When set, forces see more to redirect.
   @Input() redirectUrl: string = '';
 
+  // Don't expand on click
+  @Input() clickDisabled: boolean = false;
+
   // Don't show the "see more" text
   @Input() showOnlyFadeout: boolean = false;
 
@@ -72,14 +75,16 @@ export class ReadMoreButtonComponent {
   constructor(private cd: ChangeDetectorRef, private router: Router) {}
 
   expandIfShowingOnlyFadeout($event: MouseEvent) {
-    if (!this.showOnlyFadeout) {
+    if (this.clickDisabled === true || !this.showOnlyFadeout) {
       return;
     }
     if ($event) {
       $event.stopPropagation();
       $event.preventDefault();
     }
-    this.content.expand();
+    if (this.showOnlyFadeout) {
+      this.content.expand();
+    }
   }
 
   /**
@@ -87,6 +92,9 @@ export class ReadMoreButtonComponent {
    * @returns void
    */
   public onExpandClick(): void {
+    if (this.clickDisabled === true) {
+      return;
+    }
     if (this.redirectUrl.length > 0) {
       this.cd.detach();
       this.router.navigate([this.redirectUrl]);
