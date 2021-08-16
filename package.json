@@ -54,7 +54,7 @@
     "@types/hls.js": "^0.13.3",
     "@types/yargs": "^17.0.2",
     "@walletconnect/web3-provider": "^1.4.1",
-    "angular-plotly.js": "^4.0.0",
+    "angular-plotly.js": "^4.0.4",
     "assert": "^2.0.0",
     "bn.js": "^5.2.0",
     "braintree-web": "3.79.1",
