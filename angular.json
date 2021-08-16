@@ -72,7 +72,6 @@
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "baseHref": "/static/",
-            "deployUrl": "http://localhost:4200/",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
