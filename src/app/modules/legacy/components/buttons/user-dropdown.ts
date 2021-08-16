@@ -425,7 +425,7 @@ export class UserDropdownButton {
   }
 
   async setNSFWLock(reasons: Array<{ label; value; selected }>) {
-    const nsfw = reasons.map((reason) => reason.value);
+    const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
     this.user.nsfw = nsfw;
     this.userChanged.emit(this.user);

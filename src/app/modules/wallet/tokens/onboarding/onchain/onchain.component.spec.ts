@@ -38,7 +38,7 @@ let blockchainService: any = MockService(BlockchainService, {
   getWallet: null,
 });
 
-let web3walletMock = new (function () {
+let web3walletMock = new (function() {
   this.getWallets = jasmine
     .createSpy('getWallets')
     .and.stub()
@@ -100,7 +100,7 @@ xdescribe('TokenOnChainOnboardingComponent', () => {
   );
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();

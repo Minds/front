@@ -32,26 +32,24 @@ export class EmbeddedVideoComponent implements OnInit {
 
   ngOnInit() {
     this.queryParamsSubscription = this.activatedRoute.queryParamMap.subscribe(
-      (params) => {
+      params => {
         this.autoplay = params.get('autoplay') === 'true' || false;
         this.detectChanges();
       }
     );
-    this.paramsSubscription = this.activatedRoute.paramMap.subscribe(
-      (params) => {
-        this.guid = params.get('guid');
+    this.paramsSubscription = this.activatedRoute.paramMap.subscribe(params => {
+      this.guid = params.get('guid');
 
-        /**
-         * Load entity and update metadata.
-         * This request must ideally be run on the
-         * server side and transferred to the client
-         * */
-        if (this.guid) {
-          this.load(this.guid);
-        }
-        this.detectChanges();
+      /**
+       * Load entity and update metadata.
+       * This request must ideally be run on the
+       * server side and transferred to the client
+       * */
+      if (this.guid) {
+        this.load(this.guid);
       }
-    );
+      this.detectChanges();
+    });
   }
 
   load(guid: string) {

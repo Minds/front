@@ -211,7 +211,7 @@ xdescribe('EmbeddedVideoComponent', () => {
   beforeEach(
     waitForAsync(() => {
       const configsServiceMock = MockService(ConfigsService, {
-        get: (key) => {
+        get: key => {
           const config = {
             site_url: 'https://minds.com/',
             cdn_url: 'https://cdn.minds.com/',
