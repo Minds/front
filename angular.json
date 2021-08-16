@@ -75,8 +75,6 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "extractCss": true,
-            "aot": true,
             "localize": ["en"],
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
@@ -92,7 +90,24 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
-            }
+            },
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "progress": true,
+            "allowedCommonJsDependencies": [
+              "stream",
+              "os",
+              "http",
+              "https",
+              "crypto",
+              "util",
+              "assert"
+            ],
+            "preserveSymlinks": true
           },
           "configurations": {
             "production": {
@@ -103,12 +118,9 @@
                 "scripts": true,
                 "styles": true
               },
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "localize": true,
               "extractLicenses": true,
-              "vendorChunk": true,
               "buildOptimizer": true,
               "fileReplacements": [
                 {
@@ -125,7 +137,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -194,7 +207,9 @@
             "tsConfig": "tsconfig.server.json",
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
-            }
+            },
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {
@@ -207,7 +222,8 @@
               "sourceMap": false,
               "optimization": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         }
       }
     },
@@ -227,18 +243,23 @@
             "outputPath": "dist/embed",
             "index": "src/app/modules/embed/embed.html",
             "baseHref": "/embed-static/",
+            "deployUrl": "http://localhost:4300/",
             "main": "src/app/modules/embed/main.ts",
             "tsConfig": "src/app/modules/embed/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "extractCss": true,
-            "aot": true,
             "outputHashing": "bundles",
             "localize": ["en"],
             "assets": ["src/favicon.ico"],
             "styles": ["node_modules/plyr/dist/plyr.css", "src/main.css"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
-            }
+            },
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -249,13 +270,9 @@
                 "scripts": true,
                 "styles": true
               },
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "localize": true,
               "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -271,7 +288,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

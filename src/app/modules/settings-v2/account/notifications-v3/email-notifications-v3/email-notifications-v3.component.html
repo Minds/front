@@ -1,9 +1,8 @@
 <m-settingsV2__header>
-  <div
-    class="m-settingsV2__headerLabel"
-    i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__LABEL"
-  >
-    Email Notifications
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__LABEL"
+      >Email Notifications</span
+    >
   </div>
   <div
     class="m-settingsV2__desc"
@@ -16,7 +15,10 @@
 <m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(initializing$ | async)">
   <h5
-    class="m-pushNotifSettings__categoryTitle m-pushNotifSettings__categoryTitle--first"
+    class="
+      m-pushNotifSettings__categoryTitle
+      m-pushNotifSettings__categoryTitle--first
+    "
     i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WHEN"
   >
     Email me when
@@ -114,18 +116,21 @@
         <option
           value="daily"
           i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_DAILY"
-          >Daily</option
         >
+          Daily
+        </option>
         <option
           value="weekly"
           i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_WEEKLY"
-          >Weekly</option
         >
+          Weekly
+        </option>
         <option
           value="periodically"
           i18n="@@SETTINGS_NOTIFICATIONS_EMAIL__EMAIL_ME_PERIODICALLY"
-          >Periodically</option
         >
+          Periodically
+        </option>
       </select>
     </div>
   </ng-template>

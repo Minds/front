@@ -1,5 +1,11 @@
 import { CookieService } from '../../common/services/cookie.service';
-import { PLATFORM_ID, Inject, forwardRef, EventEmitter } from '@angular/core';
+import {
+  PLATFORM_ID,
+  Inject,
+  forwardRef,
+  EventEmitter,
+  Injectable,
+} from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
@@ -11,6 +17,7 @@ import { EmailConfirmationService } from '../../common/components/email-confirma
 /**
  * API Class
  */
+@Injectable()
 export class Client {
   base: string = '/';
   onError: EventEmitter<any> = new EventEmitter<any>();

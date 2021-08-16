@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import * as hljs from 'highlight.js';
+import hljs from 'highlight.js';
 
 /**
  * Relevant output from Highlight.js methods

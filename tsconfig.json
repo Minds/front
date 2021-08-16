@@ -5,10 +5,10 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "target": "es2018",
+    "emitDecoratorMetadata": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -19,9 +19,39 @@
     "module": "commonjs",
     "baseUrl": "./",
     "paths": {
-      "fs": [ "./shims/noop" ],
-      "bn.js": [ "../node_modules/bn.js/lib/bn.js" ],
-      "ngx-plyr": [ "../node_modules/ngx-plyr/dist/ngx-plyr" ]
+      "fs": [
+        "./shims/noop"
+      ],
+      "bn.js": [
+        "../node_modules/bn.js/lib/bn.js"
+      ],
+      "ngx-plyr": [
+        "../node_modules/ngx-plyr/dist/ngx-plyr"
+      ],
+      "stream": [
+        "../node_modules/stream-browserify"
+      ],
+      "os": [
+        "../node_modules/os-browserify"
+      ],
+      "http": [
+        "../node_modules/stream-http"
+      ],
+      "https": [
+        "../node_modules/https-browserify"
+      ],
+      "crypto": [
+        "../node_modules/crypto-browserify"
+      ],
+      "util": [
+        "../node_modules/util"
+      ],
+      "assert": [
+        "../node_modules/assert"
+      ],
+      // ojm      “core-js/es7/reflect”: [“node_modules/core-js/proposals/reflect-metadata”
+      //       ],
+      // “core-js/es6/*”: [“node_modules/core-js/es/*”]
     }
   }
 }

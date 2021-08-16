@@ -31,7 +31,7 @@ import { Subscription } from 'rxjs';
       <ng-container
         i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
         *ngIf="!iconOnly"
-        >Click to load more</ng-container
+        >Load more</ng-container
       >
 
       <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_right</i>

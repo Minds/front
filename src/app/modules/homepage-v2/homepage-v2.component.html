@@ -8,7 +8,10 @@
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div
-        class="m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+        class="
+          m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
+          m-marketing__body
+        "
       >
         <h1 class="m-homepage__title">
           <ng-container>Minds</ng-container>
@@ -37,7 +40,10 @@
 
         <ng-container *mIfFeature="'!onboarding-october-2020'">
           <m-button
-            class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
+            class="
+              mf-button mf-button--alt
+              m-homepage__joinButton m-homepage__joinButton--first
+            "
             (click)="register()"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
           >
@@ -72,7 +78,10 @@
 
       <ng-container *mIfFeature="'!onboarding-october-2020'">
         <div
-          class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__registerForm"
+          class="
+            m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-homepage__registerForm
+          "
         >
           <minds-form-register
             [showTitle]="true"
@@ -88,7 +97,10 @@
       </ng-container>
       <ng-container *mIfFeature="'onboarding-october-2020'">
         <div
-          class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__phoneImageContainer"
+          class="
+            m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-homepage__phoneImageContainer
+          "
         >
           <img
             class="m-homepage__phoneImage"
@@ -107,7 +119,14 @@
     <div class="m-marketing__section m-homepage__quotation">
       <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-grid__column-12 m-grid__column-10--mobile m-grid__column-10--tablet m-grid__column__skip-2--tablet m-grid__column__skip-2--mobile m-marketing__body"
+          class="
+            m-grid__column-12
+            m-grid__column-10--mobile
+            m-grid__column-10--tablet
+            m-grid__column__skip-2--tablet
+            m-grid__column__skip-2--mobile
+            m-marketing__body
+          "
         >
           <div class="m-marketing__quotation">
             <h3>“Minds is the anti-Facebook that pays you for your time.”</h3>
@@ -120,7 +139,10 @@
     <div class="m-marketing__section m-marketing__section--style-5">
       <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+          class="
+            m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__body
+          "
         >
           <h2 i18n="@@HOMEPAGE_V2__HOW_DOES_IT_WORK">How does it work?</h2>
 
@@ -163,7 +185,10 @@
           </div>
         </div>
         <div
-          class="m-grid__column-6 m-grid__column-5--tablet m-grid__column-12--mobile m-marketing__image"
+          class="
+            m-grid__column-6 m-grid__column-5--tablet m-grid__column-12--mobile
+            m-marketing__image
+          "
         >
           <span>
             <img
@@ -180,7 +205,10 @@
     <div class="m-marketing__section m-marketing__section--style-4">
       <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+          class="
+            m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__body
+          "
         >
           <h2 i18n="@@HOMEPAGE_V2__OUR_PRINCIPLES">Our principles</h2>
 
@@ -206,7 +234,10 @@
           </ol>
         </div>
         <div
-          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__image"
+          class="
+            m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__image
+          "
         >
           <span>
             <img
@@ -262,11 +293,10 @@
     <div class="m-marketing__section m-marketing__section--tail">
       <div class="m-grid m-marketing__wrapper">
         <div class="m-grid__column-12 m-marketing__body">
-          <h3
-            class="m-marketingTitle__centered"
-            i18n="@@HOMEPAGE_V2__TAKE_BACK_CONTROL"
-          >
-            Take back control of your social media
+          <h3 class="m-marketingTitle__centered">
+            <ng-container i18n="@@HOMEPAGE_V2__TAKE_BACK_CONTROL"
+              >Take back control of your social media</ng-container
+            >
           </h3>
 
           <div class="m-marketing__actionButtons">
