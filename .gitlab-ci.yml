@@ -316,6 +316,8 @@ review:stop:
     ## Update docker server container
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
+    - docker push $CI_REGISTRY_IMAGE/server:$IMAGE_LABEL
     # Update EKS role
     - aws eks --region us-east-1 update-kubeconfig --name $AWS_EKS_CLUSTER_NAME --role-arn=$AWS_IAM_ROLE_ARN
     # Update the image tags
