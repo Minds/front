@@ -18,7 +18,7 @@
       <li
         class="m-sidebarNavigation__item m-sidebarNavigation__item--compose"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         <a (click)="openComposeModal()">
           <m-tooltip
@@ -85,7 +85,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'nav-plus-2020'"
       >
         <a routerLink="/discovery/plus" (click)="toggle()">
@@ -231,7 +231,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'earn-modal'"
       >
         <a (click)="openEarnModal()">
@@ -253,7 +253,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'buy-tokens-uniswap-transak'"
       >
         <a (click)="buyTokens()">
@@ -277,7 +277,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'boost-modal-v2'"
       >
         <a (click)="openBoostModal()">
@@ -300,7 +300,7 @@
         *mIfFeature="'matrix'"
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         <a [routerLink]="['/groups/memberships']" (click)="toggle()">
           <m-tooltip

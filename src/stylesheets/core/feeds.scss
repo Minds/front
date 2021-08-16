@@ -136,7 +136,7 @@ minds-newsfeed-single {
   }
 
   .m-inline-owner-block {
-    padding: $minds-padding*0.5 0;
+    padding: $minds-padding * 0.5 0;
     overflow: hidden;
     height: 16px;
     a {
@@ -151,7 +151,7 @@ minds-newsfeed-single {
       img {
         height: 18px;
         border-radius: 50%;
-        margin-right: $minds-padding*0.5;
+        margin-right: $minds-padding * 0.5;
       }
     }
     span {

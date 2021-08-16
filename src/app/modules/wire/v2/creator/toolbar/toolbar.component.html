@@ -39,7 +39,7 @@
     <ng-container
       *ngIf="!(service.isUpgrade$ | async) && !(service.supportTier$ | async)"
     >
-      <ng-container i18n="@@WIRE_CREATOR_TOOLBAR__SEND">
+      <ng-container i18n="@@WIRE_CREATOR_TOOLBAR__SEND__AMOUNT">
         Send {{ service.amount$ | async | number: '1.0-6' }}
       </ng-container>
       <ng-container *ngTemplateOutlet="typeLabel"></ng-container>
