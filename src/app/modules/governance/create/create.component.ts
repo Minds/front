@@ -1,21 +1,22 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ShareModalComponent } from '../../modals/share/share';
+import { SnapshotService } from '../snapshot.service';
+
 @Component({
   moduleId: module.id,
-  selector: 'm-governance__create',
+  selector: 'm-governance--create',
   templateUrl: './create.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GovernanceCreateComponent implements OnInit {
   form: FormGroup;
-  inProgress: boolean = false;
+  inProgress = false;
   userData;
 
   constructor(
@@ -23,7 +24,8 @@ export class GovernanceCreateComponent implements OnInit {
     public session: Session,
     private router: Router,
     private overlayModal: OverlayModalService,
-    private settingsV2Service: SettingsV2Service
+    private settingsV2Service: SettingsV2Service,
+    private snapshotService: SnapshotService
   ) {}
 
   async ngOnInit() {
@@ -93,7 +95,27 @@ export class GovernanceCreateComponent implements OnInit {
     this.inProgress = true;
 
     try {
-      console.log(values);
+      const start = this.formatDatetime(new Date().getTime());
+      const end = this.formatDatetime(new Date().getTime() + 3600 * 24 * 14);
+
+      await this.snapshotService.createProposal({
+        end,
+        start,
+        name: 'Test proposal from Proposal',
+        body: `
+          ## Project Description
+          ${values.project_description}
+
+          ## Roadmap
+          ${values.roadmap}
+
+          ## Funding
+          ${values.funding}
+
+          ## Experience
+          ${values.experience}
+        `.trim(),
+      });
       this.toasterService.success('proposal sent');
       this.openShareModal();
       // this.router.navigate(['/governance/latest']);
@@ -101,5 +123,9 @@ export class GovernanceCreateComponent implements OnInit {
       this.inProgress = false;
       this.toasterService.error(e.message);
     }
+  }
+
+  private formatDatetime(time: number): number {
+    return Math.floor(time / 1000);
   }
 }

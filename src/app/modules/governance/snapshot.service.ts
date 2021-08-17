@@ -3,7 +3,6 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import snapshot from '@snapshot-labs/snapshot.js';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
-import { Observable } from 'rxjs';
 
 const SNAPSHOT_GRAPHQL_URL = 'https://hub.snapshot.org/graphql';
 const MINDS_SPACE = 'mind.eth';
@@ -98,6 +97,13 @@ query ($id: String!) {
   }
 }`;
 
+interface CreateProposalParam extends Partial<CreateProposal> {
+  name: CreateProposal['name'];
+  body: CreateProposal['body'];
+  start: CreateProposal['start'];
+  end: CreateProposal['end'];
+}
+
 @Injectable()
 export class SnapshotService {
   private snapshotClient = new snapshot.Client();
@@ -118,7 +124,8 @@ export class SnapshotService {
     return this.getProposals({ ...variables, space: MINDS_SPACE });
   }
 
-  async createProposal() {
+  async createProposal(proposal: CreateProposalParam) {
+    await this.web3Wallet.initializeProvider();
     const provider = this.web3Wallet.provider;
     if (provider) {
       const space = await this.getSpace(MINDS_SPACE).toPromise();
@@ -126,28 +133,23 @@ export class SnapshotService {
       const address = await signer.getAddress();
       const blockNumber = await snapshot.utils.getBlockNumber(provider);
 
-      const start = new Date().getTime();
-      const end = start + 3600 * 24 * 14;
-
-      const proposal: CreateProposal = {
-        name: '',
-        body: '',
+      const proposalPayload: CreateProposal = {
         type: 'single-choice',
-        end,
-        start,
         choices: ['approve', 'reject'],
         snapshot: blockNumber,
+        ...proposal,
         metadata: {
           network: space.network,
           strategies: space.strategies,
+          ...proposal.metadata,
         },
       };
 
-      return this.snapshotClient.proposal(
+      return await this.snapshotClient.proposal(
         provider,
         address,
         MINDS_SPACE,
-        proposal
+        proposalPayload
       );
     }
   }
