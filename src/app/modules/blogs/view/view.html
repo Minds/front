@@ -71,39 +71,23 @@
   </div>
 
   <div class="mdl-grid m-blog-header" style="width: 100%">
-    <div class="">
+    <div>
       <h1 class="m-blog--title">{{blog.title}}</h1>
     </div>
 
     <!-- Owner box -->
     <div class="m-blog__InteractionBar">
       <div class="minds-blog-ownerblock">
-        <popper-content #popper>
-          <m-publisherCard
-            [publisher]="blog.ownerObj"
-            [isHovercard]="true"
-          ></m-publisherCard>
-          <!-- ojm test -->
-        </popper-content>
-        <div
-          class="minds-avatar"
-          [popper]="popper"
-          [popperPlacement]="'bottom'"
-          [showDelay]="500"
-        >
-          <a [routerLink]="['/', blog.ownerObj.username]">
-            <img
-              src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
-              class="mdl-shadow--2dp"
-            />
-          </a>
-        </div>
-        <div
-          class="minds-body"
-          [popper]="popper"
-          [popperPlacement]="'bottom'"
-          [showDelay]="500"
-        >
+        <m-hovercard [publisher]="blog.ownerObj" [offset]="[0,15]">
+          <div class="minds-avatar">
+            <a [routerLink]="['/', blog.ownerObj.username]">
+              <img
+                src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+              />
+            </a>
+          </div>
+        </m-hovercard>
+        <div class="minds-body">
           <a [routerLink]="['/', blog.ownerObj.username]"
             >{{blog.ownerObj.name}}</a
           >

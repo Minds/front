@@ -12,11 +12,8 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
-import { Hovercard } from '../../../common/directives/hovercard';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { HovercardService } from '../../../services/hovercard';
-import { hovercardServiceMock } from '../../../mocks/services/hovercard-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 
@@ -64,19 +61,15 @@ describe('GroupsMembersModuleComponent', () => {
         declarations: [
           MaterialMock,
           MaterialSwitchMock,
-          Hovercard,
           GroupsMembersModuleComponent,
         ],
         imports: [NgCommonModule, RouterTestingModule],
-        providers: [
-          { provide: Client, useValue: clientMock },
-          { provide: HovercardService, useValue: hovercardServiceMock },
-        ],
+        providers: [{ provide: Client, useValue: clientMock }],
       }).compileComponents();
     })
   );
 
-  beforeEach(done => {
+  beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -85,9 +78,8 @@ describe('GroupsMembersModuleComponent', () => {
     membersComponent = fixture.componentInstance;
 
     clientMock.response = {};
-    clientMock.response[
-      `api/v1/groups/membership/11111`
-    ] = successfulGroupResponse;
+    clientMock.response[`api/v1/groups/membership/11111`] =
+      successfulGroupResponse;
 
     membersComponent._group = group;
     membersComponent.linksTo = fixture.detectChanges();
@@ -134,9 +126,10 @@ describe('GroupsMembersModuleComponent', () => {
     tick();
 
     expect(membersComponent.load).toHaveBeenCalled();
-    expect(
-      clientMock.get
-    ).toHaveBeenCalledWith('api/v1/groups/membership/11111', { limit: 21 });
+    expect(clientMock.get).toHaveBeenCalledWith(
+      'api/v1/groups/membership/11111',
+      { limit: 21 }
+    );
 
     expect(membersComponent.members).toEqual(successfulGroupResponse.members);
   }));

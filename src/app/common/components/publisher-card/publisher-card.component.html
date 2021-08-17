@@ -10,11 +10,10 @@
   *ngIf="publisher"
   #publisherCard
 >
-  <div
-    class="m-publisherCard__inner"
-    m-read-more
-    [maxHeightAllowed]="maxHeight"
-  >
+  <div class="m-publisherCard__inner">
+    <!-- ojm
+      m-read-more
+    [maxHeightAllowed]="maxHeight" -->
     <!-- --OWNER ROW ----------------------------- -->
     <div class="m-publisherCard__ownerRow m-legible">
       <!-- AVATAR -->
@@ -113,11 +112,11 @@
       <p [innerHtml]="publisher.briefdescription | tags">
         {{ publisher.briefdescription }}
       </p>
+      <!-- ojm
       <m-read-more--button
         v2="true"
         showOnlyFadeout="true"
-        clickDisabled="true"
-      ></m-read-more--button>
+      ></m-read-more--button> -->
     </div>
   </div>
 </div>

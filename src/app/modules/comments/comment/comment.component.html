@@ -5,25 +5,13 @@
   [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
-    <popper-content #popper>
-      <m-publisherCard
-        [publisher]="comment.ownerObj"
-        [isHovercard]="true"
-      ></m-publisherCard>
-    </popper-content>
-    <!-- ojm test -->
-    <div
-      class="minds-avatar"
-      [popper]="popper"
-      [popperTrigger]="'hover'"
-      [popperPlacement]="'bottom'"
-      [showDelay]="500"
-      [popperShowOnStart]="true"
-    >
-      <a [routerLink]="['/', comment.ownerObj.username]">
-        <img [src]="getAvatarSrc() | async" class="m-border" />
-      </a>
-    </div>
+    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 10]">
+      <div class="minds-avatar">
+        <a [routerLink]="['/', comment.ownerObj.username]">
+          <img [src]="getAvatarSrc() | async" class="m-border" />
+        </a>
+      </div>
+    </m-hovercard>
   </ng-template>
   <div *ngIf="!_compact" class="m-comment__avatarWrapper">
     <ng-container *ngTemplateOutlet="avatar"></ng-container>

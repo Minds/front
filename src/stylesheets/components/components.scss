@@ -434,25 +434,6 @@ minds-graph-line {
   }
 }
 
-.minds-avatar-hovercard {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: auto;
-  right: auto;
-  @include z-index(tooltip);
-  width: 330px;
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
-
-  m-publisherCard .m-publisherCard {
-    @include m-theme() {
-      border: none;
-    }
-  }
-}
-
 .m-bubble-popup {
   position: fixed;
   user-select: none;
@@ -768,37 +749,6 @@ m-text-input--autocomplete-menu {
           }
         }
       }
-    }
-  }
-}
-
-popper-content {
-  .ngxp__container {
-    max-width: 350px;
-    min-width: 350px;
-    border-radius: $m-borderRadius;
-    padding: 0;
-    @include z-index(tooltip);
-
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-      background: themed($m-bgColor--primary);
-      border: 1px solid themed($m-borderColor--primary);
-    }
-    box-shadow: none;
-  }
-
-  .ngxp__arrow:before {
-    height: 10px;
-    width: 10px;
-    @include m-theme() {
-      background: themed($m-bgColor--primary);
-      border: 1px solid themed($m-borderColor--primary);
-    }
-  }
-  .ngxp__inner {
-    @include m-theme() {
-      background: themed($m-bgColor--primary);
     }
   }
 }

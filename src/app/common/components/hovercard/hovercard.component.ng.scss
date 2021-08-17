@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  min-width: 351px;
+  ::ng-deep popper-content {
+    .ngxp__container {
+      max-width: 350px;
+      min-width: 350px;
+      border-radius: $m-borderRadius;
+      padding: 0;
+      box-shadow: none;
+
+      @include z-index(tooltip);
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .ngxp__arrow,
+    .ngxp__arrow:before {
+      height: 25px !important;
+      width: 25px !important;
+    }
+
+    .ngxp__arrow:before {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+    .ngxp__inner {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+      }
+    }
+  }
+}

@@ -131,10 +131,6 @@
   }
 
   ::ng-deep {
-    m-hovercard-popup div.minds-avatar-hovercard {
-      @include z-index(popover--modal);
-    }
-
     m-paywallBadge {
       position: absolute;
       right: 43px;

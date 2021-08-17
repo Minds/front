@@ -1,0 +1,19 @@
+<div
+  *ngIf="publisher"
+  class="m-hovercard"
+  [popper]="popper"
+  popperPlacement="bottom"
+  popperTrigger="hover"
+  popperDelay="500"
+  popperTimeout="100"
+  [popperModifiers]="popperModifiers"
+>
+  <ng-content></ng-content>
+  <popper-content #popper>
+    <m-publisherCard
+      [publisher]="publisher"
+      [isHovercard]="true"
+      sizeOverride="medium"
+    ></m-publisherCard>
+  </popper-content>
+</div>

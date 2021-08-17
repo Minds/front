@@ -68,56 +68,50 @@
 
     <ng-container *ngFor="let referral of referrals">
       <ng-container *ngIf="referral.prospect">
-        <popper-content #popper>
-          <m-publisherCard
-            [publisher]="referral.prospect"
-            [isHovercard]="true"
-          ></m-publisherCard>
-        </popper-content>
         <div
           class="
             m-settingsV2__referralsDashboard__row
             m-settingsV2__referralsDashboard__dataRow
           "
         >
-          <div
-            class="
-              m-settingsV2__referralsDashboard__cell
-              m-settingsV2__referralsDashboard__userCol
-            "
-          >
-            <a
-              [routerLink]="['/', referral.prospect.username]"
-              class="m-settingsV2__referralsDashboard__userAvatarWrapper"
+          <m-hovercard [publisher]="referral.prospect">
+            <div
+              class="
+                m-settingsV2__referralsDashboard__cell
+                m-settingsV2__referralsDashboard__userCol
+              "
             >
-              <img
-                class="
-                  m-settingsV2__referralsDashboard__userAvatar
-                  mdl-shadow--2dp
-                "
-                src="/icon/{{ referral.prospect.guid }}/small/{{
-                  referral.prospect.icontime
-                }}"
-                [popper]="popper"
-                popperPlacement="bottom"
-                showDelay="500"
-                popperTrigger="hover"
-              />
-            </a>
-            <a
-              [routerLink]="['/', referral.prospect.username]"
-              class="m-settingsV2__referralsDashboard__userNameWrapper"
-            >
-              <span class="m-settingsV2__referralsDashboard__userName">{{
-                referral.prospect.username
-              }}</span>
-              <m-channel--badges
-                class="m-channel--badges-activity"
-                [user]="referral.prospect"
-                badges="[ 'admin', 'verified' ]"
-              ></m-channel--badges>
-            </a>
-          </div>
+              <a
+                [routerLink]="['/', referral.prospect.username]"
+                class="m-settingsV2__referralsDashboard__userAvatarWrapper"
+              >
+                <img
+                  class="
+                    m-settingsV2__referralsDashboard__userAvatar
+                    mdl-shadow--2dp
+                  "
+                  src="/icon/{{ referral.prospect.guid }}/small/{{
+                    referral.prospect.icontime
+                  }}"
+                />
+              </a>
+
+              <a
+                [routerLink]="['/', referral.prospect.username]"
+                class="m-settingsV2__referralsDashboard__userNameWrapper"
+              >
+                <span class="m-settingsV2__referralsDashboard__userName">{{
+                  referral.prospect.username
+                }}</span>
+                <m-channel--badges
+                  class="m-channel--badges-activity"
+                  [user]="referral.prospect"
+                  badges="[ 'admin', 'verified' ]"
+                ></m-channel--badges>
+              </a>
+            </div>
+          </m-hovercard>
+
           <div
             class="
               m-settingsV2__referralsDashboard__cell
