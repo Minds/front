@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ShareModalComponent } from '../../modals/share/share';
 @Component({
+  moduleId: module.id,
   selector: 'm-governance__create',
   templateUrl: './create.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GovernanceCreateComponent implements OnInit {
   form: FormGroup;
@@ -18,6 +22,7 @@ export class GovernanceCreateComponent implements OnInit {
     private toasterService: FormToastService,
     public session: Session,
     private router: Router,
+    private overlayModal: OverlayModalService,
     private settingsV2Service: SettingsV2Service
   ) {}
 
@@ -48,7 +53,21 @@ export class GovernanceCreateComponent implements OnInit {
     );
   }
 
+  openShareModal() {
+    const data = {
+      url: 'www.google.com',
+    };
+
+    console.log('se abre');
+    this.overlayModal
+      .create(ShareModalComponent, data, {
+        class: 'm-overlay-modal--medium m-overlayModal__share',
+      })
+      .present();
+  }
+
   async onSubmit(e) {
+    console.log(this.userData);
     const values = this.form.value;
     if (!values.funding) {
       this.toasterService.error('Funding field is required');
@@ -76,7 +95,8 @@ export class GovernanceCreateComponent implements OnInit {
     try {
       console.log(values);
       this.toasterService.success('proposal sent');
-      this.router.navigate(['/governance/latest']);
+      this.openShareModal();
+      // this.router.navigate(['/governance/latest']);
     } catch (e) {
       this.inProgress = false;
       this.toasterService.error(e.message);

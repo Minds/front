@@ -17,6 +17,8 @@ import { ProposalListComponent } from './proposal-list/proposal-list.component';
 import { SnapshotService } from './snapshot.service';
 import { GovernanceService } from './governance.service';
 import { GovernanceFilterSelector } from './filter-selector/filter-selector.component';
+import { ModalsModule } from '../modals/modals.module';
+import { EmbedServiceV2 } from '../../services/embedV2.service';
 
 @NgModule({
   imports: [
@@ -47,12 +49,13 @@ import { GovernanceFilterSelector } from './filter-selector/filter-selector.comp
     ActivityModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalsModule,
     LegacyModule, // For subscribe button
     // GroupsModule,
     LanguageModule,
     RouterModule,
   ],
-  providers: [SnapshotService, GovernanceService],
+  providers: [SnapshotService, GovernanceService, EmbedServiceV2],
   declarations: [
     GovernanceComponent,
     GovernanceTabsComponent,
