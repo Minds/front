@@ -9,6 +9,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 @Component({
   selector: 'm-groups--tile',
   templateUrl: 'tile.component.html',
+  styleUrls: ['tile.component.ng.scss'],
 })
 export class GroupsTileComponent {
   cdnUrl: string;

@@ -40,8 +40,6 @@
 
     .m-notificationsNotificationAvatar__typeBubbleTag {
       border-radius: 50%;
-      // width: 20px;
-      // height: 20px;
       position: absolute;
       top: 24px;
       right: 15px;
@@ -52,6 +50,7 @@
 
       ::ng-deep m-icon i {
         font-size: 0.75em !important;
+        margin: 0 -0.5px 0 0.5px;
         @include m-theme() {
           color: themed($m-white-always);
         }
@@ -176,6 +175,16 @@
     }
     100% {
       opacity: 0.1;
+    }
+  }
+
+  // Error view
+
+  .m-notifications__notification--error {
+    .m-notificationsNotification__avatar img {
+      @include m-theme() {
+        background-color: themed($m-bgColor--contrast);
+      }
     }
   }
 }
