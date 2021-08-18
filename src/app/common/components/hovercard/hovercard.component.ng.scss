@@ -1,7 +1,6 @@
 @import 'defaults.scss';
 
 :host {
-  min-width: 351px;
   ::ng-deep popper-content {
     .ngxp__container {
       max-width: 350px;

@@ -11,9 +11,6 @@
   #publisherCard
 >
   <div class="m-publisherCard__inner">
-    <!-- ojm
-      m-read-more
-    [maxHeightAllowed]="maxHeight" -->
     <!-- --OWNER ROW ----------------------------- -->
     <div class="m-publisherCard__ownerRow m-legible">
       <!-- AVATAR -->
@@ -108,15 +105,17 @@
     <div
       class="m-publisherCard__desc"
       *ngIf="showDescription && publisher.briefdescription"
+      m-read-more
+      maxHeightAllowed="52"
     >
       <p [innerHtml]="publisher.briefdescription | tags">
         {{ publisher.briefdescription }}
       </p>
-      <!-- ojm
       <m-read-more--button
         v2="true"
         showOnlyFadeout="true"
-      ></m-read-more--button> -->
+        clickDisabled="true"
+      ></m-read-more--button>
     </div>
   </div>
 </div>

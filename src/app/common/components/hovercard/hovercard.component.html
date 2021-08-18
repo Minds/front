@@ -4,13 +4,16 @@
   [popper]="popper"
   popperPlacement="bottom"
   popperTrigger="hover"
-  popperDelay="500"
   popperTimeout="100"
+  popperDelay="500"
   [popperModifiers]="popperModifiers"
+  (popperOnShown)="shown = true"
+  (popperOnHide)="shown = false"
 >
   <ng-content></ng-content>
   <popper-content #popper>
     <m-publisherCard
+      *ngIf="shown"
       [publisher]="publisher"
       [isHovercard]="true"
       sizeOverride="medium"

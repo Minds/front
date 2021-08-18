@@ -56,9 +56,7 @@ export class ReadMoreButtonComponent {
   @Input() redirectUrl: string = '';
 
   // Don't expand on click
-  // ojm remove
   @Input() clickDisabled: boolean = false;
-  // ojm this isn't working? Also need to remove cursor:pointer
 
   // Don't show the "see more" text
   @Input() showOnlyFadeout: boolean = false;
@@ -77,8 +75,7 @@ export class ReadMoreButtonComponent {
   constructor(private cd: ChangeDetectorRef, private router: Router) {}
 
   expandIfShowingOnlyFadeout($event: MouseEvent) {
-    console.log('ojm readmore btn', this.clickDisabled, this.showOnlyFadeout);
-    if (this.clickDisabled === true || !this.showOnlyFadeout) {
+    if (this.clickDisabled || !this.showOnlyFadeout) {
       return;
     }
     if ($event) {
@@ -95,9 +92,7 @@ export class ReadMoreButtonComponent {
    * @returns void
    */
   public onExpandClick(): void {
-    console.log('ojm readmore btn', this.clickDisabled);
-
-    if (this.clickDisabled === true) {
+    if (this.clickDisabled) {
       return;
     }
     if (this.redirectUrl.length > 0) {

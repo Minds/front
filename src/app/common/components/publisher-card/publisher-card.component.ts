@@ -85,15 +85,6 @@ export class PublisherCardComponent implements AfterViewInit {
       this.size = 'large';
     }
 
-    if (this._isHovercard) {
-      console.log(
-        'ojm pubcard onResize()',
-        this.size,
-        this.maxHeight,
-        publisherCardWidth
-      );
-    }
-
     this.btnIconOnly = this.size === 'medium';
   }
 
@@ -139,17 +130,5 @@ export class PublisherCardComponent implements AfterViewInit {
           this.publisher.subscriptions_count)) ||
         (this.type === 'group' && this.publisher['members:count']))
     );
-  }
-
-  get maxHeight(): number {
-    switch (this.size) {
-      case 'small':
-        return 150;
-      case 'medium':
-        return 130;
-      case 'large':
-      default:
-        return 140;
-    }
   }
 }
