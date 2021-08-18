@@ -87,7 +87,7 @@ m-onboarding {
       color: #9b9b9b;
 
       @include m-theme() {
-        background-color: themed($m-bgColor--primary);
+        background-color: themed($m-bgColor--secondary);
       }
 
       &::before {
@@ -216,9 +216,14 @@ m-onboarding {
           height: 18px;
           top: -9px;
           margin-left: -70px;
-          background: black;
-          background: linear-gradient(180deg, #f3f3f3 0%, transparent 56%);
-
+          @include m-theme() {
+            background: themed($m-black-always);
+            background: linear-gradient(
+              180deg,
+              themed($m-borderColor--tertiary) 0%,
+              transparent 56%
+            );
+          }
           @media screen and (min-width: 741px) and (max-width: $m-grid-max-tablet) {
             content: '';
             width: calc(100% + 40px);
@@ -363,6 +368,13 @@ m-onboarding {
 
           .m-onboarding__location {
             position: relative;
+
+            input {
+              @include m-theme() {
+                background-color: themed($m-bgColor--primary);
+                border: 1px solid themed($m-borderColor--primary);
+              }
+            }
 
             ul.m-onboarding__cities {
               position: absolute;
