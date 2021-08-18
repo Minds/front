@@ -55,7 +55,7 @@ export class Client {
    * Return a GET request
    */
   get(endpoint: string, data: Object = {}, options: Object = {}) {
-    if (data) {
+    if (Object.keys(data).length > 0) {
       endpoint += '?' + this.buildParams(data);
     }
 
