@@ -86,4 +86,16 @@ export class ActivityToolbarComponent {
         : this.entity.guid;
     await this.interactionsModalService.open(type, guid);
   }
+
+  /**
+   * Show the metrics bar if at least one metric has data
+   **/
+  get showMetrics(): boolean {
+    return (
+      this.entity['thumbs:up:count'] > 0 ||
+      this.entity['thumbs:down:count'] > 0 ||
+      this.entity?.reminds > 0 ||
+      this.entity?.quotes > 0
+    );
+  }
 }
