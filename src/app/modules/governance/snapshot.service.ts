@@ -5,7 +5,7 @@ import snapshot from '@snapshot-labs/snapshot.js';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 
 const SNAPSHOT_GRAPHQL_URL = 'https://hub.snapshot.org/graphql';
-const MINDS_SPACE = 'mind.eth';
+const MINDS_SPACE = 'weenus';
 
 type ProposalType =
   | 'single-choice'
@@ -28,6 +28,7 @@ export interface SnapshotProposal {
     id: number;
     name: string;
   };
+  proposal?: SnapshotProposal;
 }
 
 interface SnapshotStrategy {
@@ -42,6 +43,7 @@ interface CreateProposal {
   start: number;
   end: number;
   snapshot: number;
+  area: number;
 
   type?: ProposalType;
   metadata?: {
@@ -84,6 +86,25 @@ query ($first: Int!, $skip: Int!, $space: String, $state: String) {
   }
 }`;
 
+const QUERY_GET_PROPOSAL = `
+query ($id: String) {
+  proposal(id: $id) {
+    id
+    title
+    body
+    choices
+    start
+    end
+    snapshot
+    state
+    author
+    space {
+      id
+      name
+    }
+  }
+}`;
+
 const QUERY_GET_SPACE = `
 query ($id: String!) {
   space(id: $id) {
@@ -102,6 +123,7 @@ interface CreateProposalParam extends Partial<CreateProposal> {
   body: CreateProposal['body'];
   start: CreateProposal['start'];
   end: CreateProposal['end'];
+  area: CreateProposal['area'];
 }
 
 @Injectable()
@@ -118,6 +140,13 @@ export class SnapshotService {
       QUERY_GET_PROPOSAL_LIST,
       variables as any
     ).pipe(map(response => response));
+  }
+
+  getProposal(id: any) {
+    return this.execQuery<{ proposal: SnapshotProposal }>(
+      QUERY_GET_PROPOSAL,
+      id as any
+    ).pipe(map(response => response.proposal));
   }
 
   getMindsProposals(variables: GetProposalsVariables) {

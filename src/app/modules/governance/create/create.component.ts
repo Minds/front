@@ -101,6 +101,7 @@ export class GovernanceCreateComponent implements OnInit {
       await this.snapshotService.createProposal({
         end,
         start,
+        area: values.area,
         name: 'Test proposal from Proposal',
         body: `
           ## Project Description
@@ -112,8 +113,24 @@ export class GovernanceCreateComponent implements OnInit {
           ## Funding
           ${values.funding}
 
+          ## Challenges
+          ${values.challenges}
+
+          ## Links
+          ${values.links}
+
           ## Experience
           ${values.experience}
+
+          ## Goals
+          ${values.goals}
+
+          ## Additional requests
+          ${values.additional_requests}
+
+          ## Additional information
+          ${values.additional_info}
+          
         `.trim(),
       });
       this.toasterService.success('proposal sent');

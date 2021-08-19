@@ -1,6 +1,7 @@
 <div class="m-governance__card">
   <m-governance__card
-    *ngFor="let proposal of proposals"
-    [proposal]="proposal"
+    *ngFor="let item of proposals"
+    [proposal]="item"
+    routerLink="/governance/proposal/{{ item.id }}"
   ></m-governance__card>
 </div>

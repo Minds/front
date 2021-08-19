@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { LanguageModule } from '../language/language.module';
@@ -19,11 +18,14 @@ import { GovernanceService } from './governance.service';
 import { GovernanceFilterSelector } from './filter-selector/filter-selector.component';
 import { ModalsModule } from '../modals/modals.module';
 import { EmbedServiceV2 } from '../../services/embedV2.service';
+import { GovernanceProposalDetailComponent } from './proposal-detail/proposal-detail.component';
+import { GroupsModule } from '../groups/groups.module';
 
 @NgModule({
   imports: [
     NgCommonModule,
-    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -42,18 +44,19 @@ import { EmbedServiceV2 } from '../../services/embedV2.service';
             path: 'create',
             component: GovernanceCreateComponent,
           },
+          {
+            path: 'proposal/:id',
+            component: GovernanceProposalDetailComponent,
+          },
         ],
       },
     ]),
-    SuggestionsModule,
+    CommonModule,
     ActivityModule,
-    FormsModule,
-    ReactiveFormsModule,
     ModalsModule,
     LegacyModule, // For subscribe button
-    // GroupsModule,
+    GroupsModule,
     LanguageModule,
-    RouterModule,
   ],
   providers: [SnapshotService, GovernanceService, EmbedServiceV2],
   declarations: [
@@ -65,6 +68,7 @@ import { EmbedServiceV2 } from '../../services/embedV2.service';
     GovernanceCreateComponent,
     ProposalListComponent,
     GovernanceFilterSelector,
+    GovernanceProposalDetailComponent,
   ],
   exports: [
     GovernanceComponent,
@@ -74,6 +78,7 @@ import { EmbedServiceV2 } from '../../services/embedV2.service';
     GovernanceCardComponent,
     GovernanceCreateComponent,
     GovernanceFilterSelector,
+    GovernanceProposalDetailComponent,
   ],
 })
 export class GovernanceModule {}
