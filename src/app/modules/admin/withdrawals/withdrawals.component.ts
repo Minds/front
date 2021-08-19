@@ -140,15 +140,14 @@ export class AdminWithdrawals {
   }
 
   /**
-   * Add a missing withdrawal
+   * Add a missing withdrawal by txid.
    * @param { string } txid - transaction id (txid).
    * @returns { Promise<void> }
    */
   async addMissingWithdrawal(txid: string): Promise<void> {
     this.inProgress = true;
     try {
-      await this.client.post('api/v2/admin/rewards/withdrawals', {
-        action: 'missing',
+      await this.client.post('api/v3/rewards/admin/missing', {
         txid: txid,
       });
       this.toasterService.success('Withdrawal resubmitted');
@@ -159,22 +158,21 @@ export class AdminWithdrawals {
   }
 
   /**
-   * Attempt to repair withdrawal
+   * Force on-chain confirmation state of a withdrawal.
    * @param { any } request - request object.
    * @returns { Promise<void> }
    */
-  async repairWithdrawal(request: any): Promise<void> {
+  async forceConfirmation(request: any): Promise<void> {
     this.inProgress = true;
 
-    if (!this.hasAdminConfirmation(request)) {
+    if (!confirm('Force transaction to be recognised as approved on the blockchain. Check that the transaction has AT LEAST 20 CONFIRMATIONS. Do not run more than once.')) {
       this.toasterService.warn('Cancelled - no action taken');
       this.inProgress = false;
       return;
     }
 
     try {
-      await this.client.post('api/v2/admin/rewards/withdrawals', {
-        action: 'repair',
+      await this.client.post('api/v3/rewards/admin/confirm', {
         request_txid: request.tx,
         user_guid: request.user_guid,
         timestamp: request.timestamp,
@@ -187,28 +185,54 @@ export class AdminWithdrawals {
   }
 
   /**
-   * Shows confirmation modal to admin, returns true if admin accepts.
+   * Redispatch completed withdrawal.
    * @param { any } request - request object.
-   * @returns { boolean } true if admin accepts, else false.
+   * @returns { Promise<void> }
    */
-  private hasAdminConfirmation(request): boolean {
-    let str;
+   async redispatchCompleted(request: any): Promise<void> {
+    this.inProgress = true;
 
-    switch (request.status) {
-      case 'pending':
-        str =
-          'The system will re-check the transaction is ready for approval. Check that the transaction has AT LEAST 20 CONFIRMATIONS. Do not run more than once';
-        break;
-      case 'approved':
-        str =
-          'Only run this if the completed_tx is registered with our system but not written to chain AND more than 72 hours has passed since the request - DO NOT run more than once';
-        break;
-      default:
-        this.toasterService.warn(
-          'Repair not yet implemented for ' + request.status
-        );
-        return false;
+    if (!confirm('Only run this if the completed_tx is registered with our system but not written to chain AND more than 72 hours has passed since the request - DO NOT run more than once.')) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
     }
-    return confirm(str);
+
+    try {
+      await this.client.post('api/v3/rewards/admin/redispatch', {
+        request_txid: request.tx,
+        user_guid: request.user_guid,
+        timestamp: request.timestamp,
+      });
+      this.toasterService.success('Withdrawal submitted for repair');
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
   }
+
+  /**
+   * Run garbage collection.
+   * @returns { Promise<void> }
+   */
+  async garbageCollect(): Promise<void> {
+    this.inProgress = true;
+
+    if (!confirm('WARNING! This will FAIL all requests older than 72 hours. This is NOT REVERSIBLE.')) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
+    this.toasterService.warn('Running long operation...');
+
+    try {
+      await this.client.post('api/v3/rewards/admin/gc');
+      this.toasterService.success('Garbage collected all transactions older than 72 hours');
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
 }

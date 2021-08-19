@@ -23,6 +23,13 @@
       size="'small'"
       >Submit</m-button
     >
+    <m-button
+      class="m-admin-withdrawals__transactionInputButton"
+      (onAction)="garbageCollect()"
+      size="'small'"
+      color="'red'"
+      >Garbage Collect</m-button
+    >
   </div>
   <div
     class="m-admin-withdrawals__card"
@@ -169,19 +176,26 @@
           </m-button>
         </div>
       </div>
-
       <div
         class="m-admin-withdrawalsCard__cell m-admin-withdrawalsCard__cell--actions"
-        *ngIf="request.status === 'pending' || request.status === 'approved'"
+        *ngIf="request.status !== 'pending_approval'"
       >
         <div class="m-admin-withdrawalsCardCell__body">
           <m-button
             size="small"
             [saving]="inProgress"
             [disabled]="inProgress"
-            (onAction)="repairWithdrawal(request)"
+            (onAction)="forceConfirmation(request)"
           >
-            Repair
+            Force Confirm
+          </m-button>
+          <m-button
+            size="small"
+            [saving]="inProgress"
+            [disabled]="inProgress"
+            (onAction)="redispatchCompleted(request)"
+          >
+            Redispatch
           </m-button>
         </div>
       </div>
