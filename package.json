@@ -137,5 +137,12 @@
       "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged --bail --pattern \"**/*.*(ts|html|scss)\"",
       "post-commit": "sh .githooks/post-commit"
     }
-  }
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "not IE 11"
+  ]
 }
