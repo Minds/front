@@ -87,11 +87,10 @@
 
       <ng-container *ngIf="service.isExplicit$ | async">
         <li (click)="setExplicit(false)">
-          <span
-            class="m-dropdownMenu__item"
-            i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
-          >
-            Remove explicit
+          <span class="m-dropdownMenu__item">
+            <ng-container i18n="@@MINDS_BUTTON__USER_DROPDOWN__REMOVE_EXPLICIT"
+              >Remove explicit</ng-container
+            >
           </span>
         </li>
       </ng-container>
@@ -143,10 +142,10 @@
 >
   <div
     class="mdl-card__supporting-text"
-    style="padding: 64px; font-size: 20px; text-align: center;"
+    style="padding: 64px; font-size: 20px; text-align: center"
   >
     @{{ service.username$ | async }}'s email:
-    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none;">
+    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none">
       {{ email }}
     </a>
     <ng-container *ngIf="!email">...</ng-container>

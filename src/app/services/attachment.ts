@@ -528,7 +528,7 @@ export class AttachmentService {
   }
 
   private checkFileType(file): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
         const maxFileSize = this.maxVideoFileSize;
         if (file.size > maxFileSize) {

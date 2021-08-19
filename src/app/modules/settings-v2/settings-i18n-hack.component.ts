@@ -41,12 +41,12 @@ import { Component } from '@angular/core';
       >Deactivate and Delete Account</ng-container
     >
 
-    <ng-container i18n="@@SETTINGS__PRO__HEADER__LABEL">
-      Pro Settings
-    </ng-container>
-    <ng-container i18n="@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL">
-      Pro Subscription Management
-    </ng-container>
+    <ng-container i18n="@@SETTINGS__PRO__HEADER__LABEL"
+      >Pro Settings</ng-container
+    >
+    <ng-container i18n="@@SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL"
+      >Pro Subscription Management</ng-container
+    >
 
     <!-- LINKS (NO COMPONENTS) -->
     <ng-container i18n="@@SETTINGS__ACCOUNTUPGRADE__PRO__LABEL"
@@ -55,9 +55,9 @@ import { Component } from '@angular/core';
     <ng-container i18n="@@SETTINGS__ACCOUNTUPGRADE__PLUS__LABEL"
       >Upgrade to Plus</ng-container
     >
-    <ng-container i18n="@@SETTINGS__PRO__VIEW__CHANNEL__LABEL">
-      View Pro Channel
-    </ng-container>
+    <ng-container i18n="@@SETTINGS__PRO__VIEW__CHANNEL__LABEL"
+      >View Pro Channel</ng-container
+    >
 
     <!-- SEE COMPONENTS FOR OTHER HEADERS -->
   `,

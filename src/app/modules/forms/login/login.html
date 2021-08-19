@@ -1,6 +1,14 @@
 <div
-  class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50 m-error-box mdl-shadow--2dp minds-login-box m-error-box"
-  style="min-height:0;"
+  class="
+    mdl-card
+    mdl-color--red-500
+    mdl-color-text--blue-grey-50
+    m-error-box
+    mdl-shadow--2dp
+    minds-login-box
+    m-error-box
+  "
+  style="min-height: 0"
   [hidden]="showInlineErrors || !errorMessage"
 >
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
@@ -186,9 +194,7 @@
       color="blue"
       data-cy="data-minds-login-button"
     >
-      <ng-container i18n="@@M__ACTION__LOGIN">
-        Login
-      </ng-container>
+      <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </m-button>
   </div>
 </form>
