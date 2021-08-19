@@ -47,7 +47,6 @@ import '@angular/localize/init';
 /** Evergreen browsers require these. **/
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
 // import 'core-js/es7/reflect';
-// ojm confirm we have differential loading with browserslistrc
 
 /**
  * Required to support Web Animations `@angular/platform-browser/animations`.
