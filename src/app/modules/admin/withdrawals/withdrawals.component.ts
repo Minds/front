@@ -165,7 +165,11 @@ export class AdminWithdrawals {
   async forceConfirmation(request: any): Promise<void> {
     this.inProgress = true;
 
-    if (!confirm('Force transaction to be recognised as approved on the blockchain. Check that the transaction has AT LEAST 20 CONFIRMATIONS. Do not run more than once.')) {
+    if (
+      !confirm(
+        'Force transaction to be recognised as approved on the blockchain. Check that the transaction has AT LEAST 20 CONFIRMATIONS. Do not run more than once.'
+      )
+    ) {
       this.toasterService.warn('Cancelled - no action taken');
       this.inProgress = false;
       return;
@@ -189,10 +193,14 @@ export class AdminWithdrawals {
    * @param { any } request - request object.
    * @returns { Promise<void> }
    */
-   async redispatchCompleted(request: any): Promise<void> {
+  async redispatchCompleted(request: any): Promise<void> {
     this.inProgress = true;
 
-    if (!confirm('Only run this if the completed_tx is registered with our system but not written to chain AND more than 72 hours has passed since the request - DO NOT run more than once.')) {
+    if (
+      !confirm(
+        'Only run this if the completed_tx is registered with our system but not written to chain AND more than 72 hours has passed since the request - DO NOT run more than once.'
+      )
+    ) {
       this.toasterService.warn('Cancelled - no action taken');
       this.inProgress = false;
       return;
@@ -218,7 +226,11 @@ export class AdminWithdrawals {
   async garbageCollect(): Promise<void> {
     this.inProgress = true;
 
-    if (!confirm('WARNING! This will FAIL all requests older than 72 hours. This is NOT REVERSIBLE.')) {
+    if (
+      !confirm(
+        'WARNING! This will FAIL all requests older than 72 hours. This is NOT REVERSIBLE.'
+      )
+    ) {
       this.toasterService.warn('Cancelled - no action taken');
       this.inProgress = false;
       return;
@@ -228,11 +240,12 @@ export class AdminWithdrawals {
 
     try {
       await this.client.post('api/v3/rewards/admin/gc');
-      this.toasterService.success('Garbage collected all transactions older than 72 hours');
+      this.toasterService.success(
+        'Garbage collected all transactions older than 72 hours'
+      );
     } catch (e) {
       this.toasterService.error(e.message);
     }
     this.inProgress = false;
   }
-
 }
