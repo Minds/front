@@ -71,7 +71,7 @@ export class InteractionsModalComponent {
    * @returns { boolean } - true if user matches currently logged in user. 
    */
   public isSelf(guid: string): boolean {
-    return this.session.getLoggedInUser().guid === guid; 
+    return this.session.getLoggedInUser().guid === guid;
   }
 
   loadNext() {
