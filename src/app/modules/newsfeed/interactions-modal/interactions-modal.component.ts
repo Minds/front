@@ -1,5 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Session } from '../../../services/session';
 import {
   InteractionsModalDataService,
   InteractionType,
@@ -24,7 +25,10 @@ export class InteractionsModalComponent {
 
   listSubscription: Subscription;
 
-  constructor(private interactionsDataService: InteractionsModalDataService) {}
+  constructor(
+    private interactionsDataService: InteractionsModalDataService,
+    private session: Session
+  ) {}
 
   ngOnInit() {
     this.listSubscription = this.interactionsDataService.list$.subscribe(
@@ -59,6 +63,15 @@ export class InteractionsModalComponent {
       case 'subscribers':
         return 'Recent subscribers';
     }
+  }
+
+  /**
+   * Returns whether or not guid matches that of the logged in user.
+   * @param { string } guid - guid to check.
+   * @returns { boolean } - true if user matches currently logged in user. 
+   */
+  public isSelf(guid: string): boolean {
+    return this.session.getLoggedInUser().guid === guid; 
   }
 
   loadNext() {

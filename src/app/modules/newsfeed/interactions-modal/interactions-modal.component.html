@@ -10,6 +10,7 @@
       <li *ngFor="let entity of entities">
         <m-publisherCard
           [publisher]="entity"
+          [disableSubscribe]="isSelf(entity.guid)"
           *ngIf="entity?.type === 'user'"
         ></m-publisherCard>
         <m-newsfeed__entity
