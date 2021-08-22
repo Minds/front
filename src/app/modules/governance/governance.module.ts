@@ -20,6 +20,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { EmbedServiceV2 } from '../../services/embedV2.service';
 import { GovernanceProposalDetailComponent } from './proposal-detail/proposal-detail.component';
 import { GroupsModule } from '../groups/groups.module';
+import { GovernanceProposalDetailDropdownComponent } from './proposal-detail/dropdown/dropdown.component';
 
 @NgModule({
   imports: [
@@ -69,6 +70,7 @@ import { GroupsModule } from '../groups/groups.module';
     ProposalListComponent,
     GovernanceFilterSelector,
     GovernanceProposalDetailComponent,
+    GovernanceProposalDetailDropdownComponent,
   ],
   exports: [
     GovernanceComponent,
@@ -79,6 +81,7 @@ import { GroupsModule } from '../groups/groups.module';
     GovernanceCreateComponent,
     GovernanceFilterSelector,
     GovernanceProposalDetailComponent,
+    GovernanceProposalDetailDropdownComponent,
   ],
 })
 export class GovernanceModule {}

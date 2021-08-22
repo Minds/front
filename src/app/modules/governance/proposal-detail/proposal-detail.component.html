@@ -1,14 +1,18 @@
+<m-loadingSpinner
+  *ngIf="inProgress"
+  [inProgress]="inProgress"
+></m-loadingSpinner>
+
 <div class="m-governance--proposal-detail ">
   <div class="m-pageLayout__pane--main" m-pageLayout__pane="main">
-    <m-loadingSpinner
-      *ngIf="inProgress"
-      [inProgress]="inProgress"
-    ></m-loadingSpinner>
-
     <div *ngIf="!inProgress">
-      <div class="m-governance--proposal-detail-header">
-        {{ proposal.title }}
+      <div class="m-governance--proposal-detail-options-row">
+        <div class="m-governance--proposal-detail-header">
+          {{ proposal.title }}
+        </div>
+        <m-governance--proposal-detail-dropdown></m-governance--proposal-detail-dropdown>
       </div>
+
       <div class="m-governance__card-status">
         {{ proposal.state }}
       </div>
@@ -19,48 +23,97 @@
     </div>
   </div>
 
-  <div class="m-governance--proposal-detail-info" *ngIf="!inProgress">
-    <div class="m-governance--proposal-detail-title">
-      Information
+  <div>
+    <div class="m-governance--proposal-detail-info" *ngIf="!inProgress">
+      <div class="m-governance--proposal-detail-title">
+        Information
+      </div>
+
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-extra">
+          Author
+        </div>
+        <div class="m-governance--proposal-detail-value">
+          {{ truncatedOnchainAddress(proposal.author) }}
+        </div>
+      </div>
+
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-extra">
+          Start date
+        </div>
+        <div class="m-governance--proposal-detail-value">
+          {{ proposal.start }}
+        </div>
+      </div>
+
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-extra">
+          End date
+        </div>
+        <div class="m-governance--proposal-detail-value">
+          {{ proposal.end }}
+        </div>
+      </div>
+
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-extra">
+          Snapshot
+        </div>
+        <div
+          class="m-governance--proposal-detail-value m-governance--proposal-detail-pointer"
+          (click)="openSnapshot(proposal.id)"
+        >
+          #{{ proposal.snapshot }}
+          <m-icon iconId="open_in_new" m-tooltip--icon></m-icon>
+        </div>
+      </div>
     </div>
 
-    <div class="m-governance--proposal-detail-row">
-      <div class="m-governance--proposal-detail-extra">
-        Author
+    <div
+      class="m-governance--proposal-detail-info m-governance--proposal-detail-results"
+      *ngIf="!inProgress"
+    >
+      <div class="m-governance--proposal-detail-title">
+        Results
       </div>
-      <div class="m-governance--proposal-detail-value">
-        {{ truncatedOnchainAddress(proposal.author) }}
-      </div>
-    </div>
 
-    <div class="m-governance--proposal-detail-row">
-      <div class="m-governance--proposal-detail-extra">
-        Start date
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-extra">
+          Approve
+        </div>
+        <div class="m-governance--proposal-detail-value">
+          100%
+        </div>
       </div>
-      <div class="m-governance--proposal-detail-value">
-        {{ proposal.start }}
-      </div>
-    </div>
 
-    <div class="m-governance--proposal-detail-row">
-      <div class="m-governance--proposal-detail-extra">
-        End date
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-progress ">
+          <span style="width: 100%"></span>
+        </div>
       </div>
-      <div class="m-governance--proposal-detail-value">
-        {{ proposal.end }}
-      </div>
-    </div>
 
-    <div class="m-governance--proposal-detail-row">
-      <div class="m-governance--proposal-detail-extra">
-        Snapshot
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-extra">
+          Reject
+        </div>
+        <div class="m-governance--proposal-detail-value">
+          0%
+        </div>
       </div>
-      <div
-        class="m-governance--proposal-detail-value m-governance--proposal-detail-pointer"
-        (click)="openSnapshot(proposal.id)"
-      >
-        #{{ proposal.snapshot }}
-        <m-icon iconId="open_in_new" m-tooltip--icon></m-icon>
+
+      <div class="m-governance--proposal-detail-row">
+        <div class="m-governance--proposal-detail-progress ">
+          <span style="width: 0%"></span>
+        </div>
+      </div>
+
+      <div class="m-governance--proposal-detail-vote">
+        VOTE APPROVE
+      </div>
+
+      <div class="m-governance--proposal-detail-vote">
+        VOTE REJECT
       </div>
     </div>
   </div>

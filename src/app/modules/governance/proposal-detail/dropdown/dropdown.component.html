@@ -1,0 +1,25 @@
+<div class="m-dropdown--v2">
+  <button
+    class="m-governance--proposal-detail-dropdown__button"
+    (click)="onButtonClick($event)"
+  >
+    <i class="material-icons">more_horiz</i>
+  </button>
+
+  <ul class="m-dropdown__list" *ngIf="isOpened">
+    <li
+      class="m-dropdownList__item"
+      (click)="onButtonClick($event)"
+      i18n="@@M__ACTION__VIEW"
+    >
+      Share
+    </li>
+    <li
+      class="m-dropdownList__item"
+      (click)="onButtonClick($event)"
+      i18n="@@M__ACTION__EDIT"
+    >
+      Delete proposal
+    </li>
+  </ul>
+</div>

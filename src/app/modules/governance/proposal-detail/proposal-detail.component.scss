@@ -3,7 +3,7 @@
 m-governance--proposal-detail {
   .m-pageLayout__pane--main {
     position: relative;
-    padding: 40px 40px;
+    padding: 30px;
     @media screen and (max-width: $max-mobile) {
       padding: 40px 24px;
     }
@@ -13,14 +13,12 @@ m-governance--proposal-detail {
     @media screen and (max-width: $max-mobile) {
       display: grid;
     }
-    div {
-      white-space: pre-wrap;
-    }
+
     .m-governance--proposal-detail-info {
       width: 100%;
       padding: 20px 20px;
       border: 1px solid #414c57;
-      margin-right: 40px;
+      margin-right: 30px;
       margin-top: 40px;
       border-radius: 4px;
       box-sizing: border-box;
@@ -28,6 +26,18 @@ m-governance--proposal-detail {
       @media screen and (max-width: $max-mobile) {
         margin-top: 0px;
       }
+    }
+
+    .m-governance--proposal-detail-results {
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 30px;
+      }
+    }
+
+    .m-governance--proposal-detail-options-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .m-governance--proposal-detail-title {
@@ -41,6 +51,24 @@ m-governance--proposal-detail {
       justify-content: space-between;
       padding-top: 12px;
       cursor: default;
+
+      m-icon {
+        cursor: pointer;
+      }
+    }
+
+    .m-governance--proposal-detail-vote {
+      padding: 8px;
+      justify-content: center;
+      border: 1px solid;
+      margin-top: 20px;
+      display: flex;
+      cursor: pointer;
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--btnHover);
+        }
+      }
     }
 
     .m-governance--proposal-detail-key {
@@ -87,12 +115,30 @@ m-governance--proposal-detail {
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 0px;
-        margin-top: 12px;
+        margin-top: 20px;
       }
 
       p {
         margin-bottom: 0px;
       }
+    }
+    .m-governance--proposal-detail-progress {
+      height: 8px;
+      position: relative;
+      background: #858586;
+      border-radius: 25px;
+      width: 100%;
+    }
+
+    .m-governance--proposal-detail-progress > span {
+      display: block;
+      height: 100%;
+      border-radius: 20px;
+      @include m-theme() {
+        background-color: themed($m-blue);
+      }
+      position: relative;
+      overflow: hidden;
     }
   }
 }
