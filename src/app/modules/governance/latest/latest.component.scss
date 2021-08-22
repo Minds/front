@@ -8,6 +8,9 @@
   align-items: center;
   display: flex;
   justify-content: flex-end;
+  @media screen and (max-width: $max-mobile) {
+    padding-right: 24px;
+  }
 }
 
 .m-governance-button {

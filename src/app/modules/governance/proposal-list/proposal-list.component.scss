@@ -1,5 +1,10 @@
+@import 'defaults.scss';
+
 .m-governance__card {
   padding: 20px 40px;
+  @media screen and (max-width: $max-mobile) {
+    padding: 20px 24px;
+  }
 
   .m-governance-total {
     text-transform: uppercase;

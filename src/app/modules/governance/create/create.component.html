@@ -7,59 +7,26 @@
     class="m-groupsCreate__form m-formWrapper m-formLayout--buttonRight"
     (keydown.enter)="$event.preventDefault()"
   >
-    <!-- <div class="m-form__fieldsContainer">
+    <div class="m-form__fieldsContainer">
       <div class="m-form__field--text stretchedField">
         <div class="m-form__row--label">
-          <label i18n="@@CREATE_GROUP__NAME">Email Address</label>
+          <label i18n="@@CREATE_GROUP__DESCRIPTION">Question </label>
+          <div class="m-form__sublabel">
+            What is your proposal?
+          </div>
         </div>
 
         <div class="m-form__row--input">
           <input
             type="text"
             class="form-control"
-            name="email"
-            formControlName="email"
+            name="question"
+            formControlName="question"
             data-cy="minds-groups-create-name-input"
           />
         </div>
       </div>
-    </div> -->
-
-    <!-- <div class="m-form__fieldsContainer">
-      <div class="m-form__field--text stretchedField">
-        <div class="m-form__row--label">
-          <label i18n="@@CREATE_GROUP__NAME">Minds Username</label>
-        </div>
-
-        <div class="m-form__row--input">
-          <input
-            type="text"
-            class="form-control"
-            name="username"
-            formControlName="username"
-            data-cy="minds-groups-create-name-input"
-          />
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="m-form__fieldsContainer">
-      <div class="m-form__field--text stretchedField">
-        <div class="m-form__row--label">
-          <label i18n="@@CREATE_GROUP__NAME">Full Name</label>
-        </div>
-
-        <div class="m-form__row--input">
-          <input
-            type="text"
-            class="form-control"
-            name="name"
-            formControlName="name"
-            data-cy="minds-groups-create-name-input"
-          />
-        </div>
-      </div>
-    </div> -->
+    </div>
 
     <div class="m-form__fieldsContainer">
       <div class="m-form__field--text stretchedField">

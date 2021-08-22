@@ -27,7 +27,6 @@ export class GovernanceEnactedComponent implements OnInit, OnDestroy {
         pairwise(),
         filter((events: RouterEvent[]) => events[0].url === events[1].url),
         startWith('Initial call')
-        // takeUntil(this.destroyed)
       )
       .subscribe(async () => {
         if (!this.proposals$.getValue().length) {

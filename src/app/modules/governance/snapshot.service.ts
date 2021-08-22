@@ -19,8 +19,8 @@ export interface SnapshotProposal {
   title: string;
   body: string;
   choices: string[];
-  start: number;
-  end: number;
+  start: any;
+  end: any;
   snapshot: string;
   state: string;
   author: string;
@@ -43,8 +43,6 @@ interface CreateProposal {
   start: number;
   end: number;
   snapshot: number;
-  area: number;
-
   type?: ProposalType;
   metadata?: {
     plugins?: Record<string, unknown>;
@@ -102,6 +100,8 @@ query ($id: String) {
       id
       name
     }
+    ipfs
+    state
   }
 }`;
 
@@ -123,7 +123,6 @@ interface CreateProposalParam extends Partial<CreateProposal> {
   body: CreateProposal['body'];
   start: CreateProposal['start'];
   end: CreateProposal['end'];
-  area: CreateProposal['area'];
 }
 
 @Injectable()

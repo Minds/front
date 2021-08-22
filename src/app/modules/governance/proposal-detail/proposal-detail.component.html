@@ -1,5 +1,67 @@
-<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+<div class="m-governance--proposal-detail ">
+  <div class="m-pageLayout__pane--main" m-pageLayout__pane="main">
+    <m-loadingSpinner
+      *ngIf="inProgress"
+      [inProgress]="inProgress"
+    ></m-loadingSpinner>
 
-<div *ngIf="!inProgress">
-  {{ proposal.body }}
+    <div *ngIf="!inProgress">
+      <div class="m-governance--proposal-detail-header">
+        {{ proposal.title }}
+      </div>
+      <div class="m-governance__card-status">
+        {{ proposal.state }}
+      </div>
+      <div
+        class="m-governance--proposal-detail-body-title"
+        [innerHTML]="proposal.body"
+      ></div>
+    </div>
+  </div>
+
+  <div class="m-governance--proposal-detail-info" *ngIf="!inProgress">
+    <div class="m-governance--proposal-detail-title">
+      Information
+    </div>
+
+    <div class="m-governance--proposal-detail-row">
+      <div class="m-governance--proposal-detail-extra">
+        Author
+      </div>
+      <div class="m-governance--proposal-detail-value">
+        {{ truncatedOnchainAddress(proposal.author) }}
+      </div>
+    </div>
+
+    <div class="m-governance--proposal-detail-row">
+      <div class="m-governance--proposal-detail-extra">
+        Start date
+      </div>
+      <div class="m-governance--proposal-detail-value">
+        {{ proposal.start }}
+      </div>
+    </div>
+
+    <div class="m-governance--proposal-detail-row">
+      <div class="m-governance--proposal-detail-extra">
+        End date
+      </div>
+      <div class="m-governance--proposal-detail-value">
+        {{ proposal.end }}
+      </div>
+    </div>
+
+    <div class="m-governance--proposal-detail-row">
+      <div class="m-governance--proposal-detail-extra">
+        Snapshot
+      </div>
+      <div
+        class="m-governance--proposal-detail-value m-governance--proposal-detail-pointer"
+        (click)="openSnapshot(proposal.id)"
+      >
+        #{{ proposal.snapshot }}
+        <m-icon iconId="open_in_new" m-tooltip--icon></m-icon>
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { ShareModalComponent } from '../../modals/share/share';
-import { SnapshotService } from '../snapshot.service';
+import { SnapshotProposal, SnapshotService } from '../snapshot.service';
 
 @Component({
   moduleId: module.id,
@@ -23,13 +21,15 @@ export class GovernanceCreateComponent implements OnInit {
     private toasterService: FormToastService,
     public session: Session,
     private router: Router,
-    private overlayModal: OverlayModalService,
     private settingsV2Service: SettingsV2Service,
     private snapshotService: SnapshotService
   ) {}
 
   async ngOnInit() {
     this.form = new FormGroup({
+      question: new FormControl('', {
+        validators: [Validators.required],
+      }),
       email: new FormControl(''),
       username: new FormControl(''),
       name: new FormControl(''),
@@ -55,21 +55,7 @@ export class GovernanceCreateComponent implements OnInit {
     );
   }
 
-  openShareModal() {
-    const data = {
-      url: 'www.google.com',
-    };
-
-    console.log('se abre');
-    this.overlayModal
-      .create(ShareModalComponent, data, {
-        class: 'm-overlay-modal--medium m-overlayModal__share',
-      })
-      .present();
-  }
-
   async onSubmit(e) {
-    console.log(this.userData);
     const values = this.form.value;
     if (!values.funding) {
       this.toasterService.error('Funding field is required');
@@ -98,44 +84,67 @@ export class GovernanceCreateComponent implements OnInit {
       const start = this.formatDatetime(new Date().getTime());
       const end = this.formatDatetime(new Date().getTime() + 3600 * 24 * 14);
 
-      await this.snapshotService.createProposal({
-        end,
-        start,
-        area: values.area,
-        name: 'Test proposal from Proposal',
-        body: `
-          ## Project Description
-          ${values.project_description}
+      const body = `
+      ## Project Description
+      ${values.project_description}
 
-          ## Roadmap
-          ${values.roadmap}
+      ## Roadmap
+      ${values.roadmap}
 
-          ## Funding
-          ${values.funding}
+      ## Funding
+      ${values.funding}
 
-          ## Challenges
-          ${values.challenges}
+      ## Challenges
+      ${values.challenges}
 
-          ## Links
-          ${values.links}
+      ## Links
+      ${values.links}
 
-          ## Experience
-          ${values.experience}
+      ## Experience
+      ${values.experience}
 
-          ## Goals
-          ${values.goals}
+      ## Goals
+      ${values.goals}
 
-          ## Additional requests
-          ${values.additional_requests}
+      ## Additional requests
+      ${values.additional_requests}
 
-          ## Additional information
-          ${values.additional_info}
-          
-        `.trim(),
-      });
-      this.toasterService.success('proposal sent');
-      this.openShareModal();
-      // this.router.navigate(['/governance/latest']);
+      ## Additional information
+      ${values.additional_info}
+      
+    `.trim();
+
+      // console.log(String(body));
+
+      await this.snapshotService
+        .createProposal({
+          end,
+          start,
+          name: values.question,
+          body: `
+## Project Description
+${values.project_description}
+## Roadmap
+${values.roadmap}
+## Funding
+${values.funding}
+## Challenges
+${values.challenges}
+## Links
+${values.links}
+## Experience
+${values.experience}
+## Goals
+${values.goals}
+## Additional requests
+${values.additional_requests}
+## Additional information
+${values.additional_info}`.trim(),
+        })
+        .then((data: SnapshotProposal) =>
+          this.router.navigate([`/governance/proposal/${data.id}`])
+        );
+      this.toasterService.success('Proposal successfully submitted');
     } catch (e) {
       this.inProgress = false;
       this.toasterService.error(e.message);

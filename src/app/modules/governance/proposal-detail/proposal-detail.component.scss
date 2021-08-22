@@ -1,3 +1,98 @@
-div {
-  white-space: pre-wrap;
+@import 'defaults.scss';
+
+m-governance--proposal-detail {
+  .m-pageLayout__pane--main {
+    position: relative;
+    padding: 40px 40px;
+    @media screen and (max-width: $max-mobile) {
+      padding: 40px 24px;
+    }
+  }
+  .m-governance--proposal-detail {
+    display: flex;
+    @media screen and (max-width: $max-mobile) {
+      display: grid;
+    }
+    div {
+      white-space: pre-wrap;
+    }
+    .m-governance--proposal-detail-info {
+      width: 100%;
+      padding: 20px 20px;
+      border: 1px solid #414c57;
+      margin-right: 40px;
+      margin-top: 40px;
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: fit-content;
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 0px;
+      }
+    }
+
+    .m-governance--proposal-detail-title {
+      border-bottom: 1px solid #414c57;
+      padding-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .m-governance--proposal-detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+      cursor: default;
+    }
+
+    .m-governance--proposal-detail-key {
+      color: #b8c1ca;
+    }
+
+    .m-governance--proposal-detail-value {
+      align-items: center;
+      display: flex;
+    }
+
+    .m-governance--proposal-detail-pointer {
+      cursor: pointer;
+    }
+
+    .m-governance--proposal-detail-header {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .m-governance__card-status {
+      margin-bottom: 40px;
+      max-width: 100px;
+      border: 1px solid;
+      padding: 4px 2px;
+      display: flex;
+      justify-content: center;
+      border-radius: 50px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      @include m-theme() {
+        border-color: themed($m-blue);
+      }
+    }
+
+    .m-governance--proposal-detail-extra {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-governance--proposal-detail-body-title {
+      h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 0px;
+        margin-top: 12px;
+      }
+
+      p {
+        margin-bottom: 0px;
+      }
+    }
+  }
 }

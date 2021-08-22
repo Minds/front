@@ -1,25 +1,23 @@
 @import 'defaults.scss';
 
-:host {
-  .m-tabs__container {
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+.m-tabs__container {
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-    .m-tabs__tab a {
-      white-space: nowrap;
-    }
+  .m-tabs__tab a {
+    white-space: nowrap;
+  }
 
-    m-discovery__settingsButton {
-      ::ng-deep {
-        i {
-          @media screen and (max-width: $max-mobile) {
-            margin-right: 10px;
-          }
+  m-discovery__settingsButton {
+    ::ng-deep {
+      i {
+        @media screen and (max-width: $max-mobile) {
+          margin-right: 10px;
         }
       }
     }
