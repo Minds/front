@@ -121,7 +121,7 @@ export class PublisherCardComponent implements AfterViewInit {
   get maxHeight(): number {
     switch (this.size) {
       case 'small':
-        return 150;
+        return 170;
       case 'medium':
         return 130;
       case 'large':

@@ -89,6 +89,7 @@
     width: 100%;
     padding: 15px;
     box-sizing: border-box;
+    z-index: 2;
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
       background-color: themed($m-bgColor--primary);

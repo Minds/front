@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Session } from '../../services/session';
 import { NotificationService } from './notification.service';
-import { FeaturesService } from '../../services/features.service';
 
 @Component({
   moduleId: module.id,
@@ -17,11 +16,7 @@ export class NotificationsTopbarToggleComponent {
   @HostBinding('class.m-notificationsTopbarToggle--newNav')
   newNavigation: boolean = false;
 
-  constructor(
-    public session: Session,
-    public service: NotificationService,
-    private featuresService: FeaturesService
-  ) {
+  constructor(public session: Session, public service: NotificationService) {
     this.newNavigation = true;
   }
 

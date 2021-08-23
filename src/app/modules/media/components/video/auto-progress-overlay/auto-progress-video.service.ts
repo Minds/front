@@ -87,6 +87,7 @@ export class AutoProgressVideoService extends AbstractSubscriberComponent {
     private relatedContent: RelatedContentService,
     isCommentingService: IsCommentingService
   ) {
+    //ojm
     super();
 
     // if service detects that a user is typing, call to cancel.
