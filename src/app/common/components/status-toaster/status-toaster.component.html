@@ -1,0 +1,51 @@
+<div class="m-statusToaster__toastsContainer" *ngIf="visibleToasts">
+  <ng-container *ngFor="let toast of toasts; let i = index">
+    <div
+      class="m-statusToast__wrapper"
+      [ngClass]="{
+        'm-statusToast__wrapper--resolved': toast.resolved,
+        'm-statusToast__wrapper--unresolved': !toast.resolved
+      }"
+      [@fader]="toast.dismissed ? 'dismissed' : 'active'"
+    >
+      <!-- INCIDENT ------------------->
+      <div class="m-statusToast__iconWrapper">
+        <i class="material-icons">
+          <ng-container *ngIf="toast.resolved">check_circle</ng-container>
+          <ng-container *ngIf="!toast.resolved">warning</ng-container>
+        </i>
+      </div>
+      <div class="m-statusToast__details">
+        <p class="m-statusToastDetails__title">
+          <ng-container
+            *ngIf="toast.resolved"
+            i18n="@@M__STATUS_TOASTER__RESOLVED"
+          >
+            Resolved: </ng-container
+          >{{ toast.incident.name }}
+        </p>
+        <p class="m-statusToastDetails__desc" *ngIf="!toast.resolved">
+          {{ toast.incident.incident_updates[0].body }}
+        </p>
+        <p class="m-statusToastDetails__updated">
+          Last updated {{ getLastUpdated(toast.incident.updated_at) }}
+        </p>
+        <p class="m-statusToastDetails__link">
+          <a target="_blank" href="{{ toast.incident.shortlink }}"
+            >View latest updates</a
+          >
+        </p>
+      </div>
+
+      <div class="m-statusToast__iconWrapper--close">
+        <i class="material-icons" (click)="dismiss(i)">clear</i>
+      </div>
+      <!-- ------------------- -->
+    </div>
+    <div
+      class="m-statusToaster__spacer"
+      [@fader]="toast.dismissed ? 'dismissed' : 'active'"
+    ></div>
+  </ng-container>
+  <div class="m-statusToasterContainer__spacer"></div>
+</div>

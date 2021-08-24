@@ -1,12 +1,15 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { FormToast, FormToastService } from '../../services/form-toast.service';
 import { Subscription } from 'rxjs';
+import { StatusToasterService } from './status-toaster.service';
 import {
   animate,
   keyframes,
@@ -15,11 +18,12 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'm-formToast',
-  templateUrl: './form-toast.component.html',
-  styleUrls: ['./form-toast.component.ng.scss'],
+  selector: 'm-statusToaster',
+  templateUrl: './status-toaster.component.html',
+  styleUrls: ['./status-toaster.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fader', [
@@ -71,7 +75,8 @@ import {
     ]),
   ],
 })
-export class FormToastComponent implements OnInit, OnDestroy {
+export class StatusToasterComponent implements OnInit, OnDestroy {
+  interval;
   subscription: Subscription;
 
   get toasts() {
@@ -83,60 +88,52 @@ export class FormToastComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private service: FormToastService,
-    protected cd: ChangeDetectorRef
+    protected service: StatusToasterService,
+    protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit(): void {
     this.subscription = this.service.onToast().subscribe((toast) => {
-      // clear toasts when an empty toast is received
-      if (!toast.message) {
-        this.service.toasts = [];
-        return;
-      }
-
       // if all saved toasts have already been dismissed, then clean the array to prevent leaks
       if (this.service.toasts.findIndex((value) => !value.dismissed) === -1) {
-        this.service.timeoutIds = [];
         this.service.toasts = [];
       }
 
-      const toastIndex = this.service.toasts.push(toast) - 1;
+      this.service.toasts.push(toast) - 1;
       this.detectChanges();
-
-      this.setToastTimeout(toastIndex);
     });
+
+    this.startPolling();
   }
 
-  pauseTimeout(toastIndex: number): void {
-    clearTimeout(this.service.timeoutIds[toastIndex]);
+  ngOnDestroy(): void {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
-  resumeTimeout(toastIndex: number): void {
-    this.setToastTimeout(toastIndex);
+  /**
+   * Check for unresolved incidents every 30s
+   */
+  startPolling(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.interval = setInterval(() => {
+        this.service.update();
+      }, 30000);
+    }
+  }
+
+  getLastUpdated(utc): string {
+    return moment(utc).local().format('MMM Do hh:mm a');
   }
 
   dismiss(toastIndex: number): void {
     this.service.toasts[toastIndex].dismissed = true;
   }
 
-  private setToastTimeout(toastIndex: number): void {
-    const toastTimeout: number = window.setTimeout(() => {
-      this.dismiss(toastIndex);
-
-      this.detectChanges();
-    }, 3400);
-
-    this.service.timeoutIds[toastIndex] = toastTimeout;
-  }
-
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy(): void {
-    this.service.timeoutIds.forEach((id) => clearTimeout(id));
-    this.subscription.unsubscribe();
   }
 }
