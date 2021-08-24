@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
-import { LocalWalletService } from '../../../../blockchain/local-wallet.service';
 import { BlockchainService } from '../../../../blockchain/blockchain.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../../utils/browser';
@@ -48,7 +47,6 @@ export class TokenOnChainOnboardingComponent {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
-    protected localWallet: LocalWalletService,
     protected blockchain: BlockchainService,
     protected web3Wallet: Web3WalletService,
     configs: ConfigsService
@@ -67,23 +65,6 @@ export class TokenOnChainOnboardingComponent {
   ngOnDestroy() {
     if (this._externalTimer) {
       clearInterval(this._externalTimer);
-    }
-  }
-
-  async createAddress() {
-    try {
-      this.inProgress = true;
-      this.detectChanges();
-
-      this.generatedAccount = await this.localWallet.create(false);
-      await this.blockchain.setWallet({
-        address: this.generatedAccount.address,
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      this.inProgress = false;
-      this.detectChanges();
     }
   }
 

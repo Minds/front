@@ -85,6 +85,12 @@ export class NewsfeedActivitySuggestionsComponent {
     if (!this._baseEntity) {
       return;
     }
+
+    // if group
+    if (this._baseEntity.containerObj && this._baseEntity.containerObj.name) {
+      return this._baseEntity.containerObj.name;
+    }
+
     const baseOwner = this._baseEntity.ownerObj;
 
     if (baseOwner.guid === this.session.getLoggedInUser().guid) {

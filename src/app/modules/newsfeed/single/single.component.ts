@@ -212,6 +212,10 @@ export class NewsfeedSingleComponent {
       this.metaService.setOgType('video');
       this.metaService.setOgImage(activity.custom_data['thumbnail_src']);
     }
+
+    if (activity.subtype === 'video' || activity.subtype === 'image') {
+      this.metaService.setOEmbed(activity.guid);
+    }
   }
 
   delete(activity) {

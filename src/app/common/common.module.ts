@@ -189,6 +189,7 @@ import { PublisherSearchModalComponent } from './components/publisher-search-mod
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
 import { DateRangeModalService } from './components/date-range-modal/date-range-modal.services';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const routes: Routes = [
   {
@@ -206,6 +207,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    QRCodeModule,
     RouterModule.forChild(routes),
   ],
   declarations: [

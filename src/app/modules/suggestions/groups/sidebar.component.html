@@ -41,18 +41,16 @@
             *ngIf="entity['is:member']"
             (onAction)="leave(entity)"
             i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
+            >Leave</m-button
           >
-            Leave
-          </m-button>
           <m-button
             size="xsmall"
             class="awaiting"
             *ngIf="entity['is:awaiting']"
             (onAction)="cancelRequest(entity)"
             i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
+            >Cancel request</m-button
           >
-            Cancel request
-          </m-button>
         </div>
       </a>
     </li>

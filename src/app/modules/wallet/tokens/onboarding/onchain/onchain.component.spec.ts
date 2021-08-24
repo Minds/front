@@ -16,7 +16,6 @@ import {
 import { TokenOnChainOnboardingComponent } from './onchain.component';
 import { clientMock } from '../../../../../../tests/client-mock.spec';
 import { Client } from '../../../../../services/api/client';
-import { LocalWalletService } from '../../../../blockchain/local-wallet.service';
 import { localWalletServiceMock } from '../../../../../../tests/local-wallet-service-mock.spec';
 import {
   MockComponent,
@@ -89,7 +88,6 @@ xdescribe('TokenOnChainOnboardingComponent', () => {
         providers: [
           { provide: Client, useValue: clientMock },
           { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-          { provide: LocalWalletService, useValue: localWalletServiceMock },
           { provide: Session, useValue: sessionMock },
           { provide: Router, useValue: RouterTestingModule },
           { provide: BlockchainService, useValue: blockchainService },
@@ -124,33 +122,6 @@ xdescribe('TokenOnChainOnboardingComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should create address', fakeAsync(() => {
-    expect(fixture.debugElement.query(By.css(`button`))).not.toBeNull();
-    expect(
-      fixture.debugElement.query(By.css(`.m-token--onboarding--slide`))
-    ).not.toBeNull();
-    expect(
-      fixture.debugElement.query(By.css(`m-token--onboarding--video`))
-    ).not.toBeNull();
-    comp.createAddress();
-    tick();
-    expect(blockchainService.setWallet).toHaveBeenCalled();
-  }));
-
-  it('should call next when provided valid address', fakeAsync(() => {
-    spyOn(comp.next, 'next').and.stub();
-    comp.createAddress();
-    comp.providedAddress = '0x8ba5b43846ecf44e08968dd824db544a94e05b2a';
-
-    fixture.detectChanges();
-    tick();
-    expect(comp.canProvideAddress()).toBeTruthy();
-    comp.provideAddress();
-
-    tick();
-    expect(comp.next.next).toHaveBeenCalled();
-  }));
-
   it('should use external and detect', fakeAsync(() => {
     spyOn(comp.next, 'next').and.stub();
     comp.providedAddress = '0x8ba5b43846ecf44e08968dd824db544a94e05b2a';
@@ -170,9 +141,9 @@ xdescribe('TokenOnChainOnboardingComponent', () => {
     tick();
     comp.downloadPrivateKey();
     expect(comp.canProvideAddress()).toBeTruthy();
-    spyOn(window, 'open').and.callFake(function() {
-      return true;
-    });
+    // spyOn(window, 'open').and.callFake(function() {
+    //   return true;
+    // });ojm
     comp.downloadMetamask();
     tick();
     expect(comp.downloadingMetamask).toBeTruthy();

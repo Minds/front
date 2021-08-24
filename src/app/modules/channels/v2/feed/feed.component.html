@@ -147,7 +147,10 @@
           feed?.length < 1 &&
           isOwnedChannel
         "
-        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+        class="
+          m-channelFeed__emptyFeedContainer
+          m-channelFeed__emptyFeedContainer--bordered
+        "
       >
         <ng-container [ngSwitch]="feedService.type$ | async">
           <span
@@ -179,7 +182,7 @@
             *ngSwitchCaseDefault
             class="m-channelFeed__emptyFeedTitle"
             i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
-            >Looks like you haven't posted any content of this type yet.</span
+            >Looks like you haven't posted any content of this type yet</span
           >
         </ng-container>
 
@@ -202,7 +205,10 @@
         *ngIf="
           !(feedService.service.inProgress | async) && feed && feed?.length < 1
         "
-        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+        class="
+          m-channelFeed__emptyFeedContainer
+          m-channelFeed__emptyFeedContainer--bordered
+        "
       >
         <span
           class="m-channelFeed__emptyFeedTitle"

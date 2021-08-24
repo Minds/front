@@ -134,7 +134,7 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
   public viewBoosts(type: 'newsfeed' | 'content'): void {
     this.router.navigate([
       `/boost/console/${type}/history`,
-      { remote: this.service.channel$.getValue().username },
+      { remote: this.service.channel$.getValue().username.toLowerCase() },
     ]);
   }
 

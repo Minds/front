@@ -138,7 +138,11 @@
               "
               *ngIf="(service.type$ | async) === 'usd'"
             >
-              <div i18n="@@COMMON__MONTHLY" class="m-legible">Monthly</div>
+              <div class="m-legible">
+                <ng-container i18n="@@COMMON__MONTHLY__TITLECASE"
+                  >Monthly</ng-container
+                >
+              </div>
               <div class="m-wireCreatorFormIntervalOption__pricing">
                 <ng-container *ngIf="(service.type$ | async) === 'usd'"
                   >$</ng-container
@@ -157,7 +161,10 @@
           </ng-container>
           <ng-template #tokenLifetimeUpgrade>
             <div
-              class="m-wireCreatorForm__intervalOption m-wireCreatorForm__intervalOption--selected"
+              class="
+                m-wireCreatorForm__intervalOption
+                m-wireCreatorForm__intervalOption--selected
+              "
               (click)="service.setUpgradeInterval('once')"
             >
               <div
@@ -196,7 +203,7 @@
         >
           <ng-container
             *ngSwitchCase="'tokens'"
-            i18n="currency|@@COMMON__TOKENS"
+            i18n="currency|@@COMMON__MINDS__CAPS"
             >MINDS</ng-container
           >
           <ng-container *ngSwitchCase="'usd'" i18n="currency|@@COMMON__USD"
@@ -314,11 +321,10 @@
         <!--SELECT BANK ACCOUNT/CARD-->
         <!--------------------------->
         <div class="m-wireCreatorForm__field m-wireCreatorForm__field--card">
-          <div
-            class="m-wireCreatorForm__label"
-            i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
-          >
-            Payment Method
+          <div class="m-wireCreatorForm__label">
+            <ng-container i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
+              >Payment Method</ng-container
+            >
           </div>
 
           <m-payments__selectCard

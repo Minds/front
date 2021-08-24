@@ -74,6 +74,29 @@ export class SettingsV2SessionsComponent implements OnInit, OnDestroy {
     this.init = false;
   }
 
+  /**
+   * Calls to delete all sessions for the logged in user.
+   * As user is logged out in the process, redirects to /login form.
+   * @returns { Promise<void> }
+   */
+  async deleteAllSessions(): Promise<void> {
+    if (!confirm('This will log you out of all sessions - continue?')) {
+      return;
+    }
+
+    const response = <any>(
+      await this.client.delete(`api/v3/sessions/common-sessions/all`)
+    );
+
+    if (response && response.status === 'success') {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.toast.error(response.message ?? 'An unknown error has occurred');
+    this.init = false;
+  }
+
   onButtonClick(i): void {
     this.menuOpened$.next(i);
     this.detectChanges();

@@ -94,7 +94,7 @@
     font-size: inherit;
     line-height: inherit;
     border: none;
-    border-radius: $minds-padding / 2;
+    border-radius: $minds-padding * 0.5;
     margin: 0;
     @include m-theme() {
       background-color: rgba(themed($m-black), 0.15);
@@ -134,7 +134,7 @@
       font-size: inherit;
       line-height: inherit;
       border: none;
-      border-radius: $minds-padding / 2;
+      border-radius: $minds-padding * 0.5;
       margin: 0;
       margin-right: 8px;
       @include m-theme() {
@@ -346,7 +346,7 @@
     }
 
     .m-boost--creator-autocomplete--result {
-      padding: $minds-padding / 2;
+      padding: $minds-padding * 0.5;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -558,7 +558,7 @@
     .m-payments-saved--item {
       text-transform: uppercase;
       font-weight: 400;
-      padding: $minds-padding / 2;
+      padding: $minds-padding * 0.5;
       padding-left: $minds-padding * 2;
 
       &:hover,

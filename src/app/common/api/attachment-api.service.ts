@@ -99,15 +99,23 @@ export const httpEventToUploadEvent = (
     ),
 
     // If something happens during the upload, replace with a static HOO
-    catchError(e =>
-      of({
+    catchError(e => {
+      let errorMessage = 'E_CLIENT_ERROR';
+
+      if (e.error && e.error.message) {
+        errorMessage = e.error.message;
+      } else if (e.message) {
+        errorMessage = e.message;
+      }
+
+      return of({
         type: UploadEventType.Fail,
         payload: {
           request: { type },
-          response: (e && e.message) || 'E_CLIENT_ERROR',
+          response: errorMessage,
         },
-      })
-    )
+      });
+    })
   );
 
 /**
