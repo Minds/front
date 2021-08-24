@@ -1,9 +1,6 @@
 <m-settingsV2__header>
-  <div
-    class="m-settingsV2__headerLabel"
-    i18n="@@SETTINGS__BILLING__RECURRING__LABEL"
-  >
-    Recurring Payments
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__BILLING__RECURRING__LABEL">Recurring Payments</span>
   </div>
   <div
     class="m-settingsV2__desc"
@@ -95,9 +92,8 @@
           color="grey"
           i18n="@@M__ACTION__CANCEL"
           (onAction)="cancel(i)"
+          >Cancel</m-button
         >
-          Cancel
-        </m-button>
       </div>
     </li>
   </ul>

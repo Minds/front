@@ -14,7 +14,7 @@
     background-size: cover;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--primary);
+      background-color: themed($m-bgColor--primaryInverted);
       border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
@@ -100,8 +100,9 @@
   }
   .m-wireCreatorMarketingBlock__desc {
     margin-bottom: 10px;
+    font-weight: 300;
     @include m-theme() {
-      color: themed($m-textColor--secondary);
+      color: themed($m-white-always);
     }
   }
   .m-wireCreatorMarketingBlock__learnMore {

@@ -306,6 +306,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * True if composer service is instantiated in a group context (with a container_guid).
+   * @returns { Observable<boolean> } - holds true when this is in a group context.
+   */
+  get isGroupPost$(): Observable<boolean> {
+    return this.service.isGroupPost$;
+  }
+
+  /**
    * Emits the new attachment
    * @param $event
    */

@@ -40,9 +40,9 @@
   <div class="m-layout__grid">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME">
-          Username
-        </label>
+        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
+          >Username</label
+        >
       </div>
       <div class="m-form__row--input">
         <input
@@ -189,7 +189,7 @@
       >
         <ng-container
           *ngIf="this.form.errors?.passwordConfirming"
-          i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_EMAIL"
+          i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORDS_MUST_MATCH"
         >
           Passwords must match
         </ng-container>

@@ -40,18 +40,16 @@
       [saving]="inProgress"
       i18n="@@M__ACTION__ACCEPT"
       size="small"
+      >Accept</m-button
     >
-      Accept
-    </m-button>
     <m-button
       class="m-groupsJoinButton__verdict"
       (onAction)="decline()"
       [saving]="inProgress"
       i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
       size="small"
+      >Decline</m-button
     >
-      Decline
-    </m-button>
   </ng-container>
   <m-button
     class="m-groupsJoinButton__leave"
@@ -60,9 +58,8 @@
     [saving]="inProgress"
     i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
     size="small"
+    >Leave</m-button
   >
-    Leave
-  </m-button>
   <m-button
     class="m-groupsJoinButton__cancel"
     *ngIf="group['is:awaiting']"
@@ -70,9 +67,8 @@
     [saving]="inProgress"
     i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
     size="small"
+    >Cancel request</m-button
   >
-    Cancel request
-  </m-button>
   <m-modal-signup-on-action
     [open]="showModal"
     (closed)="join(); showModal = false"

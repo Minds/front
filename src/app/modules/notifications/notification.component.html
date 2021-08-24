@@ -228,11 +228,13 @@
               focusedCommentUrn: notification.params?.focusedCommentUrn
             }"
           >
-            <p i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
-              {{ notification.fromObj.name }} commented on
-              <span class="pseudo-link mdl-color-text--blue-grey-400">{{
-                notification.entityObj.title | excerpt
-              }}</span>
+            <p>
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y"
+                >{{ notification.fromObj.name }} commented on
+                <span class="pseudo-link mdl-color-text--blue-grey-400">{{
+                  notification.entityObj.title | excerpt
+                }}</span></ng-container
+              >
             </p>
           </a>
         </div>
@@ -1074,7 +1076,7 @@
             notification.entityObj.type !== 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST"
-          >your post.</span
+          >your post</span
         >
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1085,7 +1087,7 @@
             notification.entityObj.type === 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL"
-          >your channel.</span
+          >your channel</span
         >
         <ng-container
           i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__REFUNDED"
@@ -1106,7 +1108,7 @@
       "
     >
       <p *ngIf="notification.params.impressions">
-        <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__X_POINTS_FOR"
+        <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__X_TOKENS_FOR"
           >{{ notification.params.bid | token: 18 }} tokens
           <span *ngIf="notification.entityObj">for </span></ng-container
         >
@@ -1294,9 +1296,8 @@
         <span
           *ngIf="notification.entityObj"
           i18n="@@NOTIFICATIONS__NOTIFICATION__FOR_WORD"
+          >for</span
         >
-          for
-        </span>
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
           *ngIf="notification.entityObj && notification.entityObj.title"
@@ -1432,8 +1433,8 @@
         <span
           *ngIf="notification.entityObj"
           i18n="X points _for_ entity@@NOTIFICATIONS__NOTIFICATION__FOR_WORD"
-          >for
-        </span>
+          >for</span
+        >
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
           *ngIf="notification.entityObj && notification.entityObj.title"
@@ -1447,8 +1448,8 @@
             notification.entityObj.type !== 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST"
-          >your post.
-        </span>
+          >your post</span
+        >
         <span
           class="pseudo-link mdl-color-text--blue-grey-400"
           *ngIf="
@@ -1457,8 +1458,8 @@
             notification.entityObj.type === 'user'
           "
           i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL"
-          >your channel.
-        </span>
+          >your channel</span
+        >
         <ng-container
           i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__NOT_CHARGED"
           >You have not been charged.</ng-container

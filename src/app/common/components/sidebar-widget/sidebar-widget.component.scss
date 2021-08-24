@@ -20,7 +20,7 @@ m-sidebarWidget {
   font-size: 18px;
   line-height: 24px;
   padding: $sidebarSpacing;
-  padding-bottom: $sidebarSpacing / 2;
+  padding-bottom: $sidebarSpacing * 0.5;
   padding-right: 40px; // Allow for dimiss
   margin: 0;
   font-weight: 500;

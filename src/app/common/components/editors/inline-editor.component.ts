@@ -169,7 +169,7 @@ export class InlineEditorComponent
   }
 
   prepareForSave(): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.buttons.prepare();
       this.images.prepare();
       this.videos.prepare();

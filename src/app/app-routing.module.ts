@@ -49,6 +49,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
+      initialNavigation: 'enabledBlocking',
       onSameUrlNavigation: 'reload',
       relativeLinkResolution: 'legacy',
     }),
