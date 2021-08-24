@@ -207,12 +207,12 @@ export class AdminWithdrawals {
     }
 
     try {
-      await this.client.post('api/v3/rewards/admin/redispatch', {
+      const response: { message?: string } = await this.client.post('api/v3/rewards/admin/redispatch', {
         request_txid: request.tx,
         user_guid: request.user_guid,
         timestamp: request.timestamp,
       });
-      this.toasterService.success('Withdrawal submitted for repair');
+      this.toasterService.success(response.message ?? 'Withdrawal submitted for repair');
     } catch (e) {
       this.toasterService.error(e.message);
     }
