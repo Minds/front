@@ -16,12 +16,8 @@
         >
           <h1 i18n="@@COMMON__MINDS_REWARDS">Minds Rewards</h1>
 
-          <h2
-            ngPreserveWhitespaces
-            i18n="@@COMMON__EARN_TOKENS_FOR_CONTRIBUTIONS"
-          >
-            Earn tokens for your
-            <em>contributions to the network</em>
+          <h2 i18n="@@COMMON__EARN_TOKENS_FOR_CONTRIBUTIONS">
+            Earn tokens for your<em>contributions to the network</em>
           </h2>
 
           <p
@@ -165,8 +161,11 @@
             </p>
 
             <ul class="m-marketing__points">
-              <li i18n="@@COMMON__REFERRALS">
-                Referrals =
+              <li>
+                <ng-container i18n="@@COMMON__REFERRALS"
+                  >Referrals</ng-container
+                >
+                =
                 <em
                   >{contributionValues.referrals, plural, =1
                   {{{contributionValues.referrals}} point} other

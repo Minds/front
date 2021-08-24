@@ -18,7 +18,7 @@
       <li
         class="m-sidebarNavigation__item m-sidebarNavigation__item--compose"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         <a (click)="openComposeModal()">
           <m-tooltip
@@ -52,13 +52,12 @@
             [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
+            >Newsfeed</m-tooltip
           >
-            Newsfeed
-          </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__NEWSFEED">
-            Newsfeed
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__NEWSFEED"
+            >Newsfeed</span
+          >
         </a>
       </li>
 
@@ -77,19 +76,16 @@
             <ng-container i18n="@@COMMON__DISCOVERY">Discovery</ng-container>
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            i18n="@@COMMON__DISCOVERY"
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__DISCOVERY"
+            >Discovery</span
           >
-            Discovery
-          </span>
         </a>
       </li>
 
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'nav-plus-2020'"
       >
         <a routerLink="/discovery/plus" (click)="toggle()">
@@ -102,9 +98,9 @@
             <ng-container i18n="@@COMMON__MINDS+">Minds+</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+">
-            Minds+
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+"
+            >Minds+</span
+          >
         </a>
       </li>
 
@@ -122,9 +118,9 @@
             <ng-container i18n="@@COMMON__WALLET">Wallet</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__WALLET">
-            Wallet
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__WALLET"
+            >Wallet</span
+          >
         </a>
       </li>
 
@@ -162,19 +158,15 @@
         <a routerLink="/analytics" (click)="toggle()">
           <m-tooltip
             icon="insert_chart"
-            i18n="@@COMMON__ANALYTICS"
             [enabled]="false"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
-            Analytics
+            <ng-container i18n="@@COMMON__ANALYTICS">Analytics</ng-container>
           </m-tooltip>
-          <span
-            class="m-sidebarNavigationItem__text"
-            i18n="@@COMMON__ANALYTICS"
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
+            >Analytics</span
           >
-            Analytics
-          </span>
         </a>
 
         <ul class="m-sidebarNavigation__subnav" m-sidebarNavigation__subnav>
@@ -239,7 +231,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'earn-modal'"
       >
         <a (click)="openEarnModal()">
@@ -252,16 +244,16 @@
             <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN">
-            Earn
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN"
+            >Earn</span
+          >
         </a>
       </li>
 
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'buy-tokens-uniswap-transak'"
       >
         <a (click)="buyTokens()">
@@ -277,16 +269,15 @@
           <span
             class="m-sidebarNavigationItem__text"
             i18n="@@COMMON__BUY_CRYPTO"
+            >Buy Crypto</span
           >
-            Buy Crypto
-          </span>
         </a>
       </li>
 
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'boost-modal-v2'"
       >
         <a (click)="openBoostModal()">
@@ -299,9 +290,9 @@
             <ng-container>Boost your channel</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST">
-            Boost
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST"
+            >Boost</span
+          >
         </a>
       </li>
 
@@ -309,7 +300,7 @@
         *mIfFeature="'matrix'"
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        routerLinkActiveOptions="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         <a [routerLink]="['/groups/memberships']" (click)="toggle()">
           <m-tooltip
@@ -320,9 +311,9 @@
             <i class="material-icons" m-tooltip--anchor>group</i>
             <ng-container i18n="@@COMMON__GROUPS">Groups</ng-container>
           </m-tooltip>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS">
-            Groups
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS"
+            >Groups</span
+          >
         </a>
       </li>
 
@@ -377,13 +368,12 @@
             [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
+            >Settings</m-tooltip
           >
-            Settings
-          </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS">
-            Settings
-          </span>
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+            >Settings</span
+          >
         </a>
       </li>
     </ul>

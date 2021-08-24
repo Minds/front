@@ -86,17 +86,16 @@
       </div>
 
       <div class="m--blockchain--transaction-overlay--field">
-        <button class="m-btn" (click)="cancel()" i18n="@@M__ACTION__CANCEL">
-          Cancel
+        <button class="m-btn" (click)="cancel()">
+          <ng-container i18n="@@M__ACTION__CANCEL">Cancel</ng-container>
         </button>
 
         <button
           class="m-btn m-btn--action"
           (click)="unlock()"
           [disabled]="!validateUnlock()"
-          i18n="@@MM__ACTION__COMPLETE"
         >
-          Complete
+          <ng-container i18n="@@MM__ACTION__COMPLETE">Complete</ng-container>
         </button>
       </div>
 
@@ -144,8 +143,8 @@
           </div>
 
           <div class="m--blockchain--transaction-overlay--field">
-            <button class="m-btn" (click)="cancel()" i18n="@@COMMON__CANCEL">
-              Cancel
+            <button class="m-btn" (click)="cancel()">
+              <ng-container>Cancel</ng-container>
             </button>
 
             <button

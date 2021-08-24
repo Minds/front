@@ -60,11 +60,8 @@
   <div class="m-layout__spacer"></div>
 
   <div class="m-form__field--select" *ngIf="(service.type$ | async) === 'usd'">
-    <div
-      class="m-wireCreatorForm__label m-wireCreatorForm__label--hasCta"
-      i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD"
-    >
-      <h3>Payment Method</h3>
+    <div class="m-wireCreatorForm__label m-wireCreatorForm__label--hasCta">
+      <h3 i18n="@@WIRE_CREATOR_FORM__PAYMENT_METHOD">Payment Method</h3>
       <a class="m-wireCreatorFormLabel__cta" (click)="onAddCardClick($event)"
         >Add a new card</a
       >
