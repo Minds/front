@@ -133,12 +133,6 @@
     "webpack-cli": "^4.7.2",
     "xmlbuilder2": "^2.1.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged --bail --pattern \"**/*.*(ts|html|scss)\"",
-      "post-commit": "sh .githooks/post-commit"
-    }
-  },
   "browserslist": [
     "> 0.5%",
     "last 2 versions",
