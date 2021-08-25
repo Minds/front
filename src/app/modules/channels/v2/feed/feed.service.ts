@@ -41,26 +41,23 @@ export class FeedService {
   /**
    * Type state
    */
-  readonly sort$: BehaviorSubject<FeedFilterSort> = new BehaviorSubject<
-    FeedFilterSort
-  >('latest');
+  readonly sort$: BehaviorSubject<FeedFilterSort> =
+    new BehaviorSubject<FeedFilterSort>('latest');
 
   /**
    * Filter type state
    */
-  readonly type$: BehaviorSubject<FeedFilterType> = new BehaviorSubject<
-    FeedFilterType
-  >('activities');
+  readonly type$: BehaviorSubject<FeedFilterType> =
+    new BehaviorSubject<FeedFilterType>('activities');
 
   /**
    * Date range state
    */
-  dateRange$: BehaviorSubject<FeedFilterDateRange> = new BehaviorSubject<
-    FeedFilterDateRange
-  >({
-    fromDate: null,
-    toDate: null,
-  });
+  dateRange$: BehaviorSubject<FeedFilterDateRange> =
+    new BehaviorSubject<FeedFilterDateRange>({
+      fromDate: null,
+      toDate: null,
+    });
 
   /**
    * Scheduled count observable
@@ -93,7 +90,7 @@ export class FeedService {
       this.dateRange$,
     ])
       .pipe(distinctUntilChanged(deepDiff))
-      .subscribe(values => {
+      .subscribe((values) => {
         this.service.clear();
         if (!values[0] || !values[1] || !values[2]) {
           return;
@@ -120,15 +117,14 @@ export class FeedService {
           this.service.setFromTimestamp('');
         }
 
-        console.log('ojm chfeedSvc, daterangeenabld?', dateRangeEnabled);
+        console.log('ojm ch daterangeenabld?', dateRangeEnabled);
 
         // Don't allow using search or date filters for scheduled posts
         if (query || dateRangeEnabled) {
           params['all'] = 1;
           params['period'] = 'all';
+          sort = 'container';
         }
-
-        sort = 'container';
 
         this.service.setParams(params);
 
@@ -141,11 +137,11 @@ export class FeedService {
     // Fetch scheduled count when GUID changes
     this.scheduledCount$ = this.guid$.pipe(
       distinctUntilChanged(),
-      filter(guid => !!guid),
-      map(guid => this.api.get(`api/v2/feeds/scheduled/${guid}/count`)),
+      filter((guid) => !!guid),
+      map((guid) => this.api.get(`api/v2/feeds/scheduled/${guid}/count`)),
       switchAll(),
-      map(response => response.count),
-      catchError(e => {
+      map((response) => response.count),
+      catchError((e) => {
         if (this.router.url.indexOf('/scheduled') !== -1) {
           this.toast.error(e.message ?? e);
         }
@@ -177,15 +173,16 @@ export class FeedService {
    * Load next batch of entities
    */
   loadNext() {
-    console.log('ojm LOADNEXT');
+    console.log('ojm ch LOADNEXT');
     if (
       this.service.canFetchMore &&
       !this.service.inProgress.getValue() &&
       this.service.offset.getValue()
     ) {
+      console.log('ojm ch loadnext->fetch');
       this.service.fetch(); // load the next 150 in the background
     }
-
+    console.log('ojm ch loadnext->loadmore');
     this.service.loadMore();
   }
 

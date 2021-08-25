@@ -43,23 +43,23 @@ export class FeedsService implements OnDestroy {
     protected blockListService: BlockListService
   ) {
     this.pageSize = this.offset.pipe(
-      map(offset => this.limit.getValue() + offset)
+      map((offset) => this.limit.getValue() + offset)
     );
 
     this.feed = this.rawFeed.pipe(
-      tap(feed => {
+      tap((feed) => {
         if (feed.length) this.inProgress.next(true);
       }),
-      switchMap(async feed => {
+      switchMap(async (feed) => {
         return feed.slice(0, await this.pageSize.pipe(first()).toPromise());
       }),
-      switchMap(feed =>
+      switchMap((feed) =>
         this.entitiesService
           .setCastToActivities(this.castToActivities)
           .setExportUserCounts(this.exportUserCounts)
           .getFromFeed(feed)
       ),
-      tap(feed => {
+      tap((feed) => {
         if (feed.length && this.fallbackAt) {
           for (let i = 0; i < feed.length; i++) {
             const entity: any = feed[i].getValue();
@@ -75,7 +75,7 @@ export class FeedsService implements OnDestroy {
           }
         }
       }),
-      tap(feed => {
+      tap((feed) => {
         if (feed.length)
           // We should have skipped but..
           this.inProgress.next(false);
@@ -83,7 +83,7 @@ export class FeedsService implements OnDestroy {
     );
 
     // Trigger a re-run of the above pipe on blockedList emission.
-    this.blockListSubscription = blockListService.blocked.subscribe(block => {
+    this.blockListSubscription = blockListService.blocked.subscribe((block) => {
       this.rawFeed.next(this.rawFeed.getValue());
     });
 
@@ -92,7 +92,7 @@ export class FeedsService implements OnDestroy {
       this.inProgress,
       this.offset
     ).pipe(
-      map(values => {
+      map((values) => {
         const feed = values[0];
         const inProgress = values[1];
         const offset = values[2];
@@ -195,7 +195,7 @@ export class FeedsService implements OnDestroy {
       toTimestamp: this.params.to_timestamp,
       pagingToken: this.pagingToken,
       canFetchMore: this.canFetchMore,
-      // hasMore: this.hasMore,
+      hasMore: this.hasMore,
       fromTimestamp: fromTimestamp,
     });
     console.log(
@@ -219,12 +219,13 @@ export class FeedsService implements OnDestroy {
       .get(this.endpoint, {
         ...this.params,
         ...{
-          limit: 13,
-          // ojm
-          // limit: 150, // Over 12 scrolls
+          // ojm uncomment/remove
+          // limit: 13,
+          limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: this.pagingToken ?? this.fromTimestamp,
+          // ojm previously - from_timestamp: this.pagingToken,
         },
       })
       .then((response: any) => {
@@ -248,6 +249,8 @@ export class FeedsService implements OnDestroy {
           this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
+          // ojm solution:??
+          // this.setFromTimestamp(this.pagingToken);
 
           console.log(
             'ojmFEEDS RESPONSE.load-next',
@@ -261,7 +264,7 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
       })
-      .catch(e => console.log(e));
+      .catch((e) => console.log(e));
   }
 
   /**
@@ -269,6 +272,7 @@ export class FeedsService implements OnDestroy {
    */
   loadMore(): FeedsService {
     if (!this.inProgress.getValue()) {
+      console.log('ojm feed loadMore');
       this.setOffset(this.limit.getValue() + this.offset.getValue());
       this.rawFeed.next(this.rawFeed.getValue());
     }
@@ -284,8 +288,11 @@ export class FeedsService implements OnDestroy {
       !this.inProgress.getValue() &&
       this.offset.getValue()
     ) {
+      console.log('ojm feed loadnext->fetch');
       this.fetch(); // load the next 150 in the background
     }
+    console.log('ojm feed loadnext->loadmore');
+
     this.loadMore();
   }
 
