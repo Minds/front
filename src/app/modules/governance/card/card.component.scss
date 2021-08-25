@@ -41,7 +41,7 @@
     }
   }
 
-  h2 {
+  .m-governance__card-arrow-h2 {
     padding-left: 4px;
     margin: 0;
 
@@ -51,10 +51,8 @@
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-
-    @include m-theme() {
-      color: themed($m-white-always);
-    }
+    margin-bottom: 12px;
+    margin-top: 6px;
   }
   .m-governance__card-arrow-container {
     .m-governance__card-arrow-corner {

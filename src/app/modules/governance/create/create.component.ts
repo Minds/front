@@ -114,8 +114,6 @@ export class GovernanceCreateComponent implements OnInit {
       
     `.trim();
 
-      // console.log(String(body));
-
       await this.snapshotService
         .createProposal({
           end,

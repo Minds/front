@@ -4,6 +4,8 @@ import { SnapshotService, SnapshotProposal } from '../snapshot.service';
 import * as moment from 'moment';
 import { Remarkable } from 'remarkable';
 import { linkify } from 'remarkable/linkify';
+import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-governance--proposal-detail',
@@ -12,12 +14,16 @@ import { linkify } from 'remarkable/linkify';
 export class GovernanceProposalDetailComponent implements OnInit {
   proposal: SnapshotProposal;
   inProgress = false;
+  userData;
+  allowDelete = true;
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly snapshotService: SnapshotService
-  ) {}
+    private readonly snapshotService: SnapshotService,
+    private settingsV2Service: SettingsV2Service,
+    public session: Session
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.params.subscribe(params => {
       const proposalId = params['id'];
       this.inProgress = true;
@@ -30,6 +36,7 @@ export class GovernanceProposalDetailComponent implements OnInit {
         });
         this.proposal.body = md.use(linkify).render(this.proposal.body);
         this.inProgress = false;
+        this.validateUser();
       });
     });
   }
@@ -45,5 +52,14 @@ export class GovernanceProposalDetailComponent implements OnInit {
     return window
       .open(`https://snapshot.org/#/weenus/proposal/${snapshotId}`, '_blank')
       .focus();
+  }
+
+  async validateUser() {
+    this.userData = await this.settingsV2Service.loadSettings(
+      this.session.getLoggedInUser().guid
+    );
+    if (this.userData.eth_wallet !== this.proposal.author) {
+      this.allowDelete = false;
+    }
   }
 }

@@ -9,14 +9,15 @@
   <ul class="m-dropdown__list" *ngIf="isOpened">
     <li
       class="m-dropdownList__item"
-      (click)="onButtonClick($event)"
+      (click)="onButtonClick($event); openShareModal()"
       i18n="@@M__ACTION__VIEW"
     >
       Share
     </li>
     <li
+      *ngIf="allowDelete"
       class="m-dropdownList__item"
-      (click)="onButtonClick($event)"
+      (click)="onButtonClick($event); deleteProposal()"
       i18n="@@M__ACTION__EDIT"
     >
       Delete proposal

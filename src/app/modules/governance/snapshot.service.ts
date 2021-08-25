@@ -132,7 +132,7 @@ export class SnapshotService {
   constructor(
     protected web3Wallet: Web3WalletService,
     private httpClient: HttpClient
-  ) {}
+  ) { }
 
   getProposals(variables: GetProposalsVariables) {
     return this.execQuery<{ proposals: SnapshotProposal[] }>(
@@ -180,6 +180,24 @@ export class SnapshotService {
         proposalPayload
       );
     }
+  }
+
+  async deleteProposal(proposal) {
+    await this.web3Wallet.initializeProvider();
+    const provider = this.web3Wallet.provider;
+
+    if (provider) {
+      const signer = this.web3Wallet.getSigner();
+      const address = await signer.getAddress();
+
+      return await this.snapshotClient.deleteProposal(
+        provider,
+        address,
+        MINDS_SPACE,
+        {"proposal": proposal.id}
+      );
+    }
+
   }
 
   getSpace(id: string) {
