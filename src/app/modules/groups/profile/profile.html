@@ -6,7 +6,10 @@
   ></div>
 </div>
 
-<m-error-splash *ngIf="error && !group"></m-error-splash>
+<div class="m-pageLayout__container" *ngIf="error && !group">
+  <m-errorSplash class="m-pageLayout__container"></m-errorSplash>
+  <div class="m-pageLayout__pane--right"> <!-- Spacer --> </div>
+</div>
 
 <m-explicit-overlay
   [entity]="group"

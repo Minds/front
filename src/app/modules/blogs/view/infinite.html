@@ -9,7 +9,10 @@
   ></div>
 </div>
 
-<m-error-splash *ngIf="error && !inProgress"></m-error-splash>
+<div class="m-pageLayout__container" *ngIf="error && !inProgress">
+  <m-errorSplash class="m-pageLayout__container"></m-errorSplash>
+  <div class="m-pageLayout__pane--right"> <!-- Spacer --> </div>
+</div>
 
 <div class="m-blog-view" *ngFor="let blog of blogs; let i = index">
   <m-blog-view [blog]="blog" [index]="i"></m-blog-view>

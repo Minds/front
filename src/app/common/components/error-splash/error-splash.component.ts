@@ -17,7 +17,7 @@ const DEFAULT_SUBHEADER_TYPE: ErrorSubheaderType = 'WE_HAVE_BEEN_NOTIFIED';
  * use the relevant switch cases in the template and extend the types above.
  */
 @Component({
-  selector: 'm-error-splash',
+  selector: 'm-errorSplash',
   templateUrl: './error-splash.component.html',
   styleUrls: ['./error-splash.component.ng.scss'],
 })

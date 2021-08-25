@@ -3,6 +3,7 @@
 :host {
   min-width: 100%;
   margin-top: 100px;
+  height: calc(100vh - 75px); // subtract topbar height
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;

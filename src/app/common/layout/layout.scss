@@ -55,7 +55,6 @@ $layoutMin1ColWidth: 280px;
   max-width: $layoutMax3ColWidth - $layoutTotalPadding;
   min-height: 100%;
   box-sizing: content-box; // 1172px (incl. 16px padding * 2)
-  overflow-x: hidden;
 
   .m-pageLayout__container {
     padding: 0;
