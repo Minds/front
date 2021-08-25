@@ -10,6 +10,7 @@
       <li *ngFor="let entity of entities">
         <m-publisherCard
           [publisher]="entity"
+          [showSubscribeButton]="false"
           *ngIf="entity?.type === 'user'"
         ></m-publisherCard>
         <m-newsfeed__entity
