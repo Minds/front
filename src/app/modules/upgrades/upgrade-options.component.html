@@ -4,6 +4,23 @@
 
     <div class="m-upgradesUpgradeOptionsHeader__toggleContainer">
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
+        <span i18n="currency|@@COMMON__USD">USD</span>
+        <span
+          ><m-toggle
+            [(mModel)]="currency"
+            (mModelChange)="setCurrency($event)"
+            leftValue="usd"
+            rightValue="tokens"
+          ></m-toggle
+        ></span>
+        <span i18n="currency|@@COMMON__TOKENS">Tokens</span>
+      </div>
+      <div
+        class="m-upgradesUpgradeOptionsHeader__toggle"
+        [ngClass]="{
+          'm-upgradesUpgradeOptionsHeader__toggle--hidden': currency !== 'usd'
+        }"
+      >
         <span i18n="@@COMMON__YEARLY">Yearly</span>
         <span
           ><m-toggle
@@ -12,25 +29,17 @@
             rightValue="monthly"
           ></m-toggle
         ></span>
-        <span i18n="@@COMMON__MONTHLY">Monthly</span>
-      </div>
-      <div class="m-upgradesUpgradeOptionsHeader__toggle">
-        <span i18n="currency|@@COMMON__USD">USD</span>
-        <span
-          ><m-toggle
-            [(mModel)]="currency"
-            leftValue="usd"
-            rightValue="tokens"
-          ></m-toggle
-        ></span>
-        <span i18n="currency|@@COMMON__TOKENS">Tokens</span>
+        <span i18n="@@COMMON__MONTHLY__TITLECASE">Monthly</span>
       </div>
     </div>
   </div>
 
   <div class="m-upgradesUpgradeOptions__plans">
     <div
-      class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--first"
+      class="
+        m-upgradesUpgradeOptionsPlan__row
+        m-upgradesUpgradeOptionsPlan__row--first
+      "
     >
       <h3 i18n="@@UPGRADE_OPTIONS__PLUS">Minds+</h3>
 
@@ -56,22 +65,19 @@
         <li i18n="@@UPGRADE_OPTIONS__ACCESS_EXCLUSIVE_CONTENT">
           Access exclusive Minds+ content
         </li>
-        <li i18n="@@UPGRADE_OPTIONS__SUBMIT_EXCLUSIVE_CONTENT">
-          Submit content to Minds+ and earn
+        <li i18n="@@UPGRADE_OPTIONS__VERIFY_YOUR_CHANNEL">
+          Verify your channel
         </li>
 
-        <li i18n="@@UPGRADE_OPTIONS__UNLOCK_BONUS_FEATURES">
-          Unlock bonus features
-        </li>
-
-        <li i18n="@@UPGRADE_OPTIONS__PRIORITY_SUPPORT">
-          Priority support
-        </li>
+        <li i18n="@@UPGRADE_OPTIONS__HIDE_BOOSTS">Hide boosted content</li>
       </ul>
     </div>
 
     <div
-      class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--last"
+      class="
+        m-upgradesUpgradeOptionsPlan__row
+        m-upgradesUpgradeOptionsPlan__row--last
+      "
     >
       <p>
         <a
@@ -82,40 +88,57 @@
           More info
         </a>
       </p>
-      <p
-        class="m-upgradesUpgradeOptionsPlan__pricing"
-        i18n="@@UPGRADE_OPTIONS__PER_MONTH"
-      >
-        <span>{{ plusPricing.amount }}</span> per month
-      </p>
+      <ng-container *ngIf="currency === 'usd'">
+        <p
+          class="m-upgradesUpgradeOptionsPlan__pricing"
+          i18n="@@UPGRADE_OPTIONS__PER_MONTH"
+        >
+          <span>{{ plusPricing.amount }}</span> per month
+        </p>
 
-      <p
-        class="m-upgradesUpgradeOptionsPlan__offer"
-        *ngIf="plusPricing.offerFrom"
-        i18n="@@UPGRADE_OPTIONS__PER_MONTH"
-      >
-        <span>{{ plusPricing.offerFrom }}</span> per month
-      </p>
+        <p
+          class="m-upgradesUpgradeOptionsPlan__offer"
+          *ngIf="plusPricing.offerFrom"
+          i18n="@@UPGRADE_OPTIONS__PER_MONTH"
+        >
+          <span>{{ plusPricing.offerFrom }}</span> per month
+        </p>
+      </ng-container>
+      <ng-container *ngIf="currency === 'tokens'">
+        <p class="m-upgradesUpgradeOptionsPlan__pricing">
+          <span i18n="@@UPGRADES_PLUS_SUBSCRIPTION__MINDS_AMOUNT">
+            <span>{{ plusPricing.amount | number }}</span> MINDS
+          </span>
+        </p>
+        <p class="m-upgradesUpgradeOptionsPlan__intervalDesc">
+          <span i18n="@@UPGRADES__LIFETIME_MEMBERSHIP">
+            Lifetime membership!
+          </span>
+        </p>
+      </ng-container>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <m-button
-        color="blue"
-        class="m-upgradesUpgradeOptionsPlan__action"
-        *ngIf="!session.getLoggedInUser()?.plus"
-        ><a
-          routerLink="/plus"
-          [queryParams]="intervalCurrencyQueryParams"
-          data-cy="m-upgradeOptions__upgrade-to-plus-button"
-          i18n="@@COMMON__UPGRADE_TO_PLUS"
+      <a
+        routerLink="/plus"
+        [queryParams]="intervalCurrencyQueryParams"
+        data-cy="m-upgradeOptions__upgrade-to-plus-button"
+        i18n="@@COMMON__UPGRADE_TO_PLUS"
+        ><m-button
+          color="blue"
+          class="m-upgradesUpgradeOptionsPlan__action"
+          *ngIf="!session.getLoggedInUser()?.plus"
         >
           Upgrade to Minds+
-        </a></m-button
+        </m-button></a
       >
     </div>
 
     <div
-      class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--first"
+      class="
+        m-upgradesUpgradeOptionsPlan__row
+        m-upgradesUpgradeOptionsPlan__row--first
+      "
     >
       <h3 i18n="@@COMMON__PRO">Pro</h3>
 
@@ -138,9 +161,7 @@
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ul>
-        <li i18n="@@UPGRADE_OPTIONS__GET_PAID_WORK">
-          Get paid for your work
-        </li>
+        <li i18n="@@UPGRADE_OPTIONS__GET_PAID_WORK">Get paid for your work</li>
 
         <li i18n="@@UPGRADE_OPTIONS__BUILD_OWN_CUSTOM_SITE">
           Build your own custom website
@@ -149,15 +170,14 @@
         <li i18n="@@UPGRADE_OPTIONS__PROFESSIONAL_MEDIA_TOOLS">
           Professional media tools
         </li>
-
-        <li i18n="@@UPGRADE_OPTIONS__CUSTOM_SUPPORT">
-          Custom support
-        </li>
       </ul>
     </div>
 
     <div
-      class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--last"
+      class="
+        m-upgradesUpgradeOptionsPlan__row
+        m-upgradesUpgradeOptionsPlan__row--last
+      "
     >
       <p>
         <a
@@ -179,54 +199,70 @@
           Try Pro
         </a>
       </p>
-      <p
-        class="m-upgradesUpgradeOptionsPlan__pricing"
-        i18n="@@COMMON__PER_MONTH"
-      >
-        <span>{{ proPricing.amount }}</span> per month
-      </p>
-
-      <p
-        class="m-upgradesUpgradeOptionsPlan__offer"
-        *ngIf="proPricing.offerFrom"
-        i18n="@@COMMON__PER_MONTH"
-      >
-        <span>{{ proPricing.offerFrom }}</span> per month
-      </p>
+      <ng-container *ngIf="currency === 'usd'">
+        <p
+          class="m-upgradesUpgradeOptionsPlan__pricing"
+          i18n="@@COMMON__PER_MONTH"
+        >
+          <span>{{ proPricing.amount }}</span> per month
+        </p>
+        <p
+          class="m-upgradesUpgradeOptionsPlan__offer"
+          *ngIf="proPricing.offerFrom"
+          i18n="@@COMMON__PER_MONTH"
+        >
+          <span>{{ proPricing.offerFrom }}</span> per month
+        </p>
+      </ng-container>
+      <ng-container *ngIf="currency === 'tokens'">
+        <p class="m-upgradesUpgradeOptionsPlan__pricing">
+          <span i18n="@@UPGRADES_PRO_SUBSCRIPTION__MINDS_AMOUNT">
+            <span>{{ proPricing.amount | number }}</span> MINDS
+          </span>
+        </p>
+        <p class="m-upgradesUpgradeOptionsPlan__intervalDesc">
+          <span i18n="@@UPGRADES__LIFETIME_MEMBERSHIP">
+            Lifetime membership!
+          </span>
+        </p>
+      </ng-container>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ng-container *mIfFeature="'purchase-pro'; else comingSoon">
-        <m-button
-          color="blue"
-          class="m-upgradesUpgradeOptionsPlan__action"
-          *ngIf="!session.getLoggedInUser()?.pro"
+        <a
+          routerLink="/pro"
+          [queryParams]="intervalCurrencyQueryParams"
+          data-cy="m-upgradeOptions__upgrade-to-pro-button"
+          i18n="@@COMMON__UPGRADE_TO_PRO"
         >
-          <a
-            routerLink="/pro"
-            [queryParams]="intervalCurrencyQueryParams"
-            data-cy="m-upgradeOptions__upgrade-to-pro-button"
-            i18n="@@COMMON__UPGRADE_TO_PRO"
+          <m-button
+            color="blue"
+            class="m-upgradesUpgradeOptionsPlan__action"
+            *ngIf="!session.getLoggedInUser()?.pro"
           >
             Upgrade to Pro
-          </a></m-button
+          </m-button></a
         >
       </ng-container>
       <ng-template #comingSoon>
-        <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
-          <a
-            routerLink="/pro"
-            data-cy="m-upgradeOptions__upgrade-to-pro-button"
-            i18n="@@COMMON__COMING_SOON"
-          >
+        <a
+          routerLink="/pro"
+          data-cy="m-upgradeOptions__upgrade-to-pro-button"
+          i18n="@@COMMON__COMING_SOON"
+        >
+          <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
             Coming soon
-          </a>
-        </m-button>
+          </m-button></a
+        >
       </ng-template>
     </div>
 
     <div
-      class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--first"
+      class="
+        m-upgradesUpgradeOptionsPlan__row
+        m-upgradesUpgradeOptionsPlan__row--first
+      "
     >
       <h3 i18n="@@UPGRADE_OPTIONS__NODE">Node</h3>
 
@@ -249,26 +285,25 @@
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ul>
-        <li i18n="@@UPGRADE_OPTIONS__WHITE_LABEL_MOBILE">
-          White-labeled mobile app
+        <li i18n="@@UPGRADE_OPTIONS__WHITE_LABEL_MOBILE_AND_WEB">
+          White-labeled web + mobile app
         </li>
 
-        <li i18n="@@UPGRADE_OPTIONS__CUSTOM_DOMAIN_BRAND">
-          Use a custom domain and branding
+        <li i18n="@@UPGRADE_OPTIONS__CUSTOM_DOMAIN_AND_BRAND">
+          Custom domain and brand
         </li>
 
         <li i18n="@@UPGRADE_OPTIONS__INDEPENDANT_FROM_MINDS">
           Independent from Minds
         </li>
-
-        <li i18n="@@UPGRADE_OPTIONS__PRIORITY_SUPPORT">
-          Priority support
-        </li>
       </ul>
     </div>
 
     <div
-      class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--last"
+      class="
+        m-upgradesUpgradeOptionsPlan__row
+        m-upgradesUpgradeOptionsPlan__row--last
+      "
     >
       <p>
         <a
@@ -288,14 +323,13 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
-        <a
-          routerLink="/nodes"
-          data-cy="m-upgradeOptions__contact-us-nodes-button"
-          i18n="@@COMMON__CONTACT_US"
-        >
-          Contact us
-        </a></m-button
+      <a
+        routerLink="/nodes"
+        data-cy="m-upgradeOptions__contact-us-nodes-button"
+        i18n="@@COMMON__CONTACT_US"
+        ><m-button color="blue" class="m-upgradesUpgradeOptionsPlan__action">
+          Join waitlist
+        </m-button></a
       >
     </div>
   </div>

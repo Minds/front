@@ -37,9 +37,18 @@
       i18n="@@M__UNISWAP_WARNING"
     >
       <i class="material-icons">info</i>
-      <span>
-        Please check your wallet for transaction updates
-      </span>
+      <span> Please check your wallet for transaction updates </span>
+    </div>
+
+    <div
+      class="m-buyTokensBody__uniswapWarning"
+      *ngIf="paymentMethod === 'card'"
+    >
+      <i class="material-icons">info</i>
+      <span
+        >Customers in the US can only purchase ETH with USD, and then use ETH to
+        swap for Minds Tokens via Uniswap.</span
+      >
     </div>
 
     <div class="m-buyTokensBody__termsCheck">
@@ -48,12 +57,14 @@
         class="m-buyTokensBodyTermsCheck__label"
         for="terms-check"
         i18n="@@M__PURCHASE_TERMS"
-        >I have read and accept the
+      >
+        I have read and accept the
         <a
           href="https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf"
           target="_blank"
-          >Minds Token Terms Of Sale
-        </a>
+          >Terms Of Sale</a
+        >
+        for the Minds Token
       </label>
     </div>
 
@@ -64,7 +75,7 @@
       <m-button
         [disabled]="!canContinue()"
         (onAction)="openPaymentModal()"
-        i18n="@@M__PURCHASE_BUTTON"
+        i18n="@@M__CONTINUE_BUTTON"
       >
         Continue
       </m-button>

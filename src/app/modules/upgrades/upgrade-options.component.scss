@@ -45,6 +45,10 @@ m-upgrades__upgradeOptions {
         &:last-child {
           margin-right: 0;
         }
+
+        &.m-upgradesUpgradeOptionsHeader__toggle--hidden {
+          visibility: hidden;
+        }
       }
     }
   }
@@ -73,6 +77,9 @@ m-upgrades__upgradeOptions {
         margin-top: 50px;
         @media screen and (max-width: $m-grid-min-vp) {
           margin-top: 10px;
+        }
+        @media screen and (min-width: $m-grid-min-vp + 1) {
+          height: 100px;
         }
       }
     }
@@ -210,11 +217,21 @@ m-upgrades__upgradeOptions {
       }
     }
 
+    .m-upgradesUpgradeOptionsPlan__intervalDesc {
+      font-size: 16px;
+      line-height: 21px;
+      margin-top: 8px;
+      min-width: 170px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
     .m-upgradesUpgradeOptionsPlan__action {
       display: block;
       margin-top: 25px;
       button {
-        width: 66%;
+        width: 80%;
         @media screen and (max-width: $m-grid-min-vp) {
           width: 100%;
         }

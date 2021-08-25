@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import 'defaults';
 
 minds-notification.mdl-card {
@@ -116,7 +118,7 @@ minds-notifications {
     }
 
     @media only screen and (max-width: $min-mobile) {
-      padding: 0 ($minds-padding / 1.333);
+      padding: 0 math.div($minds-padding, 1.333);
     }
   }
 

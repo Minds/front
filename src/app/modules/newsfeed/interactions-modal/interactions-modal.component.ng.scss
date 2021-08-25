@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+
+:host {
+  .m-modalV2__body {
+    width: 500px;
+    min-height: 300px;
+
+    padding: 20px 0;
+
+    @include hide-scrollbar;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 20px;
+
+      &:not(:nth-of-type(1)) {
+        padding-top: 20px;
+        @include m-theme() {
+          border-top: 1px solid themed($m-borderColor--primary);
+        }
+      }
+
+      ::ng-deep m-publisherCard {
+        .m-publisherCard {
+          padding: 0 40px;
+          @include m-theme() {
+            border: 0;
+          }
+        }
+      }
+
+      ::ng-deep m-newsfeed__entity m-activity {
+        margin: 0 40px;
+        .m-activityContent__remind {
+          display: none;
+        }
+      }
+    }
+  }
+}

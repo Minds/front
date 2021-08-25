@@ -1,6 +1,6 @@
 <m-settingsV2__header>
-  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__PAYOUTS__LABEL">
-    Payouts
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__PRO__PAYOUTS__LABEL">Payouts</span>
   </div>
   <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__PAYOUTS__DESCRIPTION">
     Select the currency type you wish you be paid out in. Please note payouts
@@ -41,32 +41,6 @@
             value="tokens"
             name="payout_method"
             id="method_tokens"
-            formControlName="payout_method"
-            class="form-control"
-          />
-          <span class="m-form__customInput__radio"></span>
-        </label>
-
-        <label for="method_eth" class="m-form__customInputWrapper__radio">
-          <ng-container i18n="currency|@@COMMON__ETHER">Ether</ng-container>
-          <input
-            type="radio"
-            value="eth"
-            name="payout_method"
-            id="method_eth"
-            formControlName="payout_method"
-            class="form-control"
-          />
-          <span class="m-form__customInput__radio"></span>
-        </label>
-
-        <label for="method_btc" class="m-form__customInputWrapper__radio">
-          <ng-container i18n="currency|@@COMMON__BITCOIN">Bitcoin</ng-container>
-          <input
-            type="radio"
-            value="btc"
-            name="payout_method"
-            id="method_btc"
             formControlName="payout_method"
             class="form-control"
           />

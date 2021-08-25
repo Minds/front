@@ -7,6 +7,10 @@ import { Router } from '@angular/router';
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
+import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { FeaturesService } from '../../../../services/features.service';
+import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
+import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -25,7 +29,10 @@ export class ActivityToolbarComponent {
     public session: Session,
     private router: Router,
     private overlayModalService: OverlayModalService,
-    private stackableModal: StackableModalService
+    private stackableModal: StackableModalService,
+    private boostModal: BoostModalLazyService,
+    private features: FeaturesService,
+    private interactionsModalService: InteractionsModalService
   ) {}
 
   ngOnInit() {
@@ -58,8 +65,37 @@ export class ActivityToolbarComponent {
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {
-    await this.stackableModal
-      .present(BoostCreatorComponent, this.entity)
-      .toPromise();
+    try {
+      if (this.features.has('boost-modal-v2')) {
+        await this.boostModal.open(this.entity);
+        return;
+      }
+
+      await this.stackableModal
+        .present(BoostCreatorComponent, this.entity)
+        .toPromise();
+    } catch (e) {
+      // do nothing.
+    }
+  }
+
+  async openInteractions(type: InteractionType) {
+    const guid =
+      this.entity.entity_guid && type !== 'quotes' && type !== 'reminds'
+        ? this.entity.entity_guid
+        : this.entity.guid;
+    await this.interactionsModalService.open(type, guid);
+  }
+
+  /**
+   * Show the metrics bar if at least one metric has data
+   **/
+  get showMetrics(): boolean {
+    return (
+      this.entity['thumbs:up:count'] > 0 ||
+      this.entity['thumbs:down:count'] > 0 ||
+      this.entity?.reminds > 0 ||
+      this.entity?.quotes > 0
+    );
   }
 }

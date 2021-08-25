@@ -70,7 +70,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadComponent();
+    if (!this.featuresService.has('notifications-v3')) {
+      this.loadComponent();
+    }
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
@@ -97,25 +99,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  touchStart() {
-    this.isTouchScreen = true;
-  }
-
-  mouseEnter() {
-    if (this.session.isLoggedIn()) {
-      this.timeout = setTimeout(() => {
-        if (!this.isTouchScreen) {
-          this.themeService.toggleUserThemePreference();
-        }
-      }, 5000);
-    }
-  }
-
-  mouseLeave() {
-    clearTimeout(this.timeout);
-  }
-
-  toggleSidebarNav() {
+  /**
+   * Toggles sidebar navigation open.
+   * @param { void }
+   */
+  public toggleSidebarNav(): void {
     this.sidebarService.toggle();
   }
 
@@ -180,18 +168,38 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   async onJoinNowClick() {
-    if (this.featuresService.has('onboarding-october-2020')) {
-      try {
-        await this.authModal.open();
-      } catch (e) {
-        if (e === 'DismissedModalException') {
-          return; // modal dismissed, do nothing
-        }
-        console.error(e);
+    try {
+      await this.authModal.open();
+      this.doRedirect();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
       }
-      return;
+      console.error(e);
     }
-    this.router.navigate(['/register']);
+  }
+
+  /**
+   * Depending on enabled feature, either navigates to login
+   * or opens auth modal login panel.
+   * @returns { Promise<void> } - awaitable.
+   */
+  async onLoginClick(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+      this.doRedirect();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
+  }
+
+  doRedirect(): void {
+    if (this.router.url === '/') {
+      this.router.navigate(['/newsfeed/subscriptions']);
+    }
   }
 
   /**

@@ -50,7 +50,11 @@
           (added)="upload_avatar($event)"
         >
         </minds-avatar>
-
+        <div class="m-group__searchBtnWrapper">
+          <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
+            ><i class="material-icons">search</i></a
+          >
+        </div>
         <minds-groups-settings-button
           [(group)]="group"
           class="m-button"

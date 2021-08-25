@@ -1,0 +1,112 @@
+<h6 i18n="@@ONCHAIN_TRANSFERS__WITHDRAWALS_TAKE_72_HOURS">
+  Withdrawals can take up to 72 hours. Please contact support for any issues.
+</h6>
+<div class="m-walletOnchainTransfers__tableWrapper">
+  <table>
+    <thead>
+      <tr class="m-walletOnchainTransfers__tableHeaderRow">
+        <td i18n="@@ONCHAIN_TRANSFERS__TRANSACTION_ID">TXID</td>
+        <td i18n="@@ONCHAIN_TRANSFERS__DATE">Date</td>
+        <td i18n="@@ONCHAIN_TRANSFERS__AMOUNT_OF_TOKENS">Amount</td>
+        <td i18n="@@ONCHAIN_TRANSFERS__TRANSFER_STATUS">Status</td>
+        <td i18n="@@ONCHAIN_TRANSFERS__PAYOUT_TRANSACTION_ID">Payout TXID</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        class="total m-walletOnchainTransfers__header"
+        *ngFor="let withdrawal of withdrawals$ | async"
+      >
+        <td class="m-walletOnchainTransfers__address">
+          {{ truncateAddress(withdrawal.tx) }}
+          <m-launchButton
+            (click)="openExplorer(withdrawal.tx)"
+          ></m-launchButton>
+        </td>
+        <td>
+          {{ withdrawal.timestamp * 1000 | date: 'E LLL d · HH:mm' }}
+        </td>
+        <td>
+          {{ withdrawal.amount / 1000000000000000000 }}
+          <span class="m-walletOnchainTransfers__text--secondary">MINDS</span>
+        </td>
+        <td [ngSwitch]="withdrawal.status">
+          <div
+            class="m-walletOnchainTransfers__tdInnerContainer"
+            *ngSwitchCase="'pending'"
+          >
+            <span i18n="@@ONCHAIN_TRANSFERS__PENDING">Pending</span>
+            <m-tooltip
+              icon="info"
+              i18n="@@ONCHAIN_TRANSFERS__AWAITING_CONFIRMATION"
+            >
+              Awaiting confirmation on blockchain
+            </m-tooltip>
+          </div>
+          <div
+            class="m-walletOnchainTransfers__tdInnerContainer"
+            *ngSwitchCase="'pending_review'"
+          >
+            <span i18n="@@ONCHAIN_TRANSFERS__IN_REVIEW">In Review</span>
+            <m-tooltip icon="info" i18n="@@ONCHAIN_TRANSFERS__PENDING_IN_QUEUE">
+              Your transaction is in the queue and we’ll get to it ASAP.
+            </m-tooltip>
+          </div>
+          <div
+            class="m-walletOnchainTransfers__tdInnerContainer"
+            *ngSwitchCase="'failed'"
+          >
+            <span i18n="@@ONCHAIN_TRANSFERS__FAILED">Failed</span>
+            <m-tooltip
+              icon="info"
+              i18n="@@ONCHAIN_TRANSFERS__SOMETHING_WENT_WRONG"
+            >
+              Something went wrong on the blockchain. Please resubmit.
+            </m-tooltip>
+          </div>
+          <div
+            class="m-walletOnchainTransfers__tdInnerContainer"
+            *ngSwitchCase="'rejected'"
+          >
+            <span i18n="@@ONCHAIN_TRANSFERS__REJECTED">Rejected</span>
+            <m-tooltip
+              icon="info"
+              i18n="@@ONCHAIN_TRANSFERS__REJECTED_TOS_VIOLATION"
+            >
+              Following review your tokens are not available for withdrawal. TOS
+              violation.
+            </m-tooltip>
+          </div>
+          <div
+            class="m-walletOnchainTransfers__tdInnerContainer"
+            *ngSwitchCase="'approved'"
+          >
+            <span i18n="@@ONCHAIN_TRANSFERS__SUCCESS">Success</span>
+            <m-tooltip
+              icon="info"
+              i18n="@@ONCHAIN_TRANSFERS__SUCCESSFULLY_PAID_OUT"
+            >
+              We’ve successfully paid out your withdrawal.
+            </m-tooltip>
+          </div>
+        </td>
+        <td class="m-walletOnchainTransfers__address">
+          <ng-container *ngIf="withdrawal.completed_tx">
+            {{ truncateAddress(withdrawal.completed_tx) }}
+            <m-launchButton
+              (click)="openExplorer(withdrawal.completed_tx)"
+            ></m-launchButton>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<infinite-scroll
+  distance="25%"
+  (load)="load()"
+  [moreData]="this.pagingToken !== ''"
+  [inProgress]="inProgress$ | async"
+>
+</infinite-scroll>

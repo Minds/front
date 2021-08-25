@@ -39,11 +39,3 @@
     </div>
   </div>
 </div>
-<m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
-  <m-walletPhoneVerification
-    class="m-walletTokenOnboardingModal__view--verifyPhone"
-    *ngIf="activeStep === 'phone'"
-    (phoneVerificationComplete)="phoneVerificationComplete()"
-  >
-  </m-walletPhoneVerification>
-</m-walletModal>

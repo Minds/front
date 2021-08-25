@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public session: Session,
     public navigation: NavigationService,
     private navigationService: SidebarNavigationService,
-    configs: ConfigsService,
+    private configs: ConfigsService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
@@ -97,6 +97,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       } else {
         this.setPlaceholderMetaImage();
       }
+      if (params['redirectUrl']) {
+        this.redirectTo = decodeURI(params['redirectUrl']);
+      }
     });
 
     this.metaService.setTitle('Register');
@@ -127,7 +130,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setPlaceholderMetaImage(): void {
-    this.metaService.setOgImage('/assets/logos/placeholder.jpg');
+    this.metaService.setOgImage('/assets/og-images/default-v3.png');
   }
 
   registered() {
@@ -170,6 +173,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.router.navigate([uri[0]], extras);
+    // If this is an api redirect, we need to redirect outside of angular router
+    if (uri[0].indexOf(this.configs.get('site_url') + 'api/') === 0) {
+      window.location.href = this.redirectTo;
+    } else {
+      this.router.navigate([uri[0]], extras);
+    }
   }
 }

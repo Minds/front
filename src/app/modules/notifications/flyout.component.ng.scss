@@ -1,0 +1,101 @@
+@import 'defaults.scss';
+
+:host {
+  &.v3 {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      border: 1px solid themed($m-borderColor--primary);
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
+    }
+    min-width: 320px;
+    max-width: 500px;
+    width: 50vw;
+    right: -70px;
+    top: 40px;
+    max-height: calc(100vh - 72px);
+
+    @media screen and (max-width: $min-tablet) {
+      right: -25px;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      top: 75px;
+      width: 85vw;
+      min-width: 85vw;
+    }
+
+    &::before,
+    &::after {
+      content: ' ';
+      position: absolute;
+      pointer-events: none;
+      bottom: 100%;
+      right: 70px;
+      width: 0;
+      height: 0;
+      border: solid transparent;
+      @media screen and (max-width: $min-tablet) {
+        right: 25px;
+      }
+      @media screen and (max-width: $max-mobile) {
+        right: 45px;
+      }
+    }
+    &::after {
+      @include m-theme() {
+        border-color: rgba(themed($m-bgColor--primary), 0);
+        border-bottom-color: themed($m-bgColor--primary);
+      }
+      border-width: 10px;
+      margin-left: 10px;
+    }
+    &::before {
+      @include m-theme() {
+        border-color: rgba(themed($m-borderColor--primary), 0);
+        border-bottom-color: themed($m-borderColor--primary);
+      }
+      border-width: 12px;
+      margin-right: -2px;
+    }
+  }
+
+  .m-notificationsFlyout__scrollable {
+    max-height: calc(100vh - 122px); // 72px + 50px top margin
+    overflow: scroll;
+    overscroll-behavior: contain; // not supported in all browsers
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding-bottom: 60px; // Height of view all
+    margin-top: 50px;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      @include m-theme() {
+        background-color: rgba(themed($m-borderColor--primary), 0.35);
+      }
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      height: 40px;
+      @include m-theme() {
+        background-color: themed($m-bgColor--contrast);
+      }
+    }
+  }
+
+  .m-notificationsFlyout__bottomContainer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 2;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+    a {
+      font-size: 15px;
+    }
+  }
+}

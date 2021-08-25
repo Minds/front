@@ -87,7 +87,7 @@ m-onboarding {
       color: #9b9b9b;
 
       @include m-theme() {
-        background-color: themed($m-bgColor--primary);
+        background-color: themed($m-bgColor--secondary);
       }
 
       &::before {
@@ -159,23 +159,31 @@ m-onboarding {
       h2 {
         font-size: 32px;
         line-height: 43px;
-        color: #4a4a4a;
         padding-bottom: 13px;
         font-weight: bold;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
 
         &.m-onboarding__mobileTitle {
           font-size: 28px;
           line-height: 37px;
           margin-top: 0;
           margin-bottom: 30px;
-          color: #4a4a4a;
           text-align: center;
           word-break: break-word;
+
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
         }
 
         &:not(.m-onboarding__noticeTitle):not(.m-onboardingProgressbar__stepName) {
           @media screen and (max-width: 740px) {
-            color: #a2a2a2;
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
             font-size: 13px;
             line-height: 18px;
             letter-spacing: 2px;
@@ -208,9 +216,14 @@ m-onboarding {
           height: 18px;
           top: -9px;
           margin-left: -70px;
-          background: black;
-          background: linear-gradient(180deg, #f3f3f3 0%, transparent 56%);
-
+          @include m-theme() {
+            background: themed($m-black-always);
+            background: linear-gradient(
+              180deg,
+              themed($m-borderColor--tertiary) 0%,
+              transparent 56%
+            );
+          }
           @media screen and (min-width: 741px) and (max-width: $m-grid-max-tablet) {
             content: '';
             width: calc(100% + 40px);
@@ -355,6 +368,13 @@ m-onboarding {
 
           .m-onboarding__location {
             position: relative;
+
+            input {
+              @include m-theme() {
+                background-color: themed($m-bgColor--primary);
+                border: 1px solid themed($m-borderColor--primary);
+              }
+            }
 
             ul.m-onboarding__cities {
               position: absolute;

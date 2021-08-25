@@ -4,6 +4,7 @@ import { uploadMock } from '../../../../../tests/upload-mock.spec';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { siteServiceMock } from '../../../notifications/notification.service.spec';
 import { composerMockService } from '../../../../mocks/modules/composer/services/composer.service.mock';
+import { BehaviorSubject } from 'rxjs';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
@@ -11,6 +12,13 @@ let routerMock = new (function() {
 
 export let toastServiceMock = new (function() {
   this.success = jasmine.createSpy('success').and.returnValue(this);
+})();
+
+const message$ = new BehaviorSubject<string>('');
+
+export let preloadServiceMock = new (function() {
+  this.getValue = jasmine.createSpy('getValue').and.returnValue('');
+  this.message$ = message$;
 })();
 
 describe('BlogsEditService', () => {
@@ -32,6 +40,7 @@ describe('BlogsEditService', () => {
       clientMock,
       siteServiceMock,
       toastServiceMock,
+      preloadServiceMock,
       composerMockService
     );
   });

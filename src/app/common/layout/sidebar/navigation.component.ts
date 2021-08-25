@@ -9,6 +9,7 @@ import {
   PLATFORM_ID,
   ViewChild,
   OnDestroy,
+  Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -30,14 +31,18 @@ import { UniswapModalService } from '../../../modules/blockchain/token-purchase/
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
+import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
+  styleUrls: ['./navigation.component.ng.scss'],
 })
 export class SidebarNavigationComponent
   implements OnInit, AfterViewInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  readonly chatUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -63,6 +68,8 @@ export class SidebarNavigationComponent
 
   routerSubscription: Subscription;
 
+  matrixFeature: boolean = false;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -76,12 +83,14 @@ export class SidebarNavigationComponent
     private userMenu: UserMenuService,
     private buyTokensModalService: BuyTokensModalService,
     private web3WalletService: Web3WalletService,
-    private uniswapModalService: UniswapModalService,
+    private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
-    private overlayModal: OverlayModalService
+    private composerModalService: ComposerModalService,
+    private injector: Injector
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.chatUrl = this.configs.get('matrix')?.chat_url;
     this.service.setContainer(this);
     this.getUser();
 
@@ -103,6 +112,8 @@ export class SidebarNavigationComponent
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
     }
+
+    this.matrixFeature = this.featuresService.has('matrix');
 
     this.settingsLink = '/settings';
   }
@@ -126,6 +137,9 @@ export class SidebarNavigationComponent
   }
 
   createGroupsSideBar() {
+    if (this.matrixFeature) {
+      return;
+    }
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
         GroupsSidebarMarkersComponent
       ),
@@ -164,8 +178,16 @@ export class SidebarNavigationComponent
   }
 
   async openBoostModal() {
-    const creator = this.overlayModal.create(BoostCreatorComponent, this.user);
-    creator.present();
+    this.toggle();
+    await this.boostModalService.open(this.session.getLoggedInUser());
+  }
+
+  async openComposeModal() {
+    this.toggle();
+    await this.composerModalService
+      .setInjector(this.injector)
+      .present()
+      .toPromise();
   }
 
   setVisible(value: boolean): void {

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-blockchainMarketing__rewards',
@@ -24,7 +25,8 @@ export class BlockchainMarketingRewardsComponent {
   constructor(
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    private configs: ConfigsService
+    private features: FeaturesService,
+    configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.contributionValues = configs.get('contribution_values');
@@ -42,6 +44,14 @@ export class BlockchainMarketingRewardsComponent {
 
   action() {
     this.router.navigate(['/wallet/tokens/overview']);
+  }
+
+  /**
+   * Returns whether token-marketing-2021 is enabled (v2).
+   * @returns { boolean } true if feature flag for v2 is enabled.
+   */
+  public isV2(): boolean {
+    return this.features.has('token-marketing-2021');
   }
 
   detectChanges() {

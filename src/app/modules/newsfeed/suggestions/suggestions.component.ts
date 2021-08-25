@@ -44,14 +44,14 @@ export class NewsfeedActivitySuggestionsComponent {
     this.relatedContent.setContext('container');
     this.relatedContent.setBaseEntity(e);
 
-    await this.relatedContent.fetch();
+    try {
+      await this.relatedContent.fetch();
+      const pools = this.relatedContent.pools;
 
-    const pools = this.relatedContent.pools;
-
-    if (pools) {
-      this.collatePools(pools);
-    }
-
+      if (pools) {
+        this.collatePools(pools);
+      }
+    } catch (e) {}
     this.inProgress = false;
   }
 
@@ -85,6 +85,12 @@ export class NewsfeedActivitySuggestionsComponent {
     if (!this._baseEntity) {
       return;
     }
+
+    // if group
+    if (this._baseEntity.containerObj && this._baseEntity.containerObj.name) {
+      return this._baseEntity.containerObj.name;
+    }
+
     const baseOwner = this._baseEntity.ownerObj;
 
     if (baseOwner.guid === this.session.getLoggedInUser().guid) {

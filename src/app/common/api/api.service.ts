@@ -115,15 +115,24 @@ export class ApiService {
     );
   }
 
+  /**
+   * Delete method
+   * @param endpoint - endpoint to hit.
+   * @param queryParams - data for params.
+   * @param options - api options.
+   * @param data - payload data.
+   * @returns Observable<ApiResponse> - api response
+   */
   delete(
     endpoint: string,
     queryParams: ApiRequestQueryParams = null,
-    options: ApiRequestOptions = {}
+    options: ApiRequestOptions = {},
+    payload: ApiRequestData = {}
   ): Observable<ApiResponse> {
     return this.request(
       ApiRequestMethod.DELETE,
       this._buildQueryString(endpoint, queryParams),
-      {},
+      payload,
       options
     );
   }
@@ -192,7 +201,7 @@ export class ApiService {
       )
       .pipe(
         map(response => {
-          if (!response || !response.status || response.status !== 'success') {
+          if (!response || (response.status && response.status !== 'success')) {
             throw new Error(
               (response && response.message) || 'Internal server error'
             );
@@ -265,7 +274,7 @@ export class ApiService {
       responseType: 'json',
       reportProgress: options.upload,
       withCredentials: options.withCredentials,
-      headers: this._buildHeaders(),
+      headers: this._buildHeaders(options?.headers ?? {}),
     };
 
     if (!options.upload) {
@@ -298,12 +307,13 @@ export class ApiService {
    * Builds HTTP Request headers object
    * @private
    */
-  protected _buildHeaders(): HttpHeaders {
+  protected _buildHeaders(customHeaders = {}): HttpHeaders {
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 
     return new HttpHeaders({
       'X-XSRF-TOKEN': XSRF_TOKEN,
       'X-VERSION': environment.version,
+      ...customHeaders,
     });
   }
 }

@@ -5,7 +5,15 @@
     ::ng-deep {
       m-modal {
         @include z-index(modal--stackable);
+        display: block;
+        position: unset;
       }
+    }
+  }
+
+  & > ::ng-deep m-chatIcon {
+    @media screen and (min-width: $max-mobile + 1) {
+      display: none;
     }
   }
 }

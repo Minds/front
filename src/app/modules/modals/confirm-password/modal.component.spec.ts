@@ -1,10 +1,10 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import {
   Component,
@@ -43,28 +43,30 @@ describe('ConfirmPasswordCreatorComponent', () => {
   let comp: ConfirmPasswordModalComponent;
   let fixture: ComponentFixture<ConfirmPasswordModalComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MaterialSwitchMock,
-        AbbrPipe,
-        TokenPipe,
-        ConfirmPasswordModalComponent,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MaterialSwitchMock,
+          AbbrPipe,
+          TokenPipe,
+          ConfirmPasswordModalComponent,
+          ButtonComponent,
+        ], // declare the test component
+        imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

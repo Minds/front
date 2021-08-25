@@ -23,6 +23,9 @@ import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
 import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
+import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
+import { Router } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-settingsV2__password',
@@ -46,7 +49,8 @@ export class SettingsV2PasswordComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     private session: Session,
     protected settingsService: SettingsV2Service,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -103,8 +107,7 @@ export class SettingsV2PasswordComponent implements OnInit {
         formValue
       );
       if (response.status === 'success') {
-        this.formSubmitted.emit({ formSubmitted: true });
-        this.form.reset();
+        this.router.navigate(['/login']);
       } else {
         this.passwordIncorrect = true;
       }
@@ -136,7 +139,9 @@ export class SettingsV2PasswordComponent implements OnInit {
   }
 
   onNewPasswordBlur() {
-    this.popover.hide();
+    if (!isMobileOrTablet()) {
+      this.popover.hide();
+    }
   }
 
   onPopoverChange(valid: boolean) {

@@ -12,6 +12,7 @@ import {
 import { UniqueId } from '../../../../helpers/unique-id.helper';
 import {
   ComposerService,
+  ComposerSize,
   RemindSubjectValue,
 } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
@@ -22,8 +23,9 @@ import { InMemoryStorageService } from '../../../../services/in-memory-storage.s
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { first } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { first, map, distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { BlogPreloadService } from '../../../blogs/v2/edit/blog-preload.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -94,9 +96,16 @@ export class BaseComponent implements AfterViewInit {
     protected injector: Injector,
     protected toasterService: FormToastService,
     protected featuresService: FeaturesService,
+    protected blogPreloadService: BlogPreloadService,
     configs: ConfigsService
   ) {
     this.plusTierUrn = configs.get('plus').support_tier_urn;
+
+    this.attachmentError$.pipe(distinctUntilChanged()).subscribe(error => {
+      if (error) {
+        this.service.removeAttachment();
+      }
+    });
   }
 
   /**
@@ -135,12 +144,25 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Composer size from service.
+   * @returns { BehaviorSubject<ComposerSize> } - Composer size.
+   */
+  get size$(): BehaviorSubject<ComposerSize> {
+    return this.service.size$;
+  }
+
+  /**
+   * Compact mode if size is compact and NOT in a modal.
+   * @returns { Observable<boolean> } - holds true if compact mode should be applied.
+   */
+  get isCompactMode$(): Observable<boolean> {
+    return this.size$.pipe(map(size => size === 'compact' && !this.isModal));
+  }
+
+  /**
    * Attachment error subject in service
    */
   get attachmentError$() {
-    if (this.service.attachmentError$.value) {
-      this.toasterService.error(this.service.attachmentError$.value);
-    }
     return this.service.attachmentError$;
   }
 
@@ -165,6 +187,7 @@ export class BaseComponent implements AfterViewInit {
     }
 
     if (this.featuresService.has('ckeditor5')) {
+      this.blogPreloadService.next(message);
       this.router.navigate(['/blog/v2/edit/new']);
       return;
     }
@@ -256,7 +279,7 @@ export class BaseComponent implements AfterViewInit {
     ) {
       const confirmation = confirm(
         this.service.isMovingContent$.getValue()
-          ? `Discard changes? Text will be moved into blog editor.`
+          ? `Are you sure? The existing text will be moved into the blog editor.`
           : `Discard changes?`
       );
 

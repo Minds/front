@@ -20,6 +20,16 @@ export class RegexService {
       ].join(''),
       'gim' // Global, Case insensitive, Multiline
     ), //
+    crypto: new RegExp(
+      [
+        '([^&]|\\b|^)', // Start of string, and word bounday. Not if preceeded by & symbol
+        '\\$', //
+        '([',
+        'A-Za-z',
+        ']+)',
+      ].join(''),
+      'gim' // Global, Case insensitive, Multiline
+    ), //
     at: /(^|\W|\s)@([a-z0-9_\-\.]+[a-z0-9_])/gim,
   };
 

@@ -15,7 +15,6 @@ import { WalletSettingsETHComponent } from './components/eth/settings/settings-e
 import { WalletSettingsBTCComponent } from './components/btc/settings/settings-btc.component';
 import { WalletTokenOnboardingComponent } from './components/tokens/onboarding/token-onboarding.component';
 import { WalletModalComponent } from './components/components/modal/modal.component';
-import { WalletPhoneVerificationComponent } from './components/components/phone-verification/phone-verification.component';
 import { WalletOnchainTransferComponent } from './components/components/onchain-transfer/onchain-transfer.component';
 import { WalletBalanceCashComponent } from './components/cash/balance/balance-cash.component';
 import { WalletPendingCashPayoutComponent } from './components/components/pending-cash-payout/pending-cash-payout.component';
@@ -36,6 +35,13 @@ import { WalletTabHistoryService } from './components/tab-history.service';
 import { DefaultRedirectGuard } from './components/guards/default-redirect-guard.component';
 import { TabStorageGuard } from './components/guards/tab-storage-guard.component';
 import { WalletToggleComponent } from './toggle.component';
+import { WalletBalanceComponent } from './components/components/balance/balance.component';
+import { WalletTokenRewardsComponent } from './components/tokens/rewards/rewards.component';
+import { WalletEarningsComponent } from './components/components/earnings/earnings.component';
+import { OnchainTransferModalService } from './components/components/onchain-transfer/onchain-transfer.service';
+import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
+import { WalletSharedModule } from './wallet-shared.module';
+import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -45,7 +51,9 @@ export const WALLET_ROUTES: Routes = [
     data: {
       title: 'Wallet',
       description: 'Manage all of your transactions and earnings on Minds',
-      ogImage: '/assets/photos/graph.jpg',
+      ogImage: '/assets/og-images/wallet-v3.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 1200,
     },
     children: [
       {
@@ -54,13 +62,29 @@ export const WALLET_ROUTES: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'overview',
+            redirectTo: 'rewards',
             pathMatch: 'full',
           },
           {
             path: 'overview',
+            redirectTo: 'balance',
+            pathMatch: 'full',
+          },
+          {
+            path: 'balance',
             canActivate: [TabStorageGuard],
             component: WalletChartComponent,
+          },
+          {
+            path: 'rewards',
+            canActivate: [TabStorageGuard],
+            component: WalletTokenRewardsComponent,
+          },
+          {
+            path: 'earnings',
+            canActivate: [TabStorageGuard],
+            component: WalletEarningsComponent,
+            data: {},
           },
           {
             path: 'transactions',
@@ -71,12 +95,21 @@ export const WALLET_ROUTES: Routes = [
             path: 'settings',
             component: WalletSettingsTokensComponent,
           },
+          {
+            path: 'transfers',
+            component: WalletOnchainTransfersSummaryComponent,
+          },
         ],
       },
       {
         path: 'cash',
         component: WalletV2CashComponent,
         children: [
+          {
+            path: '',
+            redirectTo: 'earnings',
+            pathMatch: 'full',
+          },
           {
             path: 'earnings',
             component: WalletProEarningsCashComponent,
@@ -140,6 +173,7 @@ export const WALLET_ROUTES: Routes = [
     RouterModule,
     RouterModule.forChild(WALLET_ROUTES),
     ChartV2Module,
+    WalletSharedModule,
   ],
   declarations: [
     WalletDashboardComponent,
@@ -152,7 +186,6 @@ export const WALLET_ROUTES: Routes = [
     WalletSettingsBTCComponent,
     WalletTokenOnboardingComponent,
     WalletModalComponent,
-    WalletPhoneVerificationComponent,
     WalletOnchainTransferComponent,
     WalletBalanceTokensV2Component,
     WalletBalanceCashComponent,
@@ -163,6 +196,7 @@ export const WALLET_ROUTES: Routes = [
     WalletCashOnboardingComponent,
     WalletCashOnboardingExtrasComponent,
     WalletCashBankFormComponent,
+    WalletOnchainTransfersSummaryComponent,
     // MH fixed:
     WalletV2TokensComponent,
     WalletV2CashComponent,
@@ -170,14 +204,20 @@ export const WALLET_ROUTES: Routes = [
     WalletV2BtcComponent,
     // Legacy wallet
     WalletToggleComponent,
+    // V3 wallet
+    WalletBalanceComponent,
+    WalletTokenRewardsComponent,
+    WalletEarningsComponent,
+    WalletTokensDropdownMenu,
   ],
-  exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
+  exports: [WalletDashboardComponent],
   providers: [
     TokenContractService,
     WithdrawContractService,
     WalletTabHistoryService,
     DefaultRedirectGuard,
     TabStorageGuard,
+    OnchainTransferModalService,
   ],
 })
 export class WalletModule {}

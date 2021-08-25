@@ -78,7 +78,7 @@ export class SettingsV2ProPayoutsComponent implements OnInit, OnDestroy {
       this.formSubmitted.emit({ formSubmitted: true });
       this.form.markAsPristine();
     } catch (e) {
-      this.formSubmitted.emit({ formSubmitted: false, error: e });
+      this.formSubmitted.emit({ formSubmitted: false, error: e.message ?? e });
     } finally {
       this.inProgress = false;
       this.detectChanges();

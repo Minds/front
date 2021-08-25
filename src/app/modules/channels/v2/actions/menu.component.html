@@ -48,6 +48,22 @@
           View Withdrawals
         </span>
       </li>
+      <li (click)="viewBoosts('newsfeed')">
+        <span
+          class="m-dropdownMenu__item"
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_NEWSFEED_BOOSTS"
+        >
+          View Newsfeed Boosts
+        </span>
+      </li>
+      <li (click)="viewBoosts('content')">
+        <span
+          class="m-dropdownMenu__item"
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_SIDEBAR_BOOSTS"
+        >
+          View Sidebar Boosts
+        </span>
+      </li>
       <li (click)="viewEmail()">
         <span
           class="m-dropdownMenu__item"
@@ -63,13 +79,18 @@
         </span>
       </li>
 
+      <li (click)="plusAdminToggle()" *ngIf="!(service.channel$ | async)?.pro">
+        <span class="m-dropdownMenu__item">
+          {{ !(service.channel$ | async)?.plus ? 'Make Plus' : 'Remove Plus' }}
+        </span>
+      </li>
+
       <ng-container *ngIf="service.isExplicit$ | async">
         <li (click)="setExplicit(false)">
-          <span
-            class="m-dropdownMenu__item"
-            i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
-          >
-            Remove explicit
+          <span class="m-dropdownMenu__item">
+            <ng-container i18n="@@MINDS_BUTTON__USER_DROPDOWN__REMOVE_EXPLICIT"
+              >Remove explicit</ng-container
+            >
           </span>
         </li>
       </ng-container>
@@ -88,39 +109,6 @@
           Reindex
         </span>
       </li>
-
-      <li
-        *ngIf="(service.rating$ | async) === 2; else markAsOpenOption"
-        (click)="setRating(1)"
-      >
-        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MARK_AS_SAFE">
-          Mark as Safe
-        </span>
-      </li>
-      <ng-template #markAsOpenOption>
-        <li (click)="setRating(2)">
-          <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MARK_AS_OPEN">
-            Mark as Open
-          </span>
-        </li>
-      </ng-template>
-
-      <!-- Seed Channels -->
-      <li
-        *ngIf="!(service.seed$ | async); else removeSeed"
-        (click)="setSeed(true)"
-      >
-        <span class="m-dropdownMenu__item" i18n="@@M__ACTION__MAKE__SEED">
-          Add as Seed
-        </span>
-      </li>
-      <ng-template #removeSeed>
-        <li (click)="setSeed(false)">
-          <span class="m-dropdownMenu__item" i18n="@@M__ACTION__REMOVE__SEED">
-            Remove as Seed
-          </span>
-        </li>
-      </ng-template>
     </ng-container>
 
     <li
@@ -154,10 +142,10 @@
 >
   <div
     class="mdl-card__supporting-text"
-    style="padding: 64px; font-size: 20px; text-align: center;"
+    style="padding: 64px; font-size: 20px; text-align: center"
   >
     @{{ service.username$ | async }}'s email:
-    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none;">
+    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none">
       {{ email }}
     </a>
     <ng-container *ngIf="!email">...</ng-container>

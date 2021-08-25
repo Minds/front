@@ -2,9 +2,22 @@
 
 :host {
   .m-blogEditor {
+    &__bannerEditorContainer {
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
     @include m-theme() {
       border-right: 1px solid themed($m-borderColor--primary);
       color: 1px solid themed($m-bgColor--primary);
+    }
+
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 76px);
+
+    .m-blogEditor__bodyContainer {
+      padding-bottom: 40px;
     }
 
     .m-blogEditor__bannerImageContainer {
@@ -14,8 +27,13 @@
 
       img {
         width: 100%;
+
+        // Switch height here depending on date/time
+
+        // Address issue here:
         max-height: 60vh;
         height: 60vh;
+
         object-fit: cover;
       }
 
@@ -36,8 +54,30 @@
       }
     }
 
+    .wide-banner {
+      img {
+        @media screen and (max-width: 700px) {
+          height: calc(50vw);
+        }
+
+        @include mobile-only {
+          height: 55vw;
+        }
+
+        @media screen and (min-width: 700px) and (max-width: 1040px) {
+          height: 344px;
+        }
+
+        height: 500px;
+      }
+    }
+
     .m-blogEditor__container {
-      padding: 40px 100px;
+      position: relative;
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      padding: 40px 100px 80px 100px;
       @media screen and (max-width: $min-desktop) {
         padding: 20px 40px;
       }
@@ -66,6 +106,16 @@
 
             i {
               margin-right: 4px;
+            }
+
+            span {
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+
+              font-weight: 400;
+              font-size: 13px;
+              padding-left: 15px;
             }
 
             @media screen and (max-width: $min-desktop) {
@@ -119,10 +169,16 @@
           font-weight: 500;
           outline: none;
           font-family: 'Roboto';
-          font-size: 42px;
+          font-size: 26px;
           font-weight: bold;
           resize: none;
           overflow: hidden;
+
+          &::placeholder {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
         }
       }
     }

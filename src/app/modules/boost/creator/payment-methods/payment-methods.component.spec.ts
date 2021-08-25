@@ -1,10 +1,10 @@
 ///<reference path="../../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component, DebugElement, EventEmitter, Input } from '@angular/core';
@@ -23,7 +23,6 @@ import { TooltipComponentMock } from '../../../../mocks/common/components/toolti
 import { AddressExcerptPipe } from '../../../../common/pipes/address-excerpt';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { localWalletServiceMock } from '../../../../../tests/local-wallet-service-mock.spec';
-import { LocalWalletService } from '../../../blockchain/local-wallet.service';
 import { transactionOverlayServiceMock } from '../../../../../tests/transaction-overlay-service-mock.spec';
 import { TransactionOverlayService } from '../../../blockchain/transaction-overlay/transaction-overlay.service';
 
@@ -128,30 +127,31 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        TooltipComponentMock,
-        AddressExcerptPipe,
-        TokenPipe,
-        BoostCreatorPaymentMethodsComponent,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        BoostService,
-        { provide: Web3WalletService, useValue: web3WalletServiceMock },
-        {
-          provide: TransactionOverlayService,
-          useValue: transactionOverlayServiceMock,
-        },
-        { provide: LocalWalletService, useValue: localWalletServiceMock },
-        { provide: TokenContractService, useValue: tokenContractServiceMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          TooltipComponentMock,
+          AddressExcerptPipe,
+          TokenPipe,
+          BoostCreatorPaymentMethodsComponent,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          BoostService,
+          { provide: Web3WalletService, useValue: web3WalletServiceMock },
+          {
+            provide: TransactionOverlayService,
+            useValue: transactionOverlayServiceMock,
+          },
+          { provide: TokenContractService, useValue: tokenContractServiceMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

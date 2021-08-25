@@ -24,10 +24,13 @@
         <span *ngIf="trend.volume > 0"
           >{{ trend.volume }} channels discussing</span
         >
-        <span>{{ trend.entity.time_created | friendlytime }}</span>
+        <span>{{ trend.entity.time_created | friendlydatediff }}</span>
       </div>
     </div>
-    <img [src]="trend.entity.thumbnail_src" />
+    <img
+      [src]="trend.entity.thumbnail_src"
+      class="m-discoveryTrendListItem__image"
+    />
   </ng-container>
   <ng-container *ngIf="!trend.title">
     <div>

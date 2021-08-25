@@ -14,7 +14,8 @@ m-composer__modal {
   @media screen and (max-width: $max-mobile) {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: var(--mobileVH);
+
     border-radius: 0;
 
     // flex: 1;
@@ -30,8 +31,7 @@ m-composer__modal {
 
     @media screen and (max-width: $max-mobile) {
       padding-bottom: 0;
-      height: 100vh;
-      max-height: 100vh;
+      height: 100%;
 
       .m-composer__base,
       .m-composer__base.m-composer__base--withPreview {

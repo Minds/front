@@ -16,7 +16,7 @@
   >
     <ng-container *ngIf="request">
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label">Requested</div>
+        <div class="m-admin-withdrawalsCardCell__label">Last Updated</div>
 
         <div class="m-admin-withdrawalsCardCell__body">
           {{ request.timestamp * 1000 | date: 'short' }}
@@ -71,6 +71,56 @@
 
         <div class="m-admin-withdrawalsCardCell__body">
           {{ request.status?.replace('_', ' ') | uppercase }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell" *ngIf="request.tx">
+        <div class="m-admin-withdrawalsCardCell__label">Wallet</div>
+        <div
+          class="m-admin-withdrawalsCardCell__body m-admin-withdrawalsCardCell__body--txId"
+        >
+          <div class="m-admin-withdrawals__txId">
+            {{ request.user.eth_wallet }}
+          </div>
+          <m-admin__txExplorers
+            [address]="{
+              type: 'wallet',
+              id: request.user.eth_wallet
+            }"
+          ></m-admin__txExplorers>
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell" *ngIf="request.tx">
+        <div class="m-admin-withdrawalsCardCell__label">Request TX</div>
+        <div
+          class="m-admin-withdrawalsCardCell__body m-admin-withdrawalsCardCell__body--txId"
+        >
+          <div class="m-admin-withdrawals__txId">{{ request.tx }}</div>
+          <m-admin__txExplorers
+            [address]="{
+              type: 'txid',
+              id: request.tx
+            }"
+          ></m-admin__txExplorers>
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell" *ngIf="request.completed_tx">
+        <div class="m-admin-withdrawalsCardCell__label">Payout TX</div>
+
+        <div
+          class="m-admin-withdrawalsCardCell__body m-admin-withdrawalsCardCell__body--txId"
+        >
+          <div class="m-admin-withdrawals__txId">
+            {{ request.completed_tx }}
+          </div>
+          <m-admin__txExplorers
+            [address]="{
+              type: 'txid',
+              id: request.completed_tx
+            }"
+          ></m-admin__txExplorers>
         </div>
       </div>
 

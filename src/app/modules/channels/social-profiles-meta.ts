@@ -183,7 +183,7 @@ export const socialProfileMeta: SocialProfileMeta[] = [
     key: 'medium',
     label: 'Medium Profile',
     link: 'https://medium.com/:value',
-    icon: 'medium-m',
+    icon: 'medium',
     domain: 'medium.com',
   },
   {

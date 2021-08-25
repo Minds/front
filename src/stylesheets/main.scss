@@ -78,7 +78,7 @@ minds-topbar {
         position: relative;
 
         .counter {
-          padding: $minds-padding/2;
+          padding: $minds-padding * 0.5;
         }
       }
     }
@@ -307,5 +307,17 @@ body.m-theme-in-transition *:after {
   &::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* Chrome/Safari/Webkit */
+  }
+}
+
+.m-legible {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Helper classes
+.m-hideOnSmall {
+  @media screen and (max-width: $max-mobile) {
+    display: none;
   }
 }

@@ -1,0 +1,26 @@
+@import 'defaults.scss';
+
+:host {
+  .m-groupSorted__searchDisplay {
+    padding: 5px 0 20px 0;
+
+    span {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      &.m-groupSortedSearch__query {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+    a {
+      cursor: pointer;
+      font-weight: 400;
+      text-decoration: underline;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

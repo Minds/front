@@ -1,0 +1,66 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__LABEL">Push Notifications</span>
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS_NOTIFICATIONS_PUSH__DESCRIPTION"
+  >
+    Control which mobile push notifications you receive, and when.
+  </div>
+</m-settingsV2__header>
+<m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
+<ng-container *ngIf="!(initializing$ | async)">
+  <div
+    class="
+      m-pushNotifSettings__optionContainer
+      m-pushNotifSettings__optionContainer--horizontal
+    "
+    *ngIf="getToggle('all')"
+  >
+    <m-toggle
+      [mModel]="getToggle('all').state"
+      (mModelChange)="toggle('all')"
+      leftValue="off"
+      rightValue="on"
+    ></m-toggle>
+    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__NOTIFS_ENABLED"
+      >Push notifications enabled</span
+    >
+  </div>
+
+  <hr />
+
+  <h5 i18n="@@SETTINGS_NOTIFICATIONS_PUSH__RELATED_TO_POSTS">
+    Related to your posts and channel
+  </h5>
+
+  <div
+    class="
+      m-pushNotifSettings__optionContainer
+      m-pushNotifSettings__optionContainer--horizontal
+    "
+    *ngFor="let option of getDynamicToggles()"
+  >
+    <m-toggle
+      [mModel]="option.state"
+      (mModelChange)="toggle(option.notificationGroup)"
+      [disabled]="getToggle('all').state === 'off'"
+      leftValue="off"
+      rightValue="on"
+    ></m-toggle>
+    <div class="m-pushNotifSettings__optionContainerLabels">
+      <span class="m-pushNotifSettings__optionTitle">
+        <ng-container [ngSwitch]="option.notificationGroup">
+          <ng-template ngSwitchCase="wires">Pay</ng-template>
+          <ng-template ngSwitchDefault>{{
+            option.notificationGroup | titlecase
+          }}</ng-template>
+        </ng-container></span
+      >
+      <span class="m-pushNotifSettings__optionSubtext" *ngIf="option.subtext">{{
+        option.subtext
+      }}</span>
+    </div>
+  </div>
+</ng-container>

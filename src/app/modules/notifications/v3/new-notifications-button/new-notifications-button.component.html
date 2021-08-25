@@ -1,0 +1,14 @@
+<div
+  *ngIf="count > 0"
+  class="m-newNotificationsButton"
+  (click)="loadNewNotifications($event)"
+>
+  <i class="material-icons">refresh</i>
+  <span class="m-legible"
+    >{{ count }}
+    <ng-container i18n="@@M__NOTIFICATIONS__NEW">new </ng-container>
+    <ng-container i18n="@@M__NOTIFICATIONS__NOTIFICATION"
+      >{ count, plural, =1 {notification} other {notifications} }</ng-container
+    >
+  </span>
+</div>

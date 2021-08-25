@@ -39,7 +39,22 @@ export class TagsPipe implements PipeTransform {
         }
         return `${
           m.match[1]
-        }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}">#${
+        }<a href="/discovery/search?f=top&t=all&q=%23${m.match[2].toLowerCase()}" class="m-legible">#${
+          m.match[2]
+        }</a>`; // TODO: make these link locally
+      },
+    },
+    crypto: {
+      rule: this.regexService.getRegex('crypto'),
+      replace: m => {
+        if (this.siteService.isProDomain) {
+          return `${
+            m.match[1]
+          }<a href="/all;query=${m.match[2].toUpperCase()}">#${m.match[2]}</a>`;
+        }
+        return `${
+          m.match[1]
+        }<a href="/discovery/search?f=top&t=all&q=%24${m.match[2].toUpperCase()}" class="m-legible">$${
           m.match[2]
         }</a>`; // TODO: make these link locally
       },
@@ -109,6 +124,7 @@ export class TagsPipe implements PipeTransform {
     this.parse('url', value);
     this.parse('mail', value);
     this.parse('hash', value);
+    this.parse('crypto', value);
     this.parse('at', value);
 
     if (this.results.length === 0) {

@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
@@ -16,6 +16,8 @@ import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
+import { ThemeService } from '../../services/theme.service';
+import { themeServiceMock } from '../../../mocks/common/services/theme.service-mock.spec';
 
 describe('ChannelBadgesComponent', () => {
   let comp: ChannelBadgesComponent;
@@ -26,32 +28,45 @@ describe('ChannelBadgesComponent', () => {
     return fixture.debugElement.query(By.css('.m-channel--badges li'));
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [TooltipComponentMock, ChannelBadgesComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [TooltipComponentMock, ChannelBadgesComponent],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: ThemeService, useValue: themeServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
-  beforeEach(() => {
+  beforeEach(done => {
     fixture = TestBed.createComponent(ChannelBadgesComponent);
 
     comp = fixture.componentInstance;
 
     comp.user = sessionMock.user;
 
-    fixture.detectChanges();
-
     session = comp.session;
 
     clientMock.response = {};
+    fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
+    }
   });
 
   it('should show plus badge only if the user is plus', () => {
+    sessionMock.user.plus = false;
+    sessionMock.user.pro = false;
     comp.user = sessionMock.user;
     comp.badges = ['plus'];
     fixture.detectChanges();
@@ -61,7 +76,6 @@ describe('ChannelBadgesComponent', () => {
 
     sessionMock.user.plus = true;
     comp.user = sessionMock.user;
-
     fixture.detectChanges();
 
     badge = getCurrentBadge();

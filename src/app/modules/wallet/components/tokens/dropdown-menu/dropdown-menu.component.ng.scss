@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  display: inline-block;
+  vertical-align: middle;
+
+  // We need this element to be off the screen
+  .m-walletTokensDropdown__copyToClipboardContent {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+  }
+}

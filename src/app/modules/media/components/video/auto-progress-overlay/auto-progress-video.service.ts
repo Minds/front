@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, timer, Observable, of } from 'rxjs';
 import { tap, takeWhile, scan, map } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { RelatedContentService } from '../../../../../common/services/related-content.service';
+import { IsCommentingService } from '../../../../comments/poster/is-commenting.service';
 import { ActivityEntity } from '../../../../newsfeed/activity/activity.service';
 
 /**
@@ -9,7 +11,7 @@ import { ActivityEntity } from '../../../../newsfeed/activity/activity.service';
  * the next video in a sequence to load.
  */
 @Injectable({ providedIn: 'root' })
-export class AutoProgressVideoService {
+export class AutoProgressVideoService extends AbstractSubscriberComponent {
   /**
    * Holds countdown timer Observable. Can be destroyed.
    */
@@ -81,7 +83,22 @@ export class AutoProgressVideoService {
     );
   }
 
-  constructor(private relatedContent: RelatedContentService) {}
+  constructor(
+    private relatedContent: RelatedContentService,
+    isCommentingService: IsCommentingService
+  ) {
+    //ojm
+    super();
+
+    // if service detects that a user is typing, call to cancel.
+    this.subscriptions.push(
+      isCommentingService.isCommenting$.subscribe((isCommenting: boolean) => {
+        if (isCommenting) {
+          this.cancel();
+        }
+      })
+    );
+  }
 
   /**
    * If a next video exists, trigger it to play next.

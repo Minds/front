@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
 import { PageLayoutComponent } from './page-layout.component';
 
@@ -15,11 +15,13 @@ describe('PageLayoutComponent', () => {
   let component: PageLayoutComponent;
   let fixture: ComponentFixture<PageLayoutComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [PageLayoutComponent, SidebarMenuComponentMock],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [PageLayoutComponent, SidebarMenuComponentMock],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PageLayoutComponent);

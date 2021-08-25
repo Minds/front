@@ -1,37 +1,11 @@
-<div class="m--blockchain--transaction-overlay">
+<div
+  class="m--blockchain--transaction-overlay"
+  [ngClass]="{
+    'm--blockchain--transaction-overlay--transparant':
+      comp !== COMP_SETUP_METAMASK
+  }"
+>
   <div class="m--blockchain--transaction-overlay--content">
-    <ng-container *ngIf="comp !== COMP_SETUP_METAMASK">
-      <img
-        [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
-        class="m--blockchain--transaction-overlay--logo"
-      />
-      <h2
-        class="m--blockchain--transaction-overlay--title"
-        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_YOUR_TX"
-        *ngIf="comp !== COMP_SETUP_METAMASK"
-      >
-        Complete your OnChain transaction
-      </h2>
-
-      <p
-        class="m--blockchain--transaction-overlay--note"
-        *ngIf="comp === COMP_METAMASK"
-        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_USING_WALLET"
-      >
-        Please open your Wallet Provider client to complete the transaction. If
-        you are using a mobile wallet, like Coinbase, please complete the
-        transaction prompt on your wallet's mobile app
-      </p>
-
-      <p
-        class="m--blockchain--transaction-overlay--note"
-        *ngIf="comp !== COMP_UNLOCK && !!message"
-        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__YOURE_APPROVING_MESSAGE"
-      >
-        You are approving a {{ message }}
-      </p>
-    </ng-container>
-
     <ng-container *ngIf="comp === COMP_SETUP_METAMASK">
       <m-get-metamask
         (actioned)="handleMetamaskAction($event)"
@@ -87,7 +61,10 @@
 
       <div class="m--blockchain--transaction-overlay--field">
         <label
-          class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect m--blockchain--transaction-overlay--checkbox-label"
+          class="
+            mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect
+            m--blockchain--transaction-overlay--checkbox-label
+          "
           for="tx-overlay-secure-mode-1"
           [mdlSwitch]
           [toggled]="data.unlock.secureMode"
@@ -109,17 +86,16 @@
       </div>
 
       <div class="m--blockchain--transaction-overlay--field">
-        <button class="m-btn" (click)="cancel()" i18n="@@M__ACTION__CANCEL">
-          Cancel
+        <button class="m-btn" (click)="cancel()">
+          <ng-container i18n="@@M__ACTION__CANCEL">Cancel</ng-container>
         </button>
 
         <button
           class="m-btn m-btn--action"
           (click)="unlock()"
           [disabled]="!validateUnlock()"
-          i18n="@@MM__ACTION__COMPLETE"
         >
-          Complete
+          <ng-container i18n="@@MM__ACTION__COMPLETE">Complete</ng-container>
         </button>
       </div>
 
@@ -167,8 +143,8 @@
           </div>
 
           <div class="m--blockchain--transaction-overlay--field">
-            <button class="m-btn" (click)="cancel()" i18n="@@COMMON__CANCEL">
-              Cancel
+            <button class="m-btn" (click)="cancel()">
+              <ng-container>Cancel</ng-container>
             </button>
 
             <button

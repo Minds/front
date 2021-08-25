@@ -125,7 +125,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
     return (
       this.disabled ||
       !this.active ||
-      (!this.q && this.recent && this.recent.length < 1)
+      (!this.q && ((this.recent && this.recent.length < 1) || !this.recent))
     );
   }
 }

@@ -13,6 +13,7 @@ import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-login',
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    private modal: SignupModalService,
+    private config: ConfigsService,
     private loginReferrer: LoginReferrerService,
     private cookieService: CookieService,
     private featuresService: FeaturesService,
@@ -67,6 +68,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
+      }
+      if (params['redirectUrl']) {
+        this.redirectTo = decodeURI(params['redirectUrl']);
       }
     });
 
@@ -121,6 +125,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.router.navigate([uri[0]], extras);
+    // If this is an api redirect, we need to redirect outside of angular router
+    if (uri[0].indexOf(this.config.get('site_url') + 'api/') === 0) {
+      window.location.href = this.redirectTo;
+    } else {
+      this.router.navigate([uri[0]], extras);
+    }
   }
 }

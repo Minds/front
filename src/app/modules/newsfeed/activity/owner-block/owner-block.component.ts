@@ -45,6 +45,11 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return this.service.displayOptions.minimalMode;
   }
 
+  // Show absolute dates for items outside the feed
+  get isFeed(): boolean {
+    return this.service.displayOptions.isFeed;
+  }
+
   get owner(): MindsUser {
     return this.entity.ownerObj;
   }
@@ -98,10 +103,12 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Converts a date to a human readable datetime e.g. 29/05/2020, 10:32:46.
+   * Converts a date to a human readable datetime, e.g. Jul 16 2021 · 2:48pm
    * @returns - human readable datetime.
    */
   toReadableDate(seconds: string): string {
-    return new Date(parseInt(seconds) * 1000).toLocaleString();
+    const date = moment(parseInt(seconds) * 1000).format('MMM D YYYY ');
+    const time = moment(parseInt(seconds) * 1000).format('LT');
+    return `${date} · ${time}`;
   }
 }

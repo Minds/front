@@ -24,7 +24,7 @@ export class NewsfeedEntityComponent {
   @ViewChild(DynamicHostDirective)
   host: DynamicHostDirective;
   entity;
-  @Input() displayOptions = { v2: false };
+  @Input() displayOptions = { v2: false, isFeed: true };
 
   constructor(
     protected componentFactoryResolver: ComponentFactoryResolver,
@@ -53,10 +53,7 @@ export class NewsfeedEntityComponent {
 
   // Update the component
   updateComponents() {
-    if (
-      this.entity &&
-      (this.entity.type === 'user' || this.entity.type === 'group')
-    ) {
+    if (this.entity && this.entity.type === 'group') {
       this.clear();
 
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(

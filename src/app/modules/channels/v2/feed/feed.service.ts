@@ -1,13 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  EMPTY,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import {
   FeedFilterSort,
   FeedFilterType,
 } from '../../../../common/components/feed-filter/feed-filter.component';
-import { distinctUntilChanged, map, switchAll, filter } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  switchAll,
+  filter,
+  catchError,
+} from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
 import { Router } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ChannelsV2Service } from '../channels-v2.service';
 
 /**
  * Feed component service, handles filtering and pagination
@@ -51,13 +65,16 @@ export class FeedService {
   constructor(
     public service: FeedsService,
     protected api: ApiService,
-    protected router: Router
+    protected router: Router,
+    private toast: FormToastService,
+    protected channelsService: ChannelsV2Service
   ) {
     // Fetch when GUID or filter change
     this.filterChangeSubscription = combineLatest([
       this.guid$,
       this.sort$,
       this.type$,
+      this.channelsService.query$,
     ])
       .pipe(distinctUntilChanged((a, b) => a.join(':') === b.join(':')))
       .subscribe(values => {
@@ -69,8 +86,24 @@ export class FeedService {
 
         const endpoint = `api/v2/feeds`;
         const guid = values[0];
-        const sort = values[1] === 'scheduled' ? 'scheduled' : 'container';
+        let sort = values[1] === 'scheduled' ? 'scheduled' : 'container';
         const type = values[2];
+        const query = values[3];
+
+        if (query) {
+          sort = 'container';
+
+          const params: any = {
+            period: '1y',
+            all: 1,
+            query: query,
+            sync: 1,
+            force_public: 1,
+          };
+          this.service.setParams(params);
+        } else {
+          this.service.setParams({ query: '' });
+        }
 
         this.service
           .setEndpoint(`${endpoint}/${sort}/${guid}/${type}`)
@@ -84,7 +117,13 @@ export class FeedService {
       filter(guid => !!guid),
       map(guid => this.api.get(`api/v2/feeds/scheduled/${guid}/count`)),
       switchAll(),
-      map(response => response.count)
+      map(response => response.count),
+      catchError(e => {
+        if (this.router.url.indexOf('/scheduled') !== -1) {
+          this.toast.error(e.message ?? e);
+        }
+        return EMPTY;
+      })
     );
   }
 

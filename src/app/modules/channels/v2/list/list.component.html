@@ -41,7 +41,7 @@
 
       <infinite-scroll
         distance="25%"
-        (load)="feedsService.loadNext()"
+        (load)="loadNext()"
         [moreData]="feedsService.hasMore | async"
         [inProgress]="feedsService.inProgress | async"
       ></infinite-scroll>

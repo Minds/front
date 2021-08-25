@@ -5,7 +5,9 @@
   <i class="material-icons">repeat</i>
   <span>Reminded by </span>
   <ng-container *ngFor="let reminder of entity.remind_users; let i = index">
-    <a [routerLink]="['/', reminder.username]">{{ reminder.name }}</a>
+    <a [routerLink]="['/', reminder.username]">
+      {{ reminder.name | excerpt: 50 }}
+    </a>
   </ng-container>
 </div>
 
@@ -49,26 +51,24 @@
         [routerLink]="service.canonicalUrl$ | async"
         class="m-activityOwnerBlock__permalink"
       >
-        <div *ngIf="isScheduled()" class="m-activityOwnerBlockPermalink__text">
-          <i class="material-icons">schedule</i>
-          <span>
-            {{ toReadableDate(entity.time_created) }}
-          </span>
-        </div>
-        <span
-          class="m-activityOwnerBlockPermalink__text--timestamp"
-          [title]="entity.time_created * 1000 | date: 'medium'"
-          *ngIf="!isScheduled()"
-        >
-          {{ entity.time_created * 1000 | friendlydatediff }}
-        </span>
+        <m-relativeTimeSpan
+          class="m-activityOwnerBlockPermalink__text"
+          *ngIf="!isScheduled() && isFeed; else absoluteDate"
+          [entity]="entity"
+        ></m-relativeTimeSpan>
+        <ng-template #absoluteDate>
+          <div class="m-activityOwnerBlockPermalink__text">
+            <i *ngIf="isScheduled()" class="material-icons">schedule</i>
+            <span> {{ toReadableDate(entity.time_created) }} </span>
+          </div>
+        </ng-template>
         <span
           *ngIf="
             service.displayOptions.showEditedTag && (service.isEdited$ | async)
           "
           class="m-activityOwnerBlockPermalink__text--edited"
           i18n="@@M__COMMON__EDITED"
-          >edited</span
+          >Edited</span
         >
         <ng-template [ngTemplateOutlet]="boostedTag"></ng-template>
         <div

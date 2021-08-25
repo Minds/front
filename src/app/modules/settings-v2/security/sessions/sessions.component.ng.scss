@@ -1,0 +1,68 @@
+@import 'defaults.scss';
+
+:host {
+  .m-form__fieldsContainer {
+    div,
+    a,
+    span,
+    > * {
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 300;
+      @media screen and (max-width: $max-mobile) {
+        font-size: 14px;
+      }
+    }
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+
+  .m-dropdown--v2 {
+    position: relative;
+    i {
+      cursor: pointer;
+      position: relative;
+      font-size: 24px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      transition: 0.15s color ease-out;
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+
+  .m-settingsV2__tableCol--right {
+    flex: 2 1 180px !important;
+    > * {
+      &:first-child {
+        margin-right: 0px !important;
+      }
+    }
+  }
+
+  .m-settingsV2__tableItem {
+    min-height: 40px;
+  }
+
+  .m-settingsV2__sessions__ip span {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-settingsV2__deleteAllSessionContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

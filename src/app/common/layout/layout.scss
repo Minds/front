@@ -74,10 +74,10 @@ $layoutMin1ColWidth: 280px;
   @media screen and (min-width: $layoutMin2ColWidth) and (max-width: $layoutMax2ColFixedWidth) {
     min-width: 0;
     width: auto;
-    padding-right: $layoutTotalPadding / 4;
+    padding-right: $layoutTotalPadding * 0.25;
   }
   @media screen and (max-width: $layoutMin2ColWidth) {
-    padding: 0 $layoutTotalPadding / 2;
+    padding: 0 $layoutTotalPadding * 0.5;
     m-body & {
       padding: 0;
     }

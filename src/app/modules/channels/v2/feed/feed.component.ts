@@ -8,6 +8,9 @@ import {
   OnInit,
   ChangeDetectorRef,
   Injector,
+  ElementRef,
+  QueryList,
+  ViewChildren,
 } from '@angular/core';
 import { FeedService } from './feed.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,6 +38,9 @@ import { catchError, take } from 'rxjs/operators';
 })
 export class ChannelFeedComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
+
+  @ViewChildren('feedViewChildren', { read: ElementRef })
+  feedViewChildren: QueryList<ElementRef>;
 
   isGrid: boolean = false;
 
@@ -173,7 +179,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   onTypeChange(type: FeedFilterType) {
     const filter = type !== 'activities' ? type : '';
     this.router.navigate(['/', this.service.username$.getValue(), filter], {
-      preserveQueryParams: true,
+      queryParamsHandling: 'preserve',
     });
   }
 

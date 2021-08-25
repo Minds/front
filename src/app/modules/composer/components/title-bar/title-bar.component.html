@@ -4,14 +4,20 @@
       >Compose</label
     >
 
-    <label [for]="inputId" i18n="@@COMPOSER__COMPOSE" *ngIf="remind$ | async"
+    <label
+      [for]="inputId"
+      i18n="@@M__COMPOSER__QUOTE_POST"
+      *ngIf="remind$ | async"
       >Quote post</label
     >
   </div>
 
   <div
     *ngIf="
-      !(isEditing$ | async) && !(attachment$ | async) && !(remind$ | async)
+      !(isEditing$ | async) &&
+      !(attachment$ | async) &&
+      !(remind$ | async) &&
+      !containerGuid
     "
     class="m-composerTitleBar__createBlogTrigger"
     [hidden]="isPosting$ | async"

@@ -9,12 +9,12 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: $activity-padding-lr;
-    padding-right: $activity-padding-lr / 2;
+    padding-right: $activity-padding-lr * 0.5;
     box-sizing: border-box;
 
     &.m-activity__ownerBlock--minimalMode {
       padding-left: $activity-padding-lr--minimalMode;
-      padding-right: $activity-padding-lr--minimalMode / 2;
+      padding-right: $activity-padding-lr--minimalMode * 0.5;
       .m-activityOwnerBlock__avatar {
         img {
           height: 35px;
@@ -102,6 +102,12 @@
       color: themed($m-textColor--primary);
     }
 
+    strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     > * {
       display: inline-block;
       vertical-align: middle;
@@ -127,7 +133,7 @@
 
   .m-activityOwnerBlock__remindIcon {
     font-size: 18px;
-    margin-right: $minds-margin / 2;
+    margin-right: $minds-margin * 0.5;
     vertical-align: middle;
     @include m-theme() {
       color: themed($m-link);
@@ -135,19 +141,21 @@
   }
 
   .m-activityOwnerBlock__permalink {
-    font-size: 14px;
-    line-height: 17px;
-    font-weight: normal;
+    .m-activityOwnerBlockPermalink__text {
+      font-size: 14px;
+      line-height: 17px;
+      font-weight: normal;
 
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
 
-    .material-icons {
-      //padding-right: 4px;
-      //font-size: 20px;
-      font-size: initial;
-      vertical-align: text-top;
+      .material-icons {
+        //padding-right: 4px;
+        //font-size: 20px;
+        font-size: initial;
+        vertical-align: text-top;
+      }
     }
   }
 

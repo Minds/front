@@ -9,15 +9,11 @@
         "
     iconOnly="true"
   >
-    <i class="material-icons">
-      add
-    </i>
+    <i class="material-icons"> add </i>
   </m-button>
 
   <m-button (onAction)="leave()" *ngIf="group['is:member']" iconOnly="true">
-    <i class="material-icons">
-      check
-    </i>
+    <i class="material-icons"> check </i>
   </m-button>
 </ng-container>
 
@@ -41,38 +37,38 @@
     <m-button
       class="m-groupsJoinButton__verdict"
       (onAction)="accept()"
+      [saving]="inProgress"
       i18n="@@M__ACTION__ACCEPT"
       size="small"
+      >Accept</m-button
     >
-      Accept
-    </m-button>
     <m-button
       class="m-groupsJoinButton__verdict"
       (onAction)="decline()"
+      [saving]="inProgress"
       i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION"
       size="small"
+      >Decline</m-button
     >
-      Decline
-    </m-button>
   </ng-container>
   <m-button
     class="m-groupsJoinButton__leave"
     *ngIf="group['is:member']"
     (onAction)="leave()"
+    [saving]="inProgress"
     i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION"
     size="small"
+    >Leave</m-button
   >
-    Leave
-  </m-button>
   <m-button
     class="m-groupsJoinButton__cancel"
     *ngIf="group['is:awaiting']"
     (onAction)="cancelRequest()"
+    [saving]="inProgress"
     i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION"
     size="small"
+    >Cancel request</m-button
   >
-    Cancel request
-  </m-button>
   <m-modal-signup-on-action
     [open]="showModal"
     (closed)="join(); showModal = false"

@@ -68,8 +68,8 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           {
-            label: $localize`:@@SETTINGS__ACCOUNT__DISPLAYNAME__LABEL:Display Name`,
-            id: 'display-name',
+            label: $localize`:@@SETTINGS__ACCOUNT__PROFILE__LABEL:Profile`,
+            id: 'profile',
           },
           {
             label: $localize`:@@SETTINGS__ACCOUNT__EMAIL__LABEL:Email Address`,
@@ -99,6 +99,10 @@ export class SettingsV2Component implements OnInit {
             label: $localize`:@@SETTINGS__ACCOUNT__AUTOPLAY__LABEL:Autoplay Videos`,
             id: 'autoplay-videos',
           },
+          {
+            label: $localize`:@@SETTINGS__ACCOUNT__MESSENGER__LABEL:Messenger`,
+            id: 'messenger',
+          },
         ],
       },
       {
@@ -106,16 +110,7 @@ export class SettingsV2Component implements OnInit {
           label: $localize`:@@SETTINGS__NOTIFICATIONS__HEADER__LABEL:Notifications`,
           id: 'notifications',
         },
-        items: [
-          {
-            label: $localize`:@@SETTINGS__NOTIFICATIONS__EMAIL__LABEL:Email`,
-            id: 'email-notifications',
-          },
-          {
-            label: $localize`:@@SETTINGS__NOTIFICATIONS__POPOVERS__LABEL:Popovers`,
-            id: 'toaster-notifications',
-          },
-        ],
+        items: [],
       },
       {
         header: {
@@ -146,6 +141,10 @@ export class SettingsV2Component implements OnInit {
           id: 'security',
         },
         items: [
+          {
+            label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
+            id: 'two-factor',
+          },
           {
             label: $localize`:@@SETTINGS__SECURITY__SESSIONS__LABEL:Sessions`,
             id: 'sessions',
@@ -346,17 +345,53 @@ export class SettingsV2Component implements OnInit {
       this.secondaryMenus.other.splice(0, 0, referralsMenuItem);
     }
 
+    this.addNotificationsMenuItems();
+
     this.setProRoutes();
     this.setSecondaryPane();
-    this.loadSettings().then(() => {
-      if (this.settingsService.settings$.getValue().has2fa) {
-        const mfaMenuItem = {
-          label: $localize`:@@SETTINGS__SECURITY__2FA__LABEL:Two-factor Authentication`,
-          id: 'two-factor',
-        };
-        this.secondaryMenus.security[0].items.splice(0, 0, mfaMenuItem);
-      }
-    });
+    this.loadSettings();
+  }
+
+  /**
+   * Adds released notification menu items depending
+   * on notifications-v3 feat flag.
+   * @returns { void }
+   */
+  private addNotificationsMenuItems(): void {
+    let menuItems = [];
+    if (this.featuresService.has('notifications-v3')) {
+      menuItems = [
+        {
+          label: 'Push Notifications',
+          id: 'push-notifications',
+          route: null,
+          shouldShow: null,
+        },
+        {
+          label: 'Email Notifications',
+          id: 'email-notifications-v2',
+          route: null,
+          shouldShow: null,
+        },
+      ];
+    } else {
+      menuItems = [
+        {
+          label: 'Email Notifications',
+          id: 'email-notifications',
+        },
+        {
+          label: 'Popovers',
+          id: 'toaster-notifications',
+        },
+      ];
+    }
+
+    this.secondaryMenus.account
+      .filter(item => {
+        return item.header.id === 'notifications';
+      })[0]
+      .items.push(...menuItems);
   }
 
   setProRoutes() {

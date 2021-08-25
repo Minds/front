@@ -4,34 +4,37 @@
   [type]="type"
   [disabled]="disabled"
   [ngClass]="{
-    'm-button--saving': saving,
+    'm-button--saving': _saving,
     'm-button--grey': color === 'grey',
     'm-button--blue': color === 'blue',
     'm-button--red': color === 'red',
+    'm-button--primary': color === 'primary',
+    'm-button--secondary': color === 'secondary',
     'm-button--xsmall': size === 'xsmall',
     'm-button--small': size === 'small',
     'm-button--medium': size === 'medium',
     'm-button--large': size === 'large',
     'm-button--overlay': overlay,
     'm-button--iconOnly': iconOnly,
-    'm-button--dropdown': !!dropdown,
+    'm-button--dropdown': !!dropdown && showDropdownMenu,
     'm-pulsating--small': pulsating
   }"
 >
-  <div *ngIf="!saving" class="m-button__text--unsaved" #buttonTextContainer>
+  <div *ngIf="!_saving" class="m-button__text--unsaved" #buttonTextContainer>
     <ng-content></ng-content>
   </div>
   <div
-    *ngIf="saving"
+    *ngIf="_saving"
     class="m-button__text--saving"
     [style.width]="buttonTextWidth + 'px'"
+    [style.height]="buttonTextHeight + 'px'"
   >
     <span></span>
     <span></span>
     <span></span>
   </div>
   <m-dropdownMenu
-    *ngIf="dropdown"
+    *ngIf="dropdown && showDropdownMenu"
     [menu]="dropdown"
     [anchorPosition]="dropdownAnchorPosition"
     triggerClass="m-button__dropdownArrow"

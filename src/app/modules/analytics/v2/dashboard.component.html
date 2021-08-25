@@ -30,8 +30,9 @@
       >
         <ng-container *ngIf="(category$ | async) === 'earnings'">
           <span *ngIf="!session.getLoggedInUser().pro">
-            In order to start earning,
-            <a routerLink="/pro">upgrade to Pro</a>.</span
+            To start earning more, upgrade to
+            <a routerLink="/plus"> Minds+ </a> or
+            <a routerLink="/pro">Pro</a>.</span
           >
           <a
             *ngIf="

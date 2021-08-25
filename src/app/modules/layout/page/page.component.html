@@ -22,9 +22,18 @@
     </div>
   </div>
 </m-body>
+<ng-container *mIfFeature="'matrix'">
+  <m-chatIcon *ngIf="session.isLoggedIn()" [floating]="true"></m-chatIcon>
+</ng-container>
 
 <ng-container *mIfBrowser>
-  <m-messenger *ngIf="session.isLoggedIn() && !isProDomain"></m-messenger>
+  <m-messenger
+    *ngIf="
+      session.isLoggedIn() &&
+      !isProDomain &&
+      (messengerService.showLegacyMessenger$ | async)
+    "
+  ></m-messenger>
 </ng-container>
 
 <m-hovercard-popup></m-hovercard-popup>
@@ -40,15 +49,15 @@
   <m-juryDutySession__summons
     *ngIf="session.isLoggedIn() && !isProDomain"
   ></m-juryDutySession__summons>
-</ng-container>
 
-<m-web3-modal
-  title="Connect Wallet"
-  description="To earn tokens and access the decentralized web, select an option below"
-  descriptionGray="(It's easier than you think)"
-  dismissText="No thanks, I'll do it later"
-  promptMetamaskIfNotInstalled="true"
-></m-web3-modal>
+  <m-web3-modal
+    title="Connect Wallet"
+    description="To earn tokens and access the decentralized web, select an option below"
+    descriptionGray="(It's easier than you think)"
+    dismissText="No thanks, I'll do it later"
+    promptMetamaskIfNotInstalled="true"
+  ></m-web3-modal>
+</ng-container>
 
 <m-modal-signup
   *ngIf="!isProDomain && !session.getLoggedInUser()"

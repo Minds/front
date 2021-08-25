@@ -1,0 +1,37 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content; // expand with text
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  &:hover {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-launchButton__container {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+
+    .m-launchButton__label {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    .m-launchButton__icon {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+  }
+}

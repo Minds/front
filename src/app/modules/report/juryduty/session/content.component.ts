@@ -1,16 +1,7 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { Client } from '../../../../services/api';
-import { Session } from '../../../../services/session';
-import { REASONS } from '../../../../services/list-options';
+import { Component, Input, Inject, PLATFORM_ID } from '@angular/core';
+
 import { JurySessionService } from './session.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-juryDutySession__content',
@@ -20,7 +11,10 @@ export class JuryDutySessionContentComponent {
   @Input() report;
   decided: boolean = false;
 
-  constructor(private sessionService: JurySessionService) {}
+  constructor(
+    private sessionService: JurySessionService,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
   getReasonString(report) {
     return this.sessionService.getReasonString(report);
@@ -39,13 +33,31 @@ export class JuryDutySessionContentComponent {
     return friendlyString;
   }
 
+  /**
+   * Overturn a report.
+   * @returns { Promise<void> }
+   */
   async overturn() {
-    this.decided = true;
-    await this.sessionService.overturn(this.report);
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    if (confirm('Are you sure?')) {
+      this.decided = true;
+      await this.sessionService.overturn(this.report);
+    }
   }
 
-  async uphold() {
-    this.decided = true;
-    await this.sessionService.uphold(this.report);
+  /**
+   * Uphold a report.
+   * @returns { Promise<void> }
+   */
+  async uphold(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    if (confirm('Are you sure?')) {
+      this.decided = true;
+      await this.sessionService.uphold(this.report);
+    }
   }
 }

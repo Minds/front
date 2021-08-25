@@ -1,21 +1,15 @@
-<ng-template #layout>
-  <m-dashboardLayout>
-    <ng-container *mIfFeature="'navigation'; else header"></ng-container>
-    <ng-template #header>
-      <ng-container m-dashboardLayout__header>
-        <div>
-          <h3 i18n="@@WALLET_V2__TOKENS__YOUR_WALLETS">
-            Your Wallet
-          </h3>
-        </div>
-      </ng-container>
-    </ng-template>
-    <ng-container m-dashboardLayout__body *ngIf="!tabs || inProgress">
-      <div *ngIf="!tabs" class="m-wallet__spinner">
-        <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-      </div>
+<m-dashboardLayout>
+  <ng-container m-dashboardLayout__body *ngIf="!tabs || inProgress">
+    <div *ngIf="!tabs" class="m-wallet__spinner">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+  </ng-container>
+  <ng-container m-dashboardLayout__body>
+    <ng-container *mIfFeature="'wallet-v3'; else walletV2">
+      <ng-container *ngTemplateOutlet="tabsTemplate"></ng-container>
+      <router-outlet></router-outlet>
     </ng-container>
-    <ng-container m-dashboardLayout__body>
+    <ng-template #walletV2>
       <m-shadowboxLayout>
         <m-shadowboxHeader__tabs
           class="m-shadowboxLayout__header"
@@ -28,8 +22,23 @@
           <router-outlet></router-outlet>
         </div>
       </m-shadowboxLayout>
-    </ng-container>
-  </m-dashboardLayout>
-</ng-template>
+    </ng-template>
+  </ng-container>
+</m-dashboardLayout>
 
-<ng-container *ngTemplateOutlet="layout"></ng-container>
+<ng-template #tabsTemplate>
+  <div class="m-tabs__container">
+    <div class="m-tabs__tab">
+      <a routerLink="/wallet/tokens" routerLinkActive="m-tabs__tab--selected"
+        >Tokens</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a routerLink="/wallet/cash" routerLinkActive="m-tabs__tab--selected"
+        >Cash</a
+      >
+    </div>
+    <div class="m-layout__spacer"></div>
+    <m-wallet__tokenPriceBadge></m-wallet__tokenPriceBadge>
+  </div>
+</ng-template>

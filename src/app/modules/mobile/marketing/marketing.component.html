@@ -1,92 +1,82 @@
-<m-marketing
-  class="m-aux__marketing m-aux__marketing--hasHero"
-  [useFullWidth]="false"
->
-  <div class="m-marketing__main">
-    <div class="m-aux__hero">
-      <div class="m-aux__heroInner">
-        <h1>Minds Mobile App</h1>
-      </div>
-    </div>
+<div class="m-marketing">
+  <div class="m-marketing__header">
+    <h1 i18n="@@MOBILE__MARKETING__TITLE">Minds Mobile Applications</h1>
+  </div>
 
-    <div class="m-aux__mobile__downloadPlatform">
-      <!-- ----------------------------------- -->
-      <!-- Android APK -->
-      <!-- ----------------------------------- -->
-      <h2>
-        Android - Minds APK (recommended)
-      </h2>
-      <div class="m-aux__mobile__downloadOption">
-        <div class="m-aux__mobile__downloadButton--apk">
-          <a [href]="latestRelease.href" target="_blank"
-            ><img [src]="cdnAssetsUrl + 'assets/marketing/mobile-dl-button.png'"
-          /></a>
+  <div class="m-marketing__group">
+    <h2 i18n="@@MOBILE__MARKETING__ANDROID__TITLE">Android</h2>
+    <p i18n="@@MOBILE__MARKETING__ANDROID__INTRO">
+      For the best experience, download the mobile app directly from Minds. All
+      content is accessible. Make sure you are running Android 5 (Lollipop) or
+      higher and update phone settings to "allow installation of apps from
+      unknown sources." NSFW content is not currently accessible on Google Play
+      due to their terms of service.
+    </p>
+
+    <div class="m-marketing__grid">
+      <div class="m-marketing__gridItem">
+        <div class="m-marketing__gridItemTitle">
+          Minds
         </div>
-        <p>
-          For the best experience, download the mobile app directly from Minds.
-          All content is accessible.
-        </p>
-        <p><b>Before installing:</b></p>
-        <ul>
-          <li>Make sure you are running Android 5 (Lollipop) or higher</li>
-          <li>
-            Update phone settings to "Allow installation of apps from unknown
-            sources"
-          </li>
-        </ul>
-      </div>
-      <!-- ----------------------------------- -->
-      <!-- Google Play store -->
-      <!-- ----------------------------------- -->
-      <div class="m-aux__mobile__downloadOption">
-        <h2>
-          Android - Play Store
-        </h2>
-        <div class="m-aux__mobile__downloadButton--playStore">
+        <div class="m-marketing__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/marketing/mobile/android-minds.png"
+            height="500"
+          />
+        </div>
+
+        <div class="m-marketing__gridItemActions">
+          <a [href]="latestRelease.href" target="_blank"
+            ><img
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/download-minds.svg"
+              height="40"
+          /></a>
           <a
             href="https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
             target="_blank"
             ><img
-              alt="Get it on Google Play"
-              src="https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png"
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/google-play.svg"
+              height="40"
           /></a>
+          <i (click)="toggleReleases()" class="material-icons">
+            history
+          </i>
         </div>
-        <p>
-          You may also download the mobile app from the Google Play Store. Due
-          to the Google Play Store terms of service, NSFW content is not
-          accessible in this version.
-        </p>
       </div>
-    </div>
-    <!-- ----------------------------------- -->
-    <!-- iOS -->
-    <!-- ----------------------------------- -->
-    <div class="m-aux__mobile__downloadPlatform">
-      <h2>
-        iPhone
-      </h2>
-      <div class="m-aux__mobile__downloadOption">
-        <div
-          class="m-aux__mobile__downloadButton m-aux__mobile__downloadButton--iOS"
-        >
+
+      <div class="m-marketing__gridItem">
+        <div class="m-marketing__gridItemTitle">
+          Minds Chat
+        </div>
+        <div class="m-marketing__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/marketing/mobile/android-chat.png"
+            height="500"
+            alt=""
+          />
+        </div>
+
+        <div class="m-marketing__gridItemActions">
           <a
-            href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6"
+            href="https://minds-repo.s3.amazonaws.com/android/MindsChat-1_1_6.apk"
             target="_blank"
             ><img
-              alt="iOS App"
-              src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/download-minds.svg"
+              height="40"
+          /></a>
+          <a
+            href="https://play.google.com/store/apps/details?id=com.minds.chat"
+            target="_blank"
+            ><img
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/google-play.svg"
+              height="40"
           /></a>
         </div>
-        <p>
-          iPhone users may download the mobile app directly from the iOS App
-          Store. All features of the Minds Token (wallet, boost, wire, etc) are
-          not currently supported in this version. All content is accessible.
-        </p>
       </div>
     </div>
-    <!-- ----------------------------------- -->
-    <!-- Releases -->
-    <!-- ----------------------------------- -->
+  </div>
+
+  <div class="m-marketing__group" *ngIf="releases.length > 0 && showReleases">
     <h2>
       Release History
     </h2>
@@ -118,5 +108,64 @@
         </li>
       </ul>
     </div>
-  </div></m-marketing
->
+  </div>
+
+  <div class="m-marketing__group">
+    <h2 i18n="@@MOBILE__MARKETING__APPLE__TITLE">Apple</h2>
+    <p i18n="@@MOBILE__MARKETING__APPLE__INTRO">
+      iPhone users may only download the mobile app directly from the iOS App
+      Store. NSFW content is not currently accessible on iOS App Store due to
+      their terms of service.
+    </p>
+
+    <div class="m-marketing__grid">
+      <div class="m-marketing__gridItem">
+        <div class="m-marketing__gridItemTitle">
+          Minds
+        </div>
+        <div class="m-marketing__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/marketing/mobile/ios-minds.png"
+            height="500"
+            alt="Minds Newsfeed - iOS"
+          />
+        </div>
+
+        <div class="m-marketing__gridItemActions">
+          <a
+            href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6"
+            target="_blank"
+            ><img
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/app-store.svg"
+              height="40"
+          /></a>
+        </div>
+      </div>
+
+      <div class="m-marketing__gridItem">
+        <div class="m-marketing__gridItemTitle">
+          Minds Chat
+        </div>
+        <div class="m-marketing__gridItemImage">
+          <img
+            src="{{ cdnAssetsUrl }}assets/marketing/mobile/ios-chat.png"
+            height="500"
+            alt="Minds Discovery - iOS"
+          />
+        </div>
+
+        <div class="m-marketing__gridItemActions">
+          <a
+            href="https://apps.apple.com/us/app/minds-chat/id1562887434"
+            target="_blank"
+            ><img
+              src="{{ cdnAssetsUrl }}assets/marketing/mobile/app-store.svg"
+              height="40"
+          /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<m-marketing__footer></m-marketing__footer>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ExplicitOverlayComponent } from './overlay.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
@@ -16,18 +16,20 @@ describe('OverlayComponent', () => {
   let comp: ExplicitOverlayComponent;
   let fixture: ComponentFixture<ExplicitOverlayComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ExplicitOverlayComponent],
-      imports: [],
-      providers: [
-        { provide: Storage, useValue: storageMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: Router, useValue: routerMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ExplicitOverlayComponent],
+        imports: [],
+        providers: [
+          { provide: Storage, useValue: storageMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: Router, useValue: routerMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

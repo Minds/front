@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,7 +8,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SettingsV2HeaderComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
-  goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route.firstChild });
+  @Output('backPress') backPress = new EventEmitter<boolean>();
+
+  /**
+   * On go back press, emit backPress output.
+   */
+  public goBack(): void {
+    this.backPress.emit(true);
   }
 }

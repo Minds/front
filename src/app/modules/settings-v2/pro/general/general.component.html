@@ -1,6 +1,11 @@
 <m-settingsV2__header>
-  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__GENERAL__LABEL">
-    General Settings
+  <div class="m-settingsV2__headerLabel">
+    <span
+      ><ng-container i18n="@@SETTINGS__PRO__GENERAL__LABEL"
+        >General</ng-container
+      >
+      <ng-container i18n="@@COMMON__SETTINGS">Settings</ng-container></span
+    >
   </div>
   <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__GENERAL__DESCRIPTION">
     Customize your title and headline.
@@ -87,7 +92,8 @@
       </div>
     </div>
 
-    <div class="m-form__field--checkbox">
+    <!-- Disabled for https://gitlab.com/minds/front/-/issues/4379 -->
+    <!-- <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label
           for="publish"
@@ -116,7 +122,7 @@
           <span class="m-form__customInput__checkbox"></span>
         </label>
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="m-form__buttonsContainer">
     <m-button

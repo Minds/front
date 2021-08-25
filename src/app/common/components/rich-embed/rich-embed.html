@@ -4,7 +4,7 @@
 <div
   class="m-rich-embed-src"
   *ngIf="src && type == 'src'"
-  [ngClass]="{ 'm-has-inline-embed': hasInlineContentLoaded() }"
+  [ngClass]="{ 'm-has-inline-embed' : hasInlineContentLoaded(), 'm-richEmbedPreview--noThumbnail' : !src.thumbnail_src }"
 >
   <!-- ----------------------------------- -->
   <!-- MEDIA -->
@@ -92,15 +92,23 @@
 <!-- TYPE: PREVIEW -->
 <!-- (Currently used in comments) -->
 <!-- ----------------------------------- -->
-
-<div class="m-rich-embed-preview" *ngIf="preview && type == 'preview'">
+<div
+  class="m-rich-embed-preview"
+  [ngClass]="{'m-richEmbedPreview--noThumbnail' : !preview.thumbnail}"
+  *ngIf="preview && type == 'preview'"
+>
   <a class="thumbnail" *ngIf="preview.thumbnail">
-    <img src="{{preview.thumbnail}}" />
+    <img *ngIf="!cropImage" src="{{preview.thumbnail}}" />
+    <div
+      class="m-rich-embed-thumbnail-wrapper"
+      *ngIf="cropImage"
+      [ngStyle]="{ 'background-image': 'url(' + preview.thumbnail + ')' }"
+    ></div>
   </a>
   <a class="meta" [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }">
     <h2 class="m-rich-embed--title mdl-card__title-text">
       {{preview.title | excerpt}}
     </h2>
-    <p>{{preview.description}}</p>
+    <p>{{preview.url | domain}}</p>
   </a>
 </div>

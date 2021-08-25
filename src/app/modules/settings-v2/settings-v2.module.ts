@@ -61,6 +61,20 @@ import { SettingsV2BoostedContentComponent } from './account/boosted-content/boo
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { SettingsTwoFactorComponent } from '../settings/two-factor/two-factor.component';
 import { SettingsReportedContentComponent } from '../settings/reported-content/reported-content.component';
+import { SettingsTwoFactorV2BaseComponent } from './security/two-factor-v2/two-factor-v2-base.component';
+import { SettingsTwoFactorPasswordComponent } from './security/two-factor-v2/confirm-password/confirm-password.component';
+import { SettingsTwoFactorV2RootComponent } from './security/two-factor-v2/root/root.component';
+import { SettingsTwoFactorRecoveryCodeComponent } from './security/two-factor-v2/recovery-codes/recovery-codes.component';
+import { SettingsTwoFactorConnectAppComponent } from './security/two-factor-v2/connect-app/connect-app.component';
+import { SettingsTwoFactorDisableTOTPComponent } from './security/two-factor-v2/confirm-disable/totp/confirm-disable-totp.component';
+import { SettingsTwoFactorDisableSMSComponent } from './security/two-factor-v2/confirm-disable/sms/confirm-disable-sms.component';
+
+import { SettingsTwoFactorCodePopupComponent } from './security/two-factor-v2/connect-app/code-popup/code-popup.component';
+import { SettingsV2MessengerComponent } from './account/messenger/messenger.component';
+import { MessengerModule } from '../messenger/messenger.module';
+import { SettingsV2PushNotificationsV3Component } from './account/notifications-v3/push-notifications/push-notifications.component';
+import { SettingsV2EmailNotificationsV3Component } from './account/notifications-v3/email-notifications-v3/email-notifications-v3.component';
+import { SettingsV2ProfileComponent } from './account/profile/profile.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -78,16 +92,18 @@ const SETTINGS_V2_ROUTES: Routes = [
           isMenu: true,
           title: 'Account Settings',
           description: 'Configure your general account settings.',
+          ogImage: '/assets/og-images/settings-v3.png',
+          ogImageWidth: 1200,
+          ogImageHeight: 1200,
         },
         children: [
           {
-            path: 'display-name',
-            component: SettingsV2DisplayNameComponent,
-            canDeactivate: [CanDeactivateGuardService],
+            path: 'profile',
+            component: SettingsV2ProfileComponent,
             data: {
-              title: 'Display Name',
-              description: 'Customize your display name.',
-              id: 'display-name',
+              title: 'Profile',
+              description: 'Customize your profile.',
+              id: 'profile',
             },
           },
           {
@@ -170,6 +186,28 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
+            path: 'push-notifications',
+            component: SettingsV2PushNotificationsV3Component,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Push Notifications',
+              description:
+                'Control what push notifications you receive, and when.',
+              id: 'push-notifications',
+            },
+          },
+          {
+            path: 'email-notifications-v2',
+            component: SettingsV2EmailNotificationsV3Component,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Email Notifications',
+              description:
+                'Control what push notifications you receive, and when.',
+              id: 'email-notifications-v2',
+            },
+          },
+          {
             path: 'toaster-notifications',
             component: SettingsV2ToasterNotificationsComponent,
             data: {
@@ -178,6 +216,17 @@ const SETTINGS_V2_ROUTES: Routes = [
               id: 'toaster-notifications',
             },
           },
+          {
+            path: 'messenger',
+            component: SettingsV2MessengerComponent,
+            data: {
+              title: 'Messenger',
+              description:
+                'Choose whether you want to see the legacy messenger.',
+              id: 'messenger',
+            },
+          },
+
           { path: '**', redirectTo: 'account' },
         ],
       },
@@ -283,7 +332,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             component: SettingsV2SessionsComponent,
             data: {
               title: 'Sessions',
-              description: 'Close all sessions with a single click.',
+              description:
+                'Manage the devices that have been granted access to your account',
               id: 'sessions',
             },
           },
@@ -461,6 +511,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     ReferralsV2Module,
     LanguageModule,
     NewsfeedModule,
+    MessengerModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -471,6 +522,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2LanguageComponent,
     SettingsV2PasswordComponent,
     SettingsV2EmailNotificationsComponent,
+    SettingsV2EmailNotificationsV3Component,
+    SettingsV2PushNotificationsV3Component,
     SettingsV2NsfwContentComponent,
     SettingsV2ShareButtonsComponent,
     SettingsV2PaymentMethodsComponent,
@@ -493,10 +546,19 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2I18nHack,
     SettingsV2HeaderComponent,
     SettingsV2BoostedContentComponent,
-
+    SettingsTwoFactorV2BaseComponent,
+    SettingsTwoFactorPasswordComponent,
+    SettingsTwoFactorV2RootComponent,
+    SettingsTwoFactorRecoveryCodeComponent,
+    SettingsTwoFactorConnectAppComponent,
+    SettingsTwoFactorDisableSMSComponent,
+    SettingsTwoFactorDisableTOTPComponent,
+    SettingsTwoFactorCodePopupComponent,
+    SettingsV2ProfileComponent,
     // These need moving to settings folder
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
+    SettingsV2MessengerComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

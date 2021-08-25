@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { TitleBarComponent } from './title-bar.component';
 import { ComposerService } from '../../services/composer.service';
@@ -13,23 +13,25 @@ describe('Composer Title Bar', () => {
     getContainerGuid: () => containerGuid,
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TitleBarComponent,
-        MockComponent({
-          selector: 'm-icon',
-          inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-      ],
-      providers: [
-        {
-          provide: ComposerService,
-          useValue: composerServiceMock,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          TitleBarComponent,
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['from', 'iconId', 'sizeFactor'],
+          }),
+        ],
+        providers: [
+          {
+            provide: ComposerService,
+            useValue: composerServiceMock,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

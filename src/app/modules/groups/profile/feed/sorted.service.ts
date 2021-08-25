@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { EntitiesService } from '../../../../common/services/entities.service';
 
 @Injectable()

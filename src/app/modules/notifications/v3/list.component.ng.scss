@@ -1,0 +1,64 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  position: static;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+
+  // &.m-notifications__list--scrolledPastTabs {
+  //   position: static;
+  // }
+
+  .m-tabs__container {
+    padding: 0 20px;
+    position: absolute;
+    z-index: 2;
+    padding: 0;
+    width: 100%;
+    top: 0;
+
+    > .m-tabs__tab {
+      flex: 1;
+      text-align: center;
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+
+      a {
+        margin-right: 0;
+      }
+
+      ::ng-deep m-tooltip i {
+        font-size: 21px;
+      }
+    }
+  }
+  .m-notificationsList__listWrapper {
+    position: relative;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li:not(:last-of-type) {
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-notificationsList__empty {
+    padding: 20px;
+    text-align: center;
+    margin: 20px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+      border: 1px dashed themed($m-borderColor--primary);
+    }
+  }
+}

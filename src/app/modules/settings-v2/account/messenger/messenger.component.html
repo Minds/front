@@ -1,0 +1,46 @@
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__ACCOUNT__MESSENGER">Messenger</span>
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__ACCOUNT__MESSENGER__DESC">
+    Choose whether you want to see the legacy messenger.
+  </div>
+</m-settingsV2__header>
+
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <label
+          for="legacy_messenger"
+          class="m-form__customInputWrapper__checkbox"
+        >
+          <ng-container i18n="@@SETTINGS__ACCOUNT__MESSENGER__SHOW"
+            >Show legacy messenger</ng-container
+          >
+          <input
+            type="checkbox"
+            id="legacy_messenger"
+            name="legacy_messenger"
+            formControlName="legacy_messenger"
+            class="form-control"
+            data-minds="legacy_messenger"
+            [readonly]="inProgress || !init || !isPlus"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-button
+      color="blue"
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (onAction)="submit()"
+      i18n="@@SETTINGS__ACCOUNT__MESSENGER__UPDATE"
+    >
+      Update Preference
+    </m-button>
+  </div>
+</form>

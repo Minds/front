@@ -42,6 +42,7 @@
           "
           [v2]="true"
           [showOnlyFadeout]="minimalMode"
+          [redirectUrl]="getRedirectUrl()"
         ></m-read-more--button>
       </div>
       <!-- ----------------------------------- -->
@@ -161,6 +162,7 @@
         *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
         [v2]="true"
         [showOnlyFadeout]="minimalMode"
+        [redirectUrl]="getRedirectUrl()"
       ></m-read-more--button>
     </div>
     <!-- ----------------------------------- -->

@@ -1,10 +1,10 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import {
   Component,
@@ -50,28 +50,30 @@ describe('ReportCreatorComponent', () => {
     )[i];
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MdlRadioMock,
-        MaterialSwitchMock,
-        AbbrPipe,
-        ReportCreatorComponent,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [FormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MdlRadioMock,
+          MaterialSwitchMock,
+          AbbrPipe,
+          ReportCreatorComponent,
+          ButtonComponent,
+        ], // declare the test component
+        imports: [FormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {
@@ -120,7 +122,7 @@ describe('ReportCreatorComponent', () => {
       By.css('.m-reportCreatorSubjects__subject')
     );
     expect(subjectList).not.toBeNull();
-    expect(subjectListInputs.length).toBe(12);
+    expect(subjectListInputs.length).toBe(13);
   });
 
   it('once a item is clicked submit shouldnt be disabled', () => {

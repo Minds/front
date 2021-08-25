@@ -1,6 +1,13 @@
 <div
-  class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box"
-  style="min-height:0;"
+  class="
+    mdl-card
+    mdl-color--red-500
+    mdl-color-text--blue-grey-50
+    mdl-shadow--2dp
+    minds-login-box
+    m-error-box
+  "
+  style="min-height: 0"
   [hidden]="showInlineErrors || !errorMessage"
 >
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
@@ -8,9 +15,7 @@
   </div>
 </div>
 
-<ng-template #errorTemplate>
-  {{ errorMessage }}
-</ng-template>
+<ng-template #errorTemplate> {{ errorMessage }} </ng-template>
 
 <h3 *ngIf="showTitle" i18n="@@REGISTER__JOIN__TITLE">
   Join the Minds Revolution
@@ -20,7 +25,8 @@
   *ngIf="showTitle"
   i18n="@@REGISTER__ALREADY__HAVE__ACOUNT__LINK"
 >
-  Already have an account? <a [routerLink]="'/login'">Login</a>
+  Already have an account?
+  <a [routerLink]="'/login'" queryParamsHandling="merge">Login</a>
 </span>
 
 <!-- START: Register -->
@@ -34,9 +40,9 @@
   <div class="m-layout__grid">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME">
-          Username
-        </label>
+        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
+          >Username</label
+        >
       </div>
       <div class="m-form__row--input">
         <input
@@ -60,13 +66,13 @@
           *ngIf="this.form.get('username').errors?.minlength"
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_SHORT"
         >
-          Must be at least 4 characters long
+          Must be at least 4 characters long.
         </ng-container>
         <ng-container
           *ngIf="this.form.get('username').errors?.maxlength"
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_LONG"
         >
-          Cannot be longer than 128 characters
+          Cannot be longer than 128 characters.
         </ng-container>
         <ng-container
           *ngIf="this.form.get('username').errors?.pattern"
@@ -74,6 +80,12 @@
         >
           Usernames can only have letters, numbers or underscores. Special
           characters (e.g. @^%.) and spaces are not allowed.
+        </ng-container>
+        <ng-container
+          *ngIf="username.errors?.existingUsername"
+          i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TAKEN"
+        >
+          Username already taken.
         </ng-container>
       </div>
     </div>
@@ -131,6 +143,17 @@
           />
         </div>
       </m-popover>
+      <div
+        class="m-register__error"
+        [style.visibility]="showError('password') ? 'visible' : 'hidden'"
+      >
+        <ng-container
+          *ngIf="this.form.get('password').errors?.invalidPassword"
+          i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_PASSWORD"
+        >
+          Invalid password
+        </ng-container>
+      </div>
     </div>
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"
@@ -157,6 +180,7 @@
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           data-cy="data-minds-register-password-input-2"
+          [class.ng-invalid]="this.form.errors?.passwordConfirming"
         />
       </div>
       <div
@@ -165,7 +189,7 @@
       >
         <ng-container
           *ngIf="this.form.errors?.passwordConfirming"
-          i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_EMAIL"
+          i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORDS_MUST_MATCH"
         >
           Passwords must match
         </ng-container>

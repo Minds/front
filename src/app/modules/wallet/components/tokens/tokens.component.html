@@ -1,25 +1,43 @@
 <div class="m-walletDashboardBalance__wrapper">
-  <m-walletTokenOnboarding
-    *ngIf="!tokenOnboardingComplete"
-    [hasAddress]="hasOnchainAddress"
-    [phoneVerified]="phoneVerified"
-    [dashboardView]="dashboardView"
-    (onboardingComplete)="onTokenOnboardingCompleted()"
-  ></m-walletTokenOnboarding>
+  <ng-container *mIfFeature="'!wallet-v3'">
+    <m-walletTokenOnboarding
+      *ngIf="!tokenOnboardingComplete"
+      [hasAddress]="hasOnchainAddress"
+      [phoneVerified]="phoneVerified"
+      [dashboardView]="dashboardView"
+      (onboardingComplete)="onTokenOnboardingCompleted()"
+    ></m-walletTokenOnboarding>
+  </ng-container>
 
-  <m-walletBalance--tokens
-    class="m-shadowboxLayout__body"
-  ></m-walletBalance--tokens>
+  <m-walletBalance--tokens></m-walletBalance--tokens>
 </div>
 
 <div class="m-tabs__container">
+  <li class="m-tabs__tab" *mIfFeature="'wallet-v3'">
+    <a
+      routerLink="rewards"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__TOKENS__REWARDS"
+    >
+      Rewards
+    </a>
+  </li>
+  <li class="m-tabs__tab" *mIfFeature="'wallet-v3'">
+    <a
+      routerLink="earnings"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__TOKENS__EARNINGS"
+    >
+      Earnings
+    </a>
+  </li>
   <li class="m-tabs__tab">
     <a
-      routerLink="overview"
+      routerLink="balance"
       routerLinkActive="selected"
-      i18n="@@WALLET_V2__TOKENS__OVERVIEW"
+      i18n="@@WALLET_V2__TOKENS__BALANCE"
     >
-      Overview
+      Balance
     </a>
   </li>
   <li class="m-tabs__tab">
@@ -29,6 +47,15 @@
       i18n="@@WALLET_V2__TOKENS__TRANSACTIONS"
     >
       Transactions
+    </a>
+  </li>
+  <li class="m-tabs__tab" *mIfFeature="'withdrawal-console'">
+    <a
+      routerLink="transfers"
+      routerLinkActive="selected"
+      i18n="@@WALLET_V2__ONCHAIN__TRANSFERS"
+    >
+      On-chain transfers
     </a>
   </li>
   <li class="m-tabs__tab">

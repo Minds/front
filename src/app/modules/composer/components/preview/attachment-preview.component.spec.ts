@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AttachmentPreviewComponent } from './attachment-preview.component';
@@ -10,6 +10,9 @@ import { AttachmentApiService } from '../../../../common/api/attachment-api.serv
 import { RichEmbedService } from '../../services/rich-embed.service';
 import { PreviewService } from '../../services/preview.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
+import { RegexService } from '../../../../common/services/regex.service';
+import { Session } from '../../../../services/session';
+import { Storage } from '../../../../services/storage';
 
 describe('Composer Attachment Preview', () => {
   let comp: AttachmentPreviewComponent;
@@ -24,6 +27,9 @@ describe('Composer Attachment Preview', () => {
           useValue: MockService(ConfigsService),
         },
         ComposerService,
+        Session,
+        Storage,
+        RegexService,
         AttachmentService,
         RichEmbedService,
         PreviewService,
@@ -56,7 +62,6 @@ describe('Composer Attachment Preview', () => {
   });
 
   it('should set portrait for an image', () => {
-    console.log(this.service);
     const img = document.createElement('img');
     spyOnProperty(img, 'naturalWidth').and.returnValue(1000);
     spyOnProperty(img, 'naturalHeight').and.returnValue(2000);

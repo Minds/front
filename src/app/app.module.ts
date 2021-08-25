@@ -1,10 +1,7 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   NgModule,
-  Injectable,
-  ErrorHandler,
   APP_INITIALIZER,
-  APP_BOOTSTRAP_LISTENER,
 } from '@angular/core';
 import {
   BrowserModule,
@@ -68,16 +65,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
-
-@Injectable()
-export class SentryErrorHandler implements ErrorHandler {
-  constructor() {}
-  handleError(error) {
-    // const eventId = Sentry.captureException(error.originalError || error);
-    // Sentry.showReportDialog({ eventId });
-    console.error(error);
-  }
-}
+import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -130,13 +118,13 @@ export class SentryErrorHandler implements ErrorHandler {
     UpgradesModule,
     CodeHighlightModule,
     SharedModule,
+    MessengerV2Module,
 
     //last due to :username route
     AppRoutingModule,
     //ChannelContainerModule,
   ],
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
     MINDS_PROVIDERS,
     {
       provide: APP_INITIALIZER,
