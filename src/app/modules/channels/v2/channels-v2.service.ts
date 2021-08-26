@@ -10,6 +10,7 @@ import {
   switchAll,
   switchMap,
 } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Service that holds a channel information using Observables
@@ -29,9 +30,8 @@ export class ChannelsV2Service {
   /**
    * Channel data
    */
-  readonly channel$: BehaviorSubject<MindsUser> = new BehaviorSubject<
-    MindsUser
-  >(null);
+  readonly channel$: BehaviorSubject<MindsUser> =
+    new BehaviorSubject<MindsUser>(null);
 
   /**
    * The user's email
@@ -115,11 +115,15 @@ export class ChannelsV2Service {
    * @param api
    * @param session
    */
-  constructor(protected api: ApiService, protected session: Session) {
+  constructor(
+    protected api: ApiService,
+    protected session: Session,
+    protected route: ActivatedRoute
+  ) {
     // Set tokens$ observable
     this.tokens$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(channel =>
+      map((channel) =>
         channel
           ? this.api.get(`api/v1/wire/sums/overview/${channel.guid}`, {
               merchant: channel.merchant ? 1 : 0,
@@ -128,18 +132,18 @@ export class ChannelsV2Service {
       ),
       switchAll(),
       shareReplay({ bufferSize: 1, refCount: true }),
-      map(response => parseFloat((response && response.tokens) || '0'))
+      map((response) => parseFloat((response && response.tokens) || '0'))
     );
 
     // Set tokensSent$ observable
     this.tokensSent$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(channel =>
+      map((channel) =>
         channel ? this.api.get(`api/v1/wire/rewards/${channel.guid}`) : of(null)
       ),
       switchAll(),
       shareReplay({ bufferSize: 1, refCount: true }),
-      map(response =>
+      map((response) =>
         parseFloat((response && response.sums && response.sums.tokens) || '0')
       )
     );
@@ -147,14 +151,14 @@ export class ChannelsV2Service {
     // Set groupCount$ observable
     this.groupCount$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(channel =>
+      map((channel) =>
         channel
           ? this.api.get(`api/v3/channel/${channel.guid}/groups/count`)
           : of(null)
       ),
       switchAll(),
       shareReplay({ bufferSize: 1, refCount: true }),
-      map(response => (response && response.count) || 0)
+      map((response) => (response && response.count) || 0)
     );
 
     // Set isOwner$ observable
@@ -223,7 +227,7 @@ export class ChannelsV2Service {
 
     // Set isAdmin$ observable
     this.isAdmin$ = this.session.user$.pipe(
-      map(channel => channel && channel.is_admin)
+      map((channel) => channel && channel.is_admin)
     );
   }
 
@@ -232,7 +236,13 @@ export class ChannelsV2Service {
    * @param channel
    */
   load(channel: MindsUser | string): void {
-    this.query$.next('');
+    const params = this.route.snapshot.queryParamMap;
+    let query = '';
+    if (params.has('query')) {
+      query = decodeURIComponent(params.get('query'));
+    }
+
+    this.query$.next(query);
 
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
@@ -246,7 +256,7 @@ export class ChannelsV2Service {
   sync(): void {
     this.api
       .get(`api/v1/channel/${this.guid$.getValue()}`)
-      .subscribe(response => {
+      .subscribe((response) => {
         this.setChannel(response.channel);
       });
   }

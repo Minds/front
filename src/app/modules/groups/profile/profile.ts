@@ -61,6 +61,7 @@ export class GroupsProfile {
   paramsSubscription: Subscription;
   childParamsSubscription: Subscription;
   queryParamsSubscripton: Subscription;
+  groupsSearchQuerySubscription: Subscription;
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
@@ -107,7 +108,27 @@ export class GroupsProfile {
     this.detectWidth(true);
     this.detectConversationsState();
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    const params = this.route.snapshot.queryParamMap;
+    if (params.has('query')) {
+      const query = decodeURIComponent(params.get('query'));
+      this.groupsSearch.query$.next(query);
+    }
+
+    this.groupsSearchQuerySubscription = this.groupsSearch.query$.subscribe(
+      (query) => {
+        const encodedQuery = query.length ? encodeURIComponent(query) : null;
+
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            query: encodedQuery,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
+    );
+
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['guid']) {
         let changed = params['guid'] !== this.guid;
 
@@ -142,8 +163,8 @@ export class GroupsProfile {
     });
 
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
         const url = this.router.routerState.snapshot.url;
 
         this.setFilter(url);
@@ -157,7 +178,7 @@ export class GroupsProfile {
       }, 120 * 1000);
 
     this.videoChatActiveSubscription = this.videochat.activate$.subscribe(
-      next => {
+      (next) => {
         if (!next) {
           this.pageLayoutService.cancelFullWidth();
         } else {
@@ -192,6 +213,9 @@ export class GroupsProfile {
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
 
+    if (this.groupsSearchQuerySubscription) {
+      this.groupsSearchQuerySubscription.unsubscribe();
+    }
     this.unlistenForNewMessages();
     this.leaveCommentsSocketRoom();
 
@@ -230,7 +254,7 @@ export class GroupsProfile {
       this.updateMarkersSubscription = this.updateMarkers
         .getByEntityGuid(this.guid)
         .subscribe(
-          (marker => {
+          ((marker) => {
             // this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
             if (!marker) return;
 
@@ -240,7 +264,7 @@ export class GroupsProfile {
               map(
                 () =>
                   [marker].filter(
-                    marker =>
+                    (marker) =>
                       marker.entity_guid == this.group.guid &&
                       marker.marker == 'gathering-heartbeat' &&
                       marker.updated_timestamp > Date.now() / 1000 - 60 //1 minute tollerance
@@ -295,7 +319,7 @@ export class GroupsProfile {
     this.recent.storeSuggestion(
       'publisher',
       this.group,
-      entry => entry.guid === this.group.guid
+      (entry) => entry.guid === this.group.guid
     );
   }
 
@@ -421,7 +445,7 @@ export class GroupsProfile {
       q: searchText,
     });
     return response.tags
-      .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
+      .filter((item) => item.toLowerCase().includes(searchText.toLowerCase()))
       .slice(0, 5);
   }
 
