@@ -122,9 +122,10 @@ export class ReportCreatorComponent implements AfterViewInit {
    * Submits the report to the appropiate server endpoint using the current settings
    */
   async submit() {
-    if (this.isAdmin && !confirm(
-        "Warning: This action is being run as admin - proceed?"
-    )) {
+    if (
+      this.isAdmin &&
+      !confirm('Warning: This action is being run as admin - proceed?')
+    ) {
       this.toasterService.inform('Action cancelled');
       return;
     }
