@@ -2,6 +2,14 @@
   font-weight: 600;
   margin: 0;
   font-size: 36px;
+
+  .m-reportCreator__header--admin {
+    margin-left: 20px;
+  
+    @include m-theme() {
+      color: themed($m-red-dark);
+    }
+  }
 }
 
 .m-reportCreator__subjects {
