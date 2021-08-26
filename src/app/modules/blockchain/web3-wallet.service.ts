@@ -159,11 +159,20 @@ export class Web3WalletService {
       gasLimit = BigNumber.from(15000000).toHexString();
     }
 
+    /**
+     * Dispatch an EIP-2718 transaction for EIP-1559 compatibility.
+     * ethers.js should fallback to legacy transactions if
+     * the web3 provider is not equipped to deal with this tx type.
+     *
+     * maxFeePerGas and maxPriorityFeePerGas are omitted and left for
+     * the web3 client to decide.
+     */
     const txHash = await this.transactionOverlay.waitForExternalTx(
       () =>
         connectedContract[method](...params, {
-          value,
-          gasLimit,
+          type: 2,
+          value: value,
+          gasLimit: gasLimit,
         }),
       message
     );

@@ -29,7 +29,7 @@ export class StatusToasterService {
   };
 
   constructor(private http: HttpClient, protected configs: ConfigsService) {
-    this.statusPageUrl = this.configs.get('status_url');
+    this.statusPageUrl = this.configs.get('statuspage_io').url;
   }
 
   onToast(): Observable<StatusToast> {
