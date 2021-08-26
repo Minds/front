@@ -38,7 +38,7 @@ export class GovernanceProposalDetailDropdownComponent implements OnInit {
 
   openShareModal() {
     const data = {
-      url: 'test'
+      url: `https://www.minds.com/governance/proposal/${this.proposal.id}`
     };
 
     this.overlayModal
