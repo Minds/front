@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
+import { ComposerService } from '../../composer/services/composer.service';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { SnapshotProposal, SnapshotService } from '../snapshot.service';
 
@@ -16,13 +17,16 @@ export class GovernanceCreateComponent implements OnInit {
   form: FormGroup;
   inProgress = false;
   userData;
+  @Output('onPost') onPostEmitter: EventEmitter<any> = new EventEmitter<any>();
+
 
   constructor(
     private toasterService: FormToastService,
     public session: Session,
     private router: Router,
     private settingsV2Service: SettingsV2Service,
-    private snapshotService: SnapshotService
+    private snapshotService: SnapshotService,
+    protected service: ComposerService
   ) {}
 
   async ngOnInit() {
@@ -114,6 +118,9 @@ export class GovernanceCreateComponent implements OnInit {
       
     `.trim();
 
+    this.service.message$.next(body);
+    this.service.title$.next(values.question);
+
       await this.snapshotService
         .createProposal({
           end,
@@ -139,8 +146,11 @@ ${values.additional_requests}
 ## Additional information
 ${values.additional_info}`.trim(),
         })
-        .then((data: SnapshotProposal) =>
+        .then(async (data: SnapshotProposal) => {
+        const activity = await this.service.postProposal();
+        this.onPostEmitter.next(activity);
           this.router.navigate([`/governance/proposal/${data.id}`])
+        }
         );
       this.toasterService.success('Proposal successfully submitted');
     } catch (e) {

@@ -212,6 +212,7 @@ export interface Data {
   videoPoster: VideoPoster;
   postToPermaweb: PostToPermawebSubjectValue;
   remind: RemindSubjectValue;
+  proposal?: boolean;
 }
 
 /**
@@ -1090,4 +1091,44 @@ export class ComposerService implements OnDestroy {
       throw e; // Re-throw
     }
   }
+
+    /**
+   * Posts a new activity
+   */
+     async postProposal(): Promise<ActivityEntity> {
+      this.isPosting$.next(true);
+      this.setProgress(true);
+  
+      // New activity
+      let endpoint = `api/v2/newsfeed`;
+  
+      let editing = this.entity && this.entity.guid;
+      if (editing) {
+        endpoint = `api/v2/newsfeed/${this.entity.guid}`;
+      }
+
+      this.payload.proposal = true;
+  
+      try {
+        const { activity } = await this.api
+          .post(endpoint, this.payload)
+          .toPromise();
+  
+        // Provide an update to subscribing feeds.
+        if (!editing) {
+          this.feedsUpdate.postEmitter.emit(activity);
+        }
+  
+        this.reset();
+        this.isPosting$.next(false);
+        this.setProgress(false);
+  
+        activity.boostToggle = true;
+        return activity;
+      } catch (e) {
+        this.isPosting$.next(false);
+        this.setProgress(false);
+        throw e; // Re-throw
+      }
+    }
 }
