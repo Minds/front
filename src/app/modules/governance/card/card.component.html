@@ -1,9 +1,21 @@
 <div class="m-governance__card-container">
   <div class="m-application-meta">
-    <div  class="m-governance__card-arrow-h2  m-user">
+    <div class="m-governance__card-arrow-h2 m-user">
       {{ proposal.title }}
     </div>
-    <div class="m-governance__card-status">
+    <div
+      [ngClass]="{
+        'm-governance__card-status-green': proposal.state === 'closed' || proposal.state === 'active',
+        'm-governance__card-orange': proposal.state === 'pending',
+        'm-governance__card-status-red' : proposal.state === 'rejected'
+      }"
+      class="m-governance__card-status m-governance__card-status-text"
+    >
+      <m-icon
+        *ngIf="proposal.state === 'closed'"
+        class="m-governance__card-check m-governance__card-status-green"
+        iconId="check"
+      ></m-icon>
       {{ proposal.state }}
     </div>
   </div>

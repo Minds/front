@@ -6,10 +6,10 @@
     <i class="material-icons">more_horiz</i>
   </button>
 
-  <ul class="m-dropdown__list" *ngIf="isOpened">
+  <ul class="m-dropdown__list" [hidden]="!isOpened">
     <li
       class="m-dropdownList__item"
-      (click)="onButtonClick($event); openShareModal()"
+      (click)="onOptionClick($event); openShareModal()"
       i18n="@@M__ACTION__VIEW"
     >
       Share
@@ -17,7 +17,7 @@
     <li
       *ngIf="allowDelete"
       class="m-dropdownList__item"
-      (click)="onButtonClick($event); deleteProposal()"
+      (click)="onOptionClick($event); deleteProposal()"
       i18n="@@M__ACTION__EDIT"
     >
       Delete proposal

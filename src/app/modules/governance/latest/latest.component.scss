@@ -16,7 +16,10 @@
 .m-governance-button {
   border: 1px solid;
   padding: 8px 16px;
-  text-transform: uppercase;
+  font-size: 16px;
+  border-radius: 21px;
+  min-width: 139px;
+  text-align: center;
   cursor: pointer;
   @include m-theme() {
     border-color: themed($m-blue);

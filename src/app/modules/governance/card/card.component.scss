@@ -2,7 +2,7 @@
 @import 'themes';
 
 .m-governance__card-container {
-  padding: 10px;
+  padding: 25px 20px;
   margin-bottom: 20px;
   cursor: pointer;
 
@@ -45,13 +45,13 @@
     padding-left: 4px;
     margin: 0;
 
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     letter-spacing: 0.25px;
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     margin-top: 6px;
   }
   .m-governance__card-arrow-container {
@@ -66,17 +66,30 @@
 
   .m-application-meta {
     .m-governance__card-status {
-      max-width: 100px;
-      border: 1px solid;
-      padding: 6px 4px;
       display: flex;
-      justify-content: center;
-      border-radius: 50px;
-      text-transform: uppercase;
+      text-transform: capitalize;
       margin-bottom: 4px;
-      @include m-theme() {
-        border-color: themed($m-blue);
-      }
     }
+  }
+
+  .m-governance__card-status-text {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .m-governance__card-status-green {
+    color: #64CB2F;
+  }
+
+  .m-governance__card-status-red {
+    color: #e63535;
+  }
+
+  .m-governance__card-check {
+    margin-right: 9px;
+  }
+
+  .m-governance__card-orange {
+    color: #ffb200;
   }
 }

@@ -85,23 +85,14 @@ m-governance--proposal-detail {
     }
 
     .m-governance--proposal-detail-header {
-      font-size: 22px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       margin-bottom: 20px;
     }
     .m-governance__card-status {
-      margin-bottom: 40px;
-      max-width: 100px;
-      border: 1px solid;
-      padding: 4px 2px;
+      margin-bottom: 29px;
       display: flex;
-      justify-content: center;
-      border-radius: 50px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      @include m-theme() {
-        border-color: themed($m-blue);
-      }
+      text-transform: capitalize;
     }
 
     .m-governance--proposal-detail-extra {
@@ -111,9 +102,9 @@ m-governance--proposal-detail {
     }
 
     .m-governance--proposal-detail-body-title {
-      h2 {
-        font-size: 20px;
-        font-weight: bold;
+      h2, h1, h3, h4, h5 {
+        font-size: 16px;
+        font-weight: 700;
         margin-bottom: 0px;
         margin-top: 20px;
       }
@@ -140,5 +131,32 @@ m-governance--proposal-detail {
       position: relative;
       overflow: hidden;
     }
+  }
+
+  .m-governance__card-status {
+    display: flex;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+  }
+
+  .m-governance__card-status-text {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .m-governance__card-status-green {
+    color: #64cb2f;
+  }
+
+  .m-governance__card-status-red {
+    color: #e63535;
+  }
+
+  .m-governance__card-check {
+    margin-right: 9px;
+  }
+
+  .m-governance__card-orange {
+    color: #ffb200;
   }
 }

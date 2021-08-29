@@ -26,6 +26,10 @@ export class GovernanceProposalDetailDropdownComponent implements OnInit {
     this.isOpened = !this.isOpened;
   }
 
+  onOptionClick(e: MouseEvent): void {
+    this.isOpened = !this.isOpened;
+  }
+
   async deleteProposal() {
     await this.snapshotService
       .deleteProposal(this.proposal)
