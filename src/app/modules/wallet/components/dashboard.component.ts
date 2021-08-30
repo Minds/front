@@ -24,6 +24,7 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
   selector: 'm-walletDashboard',
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [WalletV2Service],
 })
 export class WalletDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('dashboardViews')
@@ -88,7 +89,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   updateTabs() {
     this.tabs = [];
     const headerCurrencies: string[] = ['cash', 'tokens', 'eth', 'btc'];
-    headerCurrencies.forEach((currency) => {
+    headerCurrencies.forEach(currency => {
       const headerTab: ShadowboxHeaderTab = {
         id: currency,
         label: this.wallet[currency].label,

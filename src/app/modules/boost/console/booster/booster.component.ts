@@ -49,7 +49,7 @@ export class BoostConsoleBooster {
    */
   ngOnInit() {
     this.loaded = false;
-    this.route.parent.url.subscribe((segments) => {
+    this.route.parent.url.subscribe(segments => {
       this.type = <BoostConsoleType>segments[0].path;
       this.load(true);
       this.loaded = true;
@@ -73,9 +73,7 @@ export class BoostConsoleBooster {
     this.feedsService
       .setEndpoint(
         this.type === 'content'
-          ? `api/v2/feeds/container/${
-              this.session.getLoggedInUser().guid
-            }/objects`
+          ? `api/v2/feeds/container/${this.session.getLoggedInUser().guid}/all`
           : `api/v2/feeds/container/${
               this.session.getLoggedInUser().guid
             }/activities`
@@ -86,7 +84,7 @@ export class BoostConsoleBooster {
     this.feed$ = this.feedsService.feed;
     this.inProgress = false;
     this.loaded = true;
-    this.feed$.subscribe((feed) => (this.noContent = feed.length > 0));
+    this.feed$.subscribe(feed => (this.noContent = feed.length > 0));
   }
 
   /**

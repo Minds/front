@@ -164,7 +164,7 @@ describe('AdminBoosts', () => {
   );
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -296,6 +296,33 @@ describe('AdminBoosts', () => {
     expect(boost).not.toBeNull();
   }));
 
+  it('should have a quality slider with a default value of 75', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    expect(
+      fixture.debugElement.query(By.css('.boost > .quality-slider'))
+    ).not.toBeNull();
+
+    const slider: DebugElement = fixture.debugElement.query(
+      By.css('.quality-slider input[type=range]')
+    );
+    expect(slider).not.toBeNull();
+    expect(slider.nativeElement.value).toBe('75');
+  }));
+
+  it('should have a quality input with a default value of 75', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    const input: DebugElement = fixture.debugElement.query(
+      By.css('.quality-slider input[type=number]')
+    );
+    expect(input).not.toBeNull();
+
+    expect(input.nativeElement.value).toBe('75');
+  }));
+
   it('boost should have an Accept button', () => {
     fixture.detectChanges();
 
@@ -354,6 +381,32 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
 
     expect(comp.openReasonsModal).toHaveBeenCalled();
+  });
+
+  it('boost should have an e-tag button', () => {
+    fixture.detectChanges();
+
+    expect(getETagButton()).not.toBeNull();
+  });
+
+  it('Reject button should call eTag(...) and boost should be marked as explicit', () => {
+    fixture.detectChanges();
+
+    const button: DebugElement = getETagButton();
+
+    spyOn(comp, 'eTag').and.callThrough();
+    spyOn(comp, 'reject').and.stub();
+
+    comp.boosts[0].rejection_reason = 2;
+
+    button.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(comp.eTag).toHaveBeenCalled();
+    expect(comp.reject).toHaveBeenCalled();
+    expect(comp.findReason(comp.boosts[0].rejection_reason).label).toContain(
+      'Explicit'
+    );
   });
 
   it('calling reject(boost) should call api/v1/admin/boosts/:type/:guid/reject together with the rejection reason', fakeAsync(() => {
