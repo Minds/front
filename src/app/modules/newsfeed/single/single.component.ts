@@ -18,7 +18,6 @@ import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
 
-//ojm test
 @Component({
   selector: 'm-newsfeed--single',
   templateUrl: 'single.component.html',
