@@ -92,31 +92,6 @@
       ></minds-card-group>
 
       <div
-        class="mdl-card__supporting-text quality-slider"
-        *ngIf="boost.state == 'created'"
-      >
-        <ng-container>Quality: </ng-container>
-        <div class="m--inputs">
-          <input
-            type="range"
-            class="mdl-slider mdl-js-slider"
-            [(ngModel)]="boost.quality"
-            min="0"
-            max="100"
-            step="5"
-            [mdlSlider]
-          />
-          <input
-            type="number"
-            min="0"
-            max="100"
-            step="5"
-            [(ngModel)]="boost.quality"
-          />
-        </div>
-      </div>
-
-      <div
         class="m-previously-rejected-notice"
         *ngIf="boost.entity.boost_rejection_reason && boost.entity.boost_rejection_reason != -1"
       >
@@ -174,7 +149,7 @@
           size="xsmall"
           class="m-admin-boosts--accept-button"
         >
-          Accept
+          Safe
         </m-button>
         <m-button
           (onAction)="accept(boost, true)"
@@ -183,9 +158,6 @@
         >
           Open
         </m-button>
-        <m-button (onAction)="accept(boost, true, { mature: 1 })" size="xsmall">
-          Open (E-tag)
-        </m-button>
         <m-button
           (onAction)="openReasonsModal(boost)"
           color="red"
@@ -193,14 +165,6 @@
           class="m-admin-boosts--reject-button"
         >
           Reject
-        </m-button>
-        <m-button
-          (click)="eTag(boost)"
-          class="m-admin-boosts--e-tag-button"
-          color="red"
-          size="xsmall"
-        >
-          E-tag
         </m-button>
       </div>
     </div>
