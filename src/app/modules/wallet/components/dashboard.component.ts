@@ -24,7 +24,6 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
   selector: 'm-walletDashboard',
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [WalletV2Service],
 })
 export class WalletDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('dashboardViews')
