@@ -188,6 +188,7 @@ import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { JsonLdService } from './services/jsonld.service';
 
 const routes: Routes = [
   {
@@ -510,13 +511,13 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService =>
+      useFactory: (boostedContentService) =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
     },
     {
       provide: RouterHistoryService,
-      useFactory: router => new RouterHistoryService(router),
+      useFactory: (router) => new RouterHistoryService(router),
       deps: [Router],
     },
     MetaService,
@@ -535,6 +536,7 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    JsonLdService,
   ],
 })
 export class CommonModule {}

@@ -16,6 +16,7 @@ import {
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { JsonLdService } from '../../../common/services/jsonld.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -45,7 +46,8 @@ export class NewsfeedSingleComponent {
     private metaService: MetaService,
     configs: ConfigsService,
     private headersService: HeadersService,
-    private authModalService: AuthModalService
+    private authModalService: AuthModalService,
+    protected jsonLdService: JsonLdService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -54,21 +56,20 @@ export class NewsfeedSingleComponent {
   ngOnInit() {
     this.context.set('activity');
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['guid']) {
         this.error = '';
         this.activity = void 0;
         if (this.route.snapshot.queryParamMap.has('comment_guid')) {
-          this.focusedCommentGuid = this.route.snapshot.queryParamMap.get(
-            'comment_guid'
-          );
+          this.focusedCommentGuid =
+            this.route.snapshot.queryParamMap.get('comment_guid');
         }
         this.load(params['guid']);
       }
     });
 
     this.queryParamsSubscription = this.route.queryParamMap.subscribe(
-      params => {
+      (params) => {
         if (params.has('editing')) {
           this.editing = !!params.get('editing');
         }
@@ -82,6 +83,7 @@ export class NewsfeedSingleComponent {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
+    this.jsonLdService.removeStructuredData();
   }
 
   /**
@@ -132,7 +134,7 @@ export class NewsfeedSingleComponent {
           this.context.reset();
         }
       },
-      err => {
+      (err) => {
         this.inProgress = false;
 
         if (err.status === 0) {
@@ -206,6 +208,15 @@ export class NewsfeedSingleComponent {
 
     if (activity.nsfw.length) {
       this.metaService.setNsfw(true);
+    }
+
+    if (
+      activity.subtype === 'video' ||
+      activity.custom_type === 'video' ||
+      activity.content_type === 'video'
+    ) {
+      const videoSchema = this.jsonLdService.getVideoSchema(activity);
+      this.jsonLdService.insertSchema(videoSchema);
     }
 
     if (activity.custom_type === 'video') {
