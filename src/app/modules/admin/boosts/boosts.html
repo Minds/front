@@ -26,27 +26,19 @@
     <span class="m-value">{{ statistics.backlog | number }}</span>
   </div>
   <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
-    <h3>
-      Backlog (priority)
-    </h3>
+    <h3>Backlog (priority)</h3>
     <span class="m-value">{{ statistics.priorityBacklog | number }}</span>
   </div>
   <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
-    <h3>
-      Impressions (backlog)
-    </h3>
+    <h3>Impressions (backlog)</h3>
     <span class="m-value">{{ statistics.impressions | number }}</span>
   </div>
   <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
-    <h3>
-      Avg. Impressions (backlog)
-    </h3>
+    <h3>Avg. Impressions (backlog)</h3>
     <span class="m-value">{{ statistics.avgImpressions | number }}</span>
   </div>
   <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
-    <h3>
-      Avg. Approval Time
-    </h3>
+    <h3>Avg. Approval Time</h3>
     <span class="m-value">{{ _duration(statistics.avgApprovalTime) }}</span>
   </div>
   <div class="mdl-cell mdl-cell--12-col m-admin-boost-stat-note">
@@ -90,31 +82,6 @@
         class="mdl-card mdl-shadow--8dp"
         *ngIf="boost.entity.type == 'group'"
       ></minds-card-group>
-
-      <div
-        class="mdl-card__supporting-text quality-slider"
-        *ngIf="boost.state == 'created'"
-      >
-        <ng-container>Quality: </ng-container>
-        <div class="m--inputs">
-          <input
-            type="range"
-            class="mdl-slider mdl-js-slider"
-            [(ngModel)]="boost.quality"
-            min="0"
-            max="100"
-            step="5"
-            [mdlSlider]
-          />
-          <input
-            type="number"
-            min="0"
-            max="100"
-            step="5"
-            [(ngModel)]="boost.quality"
-          />
-        </div>
-      </div>
 
       <div
         class="m-previously-rejected-notice"
@@ -174,7 +141,7 @@
           size="xsmall"
           class="m-admin-boosts--accept-button"
         >
-          Accept
+          Safe
         </m-button>
         <m-button
           (onAction)="accept(boost, true)"
@@ -183,9 +150,6 @@
         >
           Open
         </m-button>
-        <m-button (onAction)="accept(boost, true, { mature: 1 })" size="xsmall">
-          Open (E-tag)
-        </m-button>
         <m-button
           (onAction)="openReasonsModal(boost)"
           color="red"
@@ -193,14 +157,6 @@
           class="m-admin-boosts--reject-button"
         >
           Reject
-        </m-button>
-        <m-button
-          (click)="eTag(boost)"
-          class="m-admin-boosts--e-tag-button"
-          color="red"
-          size="xsmall"
-        >
-          E-tag
         </m-button>
       </div>
     </div>
