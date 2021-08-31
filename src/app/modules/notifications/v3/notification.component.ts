@@ -29,8 +29,7 @@ import { NotificationsV3Service } from './notifications-v3.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsV3NotificationComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+  implements OnInit, AfterViewInit, OnDestroy {
   @Input() notification;
 
   @ViewChild('notificationWrapper') notificationWrapper: ElementRef;
@@ -407,7 +406,7 @@ export class NotificationsV3NotificationComponent
 
     this.interceptionObserver = new IntersectionObserver(
       (entries, observer) => {
-        entries.forEach((entry) => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             this.service.markAsRead(this.notification);
           }
