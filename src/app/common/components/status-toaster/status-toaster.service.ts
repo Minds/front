@@ -29,8 +29,9 @@ export class StatusToasterService {
   };
 
   constructor(private http: HttpClient, protected configs: ConfigsService) {
-    this.statusPageUrl =
-      this.configs.get('statuspage_io').url ?? 'https://status.minds.com';
+    this.statusPageUrl = this.configs.get('statuspage_io').url
+      ? this.configs.get('statuspage_io').url
+      : 'https://status.minds.com';
   }
 
   onToast(): Observable<StatusToast> {
