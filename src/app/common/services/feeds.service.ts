@@ -166,9 +166,13 @@ export class FeedsService implements OnDestroy {
 
   /**
    * Sets fromTimestamp
+   * NOTE: "from" refers to the starting point (top) of the feed,
+   * not chronological time. Since by default feeds start with the most recent activity,
+   * "from" should be the most recent date
    * @param {string } export - whether or not to export user's subscribers_count and subscriptions_count.
    */
   setFromTimestamp(value: string): FeedsService {
+    console.log('ojm setFromTimestamp', value);
     this.fromTimestamp = value;
     return this;
   }
@@ -183,20 +187,24 @@ export class FeedsService implements OnDestroy {
 
     const endpoint = this.endpoint;
 
-    let fromTimestamp = this.fromTimestamp;
-    if (this.pagingToken) {
-      if (!this.fromTimestamp || this.pagingToken >= this.fromTimestamp) {
-        fromTimestamp = this.pagingToken;
-      }
-    }
+    let fromTimestamp = this.pagingToken
+      ? this.pagingToken
+      : this.fromTimestamp;
+    // ojm
+    // if (this.pagingToken) {
+    //   if (!this.fromTimestamp || this.pagingToken >= this.fromTimestamp) {
+    //     fromTimestamp = this.pagingToken;
+    //   }
+    // }
 
+    // ojm stop feed if paging token is earlier than to_timestamp?
     console.log('ojm FEEDS FETCH()', {
-      offset: this.offset.getValue(),
-      toTimestamp: this.params.to_timestamp,
+      fromTimestamp: fromTimestamp,
       pagingToken: this.pagingToken,
+      toTimestamp: this.params.to_timestamp,
+      offset: this.offset.getValue(),
       canFetchMore: this.canFetchMore,
       hasMore: this.hasMore,
-      fromTimestamp: fromTimestamp,
     });
     console.log(
       'ojmFEEDS FETCH() pagingToken',
@@ -207,7 +215,7 @@ export class FeedsService implements OnDestroy {
       'ojmFEEDS FETCH() fromTimestamp',
       this.fromTimestamp,
 
-      moment(parseInt(fromTimestamp)).format('MMM DD YYYY, HH:')
+      moment(parseInt(this.fromTimestamp)).format('MMM DD YYYY, HH:')
     );
     console.log(
       'ojmFEEDS FETCH() toTimestamp',
@@ -224,8 +232,8 @@ export class FeedsService implements OnDestroy {
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
-          from_timestamp: this.pagingToken ?? this.fromTimestamp,
-          // ojm previously - from_timestamp: this.pagingToken,
+          // ojm from_timestamp: this.pagingToken ?? this.fromTimestamp,
+          from_timestamp: fromTimestamp,
         },
       })
       .then((response: any) => {

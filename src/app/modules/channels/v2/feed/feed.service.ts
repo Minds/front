@@ -110,14 +110,16 @@ export class FeedService {
         };
 
         if (dateRangeEnabled) {
-          // ojm does paging work within a date range??
-          this.service.setFromTimestamp(dateRange.fromDate);
-          params['to_timestamp'] = dateRange.toDate;
+          console.log('ojm channelFeed - dateRangeEnabled');
+          // Reversed from<->to because feeds are displayed
+          // in reverse chronological order
+          this.service.setFromTimestamp(dateRange.toDate);
+          params['to_timestamp'] = dateRange.fromDate;
         } else {
+          console.log('ojm channelFeed - dateRange NOT Enabled');
+
           this.service.setFromTimestamp('');
         }
-
-        console.log('ojm ch daterangeenabld?', dateRangeEnabled);
 
         // Don't allow using search or date filters for scheduled posts
         if (query || dateRangeEnabled) {
