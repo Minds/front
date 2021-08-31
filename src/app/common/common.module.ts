@@ -187,12 +187,9 @@ import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
-<<<<<<< HEAD
 import { StatusToasterComponent } from './components/status-toaster/status-toaster.component';
 import { StatusToasterService } from './components/status-toaster/status-toaster.service';
-=======
 import { QRCodeModule } from 'angularx-qrcode';
->>>>>>> ccc10d8438411134a1485ff4cef95735875ed727
 
 const routes: Routes = [
   {
