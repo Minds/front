@@ -29,7 +29,7 @@ export class StatusToasterService {
   };
 
   constructor(private http: HttpClient, protected configs: ConfigsService) {
-    this.statusPageUrl = this.configs.get('statuspage_io').url
+    this.statusPageUrl = this.configs.get('statuspage_io')
       ? this.configs.get('statuspage_io').url
       : 'https://status.minds.com';
   }
@@ -43,7 +43,7 @@ export class StatusToasterService {
       JSON.stringify(this.unresolvedIncidents)
     );
 
-    this.fetchUnresolvedIncidents().subscribe(data => {
+    this.fetchUnresolvedIncidents().subscribe((data) => {
       if (!data) {
         return;
       }
@@ -52,7 +52,7 @@ export class StatusToasterService {
       // from the tracker array. Process any
       // new unresolved incidents
       if (data.incidents) {
-        data.incidents.forEach(incident => {
+        data.incidents.forEach((incident) => {
           if (
             !this.findAndRemove(incident.id, this.unresolvedIncidentsTracker)
           ) {
@@ -74,7 +74,7 @@ export class StatusToasterService {
   }
 
   showResolvedToasts(): void {
-    this.unresolvedIncidentsTracker.forEach(incident => {
+    this.unresolvedIncidentsTracker.forEach((incident) => {
       // Show the toast
       this.trigger(true, incident);
       // Remove it from list of unresolved incidents
@@ -84,7 +84,7 @@ export class StatusToasterService {
 
   // Returns true if an incident was found and removed
   findAndRemove(id: string, array: Array<any>): boolean {
-    const index = array.findIndex(incident => incident.id === id);
+    const index = array.findIndex((incident) => incident.id === id);
 
     if (index > -1) {
       array.splice(index, 1);
