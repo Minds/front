@@ -22,7 +22,8 @@
     "serve:embed:dev": "ng serve minds-embed --watch=true --poll=1000 --proxy-config proxy.conf.js --host=0.0.0.0 --port=4300 --disableHostCheck=true",
     "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json",
     "xi18n": "gulp extract.i18n",
-    "xi18n-import": "gulp import.i18n"
+    "xi18n-import": "gulp import.i18n",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
