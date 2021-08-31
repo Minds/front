@@ -84,7 +84,7 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   }
 
   get visibleToasts(): boolean {
-    return this.service.toasts.findIndex((item) => !item.dismissed) !== -1;
+    return this.service.toasts.findIndex(item => !item.dismissed) !== -1;
   }
 
   constructor(
@@ -94,9 +94,9 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.service.onToast().subscribe((toast) => {
+    this.subscription = this.service.onToast().subscribe(toast => {
       // if all saved toasts have already been dismissed, then clean the array to prevent leaks
-      if (this.service.toasts.findIndex((value) => !value.dismissed) === -1) {
+      if (this.service.toasts.findIndex(value => !value.dismissed) === -1) {
         this.service.toasts = [];
       }
 
@@ -125,7 +125,9 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   }
 
   getLastUpdated(utc): string {
-    return moment(utc).local().format('MMM Do hh:mm a');
+    return moment(utc)
+      .local()
+      .format('MMM Do hh:mm a');
   }
 
   dismiss(toastIndex: number): void {
