@@ -188,6 +188,8 @@ import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { StatusToasterComponent } from './components/status-toaster/status-toaster.component';
+import { StatusToasterService } from './components/status-toaster/status-toaster.service';
 
 const routes: Routes = [
   {
@@ -349,6 +351,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    StatusToasterComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -486,6 +489,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    StatusToasterComponent,
   ],
   providers: [
     SiteService,
@@ -510,13 +514,13 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService =>
+      useFactory: (boostedContentService) =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
     },
     {
       provide: RouterHistoryService,
-      useFactory: router => new RouterHistoryService(router),
+      useFactory: (router) => new RouterHistoryService(router),
       deps: [Router],
     },
     MetaService,
@@ -535,6 +539,7 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    StatusToasterService,
   ],
 })
 export class CommonModule {}
