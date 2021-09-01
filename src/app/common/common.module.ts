@@ -514,13 +514,13 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: (boostedContentService) =>
+      useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
     },
     {
       provide: RouterHistoryService,
-      useFactory: (router) => new RouterHistoryService(router),
+      useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
     MetaService,
