@@ -188,6 +188,7 @@ import { PublisherSearchModalComponent } from './components/publisher-search-mod
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const routes: Routes = [
   {
@@ -206,6 +207,7 @@ const routes: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
+    QRCodeModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
@@ -511,13 +513,13 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: (boostedContentService) =>
+      useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
     },
     {
       provide: RouterHistoryService,
-      useFactory: (router) => new RouterHistoryService(router),
+      useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
     MetaService,
