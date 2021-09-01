@@ -30,7 +30,7 @@ export class SeoService {
       return;
     }
 
-    const url = `/${user.username.toLowerCase()}`;
+    const url = `/${user.username.toLowerCase()}/`;
     this.meta
       .setTitle(`${user.name} (@${user.username})`)
       .setDescription(user.briefdescription || `Subscribe to @${user.username}`)
