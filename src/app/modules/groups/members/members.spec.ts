@@ -69,7 +69,7 @@ describe('GroupsMembersModuleComponent', () => {
     })
   );
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -78,8 +78,9 @@ describe('GroupsMembersModuleComponent', () => {
     membersComponent = fixture.componentInstance;
 
     clientMock.response = {};
-    clientMock.response[`api/v1/groups/membership/11111`] =
-      successfulGroupResponse;
+    clientMock.response[
+      `api/v1/groups/membership/11111`
+    ] = successfulGroupResponse;
 
     membersComponent._group = group;
     membersComponent.linksTo = fixture.detectChanges();
@@ -126,10 +127,9 @@ describe('GroupsMembersModuleComponent', () => {
     tick();
 
     expect(membersComponent.load).toHaveBeenCalled();
-    expect(clientMock.get).toHaveBeenCalledWith(
-      'api/v1/groups/membership/11111',
-      { limit: 21 }
-    );
+    expect(
+      clientMock.get
+    ).toHaveBeenCalledWith('api/v1/groups/membership/11111', { limit: 21 });
 
     expect(membersComponent.members).toEqual(successfulGroupResponse.members);
   }));

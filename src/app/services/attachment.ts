@@ -138,7 +138,7 @@ export class AttachmentService {
   }
 
   setNSFW(nsfw) {
-    this.meta.nsfw = nsfw.map((reason) => reason.value);
+    this.meta.nsfw = nsfw.map(reason => reason.value);
   }
 
   async upload(file: HTMLInputElement | File, detectChangesFn?: Function) {
@@ -172,7 +172,7 @@ export class AttachmentService {
           'api/v1/media',
           [file],
           this.meta,
-          (progress) => {
+          progress => {
             this.attachment.progress = progress;
             this.progress.next(progress);
             if (detectChangesFn) {
@@ -236,7 +236,7 @@ export class AttachmentService {
 
     if (this.uploadSubscription) this.uploadSubscription.unsubscribe();
 
-    this.uploadSubscription = uploadProgress$.subscribe((pct) => {
+    this.uploadSubscription = uploadProgress$.subscribe(pct => {
       if (pct >= 0) this.progress.next(pct);
     });
 
@@ -279,7 +279,7 @@ export class AttachmentService {
       .then(() => {
         this.meta.attachment_guid = null;
       })
-      .catch((e) => {
+      .catch(e => {
         this.meta.attachment_guid = null;
 
         throw e;
@@ -454,7 +454,7 @@ export class AttachmentService {
 
           if (detectChangesFn) detectChangesFn();
         })
-        .catch((e) => {
+        .catch(e => {
           this.resetRich();
           if (detectChangesFn) detectChangesFn();
         });
@@ -467,7 +467,7 @@ export class AttachmentService {
     }
 
     if (typeof object.nsfw !== 'undefined') {
-      let res = [1, 2, 4].filter((nsfw) => {
+      let res = [1, 2, 4].filter(nsfw => {
         return object.nsfw.indexOf(nsfw) > -1;
       }).length;
       if (res) return true;
@@ -533,16 +533,18 @@ export class AttachmentService {
         const maxFileSize = this.maxVideoFileSize;
         if (file.size > maxFileSize) {
           throw new Error(
-            `File exceeds ${
-              maxFileSize / Math.pow(1000, 3)
-            }GB maximum size. Please try compressing your file.`
+            `File exceeds ${maxFileSize /
+              Math.pow(
+                1000,
+                3
+              )}GB maximum size. Please try compressing your file.`
           );
         }
 
         this.attachment.mime = 'video';
 
         this.checkVideoDuration(file)
-          .then((duration) => {
+          .then(duration => {
             let maxVideoLength = this.maxVideoLength;
             if (this.session.getLoggedInUser().plus) {
               maxVideoLength = this.maxVideoLength * 3; // Hacky
@@ -558,7 +560,7 @@ export class AttachmentService {
 
             resolve();
           })
-          .catch((error) => {
+          .catch(error => {
             resolve(); //resolve regardless and forward to backend job
             //reject(error);
           });
@@ -584,13 +586,13 @@ export class AttachmentService {
       const videoElement = document.createElement('video');
       let timeout: number = 0;
       videoElement.preload = 'metadata';
-      videoElement.onloadedmetadata = function () {
+      videoElement.onloadedmetadata = function() {
         if (timeout !== 0) window.clearTimeout(timeout);
 
         window.URL.revokeObjectURL(videoElement.src);
         resolve(videoElement.duration);
       };
-      videoElement.addEventListener('error', function (error) {
+      videoElement.addEventListener('error', function(error) {
         if (timeout !== 0) window.clearTimeout(timeout);
 
         window.URL.revokeObjectURL(this.src);
