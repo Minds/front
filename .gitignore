@@ -43,3 +43,4 @@ cypress/videos
 !.gitattributes
 !.gitkeep
 !/.nvmrc
+!/.husky
