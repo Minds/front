@@ -15,12 +15,12 @@ export class JsonLdService {
   removeStructuredData(): void {
     const els = [];
     // An array in case we want to start adding add'l schemass
-    ['m-structuredData--video'].forEach((className) => {
+    ['m-structuredData--video'].forEach(className => {
       els.push(
         ...Array.from(this._document.head.getElementsByClassName(className))
       );
     });
-    els.forEach((el) => this._document.head.removeChild(el));
+    els.forEach(el => this._document.head.removeChild(el));
   }
 
   // Check that an element with the same class name doesn’t exist in the DOM,
