@@ -49,7 +49,7 @@ export class BoostConsoleBooster {
    */
   ngOnInit() {
     this.loaded = false;
-    this.route.parent.url.subscribe((segments) => {
+    this.route.parent.url.subscribe(segments => {
       this.type = <BoostConsoleType>segments[0].path;
       this.load(true);
       this.loaded = true;
@@ -86,7 +86,7 @@ export class BoostConsoleBooster {
     this.feed$ = this.feedsService.feed;
     this.inProgress = false;
     this.loaded = true;
-    this.feed$.subscribe((feed) => (this.noContent = feed.length > 0));
+    this.feed$.subscribe(feed => (this.noContent = feed.length > 0));
   }
 
   /**

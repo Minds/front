@@ -43,23 +43,23 @@ export class FeedsService implements OnDestroy {
     protected blockListService: BlockListService
   ) {
     this.pageSize = this.offset.pipe(
-      map((offset) => this.limit.getValue() + offset)
+      map(offset => this.limit.getValue() + offset)
     );
 
     this.feed = this.rawFeed.pipe(
-      tap((feed) => {
+      tap(feed => {
         if (feed.length) this.inProgress.next(true);
       }),
-      switchMap(async (feed) => {
+      switchMap(async feed => {
         return feed.slice(0, await this.pageSize.pipe(first()).toPromise());
       }),
-      switchMap((feed) =>
+      switchMap(feed =>
         this.entitiesService
           .setCastToActivities(this.castToActivities)
           .setExportUserCounts(this.exportUserCounts)
           .getFromFeed(feed)
       ),
-      tap((feed) => {
+      tap(feed => {
         if (feed.length && this.fallbackAt) {
           for (let i = 0; i < feed.length; i++) {
             const entity: any = feed[i].getValue();
@@ -75,7 +75,7 @@ export class FeedsService implements OnDestroy {
           }
         }
       }),
-      tap((feed) => {
+      tap(feed => {
         if (feed.length)
           // We should have skipped but..
           this.inProgress.next(false);
@@ -83,7 +83,7 @@ export class FeedsService implements OnDestroy {
     );
 
     // Trigger a re-run of the above pipe on blockedList emission.
-    this.blockListSubscription = blockListService.blocked.subscribe((block) => {
+    this.blockListSubscription = blockListService.blocked.subscribe(block => {
       this.rawFeed.next(this.rawFeed.getValue());
     });
 
@@ -92,7 +92,7 @@ export class FeedsService implements OnDestroy {
       this.inProgress,
       this.offset
     ).pipe(
-      map((values) => {
+      map(values => {
         const feed = values[0];
         const inProgress = values[1];
         const offset = values[2];
@@ -272,7 +272,7 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
       })
-      .catch((e) => console.log(e));
+      .catch(e => console.log(e));
   }
 
   /**

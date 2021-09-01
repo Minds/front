@@ -88,7 +88,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   updateTabs() {
     this.tabs = [];
     const headerCurrencies: string[] = ['cash', 'tokens', 'eth', 'btc'];
-    headerCurrencies.forEach((currency) => {
+    headerCurrencies.forEach(currency => {
       const headerTab: ShadowboxHeaderTab = {
         id: currency,
         label: this.wallet[currency].label,
