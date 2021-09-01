@@ -93,7 +93,7 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     this.load(true);
 
     this.groupsSearchQuerySubscription = this.groupsSearch.query$.subscribe(
-      (query) => {
+      query => {
         this.query = query;
         this.load(true);
       }
