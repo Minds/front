@@ -1,27 +1,69 @@
-<div class="m-governance__card-container">
-  <div class="m-application-meta">
-    <div class="m-governance__card-arrow-h2 m-user">
+<ng-container>
+  <div class="m-proposal--row" *ngIf="showHeader">
+    <div class="m-proposal--second-row">
+      <m-icon class="m-proposal--icon" from="custom" iconId="note"></m-icon>
+      <span class="m-proposal--icon m-proposal--proposal">PROPOSAL</span>
+    </div>
+
+    <div class="m-proposal--second-row">
+      <span class="m-proposal--actions">See more · &nbsp;</span>
+      <span class="m-proposal--actions">Hide</span>
+    </div>
+  </div>
+  <div
+    class="m-proposal--container"
+    [ngClass]="{
+      'm-proposal--container-gray': !showHeader,
+      'm-proposal--container-blue': showHeader
+    }"
+  >
+    <div class="m-proposal--row-title">
       {{ proposal.title }}
     </div>
-    <div
-      [ngClass]="{
-        'm-governance__card-status-green': proposal.state === 'closed' || proposal.state === 'active',
-        'm-governance__card-orange': proposal.state === 'pending',
-        'm-governance__card-status-red' : proposal.state === 'rejected'
-      }"
-      class="m-governance__card-status m-governance__card-status-text"
-    >
-      <m-icon
-        *ngIf="proposal.state === 'closed'"
-        class="m-governance__card-check m-governance__card-status-green"
-        iconId="check"
-      ></m-icon>
-      {{ proposal.state }}
+    <div class="m-proposal--voting-row">
+      <div
+        class="m-proposal--actions-active"
+        *ngIf="proposal.state === 'active'"
+      >
+        Voting open
+      </div>
+      <div
+        [ngClass]="{
+          'm-proposal--actions-pending' : proposal.state === 'pending',
+          'm-proposal--actions-closed': proposal.state === 'closed'
+        }"
+        *ngIf="proposal.state !== 'active'"
+      >
+        {{ proposal.state }}
+      </div>
+      <div class="m-proposal--actions">
+        &nbsp;· proposed by @fabiolalombardim
+      </div>
+    </div>
+
+    <div class="m-proposal--details m-proposal--details-container">
+      <p [ngClass]="{ test: isLong }">
+        {{ proposal.body }}
+      </p>
+    </div>
+
+    <div class="m-proposal--thumbnail-row" *ngIf="proposal.state !== 'pending'">
+      <div class="m-proposal--thumbnail"></div>
+      <div class="m-proposal--thumbnail"></div>
+      <div class="m-proposal--thumbnail"></div>
+      <div class="m-proposal--users">Sarah, Ted and Ada participated</div>
+    </div>
+
+    <div *ngIf="proposal.state !== 'pending'" class="m-proposal--row-limit">
+      <div class="m-proposal--voting-row">
+        <div class="m-proposal--proposal-detail-progress">
+          <span style="width: 30%"></span>
+        </div>
+      </div>
+      <div class="m-proposal--row-score" >
+        <div class="m-proposal--actions-results">30% accepted </div>
+        <div class="m-proposal--actions-results">70% rejected</div>
+      </div>
     </div>
   </div>
-  <div class="m-governance__card-arrow-container">
-    <div class="m-governance__card-arrow-corner" href="#">
-      <div class="m-governance__card-arrow">→</div>
-    </div>
-  </div>
-</div>
+</ng-container>

@@ -1,95 +1,205 @@
-@import 'defaults';
-@import 'themes';
+m-proposal {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  margin-top: 10px;
 
-.m-governance__card-container {
-  padding: 25px 20px;
-  margin-bottom: 20px;
-  cursor: pointer;
+  &,
+  &.m-border {
+    border-radius: $m-borderRadius;
+  }
 
   @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-    border: 1px solid themed($m-borderColor--primary);
+    background: themed($m-bgColor--primary);
   }
-  &:hover {
-    box-shadow: 0 0 11px #424a50;
-    transform: translateY(-4px);
-    .m-governance__card-arrow-container {
-      .m-governance__card-arrow-corner {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        width: 32px;
-        height: 32px;
-        overflow: hidden;
-        top: 0;
-        right: 0px;
-        border-radius: 0 0 0 32px;
-        @include m-theme() {
-          background-color: themed($m-blue);
-          border-color: themed($m-blue);
-        }
-      }
+}
 
-      .m-governance__card-arrow {
-        display: flex;
-        margin-top: -4px;
-        margin-right: -4px;
-        color: white;
-        font-family: courier, sans;
-      }
-    }
+.m-proposal--actions {
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
   }
+  font-size: 14px;
+  cursor: pointer;
+}
 
-  .m-governance__card-arrow-h2 {
-    padding-left: 4px;
-    margin: 0;
+.m-proposal--actions-active {
+  color: #38a169;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: inherit;
+}
 
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 0.25px;
+.m-proposal--actions-pending {
+  color: #bf8f33;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
 
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    margin-bottom: 16px;
-    margin-top: 6px;
+.m-proposal--actions-closed {
+  @include m-theme() {
+    color: themed($m-red);
   }
-  .m-governance__card-arrow-container {
-    .m-governance__card-arrow-corner {
-      display: none;
-    }
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
 
-    .m-governance__card-arrow {
-      display: none;
-    }
-  }
+.m-proposal--row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  align-items: center;
+  margin-top: 10px;
+}
 
-  .m-application-meta {
-    .m-governance__card-status {
-      display: flex;
-      text-transform: capitalize;
-      margin-bottom: 4px;
-    }
-  }
+.m-proposal--row-title {
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+}
 
-  .m-governance__card-status-text {
-    font-weight: 500;
-    font-size: 15px;
-  }
+.m-proposal--second-row {
+  align-items: center;
+  display: flex;
+}
 
-  .m-governance__card-status-green {
-    color: #64CB2F;
-  }
+.m-proposal--proposal {
+  margin-left: 6px;
+  font-size: 13px;
+}
 
-  .m-governance__card-status-red {
-    color: #e63535;
-  }
+.m-proposal--container {
+  border: 1px solid;
+  margin-bottom: 20px;
+  border-radius: $m-borderRadius;
+  padding: 27px 37px;
+}
 
-  .m-governance__card-check {
-    margin-right: 9px;
+.m-proposal--container-blue {
+  @include m-theme() {
+    border-color: themed($m-link);
   }
+}
 
-  .m-governance__card-orange {
-    color: #ffb200;
+.m-proposal--container-gray {
+  @include m-theme() {
+    border-color: themed($m-borderColor--primary) !important;
   }
+}
+
+.m-proposal--icon {
+  @include m-theme() {
+    color: themed($m-link);
+  }
+}
+
+.m-proposal--fixedHeight {
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-proposal--fixedHeightContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.m-proposal--voting-row {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.m-proposal--clock {
+  margin-right: 9px;
+}
+
+.m-proposal--details {
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  margin-top: 14px;
+}
+
+.m-proposal--details-container .test {
+  position: relative;
+}
+
+.m-proposal--details-container .test::after {
+  content: '';
+  display: block;
+  height: 25px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  @include m-theme() {
+    background: rgba(240, 248, 255, 0)
+      linear-gradient(
+        to top,
+        themed($m-bgColor--primary),
+        rgba(255, 255, 255, 0)
+      )
+      repeat scroll 0 0; // for white
+  }
+}
+
+.m-proposal--thumbnail {
+  height: 30px;
+  width: 30px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.m-proposal--thumbnail-row {
+  display: flex;
+  margin-top: 14px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.m-proposal--users {
+  margin-left: 16px;
+}
+
+.m-proposal--proposal-detail-progress {
+  height: 8px;
+  position: relative;
+  background: #bf2c2c;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.m-proposal--proposal-detail-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #38a169;
+  position: relative;
+  overflow: hidden;
+}
+
+.m-proposal--row-score {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.m-proposal--actions-results {
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+
+.m-proposal--row-limit {
+  max-width: 476px;
 }

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { filter, pairwise, startWith } from 'rxjs/operators';
 import { GovernanceService } from '../governance.service';
+import { Wallet, WalletV2Service } from '../../wallet/components/wallet-v2.service';
 
 @Component({
   selector: 'm-governance--latest',
@@ -13,14 +14,14 @@ export class GovernanceLatestComponent implements OnInit, OnDestroy {
   inProgress$ = this.governanceService.inProgress$;
   hasMoreData$ = this.governanceService.hasMoreData$;
   routerEventsSubscription: Subscription;
-
+  tokenBalance;
   current = 12;
   currentFilter = '';
 
   constructor(
     private router: Router,
     private governanceService: GovernanceService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.routerEventsSubscription = this.router.events

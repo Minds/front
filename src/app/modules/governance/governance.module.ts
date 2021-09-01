@@ -21,6 +21,7 @@ import { EmbedServiceV2 } from '../../services/embedV2.service';
 import { GovernanceProposalDetailComponent } from './proposal-detail/proposal-detail.component';
 import { GroupsModule } from '../groups/groups.module';
 import { GovernanceProposalDetailDropdownComponent } from './proposal-detail/dropdown/dropdown.component';
+import { GovernanceFilterTypeSelector } from './filter-type-selector/filter-type-selector.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { GovernanceProposalDetailDropdownComponent } from './proposal-detail/dro
     GovernanceFilterSelector,
     GovernanceProposalDetailComponent,
     GovernanceProposalDetailDropdownComponent,
+    GovernanceFilterTypeSelector
   ],
   exports: [
     GovernanceComponent,
@@ -82,6 +84,7 @@ import { GovernanceProposalDetailDropdownComponent } from './proposal-detail/dro
     GovernanceFilterSelector,
     GovernanceProposalDetailComponent,
     GovernanceProposalDetailDropdownComponent,
+    GovernanceFilterTypeSelector
   ],
 })
 export class GovernanceModule {}

@@ -7,8 +7,19 @@ import { SnapshotProposal } from '../snapshot.service';
 })
 export class GovernanceCardComponent implements OnInit {
   @Input() proposal: SnapshotProposal;
+  @Input() showHeader: boolean;
+
+  isLong = false;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkLength(this.proposal.body);
+  }
+
+  checkLength(text: string) {
+    if (text.length > 360) {
+      this.isLong =  true;
+    }
+  }
 }

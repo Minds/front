@@ -1,6 +1,17 @@
 <div class="m-governance_body">
-  <m-governance__tabs
-    *ngIf="router.url !== '/governance/create'"
-  ></m-governance__tabs>
+  <div class="m-governance--row" *ngIf="isDetailScreen()">
+    <m-governance__tabs
+      *ngIf="router.url !== '/governance/create'"
+    ></m-governance__tabs>
+
+    <button
+      class="m-governance-button"
+      (click)="goToCreate()"
+      [disabled]="tokenBalance <= 0"
+    >
+      Submit proposal
+    </button>
+  </div>
+
   <router-outlet></router-outlet>
 </div>

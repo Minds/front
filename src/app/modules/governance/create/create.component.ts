@@ -57,6 +57,7 @@ export class GovernanceCreateComponent implements OnInit {
     this.userData = await this.settingsV2Service.loadSettings(
       this.session.getLoggedInUser().guid
     );
+    console.log(this.userData);
   }
 
   async onSubmit(e) {

@@ -1,0 +1,45 @@
+@import 'defaults';
+@import 'themes';
+
+.m-governance--filter-type {
+  padding-top: 20px;
+  padding-right: 39px;
+
+  .m-governance--filter-type-title {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.25px;
+    margin-bottom: 14px;
+  }
+
+  .m-governance--filter-type-option {
+    padding: 8px 12px;
+    display: flex;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    &:hover {
+      @include m-theme() {
+        background: themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  .m-governance--filter-type-option-active {
+    @include m-theme() {
+      background: themed($m-borderColor--primary);
+    }
+  }
+
+  .m-governance--filter-type-first {
+    margin-top: 21px;
+  }
+
+  .m-governance--filter-type-last {
+    margin-bottom: 40px;
+  }
+}

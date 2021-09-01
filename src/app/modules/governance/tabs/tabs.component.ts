@@ -25,11 +25,4 @@ export class GovernanceTabsComponent {
     return url === currentUrl.split('?')[0];
   }
 
-  public isDetailScreen() {
-    if (this.router.url.includes('/governance/proposal/')) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 }

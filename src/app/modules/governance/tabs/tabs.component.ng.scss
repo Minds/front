@@ -4,6 +4,7 @@
   overflow-x: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  border-bottom: none !important;
 
   &::-webkit-scrollbar {
     display: none;

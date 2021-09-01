@@ -1,21 +1,27 @@
-<div class="mdl-grid">
-  <m-governance--filter-selector
-    (filterBy)="filter($event)"
-  ></m-governance--filter-selector>
-  <div class="m-governance-button" routerLink="/governance/create">
-    Submit proposal
+<div class="m-governance--latest-row">
+  <div class="m-pageLayout__pane--main" m-pageLayout__pane="main">
+    <m-proposal-list
+      *ngIf="!(inProgress$ | async)"
+      [proposals]="proposals$ | async"
+    ></m-proposal-list>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="hasMoreData$ | async"
+      [inProgress]="inProgress$ | async"
+    >
+    </infinite-scroll>
+  </div>
+
+  <div style="flex: 1;">
+    <m-governance--filter-type-selector>
+
+    </m-governance--filter-type-selector>
+
+    <span class="m-governance--filter-type-title"> OUTCOME </span>
+    <m-governance--filter-selector
+      (filterBy)="filter($event)"
+    ></m-governance--filter-selector>
   </div>
 </div>
-
-<m-proposal-list
-  *ngIf="!(inProgress$ | async)"
-  [proposals]="proposals$ | async"
-></m-proposal-list>
-
-<infinite-scroll
-  distance="25%"
-  (load)="load()"
-  [moreData]="hasMoreData$ | async"
-  [inProgress]="inProgress$ | async"
->
-</infinite-scroll>

@@ -17,7 +17,7 @@ m-governance--proposal-detail {
     .m-governance--proposal-detail-info {
       width: 100%;
       padding: 20px 20px;
-      border: 1px solid #414c57;
+      border: 1px solid;
       margin-right: 30px;
       margin-top: 40px;
       border-radius: 4px;
@@ -25,6 +25,9 @@ m-governance--proposal-detail {
       height: fit-content;
       @media screen and (max-width: $max-mobile) {
         margin-top: 0px;
+      }
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
       }
     }
 
@@ -37,13 +40,16 @@ m-governance--proposal-detail {
     .m-governance--proposal-detail-options-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: baseline;
     }
 
     .m-governance--proposal-detail-title {
-      border-bottom: 1px solid #414c57;
+      border-bottom: 1px solid;
       padding-bottom: 8px;
       font-weight: bold;
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+      }
     }
 
     .m-governance--proposal-detail-row {
@@ -72,7 +78,9 @@ m-governance--proposal-detail {
     }
 
     .m-governance--proposal-detail-key {
-      color: #b8c1ca;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
 
     .m-governance--proposal-detail-value {

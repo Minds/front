@@ -1,9 +1,7 @@
 @import 'defaults.scss';
 
 m-governance {
-  @include m-theme() {
-    border-right: 1px solid themed($m-borderColor--primary);
-  }
+
   height: inherit;
   min-height: inherit;
   display: grid;
@@ -23,5 +21,14 @@ m-governance {
     @include m-theme() {
       color: themed($m-blue);
     }
+  }
+
+  .m-governance--row {
+    display: flex;
+    justify-content: space-between;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+    align-items: center;
   }
 }

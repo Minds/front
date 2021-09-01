@@ -1,12 +1,19 @@
 <div class="m-dropdown--v2">
   <button
+    id="dropdown-button"
     class="m-governance--proposal-detail-dropdown__button"
     (click)="onButtonClick($event)"
   >
     <i class="material-icons">more_horiz</i>
   </button>
 
-  <ul class="m-dropdown__list" [hidden]="!isOpened">
+  <ul
+    class="m-dropdown__list"
+    [hidden]="!isOpened"
+    tabindex="1"
+    id="share"
+    (mouseout)="isOpened = false"
+  >
     <li
       class="m-dropdownList__item"
       (click)="onOptionClick($event); openShareModal()"
