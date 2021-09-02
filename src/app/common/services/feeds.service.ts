@@ -7,6 +7,7 @@ import { EntitiesService } from './entities.service';
 import { BlockListService } from './block-list.service';
 
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
+import { switchMap, map, tap, first } from 'rxjs/operators';
 
 /**
  * Enables the grabbing of data through observable feeds.
