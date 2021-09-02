@@ -7,10 +7,6 @@ import { EntitiesService } from './entities.service';
 import { BlockListService } from './block-list.service';
 
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
-import { switchMap, map, tap, first } from 'rxjs/operators';
-
-//ojm temp
-import * as moment from 'moment';
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -172,7 +168,6 @@ export class FeedsService implements OnDestroy {
    * @param {string } export - whether or not to export user's subscribers_count and subscriptions_count.
    */
   setFromTimestamp(value: string): FeedsService {
-    console.log('ojm setFromTimestamp', value);
     this.fromTimestamp = value;
     return this;
   }
@@ -190,49 +185,14 @@ export class FeedsService implements OnDestroy {
     let fromTimestamp = this.pagingToken
       ? this.pagingToken
       : this.fromTimestamp;
-    // ojm
-    // if (this.pagingToken) {
-    //   if (!this.fromTimestamp || this.pagingToken >= this.fromTimestamp) {
-    //     fromTimestamp = this.pagingToken;
-    //   }
-    // }
-
-    // ojm stop feed if paging token is earlier than to_timestamp?
-    console.log('ojm FEEDS FETCH()', {
-      fromTimestamp: fromTimestamp,
-      pagingToken: this.pagingToken,
-      toTimestamp: this.params.to_timestamp,
-      offset: this.offset.getValue(),
-      canFetchMore: this.canFetchMore,
-      hasMore: this.hasMore,
-    });
-    console.log(
-      'ojmFEEDS FETCH() pagingToken',
-      this.pagingToken,
-      moment(parseInt(this.pagingToken)).format('MMM DD YYYY, HH:')
-    );
-    console.log(
-      'ojmFEEDS FETCH() fromTimestamp',
-      this.fromTimestamp,
-
-      moment(parseInt(this.fromTimestamp)).format('MMM DD YYYY, HH:')
-    );
-    console.log(
-      'ojmFEEDS FETCH() toTimestamp',
-      this.params.to_timestamp,
-      moment(parseInt(this.params.to_timestamp)).format('MMM DD YYYY, HH:')
-    );
 
     return this.client
       .get(this.endpoint, {
         ...this.params,
         ...{
-          // ojm uncomment/remove
-          // limit: 13,
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
-          // ojm from_timestamp: this.pagingToken ?? this.fromTimestamp,
           from_timestamp: fromTimestamp,
         },
       })
@@ -257,14 +217,7 @@ export class FeedsService implements OnDestroy {
           this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
-          // ojm solution:??
-          // this.setFromTimestamp(this.pagingToken);
 
-          console.log(
-            'ojmFEEDS RESPONSE.load-next',
-            this.pagingToken,
-            moment(parseInt(this.pagingToken)).format('MMM DD YYYY, HH:')
-          );
           if (!this.pagingToken) {
             this.canFetchMore = false;
           }
@@ -280,7 +233,6 @@ export class FeedsService implements OnDestroy {
    */
   loadMore(): FeedsService {
     if (!this.inProgress.getValue()) {
-      console.log('ojm feed loadMore');
       this.setOffset(this.limit.getValue() + this.offset.getValue());
       this.rawFeed.next(this.rawFeed.getValue());
     }
@@ -296,10 +248,8 @@ export class FeedsService implements OnDestroy {
       !this.inProgress.getValue() &&
       this.offset.getValue()
     ) {
-      console.log('ojm feed loadnext->fetch');
       this.fetch(); // load the next 150 in the background
     }
-    console.log('ojm feed loadnext->loadmore');
 
     this.loadMore();
   }

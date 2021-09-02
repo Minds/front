@@ -113,14 +113,11 @@ export class FeedService {
         };
 
         if (dateRangeEnabled) {
-          console.log('ojm channelFeed - dateRangeEnabled');
           // Reversed from<->to because feeds are displayed
           // in reverse chronological order
           this.service.setFromTimestamp(dateRange.toDate);
           params['to_timestamp'] = dateRange.fromDate;
         } else {
-          console.log('ojm channelFeed - dateRange NOT Enabled');
-
           this.service.setFromTimestamp('');
         }
 
@@ -178,16 +175,13 @@ export class FeedService {
    * Load next batch of entities
    */
   loadNext() {
-    console.log('ojm ch LOADNEXT');
     if (
       this.service.canFetchMore &&
       !this.service.inProgress.getValue() &&
       this.service.offset.getValue()
     ) {
-      console.log('ojm ch loadnext->fetch');
       this.service.fetch(); // load the next 150 in the background
     }
-    console.log('ojm ch loadnext->loadmore');
     this.service.loadMore();
   }
 
