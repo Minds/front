@@ -77,17 +77,21 @@ import * as moment from 'moment';
 export class StatusToasterComponent implements OnInit, OnDestroy {
   interval;
   subscription: Subscription;
+
   get toasts() {
     return this.service.toasts;
   }
+
   get visibleToasts(): boolean {
     return this.service.toasts.findIndex(item => !item.dismissed) !== -1;
   }
+
   constructor(
     protected service: StatusToasterService,
     protected cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
+
   ngOnInit(): void {
     this.subscription = this.service.onToast().subscribe(toast => {
       // if all saved toasts have already been dismissed, then clean the array to prevent leaks
@@ -99,11 +103,14 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
     });
     this.startPolling();
   }
+
   ngOnDestroy(): void {
     if (this.interval) {
       clearInterval(this.interval);
     }
   }
+
+  // ojm TEMP shorten poll interval for testing
   /**
    * Check for unresolved incidents every 30s
    */
@@ -111,17 +118,21 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.interval = setInterval(() => {
         this.service.update();
-      }, 30000);
+      }, 5000);
+      // }, 30000);
     }
   }
+
   getLastUpdated(utc): string {
     return moment(utc)
       .local()
       .format('MMM Do hh:mm a');
   }
+
   dismiss(toastIndex: number): void {
     this.service.toasts[toastIndex].dismissed = true;
   }
+
   detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();

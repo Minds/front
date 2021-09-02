@@ -15,20 +15,24 @@ export class StatusToasterService {
   toasts: StatusToast[] = [];
   unresolvedIncidents: Array<any> = [];
   unresolvedIncidentsTracker: Array<any> = [];
+
   private subject = new Subject<StatusToast>();
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
   };
+
   constructor(private http: HttpClient, protected configs: ConfigsService) {
     this.statusPageUrl = this.configs.get('statuspage_io')
       ? this.configs.get('statuspage_io').url
       : 'https://status.minds.com';
   }
+
   onToast(): Observable<StatusToast> {
     return this.subject.asObservable();
   }
+
   update(): void {
     this.unresolvedIncidentsTracker = JSON.parse(
       JSON.stringify(this.unresolvedIncidents)
@@ -53,12 +57,14 @@ export class StatusToasterService {
     // At this point, any remaining incidents in the tracker will have been resolved
     this.showResolvedToasts();
   }
+
   processNewUnresolvedIncident(incident: any): void {
     // Show the toast
     this.trigger(false, incident);
     // Add incident to list of unresolved incidents
     this.unresolvedIncidents.push(incident);
   }
+
   showResolvedToasts(): void {
     this.unresolvedIncidentsTracker.forEach(incident => {
       // Show the toast
@@ -67,6 +73,7 @@ export class StatusToasterService {
       this.findAndRemove(incident.id, this.unresolvedIncidents);
     });
   }
+
   // Returns true if an incident was found and removed
   findAndRemove(id: string, array: Array<any>): boolean {
     const index = array.findIndex(incident => incident.id === id);
@@ -77,6 +84,7 @@ export class StatusToasterService {
       return false;
     }
   }
+
   trigger(resolved: boolean, incident: any): void {
     const toast: StatusToast = {
       resolved: resolved,
@@ -84,11 +92,13 @@ export class StatusToasterService {
     };
     this.subject.next(toast);
   }
+
   fetchUnresolvedIncidents(): Observable<any> {
     return this.http
       .get<any>(this.statusPageUrl + '/api/v2/incidents/unresolved.json')
       .pipe(retry(1), catchError(this.handleError));
   }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
