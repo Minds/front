@@ -1,0 +1,38 @@
+<div
+  class="
+    m-governance--proposal-detail-info m-governance--proposal-detail-results
+  "
+>
+  <div class="m-governance--proposal-detail-title">Results</div>
+
+  <div *ngFor="let choice of choices$ | async">
+    <div class="m-governance--proposal-detail-row">
+      <div class="m-governance--proposal-detail-extra">
+        {{ choice.label }} {{ formatVotes(choice.votes) }} MINDS
+      </div>
+      <div class="m-governance--proposal-detail-value">
+        {{ choice.percentage.toFixed(2) }}%
+      </div>
+    </div>
+
+    <div class="m-governance--proposal-detail-row">
+      <div class="m-governance--proposal-detail-progress">
+        <span [style.width]="choice.percentage.toFixed(2) + '%'"></span>
+      </div>
+    </div>
+  </div>
+
+  <m-loadingSpinner
+    *ngIf="loading$ | async"
+    [inProgress]="true"
+  ></m-loadingSpinner>
+  <ng-container *ngIf="!(loading$ | async)">
+    <div
+      *ngFor="let choice of choicesButtons$ | async"
+      class="m-governance--proposal-detail-vote"
+      (click)="handleVoting(choice)"
+    >
+      {{ choice.label }}
+    </div>
+  </ng-container>
+</div>

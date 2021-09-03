@@ -8,6 +8,7 @@ import { GovernanceService } from '../governance.service';
   templateUrl: './enacted.component.html',
 })
 export class GovernanceEnactedComponent implements OnInit, OnDestroy {
+  space$ = this.governanceService.space$;
   proposals$ = this.governanceService.proposals$;
   inProgress$ = this.governanceService.inProgress$;
   hasMoreData$ = this.governanceService.hasMoreData$;

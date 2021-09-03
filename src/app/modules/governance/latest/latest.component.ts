@@ -3,13 +3,13 @@ import { Subscription } from 'rxjs';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { filter, pairwise, startWith } from 'rxjs/operators';
 import { GovernanceService } from '../governance.service';
-import { Wallet, WalletV2Service } from '../../wallet/components/wallet-v2.service';
 
 @Component({
   selector: 'm-governance--latest',
   templateUrl: './latest.component.html',
 })
 export class GovernanceLatestComponent implements OnInit, OnDestroy {
+  space$ = this.governanceService.space$;
   proposals$ = this.governanceService.proposals$;
   inProgress$ = this.governanceService.inProgress$;
   hasMoreData$ = this.governanceService.hasMoreData$;

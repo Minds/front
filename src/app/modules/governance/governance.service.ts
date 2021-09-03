@@ -1,14 +1,16 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformServer } from '@angular/common';
-import { SnapshotProposal, SnapshotService } from './snapshot.service';
+import { SnapshotService, SnapshotSpace } from './snapshot.service';
+import { shareReplay, tap } from 'rxjs/operators';
 
 @Injectable()
 export class GovernanceService {
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   error$: BehaviorSubject<string> = new BehaviorSubject('');
   hasMoreData$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-  lastOffset: number = 0;
+  lastOffset = 0;
+  space$ = this.snapshot.getMindsSpace().pipe(shareReplay(1));
   proposals$: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
 
   constructor(
@@ -24,7 +26,9 @@ export class GovernanceService {
     this.error$.next(null);
     this.inProgress$.next(true);
 
-    if (isPlatformServer(this.platformId)) return;
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
 
     if (opts.refresh) {
       this.proposals$.next([]);
@@ -36,10 +40,10 @@ export class GovernanceService {
       : 0;
 
     this.snapshot
-      .getProposals({ skip: this.lastOffset, first: 12, state: opts.type })
+      .getMindsProposals({ skip: this.lastOffset, first: 12, state: opts.type })
       // .getMindsProposals({ skip: 0, first: 20 })
       .subscribe(
-        data => {
+        (data) => {
           this.proposals$.next([
             ...this.proposals$.getValue(),
             ...data.proposals,
@@ -47,7 +51,7 @@ export class GovernanceService {
           this.hasMoreData$.next(data.proposals.length >= opts.limit);
           this.error$.next('');
         },
-        err => {
+        (err) => {
           this.proposals$.next(err.data);
         },
         () => this.inProgress$.next(false)

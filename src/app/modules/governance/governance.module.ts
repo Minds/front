@@ -22,6 +22,7 @@ import { GovernanceProposalDetailComponent } from './proposal-detail/proposal-de
 import { GroupsModule } from '../groups/groups.module';
 import { GovernanceProposalDetailDropdownComponent } from './proposal-detail/dropdown/dropdown.component';
 import { GovernanceFilterTypeSelector } from './filter-type-selector/filter-type-selector.component';
+import { VotingCardComponent } from './proposal-detail/voting-card/voting-card.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { GovernanceFilterTypeSelector } from './filter-type-selector/filter-type
     GovernanceFilterSelector,
     GovernanceProposalDetailComponent,
     GovernanceProposalDetailDropdownComponent,
-    GovernanceFilterTypeSelector
+    GovernanceFilterTypeSelector,
+    VotingCardComponent,
   ],
   exports: [
     GovernanceComponent,

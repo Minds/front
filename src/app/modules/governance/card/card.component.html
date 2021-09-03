@@ -29,7 +29,7 @@
       </div>
       <div
         [ngClass]="{
-          'm-proposal--actions-pending' : proposal.state === 'pending',
+          'm-proposal--actions-pending': proposal.state === 'pending',
           'm-proposal--actions-closed': proposal.state === 'closed'
         }"
         *ngIf="proposal.state !== 'active'"
@@ -57,12 +57,12 @@
     <div *ngIf="proposal.state !== 'pending'" class="m-proposal--row-limit">
       <div class="m-proposal--voting-row">
         <div class="m-proposal--proposal-detail-progress">
-          <span style="width: 30%"></span>
+          <span [style.width]="accepted + '%'"></span>
         </div>
       </div>
-      <div class="m-proposal--row-score" >
-        <div class="m-proposal--actions-results">30% accepted </div>
-        <div class="m-proposal--actions-results">70% rejected</div>
+      <div class="m-proposal--row-score">
+        <div class="m-proposal--actions-results">{{ accepted }}% accepted</div>
+        <div class="m-proposal--actions-results">{{ rejected }}% rejected</div>
       </div>
     </div>
   </div>

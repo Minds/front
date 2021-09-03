@@ -1,8 +1,3 @@
-<m-loadingSpinner
-  *ngIf="inProgress"
-  [inProgress]="inProgress"
-></m-loadingSpinner>
-
 <div class="m-governance--proposal-detail">
   <div class="m-pageLayout__pane--main" m-pageLayout__pane="main">
     <div *ngIf="!inProgress">
@@ -17,20 +12,21 @@
       </div>
 
       <div
-      [ngClass]="{
-        'm-governance__card-status-green': proposal.state === 'closed' || proposal.state === 'active',
-        'm-governance__card-orange': proposal.state === 'pending',
-        'm-governance__card-status-red' : proposal.state === 'rejected'
-      }"
-      class="m-governance__card-status m-governance__card-status-text"
-    >
-      <m-icon
-        *ngIf="proposal.state === 'closed'"
-        class="m-governance__card-check m-governance__card-status-green"
-        iconId="check"
-      ></m-icon>
-      {{ proposal.state }}
-    </div>
+        [ngClass]="{
+          'm-governance__card-status-green':
+            proposal.state === 'closed' || proposal.state === 'active',
+          'm-governance__card-orange': proposal.state === 'pending',
+          'm-governance__card-status-red': proposal.state === 'rejected'
+        }"
+        class="m-governance__card-status m-governance__card-status-text"
+      >
+        <m-icon
+          *ngIf="proposal.state === 'closed'"
+          class="m-governance__card-check m-governance__card-status-green"
+          iconId="check"
+        ></m-icon>
+        {{ proposal.state }}
+      </div>
       <div
         class="m-governance--proposal-detail-body-title"
         [innerHTML]="proposal.body"
@@ -40,7 +36,17 @@
 
   <div>
     <div class="m-governance--proposal-detail-info" *ngIf="!inProgress">
-      <div class="m-governance--proposal-detail-title">Information</div>
+      <div
+        class="
+          m-governance--proposal-detail-row
+          m-governance--proposal-detail-title
+          m-governance--proposal-detail-pointer
+        "
+        (click)="openSnapshot(proposal.id)"
+      >
+        <span>Information</span>
+        <m-icon iconId="open_in_new" m-tooltip--icon></m-icon>
+      </div>
 
       <div class="m-governance--proposal-detail-row">
         <div class="m-governance--proposal-detail-extra">Author</div>
@@ -65,52 +71,21 @@
 
       <div class="m-governance--proposal-detail-row">
         <div class="m-governance--proposal-detail-extra">Snapshot</div>
-        <div
-          class="
-            m-governance--proposal-detail-value
-            m-governance--proposal-detail-pointer
-          "
-          (click)="openSnapshot(proposal.id)"
-        >
+        <div class="m-governance--proposal-detail-value">
           #{{ proposal.snapshot }}
-          <m-icon iconId="open_in_new" m-tooltip--icon></m-icon>
         </div>
       </div>
     </div>
 
-    <div
-      class="
-        m-governance--proposal-detail-info m-governance--proposal-detail-results
-      "
+    <m-loadingSpinner
+      *ngIf="inProgress"
+      [inProgress]="inProgress"
+    ></m-loadingSpinner>
+    <m-voting-card
       *ngIf="!inProgress"
-    >
-      <div class="m-governance--proposal-detail-title">Results</div>
-
-      <div class="m-governance--proposal-detail-row">
-        <div class="m-governance--proposal-detail-extra">Approve</div>
-        <div class="m-governance--proposal-detail-value">100%</div>
-      </div>
-
-      <div class="m-governance--proposal-detail-row">
-        <div class="m-governance--proposal-detail-progress">
-          <span style="width: 100%"></span>
-        </div>
-      </div>
-
-      <div class="m-governance--proposal-detail-row">
-        <div class="m-governance--proposal-detail-extra">Reject</div>
-        <div class="m-governance--proposal-detail-value">0%</div>
-      </div>
-
-      <div class="m-governance--proposal-detail-row">
-        <div class="m-governance--proposal-detail-progress">
-          <span style="width: 0%"></span>
-        </div>
-      </div>
-
-      <div class="m-governance--proposal-detail-vote">VOTE APPROVE</div>
-
-      <div class="m-governance--proposal-detail-vote">VOTE REJECT</div>
-    </div>
+      [proposal]="proposal"
+      [space]="space"
+      [votes]="votes$ | async"
+    ></m-voting-card>
   </div>
 </div>

@@ -1,5 +1,6 @@
 <m-proposal-list
   *ngIf="!(inProgress$ | async)"
+  [space]="space$ | async"
   [proposals]="proposals$ | async"
 ></m-proposal-list>
 

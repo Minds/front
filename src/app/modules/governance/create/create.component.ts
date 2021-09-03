@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../common/services/form-toast.service';
@@ -6,6 +12,11 @@ import { Session } from '../../../services/session';
 import { ComposerService } from '../../composer/services/composer.service';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { SnapshotProposal, SnapshotService } from '../snapshot.service';
+
+export enum PROPOSAL_CHOICE {
+  APPROVE = 'approve',
+  REJECT = 'reject',
+}
 
 @Component({
   moduleId: module.id,
@@ -18,7 +29,6 @@ export class GovernanceCreateComponent implements OnInit {
   inProgress = false;
   userData;
   @Output('onPost') onPostEmitter: EventEmitter<any> = new EventEmitter<any>();
-
 
   constructor(
     private toasterService: FormToastService,
@@ -89,70 +99,40 @@ export class GovernanceCreateComponent implements OnInit {
       const start = this.formatDatetime(new Date().getTime());
       const end = this.formatDatetime(new Date().getTime() + 3600 * 24 * 14);
 
-      const body = `
-      ## Project Description
-      ${values.project_description}
+      const body = [
+        '## Project Description',
+        values.project_description,
+        '## Roadmap',
+        values.roadmap,
+        '## Funding',
+        values.funding,
+        '## Challenges',
+        values.challenges,
+        '## Links',
+        values.links,
+        '## Experience',
+        values.experience,
+        '## Goals',
+        values.goals,
+        '## Additional requests',
+        values.additional_requests,
+        '## Additional information',
+        values.additional_info,
+      ].join('\n');
 
-      ## Roadmap
-      ${values.roadmap}
+      this.service.message$.next(body);
+      this.service.title$.next(values.question);
 
-      ## Funding
-      ${values.funding}
-
-      ## Challenges
-      ${values.challenges}
-
-      ## Links
-      ${values.links}
-
-      ## Experience
-      ${values.experience}
-
-      ## Goals
-      ${values.goals}
-
-      ## Additional requests
-      ${values.additional_requests}
-
-      ## Additional information
-      ${values.additional_info}
-      
-    `.trim();
-
-    this.service.message$.next(body);
-    this.service.title$.next(values.question);
-
-      await this.snapshotService
-        .createProposal({
-          end,
-          start,
-          name: values.question,
-          body: `
-## Project Description
-${values.project_description}
-## Roadmap
-${values.roadmap}
-## Funding
-${values.funding}
-## Challenges
-${values.challenges}
-## Links
-${values.links}
-## Experience
-${values.experience}
-## Goals
-${values.goals}
-## Additional requests
-${values.additional_requests}
-## Additional information
-${values.additional_info}`.trim(),
-        })
-        .then(async (data: SnapshotProposal) => {
-        const activity = await this.service.postProposal();
-        this.onPostEmitter.next(activity);
-          this.router.navigate([`/governance/proposal/${data.id}`])
-        }
-        );
+      const data = await this.snapshotService.createProposal({
+        end,
+        start,
+        body,
+        name: values.question,
+        choices: [PROPOSAL_CHOICE.APPROVE, PROPOSAL_CHOICE.REJECT],
+      });
+      const activity = await this.service.postProposal();
+      this.onPostEmitter.next(activity);
+      await this.router.navigate([`/governance/proposal/${data.id}`]);
       this.toasterService.success('Proposal successfully submitted');
     } catch (e) {
       this.inProgress = false;
