@@ -110,7 +110,6 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ojm TEMP shorten poll interval for testing
   /**
    * Check for unresolved incidents every 30s
    */
@@ -118,8 +117,7 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.interval = setInterval(() => {
         this.service.update();
-      }, 5000);
-      // }, 30000);
+      }, 30000);
     }
   }
 

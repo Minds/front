@@ -33,7 +33,7 @@ export class StatusToasterService {
     return this.subject.asObservable();
   }
 
-  update(): void {
+  async update(): Promise<void> {
     this.unresolvedIncidentsTracker = JSON.parse(
       JSON.stringify(this.unresolvedIncidents)
     );
@@ -53,9 +53,9 @@ export class StatusToasterService {
           }
         });
       }
+      // At this point, any remaining incidents in the tracker will have been resolved
+      this.showResolvedToasts();
     });
-    // At this point, any remaining incidents in the tracker will have been resolved
-    this.showResolvedToasts();
   }
 
   processNewUnresolvedIncident(incident: any): void {
