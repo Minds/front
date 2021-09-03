@@ -25,6 +25,7 @@ export class DiscoveryFeedsListComponent implements OnInit, OnDestroy {
       this.service.nsfw$,
       this.service.type$,
       this.service.period$
+      // ojm add plus$? or filter$?
     )
       .pipe(debounceTime(300))
       .subscribe(() => {

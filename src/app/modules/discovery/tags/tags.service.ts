@@ -4,6 +4,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HashtagDefaultsService } from '../../hashtags/service/defaults.service';
 import { isPlatformServer } from '@angular/common';
+import { DiscoveryService } from '../discovery.service';
 
 export type DiscoveryTag = any;
 
@@ -56,6 +57,7 @@ export class DiscoveryTagsService {
   constructor(
     private client: Client,
     private hashtagDefaults: HashtagDefaultsService,
+    private discoveryService: DiscoveryService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -74,6 +76,8 @@ export class DiscoveryTagsService {
 
     let endpoint = 'api/v3/discovery/tags',
       params = entityGuid ? { entity_guid: entityGuid } : {};
+
+    params['plus'] = this.discoveryService.isPlusPage$.value;
 
     try {
       const response: any = await this.client.get(endpoint, params);

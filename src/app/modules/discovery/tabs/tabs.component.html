@@ -46,8 +46,6 @@
         >Boosted</a
       >
     </div>
-    <div class="m-layout__spacer"></div>
-    <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
   </ng-container>
   <!-- MINDS+ TABS -------------------------------->
   <ng-template #plusTabs>
@@ -56,8 +54,26 @@
         routerLink="/discovery/plus/overview"
         routerLinkActive="m-tabs__tab--selected"
         data-cy="discovery-tab-link-plus-overview"
-        i18n="@@DISCOVERY_TABS__OVERVIEW"
-        >Overview</a
+        i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
+        >Just for you</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="/discovery/plus/tags/your"
+        routerLinkActive="m-tabs__tab--selected"
+        data-cy="discovery-tab-link-tags"
+        i18n="@@DISCOVERY_TAGS__YOUR_TAGS"
+        >Your tags</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLink="/discovery/plus/tags/trending"
+        routerLinkActive="m-tabs__tab--selected"
+        data-cy="discovery-tab-link-trending"
+        i18n="@@DISCOVERY_TAGS__TRENDING"
+        >Trending</a
       >
     </div>
     <div class="m-tabs__tab">
@@ -70,4 +86,7 @@
       >
     </div>
   </ng-template>
+  <!-- SETTINGS COG -------------------------------->
+  <div class="m-layout__spacer"></div>
+  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
 </div>
