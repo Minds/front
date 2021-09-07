@@ -247,6 +247,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * Component destruction
    */
   ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
