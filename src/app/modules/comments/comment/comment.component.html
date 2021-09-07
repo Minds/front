@@ -5,11 +5,13 @@
   [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
-    <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
-      <a [routerLink]="['/', comment.ownerObj.username]">
-        <img [src]="getAvatarSrc() | async" class="m-border" />
-      </a>
-    </div>
+    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 10]">
+      <div class="minds-avatar">
+        <a [routerLink]="['/', comment.ownerObj.username]">
+          <img [src]="getAvatarSrc() | async" class="m-border" />
+        </a>
+      </div>
+    </m-hovercard>
   </ng-template>
   <div *ngIf="!_compact" class="m-comment__avatarWrapper">
     <ng-container *ngTemplateOutlet="avatar"></ng-container>
