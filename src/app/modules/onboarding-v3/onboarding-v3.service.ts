@@ -69,7 +69,10 @@ export class OnboardingV3Service implements OnDestroy {
   /*
    * Steps that will not trigger endpoint reload.
    */
-  public readonly loadOverrideSteps = ['SetupChannelStep'];
+  public readonly loadOverrideSteps = [
+    'SetupChannelStep',
+    'VerifyUniquenessStep',
+  ];
 
   /*
    * Holds response of progress that can be loaded using load().

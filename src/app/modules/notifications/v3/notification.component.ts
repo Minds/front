@@ -51,6 +51,7 @@ export class NotificationsV3NotificationComponent
   ) {}
 
   ngOnInit(): void {
+    if (!this.notification) return;
     /**
      * All notification types must be added to this list
      */

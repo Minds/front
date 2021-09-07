@@ -68,6 +68,7 @@ export class MetaService {
       value = value.substr(0, 157) + '...';
     }
     this.metaService.updateTag({ name: 'description', content: value });
+    this.metaService.updateTag({ property: 'og:description', content: value });
     return this;
   }
 
@@ -235,6 +236,14 @@ export class MetaService {
     return this;
   }
 
+  setOgSiteName(): MetaService {
+    this.metaService.updateTag({
+      property: 'og:site_name',
+      content: this.site.title,
+    });
+    return this;
+  }
+
   reset(
     data: {
       title?: string;
@@ -269,6 +278,7 @@ export class MetaService {
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false)
+      .setOgSiteName()
       .resetDynamicFavicon()
       .resetOEmbed();
   }
@@ -280,7 +290,7 @@ export class MetaService {
       this.titleService.setTitle(this.title);
     }
     this.metaService.updateTag({
-      name: 'og:title',
+      property: 'og:title',
       content: this.ogTitle,
     });
   }
