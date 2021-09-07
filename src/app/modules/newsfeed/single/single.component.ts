@@ -28,11 +28,13 @@ export class NewsfeedSingleComponent {
   inProgress: boolean = false;
   activity: any;
   error: string = '';
-  paramsSubscription: Subscription;
-  queryParamsSubscription: Subscription;
   focusedCommentGuid: string = '';
   editing = false;
   fixedHeight = false;
+
+  private paramsSubscription: Subscription;
+  private queryParamsSubscription: Subscription;
+  private singleGuidSubscription: Subscription;
 
   constructor(
     public router: Router,
@@ -82,6 +84,10 @@ export class NewsfeedSingleComponent {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
+
+    if (this.singleGuidSubscription) {
+      this.singleGuidSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -94,7 +100,7 @@ export class NewsfeedSingleComponent {
 
     const fetchSingleGuid = this.loadFromFeedsService(guid);
 
-    fetchSingleGuid.subscribe(
+    this.singleGuidSubscription = fetchSingleGuid.subscribe(
       (activity: any) => {
         if (activity === null) {
           return; // Not yet loaded
