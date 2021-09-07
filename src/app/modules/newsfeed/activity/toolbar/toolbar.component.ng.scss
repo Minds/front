@@ -150,6 +150,11 @@
         }
       }
     }
+
+    ::ng-deep m-tooltip .m-tooltip--bubble {
+      right: 0;
+      width: 400px;
+    }
   }
 
   .m-activity--fixedHeight & {

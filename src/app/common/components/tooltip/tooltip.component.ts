@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 
 @Component({
@@ -9,13 +9,15 @@ import { ConfigsService } from '../../services/configs.service';
     '(mouseout)': 'setHidden(true)',
   },
 })
-export class TooltipComponent {
+export class TooltipComponent implements OnInit {
   @Input() icon;
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
   @Input() iconSrc;
   @Input() useParentPosition: boolean = false;
   @Input() enabled: boolean = true;
+  @Input() visible: boolean = false;
+  @Input() showArrow: boolean = false;
 
   public readonly cdnAssetsUrl: string;
 
@@ -23,9 +25,28 @@ export class TooltipComponent {
   offsetTop: number = 0;
   offsetRight: number = 0;
   offsetLeft: number = 0;
+  triangleOffset: number = 0;
 
   constructor(private element: ElementRef, private configs: ConfigsService) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+  }
+
+  ngOnInit() {
+    const {
+      width,
+      height,
+    } = this.element.nativeElement.getBoundingClientRect();
+
+    switch (this.anchor) {
+      case 'top':
+      case 'bottom':
+        this.triangleOffset = width / 2;
+        break;
+      case 'left':
+      case 'right':
+        this.triangleOffset = height / 2;
+        break;
+    }
   }
 
   setHidden(value: boolean) {

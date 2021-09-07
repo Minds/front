@@ -16,7 +16,10 @@ import {
   tap,
 } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
-import { ActivityEntity } from '../../newsfeed/activity/activity.service';
+import {
+  ActivityEntity,
+  ActivityService,
+} from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
 import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
@@ -467,7 +470,8 @@ export class ComposerService implements OnDestroy {
     protected preview: PreviewService,
     protected feedsUpdate: FeedsUpdateService,
     private hashtagsFromString: HashtagsFromStringService,
-    private attachmentValidator: AttachmentValidatorService
+    private attachmentValidator: AttachmentValidatorService,
+    private activityService: ActivityService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -1080,6 +1084,10 @@ export class ComposerService implements OnDestroy {
 
       this.reset();
       this.isPosting$.next(false);
+      setTimeout(
+        () => this.activityService.recommendBoost(activity.guid),
+        1000
+      );
       this.setProgress(false);
 
       activity.boostToggle = true;
