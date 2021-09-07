@@ -74,41 +74,44 @@
             m-settingsV2__referralsDashboard__dataRow
           "
         >
-          <div
-            class="
-              m-settingsV2__referralsDashboard__cell
-              m-settingsV2__referralsDashboard__userCol
-            "
-          >
-            <a
-              [routerLink]="['/', referral.prospect.username]"
-              class="m-settingsV2__referralsDashboard__userAvatarWrapper"
+          <m-hovercard [publisher]="referral.prospect" [offset]="[60, 0]">
+            <div
+              class="
+                m-settingsV2__referralsDashboard__cell
+                m-settingsV2__referralsDashboard__userCol
+              "
             >
-              <img
-                class="
-                  m-settingsV2__referralsDashboard__userAvatar
-                  mdl-shadow--2dp
-                "
-                [hovercard]="referral.prospect.guid"
-                src="/icon/{{ referral.prospect.guid }}/small/{{
-                  referral.prospect.icontime
-                }}"
-              />
-            </a>
-            <a
-              [routerLink]="['/', referral.prospect.username]"
-              class="m-settingsV2__referralsDashboard__userNameWrapper"
-            >
-              <span class="m-settingsV2__referralsDashboard__userName">{{
-                referral.prospect.username
-              }}</span>
-              <m-channel--badges
-                class="m-channel--badges-activity"
-                [user]="referral.prospect"
-                badges="[ 'admin', 'verified' ]"
-              ></m-channel--badges>
-            </a>
-          </div>
+              <a
+                [routerLink]="['/', referral.prospect.username]"
+                class="m-settingsV2__referralsDashboard__userAvatarWrapper"
+              >
+                <img
+                  class="
+                    m-settingsV2__referralsDashboard__userAvatar
+                    mdl-shadow--2dp
+                  "
+                  src="/icon/{{ referral.prospect.guid }}/small/{{
+                    referral.prospect.icontime
+                  }}"
+                />
+              </a>
+
+              <a
+                [routerLink]="['/', referral.prospect.username]"
+                class="m-settingsV2__referralsDashboard__userNameWrapper"
+              >
+                <span class="m-settingsV2__referralsDashboard__userName">{{
+                  referral.prospect.username
+                }}</span>
+                <m-channel--badges
+                  class="m-channel--badges-activity"
+                  [user]="referral.prospect"
+                  badges="[ 'admin', 'verified' ]"
+                ></m-channel--badges>
+              </a>
+            </div>
+          </m-hovercard>
+
           <div
             class="
               m-settingsV2__referralsDashboard__cell

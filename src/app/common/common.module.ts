@@ -43,7 +43,6 @@ import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
 import { InlineAutoGrow } from './directives/inline-autogrow';
 import { Emoji } from './directives/emoji';
-import { Hovercard } from './directives/hovercard';
 import { ScrollLock } from './directives/scroll-lock';
 import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
@@ -189,6 +188,8 @@ import { PublisherSearchModalComponent } from './components/publisher-search-mod
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
 import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
 import { DateRangeModalService } from './components/date-range-modal/date-range-modal.services';
+import { NgxPopperjsModule } from 'ngx-popperjs';
+import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 
 const routes: Routes = [
@@ -207,6 +208,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    NgxPopperjsModule,
     QRCodeModule,
     RouterModule.forChild(routes),
   ],
@@ -248,7 +250,6 @@ const routes: Routes = [
     InlineAutoGrow,
     Emoji,
     MindsEmoji,
-    Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
@@ -352,6 +353,7 @@ const routes: Routes = [
     ChatIconComponent,
     PublisherSearchModalComponent,
     DateRangeModalComponent,
+    HovercardComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -389,7 +391,6 @@ const routes: Routes = [
     InlineAutoGrow,
     MindsEmoji,
     Emoji,
-    Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
@@ -490,6 +491,8 @@ const routes: Routes = [
     ChatIconComponent,
     PublisherSearchModalComponent,
     DateRangeModalComponent,
+    NgxPopperjsModule,
+    HovercardComponent,
   ],
   providers: [
     SiteService,

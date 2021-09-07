@@ -176,7 +176,7 @@ export class FeedsService implements OnDestroy {
   /**
    * Fetches the data.
    */
-  fetch(): Promise<any> {
+  fetch(replace: boolean = false): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -216,7 +216,13 @@ export class FeedsService implements OnDestroy {
         if (response.entities?.length) {
           this.fallbackAt = response['fallback_at'];
           this.fallbackAtIndex.next(null);
-          this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
+          if (replace) {
+            this.rawFeed.next(response.entities);
+          } else {
+            this.rawFeed.next(
+              this.rawFeed.getValue().concat(response.entities)
+            );
+          }
           this.pagingToken = response['load-next'];
 
           if (!this.pagingToken) {
@@ -269,12 +275,14 @@ export class FeedsService implements OnDestroy {
   /**
    * To clear data.
    */
-  clear(): FeedsService {
+  clear(clearFeed: boolean = true): FeedsService {
     this.fallbackAt = null;
     this.fallbackAtIndex.next(null);
     this.offset.next(0);
     this.pagingToken = '';
-    this.rawFeed.next([]);
+    if (clearFeed) {
+      this.rawFeed.next([]);
+    }
     return this;
   }
 

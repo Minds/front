@@ -297,4 +297,18 @@
         }*/
     }
   }
+
+  .minds-blog-ownerblock {
+    margin: 8px 0;
+
+    ::ng-deep m-hovercard {
+      .minds-avatar {
+        margin: 0px;
+      }
+    }
+
+    .minds-body {
+      margin-left: 8px;
+    }
+  }
 }
