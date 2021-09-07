@@ -4773,7 +4773,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Czy na pewno chcesz zbanować tego użytkownika?</target>
       </trans-unit>
-      <trans-unit id="c77c696e2335a3b2c3c13b0de8ac96dca458576c" datatype="html" approved="yes">
+      <trans-unit id="839089267464445080" datatype="html" approved="yes">
         <source>This will close all open sessions and lock them out from Minds.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
@@ -4849,7 +4849,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Kliknij tutaj, aby dodać nowy baner</target>
       </trans-unit>
-      <trans-unit id="ccbfe7707dbf576cbdf0fe024e77b2b15c2a2216" datatype="html">
+      <trans-unit id="1777770295756860973" datatype="html">
         <source>Recommended minimum size 2000px × 1125px (Ratio 16:9)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/banner/banner.ts</context>
@@ -4963,7 +4963,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Przetłumaczone</target>
       </trans-unit>
-      <trans-unit id="c3623c1d1bd75d88ab6b3e9626860983164dfd18" datatype="html" approved="yes">
+      <trans-unit id="6183288723862758287" datatype="html" approved="yes">
         <source>
           from 
           <x id="INTERPOLATION"/>
@@ -14102,7 +14102,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">USD</target>
       </trans-unit>
-      <trans-unit id="4278d0d56bf15987074af102734c503e9f06171d" datatype="html" approved="yes">
+      <trans-unit id="3623988744716522312" datatype="html" approved="yes">
         <source>Minds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
@@ -14111,7 +14111,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Umysły</target>
       </trans-unit>
-      <trans-unit id="687659a5a833d857275a474d021d250836324054" datatype="html" approved="yes">
+      <trans-unit id="2925181343504667515" datatype="html" approved="yes">
         <source>Pro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
@@ -14652,7 +14652,7 @@
            your account to launch your own website and get paid for the traffic you drive.
         </target>
       </trans-unit>
-      <trans-unit id="06c3a70914642a003aa0331f8467f2052a2f6c26" datatype="html" approved="yes">
+      <trans-unit id="1436785407037467950" datatype="html" approved="yes">
         <source>Download Whitepaper</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
@@ -16159,7 +16159,7 @@
           <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
-      <trans-unit id="d2910a31f3ccab1b28ecaef64c2a1bd790c05159" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16199,7 +16199,7 @@
           <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
-      <trans-unit id="a9522a8f70a95b5e03085e7be9b8c4b70b4cc901" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16239,7 +16239,7 @@
           <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
-      <trans-unit id="212ff5555d9cf5a131b263d0d503c2fb31f86889" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16279,7 +16279,7 @@
           <x id="CLOSE_EMPHASISED_TEXT"/>
         </target>
       </trans-unit>
-      <trans-unit id="291d0ef30a123bdb120040b04447d8e4309316c9" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16322,7 +16322,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Zasługujesz na uznanie dla ludzi, którzy wnosisz do sieci umysłów. Nagrodzimy Cię 50 punktami za każdego nowego użytkownika, który rejestruje się za pomocą Twojego kodu polecającego i dołącza do naszego programu nagród.</target>
       </trans-unit>
-      <trans-unit id="a7e072d44f2616df585beee60bee39d78350fe4f" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16409,7 +16409,7 @@
            every time you perform an OnChain transaction with your Minds Tokens.
         </target>
       </trans-unit>
-      <trans-unit id="15f1a6c8a2047315e69080d4a5f02a09987797d6" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16460,7 +16460,7 @@
            za każdym razem, gdy bierzesz udział w naszym systemie jury, aby przejrzeć odwołania od decyzji o moderacji treści.
         </target>
       </trans-unit>
-      <trans-unit id="cce3059f4ab04c94366f822f73459cc0c70a00ae" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -16511,7 +16511,7 @@
            co godzinę, którą sprawdzasz w aplikacji i wykonujesz akcję, taką jak głosowanie lub komentowanie.
         </target>
       </trans-unit>
-      <trans-unit id="50c5a7b676f1617a5773d6cf974949428d1e5042" datatype="html" approved="yes">
+      <trans-unit id="6618259968747408964" datatype="html" approved="yes">
         <source>
           {VAR_PLURAL, plural, =1 {
           <x id="INTERPOLATION"/>
@@ -20620,7 +20620,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Subskrybenci</target>
       </trans-unit>
-      <trans-unit id="eb9062dd05394a25879f197ba90765bfffe6703f" datatype="html" approved="yes">
+      <trans-unit id="6635763357958526355" datatype="html" approved="yes">
         <source>Edit Channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/edit.component.html</context>
@@ -20804,7 +20804,7 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="final">Filtr...</target>
       </trans-unit>
-      <trans-unit id="72f34b3ac267bb423e47c3bed43123f99239d1da" datatype="html" approved="yes">
+      <trans-unit id="1147358182484006761" datatype="html" approved="yes">
         <source>Shop</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/shop/brief-wire-rewards.component.html</context>

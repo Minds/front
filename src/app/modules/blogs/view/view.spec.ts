@@ -1,5 +1,5 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   Component,
   EventEmitter,
@@ -53,39 +53,44 @@ describe('Blog view component', () => {
     thumbnail: '/thumbnail',
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [BlogView, SafePipe], // declare the test component
-      imports: [NgCommonModule, RouterTestingModule],
-      providers: [
-        {
-          provide: CommentsActivityService,
-          useValue: commentsActivityServiceMock,
-        },
-        ActivityService,
-        { provide: AnalyticsService, useValue: analyticsServiceMock },
-        { provide: AttachmentService, useValue: attachmentServiceMock },
-        { provide: Client, useValue: clientMock },
-        { provide: ContextService, useValue: contextServiceMock },
-        { provide: ScrollService, useValue: scrollServiceMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: MetaService, useValue: metaServiceMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: FeaturesService, useValue: MockService(FeaturesService) },
-        { provide: FormToastService, useValue: MockService(FormToastService) },
-        {
-          provide: ClientMetaService,
-          useValue: MockService(ClientMetaService),
-        },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-      .overrideProvider(CommentsActivityService, {
-        useValue: commentsActivityServiceMock,
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [BlogView, SafePipe], // declare the test component
+        imports: [NgCommonModule, RouterTestingModule],
+        providers: [
+          {
+            provide: CommentsActivityService,
+            useValue: commentsActivityServiceMock,
+          },
+          ActivityService,
+          { provide: AnalyticsService, useValue: analyticsServiceMock },
+          { provide: AttachmentService, useValue: attachmentServiceMock },
+          { provide: Client, useValue: clientMock },
+          { provide: ContextService, useValue: contextServiceMock },
+          { provide: ScrollService, useValue: scrollServiceMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: MetaService, useValue: metaServiceMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: FeaturesService, useValue: MockService(FeaturesService) },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+          {
+            provide: ClientMetaService,
+            useValue: MockService(ClientMetaService),
+          },
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
       })
-      .compileComponents(); // compile template and css
-  }));
+        .overrideProvider(CommentsActivityService, {
+          useValue: commentsActivityServiceMock,
+        })
+        .compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(() => {

@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { Component, DebugElement, Input } from '@angular/core';
 
@@ -23,7 +23,7 @@ import { contextServiceMock } from '../../../../tests/context-service-mock.spec'
 import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { EntitiesService } from '../../../common/services/entities.service';
-import { MockService, MockComponent } from '../../../utils/mock';
+import { MockService, MockComponent, MockDirective } from '../../../utils/mock';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
@@ -32,6 +32,8 @@ import { SocialIcons } from '../../legacy/components/social-icons/social-icons';
 import { ActivityComponent } from '../activity/activity.component';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'minds-activity',
@@ -54,46 +56,63 @@ describe('NewsfeedSingleComponent', () => {
   let comp: NewsfeedSingleComponent;
   let fixture: ComponentFixture<NewsfeedSingleComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MindsActivityMock,
-        NewsfeedSingleComponent,
-        MockComponent({
-          selector: 'm-social-icons',
-          inputs: ['url', 'title', 'embed'],
-        }),
-        MockComponent({
-          selector: 'm-activity',
-          inputs: ['entity', 'displayOptions', 'autoplayVideo'],
-        }),
-      ],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Upload, useValue: uploadMock },
-        { provide: ContextService, useValue: contextServiceMock },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({ guid: 123 }),
-            snapshot: {
-              queryParamMap: convertToParamMap({}),
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MindsActivityMock,
+          NewsfeedSingleComponent,
+          MockComponent({
+            selector: 'm-social-icons',
+            inputs: ['url', 'title', 'embed'],
+          }),
+          MockComponent({
+            selector: 'm-activity',
+            inputs: ['entity', 'displayOptions', 'autoplayVideo'],
+          }),
+          LoadingSpinnerComponent,
+          MockDirective({
+            selector: 'm-clientMeta',
+          }),
+          MockComponent({
+            selector: 'm-newsfeed__activitySuggestions',
+            inputs: ['baseEntity'],
+          }),
+          MockComponent({
+            selector: 'm-discovery__sidebarTags',
+            inputs: ['entityGuid'],
+          }),
+        ],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Upload, useValue: uploadMock },
+          { provide: ContextService, useValue: contextServiceMock },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              params: of({ guid: 123 }),
+              snapshot: {
+                queryParamMap: convertToParamMap({}),
+              },
+              queryParamMap: new BehaviorSubject(convertToParamMap({})),
             },
-            queryParamMap: new BehaviorSubject(convertToParamMap({})),
           },
-        },
-        { provide: MetaService, useValue: MockService(MetaService) },
-        { provide: EntitiesService, useValue: MockService(EntitiesService) },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: HeadersService, useValue: MockService(HeadersService) },
-        { provide: AuthModalService, useValue: MockService(AuthModalService) },
-      ],
-    }).compileComponents();
-  }));
+          { provide: MetaService, useValue: MockService(MetaService) },
+          { provide: EntitiesService, useValue: MockService(EntitiesService) },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: HeadersService, useValue: MockService(HeadersService) },
+          {
+            provide: AuthModalService,
+            useValue: MockService(AuthModalService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

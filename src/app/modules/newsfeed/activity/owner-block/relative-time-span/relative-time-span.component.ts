@@ -34,7 +34,6 @@ import { ActivityEntity } from '../../activity.service';
       {{ pauseableRelativeTimeAgo$ | async }}
     </span>
   `,
-  styleUrls: ['./relative-time-span.component.ng.scss'],
   providers: [FriendlyDateDiffPipe],
 })
 export class ActivityRelativeTimeSpanComponent {
@@ -52,7 +51,7 @@ export class ActivityRelativeTimeSpanComponent {
     // first emission before first interval
     startWith(0),
     // map through date transform pipe programmatically.
-    map(() => this.datePipe.transform(this.entity.time_created * 1000)),
+    map(() => this.datePipe.transform(this.entity.time_created, '', false)),
     distinctUntilChanged()
   );
 

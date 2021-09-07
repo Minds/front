@@ -1,10 +1,10 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
@@ -30,23 +30,25 @@ describe('NotificationComponent', () => {
   let comp: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        FriendlyDateDiffPipe,
-        NotificationComponent,
-        TokenPipe,
-        ExcerptPipe,
-      ],
-      imports: [RouterTestingModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-        { provide: TimeDiffService, useValue: MockService(TimeDiffService) },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          FriendlyDateDiffPipe,
+          NotificationComponent,
+          TokenPipe,
+          ExcerptPipe,
+        ],
+        imports: [RouterTestingModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+          { provide: TimeDiffService, useValue: MockService(TimeDiffService) },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

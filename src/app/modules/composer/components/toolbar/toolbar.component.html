@@ -46,9 +46,10 @@
       >NSFW</span
     >
   </a>
-
   <a
-    *ngIf="!legacyPaywallEnabled && !(remind$ | async)"
+    *ngIf="
+      !legacyPaywallEnabled && !(remind$ | async) && !(isGroupPost$ | async)
+    "
     class="m-composerToolbar__item"
     [class.m-composerToolbar__item--active]="monetization$ | async"
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"

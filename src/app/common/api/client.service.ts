@@ -18,7 +18,10 @@ export class MindsHttpClient {
    * Return a GET request
    */
   get(endpoint: string, data: Object = {}, options: Object = {}) {
-    endpoint += '?' + this.buildParams(data);
+    if (Object.keys(data).length > 0) {
+      endpoint += '?' + this.buildParams(data);
+    }
+
     return this.http.get(this.base + endpoint, this.buildOptions(options));
     //     .map(response => response.json());
   }

@@ -3,9 +3,17 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "esNext",
-    "types": ["node"]
+    "module": "es2020",
+    "types": ["node"],
+    "sourceMap": false
   },
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "**/*.d.ts"
+  ],
   "exclude": [
     "test.ts",
     "app/mocks",

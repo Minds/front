@@ -1,10 +1,10 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { MockComponent } from '../../../utils/mock';
 import { CommonModule as NgCommonModule } from '@angular/common';
@@ -19,12 +19,14 @@ describe('ChannelModeSelector', () => {
   let comp: ChannelModeSelectorComponent;
   let fixture: ComponentFixture<ChannelModeSelectorComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DropdownComponent, ChannelModeSelectorComponent],
-      providers: [{ provide: Client, useValue: clientMock }],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [DropdownComponent, ChannelModeSelectorComponent],
+        providers: [{ provide: Client, useValue: clientMock }],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     fixture = TestBed.createComponent(ChannelModeSelectorComponent);

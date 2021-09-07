@@ -2,7 +2,6 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
-import { LocalWalletService } from './local-wallet.service';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -21,7 +20,6 @@ export class Web3WalletService {
   protected _web3LoadAttempt: number = 0;
 
   constructor(
-    protected localWallet: LocalWalletService,
     protected transactionOverlay: TransactionOverlayService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService,
@@ -161,11 +159,20 @@ export class Web3WalletService {
       gasLimit = BigNumber.from(15000000).toHexString();
     }
 
+    /**
+     * Dispatch an EIP-2718 transaction for EIP-1559 compatibility.
+     * ethers.js should fallback to legacy transactions if
+     * the web3 provider is not equipped to deal with this tx type.
+     *
+     * maxFeePerGas and maxPriorityFeePerGas are omitted and left for
+     * the web3 client to decide.
+     */
     const txHash = await this.transactionOverlay.waitForExternalTx(
       () =>
         connectedContract[method](...params, {
-          value,
-          gasLimit,
+          type: 2,
+          value: value,
+          gasLimit: gasLimit,
         }),
       message
     );
@@ -285,7 +292,6 @@ export class Web3WalletService {
   // Service provider
 
   static _(
-    localWallet: LocalWalletService,
     transactionOverlay: TransactionOverlayService,
     platformId: Object,
     configs: ConfigsService,
@@ -293,7 +299,6 @@ export class Web3WalletService {
     toast: FormToastService
   ) {
     return new Web3WalletService(
-      localWallet,
       transactionOverlay,
       platformId,
       configs,

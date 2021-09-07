@@ -17,9 +17,7 @@
     <ul class="m-walletSettings__tokenSetupOptionsContainer">
       <li class="m-walletSettings__tokenSetupOption--metamask">
         <div>
-          <h2>
-            Web3 Wallet
-          </h2>
+          <h2>Web3 Wallet</h2>
         </div>
         <ng-container *ngIf="hasExternal">
           <p i18n="@@WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_COINBASE_INFO">
@@ -42,16 +40,12 @@
       </li>
 
       <li class="m-walletSettings__tokenSetupOption--custom">
-        <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CUSTOM">
-          Custom
-        </h2>
+        <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CUSTOM">Custom</h2>
         <p i18n="@@WALLET_V2_SETTINGS_TOKENS__WALLET_ALT_INFO">
           You don’t need to use a Web3 Wallet provider. You can alternatively
           manage your own address.
         </p>
         <div>
-          <a (click)="display = Views.CreateAddress">Create a new address</a>
-          <span>or</span>
           <a (click)="display = Views.ProvideAddress">Use your public key</a>
         </div>
       </li>
@@ -75,9 +69,7 @@
     <!-- -------------------------------------------- -->
     <li *ngIf="display === Views.CreateAddress">
       <!-- Address not created yet -->
-      <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS">
-        Create Address
-      </h2>
+      <h2 i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS">Create Address</h2>
       <p
         *ngIf="!generatedAccount"
         class="m-walletSecondaryText--desc"
@@ -93,9 +85,8 @@
         (onAction)="createAddress()"
         i18n="@@WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS"
         color="blue"
+        >Create Address</m-button
       >
-        Create Address
-      </m-button>
       <!-- Address created -->
       <p
         *ngIf="generatedAccount"
@@ -151,11 +142,11 @@
         <div class="m-walletForm__fieldsContainer">
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
-              <label
-                for="addressInput"
-                i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS"
-                >On-chain Address</label
-              >
+              <label for="addressInput">
+                <ng-container i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS"
+                  >On-Chain Address</ng-container
+                >
+              </label>
               <m-tooltip icon="help">
                 <ng-container i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS_INFO"
                   >This address is where you will receive on-chain Minds tokens
@@ -220,9 +211,7 @@
     <!--- ADDRESS - CURRENT ---------------------------->
     <!-- -------------------------------------------- -->
     <li *ngIf="display === Views.CurrentAddress">
-      <h2 i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS">
-        On-Chain Address
-      </h2>
+      <h2 i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS">On-Chain Address</h2>
       <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
       <p

@@ -87,7 +87,7 @@ export class NotificationService implements OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
       this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
-        () => this.updateNotificationCount()
+        this.updateNotificationCount
       );
     }
   }

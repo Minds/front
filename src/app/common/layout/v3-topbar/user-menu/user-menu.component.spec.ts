@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { UserMenuV3Component } from './user-menu.component';
@@ -20,28 +20,30 @@ describe('UserMenuV3Component', () => {
   let comp: UserMenuV3Component;
   let fixture: ComponentFixture<UserMenuV3Component>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockComponent({
-          selector: 'minds-avatar',
-          inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
-        }),
-        IfFeatureDirective,
-        UserMenuV3Component,
-      ],
-      imports: [FormsModule, RouterTestingModule, NgCommonModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
-        {
-          provide: ThemeService,
-          useValue: themeServiceMock,
-        },
-        { provide: UserMenuService, useValue: userMenuServiceMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockComponent({
+            selector: 'minds-avatar',
+            inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
+          }),
+          IfFeatureDirective,
+          UserMenuV3Component,
+        ],
+        imports: [FormsModule, RouterTestingModule, NgCommonModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: FeaturesService, useValue: featuresServiceMock },
+          {
+            provide: ThemeService,
+            useValue: themeServiceMock,
+          },
+          { provide: UserMenuService, useValue: userMenuServiceMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
@@ -49,6 +51,7 @@ describe('UserMenuV3Component', () => {
     jasmine.clock().install();
 
     featuresServiceMock.mock('settings-referrals', true);
+    featuresServiceMock.mock('helpdesk-2021', false);
 
     fixture = TestBed.createComponent(UserMenuV3Component);
 
@@ -61,22 +64,41 @@ describe('UserMenuV3Component', () => {
     jasmine.clock().uninstall();
   });
 
-  it('Upgrade should only be visible for non pro users', () => {
+  it('Upgrade should be visible for non pro users', () => {
+    sessionMock.user.pro = false;
+
     comp.toggleMenu();
 
+    fixture.detectChanges();
     expect(
       fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
     ).not.toBeNull();
 
+    // comp.detectChanges();
+    // jasmine.clock().tick(1000);
+
+    // expect(
+    //   fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
+    // ).toBeNull();
+  });
+
+  it('Upgrade should not be visible for pro users', () => {
     sessionMock.user.pro = true;
 
+    comp.toggleMenu();
     fixture.detectChanges();
-    comp.detectChanges();
-    jasmine.clock().tick(1000);
 
     expect(
       fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
     ).toBeNull();
+
+    // fixture.detectChanges();
+    // comp.detectChanges();
+    // jasmine.clock().tick(1000);
+
+    // expect(
+    //   fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
+    // ).toBeNull();
   });
 
   it('should have a "buy tokens" option that redirects to /token', () => {

@@ -1,6 +1,13 @@
 <div
-  class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box"
-  style="min-height:0;"
+  class="
+    mdl-card
+    mdl-color--red-500
+    mdl-color-text--blue-grey-50
+    mdl-shadow--2dp
+    minds-login-box
+    m-error-box
+  "
+  style="min-height: 0"
   [hidden]="showInlineErrors || !errorMessage"
 >
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
@@ -8,9 +15,7 @@
   </div>
 </div>
 
-<ng-template #errorTemplate>
-  {{ errorMessage }}
-</ng-template>
+<ng-template #errorTemplate> {{ errorMessage }} </ng-template>
 
 <h3 *ngIf="showTitle" i18n="@@REGISTER__JOIN__TITLE">
   Join the Minds Revolution
@@ -35,9 +40,9 @@
   <div class="m-layout__grid">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME">
-          Username
-        </label>
+        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
+          >Username</label
+        >
       </div>
       <div class="m-form__row--input">
         <input
@@ -184,7 +189,7 @@
       >
         <ng-container
           *ngIf="this.form.errors?.passwordConfirming"
-          i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_EMAIL"
+          i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORDS_MUST_MATCH"
         >
           Passwords must match
         </ng-container>

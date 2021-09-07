@@ -5,6 +5,7 @@ import { ActivityService, ActivityEntity } from '../activity.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-activity__ownerBlock',
@@ -42,6 +43,11 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   // Note: currenly ownerBlocks are only visible in minimalMode for reminds/quotes
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
+  }
+
+  // Show absolute dates for items outside the feed
+  get isFeed(): boolean {
+    return this.service.displayOptions.isFeed;
   }
 
   get owner(): MindsUser {
@@ -97,10 +103,12 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Converts a date to a human readable datetime e.g. 29/05/2020, 10:32:46.
+   * Converts a date to a human readable datetime, e.g. Jul 16 2021 · 2:48pm
    * @returns - human readable datetime.
    */
   toReadableDate(seconds: string): string {
-    return new Date(parseInt(seconds) * 1000).toLocaleString();
+    const date = moment(parseInt(seconds) * 1000).format('MMM D YYYY ');
+    const time = moment(parseInt(seconds) * 1000).format('LT');
+    return `${date} · ${time}`;
   }
 }

@@ -1,7 +1,7 @@
 import { ErrorHandler, Inject, Injectable, NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { ServerTransferStateModule } from '@angular/platform-server';
-import { XhrFactory } from '@angular/common/http';
+import { XhrFactory } from '@angular/common';
 import * as xhr2 from 'xhr2';
 
 import { MindsModule } from './app.module';
@@ -42,6 +42,7 @@ export class SentryServerErrorHandler implements ErrorHandler {
 }
 
 // activate cookie for server-side rendering
+@Injectable()
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
     xhr2.prototype._restrictedHeaders.cookie = false;

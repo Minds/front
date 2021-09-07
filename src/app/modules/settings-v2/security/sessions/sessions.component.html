@@ -1,9 +1,6 @@
 <m-settingsV2__header>
-  <div
-    class="m-settingsV2__headerLabel"
-    i18n="@@SETTINGS__SECURITY__SESSIONS__LABEL"
-  >
-    Sessions
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__SECURITY__SESSIONS__LABEL">Sessions</span>
   </div>
   <div
     class="m-settingsV2__desc"
@@ -13,13 +10,18 @@
   </div>
 </m-settingsV2__header>
 
+<div class="m-settingsV2__deleteAllSessionContainer">
+  <m-button (onAction)="deleteAllSessions()" size="'small" [color]="'red'"
+    >Revoke All</m-button
+  >
+</div>
 <div class="m-formLayout--buttonLeft">
   <div class="m-form__fieldsContainer">
-    <div *ngIf="!init" style="width:100%; text-align:center;">
+    <div *ngIf="!init" style="width: 100%; text-align: center">
       <div
         class="mdl-spinner mdl-js-spinner is-active"
         [mdl]
-        style="margin: 16px auto;"
+        style="margin: 16px auto"
       ></div>
     </div>
     <ng-container *ngIf="init">
@@ -53,7 +55,7 @@
             </div>
             <div class="m-settingsV2__tableCol--right">
               <span *ngIf="session.last_active > 0">{{
-                session.last_active * 1000 | friendlydatediff
+                session.last_active | friendlydatediff
               }}</span>
               <span *ngIf="session.last_active === 0">Unknown</span>
               <div class="m-dropdown--v2">
@@ -97,5 +99,5 @@
 <div
   class="m-bgOverlay--v2"
   (click)="menuOpened$.next(false)"
-  *ngIf="(menuOpened$ | async) !== false"
+  *ngIf="menuOpened$ | async"
 ></div>

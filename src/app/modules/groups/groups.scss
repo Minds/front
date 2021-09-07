@@ -795,7 +795,7 @@ minds-groups-profile-feed {
     align-items: flex-start;
 
     minds-activity {
-      margin: $minds-padding $minds-padding / 4;
+      margin: $minds-padding $minds-padding * 0.25;
       flex-basis: calc(50% - 4px);
       max-width: calc(50% - 4px);
 

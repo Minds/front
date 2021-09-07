@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { ComposerTitleBarDropdownComponent } from './dropdown.component';
 import { ComposerService } from '../../../services/composer.service';
@@ -26,44 +26,46 @@ describe('Composer Title Bar Dropdown', () => {
     },
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ComposerTitleBarDropdownComponent,
-        ButtonComponent,
-        MockComponent({
-          selector: 'm-dropdownMenu',
-          inputs: ['menu', 'triggerClass', 'menuClass', 'anchorPosition'],
-        }),
-        MockComponent({
-          selector: 'm-icon',
-          inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-      ],
-      providers: [
-        {
-          provide: ComposerService,
-          useValue: composerServiceMock,
-        },
-        {
-          provide: FeaturesService,
-          useValue: MockService(FeaturesService),
-        },
-        {
-          provide: Session,
-          useValue: MockService(Session),
-        },
-        {
-          provide: PopupService,
-          useValue: MockService(PopupService),
-        },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ComposerTitleBarDropdownComponent,
+          ButtonComponent,
+          MockComponent({
+            selector: 'm-dropdownMenu',
+            inputs: ['menu', 'triggerClass', 'menuClass', 'anchorPosition'],
+          }),
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['from', 'iconId', 'sizeFactor'],
+          }),
+        ],
+        providers: [
+          {
+            provide: ComposerService,
+            useValue: composerServiceMock,
+          },
+          {
+            provide: FeaturesService,
+            useValue: MockService(FeaturesService),
+          },
+          {
+            provide: Session,
+            useValue: MockService(Session),
+          },
+          {
+            provide: PopupService,
+            useValue: MockService(PopupService),
+          },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

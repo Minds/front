@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AnalyticsLayoutChartComponent } from './layout-chart.component';
 
@@ -6,11 +6,13 @@ describe('AnalyticsLayoutChartComponent', () => {
   let component: AnalyticsLayoutChartComponent;
   let fixture: ComponentFixture<AnalyticsLayoutChartComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [AnalyticsLayoutChartComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [AnalyticsLayoutChartComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyticsLayoutChartComponent);

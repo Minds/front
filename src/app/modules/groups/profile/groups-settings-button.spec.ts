@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
@@ -41,36 +41,46 @@ describe('GroupsSettingsButton', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({
-          selector: 'm-modal',
-          template: '<ng-content></ng-content>',
-          inputs: ['open'],
-          outputs: ['closed'],
-        }),
-        MockComponent({
-          selector: 'm-nsfw-selector',
-          inputs: ['selected'],
-          outputs: ['selected'],
-        }),
-        GroupsSettingsButton,
-      ],
-      imports: [RouterTestingModule, FormsModule],
-      providers: [
-        { provide: GroupsService, useValue: groupsServiceMock },
-        { provide: Client, useValue: clientMock },
-        { provide: Session, useValue: sessionMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents();
-  }));
+  function getDeleteGroupItem(): DebugElement | null {
+    return fixture.debugElement.query(
+      By.css(
+        `.minds-dropdown-menu .mdl-menu__item.m-groups-settings-dropdown__item--deleteGroup`
+      )
+    );
+  }
+
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          MockComponent({
+            selector: 'm-modal',
+            template: '<ng-content></ng-content>',
+            inputs: ['open'],
+            outputs: ['closed'],
+          }),
+          MockComponent({
+            selector: 'm-nsfw-selector',
+            inputs: ['selected'],
+            outputs: ['selected'],
+          }),
+          GroupsSettingsButton,
+        ],
+        imports: [RouterTestingModule, FormsModule],
+        providers: [
+          { provide: GroupsService, useValue: groupsServiceMock },
+          { provide: Client, useValue: clientMock },
+          { provide: Session, useValue: sessionMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
@@ -185,9 +195,12 @@ describe('GroupsSettingsButton', () => {
   }));
 
   it('should have an option to report', () => {
-    const report = getMenuItem(4);
+    const report = fixture.debugElement.query(
+      By.css(
+        `.minds-dropdown-menu .mdl-menu__item.m-groups-settings-dropdown__item--report`
+      )
+    );
     expect(report).not.toBeNull();
-    expect(report.nativeElement.textContent).toContain('Report');
 
     report.nativeElement.click();
     expect(overlayModalServiceMock.present).toHaveBeenCalled();
@@ -200,19 +213,18 @@ describe('GroupsSettingsButton', () => {
       'is:creator': true,
     };
 
-    const deleteGroup = getMenuItem(5);
+    const deleteGroup = getDeleteGroupItem();
     expect(deleteGroup).not.toBeNull();
-    expect(deleteGroup.nativeElement.textContent).toContain('Delete group');
 
     group['is:creator'] = false;
     comp._group = group;
     fixture.detectChanges();
 
-    expect(getMenuItem(6)).toBeNull();
+    expect(getDeleteGroupItem()).toBeNull();
   });
 
   xit('should delete the group if there is one member', fakeAsync(() => {
-    const deleteGroup = getMenuItem(5);
+    const deleteGroup = getDeleteGroupItem();
 
     deleteGroup.nativeElement.click();
 
@@ -234,10 +246,11 @@ describe('GroupsSettingsButton', () => {
 
   it('should not allow group deletion if there is more than one member', fakeAsync(() => {
     groupConfig.countMembers = Promise.resolve(2);
-    const deleteGroup = getMenuItem(5);
+    const deleteGroup = getDeleteGroupItem();
 
     deleteGroup.nativeElement.click();
     fixture.detectChanges();
+    jasmine.clock().tick(10);
 
     expect(groupsServiceMock.countMembers).toHaveBeenCalled();
   }));

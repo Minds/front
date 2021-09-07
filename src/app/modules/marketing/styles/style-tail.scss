@@ -84,7 +84,7 @@
         height: 100%;
         top: 0;
         right: 0;
-        transform: translateX(($m-grid-gap / 2) + 1px);
+        transform: translateX(($m-grid-gap * 0.5) + 1px);
 
         @include m-theme() {
           background: linear-gradient(

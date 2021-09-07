@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   TestBed,
   fakeAsync,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { PosterDateSelectorComponent } from './selector.component';
 import { FormsModule } from '@angular/forms';
@@ -13,26 +13,28 @@ describe('PosterDateSelectorComponent', () => {
   let comp: PosterDateSelectorComponent;
   let fixture: ComponentFixture<PosterDateSelectorComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        PosterDateSelectorComponent,
-        MockComponent({
-          selector: 'm-date-selector',
-          template: '<ng-content></ng-content>',
-          inputs: [
-            'date',
-            'hideInput',
-            'tooltipIcon',
-            'tooltipText',
-            'i18n',
-            'calendarType',
-          ],
-        }),
-      ],
-      imports: [FormsModule],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          PosterDateSelectorComponent,
+          MockComponent({
+            selector: 'm-date-selector',
+            template: '<ng-content></ng-content>',
+            inputs: [
+              'date',
+              'hideInput',
+              'tooltipIcon',
+              'tooltipText',
+              'i18n',
+              'calendarType',
+            ],
+          }),
+        ],
+        imports: [FormsModule],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {
