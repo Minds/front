@@ -1,17 +1,17 @@
 <div
   [hidden]="blogs.length > 0 || error"
-  style="width:100%; text-align:center; "
+  style="width: 100%; text-align: center"
 >
   <div
     class="mdl-spinner mdl-js-spinner is-active"
     [mdl]
-    style="margin: 16px auto;"
+    style="margin: 16px auto"
   ></div>
 </div>
 
 <div class="m-pageLayout__container" *ngIf="error && !inProgress">
   <m-errorSplash class="m-pageLayout__container"></m-errorSplash>
-  <div class="m-pageLayout__pane--right"> <!-- Spacer --> </div>
+  <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
 </div>
 
 <div class="m-blog-view" *ngFor="let blog of blogs; let i = index">

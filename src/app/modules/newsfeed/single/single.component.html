@@ -3,12 +3,15 @@
     [class.m-pageLayout__container]="!showLegacyActivity"
     [class.m-newsfeed__single--legacy]="showLegacyActivity"
   >
-    <m-errorSplash class="m-pageLayout__pane--main" *ngIf="error && !inProgress"></m-errorSplash>
+    <m-errorSplash
+      class="m-pageLayout__pane--main"
+      *ngIf="error && !inProgress"
+    ></m-errorSplash>
 
     <div
       [class.m-pageLayout__pane--main]="!showLegacyActivity"
-      style="padding-bottom: 37px;"
-      *ngIf="!error" 
+      style="padding-bottom: 37px"
+      *ngIf="!error"
     >
       <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
