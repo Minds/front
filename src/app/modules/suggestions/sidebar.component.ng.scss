@@ -69,6 +69,7 @@
       align-items: center;
       flex-direction: row;
       width: calc(100% - 50px);
+      margin-left: 10px;
 
       h4 {
         margin: 0;
@@ -133,6 +134,16 @@
       > div {
         width: 100%;
         max-width: unset;
+      }
+    }
+  }
+
+  ::ng-deep m-hovercard {
+    .m-hovercard {
+      display: inline-block;
+
+      .m-suggestionsSidebarListItem__avatar {
+        margin-right: 0 !important;
       }
     }
   }

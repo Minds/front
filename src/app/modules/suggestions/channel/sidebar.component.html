@@ -24,17 +24,15 @@
     >
       <ng-container [ngSwitch]="suggestion.entity.type">
         <ng-template ngSwitchCase="user">
-          <a
-            [routerLink]="['/', suggestion.entity.username]"
-            [hovercard]="suggestion.entity.guid"
-            [hovercardAnchor]="['left', 'top']"
-          >
-            <div
-              class="m-suggestionsSidebarListItem__avatar"
-              [style.background-image]="
-                'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
-              "
-            ></div>
+          <a [routerLink]="['/', suggestion.entity.username]">
+            <m-hovercard [publisher]="suggestion.entity" [offset]="[0, 15]">
+              <div
+                class="m-suggestionsSidebarListItem__avatar"
+                [style.background-image]="
+                  'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
+                "
+              ></div
+            ></m-hovercard>
             <div class="m-suggestionsSidebarListItem__body">
               <div [title]="suggestion.entity.briefdescription">
                 <h4>{{ suggestion.entity.name }}</h4>

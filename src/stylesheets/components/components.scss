@@ -434,25 +434,6 @@ minds-graph-line {
   }
 }
 
-.minds-avatar-hovercard {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: auto;
-  right: auto;
-  @include z-index(tooltip);
-  width: 330px;
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
-
-  m-publisherCard .m-publisherCard {
-    @include m-theme() {
-      border: none;
-    }
-  }
-}
-
 .m-bubble-popup {
   position: fixed;
   user-select: none;
