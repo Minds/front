@@ -72,6 +72,10 @@ import { ActivityBoostButtonComponent } from './boost-button/boost-button.compon
     ActivityRelativeTimeSpanComponent,
   ],
   providers: [ActivityModalCreatorService],
-  exports: [ActivityComponent, ActivityRemindButtonComponent, ActivityBoostButtonComponent],
+  exports: [
+    ActivityComponent,
+    ActivityRemindButtonComponent,
+    ActivityBoostButtonComponent,
+  ],
 })
 export class ActivityModule {}
