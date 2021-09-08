@@ -1,5 +1,5 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription, timer } from 'rxjs';
 import {
   OnboardingResponse,
   OnboardingV3Service,
@@ -11,7 +11,8 @@ import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { ModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
+import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -24,6 +25,11 @@ import { catchError, take, tap } from 'rxjs/operators';
 })
 export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
+
+  /**
+   * True if user can resend verification email.
+   */
+  private canResendEmail: boolean = true;
 
   /**
    * If true, widget will be collapsed.
@@ -42,7 +48,8 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     private panel: OnboardingV3PanelService,
     private composerModal: ModalService,
     private injector: Injector,
-    private toast: FormToastService
+    private toast: FormToastService,
+    private emailConfirmation: EmailConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -105,11 +112,13 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
             tap(async (progress: OnboardingResponse) => {
               switch (step) {
                 case 'VerifyEmailStep':
-                  this.toast.inform(
-                    this.isStepComplete(step, progress)
-                      ? 'Your email address has already been confirmed.'
-                      : 'Check your inbox for a verification email from us.'
-                  );
+                  if (this.isStepComplete(step, progress)) {
+                    this.toast.inform(
+                      'Your email address has already been confirmed.'
+                    );
+                    break;
+                  }
+                  this.resendEmailConfirmation(); // async
                   break;
                 case 'CreatePostStep':
                   this.composerModal
@@ -256,6 +265,44 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
           return step.id;
         })
         .indexOf(stepName) !== -1
+    );
+  }
+
+  /**
+   * Attempts to resend email confirmation with a 30 second rate limit.
+   * @returns { Promise<boolean> } - async
+   */
+  private async resendEmailConfirmation(): Promise<void> {
+    if (this.canResendEmail) {
+      this.toast.success(
+        'Email sent, check your inbox for a verification email.'
+      );
+      this.emailConfirmation.send();
+      this.startEmailRetryTimer();
+      return;
+    }
+    this.toast.warn(`Please wait before sending another email.`);
+  }
+
+  /**
+   * Starts a retry timer that after 30 seconds,
+   * sets canResendEmail to true
+   * @returns { void }
+   */
+  private startEmailRetryTimer(): void {
+    this.canResendEmail = false;
+    this.subscriptions.push(
+      timer(0, 1000)
+        .pipe(
+          scan(acc => --acc, 30),
+          tap(timer => {
+            if (timer === 0) {
+              this.canResendEmail = true;
+            }
+          }),
+          takeWhile(x => x >= 0)
+        )
+        .subscribe()
     );
   }
 }
