@@ -12,14 +12,13 @@
   </div>
 
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 members-grid">
-    <a
-      *ngFor="let member of members"
-      [routerLink]="['/', member.username]"
-      [hovercard]="member.guid"
-      [hovercardAnchor]="['left', 'bottom']"
-    >
-      <img src="/icon/{{member.guid}}/small/{{member.icontime}}" />
-    </a>
+    <ng-container *ngFor="let member of members">
+      <m-hovercard [publisher]="member">
+        <a [routerLink]="['/', member.username]">
+          <img src="/icon/{{member.guid}}/small/{{member.icontime}}" />
+        </a>
+      </m-hovercard>
+    </ng-container>
   </div>
 
   <div

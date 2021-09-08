@@ -1,0 +1,9 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep {
+    minds-card {
+      overflow: visible;
+    }
+  }
+}

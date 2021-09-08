@@ -71,17 +71,8 @@
       [size]="'medium'"
       [color]="'blue'"
     >
-      <ng-container
-        *ngIf="(currentStep$ | async) === 'SetupChannelStep'"
-        i18n="@@ONBOARDING_MODAL__SAVE_BUTTON"
-      >
+      <ng-container i18n="@@ONBOARDING_MODAL__SAVE_BUTTON">
         Save
-      </ng-container>
-      <ng-container
-        *ngIf="(currentStep$ | async) !== 'SetupChannelStep'"
-        i18n="@@ONBOARDING_MODAL__NEXT_BUTTON"
-      >
-        Next
       </ng-container>
     </m-button>
   </div>
