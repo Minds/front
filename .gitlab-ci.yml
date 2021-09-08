@@ -28,6 +28,7 @@ test:
   image: circleci/node:14-browsers
   stage: test and build
   script:
+    - npm install -g npm@7
     - npm i
     - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
