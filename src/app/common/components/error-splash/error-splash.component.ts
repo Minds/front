@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../services/configs.service';
 import { ThemeService } from '../../services/theme.service';
 
@@ -88,6 +89,21 @@ export class ErrorSplashComponent {
     return this.themeService.isDark$;
   }
 
+  /**
+   * Logo URL - responsive to theme changes.
+   * @returns { Observable<string> } - url of logo.
+   */
+  get logoUrl$(): Observable<string> {
+    return this.isDarkTheme$.pipe(
+      map((isDarkTheme: boolean) => {
+        return `${this.cdnAssetsUrl}${
+          !isDarkTheme
+            ? 'assets/logos/logo-light-mode.svg'
+            : 'assets/logos/logo-dark-mode.svg'
+        }`;
+      })
+    );
+  }
   constructor(
     private themeService: ThemeService,
     private router: Router,

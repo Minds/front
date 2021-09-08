@@ -1,11 +1,7 @@
 <img
   class="m-errorSplash__logo"
   alt="Minds Logo"
-  [src]="
-    cdnAssetsUrl + !(isDarkTheme$ | async)
-      ? '/assets/logos/logo-light-mode.svg'
-      : '/assets/logos/logo-dark-mode.svg'
-  "
+  [src]="logoUrl$ | async"
   (click)="navigateToRoot()"
   (load)="imageLoaded$.next(true)"
 />
