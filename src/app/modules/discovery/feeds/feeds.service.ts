@@ -53,10 +53,16 @@ export class DiscoveryFeedsService {
     if (isPlatformServer(this.platformId)) return;
     const isPlusPage: boolean = this.discoveryService.isPlusPage$.value;
     const wireSupportTiersOnly: boolean = this.discoveryService.isWireSupportPage$.getValue();
-    let algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
+    let algorithm: string = this.filter$.value;
 
+    if (algorithm === 'preferred') {
+      algorithm = 'topV2';
+    }
     if (isPlusPage) {
-      algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
+      const allowedPlusAlgorithms = ['top', 'topV2', 'latest'];
+      if (!allowedPlusAlgorithms.includes(algorithm)) {
+        algorithm = 'plusFeed';
+      }
     }
 
     const type = this.type$.value;

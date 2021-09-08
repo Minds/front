@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { HashtagDefaultsService } from '../../hashtags/service/defaults.service';
 import { isPlatformServer } from '@angular/common';
 import { DiscoveryService } from '../discovery.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 export type DiscoveryTag = any;
 
@@ -54,14 +55,21 @@ export class DiscoveryTagsService {
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  plusHandler;
+
   constructor(
     private client: Client,
     private hashtagDefaults: HashtagDefaultsService,
     private discoveryService: DiscoveryService,
+    configs: ConfigsService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    const handlers = configs.get('handlers');
+    if (handlers) {
+      this.plusHandler = handlers.plus;
+    }
+  }
 
-  // TODOPLUS add optional 'plus' bool input
   async loadTags(refresh = false, entityGuid = null) {
     this.inProgress$.next(true);
 
@@ -77,7 +85,9 @@ export class DiscoveryTagsService {
     let endpoint = 'api/v3/discovery/tags',
       params = entityGuid ? { entity_guid: entityGuid } : {};
 
-    params['plus'] = this.discoveryService.isPlusPage$.value;
+    if (this.discoveryService.isPlusPage$.value) {
+      params['wire_support_tier'] = this.plusHandler;
+    }
 
     try {
       const response: any = await this.client.get(endpoint, params);
