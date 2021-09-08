@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ConfigsService } from '../../services/configs.service';
     '(mouseout)': 'setHidden(true)',
   },
 })
-export class TooltipComponent implements OnInit {
+export class TooltipComponent implements AfterViewInit {
   @Input() icon;
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
@@ -17,6 +17,7 @@ export class TooltipComponent implements OnInit {
   @Input() useParentPosition: boolean = false;
   @Input() enabled: boolean = true;
   @Input() showArrow: boolean = false;
+
   @Input('hidden') set _hidden(value: boolean) {
     this.hidden = value;
   }
@@ -33,7 +34,7 @@ export class TooltipComponent implements OnInit {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     const {
       width,
       height,
