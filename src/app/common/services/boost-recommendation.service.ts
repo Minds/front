@@ -7,9 +7,9 @@ export class BoostRecommendationService {
   /**
    * toggle to show boost recommendation
    **/
-  public showBoostRecommendationForPost$: BehaviorSubject<
-    string
-  > = new BehaviorSubject<string>(null);
+  public boostRecommendations: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
   /**
    * is boosting already recommended for this session?
    * if it was already recommended, the button will shimmer,
@@ -21,14 +21,34 @@ export class BoostRecommendationService {
     this.boostRecommended = Boolean(this.storage.get('boost:recommended'));
   }
 
+  shouldShowTooltip(entityGuid) {
+    return (
+      !this.boostRecommended &&
+      Boolean(
+        this.boostRecommendations.getValue().find(guid => guid === entityGuid)
+      )
+    );
+  }
+
+  shouldShowBoost(entityGuid) {
+    return this.boostRecommendations
+      .getValue()
+      .find(guid => guid === entityGuid);
+  }
+
   /**
    * Recommends to boost a post by showing a tooltip
    **/
   recommendBoost(guid: string) {
-    this.showBoostRecommendationForPost$.next(guid);
+    this.boostRecommendations.next([
+      ...this.boostRecommendations.getValue(),
+      guid,
+    ]);
     setTimeout(
       () => {
-        this.showBoostRecommendationForPost$.next(null);
+        this.boostRecommendations.next(
+          this.boostRecommendations.getValue().filter(p => p !== guid)
+        );
         this.storage.set('boost:recommended', true); // save to storage
         this.boostRecommended = true;
       },

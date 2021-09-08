@@ -13,4 +13,11 @@ export class ActivityBoostButtonComponent {
   };
 
   constructor(public boostRecommendationService: BoostRecommendationService) {}
+
+  get shouldShowTooltip() {
+    return this.boostRecommendationService.shouldShowTooltip(this.object.guid);
+  }
+  get shouldShowBoost() {
+    return this.boostRecommendationService.shouldShowBoost(this.object.guid);
+  }
 }

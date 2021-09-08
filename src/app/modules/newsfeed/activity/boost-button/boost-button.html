@@ -2,7 +2,7 @@
   class="m-boostButton__tooltip"
   [anchor]="'bottom'"
   [enabled]="false"
-  [hidden]="boostRecommendationService.boostRecommended ? true : ((boostRecommendationService.showBoostRecommendationForPost$ | async) !== object.guid)"
+  [hidden]="!shouldShowTooltip"
   [showArrow]="true">
   <button
     m-tooltip--anchor
@@ -10,7 +10,7 @@
     data-cy="data-minds-activity-boost-button"
   >
     <span
-      [class.m-animation__shimmer--text]="(boostRecommendationService.showBoostRecommendationForPost$ | async) === object.guid"
+      [class.m-animation__shimmer--text]="shouldShowBoost"
       i18n="verb|@@M__ACTION__BOOST"
     >Boost</span>
     <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
