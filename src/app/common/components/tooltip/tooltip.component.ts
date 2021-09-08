@@ -16,8 +16,10 @@ export class TooltipComponent implements OnInit {
   @Input() iconSrc;
   @Input() useParentPosition: boolean = false;
   @Input() enabled: boolean = true;
-  @Input() visible: boolean = false;
   @Input() showArrow: boolean = false;
+  @Input('hidden') set _hidden(value: boolean) {
+    this.hidden = value;
+  }
 
   public readonly cdnAssetsUrl: string;
 

@@ -1,7 +1,8 @@
 <m-tooltip
+  class="m-boostButton__tooltip"
   [anchor]="'bottom'"
   [enabled]="false"
-  [visible]="!boostRecommendationService.boostRecommended && (boostRecommendationService.showBoostRecommendationForPost$ | async) === object.guid"
+  [hidden]="boostRecommendationService.boostRecommended ? true : ((boostRecommendationService.showBoostRecommendationForPost$ | async) !== object.guid)"
   [showArrow]="true">
   <button
     m-tooltip--anchor

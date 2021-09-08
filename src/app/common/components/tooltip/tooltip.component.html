@@ -21,7 +21,7 @@
     [class.m-tooltip--bubble--anchor-right]="
       !useParentPosition && anchor == 'right'
     "
-    [hidden]="visible ? false : hidden"
+    [hidden]="hidden"
   >
     <div *ngIf="showArrow" class="m-tooltip__triangle"
          [style.right.px]="anchor === 'top' || anchor === 'bottom' ? triangleOffset : undefined"

@@ -18,7 +18,7 @@ export class BoostRecommendationService {
   public boostRecommended: boolean = false;
 
   constructor(protected storage: Storage) {
-    this.boostRecommended = Boolean(this.storage.get('boostRecommended'));
+    this.boostRecommended = Boolean(this.storage.get('boost:recommended'));
   }
 
   /**
@@ -29,10 +29,10 @@ export class BoostRecommendationService {
     setTimeout(
       () => {
         this.showBoostRecommendationForPost$.next(null);
-        this.storage.set('boostRecommended', true); // save to storage
+        this.storage.set('boost:recommended', true); // save to storage
         this.boostRecommended = true;
       },
-      this.boostRecommended ? 12000 : 4000
+      this.boostRecommended ? 12000 : 6000
     );
   }
 }
