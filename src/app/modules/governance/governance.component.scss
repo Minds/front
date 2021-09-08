@@ -31,4 +31,10 @@ m-governance {
     }
     align-items: center;
   }
+
+  .m-governance--row-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

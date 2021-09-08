@@ -3,22 +3,31 @@
     m-governance--proposal-detail-info m-governance--proposal-detail-results
   "
 >
-  <div class="m-governance--proposal-detail-title">Results</div>
+  <div class="m-governance--proposal-detail-title">Voting</div>
 
-  <div *ngFor="let choice of choices$ | async">
-    <div class="m-governance--proposal-detail-row">
-      <div class="m-governance--proposal-detail-extra">
-        {{ choice.label }} {{ formatVotes(choice.votes) }} MINDS
-      </div>
-      <div class="m-governance--proposal-detail-value">
-        {{ choice.percentage.toFixed(2) }}%
+  <div class="m-governance--proposal-detail-value" *ngIf="proposal.state === 'active'">
+    <m-icon class="m-governance--clock" iconId="schedule"></m-icon>
+    <div class="m-governance--proposal-detail-key">
+      Voting closes {{ fromNow(proposal.end) }}
+    </div>
+  </div>
+
+  <div class="m-proposal--thumbnail-row" *ngIf="proposal.state !== 'pending'">
+    <div class="m-proposal--thumbnail-small"></div>
+    <div class="m-proposal--thumbnail-small"></div>
+    <div class="m-proposal--thumbnail-small"></div>
+    <div class="m-proposal--users">Sarah, Ted and Ada participated</div>
+  </div>
+
+  <div class="m-proposal--row-limit">
+    <div class="m-proposal--voting-row">
+      <div class="m-proposal--proposal-detail-progress">
+        <span [style.width]="accepted + '%'"></span>
       </div>
     </div>
-
-    <div class="m-governance--proposal-detail-row">
-      <div class="m-governance--proposal-detail-progress">
-        <span [style.width]="choice.percentage.toFixed(2) + '%'"></span>
-      </div>
+    <div class="m-proposal--row-score">
+      <div class="m-proposal--actions-results">{{ accepted }}% accepted</div>
+      <div class="m-proposal--actions-results">{{ rejected }}% rejected</div>
     </div>
   </div>
 
@@ -27,12 +36,20 @@
     [inProgress]="true"
   ></m-loadingSpinner>
   <ng-container *ngIf="!(loading$ | async)">
-    <div
-      *ngFor="let choice of choicesButtons$ | async"
-      class="m-governance--proposal-detail-vote"
-      (click)="handleVoting(choice)"
-    >
-      {{ choice.label }}
+    <div class="m-governance--choices-row">
+      <div
+        *ngFor="let choice of choicesButtons$ | async"
+        class="m-governance--proposal-detail-vote"
+        [ngClass]="
+        {
+        'm-governance--option-approve': choice.label === 'approve' || choice.label === 'yes',
+        'm-governance--option-reject': choice.label === 'reject' || choice.label === 'no'}"
+        (click)="handleVoting(choice)"
+      >
+        <div class="m-governance--choices-option">
+          {{ choice.label }}
+        </div>
+      </div>
     </div>
   </ng-container>
 </div>

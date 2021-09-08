@@ -74,6 +74,11 @@ m-proposal {
   margin-bottom: 20px;
   border-radius: $m-borderRadius;
   padding: 27px 37px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 11px #424a50;
+    transform: translateY(-4px);
+  }
 }
 
 .m-proposal--container-blue {
@@ -159,6 +164,15 @@ m-proposal {
   margin-right: 10px;
 }
 
+.m-proposal--thumbnail-small {
+  height: 30px;
+  width: 36px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
 .m-proposal--thumbnail-row {
   display: flex;
   margin-top: 14px;
@@ -168,6 +182,8 @@ m-proposal {
 
 .m-proposal--users {
   margin-left: 16px;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .m-proposal--proposal-detail-progress {

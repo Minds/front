@@ -8,6 +8,23 @@ m-governance--proposal-detail {
       padding: 40px 24px;
     }
   }
+
+  a {
+    display: flex;
+    align-items: center;
+    @include m-theme() {
+      color: themed($m-textColor--secondary) !important;
+    }
+  }
+
+  i {
+    margin-right: 15px;
+    margin-left: -4px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary) !important;
+    }
+  }
+  
   .m-governance--proposal-detail {
     display: flex;
     @media screen and (max-width: $max-mobile) {
@@ -17,18 +34,15 @@ m-governance--proposal-detail {
     .m-governance--proposal-detail-info {
       width: 100%;
       padding: 20px 20px;
-      border: 1px solid;
       margin-right: 30px;
-      margin-top: 40px;
+      margin-top: 20px;
       border-radius: 4px;
       box-sizing: border-box;
       height: fit-content;
       @media screen and (max-width: $max-mobile) {
         margin-top: 0px;
       }
-      @include m-theme() {
-        border-color: themed($m-borderColor--primary);
-      }
+      padding-bottom: 0px;
     }
 
     .m-governance--proposal-detail-results {
@@ -41,15 +55,13 @@ m-governance--proposal-detail {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      margin-top: 18px;
     }
 
     .m-governance--proposal-detail-title {
-      border-bottom: 1px solid;
       padding-bottom: 8px;
-      font-weight: bold;
-      @include m-theme() {
-        border-color: themed($m-borderColor--primary);
-      }
+      font-size: 16px;
+      font-weight: 700;
     }
 
     .m-governance--proposal-detail-row {
@@ -67,7 +79,6 @@ m-governance--proposal-detail {
       padding: 8px;
       justify-content: center;
       border: 1px solid;
-      margin-top: 20px;
       display: flex;
       cursor: pointer;
       &:hover {
@@ -75,17 +86,36 @@ m-governance--proposal-detail {
           background-color: themed($m-bgColor--btnHover);
         }
       }
+      border-radius: 21px;
+      max-width: 100px;
+      width: 100%;
     }
 
     .m-governance--proposal-detail-key {
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
+      font-size: 14px;
+      font-weight: 400;
+      margin-top: 4px;
     }
 
     .m-governance--proposal-detail-value {
       align-items: center;
       display: flex;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      line-height: 18px;
+    }
+
+    .m-governance--proposal-detail-value-snapshot {
+      align-items: center;
+      display: flex;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
 
     .m-governance--proposal-detail-pointer {
@@ -93,9 +123,10 @@ m-governance--proposal-detail {
     }
 
     .m-governance--proposal-detail-header {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       margin-bottom: 20px;
+      line-height: 26px;
     }
     .m-governance__card-status {
       margin-bottom: 29px;
@@ -110,15 +141,26 @@ m-governance--proposal-detail {
     }
 
     .m-governance--proposal-detail-body-title {
-      h2, h1, h3, h4, h5 {
+      h2,
+      h1,
+      h3,
+      h4,
+      h5 {
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 500;
         margin-bottom: 0px;
         margin-top: 20px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
       }
 
       p {
         margin-bottom: 0px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+        line-height: 18px;
       }
     }
     .m-governance--proposal-detail-progress {
@@ -167,4 +209,61 @@ m-governance--proposal-detail {
   .m-governance__card-orange {
     color: #ffb200;
   }
+
+  .m-governance--clock {
+    margin-right: 9px;
+    width: 15px;
+    height: 15px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-governance--proposal-detail-column {
+    flex: 1;
+  }
+
+  .m-governance--choices-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 34px;
+  }
+
+  .m-governance--choices-option {
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .m-governance--option-approve {
+    border-color: #38a169 !important;
+  }
+
+  .m-governance--option-reject {
+    border-color: #bf2c2c !important;
+  }
+
+  .m-governance--state-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+    @include m-theme() {
+      border-color: themed($m-borderColor--primary) !important;
+    }
+  }
+
+  .m-governance--user-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .m-governance--user {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  
 }

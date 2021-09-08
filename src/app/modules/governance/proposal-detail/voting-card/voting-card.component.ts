@@ -16,6 +16,8 @@ import {
   tap,
 } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
+import * as moment from 'moment';
+import { PROPOSAL_CHOICE } from '../../create/create.component';
 
 // Only allow single-choice voting
 
@@ -35,6 +37,9 @@ export class VotingCardComponent implements OnInit {
 
   votes$ = new BehaviorSubject([]);
 
+  accepted = 0;
+  rejected = 100;
+
   choices$ = this.votes$.pipe(
     debounceTime(500),
     tap(() => this.loading$.next(true)),
@@ -50,16 +55,31 @@ export class VotingCardComponent implements OnInit {
     map((choices) => [...choices].sort((a, b) => a.position - b.position))
   );
 
-  constructor(private snapshotService: SnapshotService) {}
+  constructor(private snapshotService: SnapshotService) { }
 
   ngOnInit(): void {
     this.votes$.next(this.votes);
+    this.fetchVotes();
   }
 
   fetchVotes() {
-    this.snapshotService.getVotes(this.proposal.id).subscribe((votes) => {
-      this.votes$.next(votes);
-    });
+    this.snapshotService
+      .getVotes(this.proposal.id)
+      .pipe(
+        switchMap((votes) =>
+          fromPromise(
+            this.snapshotService.getResults(this.space, this.proposal, votes)
+          )
+        )
+      )
+      .subscribe((choices) => {
+        const rejectChoice = choices.find((choice) =>
+          ['no', PROPOSAL_CHOICE.REJECT].includes(choice.label.toLowerCase())
+        );
+        const rejectPercentage = rejectChoice ? rejectChoice.percentage : 1;
+        this.rejected = Math.round(rejectPercentage);
+        this.accepted = Math.round(100 - rejectPercentage);
+      });
   }
 
   async handleVoting(choice: SnapshotChoice) {
@@ -88,5 +108,9 @@ export class VotingCardComponent implements OnInit {
   private formatDigits(votes: number, expo: number) {
     const value = (votes / 10 ** expo).toFixed(2);
     return value.replace(/.00$/, '');
+  }
+
+  fromNow(end: number) {
+    return moment(end).endOf('day').fromNow();
   }
 }
