@@ -5,7 +5,7 @@ import { Storage } from '../../services/storage';
 @Injectable()
 export class BoostRecommendationService {
   /**
-   * toggle to show boost recommendation
+   * a list of guids that have to be recommended
    **/
   public boostRecommendations: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
@@ -37,7 +37,8 @@ export class BoostRecommendationService {
   }
 
   /**
-   * Recommends to boost a post by showing a tooltip
+   * recommend to boost by adding the guid to a list
+   * and removing it after some time.
    **/
   recommendBoost(guid: string) {
     this.boostRecommendations.next([

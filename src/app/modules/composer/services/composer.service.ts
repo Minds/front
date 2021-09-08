@@ -16,16 +16,12 @@ import {
   tap,
 } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
-import {
-  ActivityEntity,
-  ActivityService,
-} from '../../newsfeed/activity/activity.service';
+import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
 import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
 import { VideoPoster } from './video-poster.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
-import { SupportTier } from '../../wire/v2/support-tiers.service';
 import { HashtagsFromStringService } from '../../../common/services/parse-hashtags.service';
 import {
   AttachmentValidationPayload,
