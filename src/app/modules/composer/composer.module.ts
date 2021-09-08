@@ -35,7 +35,6 @@ import { RouterModule } from '@angular/router';
 import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdown/dropdown.component';
 import { RemindPreviewComponent } from './components/preview/remind-preview.component';
 import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
-import { ActivityService } from '../newsfeed/activity/activity.service';
 /**
  * Exported components
  */
@@ -78,7 +77,6 @@ const PROVIDERS = [
   AttachmentService,
   RichEmbedService,
   PreviewService,
-  ActivityService,
 ];
 
 /**

@@ -1,0 +1,19 @@
+<m-tooltip
+  [anchor]="'bottom'"
+  [enabled]="false"
+  [visible]="!boostRecommendationService.boostRecommended && (boostRecommendationService.showBoostRecommendationForPost$ | async) === object.guid"
+  [showArrow]="true">
+  <button
+    m-tooltip--anchor
+    class="m-btn m-btn--slim m-boostButton"
+    data-cy="data-minds-activity-boost-button"
+  >
+    <span
+      [class.m-animation__shimmer--text]="(boostRecommendationService.showBoostRecommendationForPost$ | async) === object.guid"
+      i18n="verb|@@M__ACTION__BOOST"
+    >Boost</span>
+    <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
+  </button>
+
+  <ng-container i18n="@@M__ACTION__BOOST__TOOLTIP">Use your tokens to get more views</ng-container>
+</m-tooltip>

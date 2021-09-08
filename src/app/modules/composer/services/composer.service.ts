@@ -31,6 +31,7 @@ import {
   AttachmentValidationPayload,
   AttachmentValidatorService,
 } from './attachment-validator.service';
+import { BoostRecommendationService } from '../../../common/services/boost-recommendation.service';
 
 /**
  * Message value type
@@ -471,7 +472,7 @@ export class ComposerService implements OnDestroy {
     protected feedsUpdate: FeedsUpdateService,
     private hashtagsFromString: HashtagsFromStringService,
     private attachmentValidator: AttachmentValidatorService,
-    private activityService: ActivityService
+    private boostRecommendationService: BoostRecommendationService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -1085,7 +1086,7 @@ export class ComposerService implements OnDestroy {
       this.reset();
       this.isPosting$.next(false);
       setTimeout(
-        () => this.activityService.recommendBoost(activity.guid),
+        () => this.boostRecommendationService.recommendBoost(activity.guid),
         1000
       );
       this.setProgress(false);

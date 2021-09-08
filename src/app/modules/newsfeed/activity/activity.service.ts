@@ -273,11 +273,6 @@ export class ActivityService {
    */
   onDelete$: Subject<boolean> = new Subject();
 
-  /**
-   * toggle to show boost recommendation tooltip
-   **/
-  showBoostRecommendationForPost$ = new BehaviorSubject(null);
-
   displayOptions: ActivityDisplayOptions = {
     autoplayVideo: true,
     showOwnerBlock: true,
@@ -383,15 +378,5 @@ export class ActivityService {
     }
 
     return entity;
-  }
-
-  /**
-   * Recommends to boost a post by showing a tooltip
-   **/
-  recommendBoost(guid: string) {
-    this.showBoostRecommendationForPost$.next(guid);
-    setTimeout(() => {
-      this.showBoostRecommendationForPost$.next(null);
-    }, 4000);
   }
 }
