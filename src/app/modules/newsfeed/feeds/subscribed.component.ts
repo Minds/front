@@ -183,6 +183,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
+      this.feedsService.clear(false);
     }
 
     this.inProgress = true;
@@ -191,7 +192,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
         .setLimit(12)
-        .fetch();
+        .fetch(refresh);
     } catch (e) {
       console.error('SortedComponent', e);
     }
