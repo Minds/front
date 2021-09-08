@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 
 # Update NPM
 
-RUN npm install -g npm@lts
+RUN npm install -g npm@7
 
 # Ensure we have typescript and angular
 
