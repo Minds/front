@@ -10,6 +10,7 @@ import { ModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
+import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 
 describe('OnboardingV3WidgetComponent', () => {
   let comp: OnboardingV3WidgetComponent;
@@ -46,6 +47,10 @@ describe('OnboardingV3WidgetComponent', () => {
           {
             provide: FeaturesService,
             useValue: MockService(FeaturesService),
+          },
+          {
+            provide: EmailConfirmationService,
+            useValue: MockService(EmailConfirmationService),
           },
         ],
         imports: [],
