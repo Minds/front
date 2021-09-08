@@ -17,6 +17,7 @@ import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-register',
@@ -64,6 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
+    private onboardingV3Service: OnboardingV3Service,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService
   ) {
@@ -141,6 +143,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     // nav directly through - delegate onboarding to sidebar widget
     if (this.featuresService.has('onboarding-october-2020')) {
+      this.onboardingV3Service.open();
       this.router.navigate(['/newsfeed/subscribed']);
       return;
     }
