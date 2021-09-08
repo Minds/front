@@ -139,6 +139,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // nav directly through - delegate onboarding to sidebar widget
+    if (this.featuresService.has('onboarding-october-2020')) {
+      this.router.navigate(['/newsfeed/subscribed']);
+      return;
+    }
+
     if (this.featuresService.has('ux-2020')) {
       if (this.onboardingService.shouldShow()) {
         this.router.navigate(['/onboarding']);
