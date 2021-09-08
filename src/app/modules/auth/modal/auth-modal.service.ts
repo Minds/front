@@ -54,7 +54,7 @@ export class AuthModalService {
             opts.formDisplay === 'register'
           ) {
             try {
-              await this.onboardingV3.open();
+              await this.onboardingV3.open(true);
             } catch (e) {
               if (e === 'DismissedModalException') {
                 return; // modal dismissed, do nothing

@@ -110,9 +110,10 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
+   * @param { boolean } reloadOnSaveIntent - reload when save intent is fired unless step is a load override step.
    * @returns { Promise<any> }
    */
-  public async open(): Promise<any> {
+  public async open(reloadOnSaveIntent: boolean = false): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
@@ -133,6 +134,10 @@ export class OnboardingV3Service implements OnDestroy {
         onSaveIntent: (step: OnboardingStepName) => {
           if (this.loadOverrideSteps.indexOf(step) > -1) {
             this.forceCompletion(step);
+            return;
+          }
+          if (reloadOnSaveIntent) {
+            this.load();
           }
         },
         onDismissIntent: () => {
