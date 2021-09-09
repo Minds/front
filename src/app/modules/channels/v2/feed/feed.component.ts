@@ -148,6 +148,16 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     );
   }
 
+  get previousPageUrl() {
+    if (!this.feedService.offset || !this.feedService.service.pagingToken)
+      return;
+    return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.firstTimestamp}&reverse=1`;
+  }
+
+  get nextPageUrl() {
+    return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.lastTimestamp}`;
+  }
+
   prepend(activity: any) {
     if (!activity) {
       return;

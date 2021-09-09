@@ -26,6 +26,9 @@ export class FeedsService implements OnDestroy {
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
   fromTimestamp: string = '';
+  reversedPagination: boolean = false;
+  lastTimestamp: number;
+  firstTimestamp: number;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -70,6 +73,15 @@ export class FeedsService implements OnDestroy {
               break;
             }
           }
+        }
+      }),
+      // save first & last timestamp
+      tap(feed => {
+        if (feed.length) {
+          const firstItem: any = feed[0].getValue();
+          this.firstTimestamp = firstItem.time_created * 1000;
+          const lastItem: any = feed[feed.length - 1].getValue();
+          this.lastTimestamp = lastItem.time_created * 1000;
         }
       }),
       tap(feed => {
@@ -134,6 +146,16 @@ export class FeedsService implements OnDestroy {
     return this;
   }
 
+  setPagingToken(pagingToken: string): FeedsService {
+    this.pagingToken = pagingToken;
+    return this;
+  }
+
+  setReversedPagination(reverse: boolean): FeedsService {
+    this.reversedPagination = reverse;
+    return this;
+  }
+
   /**
    * Sets the offset of the request
    * @param { number } offset - the offset of the request.
@@ -195,6 +217,7 @@ export class FeedsService implements OnDestroy {
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: fromTimestamp,
+          reverse_sort: this.reversedPagination ? 1 : 0,
         },
       })
       .then((response: any) => {
@@ -211,6 +234,10 @@ export class FeedsService implements OnDestroy {
           response.entities = response.activity;
         } else if (!response.entities && response.users) {
           response.entities = response.users;
+        }
+
+        if (this.reversedPagination) {
+          response.entities = response.entities.reverse();
         }
 
         if (response.entities?.length) {

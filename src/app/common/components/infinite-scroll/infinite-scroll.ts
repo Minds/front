@@ -17,23 +17,23 @@ import { Subscription } from 'rxjs';
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
     <ng-container *ngIf="!iconOnly && !hideManual">
-      <m-button
-        *ngIf="!inProgress"
+      <m-link-button
         [disabled]="!moreData"
-        (onAction)="manualLoad()"
+        (click)="onLoadMoreClick($event)"
+        [url]="nextPageUrl"
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
           *ngIf="moreData"
-          >Load more</ng-container
-        >
+          >Load more
+        </ng-container>
 
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
           *ngIf="!moreData"
-          >Nothing more to load</ng-container
-        >
-      </m-button>
+          >Nothing more to load
+        </ng-container>
+      </m-link-button>
     </ng-container>
 
     <ng-container *ngIf="iconOnly && moreData && !inProgress">
@@ -54,6 +54,7 @@ export class InfiniteScroll {
   @Input() inProgress: boolean = false;
   @Input() moreData: boolean = true;
   @Input() hideManual: boolean = false;
+  @Input() nextPageUrl: string;
 
   element: any;
 
@@ -104,5 +105,10 @@ export class InfiniteScroll {
   ngOnDestroy() {
     if (this.subscription)
       this.scroll.unListen(this.subscription[0], this.subscription[1]);
+  }
+
+  onLoadMoreClick(e) {
+    e.preventDefault();
+    this.manualLoad();
   }
 }

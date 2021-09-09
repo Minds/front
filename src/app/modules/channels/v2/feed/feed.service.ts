@@ -21,7 +21,7 @@ import {
 } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { ChannelsV2Service } from '../channels-v2.service';
 
@@ -73,6 +73,16 @@ export class FeedService {
   protected filterChangeSubscription: Subscription;
 
   /**
+   * Query param subscription
+   */
+  protected queryParamSubscription: Subscription;
+
+  /**
+   * the offset from query params
+   **/
+  public offset: string;
+
+  /**
    * Constructor. Sets the main observable subscription.
    * @param service
    * @param api
@@ -82,6 +92,7 @@ export class FeedService {
     protected api: ApiService,
     protected router: Router,
     private toast: FormToastService,
+    protected route: ActivatedRoute,
     protected channelsService: ChannelsV2Service
   ) {
     // Fetch when GUID or filter change
@@ -91,6 +102,7 @@ export class FeedService {
       this.type$,
       this.channelsService.query$,
       this.dateRange$,
+      this.route.queryParamMap,
     ])
       .pipe(distinctUntilChanged(deepDiff))
       .subscribe(values => {
@@ -105,6 +117,7 @@ export class FeedService {
         const type = values[2];
         const query = values[3];
         const dateRange = values[4];
+        const queryParams = values[5];
 
         const dateRangeEnabled = !!dateRange.fromDate && !!dateRange.toDate;
 
@@ -129,6 +142,15 @@ export class FeedService {
         }
 
         this.service.setParams(params);
+
+        if (queryParams.has('offset')) {
+          this.offset = queryParams.get('offset');
+          this.service.setPagingToken(this.offset);
+        }
+
+        if (queryParams.has('reverse')) {
+          this.service.setReversedPagination(Boolean(queryParams.get('reverse')));
+        }
 
         this.service
           .setEndpoint(`${endpoint}/${sort}/${guid}/${type}`)
