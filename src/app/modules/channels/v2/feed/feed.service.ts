@@ -73,11 +73,6 @@ export class FeedService {
   protected filterChangeSubscription: Subscription;
 
   /**
-   * Query param subscription
-   */
-  protected queryParamSubscription: Subscription;
-
-  /**
    * the offset from query params
    **/
   public offset: string;
