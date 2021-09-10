@@ -1,13 +1,15 @@
-<m-proposal-list
-  *ngIf="!(inProgress$ | async)"
-  [space]="space$ | async"
-  [proposals]="proposals$ | async"
-></m-proposal-list>
+<div class="m-governance--enacted">
+  <m-proposal-list
+    *ngIf="!(inProgress$ | async)"
+    [space]="space$ | async"
+    [proposals]="proposals$ | async"
+  ></m-proposal-list>
 
-<infinite-scroll
-  distance="25%"
-  (load)="load()"
-  [moreData]="hasMoreData$ | async"
-  [inProgress]="inProgress$ | async"
->
-</infinite-scroll>
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="hasMoreData$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
+</div>

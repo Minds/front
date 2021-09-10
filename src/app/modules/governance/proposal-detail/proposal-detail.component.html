@@ -9,11 +9,8 @@
         <div class="m-governance--proposal-detail-header">
           {{ proposal.title }}
         </div>
-        <m-governance--proposal-detail-dropdown
-          [allowDelete]="allowDelete"
-          [proposal]="proposal"
-        ></m-governance--proposal-detail-dropdown>
       </div>
+      <!-- Info row -->
       <div class="m-governance--state-row">
         <div class="m-governance--user-row">
           <div
@@ -38,13 +35,16 @@
             <div class="m-governance--user">&nbsp; @thatGuy</div>
           </div>
         </div>
-        <div class="m-governance--user-row">
+        <div class="m-governance--user-row-share" (click)="openShareModal()">
           <m-icon iconId="share"></m-icon>
-          <div>Share proposal</div>
+          <div *ngIf="!mobile">Share proposal</div>
+          <div *ngIf="mobile">Share</div>
         </div>
       </div>
+      <!-- End of info row -->
       <!-- Body -->
       <div
+        *ngIf="!mobile"
         class="m-governance--proposal-detail-body-title"
         [innerHTML]="proposal.body"
       ></div>
@@ -64,7 +64,7 @@
       [votes]="votes$ | async"
     ></m-voting-card>
 
-    <div class="m-governance--proposal-detail-info" *ngIf="!inProgress">
+    <div class="m-governance--proposal-detail-info" *ngIf="!inProgress && !mobile">
       <div
         class="
           m-governance--proposal-detail-row
@@ -108,4 +108,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Body mobile -->
+  <div
+    *ngIf="mobile"
+    class="m-governance--proposal-detail-body-title"
+    [innerHTML]="proposal.body"
+  ></div>
+  <!-- End of body mobile-->
 </div>

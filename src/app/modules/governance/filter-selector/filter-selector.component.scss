@@ -10,5 +10,9 @@ m-governance--filter-selector {
   }
   .m-governance-filter-container {
     margin-top: 20px;
+
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 0px;
+    }
   }
 }

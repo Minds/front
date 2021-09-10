@@ -20,6 +20,22 @@
   height: 100%;
   width: 100%;
   position: relative;
+  @media screen and (max-width: $max-mobile) {
+    display: grid;
+  }
+
+  .m-pageLayout__pane--main {
+    @media screen and (max-width: $max-mobile) {
+      padding: 10px 20px 0px 20px;
+    }
+  }
+
+  .m-governance-margins {
+    flex: 1;
+    @media screen and (max-width: $max-mobile) {
+      margin-bottom: 15px;
+    }
+  }
 }
 
 .m-governance-button {
@@ -52,6 +68,17 @@
     @include m-theme() {
       border-color: themed($m-borderColor--primary);
     }
+  }
+}
+
+.m-governance-button-icon {
+  padding: 8px 16px;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  background: inherit;
+  @include m-theme() {
+    color: themed($m-textColor--primary);
   }
 }
 

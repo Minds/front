@@ -79,6 +79,9 @@ m-proposal {
     box-shadow: 0 0 11px #424a50;
     transform: translateY(-4px);
   }
+  @media screen and (max-width: $max-mobile) {
+    padding: 17px 28px;
+  }
 }
 
 .m-proposal--container-blue {
@@ -112,6 +115,12 @@ m-proposal {
 
 .m-proposal--voting-row {
   display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.m-proposal--voting-row-open {
+  display: grid;
   align-items: center;
   margin-top: 6px;
 }
@@ -189,7 +198,9 @@ m-proposal {
 .m-proposal--proposal-detail-progress {
   height: 8px;
   position: relative;
-  background: #bf2c2c;
+  @include m-theme() {
+    background: themed($m-red) !important;
+  }
   border-radius: 25px;
   width: 100%;
 }

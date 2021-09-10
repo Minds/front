@@ -6,6 +6,13 @@ m-governance--proposal-detail {
     padding: 30px;
     @media screen and (max-width: $max-mobile) {
       padding: 40px 24px;
+      padding-bottom: 0px;
+      border-bottom: 1px solid !important;
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary) !important;
+      }
+      padding-bottom: 15px;
+      padding: 20px 24px;
     }
   }
 
@@ -24,7 +31,7 @@ m-governance--proposal-detail {
       color: themed($m-textColor--secondary) !important;
     }
   }
-  
+
   .m-governance--proposal-detail {
     display: flex;
     @media screen and (max-width: $max-mobile) {
@@ -47,7 +54,12 @@ m-governance--proposal-detail {
 
     .m-governance--proposal-detail-results {
       @media screen and (max-width: $max-mobile) {
-        margin-top: 30px;
+        margin-top: 0px;
+        border-bottom: 1px solid;
+        padding-bottom: 30px;
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary) !important;
+        }
       }
     }
 
@@ -62,6 +74,9 @@ m-governance--proposal-detail {
       padding-bottom: 8px;
       font-size: 16px;
       font-weight: 700;
+      @media screen and (max-width: $max-mobile) {
+        padding-bottom: 0px;
+      }
     }
 
     .m-governance--proposal-detail-row {
@@ -89,6 +104,9 @@ m-governance--proposal-detail {
       border-radius: 21px;
       max-width: 100px;
       width: 100%;
+      @media screen and (max-width: $max-mobile) {
+        max-width: 44%;
+      }
     }
 
     .m-governance--proposal-detail-key {
@@ -141,6 +159,10 @@ m-governance--proposal-detail {
     }
 
     .m-governance--proposal-detail-body-title {
+      @media screen and (max-width: $max-mobile) {
+        padding: 10px 20px 0px 20px;
+      }
+
       h2,
       h1,
       h3,
@@ -241,7 +263,9 @@ m-governance--proposal-detail {
   }
 
   .m-governance--option-reject {
-    border-color: #bf2c2c !important;
+    @include m-theme() {
+      border-color: themed($m-red) !important;
+    }
   }
 
   .m-governance--state-row {
@@ -253,6 +277,9 @@ m-governance--proposal-detail {
     @include m-theme() {
       border-color: themed($m-borderColor--primary) !important;
     }
+    @media screen and (max-width: $max-mobile) {
+      border-bottom: none;
+    }
   }
 
   .m-governance--user-row {
@@ -260,10 +287,31 @@ m-governance--proposal-detail {
     align-items: center;
   }
 
+  .m-governance--user-row-share {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    m-icon {
+      @media screen and (max-width: $max-mobile) {
+        width: 25px;
+      }
+    }
+  }
+
   .m-governance--user {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
   }
-  
+
+  .m-governance--voting-row {
+    @media screen and (max-width: $max-mobile) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+    }
+
+  }
 }

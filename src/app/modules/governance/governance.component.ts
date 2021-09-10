@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { filter, pairwise, startWith } from 'rxjs/operators';
 import { Wallet, WalletV2Service } from '../wallet/components/wallet-v2.service';
+import isMobile from '../../helpers/is-mobile';
 
 @Component({
   selector: 'm-governance',
@@ -10,6 +11,7 @@ import { Wallet, WalletV2Service } from '../wallet/components/wallet-v2.service'
 export class GovernanceComponent implements OnInit {
   tokenBalance;
   routerEventsSubscription
+  mobile = false;
 
   constructor(public router: Router, private walletService: WalletV2Service
   ) { }
@@ -29,6 +31,11 @@ export class GovernanceComponent implements OnInit {
           }
         );
       });
+    if (isMobile()) {
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
   }
 
   goToCreate() {

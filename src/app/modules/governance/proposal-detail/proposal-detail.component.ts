@@ -12,6 +12,9 @@ import { linkify } from 'remarkable/linkify';
 import { BehaviorSubject } from 'rxjs';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
 import { Session } from '../../../services/session';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ShareModalComponent } from '../../modals/share/share';
+import isMobile from '../../../helpers/is-mobile';
 
 interface Choice {
   value: string;
@@ -29,12 +32,14 @@ export class GovernanceProposalDetailComponent implements OnInit {
   userData;
   allowDelete = true;
   votes$ = new BehaviorSubject<SnapshotVote[]>([]);
+  mobile = false;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly snapshotService: SnapshotService,
     private settingsV2Service: SettingsV2Service,
-    public session: Session
+    public session: Session,
+    private overlayModal: OverlayModalService
   ) {}
 
   async ngOnInit() {
@@ -57,6 +62,12 @@ export class GovernanceProposalDetailComponent implements OnInit {
         this.votes$.next(res.votes);
       });
     });
+
+    if (isMobile()) {
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
   }
 
   truncatedOnchainAddress(address: string): string {
@@ -82,5 +93,17 @@ export class GovernanceProposalDetailComponent implements OnInit {
     if (this.userData.eth_wallet !== this.proposal.author) {
       this.allowDelete = false;
     }
+  }
+
+  openShareModal() {
+    const data = {
+      url: `https://www.minds.com/governance/proposal/${this.proposal.id}`
+    };
+
+    this.overlayModal
+      .create(ShareModalComponent, data, {
+        class: 'm-overlay-modal--medium m-overlayModal__share',
+      })
+      .present();
   }
 }

@@ -1,5 +1,12 @@
 <div class="m-governance--latest-row">
   <div class="m-pageLayout__pane--main" m-pageLayout__pane="main">
+    <div class="m-governance-margins" *ngIf="mobile">
+      <span class="m-governance--filter-type-title"> OUTCOME </span>
+      <m-governance--filter-selector
+        (filterBy)="filter($event)"
+      ></m-governance--filter-selector>
+    </div>
+
     <m-proposal-list
       *ngIf="!(inProgress$ | async) && space$ | async"
       [space]="space$ | async"
@@ -15,7 +22,7 @@
     </infinite-scroll>
   </div>
 
-  <div style="flex: 1">
+  <div class="m-governance-margins" *ngIf="!mobile">
     <m-governance--filter-type-selector> </m-governance--filter-type-selector>
 
     <span class="m-governance--filter-type-title"> OUTCOME </span>

@@ -1,7 +1,6 @@
 @import 'defaults.scss';
 
 m-governance {
-
   height: inherit;
   min-height: inherit;
   display: grid;
@@ -12,6 +11,10 @@ m-governance {
   display: block;
   width: 100%;
   padding-top: 10px;
+  @media screen and (max-width: $max-mobile) {
+    overflow: hidden;
+  }
+
   @include m-theme() {
     border-right: 1px solid themed($m-borderColor--primary);
   }

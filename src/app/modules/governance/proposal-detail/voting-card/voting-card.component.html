@@ -3,12 +3,17 @@
     m-governance--proposal-detail-info m-governance--proposal-detail-results
   "
 >
-  <div class="m-governance--proposal-detail-title">Voting</div>
+  <div class="m-governance--voting-row">
+    <div class="m-governance--proposal-detail-title">Voting</div>
 
-  <div class="m-governance--proposal-detail-value" *ngIf="proposal.state === 'active'">
-    <m-icon class="m-governance--clock" iconId="schedule"></m-icon>
-    <div class="m-governance--proposal-detail-key">
-      Voting closes {{ fromNow(proposal.end) }}
+    <div
+      class="m-governance--proposal-detail-value"
+      *ngIf="proposal.state === 'active'"
+    >
+      <m-icon class="m-governance--clock" iconId="schedule"></m-icon>
+      <div class="m-governance--proposal-detail-key">
+        Voting closes {{ fromNow(proposal.end) }}
+      </div>
     </div>
   </div>
 
@@ -40,10 +45,12 @@
       <div
         *ngFor="let choice of choicesButtons$ | async"
         class="m-governance--proposal-detail-vote"
-        [ngClass]="
-        {
-        'm-governance--option-approve': choice.label === 'approve' || choice.label === 'yes',
-        'm-governance--option-reject': choice.label === 'reject' || choice.label === 'no'}"
+        [ngClass]="{
+          'm-governance--option-approve':
+            choice.label === 'approve' || choice.label === 'yes',
+          'm-governance--option-reject':
+            choice.label === 'reject' || choice.label === 'no'
+        }"
         (click)="handleVoting(choice)"
       >
         <div class="m-governance--choices-option">

@@ -13,10 +13,19 @@
     <button
       class="m-governance-button"
       (click)="goToCreate()"
-      *ngIf="router.url !== '/governance/create'"
+      *ngIf="router.url !== '/governance/create' && !mobile"
       [disabled]="tokenBalance < 1"
     >
       Submit proposal
+    </button>
+    
+    <button
+    class="m-governance-button-icon"
+    (click)="goToCreate()"
+    *ngIf="router.url !== '/governance/create' && mobile"
+    [disabled]="tokenBalance < 1"
+  >
+    <i class="material-icons">note_add</i>
     </button>
   </div>
 

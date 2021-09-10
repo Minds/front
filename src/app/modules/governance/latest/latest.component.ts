@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { filter, pairwise, startWith } from 'rxjs/operators';
 import { GovernanceService } from '../governance.service';
-
+import isMobile from '../../../helpers/is-mobile';
 @Component({
   selector: 'm-governance--latest',
   templateUrl: './latest.component.html',
@@ -17,6 +17,8 @@ export class GovernanceLatestComponent implements OnInit, OnDestroy {
   tokenBalance;
   current = 12;
   currentFilter = '';
+  mobile = false;
+
 
   constructor(
     private router: Router,
@@ -37,6 +39,12 @@ export class GovernanceLatestComponent implements OnInit, OnDestroy {
           this.governanceService.load({ limit: 0, refresh: true, type: '' });
         }
       });
+
+      if (isMobile()) {
+        this.mobile = true;
+      } else {
+        this.mobile = false;
+      }
   }
 
   ngOnDestroy() {
