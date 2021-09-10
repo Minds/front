@@ -102,9 +102,11 @@ m-carousel {
   }
   &.m-carousel__overflowScrollButton--right {
     right: -12;
+    z-index: 5;
   }
   &.m-carousel__overflowScrollButton--left {
-    left: 12;
+    left: 12px;
+    z-index: 5;
   }
   i {
     @include m-theme() {
