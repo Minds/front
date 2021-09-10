@@ -170,7 +170,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onJoinNowClick() {
     try {
       await this.authModal.open();
-      this.doRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
@@ -187,18 +186,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onLoginClick(): Promise<void> {
     try {
       await this.authModal.open({ formDisplay: 'login' });
-      this.doRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
       }
       console.error(e);
-    }
-  }
-
-  doRedirect(): void {
-    if (this.router.url === '/') {
-      this.router.navigate(['/newsfeed/subscriptions']);
     }
   }
 
