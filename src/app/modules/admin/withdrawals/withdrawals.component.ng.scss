@@ -117,4 +117,26 @@
       }
     }
   }
+
+  .m-admin-withdrawals__transactionInputContainer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+
+    .m-admin-withdrawals__transactionInput {
+      border-radius: 5px;
+      width: 300px;
+      padding: 0 10px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+        background-color: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-admin-withdrawals__transactionInputButton {
+      margin-left: 10px;
+    }
+  }
 }
