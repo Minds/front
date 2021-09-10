@@ -122,6 +122,14 @@ export class ReportCreatorComponent implements AfterViewInit {
    * Submits the report to the appropiate server endpoint using the current settings
    */
   async submit() {
+    if (
+      this.isAdmin &&
+      !confirm('Warning: This action is being run as admin - proceed?')
+    ) {
+      this.toasterService.inform('Action cancelled');
+      return;
+    }
+
     this.inProgress = true;
 
     try {
@@ -152,5 +160,13 @@ export class ReportCreatorComponent implements AfterViewInit {
       this.toasterService.error('There was an error sending your report.');
       this.toasterService.error(e.message ? e.message : e);
     }
+  }
+
+  /**
+   * Whether or not user is logged in via an admin session.
+   * @returns { boolean } - true if logged in user is admin.
+   */
+  get isAdmin(): boolean {
+    return this.session.isAdmin();
   }
 }
