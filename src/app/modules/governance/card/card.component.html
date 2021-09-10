@@ -20,7 +20,9 @@
     <div class="m-proposal--row-title">
       {{ proposal.title }}
     </div>
-    <div class="m-proposal--voting-row">
+    <div [ngClass]="{
+    'm-proposal--voting-row': proposal.state !== 'active',
+    'm-proposal--voting-row-open': proposal.state === 'active'}">
       <div
         class="m-proposal--actions-active"
         *ngIf="proposal.state === 'active'"

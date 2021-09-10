@@ -120,9 +120,12 @@ m-proposal {
 }
 
 .m-proposal--voting-row-open {
-  display: grid;
+  display: flex;
   align-items: center;
   margin-top: 6px;
+  @media screen and (max-width: $max-mobile) {
+    display: grid;
+  }
 }
 
 .m-proposal--clock {
