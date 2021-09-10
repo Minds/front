@@ -67,6 +67,7 @@
         <div *ngIf="previousPageUrl" class="m-channelFeed__loadBefore__container">
           <m-link-button
             [url]="previousPageUrl"
+            data-cy="data-minds-load-previous-page-button"
           >
             <ng-container
               i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
@@ -85,6 +86,7 @@
             [entity]="entity | async"
             [slot]="i + 1"
             (deleted)="feedService.onDelete($event)"
+            [attr.data-cy]="'data-minds-activity-guid-' + (entity | async).guid"
             #feedViewChildren
           ></m-newsfeed__entity>
         </div>

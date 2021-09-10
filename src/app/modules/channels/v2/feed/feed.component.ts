@@ -149,12 +149,26 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   get previousPageUrl() {
-    if (!this.feedService.offset || !this.feedService.service.pagingToken)
+    // if we didn't have the firstTimestamp
+    if (!this.feedService.service.firstTimestamp) return;
+    // if we were backward paginating and we didn't
+    // have a pagingToken, there are no more prev
+    // pages
+    if (
+      !this.feedService.service.pagingToken &&
+      this.feedService.service.reversedPagination
+    )
       return;
+    // if we weren't in offset pagination mode
+    if (!this.feedService.offset) return;
     return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.firstTimestamp}&reverse=1`;
   }
 
   get nextPageUrl() {
+    // if no lastTimestamp return null
+    if (!this.feedService.service.lastTimestamp) return null;
+    // if no more pages return null
+    if (!this.feedService.service.pagingToken) return null;
     return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.lastTimestamp}`;
   }
 

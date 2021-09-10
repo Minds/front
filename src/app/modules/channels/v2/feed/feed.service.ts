@@ -194,8 +194,7 @@ export class FeedService {
   loadNext() {
     if (
       this.service.canFetchMore &&
-      !this.service.inProgress.getValue() &&
-      this.service.offset.getValue()
+      !this.service.inProgress.getValue()
     ) {
       this.service.fetch(); // load the next 150 in the background
     }

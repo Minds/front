@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
         [disabled]="!moreData"
         (click)="onLoadMoreClick($event)"
         [url]="nextPageUrl"
+        data-cy="data-minds-load-next-page-button"
       >
         <ng-container
           i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
