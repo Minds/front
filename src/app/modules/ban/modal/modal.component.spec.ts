@@ -233,3 +233,4 @@ describe('BanModalComponent', () => {
     expect(next).toBeNull();
   });
 });
+// test
