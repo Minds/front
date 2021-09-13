@@ -36,12 +36,12 @@
     </div>
   </div>
 
-  <m-loadingSpinner
-    *ngIf="loading$ | async"
-    [inProgress]="true"
-  ></m-loadingSpinner>
-  <ng-container *ngIf="!(loading$ | async)">
-    <div class="m-governance--choices-row">
+  <ng-container *ngIf="proposal.state === 'active'">
+    <m-loadingSpinner
+      *ngIf="loading$ | async"
+      [inProgress]="true"
+    ></m-loadingSpinner>
+    <div class="m-governance--choices-row" *ngIf="!(loading$ | async)">
       <div
         *ngFor="let choice of choicesButtons$ | async"
         class="m-governance--proposal-detail-vote"

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { filter, pairwise, startWith } from 'rxjs/operators';
-import { Wallet, WalletV2Service } from '../wallet/components/wallet-v2.service';
+import {
+  Wallet,
+  WalletV2Service,
+} from '../wallet/components/wallet-v2.service';
 import isMobile from '../../helpers/is-mobile';
 
 @Component({
@@ -10,11 +13,10 @@ import isMobile from '../../helpers/is-mobile';
 })
 export class GovernanceComponent implements OnInit {
   tokenBalance;
-  routerEventsSubscription
+  routerEventsSubscription;
   mobile = false;
 
-  constructor(public router: Router, private walletService: WalletV2Service
-  ) { }
+  constructor(public router: Router, private walletService: WalletV2Service) {}
 
   ngOnInit() {
     this.routerEventsSubscription = this.router.events
@@ -25,11 +27,9 @@ export class GovernanceComponent implements OnInit {
         startWith('Initial call')
       )
       .subscribe(async () => {
-        this.walletService.wallet$.subscribe(
-          (wallet: Wallet) => {
-            this.tokenBalance = wallet.onchain.balance;
-          }
-        );
+        this.walletService.wallet$.subscribe((wallet: Wallet) => {
+          this.tokenBalance = wallet.onchain.balance;
+        });
       });
     if (isMobile()) {
       this.mobile = true;
@@ -42,11 +42,11 @@ export class GovernanceComponent implements OnInit {
     this.router.navigate(['/governance/create']);
   }
 
-  public isDetailScreen() {
-    if (this.router.url.includes('/governance/proposal/')) {
-      return false;
-    } else {
-      return true;
-    }
+  isDetailScreen() {
+    return !this.router.url.includes('/governance/proposal/');
+  }
+
+  hasToken() {
+    return this.tokenBalance > 1;
   }
 }
