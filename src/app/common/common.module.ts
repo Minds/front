@@ -189,6 +189,7 @@ import { PublisherSearchModalService } from './services/publisher-search-modal.s
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { JsonLdService } from './services/jsonld.service';
 
 const routes: Routes = [
   {
@@ -538,6 +539,7 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    JsonLdService,
   ],
 })
 export class CommonModule {}

@@ -16,6 +16,7 @@ import {
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { JsonLdService } from '../../../common/services/jsonld.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -47,7 +48,8 @@ export class NewsfeedSingleComponent {
     private metaService: MetaService,
     configs: ConfigsService,
     private headersService: HeadersService,
-    private authModalService: AuthModalService
+    private authModalService: AuthModalService,
+    protected jsonLdService: JsonLdService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -88,6 +90,7 @@ export class NewsfeedSingleComponent {
     if (this.singleGuidSubscription) {
       this.singleGuidSubscription.unsubscribe();
     }
+    this.jsonLdService.removeStructuredData();
   }
 
   /**
@@ -212,6 +215,15 @@ export class NewsfeedSingleComponent {
 
     if (activity.nsfw.length) {
       this.metaService.setNsfw(true);
+    }
+
+    if (
+      activity.subtype === 'video' ||
+      activity.custom_type === 'video' ||
+      activity.content_type === 'video'
+    ) {
+      const videoSchema = this.jsonLdService.getVideoSchema(activity);
+      this.jsonLdService.insertSchema(videoSchema);
     }
 
     if (activity.custom_type === 'video') {

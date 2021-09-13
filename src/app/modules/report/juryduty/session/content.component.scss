@@ -84,6 +84,11 @@
   }
 }
 
+// fix images showing as too wide.
+.m-comment-attachment img {
+  max-width: 100%;
+}
+
 .m-juryDutySessionContent__options {
   margin-top: 20px;
 
