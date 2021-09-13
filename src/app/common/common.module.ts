@@ -191,6 +191,7 @@ import { DateRangeModalService } from './components/date-range-modal/date-range-
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { JsonLdService } from './services/jsonld.service';
 
 const routes: Routes = [
   {
@@ -543,6 +544,7 @@ const routes: Routes = [
     DownloadActivityMediaService,
     PublisherSearchModalService,
     DateRangeModalService,
+    JsonLdService,
   ],
 })
 export class CommonModule {}
