@@ -18,7 +18,7 @@ export class RedirectHandlerService implements OnDestroy {
   private paramsSubscription: Subscription;
 
   // URLs that redirect to /newsfeed/subscriptions
-  private newsfeedRedirectUrls = ['/', '/register', '/login'];
+  private newsfeedRedirectUrls = ['', '/', '/register', '/login'];
 
   constructor(
     private features: FeaturesService,
@@ -72,7 +72,7 @@ export class RedirectHandlerService implements OnDestroy {
       try {
         this.onboardingV3.open(true); // fire off async
 
-        if (this.newsfeedRedirectUrls.indexOf(this.router.url) > -1) {
+        if (this.isNewsfeedRedirectUrl(this.router.url)) {
           this.router.navigate(['/newsfeed/subscriptions']);
         }
         return;
@@ -101,7 +101,7 @@ export class RedirectHandlerService implements OnDestroy {
       return;
     }
 
-    if (this.newsfeedRedirectUrls.indexOf(this.router.url) > -1) {
+    if (this.isNewsfeedRedirectUrl(this.router.url)) {
       this.router.navigate(['/newsfeed/subscriptions']);
     }
   }
@@ -129,5 +129,15 @@ export class RedirectHandlerService implements OnDestroy {
     } else {
       this.router.navigate([uri[0]], extras);
     }
+  }
+
+  /**
+   * Whether or not the user should be redirected to newsfeed
+   * @param { string } url - the url to check.
+   * @returns { boolean } true if the user should be redirected.
+   */
+  private isNewsfeedRedirectUrl(url: string): boolean {
+    const withoutQueryString = url.split('?')[0];
+    return this.newsfeedRedirectUrls.indexOf(withoutQueryString) > -1;
   }
 }
