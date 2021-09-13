@@ -192,10 +192,7 @@ export class FeedService {
    * Load next batch of entities
    */
   loadNext() {
-    if (
-      this.service.canFetchMore &&
-      !this.service.inProgress.getValue()
-    ) {
+    if (this.service.canFetchMore && !this.service.inProgress.getValue()) {
       this.service.fetch(); // load the next 150 in the background
     }
     this.service.loadMore();
