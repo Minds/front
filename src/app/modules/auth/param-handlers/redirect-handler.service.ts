@@ -17,6 +17,9 @@ export class RedirectHandlerService implements OnDestroy {
   // subscription to route params.
   private paramsSubscription: Subscription;
 
+  // URLs that redirect to /newsfeed/subscriptions
+  private newsfeedRedirectUrls = ['/', '/register', '/login'];
+
   constructor(
     private features: FeaturesService,
     private onboardingV3: OnboardingV3Service,
@@ -68,7 +71,10 @@ export class RedirectHandlerService implements OnDestroy {
     if (this.features.has('onboarding-october-2020')) {
       try {
         this.onboardingV3.open(true); // fire off async
-        this.router.navigate(['/newsfeed/subscribed']);
+
+        if (this.newsfeedRedirectUrls.indexOf(this.router.url) > -1) {
+          this.router.navigate(['/newsfeed/subscriptions']);
+        }
         return;
       } catch (e) {
         if (e === 'DismissedModalException') {
@@ -94,7 +100,10 @@ export class RedirectHandlerService implements OnDestroy {
       this.navigateToRedirection();
       return;
     }
-    this.router.navigate(['/newsfeed/subscribed']);
+
+    if (this.newsfeedRedirectUrls.indexOf(this.router.url) > -1) {
+      this.router.navigate(['/newsfeed/subscriptions']);
+    }
   }
 
   /**
