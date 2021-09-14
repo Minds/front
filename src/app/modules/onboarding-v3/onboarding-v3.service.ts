@@ -102,7 +102,6 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
-   * @param { boolean } reloadOnSaveIntent - reload when save intent is fired unless step is a load override step.
    * @returns { Promise<any> }
    */
   public async open(): Promise<any> {
