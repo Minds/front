@@ -161,10 +161,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     } catch (e) {
       if (e === 'DismissedModalException') {
         this.checkCompletion();
-        if (this.onboarding.loadOverrideSteps.indexOf(step) === -1) {
-          this.onboarding.load();
-        }
-        return;
       }
       console.error(e);
     }
