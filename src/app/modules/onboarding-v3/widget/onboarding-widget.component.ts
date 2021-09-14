@@ -284,7 +284,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       timer(0, 1000)
         .pipe(
-          scan(acc => --acc, 30),
+          scan(acc => --acc, 120),
           tap(timer => {
             if (timer === 0) {
               this.canResendEmail = true;
