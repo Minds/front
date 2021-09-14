@@ -1,6 +1,6 @@
 <a
   class="m-link-button"
-  [href]="url"
+  [attr.href]="disabled ? undefined : url"
   [ngClass]="{
     'm-button--grey': color === 'grey',
     'm-button--blue': color === 'blue',
