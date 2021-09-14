@@ -104,7 +104,12 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   ) {
     if (isPlatformBrowser(platformId)) {
       this.subscriptions.push(
-        this.service.guid$.subscribe(guid => this.feedService.guid$.next(guid))
+        this.service.guid$.subscribe(guid => {
+          this.feedService.guid$.next(guid);
+
+          // Reset date range filter on channel change
+          this.feedService.dateRange$.next({ fromDate: null, toDate: null });
+        })
       );
     }
   }
