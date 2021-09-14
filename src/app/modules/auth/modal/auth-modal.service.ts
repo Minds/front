@@ -54,9 +54,11 @@ export class AuthModalService {
             opts.formDisplay === 'register'
           ) {
             try {
-              await this.onboardingV3.open(true);
+              await this.onboardingV3.open();
             } catch (e) {
               if (e === 'DismissedModalException') {
+                // reload so that widget updates with save.
+                this.onboardingV3.load();
                 return; // modal dismissed, do nothing
               }
             }

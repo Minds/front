@@ -69,10 +69,7 @@ export class OnboardingV3Service implements OnDestroy {
   /*
    * Steps that will not trigger endpoint reload.
    */
-  public readonly loadOverrideSteps = [
-    'SetupChannelStep',
-    'VerifyUniquenessStep',
-  ];
+  public readonly loadOverrideSteps = ['VerifyUniquenessStep'];
 
   /*
    * Holds response of progress that can be loaded using load().
@@ -113,7 +110,7 @@ export class OnboardingV3Service implements OnDestroy {
    * @param { boolean } reloadOnSaveIntent - reload when save intent is fired unless step is a load override step.
    * @returns { Promise<any> }
    */
-  public async open(reloadOnSaveIntent: boolean = false): Promise<any> {
+  public async open(): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
@@ -135,9 +132,6 @@ export class OnboardingV3Service implements OnDestroy {
           if (this.loadOverrideSteps.indexOf(step) > -1) {
             this.forceCompletion(step);
             return;
-          }
-          if (reloadOnSaveIntent) {
-            this.load();
           }
         },
         onDismissIntent: () => {
