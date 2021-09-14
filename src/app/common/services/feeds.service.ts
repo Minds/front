@@ -105,7 +105,12 @@ export class FeedsService implements OnDestroy {
         const feed = values[0];
         const inProgress = values[1];
         const offset = values[2];
-        return inProgress || feed.length > offset;
+
+        if (inProgress) return true
+        if (offset !== 0 && feed.length > offset) return true
+        if (this.pagingToken) return true
+        
+        return false
       })
     );
   }
