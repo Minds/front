@@ -88,7 +88,6 @@
             [entity]="entity | async"
             [slot]="i + 1"
             (deleted)="feedService.onDelete($event)"
-            [attr.data-cy]="'data-minds-activity-guid-' + (entity | async).guid"
             #feedViewChildren
           ></m-newsfeed__entity>
         </div>

@@ -165,7 +165,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   }
 
   get nextPageUrl() {
-    // if no lastTimestamp return null
     if (!this.feedService.service.lastTimestamp) return null;
     return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.lastTimestamp}`;
   }
