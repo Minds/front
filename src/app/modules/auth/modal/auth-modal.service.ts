@@ -5,24 +5,22 @@ import {
   StackableModalState,
 } from '../../../services/ux/stackable-modal.service';
 import { AuthModalComponent } from './auth-modal.component';
-import { Subject } from 'rxjs';
+import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
+import { FeaturesService } from '../../../services/features.service';
+import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { Session } from '../../../services/session';
-import { RedirectHandlerService } from '../param-handlers/redirect-handler.service';
-import { ReferrerHandlerService } from '../param-handlers/referrer-handler.service';
 
 @Injectable()
 export class AuthModalService {
   constructor(
     private compiler: Compiler,
     private injector: Injector,
-    private session: Session,
     private stackableModal: StackableModalService,
-    private redirect: RedirectHandlerService,
-    private referrer: ReferrerHandlerService
-  ) {
-    this.referrer.subscribe(); //unsubs on destroy
-  }
+    private features: FeaturesService,
+    private onboardingV3: OnboardingV3Service,
+    private session: Session
+  ) {}
 
   async open(
     opts: { formDisplay: string } = { formDisplay: 'register' }
@@ -50,7 +48,19 @@ export class AuthModalService {
           onSuccess$.next(user);
           onSuccess$.complete(); // Ensures promise can be called below
           this.stackableModal.dismiss();
-          this.redirect.handle(opts.formDisplay);
+
+          if (
+            this.features.has('onboarding-october-2020') &&
+            opts.formDisplay === 'register'
+          ) {
+            try {
+              await this.onboardingV3.open(true);
+            } catch (e) {
+              if (e === 'DismissedModalException') {
+                return; // modal dismissed, do nothing
+              }
+            }
+          }
         },
         onDismissIntent: () => {
           this.stackableModal.dismiss();
