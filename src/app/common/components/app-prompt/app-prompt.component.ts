@@ -1,3 +1,4 @@
+import { ConfigsService } from './../../services/configs.service';
 import { Component, HostListener } from '@angular/core';
 
 import {
@@ -24,6 +25,14 @@ import { BehaviorSubject } from 'rxjs';
         'active',
         style({
           visibility: 'visible',
+          height: 67,
+        })
+      ),
+      state(
+        'expanded',
+        style({
+          visibility: 'visible',
+          height: '85vh',
         })
       ),
       state(
@@ -44,6 +53,17 @@ import { BehaviorSubject } from 'rxjs';
             style({
               transform: 'translateY(0px)',
             }),
+          ])
+        ),
+      ]),
+      transition('* => expanded', [
+        animate(
+          '450ms ease',
+          keyframes([
+            style({
+              height: '*',
+            }),
+            style({ height: '85vh', visibility: 'visible' }),
           ])
         ),
       ]),
@@ -69,13 +89,14 @@ import { BehaviorSubject } from 'rxjs';
   ],
 })
 export class AppPromptComponent {
-  @HostListener('document:click')
-  clickOutside() {
-    // TODO: Add local storage
-    this.service.close();
-  }
+  readonly cdnAssetsUrl: string;
 
-  constructor(private service: AppPromptService) {}
+  constructor(
+    private service: AppPromptService,
+    protected configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+  }
 
   ngOnInit(): void {
     console.log('initing in component');
@@ -100,5 +121,12 @@ export class AppPromptComponent {
    */
   public onClick(): void {
     this.service.redirect();
+  }
+
+  /**
+   * Triggered on close click.
+   */
+  public onClose(): void {
+    this.service.close();
   }
 }

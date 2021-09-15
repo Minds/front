@@ -4,27 +4,102 @@
   width: 100%;
   position: fixed;
   bottom: 0;
+
   @include z-index(popover--modal);
 
-  .m-appPrompt__container {
+  .m-app-prompt__container {
     position: absolute;
     bottom: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     width: 100%;
-    height: 60px;
+    height: 100%;
     font-size: 17px;
     font-weight: 500;
     cursor: pointer;
-    opacity: 0.8;
+    // opacity: 0.8;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
 
-    @include m-theme() {
-      background-color: themed($m-black);
-      color: themed($m-white);
-    }
+    background-color: #242a30;
+    color: #fff;
   }
-  .m-appPrompt__openButton {
+
+  .m-app-prompt__header {
     width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .m-app-prompt__logo {
+    width: 35px;
+    height: 35px;
+    margin-right: 16px;
+  }
+
+  .m-app-prompt__title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .m-app-prompt__close-icon {
+    position: absolute;
+    right: 16px;
+    padding: 16px;
+  }
+
+  .m-app-prompt__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    padding-top: 16px;
+
+    .m-app-prompt__body__logo-container {
+      background-color: white;
+      border-radius: 15px;
+      padding: 10px;
+      margin-bottom: 16px;
+    }
+
+    .m-app-prompt__body__logo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .m-app-prompt__body__title {
+      font-size: 30px;
+      margin-bottom: 32px;
+    }
+
+    .m-app-prompt__body__description {
+      margin-bottom: 16px;
+      font-size: 20px;
+      @include m-theme() {
+        color: themed($m-grey-100);
+      }
+    }
+
+    .m-app-prompt__body__reviews {
+      margin-bottom: 16px;
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+
+    .m-app-prompt__body__download-container {
+      display: flex;
+      flex-direction: column;
+      padding-top: 32px;
+
+      a:first-child {
+        margin-bottom: 16px;
+      }
+    }
   }
 }

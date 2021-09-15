@@ -15,7 +15,7 @@ import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
 /**
  * Dismissed or active to make use of animations.
  */
-export type AppPromptState = 'dismissed' | 'active';
+export type AppPromptState = 'dismissed' | 'active' | 'expanded';
 
 /**
  * A supported mobile platform with our app, or non-mobile.
@@ -115,6 +115,29 @@ export class AppPromptService implements OnDestroy {
     }
   }
 
+  // opens the app and if the app wasn't opened calls the fallback function
+  private openAppWithFallback(fallback: () => void) {
+    (window as any).location = 'mindsapp://';
+
+    // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
+    var now = new Date().valueOf();
+
+    // FIXME: even after user visits here after much
+    // time has passed, this new Date().valueOf() will
+    // still return the original date
+    setTimeout(function() {
+      if (new Date().valueOf() - now < 550) {
+        fallback();
+      }
+    }, 500);
+  }
+
+  // Opens app store
+  private openAppStore() {
+    (window as any).location =
+      'https://itunes.apple.com/us/app/minds-com/id961771928';
+  }
+
   /**
    * Redirect to app or app store depending on platform and
    * whether app is installed already. Based upon solution from Vikas Kohli.
@@ -133,27 +156,10 @@ export class AppPromptService implements OnDestroy {
             try {
               switch (platform) {
                 case 'iphone':
-                  // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
-                  var now = new Date().valueOf();
-                  setTimeout(function() {
-                    if (new Date().valueOf() - now > 100) return;
-                    (window as any).location =
-                      'https://itunes.apple.com/us/app/minds-com/id961771928';
-                  }, 25);
-                  (window as any).location = 'mindsapp://';
+                  this.openAppWithFallback(() => this.openAppStore());
                   break;
                 case 'android':
-                  (window as any).location = 'mindsapp://';
-
-                  var now = new Date().valueOf();
-                  setTimeout(function() {
-                    if (new Date().valueOf() - now > 100) return;
-                    (window as any).location =
-                      'https://play.google.com/store/apps/details?id=com.minds.mobile';
-                  }, 25);
-                  break;
-                default:
-                  this.state$.next('dismissed');
+                  this.openAppWithFallback(() => this.expand());
                   break;
               }
             } catch (e) {
@@ -162,6 +168,14 @@ export class AppPromptService implements OnDestroy {
           })
       );
     }
+  }
+
+  /**
+   * Expand the modal to show download options
+   * @returns { void }
+   */
+  public expand(): void {
+    this.state$.next('expanded');
   }
 
   /**

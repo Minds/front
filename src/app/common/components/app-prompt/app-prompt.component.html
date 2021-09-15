@@ -1,5 +1,57 @@
-<div [@fader]="state$ | async" *ngIf="(state$ | async) === 'active'">
-  <div class="m-appPrompt__container" (click)="onClick()">
-    Switch to App
+<div [@fader]="state$ | async" *ngIf="(state$ | async) !== 'dismissed'">
+  <div class="m-app-prompt__container">
+    <div class="m-app-prompt__header" (click)="onClick()">
+      <img
+        class="m-app-prompt__logo"
+        [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+      />
+      <span class="m-app-prompt__title">
+        Switch to App
+      </span>
+
+      <m-icon
+        (click)="onClose()"
+        class="m-app-prompt__close-icon"
+        from="ion"
+        iconId="close"
+      ></m-icon>
+    </div>
+
+    <div class="m-app-prompt__body">
+      <div class="m-app-prompt__body__logo-container">
+        <img
+          class="m-app-prompt__body__logo"
+          [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+        />
+      </div>
+
+      <span class="m-app-prompt__body__title">Minds</span>
+      <span
+        class="m-app-prompt__body__description"
+        i18n="@@HOMEPAGE__V2__TAKE_BACK_CONTROL_SUBHEADER"
+      >
+        Take back control of your social media!
+      </span>
+      <span class="m-app-prompt__body__reviews"
+        >5 stars on 1,000,000+ reviews</span
+      >
+
+      <div class="m-app-prompt__body__download-container">
+        <a
+          href="https://cdn-assets.minds.com/mobile/Minds-stable-4-17-0.apk"
+          target="_blank"
+          ><img
+            src="{{ cdnAssetsUrl }}assets/marketing/mobile/download-minds.svg"
+            height="70"
+        /></a>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+          target="_blank"
+          ><img
+            src="{{ cdnAssetsUrl }}assets/marketing/mobile/google-play.svg"
+            height="66"
+        /></a>
+      </div>
+    </div>
   </div>
 </div>
