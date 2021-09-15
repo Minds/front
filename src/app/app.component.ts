@@ -84,6 +84,8 @@ export class Minds implements OnInit, OnDestroy {
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
+
+    this.router.initialNavigation();
   }
 
   async ngOnInit() {

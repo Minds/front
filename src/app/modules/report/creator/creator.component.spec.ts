@@ -165,6 +165,8 @@ describe('ReportCreatorComponent', () => {
       done: true,
     };
 
+    spyOn(window, 'confirm').and.returnValue(true);
+
     const item = getSubjectItem(3);
     item.nativeElement.click();
     fixture.detectChanges();
@@ -192,6 +194,8 @@ describe('ReportCreatorComponent', () => {
       done: false,
       message: 'There was a probem',
     };
+
+    spyOn(window, 'confirm').and.returnValue(true);
 
     spyOn(window, 'alert').and.callFake(function() {
       return true;
@@ -224,6 +228,8 @@ describe('ReportCreatorComponent', () => {
       done: false,
       message: 'error message',
     };
+
+    spyOn(window, 'confirm').and.returnValue(true);
 
     spyOn(window, 'alert').and.callFake(function() {
       return true;
