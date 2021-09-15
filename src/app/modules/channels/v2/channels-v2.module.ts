@@ -38,6 +38,7 @@ import { ChannelActionsBoostComponent } from './actions/boost.component';
 import { ChannelShopLazyComponent } from './shop/shop-lazy.component';
 import { ComposerModule } from '../../composer/composer.module';
 import { ChannelAdminConfirmationComponent } from './actions/admin-confirmation/admin-confirmation.component';
+import { ExperimentsModule } from '../../experiments/experiments.module';
 
 /**
  * Generally available components
@@ -96,6 +97,7 @@ const PROVIDERS = [ChannelEditModalService];
     ModalsModule,
     DiscoverySharedModule,
     ComposerModule,
+    ExperimentsModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

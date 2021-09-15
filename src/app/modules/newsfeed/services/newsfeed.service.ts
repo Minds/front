@@ -3,6 +3,7 @@ import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 import { MindsVideoPlayerComponent } from '../../media/components/video-player/player.component';
+import { AnalyticsService } from '../../../services/analytics';
 
 @Injectable()
 export class NewsfeedService {
@@ -12,7 +13,8 @@ export class NewsfeedService {
   constructor(
     private client: Client,
     private session: Session,
-    private nsfwSelectorService: NSFWSelectorConsumerService
+    private nsfwSelectorService: NSFWSelectorConsumerService,
+    private analyticsService: AnalyticsService
   ) {}
 
   get nsfw(): Array<number> {
@@ -33,12 +35,18 @@ export class NewsfeedService {
     // }
 
     (window as any).snowplow('trackSelfDescribingEvent', {
-      schema: 'iglu:com.minds/view/jsonschema/1-0-0',
-      data: {
-        entity_guid: entity.guid,
-        entity_owner_guid: entity.owner_guid,
-        ...clientMeta,
+      event: {
+        schema: 'iglu:com.minds/view/jsonschema/1-0-0',
+        data: {
+          entity_guid: entity.guid,
+          entity_owner_guid: entity.owner_guid,
+          ...clientMeta,
+        },
       },
+      context:
+        this.analyticsService.contexts.length > 0
+          ? this.analyticsService.contexts.slice(0)
+          : undefined,
     });
 
     // if it's a boost we record the boost view AND the activity view

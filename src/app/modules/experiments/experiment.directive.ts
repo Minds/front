@@ -6,6 +6,7 @@ import {
   ViewContainerRef,
   TemplateRef,
 } from '@angular/core';
+import { Experiment } from '@growthbook/growthbook';
 
 import { ExperimentsService } from './experiments.service';
 
@@ -13,30 +14,25 @@ import { ExperimentsService } from './experiments.service';
   selector: '[mExperiment]',
 })
 export class ExperimentDirective {
-  @Input('mExperiment') mExperimentId;
-  @Input() mExperimentBucket;
+  @Input('mExperiment') experimentId: string;
+  @Input('mExperimentVariation') variationId: string;
 
   constructor(
-    private _service: ExperimentsService,
-    private _viewContainer: ViewContainerRef,
-    private _templateRef: TemplateRef<any>
+    private service: ExperimentsService,
+    private viewContainer: ViewContainerRef,
+    private templateRef: TemplateRef<any>
   ) {}
 
-  async ngOnInit() {
-    if (this.mExperimentBucket === 'base')
-      //load the base first
-      this._viewContainer.createEmbeddedView(this._templateRef);
+  ngOnInit() {
+    const variation = this.service.run(this.experimentId);
 
-    if (
-      await this._service.shouldRender({
-        experimentId: this.mExperimentId,
-        bucketId: this.mExperimentBucket,
-      })
-    ) {
-      this._viewContainer.clear();
-      this._viewContainer.createEmbeddedView(this._templateRef);
+    // console.log("Growth back says you should see " + variation + " and this will render " + this.variationId);
+
+    if (variation === this.variationId) {
+      this.viewContainer.clear();
+      this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
-      this._viewContainer.clear();
+      this.viewContainer.clear();
     }
   }
 }

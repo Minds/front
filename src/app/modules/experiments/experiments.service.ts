@@ -1,58 +1,82 @@
 import { Injectable } from '@angular/core';
 
-import { Client } from '../../common/api/client.service';
-import { Storage } from '../../services/storage';
-import { CookieService } from '../../common/services/cookie.service';
+import { GrowthBook, Experiment } from '@growthbook/growthbook';
+import { ConfigsService } from '../../common/services/configs.service';
+import { AnalyticsService } from '../../services/analytics';
+import { Session } from '../../services/session';
 
-type ExperimentBucket = {
-  experimentId: string;
-  bucketId: string;
-};
+export { Experiment } from '@growthbook/growthbook';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ExperimentsService {
-  experiments = [];
-  fetching: boolean = false;
+  growthbook: GrowthBook;
+  experiments: Experiment<unknown>[] = [];
 
-  constructor(private client: Client, private cookieService: CookieService) {}
+  constructor(
+    private session: Session,
+    private configs: ConfigsService,
+    private analytics: AnalyticsService
+  ) {}
 
-  getExperimentBucket(experiment) {
-    return this.cookieService.get(`experiments:${experiment}`);
+  /**
+   * Initialize Growthbook, only want to do this once
+   */
+  initGrowthbook(): void {
+    if (!this.growthbook) {
+      this.growthbook = new GrowthBook({
+        user: { id: this.session.getLoggedInUser()?.guid },
+        trackingCallback: (experiment, result) => {
+          /**
+           * Tracking is only called if force is not used
+           */
+          this.addToAnalytics(experiment.key, result.variationId);
+          // Note: we don't need to tell the backend, as it's the backend that tells us to run experiments
+        },
+      });
+    }
+
+    const experiments = this.configs.get('experiments');
+
+    if (experiments && experiments.length > 0) {
+      for (let experiment of experiments) {
+        // Remap
+        experiment = {
+          key: experiment.experimentId,
+          variations: experiment.variations,
+          force: experiment.variationId,
+        };
+
+        this.experiments.push(experiment);
+        this.growthbook.run(experiment);
+
+        this.addToAnalytics(experiment.key, experiment.force);
+      }
+    }
   }
 
-  // Return if the bucket is valid
-  async shouldRender(opts: ExperimentBucket) {
-    if (this.cookieService.get(`experiments:${opts.experimentId}`)) {
-      this.experiments[opts.experimentId] = this.cookieService.get(
-        `experiments:${opts.experimentId}`
-      );
+  /**
+   * Returns the variation to display
+   * @param key
+   * @returns string
+   */
+  run(key): string {
+    for (let experiment of this.experiments) {
+      if (experiment.key === key) {
+        const { value } = this.growthbook.run(experiment);
+        return String(value);
+      }
     }
 
-    let bucket = this.experiments[opts.experimentId];
+    throw 'Could not find experiment with key ' + key;
+  }
 
-    if (bucket) {
-      return bucket === opts.bucketId;
-    }
-
-    if (this.fetching) {
-      await new Promise((res, rej) => setTimeout(res, 50));
-      return this.shouldRender(opts);
-    }
-
-    try {
-      this.fetching = true;
-      let response: any = await this.client.get(
-        `api/v2/experiments/${opts.experimentId}`
-      );
-      bucket = response.bucketId;
-    } catch (err) {
-      bucket = 'base';
-    }
-
-    this.experiments[opts.experimentId] = bucket;
-    this.cookieService.put(`experiments:${opts.experimentId}`, bucket);
-    this.fetching = false;
-
-    return bucket === opts.bucketId;
+  private addToAnalytics(experimentId: string, variationId: number): void {
+    this.analytics.contexts.push({
+      schema: 'iglu:com.minds/growthbook_context/jsonschema/1-0-1',
+      data: {
+        experiment_id: experimentId,
+        variation_id: variationId,
+      },
+    });
   }
 }
