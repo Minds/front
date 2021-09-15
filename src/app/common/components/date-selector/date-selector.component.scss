@@ -11,7 +11,7 @@ m-date-selector {
   align-self: center;
   font-size: 12px;
   @include m-theme() {
-    color: themed($m-grey-600);
+    color: themed($m-textColor--secondary);
   }
 }
 
@@ -20,13 +20,20 @@ m-date-selector {
   text-transform: uppercase;
   text-align: center;
   padding: 8px 0;
+  outline: 0;
+
+  &:focus {
+    @include m-theme() {
+      border: 1px solid themed($m-blue);
+    }
+  }
 
   @media screen and (max-width: $min-tablet) {
     margin: 8px 0;
   }
 
   @include m-theme() {
-    color: themed($m-grey-600);
+    color: themed($m-textColor--secondary);
     background-color: themed($m-bgColor--primary);
   }
 }
@@ -36,15 +43,20 @@ m-date-selector {
   z-index: 10000 !important;
   .owl-dt-container {
     @include m-theme() {
-      background: themed($m-white);
+      background: themed($m-bgColor--primary);
 
       * {
-        color: themed($m-grey-600);
+        color: themed($m-textColor--secondary);
       }
 
       .owl-dt-calendar-cell-selected {
         background-color: themed($m-blue);
         color: themed($m-white);
+      }
+      .owl-dt-control-button-arrow {
+        svg {
+          fill: themed($m-textColor--secondary);
+        }
       }
     }
   }
