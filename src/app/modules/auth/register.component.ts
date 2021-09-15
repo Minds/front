@@ -17,6 +17,7 @@ import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-register',
@@ -64,6 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
+    private onboardingV3: OnboardingV3Service,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService
   ) {
@@ -137,6 +139,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.redirectTo) {
       this.navigateToRedirection();
       return;
+    }
+
+    if (this.featuresService.has('onboarding-october-2020')) {
+      if (this.router.url.split('?')[0] === '/register') {
+        this.onboardingV3.open();
+        this.router.navigate(['/newsfeed/subscribed']);
+        return;
+      }
     }
 
     if (this.featuresService.has('ux-2020')) {
