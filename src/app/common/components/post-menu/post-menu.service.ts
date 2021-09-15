@@ -262,14 +262,20 @@ export class PostMenuService {
     }
   }
 
-  async block(): Promise<void> {
+  async block(): Promise<void | any> {
     this.isBlocked$.next(true);
     try {
       await this.client.put('api/v1/block/' + this.entity.ownerObj.guid, {});
-      this.blockListService.add(`${this.entity.ownerObj.guid}`);
     } catch (e) {
-      this.isBlocked$.next(false);
+      if (e.errorId === 'Minds::Core::Security::Block::BlockLimitException') {
+        this.formToastService.error(
+          `You have reached the limit of blocked users. Please unblock someone else before blocking @${this.entity.ownerObj.name}`
+        );
+        this.isBlocked$.next(false);
+        return e;
+      }
     }
+    this.blockListService.add(`${this.entity.ownerObj.guid}`);
   }
 
   async unBlock(): Promise<void> {
