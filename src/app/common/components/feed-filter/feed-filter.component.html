@@ -1,38 +1,80 @@
 <div class="m-feedFilter">
-  <div *ngIf="options?.length" class="m-feedFilter__menu">
-    <m-dropdownMenu [menu]="filtersMenu">
-      <div class="m-feedFilterMenu__trigger">
-        <span>Type: </span
-        ><span class="m-feedFilterMenuTrigger__selectionLabel">{{
-          typeLabel
-        }}</span
-        ><span>▾</span>
-      </div>
-    </m-dropdownMenu>
+  <div class="m-feedFilter__dropdownWrapper">
+    <div *ngIf="options.indexOf('type') > -1" class="m-feedFilter__menu">
+      <m-dropdownMenu [menu]="typeMenu">
+        <div class="m-feedFilterMenu__trigger">
+          <span>Type: </span
+          ><span class="m-feedFilterMenuTrigger__selectionLabel">{{
+            typeLabel
+          }}</span
+          ><span>▾</span>
+        </div>
+      </m-dropdownMenu>
+    </div>
+    <div *ngIf="options.indexOf('dateRange') > -1" class="m-feedFilter__menu">
+      <m-dropdownMenu [menu]="dateRangeMenu">
+        <div class="m-feedFilterMenu__trigger">
+          <span>Date: </span>
+          <ng-container *ngIf="service.dateRangeEnabled$ | async"
+            ><span *ngIf="service.dateRange$ | async as dateRange">
+              {{ dateRange.fromDate | date: 'mediumDate' }} -
+              {{ dateRange.toDate | date: 'mediumDate' }}</span
+            ></ng-container
+          >
+          <ng-container *ngIf="!(service.dateRangeEnabled$ | async)">
+            <span class="m-feedFilterMenuTrigger__selectionLabel">{{
+              dateRangeLabel
+            }}</span> </ng-container
+          ><span>▾</span>
+        </div>
+      </m-dropdownMenu>
+    </div>
   </div>
   <div class="m-feedFilter__content">
     <ng-content></ng-content>
   </div>
 </div>
 
-<ng-template #filtersMenu>
+<ng-template #typeMenu>
   <ul>
-    <ng-container *ngIf="options.indexOf('type') > -1">
-      <li
-        *ngFor="let typeEntry of types; let first = first"
-        [class.m-dropdownMenu__item--first]="first"
-        (click)="typeChangeEmitter.emit(typeEntry.value)"
+    <li
+      *ngFor="let typeEntry of types; let first = first"
+      [class.m-dropdownMenu__item--first]="first"
+      (click)="typeChangeEmitter.emit(typeEntry.value)"
+    >
+      <span
+        class="m-dropdownMenu__item"
+        [ngClass]="{
+          'm-dropdownMenu__item--selected': type === typeEntry.value
+        }"
       >
-        <span
-          class="m-dropdownMenu__item"
-          [ngClass]="{
-            'm-dropdownMenu__item--selected': type === typeEntry.value
-          }"
-        >
-          <m-icon *ngIf="type === typeEntry.value" iconId="check"></m-icon>
-          <span>{{ typeEntry.label }}</span>
-        </span>
-      </li>
-    </ng-container>
+        <m-icon *ngIf="type === typeEntry.value" iconId="check"></m-icon>
+        <span>{{ typeEntry.label }}</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #dateRangeMenu>
+  <ul>
+    <li
+      *ngFor="let dateRangeEntry of dateRangeTypes; let first = first"
+      [class.m-dropdownMenu__item--first]="first"
+      (click)="onDateRangeChange(dateRangeEntry.value)"
+    >
+      <span
+        class="m-dropdownMenu__item"
+        [ngClass]="{
+          'm-dropdownMenu__item--selected':
+            dateRangeType === dateRangeEntry.value
+        }"
+      >
+        <m-icon
+          *ngIf="dateRangeType === dateRangeEntry.value"
+          iconId="check"
+        ></m-icon>
+        <span>{{ dateRangeEntry.menuLabel }}</span>
+      </span>
+    </li>
   </ul>
 </ng-template>
