@@ -21,8 +21,11 @@
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 
-    background-color: #242a30;
-    color: #fff;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primaryInverted);
+      color: themed($m-textColor--primaryInverted);
+      border: 1px solid themed($m-borderColor--primary);
+    }
   }
 
   .m-app-prompt__header {
@@ -81,14 +84,14 @@
       margin-bottom: 16px;
       font-size: 20px;
       @include m-theme() {
-        color: themed($m-grey-100);
+        color: themed($m-textColor--tertiary);
       }
     }
 
     .m-app-prompt__body__reviews {
       margin-bottom: 16px;
       @include m-theme() {
-        color: themed($m-grey-300);
+        color: themed($m-textColor--tertiary);
       }
     }
 
