@@ -5,7 +5,6 @@ import { ConfigsService } from './services/configs.service';
 import { AuthModalService } from '../modules/auth/modal/auth-modal.service';
 import { Web3ModalModule, Web3ModalService } from '@mindsorg/web3modal-angular';
 import { createWeb3ModalConfig } from '../helpers/web3modal-configuration';
-import { LocalWalletService } from '../modules/blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
 import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
@@ -33,7 +32,6 @@ import { FormToastService } from './services/form-toast.service';
       provide: Web3WalletService,
       useFactory: Web3WalletService._,
       deps: [
-        LocalWalletService,
         TransactionOverlayService,
         PLATFORM_ID,
         ConfigsService,

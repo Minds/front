@@ -1,0 +1,74 @@
+@import 'defaults.scss';
+
+:host {
+  font-weight: 400;
+  font-size: 15px;
+
+  h6 {
+    font-weight: 500;
+  }
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  .m-walletOnchainTransfers__tableWrapper {
+    display: block;
+    overflow-x: auto;
+
+    @include horizontal-scroll;
+
+    .m-walletOnchainTransfers__tableHeaderRow {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0 2em;
+      // table-layout: fixed;
+      min-width: 600px;
+
+      @media screen and (min-width: $min-desktop) {
+        width: 100%;
+      }
+
+      thead {
+        td {
+          padding-bottom: 20px;
+          @include m-theme() {
+            border-bottom: 1px solid themed($m-borderColor--primary);
+          }
+        }
+      }
+
+      tbody {
+        td {
+          vertical-align: top;
+        }
+
+        .m-walletOnchainTransfers__tdInnerContainer {
+          display: flex;
+          align-items: center;
+        }
+
+        .m-walletOnchainTransfers__address {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          m-launchButton {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .m-walletOnchainTransfers__text--secondary {
+    @include m-theme() {
+      color: themed($m-textColor--secondary) !important;
+    }
+  }
+}

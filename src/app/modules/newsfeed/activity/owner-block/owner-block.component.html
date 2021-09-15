@@ -15,10 +15,13 @@
   class="m-activity__ownerBlock"
   [ngClass]="{ 'm-activity__ownerBlock--minimalMode': minimalMode }"
 >
-  <div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
-    <a [routerLink]="['/', username]">
-      <img [src]="avatarUrl" class="m-border" />
-    </a>
+  <div class="m-activityOwnerBlock__avatar">
+    <m-hovercard [publisher]="owner" [offset]="[0, 15]">
+      <a [routerLink]="['/', username]">
+        <img [src]="avatarUrl" class="m-border" />
+      </a>
+    </m-hovercard>
+
     <div
       *ngIf="minimalMode"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
@@ -51,23 +54,24 @@
         [routerLink]="service.canonicalUrl$ | async"
         class="m-activityOwnerBlock__permalink"
       >
-        <div *ngIf="isScheduled()" class="m-activityOwnerBlockPermalink__text">
-          <i class="material-icons">schedule</i>
-          <span>
-            {{ toReadableDate(entity.time_created) }}
-          </span>
-        </div>
         <m-relativeTimeSpan
-          *ngIf="!isScheduled()"
+          class="m-activityOwnerBlockPermalink__text"
+          *ngIf="!isScheduled() && isFeed; else absoluteDate"
           [entity]="entity"
         ></m-relativeTimeSpan>
+        <ng-template #absoluteDate>
+          <div class="m-activityOwnerBlockPermalink__text">
+            <i *ngIf="isScheduled()" class="material-icons">schedule</i>
+            <span> {{ toReadableDate(entity.time_created) }} </span>
+          </div>
+        </ng-template>
         <span
           *ngIf="
             service.displayOptions.showEditedTag && (service.isEdited$ | async)
           "
           class="m-activityOwnerBlockPermalink__text--edited"
           i18n="@@M__COMMON__EDITED"
-          >edited</span
+          >Edited</span
         >
         <ng-template [ngTemplateOutlet]="boostedTag"></ng-template>
         <div

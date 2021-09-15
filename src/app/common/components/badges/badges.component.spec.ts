@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
@@ -28,33 +28,45 @@ describe('ChannelBadgesComponent', () => {
     return fixture.debugElement.query(By.css('.m-channel--badges li'));
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [TooltipComponentMock, ChannelBadgesComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: ThemeService, useValue: themeServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [TooltipComponentMock, ChannelBadgesComponent],
+        imports: [RouterTestingModule, ReactiveFormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: ThemeService, useValue: themeServiceMock },
+        ],
+      }).compileComponents();
+    })
+  );
 
-  beforeEach(() => {
+  beforeEach(done => {
     fixture = TestBed.createComponent(ChannelBadgesComponent);
 
     comp = fixture.componentInstance;
 
     comp.user = sessionMock.user;
 
-    fixture.detectChanges();
-
     session = comp.session;
 
     clientMock.response = {};
+    fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
+    }
   });
 
   it('should show plus badge only if the user is plus', () => {
+    sessionMock.user.plus = false;
+    sessionMock.user.pro = false;
     comp.user = sessionMock.user;
     comp.badges = ['plus'];
     fixture.detectChanges();
@@ -64,7 +76,6 @@ describe('ChannelBadgesComponent', () => {
 
     sessionMock.user.plus = true;
     comp.user = sessionMock.user;
-
     fixture.detectChanges();
 
     badge = getCurrentBadge();

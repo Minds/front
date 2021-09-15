@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import {
   Component,
@@ -39,16 +39,18 @@ describe('RejectionReasonModalComponent', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MindsModalMock,
-        RejectionReasonModalComponent,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [NgCommonModule, FormsModule],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MindsModalMock,
+          RejectionReasonModalComponent,
+          ButtonComponent,
+        ], // declare the test component
+        imports: [NgCommonModule, FormsModule],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

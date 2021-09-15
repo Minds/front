@@ -30,7 +30,7 @@
   >
     <div
       class="m-composerPreview__close"
-      [hidden]="(isPosting$ | async) || (messageUrl$ | async)"
+      [hidden]="isPosting$ | async"
       (click)="removeRichEmbed()"
     >
       <m-icon iconId="close"></m-icon>

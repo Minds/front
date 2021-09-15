@@ -10,7 +10,6 @@ import { Client, Upload } from './api';
 import { Storage } from './storage';
 import { SignupModalService } from '../modules/modals/signup/service';
 import { CacheService } from './cache';
-import { HovercardService } from './hovercard';
 import { TranslationService } from './translation';
 import { RichEmbedService } from './rich-embed';
 import { Session } from './session';
@@ -113,11 +112,6 @@ export const MINDS_PROVIDERS: any[] = [
     provide: CacheService,
     useFactory: CacheService._,
     deps: [],
-  },
-  {
-    provide: HovercardService,
-    useFactory: HovercardService._,
-    deps: [Client, CacheService],
   },
   {
     provide: TranslationService,

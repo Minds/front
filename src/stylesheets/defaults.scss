@@ -81,3 +81,37 @@ $layout-sidebar-width: 80px;
     display: none;
   }
 }
+
+@mixin vertical-scroll {
+  &::-webkit-scrollbar {
+    width: 10px !important;
+    @include m-theme() {
+      background-color: rgba(themed($m-borderColor--primary), 0.35);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--contrast);
+    }
+  }
+}
+
+@mixin horizontal-scroll {
+  &::-webkit-scrollbar {
+    height: 10px !important;
+    @include m-theme() {
+      background-color: rgba(themed($m-borderColor--primary), 0.35);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--contrast);
+    }
+  }
+}

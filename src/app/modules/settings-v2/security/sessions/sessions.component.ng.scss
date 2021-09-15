@@ -60,4 +60,9 @@
       color: themed($m-textColor--secondary);
     }
   }
+
+  .m-settingsV2__deleteAllSessionContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

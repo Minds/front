@@ -88,11 +88,12 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
         this.user.guid,
         this.form.value
       );
-      if (response.status === 'success') {
-        this.formSubmitted.emit({ formSubmitted: true });
-        this.user.email_confirmed = false;
-        this.form.reset();
+      if (response.status !== 'success') {
+        throw response.message;
       }
+      this.formSubmitted.emit({ formSubmitted: true });
+      this.user.email_confirmed = false;
+      this.form.reset();
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {

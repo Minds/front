@@ -73,7 +73,9 @@ export class BoostConsoleBooster {
     this.feedsService
       .setEndpoint(
         this.type === 'content'
-          ? `api/v2/feeds/container/${this.session.getLoggedInUser().guid}/all`
+          ? `api/v2/feeds/container/${
+              this.session.getLoggedInUser().guid
+            }/objects`
           : `api/v2/feeds/container/${
               this.session.getLoggedInUser().guid
             }/activities`

@@ -5,11 +5,13 @@
   [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
-    <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
-      <a [routerLink]="['/', comment.ownerObj.username]">
-        <img [src]="getAvatarSrc() | async" class="m-border" />
-      </a>
-    </div>
+    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 10]">
+      <div class="minds-avatar">
+        <a [routerLink]="['/', comment.ownerObj.username]">
+          <img [src]="getAvatarSrc() | async" class="m-border" />
+        </a>
+      </div>
+    </m-hovercard>
   </ng-template>
   <div *ngIf="!_compact" class="m-comment__avatarWrapper">
     <ng-container *ngTemplateOutlet="avatar"></ng-container>
@@ -80,7 +82,11 @@
             <span class="m-commentOwnerRow__dot">·</span>
             <span title="Mature content"
               ><i
-                class="material-icons m-material-icons-inline m-commentOwnerRowItem__explicit"
+                class="
+                  material-icons
+                  m-material-icons-inline
+                  m-commentOwnerRowItem__explicit
+                "
                 >explicit</i
               >
             </span></ng-container
@@ -334,7 +340,9 @@
                   <!-- Cancel editing -->
                   <!-- --------------------- -->
                   <li
-                    class="m-dropdownList__item m-dropdownList__item--destructive"
+                    class="
+                      m-dropdownList__item m-dropdownList__item--destructive
+                    "
                   >
                     <div
                       (click)="
@@ -405,7 +413,9 @@
             [hidden]="attachment.getMeta().title"
           ></div>
           <div
-            class="m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed"
+            class="
+              m-attachmentPreviewWrapper m-attachmentPreviewWrapper--richEmbed
+            "
           >
             <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
               <minds-rich-embed

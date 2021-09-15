@@ -18,7 +18,7 @@ export class AttachmentService {
   readonly maxVideoFileSize: number;
   readonly maxVideoLength: number;
 
-  private meta: any = {};
+  public meta: any = {};
   private attachment: any = {};
 
   public progress: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -528,7 +528,7 @@ export class AttachmentService {
   }
 
   private checkFileType(file): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
         const maxFileSize = this.maxVideoFileSize;
         if (file.size > maxFileSize) {

@@ -1,10 +1,10 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import {
   Component,
@@ -50,28 +50,30 @@ describe('ReportCreatorComponent', () => {
     )[i];
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MdlRadioMock,
-        MaterialSwitchMock,
-        AbbrPipe,
-        ReportCreatorComponent,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [FormsModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        {
-          provide: FormToastService,
-          useValue: MockService(FormToastService),
-        },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MdlRadioMock,
+          MaterialSwitchMock,
+          AbbrPipe,
+          ReportCreatorComponent,
+          ButtonComponent,
+        ], // declare the test component
+        imports: [FormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          {
+            provide: FormToastService,
+            useValue: MockService(FormToastService),
+          },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {
@@ -163,6 +165,8 @@ describe('ReportCreatorComponent', () => {
       done: true,
     };
 
+    spyOn(window, 'confirm').and.returnValue(true);
+
     const item = getSubjectItem(3);
     item.nativeElement.click();
     fixture.detectChanges();
@@ -190,6 +194,8 @@ describe('ReportCreatorComponent', () => {
       done: false,
       message: 'There was a probem',
     };
+
+    spyOn(window, 'confirm').and.returnValue(true);
 
     spyOn(window, 'alert').and.callFake(function() {
       return true;
@@ -222,6 +228,8 @@ describe('ReportCreatorComponent', () => {
       done: false,
       message: 'error message',
     };
+
+    spyOn(window, 'confirm').and.returnValue(true);
 
     spyOn(window, 'alert').and.callFake(function() {
       return true;

@@ -102,7 +102,7 @@ export class PublisherSearchModalComponent implements OnInit {
 
     if (window.innerWidth >= 500) {
       if (this.type === 'user') {
-        this.placeholder += ` @${this.publisher.name}'s channel`;
+        this.placeholder += ` @${this.publisher.username}'s channel`;
       } else {
         this.placeholder += ` ${this.publisher.name}`;
       }

@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 import {
   Component,
@@ -28,6 +28,9 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
+import { MockComponent } from '../../../utils/mock';
 
 @Component({
   selector: 'minds-card-video',
@@ -128,30 +131,37 @@ describe('AdminBoosts', () => {
     );
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TokenPipe,
-        MindsCardVideoMock,
-        MindsCardImageMock,
-        MindsCardBlogMock,
-        MindsCardUserMock,
-        MindsActivityMock,
-        MindsCardGroupMock,
-        RejectionReasonModalMock,
-        MaterialMock,
-        MaterialSliderMock,
-        AdminBoosts,
-        ButtonComponent,
-      ], // declare the test component
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ActivityService, useValue: activityServiceMock },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          TokenPipe,
+          MindsCardVideoMock,
+          MindsCardImageMock,
+          MindsCardBlogMock,
+          MindsCardUserMock,
+          MindsActivityMock,
+          MindsCardGroupMock,
+          RejectionReasonModalMock,
+          MaterialMock,
+          MaterialSliderMock,
+          AdminBoosts,
+          ButtonComponent,
+          MockComponent({
+            selector: 'm-activity',
+            inputs: ['entity'],
+          }),
+        ], // declare the test component
+        imports: [RouterTestingModule, NgCommonModule, FormsModule],
+        providers: [
+          { provide: Session, useValue: sessionMock },
+          { provide: Client, useValue: clientMock },
+          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ActivityService, useValue: activityServiceMock },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {
@@ -286,33 +296,6 @@ describe('AdminBoosts', () => {
     expect(boost).not.toBeNull();
   }));
 
-  it('should have a quality slider with a default value of 75', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
-
-    expect(
-      fixture.debugElement.query(By.css('.boost > .quality-slider'))
-    ).not.toBeNull();
-
-    const slider: DebugElement = fixture.debugElement.query(
-      By.css('.quality-slider input[type=range]')
-    );
-    expect(slider).not.toBeNull();
-    expect(slider.nativeElement.value).toBe('75');
-  }));
-
-  it('should have a quality input with a default value of 75', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
-
-    const input: DebugElement = fixture.debugElement.query(
-      By.css('.quality-slider input[type=number]')
-    );
-    expect(input).not.toBeNull();
-
-    expect(input.nativeElement.value).toBe('75');
-  }));
-
   it('boost should have an Accept button', () => {
     fixture.detectChanges();
 
@@ -371,32 +354,6 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
 
     expect(comp.openReasonsModal).toHaveBeenCalled();
-  });
-
-  it('boost should have an e-tag button', () => {
-    fixture.detectChanges();
-
-    expect(getETagButton()).not.toBeNull();
-  });
-
-  it('Reject button should call eTag(...) and boost should be marked as explicit', () => {
-    fixture.detectChanges();
-
-    const button: DebugElement = getETagButton();
-
-    spyOn(comp, 'eTag').and.callThrough();
-    spyOn(comp, 'reject').and.stub();
-
-    comp.boosts[0].rejection_reason = 2;
-
-    button.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(comp.eTag).toHaveBeenCalled();
-    expect(comp.reject).toHaveBeenCalled();
-    expect(comp.findReason(comp.boosts[0].rejection_reason).label).toContain(
-      'Explicit'
-    );
   });
 
   it('calling reject(boost) should call api/v1/admin/boosts/:type/:guid/reject together with the rejection reason', fakeAsync(() => {

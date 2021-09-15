@@ -10,6 +10,8 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
+  pairwise,
+  startWith,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -668,43 +670,46 @@ export class ComposerService implements OnDestroy {
 
     this.richEmbedExtractorSubscription = combineLatest([
       this.messageUrl$.pipe(distinctUntilChanged()),
-      this.richEmbed$.pipe(distinctUntilChanged()),
+      // get last 2 emissions - start with '' for first emission.
+      this.richEmbed$.pipe(distinctUntilChanged(), startWith(''), pairwise()),
       this.attachment$.pipe(distinctUntilChanged()),
       this.remind$.pipe(distinctUntilChanged()),
     ])
       .pipe(debounceTime(500))
-      .subscribe(([messageUrl, richEmbed, attachment, remind]) => {
-        // Use current message URL when:
-        // a) there's no rich embed already set; or
-        // b) rich embed's type is a string (locally extracted); or
-        // c) loaded activity don't have the entity GUID set (which mean is a blog)
-        //
-        // It won't emit an empty extraction to allow keeping embeds when deleting text
-        // thanks to debounceTime pipe above.
-        //
-        // Be very careful, as it depends on the same observable we're modifying
-        if (
-          (!richEmbed ||
-            typeof richEmbed === 'string' ||
-            !richEmbed.entityGuid) &&
-          !attachment &&
-          !remind
-        ) {
-          if (!this.canEditMetadata()) {
-            return;
+      .subscribe(
+        ([messageUrl, [previousRichEmbed, richEmbed], attachment, remind]) => {
+          // Use current message URL when:
+          // a) there's no rich embed already set; or
+          // b) rich embed's type is a string (locally extracted); or
+          // c) loaded activity don't have the entity GUID set (which mean is a blog)
+          //
+          // It won't emit an empty extraction to allow keeping embeds when deleting text
+          // thanks to debounceTime pipe above.
+          //
+          // Be very careful, as it depends on the same observable we're modifying
+          if (
+            (!richEmbed ||
+              typeof richEmbed === 'string' ||
+              !richEmbed.entityGuid) &&
+            !attachment &&
+            !remind
+          ) {
+            if (!this.canEditMetadata()) {
+              return;
+            }
+
+            if (messageUrl && messageUrl !== previousRichEmbed) {
+              this.richEmbed$.next(messageUrl);
+            }
           }
 
-          if (messageUrl) {
-            this.richEmbed$.next(messageUrl);
+          // If there is an attachment already provided then reset the rich embed
+          // as we can't have both values
+          if ((richEmbed && attachment) || (richEmbed && remind)) {
+            this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
           }
         }
-
-        // If there is an attachment already provided then reset the rich embed
-        // as we can't have both values
-        if ((richEmbed && attachment) || (richEmbed && remind)) {
-          this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
-        }
-      });
+      );
   }
 
   /**

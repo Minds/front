@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { ComposerService } from '../../services/composer.service';
 import { PreviewComponent } from './preview.component';
@@ -11,35 +11,37 @@ describe('Composer Preview', () => {
     removeAttachment: true,
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        PreviewComponent,
-        MockComponent({
-          selector: 'm-icon',
-          inputs: ['from', 'iconId', 'sizeFactor'],
-        }),
-        MockComponent({
-          selector: 'm-composerAttachmentPreview',
-          inputs: ['attachmentPreviewResource'],
-          outputs: ['onPortraitOrientation'],
-        }),
-        MockComponent({
-          selector: 'm-composerRichEmbedPreview',
-          inputs: ['richEmbed'],
-        }),
-        MockComponent({
-          selector: 'm-composer__coverPhotoSelector',
-        }),
-      ],
-      providers: [
-        {
-          provide: ComposerService,
-          useValue: composerServiceMock,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          PreviewComponent,
+          MockComponent({
+            selector: 'm-icon',
+            inputs: ['from', 'iconId', 'sizeFactor'],
+          }),
+          MockComponent({
+            selector: 'm-composerAttachmentPreview',
+            inputs: ['attachmentPreviewResource'],
+            outputs: ['onPortraitOrientation'],
+          }),
+          MockComponent({
+            selector: 'm-composerRichEmbedPreview',
+            inputs: ['richEmbed'],
+          }),
+          MockComponent({
+            selector: 'm-composer__coverPhotoSelector',
+          }),
+        ],
+        providers: [
+          {
+            provide: ComposerService,
+            useValue: composerServiceMock,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;

@@ -1,19 +1,29 @@
 <div class="m-settingsV2__referralsDashboard">
-  <div class="m-settingsV2__headerLabel" i18n="@@REFERRALS__MY_REFERRALS">
-    My Referrals
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@REFERRALS__MY_REFERRALS">My Referrals</span>
   </div>
   <div class="m-settingsV2__referralsDashboard__flexTable">
     <div
       *ngIf="!noInitResults"
-      class="m-settingsV2__referralsDashboard__row m-settingsV2__referralsDashboard__headerRow"
+      class="
+        m-settingsV2__referralsDashboard__row
+        m-settingsV2__referralsDashboard__headerRow
+      "
     >
       <div
-        class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__userCol"
+        class="
+          m-settingsV2__referralsDashboard__cell
+          m-settingsV2__referralsDashboard__userCol
+        "
       >
         <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_USER">User</span>
       </div>
       <div
-        class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__statusCol m-settingsV2__referralsDashboard__statusHeader"
+        class="
+          m-settingsV2__referralsDashboard__cell
+          m-settingsV2__referralsDashboard__statusCol
+          m-settingsV2__referralsDashboard__statusHeader
+        "
       >
         <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_STATUS">Status</span>
         <m-tooltip icon="help" i18n="@@M_REFERRALS_DASHBOARD__STATUS_TOOLTIP">
@@ -21,7 +31,10 @@
         </m-tooltip>
       </div>
       <div
-        class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__registerCol"
+        class="
+          m-settingsV2__referralsDashboard__cell
+          m-settingsV2__referralsDashboard__registerCol
+        "
       >
         <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_MINDS_SIGNUP"
           >Minds Signup</span
@@ -34,7 +47,10 @@
         </m-tooltip>
       </div>
       <div
-        class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__rewardsCol"
+        class="
+          m-settingsV2__referralsDashboard__cell
+          m-settingsV2__referralsDashboard__rewardsCol
+        "
       >
         <span i18n="@@M_REFERRALS_DASHBOARD__HEADER_REWARDS_SIGNUP"
           >Rewards Signup</span
@@ -53,49 +69,70 @@
     <ng-container *ngFor="let referral of referrals">
       <ng-container *ngIf="referral.prospect">
         <div
-          class="m-settingsV2__referralsDashboard__row m-settingsV2__referralsDashboard__dataRow"
+          class="
+            m-settingsV2__referralsDashboard__row
+            m-settingsV2__referralsDashboard__dataRow
+          "
         >
-          <div
-            class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__userCol"
-          >
-            <a
-              [routerLink]="['/', referral.prospect.username]"
-              class="m-settingsV2__referralsDashboard__userAvatarWrapper"
+          <m-hovercard [publisher]="referral.prospect" [offset]="[60, 0]">
+            <div
+              class="
+                m-settingsV2__referralsDashboard__cell
+                m-settingsV2__referralsDashboard__userCol
+              "
             >
-              <img
-                class="m-settingsV2__referralsDashboard__userAvatar mdl-shadow--2dp"
-                [hovercard]="referral.prospect.guid"
-                src="/icon/{{ referral.prospect.guid }}/small/{{
-                  referral.prospect.icontime
-                }}"
-              />
-            </a>
-            <a
-              [routerLink]="['/', referral.prospect.username]"
-              class="m-settingsV2__referralsDashboard__userNameWrapper"
-            >
-              <span class="m-settingsV2__referralsDashboard__userName">{{
-                referral.prospect.username
-              }}</span>
-              <m-channel--badges
-                class="m-channel--badges-activity"
-                [user]="referral.prospect"
-                badges="[ 'admin', 'verified' ]"
-              ></m-channel--badges>
-            </a>
-          </div>
+              <a
+                [routerLink]="['/', referral.prospect.username]"
+                class="m-settingsV2__referralsDashboard__userAvatarWrapper"
+              >
+                <img
+                  class="
+                    m-settingsV2__referralsDashboard__userAvatar
+                    mdl-shadow--2dp
+                  "
+                  src="/icon/{{ referral.prospect.guid }}/small/{{
+                    referral.prospect.icontime
+                  }}"
+                />
+              </a>
+
+              <a
+                [routerLink]="['/', referral.prospect.username]"
+                class="m-settingsV2__referralsDashboard__userNameWrapper"
+              >
+                <span class="m-settingsV2__referralsDashboard__userName">{{
+                  referral.prospect.username
+                }}</span>
+                <m-channel--badges
+                  class="m-channel--badges-activity"
+                  [user]="referral.prospect"
+                  badges="[ 'admin', 'verified' ]"
+                ></m-channel--badges>
+              </a>
+            </div>
+          </m-hovercard>
+
           <div
-            class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__statusCol"
+            class="
+              m-settingsV2__referralsDashboard__cell
+              m-settingsV2__referralsDashboard__statusCol
+            "
           >
             <span>{{ referral.state | titlecase }}</span>
           </div>
           <div
-            class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__registerCol"
+            class="
+              m-settingsV2__referralsDashboard__cell
+              m-settingsV2__referralsDashboard__registerCol
+            "
           >
             <span>{{ referral.register_timestamp | date }}</span>
           </div>
           <div
-            class="m-settingsV2__referralsDashboard__cell m-settingsV2__referralsDashboard__rewardsCol"
+            class="
+              m-settingsV2__referralsDashboard__cell
+              m-settingsV2__referralsDashboard__rewardsCol
+            "
           >
             <span
               *ngIf="referral.state === 'complete'; else ping"
@@ -119,7 +156,10 @@
                     >
                       <i
                         *ngIf="referral.pingable"
-                        class="m-settingsV2__referralsDashboard__pingIcon material-icons"
+                        class="
+                          m-settingsV2__referralsDashboard__pingIcon
+                          material-icons
+                        "
                         [ngClass]="{
                           'm-settingsV2__referralsDashboard__pingIcon--wiggle':
                             referral.pingInProgress
@@ -128,7 +168,10 @@
                       >
                       <i
                         *ngIf="!referral.pingable"
-                        class="m-settingsV2__referralsDashboard__pingIcon material-icons"
+                        class="
+                          m-settingsV2__referralsDashboard__pingIcon
+                          material-icons
+                        "
                         >notifications</i
                       >
                       <span
@@ -176,7 +219,11 @@
 
     <div
       *ngIf="noInitResults"
-      class="m-settingsV2__referralsDashboard__row m-settingsV2__referralsDashboard__footer m-settingsV2__referralsDashboard__notice"
+      class="
+        m-settingsV2__referralsDashboard__row
+        m-settingsV2__referralsDashboard__footer
+        m-settingsV2__referralsDashboard__notice
+      "
     >
       <div
         class="m-settingsV2__referralsDashboard__cell m-settingsV2__desc"
@@ -187,7 +234,10 @@
     </div>
     <div
       *ngIf="!fewerResultsThanLimit"
-      class="m-settingsV2__referralsDashboard__row m-settingsV2__referralsDashboard__footer"
+      class="
+        m-settingsV2__referralsDashboard__row
+        m-settingsV2__referralsDashboard__footer
+      "
     >
       <div class="m-settingsV2__referralsDashboard__cell">
         <infinite-scroll

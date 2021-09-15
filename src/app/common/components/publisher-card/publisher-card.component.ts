@@ -4,7 +4,6 @@ import {
   ElementRef,
   HostListener,
   Input,
-  OnInit,
   ViewChild,
   Inject,
   PLATFORM_ID,
@@ -15,6 +14,7 @@ import { Session } from '../../../services/session';
 import { ConfigsService } from '../../services/configs.service';
 import { UserAvatarService } from '../../services/user-avatar.service';
 
+export type PublisherCardSize = 'small' | 'medium' | 'large';
 @Component({
   selector: 'm-publisherCard',
   templateUrl: './publisher-card.component.html',
@@ -35,9 +35,12 @@ export class PublisherCardComponent implements AfterViewInit {
   // display a blue border
   @Input() featured: boolean = false;
 
+  // Specify size
+  @Input() sizeOverride: PublisherCardSize;
+
   readonly cdnUrl: string;
   btnIconOnly: boolean = false;
-  size: 'small' | 'medium' | 'large' = 'large';
+  size: PublisherCardSize = 'medium';
 
   constructor(
     protected userAvatar: UserAvatarService,
@@ -48,9 +51,17 @@ export class PublisherCardComponent implements AfterViewInit {
     this.cdnUrl = configs.get('cdn_url');
   }
 
+  private _isHovercard: boolean;
+  @Input() set isHovercard(value: boolean) {
+    this._isHovercard = value;
+    if (value) {
+      this.showSubs = true;
+    }
+  }
+
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => this.onResize(), 0);
+      setTimeout(() => this.onResize());
     }
   }
 
@@ -62,7 +73,9 @@ export class PublisherCardComponent implements AfterViewInit {
 
     const publisherCardWidth = this.publisherCardEl.nativeElement.offsetWidth;
 
-    if (publisherCardWidth <= 350) {
+    if (this.sizeOverride) {
+      this.size = this.sizeOverride;
+    } else if (publisherCardWidth <= 350) {
       if (publisherCardWidth > 250) {
         this.size = 'medium';
       } else {

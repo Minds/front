@@ -2,21 +2,18 @@
 
 import { DebugElement } from '@angular/core';
 import {
-  async,
   ComponentFixture,
   TestBed,
   tick,
   fakeAsync,
+  waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
-import { Hovercard } from '../../../common/directives/hovercard';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { HovercardService } from '../../../services/hovercard';
-import { hovercardServiceMock } from '../../../mocks/services/hovercard-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 
@@ -58,21 +55,19 @@ describe('GroupsMembersModuleComponent', () => {
     ],
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        MaterialMock,
-        MaterialSwitchMock,
-        Hovercard,
-        GroupsMembersModuleComponent,
-      ],
-      imports: [NgCommonModule, RouterTestingModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: HovercardService, useValue: hovercardServiceMock },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          MaterialMock,
+          MaterialSwitchMock,
+          GroupsMembersModuleComponent,
+        ],
+        imports: [NgCommonModule, RouterTestingModule],
+        providers: [{ provide: Client, useValue: clientMock }],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { RESPONSE } from '@nguniversal/express-engine/tokens';
 
+@Injectable()
 export class RedirectService {
   public redirect(url: string): void {}
 }

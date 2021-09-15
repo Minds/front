@@ -1,9 +1,9 @@
 import {
-  async,
   ComponentFixture,
   TestBed,
   fakeAsync,
   tick,
+  waitForAsync,
 } from '@angular/core/testing';
 
 import {
@@ -37,26 +37,28 @@ describe('TokenIntroductionOnboardingComponent', () => {
   let comp: TokenIntroductionOnboardingComponent;
   let fixture: ComponentFixture<TokenIntroductionOnboardingComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TokenIntroductionOnboardingComponent,
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({
-          selector: 'm-token--onboarding--video',
-          inputs: ['src'],
-        }),
-      ],
-      providers: [
-        { provide: Client, useValue: clientMock },
-        { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
-        { provide: Router, useValue: RouterTestingModule },
-        { provide: Session, useValue: sessionMock },
-        { provide: Storage, useValue: storageMock },
-        { provide: ConfigsService, useValue: MockService(ConfigsService) },
-      ],
-    }).compileComponents(); // compile template and css
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          TokenIntroductionOnboardingComponent,
+          MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+          MockComponent({
+            selector: 'm-token--onboarding--video',
+            inputs: ['src'],
+          }),
+        ],
+        providers: [
+          { provide: Client, useValue: clientMock },
+          { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
+          { provide: Router, useValue: RouterTestingModule },
+          { provide: Session, useValue: sessionMock },
+          { provide: Storage, useValue: storageMock },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        ],
+      }).compileComponents(); // compile template and css
+    })
+  );
 
   // synchronous beforeEach
   beforeEach(done => {

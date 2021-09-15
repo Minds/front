@@ -43,7 +43,6 @@ import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
 import { InlineAutoGrow } from './directives/inline-autogrow';
 import { Emoji } from './directives/emoji';
-import { Hovercard } from './directives/hovercard';
 import { ScrollLock } from './directives/scroll-lock';
 import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
@@ -188,6 +187,10 @@ import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
+import { NgxPopperjsModule } from 'ngx-popperjs';
+import { HovercardComponent } from './components/hovercard/hovercard.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { JsonLdService } from './services/jsonld.service';
 
 const routes: Routes = [
   {
@@ -205,6 +208,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    NgxPopperjsModule,
+    QRCodeModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
@@ -245,7 +250,6 @@ const routes: Routes = [
     InlineAutoGrow,
     Emoji,
     MindsEmoji,
-    Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
@@ -349,6 +353,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    HovercardComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -386,7 +391,6 @@ const routes: Routes = [
     InlineAutoGrow,
     MindsEmoji,
     Emoji,
-    Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
@@ -487,6 +491,8 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    NgxPopperjsModule,
+    HovercardComponent,
   ],
   providers: [
     SiteService,
@@ -536,6 +542,7 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    JsonLdService,
   ],
 })
 export class CommonModule {}

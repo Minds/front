@@ -99,7 +99,7 @@ m-modal-signup-on-action {
       @media screen and (min-width: $max-mobile) {
         flex: 1;
       }
-      margin: $minds-margin/2;
+      margin: $minds-margin * 0.5;
 
       img {
         min-width: 130px;
