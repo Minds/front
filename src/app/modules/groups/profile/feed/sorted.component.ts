@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { Session } from '../../../../services/session';
 import { SortedService } from './sorted.service';
@@ -82,7 +82,6 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
     protected sortedService: SortedService,
     protected session: Session,
     protected router: Router,
-    protected route: ActivatedRoute,
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public groupsSearch: GroupsSearchService
