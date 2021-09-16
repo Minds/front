@@ -57,6 +57,8 @@ export class AuthModalService {
               await this.onboardingV3.open();
             } catch (e) {
               if (e === 'DismissedModalException') {
+                // reload so that widget updates with save.
+                this.onboardingV3.load();
                 return; // modal dismissed, do nothing
               }
             }

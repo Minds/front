@@ -22,6 +22,7 @@ import { ClientMetaDirective } from '../../../common/directives/client-meta.dire
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
+import { Experiment } from '../../experiments/experiments.service';
 
 /**
  * Views
@@ -48,6 +49,11 @@ type ChannelView =
   providers: [ChannelsV2Service, ChannelEditIntentService, SeoService],
 })
 export class ChannelComponent implements OnInit, OnDestroy {
+  galleryExperiment: Experiment<unknown> = {
+    key: 'channel-gallery',
+    variations: ['without-gallery', 'with-gallery'],
+  };
+
   /**
    * Input that sets the current channel
    * @param channel
@@ -263,6 +269,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * Component destruction
    */
   ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }

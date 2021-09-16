@@ -22,17 +22,6 @@ export class MultiFactorAuthTOTPRecoveryComponent extends AbstractMFAFormCompone
    * @returns { void }
    */
   public onVerifyClick(): void {
-    this.subscriptions.push(
-      this.code$.pipe(take(1), throttleTime(1000)).subscribe((code: string) => {
-        this.service.validateRecoveryCode(code);
-      })
-    );
-  }
-  /**
-   * Should be disabled.
-   * @returns { Observable<boolean> } - true if should be disabled.
-   */
-  get disabled$(): Observable<boolean> {
-    return this.code$.pipe(map((code: string) => code.length < 6));
+    this.service.validateRecoveryCode(this.code);
   }
 }

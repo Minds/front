@@ -47,11 +47,6 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     true
   );
 
-  /**
-   * Pushed to on next button clicked. Used so that exterior service can
-   */
-  @Input() nextClicked$: BehaviorSubject<boolean>;
-
   constructor(
     private fb: FormBuilder,
     private session: Session,
@@ -90,12 +85,6 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
 
     // setup subscriptions
     this.subscriptions.push(
-      // save on next clicked
-      this.nextClicked$.subscribe(clicked => {
-        if (clicked) {
-          this.save();
-        }
-      }),
       // set new avatar src on change
       this.channelEditService.avatar$.subscribe(avatar => {
         const channel = this.channelEditService.channel$.getValue();
@@ -142,7 +131,7 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
    * Saves bio and display name using channel service.
    * @returns { Promise<void> } - awaitable.
    */
-  public async save(): Promise<void> {
+  public async saveAsync(): Promise<void> {
     this.inProgressService.next(true);
 
     this.channelEditService.bio$.next(this.form.get('bio').value);

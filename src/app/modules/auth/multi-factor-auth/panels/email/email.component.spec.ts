@@ -3,17 +3,17 @@ import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 import { MockService } from '../../../../../utils/mock';
 import { MultiFactorAuthService } from '../../services/multi-factor-auth-service';
-import { MultiFactorAuthSMSComponent } from './sms.component';
+import { MultiFactorAuthEmailComponent } from './email.component';
 
-describe('MultiFactorAuthSMSComponent', () => {
-  let comp: MultiFactorAuthSMSComponent;
-  let fixture: ComponentFixture<MultiFactorAuthSMSComponent>;
+describe('MultiFactorAuthEmailComponent', () => {
+  let comp: MultiFactorAuthEmailComponent;
+  let fixture: ComponentFixture<MultiFactorAuthEmailComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [FormsModule],
-        declarations: [MultiFactorAuthSMSComponent, ButtonComponent],
+        declarations: [MultiFactorAuthEmailComponent, ButtonComponent],
         providers: [
           {
             provide: MultiFactorAuthService,
@@ -25,7 +25,7 @@ describe('MultiFactorAuthSMSComponent', () => {
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MultiFactorAuthSMSComponent);
+    fixture = TestBed.createComponent(MultiFactorAuthEmailComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -34,18 +34,9 @@ describe('MultiFactorAuthSMSComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should call to validate sms code on verify click', () => {
+  it('should call to validate email code on verify click', () => {
     comp.onVerifyClick();
 
     expect((comp as any).service.completeMultiFactor).toHaveBeenCalled();
-  });
-
-  it('should call to resend sms and start retry timer', () => {
-    comp.resendSMSTimer();
-
-    expect((comp as any).service.completeMultiFactor).toHaveBeenCalled();
-    const sub = comp.timer$.subscribe(val => {
-      expect(val > 0);
-    });
   });
 });
