@@ -51,7 +51,14 @@ export class FeedsService implements OnDestroy {
         if (feed.length) this.inProgress.next(true);
       }),
       switchMap(async feed => {
-        return feed.slice(0, await this.pageSize.pipe(first()).toPromise());
+        const slicedFeed = feed.slice(
+          0,
+          await this.pageSize.pipe(first()).toPromise()
+        );
+
+        if (this.reversedPagination) return slicedFeed.reverse();
+
+        return slicedFeed;
       }),
       switchMap(feed =>
         this.entitiesService
@@ -239,10 +246,6 @@ export class FeedsService implements OnDestroy {
           response.entities = response.activity;
         } else if (!response.entities && response.users) {
           response.entities = response.users;
-        }
-
-        if (this.reversedPagination) {
-          response.entities = response.entities.reverse();
         }
 
         if (response.entities?.length) {
