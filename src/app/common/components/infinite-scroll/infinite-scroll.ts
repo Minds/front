@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 
     <ng-container *ngIf="!iconOnly && !hideManual">
       <m-link-button
+        *ngIf="!inProgress"
         [disabled]="!moreData"
         (click)="onLoadMoreClick($event)"
         [url]="nextPageUrl"
