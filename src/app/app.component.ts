@@ -33,6 +33,7 @@ import { MetaService } from './common/services/meta.service';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Upload } from './services/api/upload';
 import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
+import { ExperimentsService } from './modules/experiments/experiments.service';
 
 @Component({
   selector: 'm-app',
@@ -77,18 +78,20 @@ export class Minds implements OnInit, OnDestroy {
     private metaService: MetaService,
     private configs: ConfigsService,
     private cd: ChangeDetectorRef,
-    private socketsService: SocketsService
+    private socketsService: SocketsService,
+    private experimentsService: ExperimentsService
   ) {
     this.name = 'Minds';
 
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
-
-    this.router.initialNavigation();
   }
 
   async ngOnInit() {
+    // Start the router
+    this.router.initialNavigation();
+
     this.clientError$ = this.client.onError.subscribe(
       this.checkXHRError.bind(this)
     );
@@ -119,6 +122,9 @@ export class Minds implements OnInit, OnDestroy {
       // Setup sentry/diagnostic configs
       this.diagnostics.setUser(this.configs.get('user'));
       this.diagnostics.listen(); // Listen for user changes
+
+      // Setup our AB testing
+      this.experimentsService.initGrowthbook();
 
       // if (this.sso.isRequired()) {
       //   this.sso.connect();
