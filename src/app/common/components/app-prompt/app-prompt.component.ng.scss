@@ -7,7 +7,7 @@
 
   @include z-index(popover--modal);
 
-  .m-app-prompt__container {
+  .m-appPrompt__container {
     position: absolute;
     bottom: 0;
     display: flex;
@@ -28,33 +28,33 @@
     }
   }
 
-  .m-app-prompt__header {
+  .m-appPrompt__header {
     width: 100%;
     height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 16px;
+
+    .m-appPrompt__header__logo {
+      width: 35px;
+      height: 35px;
+      margin-right: 16px;
+    }
+
+    .m-appPrompt__header__title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .m-appPrompt__header__closeIcon {
+      position: absolute;
+      right: 16px;
+      padding: 16px;
+    }
   }
 
-  .m-app-prompt__logo {
-    width: 35px;
-    height: 35px;
-    margin-right: 16px;
-  }
-
-  .m-app-prompt__title {
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .m-app-prompt__close-icon {
-    position: absolute;
-    right: 16px;
-    padding: 16px;
-  }
-
-  .m-app-prompt__body {
+  .m-appPrompt__body {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -63,24 +63,24 @@
     margin-bottom: 50px;
     padding-top: 16px;
 
-    .m-app-prompt__body__logo-container {
+    .m-appPrompt__body__logoContainer {
       background-color: white;
       border-radius: 15px;
       padding: 10px;
       margin-bottom: 16px;
     }
 
-    .m-app-prompt__body__logo {
+    .m-appPrompt__body__logo {
       width: 100px;
       height: 100px;
     }
 
-    .m-app-prompt__body__title {
+    .m-appPrompt__body__title {
       font-size: 30px;
       margin-bottom: 32px;
     }
 
-    .m-app-prompt__body__description {
+    .m-appPrompt__body__description {
       margin-bottom: 16px;
       font-size: 20px;
       @include m-theme() {
@@ -88,14 +88,14 @@
       }
     }
 
-    .m-app-prompt__body__reviews {
+    .m-appPrompt__body__reviews {
       margin-bottom: 16px;
       @include m-theme() {
         color: themed($m-textColor--tertiary);
       }
     }
 
-    .m-app-prompt__body__download-container {
+    .m-appPrompt__body__downloadContainer {
       display: flex;
       flex-direction: column;
       padding-top: 32px;
