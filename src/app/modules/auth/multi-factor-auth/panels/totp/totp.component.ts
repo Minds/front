@@ -21,11 +21,7 @@ export class MultiFactorAuthTOTPComponent extends AbstractMFAFormComponent {
    * @returns { void }
    */
   public onVerifyClick(): void {
-    this.subscriptions.push(
-      this.code$.pipe(take(1), throttleTime(1000)).subscribe((code: string) => {
-        this.service.validateCode(code);
-      })
-    );
+    this.service.completeMultiFactor(this.code);
   }
 
   /**
