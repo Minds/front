@@ -117,10 +117,10 @@ export class AppPromptService implements OnDestroy {
       // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
       var now = new Date().valueOf();
       setTimeout(function() {
-        if (new Date().valueOf() - now < 50) {
+        if (new Date().valueOf() - now < 25) {
           fallback();
         }
-      }, 50);
+      }, 25);
     } else {
       // delay the fallback to let the animations of the
       // platform finish
@@ -158,7 +158,8 @@ export class AppPromptService implements OnDestroy {
 
     // stop running and shrink if the the user has been
     // away for more than timeout's duration
-    if (Date.now() - this.lastDateNow > 1000) {
+    if (this.lastDateNow && Date.now() - this.lastDateNow > 1000) {
+      this.lastDateNow = undefined;
       return cb();
     }
 
