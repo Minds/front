@@ -32,7 +32,7 @@ export class AppPromptService implements OnDestroy {
   ngOnInit(): void {
     if (this.hasAvailableApp()) {
       this.setPlatform();
-      this.open();
+      this.activate();
     }
   }
 
@@ -65,7 +65,7 @@ export class AppPromptService implements OnDestroy {
    * Open the prompt.
    * @returns { AppPromptService } - chain-able.
    */
-  public open(): AppPromptService {
+  public activate(): AppPromptService {
     this.state$.next('active');
     return this;
   }
@@ -84,13 +84,9 @@ export class AppPromptService implements OnDestroy {
    * @returns { boolean } true if platform has app available.
    */
   public hasAvailableApp(): boolean {
-    // console.log('checking if has app'); //TODO: Diagnostics - remove
     if (!isPlatformBrowser(this.platformId)) {
       return false;
     }
-    // console.log('this.platformId.toString()', this.platformId.toString()); //TODO: Diagnostics - remove
-    // console.log('isMobileOrTablet() is...'); //TODO: Diagnostics - remove
-    // console.log(isMobileOrTablet() ? 'true' : 'false'); //TODO: Diagnostics - remove
     return isMobileOrTablet();
   }
 
@@ -99,43 +95,76 @@ export class AppPromptService implements OnDestroy {
    * @returns { void }
    */
   public setPlatform(): void {
-    // console.log('ua ' + navigator.userAgent);
-    // console.log('setting platform...'); //TODO: Diagnostics - remove
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
     if (/iPad|iPhone|iPod/i.test(navigator.userAgent)) {
-      // console.log('>>>>>>.is iOS'); //TODO: Diagnostics - remove
       this.platform$.next('iphone');
       return;
     }
     if (/android/i.test(navigator.userAgent)) {
-      // console.log('>>>>>>is android'); //TODO: Diagnostics - remove
       this.platform$.next('android');
     }
   }
 
   // opens the app and if the app wasn't opened calls the fallback function
   private openAppWithFallback(fallback: () => void) {
-    (window as any).location = 'mindsapp://';
+    this.watchUserPresence(() => {
+      this.activate();
+    });
 
-    // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
-    var now = new Date().valueOf();
-
-    // FIXME: even after user visits here after much
-    // time has passed, this new Date().valueOf() will
-    // still return the original date
-    setTimeout(function() {
-      if (new Date().valueOf() - now < 550) {
+    if (this.platform$.getValue() === 'iphone') {
+      // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
+      var now = new Date().valueOf();
+      setTimeout(function() {
+        if (new Date().valueOf() - now < 50) {
+          fallback();
+        }
+      }, 50);
+    } else {
+      // delay the fallback to let the animations of the
+      // platform finish
+      setTimeout(() => {
         fallback();
-      }
-    }, 500);
+      }, 1000);
+    }
+
+    // attempt to open the app
+    (window as any).location = 'mindsapp://';
   }
 
   // Opens app store
   private openAppStore() {
     (window as any).location =
       'https://itunes.apple.com/us/app/minds-com/id961771928';
+  }
+
+  private lastDateNow: number;
+
+  /**
+   * a timer to run every 500ms.
+   *
+   * this is a hack to detect whether the user has left the
+   * browser or not. This works because when the user leaves
+   * the browser the timeouts will be freezed and therefore
+   * the diff of `Date.now()` with the last `Date.now()` will
+   * be larger than the timer's duration
+   *
+   * @returns { void }
+   */
+  watchUserPresence(cb: () => void): void {
+    // stop running if the prompt was dismissed
+    if (this.state$.getValue() === 'dismissed') return;
+
+    // stop running and shrink if the the user has been
+    // away for more than timeout's duration
+    if (Date.now() - this.lastDateNow > 1000) {
+      return cb();
+    }
+
+    this.lastDateNow = Date.now();
+
+    setTimeout(() => this.watchUserPresence(cb), 500);
   }
 
   /**

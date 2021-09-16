@@ -1,6 +1,6 @@
-<div [@fader]="state$ | async" *ngIf="(state$ | async) !== 'dismissed'">
+<div [@fader]="state$ | async">
   <div class="m-app-prompt__container">
-    <div class="m-app-prompt__header" (click)="onClick()">
+    <div class="m-app-prompt__header" (click)="onClick($event)">
       <img
         class="m-app-prompt__logo"
         [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
@@ -10,7 +10,7 @@
       </span>
 
       <m-icon
-        (click)="onClose()"
+        (click)="onClose($event)"
         class="m-app-prompt__close-icon"
         from="ion"
         iconId="close"

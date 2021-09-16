@@ -1,6 +1,5 @@
 import { ConfigsService } from './../../services/configs.service';
 import { Component, HostListener } from '@angular/core';
-
 import {
   animate,
   keyframes,
@@ -24,39 +23,48 @@ import { BehaviorSubject } from 'rxjs';
       state(
         'active',
         style({
-          visibility: 'visible',
           height: 67,
+          transform: 'translateY(0)',
         })
       ),
       state(
         'expanded',
         style({
-          visibility: 'visible',
           height: '85vh',
+          transform: 'translateY(0)',
         })
       ),
       state(
         'dismissed',
         style({
-          visibility: 'hidden',
-          maxHeight: 0,
           height: 0,
+          transform: 'translateY(100px)',
         })
       ),
-      transition(':enter', [
+      transition('dismissed => active', [
         animate(
-          '300ms cubic-bezier(0.25, 0.1, 0.25, 1)',
+          '450ms ease',
           keyframes([
             style({
-              transform: 'translateY(300px)',
+              transform: 'translateY(100px)',
+              height: 0,
             }),
-            style({
-              transform: 'translateY(0px)',
-            }),
+            style({ height: 67, transform: 'translateY(0)' }),
           ])
         ),
       ]),
-      transition('* => expanded', [
+      transition('expanded => active', [
+        animate(
+          '450ms ease',
+          keyframes([
+            style({
+              height: '85vh',
+            }),
+            style({ height: 67 }),
+          ])
+        ),
+      ]),
+      transition('active => expanded', [
         animate(
           '450ms ease',
           keyframes([
@@ -67,20 +75,30 @@ import { BehaviorSubject } from 'rxjs';
           ])
         ),
       ]),
-      transition('* => dismissed', [
+      transition('expanded => dismissed', [
         animate(
           '450ms ease',
           keyframes([
             style({
-              opacity: 1,
-              maxHeight: '*',
-              height: '*',
+              height: '85vh',
             }),
-            style({ opacity: 0 }),
             style({
-              maxHeight: 0,
-              visibility: 'hidden',
               height: 0,
+              transform: 'translateY(100px)',
+            }),
+          ])
+        ),
+      ]),
+      transition('active => dismissed', [
+        animate(
+          '450ms ease',
+          keyframes([
+            style({
+              height: 67,
+            }),
+            style({
+              height: 0,
+              transform: 'translateY(100px)',
             }),
           ])
         ),
@@ -99,13 +117,11 @@ export class AppPromptComponent {
   }
 
   ngOnInit(): void {
-    console.log('initing in component');
     if (this.service.hasAvailableApp()) {
-      console.log('settings platform from component');
       this.service.setPlatform();
-      console.log('opening...');
-      this.service.open();
-      console.log(this.service.platform$.getValue());
+
+      // open with 2000ms delay
+      setTimeout(() => this.service.activate(), 2000);
     }
   }
 
@@ -119,14 +135,18 @@ export class AppPromptComponent {
   /**
    * Triggered on navigate click.
    */
-  public onClick(): void {
+  public onClick(e): void {
+    e.preventDefault();
+    if (this.service.state$.getValue() !== 'active') return;
+
     this.service.redirect();
   }
 
   /**
    * Triggered on close click.
    */
-  public onClose(): void {
+  public onClose(e): void {
+    e.stopPropagation();
     this.service.close();
   }
 }
