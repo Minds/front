@@ -1,3 +1,4 @@
+import { OnInit } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';

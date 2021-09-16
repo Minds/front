@@ -11,13 +11,13 @@ import { AbstractMFAFormComponent } from '../abstract/abstract-mfa-form.componen
  * MFA input form for SMS.
  */
 @Component({
-  selector: 'm-multiFactorAuth__sms',
-  templateUrl: './sms.component.html',
+  selector: 'm-multiFactorAuth__email',
+  templateUrl: './email.component.html',
   styleUrls: ['../mfa-panel.component.ng.scss'],
 })
-export class MultiFactorAuthSMSComponent extends AbstractMFAFormComponent {
+export class MultiFactorAuthEmailComponent extends AbstractMFAFormComponent {
   /**
-   * Holds timer for SMS resend.
+   * Holds timer for Email resend.
    */
   public timer$: Observable<number>;
 
@@ -45,7 +45,7 @@ export class MultiFactorAuthSMSComponent extends AbstractMFAFormComponent {
    * Resends SMS and starts timer counting down from 30 seconds.
    * @returns { void }
    */
-  public resendSMSTimer(): void {
+  public resendTimer(): void {
     this.code = '';
     this.service.completeMultiFactor(null);
 
