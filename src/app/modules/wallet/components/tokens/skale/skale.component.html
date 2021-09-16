@@ -1,0 +1,16 @@
+<h6>
+  MINDS <=> skMINDS Bridge
+</h6>
+
+<span>MINDS: {{ mindsTokenBalance ?? '...'}} </span>
+<input
+  type="number"
+  class="m-input"
+  [(ngModel)]="amount"
+  placeholder="Enter amount"
+/>
+<m-button (onAction)="approve()">Approve</m-button>
+<m-button (onAction)="deposit()">Deposit</m-button>
+<m-button (onAction)="withdraw()">Withdraw</m-button>
+<m-button (onAction)="switchNetworkSkale()">Connect SKALE</m-button>
+<m-button (onAction)="switchNetworkRinkeby()">Connect Rinkeby</m-button>

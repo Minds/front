@@ -42,6 +42,7 @@ import { OnchainTransferModalService } from './components/components/onchain-tra
 import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
 import { WalletSharedModule } from './wallet-shared.module';
 import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
+import { WalletSkaleSummaryComponent } from './components/tokens/skale/skale.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -90,6 +91,10 @@ export const WALLET_ROUTES: Routes = [
             path: 'transactions',
             canActivate: [TabStorageGuard],
             component: WalletTransactionsTokensComponent,
+          },
+          {
+            path: 'skale',
+            component: WalletSkaleSummaryComponent,
           },
           {
             path: 'settings',
@@ -209,6 +214,7 @@ export const WALLET_ROUTES: Routes = [
     WalletTokenRewardsComponent,
     WalletEarningsComponent,
     WalletTokensDropdownMenu,
+    WalletSkaleSummaryComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [

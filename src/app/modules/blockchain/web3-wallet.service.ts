@@ -223,7 +223,7 @@ export class Web3WalletService {
     return txHash;
   }
 
-  getContract(address: Address, abi: string[]): Contract {
+  getContract(address: Address, abi: any[]): Contract {
     return new Contract(address, abi);
   }
 

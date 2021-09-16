@@ -1,0 +1,14 @@
+@import 'defaults.scss';
+
+:host {
+  font-weight: 400;
+  font-size: 15px;
+
+  h6 {
+    font-weight: 500;
+  }
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
