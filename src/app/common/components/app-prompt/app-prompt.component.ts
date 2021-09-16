@@ -23,22 +23,19 @@ import { BehaviorSubject } from 'rxjs';
       state(
         'active',
         style({
-          height: 67,
-          transform: 'translateY(0)',
+          transform: 'translateY(calc(80vh - 80px))',
         })
       ),
       state(
         'expanded',
         style({
-          height: '85vh',
           transform: 'translateY(0)',
         })
       ),
       state(
         'dismissed',
         style({
-          height: 0,
-          transform: 'translateY(100px)',
+          transform: 'translateY(100vh)',
         })
       ),
       transition('dismissed => active', [
@@ -46,10 +43,9 @@ import { BehaviorSubject } from 'rxjs';
           '450ms ease',
           keyframes([
             style({
-              transform: 'translateY(100px)',
-              height: 0,
+              transform: 'translateY(100vh)',
             }),
-            style({ height: 67, transform: 'translateY(0)' }),
+            style({ transform: 'translateY(calc(80vh - 80px))' }),
           ])
         ),
       ]),
@@ -58,9 +54,9 @@ import { BehaviorSubject } from 'rxjs';
           '450ms ease',
           keyframes([
             style({
-              height: '85vh',
+              transform: 'translateY(0)',
             }),
-            style({ height: 67 }),
+            style({ transform: 'translateY(calc(80vh - 80px))' }),
           ])
         ),
       ]),
@@ -69,9 +65,9 @@ import { BehaviorSubject } from 'rxjs';
           '450ms ease',
           keyframes([
             style({
-              height: '*',
+              transform: 'translateY(calc(80vh - 80px))',
             }),
-            style({ height: '85vh', visibility: 'visible' }),
+            style({ transform: 'translateY(0)' }),
           ])
         ),
       ]),
@@ -80,12 +76,9 @@ import { BehaviorSubject } from 'rxjs';
           '450ms ease',
           keyframes([
             style({
-              height: '85vh',
+              transform: 'translateY(0)',
             }),
-            style({
-              height: 0,
-              transform: 'translateY(100px)',
-            }),
+            style({ transform: 'translateY(100vh)' }),
           ])
         ),
       ]),
@@ -94,11 +87,10 @@ import { BehaviorSubject } from 'rxjs';
           '450ms ease',
           keyframes([
             style({
-              height: 67,
+              transform: 'translateY(calc(80vh - 80px))',
             }),
             style({
-              height: 0,
-              transform: 'translateY(100px)',
+              transform: 'translateY(100vh)',
             }),
           ])
         ),
