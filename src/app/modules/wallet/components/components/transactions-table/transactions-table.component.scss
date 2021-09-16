@@ -39,6 +39,10 @@
 m-walletTransactionsTable {
   table {
     width: 100%;
+
+    @media screen and (min-width: $min-desktop) {
+      padding: 0 50px;
+    }
   }
   tr {
     vertical-align: top;

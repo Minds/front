@@ -129,28 +129,6 @@
             tx.amount | currency: currency
           }}</span>
         </td>
-        <td
-          class="m-walletTransactionsTable__totalWrapper"
-          *ngIf="
-            (currency === 'tokens' && !filterApplied) || currency !== 'tokens'
-          "
-        >
-          <span
-            class="m-walletTransactionsTable__total--int"
-            *ngIf="currency === 'tokens'"
-            >{{ tx.runningTotal.int | number: '1.0-0' }}</span
-          >
-          <span
-            class="m-walletTransactionsTable__total--int"
-            *ngIf="currency !== 'tokens'"
-            >{{ tx.runningTotal.int | currency: currency | slice: 0:-3 }}</span
-          >
-          <span
-            class="m-walletTransactionsTable__total--frac"
-            *ngIf="tx.runningTotal.frac"
-            >.{{ tx.runningTotal.frac }}</span
-          >
-        </td>
       </tr>
       <tr class="m-walletTransactionsTable__row--spacer"></tr>
     </ng-container>
