@@ -12,7 +12,6 @@ import { MindsHttpClient } from '../../common/api/client.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { EntitiesService } from '../../common/services/entities.service';
-import { MetaService } from '../../common/services/meta.service';
 import { RelatedContentService } from '../../common/services/related-content.service';
 import { SiteService } from '../../common/services/site.service';
 import { Client } from '../../services/api/client';
@@ -40,7 +39,6 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   ],
   providers: [
     SiteService,
-    MetaService,
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
