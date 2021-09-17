@@ -52,7 +52,6 @@
     "@sentry/browser": "^6.9.0",
     "@sentry/node": "^6.9.0",
     "@sentry/tracing": "^6.9.0",
-    "@skalenetwork/ima-js": "^0.0.16",
     "@transak/transak-sdk": "^1.0.28",
     "@types/express": "^4.17.13",
     "@types/hls.js": "^0.13.3",
