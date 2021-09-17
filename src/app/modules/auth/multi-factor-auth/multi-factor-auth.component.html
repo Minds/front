@@ -16,7 +16,7 @@
 <!-- NOT embedded mode -->
 <ng-container *ngIf="!embedded">
   <div class="m-mfaBase__header" [ngStyle]="getBannerSrc()">
-    Login to Minds
+    Two-factor Required
   </div>
   <div class="m-mfaBase__panelContainer" [ngSwitch]="activePanel$ | async">
     <m-multiFactorAuth__totp
@@ -27,6 +27,10 @@
       *ngSwitchCase="'sms'"
       (onVerify)="onSaveIntent()"
     ></m-multiFactorAuth__sms>
+    <m-multiFactorAuth__email
+      *ngSwitchCase="'email'"
+      (onVerify)="onSaveIntent()"
+    ></m-multiFactorAuth__email>
     <m-multiFactorAuth__totpRecovery
       *ngSwitchCase="'totp-recovery'"
     ></m-multiFactorAuth__totpRecovery>

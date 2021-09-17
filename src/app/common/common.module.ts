@@ -186,9 +186,12 @@ import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
+import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
+import { DateRangeModalService } from './components/date-range-modal/date-range-modal.services';
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { JsonLdService } from './services/jsonld.service';
 
 const routes: Routes = [
   {
@@ -350,6 +353,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    DateRangeModalComponent,
     HovercardComponent,
   ],
   exports: [
@@ -487,6 +491,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
   ],
@@ -538,6 +543,8 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    DateRangeModalService,
+    JsonLdService,
   ],
 })
 export class CommonModule {}

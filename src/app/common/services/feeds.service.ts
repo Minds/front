@@ -25,6 +25,7 @@ export class FeedsService implements OnDestroy {
   params: any = { sync: 1 };
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
+  fromTimestamp: string = '';
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -161,6 +162,18 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Sets fromTimestamp
+   * NOTE: "from" refers to the starting point (top) of the feed,
+   * not chronological time. Since by default feeds start with the most recent activity,
+   * "from" should be the most recent date
+   * @param {string } export - whether or not to export user's subscribers_count and subscriptions_count.
+   */
+  setFromTimestamp(value: string): FeedsService {
+    this.fromTimestamp = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
   fetch(replace: boolean = false): Promise<any> {
@@ -170,6 +183,10 @@ export class FeedsService implements OnDestroy {
 
     const endpoint = this.endpoint;
 
+    let fromTimestamp = this.pagingToken
+      ? this.pagingToken
+      : this.fromTimestamp;
+
     return this.client
       .get(this.endpoint, {
         ...this.params,
@@ -177,7 +194,7 @@ export class FeedsService implements OnDestroy {
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
-          from_timestamp: this.pagingToken,
+          from_timestamp: fromTimestamp,
         },
       })
       .then((response: any) => {
@@ -240,6 +257,7 @@ export class FeedsService implements OnDestroy {
     ) {
       this.fetch(); // load the next 150 in the background
     }
+
     this.loadMore();
   }
 

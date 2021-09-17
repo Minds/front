@@ -5,6 +5,7 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { NSFWSelectorComponent } from '../../../common/components/nsfw-selector/nsfw-selector.component';
 import { MockService } from '../../../utils/mock';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
+import { analyticsServiceMock } from '../../../../tests/analytics-service-mock.spec';
 
 describe('NewsfeedService', () => {
   let service: NewsfeedService;
@@ -29,7 +30,8 @@ describe('NewsfeedService', () => {
     service = new NewsfeedService(
       clientMock,
       sessionMock,
-      NSFWSelectorServiceMock
+      NSFWSelectorServiceMock,
+      analyticsServiceMock
     );
     clientMock.response = {};
   });
