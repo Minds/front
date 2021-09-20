@@ -106,10 +106,7 @@ export class HomepageV2Component implements OnInit {
     if (this.featuresService.has('onboarding-october-2020')) {
       try {
         await this.authModal.open();
-
-        if (this.router.url === '/') {
-          this.router.navigate(['/newsfeed/subscriptions']);
-        }
+        this.router.navigate(['/newsfeed/subscriptions']);
       } catch (e) {
         if (e === 'DismissedModalException') {
           return; // modal dismissed, do nothing
