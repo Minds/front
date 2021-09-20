@@ -47,7 +47,8 @@
   </ng-template>
 </div>
 
-<div class="m-twoFactor__optionContainer">
+<!-- Deprecated - only show if SMS is already enabled -->
+<div class="m-twoFactor__optionContainer" *ngIf="smsEnabled$ | async">
   <h4 class="m-twoFactor__optionTitle">
     <ng-container i18n="@@MFA_SETTINGS_ROOT__SMS">SMS</ng-container>
     <span
