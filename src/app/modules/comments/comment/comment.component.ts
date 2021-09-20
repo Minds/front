@@ -112,6 +112,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   // Compact view may be determined by input or window width
   _compact: boolean = false;
 
+  commentAgeOnLoadMs: number;
+
   @Input() set compact(value: boolean) {
     this._compact = value;
     if (!value) {
@@ -152,7 +154,9 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       );
     }
 
-    if (this.session.getLoggedInUser().guid === this.comment.ownerObj.guid) {
+    this.commentAgeOnLoadMs = Date.now() - this.comment.time_created * 1000;
+
+    if (this.isOwner) {
       this.showMature = true;
     }
 
@@ -529,5 +533,14 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     return of(
       `${this.cdnUrl}icon/${this.comment.ownerObj.guid}/small/${this.comment.ownerObj.icontime}`
     );
+  }
+
+  get isOwner(): boolean {
+    return this.session.getLoggedInUser().guid === this.comment.ownerObj.guid;
+  }
+
+  // Very new comments (less than 10s old) should be expanded for owner by default
+  get disableReadMore(): boolean {
+    return this.isOwner && this.commentAgeOnLoadMs < 10000;
   }
 }
