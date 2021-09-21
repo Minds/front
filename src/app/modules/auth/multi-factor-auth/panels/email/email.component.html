@@ -1,6 +1,6 @@
 <span class="m-mfaAuth__subheader" i18n="@@MFA_AUTH__SENT_SMS_CODE"
-  >Minds just sent a 6-digit authentication code to your registered phone
-  number.</span
+  >Minds just sent a 6-digit authentication code to your registered email
+  address.</span
 >
 
 <div class="m-mfaAuth__formContainer">
@@ -34,7 +34,7 @@
   >
   <a
     class="m-mfaAuth__footerLink"
-    (click)="resendSMSTimer()"
+    (click)="resendTimer()"
     *ngIf="(timer$ | async) <= 0; else wait"
     i18n="@@MFA_AUTH__RESEND"
     >Resend</a

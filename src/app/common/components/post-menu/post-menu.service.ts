@@ -265,7 +265,11 @@ export class PostMenuService {
   async block(): Promise<void | any> {
     this.isBlocked$.next(true);
     try {
-      await this.client.put('api/v1/block/' + this.entity.ownerObj.guid, {});
+      // Allow username in case guid isn't available bc channel is disabled
+      const user = this.entity.ownerObj.guid || this.entity.ownerObj.username;
+
+      await this.client.put('api/v1/block/' + user, {});
+      this.blockListService.add(`${this.entity.ownerObj.guid}`);
     } catch (e) {
       if (e.errorId === 'Minds::Core::Security::Block::BlockLimitException') {
         this.formToastService.error(

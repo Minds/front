@@ -129,7 +129,6 @@ import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdow
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
-import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { RelatedContentService } from './services/related-content.service';
@@ -527,7 +526,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    MetaService,
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
