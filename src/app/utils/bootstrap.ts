@@ -7,20 +7,24 @@ if (environment.production) {
   enableProdMode();
 }
 
-export default function bootstrap(module: any) {
-  document.addEventListener('DOMContentLoaded', async () => {
-    const bootstrapModule = () =>
-      platformBrowserDynamic().bootstrapModule(module);
+export default function bootstrap(AppModule) {
+  const bootstrapModule = () =>
+    platformBrowserDynamic().bootstrapModule(AppModule);
 
-    if (environment.hmr) {
-      if (module['hot']) {
-        hmrBootstrap(module, bootstrapModule);
-      } else {
-        console.error('HMR is not enabled for webpack-dev-server!');
-        console.log('Are you using the --hmr flag for ng serve?');
-      }
+  if (environment.production) {
+    if (document.readyState === 'complete') {
+      bootstrapModule();
     } else {
-      bootstrapModule().catch(err => console.log(err));
+      document.addEventListener('DOMContentLoaded', bootstrapModule);
     }
-  });
+  } else if (environment.hmr) {
+    if (module['hot']) {
+      hmrBootstrap(module, bootstrapModule);
+    } else {
+      console.error('HMR is not enabled for webpack-dev-server!');
+      console.log('Are you using the --hmr flag for ng serve?');
+    }
+  } else {
+    bootstrapModule().catch(err => console.error(err));
+  }
 }
