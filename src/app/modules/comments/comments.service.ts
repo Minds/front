@@ -113,7 +113,7 @@ export class CommentsService {
       {
         limit: 1,
         reversed: false,
-        descending: true,
+        descending: false,
       }
     );
 
