@@ -144,7 +144,9 @@ export class FeedService {
         }
 
         if (queryParams.has('reverse')) {
-          this.service.setReversedPagination(Boolean(queryParams.get('reverse')));
+          this.service.setReversedPagination(
+            Boolean(queryParams.get('reverse'))
+          );
         }
 
         this.service
