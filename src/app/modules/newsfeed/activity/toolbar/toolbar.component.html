@@ -76,6 +76,9 @@
   <!-- Show boost if own post -->
   <ng-container *ngIf="session.getLoggedInUser().guid == entity.ownerObj.guid">
     <div class="m-layout__spacer"></div>
-    <m-activity__boostButton [object]="entity" (click)="openBoostModal($event)"></m-activity__boostButton>
+    <m-activity__boostButton
+      [object]="entity"
+      (click)="openBoostModal($event)"
+    ></m-activity__boostButton>
   </ng-container>
 </div>
