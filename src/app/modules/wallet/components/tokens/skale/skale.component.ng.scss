@@ -11,4 +11,51 @@
   @include m-theme() {
     color: themed($m-textColor--primary);
   }
+
+  .m-skale__body {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    .m-skale__tokenConverter {
+      width: 400px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 20px;
+      border-radius: 25px;
+
+      @include m-theme() {
+        background: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-skale__swapButton {
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 25px;
+
+        @include m-theme() {
+          background: themed($m-bgColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+
+          &:hover {
+            background: themed($m-bgColor--secondary);
+          }
+        }
+      }
+
+      .m-skale__outputAmount {
+        margin: 20px;
+      }
+
+      .m-skale__buttonContainer {
+        margin: 10px;
+      }
+
+      .m-skale__networkSwapButtonContainer {
+        margin: 10px;
+      }
+    }
+  }
 }

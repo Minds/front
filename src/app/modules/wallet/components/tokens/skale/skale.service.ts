@@ -6,16 +6,32 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Injectable({ providedIn: 'root' })
 export class SkaleService {
+  // chain ids used (hex)
   private chainIds = {
     skale: '',
     rinkeby: '0x4',
   };
 
+  // current provider
   private provider;
+
+  // SKALE chain name
   private skaleChainName = '';
-  private rpcUrl = '';
+
+  // SKALE rpc url
+  private skaleRpcUrl = '';
+
+  // Address of SKALE deposit box
   private depositBoxAddress: string = '';
+
+  // ABI of SKALE deposit box
   private depositBoxAbi: any = {};
+
+  // Address of MINDS ERC20 on SKALE.
+  private skaleERC20Address: string = '';
+
+  // ABI of MINDS ERC20 on SKALE.
+  private skaleERC20Abi: any = {};
 
   constructor(
     private toast: FormToastService,
@@ -24,18 +40,27 @@ export class SkaleService {
   ) {
     const blockchainConfig = config.get('blockchain');
     const skaleConfig = config.get('skale');
+
     this.depositBoxAddress =
-      blockchainConfig['skale'].deposit_box_erc20_address;
-    this.depositBoxAbi = blockchainConfig['skale'].deposit_box_erc20_abi;
-    this.rpcUrl = skaleConfig['rpc_url'];
+      blockchainConfig['skale']['skale_contracts'].deposit_box_erc20_address;
+    this.depositBoxAbi =
+      blockchainConfig['skale']['skale_contracts'].deposit_box_erc20_abi;
+    this.skaleERC20Abi = blockchainConfig['skale']['erc20_contract']['abi'];
+
+    this.skaleRpcUrl = skaleConfig['rpc_url'];
     this.skaleChainName = skaleConfig['chain_name'];
     this.chainIds.skale = skaleConfig['chain_id_hex'];
+    this.skaleERC20Address = skaleConfig['erc20_address'];
 
     // init provider
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
   }
 
-  public async getMainnetTokenBalance() {
+  /**
+   * Gets mainnet token balance.
+   * @returns { Promise<number> }
+   */
+  public async getMainnetTokenBalance(): Promise<number> {
     const currentWalletAddress = await this.provider.getSigner().getAddress();
 
     const mindsToken = new ethers.Contract(
@@ -47,6 +72,28 @@ export class SkaleService {
     return mindsToken.balanceOf(currentWalletAddress);
   }
 
+  /**
+   * Gets SKALE token balance.
+   * TODO: Currency throws errors - need to fix.
+   * @returns { Promise<number> }
+   */
+  public async getSkaleTokenBalance(): Promise<number> {
+    const currentWalletAddress = await this.provider.getSigner().getAddress();
+
+    const mindsToken = new ethers.Contract(
+      this.skaleERC20Address,
+      this.skaleERC20Abi,
+      this.provider.getSigner()
+    );
+
+    return mindsToken.balanceOf(currentWalletAddress);
+  }
+
+  /**
+   * Approve the spend of X tokens
+   * @param { number } amount - amount of tokens to approve.
+   * @returns { Promise<void> }
+   */
   public async approve(amount: number): Promise<void> {
     if (!amount) {
       this.toast.warn('You must provide an amount of tokens');
@@ -69,6 +116,11 @@ export class SkaleService {
     return receipt;
   }
 
+  /**
+   * Calls to deposit X amount of tokens.
+   * @param { number } amount - amount of tokens to deposit.
+   * @returns { Promise<void> }
+   */
   public async deposit(amount: number): Promise<void> {
     const { chainId } = await this.provider.getNetwork();
 
@@ -108,13 +160,34 @@ export class SkaleService {
   }
 
   // TODO: Withdraw
-  withdraw = () => void 0;
+  public async withdraw(amount: number): Promise<void> {
+    this.toast.warn('Not yet implemented');
+  }
 
   /**
-   * SKALE: 0x466ec1d61bcef
-   * Rinekby: 0x4
+   * Calls to switch network to Rinkeby.
+   * @returns { Promise<void> }
    */
-  private async switchNetwork(chainId: string = '0x4') {
+  public switchNetworkRinkeby(): Promise<void> {
+    return this.switchNetwork(this.chainIds.rinkeby);
+  }
+
+  /**
+   * Calls to switch network to SKALE.
+   * @returns { Promise<void> }
+   */
+  public switchNetworkSkale(): Promise<void> {
+    return this.switchNetwork(this.chainIds.skale);
+  }
+
+  /**
+   * Calls to switch network. Encapsulation to be kept private
+   * to prevent this from being called with unsupported networks.
+   * TODO: Break off into separate service for reusability.
+   * @param { string } - hex of chain id - defaults to 0x4, rinkeby.
+   * @returns { Promise<void> }
+   */
+  private async switchNetwork(chainId: string = '0x4'): Promise<void> {
     const currentChainId = (await this.provider.getNetwork())?.chainId;
 
     if (parseInt(chainId, 16) === currentChainId) {
@@ -134,7 +207,7 @@ export class SkaleService {
         try {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
-            params: [{ chainId: chainId, rpcUrl: this.rpcUrl }],
+            params: [{ chainId: chainId, rpcUrl: this.skaleRpcUrl }],
           });
           window.location.reload();
         } catch (addError) {
@@ -142,13 +215,5 @@ export class SkaleService {
         }
       }
     }
-  }
-
-  public switchNetworkRinkeby(): Promise<void> {
-    return this.switchNetwork(this.chainIds.rinkeby);
-  }
-
-  public switchNetworkSkale(): Promise<void> {
-    return this.switchNetwork(this.chainIds.skale);
   }
 }
