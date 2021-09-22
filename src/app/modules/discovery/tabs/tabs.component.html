@@ -3,9 +3,7 @@
     <div class="m-tabs__tab">
       <a
         routerLink="/discovery/overview"
-        [class.m-tabs__tab--selected]="
-          isLinkActive('/discovery/overview') || isLinkActive('/')
-        "
+        [class.m-tabs__tab--selected]="isLinkActive('/discovery/overview')"
         [queryParams]="{ reload: false }"
         data-cy="discovery-tab-link-overview"
         i18n="@@DISCOVERY_TAGS__JUST_FOR_YOU"
