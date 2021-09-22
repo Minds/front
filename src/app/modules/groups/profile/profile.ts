@@ -61,6 +61,7 @@ export class GroupsProfile {
   paramsSubscription: Subscription;
   childParamsSubscription: Subscription;
   queryParamsSubscripton: Subscription;
+  groupsSearchQuerySubscription: Subscription;
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
@@ -106,6 +107,26 @@ export class GroupsProfile {
     this.listenForNewMessages();
     this.detectWidth(true);
     this.detectConversationsState();
+
+    const params = this.route.snapshot.queryParamMap;
+    if (params.has('query')) {
+      const query = decodeURIComponent(params.get('query'));
+      this.groupsSearch.query$.next(query);
+    }
+
+    this.groupsSearchQuerySubscription = this.groupsSearch.query$.subscribe(
+      query => {
+        const encodedQuery = query.length ? encodeURIComponent(query) : null;
+
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            query: encodedQuery,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
+    );
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -192,6 +213,9 @@ export class GroupsProfile {
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
 
+    if (this.groupsSearchQuerySubscription) {
+      this.groupsSearchQuerySubscription.unsubscribe();
+    }
     this.unlistenForNewMessages();
     this.leaveCommentsSocketRoom();
 
