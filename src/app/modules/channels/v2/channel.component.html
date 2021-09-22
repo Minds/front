@@ -18,7 +18,7 @@
             <a
               [class.m-tabs__tab--selected]="isFeedView && layout === 'list'"
               [routerLink]="['/', username, '']"
-              [queryParams]="{ layout: 'list' }"
+              [queryParams]="getLayoutLinkQueryParams('list')"
               i18n="@@COMMON__FEED"
               >Feed</a
             >
@@ -30,7 +30,7 @@
           >
             <a
               [routerLink]="['/', username, '']"
-              [queryParams]="{ layout: 'grid' }"
+              [queryParams]="getLayoutLinkQueryParams('grid')"
               [class.m-tabs__tab--selected]="isFeedView && layout === 'grid'"
               >Gallery</a
             >
