@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SkaleService } from './skale.service';
 import { InputBalance, TransactableCurrency } from './skale.types';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 
 /**
  * SKALE component, giving users the ability to swap between networks.
@@ -23,6 +29,12 @@ export class WalletSkaleSummaryComponent implements OnInit {
     amount: 0,
   };
 
+  // token allowance
+  public allowance: number = 0;
+
+  // form for input amount
+  form: FormGroup;
+
   constructor(private service: SkaleService) {}
 
   ngOnInit(): void {
@@ -32,6 +44,20 @@ export class WalletSkaleSummaryComponent implements OnInit {
         currency: 'MINDS',
         amount: balance / 1000000000000000000,
       };
+    });
+
+    this.updateAllowance();
+
+    this.form = new FormGroup({
+      amount: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.min(0.001),
+          // will update as max changes
+          (control: AbstractControl) =>
+            Validators.max(this.maxInputAmount)(control),
+        ],
+      }),
     });
   }
 
@@ -111,5 +137,21 @@ export class WalletSkaleSummaryComponent implements OnInit {
    */
   get ouputCurrency(): TransactableCurrency {
     return this.inputCurrency === 'MINDS' ? 'skMINDS' : 'MINDS';
+  }
+
+  /**
+   * Call to get the users allowance, and set class variable 'allowance' to the value.
+   * @returns { Promise<void> }
+   */
+  private async updateAllowance(): Promise<void> {
+    this.allowance = await this.service.getERC20Allowance();
+  }
+
+  /**
+   * Max amount a user can input - returns the lowest of allowance and balance amount.
+   * @returns { number } - maximum amount a user can input.
+   */
+  get maxInputAmount(): number {
+    return Math.min(this.allowance, this.balance.amount);
   }
 }

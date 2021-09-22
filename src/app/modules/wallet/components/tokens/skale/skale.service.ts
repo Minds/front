@@ -90,6 +90,27 @@ export class SkaleService {
   }
 
   /**
+   * Gets allowance for DepositBox contract from ERC20 token
+   * @returns { Promise<number> } - allowance of tokens in 'ether' units.
+   */
+  public async getERC20Allowance(): Promise<number> {
+    const currentWalletAddress = await this.provider.getSigner().getAddress();
+
+    const mindsToken = new ethers.Contract(
+      this.web3Wallet.config.token.address,
+      this.web3Wallet.config.token.abi,
+      this.provider.getSigner()
+    );
+
+    const allowanceObj = await mindsToken.allowance(
+      currentWalletAddress,
+      this.depositBoxAddress
+    );
+
+    return parseInt(ethers.utils.formatEther(allowanceObj));
+  }
+
+  /**
    * Approve the spend of X tokens
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }

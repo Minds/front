@@ -3,7 +3,7 @@
     SKALE Bridge
   </h6>
 
-  <div class="m-skale__tokenConverter">
+  <div class="m-skale__tokenConverter" [formGroup]="form">
     <div class="m-skale__inputAmountContainer">
       <span>{{ inputCurrency }}</span>
       <input
@@ -11,12 +11,12 @@
         class="m-input"
         [(ngModel)]="amount"
         placeholder="Enter amount"
-        min="0"
+        formControlName="amount"
       />
-      <span
-        >Available: {{ (balance?.amount | number) ?? '0'}}
-        {{ balance.currency }}</span
-      >
+      <div>
+        Available: {{ (balance?.amount | number) ?? '0'}} {{ balance.currency }}
+      </div>
+      <div>Allowance: {{ allowance | number }} {{ inputCurrency }}</div>
     </div>
     <span
       class="material-icons m-skale__swapButton"
@@ -27,7 +27,9 @@
     <div class="m-skale__outputAmount">{{ amount }} {{ ouputCurrency }}</div>
     <div class="m-skale__buttonContainer">
       <m-button color="primary" (onAction)="approve()">Approve</m-button>
-      <m-button color="primary" (onAction)="transfer()">Transfer</m-button>
+      <m-button color="primary" (onAction)="transfer()" [disabled]="!form.valid"
+        >Transfer</m-button
+      >
     </div>
   </div>
 
