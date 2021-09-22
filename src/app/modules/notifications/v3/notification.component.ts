@@ -52,6 +52,9 @@ export class NotificationsV3NotificationComponent
 
   ngOnInit(): void {
     if (!this.notification) return;
+
+    console.log('ojm notification', this.notification);
+
     /**
      * All notification types must be added to this list
      */
@@ -209,14 +212,15 @@ export class NotificationsV3NotificationComponent
 
   get pronoun(): string {
     switch (this.notification.type) {
-      case 'quote':
-        return 'your';
       case 'boost_peer_request':
         return 'a';
+      case 'quote':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
       case 'boost_rejected':
         return 'your';
+      case 'group_queue_reject':
+        return 'your post from';
       case 'wire_received':
         return 'you ' + this.formatWireAmount(this.notification);
       case 'wire_payout':
@@ -284,6 +288,7 @@ export class NotificationsV3NotificationComponent
       case 'subscribe':
         return ['/' + this.notification.from.username];
       case 'group_invite':
+      case 'group_queue_reject':
         return ['/groups/profile/' + this.notification.entity.guid];
     }
 
