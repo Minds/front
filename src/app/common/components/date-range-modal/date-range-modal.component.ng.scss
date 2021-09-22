@@ -1,0 +1,103 @@
+@import 'defaults.scss';
+
+:host {
+  z-index: inherit;
+
+  .m-dateRangeModal {
+    max-width: 600px;
+    padding: 40px 40px 50px;
+    border-radius: $m-borderRadius;
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 24px;
+      margin: 20vh 0;
+    }
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      box-shadow: 0 0 15px 0 rgba(themed($m-black-always), 0.1);
+    }
+
+    .m-dateRangeModal__header {
+      font-size: 22px;
+      line-height: 29px;
+      margin-bottom: 25px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  .m-dateRangeModal__inputContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+      ::ng-deep m-date-selector {
+        width: 100% !important;
+        &:last-child {
+          margin-left: 0px !important;
+        }
+      }
+    }
+    ::ng-deep m-date-selector {
+      width: 48%;
+      &:last-child {
+        margin-left: 10px;
+      }
+      input {
+        width: 100%;
+        height: 55px;
+        font-size: 18px;
+        outline: none;
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+          border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-textColor--primary);
+        }
+        &::placeholder {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+  }
+  .m-dateRangeModal__error {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 20px;
+    margin-top: 5px;
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+
+  .m-dateRangeModal__buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    margin-top: 30px;
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+    }
+    ::ng-deep m-button {
+      margin-right: 0;
+      button {
+        width: 100%;
+      }
+      &:last-child {
+        margin-left: 20px;
+        @media screen and (max-width: $max-mobile) {
+          margin-left: 0;
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}

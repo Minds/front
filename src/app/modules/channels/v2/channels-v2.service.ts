@@ -101,6 +101,11 @@ export class ChannelsV2Service {
   readonly isExplicit$: Observable<boolean>;
 
   /**
+   * Disabled status
+   */
+  readonly isDisabled$: Observable<boolean>;
+
+  /**
    * Admin status
    */
   readonly isAdmin$: Observable<boolean>;
@@ -127,7 +132,10 @@ export class ChannelsV2Service {
           : of(null)
       ),
       switchAll(),
-      shareReplay({ bufferSize: 1, refCount: true }),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
       map(response => parseFloat((response && response.tokens) || '0'))
     );
 
@@ -138,7 +146,10 @@ export class ChannelsV2Service {
         channel ? this.api.get(`api/v1/wire/rewards/${channel.guid}`) : of(null)
       ),
       switchAll(),
-      shareReplay({ bufferSize: 1, refCount: true }),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
       map(response =>
         parseFloat((response && response.sums && response.sums.tokens) || '0')
       )
@@ -153,7 +164,10 @@ export class ChannelsV2Service {
           : of(null)
       ),
       switchAll(),
-      shareReplay({ bufferSize: 1, refCount: true }),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
       map(response => (response && response.count) || 0)
     );
 
@@ -224,6 +238,11 @@ export class ChannelsV2Service {
     // Set isAdmin$ observable
     this.isAdmin$ = this.session.user$.pipe(
       map(channel => channel && channel.is_admin)
+    );
+
+    // set isDisabled$ observable
+    this.isDisabled$ = this.channel$.pipe(
+      map(channel => channel && channel.enabled === 'no')
     );
   }
 

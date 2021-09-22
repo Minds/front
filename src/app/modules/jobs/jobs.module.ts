@@ -1,36 +1,29 @@
 import { NgModule } from '@angular/core';
-
-import { JobsMarketingComponent } from './marketing/marketing.component';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule as NgCommonModule } from '@angular/common';
-import { CommonModule } from '../../common/common.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MarketingModule } from '../marketing/marketing.module';
+import { RedirectGuard } from '../../services/redirect-guard';
+
+const REDIRECT_URL = 'https://jobs.lever.co/minds/';
 
 const routes: Routes = [
   {
     path: 'jobs',
-    component: JobsMarketingComponent,
+    canActivate: [RedirectGuard],
+    component: RedirectGuard,
     data: {
-      title: 'Jobs',
-      description: 'Want to join the team? View our open positions.',
-      ogImage: '/assets/og-images/jobs-v3.png',
-      ogImageWidth: 1200,
-      ogImageHeight: 1200,
+      externalUrl: REDIRECT_URL,
+    },
+  },
+  {
+    path: 'careers',
+    canActivate: [RedirectGuard],
+    component: RedirectGuard,
+    data: {
+      externalUrl: REDIRECT_URL,
     },
   },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    NgCommonModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MarketingModule,
-  ],
-  declarations: [JobsMarketingComponent],
-  exports: [JobsMarketingComponent],
+  imports: [RouterModule.forChild(routes)],
 })
 export class JobsMarketingModule {}

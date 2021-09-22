@@ -26,7 +26,8 @@
         [attr.data-minds-activity-guid]="entity.guid"
         [slot]="i + 1"
         [canRecordAnalytics]="false"
-        *ngIf="i === currentPosition"
+        [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
+        *ngIf="shouldRender(i)"
       ></m-activity>
     </ng-container>
     <div

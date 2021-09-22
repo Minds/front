@@ -1,10 +1,9 @@
 <!-- Header -->
 <m-settingsV2__header (backPress)="onBackPress()">
-  <div
-    class="m-settingsV2__headerLabel"
-    i18n="@@SETTINGS__SECURITY__2FA__LABEL"
-  >
-    Two-factor Authentication
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__SECURITY__2FA__LABEL"
+      >Two-factor Authentication</span
+    >
   </div>
   <div class="m-settingsV2__desc" [ngSwitch]="activePanel$ | async">
     <ng-container

@@ -70,17 +70,23 @@
           <ng-container *ngIf="!isPlus">
             <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="!isCustom">
               Join @{{ entity.ownerObj.username }}'s
-              {{ entity.wire_threshold.support_tier.name }}
+              {{ entity.wire_threshold.support_tier?.name }}
               Membership to see this post
             </ng-container>
-            <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="isCustom">
+            <ng-container
+              i18n="@@WIRE__SUPPORT__TIER__TEXT__RECURRING"
+              *ngIf="isCustom"
+            >
               Join @{{ entity.ownerObj.username }}'s Custom Membership for ${{
                 entity.wire_threshold.support_tier.usd
               }}
               per month to see this post
             </ng-container>
           </ng-container>
-          <ng-container i18n="@@WIRE__SUPPORT__TIER__TEXT" *ngIf="isPlus">
+          <ng-container
+            i18n="@@WIRE__SUPPORT__TIER__TEXT__PLUS_ONLY"
+            *ngIf="isPlus"
+          >
             Only Minds+ users can see this post
           </ng-container>
         </ng-template>

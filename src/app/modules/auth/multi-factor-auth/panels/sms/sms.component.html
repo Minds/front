@@ -8,8 +8,7 @@
     >Authentication code</label
   >
   <input
-    [ngModel]="code$ | async"
-    (ngModelChange)="onCodeChange($event)"
+    [(ngModel)]="code"
     (keyup.enter)="onVerifyClick()"
     class="m-mfaAuth__codeInput"
     type="text"
@@ -22,7 +21,7 @@
 <m-button
   class="m-mfaAuth__verifyButton"
   [color]="'blue'"
-  [disabled]="disabled$ | async"
+  [disabled]="code.length < 6"
   [saving]="inProgress$ | async"
   (onAction)="onVerifyClick()"
 >

@@ -50,7 +50,7 @@ describe('WalletOnchainTransfersSummaryComponent', () => {
   });
 
   it('should open etherscan explorer', () => {
-    spyOn(window, 'open').and.returnValue(true);
+    spyOn(window, 'open');
     comp.openExplorer('123');
     expect(window.open).toHaveBeenCalledWith(
       `https://etherscan.com/tx/123`,

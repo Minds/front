@@ -15,10 +15,13 @@
   class="m-activity__ownerBlock"
   [ngClass]="{ 'm-activity__ownerBlock--minimalMode': minimalMode }"
 >
-  <div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
-    <a [routerLink]="['/', username]">
-      <img [src]="avatarUrl" class="m-border" />
-    </a>
+  <div class="m-activityOwnerBlock__avatar">
+    <m-hovercard [publisher]="owner" [offset]="[0, 15]">
+      <a [routerLink]="['/', username]">
+        <img [src]="avatarUrl" class="m-border" />
+      </a>
+    </m-hovercard>
+
     <div
       *ngIf="minimalMode"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
@@ -68,7 +71,7 @@
           "
           class="m-activityOwnerBlockPermalink__text--edited"
           i18n="@@M__COMMON__EDITED"
-          >edited</span
+          >Edited</span
         >
         <ng-template [ngTemplateOutlet]="boostedTag"></ng-template>
         <div

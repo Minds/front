@@ -101,6 +101,7 @@ export class OnboardingV3VerifyPhoneService implements OnDestroy {
 
           this.inProgress$.next(false);
           this.toast.success('Verification successful');
+          this.panel.forceComplete$.next('VerifyUniquenessStep');
           this.panel.dismiss$.next(true);
         })
     );

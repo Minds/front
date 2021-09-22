@@ -29,12 +29,15 @@ import { NotificationsV3Service } from './notifications-v3.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsV3NotificationComponent
-  implements AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy {
   @Input() notification;
 
   @ViewChild('notificationWrapper') notificationWrapper: ElementRef;
 
   interceptionObserver: IntersectionObserver;
+
+  /** show a warning error if the notification type is not recognised */
+  typeError: boolean = false;
 
   constructor(
     public session: Session,
@@ -46,6 +49,52 @@ export class NotificationsV3NotificationComponent
     private interactionsModalService: InteractionsModalService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  ngOnInit(): void {
+    if (!this.notification) return;
+    /**
+     * All notification types must be added to this list
+     */
+    switch (this.notification.type) {
+      case 'vote_up':
+      case 'vote_down':
+      case 'comment':
+      case 'tag':
+      //
+      case 'remind':
+      case 'quote':
+      //
+      case 'subscribe':
+      //
+      case 'group_queue_add':
+      case 'group_queue_approve':
+      case 'group_queue_reject':
+      case 'group_invite':
+      //
+      case 'wire_received':
+      case 'wire_payout':
+      //
+      case 'boost_peer_request':
+      case 'boost_peer_accepted':
+      case 'boost_peer_rejected':
+      case 'boost_rejected':
+      case 'boost_completed':
+      //
+      case 'token_rewards_summary':
+      case 'token_withdraw_accepted':
+      case 'token_withdraw_rejected':
+      //
+      case 'report_actioned':
+        // case 'chat_invite':
+        return;
+      default:
+        this.typeError = true;
+        console.error(
+          'No template available for notification type: ' +
+            this.notification.type
+        );
+    }
+  }
 
   ngAfterViewInit() {
     this.detectIntersecting();
@@ -69,14 +118,18 @@ export class NotificationsV3NotificationComponent
   }
 
   get showFrom(): boolean {
-    if (
-      ['group_queue_add', 'token_rewards_summary', 'report_actioned'].indexOf(
-        this.notification.type
-      ) > -1
-    ) {
-      return false;
+    switch (this.notification.type) {
+      case 'group_queue_add':
+      case 'token_rewards_summary':
+      case 'token_withdraw_accepted':
+      case 'token_withdraw_rejected':
+      case 'report_actioned':
+      case 'wire_payout':
+      case 'boost_completed':
+        return false;
+      default:
+        return true;
     }
-    return true;
   }
 
   get verb(): string {
@@ -108,6 +161,12 @@ export class NotificationsV3NotificationComponent
         return 'invited you to join';
       case 'wire_received':
         return 'paid';
+      case 'wire_payout':
+        return (
+          'You received a payout of ' +
+          this.formatWireAmount(this.notification) +
+          ' for Minds+/Pro'
+        );
       case 'boost_peer_request':
         return 'sent you';
       case 'boost_peer_accepted':
@@ -116,6 +175,8 @@ export class NotificationsV3NotificationComponent
         return 'declined'; // Friendlier than REJECTED
       case 'boost_rejected':
         return 'is unable to approve';
+      case 'boost_completed':
+        return 'Your boost is complete';
       case 'token_rewards_summary':
         return (
           'You earned ' +
@@ -123,6 +184,18 @@ export class NotificationsV3NotificationComponent
           ' tokens ($' +
           this.notification.data.usd_formatted +
           ') in rewards yesterday 🚀'
+        );
+      case 'token_withdraw_accepted':
+        return (
+          'Your request to withdraw ' +
+          this.formatTokenAmount(this.notification.data.amount) +
+          ' tokens has been accepted'
+        );
+      case 'token_withdraw_rejected':
+        return (
+          'Your request to withdraw ' +
+          this.formatTokenAmount(this.notification.data.amount) +
+          ' tokens has been accepted'
         );
       case 'report_actioned':
         return (
@@ -142,26 +215,19 @@ export class NotificationsV3NotificationComponent
         return 'a';
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
+      case 'boost_rejected':
         return 'your';
       case 'wire_received':
-        switch (this.notification.data.method) {
-          case 'tokens':
-            return (
-              'you ' +
-              utils.formatEther(this.notification.data.amount) +
-              ' ' +
-              this.notification.data.method
-            );
-          case 'usd':
-            const cents = this.notification.data.amount;
-            const usd = Math.round(this.notification.data.amount / 100);
-            return 'you $' + usd;
-        }
+        return 'you ' + this.formatWireAmount(this.notification);
+      case 'wire_payout':
       case 'subscribe':
       case 'group_queue_add':
       case 'group_invite':
       case 'token_rewards_summary':
+      case 'token_withdraw_accepted':
+      case 'token_withdraw_rejected':
       case 'report_actioned':
+      case 'boost_completed':
         return '';
     }
 
@@ -174,10 +240,14 @@ export class NotificationsV3NotificationComponent
   get noun(): string {
     switch (this.notification.type) {
       case 'wire_received':
+      case 'wire_payout':
       case 'group_queue_add':
       case 'token_rewards_summary':
+      case 'token_withdraw_accepted':
+      case 'token_withdraw_rejected':
       case 'report_actioned':
       case 'subscribe':
+      case 'boost_completed':
         return '';
       case 'boost_peer_request':
       case 'boost_peer_accepted':
@@ -207,6 +277,10 @@ export class NotificationsV3NotificationComponent
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
         return ['/boost/console/offers/history/outbox'];
+      case 'boost_rejected':
+        return ['/boost/console/newsfeed/history'];
+      case 'token_rewards_summary':
+        return ['/wallet/tokens/rewards'];
       case 'subscribe':
         return ['/' + this.notification.from.username];
       case 'group_invite':
@@ -255,15 +329,63 @@ export class NotificationsV3NotificationComponent
   }
 
   /**
+   * Return the iconId for the optional typeBubbleTag
+   */
+  get typeBubbleTag(): string | null {
+    switch (this.notification.type) {
+      case 'vote_up':
+        return 'thumb_up';
+      case 'vote_down':
+        return 'thumb_down';
+      case 'vote_down':
+        return 'thumb_down';
+      case 'comment':
+        return 'chat_bubble';
+      case 'tag':
+        return 'local_offer';
+      case 'remind':
+        return 'repeat';
+      case 'quote':
+        return 'create';
+      case 'subscribe':
+        return 'person';
+      case 'group_queue_add':
+      case 'group_queue_approve':
+      case 'group_queue_reject':
+      case 'group_invite':
+        return 'people';
+      case 'token_rewards_summary':
+        return 'account_balance';
+      case 'wire_received':
+        return 'attach_money';
+      case 'report_actioned':
+        return 'warning';
+      case 'boost_rejected':
+      case 'boost_completed':
+      case 'boost_peer_request':
+      case 'boost_peer_rejected':
+      case 'boost_peer_accepted':
+        return 'trending_up';
+      default:
+        return null;
+    }
+  }
+
+  /**
    * Returns the entity object
    */
   get entity(): Object | null {
     switch (this.notification.type) {
+      case 'wire_payout':
       case 'token_rewards_summary':
+      case 'token_withdraw_accepted':
+      case 'token_withdraw_rejected':
         return null;
       case 'boost_peer_request':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
+      case 'boost_rejected':
+      case 'boost_completed':
         return this.notification.entity.entity;
     }
     return this.notification.entity;
@@ -294,5 +416,32 @@ export class NotificationsV3NotificationComponent
     );
 
     this.interceptionObserver.observe(this.notificationWrapper.nativeElement);
+  }
+
+  formatWireAmount(notification): string | null {
+    if (
+      notification.data &&
+      notification.data.method &&
+      notification.data.amount
+    ) {
+      switch (this.notification.data.method) {
+        case 'tokens':
+          return this.formatTokenAmount(this.notification.data.amount);
+        case 'usd':
+          return '$' + (this.notification.data.amount / 100).toFixed(2);
+      }
+    } else {
+      return;
+    }
+  }
+
+  /**
+   * Convert big number to a readable token amount
+   */
+  formatTokenAmount(tokens: string | number): string {
+    const readableTokens = utils.formatEther(tokens);
+    const method = readableTokens === '1' ? ' token' : ' tokens';
+
+    return readableTokens + method;
   }
 }

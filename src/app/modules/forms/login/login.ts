@@ -14,7 +14,6 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
-import { MultiFactorAuthService } from '../../auth/multi-factor-auth/services/multi-factor-auth-service';
 import { skip } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
 
@@ -56,7 +55,6 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
     private userAvatarService: UserAvatarService,
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
-    private multiFactorAuth: MultiFactorAuthService,
     private router: Router
   ) {
     super();
@@ -67,14 +65,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.multiFactorAuth.onSuccess$.pipe(skip(1)).subscribe(user => {
-        this.inProgress = false;
-        this.session.login(user);
-        this.userAvatarService.init();
-        this.done.next(user);
-      })
-    );
+    this.subscriptions.push();
   }
 
   login() {
@@ -136,62 +127,28 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
         if (!e) {
           this.errorMessage = 'LoginException::Unknown';
           this.session.logout();
-        } else if (e.error.status === 'failed') {
+        } else if (e.error?.status === 'failed') {
           // incorrect login details
           this.errorMessage = 'LoginException::AuthenticationFailed';
           this.session.logout();
-        } else if (e.error.status === 'error') {
+        } else if (e.error?.status === 'error') {
+          this.errorMessage = e.error.message;
+
+          if (e.error.errorId) {
+            this.errorMessage = e.error.errorId;
+          }
+
           if (
             e.error.message === 'LoginException:BannedUser' ||
             e.error.message === 'LoginException::AttemptsExceeded'
           ) {
             this.session.logout();
           }
-          // if 2fa required
-          if (
-            e.error.errorId ===
-            'Minds::Core::Security::TwoFactor::TwoFactorRequiredException'
-          ) {
-            // try to get sms key from header
-            const smsKey = e.headers.get('X-MINDS-SMS-2FA-KEY');
-
-            // set next panel and mfa service MFARequest.
-            this.multiFactorAuth.activePanel$.next(smsKey ? 'sms' : 'totp');
-            this.multiFactorAuth.setMFARequest({
-              secretKeyId: smsKey ?? null,
-              ...opts,
-            });
-
-            // show mfa form
-            this.hideLogin = true;
-            this.hideMFA = false;
-            return;
-          }
-
-          // two factor? TODO: Remove when totp-2021 feat flag retired.
-          this.twofactorToken = e.error.message;
-          this.hideLogin = true;
+        } else if (e === 'Front::TwoFactorAborted') {
+          // do nothing, as the user made this call
         } else {
           this.errorMessage = 'LoginException::Unknown';
         }
-      });
-  }
-
-  twofactorAuth(code) {
-    this.client
-      .post('api/v1/twofactor/authenticate', {
-        token: this.twofactorToken,
-        code: code.value,
-      })
-      .then((data: any) => {
-        this.session.login(data.user);
-        this.userAvatarService.init();
-        this.done.next(data.user);
-      })
-      .catch(e => {
-        this.errorMessage = e.message;
-        this.twofactorToken = '';
-        this.hideLogin = false;
       });
   }
 

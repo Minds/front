@@ -14,12 +14,14 @@ const currentStep$ = new BehaviorSubject<OnboardingStepName>(
 );
 
 const dismiss$ = new BehaviorSubject<boolean>(false);
+const forceComplete$ = new BehaviorSubject<boolean>(false);
 
 const panelServiceMock: any = MockService(OnboardingV3PanelService, {
-  has: ['dismiss$', 'currentStep$'],
+  has: ['dismiss$', 'currentStep$', 'forceComplete$'],
   props: {
     currentStep$: { get: () => currentStep$ },
     dismiss$: { get: () => dismiss$ },
+    forceComplete$: { get: () => forceComplete$ },
   },
 });
 
@@ -52,6 +54,8 @@ describe('OnboardingV3ModalComponent', () => {
 
     comp = fixture.componentInstance;
     (comp as any).dismiss$ = new Subscription();
+    (comp as any).forceComplete$ = new Subscription();
+
     fixture.detectChanges();
   });
 

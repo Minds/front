@@ -7,23 +7,25 @@
 
 <ng-template #actionsDropdown>
   <ul>
-    <li
-      *ngIf="service.isSubscribed$ | async; else subscribeOption"
-      (click)="unsubscribe()"
-    >
-      <span class="m-dropdownMenu__item">
-        <span i18n="@@COMMON__UNSUBSCRIBE">Unsubscribe</span>
-      </span>
-    </li>
-    <ng-template #subscribeOption>
-      <li (click)="subscribe()">
+    <ng-container *ngIf="!(service.isDisabled$ | async)">
+      <li
+        *ngIf="service.isSubscribed$ | async; else subscribeOption"
+        (click)="unsubscribe()"
+      >
         <span class="m-dropdownMenu__item">
-          <span i18n="@@COMMON__SUBSCRIBE">Subscribe</span>
+          <span i18n="@@COMMON__UNSUBSCRIBE">Unsubscribe</span>
         </span>
       </li>
-    </ng-template>
+      <ng-template #subscribeOption>
+        <li (click)="subscribe()">
+          <span class="m-dropdownMenu__item">
+            <span i18n="@@COMMON__SUBSCRIBE">Subscribe</span>
+          </span>
+        </li>
+      </ng-template>
+    </ng-container>
 
-    <!-- ******** admin block ******** -->
+    <!-- ******** admin ******************** -->
     <ng-container *ngIf="service.isAdmin$ | async">
       <li *ngIf="service.isBanned$ | async" (click)="unBan()">
         <span class="m-dropdownMenu__item">
@@ -87,11 +89,10 @@
 
       <ng-container *ngIf="service.isExplicit$ | async">
         <li (click)="setExplicit(false)">
-          <span
-            class="m-dropdownMenu__item"
-            i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
-          >
-            Remove explicit
+          <span class="m-dropdownMenu__item">
+            <ng-container i18n="@@MINDS_BUTTON__USER_DROPDOWN__REMOVE_EXPLICIT"
+              >Remove explicit</ng-container
+            >
           </span>
         </li>
       </ng-container>
@@ -112,6 +113,8 @@
       </li>
     </ng-container>
 
+    <!-- ******** end admin ******************** -->
+
     <li
       *ngIf="service.isBlocked$ | async; else blockOption"
       (click)="unblock()"
@@ -128,11 +131,13 @@
       </li>
     </ng-template>
 
-    <li (click)="report()">
-      <span class="m-dropdownMenu__item">
-        <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REPORT">Report</span>
-      </span>
-    </li>
+    <ng-container *ngIf="!(service.isDisabled$ | async)">
+      <li (click)="report()">
+        <span class="m-dropdownMenu__item">
+          <span i18n="@@MINDS_BUTTON__USER_DROPDOWN__REPORT">Report</span>
+        </span>
+      </li>
+    </ng-container>
   </ul>
 </ng-template>
 
@@ -143,10 +148,10 @@
 >
   <div
     class="mdl-card__supporting-text"
-    style="padding: 64px; font-size: 20px; text-align: center;"
+    style="padding: 64px; font-size: 20px; text-align: center"
   >
     @{{ service.username$ | async }}'s email:
-    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none;">
+    <a *ngIf="email" [href]="'mailto:' + email" style="text-decoration: none">
       {{ email }}
     </a>
     <ng-container *ngIf="!email">...</ng-container>

@@ -1,0 +1,38 @@
+<div class="m-dateRangeModal">
+  <div class="m-dateRangeModal__header">
+    <span i18n="@@M__DATE_RANGE_MODAL__HEADER">Filter by date range</span>
+  </div>
+  <div class="m-dateRangeModal__inputContainer">
+    <m-date-selector
+      label="From"
+      #fromDateSelector
+      [date]="fromDate"
+      [max]="maxDate"
+      [min]="minDate"
+      (dateChange)="onFromDateChange($event)"
+    ></m-date-selector>
+    <m-date-selector
+      label="To"
+      #toDateSelector
+      [date]="toDate"
+      [max]="maxDate"
+      [min]="minDate"
+      (dateChange)="onToDateChange($event)"
+    ></m-date-selector>
+  </div>
+  <div class="m-dateRangeModal__error">
+    <span
+      *ngIf="hasBackwardsRangeError"
+      i18n="@@M__DATE_RANGE_MODAL__BACKWARDS_RANGE_ERROR"
+      >From date must be earlier than to date</span
+    >
+  </div>
+  <div class="m-dateRangeModal__buttonContainer">
+    <m-button (onAction)="onDismiss()">
+      <ng-container i18n="verb|@@M__ACTION__CANCEL">Cancel</ng-container>
+    </m-button>
+    <m-button color="blue" (onAction)="onApply()" [disabled]="!canApply">
+      <ng-container i18n="verb|@@M__ACTION__APPLY">Apply</ng-container>
+    </m-button>
+  </div>
+</div>

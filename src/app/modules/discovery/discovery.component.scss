@@ -46,7 +46,7 @@
     }
   }
   .m-discoveryTrendListItem__supportingText--above {
-    margin-bottom: $minds-margin / 2;
+    margin-bottom: $minds-margin * 0.5;
   }
   .m-discoveryTrendListItem__supportingText--below {
     margin-top: $minds-margin;

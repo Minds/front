@@ -15,7 +15,7 @@ export class SettingsV2ReferralsDashboardComponent
   inProgress = false;
   noInitResults = false;
   fewerResultsThanLimit = false;
-  timeoutIds: number[] = [];
+  timeoutIds: ReturnType<typeof setTimeout>[] = [];
 
   constructor(public client: Client) {}
 

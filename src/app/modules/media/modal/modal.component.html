@@ -111,7 +111,9 @@
 
           <!-- MEDIA: RICH-EMBED -->
           <div
-            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--richEmbed"
+            class="
+              m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--richEmbed
+            "
             *ngIf="contentType === 'rich-embed'"
             [ngClass]="{
               'm-mature-content': attachment.shouldBeBlurred(entity),
@@ -179,7 +181,10 @@
             >
               <!-- TITLE -->
               <span
-                class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--notFullscreen"
+                class="
+                  m-mediaModal__overlayTitle
+                  m-mediaModal__overlayTitle--notFullscreen
+                "
                 *ngIf="!isFullscreen"
               >
                 <a
@@ -190,7 +195,10 @@
               </span>
               <!-- TITLE: FULLSCREEN -->
               <span
-                class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--fullscreen"
+                class="
+                  m-mediaModal__overlayTitle
+                  m-mediaModal__overlayTitle--fullscreen
+                "
                 *ngIf="isFullscreen"
               >
                 <a
@@ -270,18 +278,20 @@
       <div class="m-mediaModal__contentContainer">
         <div class="m-mediaModal__contentBody">
           <div
-            class="m-mediaModal__scrollableAreaContainer m-mediaModal__contentAfter"
+            class="
+              m-mediaModal__scrollableAreaContainer m-mediaModal__contentAfter
+            "
           >
             <div class="m-mediaModal__scrollableAreaWrapper">
               <!-- OWNER BLOCK -->
               <div
-                class="m-mediaModal__ownerBlock m-mediaModal__clearfix m-owner-block"
+                class="
+                  m-mediaModal__ownerBlock m-mediaModal__clearfix
+                  m-owner-block
+                "
               >
                 <!-- OWNER BLOCK AVATAR -->
-                <div
-                  class="m-mediaModal__ownerBlockAvatar avatar"
-                  [hovercard]="entity.ownerObj.guid"
-                >
+                <div class="m-mediaModal__ownerBlockAvatar avatar">
                   <a [routerLink]="['/', entity.ownerObj.username]">
                     <img
                       [src]="
@@ -316,7 +326,10 @@
                       entity.containerObj && entity.containerObj.type == 'group'
                     "
                     [routerLink]="['/groups/profile', entity.containerObj.guid]"
-                    class="m-ownerBlock__groupLink mdl-color-text--blue-grey-300"
+                    class="
+                      m-ownerBlock__groupLink
+                      mdl-color-text--blue-grey-300
+                    "
                   >
                     <strong>({{ entity.containerObj.name }})</strong>
                   </a>
@@ -330,13 +343,20 @@
                     }}</span>
                     <span
                       *ngIf="entity.edited"
-                      class="m-ownerBlock__permalinkFlag m-ownerBlock__permalinkFlag--edited"
+                      class="
+                        m-ownerBlock__permalinkFlag
+                        m-ownerBlock__permalinkFlag--edited
+                      "
                       i18n="@@M__COMMON__EDITED"
-                      >edited</span
+                      >Edited</span
                     >
                     <div
                       *ngIf="boosted"
-                      class="mdl-card__supporting-text m-ownerBlock__permalinkFlag m-ownerBlock__permalinkFlag--boosted"
+                      class="
+                        mdl-card__supporting-text
+                        m-ownerBlock__permalinkFlag
+                        m-ownerBlock__permalinkFlag--boosted
+                      "
                       [class.m-ownerBlock__permalinkFlag--onchain]="
                         entity.boosted_onchain
                       "
@@ -370,7 +390,11 @@
               </div>
               <!-- MESSAGE -->
               <div
-                class="m-mediaModal__message mdl-card__supporting-text m-mature-message"
+                class="
+                  m-mediaModal__message
+                  mdl-card__supporting-text
+                  m-mature-message
+                "
                 m-read-more
                 *ngIf="
                   this.contentType !== 'blog' &&

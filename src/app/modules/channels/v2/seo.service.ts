@@ -30,7 +30,7 @@ export class SeoService {
       return;
     }
 
-    const url = `/${user.username.toLowerCase()}`;
+    const url = `/${user.username.toLowerCase()}/`;
     this.meta
       .setTitle(`${user.name} (@${user.username})`)
       .setDescription(user.briefdescription || `Subscribe to @${user.username}`)
@@ -40,6 +40,7 @@ export class SeoService {
         width: 2000,
         height: 1000,
       })
+      .setOgType('profile')
       .setRobots(
         user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS ? 'noindex' : 'all'
       );

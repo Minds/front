@@ -3,32 +3,46 @@ import {
   LazyLoadingService,
   ModalLazyLoadService,
 } from '../../../../common/services/modal-lazy-load.service';
-import { MultiFactorRootPanel } from './multi-factor-auth-service';
+import {
+  MultiFactorAuthService,
+  MultiFactorRootPanel,
+} from './multi-factor-auth-service';
 import { MultiFactorAuthBaseComponent } from '../multi-factor-auth.component';
+import { OnDestroy } from '@angular/core';
+
+export type MultiFactorModalOpts = {
+  authType: MultiFactorRootPanel;
+};
 
 /**
  * Lazy loads MFA modal.
  */
 @Injectable({ providedIn: 'root' })
 export class MultiFactorLazyService implements LazyLoadingService {
-  constructor(private lazyModal: ModalLazyLoadService) {}
+  constructor(
+    private lazyModal: ModalLazyLoadService,
+    private multiFactorAuthService: MultiFactorAuthService
+  ) {}
 
   /**
    * Lazy load modules and open modal.
    * @param { MultiFactorAuthType } - totp or sms.
    * @returns { Promise<any> } - awaitable.
    */
-  public async open(type: MultiFactorRootPanel = 'totp'): Promise<any> {
+  public async open(
+    opts: MultiFactorModalOpts = { authType: 'totp' }
+  ): Promise<void> {
     const { MultiFactorAuthLazyModule } = await import(
       '../multi-factor-auth-lazy.module'
     );
+
     try {
       await this.lazyModal
         .setComponent(MultiFactorAuthBaseComponent)
         .setLazyModule(MultiFactorAuthLazyModule)
         .setOpts({
           wrapperClass: 'm-modalV2__wrapper',
-          authType: type,
+          ...opts,
           onSaveIntent: () => {
             this.lazyModal.dismiss();
           },
@@ -39,9 +53,12 @@ export class MultiFactorLazyService implements LazyLoadingService {
         .open();
     } catch (e) {
       if (e === 'DismissedModalException') {
-        return; // do nothing
+        return;
       }
-      console.error(e);
     }
+  }
+
+  dismiss(): void {
+    this.lazyModal.dismiss();
   }
 }
