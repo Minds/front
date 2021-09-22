@@ -75,4 +75,10 @@
       color: themed($m-blue-grey-500);
     }
   }
+
+  ::ng-deep .m-commentsThreadComment--first {
+    > .m-comment {
+      margin-top: 25px;
+    }
+  }
 }

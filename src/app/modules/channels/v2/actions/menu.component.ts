@@ -190,11 +190,29 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
     // Shallow clone current user
     const channel = { ...this.service.channel$.getValue() };
 
-    // Optimistic mutation
-    this.service.setChannel({ ...channel, blocked: true, subscribed: false });
-
     // Let Post Menu service handle block operation
-    await this.postMenu.setEntity({ ownerObj: channel }).block();
+    try {
+      const response = await this.postMenu
+        .setEntity({ ownerObj: channel })
+        .block();
+
+      // Don't allow more blocks than block limit
+      if (
+        response &&
+        response.errorId === 'Minds::Core::Security::Block::BlockLimitException'
+      ) {
+        return;
+      }
+    } catch (e) {
+      return;
+    }
+
+    // Optimistic mutation
+    this.service.setChannel({
+      ...channel,
+      blocked: true,
+      subscribed: false,
+    });
   }
 
   /**
