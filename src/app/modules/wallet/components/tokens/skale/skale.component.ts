@@ -17,6 +17,9 @@ import {
   styleUrls: ['./skale.component.ng.scss'],
 })
 export class WalletSkaleSummaryComponent implements OnInit {
+  // loading in progress
+  public inProgress: boolean = true;
+
   // amount we are transacting.
   public amount: number = 0;
 
@@ -33,20 +36,12 @@ export class WalletSkaleSummaryComponent implements OnInit {
   public allowance: number = 0;
 
   // form for input amount
-  form: FormGroup;
+  public form: FormGroup;
 
   constructor(private service: SkaleService) {}
 
   ngOnInit(): void {
-    // TODO: if we are on the SKALE network after reload, we should get SKALE balance instead.
-    this.getMainnetTokenBalance().then(balance => {
-      this.balance = {
-        currency: 'MINDS',
-        amount: balance / 1000000000000000000,
-      };
-    });
-
-    this.updateAllowance();
+    this.initBalance(); // async
 
     this.form = new FormGroup({
       amount: new FormControl('', {
@@ -59,6 +54,22 @@ export class WalletSkaleSummaryComponent implements OnInit {
         ],
       }),
     });
+  }
+
+  /**
+   * Current output currency (inverse of inputCurrency)
+   * @returns { TransactableCurrency } - 'MINDS', or 'skMINDS'.
+   */
+  get ouputCurrency(): TransactableCurrency {
+    return this.inputCurrency === 'MINDS' ? 'skMINDS' : 'MINDS';
+  }
+
+  /**
+   * Max amount a user can input - returns the lowest of allowance and balance amount.
+   * @returns { number } - maximum amount a user can input.
+   */
+  get maxInputAmount(): number {
+    return Math.min(this.allowance, this.balance.amount);
   }
 
   /**
@@ -93,10 +104,21 @@ export class WalletSkaleSummaryComponent implements OnInit {
    * Calls to switch network to SKALE via service.
    * @returns { void }
    */
-  public async switchNetworkSkale(): Promise<void> {
-    await this.service.switchNetworkSkale();
-    // TODO: see if we can persist state to automatically set the inputCurrency
-    // and determine balance on reload.
+  public switchNetworkSkale(): void {
+    this.service.switchNetworkSkale();
+  }
+
+  /**
+   * Swaps input currency fields around by swapping networks
+   * and triggering a reload.
+   * @returns { void }
+   */
+  public swapCurrencyFields(): void {
+    if (this.inputCurrency === 'MINDS') {
+      this.switchNetworkSkale();
+    } else {
+      this.switchNetworkRinkeby();
+    }
   }
 
   /**
@@ -124,19 +146,11 @@ export class WalletSkaleSummaryComponent implements OnInit {
   }
 
   /**
-   * Swaps input currency fields around.
-   * @returns { void }
+   * Calls to get mainnet token balance from service
+   * @returns { Promise<number> }
    */
-  public swapCurrencyFields(): void {
-    this.inputCurrency = this.inputCurrency === 'MINDS' ? 'skMINDS' : 'MINDS';
-  }
-
-  /**
-   * Current output currency (inverse of inputCurrency)
-   * @returns { TransactableCurrency } - 'MINDS', or 'skMINDS'.
-   */
-  get ouputCurrency(): TransactableCurrency {
-    return this.inputCurrency === 'MINDS' ? 'skMINDS' : 'MINDS';
+  private async getSkaleTokenBalance(): Promise<number> {
+    return this.service.getSkaleTokenBalance();
   }
 
   /**
@@ -145,13 +159,32 @@ export class WalletSkaleSummaryComponent implements OnInit {
    */
   private async updateAllowance(): Promise<void> {
     this.allowance = await this.service.getERC20Allowance();
+    this.inProgress = false;
   }
 
   /**
-   * Max amount a user can input - returns the lowest of allowance and balance amount.
-   * @returns { number } - maximum amount a user can input.
+   * Inits balances and calls to get allowance.
+   * @returns { Promise<void> }
    */
-  get maxInputAmount(): number {
-    return Math.min(this.allowance, this.balance.amount);
+  private async initBalance(): Promise<void> {
+    if (await this.service.isOnMainnet()) {
+      this.inputCurrency = 'MINDS';
+
+      const balance = await this.getMainnetTokenBalance();
+      this.balance = {
+        currency: 'MINDS',
+        amount: balance / 1000000000000000000,
+      };
+    } else if (await this.service.isOnSkaleNetwork()) {
+      this.inputCurrency = 'skMINDS';
+
+      const balance = await this.getSkaleTokenBalance();
+      this.balance = {
+        currency: 'skMINDS',
+        amount: balance / 1000000000000000000,
+      };
+    }
+
+    this.updateAllowance();
   }
 }

@@ -1,4 +1,5 @@
-<div class="m-skale__body">
+<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+<div class="m-skale__body" *ngIf="!inProgress">
   <h6>
     SKALE Bridge
   </h6>
@@ -26,16 +27,18 @@
     </span>
     <div class="m-skale__outputAmount">{{ amount }} {{ ouputCurrency }}</div>
     <div class="m-skale__buttonContainer">
-      <m-button color="primary" (onAction)="approve()">Approve</m-button>
+      <m-button color="primary" (onAction)="approve()" [disabled]="amount === 0"
+        >Approve</m-button
+      >
       <m-button color="primary" (onAction)="transfer()" [disabled]="!form.valid"
         >Transfer</m-button
       >
     </div>
   </div>
-
+  <!-- 
   <div class="m-skale__networkSwapButtonContainer">
     <h6>Dev tools</h6>
     <m-button (onAction)="switchNetworkSkale()">Connect SKALE</m-button>
     <m-button (onAction)="switchNetworkRinkeby()">Connect Rinkeby</m-button>
-  </div>
+  </div> -->
 </div>

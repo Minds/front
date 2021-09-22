@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { ethers } from 'ethers';
+import { ethers, Contract } from 'ethers';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber';
 
 @Injectable({ providedIn: 'root' })
 export class SkaleService {
@@ -33,6 +34,9 @@ export class SkaleService {
   // ABI of MINDS ERC20 on SKALE.
   private skaleERC20Abi: any = {};
 
+  skaleTokenManagerAbi;
+  skaleTokenManagerAddress;
+
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
@@ -42,9 +46,23 @@ export class SkaleService {
     const skaleConfig = config.get('skale');
 
     this.depositBoxAddress =
-      blockchainConfig['skale']['skale_contracts'].deposit_box_erc20_address;
+      blockchainConfig['skale'][
+        'skale_contracts_mainnet'
+      ].deposit_box_erc20_address;
     this.depositBoxAbi =
-      blockchainConfig['skale']['skale_contracts'].deposit_box_erc20_abi;
+      blockchainConfig['skale'][
+        'skale_contracts_mainnet'
+      ].deposit_box_erc20_abi;
+
+    this.skaleTokenManagerAbi =
+      blockchainConfig['skale'][
+        'skale_contracts_skale_network'
+      ].token_manager_erc20_abi;
+    this.skaleTokenManagerAddress =
+      blockchainConfig['skale'][
+        'skale_contracts_skale_network'
+      ].token_manager_erc20_address;
+
     this.skaleERC20Abi = blockchainConfig['skale']['erc20_contract']['abi'];
 
     this.skaleRpcUrl = skaleConfig['rpc_url'];
@@ -62,13 +80,7 @@ export class SkaleService {
    */
   public async getMainnetTokenBalance(): Promise<number> {
     const currentWalletAddress = await this.provider.getSigner().getAddress();
-
-    const mindsToken = new ethers.Contract(
-      this.web3Wallet.config.token.address,
-      this.web3Wallet.config.token.abi,
-      this.provider.getSigner()
-    );
-
+    const mindsToken = await this.getMindsTokenMainnet();
     return mindsToken.balanceOf(currentWalletAddress);
   }
 
@@ -79,33 +91,38 @@ export class SkaleService {
    */
   public async getSkaleTokenBalance(): Promise<number> {
     const currentWalletAddress = await this.provider.getSigner().getAddress();
-
-    const mindsToken = new ethers.Contract(
-      this.skaleERC20Address,
-      this.skaleERC20Abi,
-      this.provider.getSigner()
-    );
-
+    const mindsToken = await this.getMindsTokenSkale();
     return mindsToken.balanceOf(currentWalletAddress);
   }
 
   /**
-   * Gets allowance for DepositBox contract from ERC20 token
+   * Gets allowance for relevant deposit or withdraw contract.
    * @returns { Promise<number> } - allowance of tokens in 'ether' units.
    */
   public async getERC20Allowance(): Promise<number> {
     const currentWalletAddress = await this.provider.getSigner().getAddress();
 
-    const mindsToken = new ethers.Contract(
-      this.web3Wallet.config.token.address,
-      this.web3Wallet.config.token.abi,
-      this.provider.getSigner()
-    );
+    let allowanceObj = {};
 
-    const allowanceObj = await mindsToken.allowance(
-      currentWalletAddress,
-      this.depositBoxAddress
-    );
+    if (await this.isOnMainnet()) {
+      const mindsToken = await this.getMindsTokenMainnet();
+
+      allowanceObj = await mindsToken.allowance(
+        currentWalletAddress,
+        this.depositBoxAddress
+      );
+    } else if (await this.isOnSkaleNetwork()) {
+      const mindsToken = await this.getMindsTokenSkale();
+
+      allowanceObj = await mindsToken.allowance(
+        currentWalletAddress,
+        this.skaleTokenManagerAddress
+      );
+    }
+
+    if (!isBigNumberish(allowanceObj)) {
+      throw new Error('Checking allowance for an unsupported network');
+    }
 
     return parseInt(ethers.utils.formatEther(allowanceObj));
   }
@@ -123,16 +140,26 @@ export class SkaleService {
 
     const amountWei = this.web3Wallet.toWei(amount);
 
-    const mindsToken = new ethers.Contract(
-      this.web3Wallet.config.token.address,
-      this.web3Wallet.config.token.abi,
-      this.provider.getSigner()
-    );
+    let mindsToken, receiverContractAddress;
+
+    if (await this.isOnMainnet()) {
+      // for mainnet, we're approving deposits.
+      mindsToken = await this.getMindsTokenMainnet();
+      receiverContractAddress = this.depositBoxAddress;
+    } else if (await this.isOnSkaleNetwork()) {
+      // for SKALE network, we're approving withdrawals.
+      receiverContractAddress = this.skaleTokenManagerAddress;
+      mindsToken = await this.getMindsTokenSkale();
+    } else if (!mindsToken || !receiverContractAddress) {
+      this.toast.warn('Network unsupported.');
+      throw new Error('Approving for an unsupported network');
+    }
 
     const approvalTx = await mindsToken.approve(
-      this.depositBoxAddress,
+      receiverContractAddress,
       amountWei
     );
+
     const receipt = await approvalTx.wait();
     return receipt;
   }
@@ -143,9 +170,7 @@ export class SkaleService {
    * @returns { Promise<void> }
    */
   public async deposit(amount: number): Promise<void> {
-    const { chainId } = await this.provider.getNetwork();
-
-    if (chainId !== parseInt(this.chainIds.rinkeby, 16)) {
+    if (!(await this.isOnMainnet())) {
       this.toast.warn('Unavailable on this network - please switch');
       return;
     }
@@ -180,9 +205,44 @@ export class SkaleService {
     return depositReceipt;
   }
 
-  // TODO: Withdraw
+  /**
+   * Withdraw to mainnet
+   * @param { number } amount
+   * @returns { Promise<void> }
+   */
   public async withdraw(amount: number): Promise<void> {
-    this.toast.warn('Not yet implemented');
+    if (!(await this.isOnSkaleNetwork())) {
+      this.toast.warn('Unavailable on this network - please switch');
+      return;
+    }
+
+    if (!amount) {
+      this.toast.warn('You must provide an amount of tokens');
+      return;
+    }
+
+    const currentWalletAddress = await this.provider.getSigner().getAddress();
+
+    const amountWei = this.web3Wallet.toWei(amount);
+
+    const skaleTokenManager = new ethers.Contract(
+      this.skaleTokenManagerAddress,
+      this.skaleTokenManagerAbi,
+      this.provider.getSigner()
+    );
+
+    const withdrawTx = await skaleTokenManager.exitToMainERC20(
+      this.web3Wallet.config.token.address,
+      currentWalletAddress,
+      amountWei,
+      {
+        // type: 2,
+        gasLimit: 8000000,
+      }
+    );
+
+    const withdrawReceipt = await withdrawTx;
+    return withdrawReceipt;
   }
 
   /**
@@ -202,6 +262,57 @@ export class SkaleService {
   }
 
   /**
+   * Gets current chain ID as a number.
+   * @returns { number } current chain id.
+   */
+  public async getChainId(): Promise<number> {
+    const { chainId } = await this.provider.getNetwork();
+    return chainId;
+  }
+
+  /**
+   * Is on SKALE network.
+   * @returns { Promise<boolean> }
+   */
+  public async isOnSkaleNetwork(): Promise<boolean> {
+    const chainId = await this.getChainId();
+    return chainId === parseInt(this.chainIds.skale, 16);
+  }
+
+  /**
+   * Is on mainnet / rinkeby.
+   * @returns { Promise<boolean> }
+   */
+  public async isOnMainnet(): Promise<boolean> {
+    const chainId = await this.getChainId();
+    return chainId === parseInt(this.chainIds.rinkeby, 16);
+  }
+
+  /**
+   * Gets Minds token on mainnet / rinkeby.
+   * @returns { Promise<Contract> }
+   */
+  private async getMindsTokenMainnet(): Promise<Contract> {
+    return new ethers.Contract(
+      this.web3Wallet.config.token.address,
+      this.web3Wallet.config.token.abi,
+      this.provider.getSigner()
+    );
+  }
+
+  /**
+   * Gets Minds token on SKALE network.
+   * @returns { Promise<Contract> }
+   */
+  private async getMindsTokenSkale(): Promise<Contract> {
+    return new ethers.Contract(
+      this.skaleERC20Address,
+      this.skaleERC20Abi,
+      this.provider.getSigner()
+    );
+  }
+
+  /**
    * Calls to switch network. Encapsulation to be kept private
    * to prevent this from being called with unsupported networks.
    * TODO: Break off into separate service for reusability.
@@ -209,7 +320,7 @@ export class SkaleService {
    * @returns { Promise<void> }
    */
   private async switchNetwork(chainId: string = '0x4'): Promise<void> {
-    const currentChainId = (await this.provider.getNetwork())?.chainId;
+    const currentChainId = await this.getChainId();
 
     if (parseInt(chainId, 16) === currentChainId) {
       this.toast.warn('Already on this network');
