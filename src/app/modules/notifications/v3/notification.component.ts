@@ -53,8 +53,6 @@ export class NotificationsV3NotificationComponent
   ngOnInit(): void {
     if (!this.notification) return;
 
-    console.log('ojm notification', this.notification);
-
     /**
      * All notification types must be added to this list
      */
