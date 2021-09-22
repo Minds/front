@@ -1,3 +1,4 @@
+import { SiteService } from './../../services/site.service';
 import {
   Component,
   ChangeDetectorRef,
@@ -54,6 +55,7 @@ export class MindsRichEmbed {
     protected featureService: FeaturesService,
     private mediaProxy: MediaProxyService,
     private configs: ConfigsService,
+    private site: SiteService,
     private overlayModal: OverlayModalService
   ) {}
 
@@ -314,6 +316,10 @@ export class MindsRichEmbed {
       this.inlineEmbed.html &&
       (!this.modalRequestSubscribed || !this.overlayModal.canOpenInModal())
     );
+  }
+
+  getRel() {
+    return this.site.getExternalLinkRel(this.src.perma_url);
   }
 
   detectChanges() {

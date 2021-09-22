@@ -65,4 +65,19 @@ export class SiteService {
 
     return false;
   }
+
+  /**
+   * Returns the rel attribute for external links
+   *
+   * @param { string } url
+   * @returns { string }
+   */
+  getExternalLinkRel(url: string) {
+    const siteUrl = this.configs.get('site_url');
+    let rel = 'noopener noreferrer';
+    // if the link was pointing to our website
+    if (url.indexOf(siteUrl) === 0) return rel;
+    // don't follow links that aren't from our site
+    return (rel += ' ugc nofollow');
+  }
 }

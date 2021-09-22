@@ -20,13 +20,19 @@ export class TagsPipe implements PipeTransform {
     url: {
       rule: this.regexService.getRegex('url'),
       replace: m => {
-        return `<a href="${m.match[1]}" target="_blank" rel="noopener nofollow ugc">${m.match[1]}</a>`;
+        const url = m.match[1];
+        return `<a href="${url}" target="_blank" rel="${this.siteService.getExternalLinkRel(
+          url
+        )}">${m.match[1]}</a>`;
       },
     },
     mail: {
       rule: this.regexService.getRegex('mail'),
       replace: m => {
-        return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener nofollow ugc">${m.match[0]}</a>`;
+        const url = m.match[0];
+        return `<a href="mailto:${url}" target="_blank" rel="${this.siteService.getExternalLinkRel(
+          url
+        )}">${m.match[0]}</a>`;
       },
     },
     hash: {
