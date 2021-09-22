@@ -10,54 +10,20 @@
   }"
   #scrollArea
 >
-  <m-loadingSpinner
-    [inProgress]="inProgress"
-    *ngIf="inProgress && comments?.length === 0"
+  <m-comment__poster
+    #poster
+    *ngIf="activityService.allowComment$ | async"
+    [guid]="guid"
+    [parent]="parent"
+    [entity]="entity"
+    [currentIndex]="comments.length - 1"
+    [conversation]="conversation"
+    [level]="level"
+    (posted)="onPosted($event)"
+    (optimisticPost)="onOptimisticPost($event)"
   >
-  </m-loadingSpinner>
+  </m-comment__poster>
 
-  <!-- --------------------------------  -->
-  <div class="m-comments__viewMore" *ngIf="loadPrevious && showReplies">
-    <m-button
-      (onAction)="load(false, 'desc')"
-      [saving]="inProgress || descendingInProgress"
-      overlay="true"
-      size="xsmall"
-    >
-      <span *ngIf="!descendingInProgress && !loaded">
-        <ng-container *ngIf="!error"
-          ><ng-container i18n="@@MINDS__COMMENTS__VIEW_MORE_ACTION"
-            >View more</ng-container
-          ></ng-container
-        >
-        <ng-container *ngIf="error"
-          ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
-            >Try again</ng-container
-          ></ng-container
-        >
-      </span>
-      <span *ngIf="!descendingInProgress && loaded">
-        <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
-          >Load earlier</ng-container
-        >
-      </span>
-    </m-button>
-  </div>
-  <!-- --------------------------------  -->
-  <!-- <div
-    class="m-comments__startConversation"
-    *ngIf="
-      isLoggedIn &&
-      !inProgress &&
-      !error &&
-      comments?.length === 0 &&
-      parent.type == 'activity' &&
-      (activityService.allowComment$ | async)
-    "
-    i18n="@@MINDS__COMMENTS__START_CONVERSATION"
-  >
-    <span>Start the conversation!</span>
-  </div> -->
   <!-- --------------------------------  -->
   <p class="m-comments--load-error-label" *ngIf="!inProgress && !!error">
     <i class="material-icons">warning</i>
@@ -73,35 +39,20 @@
   </p>
   <div class="m-layout--spacer"></div>
   <!-- --------------------------------  -->
-  <ng-container *ngIf="showReplies">
-    <ng-container *ngFor="let comment of getComments(); let i = index">
-      <m-comment
-        [comment]="comment"
-        [entity]="entity"
-        [parent]="parent"
-        [level]="level"
-        [canEdit]="canEdit"
-        [canDelete]="canDelete"
-        [showReplies]="comment.show_replies"
-        [compact]="compact"
-        (delete)="delete(i)"
-        (saved)="edited(i, $event)"
-        (onReply)="reply($event.comment)"
-        [poster]="poster"
-      ></m-comment>
-    </ng-container>
-  </ng-container>
-  <!-- --------------------------------  -->
-  <div class="m-comments__viewMore" *ngIf="loadNext && showReplies">
+  <div
+    class="m-comments__viewMore m-comments__viewMore--newer"
+    *ngIf="loadNext && showReplies"
+  >
     <m-button
-      (onAction)="load(false, 'asc')"
+      (onAction)="load(false)"
       [saving]="ascendingInProgress"
       overlay="true"
       size="xsmall"
     >
       <span *ngIf="!ascendingInProgress && !loaded">
-        <ng-container *ngIf="!error"
-          ><ng-container i18n="@@MINDS__COMMENTS__VIEW_MORE_ACTION"
+        <ng-container *ngIf="!error">
+          ↑
+          <ng-container i18n="@@MINDS__COMMENTS__VIEW_MORE_ACTION"
             >View more</ng-container
           ></ng-container
         >
@@ -118,20 +69,72 @@
       </span>
     </m-button>
   </div>
-  <m-comment__poster
-    #poster
-    *ngIf="activityService.allowComment$ | async"
-    [guid]="guid"
-    [parent]="parent"
-    [entity]="entity"
-    [currentIndex]="comments.length - 1"
-    [conversation]="conversation"
-    [level]="level"
-    (posted)="onPosted($event)"
-    (optimisticPost)="onOptimisticPost($event)"
-  >
-  </m-comment__poster>
 </div>
+<!-- --------------------------------  -->
+
+<ng-container *ngIf="showReplies">
+  <ng-container
+    *ngFor="
+      let comment of getComments()
+        .slice()
+        .reverse();
+      let i = index;
+      let first = first
+    "
+  >
+    <m-comment
+      [comment]="comment"
+      [entity]="entity"
+      [parent]="parent"
+      [level]="level"
+      [canEdit]="canEdit"
+      [canDelete]="canDelete"
+      [showReplies]="comment.show_replies"
+      [compact]="compact"
+      (delete)="delete(i)"
+      (saved)="edited(i, $event)"
+      (onReply)="reply($event.comment)"
+      [poster]="poster"
+      [ngClass]="{ 'm-commentsThreadComment--first': first && level === 0 }"
+    ></m-comment>
+  </ng-container>
+</ng-container>
+<!-- --------------------------------  -->
+<div
+  class="m-comments__viewMore m-comments__viewMore--older"
+  *ngIf="loadPrevious && showReplies"
+>
+  <m-button
+    (onAction)="load(false, 'desc')"
+    [saving]="inProgress || descendingInProgress"
+    overlay="true"
+    size="xsmall"
+  >
+    <span *ngIf="!descendingInProgress && !loaded">
+      <ng-container *ngIf="!error"
+        ><ng-container i18n="@@MINDS__COMMENTS__VIEW_MORE_ACTION"
+          >View more</ng-container
+        ></ng-container
+      >
+      <ng-container *ngIf="error"
+        ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
+          >Try again</ng-container
+        ></ng-container
+      >
+    </span>
+    <span *ngIf="!descendingInProgress && loaded">
+      <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
+        >Load earlier</ng-container
+      >
+    </span>
+  </m-button>
+</div>
+<m-loadingSpinner
+  [inProgress]="inProgress"
+  *ngIf="inProgress && comments?.length === 0"
+>
+</m-loadingSpinner>
+
 <!-- --------------------------------  -->
 <span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
   <ng-container i18n="@@MINDS__COMMENTS__NO_LIVE_COMMENTS"

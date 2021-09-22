@@ -1,3 +1,16 @@
+<ng-container *ngIf="showOnlyPoster">
+  <m-comment__poster
+    [guid]="guid"
+    [parent]="entity"
+    [entity]="entity"
+    [level]="0"
+    (posted)="onPosted($event); showOnlyPoster = false"
+    (optimisticPost)="onOptimisticPost($event)"
+  >
+  </m-comment__poster>
+  <div (click)="showOnlyPoster = false">Show comments</div>
+</ng-container>
+
 <ng-container *ngIf="!showOnlyPoster">
   <m-comments__thread
     [entity]="entity"
@@ -12,18 +25,4 @@
     [compact]="compact"
   >
   </m-comments__thread>
-</ng-container>
-
-<ng-container *ngIf="showOnlyPoster">
-  <m-comment__poster
-    [guid]="guid"
-    [parent]="entity"
-    [entity]="entity"
-    [level]="0"
-    (posted)="onPosted($event); showOnlyPoster = false"
-    (optimisticPost)="onOptimisticPost($event)"
-  >
-  </m-comment__poster>
-
-  <div (click)="showOnlyPoster = false">Show comments</div>
 </ng-container>

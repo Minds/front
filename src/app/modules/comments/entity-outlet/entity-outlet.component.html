@@ -32,16 +32,6 @@
   </div>
 </div>
 <!-- -------------------- -->
-<!-- START CONVERSATION -->
-<!-- -------------------- -->
-<!-- <div
-  class="m-comments__startConversation"
-  *ngIf="count < 1 && !showOnlyPoster"
-  i18n="@@MINDS__COMMENTS__START_CONVERSATION"
->
-  <span>Start the conversation!</span>
-</div> -->
-<!-- -------------------- -->
 
 <ng-container *ngIf="showOnlyPoster">
   <!-- -------------------- -->
@@ -54,6 +44,21 @@
   >
     View {{ count }} comment{{ count > 1 ? 's' : '' }}
   </div>
+
+  <!-- -------------------- -->
+  <!-- POSTER ONLY -->
+  <!-- -------------------- -->
+  <m-comment__poster
+    *ngIf="legacyActivityService.allowComment$ | async"
+    [guid]="guid"
+    [parent]="entity"
+    [entity]="entity"
+    [currentIndex]="0"
+    [level]="0"
+    (posted)="onPosted($event)"
+    (optimisticPost)="onOptimisticPost($event)"
+  >
+  </m-comment__poster>
   <!-- -------------------- -->
   <!-- OPTIMISTIC LIST -->
   <!-- -------------------- -->
@@ -78,20 +83,6 @@
       ></m-comment>
     </ng-container>
   </div>
-  <!-- -------------------- -->
-  <!-- POSTER ONLY -->
-  <!-- -------------------- -->
-  <m-comment__poster
-    *ngIf="legacyActivityService.allowComment$ | async"
-    [guid]="guid"
-    [parent]="entity"
-    [entity]="entity"
-    [currentIndex]="0"
-    [level]="0"
-    (posted)="onPosted($event)"
-    (optimisticPost)="onOptimisticPost($event)"
-  >
-  </m-comment__poster>
 </ng-container>
 <!-- -------------------- -->
 <!-- TREE -->
