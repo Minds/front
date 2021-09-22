@@ -86,7 +86,6 @@ export class SkaleService {
 
   /**
    * Gets SKALE token balance.
-   * TODO: Currency throws errors - need to fix.
    * @returns { Promise<number> }
    */
   public async getSkaleTokenBalance(): Promise<number> {
