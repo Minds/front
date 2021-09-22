@@ -20,9 +20,7 @@ export class HomepageContainerComponent {
    * @returns { boolean } true if it should be rendered.
    */
   public shouldRenderDiscoveryExperiment(): boolean {
-    return this.experiments.shouldRender({
-      experimentId: 'Homepage030821',
-      bucketId: 'base',
-    });
+    const output = this.experiments.run('discovery-homepage');
+    return output === 'on';
   }
 }
