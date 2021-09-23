@@ -191,6 +191,7 @@ import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { JsonLdService } from './services/jsonld.service';
+import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 
 const routes: Routes = [
   {
@@ -354,6 +355,7 @@ const routes: Routes = [
     PublisherSearchModalComponent,
     DateRangeModalComponent,
     HovercardComponent,
+    JoinBannerComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -493,6 +495,7 @@ const routes: Routes = [
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
+    JoinBannerComponent,
   ],
   providers: [
     SiteService,
