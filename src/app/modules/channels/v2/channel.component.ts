@@ -101,11 +101,17 @@ export class ChannelComponent implements OnInit, OnDestroy {
   protected userSubscription: Subscription;
 
   /**
+   * Subscription to search query
+   */
+  protected querySubscription: Subscription;
+  /**
    * Last user GUID that emitted an Analytics beacon
    */
   protected lastChannel: string;
 
   protected currentChannel: MindsUser;
+
+  protected encodedQuery: string;
   /**
    * True if the selected tab is 'feed'
    */
@@ -202,6 +208,18 @@ export class ChannelComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    this.querySubscription = this.service.query$.subscribe(query => {
+      this.encodedQuery = query.length ? encodeURIComponent(query) : null;
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          query: this.encodedQuery,
+        },
+        queryParamsHandling: 'merge',
+      });
+    });
   }
 
   /**
@@ -247,6 +265,23 @@ export class ChannelComponent implements OnInit, OnDestroy {
     if (query) {
       this.service.query$.next(query);
     }
+  }
+
+  /**
+   * Sets query params for the links that switch btwn 'list' and 'grid' layouts
+   */
+  getLayoutLinkQueryParams(layout: string): any {
+    let queryParams = {
+      layout: layout,
+    };
+
+    if (this.encodedQuery) {
+      queryParams['query'] = this.encodedQuery;
+    }
+
+    console.log(queryParams);
+
+    return queryParams;
   }
 
   /**
