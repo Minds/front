@@ -30,6 +30,7 @@
         font-weight: 500;
         font-size: 17px;
         line-height: 1.294;
+        @include unselectable;
 
         @media screen and (min-width: $min-desktop) {
           margin-right: 200px;
@@ -42,6 +43,7 @@
       .m-joinBanner__logo {
         width: 130px;
         margin-bottom: 20px;
+        @include unselectable;
       }
 
       // overriding button theming as m-button does not yet work well with inverted background colors.
@@ -51,12 +53,15 @@
         justify-content: center;
 
         button {
+          @include unselectable;
           @include m-theme() {
             color: themed($m-textColor--primaryInverted) !important;
           }
           &:hover {
             @include m-theme() {
-              background-color: themed($m-bgColor--contrast) !important;
+              background-color: themed(
+                $m-bgColor--btnHoverLightAlways
+              ) !important;
             }
           }
         }
@@ -70,6 +75,7 @@
       margin: 20px 40px;
       cursor: pointer;
 
+      @include unselectable;
       @include m-theme() {
         color: themed($m-textColor--primaryInverted);
       }
