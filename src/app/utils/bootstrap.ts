@@ -11,13 +11,7 @@ export default function bootstrap(AppModule) {
   const bootstrapModule = () =>
     platformBrowserDynamic().bootstrapModule(AppModule);
 
-  if (environment.production) {
-    if (document.readyState === 'complete') {
-      bootstrapModule();
-    } else {
-      document.addEventListener('DOMContentLoaded', bootstrapModule);
-    }
-  } else if (environment.hmr) {
+  if (environment.hmr) {
     if (module['hot']) {
       hmrBootstrap(module, bootstrapModule);
     } else {
@@ -25,6 +19,10 @@ export default function bootstrap(AppModule) {
       console.log('Are you using the --hmr flag for ng serve?');
     }
   } else {
-    bootstrapModule().catch(err => console.error(err));
+    if (document.readyState === 'complete') {
+      bootstrapModule();
+    } else {
+      document.addEventListener('DOMContentLoaded', bootstrapModule);
+    }
   }
 }
