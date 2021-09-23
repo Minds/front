@@ -68,7 +68,10 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: plusPageActive }"
       >
-        <a routerLink="/discovery" (click)="toggle()">
+        <a
+          [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
+          (click)="toggle()"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -90,7 +93,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
         *mIfFeature="'nav-plus-2020'"
       >
-        <a routerLink="/discovery/plus" (click)="toggle()">
+        <a routerLink="/discovery/plus/overview" (click)="toggle()">
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"

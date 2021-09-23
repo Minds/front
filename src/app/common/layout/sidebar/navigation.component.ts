@@ -34,6 +34,7 @@ import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.co
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -89,7 +90,8 @@ export class SidebarNavigationComponent
     private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
     private injector: Injector,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private experiments: ExperimentsService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -247,5 +249,13 @@ export class SidebarNavigationComponent
       }
       console.error(e);
     }
+  }
+
+  /**
+   * Returns if link should be to discovery homepage
+   * @returns { boolean } true if link should be '/'.
+   */
+  public shouldBeDiscoveryHomepage(): boolean {
+    return this.experiments.run('discovery-homepage') === 'on' && !this.user; // logged out
   }
 }
