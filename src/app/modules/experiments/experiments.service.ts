@@ -55,11 +55,12 @@ export class ExperimentsService {
   }
 
   /**
-   * Returns the variation to display
-   * @param key
-   * @returns string
+   * Returns the variation to display.
+   * @param { string } key - key to check.
+   * @throws { string } unable to find experiment error.
+   * @returns { string } - variation to display.
    */
-  run(key): string {
+  public run(key: string): string {
     for (let experiment of this.experiments) {
       if (experiment.key === key) {
         const { value } = this.growthbook.run(experiment);
@@ -78,5 +79,19 @@ export class ExperimentsService {
         variation_id: variationId,
       },
     });
+  }
+
+  /**
+   * Return whether an experiment has a given state
+   * @param { string } experimentId - experiment key.
+   * @param { string } activeState - state to check, e.g. 'on' or 'off'.
+   * @returns { boolean } - true if params reflect current state.
+   */
+  public hasState(experimentId: string, activeState: string = 'on'): boolean {
+    try {
+      return this.run(experimentId) === activeState;
+    } catch (e) {
+      return false;
+    }
   }
 }
