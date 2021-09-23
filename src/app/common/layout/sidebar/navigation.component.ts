@@ -256,6 +256,8 @@ export class SidebarNavigationComponent
    * @returns { boolean } true if link should be '/'.
    */
   public shouldBeDiscoveryHomepage(): boolean {
-    return this.experiments.hasState('discovery-homepage', 'on') && !this.user; // logged out
+    return (
+      this.experiments.hasVariation('discovery-homepage', 'on') && !this.user
+    ); // logged out
   }
 }

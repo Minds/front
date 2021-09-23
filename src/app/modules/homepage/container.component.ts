@@ -20,6 +20,6 @@ export class HomepageContainerComponent {
    * @returns { boolean } true if it should be rendered.
    */
   public shouldRenderDiscoveryExperiment(): boolean {
-    return this.experiments.hasState('discovery-homepage', 'on');
+    return this.experiments.hasVariation('discovery-homepage', 'on');
   }
 }

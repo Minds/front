@@ -87,9 +87,9 @@ export class ExperimentsService {
    * @param { string } activeState - state to check, e.g. 'on' or 'off'.
    * @returns { boolean } - true if params reflect current state.
    */
-  public hasState(experimentId: string, activeState: string = 'on'): boolean {
+  public hasVariation(experimentId: string, variation: string = 'on'): boolean {
     try {
-      return this.run(experimentId) === activeState;
+      return this.run(experimentId) === variation;
     } catch (e) {
       return false;
     }

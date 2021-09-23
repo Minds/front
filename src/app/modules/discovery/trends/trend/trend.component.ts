@@ -75,7 +75,7 @@ export class DiscoveryTrendComponent {
    */
   public shouldBeDiscoveryHomepage(): boolean {
     return (
-      this.experiments.hasState('discovery-homepage', 'on') &&
+      this.experiments.hasVariation('discovery-homepage', 'on') &&
       !this.session.getLoggedInUser()
     ); // logged out
   }

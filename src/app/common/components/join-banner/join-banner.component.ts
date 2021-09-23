@@ -42,7 +42,7 @@ export class JoinBannerComponent implements OnInit {
    */
   public shouldShow(): boolean {
     return (
-      this.experiments.hasState('discovery-homepage', 'on') &&
+      this.experiments.hasVariation('discovery-homepage', 'on') &&
       !this.session.getLoggedInUser() &&
       !this.dismissed
     );
