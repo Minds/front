@@ -36,6 +36,7 @@ import { WireModalService } from '../wire/wire-modal.service';
 import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.service';
 import { DiscoveryTrendsService } from './trends/trends.service';
 import { DiscoveryTrendComponent } from './trends/trend/trend.component';
+import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/build-your-algorithm.component';
 
 @NgModule({
   imports: [
@@ -72,6 +73,7 @@ import { DiscoveryTrendComponent } from './trends/trend/trend.component';
     DiscoveryTabsComponent,
     DiscoveryLatestFeedComponent,
     DiscoveryCardCarouselComponent,
+    DiscoveryBuildYourAlgorithmComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
@@ -86,6 +88,7 @@ import { DiscoveryTrendComponent } from './trends/trend/trend.component';
     DiscoveryBoostFeedComponent,
     DiscoveryFeedsComponent,
     DiscoverySidebarTagsComponent,
+    DiscoveryBuildYourAlgorithmComponent,
   ],
   providers: [
     DiscoveryTrendsService,
