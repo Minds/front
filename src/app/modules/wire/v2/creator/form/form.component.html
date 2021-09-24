@@ -266,6 +266,19 @@
               >Off-chain</span
             >
           </div>
+
+          <div
+            class="m-wireCreatorForm__field m-wireCreatorForm__networkSelect"
+            *ngIf="(service.tokenType$ | async) === 'onchain'"
+          >
+            <select
+              [ngModel]="service.onchainNetwork$ | async"
+              (ngModelChange)="this.service.setOnchainNetwork($event)"
+            >
+              <option selected value="mainnet">Mainnet</option>
+              <option value="skale">SKALE</option>
+            </select>
+          </div>
         </div>
         <!-- </ng-container> -->
 

@@ -4,28 +4,23 @@ import { ethers, Contract } from 'ethers';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber';
+import { NetworkSwitchService } from '../../../../../common/services/network-switch-service';
 
 @Injectable({ providedIn: 'root' })
 export class SkaleService {
-  // chain ids used (hex)
-  private chainIds = {
-    skale: '',
-    mainnet: '',
-  };
-
-  // current provider
+  // Current provider.
   private provider;
 
-  // SKALE chain name
+  // SKALE chain name.
   private skaleChainName = '';
 
-  // SKALE rpc url
+  // SKALE rpc url.
   private skaleRpcUrl = '';
 
-  // Address of SKALE deposit box
+  // Address of SKALE deposit box.
   private depositBoxAddress: string = '';
 
-  // ABI of SKALE deposit box
+  // ABI of SKALE deposit box.
   private depositBoxAbi: any = {};
 
   // Address of MINDS ERC20 on SKALE.
@@ -34,12 +29,16 @@ export class SkaleService {
   // ABI of MINDS ERC20 on SKALE.
   private skaleERC20Abi: any = {};
 
-  skaleTokenManagerAbi;
-  skaleTokenManagerAddress;
+  // SKALE token manager ABI.
+  private skaleTokenManagerAbi: any;
+
+  // SKALE token manager address.
+  private skaleTokenManagerAddress: string = '';
 
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
+    private networkSwitch: NetworkSwitchService,
     config: ConfigsService
   ) {
     const blockchainConfig = config.get('blockchain');
@@ -67,13 +66,7 @@ export class SkaleService {
 
     this.skaleRpcUrl = skaleConfig['rpc_url'];
     this.skaleChainName = skaleConfig['chain_name'];
-    this.chainIds.skale = skaleConfig['chain_id_hex'];
     this.skaleERC20Address = skaleConfig['erc20_address'];
-
-    this.chainIds.mainnet =
-      config.get('environment') === 'development'
-        ? '0x4' // rinkeby
-        : '0x1'; // mainnet
 
     // init provider
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -136,7 +129,7 @@ export class SkaleService {
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }
    */
-  public async approve(amount: number): Promise<void> {
+  public async approve(amount: number): Promise<unknown> {
     if (!amount) {
       this.toast.warn('You must provide an amount of tokens');
       return;
@@ -173,7 +166,7 @@ export class SkaleService {
    * @param { number } amount - amount of tokens to deposit.
    * @returns { Promise<void> }
    */
-  public async deposit(amount: number): Promise<void> {
+  public async deposit(amount: number): Promise<unknown> {
     if (!(await this.isOnMainnet())) {
       this.toast.warn('Unavailable on this network - please switch');
       return;
@@ -214,7 +207,7 @@ export class SkaleService {
    * @param { number } amount
    * @returns { Promise<void> }
    */
-  public async withdraw(amount: number): Promise<void> {
+  public async withdraw(amount: number): Promise<unknown> {
     if (!(await this.isOnSkaleNetwork())) {
       this.toast.warn('Unavailable on this network - please switch');
       return;
@@ -254,7 +247,7 @@ export class SkaleService {
    * @returns { Promise<void> }
    */
   public switchNetworkMainnet(): Promise<void> {
-    return this.switchNetwork(this.chainIds.mainnet);
+    return this.networkSwitch.switchToMainnet(this.provider);
   }
 
   /**
@@ -262,16 +255,7 @@ export class SkaleService {
    * @returns { Promise<void> }
    */
   public switchNetworkSkale(): Promise<void> {
-    return this.switchNetwork(this.chainIds.skale);
-  }
-
-  /**
-   * Gets current chain ID as a number.
-   * @returns { number } current chain id.
-   */
-  public async getChainId(): Promise<number> {
-    const { chainId } = await this.provider.getNetwork();
-    return chainId;
+    return this.networkSwitch.switchToSkale(this.provider, this.skaleRpcUrl);
   }
 
   /**
@@ -279,8 +263,7 @@ export class SkaleService {
    * @returns { Promise<boolean> }
    */
   public async isOnSkaleNetwork(): Promise<boolean> {
-    const chainId = await this.getChainId();
-    return chainId === parseInt(this.chainIds.skale, 16);
+    return this.networkSwitch.isOnSkaleNetwork(this.provider);
   }
 
   /**
@@ -288,8 +271,7 @@ export class SkaleService {
    * @returns { Promise<boolean> }
    */
   public async isOnMainnet(): Promise<boolean> {
-    const chainId = await this.getChainId();
-    return chainId === parseInt(this.chainIds.mainnet, 16);
+    return this.networkSwitch.isOnMainnet(this.provider);
   }
 
   /**
@@ -317,41 +299,24 @@ export class SkaleService {
   }
 
   /**
-   * Calls to switch network. Encapsulation to be kept private
-   * to prevent this from being called with unsupported networks.
-   * TODO: Break off into separate service for reusability.
-   * @param { string } - hex of chain id - defaults to mainnet chain id.
-   * @returns { Promise<void> }
+   * Transfer tokens to another user
+   * @param toAddress - recipient address.
+   * @param amountEther - amount to transfer in whole Ether denomination - NOT WEI.
+   * @returns { unknown } - transaction receipt.
    */
-  private async switchNetwork(
-    chainId: string = this.chainIds.mainnet
-  ): Promise<void> {
-    const currentChainId = await this.getChainId();
-
-    if (parseInt(chainId, 16) === currentChainId) {
-      this.toast.warn('Already on this network');
+  public async transfer(
+    toAddress: string,
+    amountEther: number
+  ): Promise<unknown> {
+    if (!this.isOnSkaleNetwork()) {
+      this.toast.warn('Incorrect network, please switch and try again.');
+      await this.switchNetworkSkale(); // will trigger reload.
       return;
     }
 
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: chainId }],
-      });
-      window.location.reload();
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [{ chainId: chainId, rpcUrl: this.skaleRpcUrl }],
-          });
-          window.location.reload();
-        } catch (addError) {
-          console.error(addError);
-        }
-      }
-    }
+    const amountWei = this.web3Wallet.toWei(amountEther);
+
+    const mindsToken = await this.getMindsTokenSkale();
+    return await mindsToken.transfer(toAddress, amountWei);
   }
 }

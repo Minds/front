@@ -132,6 +132,11 @@ const DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS: WireUpgradePricingOptions = {
 export type WireTokenType = 'offchain' | 'onchain';
 
 /**
+ * Onchain network types
+ */
+export type WireOnchainNetworkType = 'mainnet' | 'skale';
+
+/**
  * Default token type value
  */
 const DEFAULT_TOKEN_TYPE_VALUE: WireTokenType = 'offchain';
@@ -169,6 +174,7 @@ interface Data {
   upgradeInterval: UpgradeOptionInterval;
   upgradePricingOptions: WireUpgradePricingOptions;
   tokenType: WireTokenType;
+  onchainNetwork: WireOnchainNetworkType;
   amount: number;
   recurring: boolean;
   owner: MindsUser | null;
@@ -189,6 +195,7 @@ type DataArray = [
   UpgradeOptionInterval,
   WireUpgradePricingOptions,
   WireTokenType,
+  WireOnchainNetworkType,
   number,
   boolean,
   MindsUser,
@@ -272,6 +279,9 @@ export class WireV2Service implements OnDestroy {
     WireTokenType
   >(DEFAULT_TOKEN_TYPE_VALUE);
 
+  readonly onchainNetwork$: BehaviorSubject<
+    WireOnchainNetworkType
+  > = new BehaviorSubject<WireOnchainNetworkType>('mainnet');
   /**
    * Amount subject
    */
@@ -400,6 +410,7 @@ export class WireV2Service implements OnDestroy {
       this.upgradeInterval$,
       this.upgradePricingOptions$,
       this.tokenType$,
+      this.onchainNetwork$,
       this.amount$,
       this.recurring$,
       this.owner$.pipe(
@@ -427,6 +438,7 @@ export class WireV2Service implements OnDestroy {
           upgradeInterval,
           upgradePricingOptions,
           tokenType,
+          onchainNetwork,
           amount,
           recurring,
           owner,
@@ -441,6 +453,7 @@ export class WireV2Service implements OnDestroy {
           upgradeInterval,
           upgradePricingOptions,
           tokenType,
+          onchainNetwork,
           amount,
           recurring,
           owner,
@@ -705,6 +718,17 @@ export class WireV2Service implements OnDestroy {
   }
 
   /**
+   * Sets the Wire token type
+   * @param tokenType
+   */
+  public setOnchainNetwork(
+    onchainNetwork: WireOnchainNetworkType
+  ): WireV2Service {
+    this.onchainNetwork$.next(onchainNetwork);
+    return this;
+  }
+
+  /**
    * Sets the Wire amount
    * @param amount
    */
@@ -837,6 +861,7 @@ export class WireV2Service implements OnDestroy {
             );
           }
         } else {
+          // TODO: Maybe network switch here?
           // On-chain & Eth
           if (!data.owner || !data.owner.eth_wallet) {
             return invalid(
@@ -891,6 +916,7 @@ export class WireV2Service implements OnDestroy {
         } else if (data.tokenType === 'onchain') {
           wire.payload = {
             receiver: data.owner && data.owner.eth_wallet,
+            network: data.onchainNetwork,
             address: '',
           };
         }

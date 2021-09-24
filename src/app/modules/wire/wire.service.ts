@@ -5,6 +5,7 @@ import { TokenContractService } from '../blockchain/contracts/token-contract.ser
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { BTCService } from '../payments/btc/btc.service';
 import { FormToastService } from '../../common/services/form-toast.service';
+import { SkaleService } from '../wallet/components/tokens/skale/skale.service';
 
 export type PayloadType =
   | 'onchain'
@@ -33,6 +34,7 @@ export class WireService {
     private tokenContract: TokenContractService,
     private web3Wallet: Web3WalletService,
     private btcService: BTCService,
+    private skaleService: SkaleService,
     private toast: FormToastService
   ) {}
 
@@ -45,6 +47,10 @@ export class WireService {
 
     switch (wire.payloadType) {
       case 'onchain':
+        if (wire.payload.network === 'skale') {
+          await this.skaleService.transfer(payload.receiver, wire.amount);
+          return;
+        }
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
