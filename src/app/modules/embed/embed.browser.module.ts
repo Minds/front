@@ -17,7 +17,7 @@ import { EmbedModule } from './embed.module';
 @NgModule({
   imports: [
     EmbedModule,
-    BrowserModule.withServerTransition({ appId: 'm-app' }),
+    BrowserModule.withServerTransition({ appId: 'm-embed' }),
     BrowserTransferStateModule,
   ],
   providers: [

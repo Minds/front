@@ -1,3 +1,5 @@
+import { FeaturesService } from './../../services/features.service';
+import { ThemeService } from './../../common/services/theme.service';
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
@@ -22,11 +24,20 @@ import { RecentService } from '../../services/ux/recent';
 import { VideoModule } from '../media/components/video/video.module';
 import { EmbedComponent } from './embed.component';
 import { EmbeddedVideoComponent } from './embedded-video/embedded-video.component';
+import { EmbeddedImageComponent } from './embedded-image/embedded-image.component';
+import { InvalidEmbedComponent } from './invalid-embed/invalid-embed.component';
+import { EmbedTopbarComponent } from './embed-topbar/embed-topbar.component';
 
-const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
+const routes = [{ path: 'embed/:guid', component: EmbedComponent }];
 
 @NgModule({
-  declarations: [EmbedComponent, EmbeddedVideoComponent],
+  declarations: [
+    EmbedComponent,
+    EmbeddedVideoComponent,
+    EmbeddedImageComponent,
+    InvalidEmbedComponent,
+    EmbedTopbarComponent,
+  ],
   exports: [EmbedComponent],
   imports: [
     CommonModule,
@@ -68,6 +79,8 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     Session,
     Storage,
     RecentService,
+    ThemeService,
+    FeaturesService,
     {
       provide: BlockListService,
       useFactory: BlockListService._,

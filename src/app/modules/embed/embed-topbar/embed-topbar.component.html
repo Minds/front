@@ -1,0 +1,21 @@
+<div
+  class="m-embedTopBar__top"
+  [class.m-embedTopBar__top--active]="true"
+  *ngIf="entity"
+>
+  <a href="{{ channelUrl }}">
+    <div
+      class="m-embedTopBar__channel-avatar"
+      [ngStyle]="{ 'background-image': 'url(' + avatarSrc + ')' }"
+      *ngIf="avatarSrc"
+    ></div>
+  </a>
+  <a href="{{ mediaUrl }}" class="m-embedTopBar__title">{{ title }}</a>
+
+  <a [href]="siteUrl + 'newsfeed/' + entity?.guid" target="_blank">
+    <img
+      [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+      class="m-embedTopBar__bulb"
+    />
+  </a>
+</div>

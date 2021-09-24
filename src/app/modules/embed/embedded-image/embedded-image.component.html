@@ -1,0 +1,13 @@
+<img
+  (mouseenter)="mouseEnter()"
+  (mouseleave)="mouseLeave()"
+  class="m-embeddedImage"
+  [src]="src"
+  alt=""
+/>
+
+<m-embed-topbar
+  *ngIf="entity"
+  [visible]="topVisible$ | async"
+  [entity]="entity"
+></m-embed-topbar>

@@ -46,6 +46,34 @@ export class BlogEditorComponent {
     public themeService: ThemeService
   ) {}
 
+  editorConfig = {
+    uploadHandler: async file => {
+      const response = this.attachment.upload(await file);
+      return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
+    },
+    isDark$: this.themeService.isDark$,
+    mediaEmbed: {
+      previewsInData: true,
+      extraProviders: [
+        {
+          name: 'minds',
+          url: [/^minds\.com\/newsfeed\/(\w+)/, /^minds\.com\/embed\/(\w+)/],
+          html: match => {
+            const guid = match[1];
+            return `<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">
+              <iframe src="http://localhost:4300/embed/${guid}?theme=${
+              this.themeService.isDark$.getValue() ? 'dark' : 'light'
+            }"
+                  style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+              </iframe>
+          </div>`;
+          },
+        },
+      ],
+    },
+  };
+
   ngOnInit() {
     this.themeService.emitThemePreference();
     // Render on browser side.
@@ -53,13 +81,6 @@ export class BlogEditorComponent {
       // Must be required here for client-side loading.
       const MindsEditor = require('@bhayward93/ckeditor5-build-minds');
       this.Editor = MindsEditor;
-      this.Editor.config = {
-        uploadHandler: async file => {
-          const response = this.attachment.upload(await file);
-          return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
-        },
-        isDark$: this.themeService.isDark$,
-      };
     }
   }
 

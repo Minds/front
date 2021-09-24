@@ -1,1 +1,18 @@
+<ng-container *ngIf="entity$ | async" [ngSwitch]="(entity$ | async).subtype">
+  <m-embedded-video
+    *ngSwitchCase="'video'"
+    [entity]="entity$ | async"
+  ></m-embedded-video>
+  <m-embedded-image
+    *ngSwitchCase="'image'"
+    [entity]="entity$ | async"
+  ></m-embedded-image>
+  <m-invalid-embed *ngSwitchDefault></m-invalid-embed>
+</ng-container>
+
+<m-invalid-embed
+  *ngIf="error$ | async"
+  [message]="error$ | async"
+></m-invalid-embed>
+
 <router-outlet></router-outlet>
