@@ -218,7 +218,7 @@ export class NotificationsV3NotificationComponent
       case 'boost_rejected':
         return 'your';
       case 'group_queue_reject':
-        return 'your post from';
+        return 'your post at';
       case 'wire_received':
         return 'you ' + this.formatWireAmount(this.notification);
       case 'wire_payout':
