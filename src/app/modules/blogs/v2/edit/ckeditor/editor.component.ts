@@ -1,3 +1,4 @@
+import { ConfigsService } from './../../../../../common/services/configs.service';
 /**
  * @author Ben Hayward
  * @desc Wrapper for CKEditor5 text editor.
@@ -50,7 +51,8 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) protected platformId: Object,
     private attachment: AttachmentService,
     private site: SiteService,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private configs: ConfigsService
   ) {}
 
   buildConfig(dark?: boolean) {
@@ -61,14 +63,14 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
       },
       isDark$: this.themeService.isDark$,
       mediaEmbed: {
-        // setting this to false because we want to
-        // populate minds links every time so we can set
-        // the embed theme according to site theme
-        previewsInData: false,
+        previewsInData: true,
         extraProviders: [
           {
             name: 'minds',
-            url: [/^minds\.com\/newsfeed\/(\w+)/, /^minds\.com\/embed\/(\w+)/],
+            url: [
+              new RegExp(`${this.configs.get('site_url')}newsfeed\/(\\w+)`),
+              new RegExp(`${this.configs.get('site_url')}embed\/(\\w+)`),
+            ],
             html: match => {
               const guid = match[1];
               return `<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">
