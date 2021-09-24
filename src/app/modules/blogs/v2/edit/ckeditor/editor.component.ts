@@ -61,7 +61,7 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
       },
       isDark$: this.themeService.isDark$,
       mediaEmbed: {
-        // setting this to false because we want to 
+        // setting this to false because we want to
         // populate minds links every time so we can set
         // the embed theme according to site theme
         previewsInData: false,
