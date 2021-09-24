@@ -96,8 +96,8 @@ export class WalletSkaleSummaryComponent implements OnInit {
    * Calls to switch network to Rinkeby via service.
    * @returns { void }
    */
-  public switchNetworkRinkeby(): void {
-    this.service.switchNetworkRinkeby();
+  public switchNetworkMainnet(): void {
+    this.service.switchNetworkMainnet();
   }
 
   /**
@@ -117,7 +117,7 @@ export class WalletSkaleSummaryComponent implements OnInit {
     if (this.inputCurrency === 'MINDS') {
       this.switchNetworkSkale();
     } else {
-      this.switchNetworkRinkeby();
+      this.switchNetworkMainnet();
     }
   }
 
@@ -183,6 +183,9 @@ export class WalletSkaleSummaryComponent implements OnInit {
         currency: 'skMINDS',
         amount: balance / 1000000000000000000,
       };
+    } else {
+      console.warn('Unsupported network, please switch');
+      await this.switchNetworkMainnet();
     }
 
     this.updateAllowance();

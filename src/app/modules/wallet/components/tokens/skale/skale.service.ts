@@ -10,7 +10,7 @@ export class SkaleService {
   // chain ids used (hex)
   private chainIds = {
     skale: '',
-    rinkeby: '0x4',
+    mainnet: '',
   };
 
   // current provider
@@ -69,6 +69,11 @@ export class SkaleService {
     this.skaleChainName = skaleConfig['chain_name'];
     this.chainIds.skale = skaleConfig['chain_id_hex'];
     this.skaleERC20Address = skaleConfig['erc20_address'];
+
+    this.chainIds.mainnet =
+      config.get('environment') === 'development'
+        ? '0x4' // rinkeby
+        : '0x1'; // mainnet
 
     // init provider
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -245,11 +250,11 @@ export class SkaleService {
   }
 
   /**
-   * Calls to switch network to Rinkeby.
+   * Calls to switch network to mainnet / rinkeby.
    * @returns { Promise<void> }
    */
-  public switchNetworkRinkeby(): Promise<void> {
-    return this.switchNetwork(this.chainIds.rinkeby);
+  public switchNetworkMainnet(): Promise<void> {
+    return this.switchNetwork(this.chainIds.mainnet);
   }
 
   /**
@@ -284,7 +289,7 @@ export class SkaleService {
    */
   public async isOnMainnet(): Promise<boolean> {
     const chainId = await this.getChainId();
-    return chainId === parseInt(this.chainIds.rinkeby, 16);
+    return chainId === parseInt(this.chainIds.mainnet, 16);
   }
 
   /**
@@ -315,10 +320,12 @@ export class SkaleService {
    * Calls to switch network. Encapsulation to be kept private
    * to prevent this from being called with unsupported networks.
    * TODO: Break off into separate service for reusability.
-   * @param { string } - hex of chain id - defaults to 0x4, rinkeby.
+   * @param { string } - hex of chain id - defaults to mainnet chain id.
    * @returns { Promise<void> }
    */
-  private async switchNetwork(chainId: string = '0x4'): Promise<void> {
+  private async switchNetwork(
+    chainId: string = this.chainIds.mainnet
+  ): Promise<void> {
     const currentChainId = await this.getChainId();
 
     if (parseInt(chainId, 16) === currentChainId) {
