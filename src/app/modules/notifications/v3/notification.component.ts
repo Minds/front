@@ -157,7 +157,7 @@ export class NotificationsV3NotificationComponent
       case 'group_queue_approve':
         return 'approved';
       case 'group_queue_reject':
-        return 'rejected';
+        return 'declined approval of';
       case 'group_invite':
         return 'invited you to join';
       case 'wire_received':
