@@ -10,6 +10,7 @@ import {
   switchAll,
   switchMap,
 } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Service that holds a channel information using Observables
@@ -120,7 +121,11 @@ export class ChannelsV2Service {
    * @param api
    * @param session
    */
-  constructor(protected api: ApiService, protected session: Session) {
+  constructor(
+    protected api: ApiService,
+    protected session: Session,
+    protected route: ActivatedRoute
+  ) {
     // Set tokens$ observable
     this.tokens$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
@@ -251,7 +256,13 @@ export class ChannelsV2Service {
    * @param channel
    */
   load(channel: MindsUser | string): void {
-    this.query$.next('');
+    const params = this.route.snapshot.queryParamMap;
+    let query = '';
+    if (params.has('query')) {
+      query = decodeURIComponent(params.get('query'));
+    }
+
+    this.query$.next(query);
 
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
