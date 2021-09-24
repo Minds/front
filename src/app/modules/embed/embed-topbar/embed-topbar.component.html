@@ -3,14 +3,16 @@
   [class.m-embedTopBar__top--active]="true"
   *ngIf="entity"
 >
-  <a href="{{ channelUrl }}">
+  <a href="{{ channelUrl }}" target="_blank">
     <div
       class="m-embedTopBar__channel-avatar"
       [ngStyle]="{ 'background-image': 'url(' + avatarSrc + ')' }"
       *ngIf="avatarSrc"
     ></div>
   </a>
-  <a href="{{ mediaUrl }}" class="m-embedTopBar__title">{{ title }}</a>
+  <a href="{{ mediaUrl }}" target="_blank" class="m-embedTopBar__title">{{
+    title
+  }}</a>
 
   <a [href]="siteUrl + 'newsfeed/' + entity?.guid" target="_blank">
     <img
