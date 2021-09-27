@@ -111,10 +111,11 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Check for unresolved incidents every 30s
+   * Check for unresolved incidents on load and then every 30s
    */
   startPolling(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this.service.update();
       this.interval = setInterval(() => {
         this.service.update();
       }, 30000);
