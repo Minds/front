@@ -18,6 +18,7 @@ describe('WireService', () => {
       tokenContractServiceMock,
       web3WalletServiceMock,
       new (() => {})(),
+      new (() => {})(),
       new (() => {})()
     );
 
