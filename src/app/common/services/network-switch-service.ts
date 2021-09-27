@@ -33,9 +33,9 @@ export class NetworkSwitchService {
 
     this.chainIds.skale = skaleConfig['chain_id_hex'];
     this.chainIds.mainnet =
-      config.get('environment') === 'development'
-        ? '0x4' // rinkeby
-        : '0x1'; // mainnet
+      config.get('blockchain')['client_network'] === 1
+        ? '0x1' // mainnet
+        : '0x4'; // rinkeby
   }
 
   /**

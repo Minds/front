@@ -83,8 +83,16 @@ export class SkaleService {
     this.skaleChainName = skaleConfig['chain_name'];
     this.skaleERC20Address = skaleConfig['erc20_address'];
 
-    // init provider
+    // init provider.
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    // warn if wallet is not unlocked.
+    this.provider
+      .getSigner()
+      .getAddress()
+      .catch(e => {
+        this.toast.warn('Please unlock your wallet and reload.');
+      });
   }
 
   /**
