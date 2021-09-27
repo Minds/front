@@ -58,5 +58,17 @@
         margin: 10px;
       }
     }
+
+    .m-skale__rechargeWarning,
+    .m-skale__enoughSKETHWarning {
+      margin-top: 20px;
+      margin-bottom: unset;
+      width: 400px;
+      font-weight: 600;
+
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
   }
 }

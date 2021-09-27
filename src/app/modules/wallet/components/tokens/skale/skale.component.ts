@@ -16,7 +16,7 @@ import {
   templateUrl: 'skale.component.html',
   styleUrls: ['./skale.component.ng.scss'],
 })
-export class WalletSkaleSummaryComponent implements OnInit {
+export class WalletSkaleComponent implements OnInit {
   // loading in progress
   public inProgress: boolean = true;
 

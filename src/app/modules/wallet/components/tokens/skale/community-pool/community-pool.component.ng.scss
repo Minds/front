@@ -1,0 +1,12 @@
+@import 'defaults.scss';
+
+:host {
+  .m-skale__inputAmountContainer {
+    h6 {
+      margin-top: 40px;
+    }
+  }
+  .m-skale__depositedAmount {
+    margin: 20px 0;
+  }
+}

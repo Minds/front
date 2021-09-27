@@ -42,7 +42,8 @@ import { OnchainTransferModalService } from './components/components/onchain-tra
 import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/dropdown-menu.component';
 import { WalletSharedModule } from './wallet-shared.module';
 import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
-import { WalletSkaleSummaryComponent } from './components/tokens/skale/skale.component';
+import { WalletSkaleComponent } from './components/tokens/skale/skale.component';
+import { WalletSkaleCommunityPoolComponent } from './components/tokens/skale/community-pool/community-pool.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -94,7 +95,7 @@ export const WALLET_ROUTES: Routes = [
           },
           {
             path: 'skale',
-            component: WalletSkaleSummaryComponent,
+            component: WalletSkaleComponent,
           },
           {
             path: 'settings',
@@ -214,7 +215,8 @@ export const WALLET_ROUTES: Routes = [
     WalletTokenRewardsComponent,
     WalletEarningsComponent,
     WalletTokensDropdownMenu,
-    WalletSkaleSummaryComponent,
+    WalletSkaleComponent,
+    WalletSkaleCommunityPoolComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [

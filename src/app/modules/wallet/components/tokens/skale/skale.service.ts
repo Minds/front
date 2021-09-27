@@ -35,6 +35,12 @@ export class SkaleService {
   // SKALE token manager address.
   private skaleTokenManagerAddress: string = '';
 
+  // SKALE community pool ABI.
+  private skaleCommunityPoolAbi: any;
+
+  // SKALE community pool address.
+  private skaleCommunityPoolAddress: string = '';
+
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
@@ -52,6 +58,15 @@ export class SkaleService {
       blockchainConfig['skale'][
         'skale_contracts_mainnet'
       ].deposit_box_erc20_abi;
+
+    this.skaleCommunityPoolAbi =
+      blockchainConfig['skale']['skale_contracts_mainnet'].community_pool_abi;
+
+    // SKALE community pool address.
+    this.skaleCommunityPoolAddress =
+      blockchainConfig['skale'][
+        'skale_contracts_mainnet'
+      ].community_pool_address;
 
     this.skaleTokenManagerAbi =
       blockchainConfig['skale'][
@@ -318,5 +333,52 @@ export class SkaleService {
 
     const mindsToken = await this.getMindsTokenSkale();
     return await mindsToken.transfer(toAddress, amountWei);
+  }
+
+  /**
+   * Gets SKALE community pool contract  (on Rinkeby)
+   * @returns { Contract } SKALE community pool contract, on Rinkeby.
+   */
+  private getCommunityPoolSkale(): Contract {
+    return new ethers.Contract(
+      this.skaleCommunityPoolAddress,
+      this.skaleCommunityPoolAbi,
+      this.provider.getSigner()
+    );
+  }
+
+  /**
+   * Deposit to the community pool, to fund exits from SKALE chain.
+   * @param { number } amountEther - amount to deposit in Ether.
+   * @returns { Promise<void> }
+   */
+  public async depositCommunityPool(amountEther: number): Promise<void> {
+    const communityPool = await this.getCommunityPoolSkale();
+    const amountWei = this.web3Wallet.toWei(amountEther);
+    return communityPool.rechargeUserWallet(this.skaleChainName, {
+      value: amountWei,
+    });
+  }
+
+  /**
+   * Withdraw ETH from the community pool.
+   * @param { number } amountEther - amount to withdraw in Ether.
+   * @returns { Promise<void> }
+   */
+  public async withdrawCommunityPool(amountEther: number): Promise<void> {
+    const communityPool = await this.getCommunityPoolSkale();
+    const amountWei = this.web3Wallet.toWei(amountEther);
+    return communityPool.withdrawFunds(this.skaleChainName, amountWei);
+  }
+
+  /**
+   * Gets current community pool balance
+   * @returns { Promise<string> } current community pool balance in Ether denomination.
+   */
+  public async getCommunityPoolBalance(): Promise<string> {
+    const communityPool = await this.getCommunityPoolSkale();
+    return this.web3Wallet.fromWei(
+      await communityPool.getBalance(this.skaleChainName)
+    );
   }
 }

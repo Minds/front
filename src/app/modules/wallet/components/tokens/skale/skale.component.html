@@ -35,10 +35,20 @@
       >
     </div>
   </div>
-  <!-- 
-  <div class="m-skale__networkSwapButtonContainer">
-    <h6>Dev tools</h6>
-    <m-button (onAction)="switchNetworkSkale()">Connect SKALE</m-button>
-    <m-button (onAction)="switchNetworkRinkeby()">Connect Rinkeby</m-button>
-  </div> -->
+
+  <m-wallet__skaleCommunityPool
+    *ngIf="inputCurrency === 'MINDS'"
+  ></m-wallet__skaleCommunityPool>
+
+  <!-- Warnings -->
+  <p *ngIf="inputCurrency === 'skMINDS'" class="m-skale__rechargeWarning">
+    Ensure you have recharged the community pool with enough ETH to make any
+    withdrawals prior to transferring from skMINDS to MINDS.
+  </p>
+  <p *ngIf="inputCurrency === 'skMINDS'" class="m-skale__enoughSKETHWarning">
+    Also make sure you have enough skETH in your wallet which can be acquired at
+    <a href="https://faucet.skale.network/" target="_blank"
+      >https://faucet.skale.network/</a
+    >
+  </p>
 </div>
