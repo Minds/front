@@ -10,12 +10,14 @@ import { MultiFactorAuthBaseComponent } from './multi-factor-auth.component';
 import { MultiFactorAuthTOTPComponent } from './panels/totp/totp.component';
 import { MultiFactorAuthTOTPRecoveryComponent } from './panels/recovery-code/recovery-code.component';
 import { MultiFactorAuthSMSComponent } from './panels/sms/sms.component';
+import { MultiFactorAuthEmailComponent } from './panels/email/email.component';
 
 const COMPONENTS = [
   MultiFactorAuthBaseComponent,
   MultiFactorAuthTOTPComponent,
   MultiFactorAuthTOTPRecoveryComponent,
   MultiFactorAuthSMSComponent,
+  MultiFactorAuthEmailComponent,
 ];
 
 const MODULES = [

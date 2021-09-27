@@ -11,13 +11,5 @@ import { ExperimentsService } from './experiments.service';
   imports: [NgCommonModule, CommonModule],
   declarations: [ExperimentDirective],
   exports: [ExperimentDirective],
-  providers: [
-    {
-      provide: ExperimentsService,
-      useFactory: (_client, cookieService) =>
-        new ExperimentsService(_client, cookieService),
-      deps: [Client, CookieService],
-    },
-  ],
 })
 export class ExperimentsModule {}

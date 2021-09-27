@@ -28,6 +28,13 @@ export class OnboardingV3PanelService implements OnDestroy {
     OnboardingStepName
   > = new BehaviorSubject<OnboardingStepName>('SuggestedHashtagsStep');
 
+  /**
+   * Force completion of a step.
+   */
+  public readonly forceComplete$: BehaviorSubject<
+    OnboardingStepName
+  > = new BehaviorSubject<OnboardingStepName>(null);
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -82,9 +89,9 @@ export class OnboardingV3PanelService implements OnDestroy {
         )
         .subscribe(currentStep => {
           if (currentStep === 'SuggestedHashtagsStep') {
-            this.currentStep$.next('WelcomeStep');
-            this.router.navigate(['/newsfeed/subscribed']);
-            return;
+            // this.currentStep$.next('WelcomeStep');
+            // this.router.navigate(['/newsfeed/subscribed']);
+            // return;
           }
           this.dismiss$.next(true);
         })

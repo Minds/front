@@ -80,14 +80,14 @@ export class CommentsThreadComponent implements OnInit {
 
   ngOnInit() {
     this.load(true);
-    this.listen();
+    // this.listen();
   }
 
   get guid(): string {
     return this.entity.entity_guid ? this.entity.entity_guid : this.entity.guid;
   }
 
-  async load(refresh: boolean = false, direction: string = 'desc') {
+  async load(refresh: boolean = false, direction: string = 'asc') {
     if (refresh) {
       this.comments = [];
 
@@ -117,7 +117,7 @@ export class CommentsThreadComponent implements OnInit {
           limit: 12,
           loadNext: descending ? null : this.loadNext,
           loadPrevious: descending ? this.loadPrevious : null,
-          descending,
+          descending: descending,
         })
       );
     } catch (e) {}
@@ -182,7 +182,7 @@ export class CommentsThreadComponent implements OnInit {
       this.autoloadBlocked = false;
     }, 1000);
 
-    this.load(false, 'desc');
+    this.load(false);
   }
 
   listen() {

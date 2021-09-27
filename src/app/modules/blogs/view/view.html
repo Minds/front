@@ -45,7 +45,7 @@
 
 <div
   class="mdl-grid m-blog-container blogs-grid"
-  style="max-width:740px"
+  style="max-width: 740px"
   *ngIf="blog.guid"
 >
   <ng-container *ngIf="false">
@@ -64,28 +64,25 @@
         [topRightPosition]="false"
       ></m-paywallBadge>
     </div>
-    <m-subscribeButton
-      *ngIf="!isOwner"
-      [user]="blog.ownerObj"
-    ></m-subscribeButton>
   </div>
 
-  <div class="mdl-grid m-blog-header" style="width:100%;">
-    <div class="">
+  <div class="mdl-grid m-blog-header" style="width: 100%">
+    <div>
       <h1 class="m-blog--title">{{blog.title}}</h1>
     </div>
 
     <!-- Owner box -->
     <div class="m-blog__InteractionBar">
       <div class="minds-blog-ownerblock">
-        <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
-          <a [routerLink]="['/', blog.ownerObj.username]">
-            <img
-              src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
-              class="mdl-shadow--2dp"
-            />
-          </a>
-        </div>
+        <m-hovercard [publisher]="blog.ownerObj" [offset]="[0,15]">
+          <div class="minds-avatar">
+            <a [routerLink]="['/', blog.ownerObj.username]">
+              <img
+                src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+              />
+            </a>
+          </div>
+        </m-hovercard>
         <div class="minds-body">
           <a [routerLink]="['/', blog.ownerObj.username]"
             >{{blog.ownerObj.name}}</a
@@ -115,7 +112,7 @@
     </div>
   </div>
 
-  <div style="width:100%; position:relative;" *ngIf="!blog.paywall">
+  <div style="width: 100%; position: relative" *ngIf="!blog.paywall">
     <div
       m-code-highlight
       class="mdl-cell mdl-cell--12-col minds-blog-body m-blog__body"
@@ -127,7 +124,12 @@
 
   <!-- Additional block -->
   <div
-    class="m-blog--footer mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200"
+    class="
+      m-blog--footer
+      mdl-cell mdl-cell--12-col
+      m-additional-block
+      mdl-color-text--blue-grey-200
+    "
     *ngIf="!blog.paywall"
   >
     <div class="m-license-info">
@@ -167,7 +169,7 @@
 <ng-container *mIfBrowser>
   <div
     class="mdl-grid blogs-grid"
-    style="max-width:740px; padding-bottom: 50px;"
+    style="max-width: 740px; padding-bottom: 50px"
     *ngIf="showComments && blog.guid && !blog.paywall"
   >
     <m-comments__entityOutlet

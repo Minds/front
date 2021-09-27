@@ -4,16 +4,13 @@
     'm-publisherCard--large': size === 'large',
     'm-publisherCard--medium': size === 'medium',
     'm-publisherCard--small': size === 'small',
-    'm-publisherCard--featured': featured
+    'm-publisherCard--featured': featured,
+    'm-publisherCard--hovercard': _isHovercard
   }"
   *ngIf="publisher"
   #publisherCard
 >
-  <div
-    class="m-publisherCard__inner"
-    m-read-more
-    [maxHeightAllowed]="maxHeight"
-  >
+  <div class="m-publisherCard__inner">
     <!-- --OWNER ROW ----------------------------- -->
     <div class="m-publisherCard__ownerRow m-legible">
       <!-- AVATAR -->
@@ -108,6 +105,8 @@
     <div
       class="m-publisherCard__desc"
       *ngIf="showDescription && publisher.briefdescription"
+      m-read-more
+      maxHeightAllowed="52"
     >
       <p [innerHtml]="publisher.briefdescription | tags">
         {{ publisher.briefdescription }}
@@ -115,6 +114,7 @@
       <m-read-more--button
         v2="true"
         showOnlyFadeout="true"
+        clickDisabled="true"
       ></m-read-more--button>
     </div>
   </div>

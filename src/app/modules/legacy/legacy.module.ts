@@ -25,7 +25,6 @@ import { MindsFatBanner } from './components/banner/fat';
 import { SocialIcons } from './components/social-icons/social-icons';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
-import { HovercardPopup } from './components/hovercard-popup/hovercard-popup';
 import { CarouselComponent } from './components/carousel.component';
 import { CommentsModule } from '../comments/comments.module';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
@@ -51,7 +50,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
   ],
   declarations: [
     UserCard,
-    HovercardPopup,
     BoostButton,
     CommentButton,
     SubscribeButton,
@@ -76,7 +74,6 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     MindsFatBanner,
 
     SocialIcons,
-    HovercardPopup,
     CarouselComponent,
   ],
 })
