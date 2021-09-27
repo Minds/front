@@ -460,6 +460,17 @@ const SETTINGS_V2_ROUTES: Routes = [
             ],
           },
           {
+            path: 'twitter-sync',
+            loadChildren: () =>
+              import('../newsfeed/twitter-sync/twitter-sync.module').then(
+                m => m.TwitterSyncModule
+              ),
+            data: {
+              title: 'Twitter Sync',
+              standardHeader: false,
+            },
+          },
+          {
             path: 'deactivate-account',
             component: SettingsV2DeactivateAccountComponent,
             data: {
