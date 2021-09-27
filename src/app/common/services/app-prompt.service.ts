@@ -109,19 +109,15 @@ export class AppPromptService implements OnDestroy {
 
   // opens the app and if the app wasn't opened calls the fallback function
   private openAppWithFallback(fallback: () => void) {
-    this.watchUserPresence(() => {
-      this.activate();
-    });
-
     if (this.platform$.getValue() === 'iphone') {
-      // https://stackoverflow.com/questions/13044805/how-can-i-check-if-an-app-is-installed-from-a-web-page-on-an-iphone
-      var now = new Date().valueOf();
-      setTimeout(function() {
-        if (new Date().valueOf() - now < 25) {
-          fallback();
-        }
-      }, 25);
+      this.watchIfAppWasntOpened(() => {
+        fallback();
+      });
     } else {
+      this.watchUserPresence(() => {
+        this.activate();
+      });
+
       // delay the fallback to let the animations of the
       // platform finish
       setTimeout(() => {
@@ -166,6 +162,33 @@ export class AppPromptService implements OnDestroy {
     this.lastDateNow = Date.now();
 
     setTimeout(() => this.watchUserPresence(cb), 500);
+  }
+
+  /**
+   * a timer to run every 25ms.
+   *
+   * this is a hack to detect whether the app was opened or not.
+   * if the app wasn't opened, call the fallback. If the app was
+   * opened, don't call the fallback.
+   *
+   * @returns { void }
+   */
+  watchIfAppWasntOpened(cb: () => void): void {
+    // stop running if the prompt was dismissed
+    if (this.state$.getValue() === 'dismissed') return;
+
+    if (this.lastDateNow) {
+      if (Date.now() - this.lastDateNow > 50) {
+        return;
+      }
+
+      this.lastDateNow = undefined;
+      return cb();
+    }
+
+    this.lastDateNow = Date.now();
+
+    setTimeout(() => this.watchIfAppWasntOpened(cb), 25);
   }
 
   /**
