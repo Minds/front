@@ -209,7 +209,12 @@ export class AppPromptService implements OnDestroy {
             try {
               switch (platform) {
                 case 'iphone':
-                  this.openAppWithFallback(() => this.openAppStore());
+                  this.openAppWithFallback(() => {
+                    this.openAppStore();
+                    // reload the page after launching appstore
+                    // to make the error dialog disappears
+                    setTimeout(() => window.location.reload(), 1000);
+                  });
                   break;
                 case 'android':
                   this.openAppWithFallback(() => this.expand());
