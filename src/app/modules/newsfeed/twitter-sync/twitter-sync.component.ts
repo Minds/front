@@ -90,6 +90,7 @@ export class TwitterSyncComponent implements OnInit {
       );
       this.isSetup = true;
     } catch (err) {
+      this.toastService.error("Sorry, we couldn't find your verification post");
     } finally {
       this.isSaving = false;
     }
