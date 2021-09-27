@@ -3,6 +3,7 @@ import { FormToastService } from './form-toast.service';
 import { ConfigsService } from './configs.service';
 import { Provider } from '@ethersproject/abstract-provider';
 
+// Interface for adding new Ethereum chains
 export interface AddEthereumChainParameter {
   chainId: string;
   blockExplorerUrls?: string[];
@@ -16,6 +17,9 @@ export interface AddEthereumChainParameter {
   rpcUrls?: string[];
 }
 
+/**
+ * Service for the switching of blockchain networks.
+ */
 @Injectable({ providedIn: 'root' })
 export class NetworkSwitchService {
   // chain ids used (hex)
@@ -34,6 +38,11 @@ export class NetworkSwitchService {
         : '0x1'; // mainnet
   }
 
+  /**
+   * Call to switch to SKALE chain.
+   * @param { Provider } provider - provider to use for switching.
+   * @returns { Promise<void> }
+   */
   public async switchToSkale(
     provider: Provider,
     rpcUrl: string = ''
@@ -41,6 +50,11 @@ export class NetworkSwitchService {
     await this.switch(this.chainIds.skale, provider, 'SKALE Minds', rpcUrl);
   }
 
+  /**
+   * Call to switch to mainnet / rinkeby.
+   * @param { Provider } provider - provider to use for switching.
+   * @returns { Promise<void> }
+   */
   public async switchToMainnet(provider: Provider): Promise<void> {
     await this.switch(this.chainIds.mainnet, provider);
   }
@@ -93,8 +107,6 @@ export class NetworkSwitchService {
       }
     }
   }
-
-  getAddChainParams() {}
 
   /**
    * Gets current chain ID as a number.
