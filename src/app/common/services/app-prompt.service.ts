@@ -22,6 +22,33 @@ export type AppPromptState = 'dismissed' | 'active' | 'expanded';
  */
 export type MobilePlatform = 'android' | 'iphone' | 'non-mobile';
 
+let lastDateNow;
+
+function watchIOS(cb) {
+  if (lastDateNow) {
+    if (Date.now() - lastDateNow > 50) {
+      return;
+    }
+
+    lastDateNow = undefined;
+    return cb();
+  }
+
+  lastDateNow = Date.now();
+
+  setTimeout(() => watchIOS(cb), 25);
+}
+
+function openIOS() {
+  watchIOS(() => {
+    (window as any).location =
+      'https://itunes.apple.com/us/app/minds-com/id961771928';
+    setTimeout(() => window.location.reload(), 1000);
+  });
+
+  (window as any).location = 'mindsapp://';
+}
+
 /**
  * Service for interacting with the mobile app prompt.
  */
@@ -164,6 +191,9 @@ export class AppPromptService implements OnDestroy {
     setTimeout(() => this.watchUserPresence(cb), 500);
   }
 
+  // EXPERIMENT
+  onceCalled = false;
+
   /**
    * a timer to run every 25ms.
    *
@@ -179,6 +209,11 @@ export class AppPromptService implements OnDestroy {
 
     if (this.lastDateNow) {
       if (Date.now() - this.lastDateNow > 50) {
+        return;
+      }
+
+      if (!this.onceCalled) {
+        this.onceCalled = true;
         return;
       }
 
@@ -199,6 +234,10 @@ export class AppPromptService implements OnDestroy {
    */
   public redirect(): void {
     if (isPlatformBrowser(this.platformId)) {
+      if (this.platform$.getValue() === 'iphone') {
+        return openIOS();
+      }
+
       this.subscriptions.push(
         this.platform$
           .pipe(
