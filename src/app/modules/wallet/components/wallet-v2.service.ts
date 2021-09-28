@@ -47,6 +47,7 @@ export interface Wallet {
   cash: WalletCurrency;
   eth: WalletCurrency;
   btc: WalletCurrency;
+  skMINDS: WalletCurrency;
   limits: WalletLimits;
 }
 
@@ -98,6 +99,12 @@ export class WalletV2Service {
     btc: {
       label: 'Bitcoin',
       unit: 'btc',
+      balance: 0,
+      address: null,
+    },
+    skMINDS: {
+      label: 'skMINDS',
+      unit: 'skMINDS',
       balance: 0,
       address: null,
     },
@@ -161,6 +168,8 @@ export class WalletV2Service {
             this.wallet.eth.balance = toFriendlyCryptoVal(
               address.ether_balance
             );
+          } else if (address.label === 'skMINDS') {
+            this.wallet.skMINDS.balance = toFriendlyCryptoVal(address.balance);
           }
         });
         this.wallet.loaded = true;

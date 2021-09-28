@@ -23,6 +23,14 @@
             currency="tokens"
           ></m-wallet__currencyValue>
         </b>
+        <div class="m-layout__spacer"></div>
+        <h4>skMINDS</h4>
+        <b
+          ><m-wallet__currencyValue
+            [value]="wallet.skMINDS.balance"
+            currency="skMINDS"
+          ></m-wallet__currencyValue>
+        </b>
       </ng-container>
     </m-wallet__balance>
     <span style="width:10px; display: inline-block;"></span>
