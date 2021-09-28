@@ -26,6 +26,9 @@ export class TwitterSyncComponent implements OnInit {
   // If saving
   isSaving = false;
 
+  // The min number of followers we will try to sync for
+  minFollowersForSync: number;
+
   constructor(
     private session: Session,
     protected twitterSyncService: TwitterSyncService,
@@ -42,6 +45,8 @@ export class TwitterSyncComponent implements OnInit {
         validators: [],
       }),
     });
+
+    this.minFollowersForSync = configs.get('twitter').min_followers_for_sync;
   }
 
   ngOnInit() {

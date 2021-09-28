@@ -14,6 +14,12 @@
   over from Twitter to Minds. Retweets & Replies will not be copied over.
 </div>
 
+<div class="m-settingsV2__desc" *ngIf="isSetup">
+  You must have over {{ minFollowersForSync | number }} Twitter followers in
+  order for tweets to copy over, and they could take up to an hour to show on
+  Minds
+</div>
+
 <div *ngIf="!inProgress && isSetup">
   <form [formGroup]="updateForm">
     <div class="m-form__fieldsContainer">
