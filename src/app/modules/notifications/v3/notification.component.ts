@@ -285,6 +285,9 @@ export class NotificationsV3NotificationComponent
         return ['/' + this.notification.from.username];
       case 'group_invite':
         return ['/groups/profile/' + this.notification.entity.guid];
+      case 'wire_received':
+      case 'wire_payout':
+        return [`/wallet/${this.notification.data.method}/transactions`];
     }
 
     switch (this.notification.entity?.type) {
