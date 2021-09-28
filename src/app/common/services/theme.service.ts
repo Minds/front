@@ -78,13 +78,8 @@ export class ThemeService {
     this.isDark$.next(shouldBeDark);
   }
 
-  toggleTheme(dark?: boolean): void {
-    if (typeof dark === 'boolean') {
-      this.isDark$.next(dark);
-    } else {
-      this.isDark$.next(!this.isDark$.value);
-    }
-
+  toggleTheme(): void {
+    this.isDark$.next(!this.isDark$.value);
     this.renderTheme();
   }
 

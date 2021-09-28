@@ -43,7 +43,7 @@ export class EmbedComponent implements OnInit {
 
     this.queryParamsSubscription$ = this.activatedRoute.queryParamMap.subscribe(
       params => {
-        this.themeService.toggleTheme(params.get('theme') === 'dark');
+        if (params.get('theme') === 'dark') this.themeService.toggleTheme();
       }
     );
   }
