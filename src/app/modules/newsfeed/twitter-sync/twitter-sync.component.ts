@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { timer } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
@@ -89,6 +90,13 @@ export class TwitterSyncComponent implements OnInit {
 
   async verify(e: MouseEvent): Promise<void> {
     this.isSaving = true;
+
+    this.toastService.inform(
+      'Please wait a moment, tweets can take a while to be visible.'
+    );
+
+    await timer(15000).toPromise(); // Delay by 15 seconds as twitter can take a while
+
     try {
       await this.twitterSyncService.createConnectAccount(
         this.form.controls.twitterHandle.value
