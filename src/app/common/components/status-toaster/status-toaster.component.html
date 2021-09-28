@@ -28,7 +28,15 @@
           {{ toast.incident.incident_updates[0].body }}
         </p>
         <p class="m-statusToastDetails__updated">
-          Last updated {{ getLastUpdated(toast.incident.updated_at) }}
+          <ng-container *ngIf="!toast.resolved"
+            >Last updated
+            {{ getLastUpdated(toast.incident.updated_at) }}</ng-container
+          >
+          <ng-container *ngIf="toast.resolved"
+            >Resolved at{{
+              getLastUpdated(toast.incident.resolved_at)
+            }}</ng-container
+          >
         </p>
         <p class="m-statusToastDetails__link">
           <a target="_blank" href="{{ toast.incident.shortlink }}"

@@ -34,28 +34,55 @@ export class StatusToasterService {
   }
 
   async update(): Promise<void> {
+    // Set up array of known incidents to cross-check with the new data
+    // Remove the known incidents as we go, so we'll know which ones are new
+    // and need to be toasted
     this.unresolvedIncidentsTracker = JSON.parse(
       JSON.stringify(this.unresolvedIncidents)
     );
-    this.fetchUnresolvedIncidents().subscribe(data => {
-      if (!data) {
+    this.fetchUnresolvedIncidents().subscribe(fetched => {
+      if (!fetched) {
         return;
       }
       // Remove any incidents we already know about
-      // from the tracker array. Process any
-      // new unresolved incidents
-      if (data.incidents) {
-        data.incidents.forEach(incident => {
-          if (
-            !this.findAndRemove(incident.id, this.unresolvedIncidentsTracker)
-          ) {
+      // from the tracker array so that we know what has been resolved.
+      // Process any new unresolved incidents
+      if (fetched.incidents) {
+        fetched.incidents.forEach(incident => {
+          // If we already know about this incident's id
+          const index = this.unresolvedIncidentsTracker.findIndex(
+            unresolved => unresolved.id === incident.id
+          );
+
+          // We haven't seen this incident before - process it
+          if (index < 0) {
             this.processNewUnresolvedIncident(incident);
+          } else {
+            // We know about this incident so we remove it from the tracker
+            this.removeFromTracker(index);
+            // This known incident has been updated since we last showed a toast about it
+            if (
+              this.unresolvedIncidentsTracker[index].updated_at !==
+              incident.updated_at
+            ) {
+              // Replace incident in list of unresolvedIncidents
+              this.unresolvedIncidents.splice(index, 1, incident);
+              // trigger a new toast
+              this.trigger(false, incident);
+            }
           }
         });
       }
       // At this point, any remaining incidents in the tracker will have been resolved
       this.showResolvedToasts();
     });
+  }
+
+  removeFromTracker(index: number): void {
+    if (index < 0) {
+      return;
+    }
+    this.unresolvedIncidentsTracker.splice(index, 1);
   }
 
   processNewUnresolvedIncident(incident: any): void {
@@ -70,19 +97,13 @@ export class StatusToasterService {
       // Show the toast
       this.trigger(true, incident);
       // Remove it from list of unresolved incidents
-      this.findAndRemove(incident.id, this.unresolvedIncidents);
+      const index = this.unresolvedIncidents.findIndex(
+        unresolved => unresolved.id === incident.id
+      );
+      if (index > -1) {
+        this.unresolvedIncidents.splice(index, 1);
+      }
     });
-  }
-
-  // Returns true if an incident was found and removed
-  findAndRemove(id: string, array: Array<any>): boolean {
-    const index = array.findIndex(incident => incident.id === id);
-    if (index > -1) {
-      array.splice(index, 1);
-      return true;
-    } else {
-      return false;
-    }
   }
 
   trigger(resolved: boolean, incident: any): void {
