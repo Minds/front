@@ -122,10 +122,23 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
     }
   }
 
-  getLastUpdated(utc): string {
+  formatTimestamp(utc): string {
     return moment(utc)
       .local()
       .format('MMM Do hh:mm a');
+  }
+
+  /**
+   * Say it was resolved at the time the toast is triggered
+   */
+  getResolvedTime(): string {
+    const utc = moment.utc().format();
+
+    return this.formatTimestamp(utc);
+  }
+
+  getUpdateCount(toast: any): number {
+    return toast.incident.updates.length;
   }
 
   dismiss(toastIndex: number): void {

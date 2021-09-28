@@ -14,7 +14,7 @@ export class StatusToasterService {
   statusPageUrl: string;
   toasts: StatusToast[] = [];
   unresolvedIncidents: Array<any> = [];
-  unresolvedIncidentsTracker: Array<any> = [];
+  resolvedIncidentsTracker: Array<any> = [];
 
   private subject = new Subject<StatusToast>();
   httpOptions = {
@@ -29,46 +29,52 @@ export class StatusToasterService {
       : 'https://status.minds.com';
   }
 
-  onToast(): Observable<StatusToast> {
-    return this.subject.asObservable();
+  fetchUnresolvedIncidents(): Observable<any> {
+    return this.http
+      .get<any>(this.statusPageUrl + '/api/v2/incidents/unresolved.json')
+      .pipe(retry(1), catchError(this.handleError));
   }
 
   async update(): Promise<void> {
-    // Set up array of known incidents to cross-check with the new data
-    // Remove the known incidents as we go, so we'll know which ones are new
-    // and need to be toasted
-    this.unresolvedIncidentsTracker = JSON.parse(
+    // Set up array of known incidents to cross-check with the fetched data,
+    // removing the known incidents from the tracker as we go.
+    //
+    // After we've checked all of the fetched incidents,
+    // the ones that remain in the tracker will be
+    // the ones that have been resolved
+    this.resolvedIncidentsTracker = JSON.parse(
       JSON.stringify(this.unresolvedIncidents)
     );
+
     this.fetchUnresolvedIncidents().subscribe(fetched => {
       if (!fetched) {
         return;
       }
-      // Remove any incidents we already know about
-      // from the tracker array so that we know what has been resolved.
       // Process any new unresolved incidents
       if (fetched.incidents) {
         fetched.incidents.forEach(incident => {
-          // If we already know about this incident's id
-          const index = this.unresolvedIncidentsTracker.findIndex(
+          // Check if we've already seen an incident with this id
+          const index = this.resolvedIncidentsTracker.findIndex(
             unresolved => unresolved.id === incident.id
           );
 
-          // We haven't seen this incident before - process it
           if (index < 0) {
+            // If we've never seen this incident before, process it
             this.processNewUnresolvedIncident(incident);
           } else {
-            // We know about this incident so we remove it from the tracker
+            // If we've already seen this incident's id, remove it from the tracker
             this.removeFromTracker(index);
-            // This known incident has been updated since we last showed a toast about it
+
             if (
-              this.unresolvedIncidentsTracker[index].updated_at !==
+              this.resolvedIncidentsTracker[index].updated_at !==
               incident.updated_at
             ) {
-              // Replace incident in list of unresolvedIncidents
-              this.unresolvedIncidents.splice(index, 1, incident);
+              // If this known incident has been updated
+              // since we last showed a toast about it,
               // trigger a new toast
               this.trigger(false, incident);
+              // and replace the latest version in our list of unresolvedIncidents
+              this.unresolvedIncidents.splice(index, 1, incident);
             }
           }
         });
@@ -82,7 +88,7 @@ export class StatusToasterService {
     if (index < 0) {
       return;
     }
-    this.unresolvedIncidentsTracker.splice(index, 1);
+    this.resolvedIncidentsTracker.splice(index, 1);
   }
 
   processNewUnresolvedIncident(incident: any): void {
@@ -93,7 +99,7 @@ export class StatusToasterService {
   }
 
   showResolvedToasts(): void {
-    this.unresolvedIncidentsTracker.forEach(incident => {
+    this.resolvedIncidentsTracker.forEach(incident => {
       // Show the toast
       this.trigger(true, incident);
       // Remove it from list of unresolved incidents
@@ -114,10 +120,8 @@ export class StatusToasterService {
     this.subject.next(toast);
   }
 
-  fetchUnresolvedIncidents(): Observable<any> {
-    return this.http
-      .get<any>(this.statusPageUrl + '/api/v2/incidents/unresolved.json')
-      .pipe(retry(1), catchError(this.handleError));
+  onToast(): Observable<StatusToast> {
+    return this.subject.asObservable();
   }
 
   handleError(error) {
