@@ -62,9 +62,7 @@ export class StatusToasterService {
             // If we've never seen this incident before, process it
             this.processNewUnresolvedIncident(incident);
           } else {
-            // If we've already seen this incident's id, remove it from the tracker
-            this.removeFromTracker(index);
-
+            // We've already seen this incident's id,
             if (
               this.resolvedIncidentsTracker[index].updated_at !==
               incident.updated_at
@@ -76,19 +74,14 @@ export class StatusToasterService {
               // and replace the latest version in our list of unresolvedIncidents
               this.unresolvedIncidents.splice(index, 1, incident);
             }
+            // Remove any incidents we've seen before from the tracker
+            this.resolvedIncidentsTracker.splice(index, 1);
           }
         });
       }
       // At this point, any remaining incidents in the tracker will have been resolved
       this.showResolvedToasts();
     });
-  }
-
-  removeFromTracker(index: number): void {
-    if (index < 0) {
-      return;
-    }
-    this.resolvedIncidentsTracker.splice(index, 1);
   }
 
   processNewUnresolvedIncident(incident: any): void {
