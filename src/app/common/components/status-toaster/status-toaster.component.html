@@ -33,7 +33,7 @@
             {{ formatTimestamp(toast.incident.updated_at) }}</ng-container
           >
           <ng-container *ngIf="toast.resolved"
-            >Resolved at{{ getResolvedTime() }}</ng-container
+            >Resolved {{ getResolvedTime() }}</ng-container
           >
         </p>
         <p class="m-statusToastDetails__link">
