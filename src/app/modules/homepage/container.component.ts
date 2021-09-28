@@ -4,22 +4,12 @@ import { ExperimentsService } from '../experiments/experiments.service';
 @Component({
   selector: 'm-homepagecontainer',
   template: `
-    <m-discovery *ngIf="shouldRenderDiscoveryExperiment(); else homepageSplash">
+    <m-discovery *mExperiment="'discovery-homepage'; variation: 'on'">
       <m-discovery__trends [showTabs]="false"></m-discovery__trends>
     </m-discovery>
-    <ng-template #homepageSplash>
-      <m-homepage__v2></m-homepage__v2>
-    </ng-template>
+    <m-homepage__v2
+      *mExperiment="'discovery-homepage'; variation: 'off'"
+    ></m-homepage__v2>
   `,
 })
-export class HomepageContainerComponent {
-  constructor(private experiments: ExperimentsService) {}
-
-  /**
-   * Should discovery homepage should be rendered.
-   * @returns { boolean } true if it should be rendered.
-   */
-  public shouldRenderDiscoveryExperiment(): boolean {
-    return this.experiments.hasVariation('discovery-homepage', 'on');
-  }
-}
+export class HomepageContainerComponent {}
