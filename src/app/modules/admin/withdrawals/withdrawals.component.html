@@ -199,6 +199,14 @@
             size="small"
             [saving]="inProgress"
             [disabled]="inProgress"
+            (onAction)="forceFail(request)"
+          >
+            Force Fail
+          </m-button>
+          <m-button
+            size="small"
+            [saving]="inProgress"
+            [disabled]="inProgress"
             (onAction)="forceConfirmation(request)"
           >
             Force Confirm
