@@ -138,7 +138,7 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   }
 
   getUpdateCount(toast: any): number {
-    return toast.incident.updates.length;
+    return toast.incident.incident_updates.length;
   }
 
   dismiss(toastIndex: number): void {
