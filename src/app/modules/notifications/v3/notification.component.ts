@@ -377,7 +377,7 @@ export class NotificationsV3NotificationComponent
   /**
    * Returns the entity object
    */
-  get entity(): Object | null {
+  get entity(): any | null {
     switch (this.notification.type) {
       case 'wire_payout':
       case 'token_rewards_summary':
@@ -392,6 +392,19 @@ export class NotificationsV3NotificationComponent
         return this.notification.entity.entity;
     }
     return this.notification.entity;
+  }
+
+  /**
+   * Returns whether to display a newsfeed entity
+   */
+  get showNewsfeedEntity(): boolean {
+    return (
+      this.entity &&
+      this.entity?.type !== 'comment' &&
+      this.entity?.type !== 'user' &&
+      this.notification.type !== 'wire_received' &&
+      this.notification.type !== 'wire_payout'
+    );
   }
 
   /**
