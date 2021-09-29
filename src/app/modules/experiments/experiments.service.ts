@@ -23,8 +23,12 @@ export class ExperimentsService {
    */
   initGrowthbook(): void {
     if (!this.growthbook) {
+      const userId =
+        this.session.getLoggedInUser()?.guid ??
+        this.configs.get('experiments_id');
+
       this.growthbook = new GrowthBook({
-        user: { id: this.session.getLoggedInUser()?.guid },
+        user: { id: userId },
         trackingCallback: (experiment, result) => {
           /**
            * Tracking is only called if force is not used
