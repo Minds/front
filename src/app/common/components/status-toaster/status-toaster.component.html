@@ -25,7 +25,7 @@
           >{{ toast.incident.name }}
         </p>
         <p class="m-statusToastDetails__desc" *ngIf="!toast.resolved">
-          {{ toast.incident.incident_updates[getUpdateCount(toast) - 1].body }}
+          {{ toast.incident.incident_updates[0].body }}
         </p>
         <p class="m-statusToastDetails__updated">
           <ng-container *ngIf="!toast.resolved"
@@ -33,7 +33,7 @@
             {{ formatTimestamp(toast.incident.updated_at) }}</ng-container
           >
           <ng-container *ngIf="toast.resolved"
-            >Resolved {{ getResolvedTime() }}</ng-container
+            >Resolved at {{ getResolvedTime() }}</ng-container
           >
         </p>
         <p class="m-statusToastDetails__link">

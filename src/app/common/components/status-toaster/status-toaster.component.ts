@@ -137,10 +137,6 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
     return this.formatTimestamp(utc);
   }
 
-  getUpdateCount(toast: any): number {
-    return toast.incident.incident_updates.length;
-  }
-
   dismiss(toastIndex: number): void {
     this.service.toasts[toastIndex].dismissed = true;
   }
