@@ -86,10 +86,10 @@ export class ExperimentsService {
   }
 
   /**
-   * Return whether an experiment has a given state
+   * Return whether an experiment has a given variation state.
    * @param { string } experimentId - experiment key.
-   * @param { string } activeState - state to check, e.g. 'on' or 'off'.
-   * @returns { boolean } - true if params reflect current state.
+   * @param { string } variation - variation to check, e.g. 'on' or 'off'.
+   * @returns { boolean } - true if params reflect current variation.
    */
   public hasVariation(experimentId: string, variation: string = 'on'): boolean {
     try {
