@@ -100,6 +100,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ModalService,
     private injector: Injector,
+    @Inject('ORIGIN_URL') public baseUrl: string,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -150,7 +151,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   get previousPageUrl() {
     // if we didn't have the firstTimestamp
-    if (!this.feedService.service.firstTimestamp) return;
+    if (!this.feedService.service.firstItemTimestamp) return;
     // if we were backward paginating and we didn't
     // have a pagingToken, there are no more prev
     // pages
@@ -161,12 +162,13 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       return;
     // if we weren't in offset pagination mode
     if (!this.feedService.offset) return;
-    return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.firstTimestamp}&reverse=1`;
+
+    return `${this.baseUrl}${this.router.url}?offset=${this.feedService.service.firstItemTimestamp}&reverse=1`;
   }
 
   get nextPageUrl() {
-    if (!this.feedService.service.lastTimestamp) return null;
-    return `${window.location.origin}${window.location.pathname}?offset=${this.feedService.service.lastTimestamp}`;
+    if (!this.feedService.service.lastItemTimestamp) return null;
+    return `${this.baseUrl}${this.router.url}?offset=${this.feedService.service.lastItemTimestamp}`;
   }
 
   prepend(activity: any) {

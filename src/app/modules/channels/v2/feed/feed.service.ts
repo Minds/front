@@ -140,7 +140,7 @@ export class FeedService {
 
         if (queryParams.has('offset')) {
           this.offset = queryParams.get('offset');
-          this.service.setPagingToken(this.offset);
+          this.service.setFromTimestamp(this.offset);
         }
 
         if (queryParams.has('reverse')) {

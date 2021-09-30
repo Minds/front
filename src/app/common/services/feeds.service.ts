@@ -27,8 +27,8 @@ export class FeedsService implements OnDestroy {
   exportUserCounts: boolean = false;
   fromTimestamp: string = '';
   reversedPagination: boolean = false;
-  lastTimestamp: number;
-  firstTimestamp: number;
+  lastItemTimestamp: number;
+  firstItemTimestamp: number;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -50,6 +50,8 @@ export class FeedsService implements OnDestroy {
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
       }),
+      // reverse the feed after slicing it if we were
+      // in reversed pagination
       switchMap(async feed => {
         const slicedFeed = feed.slice(
           0,
@@ -82,13 +84,13 @@ export class FeedsService implements OnDestroy {
           }
         }
       }),
-      // save first & last timestamp
+      // save first item & last item timestamp
       tap(feed => {
         if (feed.length) {
           const firstItem: any = feed[0].getValue();
-          this.firstTimestamp = firstItem.time_created * 1000;
+          this.firstItemTimestamp = firstItem.time_created * 1000;
           const lastItem: any = feed[feed.length - 1].getValue();
-          this.lastTimestamp = lastItem.time_created * 1000;
+          this.lastItemTimestamp = lastItem.time_created * 1000;
         }
       }),
       tap(feed => {
@@ -155,11 +157,6 @@ export class FeedsService implements OnDestroy {
     if (!params.sync) {
       this.params.sync = 1;
     }
-    return this;
-  }
-
-  setPagingToken(pagingToken: string): FeedsService {
-    this.pagingToken = pagingToken;
     return this;
   }
 
