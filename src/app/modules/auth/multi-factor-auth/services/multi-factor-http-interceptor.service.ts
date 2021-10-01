@@ -107,13 +107,12 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
           return this.handleResponseError(err, req, next);
         }),
         tap((httpEvent: HttpEvent<any>) => {
-          console.log(httpEvent);
           if (httpEvent.type === 0) {
             return;
           }
 
           // If no errors then we can dismiss this modal
-          this.multiFactorModalService.dismiss();
+          this.multiFactorModalService.dismiss({ success: true });
         })
       );
     }
