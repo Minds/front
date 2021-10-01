@@ -5,7 +5,7 @@ EMBED_PATH=${1:-dist/embed}
 SERVER_PATH=${3:-dist/server}
 
 # Allow Node.js to use up to 4G
-export NODE_OPTIONS="--max_old_space_size=4096"
+export NODE_OPTIONS="--max_old_space_size=5120"
 
 # Build global CSS
 npx gulp build.sass --deploy-url="/static/en/"
