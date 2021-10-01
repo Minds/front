@@ -407,7 +407,7 @@ m-comments__entityOutlet,
   .m-comments__viewMore {
     display: flex;
     justify-content: space-around;
-    margin: -10px 0 10px;
+    margin: 10px 0 20px;
     m-button button {
       min-height: 30px !important;
       padding: 4px 11px !important;
@@ -419,6 +419,14 @@ m-comments__entityOutlet,
         font-weight: 500 !important;
         font-size: 13px !important;
       }
+    }
+
+    &.m-comments__viewMore--newer {
+      margin: 15px 0;
+    }
+
+    &.m-comments__viewMore--older {
+      margin-top: 0;
     }
   }
 }

@@ -11,13 +11,10 @@ import {
  */
 @Directive()
 export abstract class AbstractMFAFormComponent implements OnDestroy {
-  // subscriptions within host.
-  protected subscriptions: Subscription[] = [];
-
-  // code or recovery code.
-  public readonly code$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    ''
-  );
+  /**
+   * The code a user enters
+   */
+  code: string = '';
 
   // to be fired on code verify
   @Output('onVerify') onVerify: EventEmitter<any> = new EventEmitter();
@@ -41,33 +38,10 @@ export abstract class AbstractMFAFormComponent implements OnDestroy {
     return this.service.activePanel$;
   }
 
-  /**
-   * Should be disabled.
-   * @returns { Observable<boolean> } - true if should be disabled.
-   */
-  get disabled$(): Observable<boolean> {
-    return this.code$.pipe(map((code: string) => code.length !== 6));
-  }
-
   constructor(public service: MultiFactorAuthService) {}
 
   ngOnDestroy(): void {
-    for (let subscription of this.subscriptions) {
-      try {
-        subscription.unsubscribe();
-      } catch (e) {}
-    }
-
-    this.code$.next('');
     this.inProgress$.next(false);
-  }
-
-  /**
-   * Fired on code change.
-   * @param { string } $event - string of new value for code.
-   */
-  public onCodeChange($event: string): void {
-    this.code$.next($event);
   }
 
   /**

@@ -8,7 +8,7 @@ import * as moment from 'moment';
   providedIn: 'root',
 })
 export class JsonLdService {
-  readonly scriptType: string = 'application/json+ld';
+  readonly scriptType: string = 'application/ld+json';
 
   constructor(@Inject(DOCUMENT) private _document: Document) {}
 

@@ -1,6 +1,9 @@
+import { HttpRequest } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
+import { last } from 'rxjs/operators';
 import { catchError, map, switchMap, take, throttleTime } from 'rxjs/operators';
 import { ApiService } from '../../../../common/api/api.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -19,16 +22,16 @@ export type AuthResponse = { status: string; user: MindsUser };
 /**
  * Object containing data needed to construct payload.
  */
-export type MFARequest = {
-  secretKeyId?: string;
-  username: string;
-  password: string;
+export type MFAPayload = {
+  smsSecretKey?: string;
+  emailSecretKey?: string;
+  code?: string;
 };
 
 /**
  * Modal entry-points.
  */
-export type MultiFactorRootPanel = 'sms' | 'totp';
+export type MultiFactorRootPanel = 'sms' | 'totp' | 'email';
 
 /**
  * Different panels that can be displayed.
@@ -44,29 +47,13 @@ export type MultiFactorPanel =
  * Handles shared state.
  */
 @Injectable({ providedIn: 'root' })
-export class MultiFactorAuthService implements OnDestroy {
-  protected subscriptions: Subscription[] = [];
-
+export class MultiFactorAuthService {
   /**
    * Currently active panel.
    */
   public readonly activePanel$: BehaviorSubject<
     MultiFactorPanel
   > = new BehaviorSubject<MultiFactorPanel>('totp');
-
-  /**
-   * Code from form.
-   */
-  public readonly code$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    ''
-  );
-
-  /**
-   * Fired on success.
-   */
-  public readonly onSuccess$: BehaviorSubject<MindsUser> = new BehaviorSubject<
-    MindsUser
-  >(null);
 
   /**
    * Fired on success.
@@ -76,11 +63,33 @@ export class MultiFactorAuthService implements OnDestroy {
   >(null);
 
   /**
-   * MFA Request payload
+   * This is the original request that triggered the modal
+   * Mainly used for recovery reset as we need the users credentials
    */
-  private readonly mfaRequest$: BehaviorSubject<
-    MFARequest
-  > = new BehaviorSubject<MFARequest>(null);
+  public readonly originalRequest$: BehaviorSubject<
+    HttpRequest<any>
+  > = new BehaviorSubject<HttpRequest<any>>(null);
+
+  /**
+   * The type of 2fa being used
+   * This determines how the payload is build
+   */
+  public readonly mfaType$: BehaviorSubject<
+    MultiFactorRootPanel
+  > = new BehaviorSubject<MultiFactorRootPanel>(null);
+
+  /**
+   * Email and SMS contain a a secret key with the request
+   * Devices do not so should set to null
+   */
+  public readonly mfaSecretKey$: BehaviorSubject<
+    string | null
+  > = new BehaviorSubject<string | null>(null);
+
+  /**
+   * MFA Request payload for new request (interceptor will merge)
+   */
+  public readonly mfaPayload$: Subject<MFAPayload> = new Subject<MFAPayload>();
 
   constructor(
     private toast: FormToastService,
@@ -88,20 +97,27 @@ export class MultiFactorAuthService implements OnDestroy {
     private router: Router
   ) {}
 
-  ngOnDestroy() {
-    for (let subscription of this.subscriptions) {
-      subscription.unsubscribe();
+  /**
+   * Call to validate code.
+   * @param { string } code - code for submission.
+   * @returns { void }
+   */
+  public completeMultiFactor(code?: string): void {
+    // It is the HTTP interceptor that handles the logic, so we just return
+    // a mfaPayload object
+
+    const payload: MFAPayload = {
+      code,
+    };
+
+    if (this.mfaType$.getValue() === 'sms') {
+      payload.smsSecretKey = this.mfaSecretKey$.getValue();
+    } else if (this.mfaType$.getValue() === 'email') {
+      payload.emailSecretKey = this.mfaSecretKey$.getValue();
     }
-  }
 
-  /**
-   * Set MFA request object.
-   * @param { MFARequest } mfaRequest
-   * @returns { MultiFactorAuthService } - Chainable.
-   */
-  public setMFARequest(mfaRequest: MFARequest): MultiFactorAuthService {
-    this.mfaRequest$.next(mfaRequest);
-    return this;
+    this.inProgress$.next(true);
+    this.mfaPayload$.next(payload);
   }
 
   /**
@@ -109,184 +125,30 @@ export class MultiFactorAuthService implements OnDestroy {
    * @param { string } code - code for submission.
    * @returns { void }
    */
-  public validateCode(code: string): void {
+  public async validateRecoveryCode(code: string): Promise<void> {
     this.inProgress$.next(true);
-    this.subscriptions.push(
-      this.mfaRequest$
-        .pipe(
-          take(1),
-          throttleTime(2000),
-          // shape data we need from MFARequest
-          map(
-            (mfaRequest: MFARequest): CredentialsPayload => {
-              return {
-                username: mfaRequest.username,
-                password: mfaRequest.password,
-              };
-            }
-          ),
-          // emit api post observable using previously mapped data.
-          switchMap((data: CredentialsPayload) => {
-            return this.api.post('api/v1/authenticate', data, {
-              headers: { 'X-MINDS-2FA-CODE': code },
-            });
-          }),
-          catchError(e => this.handleError(e))
-        )
-        .subscribe((response: AuthResponse) => {
-          this.inProgress$.next(false);
-          if (!response) {
-            return;
-          }
-          this.onSuccess$.next(response.user);
-        })
-    );
-  }
 
-  /**
-   * Call to validate code.
-   * @param { string } code - code for submission.
-   * @returns { void }
-   */
-  public validateRecoveryCode(code: string): void {
-    this.inProgress$.next(true);
-    this.subscriptions.push(
-      this.mfaRequest$
-        .pipe(
-          take(1),
-          throttleTime(2000),
-          switchMap((mfaRequest: MFARequest): any => {
-            return this.api.post('api/v3/security/totp/recovery', {
-              username: mfaRequest.username,
-              password: mfaRequest.password,
-              recovery_code: code,
-            });
-          }),
-          catchError(e => this.handleError(e))
-        )
-        .subscribe((response: any): void => {
-          this.inProgress$.next(false);
+    const req: HttpRequest<any> = this.originalRequest$.getValue();
 
-          if (!response) {
-            return;
-          }
+    const response = await this.api
+      .post('api/v3/security/totp/recovery', {
+        ...JSON.parse(req.body),
+        recovery_code: code,
+      })
+      .toPromise();
 
-          if (!response.matches) {
-            this.toast.error('Invalid recovery code');
-            return;
-          }
+    this.inProgress$.next(false);
 
-          this.toast.success('Successfully recovered MFA. Please login again.');
-          this.router.navigate(['/']);
-        })
-    );
-  }
+    if (!response) {
+      return;
+    }
 
-  /**
-   * Call to validate code.
-   * @param { string } code - code for submission.
-   * @returns { void }
-   */
-  public validateSMSCode(code: string): void {
-    this.inProgress$.next(true);
-    this.subscriptions.push(
-      this.mfaRequest$
-        .pipe(
-          take(1),
-          throttleTime(2000),
-          // shape MFARequest into the shape we need
-          map((mfaRequest: MFARequest): any => {
-            return {
-              username: mfaRequest.username,
-              password: mfaRequest.password,
-              secretKeyId: mfaRequest.secretKeyId,
-            };
-          }),
-          // construct and emit api post request
-          switchMap((args: MFARequest) => {
-            const data = {
-              username: args.username,
-              password: args.password,
-            };
-            return this.api.post('api/v1/authenticate', data, {
-              headers: {
-                'X-MINDS-2FA-CODE': code,
-                'X-MINDS-SMS-2FA-KEY': args.secretKeyId,
-              },
-            });
-          }),
-          catchError(e => this.handleError(e))
-        )
-        .subscribe((response: AuthResponse) => {
-          this.inProgress$.next(false);
+    if (!response.matches) {
+      this.toast.error('Invalid recovery code');
+      return;
+    }
 
-          if (!response) {
-            return;
-          }
-          this.onSuccess$.next(response.user);
-        })
-    );
-  }
-
-  /**
-   * Resend an SMS code and replace secret.
-   * @returns { void }
-   */
-  public resendSMS(): void {
-    this.subscriptions.push(
-      this.mfaRequest$
-        .pipe(
-          take(1),
-          throttleTime(30000),
-          // shape MFARequest into the shape we need
-          map(
-            (mfaRequest: MFARequest): CredentialsPayload => {
-              return {
-                username: mfaRequest.username,
-                password: mfaRequest.password,
-              };
-            }
-          ),
-          // construct and emit api post request.
-          switchMap((data: CredentialsPayload) => {
-            return this.api.post('api/v1/authenticate', data);
-          }),
-          catchError(e => {
-            // we are expecting this error
-            if (
-              e.error.errorId ===
-              'Minds::Core::Security::TwoFactor::TwoFactorRequiredException'
-            ) {
-              // get new key from header to pass through with validation request
-              const smsKey = e.headers.get('X-MINDS-SMS-2FA-KEY');
-
-              // setup next panel and update MFARequest.
-              this.activePanel$.next(smsKey ? 'sms' : 'totp');
-              this.setMFARequest({
-                ...this.mfaRequest$.getValue(),
-                secretKeyId: smsKey ?? null,
-              });
-              this.toast.success('Your code has been resent.');
-              return EMPTY;
-            }
-            // else, handle like other errors.
-            return this.handleError(e);
-          })
-        )
-        .subscribe((response: AuthResponse) => {
-          if (!response) {
-            return;
-          }
-        })
-    );
-  }
-
-  /**
-   * Handles errors
-   * @returns { Observable<null> }
-   */
-  private handleError(e: { error }): Observable<boolean> {
-    this.toast.error(e.error.message ?? `An unknown error has occurred`);
-    return of(null);
+    this.toast.success('Successfully recovered MFA. Please login again.');
+    this.router.navigate(['/']);
   }
 }

@@ -129,7 +129,6 @@ import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdow
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
-import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { RelatedContentService } from './services/related-content.service';
@@ -186,6 +185,8 @@ import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
+import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
+import { DateRangeModalService } from './components/date-range-modal/date-range-modal.services';
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -351,6 +352,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    DateRangeModalComponent,
     HovercardComponent,
   ],
   exports: [
@@ -488,6 +490,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
   ],
@@ -523,7 +526,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    MetaService,
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
@@ -539,6 +541,7 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    DateRangeModalService,
     JsonLdService,
   ],
 })

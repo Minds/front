@@ -37,13 +37,13 @@ describe('MultiFactorAuthSMSComponent', () => {
   it('should call to validate sms code on verify click', () => {
     comp.onVerifyClick();
 
-    expect((comp as any).service.validateSMSCode).toHaveBeenCalled();
+    expect((comp as any).service.completeMultiFactor).toHaveBeenCalled();
   });
 
   it('should call to resend sms and start retry timer', () => {
     comp.resendSMSTimer();
 
-    expect((comp as any).service.resendSMS).toHaveBeenCalled();
+    expect((comp as any).service.completeMultiFactor).toHaveBeenCalled();
     const sub = comp.timer$.subscribe(val => {
       expect(val > 0);
     });
