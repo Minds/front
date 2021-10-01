@@ -24,22 +24,6 @@ cache:
   paths:
     - node_modules/
 
-test:
-  image: circleci/node:14-browsers
-  stage: test and build
-  script:
-    - npm i
-    - NODE_OPTIONS=--max_old_space_size=4096
-    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-
-lint:
-  stage: test and build
-  script:
-    - npm i -g prettier@"^1.19.1"
-    - prettier --check "src/**/*.ts"
-    - prettier --check "src/**/*.scss"
-    - prettier --check "src/**/*.html"
-
 ############
 # QA Stage #
 ############
