@@ -45,6 +45,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   ethBalance: number = 0;
   amountSubscription: Subscription;
 
+  // mfa token to be retrieved from can-withdraw endpoint, and provided with final submission
+  mfaToken: string = '';
   canTransfer = true; // whether the user can withdraw from wallet
   phoneVerified = false;
   isPlus = false;
@@ -124,7 +126,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
         this.submitError = '';
       });
 
-    this.canTransfer = await this.walletService.canTransfer();
+    const canTransferResponse = await this.walletService.canTransfer();
+
+    this.canTransfer = canTransferResponse.canWithdraw;
+    this.mfaToken = canTransferResponse.mfaToken ?? '';
 
     this.loading = false;
   }
@@ -139,6 +144,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   async transfer() {
     if (!this.isPlus || !this.phoneVerified) {
       return;
+    }
+
+    if (!this.mfaToken) {
+      this.toasterService.error('Unable to authenticate');
     }
 
     if (await this.walletService.web3WalletUnlocked()) {
@@ -158,7 +167,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
         const response: any = await this.client.post(
           `api/v2/blockchain/transactions/withdraw`,
-          result
+          { ...result, ...{ mfaToken: this.mfaToken } }
         );
 
         if (response.done) {
@@ -171,7 +180,20 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
         }
       } catch (e) {
         console.error(e);
-        this.submitError = (e && e.message) || 'Server error';
+        if (e.code === 401) {
+          this.toasterService.error(
+            'Authentication failed, please contact the admin team with your transaction id'
+          );
+          this.submitError =
+            'Authentication failed, please contact the admin team';
+        } else {
+          this.toasterService.error(
+            e.message ??
+              'Unknown error, please contact the admin team with your transaction id'
+          );
+          this.submitError =
+            e.message ?? 'Unknown server error, please contact the admin team';
+        }
       } finally {
         this.transferring = false;
       }

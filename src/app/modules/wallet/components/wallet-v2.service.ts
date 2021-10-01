@@ -50,6 +50,8 @@ export interface Wallet {
   limits: WalletLimits;
 }
 
+export type CanWithdrawResponse = { canWithdraw: boolean; mfaToken?: string };
+
 @Injectable()
 export class WalletV2Service {
   readonly basePath: string = '/wallet';
@@ -400,18 +402,25 @@ export class WalletV2Service {
     }
   }
 
-  async canTransfer() {
+  /**
+   * Calls server to check if a user can withdraw (e.g. if they have a pending transaction already)
+   * @returns { Promise<CanWithdrawResponse> } - object containing whether the user canWithdraw, and an mfaToken for resubmission with transaction.
+   */
+  async canTransfer(): Promise<CanWithdrawResponse> {
     try {
       const response: any = await this.client.post(
         'api/v2/blockchain/transactions/can-withdraw'
       );
       if (!response) {
-        return false;
+        return { canWithdraw: false };
       }
-      return response.canWithdraw;
+      return {
+        canWithdraw: response.canWithdraw,
+        mfaToken: response.mfaToken ?? '',
+      };
     } catch (e) {
       console.error(e);
-      return false;
+      return { canWithdraw: false };
     }
   }
 
