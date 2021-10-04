@@ -88,9 +88,8 @@ export class DiscoveryTagsService {
       params = entityGuid ? { entity_guid: entityGuid } : {};
 
     if (
-      this.discoveryService.isPlusPage$.value
-      // &&
-      // this.featuresService.has('plus-discovery-filter')
+      this.discoveryService.isPlusPage$.value &&
+      this.featuresService.has('plus-discovery-filter')
     ) {
       params['wire_support_tier'] = this.plusHandler;
     }
