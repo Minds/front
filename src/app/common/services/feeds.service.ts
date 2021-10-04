@@ -29,7 +29,10 @@ export class FeedsService implements OnDestroy {
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
+  // feed progress state
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  // fetch call progress state
+  fetchInProgress: BehaviorSubject<boolean> = new BehaviorSubject(false);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
 
@@ -177,6 +180,9 @@ export class FeedsService implements OnDestroy {
    * Fetches the data.
    */
   fetch(replace: boolean = false): Promise<any> {
+    if (this.fetchInProgress.getValue()) return;
+
+    this.fetchInProgress.next(true);
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -203,6 +209,7 @@ export class FeedsService implements OnDestroy {
           return;
         }
 
+        this.fetchInProgress.next(false);
         if (!this.offset.getValue()) {
           this.inProgress.next(false);
         }
