@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { Storage } from '../../services/storage';
 
 @Injectable()
@@ -17,7 +18,10 @@ export class BoostRecommendationService {
    **/
   public boostRecommended: boolean = false;
 
-  constructor(protected storage: Storage) {
+  constructor(
+    protected storage: Storage,
+    protected experimentsService: ExperimentsService
+  ) {
     this.boostRecommended = Boolean(this.storage.get('boost:recommended'));
   }
 
@@ -41,6 +45,9 @@ export class BoostRecommendationService {
    * and removing it after some time.
    **/
   recommendBoost(guid: string) {
+    if (this.experimentsService.run('boost-prompt') !== 'on') {
+      return;
+    }
     this.boostRecommendations.next([
       ...this.boostRecommendations.getValue(),
       guid,
