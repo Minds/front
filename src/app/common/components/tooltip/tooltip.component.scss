@@ -48,3 +48,15 @@ m-tooltip {
     width: 220px;
   }
 }
+
+.m-tooltip__triangle {
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  position: absolute;
+  bottom: -5px;
+
+  @include m-theme() {
+    background: $blue;
+  }
+}
