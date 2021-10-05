@@ -23,9 +23,12 @@ export class ExperimentsService {
    */
   initGrowthbook(): void {
     if (!this.growthbook) {
+      // ID field required by SDK even though we are forcing.
       const userId =
         this.session.getLoggedInUser()?.guid ??
-        this.configs.get('experiments_id');
+        Math.random()
+          .toString(36)
+          .substr(2, 16);
 
       this.growthbook = new GrowthBook({
         user: { id: userId },
