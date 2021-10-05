@@ -45,8 +45,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   ethBalance: number = 0;
   amountSubscription: Subscription;
 
-  // mfa token to be retrieved from can-withdraw endpoint, and provided with final submission
-  mfaToken: string = '';
+  // secret to be retrieved from can-withdraw endpoint, and provided with final submission
+  secret: string = '';
   canTransfer = true; // whether the user can withdraw from wallet
   phoneVerified = false;
   isPlus = false;
@@ -129,7 +129,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     const canTransferResponse = await this.walletService.canTransfer();
 
     this.canTransfer = canTransferResponse.canWithdraw;
-    this.mfaToken = canTransferResponse.mfaToken ?? '';
+    this.secret = canTransferResponse.secret ?? '';
 
     this.loading = false;
   }
@@ -146,7 +146,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (!this.mfaToken) {
+    if (!this.secret) {
       this.toasterService.error('Unable to authenticate');
     }
 
@@ -167,7 +167,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
         const response: any = await this.client.post(
           `api/v2/blockchain/transactions/withdraw`,
-          { ...result, ...{ mfaToken: this.mfaToken } }
+          { secret: this.secret, ...result }
         );
 
         if (response.done) {

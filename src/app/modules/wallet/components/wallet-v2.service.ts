@@ -50,7 +50,7 @@ export interface Wallet {
   limits: WalletLimits;
 }
 
-export type CanWithdrawResponse = { canWithdraw: boolean; mfaToken?: string };
+export type CanWithdrawResponse = { canWithdraw: boolean; secret?: string };
 
 @Injectable()
 export class WalletV2Service {
@@ -404,7 +404,7 @@ export class WalletV2Service {
 
   /**
    * Calls server to check if a user can withdraw (e.g. if they have a pending transaction already)
-   * @returns { Promise<CanWithdrawResponse> } - object containing whether the user canWithdraw, and an mfaToken for resubmission with transaction.
+   * @returns { Promise<CanWithdrawResponse> } - object containing whether the user canWithdraw, and an secret for resubmission with transaction.
    */
   async canTransfer(): Promise<CanWithdrawResponse> {
     try {
@@ -416,7 +416,7 @@ export class WalletV2Service {
       }
       return {
         canWithdraw: response.canWithdraw,
-        mfaToken: response.mfaToken ?? '',
+        secret: response.secret ?? '',
       };
     } catch (e) {
       console.error(e);
