@@ -106,6 +106,7 @@ export class SidebarNavigationComponent
           this.plusPageActive = false;
         }
       });
+    // ojm todo why minds+ nav link isn't blue
   }
 
   ngOnInit() {
