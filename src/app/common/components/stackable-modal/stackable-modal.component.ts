@@ -30,6 +30,12 @@ export class StackableModalComponent implements AfterViewInit {
 
   private compRef: ComponentRef<{}>;
   private compInstance;
+
+  /**
+   * If a new call to createDynamicOverlayModal is made, setting this to true
+   * will NOT dismiss the existing modal. This allows for stackable modals
+   * on-top of stackable modals.
+   */
   private dismissOnStack: boolean = false;
 
   constructor(
@@ -45,6 +51,12 @@ export class StackableModalComponent implements AfterViewInit {
     this.stackableModalService.setContainer(this);
   }
 
+  /**
+   * Create a new dynamic overlay modal.
+   * @param { boolean } dismissOnStack - defaults to false - set to true
+   * to prevent component instance dismissal.
+   * @returns instance of this compInstance after it is set to its new value.
+   */
   createDynamicOverlayModal(
     dismissOnStack: boolean = false
   ): OverlayModalComponent {
