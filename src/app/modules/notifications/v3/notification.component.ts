@@ -52,6 +52,7 @@ export class NotificationsV3NotificationComponent
 
   ngOnInit(): void {
     if (!this.notification) return;
+
     /**
      * All notification types must be added to this list
      */
@@ -156,7 +157,7 @@ export class NotificationsV3NotificationComponent
       case 'group_queue_approve':
         return 'approved';
       case 'group_queue_reject':
-        return 'rejected';
+        return 'declined approval of';
       case 'group_invite':
         return 'invited you to join';
       case 'wire_received':
@@ -209,14 +210,15 @@ export class NotificationsV3NotificationComponent
 
   get pronoun(): string {
     switch (this.notification.type) {
-      case 'quote':
-        return 'your';
       case 'boost_peer_request':
         return 'a';
+      case 'quote':
       case 'boost_peer_accepted':
       case 'boost_peer_rejected':
       case 'boost_rejected':
         return 'your';
+      case 'group_queue_reject':
+        return 'your post at';
       case 'wire_received':
         return 'you ' + this.formatWireAmount(this.notification);
       case 'wire_payout':
@@ -284,7 +286,11 @@ export class NotificationsV3NotificationComponent
       case 'subscribe':
         return ['/' + this.notification.from.username];
       case 'group_invite':
+      case 'group_queue_reject':
         return ['/groups/profile/' + this.notification.entity.guid];
+      case 'wire_received':
+      case 'wire_payout':
+        return [`/wallet/${this.notification.data.method}/transactions`];
     }
 
     switch (this.notification.entity?.type) {
@@ -374,7 +380,7 @@ export class NotificationsV3NotificationComponent
   /**
    * Returns the entity object
    */
-  get entity(): Object | null {
+  get entity(): any | null {
     switch (this.notification.type) {
       case 'wire_payout':
       case 'token_rewards_summary':
@@ -389,6 +395,19 @@ export class NotificationsV3NotificationComponent
         return this.notification.entity.entity;
     }
     return this.notification.entity;
+  }
+
+  /**
+   * Returns whether to display a newsfeed entity
+   */
+  get showNewsfeedEntity(): boolean {
+    return (
+      this.entity &&
+      this.entity?.type !== 'comment' &&
+      this.entity?.type !== 'user' &&
+      this.notification.type !== 'wire_received' &&
+      this.notification.type !== 'wire_payout'
+    );
   }
 
   /**

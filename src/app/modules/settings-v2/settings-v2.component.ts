@@ -257,6 +257,13 @@ export class SettingsV2Component implements OnInit {
       },
       {
         header: {
+          label: 'Content Migration',
+          id: 'content-migration',
+        },
+        items: [],
+      },
+      {
+        header: {
           label: $localize`:@@SETTINGS__OTHER__LEAVE__HEADER__LABEL:Deactivate and Delete Account`,
           id: 'deactivate-account',
         },
@@ -323,17 +330,20 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
+    const contentMigrationMenu = this.secondaryMenus.other[2];
+
     // Conditionally show feature flagged items
     if (this.hasYoutubeFeature) {
-      const youtubeMenuItem = {
-        header: {
-          label: 'Content Migration',
-          id: 'content-migration',
-        },
-        items: [{ label: 'Youtube', id: 'youtube-migration' }],
-      };
-      this.secondaryMenus.other.splice(2, 0, youtubeMenuItem);
+      contentMigrationMenu.items.push({
+        label: 'Youtube',
+        id: 'youtube-migration',
+      });
     }
+
+    if (this.featuresService.has('twitter-sync')) {
+      contentMigrationMenu.items.push({ label: 'Twitter', id: 'twitter-sync' });
+    }
+
     if (this.featuresService.has('settings-referrals')) {
       const referralsMenuItem = {
         header: {

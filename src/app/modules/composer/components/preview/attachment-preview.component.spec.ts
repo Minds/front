@@ -1,3 +1,4 @@
+import { BoostRecommendationService } from './../../../../common/services/boost-recommendation.service';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -41,6 +42,10 @@ describe('Composer Attachment Preview', () => {
         {
           provide: AttachmentApiService,
           useValue: MockService(ApiService, {}),
+        },
+        {
+          provide: BoostRecommendationService,
+          useValue: MockService(BoostRecommendationService, {}),
         },
       ],
     }).compileComponents();
