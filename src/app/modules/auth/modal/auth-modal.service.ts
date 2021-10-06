@@ -5,7 +5,14 @@ import {
   StackableModalState,
 } from '../../../services/ux/stackable-modal.service';
 import { AuthModalComponent } from './auth-modal.component';
-import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
+import {
+  Subject,
+  combineLatest,
+  Observable,
+  concat,
+  merge,
+  BehaviorSubject,
+} from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
@@ -21,6 +28,10 @@ export class AuthModalService {
     private onboardingV3: OnboardingV3Service,
     private session: Session
   ) {}
+
+  public readonly success$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   async open(
     opts: { formDisplay: string } = { formDisplay: 'register' }
@@ -47,6 +58,8 @@ export class AuthModalService {
         onComplete: async (user: MindsUser) => {
           onSuccess$.next(user);
           onSuccess$.complete(); // Ensures promise can be called below
+          // can be used as an alternative global subscription this functions promise resolution.
+          this.success$.next(true);
           this.stackableModal.dismiss();
 
           if (

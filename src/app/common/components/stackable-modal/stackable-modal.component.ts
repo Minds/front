@@ -30,6 +30,7 @@ export class StackableModalComponent implements AfterViewInit {
 
   private compRef: ComponentRef<{}>;
   private compInstance;
+  private dismissOnStack: boolean = false;
 
   constructor(
     private _componentFactoryResolver: ComponentFactoryResolver,
@@ -44,7 +45,11 @@ export class StackableModalComponent implements AfterViewInit {
     this.stackableModalService.setContainer(this);
   }
 
-  createDynamicOverlayModal(): OverlayModalComponent {
+  createDynamicOverlayModal(
+    dismissOnStack: boolean = false
+  ): OverlayModalComponent {
+    this.dismissOnStack = dismissOnStack;
+
     if (this.compInstance) {
       this.dismiss();
     }
@@ -73,6 +78,8 @@ export class StackableModalComponent implements AfterViewInit {
    * Dismiss the stackable modal
    */
   dismiss(): void {
+    if (this.dismissOnStack) return;
+
     this.hidden = true;
 
     if (this.compInstance) {

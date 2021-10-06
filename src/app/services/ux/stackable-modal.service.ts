@@ -70,7 +70,9 @@ export class StackableModalService {
      * Dynamically create an overlay modal
      * and connect it to its scoped service
      */
-    const dynamicOverlayModal = this.container.createDynamicOverlayModal();
+    const dynamicOverlayModal = this.container.createDynamicOverlayModal(
+      opts.stackable
+    );
     this.overlayModalService.setContainer(dynamicOverlayModal);
 
     this.container.hidden = false;

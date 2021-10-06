@@ -21,7 +21,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'm-v3topbar',
@@ -47,6 +48,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   onAuthPages: boolean = false; // sets to false if we're on login or register pages
 
   router$;
+  authModalSuccessSubscription: Subscription;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
@@ -123,6 +125,12 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    this.authModalSuccessSubscription = this.authModal.success$
+      .pipe(filter(Boolean))
+      .subscribe((success: boolean) => {
+        this.doRedirect();
+      });
   }
 
   private setOnAuthPages(url) {
@@ -165,12 +173,15 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     if (this.router$) {
       this.router$.unsubscribe();
     }
+    if (this.authModalSuccessSubscription) {
+      this.authModalSuccessSubscription.unsubscribe();
+    }
   }
 
   async onJoinNowClick() {
     try {
+      // listening for success on global success$ variable.
       await this.authModal.open();
-      this.doRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
