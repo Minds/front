@@ -7,6 +7,7 @@ import {
   BrowserModule,
   BrowserTransferStateModule,
 } from '@angular/platform-browser';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -66,6 +67,7 @@ import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
 import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
+import { environment } from '../environments/environment';
 
 @NgModule({
   bootstrap: [Minds],
@@ -119,6 +121,9 @@ import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
     CodeHighlightModule,
     SharedModule,
     MessengerV2Module,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production,
+    }),
 
     //last due to :username route
     AppRoutingModule,

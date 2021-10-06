@@ -1,0 +1,37 @@
+{
+  "dir": "ltr",
+  "lang": "en",
+  "name": "Minds",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "short_name": "Minds",
+  "theme_color": "#4690df",
+  "description": "The crypto social network",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/assets/logos/bulb-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logos/bulb-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logos/bulb-150x150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logos/bulb.svg",
+      "sizes": "any",
+      "type": "image/svg"
+    }
+  ]
+}
