@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
   HttpEventType,
 } from '@angular/common/http';
-import { from, Observable, combineLatest, throwError, race } from 'rxjs';
+import { from, Observable, combineLatest, throwError, race, EMPTY } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { MultiFactorLazyService } from './multi-factor-auth-lazy.service';
 import {
@@ -84,6 +84,7 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
         this.multiFactorAuthService.mfaSecretKey$.next(smsKey || emailKey);
       }
 
+      // when either MFA payload is set or modal is closed.
       return race([
         this.multiFactorAuthService.mfaPayload$,
         from(
@@ -92,28 +93,32 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
           })
         ),
       ]).pipe(
+        // map into payload.
         switchMap(payload => {
           if (!payload) {
             throw 'Front::TwoFactorAborted';
           }
+          // retry request with headers containing payload.
           req = this.addHeaders(req, payload);
           return next.handle(req);
         }),
+        // catch errors above, including those within retried request.
         catchError(err => {
           if (err !== 'Front::TwoFactorAborted')
             this.toastService.error(
               err?.error?.message ?? `An unknown error has occurred`
             );
+          // recursively call to handle unexpected error.
           return this.handleResponseError(err, req, next);
         }),
-        tap((httpEvent: HttpEvent<any>) => {
-          console.log(httpEvent);
-          if (httpEvent.type === 0) {
-            return;
+        map((httpEvent: HttpEvent<any>) => {
+          // if HttpEvent type is NOT 'Sent', we can dismiss the modal.
+          if (httpEvent.type !== 0) {
+            this.multiFactorModalService.dismiss();
           }
 
-          // If no errors then we can dismiss this modal
-          this.multiFactorModalService.dismiss();
+          // return empty observable to end sequence.
+          return EMPTY;
         })
       );
     }
