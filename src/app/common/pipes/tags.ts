@@ -21,7 +21,7 @@ export class TagsPipe implements PipeTransform {
       rule: this.regexService.getRegex('url'),
       replace: m => {
         const url = m.match[1];
-        return `<a href="${url}" target="_blank" rel="${this.siteService.getExternalLinkRel(
+        return `<a href="${url}" target="_blank" rel="${this.siteService.getLinkRel(
           url
         )}">${m.match[1]}</a>`;
       },

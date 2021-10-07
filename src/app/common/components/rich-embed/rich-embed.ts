@@ -319,7 +319,7 @@ export class MindsRichEmbed {
   }
 
   getRel() {
-    return this.site.getExternalLinkRel(this.src.perma_url);
+    return this.site.getLinkRel(this.src.perma_url);
   }
 
   detectChanges() {
