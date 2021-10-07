@@ -58,7 +58,7 @@ export class AuthModalService {
         onComplete: async (user: MindsUser) => {
           onSuccess$.next(user);
           onSuccess$.complete(); // Ensures promise can be called below
-          // can be used as an alternative global subscription this functions promise resolution.
+          // can be used as an alternative emitter to this functions promise resolution.
           this.success$.next(true);
           this.stackableModal.dismiss();
 
