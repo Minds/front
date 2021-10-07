@@ -50,10 +50,10 @@ export class TooltipComponent implements AfterViewInit {
     if (isPlatformServer(this.platformId)) {
       return;
     }
-    const {
-      width,
-      height,
-    } = this.element.nativeElement.getBoundingClientRect();
+    const rect = this.element.nativeElement?.getBoundingClientRect();
+    if (!rect) return;
+
+    const { width, height } = rect;
 
     switch (this.anchor) {
       case 'top':
