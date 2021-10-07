@@ -30,9 +30,7 @@ export class TagsPipe implements PipeTransform {
       rule: this.regexService.getRegex('mail'),
       replace: m => {
         const url = m.match[0];
-        return `<a href="mailto:${url}" target="_blank" rel="${this.siteService.getExternalLinkRel(
-          url
-        )}">${m.match[0]}</a>`;
+        return `<a href="mailto:${url}" target="_blank">${m.match[0]}</a>`;
       },
     },
     hash: {
