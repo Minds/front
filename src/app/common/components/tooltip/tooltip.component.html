@@ -23,6 +23,16 @@
     "
     [hidden]="hidden"
   >
+    <div
+      *ngIf="showArrow"
+      class="m-tooltip__triangle"
+      [style.right.px]="
+        anchor === 'top' || anchor === 'bottom' ? triangleOffset : undefined
+      "
+      [style.top.px]="
+        anchor === 'left' || anchor === 'right' ? triangleOffset : undefined
+      "
+    ></div>
     <ng-content></ng-content>
   </div>
 </div>

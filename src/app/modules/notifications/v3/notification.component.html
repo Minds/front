@@ -86,7 +86,7 @@
       ></m-comment>
 
       <m-newsfeed__entity
-        *ngIf="entity && entity?.type !== 'comment' && entity?.type !== 'user'"
+        *ngIf="showNewsfeedEntity"
         [entity]="entity"
         [displayOptions]="{
           minimalMode: true,
