@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 
 @Component({
@@ -30,11 +38,18 @@ export class TooltipComponent implements AfterViewInit {
   offsetLeft: number = 0;
   triangleOffset: number = 0;
 
-  constructor(private element: ElementRef, private configs: ConfigsService) {
+  constructor(
+    private element: ElementRef,
+    private configs: ConfigsService,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
   }
 
   ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
     const {
       width,
       height,
