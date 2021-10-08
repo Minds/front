@@ -115,4 +115,18 @@
       }
     }
   }
+
+  ::ng-deep m-date-selector {
+    padding: 20px 20px 0 20px;
+
+    .m-dateSelector__label {
+      margin-right: 10px;
+      text-transform: capitalize;
+      letter-spacing: inherit;
+      font-size: 15px;
+    }
+    .m-dateSelector__input {
+      font-size: 15px;
+    }
+  }
 }
