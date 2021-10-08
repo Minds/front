@@ -192,7 +192,6 @@ import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { JsonLdService } from './services/jsonld.service';
-import { LinkButtonComponent } from './components/link-button/link-button.component';
 
 const routes: Routes = [
   {
@@ -314,7 +313,6 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ButtonComponent,
-    LinkButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
@@ -454,7 +452,6 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ButtonComponent,
-    LinkButtonComponent,
     ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,

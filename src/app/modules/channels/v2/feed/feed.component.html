@@ -68,14 +68,14 @@
           *ngIf="previousPageUrl"
           class="m-channelFeed__loadBefore__container"
         >
-          <m-link-button
-            [url]="previousPageUrl"
+          <m-button
+            [href]="previousPageUrl"
             data-cy="data-minds-load-previous-page-button"
           >
             <ng-container i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
               >Load more
             </ng-container>
-          </m-link-button>
+          </m-button>
         </div>
 
         <div

@@ -29,6 +29,8 @@ export class ButtonComponent implements AfterViewChecked {
   @ViewChild('buttonTextContainer')
   buttonTextContainer: ElementRef;
 
+  // when provided, the button will an <a></a> element
+  @Input() href: string | undefined;
   @Input() disabled: boolean = false;
   @Input() overlay: boolean = false;
   @Input() iconOnly: boolean = false;
@@ -124,5 +126,28 @@ export class ButtonComponent implements AfterViewChecked {
     } else {
       this.onAction.emit($event);
     }
+  }
+
+  /**
+   * returns classes
+   * @return { object }
+   */
+  getClass() {
+    return {
+      'm-button--saving': this._saving,
+      'm-button--grey': this.color === 'grey',
+      'm-button--blue': this.color === 'blue',
+      'm-button--red': this.color === 'red',
+      'm-button--primary': this.color === 'primary',
+      'm-button--secondary': this.color === 'secondary',
+      'm-button--xsmall': this.size === 'xsmall',
+      'm-button--small': this.size === 'small',
+      'm-button--medium': this.size === 'medium',
+      'm-button--large': this.size === 'large',
+      'm-button--overlay': this.overlay,
+      'm-button--iconOnly': this.iconOnly,
+      'm-button--dropdown': !!this.dropdown && this.showDropdownMenu,
+      'm-pulsating--small': this.pulsating,
+    };
   }
 }

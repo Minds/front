@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (click)="onLoadMoreClick($event)"
-        [url]="nextPageUrl"
+        [href]="nextPageUrl"
         data-cy="data-minds-load-next-page-button"
       >
         <ng-container
@@ -35,7 +35,7 @@ import { Subscription } from 'rxjs';
           *ngIf="!moreData"
           >Nothing more to load
         </ng-container>
-      </m-link-button>
+      </m-button>
     </ng-container>
 
     <ng-container *ngIf="iconOnly && moreData && !inProgress">

@@ -12,6 +12,7 @@
     font-weight: 500;
     background-clip: padding-box;
     white-space: nowrap;
+    text-decoration: none;
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
