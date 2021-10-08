@@ -26,9 +26,21 @@ export class FeedsService implements OnDestroy {
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
   fromTimestamp: string = '';
+  /**
+   * whether to request the feed in a reversed order.
+   * used to show posts in the correct order in backward paginating
+   */
   reversedPagination: boolean = false;
-  lastItemTimestamp: number;
-  firstItemTimestamp: number;
+  /**
+   * the last item in the timestamp used to retrieve the next page
+   */
+  lastItemTimestamp: BehaviorSubject<number | null> = new BehaviorSubject(null);
+  /**
+   * the first item in the timestamp used to retrieve the previous page
+   */
+  firstItemTimestamp: BehaviorSubject<number | null> = new BehaviorSubject(
+    null
+  );
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -50,8 +62,9 @@ export class FeedsService implements OnDestroy {
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
       }),
-      // reverse the feed after slicing it if we were
-      // in reversed pagination
+      /**
+       * reverse the feed after slicing it if we were in reversed pagination
+       */
       switchMap(async feed => {
         const slicedFeed = feed.slice(
           0,
@@ -88,9 +101,9 @@ export class FeedsService implements OnDestroy {
       tap(feed => {
         if (feed.length) {
           const firstItem: any = feed[0].getValue();
-          this.firstItemTimestamp = firstItem.time_created * 1000;
+          this.firstItemTimestamp.next(firstItem.time_created * 1000);
           const lastItem: any = feed[feed.length - 1].getValue();
-          this.lastItemTimestamp = lastItem.time_created * 1000;
+          this.lastItemTimestamp.next(lastItem.time_created * 1000);
         }
       }),
       tap(feed => {

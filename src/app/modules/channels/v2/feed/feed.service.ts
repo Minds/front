@@ -73,9 +73,11 @@ export class FeedService {
   protected filterChangeSubscription: Subscription;
 
   /**
-   * the offset from query params
+   * the timestamp from
    **/
-  public offset: string;
+  public fromTimestamp: BehaviorSubject<string> = new BehaviorSubject<string>(
+    null
+  );
 
   /**
    * Constructor. Sets the main observable subscription.
@@ -126,7 +128,13 @@ export class FeedService {
           this.service.setFromTimestamp(dateRange.toDate);
           params['to_timestamp'] = dateRange.fromDate;
         } else {
-          this.service.setFromTimestamp('');
+          if (queryParams.has('fromTimestamp')) {
+            const fromTimestamp = queryParams.get('fromTimestamp');
+            this.fromTimestamp.next(fromTimestamp);
+            this.service.setFromTimestamp(fromTimestamp);
+          } else {
+            this.service.setFromTimestamp('');
+          }
         }
 
         // Don't allow using search or date filters for scheduled posts
@@ -137,11 +145,6 @@ export class FeedService {
         }
 
         this.service.setParams(params);
-
-        if (queryParams.has('offset')) {
-          this.offset = queryParams.get('offset');
-          this.service.setFromTimestamp(this.offset);
-        }
 
         if (queryParams.has('reverse')) {
           this.service.setReversedPagination(

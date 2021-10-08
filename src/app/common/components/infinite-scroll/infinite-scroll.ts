@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
     <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
     <ng-container *ngIf="!iconOnly && !hideManual">
-      <m-link-button
+      <m-button
         *ngIf="!inProgress"
         [disabled]="!moreData"
         (click)="onLoadMoreClick($event)"
@@ -56,7 +56,7 @@ export class InfiniteScroll {
   @Input() inProgress: boolean = false;
   @Input() moreData: boolean = true;
   @Input() hideManual: boolean = false;
-  @Input() nextPageUrl: string;
+  @Input() nextPageUrl?: string;
 
   element: any;
 
