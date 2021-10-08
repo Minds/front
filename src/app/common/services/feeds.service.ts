@@ -209,11 +209,6 @@ export class FeedsService implements OnDestroy {
           return;
         }
 
-        this.fetchInProgress.next(false);
-        if (!this.offset.getValue()) {
-          this.inProgress.next(false);
-        }
-
         if (!response.entities && response.activity) {
           response.entities = response.activity;
         } else if (!response.entities && response.users) {
@@ -239,7 +234,13 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
       })
-      .catch(e => console.log(e));
+      .catch(e => console.error(e))
+      .finally(() => {
+        this.fetchInProgress.next(false);
+        if (!this.offset.getValue()) {
+          this.inProgress.next(false);
+        }
+      });
   }
 
   /**
