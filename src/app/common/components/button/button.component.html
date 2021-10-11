@@ -7,7 +7,7 @@
   *ngIf="!href"
 >
   <div *ngIf="!_saving" class="m-button__text--unsaved" #buttonTextContainer>
-    <ng-content></ng-content>
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
   </div>
   <div
     *ngIf="_saving"
@@ -36,8 +36,13 @@
 <a
   class="m-button"
   [attr.href]="disabled ? undefined : href"
+  [attr.disabled]="disabled ? true : undefined"
   [ngClass]="getClass()"
   *ngIf="href"
 >
-  <ng-content></ng-content>
+  <ng-container [ngTemplateOutlet]="content"></ng-container>
 </a>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
