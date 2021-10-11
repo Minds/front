@@ -65,16 +65,9 @@ export class FeedsService implements OnDestroy {
       /**
        * reverse the feed after slicing it if we were in reversed pagination
        */
-      switchMap(async feed => {
-        const slicedFeed = feed.slice(
-          0,
-          await this.pageSize.pipe(first()).toPromise()
-        );
-
-        if (this.reversedPagination) return slicedFeed.reverse();
-
-        return slicedFeed;
-      }),
+      switchMap(async feed =>
+        feed.slice(0, await this.pageSize.pipe(first()).toPromise())
+      ),
       switchMap(feed =>
         this.entitiesService
           .setCastToActivities(this.castToActivities)
@@ -128,11 +121,7 @@ export class FeedsService implements OnDestroy {
         const inProgress = values[1];
         const offset = values[2];
 
-        if (inProgress) return true;
-        if (offset !== 0 && feed.length > offset) return true;
-        if (this.pagingToken) return true;
-
-        return false;
+        return inProgress || feed.length > offset;
       })
     );
   }
@@ -264,9 +253,21 @@ export class FeedsService implements OnDestroy {
           if (replace) {
             this.rawFeed.next(response.entities);
           } else {
-            this.rawFeed.next(
-              this.rawFeed.getValue().concat(response.entities)
-            );
+            if (this.reversedPagination) {
+              this.rawFeed.next([
+                ...response.entities.reverse(),
+                ...this.rawFeed.getValue(),
+              ]);
+            } else {
+              this.rawFeed.next(
+                this.rawFeed.getValue().concat(response.entities)
+              );
+            }
+          }
+
+          // we only need reversed pagination for the first request
+          if (this.reversedPagination) {
+            this.setReversedPagination(false);
           }
           this.pagingToken = response['load-next'];
 
