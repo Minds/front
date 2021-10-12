@@ -22,12 +22,12 @@ import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
 import { VideoPoster } from './video-poster.service';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
-import { SupportTier } from '../../wire/v2/support-tiers.service';
 import { HashtagsFromStringService } from '../../../common/services/parse-hashtags.service';
 import {
   AttachmentValidationPayload,
   AttachmentValidatorService,
 } from './attachment-validator.service';
+import { BoostRecommendationService } from '../../../common/services/boost-recommendation.service';
 
 /**
  * Message value type
@@ -467,7 +467,8 @@ export class ComposerService implements OnDestroy {
     protected preview: PreviewService,
     protected feedsUpdate: FeedsUpdateService,
     private hashtagsFromString: HashtagsFromStringService,
-    private attachmentValidator: AttachmentValidatorService
+    private attachmentValidator: AttachmentValidatorService,
+    private boostRecommendationService: BoostRecommendationService
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -1080,6 +1081,10 @@ export class ComposerService implements OnDestroy {
 
       this.reset();
       this.isPosting$.next(false);
+      setTimeout(
+        () => this.boostRecommendationService.recommendBoost(activity.guid),
+        1000
+      );
       this.setProgress(false);
 
       activity.boostToggle = true;
