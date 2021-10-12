@@ -49,7 +49,9 @@ export class EmailResendService {
         }
       } catch (e) {
         console.error(e);
-        this.toast.error('An error has occurred sending your email.');
+        this.toast.error(
+          e.message ?? 'An error has occurred sending your email.'
+        );
         this.inProgress$.next(false);
         return;
       }
