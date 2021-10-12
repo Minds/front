@@ -214,9 +214,20 @@
 
         <ul>
           <li>
-            <a routerLink="/help" i18n="@@COMMON_FOOTER__HELP_DESK">
-              Help Desk
-            </a>
+            <ng-container *mIfFeature="'helpdesk-2021'; else helpdeskLink">
+              <a
+                href="/api/v3/helpdesk/zendesk"
+                target="_blank"
+                i18n="@@COMMON_FOOTER__HELP_DESK"
+              >
+                Help Desk
+              </a>
+            </ng-container>
+            <ng-template #helpdeskLink>
+              <a routerLink="/help" i18n="@@COMMON_FOOTER__HELP_DESK">
+                Help Desk
+              </a>
+            </ng-template>
           </li>
           <li>
             <a routerLink="/p/contact" i18n="@@COMMON_FOOTER__CONTACT">
