@@ -4,6 +4,7 @@ import { map, shareReplay, switchMapTo, tap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Client } from '../../../services/api';
+import * as moment from 'moment';
 
 export type Metric = {
   id: string;
@@ -22,7 +23,7 @@ export type Metric = {
 @Injectable({ providedIn: 'root' })
 export class AnalyticsGlobalTokensService {
   params: any = {
-    endTs: Math.floor(Date.now() / 1000),
+    endTs: this.getUtcUnix(new Date()),
   };
 
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -76,7 +77,6 @@ export class AnalyticsGlobalTokensService {
   }
 
   async fetch(): Promise<any> {
-    console.log('ojm fetch', this.params);
     this.inProgress$.next(true);
 
     try {
@@ -96,5 +96,22 @@ export class AnalyticsGlobalTokensService {
     } finally {
       this.inProgress$.next(false);
     }
+  }
+
+  /**
+   * For a given input ISO 8601 date string, return the unix timestamp
+   * of the end of the day of the selected DAY of the input
+   */
+  getUtcUnix(localDate: Date): number {
+    const localMoment = moment(new Date(localDate));
+    const day = localMoment.format('D');
+    const month = localMoment.format('MMM');
+    const year = localMoment.format('YYYY');
+
+    return Math.floor(
+      moment(`${day} ${month} ${year} 23:59:59 GMT+0000`)
+        .utc()
+        .valueOf() / 1000
+    );
   }
 }

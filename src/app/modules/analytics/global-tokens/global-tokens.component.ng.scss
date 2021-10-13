@@ -116,8 +116,12 @@
     }
   }
 
+  .m-analyticsGlobalTokens__dateSelectorContainer {
+    padding: 20px 20px 10px 20px;
+  }
+
   ::ng-deep m-date-selector {
-    padding: 20px 20px 0 20px;
+    display: inline-block;
 
     .m-dateSelector__label {
       margin-right: 10px;
@@ -127,6 +131,19 @@
     }
     .m-dateSelector__input {
       font-size: 15px;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  ::ng-deep m-tooltip {
+    margin-left: 10px;
+    i {
+      font-size: 17px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
 }

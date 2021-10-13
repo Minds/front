@@ -36,21 +36,21 @@
   </a>
 </div>
 
-<!-- ojm todo make date selector admin only -->
-<!-- <ng-container *ngIf="session.isAdmin()"> -->
-<m-date-selector
-  label="Date"
-  [date]="endDate"
-  [max]="maxDate"
-  [min]="minDate"
-  (dateChange)="onEndDateChange($event)"
-></m-date-selector>
-<!-- ojm decide whether to do GMT time  -->
-<m-tooltip icon="info"
-  >Date selector displays values for dates in GMT time. Visible to admins
-  only</m-tooltip
->
-<!-- </ng-container> -->
+<div class="m-analyticsGlobalTokens__dateSelectorContainer">
+  <ng-container *ngIf="session.isAdmin()">
+    <m-date-selector
+      label="Date"
+      [date]="endDate"
+      [max]="maxDate"
+      [min]="minDate"
+      (dateChange)="onEndDateChange($event)"
+    ></m-date-selector>
+    <m-tooltip icon="info"
+      >Date selector displays values for selected dates in GMT time. Visible to
+      admins only</m-tooltip
+    >
+  </ng-container>
+</div>
 
 <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
 
