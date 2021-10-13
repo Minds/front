@@ -51,6 +51,11 @@ const routes: Routes = [
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       {
         path: 'subscriptions',
+        redirectTo: 'subscriptions/latest',
+        pathMatch: 'full',
+      },
+      {
+        path: 'subscriptions/:algorithm',
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
