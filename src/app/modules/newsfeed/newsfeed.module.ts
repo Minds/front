@@ -43,7 +43,7 @@ const routes: Routes = [
     path: 'newsfeed',
     component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions/latest', pathMatch: 'full' },
       { path: 'suggested', redirectTo: 'subscriptions' },
       { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
