@@ -101,6 +101,7 @@ export class AnalyticsGlobalTokensService {
   /**
    * For a given input ISO 8601 date string, return the unix timestamp
    * of the end of the day of the selected DAY of the input
+   * OR, if it's today, return current unix timestamp
    */
   getUtcUnix(localDate: Date): number {
     const localMoment = moment(new Date(localDate));
@@ -108,10 +109,14 @@ export class AnalyticsGlobalTokensService {
     const month = localMoment.format('MMM');
     const year = localMoment.format('YYYY');
 
-    return Math.floor(
+    const now = Math.floor(new Date().getTime() / 1000);
+
+    const endOfDate = Math.floor(
       moment(`${day} ${month} ${year} 23:59:59 GMT+0000`)
         .utc()
         .valueOf() / 1000
     );
+
+    return Math.min(now, endOfDate);
   }
 }
