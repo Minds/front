@@ -46,6 +46,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
+  algorithm: string = 'latest';
 
   attachment_preview;
 
@@ -108,9 +109,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.load(true, true);
-
     this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['algorithm']) {
+        this.algorithm = params['algorithm'];
+        this.load(true, true);
+      }
+
       if (params['message']) {
         this.message = params['message'];
       }
@@ -183,7 +187,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
-      this.feedsService.clear(false);
+      this.feedsService.clear(true);
     }
 
     this.inProgress = true;
@@ -191,6 +195,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     try {
       this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
+        .setParams({
+          algorithm: this.algorithm,
+        })
         .setLimit(12)
         .fetch(refresh);
     } catch (e) {
