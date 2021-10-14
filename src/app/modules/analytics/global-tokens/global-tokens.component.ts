@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AnalyticsGlobalTokensService, Metric } from './global-tokens.service';
-import * as moment from 'moment';
-import { Session } from '../../../services/session';
 
 type TabId = 'supply' | 'transactions' | 'liquidity' | 'rewards';
 
@@ -44,38 +42,22 @@ export class AnalyticsGlobalTokensComponent {
   rewards$: Observable<Metric[]> = this.service.rewards$;
 
   /**
-   * InProgress subject
+   * InProgress subjkect
    */
   inProgress$: BehaviorSubject<boolean> = this.service.inProgress$;
 
-  /**
-   * Supply date filter ranges
-   */
-  minDate = new Date(1514764800000); // Jan 1 2018
-  maxDate = new Date();
-
-  endDate: number = moment(Date.now()).valueOf();
-
   constructor(
     private service: AnalyticsGlobalTokensService,
-    private route: ActivatedRoute,
-    public session: Session
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.paramMapSubscription = this.route.paramMap.subscribe(
       (params: ParamMap) => {
+        this.inProgress$.next(true);
         this.activeTabId = <TabId>params.get('tabId');
       }
     );
-    this.service.fetch();
-  }
-
-  onEndDateChange(newDate): void {
-    this.service.setParams({
-      endTs: this.service.getUtcUnix(newDate),
-    });
-    this.service.fetch();
   }
 
   ngOnDestroy() {

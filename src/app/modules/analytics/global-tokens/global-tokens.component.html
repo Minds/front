@@ -36,22 +36,6 @@
   </a>
 </div>
 
-<div class="m-analyticsGlobalTokens__dateSelectorContainer">
-  <ng-container *ngIf="session.isAdmin()">
-    <m-date-selector
-      label="Date"
-      [date]="endDate"
-      [max]="maxDate"
-      [min]="minDate"
-      (dateChange)="onEndDateChange($event)"
-    ></m-date-selector>
-    <m-tooltip icon="info"
-      >Date selector displays values for selected dates in GMT time. Visible to
-      admins only</m-tooltip
-    >
-  </ng-container>
-</div>
-
 <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
 
 <div class="m-analyticsGlobalTokens__metrics">
