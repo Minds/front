@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { EmailConfirmationService } from '../components/email-confirmation/email-confirmation.service';
 import { FormToastService } from './form-toast.service';
 
@@ -11,20 +11,24 @@ import { FormToastService } from './form-toast.service';
  */
 @Injectable({ providedIn: 'root' })
 export class EmailResendService {
-  // polls retryInSeconds for value updates.
-  public readonly retryTimer$: Observable<number> = interval(1000).pipe(
-    // map to seconds left till member can retry sending an email.
-    map(i => this.retryInSeconds),
-    // filter out values less than or equal to 0.
-    filter(i => i >= 0),
-    // set in progress to false.
-    tap(i => this.inProgress$.next(false))
-  );
-
   // is in progress.
   public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+
+  // polls retryInSeconds for value updates.
+  public readonly retryTimer$: Observable<number> = interval(1000).pipe(
+    // map to seconds left till member can retry sending an email.
+    // if less than 0 seconds, map to 0 seconds.
+    map(i => (this.retryInSeconds > 0 ? this.retryInSeconds : 0)),
+    // do not emit further if the value is NOT different from the last value.
+    // stops timer +-0-0-0-0-> emissions from triggering inProgress changes.
+    distinctUntilChanged(),
+    // set in progress to false.
+    tap(i => {
+      this.inProgress$.next(false);
+    })
+  );
 
   constructor(
     protected service: EmailConfirmationService,
@@ -37,6 +41,11 @@ export class EmailResendService {
    * @returns { Promise<void> }
    */
   async send(seconds: number = 60): Promise<void> {
+    if (this.inProgress$.getValue()) {
+      this.toast.warn('Email send already in progress.');
+      return;
+    }
+
     if (!(this.retryInSeconds > 0)) {
       this.inProgress$.next(true);
 
