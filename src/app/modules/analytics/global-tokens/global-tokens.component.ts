@@ -72,10 +72,12 @@ export class AnalyticsGlobalTokensComponent {
   }
 
   onEndDateChange(newDate): void {
-    this.service.setParams({
-      endTs: this.service.getUtcUnix(newDate),
-    });
-    this.service.fetch();
+    if (this.session.isAdmin()) {
+      this.service.setParams({
+        endTs: this.service.getUtcUnix(newDate),
+      });
+      this.service.fetch();
+    }
   }
 
   ngOnDestroy() {

@@ -23,7 +23,7 @@ export type Metric = {
 @Injectable({ providedIn: 'root' })
 export class AnalyticsGlobalTokensService {
   params: any = {
-    endTs: this.getUtcUnix(new Date()),
+    endTs: this.getUtcUnix(),
   };
 
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -101,17 +101,23 @@ export class AnalyticsGlobalTokensService {
   /**
    * For a given input ISO 8601 date string, return the unix timestamp
    * of the end of the day of the selected DAY of the input
+   * OR, if it's today, return current unix timestamp
    */
-  getUtcUnix(localDate: Date): number {
-    const localMoment = moment(new Date(localDate));
-    const day = localMoment.format('D');
-    const month = localMoment.format('MMM');
+  getUtcUnix(localDate?: string): number {
+    const localMoment = localDate ? moment(localDate) : moment();
+    const day = localMoment.format('DD');
+    const month = localMoment.format('MM');
     const year = localMoment.format('YYYY');
 
-    return Math.floor(
-      moment(`${day} ${month} ${year} 23:59:59 GMT+0000`)
+    const now = Math.floor(new Date().getTime() / 1000);
+
+    // ISO 8601 format
+    const endOfDate = Math.floor(
+      moment(`${year}${month}${day}T235959Z`)
         .utc()
         .valueOf() / 1000
     );
+
+    return Math.min(now, endOfDate);
   }
 }
