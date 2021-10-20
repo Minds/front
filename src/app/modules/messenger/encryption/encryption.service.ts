@@ -24,7 +24,7 @@ export class MessengerEncryptionService {
   }
 
   unlock(password: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.client
         .post('api/v2/messenger/keys/unlock', { password: password })
         .then((response: any) => {
@@ -47,7 +47,7 @@ export class MessengerEncryptionService {
   }
 
   doSetup(password: string): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.client
         .post('api/v2/messenger/keys/setup', {
           password: password,
@@ -66,7 +66,7 @@ export class MessengerEncryptionService {
   }
 
   rekey(password: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.client
         .post('api/v2/messenger/keys/setup', {
           password: password,

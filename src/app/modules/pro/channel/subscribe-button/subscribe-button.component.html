@@ -7,9 +7,8 @@
     <ng-container
       *ngIf="!subscribed; else subscribedActionButton"
       i18n="@@COMMON__SUBSCRIBE"
+      >Subscribe</ng-container
     >
-      Subscribe
-    </ng-container>
     <ng-template #subscribedActionButton>
       <ng-container i18n="@@COMMON__SUBSCRIBED">Subscribed</ng-container>
     </ng-template>

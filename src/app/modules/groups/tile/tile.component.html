@@ -23,11 +23,15 @@
     [routerLink]="['/groups/profile', entity.guid]"
     class="m-groups--tile-block"
   >
-    <div class="avatar">
-      <img
+    <div class="m-groups--tile__avatar">
+      <div
+        class="m-groups--tile__avatarImg"
+        [ngStyle]="{
+          'background-image':
+            'url(' + cdnUrl + 'fs/v1/avatars/' + entity.guid + '/large)'
+        }"
         [class.m-pulsating--big]="entity.hasGathering$ | async"
-        src="{{ cdnUrl }}fs/v1/avatars/{{ entity.guid }}/large"
-      />
+      ></div>
     </div>
     <div class="body">
       <h3>{{ entity.name }}</h3>

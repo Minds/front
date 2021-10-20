@@ -38,11 +38,7 @@ export class MultiFactorAuthSMSComponent extends AbstractMFAFormComponent {
    * @returns { void }
    */
   public onVerifyClick(): void {
-    this.subscriptions.push(
-      this.code$.pipe(take(1), throttleTime(1000)).subscribe((code: string) => {
-        this.service.validateSMSCode(code);
-      })
-    );
+    this.service.completeMultiFactor(this.code);
   }
 
   /**
@@ -50,7 +46,8 @@ export class MultiFactorAuthSMSComponent extends AbstractMFAFormComponent {
    * @returns { void }
    */
   public resendSMSTimer(): void {
-    this.service.resendSMS();
+    this.code = '';
+    this.service.completeMultiFactor(null);
 
     this.timer$ = timer(0, 1000).pipe(
       scan(acc => --acc, 30),

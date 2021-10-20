@@ -124,7 +124,7 @@ export class ThirdPartyNetworksService {
   private connectFb(): Promise<any> {
     this.inProgress = true;
 
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       window.onSuccessCallback = () =>
         this.zone.run(() => {
           this.getStatus(true).then(() => {
@@ -166,7 +166,7 @@ export class ThirdPartyNetworksService {
   private connectTw(): Promise<any> {
     this.inProgress = true;
 
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       window.onSuccessCallback = () =>
         this.zone.run(() => {
           this.getStatus(true).then(() => {

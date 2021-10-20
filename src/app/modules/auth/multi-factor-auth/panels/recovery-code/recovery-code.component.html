@@ -7,18 +7,17 @@
     >Recovery code</label
   >
   <input
-    [ngModel]="code$ | async"
-    (ngModelChange)="onCodeChange($event)"
+    [(ngModel)]="code"
     class="m-mfaAuth__codeInput"
     type="text"
-    placeholder="6 digit code"
+    placeholder="Enter your recovery code"
   />
 </div>
 
 <m-button
   class="m-mfaAuth__verifyButton"
   [color]="'blue'"
-  [disabled]="disabled$ | async"
+  [disabled]="code.length < 6"
   [saving]="inProgress$ | async"
   (onAction)="onVerifyClick()"
 >

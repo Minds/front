@@ -3,8 +3,8 @@
     *ngIf="channel.city"
     class="m-channelAbout__field m-channelAbout__field--fullWidth"
   >
-    <div class="m-channelAboutField__label" i18n="@@COMMON__LOCATION">
-      Location
+    <div class="m-channelAboutField__label">
+      <ng-container i18n="@@COMMON__LOCATION">Location</ng-container>
     </div>
     <div class="m-channelAboutField__content">
       {{ channel.city }}
@@ -15,8 +15,8 @@
     *ngIf="channel.dob"
     class="m-channelAbout__field m-channelAbout__field--fullWidth"
   >
-    <div class="m-channelAboutField__label" i18n="@@COMMON__DATE_OF_BIRTH">
-      Date of birth
+    <div class="m-channelAboutField__label">
+      <ng-container i18n="@@COMMON__DATE_OF_BIRTH">Date of Birth</ng-container>
     </div>
     <div class="m-channelAboutField__content">
       {{ dobToDate(channel.dob) | date: 'mediumDate' }}
@@ -72,11 +72,10 @@
 
   <div class="m-channelAbout__field">
     <div
-      class="m-channelAboutField__label  m-channelAboutField__label--subs"
-      i18n="@@COMMON__SUBSCRIPTIONS"
+      class="m-channelAboutField__label m-channelAboutField__label--subs"
       [routerLink]="['/', this.service.username$ | async, 'subscriptions']"
     >
-      Subscriptions
+      <ng-container i18n="@@COMMON__SUBSCRIPTIONS">Subscriptions</ng-container>
     </div>
     <div class="m-channelAboutField__content">
       <a

@@ -43,7 +43,6 @@ import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
 import { InlineAutoGrow } from './directives/inline-autogrow';
 import { Emoji } from './directives/emoji';
-import { Hovercard } from './directives/hovercard';
 import { ScrollLock } from './directives/scroll-lock';
 import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
@@ -130,7 +129,6 @@ import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdow
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
-import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { RelatedContentService } from './services/related-content.service';
@@ -179,6 +177,7 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
@@ -187,6 +186,13 @@ import { HotkeyScrollDirective } from './directives/hotkey-scroll.directive';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { PublisherSearchModalComponent } from './components/publisher-search-modal/publisher-search-modal.component';
 import { PublisherSearchModalService } from './services/publisher-search-modal.service';
+import { DateRangeModalComponent } from './components/date-range-modal/date-range-modal.component';
+import { DateRangeModalService } from './components/date-range-modal/date-range-modal.services';
+import { NgxPopperjsModule } from 'ngx-popperjs';
+import { HovercardComponent } from './components/hovercard/hovercard.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { BoostRecommendationService } from './services/boost-recommendation.service';
+import { JsonLdService } from './services/jsonld.service';
 
 const routes: Routes = [
   {
@@ -204,6 +210,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    NgxPopperjsModule,
+    QRCodeModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
@@ -244,7 +252,6 @@ const routes: Routes = [
     InlineAutoGrow,
     Emoji,
     MindsEmoji,
-    Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
@@ -341,12 +348,15 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    DateRangeModalComponent,
+    HovercardComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -384,7 +394,6 @@ const routes: Routes = [
     InlineAutoGrow,
     MindsEmoji,
     Emoji,
-    Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
@@ -478,12 +487,16 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    DateRangeModalComponent,
+    NgxPopperjsModule,
+    HovercardComponent,
   ],
   providers: [
     SiteService,
@@ -517,7 +530,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    MetaService,
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
@@ -533,6 +545,9 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    DateRangeModalService,
+    JsonLdService,
+    BoostRecommendationService,
   ],
 })
 export class CommonModule {}

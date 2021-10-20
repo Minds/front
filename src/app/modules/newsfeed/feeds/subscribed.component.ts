@@ -32,6 +32,7 @@ import { isPlatformServer } from '@angular/common';
 import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -45,6 +46,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
+  algorithm: string = 'latest';
 
   attachment_preview;
 
@@ -85,6 +87,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
+    private toast: FormToastService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -106,14 +109,41 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.load(true, true);
-
     this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['algorithm']) {
+        this.algorithm = params['algorithm'];
+        this.load(true, true);
+      }
+
       if (params['message']) {
         this.message = params['message'];
       }
 
       this.newUserPromo = !!params['newUser'];
+    });
+
+    // catch Zendesk errors and make them domain specific.
+    this.route.queryParams.subscribe(params => {
+      if (params.kind === 'error') {
+        if (
+          /User is invalid: External minds-guid:\d+ has already been taken/.test(
+            params.message
+          )
+        ) {
+          this.toast.error('Your email is already linked to a support account');
+          return;
+        }
+
+        if (
+          params.message ===
+          'Please use one of the options below to sign in to Zendesk.'
+        ) {
+          this.toast.error('Authentication method invalid');
+          return;
+        }
+
+        this.toast.error(params.message ?? 'An unknown error has occurred');
+      }
     });
 
     this.feedsUpdatedSubscription = this.feedsUpdate.postEmitter.subscribe(
@@ -157,6 +187,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
+      this.feedsService.clear(true);
     }
 
     this.inProgress = true;
@@ -164,8 +195,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     try {
       this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
+        .setParams({
+          algorithm: this.algorithm,
+        })
         .setLimit(12)
-        .fetch();
+        .fetch(refresh);
     } catch (e) {
       console.error('SortedComponent', e);
     }

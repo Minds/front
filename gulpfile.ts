@@ -1,11 +1,14 @@
 import * as gulp from 'gulp';
 import * as autoprefixer from 'gulp-autoprefixer';
-import * as sass from 'gulp-sass';
+import * as gulpSass from 'gulp-sass';
+import * as dartSass from 'sass';
 import * as sassGlob from 'gulp-sass-glob';
 import * as template from 'gulp-template';
 
 import { join } from 'path';
 import { argv } from 'yargs';
+
+const sass = gulpSass(dartSass);
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',

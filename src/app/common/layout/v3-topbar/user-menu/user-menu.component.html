@@ -16,7 +16,10 @@
     [hidden]="!(service.isOpen$ | async)"
   >
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__username"
+      class="
+        m-dropdownList__item
+        m-userMenuDropdown__item m-userMenuDropdown__username
+      "
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
@@ -26,27 +29,34 @@
     </li>
 
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdownItem__upgrade"
+      class="
+        m-dropdownList__item
+        m-userMenuDropdown__item
+        m-userMenuDropdownItem__upgrade
+      "
       *ngIf="getCurrentUser() && !getCurrentUser().pro"
       (click)="closeMenu()"
     >
-      <a routerLink="/upgrades" i18n="@@COMMON__UPGRADE">
-        Upgrade
-      </a>
+      <a routerLink="/upgrades" i18n="@@COMMON__UPGRADE"> Upgrade </a>
     </li>
 
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdownItem__buyTokens"
+      class="
+        m-dropdownList__item
+        m-userMenuDropdown__item
+        m-userMenuDropdownItem__buyTokens
+      "
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/token" i18n="verb|@@COMMON__BUY_TOKENS">
-        Buy tokens
-      </a>
+      <a routerLink="/token" i18n="verb|@@COMMON__BUY_TOKENS">Buy tokens</a>
     </li>
 
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__spacer"
+      class="
+        m-dropdownList__item
+        m-userMenuDropdown__item m-userMenuDropdown__spacer
+      "
     ></li>
 
     <li
@@ -102,9 +112,17 @@
       class="m-dropdownList__item m-userMenuDropdown__item"
       (click)="closeMenu()"
     >
-      <a routerLink="/help">
-        <span i18n="@@COMMON__HELP">Help</span>
-      </a>
+      <!--Endpoint handles authentication and redirection-->
+      <ng-container *mIfFeature="'helpdesk-2021'; else helpdeskLink">
+        <a href="/api/v3/helpdesk/zendesk" target="_blank">
+          <span i18n="@@COMMON__HELP">Help</span>
+        </a>
+      </ng-container>
+      <ng-template #helpdeskLink>
+        <a routerLink="/help">
+          <span i18n="@@COMMON__HELP">Help</span>
+        </a>
+      </ng-template>
     </li>
 
     <li
@@ -118,11 +136,17 @@
     </li>
 
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__spacer"
+      class="
+        m-dropdownList__item
+        m-userMenuDropdown__item m-userMenuDropdown__spacer
+      "
     ></li>
 
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__footer"
+      class="
+        m-dropdownList__item
+        m-userMenuDropdown__item m-userMenuDropdown__footer
+      "
       *ngIf="showFooterLinks"
     >
       <ng-container

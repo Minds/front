@@ -138,4 +138,152 @@ export class AdminWithdrawals {
 
     this.inProgress = false;
   }
+
+  /**
+   * Add a missing withdrawal by txid.
+   * @param { string } txid - transaction id (txid).
+   * @returns { Promise<void> }
+   */
+  async addMissingWithdrawal(txid: string): Promise<void> {
+    this.inProgress = true;
+    try {
+      await this.client.post('api/v3/rewards/admin/missing', {
+        txid: txid,
+      });
+      this.toasterService.success('Withdrawal resubmitted');
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
+  /**
+   * Force on-chain confirmation state of a withdrawal.
+   * @param { any } request - request object.
+   * @returns { Promise<void> }
+   */
+  async forceConfirmation(request: any): Promise<void> {
+    this.inProgress = true;
+
+    if (
+      !confirm(
+        'Force transaction to be recognised as approved on the blockchain. Check that the transaction has AT LEAST 20 CONFIRMATIONS. Do not run more than once.'
+      )
+    ) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
+    try {
+      await this.client.post('api/v3/rewards/admin/confirm', {
+        request_txid: request.tx,
+        user_guid: request.user_guid,
+        timestamp: request.timestamp,
+      });
+      this.toasterService.success('Withdrawal submitted for repair');
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
+  /**
+   * Force fail state of an individual withdrawal.
+   * @param { any } request - request object.
+   * @returns { Promise<void> }
+   */
+  async forceFail(request: any): Promise<void> {
+    this.inProgress = true;
+
+    if (!confirm('Force transaction failure')) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
+    try {
+      const response: { message?: string } = await this.client.post(
+        'api/v3/rewards/admin/gc-single',
+        {
+          request_txid: request.tx,
+          user_guid: request.user_guid,
+          timestamp: request.timestamp,
+        }
+      );
+      this.toasterService.success(
+        response.message ?? 'Submitted for garbage collection'
+      );
+      this.load(true);
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
+  /**
+   * Redispatch completed withdrawal.
+   * @param { any } request - request object.
+   * @returns { Promise<void> }
+   */
+  async redispatchCompleted(request: any): Promise<void> {
+    this.inProgress = true;
+
+    if (
+      !confirm(
+        'Only run this if the completed_tx is registered with our system but not written to chain AND more than 72 hours has passed since the request - DO NOT run more than once.'
+      )
+    ) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
+    try {
+      const response: { message?: string } = await this.client.post(
+        'api/v3/rewards/admin/redispatch',
+        {
+          request_txid: request.tx,
+          user_guid: request.user_guid,
+          timestamp: request.timestamp,
+        }
+      );
+      this.toasterService.success(
+        response.message ?? 'Withdrawal submitted for repair'
+      );
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
+  /**
+   * Run garbage collection.
+   * @returns { Promise<void> }
+   */
+  async garbageCollect(): Promise<void> {
+    this.inProgress = true;
+
+    if (
+      !confirm(
+        'WARNING! This will FAIL all requests older than 72 hours. This is NOT REVERSIBLE.'
+      )
+    ) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
+    this.toasterService.warn('Running long operation...');
+
+    try {
+      await this.client.post('api/v3/rewards/admin/gc');
+      this.toasterService.success(
+        'Garbage collected all transactions older than 72 hours'
+      );
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
 }

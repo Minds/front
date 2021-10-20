@@ -48,18 +48,16 @@
               [href]="settingsHref"
               target="root_minds"
               i18n="@@COMMON__SETTINGS"
+              >Settings</a
             >
-              Settings
-            </a>
 
             <a
               *ngIf="!isProDomain"
               class="m-proChannelTopbar__settingsLink"
               [routerLink]="settingsLink"
               i18n="@@COMMON__SETTING"
+              >Settings</a
             >
-              Settings
-            </a>
           </div>
         </ng-template>
       </div>
@@ -106,9 +104,8 @@
             [routerLink]="feedRouterLink"
             routerLinkActive="active"
             i18n="@@COMMON__FEED"
+            >Feed</a
           >
-            Feed
-          </a>
 
           <ng-container *ngIf="channel.guid != '1128946932434083852'">
             <a
@@ -116,36 +113,32 @@
               [routerLink]="videosRouterLink"
               routerLinkActive="active"
               i18n="@@COMMON__VIDEOS"
+              >Videos</a
             >
-              Videos
-            </a>
 
             <a
               class="m-proChannelTopbar__navItem"
               [routerLink]="imagesRouterLink"
               routerLinkActive="active"
               i18n="@@COMMON__IMAGES"
+              >Images</a
             >
-              Images
-            </a>
 
             <a
               class="m-proChannelTopbar__navItem"
               [routerLink]="articlesRouterLink"
               routerLinkActive="active"
               i18n="@@COMMON__ARTICLES"
+              >Articles</a
             >
-              Articles
-            </a>
 
             <a
               class="m-proChannelTopbar__navItem"
               [routerLink]="groupsRouterLink"
               routerLinkActive="active"
               i18n="@@COMMON__GROUPS"
+              >Groups</a
             >
-              Groups
-            </a>
           </ng-container>
         </div>
 

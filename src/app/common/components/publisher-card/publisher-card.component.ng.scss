@@ -42,6 +42,12 @@
       }
     }
 
+    .m-publisherCard__subs,
+    .m-publisherCard__desc,
+    .m-publisherCard__tags {
+      margin-top: 15px;
+    }
+
     .m-publisherCard__tags {
       span {
         font-size: 16px;
@@ -59,8 +65,8 @@
 
     .m-publisherCard__desc {
       p {
-        line-height: 19px;
-        font-size: 16px;
+        line-height: 17px;
+        font-size: 15px;
         margin: 0;
         @include m-theme() {
           color: themed($m-textColor--primary);
@@ -150,6 +156,16 @@
     }
   }
 
+  .m-publisherCard--hovercard {
+    @include m-theme() {
+      border: none;
+    }
+    .m-publisherCard__inner {
+      max-height: 151px !important;
+      overflow: hidden;
+    }
+  }
+
   .m-publisherCard--large {
     .m-publisherCard__inner {
       max-height: 141px;
@@ -170,7 +186,7 @@
   }
   .m-publisherCard--small {
     .m-publisherCard__inner {
-      max-height: 151px;
+      max-height: 155px;
       overflow: hidden;
     }
     padding: 20px;
@@ -215,6 +231,10 @@
           margin-left: 0px;
         }
       }
+
+      m-channel--badges i {
+        font-size: 20px;
+      }
     }
     .m-publisherCard__subs {
       justify-content: center;
@@ -231,13 +251,14 @@
 
     .m-readMoreButton--v2.showOnlyFadeout {
       height: 0;
+      cursor: default;
 
       @include m-theme() {
         background: linear-gradient(
           to bottom,
-          rgba(themed($m-bgColor--primary), 0) 0%,
-          rgba(themed($m-bgColor--primary), 0.4) 40%,
-          rgba(themed($m-bgColor--primary), 1) 90%
+          rgba(themed($m-bgColor--primary), 0) 55%,
+          rgba(themed($m-bgColor--primary), 0.55) 90%,
+          rgba(themed($m-bgColor--primary), 1) 100%
         );
       }
       > span {

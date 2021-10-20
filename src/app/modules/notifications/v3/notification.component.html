@@ -1,149 +1,106 @@
 <ng-container *ngIf="notification; else ghostView">
-  <a
-    #notificationWrapper
-    class="m-notification__wrapperLink"
-    [routerLink]="nounLink"
-    [queryParams]="nounLinkParams"
-  >
-    <div
-      class="m-notifications__notification"
-      [class.m-notifications__notification--noPreview]="
-        !entity || entity.type === 'user'
-      "
-      (click)="onClick($event)"
+  <ng-container *ngIf="!typeError; else errorView">
+    <a
+      #notificationWrapper
+      class="m-notification__wrapperLink"
+      [routerLink]="nounLink"
+      [queryParams]="nounLinkParams"
     >
-      <div class="m-notificationsNotification__avatar">
-        <a [routerLink]="['/', notification.from.username]">
-          <img [src]="avatarUrl" />
-        </a>
-
-        <ng-container *ngTemplateOutlet="avatarTypeBubbleTag"></ng-container>
-      </div>
-      <div class="m-notificationsNotification__body">
-        <ng-container *ngIf="showFrom">
-          <a
-            [routerLink]="['/', notification.from.username]"
-            class="m-notificationsNotificationBody__label--from"
-            >{{ notification.from.name }}</a
+      <div
+        class="m-notifications__notification"
+        [class.m-notifications__notification--noPreview]="
+          !entity || entity.type === 'user'
+        "
+        (click)="onClick($event)"
+      >
+        <div class="m-notificationsNotification__avatar">
+          <a [routerLink]="['/', notification.from.username]">
+            <img [src]="avatarUrl" />
+          </a>
+          <div
+            *ngIf="typeBubbleTag"
+            class="m-notificationsNotificationAvatar__typeBubbleTag"
           >
+            <m-icon [iconId]="typeBubbleTag"></m-icon>
+          </div>
+        </div>
+        <div class="m-notificationsNotification__body">
+          <ng-container *ngIf="showFrom">
+            <a
+              [routerLink]="['/', notification.from.username]"
+              class="m-notificationsNotificationBody__label--from"
+              >{{ notification.from.name }}</a
+            >
 
-          <!-- Merged froms -->
-          <span
-            *ngIf="
-              notification.merged_count === 1 && notification.merged_from[0]
-            "
-          >
-            and
-            <a [routerLink]="['/', notification.merged_from[0].username]">{{
-              notification.merged_from[0].name
-            }}</a>
-          </span>
-          <span *ngIf="notification.merged_count > 1">
-            and {{ notification.merged_count }} others</span
-          >
-        </ng-container>
+            <!-- Merged froms -->
+            <span
+              *ngIf="
+                notification.merged_count === 1 && notification.merged_from[0]
+              "
+            >
+              and
+              <a [routerLink]="['/', notification.merged_from[0].username]">{{
+                notification.merged_from[0].name
+              }}</a>
+            </span>
+            <span *ngIf="notification.merged_count > 1">
+              and {{ notification.merged_count }} others</span
+            >
+          </ng-container>
 
-        {{ verb }}
-        <!-- eg. commented on-->
-        {{ pronoun }}
-        <!-- eg. your, 'Mark's'-->
+          {{ verb }}
+          <!-- eg. commented on-->
+          {{ pronoun }}
+          <!-- eg. your, 'Mark's'-->
 
-        <a [routerLink]="nounLink" [queryParams]="nounLinkParams">
-          {{ noun }}
-          <!-- eg. post-->
-        </a>
+          <a [routerLink]="nounLink" [queryParams]="nounLinkParams">
+            {{ noun }}
+            <!-- eg. post-->
+          </a>
+        </div>
+        <div class="m-notificationsNotification__timestamp">
+          <span>{{
+            notification.created_timestamp | friendlydatediff: '':false
+          }}</span>
+        </div>
+        <span
+          class="m-notificationsNotification__readIndicator"
+          *ngIf="!notification.read"
+        ></span>
       </div>
-      <div class="m-notificationsNotification__timestamp">
-        <span>{{
-          notification.created_timestamp * 1000 | friendlydatediff: '':false
-        }}</span>
+
+      <div
+        class="m-notificationNotification__commentPreview"
+        *ngIf="
+          notification.type === 'comment' && notification.data.comment_excerpt
+        "
+      >
+        <p>{{ notification.data.comment_excerpt }}</p>
+        <p *ngIf="notification.entity">&nbsp;</p>
+        <!-- spacer if there is a notification below -->
       </div>
-      <span
-        class="m-notificationsNotification__readIndicator"
-        *ngIf="!notification.read"
-      ></span>
-    </div>
 
-    <div
-      class="m-notificationNotification__commentPreview"
-      *ngIf="
-        notification.type === 'comment' && notification.data.comment_excerpt
-      "
-    >
-      <p>{{ notification.data.comment_excerpt }}</p>
-      <p *ngIf="notification.entity">&nbsp;</p>
-      <!-- spacer if there is a notifcation below -->
-    </div>
+      <m-comment
+        [comment]="entity"
+        *ngIf="entity?.type === 'comment'"
+      ></m-comment>
 
-    <m-comment
-      [comment]="entity"
-      *ngIf="entity?.type === 'comment'"
-    ></m-comment>
-
-    <m-newsfeed__entity
-      *ngIf="entity && entity?.type !== 'comment' && entity?.type !== 'user'"
-      [entity]="entity"
-      [displayOptions]="{
-        minimalMode: true,
-        showComments: false,
-        autoplayVideo: false,
-        showToolbar: false,
-        bypassMediaModal: true,
-        showOwnerBlock: notification.entity.subtype === 'remind',
-        isFeed: true
-      }"
-    ></m-newsfeed__entity>
-  </a>
+      <m-newsfeed__entity
+        *ngIf="showNewsfeedEntity"
+        [entity]="entity"
+        [displayOptions]="{
+          minimalMode: true,
+          showComments: false,
+          autoplayVideo: false,
+          showToolbar: false,
+          bypassMediaModal: true,
+          showOwnerBlock: notification.entity.subtype === 'remind',
+          isFeed: true
+        }"
+      ></m-newsfeed__entity>
+    </a>
+  </ng-container>
 </ng-container>
-
-<ng-template #avatarTypeBubbleTag>
-  <div class="m-notificationsNotificationAvatar__typeBubbleTag">
-    <ng-container [ngSwitch]="notification.type">
-      <ng-template ngSwitchCase="vote_up">
-        <m-icon iconId="thumb_up"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="vote_down">
-        <m-icon iconId="thumb_down"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="comment">
-        <m-icon iconId="chat_bubble"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="tag">
-        <m-icon iconId="local_offer"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="remind">
-        <m-icon iconId="repeat"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="quote">
-        <m-icon iconId="create"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="subscribe">
-        <m-icon iconId="person"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="group_queue_add">
-        <m-icon iconId="people"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="group_queue_approve">
-        <m-icon iconId="people"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="group_queue_reject">
-        <m-icon iconId="people"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="group_invite">
-        <m-icon iconId="people"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="token_rewards_summary">
-        <m-icon iconId="account_balance"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="wire_received">
-        <m-icon iconId="attach_money"></m-icon>
-      </ng-template>
-      <ng-template ngSwitchCase="report_actioned">
-        <m-icon iconId="warning"></m-icon>
-      </ng-template>
-    </ng-container>
-  </div>
-</ng-template>
 
 <ng-template #ghostView>
   <a class="m-notification__wrapperLink">
@@ -155,6 +112,24 @@
       </div>
       <div class="m-notificationsNotification__body">
         <span></span>
+      </div>
+    </div>
+  </a>
+</ng-template>
+
+<ng-template #errorView>
+  <a class="m-notification__wrapperLink">
+    <div
+      class="m-notifications__notification m-notifications__notification--error"
+    >
+      <div class="m-notificationsNotification__avatar">
+        <img />
+      </div>
+      <div class="m-notificationsNotification__body">
+        <span>
+          Uh-oh! We're unable to display this
+          {{ notification.type }} notification
+        </span>
       </div>
     </div>
   </a>

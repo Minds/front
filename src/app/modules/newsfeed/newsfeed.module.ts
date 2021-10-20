@@ -37,13 +37,14 @@ import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
 import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.component';
 import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
+import { ExperimentsModule } from '../experiments/experiments.module';
 
 const routes: Routes = [
   {
     path: 'newsfeed',
     component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions/latest', pathMatch: 'full' },
       { path: 'suggested', redirectTo: 'subscriptions' },
       { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
@@ -51,6 +52,11 @@ const routes: Routes = [
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       {
         path: 'subscriptions',
+        redirectTo: 'subscriptions/latest',
+        pathMatch: 'full',
+      },
+      {
+        path: 'subscriptions/:algorithm',
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
@@ -102,6 +108,7 @@ const routes: Routes = [
     OnboardingV3Module,
     LiquiditySpotModule,
     MessengerV2Module,
+    ExperimentsModule,
   ],
   declarations: [
     NewsfeedComponent,

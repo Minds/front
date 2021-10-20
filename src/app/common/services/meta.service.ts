@@ -13,7 +13,9 @@ const DEFAULT_OG_IMAGE = '/assets/og-images/default-v3.png';
 const DEFAULT_OG_IMAGE_WIDTH = 1200;
 const DEFAULT_OG_IMAGE_HEIGHT = 1200;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MetaService {
   private counter: number;
   private sep = ' | ';
@@ -68,6 +70,7 @@ export class MetaService {
       value = value.substr(0, 157) + '...';
     }
     this.metaService.updateTag({ name: 'description', content: value });
+    this.metaService.updateTag({ property: 'og:description', content: value });
     return this;
   }
 
@@ -197,6 +200,28 @@ export class MetaService {
     return this;
   }
 
+  /**
+   * Sets OEmbed URL for relevant content.
+   * @param { entityGuid } - The GUID of the entity to be linked.
+   * @returns { MetaService } - Chainable.
+   */
+  public setOEmbed(entityGuid: string): MetaService {
+    const existingLink = this.dom.head.querySelector('#oEmbed');
+
+    if (existingLink) {
+      existingLink.setAttribute('href', this.getOEmbedUrl(entityGuid));
+    } else {
+      let link: HTMLLinkElement;
+      link = this.dom.createElement('link');
+      link.setAttribute('rel', 'alternative');
+      link.setAttribute('href', this.getOEmbedUrl(entityGuid));
+      link.setAttribute('type', 'application/json+oembed');
+      link.setAttribute('id', 'oEmbed');
+      this.dom.head.appendChild(link);
+    }
+    return this;
+  }
+
   setAuthor(value: string): MetaService {
     this.metaService.updateTag({
       property: 'author',
@@ -209,6 +234,14 @@ export class MetaService {
     this.metaService.updateTag({
       property: 'og:author',
       content: value,
+    });
+    return this;
+  }
+
+  setOgSiteName(): MetaService {
+    this.metaService.updateTag({
+      property: 'og:site_name',
+      content: this.site.title,
     });
     return this;
   }
@@ -247,7 +280,9 @@ export class MetaService {
       .setCanonicalUrl(data.canonicalUrl || '') // Only use canonical when required
       .setRobots(data.robots || 'all')
       .setNsfw(false)
-      .resetDynamicFavicon();
+      .setOgSiteName()
+      .resetDynamicFavicon()
+      .resetOEmbed();
   }
 
   private applyTitle(): void {
@@ -257,7 +292,7 @@ export class MetaService {
       this.titleService.setTitle(this.title);
     }
     this.metaService.updateTag({
-      name: 'og:title',
+      property: 'og:title',
       content: this.ogTitle,
     });
   }
@@ -272,5 +307,31 @@ export class MetaService {
     const fakeEl = this.dom.createElement('span');
     fakeEl.innerHTML = this.domSanitizer.sanitize(SecurityContext.HTML, value);
     return fakeEl.textContent || fakeEl.innerText;
+  }
+
+  /**
+   * Gets oEmbed URL for a given entity guid.
+   * @param { entityGuid } - entityGuid
+   * @returns { string } - full oEmbed url with encoded 'url' query parameter.
+   */
+  private getOEmbedUrl(entityGuid: string): string {
+    const baseUrl = this.site.baseUrl;
+    const encodedOEmbedUrl = encodeURIComponent(
+      `${baseUrl}newsfeed/${entityGuid}`
+    );
+    return `${baseUrl}api/v3/oembed\?url=${encodedOEmbedUrl}`;
+  }
+
+  /**
+   * Resets oEmbed link node.
+   * @param { MetaService } - Chainable.
+   */
+  private resetOEmbed(): MetaService {
+    const link = this.dom.head.querySelector('#oEmbed');
+
+    if (link) {
+      this.dom.head.removeChild(link);
+    }
+    return this;
   }
 }

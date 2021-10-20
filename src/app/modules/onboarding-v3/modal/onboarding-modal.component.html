@@ -50,7 +50,7 @@
     ></m-onboardingV3__welcome>
     <m-onboardingV3__channel
       *ngSwitchCase="'SetupChannelStep'"
-      [nextClicked$]="nextClicked$"
+      #awaitablePanel
     ></m-onboardingV3__channel>
     <m-onboardingV3__verifyUniqueness
       *ngSwitchCase="'VerifyUniquenessStep'"
@@ -71,17 +71,8 @@
       [size]="'medium'"
       [color]="'blue'"
     >
-      <ng-container
-        *ngIf="(currentStep$ | async) === 'SetupChannelStep'"
-        i18n="@@ONBOARDING_MODAL__SAVE_BUTTON"
-      >
+      <ng-container i18n="@@ONBOARDING_MODAL__SAVE_BUTTON">
         Save
-      </ng-container>
-      <ng-container
-        *ngIf="(currentStep$ | async) !== 'SetupChannelStep'"
-        i18n="@@ONBOARDING_MODAL__NEXT_BUTTON"
-      >
-        Next
       </ng-container>
     </m-button>
   </div>

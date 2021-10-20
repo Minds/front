@@ -348,13 +348,16 @@
         (onAction)="submit()"
         i18n="verb|@@M__ACTION__BOOST"
         color="blue"
+        >Boost</m-button
       >
-        Boost
-      </m-button>
 
       <div
         *ngIf="inProgress"
-        class="m-boost--creator--submit-label mdl-spinner mdl-js-spinner is-active"
+        class="
+          m-boost--creator--submit-label
+          mdl-spinner mdl-js-spinner
+          is-active
+        "
         [mdl]
       ></div>
 

@@ -407,8 +407,7 @@ m-homepage__v2 {
       right: -50%;
       width: 500px;
       height: 500px;
-      background: url('http://localhost:4200//assets/marketing/deco_2.svg')
-        no-repeat;
+      background: url('/assets/marketing/deco_2.svg') no-repeat;
       z-index: -1; // we need to layer this manually behind the phone image
 
       @media screen and (max-width: $m-grid-max-mobile) {

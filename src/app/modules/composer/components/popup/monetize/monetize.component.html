@@ -77,7 +77,11 @@
           *ngIf="!state.supportTier || !features.has('channels-shop')"
         >
           <div
-            class="m-form__fieldsContainer m-composerPopup__field m-composerMonetize__typeField"
+            class="
+              m-form__fieldsContainer
+              m-composerPopup__field
+              m-composerMonetize__typeField
+            "
           >
             <div class="m-form__field--radio">
               <div class="m-form__row--input">
@@ -155,9 +159,8 @@
         (onAction)="save()"
         data-cy="monetize-save-button"
         i18n="@@COMMON__SAVE"
+        >Save</m-button
       >
-        Save
-      </m-button>
     </div>
   </div>
 </ng-template>

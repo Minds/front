@@ -9,7 +9,7 @@
     <div class="m-channelFeed__toolbar">
       <m-feedFilter
         class="m-channelFeed__filter"
-        [options]="['type']"
+        [options]="['type', 'dateRange']"
         [type]="feedService.type$ | async"
         (typeChange)="onTypeChange($event)"
       >
@@ -87,7 +87,11 @@
     <!-- ----------------------------------------- -->
     <!-- LAYOUT : NO POSTS  -->
     <!-- ----------------------------------------- -->
-    <ng-container *ngIf="!(service.query$ | async)">
+    <ng-container
+      *ngIf="
+        !(service.query$ | async) && !(feedService.dateRangeEnabled$ | async)
+      "
+    >
       <div
         *ngIf="
           !(feedService.service.inProgress | async) &&
@@ -143,7 +147,10 @@
           feed?.length < 1 &&
           isOwnedChannel
         "
-        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+        class="
+          m-channelFeed__emptyFeedContainer
+          m-channelFeed__emptyFeedContainer--bordered
+        "
       >
         <ng-container [ngSwitch]="feedService.type$ | async">
           <span
@@ -175,7 +182,7 @@
             *ngSwitchCaseDefault
             class="m-channelFeed__emptyFeedTitle"
             i18n="@@M__CHANNEL_FEED__YOU_HAVENT_POSTED__YET_GENERIC*"
-            >Looks like you haven't posted any content of this type yet.</span
+            >Looks like you haven't posted any content of this type yet</span
           >
         </ng-container>
 
@@ -189,12 +196,19 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="service.query$ | async">
+    <ng-container
+      *ngIf="
+        (service.query$ | async) && !(feedService.dateRangeEnabled$ | async)
+      "
+    >
       <div
         *ngIf="
           !(feedService.service.inProgress | async) && feed && feed?.length < 1
         "
-        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+        class="
+          m-channelFeed__emptyFeedContainer
+          m-channelFeed__emptyFeedContainer--bordered
+        "
       >
         <span
           class="m-channelFeed__emptyFeedTitle"
@@ -205,6 +219,29 @@
         <m-button
           i18n="@@M__CHANNEL_FEED__CLEAR_SEARCH"
           (onAction)="service.query$.next('')"
+          color="blue"
+        >
+          Clear search
+        </m-button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="feedService.dateRangeEnabled$ | async">
+      <div
+        *ngIf="
+          !(feedService.service.inProgress | async) && feed && feed?.length < 1
+        "
+        class="m-channelFeed__emptyFeedContainer m-channelFeed__emptyFeedContainer--bordered"
+      >
+        <span
+          class="m-channelFeed__emptyFeedTitle"
+          i18n="@@M__CHANNEL_FEED__NO_RESULTS_FOR_DATES"
+          >No results for selected dates</span
+        >
+        <m-button
+          i18n="@@M__CHANNEL_FEED__CLEAR_DATES"
+          (onAction)="
+            feedService.dateRange$.next({ fromDate: null, toDate: null })
+          "
           color="blue"
         >
           Clear search

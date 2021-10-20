@@ -434,25 +434,6 @@ minds-graph-line {
   }
 }
 
-.minds-avatar-hovercard {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: auto;
-  right: auto;
-  @include z-index(tooltip);
-  width: 330px;
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
-
-  m-publisherCard .m-publisherCard {
-    @include m-theme() {
-      border: none;
-    }
-  }
-}
-
 .m-bubble-popup {
   position: fixed;
   user-select: none;
@@ -470,7 +451,7 @@ minds-emoji .m-bubble-popup {
   .m-emoji-selector-title {
     width: 100%;
     position: relative;
-    padding: ($minds-padding / 2) $minds-padding;
+    padding: ($minds-padding * 0.5) $minds-padding;
     box-sizing: border-box;
     text-transform: uppercase;
     font-size: 11px;
@@ -482,7 +463,7 @@ minds-emoji .m-bubble-popup {
     .m-emoji-selector-close {
       position: absolute;
       right: $minds-padding;
-      top: $minds-padding / 2;
+      top: $minds-padding * 0.5;
       font-size: 16px;
       cursor: pointer;
     }
@@ -512,7 +493,7 @@ minds-emoji .m-bubble-popup {
 }
 
 minds-tooltip .m-bubble-popup {
-  padding: ($minds-padding / 2) $minds-padding;
+  padding: ($minds-padding * 0.5) $minds-padding;
   margin: $minds-padding 0;
   font-size: 10px;
   @include m-theme() {
@@ -539,7 +520,7 @@ minds-tooltip .m-bubble-popup {
     left: auto;
 
     minds-card-comment & {
-      margin: ($minds-padding / 2) $minds-padding 0 0;
+      margin: ($minds-padding * 0.5) $minds-padding 0 0;
       right: 90px; // 3 buttons + spacing
     }
   }
@@ -549,7 +530,7 @@ minds-tooltip .m-bubble-popup {
   display: inline-block;
   padding: 0;
   margin: 0;
-  padding: 0 ($minds-padding / 2);
+  padding: 0 ($minds-padding * 0.5);
   cursor: pointer;
 
   .material-icons {
@@ -623,7 +604,7 @@ svg.m-facebook-icon {
   }
 
   minds-newsfeed-single & {
-    margin: 0 0 ($minds-padding / 2) 0;
+    margin: 0 0 ($minds-padding * 0.5) 0;
   }
 
   m-blog-view & {
@@ -741,7 +722,7 @@ m-text-input--autocomplete-menu {
     li {
       a {
         display: block;
-        padding: $minds-padding / 2 $minds-padding;
+        padding: $minds-padding * 0.5 $minds-padding;
         clear: both;
         font-weight: 400;
         line-height: 1.42857143;

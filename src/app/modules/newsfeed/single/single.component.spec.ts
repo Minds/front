@@ -167,27 +167,6 @@ describe('NewsfeedSingleComponent', () => {
     );
   });
 
-  it("should show an error message together with mind's logo when there's an error", () => {
-    comp.error = 'error';
-    comp.inProgress = false;
-    fixture.detectChanges();
-
-    expect(
-      fixture.debugElement.query(By.css('.m-error-splash'))
-    ).not.toBeNull();
-    expect(
-      fixture.debugElement.query(By.css('.m-error-splash img'))
-    ).not.toBeNull();
-
-    const h3 = fixture.debugElement.query(By.css('.m-error-splash h3'));
-    expect(h3).not.toBeNull();
-    expect(h3.nativeElement.textContent).toContain('error');
-
-    const span = fixture.debugElement.query(By.css('.m-error-splash span'));
-    expect(span).not.toBeNull();
-    expect(span.nativeElement.textContent).toContain('Please try again later');
-  });
-
   xit('it should show the activity', () => {
     fixture.detectChanges();
     expect(

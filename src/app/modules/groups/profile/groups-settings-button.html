@@ -118,9 +118,8 @@
   <li
     class="mdl-menu__item m-groups-settings-dropdown__item--report"
     (click)="report(); showMenu = false"
-    i18n="@@M__ACTION__REPORT"
   >
-    Report
+    <ng-container i18n="@@M__ACTION__REPORT">Report</ng-container>
   </li>
   <li
     class="mdl-menu__item m-groups-settings-dropdown__item--deleteGroup"
@@ -154,12 +153,12 @@
 <m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
   <div class="m-button-feature-modal">
     <select [(ngModel)]="category">
-      <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY"
-        >-- SELECT A CATEGORY --
+      <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY">
+        -- SELECT A CATEGORY --
       </option>
-      <option *ngFor="let category of categories" [value]="category.id"
-        >{{ category.label }}</option
-      >
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.label }}
+      </option>
     </select>
 
     <button

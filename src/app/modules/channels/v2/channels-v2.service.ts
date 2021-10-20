@@ -10,6 +10,7 @@ import {
   switchAll,
   switchMap,
 } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Service that holds a channel information using Observables
@@ -101,6 +102,11 @@ export class ChannelsV2Service {
   readonly isExplicit$: Observable<boolean>;
 
   /**
+   * Disabled status
+   */
+  readonly isDisabled$: Observable<boolean>;
+
+  /**
    * Admin status
    */
   readonly isAdmin$: Observable<boolean>;
@@ -115,7 +121,11 @@ export class ChannelsV2Service {
    * @param api
    * @param session
    */
-  constructor(protected api: ApiService, protected session: Session) {
+  constructor(
+    protected api: ApiService,
+    protected session: Session,
+    protected route: ActivatedRoute
+  ) {
     // Set tokens$ observable
     this.tokens$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
@@ -127,7 +137,10 @@ export class ChannelsV2Service {
           : of(null)
       ),
       switchAll(),
-      shareReplay({ bufferSize: 1, refCount: true }),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
       map(response => parseFloat((response && response.tokens) || '0'))
     );
 
@@ -138,7 +151,10 @@ export class ChannelsV2Service {
         channel ? this.api.get(`api/v1/wire/rewards/${channel.guid}`) : of(null)
       ),
       switchAll(),
-      shareReplay({ bufferSize: 1, refCount: true }),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
       map(response =>
         parseFloat((response && response.sums && response.sums.tokens) || '0')
       )
@@ -153,7 +169,10 @@ export class ChannelsV2Service {
           : of(null)
       ),
       switchAll(),
-      shareReplay({ bufferSize: 1, refCount: true }),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+      }),
       map(response => (response && response.count) || 0)
     );
 
@@ -225,6 +244,11 @@ export class ChannelsV2Service {
     this.isAdmin$ = this.session.user$.pipe(
       map(channel => channel && channel.is_admin)
     );
+
+    // set isDisabled$ observable
+    this.isDisabled$ = this.channel$.pipe(
+      map(channel => channel && channel.enabled === 'no')
+    );
   }
 
   /**
@@ -232,7 +256,13 @@ export class ChannelsV2Service {
    * @param channel
    */
   load(channel: MindsUser | string): void {
-    this.query$.next('');
+    const params = this.route.snapshot.queryParamMap;
+    let query = '';
+    if (params.has('query')) {
+      query = decodeURIComponent(params.get('query'));
+    }
+
+    this.query$.next(query);
 
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);

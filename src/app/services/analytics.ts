@@ -3,10 +3,18 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Client } from './api/client';
 import { SiteService } from '../common/services/site.service';
 import { isPlatformServer } from '@angular/common';
+import { delay } from 'rxjs/operators';
+
+export type SnowplowContext = {
+  schema: string;
+  data: Object;
+};
 
 @Injectable()
 export class AnalyticsService {
   private defaultPrevented: boolean = false;
+
+  contexts: SnowplowContext[] = [];
 
   static _(
     router: Router,
@@ -46,7 +54,10 @@ export class AnalyticsService {
       appId: 'minds',
       postPath: '/com.minds/t',
     });
-    (window as any).snowplow('enableActivityTracking', 30, 10);
+    (window as any).snowplow('enableActivityTracking', {
+      minimumVisitLength: 30,
+      heartbeatDelay: 10,
+    });
   }
 
   async send(type: string, fields: any = {}, entityGuid: string = null) {
@@ -54,7 +65,9 @@ export class AnalyticsService {
     if (type === 'pageview') {
       this.client.post('api/v2/mwa/pv', fields);
 
-      (window as any).snowplow('trackPageView');
+      (window as any).snowplow('trackPageView', {
+        context: this.contexts.length > 0 ? this.contexts.slice(0) : undefined,
+      });
     } else {
       this.client.post('api/v1/analytics', { type, fields, entityGuid });
     }

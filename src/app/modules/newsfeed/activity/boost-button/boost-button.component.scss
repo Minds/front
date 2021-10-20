@@ -1,0 +1,37 @@
+.m-boostButton__tooltip .m-tooltip--bubble {
+  right: 0;
+  width: 400px;
+  bottom: 35px !important;
+}
+
+.m-animation__shimmer--text {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.1);
+
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(themed($m-textColor--secondary)),
+      to(themed($m-textColor--secondary)),
+      color-stop(0.3, themed($m-link)),
+      color-stop(0.6, #4eb8ff),
+      color-stop(0.8, themed($m-link))
+    );
+
+    background-color: themed($m-textColor--secondary);
+    background-size: 30px 150%;
+    background-repeat: no-repeat;
+    background-position: -100% 0;
+
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-delay: 0.6s;
+
+    -webkit-background-clip: text;
+  }
+}
+
+span.m-animation__shimmer--text {
+  animation-name: shimmer--text;
+}
