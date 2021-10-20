@@ -15,7 +15,7 @@
     [ngClass]="{ 'm-inline-embed': hasInlineContentLoaded() }"
     (click)="action($event)"
     target="_blank"
-    rel="noopener nofollow ugc"
+    [rel]="getRel()"
     *ngIf="src.thumbnail_src || inlineEmbed"
   >
     <!-- ----------------------------------- -->
@@ -71,7 +71,7 @@
   <a
     [href]="src.perma_url"
     target="_blank"
-    rel="noopener noreferrer"
+    [rel]="getRel()"
     class="meta"
     [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded(), 'm-richEmbed--paywalled' : isPaywalled && mediaSource === 'minds' }"
   >

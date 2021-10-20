@@ -9,7 +9,14 @@ import {
   HttpEventType,
 } from '@angular/common/http';
 import { from, Observable, combineLatest, throwError, race } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import {
+  catchError,
+  finalize,
+  first,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { MultiFactorLazyService } from './multi-factor-auth-lazy.service';
 import {
   MultiFactorAuthService,
@@ -92,28 +99,24 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
           })
         ),
       ]).pipe(
+        first(),
         switchMap(payload => {
           if (!payload) {
             throw 'Front::TwoFactorAborted';
           }
           req = this.addHeaders(req, payload);
-          return next.handle(req);
-        }),
-        catchError(err => {
-          if (err !== 'Front::TwoFactorAborted')
-            this.toastService.error(
-              err?.error?.message ?? `An unknown error has occurred`
-            );
-          return this.handleResponseError(err, req, next);
-        }),
-        tap((httpEvent: HttpEvent<any>) => {
-          console.log(httpEvent);
-          if (httpEvent.type === 0) {
-            return;
-          }
-
-          // If no errors then we can dismiss this modal
-          this.multiFactorModalService.dismiss();
+          return next.handle(req).pipe(
+            catchError(err => {
+              if (err !== 'Front::TwoFactorAborted')
+                this.toastService.error(
+                  err?.error?.message ?? `An unknown error has occurred`
+                );
+              return this.handleResponseError(err, req, next);
+            }),
+            finalize(() => {
+              this.multiFactorModalService.dismiss();
+            })
+          );
         })
       );
     }

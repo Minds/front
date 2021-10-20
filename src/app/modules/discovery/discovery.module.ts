@@ -153,8 +153,20 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
               },
               {
                 path: 'tags',
-                component: DiscoveryTagsComponent,
-                data: { plus: true },
+                children: [
+                  {
+                    path: '',
+                    redirectTo: 'your',
+                  },
+                  {
+                    path: ':type',
+                    component: DiscoveryTagsComponent,
+                    data: {
+                      title: 'Your Tags',
+                      data: { plus: true },
+                    },
+                  },
+                ],
               },
               {
                 path: 'feeds',

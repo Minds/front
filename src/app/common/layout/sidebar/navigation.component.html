@@ -90,7 +90,7 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: !plusPageActive }"
         *mIfFeature="'nav-plus-2020'"
       >
         <a routerLink="/discovery/plus/overview" (click)="toggle()">

@@ -3,23 +3,15 @@
     [class.m-pageLayout__container]="!showLegacyActivity"
     [class.m-newsfeed__single--legacy]="showLegacyActivity"
   >
-    <div
-      class="m-error-splash"
-      [class.m-pageLayout__pane--main]="!showLegacyActivity"
+    <m-errorSplash
+      class="m-pageLayout__pane--main"
       *ngIf="error && !inProgress"
-    >
-      <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
-      <h3 class="mdl-color-text--red-300">{{ error }}</h3>
-      <span
-        class="mdl-color-text--blue-grey-300"
-        i18n="@@M__COMMON__PLEASE_TRY_AGAIN"
-        >Please try again later</span
-      >
-    </div>
+    ></m-errorSplash>
 
     <div
       [class.m-pageLayout__pane--main]="!showLegacyActivity"
-      style="padding-bottom: 37px;"
+      style="padding-bottom: 37px"
+      *ngIf="!error"
     >
       <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
