@@ -162,14 +162,18 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     // if we weren't in offset pagination mode
     if (!this.feedService.fromTimestamp.getValue()) return;
 
-    return `${this.baseUrl}${this.router.url.split('?')[0]}?fromTimestamp=${this.feedService.service.firstItemTimestamp.getValue()}&reverse=1`;
+    return `${this.baseUrl}${
+      this.router.url.split('?')[0]
+    }?fromTimestamp=${this.feedService.service.firstItemTimestamp.getValue()}&reverse=1`;
   }
 
   get nextPageUrl() {
     if (!this.feedService.service.lastItemTimestamp) return null;
 
     if (!this.feedService.service.lastItemTimestamp.getValue()) return null;
-    return `${this.baseUrl}${this.router.url.split('?')[0]}?fromTimestamp=${this.feedService.service.lastItemTimestamp.getValue()}`;
+    return `${this.baseUrl}${
+      this.router.url.split('?')[0]
+    }?fromTimestamp=${this.feedService.service.lastItemTimestamp.getValue()}`;
   }
 
   prepend(activity: any) {
