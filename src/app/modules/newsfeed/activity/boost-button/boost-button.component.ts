@@ -27,10 +27,12 @@ export class ActivityBoostButtonComponent implements OnInit {
     this.boostRecommendationsSubscription = this.boostRecommendationService.boostRecommendations.subscribe(
       boostRecommendations => {
         if (boostRecommendations.find(guid => guid === this.object.guid)) {
+          // if this was the first time we were recommending boost, show the tooltip
           if (!this.boostRecommendationService.boostRecommended.getValue()) {
             this.shouldShowTooltip.next(true);
           }
 
+          // shimmer the boost button
           this.shouldShowShimmer.next(true);
         } else {
           this.shouldShowTooltip.next(false);
