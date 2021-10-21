@@ -16,7 +16,9 @@ export class BoostRecommendationService {
    * if it was already recommended, the button will shimmer,
    * otherwise, a tooltip will be shown
    **/
-  public boostRecommended: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public boostRecommended: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
 
   constructor(
     protected storage: Storage,
