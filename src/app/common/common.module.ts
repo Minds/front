@@ -177,6 +177,7 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
@@ -347,6 +348,7 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
@@ -485,6 +487,7 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
