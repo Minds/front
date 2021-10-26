@@ -7,6 +7,7 @@ import { TransactionOverlayService } from './transaction-overlay/transaction-ove
 import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
 import { FormToastService } from '../../common/services/form-toast.service';
+import { isPlatformBrowser } from '@angular/common';
 
 type Address = string;
 
@@ -268,6 +269,28 @@ export class Web3WalletService {
     }
 
     return 'Local Interface';
+  }
+
+  /**
+   * Gets current chain ID as a number.
+   * @returns { number } current chain id.
+   */
+  public async getCurrentChainId(): Promise<number> {
+    if (!this.provider) {
+      await this.initializeProvider();
+    }
+    const { chainId } = await this.provider.getNetwork();
+    return chainId;
+  }
+
+  /**
+   * Whether or not MetaMask is the current provider.
+   * @returns { boolean } true if MetaMask is the current provider.
+   */
+  public isMetaMask(): boolean {
+    return isPlatformBrowser(this.platformId)
+      ? window.web3?.currentProvider?.isMetaMask
+      : false;
   }
 
   /**

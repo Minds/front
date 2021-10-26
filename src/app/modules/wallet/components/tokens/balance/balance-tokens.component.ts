@@ -29,6 +29,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
+import { FeaturesService } from '../../../../../services/features.service';
 
 @Component({
   selector: 'm-walletBalance--tokens',
@@ -77,6 +78,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     private injector: Injector,
     protected connectWalletModalService: ConnectWalletModalService,
     private phoneVerificationService: PhoneVerificationService,
+    private features: FeaturesService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -180,5 +182,13 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       '...' +
       this.wallet.receiver.address.substr(-4)
     );
+  }
+
+  /**
+   * If a secondary network is enabled, we should show the network switcher.
+   * @returns { boolean } true if network switcher should be shown.
+   */
+  public shouldShowNetworkSwitcher(): boolean {
+    return this.features.has('skale') || this.features.has('polygon');
   }
 }
