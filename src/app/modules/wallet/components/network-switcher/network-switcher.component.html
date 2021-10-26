@@ -1,0 +1,24 @@
+<div class="m-networkSwitcher__currentNetwork" (click)="expanded = !expanded">
+  Network: {{ (activeChain$ | async)?.siteName ?? 'Unknown' }}
+</div>
+
+<div *ngIf="expanded" class="m-networkSwitcher__optionDropdown">
+  <ng-container *ngFor="let chain of chains | keyvalue">
+    <div
+      *ngIf="shouldShowChain(chain.value)"
+      (click)="onNetworkChange(chain.value.id)"
+      class="m-networkSwitcher__optionContainer"
+    >
+      <span class="m-networkSwitcher__optionName">
+        <img [src]="cdnAssetsUrl + chain.value.logoPath" />
+        {{ chain.value.siteName }}
+        <span *ngIf="chain.value.id == (activeChainId$ | async)">
+          [selected]
+        </span>
+      </span>
+      <span class="m-networkSwitcher__optionDescription">{{
+        chain.value.description
+      }}</span>
+    </div>
+  </ng-container>
+</div>

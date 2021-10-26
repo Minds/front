@@ -1,0 +1,66 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkSwitcher__currentNetwork {
+    background-color: unset;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+  .m-networkSwitcher__optionDropdown {
+    position: absolute;
+    right: -5px;
+    margin-top: 10px;
+    border-radius: 3px;
+    width: 300px;
+
+    @include z-index(tooltip);
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primaryAlt);
+    }
+
+    padding: 20px 0;
+
+    .m-networkSwitcher__optionContainer {
+      padding: 15px 20px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondaryAlt);
+        }
+      }
+
+      img {
+        max-width: 30px;
+        margin-right: 5px;
+      }
+
+      .m-networkSwitcher__optionName {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 5px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      .m-networkSwitcher__optionDescription {
+        font-size: 14px;
+        font-weight: 400;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+}
