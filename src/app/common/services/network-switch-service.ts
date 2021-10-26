@@ -99,13 +99,6 @@ export class NetworkSwitchService {
    * @returns { Promise<void> }
    */
   public async switch(chainId: string = this.chains.mainnet.id): Promise<void> {
-    // Reset the provider here as we will be invalidating currently set network.
-    // Alternative is to run a window.location.reload().
-    this.wallet.resetProvider();
-    await this.wallet.initializeProvider();
-
-    const currentChainId = await this.wallet.getCurrentChainId();
-
     if (!this.wallet.isMetaMask()) {
       this.toast.warn(
         'Network switching is only currently enabled for Metamask'
@@ -113,7 +106,7 @@ export class NetworkSwitchService {
       return;
     }
 
-    if (parseInt(chainId, 16) === currentChainId) {
+    if (chainId === this.wallet.getCurrentChainId()) {
       this.toast.warn('Already on this network');
       return;
     }
@@ -184,7 +177,7 @@ export class NetworkSwitchService {
    * @param { Promise<void> }
    */
   private async initCurrentChain(): Promise<void> {
-    const chainId: number = await this.wallet.getCurrentChainId();
-    this.activeChainId$.next(`0x${chainId.toString(16)}`);
+    const chainId: string = this.wallet.getCurrentChainId();
+    this.activeChainId$.next(chainId);
   }
 }

@@ -272,15 +272,14 @@ export class Web3WalletService {
   }
 
   /**
-   * Gets current chain ID as a number.
+   * Gets current chain ID as a number. Gets direct from window.web3
+   * to save the need for provider instantiation.
    * @returns { number } current chain id.
    */
-  public async getCurrentChainId(): Promise<number> {
-    if (!this.provider) {
-      await this.initializeProvider();
-    }
-    const { chainId } = await this.provider.getNetwork();
-    return chainId;
+  public getCurrentChainId(): string {
+    return isPlatformBrowser(this.platformId)
+      ? window.web3?.currentProvider?.chainId
+      : '0x1';
   }
 
   /**
