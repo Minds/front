@@ -102,6 +102,7 @@ export class NetworkSwitchService {
     // Reset the provider here as we will be invalidating currently set network.
     // Alternative is to run a window.location.reload().
     this.wallet.resetProvider();
+    await this.wallet.initializeProvider();
 
     const currentChainId = await this.wallet.getCurrentChainId();
 
