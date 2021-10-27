@@ -34,7 +34,7 @@ export class ExperimentsService {
         user: { id: userId },
         trackingCallback: (experiment, result) => {
           /**
-           * Tracking is only called if force is not used
+           * Tracking is only called if force is not used.
            */
           this.addToAnalytics(experiment.key, result.variationId);
           // Note: we don't need to tell the backend, as it's the backend that tells us to run experiments
