@@ -51,12 +51,15 @@
         </div>
       </div>
       <!-- SUBSCRIBE BUTTON -->
+      <!-- For channels -->
       <m-subscribeButton
         *ngIf="showSubscribeButton && type === 'user'"
         [user]="publisher"
+        [sized]="sized"
         [iconOnly]="btnIconOnly"
         [disableSubscribe]="disableSubscribe"
       ></m-subscribeButton>
+      <!-- For groups -->
       <ng-content
         *ngIf="showSubscribeButton"
         select=".m-publisherCard__button"

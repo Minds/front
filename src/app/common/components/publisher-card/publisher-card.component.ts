@@ -42,6 +42,10 @@ export class PublisherCardComponent implements AfterViewInit {
   btnIconOnly: boolean = false;
   size: PublisherCardSize = 'medium';
 
+  // Don't show subscribe button until the card size has been determined
+  // to prevent flashing on resize
+  sized: boolean = false;
+
   constructor(
     protected userAvatar: UserAvatarService,
     protected session: Session,
@@ -86,6 +90,7 @@ export class PublisherCardComponent implements AfterViewInit {
     }
 
     this.btnIconOnly = this.size === 'medium';
+    this.sized = true;
   }
 
   public getAvatarSrc(): Observable<string> {
