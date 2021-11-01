@@ -6,13 +6,12 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { EmailConfirmationService } from './email-confirmation.service';
 import { Session } from '../../../services/session';
-import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ConfigsService } from '../../services/configs.service';
 import { Location } from '@angular/common';
-import { scan, takeWhile } from 'rxjs/operators';
 import { FormToastService } from '../../services/form-toast.service';
+import { EmailResendService } from '../../services/email-resend.service';
 
 /**
  * Component that displays an announcement-like banner
@@ -30,16 +29,17 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   private readonly fromEmailConfirmation: number;
   public sent: boolean = false;
   public shouldShow: boolean = false;
-  public retryTimer$: Observable<number> = new BehaviorSubject<number>(0);
+  public retryTimer$: Observable<number> = this.emailResend.retryTimer$;
+  public resendInProgress$: Observable<boolean> = this.emailResend.inProgress$;
 
   protected userEmitter$: Subscription;
 
   constructor(
-    protected service: EmailConfirmationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
     protected location: Location,
     protected toast: FormToastService,
+    protected emailResend: EmailResendService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -79,39 +79,8 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    */
   async send(): Promise<void> {
     this.sent = true;
-    this.startRetryCountdown();
+    this.emailResend.send();
     this.detectChanges();
-
-    try {
-      const sent = await this.service.send();
-
-      if (!sent) {
-        this.toast.error(
-          'There was an issue sending the email to your email address.'
-        );
-        this.sent = false;
-      } else {
-        this.toast.success('Verification email sent to your email address.');
-      }
-    } catch (e) {
-      this.toast.error(
-        'An unknown error occurred sending the email to your email address.'
-      );
-    }
-
-    this.detectChanges();
-  }
-
-  /**
-   * Starts retry timer, which counts down to 0.
-   * @param { number } - seconds to countdown - defaults to 30.
-   * @returns { void }
-   */
-  private startRetryCountdown(seconds: number = 30): void {
-    this.retryTimer$ = timer(0, 1000).pipe(
-      scan(acc => --acc, seconds),
-      takeWhile(x => x >= 0)
-    );
   }
 
   detectChanges(): void {

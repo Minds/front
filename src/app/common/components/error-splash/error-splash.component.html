@@ -1,0 +1,43 @@
+<img
+  class="m-errorSplash__logo"
+  alt="Minds Logo"
+  [src]="logoUrl$ | async"
+  (click)="navigateToRoot()"
+  (load)="imageLoaded$.next(true)"
+/>
+<ng-container *ngIf="imageLoaded$ | async">
+  <span class="m-errorSplash__header">
+    <ng-container [ngSwitch]="headerType$ | async">
+      <ng-container
+        *ngSwitchCase="'SOMETHING_WENT_WRONG'"
+        i18n="ERROR_SPLASH__SOMETHING_WENT_WRONG"
+      >
+        Oops! Something went wrong.
+      </ng-container>
+      <ng-container
+        *ngSwitchDefault
+        i18n="@@ERROR_SPLASH__OOPS_COULD_NOT_LOAD_THIS_PAGE"
+      >
+        Oops! We couldn’t load this page.
+      </ng-container>
+    </ng-container>
+  </span>
+  <span class="m-errorSplash__subheader">
+    <ng-container [ngSwitch]="subheaderType$ | async">
+      <ng-container
+        *ngSwitchCase="'PLEASE_TRY_AGAIN_LATER'"
+        i18n="@@ERROR_SPLASH__PLEASE_TRY_AGAIN_LATER"
+      >
+        Please try again later
+      </ng-container>
+      <ng-container
+        *ngSwitchDefault
+        i18n="@@ERROR_SPLASH__WE_HAVE_BEEN_NOTIFIED"
+      >
+        We have been notified of this issue and will investigate ASAP
+      </ng-container>
+    </ng-container>
+  </span>
+  <m-button [color]="'blue'" (click)="reload()">Retry</m-button>
+</ng-container>
+<m-loadingSpinner [inProgress]="!(imageLoaded$ | async)"></m-loadingSpinner>

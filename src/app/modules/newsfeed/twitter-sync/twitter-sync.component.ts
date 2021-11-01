@@ -68,7 +68,11 @@ export class TwitterSyncComponent implements OnInit {
 
   get tweetMessage(): string {
     const siteUrl = this.configs.get('site_url');
-    return "I'm also posting over @minds " + siteUrl + this.username;
+    return (
+      'Today I am verifying my @minds channel to activate cross-posting. I think this is essential in the age of internet censorship and encourage you all to do the same. Follow me on Minds ' +
+      siteUrl +
+      this.username
+    );
   }
 
   postToTwitter(e: MouseEvent): void {

@@ -9,19 +9,24 @@
   </div>
   <div class="m-emailConfirmation__actionContainer">
     <span
-      *ngIf="(retryTimer$ | async) === 0"
+      *ngIf="(retryTimer$ | async) <= 0 && !(resendInProgress$ | async)"
       class="m-emailConfirmation__resendText"
       i18n="@@EMAIL_CONFIRMATION__RESEND_EMAIL"
       (click)="send()"
     >
       Resend
     </span>
-    <ng-container *ngIf="(retryTimer$ | async) > 0">
+    <span *ngIf="(retryTimer$ | async) <= 0 && (resendInProgress$ | async)"
+      >...</span
+    >
+    <ng-container
+      *ngIf="(retryTimer$ | async) > 0 && !(resendInProgress$ | async)"
+    >
       <span i18n="@@EMAIL_CONFIRMATION__RESEND_IN_X_SECONDS">
         Resend in
       </span>
       <span>
-        {{ retryTimer$ | async }}
+        {{ (retryTimer$ | async) ?? '...' }}
       </span>
     </ng-container>
   </div>
