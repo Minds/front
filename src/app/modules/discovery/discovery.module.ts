@@ -34,6 +34,7 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 import { CardCarouselService } from './card-carousel/card-carousel.service';
+import { DiscoveryTrendingTagsComponent } from './trending-tags/trending-tags.component';
 
 @NgModule({
   imports: [
@@ -67,6 +68,13 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
               {
                 path: '',
                 redirectTo: 'your',
+              },
+              {
+                path: 'trending',
+                component: DiscoveryTrendingTagsComponent,
+                data: {
+                  title: 'Discovery / Trending',
+                },
               },
               {
                 path: ':type',
@@ -207,6 +215,8 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
     DiscoveryService,
     SuggestionsService,
     CardCarouselService,
+    DiscoveryFeedsService,
+    FeedsService,
   ],
   declarations: [
     DiscoveryComponent,
@@ -226,6 +236,7 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
     DiscoveryTabsComponent,
     DiscoveryLatestFeedComponent,
     DiscoveryCardCarouselComponent,
+    DiscoveryTrendingTagsComponent,
   ],
   exports: [
     DiscoveryComponent,

@@ -3,7 +3,7 @@
 
 <section
   class="m-discoveryTags__section"
-  *ngIf="(route.params | async)?.type === 'your'"
+  *ngIf="(type$ | async) === 'your'"
 >
   <ul
     class="m-discoveryTags__list m-discoveryTags__list--user"
@@ -24,7 +24,7 @@
     </li>
     <li
       class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
-      *ngIf="(tags$ | async).length"
+      *ngIf="!listOnly && (tags$ | async).length"
     >
       <a [routerLink]="parentPath + '/feeds/preferred'"
         ><div>
@@ -40,7 +40,7 @@
 
 <section
   class="m-discoveryTags__section"
-  *ngIf="(route.params | async)?.type === 'trending'"
+  *ngIf="(type$ | async) === 'trending'"
 >
   <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
     <li class="m-discoveryTrends__trend" *ngFor="let tag of trending$ | async">
@@ -62,7 +62,7 @@
     </li>
     <li
       class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
-      *ngIf="(trending$ | async).length"
+      *ngIf="!listOnly && (trending$ | async).length"
     >
       <a [routerLink]="parentPath + '/feeds/trending'"
         ><div>
