@@ -21,7 +21,7 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
   type$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   @Input()
-  type: 'trending' | 'trending';
+  type: 'trending' | 'your';
 
   /**
    * only shows the tags list. doesn't show the feedLink button
@@ -35,13 +35,12 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
     private overlayModal: OverlayModalService,
     private injector: Injector,
     private discoveryService: DiscoveryService
-  ) {
-    // if type was provided as an input, use it. Otherwise use the one from route params
-  }
+  ) {}
 
   ngOnInit() {
     this.service.loadTags();
 
+    // if type was provided as an input, use it. Otherwise use the one from route params
     if (this.type) {
       this.type$.next(this.type);
     } else {

@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TrendingTagsComponent } from './trending-tags.component';
+import { DiscoveryTrendingTagsComponent } from './trending-tags.component';
 
 describe('TrendingTagsComponent', () => {
-  let component: TrendingTagsComponent;
-  let fixture: ComponentFixture<TrendingTagsComponent>;
+  let component: DiscoveryTrendingTagsComponent;
+  let fixture: ComponentFixture<DiscoveryTrendingTagsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrendingTagsComponent ]
-    })
-    .compileComponents();
+      declarations: [DiscoveryTrendingTagsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TrendingTagsComponent);
+    fixture = TestBed.createComponent(DiscoveryTrendingTagsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
