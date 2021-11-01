@@ -34,6 +34,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { Upload } from './services/api/upload';
 import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
 import { ExperimentsService } from './modules/experiments/experiments.service';
+import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
 
 @Component({
   selector: 'm-app',
@@ -52,6 +53,8 @@ export class Minds implements OnInit, OnDestroy {
   protected uploadError$: Subscription;
 
   protected routerConfig: Route[];
+
+  private multiFactorSuccessSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -79,7 +82,8 @@ export class Minds implements OnInit, OnDestroy {
     private configs: ConfigsService,
     private cd: ChangeDetectorRef,
     private socketsService: SocketsService,
-    private experimentsService: ExperimentsService
+    private experimentsService: ExperimentsService,
+    private multiFactorConfirmation: MultiFactorAuthConfirmationService
   ) {
     this.name = 'Minds';
 
@@ -141,6 +145,16 @@ export class Minds implements OnInit, OnDestroy {
     } catch (e) {
       console.error('initialize()', e);
     }
+
+    this.multiFactorSuccessSubscription = this.multiFactorConfirmation.success$
+      .pipe(filter(success => success))
+      .subscribe(success => {
+        this.multiFactorConfirmation.reset();
+
+        if (this.router.url === '/') {
+          this.router.navigate(['/newsfeed/subscriptions']);
+        }
+      });
   }
 
   checkXHRError(err: string | any) {

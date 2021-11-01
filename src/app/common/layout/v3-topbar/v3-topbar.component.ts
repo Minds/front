@@ -49,7 +49,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   onAuthPages: boolean = false; // sets to false if we're on login or register pages
 
   router$;
-  multiFactorSuccessSubscription: Subscription;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
@@ -63,8 +62,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
-    private authModal: AuthModalService,
-    private multiFactorConfirmation: MultiFactorAuthConfirmationService
+    private authModal: AuthModalService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -80,13 +78,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
-
-    this.multiFactorSuccessSubscription = this.multiFactorConfirmation.success$
-      .pipe(filter(success => success))
-      .subscribe(success => {
-        this.multiFactorConfirmation.reset();
-        this.doRedirect();
-      });
   }
 
   getCurrentUser() {
@@ -176,9 +167,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     if (this.router$) {
       this.router$.unsubscribe();
     }
-    if (this.multiFactorSuccessSubscription) {
-      this.multiFactorSuccessSubscription.unsubscribe();
-    }
   }
 
   async onJoinNowClick() {
@@ -201,7 +189,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onLoginClick(): Promise<void> {
     try {
       await this.authModal.open({ formDisplay: 'login' });
-      this.doRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
