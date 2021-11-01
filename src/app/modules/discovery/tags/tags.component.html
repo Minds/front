@@ -1,10 +1,7 @@
 <m-discovery__tabs></m-discovery__tabs>
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
-<section
-  class="m-discoveryTags__section"
-  *ngIf="(type$ | async) === 'your'"
->
+<section class="m-discoveryTags__section" *ngIf="(type$ | async) === 'your'">
   <ul
     class="m-discoveryTags__list m-discoveryTags__list--user"
     data-cy="discovery-tags-section--user"
