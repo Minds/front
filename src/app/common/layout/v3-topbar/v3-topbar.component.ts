@@ -21,9 +21,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { Observable, Subscription } from 'rxjs';
-import { MultiFactorAuthConfirmationService } from '../../../modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
-import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-v3topbar',
@@ -189,6 +187,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onLoginClick(): Promise<void> {
     try {
       await this.authModal.open({ formDisplay: 'login' });
+      this.doRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
