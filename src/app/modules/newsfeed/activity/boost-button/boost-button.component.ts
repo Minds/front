@@ -18,25 +18,25 @@ export class ActivityBoostButtonComponent implements OnInit {
     guid: undefined,
   };
   boostRecommendationsSubscription: Subscription;
-  shouldShowTooltip: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  shouldShowShimmer: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  shouldShowTooltip$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  shouldShowShimmer$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(public boostRecommendationService: BoostRecommendationService) {}
 
   ngOnInit() {
-    this.boostRecommendationsSubscription = this.boostRecommendationService.boostRecommendations.subscribe(
+    this.boostRecommendationsSubscription = this.boostRecommendationService.boostRecommendations$.subscribe(
       boostRecommendations => {
         if (boostRecommendations.find(guid => guid === this.object.guid)) {
           // if this was the first time we were recommending boost, show the tooltip
-          if (!this.boostRecommendationService.boostRecommended.getValue()) {
-            this.shouldShowTooltip.next(true);
+          if (!this.boostRecommendationService.boostRecommended$.getValue()) {
+            this.shouldShowTooltip$.next(true);
           }
 
           // shimmer the boost button
-          this.shouldShowShimmer.next(true);
+          this.shouldShowShimmer$.next(true);
         } else {
-          this.shouldShowTooltip.next(false);
-          this.shouldShowShimmer.next(false);
+          this.shouldShowTooltip$.next(false);
+          this.shouldShowShimmer$.next(false);
         }
       }
     );

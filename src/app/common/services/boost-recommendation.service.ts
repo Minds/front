@@ -8,7 +8,7 @@ export class BoostRecommendationService {
   /**
    * a list of guids that have to be recommended
    **/
-  public boostRecommendations: BehaviorSubject<string[]> = new BehaviorSubject<
+  public boostRecommendations$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
   /**
@@ -16,7 +16,7 @@ export class BoostRecommendationService {
    * if it was already recommended, the button will shimmer,
    * otherwise, a tooltip will be shown
    **/
-  public boostRecommended: BehaviorSubject<boolean> = new BehaviorSubject(
+  public boostRecommended$: BehaviorSubject<boolean> = new BehaviorSubject(
     false
   );
 
@@ -24,7 +24,7 @@ export class BoostRecommendationService {
     protected storage: Storage,
     protected experimentsService: ExperimentsService
   ) {
-    this.boostRecommended.next(Boolean(this.storage.get('boost:recommended')));
+    this.boostRecommended$.next(Boolean(this.storage.get('boost:recommended')));
   }
 
   /**
@@ -35,19 +35,19 @@ export class BoostRecommendationService {
     if (this.experimentsService.run('boost-prompt') !== 'on') {
       return;
     }
-    this.boostRecommendations.next([
-      ...this.boostRecommendations.getValue(),
+    this.boostRecommendations$.next([
+      ...this.boostRecommendations$.getValue(),
       guid,
     ]);
     setTimeout(
       () => {
-        this.boostRecommendations.next(
-          this.boostRecommendations.getValue().filter(p => p !== guid)
+        this.boostRecommendations$.next(
+          this.boostRecommendations$.getValue().filter(p => p !== guid)
         );
         this.storage.set('boost:recommended', true); // save to storage
-        this.boostRecommended.next(true);
+        this.boostRecommended$.next(true);
       },
-      this.boostRecommended.getValue() ? 12000 : 6000
+      this.boostRecommended$.getValue() ? 12000 : 6000
     );
   }
 }
