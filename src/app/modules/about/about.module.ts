@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
-import { AboutComponent } from './about.component';
 import { HomepageV2Module } from '../homepage-v2/homepage.module';
 import { HomepageV2Component } from '../homepage-v2/homepage-v2.component';
 
@@ -26,6 +25,5 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HomepageV2Module,
   ],
-  declarations: [AboutComponent],
 })
 export class AboutModule {}
