@@ -13,6 +13,7 @@ import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
+import { EmailResendService } from '../../../common/services/email-resend.service';
 
 /**
  * Onboarding widget that tracks user progress through onboarding.
@@ -25,11 +26,6 @@ import { EmailConfirmationService } from '../../../common/components/email-confi
 })
 export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-
-  /**
-   * True if user can resend verification email.
-   */
-  private canResendEmail: boolean = true;
 
   /**
    * If true, widget will be collapsed.
@@ -49,7 +45,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
     private composerModal: ModalService,
     private injector: Injector,
     private toast: FormToastService,
-    private emailConfirmation: EmailConfirmationService
+    private emailResend: EmailResendService
   ) {}
 
   ngOnInit(): void {
@@ -263,36 +259,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { Promise<boolean> } - async
    */
   private async resendEmailConfirmation(): Promise<void> {
-    if (this.canResendEmail) {
-      this.toast.success(
-        'Email sent, check your inbox for a verification email.'
-      );
-      this.emailConfirmation.send();
-      this.startEmailRetryTimer();
-      return;
-    }
-    this.toast.warn(`Please wait before sending another email.`);
-  }
-
-  /**
-   * Starts a retry timer that after 30 seconds,
-   * sets canResendEmail to true
-   * @returns { void }
-   */
-  private startEmailRetryTimer(): void {
-    this.canResendEmail = false;
-    this.subscriptions.push(
-      timer(0, 1000)
-        .pipe(
-          scan(acc => --acc, 120),
-          tap(timer => {
-            if (timer === 0) {
-              this.canResendEmail = true;
-            }
-          }),
-          takeWhile(x => x >= 0)
-        )
-        .subscribe()
-    );
+    this.emailResend.send();
   }
 }
