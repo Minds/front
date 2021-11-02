@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  ::ng-deep m-featured-content {
+    > div {
+      padding: 20px 40px;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        padding: 20px;
+      }
+    }
+  }
+}

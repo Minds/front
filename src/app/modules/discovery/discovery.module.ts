@@ -34,6 +34,7 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 import { CardCarouselService } from './card-carousel/card-carousel.service';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 
 @NgModule({
   imports: [
@@ -199,6 +200,7 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
     HashtagsModule,
     LanguageModule,
     RouterModule,
+    NewsfeedModule,
   ],
   providers: [
     DiscoveryTrendsService,
