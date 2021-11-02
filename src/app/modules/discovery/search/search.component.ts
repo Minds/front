@@ -20,6 +20,7 @@ import { CardCarouselService } from '../card-carousel/card-carousel.service';
 @Component({
   selector: 'm-discovery__search',
   templateUrl: './search.component.html',
+  styleUrls: ['search.component.ng.scss'],
   providers: [DiscoveryFeedsService, FeedsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -37,7 +38,7 @@ export class DiscoverySearchComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private service: DiscoveryFeedsService,
+    public service: DiscoveryFeedsService,
     private router: Router,
     configs: ConfigsService,
     private metaService: MetaService,
