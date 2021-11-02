@@ -36,6 +36,10 @@ export class SubscribeButtonComponent implements OnInit {
   // disable subscription - allows for a user to preview their own card.
   @Input() disableSubscribe: boolean = false;
 
+  // When true, will use channel api to double check that the subscription status is correct
+  // (used for entities that aren't normalised)
+  @Input() enableRecheck: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -50,8 +54,14 @@ export class SubscribeButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this._user && this._user.guid) {
+    if (!this._user || !this._user.guid) {
+      return;
+    }
+
+    if (this.enableRecheck) {
       this.checkIfSubscribed();
+    } else {
+      this.subscribed = this._user.subscribed;
     }
   }
 

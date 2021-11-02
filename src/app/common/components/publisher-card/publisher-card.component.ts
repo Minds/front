@@ -46,6 +46,9 @@ export class PublisherCardComponent implements AfterViewInit {
   // to prevent flashing on resize
   sized: boolean = false;
 
+  // use channel api to double check that the subscription status is correct
+  recheckSubscribed: boolean = false;
+
   constructor(
     protected userAvatar: UserAvatarService,
     protected session: Session,
@@ -60,6 +63,7 @@ export class PublisherCardComponent implements AfterViewInit {
     this._isHovercard = value;
     if (value) {
       this.showSubs = true;
+      this.recheckSubscribed = true;
     }
   }
 
