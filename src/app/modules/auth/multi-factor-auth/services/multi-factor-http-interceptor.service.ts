@@ -114,7 +114,7 @@ export class MultiFactorHttpInterceptorService implements HttpInterceptor {
               return this.handleResponseError(err, req, next);
             }),
             finalize(() => {
-              this.multiFactorModalService.dismiss();
+              this.multiFactorModalService.dismiss({ success: true });
             })
           );
         })
