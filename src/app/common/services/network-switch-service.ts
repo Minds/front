@@ -78,7 +78,7 @@ export class NetworkSwitchService {
         // Differs to avoid conflict with other SKALE chains.
         networkName: 'SKALE Minds',
         rpcUrl: skaleConfig['rpc_url'],
-        description: 'Lightning fast decentralized side-chain.',
+        description: 'Lightning fast side-chain.',
         logoPath: 'assets/ext/skale.png',
       };
     }
