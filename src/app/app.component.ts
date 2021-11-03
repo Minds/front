@@ -151,7 +151,7 @@ export class Minds implements OnInit, OnDestroy {
       .subscribe(success => {
         this.multiFactorConfirmation.reset();
 
-        if (this.router.url === '/') {
+        if (this.router.url === '/' || this.router.url === '/about') {
           this.router.navigate(['/newsfeed/subscriptions']);
         }
       });
