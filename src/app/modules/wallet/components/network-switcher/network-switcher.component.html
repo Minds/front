@@ -1,6 +1,6 @@
 <div class="m-networkSwitcher__currentNetwork" (click)="expanded = !expanded">
   <span class="m-networkSwitcher__currentNetwork--light">Network:</span>
-  <span>&nbsp;{{ (activeChain$ | async)?.siteName ?? 'Unknown' }}&nbsp;</span>
+  <span>&nbsp;{{ (activeNetwork$ | async)?.siteName ?? 'Unknown' }}&nbsp;</span>
   <i class="material-icons">expand_more</i>
 </div>
 
@@ -8,25 +8,25 @@
   *ngIf="expanded"
   class="m-networkSwitcher__optionDropdown m-networkSwitcher__arrowBox"
 >
-  <ng-container *ngFor="let chain of chains | keyvalue">
+  <ng-container *ngFor="let network of networks | keyvalue">
     <div
-      *ngIf="shouldShowChain(chain.value)"
-      (click)="onNetworkChange(chain.value.id)"
+      *ngIf="shouldShowNetwork(network.value)"
+      (click)="onNetworkChange(network.value.id)"
       class="m-networkSwitcher__optionContainer"
     >
       <span class="m-networkSwitcher__option">
-        <img [src]="cdnAssetsUrl + chain.value.logoPath" />
-        <div class="m-networkSwitcher__chainInformation">
+        <img [src]="cdnAssetsUrl + network.value.logoPath" />
+        <div class="m-networkSwitcher__networkInformation">
           <div class="m-networkSwitcher__optionName">
-            {{ chain.value.siteName }}
+            {{ network.value.siteName }}
           </div>
           <span class="m-networkSwitcher__optionDescription">{{
-            chain.value.description
+            network.value.description
           }}</span>
         </div>
         <i
           class="material-icons m-networkSwitcher__optionIcon"
-          *ngIf="chain.value.id == (activeChainId$ | async)"
+          *ngIf="network.value.id == (activeChainId$ | async)"
         >
           done
         </i>

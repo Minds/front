@@ -20,45 +20,48 @@ export interface AddEthereumChainParameter {
   rpcUrls?: string[];
 }
 
-// map of chain data
-export interface ChainMap {
-  [key: string]: Chain;
+// map of network data
+export interface NetworkMap {
+  [key: string]: Network;
 }
 
-export type ChainId = string; // id of chain.
-export type ChainName = string; // human readable name of chain.
-export type ChainDescription = string; // human readable name of chain.
-export type ChainLogoPath = string; // human readable name of chain.
-export type ChainRpcUrl = string; // RPC Url for custom chains.
+export type NetworkChainId = string;
+export type NetworkName = 'Mainnet' | 'SKALE Minds';
+export type NetworkSiteName = 'Mainnet' | 'SKALE';
+export type NetworkDescription = string;
+export type NetworkLogoPath = string;
+export type NetworkRpcUrl = string;
 
-export type Chain = {
-  id: ChainId; // chain id (hex).
-  networkName: ChainName; // human readable name for Metamask.
-  siteName: ChainName; // label to be used on-site.
-  rpcUrl?: ChainDescription; // rpc url. nullable for some networks such as mainnet.
-  description: ChainLogoPath; // short description to be used on site.
-  logoPath: ChainRpcUrl; // path to logo file `assets/...`.
+export type Network = {
+  id: NetworkChainId; // chain id (hex).
+  networkName: NetworkName; // human readable name for Metamask.
+  siteName: NetworkSiteName; // label to be used on-site.
+  rpcUrl?: NetworkDescription; // rpc url. nullable for some networks such as mainnet.
+  description: NetworkLogoPath; // short description to be used on site.
+  logoPath: NetworkRpcUrl; // path to logo file `assets/...`.
+  swappable: boolean; // whether swapping is enabled for the network or not.
 };
 
 /**
- * Service for the switching of blockchain networks / chains.
+ * Service for the switching of blockchain networks.
  */
 @Injectable({ providedIn: 'root' })
 export class NetworkSwitchService {
-  // chain map with hex IDs used (hex)
-  public chains: ChainMap = {
+  // network map.
+  public networks: NetworkMap = {
     mainnet: {
       id: '',
       siteName: 'Mainnet',
       networkName: 'Mainnet',
       description: 'Main Ethereum Network.',
       logoPath: 'assets/ext/ethereum.png',
+      swappable: false,
     },
   };
 
-  // currently active chain - NOT read from network, should be updated on Network switch.
-  public activeChainId$: BehaviorSubject<ChainId> = new BehaviorSubject<
-    ChainId
+  // currently active network's chainId - NOT read from web3, should be updated on network switch.
+  public activeChainId$: BehaviorSubject<NetworkChainId> = new BehaviorSubject<
+    NetworkChainId
   >(null);
 
   constructor(
@@ -72,7 +75,7 @@ export class NetworkSwitchService {
 
     // SKALE
     if (this.features.has('skale') && skaleConfig) {
-      this.chains.skale = {
+      this.networks.skale = {
         id: skaleConfig['chain_id_hex'],
         siteName: 'SKALE',
         // Differs to avoid conflict with other SKALE chains.
@@ -80,25 +83,28 @@ export class NetworkSwitchService {
         rpcUrl: skaleConfig['rpc_url'],
         description: 'Lightning fast side-chain.',
         logoPath: 'assets/ext/skale.png',
+        swappable: true,
       };
     }
 
     // Mainnet / Rinkeby
-    this.chains.mainnet.id =
+    this.networks.mainnet.id =
       blockchainConfig['client_network'] === 1
         ? '0x1' // mainnet
         : '0x4'; // rinkeby
 
     // fires async.
-    this.initCurrentChain();
+    this.initCurrentNetwork();
   }
 
   /**
    * Calls to switch network.
-   * @param { string } - hex of chain id - defaults to mainnet chain id.
+   * @param { NetworkChainId } chainId - hex of chain id - defaults to mainnet chain id.
    * @returns { Promise<void> }
    */
-  public async switch(chainId: string = this.chains.mainnet.id): Promise<void> {
+  public async switch(
+    chainId: NetworkChainId = this.networks.mainnet.id
+  ): Promise<void> {
     if (!this.wallet.isMetaMask()) {
       this.toast.warn(
         'Network switching is only currently enabled for Metamask'
@@ -111,7 +117,7 @@ export class NetworkSwitchService {
       return;
     }
 
-    const chainData = this.getChainDataById(chainId);
+    const networkData = this.getNetworkDataById(chainId);
 
     try {
       await window.ethereum.request({
@@ -121,15 +127,15 @@ export class NetworkSwitchService {
       // window.location.reload();
       this.activeChainId$.next(chainId);
     } catch (switchError) {
-      const rpcUrl = chainData.rpcUrl ?? false;
-      const chainName = chainData.networkName ?? false;
+      const rpcUrl = networkData.rpcUrl ?? false;
+      const networkName = networkData.networkName ?? false;
 
-      // chain has not yet been added to MetaMask and we have params to add it.
-      if (switchError.code === 4902 && rpcUrl && chainName) {
+      // network has not yet been added to MetaMask and we have params to add it.
+      if (switchError.code === 4902 && rpcUrl && networkName) {
         try {
           const params: AddEthereumChainParameter = {
             chainId: chainId,
-            chainName: chainName,
+            chainName: networkName,
             rpcUrls: [rpcUrl],
           };
           await window.ethereum.request({
@@ -146,37 +152,51 @@ export class NetworkSwitchService {
   }
 
   /**
-   * Gets chain data by id.
-   * @param { ChainId } id - id of the chain data to get.
-   * @returns { Chain } - chain data with matching id.
+   * Gets network data by id.
+   * @param { NetworkChainId } id - chainId of the network data to get.
+   * @returns { Chain } - network data with matching chainId.
    */
-  public getChainDataById(id: ChainId): Chain {
-    const chainsArray = Object.entries(this.chains);
-    for (let chain of chainsArray) {
-      if (chain[1].id === id) {
-        return chain[1];
+  public getNetworkDataById(id: NetworkChainId): Network {
+    const networksArray = Object.entries(this.networks);
+    for (let network of networksArray) {
+      if (network[1].id === id) {
+        return network[1];
       }
     }
-    throw new Error('Unknown chain id.');
+    throw new Error('Unknown network chain id.');
   }
 
   /**
-   * Gets currently active chain's data using currently activeChainId$ BehaviorSubject.
-   * @returns { Chain } - chain data with matching id.
+   * Gets currently active network's data using currently activeChainId$.
+   * @returns { Observable<Network> } - network data with matching chain id.
    */
-  public getActiveChain$(): Observable<Chain> {
+  public getActiveNetwork$(): Observable<Network> {
     return this.activeChainId$.pipe(
-      map(activeChainId => this.getChainDataById(activeChainId)),
+      map(activeChainId => this.getNetworkDataById(activeChainId)),
       catchError(e => EMPTY)
     );
   }
 
   /**
-   * Checks which chain we are currently on and updates local value -
-   * WILL prompt for wallet connection.
+   * Gets all networks with swap functionality enabled.
+   * @param { Network[] } - networks with swap functionality enabled.
+   */
+  public getSwappableNetworks(): Network[] {
+    const enabledNetworks = Object.entries(this.networks);
+    const swappableNetworks = [];
+    for (let chain of enabledNetworks) {
+      if (chain[1].swappable) {
+        swappableNetworks.push(chain[1]);
+      }
+    }
+    return swappableNetworks;
+  }
+
+  /**
+   * Checks which network we are currently on and updates local chainId value.
    * @param { Promise<void> }
    */
-  private async initCurrentChain(): Promise<void> {
+  private async initCurrentNetwork(): Promise<void> {
     const chainId: string = this.wallet.getCurrentChainId();
     this.activeChainId$.next(chainId);
   }

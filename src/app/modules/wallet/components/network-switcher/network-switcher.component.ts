@@ -3,9 +3,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import {
   NetworkSwitchService,
-  ChainMap,
-  ChainId,
-  Chain,
+  NetworkMap,
+  NetworkChainId,
+  Network,
 } from '../../../../common/services/network-switch-service';
 
 /**
@@ -25,27 +25,27 @@ export class WalletNetworkSwitcherComponent {
   public readonly cdnAssetsUrl: string;
 
   /**
-   * Gets currently active chain id from local state.
-   * @returns { BehaviorSubject<ChainId> } - currently active chain id from local state
+   * Gets currently active network's chain id.
+   * @returns { BehaviorSubject<NetworkChainId> } - currently active network's chain id.
    */
-  get activeChainId$(): BehaviorSubject<ChainId> {
+  get activeChainId$(): BehaviorSubject<NetworkChainId> {
     return this.service.activeChainId$;
   }
 
   /**
-   * Gets currently active chain's data from service.
-   * @param { Observable<Chain> } - currently active chain's data from service.
+   * Gets currently active networks's data from service.
+   * @param { Observable<Network> } - currently active networks's data from service.
    */
-  get activeChain$(): Observable<Chain> {
-    return this.service.getActiveChain$();
+  get activeNetwork$(): Observable<Network> {
+    return this.service.getActiveNetwork$();
   }
 
   /**
-   * Gets data of all active chains from service
-   * @returns { ChainMap } - data of all active chains from service.
+   * Gets data of all active networks from service
+   * @returns { NetworkMap } - data of all active networks from service.
    */
-  get chains(): ChainMap {
-    return this.service.chains;
+  get networks(): NetworkMap {
+    return this.service.networks;
   }
 
   /**
@@ -70,19 +70,22 @@ export class WalletNetworkSwitcherComponent {
    * Fired on network change click.
    * @returns { Promise<void> }
    */
-  public async onNetworkChange($event: ChainId): Promise<void> {
+  public async onNetworkChange($event: NetworkChainId): Promise<void> {
     await this.service.switch($event);
     this.expanded = false;
   }
 
   /**
-   * True if chain's data is all present to be shown.
-   * @param { Chain } chain - chain to check.
-   * @returns { boolean } - true if chain should be shown as an option.
+   * True if a network's data is all present to be shown.
+   * @param { Network } network - network to check.
+   * @returns { boolean } - true if network should be shown as an option.
    */
-  public shouldShowChain(chain: Chain): boolean {
+  public shouldShowNetwork(network: Network): boolean {
     return (
-      !!chain.id && !!chain.siteName && !!chain.logoPath && !!chain.description
+      !!network.id &&
+      !!network.siteName &&
+      !!network.logoPath &&
+      !!network.description
     );
   }
 }
