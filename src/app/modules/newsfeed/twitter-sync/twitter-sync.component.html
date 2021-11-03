@@ -1,0 +1,110 @@
+<div class="m-settingsV2__headerWrapper">
+  <div class="m-settingsV2__backButton">
+    <a routerLink="../../..">
+      <i class="material-icons">arrow_back</i><span>Back</span>
+    </a>
+  </div>
+  <div class="m-settingsV2__headerLabel">
+    Twitter Sync
+  </div>
+</div>
+
+<div class="m-settingsV2__desc">
+  Using our Twitter Sync tool, you can have your new tweets automatically copied
+  over from Twitter to Minds. Retweets & Replies will not be copied over.
+</div>
+
+<div class="m-settingsV2__desc" *ngIf="isSetup">
+  You must have over {{ minFollowersForSync | number }} Twitter followers in
+  order for tweets to copy over, and they could take up to an hour to show on
+  Minds
+</div>
+
+<div *ngIf="!inProgress && isSetup">
+  <form [formGroup]="updateForm">
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--checkbox stretchedField">
+        <div class="m-form__row--input">
+          <div class="m-form__field--checkbox">
+            <div class="m-form__row--input">
+              <label
+                for="discoverable"
+                class="m-form__customInputWrapper__checkbox"
+              >
+                <ng-container
+                  >Allow other channels to discover me via Twitter</ng-container
+                >
+                <input
+                  type="checkbox"
+                  id="discoverable"
+                  name="discoverable"
+                  formControlName="discoverable"
+                  class="form-control"
+                  data-minds="discoverable"
+                  [readonly]="isSaving"
+                  (click)="onDisoverableCheckboxClick($event)"
+                />
+                <span class="m-form__customInput__checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <m-button color="blue" (onAction)="disconnect($event)">
+    Disconnect
+  </m-button>
+</div>
+
+<form
+  *ngIf="form && !inProgress && !isSetup"
+  [formGroup]="form"
+  class="m-formLayout--buttonRight"
+>
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--text stretchedField hasValidationRow">
+      <h4>Step 1</h4>
+
+      <p>
+        We need you to create a Tweet so that we can pair your account.
+        <b>It's important that the prepopulated link is not changed</b>.
+      </p>
+
+      <m-button color="blue" (onAction)="postToTwitter($event)">
+        Create a Tweet
+      </m-button>
+    </div>
+
+    <div class="m-form__field--text stretchedField hasValidationRow">
+      <h4>Step 2</h4>
+      <div class="m-form__row--label">
+        <label for="twitter-handle"
+          >What is your Twitter handle (eg. @minds)</label
+        >
+      </div>
+      <div
+        class="m-form__row--input"
+        [ngClass]="{
+          invalid: (form.touched || form.dirty) && false
+        }"
+      >
+        <input
+          type="text"
+          id="twitter-handle"
+          name="twitter-handle"
+          formControlName="twitterHandle"
+          class="form-control"
+          [readonly]="isSaving"
+          placeholder="eg. @minds"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-button color="blue" [saving]="isSaving" (onAction)="verify($event)">
+      Verify
+    </m-button>
+  </div>
+</form>

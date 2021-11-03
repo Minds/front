@@ -153,6 +153,7 @@ m-walletTransactionsTable {
 
   .m-walletTransactionsTable__totalWrapper {
     text-align: right;
+    display: none; // inaccurate
   }
 
   .m-walletTransactionsTable__total--int {

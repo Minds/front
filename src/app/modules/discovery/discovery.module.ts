@@ -34,6 +34,7 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 import { CardCarouselService } from './card-carousel/card-carousel.service';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 
 @NgModule({
   imports: [
@@ -153,8 +154,20 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
               },
               {
                 path: 'tags',
-                component: DiscoveryTagsComponent,
-                data: { plus: true },
+                children: [
+                  {
+                    path: '',
+                    redirectTo: 'your',
+                  },
+                  {
+                    path: ':type',
+                    component: DiscoveryTagsComponent,
+                    data: {
+                      title: 'Your Tags',
+                      data: { plus: true },
+                    },
+                  },
+                ],
               },
               {
                 path: 'feeds',
@@ -187,6 +200,7 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
     HashtagsModule,
     LanguageModule,
     RouterModule,
+    NewsfeedModule,
   ],
   providers: [
     DiscoveryTrendsService,

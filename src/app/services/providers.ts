@@ -51,6 +51,7 @@ import { CookieService } from '../common/services/cookie.service';
 import { RedirectService } from '../common/services/redirect.service';
 import { StackableModalService } from './ux/stackable-modal.service';
 import { MessengerService } from '../modules/messenger/messenger.service';
+import { MultiFactorHttpInterceptorService } from '../modules/auth/multi-factor-auth/services/multi-factor-http-interceptor.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -95,6 +96,11 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: CookieHttpInterceptorService,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: MultiFactorHttpInterceptorService,
     multi: true,
   },
   {

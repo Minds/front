@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-progress.service';
+import { OnboardingV3ChannelComponent } from '../panel/channel/channel.component';
 
 /**
  * Onboarding modal component; core function as a connector,
@@ -18,13 +19,6 @@ import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-prog
 export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
 
-  /**
-   * Used to trigger next clicked event in subscribers.
-   */
-  public nextClicked$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
   public cdnAssetsUrl: string;
 
   /**
@@ -36,6 +30,11 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    * Save intent.
    */
   onSaveIntent: (step: OnboardingStepName) => void = () => {};
+
+  /**
+   * Panel with an async save function that can be called before resuming modal dismissal.
+   */
+  @ViewChild('awaitablePanel') awaitablePanel: OnboardingV3ChannelComponent;
 
   constructor(
     private panel: OnboardingV3PanelService,
@@ -151,8 +150,13 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    */
   public async nextClicked(): Promise<void> {
     try {
+      if (
+        this.awaitablePanel &&
+        typeof this.awaitablePanel.saveAsync === 'function'
+      ) {
+        await this.awaitablePanel.saveAsync();
+      }
       if (!this.inProgressService.inProgress$.getValue()) {
-        this.nextClicked$.next(true);
         this.onSaveIntent(this.currentStep$.getValue());
         this.panel.nextStep();
       }

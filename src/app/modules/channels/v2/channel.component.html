@@ -1,7 +1,9 @@
 <ng-container [m-clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
   <div *ngIf="service.channel$ | async" class="m-channel-v2">
     <m-channel__header>
-      <m-channel__actions *ngIf="service.guid$ | async"></m-channel__actions>
+      <m-channel__actions
+        *ngIf="(service.guid$ | async) || (service.isDisabled$ | async)"
+      ></m-channel__actions>
     </m-channel__header>
 
     <m-channel__content>
@@ -18,16 +20,19 @@
             <a
               [class.m-tabs__tab--selected]="isFeedView && layout === 'list'"
               [routerLink]="['/', username, '']"
-              [queryParams]="{ layout: 'list' }"
+              [queryParams]="getLayoutLinkQueryParams('list')"
               i18n="@@COMMON__FEED"
               >Feed</a
             >
           </div>
 
-          <div class="m-tabs__tab">
+          <div
+            class="m-tabs__tab"
+            *mExperiment="'channel-gallery'; variation: 'on'"
+          >
             <a
               [routerLink]="['/', username, '']"
-              [queryParams]="{ layout: 'grid' }"
+              [queryParams]="getLayoutLinkQueryParams('grid')"
               [class.m-tabs__tab--selected]="isFeedView && layout === 'grid'"
               >Gallery</a
             >

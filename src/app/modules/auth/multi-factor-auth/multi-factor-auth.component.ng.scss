@@ -1,10 +1,14 @@
 @import 'defaults.scss';
 
 :host {
-  width: 600px;
+  max-width: 600px;
   display: flex;
   flex-flow: column nowrap;
-  background: white;
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+
   z-index: 1;
 
   .m-mfaBase__header {

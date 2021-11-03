@@ -1,22 +1,17 @@
 <div
   [hidden]="blogs.length > 0 || error"
-  style="width:100%; text-align:center; "
+  style="width: 100%; text-align: center"
 >
   <div
     class="mdl-spinner mdl-js-spinner is-active"
     [mdl]
-    style="margin: 16px auto;"
+    style="margin: 16px auto"
   ></div>
 </div>
 
-<div class="m-error-splash" *ngIf="error && !inProgress">
-  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
-  <h3 class="mdl-color-text--red-300">{{error}}</h3>
-  <span
-    class="mdl-color-text--blue-grey-300"
-    i18n="@@M__COMMON__PLEASE_TRY_AGAIN"
-    >Please try again later</span
-  >
+<div class="m-pageLayout__container" *ngIf="error && !inProgress">
+  <m-errorSplash class="m-pageLayout__container"></m-errorSplash>
+  <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
 </div>
 
 <div class="m-blog-view" *ngFor="let blog of blogs; let i = index">

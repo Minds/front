@@ -15,7 +15,10 @@ import {
 import { FeedService } from './feed.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
+import {
+  FeedFilterDateRange,
+  FeedFilterType,
+} from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { FeedsUpdateService } from '../../../../common/services/feeds-update.service';
 import { Observable, of, Subscription } from 'rxjs';
@@ -43,6 +46,8 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   feedViewChildren: QueryList<ElementRef>;
 
   isGrid: boolean = false;
+
+  dateRangeEnabled: boolean = false;
 
   @Input('layout') set _layout(layout: string) {
     this.isGrid = layout === 'grid';
@@ -99,7 +104,12 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
   ) {
     if (isPlatformBrowser(platformId)) {
       this.subscriptions.push(
-        this.service.guid$.subscribe(guid => this.feedService.guid$.next(guid))
+        this.service.guid$.subscribe(guid => {
+          this.feedService.guid$.next(guid);
+
+          // Reset date range filter on channel change
+          this.feedService.dateRange$.next({ fromDate: null, toDate: null });
+        })
       );
     }
   }
