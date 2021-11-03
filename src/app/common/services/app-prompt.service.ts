@@ -1,16 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-  OnDestroy,
-  OnInit,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { FormToastService } from './form-toast.service';
-
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
+import { Storage } from '../../services/storage';
 
 /**
  * Dismissed or active to make use of animations.
@@ -89,16 +83,9 @@ export class AppPromptService implements OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private toaster: FormToastService,
-    protected storage: Storage
+    private storage: Storage,
+    private toaster: FormToastService
   ) {}
-
-  ngOnInit(): void {
-    if (this.shouldShowPrompt()) {
-      this.setPlatform();
-      this.activate();
-    }
-  }
 
   ngOnDestroy(): void {
     for (const subscription of this.subscriptions) {
@@ -112,14 +99,14 @@ export class AppPromptService implements OnDestroy {
    */
   shouldShowPrompt(): boolean {
     if (!this.hasAvailableApp()) return false;
-    if (!this.storage.getItem(STORAGE_KEY)) return true;
+    if (!this.storage.get(STORAGE_KEY)) return true;
 
     // if app was dismissed more than 24 hours ago, remove the key and return true
     if (
-      Date.now() - Number(this.storage.getItem(STORAGE_KEY)) >
+      Date.now() - Number(this.storage.get(STORAGE_KEY)) >
       24 * 60 * 60 * 1000 // 24 hours in milliseconds
     ) {
-      this.storage.removeItem(STORAGE_KEY);
+      this.storage.destroy(STORAGE_KEY);
       return true;
     }
 
@@ -141,7 +128,7 @@ export class AppPromptService implements OnDestroy {
    */
   public close(): AppPromptService {
     this.state$.next('dismissed');
-    this.storage.setItem(STORAGE_KEY, String(Date.now()));
+    this.storage.set(STORAGE_KEY, String(Date.now()));
     return this;
   }
 

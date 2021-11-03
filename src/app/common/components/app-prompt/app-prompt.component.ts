@@ -109,7 +109,7 @@ export class AppPromptComponent {
   }
 
   ngOnInit(): void {
-    if (this.service.hasAvailableApp()) {
+    if (this.service.shouldShowPrompt()) {
       this.service.setPlatform();
 
       // open with 2000ms delay
