@@ -8,10 +8,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import {
-  AppPromptService,
-  AppPromptState,
-} from './app-prompt.service';
+import { AppPromptService, AppPromptState } from './app-prompt.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
