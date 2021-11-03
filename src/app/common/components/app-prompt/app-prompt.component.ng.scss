@@ -86,14 +86,14 @@
       margin-bottom: 16px;
       font-size: 20px;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--primaryInverted);
       }
     }
 
     .m-appPrompt__body__reviews {
       margin-bottom: 16px;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--primaryInverted);
       }
     }
 

@@ -22,7 +22,24 @@ export type AppPromptState = 'dismissed' | 'active' | 'expanded';
  */
 export type MobilePlatform = 'android' | 'iphone' | 'non-mobile';
 
+const STORAGE_KEY = 'app-prompt:dismissed';
+
 let lastDateNow;
+
+/**
+ * navigates to the same screen in the app
+ */
+function navigateDeepIntoApp() {
+  // attempt to open the app
+  (window as any).location =
+    'mindsapp://' +
+    // extracts 'channel/00000000000000' from 'https://minds.com/channel/00000000000000'
+    (window as any).location.href
+      .split('//')[1]
+      .split('/')
+      .filter((item, i) => i !== 0)
+      .join('/');
+}
 
 function watchIOS(cb) {
   if (lastDateNow) {
@@ -46,7 +63,7 @@ function openIOS() {
     setTimeout(() => window.location.reload(), 1000);
   });
 
-  (window as any).location = 'mindsapp://';
+  navigateDeepIntoApp();
 }
 
 /**
@@ -55,13 +72,6 @@ function openIOS() {
 @Injectable({ providedIn: 'root' })
 export class AppPromptService implements OnDestroy {
   private subscriptions: Subscription[] = [];
-
-  ngOnInit(): void {
-    if (this.hasAvailableApp()) {
-      this.setPlatform();
-      this.activate();
-    }
-  }
 
   /**
    * Current state of modal
@@ -79,13 +89,41 @@ export class AppPromptService implements OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private toaster: FormToastService
+    private toaster: FormToastService,
+    protected storage: Storage
   ) {}
+
+  ngOnInit(): void {
+    if (this.shouldShowPrompt()) {
+      this.setPlatform();
+      this.activate();
+    }
+  }
 
   ngOnDestroy(): void {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  /**
+   * whether the prompt has to be shown
+   * @return { boolean }
+   */
+  shouldShowPrompt(): boolean {
+    if (!this.hasAvailableApp()) return false;
+    if (!this.storage.getItem(STORAGE_KEY)) return true;
+
+    // if app was dismissed more than 24 hours ago, remove the key and return true
+    if (
+      Date.now() - Number(this.storage.getItem(STORAGE_KEY)) >
+      24 * 60 * 60 * 1000 // 24 hours in milliseconds
+    ) {
+      this.storage.removeItem(STORAGE_KEY);
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -103,6 +141,7 @@ export class AppPromptService implements OnDestroy {
    */
   public close(): AppPromptService {
     this.state$.next('dismissed');
+    this.storage.setItem(STORAGE_KEY, String(Date.now()));
     return this;
   }
 
@@ -136,6 +175,10 @@ export class AppPromptService implements OnDestroy {
 
   // opens the app and if the app wasn't opened calls the fallback function
   private openAppWithFallback(fallback: () => void) {
+    if (!isPlatformBrowser(this.platformId)) {
+      return false;
+    }
+
     if (this.platform$.getValue() === 'iphone') {
       this.watchIfAppWasntOpened(() => {
         fallback();
@@ -153,7 +196,7 @@ export class AppPromptService implements OnDestroy {
     }
 
     // attempt to open the app
-    (window as any).location = 'mindsapp://';
+    navigateDeepIntoApp();
   }
 
   // Opens app store
