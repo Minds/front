@@ -1,5 +1,5 @@
-import { ConfigsService } from './../../services/configs.service';
-import { Component, HostListener } from '@angular/core';
+import { ConfigsService } from '../../common/services/configs.service';
+import { Component } from '@angular/core';
 import {
   animate,
   keyframes,
@@ -11,7 +11,7 @@ import {
 import {
   AppPromptService,
   AppPromptState,
-} from '../../services/app-prompt.service';
+} from './app-prompt.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

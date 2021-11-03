@@ -16,8 +16,6 @@ export default function isMobileOrTablet() {
     )
       check = true;
   })(navigator.userAgent || navigator.vendor || '');
-
-  console.log(navigator);
   return check;
 }
 

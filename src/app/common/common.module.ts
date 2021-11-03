@@ -176,7 +176,6 @@ import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-
 import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
-import { AppPromptComponent } from './components/app-prompt/app-prompt.component';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
 import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
@@ -348,7 +347,6 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
-    AppPromptComponent,
     CanaryFlagComponent,
     ErrorSplashComponent,
     LaunchButtonComponent,
@@ -489,7 +487,6 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
-    AppPromptComponent,
     ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
