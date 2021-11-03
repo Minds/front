@@ -7,6 +7,10 @@
         @include z-index(modal--stackable);
         display: block;
         position: unset;
+
+        .m-web3Modal {
+          max-width: 800px !important;
+        }
       }
     }
   }
