@@ -60,6 +60,9 @@ export class DiscoveryFeedsService {
     if (algorithm === 'preferred') {
       algorithm = 'topV2';
     }
+    if (algorithm === 'trending') {
+      algorithm = 'hot';
+    }
     if (isPlusPage) {
       if (!this.featuresService.has('plus-discovery-filter')) {
         algorithm = this.filter$.value === 'latest' ? 'latest' : 'plusFeed';
