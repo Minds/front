@@ -1,0 +1,91 @@
+@import 'defaults.scss';
+@mixin slider-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  @include m-theme() {
+    background: themed($m-link);
+  }
+}
+@mixin slider-track {
+  width: 100%;
+  height: 1px;
+  cursor: pointer;
+  @include m-theme() {
+    background: themed($m-borderColor--primary);
+  }
+}
+
+:host {
+  display: block;
+  .m-slider__container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .m-slider__rangeLabel {
+    display: inline-block;
+    font-size: 14px;
+    flex-grow: 2;
+    flex-basis: 15%;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-slider__rangeLabel--min {
+    text-align: left;
+  }
+  .m-slider__rangeLabel--max {
+    text-align: right;
+  }
+
+  input[type='range'] {
+    margin: 0 15px;
+    width: 60%;
+
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    background: transparent; /* Otherwise white in Chrome */
+  }
+
+  input[type='range']:focus {
+    outline: none;
+  }
+
+  // TRACK -----------------------------------
+
+  input[type='range']::-webkit-slider-runnable-track {
+    @include slider-track();
+  }
+
+  input[type='range']::-moz-range-track {
+    @include slider-track();
+  }
+
+  input[type='range']::-ms-track {
+    @include slider-track();
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  // THUMB -----------------------------------
+  input[type='range']::-webkit-slider-thumb {
+    @include slider-thumb();
+    -webkit-appearance: none;
+    margin-top: -7px;
+  }
+
+  input[type='range']::-moz-range-thumb {
+    @include slider-thumb();
+    border-width: 0px;
+  }
+
+  input[type='range']::-ms-thumb {
+    @include slider-thumb();
+    border-width: 0px;
+  }
+  // -------------------------------------------
+}

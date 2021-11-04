@@ -1,0 +1,22 @@
+<div class="m-slider__container">
+  <span
+    *ngIf="minLabel"
+    class="m-slider__rangeLabel m-slider__rangeLabel--min"
+    >{{ minLabel }}</span
+  >
+  <input
+    type="range"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [value]="value"
+    [id]="id"
+    (input)="onSlide($event.target.value)"
+    class="m-slider__input"
+  />
+  <span
+    *ngIf="maxLabel"
+    class="m-slider__rangeLabel m-slider__rangeLabel--max"
+    >{{ maxLabel }}</span
+  >
+</div>
