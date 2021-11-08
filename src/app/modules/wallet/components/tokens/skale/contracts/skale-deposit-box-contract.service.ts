@@ -55,9 +55,9 @@ export class SkaleDepositBoxContractService extends AbstractSkaleMindsContractSe
   /**
    * Calls to deposit X amount of tokens.
    * @param { number } amount - amount of tokens to deposit.
-   * @returns { Promise<void> }
+   * @returns { Promise<any> }
    */
-  public async deposit(amount: number): Promise<unknown> {
+  public async deposit(amount: number): Promise<any> {
     if (!this.isOnMainnet()) {
       throw new Error('Unable to deposit on this network - please switch');
     }
