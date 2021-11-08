@@ -26,8 +26,8 @@ export interface NetworkMap {
 }
 
 export type NetworkChainId = string;
-export type NetworkName = 'Mainnet' | 'SKALE Minds';
-export type NetworkSiteName = 'Mainnet' | 'SKALE';
+export type NetworkName = 'Mainnet' | 'SKALE Minds' | 'Polygon';
+export type NetworkSiteName = 'Mainnet' | 'SKALE' | 'Polygon';
 export type NetworkDescription = string;
 export type NetworkLogoPath = string;
 export type NetworkRpcUrl = string;
@@ -86,6 +86,17 @@ export class NetworkSwitchService {
         swappable: true,
       };
     }
+
+    // if (this.features.has('polygon')) {
+    this.networks.polygon = {
+      id: '0x89',
+      siteName: 'Polygon',
+      networkName: 'Polygon',
+      description: "Ethereum's Internet of Blockchains.",
+      logoPath: 'assets/ext/polygon.png',
+      swappable: true,
+    };
+    // }
 
     // Mainnet / Rinkeby
     this.networks.mainnet.id =
@@ -190,6 +201,11 @@ export class NetworkSwitchService {
       }
     }
     return swappableNetworks;
+  }
+
+  public isOnNetwork(chainId: NetworkChainId) {
+    const activeChainId = this.activeChainId$.getValue();
+    return activeChainId === chainId;
   }
 
   /**

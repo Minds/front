@@ -5,6 +5,7 @@ import { first, last, map } from 'rxjs/operators';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
+import { NetworkSwapBridgeService } from '../../network-swap-bridge/network-swap-bridge-modal.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
 @Component({
@@ -29,8 +30,12 @@ export class WalletTokensDropdownMenu {
     @Inject(DOCUMENT) private dom,
     private toasterService: FormToastService,
     private onchainTransferModal: OnchainTransferModalService,
-    private injector: Injector
-  ) {}
+    private injector: Injector,
+    private networkSwapBridge: NetworkSwapBridgeService
+  ) {
+    // TODO: Development change - REMOVE.
+    this.onSwapChainsClick(null);
+  }
 
   /**
    * Will open up transfer onchain modal - TODO
@@ -53,6 +58,14 @@ export class WalletTokensDropdownMenu {
 
   async onDisconnectClick(e: MouseEvent): Promise<void> {
     await this.walletService.removeOnchainAddress();
+  }
+
+  /**
+   * Open network swap bridge modal, allowing user to swap tokens between networks
+   * @returns { Promise<void> }
+   */
+  async onSwapChainsClick(e: MouseEvent): Promise<void> {
+    await this.networkSwapBridge.open();
   }
 
   async copyAddressToClipboard(e: MouseEvent) {
