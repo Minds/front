@@ -44,6 +44,7 @@ export class SocketsService {
         reconnection: true,
         timeout: 40000,
         autoConnect: false,
+        withCredentials: true,
       });
 
       this.rooms = [];

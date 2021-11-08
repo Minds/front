@@ -10,7 +10,7 @@
     "prebuild:dev": "gulp build.sass",
     "build:dev": "ng build --watch=true --poll=1000",
     "preserve:dev": "gulp build.sass",
-    "serve:dev": "ng serve --hmr=true --proxy-config proxy.conf.js --host=0.0.0.0 --disableHostCheck=true",
+    "serve:dev": "ng serve --configuration hmr --hmr --proxy-config proxy.conf.js --host=0.0.0.0 --disableHostCheck=true",
     "test": "ng test --source-map=false",
     "test:dev": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng test --source-map=false",
     "lint": "ng lint",

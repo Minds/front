@@ -1,0 +1,38 @@
+<div class="m-adminInteractionsTable__title">
+  <h3>{{ metric.title | titlecase }}</h3>
+  <m-tooltip *ngIf="isOffchain" icon="help">
+    First column is quantity of tokens, second column is transaction count
+  </m-tooltip>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    *ngIf="inProgress && !data[type].length"
+  ></div>
+</div>
+<table>
+  <tbody>
+    <tr *ngFor="let item of data[type]">
+      <td>
+        <a
+          [routerLink]="['/', item.user.username]"
+          target="_blank"
+          class="m-admin--interactions__channelLink"
+        >
+          <img
+            class="m-admin--interactions--avatar"
+            src="/icon/{{ item.user.guid }}/small/{{ item.user.icontime }}"
+          />
+          @{{ item.user.username }}
+        </a>
+      </td>
+      <td>{{ item.value }}</td>
+      <td *ngIf="isOffchain">{{ item.count }}</td>
+    </tr>
+
+    <tr *ngIf="data[type].length === 0 && !inProgress">
+      <td style="text-align: left" i18n="@@COMMON__ADMIN__NO_DATA">
+        No data
+      </td>
+    </tr>
+  </tbody>
+</table>
