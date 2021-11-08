@@ -1,12 +1,12 @@
 @import 'defaults.scss';
 
 :host {
-  .m-group__searchBtnWrapper {
+  .m-groupInfo__rightIcons {
     display: flex;
     align-items: center;
     position: absolute;
-    top: 3px;
-    right: 25px;
+    top: 0;
+    right: 0;
     padding: 10px;
 
     .m-groupSearchBtn {
