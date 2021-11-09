@@ -45,6 +45,7 @@ export class SocketsService {
         timeout: 40000,
         autoConnect: false,
         withCredentials: true,
+        transports: ['websocket'],
       });
 
       this.rooms = [];
