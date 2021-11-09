@@ -1,6 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 
 /**
+ * Autofocus host element after view init.
  * Based on example from Netanel Basal's blog:
  * https://netbasal.com/autofocus-that-works-anytime-in-angular-apps-68cb89a3f057
  */
