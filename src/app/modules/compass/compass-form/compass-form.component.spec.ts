@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormInputSliderComponent } from './slider.component';
+import { CompassFormComponent } from './compass-form.component';
 
-describe('FormInputSliderComponent', () => {
-  let component: FormInputSliderComponent;
-  let fixture: ComponentFixture<FormInputSliderComponent>;
+describe('CompassFormComponent', () => {
+  let component: CompassFormComponent;
+  let fixture: ComponentFixture<CompassFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormInputSliderComponent],
+      declarations: [CompassFormComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormInputSliderComponent);
+    fixture = TestBed.createComponent(CompassFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

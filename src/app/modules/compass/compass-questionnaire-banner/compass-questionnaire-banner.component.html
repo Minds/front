@@ -1,0 +1,22 @@
+<ng-container *ngIf="show">
+  <div class="m-compassQuestionnaire__banner">
+    <div class="m-compassQuestionnaireBanner__contentWrapper">
+      <div class="m-compassQuestionnaireBanner__textWrapper">
+        <span class="m-compassQuestionnaireBanner__title"
+          >Help improve Minds</span
+        >
+        <span class="m-compassQuestionnaireBanner__subtitle"
+          >Complete this short user questionnaire</span
+        >
+      </div>
+      <div class="m-compassQuestionnaireBanner__buttonWrapper">
+        <m-button [color]="'blue'" (onAction)="openModal()"
+          >Questionnaire</m-button
+        >
+      </div>
+    </div>
+    <div class="m-compassQuestionnaireBanner__dismiss">
+      <i class="material-icons" (click)="dismiss()">close</i>
+    </div>
+  </div>
+</ng-container>

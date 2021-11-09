@@ -1,52 +1,78 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  FormBuilder,
+} from '@angular/forms';
 
+export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => FormInputSliderComponent),
+  multi: true,
+};
 @Component({
-  selector: 'm-slider',
+  selector: 'm-formInput__slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.ng.scss'],
+  providers: [FORM_INPUT_CHECKBOX_VALUE_ACCESSOR],
 })
-export class SliderComponent implements OnInit {
+export class FormInputSliderComponent implements ControlValueAccessor {
+  @Input() id: string;
+  @Input() title: string;
   @Input() min: number = 0;
   @Input() max: number = 100;
-  @Input() default: number;
-  @Input() step: string; // size of each increment
-  @Input() id: string;
-
   @Input() minLabel: string;
   @Input() maxLabel: string;
+  @Input() startValue: number;
+  @Input() step: string; // size of each increment
+  @Input() disabled: boolean = false;
 
-  @Input() emitOnLoad: boolean = false;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   value: number;
-  @Output('onSlide') onSlideEmitter: EventEmitter<any> = new EventEmitter<
-    any
-  >();
 
-  ngOnInit(): void {
-    if (this.default) {
-      this.value = this.default;
+  updateValue(value: number) {
+    this.value = value;
+    this.propagateChange(this.value);
+  }
+
+  propagateChange = (_: any) => {};
+
+  constructor(private fb: FormBuilder) {
+    if (this.startValue) {
+      this.value = this.startValue;
     } else {
-      this.value = this.getHalfwayPoint();
-    }
-
-    if (this.emitOnLoad) {
-      this.onSlide(this.value);
+      this.value = this.calculateStartValue();
     }
   }
 
-  onSlide(value: number): void {
-    const obj = {
-      value: value,
-    };
-    if (this.id) {
-      obj['id'] = this.id;
-    }
-    this.onSlideEmitter.emit(obj);
-  }
-
-  getHalfwayPoint(): number {
+  /**
+   * Calculates the starting value if one wasn't provided.
+   * This will almost always be the midpoint between min & max.
+   * (except when max is below min)
+   */
+  calculateStartValue(): number {
     return this.max < this.min
       ? this.min
       : this.min + (this.max - this.min) / 2;
   }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {}
 }

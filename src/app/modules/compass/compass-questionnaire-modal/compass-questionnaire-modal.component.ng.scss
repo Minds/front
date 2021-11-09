@@ -1,0 +1,42 @@
+@import 'defaults.scss';
+
+:host {
+  z-index: 1;
+  max-width: 720px;
+  .m-compassQuestionnaire__modal {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  span {
+    display: block;
+  }
+
+  .m-compassQuestionaireModal__main {
+    padding: 45px 45px 20px;
+  }
+  .m-compassQuestionaireModal__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 25px 45px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+  .m-compassQuestionaireModal__title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-compassQuestionaireModal__subtitle {
+    margin-bottom: 35px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

@@ -19,32 +19,40 @@
 
 :host {
   display: block;
-  .m-slider__container {
-    margin: 20px 0;
+  .m-formInput__slider {
     display: flex;
     justify-content: space-between;
   }
-  .m-slider__rangeLabel {
+  .m-formInputSlider__title {
+    font-size: 14px;
+    font-weight: 400;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  .m-formInputSlider__rangeLabel {
     display: inline-block;
     font-size: 14px;
     flex-grow: 2;
-    flex-basis: 15%;
+    flex-basis: 10%;
+    font-weight: 400;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
   }
 
-  .m-slider__rangeLabel--min {
+  .m-formInputSlider__rangeLabel--min {
     text-align: left;
   }
-  .m-slider__rangeLabel--max {
+  .m-formInputSlider__rangeLabel--max {
     text-align: right;
   }
 
   input[type='range'] {
     margin: 0 15px;
-    width: 60%;
+    width: 100%;
 
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
     background: transparent; /* Otherwise white in Chrome */

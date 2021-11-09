@@ -193,7 +193,7 @@ import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
-import { SliderComponent } from './components/slider/slider.component';
+import { FormInputSliderComponent } from './components/slider/slider.component';
 
 const routes: Routes = [
   {
@@ -358,7 +358,7 @@ const routes: Routes = [
     PublisherSearchModalComponent,
     DateRangeModalComponent,
     HovercardComponent,
-    SliderComponent,
+    FormInputSliderComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -499,7 +499,7 @@ const routes: Routes = [
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
-    SliderComponent,
+    FormInputSliderComponent,
   ],
   providers: [
     SiteService,
