@@ -70,8 +70,8 @@ export class NetworkSwitchService {
     private features: FeaturesService,
     config: ConfigsService
   ) {
-    const skaleConfig = config.get('skale');
     const blockchainConfig = config.get('blockchain');
+    const skaleConfig = blockchainConfig['skale'];
 
     // SKALE
     if (this.features.has('skale') && skaleConfig) {

@@ -31,10 +31,10 @@ export class SkaleDepositBoxContractService extends AbstractSkaleMindsContractSe
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.depositBoxAddress = this.blockchainConfig['skale'][
+    this.depositBoxAddress = this.skaleConfig[
       'skale_contracts_mainnet'
     ].deposit_box_erc20_address;
-    this.depositBoxAbi = this.blockchainConfig['skale'][
+    this.depositBoxAbi = this.skaleConfig[
       'skale_contracts_mainnet'
     ].deposit_box_erc20_abi;
     this.skaleChainName = this.skaleConfig['chain_name'];

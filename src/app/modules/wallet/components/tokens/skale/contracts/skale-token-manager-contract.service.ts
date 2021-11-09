@@ -26,10 +26,10 @@ export class SkaleTokenManagerContractService extends AbstractSkaleMindsContract
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.skaleTokenManagerAbi = this.blockchainConfig['skale'][
+    this.skaleTokenManagerAbi = this.skaleConfig[
       'skale_contracts_skale_network'
     ].token_manager_erc20_abi;
-    this.skaleTokenManagerAddress = this.blockchainConfig['skale'][
+    this.skaleTokenManagerAddress = this.skaleConfig[
       'skale_contracts_skale_network'
     ].token_manager_erc20_address;
   }

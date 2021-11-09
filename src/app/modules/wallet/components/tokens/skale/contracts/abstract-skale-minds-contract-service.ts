@@ -8,9 +8,6 @@ import { Web3WalletService } from '../../../../../blockchain/web3-wallet.service
  */
 export abstract class AbstractSkaleMindsContractService {
   // blockchain specific config.
-  protected blockchainConfig: {} = null;
-
-  // SKALE config.
   protected skaleConfig: {} = null;
 
   constructor(
@@ -18,8 +15,7 @@ export abstract class AbstractSkaleMindsContractService {
     protected config: ConfigsService,
     protected networkSwitch: NetworkSwitchService
   ) {
-    this.blockchainConfig = config.get('blockchain');
-    this.skaleConfig = config.get('skale');
+    this.skaleConfig = config.get('blockchain')['skale'];
   }
 
   /**

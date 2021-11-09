@@ -27,11 +27,11 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.skaleCommunityPoolAbi = this.blockchainConfig['skale'][
+    this.skaleCommunityPoolAbi = this.skaleConfig[
       'skale_contracts_mainnet'
     ].community_pool_abi;
 
-    this.skaleCommunityPoolAddress = this.blockchainConfig['skale'][
+    this.skaleCommunityPoolAddress = this.skaleConfig[
       'skale_contracts_mainnet'
     ].community_pool_address;
 

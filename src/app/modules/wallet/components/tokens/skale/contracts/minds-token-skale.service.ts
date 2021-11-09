@@ -23,9 +23,7 @@ export class SkaleMindsTokenContractService extends AbstractSkaleMindsContractSe
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.skMindsTokenAbi = this.blockchainConfig['skale']['erc20_contract'][
-      'abi'
-    ];
+    this.skMindsTokenAbi = this.skaleConfig['erc20_contract']['abi'];
     this.skMindsTokenAddress = this.skaleConfig['erc20_address'];
   }
 
