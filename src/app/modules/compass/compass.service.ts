@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from '@gorniv/ngx-universal';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
-import { Storage } from '../../services/storage';
 
-export interface SocialCompassQuestion {
+export const SOCIAL_COMPASS_ANSWERS_KEY: string = 'social-compass-answers';
+
+export interface CompassQuestion {
   minimumStepLabel: string;
   maximumStepLabel: string;
   questionText: string;
@@ -19,17 +21,14 @@ export interface SocialCompassQuestion {
 
 @Injectable()
 export class CompassService {
-  fetching$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  questions$: BehaviorSubject<
-    Array<SocialCompassQuestion>
-  > = new BehaviorSubject<Array<SocialCompassQuestion>>([]);
+  questions$: BehaviorSubject<Array<CompassQuestion>> = new BehaviorSubject<
+    Array<CompassQuestion>
+  >([]);
 
   answers$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   answersProvided$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
+    true
   );
 
   // This allows us to submit from different parent components
@@ -41,93 +40,53 @@ export class CompassService {
     private client: Client,
     protected toasterService: FormToastService,
     protected session: Session,
-    private storage: Storage
+    private cookieService: CookieService
   ) {}
 
   async fetchQuestions(): Promise<CompassService> {
-    this.fetching$.next(true);
+    try {
+      const response: any = await this.client.get(
+        'api/v3/social-compass/questions'
+      );
 
-    //////////////////////////////////////
-    // ojm switch this when the engine works
+      if (response && response.questions) {
+        this.questions$.next(response.questions);
+      }
 
-    // try {
-    //   const response: any = await this.client.get(
-    //     'api/v3/social-compass/questions'
-    //   );
-
-    //   if (response && response.questions) {
-    //     this.questions$.next(response.questions);
-    //   }
-
-    //   if (response && response.answersProvided) {
-    //     this.answersProvided$.next(response.answersProvided);
-    //   }
-    // } catch (e) {
-    //   console.error(e);
-    //   this.toasterService.error(
-    //     (e && e.message) ||
-    //       'There was a problem loading the social compass questions.'
-    //   );
-    // } finally {
-    //   this.fetching$.next(false);
-    // }
-    //////////////////////////////////////
-
-    //ojm remove everything below when using real client
-
-    const response: any = {
-      answersProvided: true,
-      questions: [
-        {
-          minimumStepLabel: 'Less',
-          maximumStepLabel: 'More',
-          questionText: 'Political Content',
-          questionId: 'PoliticalContentQuestion',
-          stepSize: 10,
-          defaultValue: 50,
-          currentValue: 50,
-          maximumRangeValue: 100,
-          minimumRangeValue: 0,
-        },
-        {
-          minimumStepLabel: 'Trustful',
-          maximumStepLabel: 'Critical',
-          questionText: 'Political Beliefs',
-          questionId: 'PoliticalBeliefsQuestion',
-          stepSize: 10,
-          defaultValue: 50,
-          currentValue: 50,
-          maximumRangeValue: 100,
-          minimumRangeValue: 0,
-        },
-      ],
-    };
-
-    console.log('ojm compass fetchQuestions response:', response);
-    this.questions$.next(response.questions);
-
-    this.fetching$.next(false);
+      if (response && response.answersProvided) {
+        this.answersProvided$.next(response.answersProvided);
+      }
+    } catch (e) {
+      console.error(e);
+      this.toasterService.error(
+        (e && e.message) ||
+          'There was a problem loading the social compass questions.'
+      );
+    }
 
     return this;
   }
 
   async saveAnswers(): Promise<boolean> {
     if (!this.session.isLoggedIn()) {
-      this.storeAnswers();
+      this.storeEphemeralAnswers();
       return true;
     }
 
-    this.saving$.next(true);
-
     const answers = this.answers$.getValue();
-    console.log('ojm saving answers', answers);
 
     try {
-      await this.client.post('api/v3/social-compass/answers', {
-        'social-compass-answers': answers,
+      const response = await this.client.post('api/v3/social-compass/answers', {
+        SOCIAL_COMPASS_ANSWERS_KEY: answers,
       });
-      this.answersProvided$.next(true);
-      return true;
+
+      if (response && response['status'] === 'success') {
+        this.answersProvided$.next(true);
+        this.submitRequested$.next(false);
+        this.clearEphemeralAnswers();
+
+        return true;
+      }
     } catch (e) {
       this.answersProvided$.next(false);
 
@@ -135,33 +94,28 @@ export class CompassService {
       this.toasterService.error(
         (e && e.message) || 'There was a problem saving your answers.'
       );
+
       return false;
-    } finally {
-      this.saving$.next(false);
     }
   }
 
   /**
-   * For logged out users, save to local storage
+   * For logged out users, save to cookies
    */
-  storeAnswers(): boolean {
-    this.storage.set('social-compass-answers', this.answers$.getValue());
+  storeEphemeralAnswers(): boolean {
+    this.cookieService.put(
+      SOCIAL_COMPASS_ANSWERS_KEY,
+      JSON.stringify(this.answers$.getValue())
+    );
+
     this.answersProvided$.next(true);
     return true;
   }
 
-  // ojm put this into a GuestMode service?
-  //   this.loggedInSubscription = this.session.loggedinEmitter.subscribe(is => {
-  //   if (is) {
-
-  // const answers = JSON.parse(
-  //       this.storage.get('social-compass-answers')
-  //     )
-
-  // if(answers) {
-  //   this.compassService.answers$.next(answers);
-  //   this.compassService.saveAnswers();
-  // }
-  //   }
-  // });
+  /**
+   * Remove answers from cookies when they're saved to the database
+   * */
+  clearEphemeralAnswers(): void {
+    this.cookieService.remove(SOCIAL_COMPASS_ANSWERS_KEY);
+  }
 }

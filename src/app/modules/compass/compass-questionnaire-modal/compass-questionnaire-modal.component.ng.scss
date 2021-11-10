@@ -7,6 +7,10 @@
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }
+
+    @media screen and (max-width: $max-mobile) {
+      min-height: 100vh;
+    }
   }
 
   span {
@@ -15,6 +19,10 @@
 
   .m-compassQuestionaireModal__main {
     padding: 45px 45px 20px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20px;
+    }
   }
   .m-compassQuestionaireModal__toolbar {
     display: flex;
@@ -23,6 +31,10 @@
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
     }
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20px;
+    }
   }
   .m-compassQuestionaireModal__title {
     font-size: 24px;
@@ -30,6 +42,10 @@
     margin-bottom: 15px;
     @include m-theme() {
       color: themed($m-textColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 30px;
     }
   }
 

@@ -6,6 +6,9 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { CompassQuestionnaireModalComponent } from '../compass-questionnaire-modal/compass-questionnaire-modal.component';
 import { CompassService } from '../compass.service';
 
+export const SOCIAL_COMPASS_DISMISSED_KEY: string =
+  'social-compass-banner-dismissed';
+
 @Component({
   selector: 'm-compassQuestionnaire__banner',
   templateUrl: './compass-questionnaire-banner.component.html',
@@ -13,7 +16,7 @@ import { CompassService } from '../compass.service';
 })
 export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
   answersProvidedSubscription: Subscription;
-  answersProvided: boolean = false;
+  answersProvided: boolean = true;
   dismissed: boolean = false;
 
   constructor(
@@ -24,17 +27,21 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // Fetch first so we know whether we've provided answers already
+    this.compassService.fetchQuestions();
+
     this.answersProvidedSubscription = this.compassService.answersProvided$.subscribe(
       provided => {
         this.answersProvided = provided;
+
+        if (provided) {
+          this.overlayModal.dismiss();
+        }
       }
     );
 
     this.dismissed =
-      JSON.parse(this.storage.get('social-compass-banner-dismissed')) || false;
-
-    // ojm this is temporary
-    this.dismissed = false;
+      JSON.parse(this.storage.get(SOCIAL_COMPASS_DISMISSED_KEY)) || false;
   }
 
   ngOnDestroy(): void {
@@ -50,7 +57,7 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
   }
 
   dismiss(): void {
-    this.storage.set('social-compass-banner-dismissed', true);
+    this.storage.set(SOCIAL_COMPASS_DISMISSED_KEY, true);
     this.dismissed = true;
   }
 
