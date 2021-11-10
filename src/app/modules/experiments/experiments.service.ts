@@ -4,6 +4,7 @@ import { GrowthBook, Experiment } from '@growthbook/growthbook';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AnalyticsService } from '../../services/analytics';
 import { Session } from '../../services/session';
+import { CookieService } from '../../common/services/cookie.service';
 
 export { Experiment } from '@growthbook/growthbook';
 
@@ -15,7 +16,8 @@ export class ExperimentsService {
   constructor(
     private session: Session,
     private configs: ConfigsService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private cookieService: CookieService
   ) {}
 
   /**
@@ -23,11 +25,14 @@ export class ExperimentsService {
    */
   initGrowthbook(): void {
     if (!this.growthbook) {
+      // ID field required by SDK even though we are forcing.
+      const userId = this.getUserId();
+
       this.growthbook = new GrowthBook({
-        user: { id: this.session.getLoggedInUser()?.guid },
+        user: { id: userId },
         trackingCallback: (experiment, result) => {
           /**
-           * Tracking is only called if force is not used
+           * Tracking is only called if force is not used.
            */
           this.addToAnalytics(experiment.key, result.variationId);
           // Note: we don't need to tell the backend, as it's the backend that tells us to run experiments
@@ -43,23 +48,30 @@ export class ExperimentsService {
         experiment = {
           key: experiment.experimentId,
           variations: experiment.variations,
-          force: experiment.variationId,
         };
+
+        // If logged in, we force the experiment
+        if (this.session.isLoggedIn()) {
+          experiment.force = experiment.variationId;
+        }
 
         this.experiments.push(experiment);
         this.growthbook.run(experiment);
 
-        this.addToAnalytics(experiment.key, experiment.force);
+        if (experiment.force != undefined) {
+          this.addToAnalytics(experiment.key, experiment.force);
+        }
       }
     }
   }
 
   /**
-   * Returns the variation to display
-   * @param key
-   * @returns string
+   * Returns the variation to display.
+   * @param { string } key - key to check.
+   * @throws { string } unable to find experiment error.
+   * @returns { string } - variation to display.
    */
-  run(key): string {
+  public run(key: string): string {
     for (let experiment of this.experiments) {
       if (experiment.key === key) {
         const { value } = this.growthbook.run(experiment);
@@ -78,5 +90,45 @@ export class ExperimentsService {
         variation_id: variationId,
       },
     });
+  }
+
+  /**
+   * Return whether an experiment has a given variation state.
+   * @param { string } experimentId - experiment key.
+   * @param { string } variation - variation to check, e.g. 'on' or 'off'.
+   * @returns { boolean } - true if params reflect current variation.
+   */
+  public hasVariation(experimentId: string, variation: string = 'on'): boolean {
+    try {
+      return this.run(experimentId) === variation;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Will return the logged in userId or a random value
+   * will generate an experiment cookie if one doesn't exist.
+   * @returns string
+   */
+  protected getUserId(): string {
+    if (this.session.isLoggedIn()) {
+      return this.session.getLoggedInUser()?.guid;
+    }
+
+    const cookieName = 'experiments_id';
+
+    let cookieValue = this.cookieService.get(cookieName);
+
+    if (!cookieValue) {
+      cookieValue =
+        'exp-' +
+        Math.random()
+          .toString(36)
+          .substr(2, 16);
+      this.cookieService.put(cookieName, cookieValue);
+    }
+
+    return cookieValue;
   }
 }
