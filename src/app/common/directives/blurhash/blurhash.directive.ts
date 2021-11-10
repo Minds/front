@@ -5,13 +5,15 @@ import {
   HostBinding,
   HostListener,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { decode } from 'blurhash';
+import { timer } from 'rxjs';
 
 @Directive({
   selector: 'img[m-blurhash]',
 })
-export class BlurhashDirective implements AfterViewInit {
+export class BlurhashDirective implements AfterViewInit, OnDestroy {
   private _src: string;
 
   @HostBinding('attr.src')
@@ -27,6 +29,7 @@ export class BlurhashDirective implements AfterViewInit {
   @HostListener('load')
   onLoad() {
     if (this.canvas) {
+      // TODO: also remove the canvas after transition is done
       this.canvas.style.opacity = 0;
     }
   }
@@ -47,26 +50,37 @@ export class BlurhashDirective implements AfterViewInit {
   @Input('m-blurhash')
   entity;
 
-  constructor(private el: ElementRef) {
-    if (this.el?.nativeElement?.complete) {
-      if (this.canvas) {
-        this.canvas.style.opacity = 0;
-      }
-    }
-  }
+  constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
+    // if image was loaded, don't bother
+    if (this.el.nativeElement.complete) {
+      return null;
+    }
+
+    // preventing an ugly case where the canvas appears outside of image container
+    timer(0)
+      .toPromise()
+      .then(() => this.drawCanvas());
+  }
+
+  drawCanvas() {
     const elementWidth = this.el?.nativeElement?.width;
     const elementHeight = this.el?.nativeElement?.height;
 
     let { blurhash, width, height } = Object.assign(
       {
-        blurhash: 'LyHnO9n$tUt7}qoOxAs:-BskngRj',
+        // NOTE: not sure if we should have a default blurhash
+        // blurhash: 'LyHnO9n$tUt7}qoOxAs:-BskngRj',
         width: elementWidth,
         height: elementHeight,
       },
       this.entity.custom_data[0]
     );
+
+    if (!blurhash) {
+      return null;
+    }
 
     const aspecRatio = width / height;
     width = elementWidth;
@@ -84,9 +98,12 @@ export class BlurhashDirective implements AfterViewInit {
     ctx.putImageData(imageData, 0, 0);
     this.canvas.setAttribute(
       'style',
-      // TODO: transition shouldn't happen if the image was already loaded
       `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out;`
     );
     this.el.nativeElement.parentElement.append(this.canvas);
+  }
+
+  ngOnDestroy() {
+    this.canvas?.remove();
   }
 }
