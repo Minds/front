@@ -45,6 +45,7 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
   showPreferredFeed: boolean = false;
 
   @Input() showTabs: boolean = true;
+  @Input() showChannels: boolean = true;
 
   constructor(
     private router: Router,
