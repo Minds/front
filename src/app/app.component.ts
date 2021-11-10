@@ -205,7 +205,9 @@ export class Minds implements OnInit, OnDestroy {
 
     this.socketsService.setUp();
 
-    this.compassHook.listen();
+    // TODO uncomment this when we want logged out users
+    // to complete the social compass questionnaire
+    // this.compassHook.listen();
   }
 
   ngOnDestroy() {

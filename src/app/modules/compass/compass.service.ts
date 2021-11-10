@@ -49,11 +49,8 @@ export class CompassService {
         'api/v3/social-compass/questions'
       );
 
-      if (response && response.questions) {
+      if (response) {
         this.questions$.next(response.questions);
-      }
-
-      if (response && response.answersProvided) {
         this.answersProvided$.next(response.answersProvided);
       }
     } catch (e) {
