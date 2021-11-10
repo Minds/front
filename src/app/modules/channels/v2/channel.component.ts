@@ -279,8 +279,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
       queryParams['query'] = this.encodedQuery;
     }
 
-    console.log(queryParams);
-
     return queryParams;
   }
 
