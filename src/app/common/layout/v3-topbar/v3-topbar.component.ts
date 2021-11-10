@@ -203,6 +203,14 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Gets URL for main logo.
+   * @returns { string } url for main logo.
+   */
+  public getMainLogoUrl(): string {
+    return this.session.getLoggedInUser() ? '/newsfeed/subscribed' : '/';
+  }
+
+  /**
    * True if current theme is dark.
    * @returns { Observable<boolean> } - true if theme is dark, else false.
    */

@@ -33,6 +33,9 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
@@ -86,7 +89,9 @@ export class SidebarNavigationComponent
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
-    private injector: Injector
+    private injector: Injector,
+    private authModal: AuthModalService,
+    private experiments: ExperimentsService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -229,5 +234,30 @@ export class SidebarNavigationComponent
     if (this.groupsSidebar) {
       this.groupsSidebar.showLabels = this.showLabels;
     }
+  }
+
+  /**
+   * Opens auth modal.
+   * @returns { Promise<void> }
+   */
+  public async openAuthModal(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
+  }
+
+  /**
+   * Returns if link should be to discovery homepage
+   * @returns { boolean } true if link should be '/'.
+   */
+  public shouldBeDiscoveryHomepage(): boolean {
+    return (
+      this.experiments.hasVariation('discovery-homepage', 'on') && !this.user
+    ); // logged out
   }
 }
