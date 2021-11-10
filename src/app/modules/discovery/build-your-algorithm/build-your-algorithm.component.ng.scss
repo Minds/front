@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  .m-buildYourAlgo__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 20px 40px;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-buildYourAlgo__headerText {
+      font-weight: 700;
+      font-size: 16px;
+
+      @include unselectable;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-buildYourAlgo__expandIcon {
+      @include unselectable;
+    }
+  }
+
+  .m-buildYourAlgo__body {
+    padding: 20px 40px;
+  }
+}

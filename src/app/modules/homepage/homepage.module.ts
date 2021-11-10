@@ -15,6 +15,7 @@ import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { HomepageV2Module } from '../homepage-v2/homepage.module';
 import { HomepageContainerComponent } from './container.component';
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 
 const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
 
@@ -31,6 +32,7 @@ const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
     MarketingModule,
     ExperimentsModule,
     HomepageV2Module,
+    DiscoverySharedModule,
   ],
   declarations: [HomepageContainerComponent],
 })
