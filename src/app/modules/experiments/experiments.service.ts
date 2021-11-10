@@ -4,6 +4,7 @@ import { GrowthBook, Experiment } from '@growthbook/growthbook';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AnalyticsService } from '../../services/analytics';
 import { Session } from '../../services/session';
+import { CookieService } from '../../common/services/cookie.service';
 
 export { Experiment } from '@growthbook/growthbook';
 
@@ -15,7 +16,8 @@ export class ExperimentsService {
   constructor(
     private session: Session,
     private configs: ConfigsService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private cookieService: CookieService
   ) {}
 
   /**
@@ -24,11 +26,7 @@ export class ExperimentsService {
   initGrowthbook(): void {
     if (!this.growthbook) {
       // ID field required by SDK even though we are forcing.
-      const userId =
-        this.session.getLoggedInUser()?.guid ??
-        Math.random()
-          .toString(36)
-          .substr(2, 16);
+      const userId = this.getUserId();
 
       this.growthbook = new GrowthBook({
         user: { id: userId },
@@ -50,13 +48,19 @@ export class ExperimentsService {
         experiment = {
           key: experiment.experimentId,
           variations: experiment.variations,
-          force: experiment.variationId,
         };
+
+        // If logged in, we force the experiment
+        if (this.session.isLoggedIn()) {
+          experiment.force = experiment.variationId;
+        }
 
         this.experiments.push(experiment);
         this.growthbook.run(experiment);
 
-        this.addToAnalytics(experiment.key, experiment.force);
+        if (experiment.force != undefined) {
+          this.addToAnalytics(experiment.key, experiment.force);
+        }
       }
     }
   }
@@ -100,5 +104,31 @@ export class ExperimentsService {
     } catch (e) {
       return false;
     }
+  }
+
+  /**
+   * Will return the logged in userId or a random value
+   * will generate an experiment cookie if one doesn't exist.
+   * @returns string
+   */
+  protected getUserId(): string {
+    if (this.session.isLoggedIn()) {
+      return this.session.getLoggedInUser()?.guid;
+    }
+
+    const cookieName = 'experiments_id';
+
+    let cookieValue = this.cookieService.get(cookieName);
+
+    if (!cookieValue) {
+      cookieValue =
+        'exp-' +
+        Math.random()
+          .toString(36)
+          .substr(2, 16);
+      this.cookieService.put(cookieName, cookieValue);
+    }
+
+    return cookieValue;
   }
 }
