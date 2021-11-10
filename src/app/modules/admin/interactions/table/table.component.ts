@@ -10,44 +10,8 @@ import { Client } from '../../../../services/api/client';
 
 @Component({
   selector: 'm-admin--interactions--table',
-  template: `
-    <h3>{{ metric.title | titlecase }}</h3>
-    <div
-      class="mdl-spinner mdl-js-spinner is-active"
-      [mdl]
-      *ngIf="inProgress && !data[type].length"
-    ></div>
-
-    <table>
-      <tbody>
-        <tr *ngFor="let item of data[type]">
-          <td>
-            <a
-              [routerLink]="['/', item.user.username]"
-              target="_blank"
-              class="m-admin--interactions__channelLink"
-            >
-              <img
-                class="m-admin--interactions--avatar"
-                src="/icon/{{ item.user.guid }}/small/{{ item.user.icontime }}"
-              />
-              @{{ item.user.username }}
-            </a>
-          </td>
-          <td>{{ item.value }}</td>
-        </tr>
-
-        <tr *ngIf="data[type].length === 0 && !inProgress">
-          <td style="text-align: left" i18n="@@COMMON__ADMIN__NO_DATA">
-            No data
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  `,
-  host: {
-    class: 'm-border',
-  },
+  templateUrl: 'table.component.html',
+  styleUrls: ['table.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InteractionsTableComponent implements OnInit {
@@ -123,5 +87,9 @@ export class InteractionsTableComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  get isOffchain() {
+    return this.metric.metric === 'offchain';
   }
 }

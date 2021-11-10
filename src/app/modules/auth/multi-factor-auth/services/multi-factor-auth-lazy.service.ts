@@ -3,12 +3,9 @@ import {
   LazyLoadingService,
   ModalLazyLoadService,
 } from '../../../../common/services/modal-lazy-load.service';
-import {
-  MultiFactorAuthService,
-  MultiFactorRootPanel,
-} from './multi-factor-auth-service';
+import { MultiFactorRootPanel } from './multi-factor-auth-service';
 import { MultiFactorAuthBaseComponent } from '../multi-factor-auth.component';
-import { OnDestroy } from '@angular/core';
+import { MultiFactorAuthConfirmationService } from './multi-factor-auth-confirmation.service';
 
 export type MultiFactorModalOpts = {
   authType: MultiFactorRootPanel;
@@ -21,7 +18,7 @@ export type MultiFactorModalOpts = {
 export class MultiFactorLazyService implements LazyLoadingService {
   constructor(
     private lazyModal: ModalLazyLoadService,
-    private multiFactorAuthService: MultiFactorAuthService
+    private multiFactorAuthConfirmation: MultiFactorAuthConfirmationService
   ) {}
 
   /**
@@ -58,7 +55,15 @@ export class MultiFactorLazyService implements LazyLoadingService {
     }
   }
 
-  dismiss(): void {
+  /**
+   * Call to dismiss modal.
+   * @param { success?: boolean } params - success will call the success service.
+   */
+  public dismiss(params: { success?: boolean } = {}): void {
     this.lazyModal.dismiss();
+
+    if (params.success) {
+      this.multiFactorAuthConfirmation.success$.next(true);
+    }
   }
 }

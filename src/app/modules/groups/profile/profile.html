@@ -53,18 +53,19 @@
           (added)="upload_avatar($event)"
         >
         </minds-avatar>
-        <div class="m-group__searchBtnWrapper">
-          <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
-            ><i class="material-icons">search</i></a
+        <div class="m-groupInfo__rightIcons">
+          <div class="m-group__searchBtnWrapper">
+            <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
+              ><i class="material-icons">search</i></a
+            >
+          </div>
+          <minds-groups-settings-button
+            [(group)]="group"
+            class="m-button"
+            (change)="onOptionsChange($event)"
           >
+          </minds-groups-settings-button>
         </div>
-        <minds-groups-settings-button
-          [(group)]="group"
-          class="m-button"
-          (change)="onOptionsChange($event)"
-        >
-        </minds-groups-settings-button>
-
         <div class="m-groupInfo__member-previews">
           <m-group--member-previews [group]="group"></m-group--member-previews>
         </div>

@@ -91,7 +91,10 @@
   ::ng-deep minds-form-register {
     padding: 86px 67px 150px;
     display: block;
-    background-color: #fcfcfc;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
 
     @media screen and (max-width: $m-grid-max-mobile) {
       clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 99%);

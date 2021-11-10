@@ -66,6 +66,7 @@ import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
 import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
+import { AboutModule } from './modules/about/about.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -85,6 +86,7 @@ import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     //CheckoutModule,
     PlusModule,
+    AboutModule,
     AdsModule,
     BoostModule,
     WireModule,

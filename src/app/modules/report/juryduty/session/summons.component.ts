@@ -29,6 +29,8 @@ export class JuryDutySessionSummonsComponent {
   reportUrn: string = '';
   report;
 
+  subscriptionReadSubscription: Subscription;
+
   constructor(
     private sessionService: JurySessionService,
     private client: Client,
@@ -39,7 +41,11 @@ export class JuryDutySessionSummonsComponent {
   }
 
   ngOnInit() {
-    this.socketsService.join(`moderation_summon`);
+    this.subscriptionReadSubscription = this.socketsService.onReady$.subscribe(
+      () => {
+        this.socketsService.join(`moderation_summon`);
+      }
+    );
     this.socketsService.subscribe(`moderation_summon`, summons => {
       if (this.showModal) return; // Already open
       this.report = null;
@@ -69,6 +75,8 @@ export class JuryDutySessionSummonsComponent {
 
   ngOnDestroy() {
     if (this.expiresCountdown$) this.expiresCountdown$.unsubscribe();
+
+    this.subscriptionReadSubscription?.unsubscribe();
   }
 
   async accept() {

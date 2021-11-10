@@ -11,6 +11,8 @@ import { FastFadeAnimation } from '../../../../animations';
 import { DiscoveryService } from '../../discovery.service';
 import { PaywallService } from '../../../wire/v2/paywall.service';
 import { MetaService } from '../../../../common/services/meta.service';
+import { Session } from '../../../../services/session';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 @Component({
   selector: 'm-discovery__trend',
@@ -28,7 +30,9 @@ export class DiscoveryTrendComponent {
     private route: ActivatedRoute,
     private discoveryService: DiscoveryService,
     private paywallService: PaywallService,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private session: Session,
+    private experiments: ExperimentsService
   ) {}
 
   ngOnInit() {
@@ -63,5 +67,16 @@ export class DiscoveryTrendComponent {
 
   loadEntityFromEntitiesService(guid: string): EntityObservable {
     return this.entitiesService.single(`urn:entity:${guid}`);
+  }
+
+  /**
+   * Returns if link should be to discovery homepage
+   * @returns { boolean } true if link should be '/'.
+   */
+  public shouldBeDiscoveryHomepage(): boolean {
+    return (
+      this.experiments.hasVariation('discovery-homepage', 'on') &&
+      !this.session.getLoggedInUser()
+    ); // logged out
   }
 }

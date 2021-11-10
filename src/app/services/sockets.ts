@@ -8,7 +8,7 @@ import {
 import { Session } from './session';
 import { io } from 'socket.io-client';
 import { ConfigsService } from '../common/services/configs.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { isPlatformServer } from '@angular/common';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class SocketsService {
   rooms: string[] = [];
   debug: boolean = false;
   public error$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  onReady$: ReplaySubject<void> = new ReplaySubject();
 
   constructor(
     public session: Session,
@@ -44,11 +45,13 @@ export class SocketsService {
         reconnection: true,
         timeout: 40000,
         autoConnect: false,
+        withCredentials: true,
       });
 
       this.rooms = [];
       this.registered = false;
       this.setUpDefaultListeners();
+      this.onReady$.next();
 
       if (this.session.isLoggedIn()) {
         this.socket.connect();
