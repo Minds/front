@@ -78,14 +78,10 @@
   }
 
   minds-groups-settings-button.m-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-
     > button.material-icons {
       border: 0;
       font-size: 18px;
-      padding: 14px 8px;
+      padding: 14px 8px 14px 4px;
 
       transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
