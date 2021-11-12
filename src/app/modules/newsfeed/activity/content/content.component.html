@@ -129,6 +129,10 @@
         (error)="onImageError($event)"
         (click)="onModalRequested($event)"
         [m-blurhash]="service.entity$ | async"
+        [paywalled]="service.shouldShowPaywall$ | async"
+        [style.object-fit]="
+          (service.shouldShowPaywall$ | async) ? 'cover' : undefined
+        "
     /></ng-template>
   </div>
 </ng-container>
