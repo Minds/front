@@ -17,14 +17,14 @@
     display: block;
   }
 
-  .m-compassQuestionaireModal__main {
+  .m-compassQuestionnaireModal__main {
     padding: 45px 45px 20px;
 
     @media screen and (max-width: $max-mobile) {
       padding: 20px;
     }
   }
-  .m-compassQuestionaireModal__toolbar {
+  .m-compassQuestionnaireModal__toolbar {
     display: flex;
     justify-content: flex-end;
     padding: 25px 45px;
@@ -36,7 +36,7 @@
       padding: 20px;
     }
   }
-  .m-compassQuestionaireModal__title {
+  .m-compassQuestionnaireModal__title {
     font-size: 24px;
     font-weight: 500;
     margin-bottom: 15px;
@@ -49,7 +49,7 @@
     }
   }
 
-  .m-compassQuestionaireModal__subtitle {
+  .m-compassQuestionnaireModal__subtitle {
     margin-bottom: 35px;
     @include m-theme() {
       color: themed($m-textColor--secondary);
