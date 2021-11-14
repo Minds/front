@@ -43,7 +43,7 @@ export class CompassService {
     private cookieService: CookieService
   ) {}
 
-  async fetchQuestions(): Promise<CompassService> {
+  async fetchQuestions(): Promise<void> {
     try {
       const response: any = await this.client.get(
         'api/v3/social-compass/questions'
@@ -60,8 +60,6 @@ export class CompassService {
           'There was a problem loading the social compass questions.'
       );
     }
-
-    return this;
   }
 
   async saveAnswers(): Promise<boolean> {
