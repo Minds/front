@@ -14,7 +14,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 
-export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
+export const FORM_INPUT_SLIDER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => FormInputSliderComponent),
   multi: true,
@@ -23,7 +23,7 @@ export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
   selector: 'm-formInput__slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.ng.scss'],
-  providers: [FORM_INPUT_CHECKBOX_VALUE_ACCESSOR],
+  providers: [FORM_INPUT_SLIDER_VALUE_ACCESSOR],
 })
 export class FormInputSliderComponent implements ControlValueAccessor {
   @Input() id: string;

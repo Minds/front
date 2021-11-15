@@ -72,7 +72,7 @@ export class CompassService {
 
     try {
       const response = await this.client.post('api/v3/social-compass/answers', {
-        SOCIAL_COMPASS_ANSWERS_KEY: answers,
+        [SOCIAL_COMPASS_ANSWERS_KEY]: answers,
       });
 
       if (response && response['status'] === 'success') {

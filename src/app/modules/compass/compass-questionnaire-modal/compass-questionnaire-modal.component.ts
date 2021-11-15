@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import noOp from '../../../helpers/no-op';
 import { CompassService } from '../compass.service';
 
 @Component({
