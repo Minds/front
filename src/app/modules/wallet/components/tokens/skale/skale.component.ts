@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 // tabs for different components that can be shown
 export type SkaleBridgeSubTab =
-  | 'mainnet-bridge'
+  | 'bridge'
   | 'skale-bridge'
   | 'community-pool'
   | 'faucet';
@@ -36,7 +36,7 @@ export class WalletSkaleComponent {
   // currently active subtab.
   public activeSubTab$: BehaviorSubject<
     SkaleBridgeSubTab
-  > = new BehaviorSubject<SkaleBridgeSubTab>('mainnet-bridge');
+  > = new BehaviorSubject<SkaleBridgeSubTab>('bridge');
 
   /**
    * Gets all subTabs$ for a given network.
@@ -46,8 +46,8 @@ export class WalletSkaleComponent {
     return this.activeNetwork$.pipe(
       map((network: Network) => {
         return network.siteName === 'Mainnet'
-          ? ['mainnet-bridge', 'community-pool']
-          : ['skale-bridge', 'faucet'];
+          ? ['bridge', 'community-pool']
+          : ['bridge', 'faucet'];
       })
     );
   }

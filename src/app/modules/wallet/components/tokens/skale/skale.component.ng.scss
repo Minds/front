@@ -4,10 +4,10 @@
   .m-skale__subTabs {
     display: flex;
     flex-flow: row nowrap;
-    margin-bottom: 20px;
+    margin: 40px 0;
 
-    > * + * {
-      margin-left: 20px;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
 
     .m-skale__subTab {
@@ -18,6 +18,11 @@
       font: inherit;
       cursor: pointer;
       outline: inherit;
+      margin-right: 20px;
+      font-weight: 700;
+      font-size: 16px;
+      border-bottom: 5px solid transparent; // alignment with selected option.
+      padding-bottom: 5px;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
@@ -25,6 +30,7 @@
 
       &.m-skale__subTab--active {
         @include m-theme() {
+          border-bottom: 5px solid themed($m-bgColor--contrast);
           color: themed($m-textColor--primary);
         }
       }

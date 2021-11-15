@@ -6,7 +6,9 @@
   *ngIf="!inProgress"
 >
   <div class="m-skaleBridge__amountContainer">
-    <span class="m-skaleBridge__inputLabel">{{ inputCurrency$ | async }}</span>
+    <span class="m-skaleBridge__inputLabel">{{
+      inputCurrencyLabel$ | async
+    }}</span>
     <input
       type="number"
       class="m-input m-skaleBridge__input"
@@ -33,7 +35,9 @@
     </i>
   </div>
   <div class="m-skaleBridge__amountContainer">
-    <span class="m-skaleBridge__inputLabel">{{ outputCurrency$ | async }}</span>
+    <span class="m-skaleBridge__inputLabel">{{
+      outputCurrencyLabel$ | async
+    }}</span>
     <input
       type="number"
       class="m-input m-skaleBridge__input"

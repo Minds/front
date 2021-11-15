@@ -107,6 +107,34 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
   }
 
   /**
+   * Label for input currency (includes network in brackets)
+   * @returns { string } - label for input currency.
+   */
+  get inputCurrencyLabel$(): Observable<string> {
+    return this.inputCurrency$.pipe(
+      map(inputCurrency => {
+        return inputCurrency === 'MINDS'
+          ? 'MINDS (Mainnet)'
+          : 'skMINDS (SKALE)';
+      })
+    );
+  }
+
+  /**
+   * Label for output currency (includes network in brackets)
+   * @returns { string } - label for output currency.
+   */
+  get outputCurrencyLabel$(): Observable<string> {
+    return this.outputCurrency$.pipe(
+      map(outputCurrency => {
+        return outputCurrency === 'MINDS'
+          ? 'MINDS (Mainnet)'
+          : 'skMINDS (SKALE)';
+      })
+    );
+  }
+
+  /**
    * Max amount a user can input - returns the lowest of allowance and balance amount.
    * @returns { number } - maximum amount a user can input.
    */

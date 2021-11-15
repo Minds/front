@@ -8,14 +8,11 @@
     (click)="setSubTab(tab)"
   >
     <ng-container [ngSwitch]="tab">
-      <ng-container *ngSwitchCase="'mainnet-bridge'">
-        Mainnet Bridge
-      </ng-container>
-      <ng-container *ngSwitchCase="'skale-bridge'">
-        SKALE Bridge
+      <ng-container *ngSwitchCase="'bridge'">
+        Bridge
       </ng-container>
       <ng-container *ngSwitchCase="'community-pool'">
-        Community Pool
+        Fund Exits
       </ng-container>
       <ng-container *ngSwitchCase="'faucet'">
         Faucet

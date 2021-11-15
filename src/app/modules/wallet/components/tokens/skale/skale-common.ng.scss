@@ -6,6 +6,8 @@
     flex-flow: column nowrap;
 
     .m-skaleBridge__inputLabel {
+      display: flex;
+      flex-direction: row;
       font-weight: 400;
       font-size: 14px;
       margin: 10px 0;
@@ -36,5 +38,13 @@
     flex-flow: row nowrap;
     justify-content: end;
     margin-top: 40px;
+  }
+
+  .m-skaleBridge__info {
+    margin-left: 5px;
+
+    ::ng-deep i {
+      font-size: 18px;
+    }
   }
 }
