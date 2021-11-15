@@ -1,21 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { CompassService } from '../compass.service';
-import { CompassFormComponent } from './compass-form.component';
 
-describe('CompassFormComponent', () => {
-  let component: CompassFormComponent;
-  let fixture: ComponentFixture<CompassFormComponent>;
+import { CompassQuestionnaireModalComponent } from './questionnaire-modal.component';
+
+describe('CompassQuestionnaireModalComponent', () => {
+  let component: CompassQuestionnaireModalComponent;
+  let fixture: ComponentFixture<CompassQuestionnaireModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompassFormComponent],
+      declarations: [CompassQuestionnaireModalComponent],
       providers: [{ provide: CompassService, useValue: compassServiceMock }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompassFormComponent);
+    fixture = TestBed.createComponent(CompassQuestionnaireModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

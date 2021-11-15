@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CompassService } from './compass.service';
-import { MockComponent, MockService } from '../../utils/mock';
+import { MockService } from '../../utils/mock';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';

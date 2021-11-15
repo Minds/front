@@ -5,8 +5,8 @@ import { CompassService } from '../compass.service';
 
 @Component({
   selector: 'm-compassForm',
-  templateUrl: './compass-form.component.html',
-  styleUrls: ['./compass-form.component.ng.scss'],
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.ng.scss'],
 })
 export class CompassFormComponent implements OnInit {
   private subscriptions: Subscription[] = [];

@@ -8,7 +8,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { MockService } from '../../../utils/mock';
 import { CompassService } from '../compass.service';
 
-import { CompassQuestionnaireBannerComponent } from './compass-questionnaire-banner.component';
+import { CompassQuestionnaireBannerComponent } from './questionnaire-banner.component';
 
 describe('CompassQuestionnaireBannerComponent', () => {
   let component: CompassQuestionnaireBannerComponent;

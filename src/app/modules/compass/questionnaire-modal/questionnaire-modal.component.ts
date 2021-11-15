@@ -3,8 +3,8 @@ import { CompassService } from '../compass.service';
 
 @Component({
   selector: 'm-compassQuestionnaire__modal',
-  templateUrl: './compass-questionnaire-modal.component.html',
-  styleUrls: ['./compass-questionnaire-modal.component.ng.scss'],
+  templateUrl: './questionnaire-modal.component.html',
+  styleUrls: ['./questionnaire-modal.component.ng.scss'],
 })
 export class CompassQuestionnaireModalComponent {
   constructor(public compassService: CompassService) {}

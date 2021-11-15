@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { CompassQuestionnaireModalComponent } from '../compass-questionnaire-modal/compass-questionnaire-modal.component';
+import { CompassQuestionnaireModalComponent } from '../questionnaire-modal/questionnaire-modal.component';
 import { CompassService } from '../compass.service';
 
 export const SOCIAL_COMPASS_DISMISSED_KEY: string =
@@ -11,8 +11,8 @@ export const SOCIAL_COMPASS_DISMISSED_KEY: string =
 
 @Component({
   selector: 'm-compassQuestionnaire__banner',
-  templateUrl: './compass-questionnaire-banner.component.html',
-  styleUrls: ['./compass-questionnaire-banner.component.ng.scss'],
+  templateUrl: './questionnaire-banner.component.html',
+  styleUrls: ['./questionnaire-banner.component.ng.scss'],
 })
 export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
   answersProvidedSubscription: Subscription;
