@@ -1,0 +1,40 @@
+@import 'defaults.scss';
+
+:host {
+  .m-skaleBridge__amountContainer {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-skaleBridge__inputLabel {
+      font-weight: 400;
+      font-size: 14px;
+      margin: 10px 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-skaleBridge__input {
+    }
+
+    .m-skaleBridge__inputBalances {
+      display: flex;
+      flex-flow: row wrap;
+      font-weight: 400;
+      font-size: 14px;
+      margin: 10px 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-skaleBridge__buttonContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: end;
+    margin-top: 40px;
+  }
+}

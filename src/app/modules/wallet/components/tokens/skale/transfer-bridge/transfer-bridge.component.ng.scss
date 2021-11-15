@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  .m-skaleTransferBridge__tokenBridge {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-skaleTransferBridge__swapButtonContainer {
+      display: flex;
+      justify-content: center;
+
+      .m-skaleTransferBridge__swapButton {
+        height: 30px;
+        margin: 20px;
+        cursor: pointer;
+        font-size: 30px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+}

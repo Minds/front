@@ -1,6 +1,6 @@
-<div class="m-skale__communityPool" [formGroup]="form">
-  <div class="m-skale__inputAmountContainer">
-    <h6>Deposit ETH to fund withdrawals</h6>
+<div class="m-skaleCommunityPool__container" [formGroup]="form">
+  <div class="m-skaleBridge__amountContainer">
+    <span class="m-skaleBridge__inputLabel">Deposit ETH to fund exits</span>
     <input
       type="number"
       class="m-input"
@@ -8,19 +8,19 @@
       placeholder="Enter amount"
       formControlName="amount"
     />
-    <div class="m-skale__depositedAmount">
+    <div class="m-skaleBridge__inputBalances">
       Deposited: {{ (communityPoolBalance | number) ?? 0 }} ETH
     </div>
   </div>
 
-  <div class="m-skale__buttonContainer">
+  <div class="m-skaleBridge__buttonContainer">
     <m-button
       color="primary"
       (onAction)="withdrawCommunityPool()"
       [disabled]="!form.valid"
       >Withdraw</m-button
     >
-    <m-button color="primary" (onAction)="depositCommunityPool()"
+    <m-button color="blue" (onAction)="depositCommunityPool()"
       >Deposit</m-button
     >
   </div>

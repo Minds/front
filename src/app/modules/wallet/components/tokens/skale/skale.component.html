@@ -1,54 +1,36 @@
-<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
-<div class="m-skale__body" *ngIf="!inProgress">
-  <h6>
-    SKALE Bridge
-  </h6>
+<div class="m-skale__subTabs">
+  <button
+    class="m-skale__subTab"
+    *ngFor="let tab of subTabs$ | async"
+    [ngClass]="{
+      'm-skale__subTab--active': (activeSubTab$ | async) === tab
+    }"
+    (click)="setSubTab(tab)"
+  >
+    <ng-container [ngSwitch]="tab">
+      <ng-container *ngSwitchCase="'mainnet-bridge'">
+        Mainnet Bridge
+      </ng-container>
+      <ng-container *ngSwitchCase="'skale-bridge'">
+        SKALE Bridge
+      </ng-container>
+      <ng-container *ngSwitchCase="'community-pool'">
+        Community Pool
+      </ng-container>
+      <ng-container *ngSwitchCase="'faucet'">
+        Faucet
+      </ng-container>
+    </ng-container>
+  </button>
+</div>
 
-  <div class="m-skale__tokenConverter" [formGroup]="form">
-    <div class="m-skale__inputAmountContainer">
-      <span>{{ inputCurrency }}</span>
-      <input
-        type="number"
-        class="m-input"
-        [(ngModel)]="amount"
-        placeholder="Enter amount"
-        formControlName="amount"
-      />
-      <div>
-        Available: {{ (balance?.amount | number) ?? '0'}} {{ balance.currency }}
-      </div>
-      <div>Allowance: {{ allowance | number }} {{ inputCurrency }}</div>
-    </div>
-    <span
-      class="material-icons m-skale__swapButton"
-      (click)="swapCurrencyFields()"
-    >
-      swap_vert
-    </span>
-    <div class="m-skale__outputAmount">{{ amount }} {{ ouputCurrency }}</div>
-    <div class="m-skale__buttonContainer">
-      <m-button color="primary" (onAction)="approve()" [disabled]="amount === 0"
-        >Approve</m-button
-      >
-      <m-button color="primary" (onAction)="transfer()" [disabled]="!form.valid"
-        >Transfer</m-button
-      >
-    </div>
-  </div>
-
-  <m-wallet__skaleCommunityPool
-    *ngIf="inputCurrency === 'MINDS'"
-  ></m-wallet__skaleCommunityPool>
-
-  <!-- Warnings -->
-  <p *ngIf="inputCurrency === 'skMINDS'" class="m-skale__rechargeWarning">
-    Ensure you have recharged the community pool with enough ETH to make any
-    withdrawals prior to transferring from skMINDS to MINDS.
-  </p>
-  <p *ngIf="inputCurrency === 'skMINDS'" class="m-skale__enoughSKETHWarning">
-    Also make sure you have enough skETH in your wallet which can be acquired at
-    <a href="https://faucet.skale.network/" target="_blank"
-      >https://faucet.skale.network/</a
-    >
-  </p>
+<div class="m-skale__body">
+  <ng-container [ngSwitch]="activeSubTab$ | async">
+    <m-wallet__skaleCommunityPool
+      *ngSwitchCase="'community-pool'"
+    ></m-wallet__skaleCommunityPool>
+    <m-wallet__skaleTransferBridge
+      *ngSwitchDefault
+    ></m-wallet__skaleTransferBridge>
+  </ng-container>
 </div>
