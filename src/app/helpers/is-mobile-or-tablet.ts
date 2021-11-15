@@ -22,3 +22,19 @@ export default function isMobileOrTablet() {
 export function isTablet() {
   return isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
 }
+
+/**
+ * True if useragent is Android.
+ * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
+ */
+export function isAndroid(): boolean {
+  return /android/i.test(navigator.userAgent);
+}
+/**
+ * True if useragent is iOS.
+ * ! BE SURE TO CALL ON CLIENT-SIDE DUE TO SSR. !
+ */
+export function isIos(): boolean {
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  return /iPad|iPhone|iPod/i.test(navigator.userAgent) && !window.MSStream;
+}

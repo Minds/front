@@ -1,0 +1,21 @@
+<div class="m-joinBanner" *ngIf="shouldShow()">
+  <i class="m-joinBanner__closeButton material-icons" (click)="dismiss()"
+    >close</i
+  >
+  <div class="m-joinBanner__container">
+    <img
+      class="m-joinBanner__logo"
+      [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+    />
+    <p class="m-joinBanner__text">
+      We are building an open source & decentralized social network dedicated to
+      privacy, free expression, rev-sharing and helping creators thrive.
+    </p>
+    <m-button
+      [color]="'blue'"
+      (onAction)="join()"
+      class="m-joinBanner__joinButton"
+      >Join Minds</m-button
+    >
+  </div>
+</div>
