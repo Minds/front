@@ -31,6 +31,7 @@ export class PolygonService {
     parentProvider: this.parentProvider,
     maticProvider: this.maticProvider,
   });
+
   /**
    * Reinitialize wallet by resetting then initializing.
    * @returns { Promise<void> }
@@ -116,14 +117,15 @@ export class PolygonService {
     if (this.isOnMainnet()) {
       // return this.depositBox.approveForThisContract(amount);
     } else if (this.isOnPolygonNetwork()) {
-      const signer = await this.web3Wallet.getSigner();
-      console.log(signer);
+      const web3Provider = await this.web3Wallet.provider.provider;
+      const from = await this.web3Wallet.getSigner().getAddress();
+      this.maticPOSClient.web3Client.setParentProvider(web3Provider);
       const tx = await this.maticPOSClient.approveERC20ForDeposit(
         '0x499d11E0b6eAC7c0593d8Fb292DCBbF815Fb29Ae',
         amount,
-        { from: '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C' }
+        { from }
       );
-      console.log(tx.transactionHash);
+      console.log('transaciton hash', tx);
       // this.maticService.approve(amount);
     } else {
       this.toast.warn('Unable to approve for this network');
