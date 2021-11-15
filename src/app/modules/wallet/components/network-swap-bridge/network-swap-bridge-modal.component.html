@@ -20,5 +20,8 @@
       *ngIf="(selectedNetworkSiteName$ | async) === 'SKALE'"
     ></m-wallet__skale>
     <!-- Add templates for other swap modals here -->
+    <m-wallet__polygon
+      *ngIf="(selectedNetworkSiteName$ | async) === 'Polygon'"
+    ></m-wallet__polygon>
   </div>
 </div>

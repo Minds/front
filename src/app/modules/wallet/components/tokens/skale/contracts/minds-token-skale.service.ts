@@ -23,8 +23,10 @@ export class SkaleMindsTokenContractService extends AbstractSkaleMindsContractSe
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.skMindsTokenAbi = this.skaleConfig['erc20_contract']['abi'];
-    this.skMindsTokenAddress = this.skaleConfig['erc20_address'];
+    if (this.skaleConfig) {
+      this.skMindsTokenAbi = this.skaleConfig['erc20_contract']['abi'];
+      this.skMindsTokenAddress = this.skaleConfig['erc20_address'];
+    }
   }
 
   /**

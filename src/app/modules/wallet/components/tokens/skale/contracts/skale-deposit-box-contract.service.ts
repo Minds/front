@@ -31,13 +31,15 @@ export class SkaleDepositBoxContractService extends AbstractSkaleMindsContractSe
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.depositBoxAddress = this.skaleConfig[
-      'skale_contracts_mainnet'
-    ].deposit_box_erc20_address;
-    this.depositBoxAbi = this.skaleConfig[
-      'skale_contracts_mainnet'
-    ].deposit_box_erc20_abi;
-    this.skaleChainName = this.skaleConfig['chain_name'];
+    if (this.skaleConfig) {
+      this.depositBoxAddress = this.skaleConfig[
+        'skale_contracts_mainnet'
+      ].deposit_box_erc20_address;
+      this.depositBoxAbi = this.skaleConfig[
+        'skale_contracts_mainnet'
+      ].deposit_box_erc20_abi;
+      this.skaleChainName = this.skaleConfig['chain_name'];
+    }
   }
 
   /**

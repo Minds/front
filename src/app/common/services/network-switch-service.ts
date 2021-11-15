@@ -26,8 +26,13 @@ export interface NetworkMap {
 }
 
 export type NetworkChainId = string;
-export type NetworkName = 'Mainnet' | 'SKALE Minds' | 'Polygon';
-export type NetworkSiteName = 'Mainnet' | 'SKALE' | 'Polygon';
+export type NetworkName =
+  | 'Mainnet'
+  | 'SKALE Minds'
+  | 'Polygon'
+  | 'Goerli'
+  | 'Mumbai';
+export type NetworkSiteName = 'Mainnet' | 'SKALE' | 'Polygon' | 'Goerli';
 export type NetworkDescription = string;
 export type NetworkLogoPath = string;
 export type NetworkRpcUrl = string;
@@ -88,8 +93,19 @@ export class NetworkSwitchService {
     }
 
     // if (this.features.has('polygon')) {
+    // this.networks.polygon = {
+    //   id: '0x89',
+    //   siteName: 'Polygon',
+    //   networkName: 'Polygon',
+    //   description: "Ethereum's Internet of Blockchains.",
+    //   logoPath: 'assets/ext/polygon.png',
+    //   swappable: true,
+    // };
+    // }
+
+    // if (this.features.has('polygon')) => id of Goerli {
     this.networks.polygon = {
-      id: '0x89',
+      id: '0x5',
       siteName: 'Polygon',
       networkName: 'Polygon',
       description: "Ethereum's Internet of Blockchains.",
