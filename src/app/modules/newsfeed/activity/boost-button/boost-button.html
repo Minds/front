@@ -2,7 +2,7 @@
   class="m-boostButton__tooltip"
   [anchor]="'bottom'"
   [enabled]="false"
-  [hidden]="!shouldShowTooltip"
+  [hidden]="!(shouldShowTooltip$ | async)"
   [showArrow]="true"
 >
   <button
@@ -11,7 +11,7 @@
     data-cy="data-minds-activity-boost-button"
   >
     <span
-      [class.m-animation__shimmer--text]="shouldShowBoost"
+      [class.m-animation__shimmer--text]="shouldShowShimmer$ | async"
       i18n="verb|@@M__ACTION__BOOST"
       >Boost</span
     >
