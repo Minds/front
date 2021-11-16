@@ -57,6 +57,7 @@
   margin: 20px 0;
   border-radius: 4px;
   box-sizing: border-box;
+  max-height: -webkit-fill-available;
 
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
