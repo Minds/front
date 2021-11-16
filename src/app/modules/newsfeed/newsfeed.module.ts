@@ -38,6 +38,7 @@ import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.modu
 import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.component';
 import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { CompassModule } from '../compass/compass.module';
 
 const routes: Routes = [
   {
@@ -109,6 +110,7 @@ const routes: Routes = [
     LiquiditySpotModule,
     MessengerV2Module,
     ExperimentsModule,
+    CompassModule,
   ],
   declarations: [
     NewsfeedComponent,

@@ -1,0 +1,13 @@
+@import 'defaults.scss';
+
+:host {
+  margin: 30px 0;
+
+  ::ng-deep {
+    m-formInput__slider {
+      .m-formInput__slider {
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
