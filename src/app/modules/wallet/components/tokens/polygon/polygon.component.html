@@ -30,8 +30,8 @@
       <m-button color="primary" (onAction)="approve()" [disabled]="amount === 0"
         >Approve</m-button
       >
-      <m-button color="primary" (onAction)="transfer()" [disabled]="!form.valid"
-        >Transfer</m-button
+      <m-button color="primary" (onAction)="deposit()" [disabled]="amount === 0"
+        >Deposit</m-button
       >
     </div>
   </div>

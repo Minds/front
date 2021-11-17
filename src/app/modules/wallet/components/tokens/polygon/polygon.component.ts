@@ -133,7 +133,7 @@ export class WalletPolygonComponent implements OnInit {
    * @returns { void }
    */
   private deposit(): void {
-    // this.service.deposit(this.amount ?? 0);
+    this.service.deposit(this.amount ?? 0);
   }
 
   /**

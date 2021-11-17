@@ -25,7 +25,7 @@ export class PolygonMindsTokenContractService extends AbstractPolygonMindsContra
 
     if (this.polygonConfig && this.polygonAbi) {
       (this.maticMindsTokenAbi = this.polygonAbi.abi),
-        (this.maticMindsTokenAddress = this.polygonConfig.Main.Contracts.Tokens.MaticToken);
+        (this.maticMindsTokenAddress = this.polygonConfig.Main.POSContracts.Tokens.DummyERC20);
     }
   }
 

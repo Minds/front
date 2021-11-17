@@ -24,7 +24,7 @@ export class PolygonService {
     private boxService: PolygonDepositBoxContractService
   ) {}
 
-  // for mumbai testnet
+  // for goerli testnet
   public maticPOSClient = new MaticPOSClient({
     network: 'testnet',
     version: 'mumbai',
@@ -32,6 +32,13 @@ export class PolygonService {
     maticProvider: this.maticProvider,
   });
 
+  // for mumbai testnet
+  public maticPOSClientMatic = new MaticPOSClient({
+    network: 'testnet',
+    version: 'mumbai',
+    parentProvider: this.maticProvider,
+    maticProvider: this.parentProvider,
+  });
   /**
    * Reinitialize wallet by resetting then initializing.
    * @returns { Promise<void> }
@@ -120,13 +127,48 @@ export class PolygonService {
       const web3Provider = await this.web3Wallet.provider.provider;
       const from = await this.web3Wallet.getSigner().getAddress();
       this.maticPOSClient.web3Client.setParentProvider(web3Provider);
+
       const tx = await this.maticPOSClient.approveERC20ForDeposit(
-        '0x499d11E0b6eAC7c0593d8Fb292DCBbF815Fb29Ae',
+        '0x655F2166b0709cd575202630952D71E2bB0d61Af',
         amount,
         { from }
       );
       console.log('transaciton hash', tx);
       // this.maticService.approve(amount);
+    } else {
+      this.toast.warn('Unable to approve for this network');
+      throw new Error('Approving for an unsupported network');
+    }
+  }
+
+  /**
+   * Deposit the spend of X tokens.
+   * @param { number } amount - amount of tokens to approve.
+   * @returns { Promise<void> }
+   */
+  public async deposit(amount: number): Promise<any> {
+    if (!amount) {
+      this.toast.warn('You must provide an amount of tokens');
+      return;
+    }
+
+    if (this.isOnMainnet()) {
+      // return this.depositBox.approveForThisContract(amount);
+    } else if (this.isOnPolygonNetwork()) {
+      const web3Provider = await this.web3Wallet.provider.provider;
+      const fromUser = await this.web3Wallet.getSigner().getAddress();
+      this.maticPOSClientMatic.web3Client.setParentProvider(web3Provider);
+
+      const tx = await this.maticPOSClientMatic.depositERC20ForUser(
+        '0x655F2166b0709cd575202630952D71E2bB0d61Af',
+        fromUser,
+        amount,
+        {
+          from: fromUser,
+          gasPrice: '1000000',
+        }
+      );
+      console.log('transaciton hash', tx);
     } else {
       this.toast.warn('Unable to approve for this network');
       throw new Error('Approving for an unsupported network');

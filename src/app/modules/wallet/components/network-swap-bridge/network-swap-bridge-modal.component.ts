@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Web3WalletService } from '../../../../modules/blockchain/web3-wallet.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import {
   Network,
@@ -15,9 +16,13 @@ import {
 })
 export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
   implements OnInit {
-  public readonly selectedNetworkSiteName$: BehaviorSubject<
+  // public readonly selectedNetworkSiteName$: BehaviorSubject<
+  //   NetworkSiteName
+  // > = new BehaviorSubject<NetworkSiteName>('Polygon');
+
+  public selectedNetworkSiteName$: BehaviorSubject<
     NetworkSiteName
-  > = new BehaviorSubject<NetworkSiteName>('SKALE');
+  > = new BehaviorSubject<NetworkSiteName>('Mainnet');
 
   public swappableNetworks: Network[] = [];
 
@@ -27,12 +32,18 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
   // Dismiss intent.
   onDismissIntent: () => void = () => {};
 
-  constructor(private networkSwitcher: NetworkSwitchService) {
+  constructor(
+    private networkSwitcher: NetworkSwitchService,
+    private web3Wallet: Web3WalletService
+  ) {
     super();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
+    const activeChainId = await this.web3Wallet.getCurrentChainId();
+
+    console.log(this.swappableNetworks);
     this.setSelectedToActiveNetwork();
   }
 
@@ -64,6 +75,8 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
           network?.siteName &&
           swappableSiteNames.includes(network.siteName)
         ) {
+          console.log(network);
+          console.log(swappableSiteNames.includes(network.siteName));
           this.selectedNetworkSiteName$.next(network.siteName);
           return;
         }

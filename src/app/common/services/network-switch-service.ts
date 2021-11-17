@@ -62,6 +62,14 @@ export class NetworkSwitchService {
       logoPath: 'assets/ext/ethereum.png',
       swappable: false,
     },
+    polygon: {
+      id: '0x5',
+      siteName: 'Polygon',
+      networkName: 'Polygon',
+      description: "ETH's Internet of Blockchains.",
+      logoPath: 'assets/ext/polygon.png',
+      swappable: true,
+    },
   };
 
   // currently active network's chainId - NOT read from web3, should be updated on network switch.
