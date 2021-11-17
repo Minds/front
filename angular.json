@@ -250,7 +250,6 @@
             "outputPath": "dist/embed",
             "index": "src/app/modules/embed/embed.html",
             "baseHref": "/embed-static/",
-            "deployUrl": "http://localhost:4300/",
             "main": "src/app/modules/embed/main.ts",
             "tsConfig": "src/app/modules/embed/tsconfig.json",
             "polyfills": "src/polyfills.ts",

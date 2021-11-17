@@ -193,6 +193,7 @@ import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
+import { FormInputSliderComponent } from './components/slider/slider.component';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 
@@ -359,6 +360,7 @@ const routes: Routes = [
     PublisherSearchModalComponent,
     DateRangeModalComponent,
     HovercardComponent,
+    FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
   ],
@@ -501,6 +503,7 @@ const routes: Routes = [
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
+    FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
   ],

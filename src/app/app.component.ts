@@ -35,6 +35,7 @@ import { Upload } from './services/api/upload';
 import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
 import { ExperimentsService } from './modules/experiments/experiments.service';
 import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
+import { CompassHookService } from './common/services/compass-hook.service';
 
 @Component({
   selector: 'm-app',
@@ -83,7 +84,8 @@ export class Minds implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private socketsService: SocketsService,
     private experimentsService: ExperimentsService,
-    private multiFactorConfirmation: MultiFactorAuthConfirmationService
+    private multiFactorConfirmation: MultiFactorAuthConfirmationService,
+    private compassHook: CompassHookService
   ) {
     this.name = 'Minds';
 
@@ -202,6 +204,10 @@ export class Minds implements OnInit, OnDestroy {
     this.themeService.setUp();
 
     this.socketsService.setUp();
+
+    // TODO uncomment this when we want logged out users
+    // to complete the social compass questionnaire
+    // this.compassHook.listen();
   }
 
   ngOnDestroy() {
