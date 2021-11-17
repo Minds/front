@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import {
   NetworkSwitchService,
@@ -38,6 +39,18 @@ export class WalletNetworkSwitcherComponent {
    */
   get activeNetwork$(): Observable<Network> {
     return this.service.getActiveNetwork$();
+  }
+
+  /**
+   * Get logo of currently active network, or fallback to mainnet ETH logo.
+   * @returns { string } - active network logo.
+   */
+  get activeNetworkLogo$(): Observable<string> {
+    return this.activeNetwork$.pipe(
+      map(activeNetwork => {
+        return activeNetwork.logoPath ?? this.networks.mainnet.logoPath;
+      })
+    );
   }
 
   /**

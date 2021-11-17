@@ -10,6 +10,7 @@ import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { ExperimentsService } from '../../modules/experiments/experiments.service';
 
 @Injectable()
 export class ThemeService {
@@ -26,6 +27,7 @@ export class ThemeService {
     private client: Client,
     private session: Session,
     private features: FeaturesService,
+    private experiments: ExperimentsService,
     @Inject(PLATFORM_ID) private platformId,
     @Inject(DOCUMENT) private dom
   ) {
@@ -72,6 +74,15 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
+    if (this.experiments.hasVariation('discovery-homepage', 'on')) {
+      const shouldBeDark: boolean =
+        !this.session.isLoggedIn() ||
+        this.session.getLoggedInUser().theme !== 'light';
+
+      this.isDark$.next(shouldBeDark);
+      return;
+    }
+
     const shouldBeDark: boolean =
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().theme === 'dark';

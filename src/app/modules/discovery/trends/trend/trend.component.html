@@ -1,5 +1,8 @@
 <div class="m-goBack">
-  <a routerLink="../.." [queryParams]="{ reload: false }">
+  <a
+    [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '../..'"
+    [queryParams]="{ reload: false }"
+  >
     <i class="material-icons">arrow_back</i><span>Back</span>
   </a>
 </div>

@@ -92,27 +92,23 @@ export class NetworkSwitchService {
       };
     }
 
-    // if (this.features.has('polygon')) {
-    // this.networks.polygon = {
-    //   id: '0x89',
-    //   siteName: 'Polygon',
-    //   networkName: 'Polygon',
-    //   description: "Ethereum's Internet of Blockchains.",
-    //   logoPath: 'assets/ext/polygon.png',
-    //   swappable: true,
-    // };
-    // }
-
-    // if (this.features.has('polygon')) => id of Goerli {
-    this.networks.polygon = {
-      id: '0x5',
-      siteName: 'Polygon',
-      networkName: 'Polygon',
-      description: "Ethereum's Internet of Blockchains.",
-      logoPath: 'assets/ext/polygon.png',
-      swappable: true,
-    };
-    // }
+    if (this.features.has('polygon')) {
+      /**
+       * TODO:
+       * - Enable feature flag in settings.php for testing.
+       * - Add RPC URL if needed - else modify switch function - without this network cannot be added.
+       * - Pull id from config instead of hardcoding like below so that it can be swapped in settings.php
+       *   for testnet / non testnet.
+       */
+      this.networks.polygon = {
+        id: '0x5',
+        siteName: 'Polygon',
+        networkName: 'Polygon',
+        description: "ETH's Internet of Blockchains.",
+        logoPath: 'assets/ext/polygon.png',
+        swappable: true,
+      };
+    }
 
     // Mainnet / Rinkeby
     this.networks.mainnet.id =

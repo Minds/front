@@ -1,7 +1,11 @@
-<div class="m-networkSwitcher__currentNetwork" (click)="expanded = !expanded">
-  <span class="m-networkSwitcher__currentNetwork--light">Network:</span>
-  <span>&nbsp;{{ (activeNetwork$ | async)?.siteName ?? 'Unknown' }}&nbsp;</span>
-  <i class="material-icons">expand_more</i>
+<div
+  class="m-networkSwitcher__currentNetworkLogoContainer"
+  (click)="expanded = !expanded"
+>
+  <img
+    class="m-networkSwitcher__currentNetworkLogo"
+    [src]="cdnAssetsUrl + (activeNetworkLogo$ | async)"
+  />
 </div>
 
 <div

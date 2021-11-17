@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { NetworkSwitchService } from '../../../../../common/services/network-switch-service';
-import { MindsTokenMainnetSignedContractService } from '../skale/contracts/minds-token-mainnet-signed-contract.service';
 import { MaticPOSClient } from '@maticnetwork/maticjs';
 import { PolygonMindsTokenContractService } from './contracts/minds-token-polygon.service';
 import { PolygonDepositBoxContractService } from './contracts/polygon-deposit-box-contract.service';
+import { MindsTokenMainnetSignedContractService } from '../../network-swap-bridge/skale/contracts/minds-token-mainnet-signed-contract.service';
 
 @Injectable({ providedIn: 'root' })
 export class PolygonService {

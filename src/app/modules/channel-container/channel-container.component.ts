@@ -53,15 +53,10 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // TODO: could we take(1) here? Would that impact channel reloading?
     this.param$ = this.route.params.subscribe(params => {
-      console.log('params', params);
-
-      // TODO: And URL does not contain username already? Would this prevent initial load? probably.
       if (params['username']) {
         this.username = params['username'];
         this.showPro = !params['pro'] || params['pro'] !== '0';
-        console.log('username param found');
 
         if (
           this.username &&
@@ -71,17 +66,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
         }
       }
     });
-
-    async () => {
-      while (true) {
-        // test a load loop this way
-        setTimeout(function() {
-          this.load();
-        }, 1000);
-
-        // what if we set the channel in here?
-      }
-    };
   }
 
   canDeactivate(): boolean | Observable<boolean> {
