@@ -1,22 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
+import { FeaturesService } from '../../services/features.service';
+import { ExperimentsService } from '../experiments/experiments.service';
 
 @Component({
   selector: 'm-homepagecontainer',
   template: `
-    <m-discovery *mExperiment="'discovery-homepage'; variation: 'on'">
+    <m-discovery *ngIf="isGuestMode; else notGuestMode">
       <m-discovery__trends
         [showTabs]="false"
         [showChannels]="false"
       ></m-discovery__trends>
     </m-discovery>
-    <m-homepage__v2
-      *mExperiment="'discovery-homepage'; variation: 'off'"
-    ></m-homepage__v2>
+    <ng-template #notGuestMode>
+      <m-homepage__v2></m-homepage__v2>
+    </ng-template>
   `,
 })
 export class HomepageContainerComponent implements OnInit {
-  constructor(private metaService: MetaService) {}
+  constructor(
+    private metaService: MetaService,
+    private experimentsService: ExperimentsService,
+    private featuresService: FeaturesService
+  ) {}
+
+  isGuestMode: boolean;
 
   ngOnInit(): void {
     this.metaService
@@ -26,5 +34,9 @@ export class HomepageContainerComponent implements OnInit {
       )
       .setCanonicalUrl('/')
       .setOgUrl('/');
+
+    this.isGuestMode =
+      this.featuresService.has('guest-mode') &&
+      this.experimentsService.hasVariation('discovery-homepage', 'on');
   }
 }

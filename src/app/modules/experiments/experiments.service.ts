@@ -44,6 +44,8 @@ export class ExperimentsService {
 
     if (experiments && experiments.length > 0) {
       for (let experiment of experiments) {
+        const originExperiment = Object.assign(experiment);
+
         // Remap
         experiment = {
           key: experiment.experimentId,
@@ -52,7 +54,7 @@ export class ExperimentsService {
 
         // If logged in, we force the experiment
         if (this.session.isLoggedIn()) {
-          experiment.force = experiment.variationId;
+          experiment.force = originExperiment.variationId;
         }
 
         this.experiments.push(experiment);

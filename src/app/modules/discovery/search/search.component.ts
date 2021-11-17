@@ -16,6 +16,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__search',
@@ -43,6 +44,7 @@ export class DiscoverySearchComponent {
     configs: ConfigsService,
     private metaService: MetaService,
     private cd: ChangeDetectorRef,
+    private session: Session,
     public cardCarouselService: CardCarouselService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -116,6 +118,14 @@ export class DiscoverySearchComponent {
       return;
     }
     this.service.loadMore();
+  }
+
+  /**
+   * Whether user is logged in.
+   * @returns { boolean } - True if user is logged in.
+   */
+  public isLoggedIn(): boolean {
+    return !!this.session.getLoggedInUser();
   }
 
   detectChanges(): void {

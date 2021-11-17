@@ -2,7 +2,7 @@
 
 :host {
   .m-joinBanner {
-    height: 160px;
+    height: 80px;
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -19,22 +19,20 @@
     .m-joinBanner__container {
       display: flex;
       flex-flow: row nowrap;
-      justify-content: space-evenly;
-
-      @include m-theme() {
-        color: themed($m-textColor--primaryInverted);
-      }
+      justify-content: space-around;
+      align-items: center;
 
       .m-joinBanner__text {
-        max-width: 450px;
         font-weight: 500;
-        font-size: 17px;
-        line-height: 1.294;
+        font-size: 18px;
+        line-height: 1.222;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondaryInverted);
+        }
+
         @include unselectable;
 
-        @media screen and (min-width: $min-desktop) {
-          margin-right: 200px;
-        }
         @media screen and (max-width: $min-tablet) {
           display: none;
         }
@@ -43,6 +41,11 @@
       .m-joinBanner__logo {
         width: 130px;
         margin-bottom: 20px;
+
+        @media screen and (min-width: $min-tablet) {
+          margin-right: 100px;
+        }
+
         @include unselectable;
       }
 
@@ -72,8 +75,16 @@
       position: absolute;
       top: 0;
       right: 0;
-      margin: 20px 40px;
+      margin: 30px;
       cursor: pointer;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 30px 20px;
+      }
+
+      @media screen and (max-width: 400px) {
+        margin: 5px;
+      }
 
       @include unselectable;
       @include m-theme() {

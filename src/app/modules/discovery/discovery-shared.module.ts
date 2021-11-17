@@ -37,6 +37,7 @@ import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.servic
 import { DiscoveryTrendsService } from './trends/trends.service';
 import { DiscoveryTrendComponent } from './trends/trend/trend.component';
 import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/build-your-algorithm.component';
+import { ExperimentsModule } from '../experiments/experiments.module';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/bui
     ReactiveFormsModule,
     LegacyModule,
     ActivityModule,
+    ExperimentsModule,
   ],
   declarations: [
     DiscoverySidebarTagsComponent,
