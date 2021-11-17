@@ -1,31 +1,21 @@
 @import 'defaults.scss';
 
 :host {
-  .m-networkSwitcher__currentNetwork {
-    display: flex;
-    flex-flow: row nowrap;
-    background-color: unset;
-    font-size: 16px;
-    font-weight: 400;
-    cursor: pointer;
-    padding: 10px 15px;
-    border-radius: 3px;
-    max-width: 200px;
-    width: fit-content;
+  .m-networkSwitcher__currentNetworkLogoContainer {
+    .m-networkSwitcher__currentNetworkLogo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
 
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-      border: 1px solid themed($m-borderColor--primary);
-
-      &:hover {
-        background-color: themed($m-bgColor--secondary);
-      }
-    }
-
-    .m-networkSwitcher__currentNetwork--light {
-      font-weight: 400;
       @include m-theme() {
-        color: themed($m-textColor--secondary);
+        background-color: themed($m-borderColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+
+        &:hover {
+          background-color: themed($m-borderColor--tertiary);
+          border: 1px solid themed($m-borderColor--tertiary);
+        }
       }
     }
   }
