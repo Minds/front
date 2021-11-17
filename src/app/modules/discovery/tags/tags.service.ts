@@ -16,6 +16,7 @@ export class DiscoveryTagsService {
   trending$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   foryou$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   activityRelated$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+  userAndDefault$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   other$: Observable<DiscoveryTag[]> = combineLatest(
     this.tags$,
     this.trending$
@@ -99,6 +100,7 @@ export class DiscoveryTagsService {
 
       this.tags$.next(response.tags);
       this.trending$.next(response.trending);
+      this.userAndDefault$.next(response.default);
 
       this.foryou$.next(
         response.for_you

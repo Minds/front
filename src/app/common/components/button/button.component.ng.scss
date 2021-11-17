@@ -265,6 +265,8 @@
       text-rendering: optimizeLegibility;
 
       ::ng-deep {
+        //ojmtodo add this margin to the left if the icon is at the end
+
         i {
           margin-right: 4px;
         }

@@ -1,0 +1,91 @@
+@import 'defaults.scss';
+
+:host {
+  z-index: 1;
+  max-width: 720px;
+  .m-contentSettings__modal {
+    border: 1px solid cornflowerblue;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      min-height: 100vh;
+    }
+  }
+
+  span {
+    display: block;
+  }
+
+  [class*='m-contentSettingsModal__section'],
+  ::ng-deep .m-tagSettings__section {
+    padding-left: 45px;
+    padding-right: 45px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+  .m-contentSettingsModal__section--title {
+    padding-top: 45px;
+
+    .m-contentSettingsModal__title {
+      font-size: 24px;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 30px; //ojm?
+      }
+    }
+  }
+  .m-contentSettingsModal__section--tabs {
+    padding: 30px 0 0 0;
+
+    .m-tabs__container {
+      padding: 0 45px;
+
+      @media screen and (max-width: $max-mobile) {
+        padding: 0 20px;
+      }
+    }
+  }
+  .m-contentSettingsModal__main {
+    min-height: 400px;
+    max-height: 400px;
+    overflow: scroll;
+    padding-top: 30px;
+
+    .m-contentSettingsModal__section--subtitle {
+      margin-bottom: 30px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        padding-top: 20px;
+      }
+    }
+
+    .m-contentSettingsModal__formWrapper {
+      margin-bottom: 40px;
+    }
+  }
+  .m-contentSettingsModal__section--toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20px;
+      margin-top: 30px;
+    }
+  }
+}

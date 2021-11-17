@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 const noOp = () => {};
 
+// ojm this is the nsfw component
 @Component({
   selector: 'm-discovery__feedSettings',
   templateUrl: './settings.component.html',
