@@ -1,11 +1,11 @@
 @import 'defaults.scss';
 
 :host {
-  .m-skaleBridge__amountContainer {
+  .m-networkSwapBridge__amountContainer {
     display: flex;
     flex-flow: column nowrap;
 
-    .m-skaleBridge__inputLabel {
+    .m-networkSwapBridge__inputLabel {
       display: flex;
       flex-direction: row;
       font-weight: 400;
@@ -17,10 +17,10 @@
       }
     }
 
-    .m-skaleBridge__input {
+    .m-networkSwapBridge__input {
     }
 
-    .m-skaleBridge__inputBalances {
+    .m-networkSwapBridge__inputBalances {
       display: flex;
       flex-flow: row wrap;
       font-weight: 400;
@@ -33,14 +33,14 @@
     }
   }
 
-  .m-skaleBridge__buttonContainer {
+  .m-networkSwapBridge__buttonContainer {
     display: flex;
     flex-flow: row nowrap;
     justify-content: end;
     margin-top: 40px;
   }
 
-  .m-skaleBridge__info {
+  .m-networkSwapBridge__info {
     margin-left: 5px;
 
     ::ng-deep i {

@@ -18,7 +18,10 @@ import { map, take } from 'rxjs/operators';
 @Component({
   selector: 'm-wallet__skaleTransferBridge',
   templateUrl: 'transfer-bridge.component.html',
-  styleUrls: ['./transfer-bridge.component.ng.scss', '../skale-common.ng.scss'],
+  styleUrls: [
+    './transfer-bridge.component.ng.scss',
+    '../../network-swap-bridge-common.ng.scss',
+  ],
 })
 export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberComponent {
   // loading in progress

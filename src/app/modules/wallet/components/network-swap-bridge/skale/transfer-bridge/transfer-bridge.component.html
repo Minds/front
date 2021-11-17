@@ -5,17 +5,17 @@
   [formGroup]="form"
   *ngIf="!inProgress"
 >
-  <div class="m-skaleBridge__amountContainer">
-    <span class="m-skaleBridge__inputLabel">{{
+  <div class="m-networkSwapBridge__amountContainer">
+    <span class="m-networkSwapBridge__inputLabel">{{
       inputCurrencyLabel$ | async
     }}</span>
     <input
       type="number"
-      class="m-input m-skaleBridge__input"
+      class="m-input m-networkSwapBridge__input"
       placeholder="Enter amount"
       formControlName="inputAmount"
     />
-    <div class="m-skaleBridge__inputBalances">
+    <div class="m-networkSwapBridge__inputBalances">
       <span
         >Approved {{ allowance | number }}
         {{ inputCurrency$ | async }}&nbsp;-&nbsp;</span
@@ -34,18 +34,18 @@
       swap_vert
     </i>
   </div>
-  <div class="m-skaleBridge__amountContainer">
-    <span class="m-skaleBridge__inputLabel">{{
+  <div class="m-networkSwapBridge__amountContainer">
+    <span class="m-networkSwapBridge__inputLabel">{{
       outputCurrencyLabel$ | async
     }}</span>
     <input
       type="number"
-      class="m-input m-skaleBridge__input"
+      class="m-input m-networkSwapBridge__input"
       placeholder="Enter amount"
       formControlName="outputAmount"
     />
   </div>
-  <div class="m-skaleBridge__buttonContainer">
+  <div class="m-networkSwapBridge__buttonContainer">
     <m-button color="primary" (onAction)="approve()" [disabled]="amount === 0"
       >Approve</m-button
     >
