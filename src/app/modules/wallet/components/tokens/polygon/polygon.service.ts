@@ -30,6 +30,10 @@ export class PolygonService {
     version: 'mumbai',
     parentProvider: this.parentProvider,
     maticProvider: this.maticProvider,
+    parentDefaultOptions: {
+      from: '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C',
+    },
+    maticDefaultOptions: { from: '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C' },
   });
 
   // for mumbai testnet
@@ -103,11 +107,15 @@ export class PolygonService {
   }
 
   /**
-   * Gets MATIC  token balance.
+   * Gets MATIC  token allowance.
    * @returns { Promise<number> }
    */
   public async getPolygonTokenAllowance(): Promise<number> {
     return this.maticService.getPolygonTokenAllowance();
+  }
+
+  public async increasePolygonTokenAllowance(amount): Promise<number> {
+    return this.maticService.increasePolygonTokenAllowance(amount);
   }
 
   /**
@@ -128,11 +136,13 @@ export class PolygonService {
       const from = await this.web3Wallet.getSigner().getAddress();
       this.maticPOSClient.web3Client.setParentProvider(web3Provider);
 
+      // rootToken
       const tx = await this.maticPOSClient.approveERC20ForDeposit(
         '0x655F2166b0709cd575202630952D71E2bB0d61Af',
         amount,
         { from }
       );
+
       console.log('transaciton hash', tx);
       // this.maticService.approve(amount);
     } else {
@@ -157,18 +167,25 @@ export class PolygonService {
     } else if (this.isOnPolygonNetwork()) {
       const web3Provider = await this.web3Wallet.provider.provider;
       const fromUser = await this.web3Wallet.getSigner().getAddress();
+
       this.maticPOSClientMatic.web3Client.setParentProvider(web3Provider);
 
-      const tx = await this.maticPOSClientMatic.depositERC20ForUser(
-        '0x655F2166b0709cd575202630952D71E2bB0d61Af',
-        fromUser,
-        amount,
-        {
-          from: fromUser,
-          gasPrice: '1000000',
-        }
-      );
-      console.log('transaciton hash', tx);
+      const gasPriceValue = await this.maticPOSClientMatic.web3Client.web3.eth.getGasPrice();
+
+      const amountWei = this.web3Wallet.toWei(1000000);
+
+      // rootToken
+      const tx = await this.maticPOSClientMatic
+        .depositERC20ForUser(
+          '0x655F2166b0709cd575202630952D71E2bB0d61Af',
+          fromUser,
+          5000000000000000,
+          {
+            from: fromUser,
+          }
+        )
+        .then(() => console.log('exito'))
+        .catch(e => console.log(e));
     } else {
       this.toast.warn('Unable to approve for this network');
       throw new Error('Approving for an unsupported network');

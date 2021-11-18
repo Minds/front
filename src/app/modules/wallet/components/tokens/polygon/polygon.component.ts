@@ -132,7 +132,7 @@ export class WalletPolygonComponent implements OnInit {
    * Calls to deposit via service.
    * @returns { void }
    */
-  private deposit(): void {
+  private async deposit(): Promise<void> {
     this.service.deposit(this.amount ?? 0);
   }
 
@@ -167,6 +167,7 @@ export class WalletPolygonComponent implements OnInit {
    */
   private async updateAllowance(): Promise<void> {
     this.allowance = await this.service.getPolygonTokenAllowance();
+    console.log(this.allowance);
     this.inProgress = false;
   }
 

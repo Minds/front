@@ -52,7 +52,6 @@ export class PolygonMindsTokenContractService extends AbstractPolygonMindsContra
 
     const currentWalletAddress = await this.getWalletAddress();
     const mindsToken = this.getContract();
-    console.log(mindsToken);
     return mindsToken.balanceOf(currentWalletAddress);
   }
 
@@ -64,6 +63,17 @@ export class PolygonMindsTokenContractService extends AbstractPolygonMindsContra
     const currentWalletAddress = await this.getWalletAddress();
     const mindsToken = this.getContract();
     return mindsToken.allowance(currentWalletAddress);
+  }
+
+  public async increasePolygonTokenAllowance(amount): Promise<number> {
+    if (!this.isOnPolygonNetwork()) {
+      throw new Error('Unavailable on this network - please switch');
+    }
+
+    const currentWalletAddress = await this.getWalletAddress();
+    const mindsToken = this.getContract();
+    console.log(mindsToken);
+    return mindsToken.increaseAllowance(currentWalletAddress, amount);
   }
 
   /**
