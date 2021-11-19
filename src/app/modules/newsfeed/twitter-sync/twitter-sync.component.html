@@ -10,14 +10,11 @@
 </div>
 
 <div class="m-settingsV2__desc">
-  Using our Twitter Sync tool, you can have your new tweets automatically copied
-  over from Twitter to Minds. Retweets & Replies will not be copied over.
-</div>
-
-<div class="m-settingsV2__desc" *ngIf="isSetup">
-  You must have over {{ minFollowersForSync | number }} Twitter followers in
-  order for tweets to copy over, and they could take up to an hour to show on
-  Minds
+  Using our Twitter Sync tool, Twitter users with over
+  {{ minFollowersForSync | number }} followers can have their new tweets
+  automatically copied over from Twitter to Minds. Retweets, replies, and tweet
+  deletions are not synced to Minds. You can edit and/or delete posts on Minds
+  through the Minds app or website.
 </div>
 
 <div *ngIf="!inProgress && isSetup">
