@@ -1,0 +1,20 @@
+<div class="m-defaultFeed__feed" m-hotkeyScroll [anchors]="feedViewChildren">
+  <m-activity
+    *ngFor="let activity$ of feedsService.feed | async; let i = index"
+    [entity]="activity$ | async"
+    [displayOptions]="{
+      showComments: true,
+      isFeed: true
+    }"
+    [slot]="i + 1"
+    class="m-defaultFeed__activity"
+    #feedViewChildren
+  ></m-activity>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="loadNext()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async"
+  ></infinite-scroll>
+</div>
