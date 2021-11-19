@@ -17,6 +17,7 @@ export class CompassFormComponent implements OnInit {
   constructor(public compassService: CompassService) {}
 
   ngOnInit(): void {
+    console.log('ojm compassform init');
     this.subscriptions.push(
       this.compassService.questions$.subscribe(questions => {
         if (!questions || !questions.length) {
@@ -64,7 +65,7 @@ export class CompassFormComponent implements OnInit {
   }
 
   async submit(): Promise<void> {
-    if (this.canSubmit) {
+    if (this.canSubmit()) {
       this.setAnswers();
 
       await this.compassService.saveAnswers();

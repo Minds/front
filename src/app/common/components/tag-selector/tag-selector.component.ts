@@ -20,27 +20,16 @@ export class TagSelectorComponent {
     DiscoveryTag
   > = new EventEmitter<DiscoveryTag>();
 
-  hovering: boolean = false;
-
-  constructor() {}
-
   async addTag(tag): Promise<void> {
-    const i = this.getIndex(tag);
-
-    if (i !== -1) {
-      tag.selected = true;
-      this._tags[i] = tag;
-      this.onAddEmitter.emit(tag);
-    }
+    tag.selected = true;
+    this._tags[this.getIndex(tag)] = tag;
+    this.onAddEmitter.emit(tag);
   }
 
   async removeTag(tag): Promise<void> {
-    const i = this.getIndex(tag);
-    if (i !== -1) {
-      tag.selected = false;
-      this._tags[i] = tag;
-      this.onRemoveEmitter.emit(tag);
-    }
+    tag.selected = false;
+    this._tags[this.getIndex(tag)] = tag;
+    this.onRemoveEmitter.emit(tag);
   }
 
   getIcon(tag: DiscoveryTag): string {
@@ -51,7 +40,6 @@ export class TagSelectorComponent {
     }
   }
 
-  // ojm i don't think i need this whole thing
   getIndex(tag: DiscoveryTag): number {
     return this._tags.findIndex(i => i.value === tag.value);
   }
