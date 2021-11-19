@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   DiscoveryTag,
@@ -15,7 +15,7 @@ import { TagSettingsService } from '../tag-settings.service';
   templateUrl: './tag-settings.component.html',
   styleUrls: ['./tag-settings.component.ng.scss'],
 })
-export class TagSettingsComponent implements OnInit {
+export class TagSettingsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   tags: Array<DiscoveryTag>;
@@ -40,9 +40,16 @@ export class TagSettingsComponent implements OnInit {
     );
   }
 
-  onAddInput($event): void {
-    console.log('ojm onaddInput $event', $event);
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
+  /**
+   * For tags added via search bar
+   */
+  onAddInput($event): void {
     const tag = {
       value: $event,
       selected: true,
@@ -63,12 +70,10 @@ export class TagSettingsComponent implements OnInit {
   }
 
   onAdd($event): void {
-    console.log('ojm onAdd event', $event);
     this.discoveryTagsService.addTag($event);
   }
 
   onRemove($event): void {
-    console.log('ojm onRemove event', $event);
     this.discoveryTagsService.removeTag($event);
   }
 
@@ -76,22 +81,4 @@ export class TagSettingsComponent implements OnInit {
     await this.discoveryTagsService.saveTags();
     this.service.submitRequested$.next(false);
   }
-
-  /**
-   * Intent to add a tag
-   * @param tag
-   */
-  // addIntent(tag: string) {
-  //   this.add(tag);
-  //   this.hashtagsTypeaheadInput.reset();
-  // }
-
-  /**
-   * Emits the internal state to the composer service, stores to MRU cache and attempts to dismiss the modal
-   */
-  // save() {
-  //   this.service.tags$.next(this.state);
-  //   this.hashtagsTypeaheadInput.pushMRUItems(this.state);
-  //   this.dismissIntent.emit();
-  // }
 }

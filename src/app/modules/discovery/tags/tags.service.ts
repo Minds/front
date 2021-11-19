@@ -54,6 +54,12 @@ export class DiscoveryTagsService {
   // Add/Remove tracker
   remove$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
 
+  /**
+   * A very unsophsticated check of whether tags have been changed and not yet saved.
+   * Unsophisticated bc if you add and remove the same tag
+   * (a.k.a. no net change) it will still return true
+   */
+  tagsChanged$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -134,6 +140,7 @@ export class DiscoveryTagsService {
   addTag(tag: DiscoveryTag): void {
     if (this.tags$.value.findIndex(i => i.value === tag.value) === -1) {
       this.tags$.next([...this.tags$.value, tag]);
+      this.tagsChanged$.next(true);
     }
   }
 
@@ -146,6 +153,7 @@ export class DiscoveryTagsService {
 
     this.tags$.next(selected);
     this.remove$.next([...this.remove$.value, tag]);
+    this.tagsChanged$.next(true);
   }
 
   async addSingleTag(tag: DiscoveryTag): Promise<boolean> {
@@ -169,6 +177,7 @@ export class DiscoveryTagsService {
           )
           .map(tag => tag.value),
       });
+      this.tagsChanged$.next(false);
       return true;
     } catch (err) {
       return false;

@@ -2,15 +2,32 @@
 
 :host {
   z-index: 1;
-  max-width: 720px;
-  .m-contentSettings__modal {
-    border: 1px solid cornflowerblue;
+  width: 65vw;
+  height: 70vh;
+  max-width: 900px;
+  max-height: 900px;
+
+  @media screen and (max-width: $min-tablet) {
+    height: 90vh;
+    width: 80vw;
+    .m-contentSettings__main {
+      min-height: 60%;
+      max-height: 60%;
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    height: 100vh;
+    width: 100vw;
+    .m-contentSettings__main {
+      min-height: 70% !important;
+      max-height: 70% !important;
+    }
+  }
+
+  .m-contentSettings {
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
-    }
-
-    @media screen and (max-width: $max-mobile) {
-      min-height: 100vh;
     }
   }
 
@@ -18,7 +35,7 @@
     display: block;
   }
 
-  [class*='m-contentSettingsModal__section'],
+  [class*='m-contentSettings__section'],
   ::ng-deep .m-tagSettings__section {
     padding-left: 45px;
     padding-right: 45px;
@@ -28,10 +45,10 @@
       padding-right: 20px;
     }
   }
-  .m-contentSettingsModal__section--title {
+  .m-contentSettings__section--title {
     padding-top: 45px;
 
-    .m-contentSettingsModal__title {
+    .m-contentSettings__title {
       font-size: 24px;
       font-weight: 500;
       @include m-theme() {
@@ -39,11 +56,11 @@
       }
 
       @media screen and (max-width: $max-mobile) {
-        margin-top: 30px; //ojm?
+        margin-top: 30px;
       }
     }
   }
-  .m-contentSettingsModal__section--tabs {
+  .m-contentSettings__section--tabs {
     padding: 30px 0 0 0;
 
     .m-tabs__container {
@@ -54,13 +71,14 @@
       }
     }
   }
-  .m-contentSettingsModal__main {
-    min-height: 400px;
-    max-height: 400px;
+  .m-contentSettings__main {
+    min-height: 60%;
+    max-height: 60%;
     overflow: scroll;
     padding-top: 30px;
+    padding-bottom: 30px;
 
-    .m-contentSettingsModal__section--subtitle {
+    .m-contentSettings__section--subtitle {
       margin-bottom: 30px;
       @include m-theme() {
         color: themed($m-textColor--secondary);
@@ -70,11 +88,11 @@
       }
     }
 
-    .m-contentSettingsModal__formWrapper {
+    .m-contentSettings__formWrapper {
       margin-bottom: 40px;
     }
   }
-  .m-contentSettingsModal__section--toolbar {
+  .m-contentSettings__section--toolbar {
     display: flex;
     justify-content: flex-end;
     padding-top: 25px;
@@ -85,7 +103,6 @@
 
     @media screen and (max-width: $max-mobile) {
       padding: 20px;
-      margin-top: 30px;
     }
   }
 }

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Client } from '../../services/api';
 
-export type ContentSettingsModalTab = 'tags' | 'compass' | 'nsfw';
+export type ContentSettingsTab = 'tags' | 'compass' | 'nsfw';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ContentSettingsService {
-  activeTab$: BehaviorSubject<ContentSettingsModalTab> = new BehaviorSubject<
-    ContentSettingsModalTab
+  activeTab$: BehaviorSubject<ContentSettingsTab> = new BehaviorSubject<
+    ContentSettingsTab
   >('tags');
 
-  constructor(private client: Client) {}
+  constructor() {}
 }

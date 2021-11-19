@@ -2,8 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryFeedsService } from '../../discovery/feeds/feeds.service';
-import { NsfwSettingsService } from '../nsfw-settings.service';
 
+/**
+ * Draft of nsfw settings form
+ * Unused and unfinished because design is still being finalized
+ */
 @Component({
   selector: 'm-nsfwSettings__form',
   templateUrl: './form.component.html',
@@ -26,7 +29,7 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private discoveryFeedsService: DiscoveryFeedsService,
-    private nsfwSettingsService: NsfwSettingsService,
+    // private nsfwSettingsService: NsfwSettingsService,
     private fb: FormBuilder
   ) {
     this.form = fb.group({
@@ -38,8 +41,6 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('ojm form oninit');
-
     this.subscriptions = [
       this.form.controls.showNsfw.valueChanges.subscribe(value => {
         this.form.controls.nsfw.setValue(this.nsfwOptions.map(() => value));
@@ -62,13 +63,13 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
       // ),
     ];
 
-    this.subscriptions.push(
-      this.nsfwSettingsService.submitRequested$.subscribe(requested => {
-        if (requested) {
-          this.submit();
-        }
-      })
-    );
+    // this.subscriptions.push(
+    //   this.nsfwSettingsService.submitRequested$.subscribe(requested => {
+    //     if (requested) {
+    //       this.submit();
+    //     }
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {
@@ -88,10 +89,8 @@ export class NsfwSettingsFormComponent implements OnInit, OnDestroy {
         nsfwReasons[i].selected = values.nsfw[i];
       }
 
-      // ojm would this even work if not singleton?
       this.discoveryFeedsService.setNsfw(nsfwReasons);
-
-      await this.nsfwSettingsService.saveSettings();
+      // await this.nsfwSettingsService.saveSettings();
     }
   }
 

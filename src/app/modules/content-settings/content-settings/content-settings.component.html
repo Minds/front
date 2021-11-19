@@ -1,8 +1,8 @@
-<div class="m-contentSettings__modal">
-  <div class="m-contentSettingsModal__section--title">
-    <span class="m-contentSettingsModal__title">Content Settings</span>
+<div class="m-contentSettings">
+  <div class="m-contentSettings__section--title">
+    <span class="m-contentSettings__title">Content Settings</span>
   </div>
-  <div class="m-contentSettingsModal__section--tabs">
+  <div class="m-contentSettings__section--tabs">
     <div class="m-tabs__container">
       <div class="m-tabs__tab">
         <a
@@ -30,12 +30,12 @@
       </div> -->
     </div>
   </div>
-  <div class="m-contentSettingsModal__main">
+  <div class="m-contentSettings__main">
     <!-- ----------------------------------------- -->
     <!-- SUBTITLE -->
     <!-- ----------------------------------------- -->
-    <div class="m-contentSettingsModal__section--subtitle">
-      <span class="m-contentSettingsModal__subtitle">
+    <div class="m-contentSettings__section--subtitle">
+      <span class="m-contentSettings__subtitle">
         <ng-container
           *ngIf="activeTab === 'tags'"
           i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__TAGS"
@@ -60,9 +60,9 @@
     <!-- FORM -->
     <!-- ----------------------------------------- -->
     <div
-      class="m-contentSettingsModal__formWrapper"
+      class="m-contentSettings__formWrapper"
       [ngClass]="{
-        'm-contentSettingsModal__section--formWrapper': activeTab !== 'tags'
+        'm-contentSettings__section--formWrapper': activeTab !== 'tags'
       }"
     >
       <m-tagSettings *ngIf="activeTab === 'tags'"></m-tagSettings>
@@ -73,7 +73,17 @@
   <!-- ----------------------------------------- -->
   <!-- FORMS -->
   <!-- ----------------------------------------- -->
-  <div class="m-contentSettingsModal__section--toolbar">
-    <m-button color="blue" (onAction)="submit()">Save</m-button>
+  <div class="m-contentSettings__section--toolbar">
+    <m-button
+      *ngIf="activeTab === 'tags'"
+      color="blue"
+      (onAction)="submit()"
+      [disabled]="!(discoveryTagsService.tagsChanged$ | async)"
+      [saving]="discoveryTagsService.saving$ | async"
+      >Save</m-button
+    >
+    <m-button *ngIf="activeTab === 'compass'" color="blue" (onAction)="submit()"
+      >Save</m-button
+    >
   </div>
 </div>

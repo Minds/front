@@ -99,7 +99,6 @@ const PROVIDERS = [ChannelEditModalService];
     DiscoverySharedModule,
     ComposerModule,
     ExperimentsModule,
-    ContentSettingsModule, //ojm remove
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

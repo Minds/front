@@ -17,7 +17,6 @@ export class CompassFormComponent implements OnInit {
   constructor(public compassService: CompassService) {}
 
   ngOnInit(): void {
-    console.log('ojm compassform init');
     this.subscriptions.push(
       this.compassService.questions$.subscribe(questions => {
         if (!questions || !questions.length) {
