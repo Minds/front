@@ -1,15 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { By } from '@angular/platform-browser';
-import { DefaultFeedContainerComponent } from './container.component';
-import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommonModule } from '../../common/common.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
-import { MockComponent, MockService } from '../../utils/mock';
-import { FeedsService } from '../../common/services/feeds.service';
+import { Router } from '@angular/router';
+import { MockComponent, MockDirective, MockService } from '../../utils/mock';
+import { Session } from '../../services/session';
+import { DefaultFeedContainerComponent } from './container.component';
 
 describe('DefaultFeedContainerComponent', () => {
   let comp: DefaultFeedContainerComponent;
@@ -29,12 +25,20 @@ describe('DefaultFeedContainerComponent', () => {
           MockComponent({
             selector: 'm-suggestions__sidebar',
           }),
+          MockDirective({
+            selector: 'm-pageLayout__container',
+          }),
+          MockDirective({
+            selector: 'm-pageLayout__pane',
+          }),
+          MockDirective({
+            selector: 'm-stickySidebar',
+          }),
         ],
-        imports: [RouterTestingModule, ReactiveFormsModule, CommonModule],
+        imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
-          PageLayoutService,
-          { provider: FeedsService, useValue: MockService(FeedsService) },
-          { provide: FeaturesService, useValue: featuresServiceMock },
+          { provide: Router, useValue: MockService(Router) },
+          { provide: Session, useValue: MockService(Session) },
         ],
       }).compileComponents();
     })
@@ -68,5 +72,25 @@ describe('DefaultFeedContainerComponent', () => {
 
   it('should have suggestions sidebar component', () => {
     expect(By.css('m-suggestions__sidebar')).toBeDefined();
+  });
+
+  it('should redirect to newsfeed if logged in', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(true);
+    spyOn((comp as any).router, 'navigate').and.returnValue(true);
+
+    comp.ngOnInit(); // manually call lifecycle hook.
+
+    expect((comp as any).router.navigate).toHaveBeenCalledWith(['/newsfeed']);
+  });
+
+  it('should NOT redirect to newsfeed if logged out', () => {
+    (comp as any).session.isLoggedIn.and.returnValue(false);
+    spyOn((comp as any).router, 'navigate');
+
+    comp.ngOnInit(); // manually call lifecycle hook.
+
+    expect((comp as any).router.navigate).not.toHaveBeenCalledWith([
+      '/newsfeed',
+    ]);
   });
 });
