@@ -1,4 +1,4 @@
-<div class="m-defaultFeed__feed" m-hotkeyScroll [anchors]="feedViewChildren">
+<div class="m-defaultFeed__feed">
   <m-activity
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
     [entity]="activity$ | async"
@@ -8,7 +8,6 @@
     }"
     [slot]="i + 1"
     class="m-defaultFeed__activity"
-    #feedViewChildren
   ></m-activity>
 
   <infinite-scroll

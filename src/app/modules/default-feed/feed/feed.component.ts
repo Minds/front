@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  QueryList,
-  ElementRef,
-  ViewChildren,
-} from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 
 /**
@@ -18,22 +11,33 @@ import { FeedsService } from '../../../common/services/feeds.service';
   styleUrls: ['./feed.component.ng.scss'],
 })
 export class DefaultFeedComponent implements OnInit {
-  // feed view children used for J / K scroll
-  @ViewChildren('feedViewChildren', { read: ElementRef })
-  feedViewChildren: QueryList<ElementRef>;
-
   constructor(public feedsService: FeedsService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.load(true);
+  }
+
+  /**
+   * Loads more content to the feed.
+   * @returns { void }
+   */
+  public loadNext(): void {
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      this.feedsService.offset.getValue()
+    ) {
+      this.feedsService.fetch();
+    }
+    this.feedsService.loadMore();
   }
 
   /**
    * Loads the feed.
    * @param { boolean } - are we refreshing?
-   * @returns { Promise<void> }
+   * @returns { void }
    */
-  private async load(refresh: boolean = false): Promise<void> {
+  private load(refresh: boolean = false): void {
     if (refresh) {
       this.feedsService.clear(true);
     }
@@ -46,20 +50,5 @@ export class DefaultFeedComponent implements OnInit {
     } catch (e) {
       console.error('DefaultFeedComponent', e);
     }
-  }
-
-  /**
-   * Loads more content to the feed.
-   * @returns { Promise<void> }
-   */
-  public loadNext(): void {
-    if (
-      this.feedsService.canFetchMore &&
-      !this.feedsService.inProgress.getValue() &&
-      this.feedsService.offset.getValue()
-    ) {
-      this.feedsService.fetch();
-    }
-    this.feedsService.loadMore();
   }
 }
