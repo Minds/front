@@ -28,7 +28,7 @@
           {{ withdrawal.timestamp * 1000 | date: 'E LLL d · HH:mm' }}
         </td>
         <td>
-          {{ withdrawal.amount / 1000000000000000000 | number: '1.0-3' }}
+          {{ withdrawal.amount / 1000000000000000000 | number: '1.0-2' }}
           <span class="m-walletOnchainTransfers__text--secondary">MINDS</span>
         </td>
         <td [ngSwitch]="withdrawal.status">
