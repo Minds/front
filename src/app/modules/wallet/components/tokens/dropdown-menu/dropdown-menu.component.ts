@@ -32,10 +32,7 @@ export class WalletTokensDropdownMenu {
     private onchainTransferModal: OnchainTransferModalService,
     private injector: Injector,
     private networkSwapBridge: NetworkSwapBridgeService
-  ) {
-    // TODO: Development change - REMOVE.
-    this.onSwapChainsClick(null);
-  }
+  ) {}
 
   /**
    * Will open up transfer onchain modal - TODO

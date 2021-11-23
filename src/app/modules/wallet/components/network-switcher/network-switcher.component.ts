@@ -1,13 +1,14 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import {
   NetworkSwitchService,
   NetworkMap,
   NetworkChainId,
   Network,
+  UNKNOWN_NETWORK_LOGO_PATH_DARK,
+  UNKNOWN_NETWORK_LOGO_PATH_LIGHT,
 } from '../../../../common/services/network-switch-service';
+import { ThemeService } from '../../../../common/services/theme.service';
 
 /**
  * Network switcher component - allows a user to switch between L2s / Side-chains
@@ -26,31 +27,24 @@ export class WalletNetworkSwitcherComponent {
   public readonly cdnAssetsUrl: string;
 
   /**
-   * Gets currently active network's chain id.
-   * @returns { BehaviorSubject<NetworkChainId> } - currently active network's chain id.
-   */
-  get activeChainId$(): BehaviorSubject<NetworkChainId> {
-    return this.service.activeChainId$;
-  }
-
-  /**
    * Gets currently active networks's data from service.
-   * @param { Observable<Network> } - currently active networks's data from service.
+   * @param { Network } - currently active networks's data from service.
    */
-  get activeNetwork$(): Observable<Network> {
-    return this.service.getActiveNetwork$();
+  get activeNetwork(): Network {
+    return this.service.getActiveNetwork();
   }
 
   /**
-   * Get logo of currently active network, or fallback to mainnet ETH logo.
+   * Get logo of currently active network, or fallback to "Unknown" logo (?).
    * @returns { string } - active network logo.
    */
-  get activeNetworkLogo$(): Observable<string> {
-    return this.activeNetwork$.pipe(
-      map(activeNetwork => {
-        return activeNetwork.logoPath ?? this.networks.mainnet.logoPath;
-      })
-    );
+  get activeNetworkLogo(): string {
+    if (this.activeNetwork?.logoPath) {
+      return this.activeNetwork.logoPath;
+    }
+    return this.theme.isDark$.getValue()
+      ? UNKNOWN_NETWORK_LOGO_PATH_LIGHT
+      : UNKNOWN_NETWORK_LOGO_PATH_DARK;
   }
 
   /**
@@ -74,6 +68,7 @@ export class WalletNetworkSwitcherComponent {
   constructor(
     public service: NetworkSwitchService,
     private elementRef: ElementRef,
+    private theme: ThemeService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');

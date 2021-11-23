@@ -1,7 +1,7 @@
 <div class="m-skale__subTabs">
   <button
     class="m-skale__subTab"
-    *ngFor="let tab of subTabs$ | async"
+    *ngFor="let tab of subTabs"
     [ngClass]="{
       'm-skale__subTab--active': (activeSubTab$ | async) === tab
     }"

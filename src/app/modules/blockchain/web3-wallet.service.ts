@@ -39,6 +39,15 @@ export class Web3WalletService {
     return this.provider;
   }
 
+  /**
+   * Reinitialize wallet by resetting then initializing.
+   * @returns { Promise<void> }
+   */
+  public async reinitializeProvider(): Promise<void> {
+    this.resetProvider();
+    await this.initializeProvider();
+  }
+
   getSigner() {
     if (this.provider) {
       return this.provider.getSigner();
