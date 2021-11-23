@@ -1,6 +1,18 @@
-<div class="m-newsfeed m-page m-pageLayout__container" m-pageLayout__container>
+<ng-container *mIfFeature="'!navigation'">
+  <div class="m-layout--vertical-spacer"></div>
+</ng-container>
+
+<div
+  class="m-newsfeed m-page"
+  [class.m-newsfeed--2019]="!newNavigation"
+  [class.mdl-grid]="!newNavigation"
+  [class.m-pageLayout__container]="newNavigation"
+  m-pageLayout__container
+>
   <div
     class="m-newsfeed--feed"
+    [class.mdl-cell]="!newNavigation"
+    [class.mdl-cell--8-col]="!newNavigation"
     m-pageLayout__pane="main"
     [ngClass]="{ 'm-newsfeed--logged-out': !session.getLoggedInUser() }"
   >
@@ -12,8 +24,10 @@
 
   <div
     class="m-newsfeed--boost-sidebar m-newsfeed__sidebar"
+    [class.mdl-cell]="!newNavigation"
+    [class.mdl-cell--4-col]="!newNavigation"
     m-pageLayout__pane="right"
-    *ngIf="showRightSidebar"
+    *ngIf="showRightSidebar || newNavigation"
   >
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
