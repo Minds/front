@@ -1,0 +1,9 @@
+@import 'defaults';
+
+:host {
+  .m-defaultFeed__feed {
+    .m-defaultFeed__activity {
+      margin-bottom: 20px;
+    }
+  }
+}

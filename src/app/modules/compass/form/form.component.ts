@@ -64,7 +64,7 @@ export class CompassFormComponent implements OnInit {
   }
 
   async submit(): Promise<void> {
-    if (this.canSubmit) {
+    if (this.canSubmit()) {
       this.setAnswers();
 
       await this.compassService.saveAnswers();

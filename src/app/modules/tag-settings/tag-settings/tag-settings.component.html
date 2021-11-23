@@ -1,0 +1,18 @@
+<m-loadingSpinner
+  [inProgress]="discoveryTagsService.inProgress$ | async"
+></m-loadingSpinner>
+<ng-container *ngIf="!(discoveryTagsService.inProgress$ | async)">
+  <m-hashtags__typeaheadInput
+    class="m-tagSettings__section m-formWrapper"
+    placeholder="Search tags"
+    historyKey="content-settings"
+    (onAction)="onAddInput($event)"
+    #hashtagsTypeaheadInput
+  ></m-hashtags__typeaheadInput>
+  <m-tagSelector
+    class="m-tagSettings__section"
+    [tags]="discoveryTagsService.userAndDefault$ | async"
+    (onAdd)="onAdd($event)"
+    (onRemove)="onRemove($event)"
+  ></m-tagSelector>
+</ng-container>

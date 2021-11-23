@@ -22,7 +22,7 @@ import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoveryFeedsComponent } from './feeds/feeds.component';
 import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
 import { DiscoverySettingsButtonComponent } from './settings-button/settings-button.component';
-import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component';
+import { DiscoveryDisclaimerModule } from './disclaimer/disclaimer.module';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
 import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
 import { DiscoveryPlusUpgradeComponent } from './plus-upgrade/plus-upgrade.component';
@@ -49,6 +49,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     LegacyModule,
     ActivityModule,
     ExperimentsModule,
+    DiscoveryDisclaimerModule,
   ],
   declarations: [
     DiscoverySidebarTagsComponent,
@@ -67,7 +68,6 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     DiscoveryFeedsComponent,
     DiscoveryFeedsListComponent,
     DiscoverySettingsButtonComponent,
-    DiscoveryDisclaimerComponent,
     DiscoverySuggestionsComponent,
     DiscoveryNoTagsPromptComponent,
     DiscoveryPlusUpgradeComponent,
