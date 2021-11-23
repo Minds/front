@@ -16,6 +16,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { HomepageV2Module } from '../homepage-v2/homepage.module';
 import { HomepageContainerComponent } from './container.component';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
+import { DefaultFeedModule } from '../default-feed/default-feed.module';
 
 const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
 
@@ -31,8 +32,9 @@ const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
     MindsFormsModule,
     MarketingModule,
     ExperimentsModule,
-    HomepageV2Module,
     DiscoverySharedModule,
+    HomepageV2Module,
+    DefaultFeedModule,
   ],
   declarations: [HomepageContainerComponent],
 })

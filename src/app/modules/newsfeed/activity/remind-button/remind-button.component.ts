@@ -8,6 +8,7 @@ import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { map } from 'rxjs/operators';
 import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
+import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 
 @Component({
   selector: 'm-activity__remindButton',
@@ -30,6 +31,7 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     private stackableModalService: StackableModalService,
     private toasterService: FormToastService,
     private session: Session,
+    private authModal: AuthModalService,
     private client: Client
   ) {}
 
@@ -76,6 +78,11 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   }
 
   async onRemindClick(e: MouseEvent): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      this.openAuthModal();
+      return;
+    }
+
     this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
@@ -94,6 +101,11 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
   }
 
   onQuotePostClick(e: MouseEvent): void {
+    if (!this.session.isLoggedIn()) {
+      this.openAuthModal();
+      return;
+    }
+
     this.dismissPopover();
 
     const entity = this.service.entity$.getValue();
@@ -125,5 +137,20 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
     }
     entity.reminds++;
     this.service.entity$.next(entity);
+  }
+
+  /**
+   * Open auth modal to prompt for login or register.
+   * @returns { Promise<void> }
+   */
+  private async openAuthModal(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
   }
 }
