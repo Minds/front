@@ -26,6 +26,7 @@
   .m-formInputSlider__title {
     font-size: 14px;
     font-weight: 400;
+    user-select: none;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -37,6 +38,7 @@
     flex-grow: 2;
     flex-basis: 10%;
     font-weight: 400;
+    user-select: none;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);

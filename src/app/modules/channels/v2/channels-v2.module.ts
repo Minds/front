@@ -39,6 +39,7 @@ import { ChannelShopLazyComponent } from './shop/shop-lazy.component';
 import { ComposerModule } from '../../composer/composer.module';
 import { ChannelAdminConfirmationComponent } from './actions/admin-confirmation/admin-confirmation.component';
 import { ExperimentsModule } from '../../experiments/experiments.module';
+import { ContentSettingsModule } from '../../content-settings/content-settings.module';
 
 /**
  * Generally available components
