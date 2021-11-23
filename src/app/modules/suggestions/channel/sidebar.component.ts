@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
 
 type SuggestionEntityTypes = 'user' | 'group';
 
+/**
+ * Allows custom title overrides. Direct string titles cannot be localized
+ * so we must use an ID instead and check for it in the title getter.
+ */
+export type CustomTitleIdentifier = 'popular_channels' | '';
+
 @Component({
   selector: 'm-suggestions__sidebar',
   templateUrl: 'sidebar.component.html',
@@ -18,6 +24,10 @@ export class SuggestionsSidebar {
   readonly cdnUrl: string;
 
   @Input() type: SuggestionEntityTypes = 'user';
+
+  // allows a custom title to be set in the title getter.
+  @Input() customTitle: CustomTitleIdentifier = '';
+
   @Input() isPlusPage: boolean = false;
 
   suggestions$: BehaviorSubject<Array<any>> = this.service.suggestions$;
@@ -87,6 +97,9 @@ export class SuggestionsSidebar {
   }
 
   get title(): string {
+    if (this.customTitle === 'popular_channels') {
+      return $localize`:@@SUGGESTIONS__POPULAR_CHANNELS__TITLE:Popular Channels`;
+    }
     if (this.isPlusPage && this.type === 'user') {
       return $localize`:@@SUGGESTIONS__PLUS_CHANNEL__TITLE:Top Minds+ Channels`;
     }
