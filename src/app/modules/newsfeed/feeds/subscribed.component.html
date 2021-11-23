@@ -1,75 +1,103 @@
-<m-emailConfirmation></m-emailConfirmation>
-<ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
-  <div
-    class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
-    *ngIf="newUserPromo"
-  >
-    <i class="material-icons">trending_up</i>
-    <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS"
-      >Have 200 free views on us. Hit post to be boosted.</ng-container
+<div class="m-newsfeed__inner">
+  <m-emailConfirmation></m-emailConfirmation>
+  <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
+    <div
+      class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
+      *ngIf="newUserPromo"
     >
-  </div>
-
-  <ng-container>
-    <m-composer
-      [activity]="message ? { message: message } : undefined"
-      [size]="'compact'"
-      #composer
-    ></m-composer>
-  </ng-container>
-
-  <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
-    <ng-container *ngFor="let preActivity of prepended">
-      <m-activity
-        [entity]="preActivity"
-        [displayOptions]="{
-          showOnlyCommentsInput: true,
-          isFeed: true
-        }"
-        (deleted)="delete(preActivity)"
-      ></m-activity>
-    </ng-container>
-
-    <ng-container *mIfFeature="'boost-rotator'">
-      <ng-container *mIfBrowser>
-        <m-newsfeed--boost-rotator
-          *ngIf="showBoostRotator"
-          #feedViewChildren
-        ></m-newsfeed--boost-rotator>
+      <i class="material-icons">trending_up</i>
+      <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS"
+        >Have 200 free views on us. Hit post to be boosted.
       </ng-container>
+    </div>
+
+    <ng-container>
+      <m-composer
+        [activity]="message ? { message: message } : undefined"
+        [size]="'compact'"
+        #composer
+      ></m-composer>
     </ng-container>
 
-    <ng-container
-      *ngFor="let activity$ of feedsService.feed | async; let i = index"
-    >
-      <m-featured-content
-        *ngIf="(i > 0 && i % 5 === 0) || i === 2"
-        [slot]="i + 1"
-        [displayOptions]="{
-          showOnlyCommentsInput: true,
-          isFeed: true
-        }"
-        #feedViewChildren
-      ></m-featured-content>
-      <m-activity
-        *ngIf="activity$ | async as activity"
-        [entity]="activity"
-        [displayOptions]="{
-          showOnlyCommentsInput: true,
-          isFeed: true
-        }"
-        [slot]="i + 1"
-        (deleted)="delete(activity)"
-        #feedViewChildren
-      ></m-activity>
-    </ng-container>
+    <div class="m-newsfeed__subscribed__feedType">
+      <span
+        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
+        *ngIf="algorithm === 'top'"
+        class="m-newsfeed__subscribed__feedType__title"
+        >Top Posts</span
+      >
+      <span
+        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
+        *ngIf="algorithm === 'latest'"
+        class="m-newsfeed__subscribed__feedType__title"
+        >Latest Posts</span
+      >
 
-    <infinite-scroll
-      distance="25%"
-      (load)="loadNext()"
-      [moreData]="feedsService.hasMore | async"
-      [inProgress]="feedsService.inProgress | async"
-    >
-    </infinite-scroll>
-  </div>
-</ng-container>
+      <m-feedTypePopover
+        [type]="algorithm"
+        (changeType)="changeFeedAlgorithm($event)"
+      ></m-feedTypePopover>
+    </div>
+
+    <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
+      <ng-container *ngFor="let preActivity of prepended">
+        <m-activity
+          [entity]="preActivity"
+          [displayOptions]="{
+            showOnlyCommentsInput: true,
+            isFeed: true
+          }"
+          (deleted)="delete(preActivity)"
+        ></m-activity>
+      </ng-container>
+
+      <m-top-feed-mini *ngIf="algorithm === 'top'"> </m-top-feed-mini>
+
+      <!--boost rotator-->
+      <ng-container *ngIf="algorithm === 'latest'">
+        <ng-container *mIfFeature="'boost-rotator'">
+          <ng-container *mIfBrowser>
+            <m-newsfeed--boost-rotator
+              *ngIf="showBoostRotator"
+              #feedViewChildren
+            ></m-newsfeed--boost-rotator>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <!--actual feed-->
+      <ng-container
+        *ngFor="let activity$ of feedsService.feed | async; let i = index"
+      >
+        <m-featured-content
+          *ngIf="(i > 0 && i % 5 === 0) || i === 2"
+          [slot]="i + 1"
+          [displayOptions]="{
+            showOnlyCommentsInput: true,
+            isFeed: true
+          }"
+          #feedViewChildren
+        ></m-featured-content>
+        <m-activity
+          *ngIf="activity$ | async as activity"
+          [entity]="activity"
+          [displayOptions]="{
+            showOnlyCommentsInput: true,
+            isFeed: true
+          }"
+          [slot]="i + 1"
+          (deleted)="delete(activity)"
+          #feedViewChildren
+        ></m-activity>
+      </ng-container>
+
+      <infinite-scroll
+        distance="25%"
+        (load)="loadNext()"
+        [moreData]="feedsService.hasMore | async"
+        [inProgress]="feedsService.inProgress | async"
+      >
+      </infinite-scroll>
+    </div>
+  </ng-container>
+</div>

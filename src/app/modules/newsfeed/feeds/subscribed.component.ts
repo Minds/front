@@ -34,10 +34,13 @@ import { FeedsUpdateService } from '../../../common/services/feeds-update.servic
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 
+const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
+
 @Component({
   selector: 'm-newsfeed--subscribed',
   providers: [FeedsService],
   templateUrl: 'subscribed.component.html',
+  styleUrls: ['subscribed.component.ng.scss'],
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
@@ -46,6 +49,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
+  algorithm: string = 'latest';
 
   attachment_preview;
 
@@ -92,6 +96,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    const lastFeedAlgorithm = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
+    if (lastFeedAlgorithm) {
+      this.algorithm = lastFeedAlgorithm;
+    }
+
     this.routerSubscription = this.router.events
       .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -189,7 +198,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.inProgress = true;
 
     try {
-      this.feedsService
+      return this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
         .setLimit(12)
         .fetch(refresh);
@@ -239,5 +248,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (this.composer) {
       return this.composer.canDeactivate();
     }
+  }
+
+  /**
+   * change feed type
+   **/
+  changeFeedAlgorithm(type: 'latest' | 'top') {
+    this.algorithm = type;
+    this.storage.set(FEED_ALGORITHM_STORAGE_KEY, type);
   }
 }

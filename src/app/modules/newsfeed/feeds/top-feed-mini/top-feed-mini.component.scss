@@ -1,0 +1,45 @@
+m-top-feed-mini {
+  .m-topFeedMini__showMore__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: $minds-padding 0;
+
+    .m-topFeedMini__showMore__link {
+      padding: $minds-padding;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: $m-borderRadius;
+      transition: color 0.3s;
+      font-size: 16px;
+      margin-bottom: $minds-padding * 2;
+
+      @include m-theme() {
+        color: themed($m-link) !important;
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-link--hover) !important;
+        }
+      }
+    }
+  }
+
+  > m-activity:nth-child(n + 4) {
+    animation-duration: 0.5s;
+    animation-name: fadeFromBottom;
+  }
+}
+
+@keyframes fadeFromBottom {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

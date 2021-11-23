@@ -1,0 +1,101 @@
+@import 'defaults.scss';
+
+:host {
+  .m-feedTypePopper {
+    .m-feedTypePopper__iconLink {
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+    }
+
+    .m-feedTypePopper__iconLink--active {
+      @include m-theme() {
+        color: themed($m-link) !important;
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-link--hover) !important;
+        }
+      }
+    }
+  }
+
+  ::ng-deep popper-content {
+    .ngxp__container {
+      max-width: 300px;
+      min-width: 300px;
+      border-radius: $m-borderRadius;
+      padding: 0;
+      box-shadow: none;
+
+      @include z-index(tooltip);
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .ngxp__arrow,
+    .ngxp__arrow:before {
+      height: 25px !important;
+      width: 25px !important;
+    }
+
+    .ngxp__arrow:before {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .ngxp__inner {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+      }
+    }
+
+    .m-feedTypePopper__container {
+      .m-feedTypePopper__item {
+        padding: $minds-padding * 2;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--primaryAlt);
+          }
+        }
+
+        .m-feedTypePopper__title {
+          font-size: 16px;
+          margin-bottom: 0;
+          font-weight: 500;
+        }
+
+        .m-feedTypePopper__desc {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        .m-feedTypePopper__icon {
+          top: -5px;
+          position: relative;
+          padding-left: $minds-padding * 2;
+        }
+      }
+    }
+  }
+}

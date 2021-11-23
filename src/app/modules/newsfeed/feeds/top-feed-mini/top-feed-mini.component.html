@@ -1,0 +1,26 @@
+<ng-container
+  *ngFor="let activity$ of feedsService.feed | async; let i = index"
+>
+  <m-activity
+    *ngIf="activity$ | async as activity"
+    [entity]="activity"
+    [displayOptions]="{
+      showOnlyCommentsInput: true,
+      isFeed: true
+    }"
+    [slot]="i + 1"
+    #feedViewChildren
+  ></m-activity>
+</ng-container>
+
+<div
+  *ngIf="(feedsService.feed | async)?.length"
+  class="m-topFeedMini__showMore__container"
+>
+  <a
+    i18n="@@MINDS__NEWSFEED__TOP_FEED__SHOW_MORE"
+    class="m-topFeedMini__showMore__link"
+    (click)="loadNext()"
+    >Show more popular posts</a
+  >
+</div>

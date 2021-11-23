@@ -1,0 +1,17 @@
+@import 'defaults.scss';
+
+:host {
+  .m-newsfeed__subscribed__feedType {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: $minds-padding * 2;
+
+    .m-newsfeed__subscribed__feedType__title {
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+      top: 2px;
+    }
+  }
+}
