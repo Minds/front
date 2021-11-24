@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
-import { FeaturesService } from '../../services/features.service';
-import { ExperimentsService } from '../experiments/experiments.service';
 import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
 
 @Component({

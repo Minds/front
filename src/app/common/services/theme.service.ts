@@ -10,7 +10,6 @@ import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
-import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { GuestModeExperimentService } from '../../modules/experiments/sub-services/guest-mode-experiment.service';
 
 @Injectable()
