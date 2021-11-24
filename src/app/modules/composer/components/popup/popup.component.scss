@@ -193,14 +193,6 @@ m-composer__popup {
       @include m-theme() {
         border-color: themed($m-borderColor--primary);
       }
-
-      @include m-on-theme(light) {
-        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
-      }
-
-      @include m-on-theme(dark) {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-      }
     }
 
     input[type='text'],

@@ -7,6 +7,9 @@
 import { BehaviorSubject, of } from 'rxjs';
 
 export let feedsServiceMock = {
+  canFetchMore: true,
+  inProgress: new BehaviorSubject(false),
+  offset: new BehaviorSubject<number>(0),
   feed: new BehaviorSubject([Promise.resolve('[1,2,3,4,5]')]),
   clear() {
     of({ response: false }, { response: false }, { response: true });
@@ -24,6 +27,9 @@ export let feedsServiceMock = {
     return this;
   },
   fetch() {
+    return this;
+  },
+  loadMore() {
     return this;
   },
 };

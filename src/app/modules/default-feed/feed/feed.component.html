@@ -1,0 +1,18 @@
+<div class="m-defaultFeed__feed">
+  <m-activity
+    *ngFor="let activity$ of feedsService.feed | async"
+    [entity]="activity$ | async"
+    [displayOptions]="{
+      showComments: true,
+      isFeed: true
+    }"
+    class="m-defaultFeed__activity"
+  ></m-activity>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="loadNext()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async"
+  ></infinite-scroll>
+</div>

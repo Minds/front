@@ -1,0 +1,11 @@
+<ng-container *ngFor="let tag of _tags">
+  <m-button
+    class="m-tagSelector__button"
+    [ngClass]="{ 'm-tagSelector__button--selected': tag.selected }"
+    (onAction)="tag.selected ? removeTag(tag) : addTag(tag)"
+    [color]="tag.selected ? 'blue' : 'grey'"
+    size="small"
+    >{{ tag.value | titlecase }}
+    <i class="material-icons">{{ getIcon(tag) }}</i>
+  </m-button>
+</ng-container>
