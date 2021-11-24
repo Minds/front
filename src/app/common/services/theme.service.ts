@@ -74,7 +74,10 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
-    if (this.experiments.hasVariation('discovery-homepage', 'on')) {
+    if (
+      this.features.has('guest-mode') &&
+      this.experiments.hasVariation('discovery-homepage', 'on')
+    ) {
       const shouldBeDark: boolean =
         !this.session.isLoggedIn() ||
         this.session.getLoggedInUser().theme !== 'light';
