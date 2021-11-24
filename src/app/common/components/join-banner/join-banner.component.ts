@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { ExperimentsService } from '../../../modules/experiments/experiments.service';
+import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { ConfigsService } from '../../services/configs.service';
@@ -22,9 +22,9 @@ export class JoinBannerComponent implements OnInit {
 
   constructor(
     private session: Session,
-    private experiments: ExperimentsService,
     private sessionStorage: SessionsStorageService,
     private authModal: AuthModalService,
+    private guestModeExperiment: GuestModeExperimentService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -42,7 +42,7 @@ export class JoinBannerComponent implements OnInit {
    */
   public shouldShow(): boolean {
     return (
-      this.experiments.hasVariation('discovery-homepage', 'on') &&
+      this.guestModeExperiment.isActive() &&
       !this.session.getLoggedInUser() &&
       !this.dismissed
     );
