@@ -13,7 +13,7 @@ const TOP_FEED_PROMPT_DURATION = 3000;
 export class FeedTypePopoverComponent implements OnInit {
   @Input() type: 'top' | 'latest' = 'latest';
   shown: boolean = false;
-  shouldShowTooltip$ = new BehaviorSubject<boolean>(true);
+  shouldShowTooltip$ = new BehaviorSubject<boolean>(false);
 
   // Here we are using offset modifier, but more options
   // are available at https://popper.js.org/docs/v2
