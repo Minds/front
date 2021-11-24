@@ -42,8 +42,8 @@ m-chartV2 {
   transition: opacity 0.2s ease-in;
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
-    box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
-    color: themed($m-grey-300);
+    box-shadow: 0 0 4px rgba(themed($m-black-always), 0.3);
+    color: themed($m-textColor--secondary);
   }
 
   [class*='m-chartV2__hoverInfo__row'] {
@@ -57,7 +57,7 @@ m-chartV2 {
     font-weight: 400;
     font-size: 15px;
     @include m-theme() {
-      color: themed($m-grey-600);
+      color: themed($m-textColor--primary);
     }
   }
 
@@ -78,11 +78,11 @@ m-chartV2 {
     right: 10px;
     transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
-      color: themed($m-grey-300);
+      color: themed($m-textColor--tertiary);
     }
     &:active {
       @include m-theme() {
-        color: themed($m-grey-500);
+        color: themed($m-textColor--primary);
       }
     }
   }

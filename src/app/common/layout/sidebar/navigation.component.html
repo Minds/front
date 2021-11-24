@@ -156,156 +156,167 @@
           </a>
         </li>
       </ng-container>
-
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        *ngIf="user"
-      >
-        <a routerLink="/analytics" (click)="toggle()">
-          <m-tooltip
-            icon="insert_chart"
-            [enabled]="false"
-            [anchor]="'left'"
-            [useParentPosition]="true"
-          >
-            <ng-container i18n="@@COMMON__ANALYTICS">Analytics</ng-container>
-          </m-tooltip>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
-            >Analytics</span
-          >
-        </a>
-
-        <ul class="m-sidebarNavigation__subnav" m-sidebarNavigation__subnav>
-          <li
-            class="m-sidebarNavigation__item"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          >
-            <a
-              routerLink="/analytics/dashboard/traffic"
-              (click)="toggle()"
-              i18n="@@COMMON__TRAFFIC"
-              >Traffic</a
-            >
-          </li>
-          <li
-            class="m-sidebarNavigation__item"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          >
-            <a
-              routerLink="/analytics/dashboard/token"
-              (click)="toggle()"
-              i18n="@@ANALYTICS__TOKEN"
-              >Tokens</a
-            >
-          </li>
-          <li
-            class="m-sidebarNavigation__item"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          >
-            <a
-              routerLink="/analytics/dashboard/engagement"
-              (click)="toggle()"
-              i18n="@@COMMON__ENGAGEMENT"
-              >Engagement</a
-            >
-          </li>
-          <li
-            class="m-sidebarNavigation__item"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          >
-            <a
-              routerLink="/analytics/dashboard/earnings"
-              (click)="toggle()"
-              i18n="@@COMMON__EARNINGS"
-              >Earnings</a
-            >
-          </li>
-          <li
-            class="m-sidebarNavigation__item"
-            [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          >
-            <a
-              routerLink="/analytics/dashboard/trending"
-              (click)="toggle()"
-              i18n="@@COMMON__TRENDING"
-              >Trending</a
-            >
-          </li>
-        </ul>
-      </li>
-      <ng-container *ngIf="user">
+      <ng-container *ngIf="!nav2021Feature">
         <li
           class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-          *mIfFeature="'earn-modal'"
+          *ngIf="user"
         >
-          <a (click)="openEarnModal()">
+          <a routerLink="/analytics" (click)="toggle()">
             <m-tooltip
-              [enabled]="!showLabels"
+              icon="insert_chart"
+              [enabled]="false"
               [anchor]="'left'"
               [useParentPosition]="true"
             >
-              <i class="material-icons" m-tooltip--anchor>attach_money</i>
-              <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
+              <ng-container i18n="@@COMMON__ANALYTICS">Analytics</ng-container>
             </m-tooltip>
-
-            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN"
-              >Earn</span
-            >
-          </a>
-        </li>
-      </ng-container>
-      <ng-container *ngIf="user">
-        <li
-          class="m-sidebarNavigation__item"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-          *mIfFeature="'buy-tokens-uniswap-transak'"
-        >
-          <a (click)="buyTokens()">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
-              <ng-container i18n="@@COMMON__BUY_CRYPTO"
-                >Buy Crypto</ng-container
-              >
-            </m-tooltip>
-
             <span
               class="m-sidebarNavigationItem__text"
-              i18n="@@COMMON__BUY_CRYPTO"
-              >Buy Crypto</span
+              i18n="@@COMMON__ANALYTICS"
+              >Analytics</span
             >
           </a>
-        </li>
-      </ng-container>
-      <ng-container *ngIf="user">
-        <li
-          class="m-sidebarNavigation__item"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
-          *mIfFeature="'boost-modal-v2'"
-        >
-          <a (click)="openBoostModal()">
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-icon iconId="trending_up" m-tooltip--icon></m-icon>
-              <ng-container>Boost your channel</ng-container>
-            </m-tooltip>
 
-            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST"
-              >Boost</span
+          <ul class="m-sidebarNavigation__subnav" m-sidebarNavigation__subnav>
+            <li
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
             >
-          </a>
+              <a
+                routerLink="/analytics/dashboard/traffic"
+                (click)="toggle()"
+                i18n="@@COMMON__TRAFFIC"
+                >Traffic</a
+              >
+            </li>
+            <li
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            >
+              <a
+                routerLink="/analytics/dashboard/token"
+                (click)="toggle()"
+                i18n="@@ANALYTICS__TOKEN"
+                >Tokens</a
+              >
+            </li>
+            <li
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            >
+              <a
+                routerLink="/analytics/dashboard/engagement"
+                (click)="toggle()"
+                i18n="@@COMMON__ENGAGEMENT"
+                >Engagement</a
+              >
+            </li>
+            <li
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            >
+              <a
+                routerLink="/analytics/dashboard/earnings"
+                (click)="toggle()"
+                i18n="@@COMMON__EARNINGS"
+                >Earnings</a
+              >
+            </li>
+            <li
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            >
+              <a
+                routerLink="/analytics/dashboard/trending"
+                (click)="toggle()"
+                i18n="@@COMMON__TRENDING"
+                >Trending</a
+              >
+            </li>
+          </ul>
         </li>
+        <ng-container *ngIf="!nav2021Feature">
+          <ng-container *ngIf="user">
+            <li
+              class="m-sidebarNavigation__item"
+              [routerLinkActive]="'m-sidebarNavigation__item--active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              *mIfFeature="'earn-modal'"
+            >
+              <a (click)="openEarnModal()">
+                <m-tooltip
+                  [enabled]="!showLabels"
+                  [anchor]="'left'"
+                  [useParentPosition]="true"
+                >
+                  <i class="material-icons" m-tooltip--anchor>attach_money</i>
+                  <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
+                </m-tooltip>
+
+                <span
+                  class="m-sidebarNavigationItem__text"
+                  i18n="@@COMMON__EARN"
+                  >Earn</span
+                >
+              </a>
+            </li>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!nav2021Feature">
+        <ng-container *ngIf="user">
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            *mIfFeature="'buy-tokens-uniswap-transak'"
+          >
+            <a (click)="buyTokens()">
+              <m-tooltip
+                [enabled]="!showLabels"
+                [anchor]="'left'"
+                [useParentPosition]="true"
+              >
+                <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
+                <ng-container i18n="@@COMMON__BUY_CRYPTO"
+                  >Buy Crypto</ng-container
+                >
+              </m-tooltip>
+
+              <span
+                class="m-sidebarNavigationItem__text"
+                i18n="@@COMMON__BUY_CRYPTO"
+                >Buy Crypto</span
+              >
+            </a>
+          </li>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!nav2021Feature">
+        <ng-container *ngIf="user">
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            *mIfFeature="'boost-modal-v2'"
+          >
+            <a (click)="openBoostModal()">
+              <m-tooltip
+                [enabled]="!showLabels"
+                [anchor]="'left'"
+                [useParentPosition]="true"
+              >
+                <m-icon iconId="trending_up" m-tooltip--icon></m-icon>
+                <ng-container>Boost your channel</ng-container>
+              </m-tooltip>
+
+              <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST"
+                >Boost</span
+              >
+            </a>
+          </li>
+        </ng-container>
       </ng-container>
 
       <ng-container *ngIf="user">
@@ -321,7 +332,7 @@
               [anchor]="'left'"
               [useParentPosition]="true"
             >
-              <i class="material-icons" m-tooltip--anchor>group</i>
+              <i class="material-icons" m-tooltip--anchor>groups</i>
               <ng-container i18n="@@COMMON__GROUPS">Groups</ng-container>
             </m-tooltip>
             <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS"
@@ -331,7 +342,7 @@
         </li>
       </ng-container>
       <li
-        *ngIf="user && !matrixFeature"
+        *ngIf="user && (!matrixFeature || nav2021Feature)"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
@@ -345,27 +356,30 @@
           </span>
         </a>
       </li>
+      <ng-container *ngIf="!nav2021Feature">
+        <li
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          class="m-sidebarNavigation__item"
+          *ngIf="user"
+        >
+          <a [routerLink]="[settingsLink]" (click)="toggle()">
+            <m-tooltip
+              icon="more_horiz"
+              i18n="@@COMMON__SETTINGS"
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+              >Settings</m-tooltip
+            >
 
-      <li
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        class="m-sidebarNavigation__item"
-        *ngIf="user"
+            <span
+              class="m-sidebarNavigationItem__text"
+              i18n="@@COMMON__SETTINGS"
+              >Settings</span
+            >
+          </a>
+        </li></ng-container
       >
-        <a [routerLink]="[settingsLink]" (click)="toggle()">
-          <m-tooltip
-            icon="more_horiz"
-            i18n="@@COMMON__SETTINGS"
-            [enabled]="!showLabels"
-            [anchor]="'left'"
-            [useParentPosition]="true"
-            >Settings</m-tooltip
-          >
-
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
-            >Settings</span
-          >
-        </a>
-      </li>
       <ng-container *ngIf="!user">
         <li
           class="m-sidebarNavigation__item"
@@ -388,10 +402,40 @@
           </a>
         </li>
       </ng-container>
+      <ng-container *ngIf="user && nav2021Feature">
+        <!-- Click event is handled by popperjs inside trigger component -->
+        <m-sidebarMore__trigger>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a>
+              <m-tooltip
+                [enabled]="!showLabels"
+                [anchor]="'left'"
+                [useParentPosition]="true"
+              >
+                <i class="material-icons" m-tooltip--anchor>more_horiz</i>
+                <ng-container i18n="@@COMMON__MORE">More</ng-container>
+              </m-tooltip>
+
+              <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MORE"
+                >More</span
+              >
+            </a>
+          </li>
+        </m-sidebarMore__trigger>
+      </ng-container>
     </ul>
   </nav>
+
+  <!-- ojm make hover -->
 
   <div class="m-sidebar--groups" [hidden]="!user || matrixFeature">
     <ng-template dynamic-host></ng-template>
   </div>
 </div>
+
+<!-- ojm -->
+<!-- <m-sidebarMore></m-sidebarMore> -->

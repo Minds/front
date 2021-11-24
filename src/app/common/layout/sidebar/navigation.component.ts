@@ -73,6 +73,8 @@ export class SidebarNavigationComponent
 
   matrixFeature: boolean = false;
 
+  nav2021Feature: boolean = false;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -119,6 +121,12 @@ export class SidebarNavigationComponent
     }
 
     this.matrixFeature = this.featuresService.has('matrix');
+
+    //ojm uncomment
+    // this.nav2021Feature = this.featuresService.has('nav-2021');
+
+    // ojm remove
+    this.nav2021Feature = true;
 
     this.settingsLink = '/settings';
   }

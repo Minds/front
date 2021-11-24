@@ -1,0 +1,15 @@
+<div
+  class="m-sidebarMore__trigger"
+  [popper]="popper"
+  popperPlacement="bottom"
+  popperTrigger="click"
+  popperDelay="0"
+  [popperModifiers]="popperModifiers"
+  (popperOnShown)="shown = true"
+  (popperOnHide)="shown = false"
+>
+  <ng-content></ng-content>
+  <popper-content #popper (click)="popper.hide(); shown = false">
+    <m-sidebarMore *ngIf="shown"></m-sidebarMore>
+  </popper-content>
+</div>

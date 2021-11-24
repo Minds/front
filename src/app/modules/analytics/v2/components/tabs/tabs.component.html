@@ -1,0 +1,46 @@
+<!-- ojm todo feature flag here  -->
+<!-- <ng-container *mIfFeature="'nav-2021'"> -->
+<ng-container *ngIf="true">
+  <div class="m-tabs__container">
+    <div class="m-tabs__tab">
+      <a
+        routerLinkActive="m-tabs__tab--selected"
+        routerLink="/analytics/dashboard/traffic"
+        i18n="@@COMMON__TRAFFIC"
+        >Traffic</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLinkActive="m-tabs__tab--selected"
+        routerLink="/analytics/dashboard/token"
+        i18n="@@ANALYTICS__TOKEN"
+        >Tokens</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLinkActive="m-tabs__tab--selected"
+        routerLink="/analytics/dashboard/engagement"
+        i18n="@@COMMON__ENGAGEMENT"
+        >Engagement</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLinkActive="m-tabs__tab--selected"
+        routerLink="/analytics/dashboard/earnings"
+        i18n="@@COMMON__EARNINGS"
+        >Earnings</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
+        routerLinkActive="m-tabs__tab--selected"
+        routerLink="/analytics/dashboard/trending"
+        i18n="@@COMMON__TRENDING"
+        >Trending</a
+      >
+    </div>
+  </div>
+</ng-container>

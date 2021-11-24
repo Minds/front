@@ -1,0 +1,165 @@
+<!-- ojm<div class="m-sidebarMore" *ngIf="service.isOpen$ | async"> -->
+<div class="m-sidebarMore">
+  <ul class="m-dropdown__list m-sidebarMore__dropdown">
+    <!-- ----------------------- -->
+    <li
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item
+      "
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a [routerLink]="'/settings'">
+        <i class="material-icons">settings</i>
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+          >Settings</span
+        >
+      </a>
+    </li>
+    <!-- ----------------------- -->
+    <li
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item
+      "
+      (click)="buyTokens()"
+      *ngIf="getCurrentUser()"
+    >
+      <a (click)="buyTokens()">
+        <m-icon from="custom" iconId="wallet"></m-icon>
+
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BUY_CRYPTO"
+          >Buy Crypto</span
+        >
+      </a>
+    </li>
+    <!-- ----------------------- -->
+    <li
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item
+      "
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a [routerLink]="'/analytics'">
+        <i class="material-icons">insert_chart</i>
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+          >Analytics</span
+        >
+      </a>
+    </li>
+    <!-- ----------------------- -->
+    <li
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a (click)="openBoostModal()">
+        <i class="material-icons">trending_up</i>
+        <span i18n="@@COMMON__BOOST_CONSOLE">Boost</span>
+      </a>
+    </li>
+    <!-- ----------------------- -->
+    <li
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a (click)="openEarnModal()">
+        <i class="material-icons">attach_money</i>
+        <span i18n="@@COMMON__EARN">Earn</span>
+      </a>
+    </li>
+    <!--...........................-->
+    <li
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
+      "
+    ></li>
+    <!--...........................-->
+
+    <li
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="toggleTheme()"
+    >
+      <a>
+        <ng-container *ngIf="isDark">
+          <i class="material-icons">flare</i>
+          <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
+        </ng-container>
+        <ng-container *ngIf="!isDark">
+          <i class="material-icons">flare</i>
+          <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
+        </ng-container>
+      </a>
+    </li>
+    <!-- ----------------------- -->
+    <li
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
+      (click)="closeMenu()"
+    >
+      <!--Endpoint handles authentication and redirection-->
+      <a href="/api/v3/helpdesk/zendesk" target="_blank">
+        <i class="material-icons">help</i>
+        <span i18n="@@COMMON__HELP">Help</span>
+      </a>
+    </li>
+    <!--...........................-->
+    <li
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
+      "
+    ></li>
+    <!--...........................-->
+
+    <li
+      class="
+        m-dropdownList__item
+        m-sidebarMoreDropdown__item m-sidebarMoreDropdown__footer
+      "
+    >
+      <ng-container
+        *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
+      >
+        <a
+          *ngIf="link.routerLink"
+          [routerLink]="link.routerLink"
+          (click)="closeMenu()"
+        >
+          {{ link.label }}
+        </a>
+        <a
+          *ngIf="link.href"
+          [href]="link.href"
+          target="_blank"
+          (click)="closeMenu()"
+        >
+          {{ link.label }}
+        </a>
+        <span> · </span>
+      </ng-container>
+      <a (click)="toggleFooterLinks()">
+        <ng-container
+          *ngIf="maxFooterLinks === 4; else lessView"
+          i18n="@@COMMON__MORE"
+          >More</ng-container
+        >
+        <ng-template #lessView>
+          <ng-container i18n="@@COMMON__LESS">Less</ng-container>
+        </ng-template>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- ojm remove? or confirm if this is transparent -->
+<!-- <div
+  class="minds-bg-overlay"
+  (click)="closeMenu()"
+  [hidden]="!(service.isOpen$ | async)"
+></div> -->

@@ -11,6 +11,12 @@ m-analytics__filters {
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
+
+  .m-dropdownSelector__labelWrapper {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
 }
 
 @media screen and (max-width: $min-tablet) {
