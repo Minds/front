@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Storage } from '../../../../services/storage';
 
 const TOP_FEED_PROMPT_STORAGE_KEY = 'top-feed:recommended';
-const TOP_FEED_PROMPT_DURATION = 30000;
+const TOP_FEED_PROMPT_DURATION = 3000;
 
 @Component({
   selector: 'm-feedTypePopover',
