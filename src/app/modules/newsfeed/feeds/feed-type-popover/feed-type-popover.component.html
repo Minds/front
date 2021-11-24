@@ -10,12 +10,22 @@
   [popperHideOnScroll]="true"
   [popperPlacement]="'bottom'"
 >
-  <a
-    class="m-feedTypePopper__iconLink"
-    [class.m-feedTypePopper__iconLink--active]="type === 'top'"
+  <m-tooltip
+    class="m-feedTypePopper__tooltip"
+    [anchor]="'top'"
+    [enabled]="false"
+    [hidden]="!(shouldShowTooltip$ | async)"
+    [showArrow]="true"
   >
-    <i class="material-icons">tune</i>
-  </a>
+    <a
+      m-tooltip--anchor
+      class="m-feedTypePopper__iconLink"
+      [class.m-feedTypePopper__iconLink--active]="type === 'top'"
+    >
+      <i class="material-icons">tune</i>
+    </a>
+    <ng-container i18n="@@MINDS__NEWSFEED__TOP_POSTS__PROMPT">Prioritize top posts in your feed</ng-container>
+  </m-tooltip>
   <popper-content #popper>
     <div class="m-feedTypePopper__container">
       <div class="m-feedTypePopper__item" (click)="onChangeType('top')">

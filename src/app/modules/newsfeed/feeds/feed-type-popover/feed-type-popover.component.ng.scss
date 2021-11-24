@@ -1,6 +1,11 @@
 @import 'defaults.scss';
 
 :host {
+  ::ng-deep .m-tooltip--bubble {
+    width: 400px;
+    right: -5px;
+  }
+
   .m-feedTypePopper {
     .m-feedTypePopper__iconLink {
       cursor: pointer;
