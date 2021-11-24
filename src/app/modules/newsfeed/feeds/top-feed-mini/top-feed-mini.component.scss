@@ -3,7 +3,23 @@ m-top-feed-mini {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin: $minds-padding 0;
+    align-items: center;
+    margin: $minds-padding 0 $minds-padding * 2;
+
+    m-loadingSpinner {
+      width: unset;
+      margin: unset;
+
+      .m-loadingSpinner__wrapper {
+        padding: 0;
+        top: -1px;
+
+        .m-loadingSpinner__container {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
 
     .m-topFeedMini__showMore__link {
       padding: $minds-padding;
@@ -12,7 +28,6 @@ m-top-feed-mini {
       border-radius: $m-borderRadius;
       transition: color 0.3s;
       font-size: 16px;
-      margin-bottom: $minds-padding * 2;
 
       @include m-theme() {
         color: themed($m-link) !important;

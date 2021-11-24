@@ -17,6 +17,7 @@
   *ngIf="(feedsService.feed | async)?.length"
   class="m-topFeedMini__showMore__container"
 >
+  <m-loadingSpinner [inProgress]="feedsService.inProgress | async"></m-loadingSpinner>
   <a
     i18n="@@MINDS__NEWSFEED__TOP_FEED__SHOW_MORE"
     class="m-topFeedMini__showMore__link"
