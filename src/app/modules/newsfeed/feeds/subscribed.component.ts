@@ -25,7 +25,6 @@ import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { isPlatformServer } from '@angular/common';
@@ -33,8 +32,10 @@ import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { TopFeedExperimentService } from '../../experiments/sub-services/top-feed-experiment.service';
 
 const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
+type FeedAlgorithm = 'top' | 'latest';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -49,7 +50,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  algorithm: string = 'latest';
+  algorithm: FeedAlgorithm = 'latest';
 
   attachment_preview;
 
@@ -85,7 +86,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private storage: Storage,
     private context: ContextService,
-    protected featuresService: FeaturesService,
+    public topFeedExperiment: TopFeedExperimentService,
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
@@ -96,9 +97,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const lastFeedAlgorithm = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
-    if (lastFeedAlgorithm) {
-      this.algorithm = lastFeedAlgorithm;
+    if (this.topFeedExperiment.isActive()) {
+      const lastFeedAlgorithm = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
+      if (lastFeedAlgorithm) {
+        this.algorithm = lastFeedAlgorithm as FeedAlgorithm;
+      }
     }
 
     this.routerSubscription = this.router.events

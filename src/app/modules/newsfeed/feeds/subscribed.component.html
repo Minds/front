@@ -19,7 +19,7 @@
       ></m-composer>
     </ng-container>
 
-    <div class="m-newsfeed__subscribed__feedType">
+    <div *ngIf="topFeedExperiment.isActive()" class="m-newsfeed__subscribed__feedType">
       <span
         i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
         *ngIf="algorithm === 'top'"
