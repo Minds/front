@@ -3,6 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { Storage } from '../../services/storage';
 
+/**
+ * the duration in ms within which a boost prompt should be shown once
+ **/
+const PROMPT_DISMISS_DURATION = 3 * 24 * 60 * 60 * 1000; // 3 days in ms
+const BOOST_RECOMMENDED_KEY = 'boost:recommendedAt';
+
 @Injectable()
 export class BoostRecommendationService {
   /**
@@ -24,7 +30,18 @@ export class BoostRecommendationService {
     protected storage: Storage,
     protected experimentsService: ExperimentsService
   ) {
-    this.boostRecommended$.next(Boolean(this.storage.get('boost:recommended')));
+    const recommendedAt = this.storage.get(BOOST_RECOMMENDED_KEY);
+    if (!recommendedAt) {
+      return;
+    }
+
+    // if the last recommendation was more than 3 days ago
+    if (Date.now() - Number(recommendedAt) > PROMPT_DISMISS_DURATION) {
+      this.storage.destroy(BOOST_RECOMMENDED_KEY);
+      return;
+    }
+
+    this.boostRecommended$.next(true);
   }
 
   /**
@@ -32,7 +49,7 @@ export class BoostRecommendationService {
    * and removing it after some time.
    **/
   recommendBoost(guid: string) {
-    if (this.experimentsService.run('boost-prompt') !== 'on') {
+    if (this.experimentsService.run('boost-prompt-2') !== 'on') {
       return;
     }
     this.boostRecommendations$.next([
@@ -44,7 +61,7 @@ export class BoostRecommendationService {
         this.boostRecommendations$.next(
           this.boostRecommendations$.getValue().filter(p => p !== guid)
         );
-        this.storage.set('boost:recommended', true); // save to storage
+        this.storage.set(BOOST_RECOMMENDED_KEY, String(Date.now())); // save to storage
         this.boostRecommended$.next(true);
       },
       this.boostRecommended$.getValue() ? 12000 : 6000
