@@ -1,4 +1,3 @@
-<!-- ojm<div class="m-sidebarMore" *ngIf="service.isOpen$ | async"> -->
 <div class="m-sidebarMore">
   <ul class="m-dropdown__list m-sidebarMore__dropdown">
     <!-- ----------------------- -->
@@ -8,7 +7,6 @@
         m-sidebarMoreDropdown__item
       "
       *ngIf="getCurrentUser()"
-      (click)="closeMenu()"
     >
       <a [routerLink]="'/settings'">
         <i class="material-icons">settings</i>
@@ -41,11 +39,10 @@
         m-sidebarMoreDropdown__item
       "
       *ngIf="getCurrentUser()"
-      (click)="closeMenu()"
     >
       <a [routerLink]="'/analytics'">
         <i class="material-icons">insert_chart</i>
-        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS"
+        <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
           >Analytics</span
         >
       </a>
@@ -54,7 +51,6 @@
     <li
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
-      (click)="closeMenu()"
     >
       <a (click)="openBoostModal()">
         <i class="material-icons">trending_up</i>
@@ -65,21 +61,20 @@
     <li
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
-      (click)="closeMenu()"
     >
       <a (click)="openEarnModal()">
         <i class="material-icons">attach_money</i>
         <span i18n="@@COMMON__EARN">Earn</span>
       </a>
     </li>
-    <!--...........................-->
+    <!--./././././././././././././.-->
     <li
       class="
         m-dropdownList__item
         m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
       "
     ></li>
-    <!--...........................-->
+    <!--./././././././././././././.-->
 
     <li
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
@@ -98,24 +93,21 @@
       </a>
     </li>
     <!-- ----------------------- -->
-    <li
-      class="m-dropdownList__item m-sidebarMoreDropdown__item"
-      (click)="closeMenu()"
-    >
+    <li class="m-dropdownList__item m-sidebarMoreDropdown__item">
       <!--Endpoint handles authentication and redirection-->
       <a href="/api/v3/helpdesk/zendesk" target="_blank">
         <i class="material-icons">help</i>
         <span i18n="@@COMMON__HELP">Help</span>
       </a>
     </li>
-    <!--...........................-->
+    <!--./././././././././././././.-->
     <li
       class="
         m-dropdownList__item
         m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
       "
     ></li>
-    <!--...........................-->
+    <!--./././././././././././././.-->
 
     <li
       class="
@@ -126,24 +118,18 @@
       <ng-container
         *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
       >
-        <a
-          *ngIf="link.routerLink"
-          [routerLink]="link.routerLink"
-          (click)="closeMenu()"
-        >
+        <a *ngIf="link.routerLink" [routerLink]="link.routerLink">
           {{ link.label }}
         </a>
-        <a
-          *ngIf="link.href"
-          [href]="link.href"
-          target="_blank"
-          (click)="closeMenu()"
-        >
+        <a *ngIf="link.href" [href]="link.href" target="_blank">
           {{ link.label }}
         </a>
         <span> · </span>
       </ng-container>
-      <a (click)="toggleFooterLinks()">
+      <a
+        (click)="toggleFooterLinks()"
+        class="m-sidebarMoreDropdownFooter__toggle"
+      >
         <ng-container
           *ngIf="maxFooterLinks === 4; else lessView"
           i18n="@@COMMON__MORE"
@@ -156,10 +142,3 @@
     </li>
   </ul>
 </div>
-
-<!-- ojm remove? or confirm if this is transparent -->
-<!-- <div
-  class="minds-bg-overlay"
-  (click)="closeMenu()"
-  [hidden]="!(service.isOpen$ | async)"
-></div> -->

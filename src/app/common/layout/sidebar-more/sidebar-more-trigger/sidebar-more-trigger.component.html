@@ -1,15 +1,22 @@
 <div
   class="m-sidebarMore__trigger"
   [popper]="popper"
-  popperPlacement="bottom"
-  popperTrigger="click"
-  popperDelay="0"
+  [popperPlacement]="'right'"
+  [popperPositionFixed]="true"
+  [popperTrigger]="'click'"
+  [popperDelay]="0"
   [popperModifiers]="popperModifiers"
-  (popperOnShown)="shown = true"
-  (popperOnHide)="shown = false"
+  (popperOnShown)="popperOnShown()"
+  (popperOnHide)="popperOnHide()"
 >
   <ng-content></ng-content>
-  <popper-content #popper (click)="popper.hide(); shown = false">
-    <m-sidebarMore *ngIf="shown"></m-sidebarMore>
-  </popper-content>
 </div>
+
+<popper-content #popper>
+  <m-sidebarMore
+    *ngIf="shown"
+    (click)="clickPopperContent($event)"
+  ></m-sidebarMore>
+</popper-content>
+
+<div class="minds-bg-overlay" *ngIf="shown" (click)="shown = false"></div>

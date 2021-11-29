@@ -122,11 +122,7 @@ export class SidebarNavigationComponent
 
     this.matrixFeature = this.featuresService.has('matrix');
 
-    //ojm uncomment
-    // this.nav2021Feature = this.featuresService.has('nav-2021');
-
-    // ojm remove
-    this.nav2021Feature = true;
+    this.nav2021Feature = this.featuresService.has('nav-2021');
 
     this.settingsLink = '/settings';
   }

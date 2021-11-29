@@ -29,10 +29,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   isDark: boolean = false;
   themeSubscription: Subscription;
 
-  popperModifiers: any = {
-    //scroll: true;
-  };
-
   footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Privacy', routerLink: ['/p/privacy'] },
@@ -62,19 +58,12 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private boostModalService: BoostModalLazyService
   ) {}
 
-  // ojm todo test every link
-  // ojm todo check all the icons
-  // ojm todo check all the i18n's
-  // ojm todo check guest mode links
-
   ngOnInit(): void {
     this.session.isLoggedIn(() => this.detectChanges());
 
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
-
-    console.log('ojm triggeroninit');
   }
 
   getCurrentUser(): MindsUser {
@@ -86,23 +75,16 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   }
 
   async buyTokens(): Promise<void> {
-    this.closeMenu();
     await this.web3WalletService.getCurrentWallet(true);
     await this.buyTokensModalService.open();
   }
 
   async openEarnModal() {
-    this.closeMenu();
     await this.earnModalService.open();
   }
 
   async openBoostModal() {
     await this.boostModalService.open(this.session.getLoggedInUser());
-  }
-
-  closeMenu(): void {
-    // this.service.isOpen$.next(false);
-    console.log('ojm closemenu');
   }
 
   detectChanges(): void {
@@ -114,7 +96,6 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     this.themeService.toggleUserThemePreference();
   }
 
-  //ojm prevent popper jiggle on expand
   toggleFooterLinks(): void {
     if (this.maxFooterLinks === 4) {
       this.maxFooterLinks = Infinity;

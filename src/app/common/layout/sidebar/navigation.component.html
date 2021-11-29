@@ -380,7 +380,7 @@
           </a>
         </li></ng-container
       >
-      <ng-container *ngIf="!user">
+      <ng-container *ngIf="!user && !nav2021Feature">
         <li
           class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
@@ -402,7 +402,7 @@
           </a>
         </li>
       </ng-container>
-      <ng-container *ngIf="user && nav2021Feature">
+      <ng-container *ngIf="nav2021Feature">
         <!-- Click event is handled by popperjs inside trigger component -->
         <m-sidebarMore__trigger>
           <li
@@ -430,12 +430,7 @@
     </ul>
   </nav>
 
-  <!-- ojm make hover -->
-
   <div class="m-sidebar--groups" [hidden]="!user || matrixFeature">
     <ng-template dynamic-host></ng-template>
   </div>
 </div>
-
-<!-- ojm -->
-<!-- <m-sidebarMore></m-sidebarMore> -->
