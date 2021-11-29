@@ -20,7 +20,7 @@ export class TopFeedExperimentService {
   public isActive(): boolean {
     return (
       this.featuresService.has('top-feed') &&
-      this.experiments.hasVariation('top-feed', 'on')
+      this.experiments.hasVariation('top-feed-2', 'on')
     );
   }
 }
