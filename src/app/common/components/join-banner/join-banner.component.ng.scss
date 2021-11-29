@@ -22,6 +22,12 @@
       justify-content: space-around;
       align-items: center;
 
+      .m-joinBanner__container--left {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+      }
+
       .m-joinBanner__text {
         font-weight: 500;
         font-size: 18px;
@@ -39,8 +45,8 @@
       }
 
       .m-joinBanner__logo {
-        width: 130px;
-        margin-bottom: 20px;
+        width: 120px;
+        margin-bottom: 10px;
 
         @media screen and (min-width: $min-tablet) {
           margin-right: 100px;
