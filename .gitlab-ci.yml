@@ -1,4 +1,4 @@
- image: minds/ci-front:14
+image: minds/ci-front:14
 
 stages:
   - test and build
