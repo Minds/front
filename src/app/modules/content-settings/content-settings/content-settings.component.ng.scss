@@ -2,32 +2,27 @@
 
 :host {
   z-index: 1;
-  width: 65vw;
-  height: 70vh;
-  max-width: 900px;
-  max-height: 900px;
-
-  @media screen and (max-width: $min-tablet) {
-    height: 90vh;
-    width: 80vw;
-    .m-contentSettings__main {
-      min-height: 60%;
-      max-height: 60%;
-    }
-  }
-
-  @media screen and (max-width: $max-mobile) {
-    height: 100vh;
-    width: 100vw;
-    .m-contentSettings__main {
-      min-height: 70% !important;
-      max-height: 70% !important;
-    }
-  }
 
   .m-contentSettings {
+    width: 75vw;
+    height: 80vh;
+    max-width: 900px;
+    max-height: 900px;
+    display: flex;
+    flex-flow: column;
+
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      height: 90vh;
+      width: 80vw;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      height: 100vh;
+      width: 100vw;
     }
   }
 
@@ -72,11 +67,22 @@
     }
   }
   .m-contentSettings__main {
-    min-height: 60%;
-    max-height: 60%;
+    // min-height: 60%;
+    // max-height: 60%;
+    height: 60%;
+
     overflow: scroll;
     padding-top: 30px;
     padding-bottom: 30px;
+
+    @media screen and (max-width: $min-tablet) {
+      height: 70%;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      // min-height: 70% !important;
+      // max-height: 70% !important;
+    }
 
     .m-contentSettings__section--subtitle {
       margin-bottom: 30px;
