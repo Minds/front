@@ -24,7 +24,7 @@
   .m-compassQuestionnaireModal__main {
     padding: 45px 45px 20px;
     height: 80%;
-    overflow: scroll;
+    overflow-y: auto;
 
     @media screen and (max-width: $max-mobile) {
       padding: 20px;
