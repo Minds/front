@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import {
   NetworkSwitchService,
   Network,
 } from '../../../../../common/services/network-switch-service';
-import { map } from 'rxjs/operators';
 
 // tabs for different components that can be shown
-export type SkaleBridgeSubTab =
-  | 'bridge'
-  | 'skale-bridge'
-  | 'community-pool'
-  | 'faucet';
+export type SkaleBridgeSubTab = 'bridge' | 'skale-bridge' | 'community-pool';
+// | 'faucet';
 
 /**
  * Wrapper for SKALE transfer bridge that allows access to bridge, and depending on network
@@ -46,7 +42,7 @@ export class WalletSkaleComponent {
     const network = this.activeNetwork;
     return !network?.siteName || network.siteName === 'Mainnet'
       ? ['bridge', 'community-pool']
-      : ['bridge', 'faucet'];
+      : ['bridge'];
   }
 
   /**
