@@ -8,6 +8,8 @@
         class="m-joinBanner__logo"
         [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
       />
+    </div>
+    <div class="m-joinBanner__container--center">
       <span
         class="m-joinBanner__text"
         i18n="@@JOIN_BANNER__SPEAK_FREELY_EARN_CRYPTO"
@@ -15,14 +17,16 @@
         Speak freely and earn crypto.
       </span>
     </div>
-    <m-button
-      [color]="'blue'"
-      (onAction)="join()"
-      class="m-joinBanner__joinButton"
-    >
-      <ng-container i18n="@@JOIN_BANNER__JOIN_MINDS">
-        Join Minds
-      </ng-container>
-    </m-button>
+    <div class="m-joinBanner__container--right">
+      <m-button
+        [color]="'blue'"
+        (onAction)="join()"
+        class="m-joinBanner__joinButton"
+      >
+        <ng-container i18n="@@JOIN_BANNER__JOIN_MINDS">
+          Join Minds
+        </ng-container>
+      </m-button>
+    </div>
   </div>
 </div>
