@@ -4,6 +4,8 @@ import { Client } from './api/client';
 import { SiteService } from '../common/services/site.service';
 import { isPlatformServer } from '@angular/common';
 import { delay } from 'rxjs/operators';
+import { CookieService } from '../common/services/cookie.service';
+import { Session } from './session';
 
 export type SnowplowContext = {
   schema: string;
@@ -16,20 +18,13 @@ export class AnalyticsService {
 
   contexts: SnowplowContext[] = [];
 
-  static _(
-    router: Router,
-    client: Client,
-    site: SiteService,
-    platformId: Object
-  ) {
-    return new AnalyticsService(router, client, site, platformId);
-  }
-
   constructor(
-    @Inject(Router) public router: Router,
-    @Inject(Client) public client: Client,
-    @Inject(SiteService) public site: SiteService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    public router: Router,
+    public client: Client,
+    public site: SiteService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cookieService: CookieService,
+    private sessionService: Session
   ) {
     this.initSnowplow();
 
@@ -42,6 +37,12 @@ export class AnalyticsService {
         } catch (e) {
           console.error('Minds: router hook(AnalyticsService)', e);
         }
+      }
+    });
+
+    this.sessionService.loggedinEmitter.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.initPseudoId();
       }
     });
   }
@@ -58,6 +59,7 @@ export class AnalyticsService {
       minimumVisitLength: 30,
       heartbeatDelay: 10,
     });
+    this.initPseudoId();
   }
 
   async send(type: string, fields: any = {}, entityGuid: string = null) {
@@ -98,5 +100,20 @@ export class AnalyticsService {
 
   wasDefaultPrevented() {
     return this.defaultPrevented;
+  }
+
+  /**
+   * Set a psuedonymous id, if one is available
+   * This one-way id is created on login and only available to user
+   */
+  initPseudoId(): void {
+    if (this.pseudoId) (window as any).snowplow('setUserId', this.pseudoId);
+  }
+
+  /**
+   * Returns a pseudoId from a cookie value
+   */
+  private get pseudoId(): string {
+    return this.cookieService.get('minds_pseudoid');
   }
 }
