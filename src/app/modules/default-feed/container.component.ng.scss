@@ -7,12 +7,12 @@
     }
 
     .m-defaultFeedContainer__sidebar {
+      padding: 20px 0 20px 40px;
+
       .m-pageLayoutPane__sticky {
         display: flex;
         flex-flow: column nowrap;
         max-width: none;
-        padding: 20px 0 20px 40px;
-        top: 0 !important; // stops jumping on scroll down
 
         > * + * {
           margin-top: 20px;

@@ -18,7 +18,7 @@ export class JoinBannerComponent implements OnInit {
   public readonly cdnAssetsUrl: string = '';
 
   // whether modal has been dismissed in this session.
-  public dismissed = false;
+  public dismissed = true;
 
   constructor(
     private session: Session,
@@ -31,9 +31,7 @@ export class JoinBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.sessionStorage.get('dismissed_join_banner')) {
-      this.dismissed = true;
-    }
+    this.dismissed = !!this.sessionStorage.get('dismissed_join_banner');
   }
 
   /**
