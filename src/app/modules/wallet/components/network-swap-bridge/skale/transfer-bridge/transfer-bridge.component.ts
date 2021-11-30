@@ -11,6 +11,7 @@ import { InputBalance, TransactableCurrency } from '../skale.types';
 import { AbstractSubscriberComponent } from '../../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { NetworkSwitchService } from '../../../../../../common/services/network-switch-service';
 
 /**
  * Skale transfer bridge component - enables transfer of MINDS to and from SKALE network.
@@ -39,46 +40,17 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
   // form for input amount
   public form: FormGroup;
 
-  constructor(private service: SkaleService) {
+  constructor(
+    private service: SkaleService,
+    private networkSwitch: NetworkSwitchService
+  ) {
     super();
   }
 
   ngOnInit(): void {
-    this.initBalance(); // async
-
-    this.form = new FormGroup({
-      inputAmount: new FormControl('', {
-        validators: [
-          Validators.required,
-          Validators.min(0.001),
-          // will update as max changes
-          (control: AbstractControl) =>
-            Validators.max(this.maxInputAmount)(control),
-        ],
-      }),
-      outputAmount: new FormControl('', {
-        validators: [
-          Validators.required,
-          Validators.min(0.001),
-          // will update as max changes
-          (control: AbstractControl) =>
-            Validators.max(this.maxInputAmount)(control),
-        ],
-      }),
-    });
-
-    const outputAmountControl = this.form.get('outputAmount');
-    const inputAmountControl = this.form.get('inputAmount');
-
-    // mirror input and output amounts as MINDS and skMINDS have a 1:1 ratio.
-    this.subscriptions.push(
-      outputAmountControl.valueChanges.subscribe((value: number) =>
-        inputAmountControl.setValue(value, { emitEvent: false })
-      ),
-      inputAmountControl.valueChanges.subscribe((value: number) =>
-        outputAmountControl.setValue(value, { emitEvent: false })
-      )
-    );
+    this.initBalance(); // fires async.
+    this.setupForm(); // setup input form.
+    this.setupNetworkChangeSubscription(); // listen to network changes.
   }
 
   /**
@@ -181,8 +153,6 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
   public async switchNetworkMainnet(): Promise<void> {
     this.inProgress = true;
     await this.service.switchNetworkMainnet();
-    await this.initBalance();
-    this.inProgress = false;
   }
 
   /**
@@ -192,8 +162,6 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
   public async switchNetworkSkale(): Promise<void> {
     this.inProgress = true;
     await this.service.switchNetworkSkale();
-    await this.initBalance();
-    this.inProgress = false;
   }
 
   /**
@@ -283,5 +251,58 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
     }
 
     this.updateAllowance();
+  }
+
+  /**
+   * Sets up amount input form.
+   * @returns { void }
+   */
+  private setupForm(): void {
+    this.form = new FormGroup({
+      inputAmount: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.min(0.001),
+          // will update as max changes
+          (control: AbstractControl) =>
+            Validators.max(this.maxInputAmount)(control),
+        ],
+      }),
+      outputAmount: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.min(0.001),
+          // will update as max changes
+          (control: AbstractControl) =>
+            Validators.max(this.maxInputAmount)(control),
+        ],
+      }),
+    });
+
+    const outputAmountControl = this.form.get('outputAmount');
+    const inputAmountControl = this.form.get('inputAmount');
+
+    // mirror input and output amounts as MINDS and skMINDS have a 1:1 ratio.
+    this.subscriptions.push(
+      outputAmountControl.valueChanges.subscribe((value: number) =>
+        inputAmountControl.setValue(value, { emitEvent: false })
+      ),
+      inputAmountControl.valueChanges.subscribe((value: number) =>
+        outputAmountControl.setValue(value, { emitEvent: false })
+      )
+    );
+  }
+
+  /**
+   * Sets up subscription to network change that reinitializes balance on switch.
+   * @returns { void }
+   */
+  private setupNetworkChangeSubscription(): void {
+    this.subscriptions.push(
+      this.networkSwitch.networkChanged$.subscribe((network: any) => {
+        this.inProgress = true;
+        this.initBalance();
+      })
+    );
   }
 }

@@ -1,8 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { FormToastService } from './form-toast.service';
 import { ConfigsService } from './configs.service';
 import { Web3WalletService } from '../../modules/blockchain/web3-wallet.service';
 import { FeaturesService } from '../../services/features.service';
+import { BehaviorSubject } from 'rxjs';
+import { ethers } from 'ethers';
+import { isPlatformBrowser } from '@angular/common';
+import { Provider } from '@ethersproject/abstract-provider';
 
 // Interface for adding new Ethereum chains
 export interface AddEthereumChainParameter {
@@ -47,7 +51,7 @@ export const UNKNOWN_NETWORK_LOGO_PATH_LIGHT = 'assets/ext/unknown-light.png';
  * Service for the switching of blockchain networks.
  */
 @Injectable({ providedIn: 'root' })
-export class NetworkSwitchService {
+export class NetworkSwitchService implements OnDestroy {
   // network map.
   public networks: NetworkMap = {
     mainnet: {
@@ -60,10 +64,19 @@ export class NetworkSwitchService {
     },
   };
 
+  // provider with the sole responsibility of listening to network changes.
+  private networkChangeProvider: Provider = null;
+
+  // fires on network change
+  public readonly networkChanged$: BehaviorSubject<any> = new BehaviorSubject<
+    any
+  >(true);
+
   constructor(
     private toast: FormToastService,
     private wallet: Web3WalletService,
     private features: FeaturesService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     config: ConfigsService
   ) {
     const blockchainConfig = config.get('blockchain');
@@ -106,6 +119,15 @@ export class NetworkSwitchService {
       blockchainConfig['client_network'] === 1
         ? '0x1' // mainnet
         : '0x4'; // rinkeby
+
+    this.setupNetworkChangeListener();
+  }
+
+  ngOnDestroy(): void {
+    if (this.networkChangeProvider) {
+      this.networkChangeProvider.removeAllListeners();
+      this.networkChangeProvider = null;
+    }
   }
 
   /**
@@ -135,7 +157,6 @@ export class NetworkSwitchService {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainId }],
       });
-      await this.wallet.reinitializeProvider();
     } catch (switchError) {
       const rpcUrl = networkData.rpcUrl ?? false;
       const networkName = networkData.networkName ?? false;
@@ -152,7 +173,6 @@ export class NetworkSwitchService {
             method: 'wallet_addEthereumChain',
             params: [params],
           });
-          await this.wallet.reinitializeProvider();
         } catch (addError) {
           console.error(addError);
         }
@@ -206,5 +226,29 @@ export class NetworkSwitchService {
   public isOnNetwork(chainId: NetworkChainId): boolean {
     const activeChainId = this.wallet.getCurrentChainId();
     return activeChainId === chainId;
+  }
+
+  /**
+   * Sets up network change listener. - will respond to change by reinitializing provider
+   * and pushing new network to networkChanged$ BehaviorSubject.
+   * @returns { void }
+   */
+  private setupNetworkChangeListener(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.networkChangeProvider = new ethers.providers.Web3Provider(
+        window.ethereum,
+        'any'
+      );
+      this.networkChangeProvider.on(
+        'network',
+        async (newNetwork, oldNetwork) => {
+          // console.log("Network changed from", oldNetwork, "to", newNetwork);
+          if (oldNetwork) {
+            await this.wallet.reinitializeProvider();
+            this.networkChanged$.next(newNetwork);
+          }
+        }
+      );
+    }
   }
 }
