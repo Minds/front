@@ -133,11 +133,7 @@ export const MINDS_PROVIDERS: any[] = [
   },
   Session,
   ThirdPartyNetworksService,
-  {
-    provide: AnalyticsService,
-    useFactory: AnalyticsService._,
-    deps: [Router, Client, SiteService, PLATFORM_ID],
-  },
+  AnalyticsService,
   Navigation,
   {
     provide: WalletService,

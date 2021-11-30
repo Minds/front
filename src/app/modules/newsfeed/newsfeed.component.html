@@ -4,7 +4,9 @@
     m-pageLayout__pane="main"
     [ngClass]="{ 'm-newsfeed--logged-out': !session.getLoggedInUser() }"
   >
-    <m-compassQuestionnaire__banner></m-compassQuestionnaire__banner>
+    <m-compassQuestionnaire__banner
+      *mIfFeature="'social-compass'"
+    ></m-compassQuestionnaire__banner>
     <router-outlet></router-outlet>
   </div>
 
