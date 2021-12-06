@@ -196,7 +196,8 @@
             "polyfills": "src/polyfills.ts",
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
-            }
+            },
+            "preserveSymlinks": true
           }
         },
         "lint": {
@@ -227,7 +228,8 @@
                 }
               ],
               "sourceMap": false,
-              "optimization": true
+              "optimization": true,
+              "preserveSymlinks": true
             }
           },
           "defaultConfiguration": ""
