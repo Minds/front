@@ -1,4 +1,4 @@
-import { NgZone, RendererFactory2, PLATFORM_ID, Injector } from '@angular/core';
+import { NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
@@ -33,7 +33,7 @@ import { ContextService } from './context.service';
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { BlockListService } from '../common/services/block-list.service';
 import { EntitiesService } from '../common/services/entities.service';
 import { InMemoryStorageService } from './in-memory-storage.service';
@@ -48,12 +48,13 @@ import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 import { CookieService } from '../common/services/cookie.service';
-import { RedirectService } from '../common/services/redirect.service';
 import { StackableModalService } from './ux/stackable-modal.service';
 import { MessengerService } from '../modules/messenger/messenger.service';
 import { MultiFactorHttpInterceptorService } from '../modules/auth/multi-factor-auth/services/multi-factor-http-interceptor.service';
 import { CompassHookService } from '../common/services/compass-hook.service';
 import { CompassService } from '../modules/compass/compass.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalService } from './ux/modal.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -159,6 +160,11 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: OverlayModalService,
     useFactory: OverlayModalService._,
+  },
+  {
+    provide: ModalService,
+    useFactory: ModalService._,
+    deps: [NgbModal],
   },
   {
     provide: LoginReferrerService,

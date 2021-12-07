@@ -87,6 +87,8 @@ import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
 import { SortSelectorComponent } from './components/sort-selector/sort-selector.component';
+import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
@@ -216,6 +218,7 @@ const routes: Routes = [
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
     QRCodeModule,
+    NgbModalModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
