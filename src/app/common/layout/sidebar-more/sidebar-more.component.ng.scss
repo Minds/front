@@ -24,13 +24,14 @@
         font-size: 15px;
         line-height: 20px;
         border: 0 !important;
-        cursor: pointer;
 
         &:first-child {
           margin-top: 10px;
         }
 
         &:not(.m-sidebarMoreDropdown__footer) {
+          cursor: pointer;
+
           > * {
             padding: 10px 20px;
             @include m-theme() {
@@ -82,6 +83,14 @@
         &.m-sidebarMoreDropdown__footer {
           flex-wrap: wrap;
           padding: 5px 20px 15px;
+
+          a {
+            cursor: pointer;
+          }
+          span {
+            cursor: default;
+            margin: 0 1px;
+          }
 
           a,
           span {

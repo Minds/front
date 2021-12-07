@@ -23,41 +23,57 @@
 }
 
 :host {
-  display: block;
-  position: relative;
+  &:not(.m-sidebarNavigation--nav2021Feature) {
+    .m-sidebarNavigation {
+      overflow: scroll;
+      padding-top: 26px;
+
+      @media screen and (max-width: $layoutMax3ColWidth) {
+        padding-top: 12px;
+      }
+    }
+  }
+
+  &.m-sidebarNavigation--nav2021Feature {
+    display: block;
+    position: relative;
+
+    .m-sidebarNavigation {
+      overflow: visible;
+
+      nav {
+        overflow-y: auto;
+        max-height: calc(100vh - 75px);
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        @media screen and (max-width: $max-mobile) {
+          max-height: 100vh;
+        }
+
+        ::ng-deep m-sidebarMore__trigger {
+          display: block;
+          margin-bottom: 200px;
+
+          ::ng-deep popper-content {
+            position: static;
+          }
+        }
+      }
+    }
+  }
+
   .m-sidebarNavigation {
     @include z-index(sidebar);
-    padding-top: 26px;
     min-width: 0;
     display: block;
     width: $layoutSidebarFullWidth;
     height: calc(100vh - 75px);
     position: fixed;
-    overflow: visible;
     box-sizing: border-box;
     -ms-overflow-style: none;
     scrollbar-width: none;
-
-    nav {
-      overflow-y: auto;
-      max-height: calc(100vh - 75px);
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      @media screen and (max-width: $max-mobile) {
-        max-height: 100vh;
-      }
-
-      ::ng-deep m-sidebarMore__trigger {
-        display: block;
-        margin-bottom: 200px;
-
-        ::ng-deep popper-content {
-          position: static;
-        }
-      }
-    }
 
     &.m-sidebarNavigation--matrixFeature {
       > nav:first-child {
@@ -75,7 +91,6 @@
     }
 
     @media screen and (max-width: $layoutMax3ColWidth) {
-      padding-top: 12px;
       width: $layoutSidebarSmallWidth;
     }
 

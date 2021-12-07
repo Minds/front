@@ -118,27 +118,25 @@
       <ng-container
         *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
       >
-        <a *ngIf="link.routerLink" [routerLink]="link.routerLink">
-          {{ link.label }}
-        </a>
-        <a *ngIf="link.href" [href]="link.href" target="_blank">
-          {{ link.label }}
-        </a>
+        <a *ngIf="link.routerLink" [routerLink]="link.routerLink">{{
+          link.label
+        }}</a>
+        <a *ngIf="link.href" [href]="link.href" target="_blank">{{
+          link.label
+        }}</a>
         <span> · </span>
       </ng-container>
       <a
         (click)="toggleFooterLinks()"
         class="m-sidebarMoreDropdownFooter__toggle"
-      >
-        <ng-container
+        ><ng-container
           *ngIf="maxFooterLinks === 4; else lessView"
           i18n="@@COMMON__MORE"
           >More</ng-container
-        >
-        <ng-template #lessView>
+        ><ng-template #lessView>
           <ng-container i18n="@@COMMON__LESS">Less</ng-container>
-        </ng-template>
-      </a>
+        </ng-template></a
+      >
     </li>
   </ul>
 </div>

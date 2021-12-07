@@ -13,7 +13,8 @@ import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 })
 export class SidebarMoreTriggerComponent implements AfterViewInit {
   mobileScreenOffset: Array<number> = [-90, -250];
-  largeScreenOffset: Array<number> = [0, -50];
+  mediumScreenOffset: Array<number> = [0, -50];
+  largeScreenOffset: Array<number> = [0, -250];
 
   popperModifiers: Array<any> = [
     {
@@ -63,10 +64,15 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
-    const offset =
-      window.innerWidth >= 480
-        ? this.largeScreenOffset
-        : this.mobileScreenOffset;
+    let offset = this.largeScreenOffset;
+
+    if (window.innerWidth < 480) {
+      offset = this.mobileScreenOffset;
+    } else if (window.innerWidth < 1220) {
+      // 1220 is the width when the nav text is visible (vs. icons only)
+      // See $layoutMax3ColWidth in common/layout/layout.scss
+      offset = this.mediumScreenOffset;
+    }
 
     this.popperModifiers.find(x => x.name === 'offset').options.offset = offset;
   }

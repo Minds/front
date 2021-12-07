@@ -60,6 +60,9 @@ export class SidebarNavigationComponent
 
   settingsLink: string = '/settings';
 
+  @HostBinding('class.m-sidebarNavigation--nav2021Feature')
+  nav2021Feature: boolean = false;
+
   @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
 
@@ -72,8 +75,6 @@ export class SidebarNavigationComponent
   routerSubscription: Subscription;
 
   matrixFeature: boolean = false;
-
-  nav2021Feature: boolean = false;
 
   constructor(
     public navigation: NavigationService,
