@@ -3,10 +3,15 @@
     [object]="getCurrentUser()"
     [editMode]="false"
     (click)="toggleMenu()"
+    data-ref="topnav-avatar"
     *ngIf="useAvatar && getCurrentUser(); else iconAnchor"
   ></minds-avatar>
   <ng-template #iconAnchor>
-    <a class="m-user-menu__Anchor" (click)="toggleMenu()">
+    <a
+      class="m-user-menu__Anchor"
+      (click)="toggleMenu()"
+      data-ref="topnav-avatar-alt"
+    >
       <i class="material-icons">more_vert</i>
     </a>
   </ng-template>
@@ -24,7 +29,10 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a [routerLink]="['/', getCurrentUser().username]">
+      <a
+        [routerLink]="['/', getCurrentUser().username]"
+        data-ref="topnav-usermenu-channel"
+      >
         @{{ getCurrentUser().username }}
       </a>
     </li>
@@ -38,7 +46,13 @@
       *ngIf="getCurrentUser() && !getCurrentUser().pro"
       (click)="closeMenu()"
     >
-      <a routerLink="/upgrades" i18n="@@COMMON__UPGRADE"> Upgrade </a>
+      <a
+        routerLink="/upgrades"
+        i18n="@@COMMON__UPGRADE"
+        data-ref="topnav-usermenu-upgrade"
+      >
+        Upgrade
+      </a>
     </li>
 
     <li
@@ -50,7 +64,12 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/token" i18n="verb|@@COMMON__BUY_TOKENS">Buy tokens</a>
+      <a
+        routerLink="/token"
+        i18n="verb|@@COMMON__BUY_TOKENS"
+        data-ref="topnav-usermenu-buytokens"
+        >Buy tokens</a
+      >
     </li>
 
     <li
@@ -66,7 +85,7 @@
       *ngIf="!getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/login">
+      <a routerLink="/login" data-ref="topnav-usermenu-login">
         <span i18n="@@COMMON__LOGIN">Login</span>
       </a>
     </li>
@@ -76,7 +95,7 @@
       *ngIf="isAdmin()"
       (click)="closeMenu()"
     >
-      <a routerLink="/admin/interactions">
+      <a routerLink="/admin/interactions" data-ref="topnav-usermenu-admin">
         <span i18n="@@COMMON__ADMIN">Admin</span>
       </a>
     </li>
@@ -86,6 +105,7 @@
         class="m-dropdownList__item m-userMenuDropdown__item"
         *ngIf="getCurrentUser()"
         (click)="toggleTheme()"
+        data-ref="topnav-usermenu-themechange"
       >
         <span i18n="@@COMMON__LIGHT_MODE" *ngIf="isDark">Enter Light Mode</span>
         <span i18n="@@COMMON__DARK_MODE" *ngIf="!isDark">Enter Dark Mode</span>
@@ -97,7 +117,7 @@
       (click)="closeMenu()"
       *ngIf="getCurrentUser()"
     >
-      <a routerLink="/boost/console">
+      <a routerLink="/boost/console" data-ref="topnav-usermenu-boostconsole">
         <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
       </a>
     </li>
@@ -107,7 +127,7 @@
       (click)="closeMenu()"
       *ngIf="getCurrentUser()"
     >
-      <a routerLink="/settings">
+      <a routerLink="/settings" data-ref="topnav-usermenu-settings">
         <span i18n="@@COMMON__SETTINGS">Settings</span>
       </a>
     </li>
@@ -118,12 +138,16 @@
     >
       <!--Endpoint handles authentication and redirection-->
       <ng-container *mIfFeature="'helpdesk-2021'; else helpdeskLink">
-        <a href="/api/v3/helpdesk/zendesk" target="_blank">
+        <a
+          href="/api/v3/helpdesk/zendesk"
+          target="_blank"
+          data-ref="topnav-usermenu-help-zendesk"
+        >
           <span i18n="@@COMMON__HELP">Help</span>
         </a>
       </ng-container>
       <ng-template #helpdeskLink>
-        <a routerLink="/help">
+        <a routerLink="/help" data-ref="topnav-usermenu-help">
           <span i18n="@@COMMON__HELP">Help</span>
         </a>
       </ng-template>
@@ -134,7 +158,7 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/logout">
+      <a routerLink="/logout" data-ref="topnav-usermenu-logout">
         <span i18n="@@COMMON__LOGOUT">Logout</span>
       </a>
     </li>
@@ -160,6 +184,7 @@
           *ngIf="link.routerLink"
           [routerLink]="link.routerLink"
           (click)="closeMenu()"
+          [data-ref]="'topnav-usermenu-footer' + link.label"
         >
           {{ link.label }}
         </a>

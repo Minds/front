@@ -47,6 +47,7 @@ describe('NewsfeedService', () => {
   it('should record an activity view in newsfeed', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/activity/123';
     clientMock.response[url] = { status: 'success' };
+    clientMock.response['https://sp.minds.com/com.minds/t'] = {};
 
     const entity: any = {
       guid: 123,
@@ -109,6 +110,7 @@ describe('NewsfeedService', () => {
   it('should record a boosted activity view stop in a channel', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/boost/1234/456/stop';
     clientMock.response[url] = { status: 'success' };
+    clientMock.response['https://sp.minds.com/com.minds/t'] = {};
 
     const entity: any = {
       guid: 123,

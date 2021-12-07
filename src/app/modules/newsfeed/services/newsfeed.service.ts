@@ -4,6 +4,7 @@ import { Session } from '../../../services/session';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 import { MindsVideoPlayerComponent } from '../../media/components/video-player/player.component';
 import { AnalyticsService } from '../../../services/analytics';
+import * as snowplow from '@snowplow/browser-tracker';
 
 @Injectable()
 export class NewsfeedService {
@@ -34,7 +35,7 @@ export class NewsfeedService {
     //   return;
     // }
 
-    (window as any).snowplow('trackSelfDescribingEvent', {
+    snowplow.trackSelfDescribingEvent({
       event: {
         schema: 'iglu:com.minds/view/jsonschema/1-0-0',
         data: {
@@ -43,10 +44,7 @@ export class NewsfeedService {
           ...clientMeta,
         },
       },
-      context:
-        this.analyticsService.contexts.length > 0
-          ? this.analyticsService.contexts.slice(0)
-          : undefined,
+      context: this.analyticsService.getContexts(),
     });
 
     // if it's a boost we record the boost view AND the activity view

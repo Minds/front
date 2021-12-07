@@ -21,7 +21,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
         *ngIf="user"
       >
-        <a (click)="openComposeModal()">
+        <a (click)="openComposeModal()" data-ref="sidenav-composer">
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -47,7 +47,11 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         *ngIf="user"
       >
-        <a [routerLink]="['/newsfeed/subscriptions']" (click)="toggle()">
+        <a
+          [routerLink]="['/newsfeed/subscriptions']"
+          (click)="toggle()"
+          data-ref="sidenav-newsfeed"
+        >
           <m-tooltip
             icon="home"
             i18n="@@COMMON__NEWSFEED"
@@ -71,6 +75,7 @@
         <a
           [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
           (click)="toggle()"
+          data-ref="sidenav-discovery"
         >
           <m-tooltip
             [enabled]="!showLabels"
@@ -93,7 +98,11 @@
         [routerLinkActiveOptions]="{ exact: !plusPageActive }"
         *mIfFeature="'nav-plus-2020'"
       >
-        <a routerLink="/discovery/plus/overview" (click)="toggle()">
+        <a
+          routerLink="/discovery/plus/overview"
+          (click)="toggle()"
+          data-ref="sidenav-plus"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -114,7 +123,11 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         *ngIf="user"
       >
-        <a [routerLink]="['/wallet']" (click)="toggle()">
+        <a
+          [routerLink]="['/wallet']"
+          (click)="toggle()"
+          data-ref="sidenav-wallet"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -136,7 +149,12 @@
           class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
         >
-          <a [href]="chatUrl" target="chat" (click)="toggle()">
+          <a
+            [href]="chatUrl"
+            target="chat"
+            (click)="toggle()"
+            data-ref="sidenav-chat"
+          >
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
@@ -162,7 +180,11 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         *ngIf="user"
       >
-        <a routerLink="/analytics" (click)="toggle()">
+        <a
+          routerLink="/analytics"
+          (click)="toggle()"
+          data-ref="sidenav-analytics"
+        >
           <m-tooltip
             icon="insert_chart"
             [enabled]="false"
@@ -185,6 +207,7 @@
               routerLink="/analytics/dashboard/traffic"
               (click)="toggle()"
               i18n="@@COMMON__TRAFFIC"
+              data-ref="sidenav-analytics-traffic"
               >Traffic</a
             >
           </li>
@@ -196,6 +219,7 @@
               routerLink="/analytics/dashboard/token"
               (click)="toggle()"
               i18n="@@ANALYTICS__TOKEN"
+              data-ref="sidenav-analytics-token"
               >Tokens</a
             >
           </li>
@@ -207,6 +231,7 @@
               routerLink="/analytics/dashboard/engagement"
               (click)="toggle()"
               i18n="@@COMMON__ENGAGEMENT"
+              data-ref="sidenav-analytics-engagement"
               >Engagement</a
             >
           </li>
@@ -218,6 +243,7 @@
               routerLink="/analytics/dashboard/earnings"
               (click)="toggle()"
               i18n="@@COMMON__EARNINGS"
+              data-ref="sidenav-analytics-earnings"
               >Earnings</a
             >
           </li>
@@ -229,6 +255,7 @@
               routerLink="/analytics/dashboard/trending"
               (click)="toggle()"
               i18n="@@COMMON__TRENDING"
+              data-ref="sidenav-analytics-trending"
               >Trending</a
             >
           </li>
@@ -241,7 +268,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           *mIfFeature="'earn-modal'"
         >
-          <a (click)="openEarnModal()">
+          <a (click)="openEarnModal()" data-ref="sidenav-earn-modal">
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
@@ -264,7 +291,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           *mIfFeature="'buy-tokens-uniswap-transak'"
         >
-          <a (click)="buyTokens()">
+          <a (click)="buyTokens()" data-ref="sidenav-buytokens-modal">
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
@@ -291,7 +318,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           *mIfFeature="'boost-modal-v2'"
         >
-          <a (click)="openBoostModal()">
+          <a (click)="openBoostModal()" data-ref="sidenav-boost-modal">
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
@@ -315,7 +342,11 @@
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a [routerLink]="['/groups/memberships']" (click)="toggle()">
+          <a
+            [routerLink]="['/groups/memberships']"
+            (click)="toggle()"
+            data-ref="sidenav-groups"
+          >
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
@@ -335,7 +366,11 @@
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
-        <a [routerLink]="['/' + user.username]" (click)="toggle()">
+        <a
+          [routerLink]="['/' + user.username]"
+          (click)="toggle()"
+          data-ref="sidenav-channel"
+        >
           <img
             [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
             alt=""
@@ -351,7 +386,11 @@
         class="m-sidebarNavigation__item"
         *ngIf="user"
       >
-        <a [routerLink]="[settingsLink]" (click)="toggle()">
+        <a
+          [routerLink]="[settingsLink]"
+          (click)="toggle()"
+          data-ref="sidenav-settings"
+        >
           <m-tooltip
             icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
@@ -372,7 +411,7 @@
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a (click)="openAuthModal()">
+          <a (click)="openAuthModal()" data-ref="sidenav-loggedout-more">
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
