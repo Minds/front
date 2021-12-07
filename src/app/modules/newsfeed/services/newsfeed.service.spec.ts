@@ -9,7 +9,11 @@ import { analyticsServiceMock } from '../../../../tests/analytics-service-mock.s
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('NewsfeedService', () => {
   let service: NewsfeedService;
@@ -42,6 +46,10 @@ describe('NewsfeedService', () => {
           useValue: analyticsServiceMock,
         },
         NewsfeedService,
+        {
+          provide: PLATFORM_ID,
+          useValue: 'server',
+        },
       ],
     });
 
