@@ -82,10 +82,6 @@ export class TopbarWalletBalance {
     }
   }
 
-  navigateWallet() {
-    this.router.navigate(['/wallet/tokens/rewards']);
-  }
-
   /**
    * Connect wallet
    * @param e

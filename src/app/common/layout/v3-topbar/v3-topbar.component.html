@@ -23,6 +23,7 @@
           [routerLink]="getMainLogoUrl()"
           title="Home"
           i18n-title="@@COMMON__HOME"
+          data-ref="topnav-logo"
         >
           <img
             [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
@@ -67,6 +68,7 @@
               (click)="onLoginClick()"
               title="Login"
               i18n-title="@@COMMON__LOGIN"
+              data-ref="topnav-login"
             >
               Login
             </a>
@@ -76,6 +78,7 @@
               (click)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
+              data-ref="topnav-join-now"
             >
               Join Now
             </a>
