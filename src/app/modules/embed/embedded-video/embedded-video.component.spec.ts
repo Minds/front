@@ -6,7 +6,7 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
+import { NgxRequest, NgxResponse } from '@mindsorg/ngx-universal';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { BehaviorSubject, of } from 'rxjs';
 import { clientMock } from '../../../../tests/client-mock.spec';
