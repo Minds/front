@@ -6,6 +6,10 @@ import { NSFWSelectorComponent } from '../../../common/components/nsfw-selector/
 import { MockService } from '../../../utils/mock';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 import { analyticsServiceMock } from '../../../../tests/analytics-service-mock.spec';
+import { Client } from '../../../services/api';
+import { Session } from '../../../services/session';
+import { AnalyticsService } from '../../../services/analytics';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('NewsfeedService', () => {
   let service: NewsfeedService;
@@ -19,20 +23,29 @@ describe('NewsfeedService', () => {
     jasmine.clock().install();
 
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         {
-          value: NSFWSelectorConsumerService,
+          provide: Client,
+          useValue: clientMock,
+        },
+        {
+          provide: Session,
+          useValue: sessionMock,
+        },
+        {
+          provide: NSFWSelectorConsumerService,
           useValue: NSFWSelectorServiceMock,
         },
+        {
+          provide: AnalyticsService,
+          useValue: analyticsServiceMock,
+        },
+        NewsfeedService,
       ],
     });
 
-    service = new NewsfeedService(
-      clientMock,
-      sessionMock,
-      NSFWSelectorServiceMock,
-      analyticsServiceMock
-    );
+    service = TestBed.inject(NewsfeedService);
     clientMock.response = {};
   });
 
@@ -47,7 +60,6 @@ describe('NewsfeedService', () => {
   it('should record an activity view in newsfeed', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/activity/123';
     clientMock.response[url] = { status: 'success' };
-    clientMock.response['https://sp.minds.com/com.minds/t'] = {};
 
     const entity: any = {
       guid: 123,
@@ -107,10 +119,9 @@ describe('NewsfeedService', () => {
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(url);
   }));
 
-  it('should record a boosted activity view stop in a channel', fakeAsync(() => {
+  it('should record a boosted activity view stop in a channel', () => {
     const url: string = 'api/v2/analytics/views/boost/1234/456/stop';
     clientMock.response[url] = { status: 'success' };
-    clientMock.response['https://sp.minds.com/com.minds/t'] = {};
 
     const entity: any = {
       guid: 123,
@@ -124,5 +135,5 @@ describe('NewsfeedService', () => {
     jasmine.clock().tick(10);
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toContain(url);
-  }));
+  });
 });
