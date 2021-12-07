@@ -40,7 +40,15 @@ export class ModalService {
       // scrollable:
     });
 
-    ref.componentInstance.opts = opts;
+    ref.componentInstance.opts = {
+      onDismiss: ref.dismiss,
+      /**
+       * supporting legacy
+       * @deprecated use onDismiss
+       **/
+      onDismissIntent: ref.dismiss,
+      ...opts,
+    };
 
     // TODO: this is temporary. we may want to return a custom type here to not be dependent on the library
     return ref;
