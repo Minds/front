@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
@@ -8,18 +7,16 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class ModalService {
   constructor(private service: NgbModal) {}
 
-  // TODO: do we need this one?
   static _(ngbModal: NgbModal) {
     return new ModalService(ngbModal);
   }
 
   /**
    * Presents the modal and returns an Observable
-   * TODO what are the params?
    * @param component the component instance the modal should load
-   * @param opts the options to pass to the component
+   * @param opts the options to pass to the component's {opts} attribute
    * @param injector
-   * @return Observable TODO: make this more clear
+   * @return NgbModalRef
    */
   present(component, opts: any = {}, injector?: Injector): NgbModalRef {
     if (!component) {
@@ -29,10 +26,7 @@ export class ModalService {
     const ref = this.service.open(component, {
       injector,
       centered: true, // FIXME: maybe this shouldn't be true all the time
-      // modalDialogClass: 'm-modalV2__wrapper',
       windowClass: 'm-modalV3__wrapper',
-      // backdropClass: 'somethingelseentirely-backdrop',
-
       // size:
       // ariaDescribedBy:
       // ariaLabelledBy:
@@ -55,7 +49,7 @@ export class ModalService {
   }
 
   /**
-   * Dismisses the stackable modal and destroys
+   * Dismisses all open modals
    * its inset component
    */
   dismissAll(): void {
