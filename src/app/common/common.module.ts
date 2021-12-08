@@ -88,7 +88,6 @@ import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
 import { SortSelectorComponent } from './components/sort-selector/sort-selector.component';
 
-
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
 import { Storage } from '../services/storage';

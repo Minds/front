@@ -53,7 +53,11 @@ export class ModalService {
    * @param { Injector } injector
    * @return { ModalRef } reference to the modal instance
    */
-  present(component: ComponentType<any>, opts: any = {}, injector?: Injector): ModalRef {
+  present(
+    component: ComponentType<any>,
+    opts: any = {},
+    injector?: Injector
+  ): ModalRef {
     if (this.module) {
       const componentFactory = this.loadLazyModule(this.module, injector);
     }
