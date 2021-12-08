@@ -1,5 +1,8 @@
-import { Injectable, Injector } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Compiler, Component, Injectable, Injector, Type } from '@angular/core';
+import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import isMobile from '../../helpers/is-mobile';
+import { ComponentType } from '@angular/cdk/overlay';
 
 @Injectable({
   providedIn: 'root',
@@ -7,26 +10,53 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class ModalService {
   constructor(private service: NgbModal) {}
 
-  static _(ngbModal: NgbModal) {
-    return new ModalService(ngbModal);
+  constructor(private service: NgbModal, private compiler: Compiler) {}
+
+  /**
+   * Set the module to be loaded - can be imported like so.
+   * const { MyModule } = await import(
+   *   './my-module-lazy.module'
+   * );
+   * @param { Type<unknown> } mod - the module to be loaded.
+   * @returns { ModalService } - chainable.
+   */
+  setLazyModule(mod: Type<unknown>): ModalService {
+    this.module = mod;
+    return this;
+  }
+
+  async loadLazyModule(module: any, injector: Injector) {
+    const moduleFactory = await this.compiler.compileModuleAsync(module);
+    const moduleRef = moduleFactory.create(injector);
+
+    if (typeof (moduleRef.instance as any).resolveComponent != 'function') {
+      console.error(
+        'Your lazy loaded module MUST have a resolveComponent function'
+      );
+      return;
+    }
+
+    return (moduleRef as any).instance.resolveComponent();
   }
 
   /**
    * Presents the modal and returns an Observable
-   * @param component the component instance the modal should load
-   * @param opts the options to pass to the component's {opts} attribute
-   * @param injector
-   * @return NgbModalRef
+   * @param { Component } component the component instance the modal should load
+   * @param { Object } opts the options to pass to the component
+   * @param { Injector } injector
+   * @return { ModalRef } reference to the modal instance
    */
-  present(component, opts: any = {}, injector?: Injector): NgbModalRef {
-    if (!component) {
-      throw new Error('Unknown component class');
+  present(component: ComponentType<any>, opts: any = {}, injector?: Injector): ModalRef {
+    if (this.module) {
+      const componentFactory = this.loadLazyModule(this.module, injector);
     }
 
     const ref = this.service.open(component, {
       injector,
       centered: true, // FIXME: maybe this shouldn't be true all the time
+      // modalDialogClass:,
       windowClass: 'm-modalV3__wrapper',
+
       // size:
       // ariaDescribedBy:
       // ariaLabelledBy:
@@ -44,8 +74,21 @@ export class ModalService {
       ...opts,
     };
 
-    // TODO: this is temporary. we may want to return a custom type here to not be dependent on the library
-    return ref;
+    return {
+      dismiss: i => ref.dismiss(i),
+      close: i => ref.close(i),
+      dismissed: ref.dismissed,
+      result: ref.result.catch(error => {
+        console.log('ERROR', error);
+      }),
+    };
+  }
+
+  canOpenInModal(): boolean {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const tooSmallForModal: boolean = screen.width < 768;
+
+    return !((isMobile() && isNotTablet) || tooSmallForModal);
   }
 
   /**

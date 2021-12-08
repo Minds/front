@@ -1,4 +1,4 @@
-// Modal wrapper options
+@import "bootstrap-modal";
 
 .m-modalV3__wrapper {
   width: 100vw;
@@ -103,7 +103,6 @@
   }
 }
 
-// TODO: find a better place for this
 ngb-modal-window {
   .modal-dialog {
     max-width: 800px;

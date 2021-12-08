@@ -163,8 +163,8 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ModalService,
-    useFactory: ModalService._,
-    deps: [NgbModal],
+    useFactory: (ngbModal, compiler) => new ModalService(ngbModal, compiler),
+    deps: [NgbModal, Compiler],
   },
   {
     provide: LoginReferrerService,
