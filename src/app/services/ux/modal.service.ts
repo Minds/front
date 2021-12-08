@@ -15,51 +15,24 @@ export type ModalRef = {
   providedIn: 'root',
 })
 export class ModalService {
-  module: Type<unknown>;
-
   constructor(private service: NgbModal, private compiler: Compiler) {}
-
-  /**
-   * Set the module to be loaded - can be imported like so.
-   * const { MyModule } = await import(
-   *   './my-module-lazy.module'
-   * );
-   * @param { Type<unknown> } mod - the module to be loaded.
-   * @returns { ModalService } - chainable.
-   */
-  setLazyModule(mod: Type<unknown>): ModalService {
-    this.module = mod;
-    return this;
-  }
-
-  async loadLazyModule(module: any, injector: Injector) {
-    const moduleFactory = await this.compiler.compileModuleAsync(module);
-    const moduleRef = moduleFactory.create(injector);
-
-    if (typeof (moduleRef.instance as any).resolveComponent != 'function') {
-      console.error(
-        'Your lazy loaded module MUST have a resolveComponent function'
-      );
-      return;
-    }
-
-    return (moduleRef as any).instance.resolveComponent();
-  }
 
   /**
    * Presents the modal and returns an Observable
    * @param { Component } component the component instance the modal should load
    * @param { Object } opts the options to pass to the component
    * @param { Injector } injector
+   * @param lazyModule
    * @return { ModalRef } reference to the modal instance
    */
-  present(
+  public present(
     component: ComponentType<any>,
     opts: any = {},
-    injector?: Injector
+    injector?: Injector,
+    lazyModule?: any,
   ): ModalRef {
-    if (this.module) {
-      const componentFactory = this.loadLazyModule(this.module, injector);
+    if (lazyModule) {
+      const componentFactory = this.loadLazyModule(lazyModule, injector);
     }
 
     const ref = this.service.open(component, {
@@ -97,7 +70,7 @@ export class ModalService {
     };
   }
 
-  canOpenInModal(): boolean {
+  public canOpenInModal(): boolean {
     const isNotTablet = Math.min(screen.width, screen.height) < 768;
     const tooSmallForModal: boolean = screen.width < 768;
 
@@ -108,7 +81,21 @@ export class ModalService {
    * Dismisses all open modals
    * its inset component
    */
-  dismissAll(): void {
+  public dismissAll(): void {
     this.service.dismissAll();
+  }
+
+  private async loadLazyModule(module: any, injector: Injector) {
+    const moduleFactory = await this.compiler.compileModuleAsync(module);
+    const moduleRef = moduleFactory.create(injector);
+
+    if (typeof (moduleRef.instance as any).resolveComponent != 'function') {
+      console.error(
+        'Your lazy loaded module MUST have a resolveComponent function'
+      );
+      return;
+    }
+
+    return (moduleRef as any).instance.resolveComponent();
   }
 }
