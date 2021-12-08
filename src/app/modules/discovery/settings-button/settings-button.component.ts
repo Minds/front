@@ -43,7 +43,7 @@ export class DiscoverySettingsButtonComponent implements OnInit {
   }
 
   openSettingsModal(e: MouseEvent): void {
-    let component: ComponentType<any>;
+    let component: Object;
 
     switch (this.modalType) {
       case 'feed':
