@@ -4,11 +4,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import isMobile from '../../helpers/is-mobile';
 import { ComponentType } from '@angular/cdk/overlay';
 
+export type ModalRef = {
+  dismiss: (reason?: string) => void;
+  close: (value?: any) => void;
+  dismissed: Observable<any>;
+  result: Promise<any>;
+};
+
 @Injectable({
   providedIn: 'root',
 })
 export class ModalService {
-  constructor(private service: NgbModal) {}
+  module: Type<unknown>;
 
   constructor(private service: NgbModal, private compiler: Compiler) {}
 
@@ -64,7 +71,7 @@ export class ModalService {
       // scrollable:
     });
 
-    ref.componentInstance.opts = {
+    const options = {
       onDismiss: ref.dismiss,
       /**
        * supporting legacy
@@ -73,6 +80,8 @@ export class ModalService {
       onDismissIntent: ref.dismiss,
       ...opts,
     };
+    ref.componentInstance.opts = options;
+    ref.componentInstance.data = options;
 
     return {
       dismiss: i => ref.dismiss(i),
