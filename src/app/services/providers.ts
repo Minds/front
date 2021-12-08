@@ -1,4 +1,4 @@
-import { NgZone, PLATFORM_ID } from '@angular/core';
+import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
