@@ -7,6 +7,7 @@ import {
 import { Subscription } from 'rxjs';
 import { TokenPricesService } from '../../../../modules/wallet/components/components/currency-value/token-prices.service';
 import { ConnectWalletModalService } from '../../../../modules/blockchain/connect-wallet/connect-wallet-modal.service';
+import { SettingsV2WalletService } from '../../../../modules/settings-v2/other/wallet/wallet.service';
 
 @Component({
   selector: 'm-topbar-walletBalance',
@@ -32,7 +33,7 @@ export class TopbarWalletBalance {
     private walletService: WalletV2Service,
     private tokenPricesService: TokenPricesService,
     protected connectWalletModalService: ConnectWalletModalService,
-
+    private walletPrivacySettings: SettingsV2WalletService,
     private router: Router
   ) {}
 
@@ -89,6 +90,19 @@ export class TopbarWalletBalance {
   async connectWallet(e: MouseEvent): Promise<void> {
     const onComplete = () => (this.isConnected = undefined);
     await this.connectWalletModalService.joinRewards(onComplete);
+  }
+
+  /**
+   * True if wallet balance should be shown.
+   * @returns { boolean } true if balance should be shown.
+   */
+  public showWalletBalance(): boolean {
+    return (
+      this.isConnected &&
+      this.tokenBalance >= 0 &&
+      this.usdBalance >= 0 &&
+      !this.walletPrivacySettings.shouldHideWalletBalance()
+    );
   }
 
   ngOnDestroy() {
