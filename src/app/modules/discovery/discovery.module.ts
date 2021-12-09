@@ -36,6 +36,7 @@ import { SuggestionsService } from '../suggestions/channel/channel-suggestions.s
 import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
+import { DiscoveryTopComponent } from './top/top.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,17 @@ import { ContentSettingsModule } from '../content-settings/content-settings.modu
         path: '',
         component: DiscoveryComponent,
         children: [
-          { path: '', redirectTo: 'overview' },
+          { path: '', redirectTo: 'top' },
+          {
+            path: 'top',
+            component: DiscoveryTopComponent,
+            data: {
+              title: 'Discovery / Top',
+              ogImage: '/assets/og-images/discovery-v3.png',
+              ogImageWidth: 1200,
+              ogImageHeight: 1200,
+            },
+          },
           {
             path: 'overview',
             component: DiscoveryTrendsComponent,

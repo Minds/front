@@ -111,7 +111,6 @@
     "cross-env": "^7.0.3",
     "gulp": "~4.0.2",
     "gulp-autoprefixer": "^8.0.0",
-    "gulp-minify-css": "^1.1.6",
     "gulp-sass": "^5.0.0",
     "gulp-sass-glob": "^1.1.0",
     "gulp-template": "^5.0.0",
