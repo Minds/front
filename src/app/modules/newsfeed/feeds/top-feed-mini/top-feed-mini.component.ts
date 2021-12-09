@@ -35,10 +35,7 @@ export class TopFeedMiniComponent implements OnInit {
 
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/subscribed/activities`)
-        .setParams({
-          algorithm: 'top',
-        })
+        .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
         .setLimit(3)
         .fetch(refresh);
     } catch (e) {
