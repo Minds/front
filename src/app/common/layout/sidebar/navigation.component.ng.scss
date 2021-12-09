@@ -41,6 +41,12 @@
     .m-sidebarNavigation {
       overflow: visible;
 
+      &:not(.m-sidebarNavigation--slide) {
+        .m-sidebarNavigation__list {
+          padding-top: 26px;
+        }
+      }
+
       nav {
         overflow-y: auto;
         max-height: calc(100vh - 75px);
