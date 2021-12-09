@@ -35,10 +35,27 @@ describe('SettingsV2WalletComponent', () => {
     })
   );
 
-  beforeEach(() => {
+  beforeEach(done => {
+    jasmine.clock().uninstall();
+    jasmine.clock().install();
+
     fixture = TestBed.createComponent(SettingsV2WalletComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
+    }
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+    sessionMock.loggedIn = true;
   });
 
   it('should instantiate', () => {
