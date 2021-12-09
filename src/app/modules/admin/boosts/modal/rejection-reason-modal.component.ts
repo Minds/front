@@ -25,7 +25,9 @@ export class RejectionReasonModalComponent {
 
   errorlevel: number = null;
   dismissButton: string = 'Dismiss';
-  reasons: Array<Reason> = rejectionReasons;
+  reasons: Array<Reason> = rejectionReasons.filter(
+    (reason: Reason) => !reason.deprecated
+  );
 
   open: boolean = true;
 

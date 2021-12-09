@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 
 /**
- * A default feed for logged-out users.
+ * A default recommendations feed - can be accessed by logged-out users.
  * Users subscribers of a recommendations user on the backend.
  */
 @Component({
@@ -44,7 +44,7 @@ export class DefaultFeedComponent implements OnInit {
 
     try {
       this.feedsService
-        .setEndpoint(`api/v3/newsfeed/logged-out`)
+        .setEndpoint(`api/v3/newsfeed/default-feed`)
         .setLimit(12)
         .fetch(refresh);
     } catch (e) {
