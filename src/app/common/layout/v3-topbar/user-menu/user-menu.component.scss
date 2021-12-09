@@ -29,6 +29,10 @@ m-usermenu__v3 {
         box-shadow: none;
       }
 
+      &.m-userMenu__dropdown--loggedOut {
+        padding-top: 10px;
+      }
+
       li.m-userMenuDropdown__item {
         padding: 0;
         font-size: 15px;

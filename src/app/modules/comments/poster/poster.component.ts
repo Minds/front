@@ -26,6 +26,7 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { IsCommentingService } from './is-commenting.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-comment__poster',
@@ -60,6 +61,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   constructor(
     public session: Session,
     public client: Client,
+    private router: Router,
     private signupModal: SignupModalService,
     public attachment: AttachmentService,
     public sockets: SocketsService,
@@ -262,6 +264,14 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
       await this.authModalService.open();
       this.detectChanges();
     } catch (e) {}
+  }
+
+  /**
+   * Whether "Log in" to comment prompt should be shown.
+   * @returns { boolean } true if prompt should be shown.
+   */
+  public shouldShowLoginPrompt(): boolean {
+    return this.router.url !== '/';
   }
 
   onMenuClick(e: MouseEvent): void {

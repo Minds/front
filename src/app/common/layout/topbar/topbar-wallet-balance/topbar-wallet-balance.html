@@ -1,6 +1,7 @@
-<div
+<a
   class="m-topbar-wallet-balance"
-  (click)="navigateWallet()"
+  routerLink="/wallet/tokens/rewards"
+  data-ref="topnav-wallet"
   *ngIf="isConnected && tokenBalance >= 0 && usdBalance >= 0"
 >
   <div class="m-topbar-wallet-balance__tokens">
@@ -10,15 +11,16 @@
   <div class="m-topbar-wallet-balance__usd">
     ${{ formatUSD(usdBalance) }}
   </div>
-</div>
+</a>
 
-<div
+<a
   class="m-topbar-wallet-balance"
   (click)="connectWallet($event)"
+  data-ref="topnav-connect-wallet"
   *ngIf="!isConnected"
 >
   <div class="m-topbar-wallet-balance__connect">
     <m-icon iconId="add_circle" m-tooltip--icon></m-icon>
     <span i18n="@@MARKETING__CONNECT_WALLET">Connect Wallet</span>
   </div>
-</div>
+</a>

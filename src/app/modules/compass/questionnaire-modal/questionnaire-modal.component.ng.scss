@@ -4,12 +4,16 @@
   z-index: 1;
   max-width: 720px;
   .m-compassQuestionnaire__modal {
+    display: flex;
+    flex-flow: column;
+    max-height: 80vh;
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }
 
     @media screen and (max-width: $max-mobile) {
       min-height: 100vh;
+      max-height: 100vh;
     }
   }
 
@@ -19,6 +23,9 @@
 
   .m-compassQuestionnaireModal__main {
     padding: 45px 45px 20px;
+    height: 80%;
+    overflow-y: scroll;
+    @include vertical-scroll;
 
     @media screen and (max-width: $max-mobile) {
       padding: 20px;

@@ -10,7 +10,7 @@ import {
   CookieOptionsProvider,
   COOKIE_OPTIONS,
   CookieModule,
-} from '@gorniv/ngx-universal';
+} from '@mindsorg/ngx-universal';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { Client } from '../../services/api';
 
