@@ -74,7 +74,7 @@ describe('DefaultFeedComponent', () => {
     (comp as any).load();
 
     expect(comp.feedsService.setEndpoint).toHaveBeenCalledWith(
-      'api/v3/newsfeed/logged-out'
+      'api/v3/newsfeed/default-feed'
     );
     expect(comp.feedsService.setLimit).toHaveBeenCalledWith(12);
     expect(comp.feedsService.fetch).toHaveBeenCalledWith(false);
