@@ -13,3 +13,4 @@
 
 (What features do these changes effect in your estimation?)
 
+/label mr-has-template
