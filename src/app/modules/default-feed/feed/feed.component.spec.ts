@@ -1,27 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+
 import { DefaultFeedComponent } from './feed.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { feedsServiceMock } from '../../../../tests/feed-service-mock.spec';
 import { GlobalScrollService } from '../../../services/ux/global-scroll.service';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
-
-const inProgress: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-const offset: BehaviorSubject<number> = new BehaviorSubject<number>(12);
-const feed: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-const hasMore: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-
-const feedsServiceMock = MockService(FeedsService, {
-  has: ['inProgress', 'offset', 'feed', 'hasMore'],
-  props: {
-    inProgress: { get: () => inProgress },
-    offset: { get: () => offset },
-    feed: { get: () => feed },
-    hasMore: { get: () => hasMore },
-  },
-});
+import { FeedService } from '../../channels/v2/feed/feed.service';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -29,6 +16,11 @@ describe('DefaultFeedComponent', () => {
 
   beforeEach(
     waitForAsync(() => {
+      TestBed.overrideComponent(DefaultFeedComponent, {
+        set: {
+          providers: [{ provide: FeedsService, useValue: feedsServiceMock }],
+        },
+      }); // https://medium.com/ngconf/how-to-override-component-providers-in-angular-unit-tests-b73b47b582e3
       TestBed.configureTestingModule({
         declarations: [
           MockComponent({
@@ -44,28 +36,19 @@ describe('DefaultFeedComponent', () => {
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
+          { provide: FeedsService, useValue: feedsServiceMock },
           {
             provide: GlobalScrollService,
             useValue: MockService(GlobalScrollService),
           },
         ],
-      })
-        .overrideComponent(DefaultFeedComponent, {
-          set: {
-            providers: [
-              {
-                provide: FeedsService,
-                useValue: feedsServiceMock,
-              },
-            ],
-          },
-        })
-        .compileComponents();
+      }).compileComponents();
     })
   );
 
   beforeEach(done => {
     fixture = TestBed.createComponent(DefaultFeedComponent);
+
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
@@ -91,8 +74,9 @@ describe('DefaultFeedComponent', () => {
   });
 
   it('should load', () => {
-    (comp.feedsService as any).setEndpoint.and.returnValue(comp.feedsService);
-    (comp.feedsService as any).setLimit.and.returnValue(comp.feedsService);
+    spyOn(comp.feedsService, 'setEndpoint').and.returnValue(comp.feedsService);
+    spyOn(comp.feedsService, 'setLimit').and.returnValue(comp.feedsService);
+    spyOn(comp.feedsService, 'fetch');
 
     (comp as any).load();
 
@@ -104,9 +88,12 @@ describe('DefaultFeedComponent', () => {
   });
 
   it('should call to load more', () => {
+    comp.feedsService.canFetchMore = true;
     comp.feedsService.inProgress.next(false);
     comp.feedsService.offset.next(12);
-    comp.feedsService.canFetchMore = true;
+
+    spyOn(comp.feedsService, 'fetch');
+    spyOn(comp.feedsService, 'loadMore');
 
     (comp as any).loadNext();
 
