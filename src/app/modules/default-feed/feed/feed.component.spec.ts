@@ -8,6 +8,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { feedsServiceMock } from '../../../../tests/feed-service-mock.spec';
 import { GlobalScrollService } from '../../../services/ux/global-scroll.service';
 import { By } from '@angular/platform-browser';
+import { FeedService } from '../../channels/v2/feed/feed.service';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -15,6 +16,11 @@ describe('DefaultFeedComponent', () => {
 
   beforeEach(
     waitForAsync(() => {
+      TestBed.overrideComponent(DefaultFeedComponent, {
+        set: {
+          providers: [{ provide: FeedsService, useValue: feedsServiceMock }],
+        },
+      }); // https://medium.com/ngconf/how-to-override-component-providers-in-angular-unit-tests-b73b47b582e3
       TestBed.configureTestingModule({
         declarations: [
           MockComponent({
@@ -42,6 +48,7 @@ describe('DefaultFeedComponent', () => {
 
   beforeEach(done => {
     fixture = TestBed.createComponent(DefaultFeedComponent);
+
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
