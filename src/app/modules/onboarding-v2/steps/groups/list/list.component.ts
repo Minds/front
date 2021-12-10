@@ -6,6 +6,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 @Component({
   selector: 'm-onboarding__groupList',
   templateUrl: 'list.component.html',
+  providers: [FeedsService],
 })
 export class GroupListComponent implements OnInit {
   readonly cdnUrl: string;

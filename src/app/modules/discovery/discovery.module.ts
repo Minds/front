@@ -29,7 +29,6 @@ import { DiscoveryService } from './discovery.service';
 import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
-import { FeedsService } from '../../common/services/feeds.service';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
