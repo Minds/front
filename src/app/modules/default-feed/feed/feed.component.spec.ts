@@ -1,13 +1,27 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { DefaultFeedComponent } from './feed.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { feedsServiceMock } from '../../../../tests/feed-service-mock.spec';
 import { GlobalScrollService } from '../../../services/ux/global-scroll.service';
 import { By } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
+
+const inProgress: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+const offset: BehaviorSubject<number> = new BehaviorSubject<number>(12);
+const feed: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+const hasMore: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+const feedsServiceMock = MockService(FeedsService, {
+  has: ['inProgress', 'offset', 'feed', 'hasMore'],
+  props: {
+    inProgress: { get: () => inProgress },
+    offset: { get: () => offset },
+    feed: { get: () => feed },
+    hasMore: { get: () => hasMore },
+  },
+});
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -30,13 +44,23 @@ describe('DefaultFeedComponent', () => {
         ],
         imports: [RouterTestingModule, ReactiveFormsModule],
         providers: [
-          { provide: FeedsService, useValue: feedsServiceMock },
           {
             provide: GlobalScrollService,
             useValue: MockService(GlobalScrollService),
           },
         ],
-      }).compileComponents();
+      })
+        .overrideComponent(DefaultFeedComponent, {
+          set: {
+            providers: [
+              {
+                provide: FeedsService,
+                useValue: feedsServiceMock,
+              },
+            ],
+          },
+        })
+        .compileComponents();
     })
   );
 
@@ -67,9 +91,8 @@ describe('DefaultFeedComponent', () => {
   });
 
   it('should load', () => {
-    spyOn(comp.feedsService, 'setEndpoint').and.returnValue(comp.feedsService);
-    spyOn(comp.feedsService, 'setLimit').and.returnValue(comp.feedsService);
-    spyOn(comp.feedsService, 'fetch');
+    (comp.feedsService as any).setEndpoint.and.returnValue(comp.feedsService);
+    (comp.feedsService as any).setLimit.and.returnValue(comp.feedsService);
 
     (comp as any).load();
 
@@ -81,12 +104,9 @@ describe('DefaultFeedComponent', () => {
   });
 
   it('should call to load more', () => {
-    comp.feedsService.canFetchMore = true;
     comp.feedsService.inProgress.next(false);
     comp.feedsService.offset.next(12);
-
-    spyOn(comp.feedsService, 'fetch');
-    spyOn(comp.feedsService, 'loadMore');
+    comp.feedsService.canFetchMore = true;
 
     (comp as any).loadNext();
 
