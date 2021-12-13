@@ -16,7 +16,7 @@ export class StatusToasterService {
   unresolvedIncidents: Array<any> = [];
   resolvedIncidentsTracker: Array<any> = [];
 
-  private subject = new Subject<StatusToast>();
+  private subject$ = new Subject<StatusToast>();
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -110,11 +110,11 @@ export class StatusToasterService {
       resolved: resolved,
       incident: incident,
     };
-    this.subject.next(toast);
+    this.subject$.next(toast);
   }
 
   onToast(): Observable<StatusToast> {
-    return this.subject.asObservable();
+    return this.subject$.asObservable();
   }
 
   handleError(error) {

@@ -8,7 +8,7 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { interval, Subscription, timer } from 'rxjs';
 import { StatusToasterService } from './status-toaster.service';
 import {
   animate,
@@ -75,8 +75,10 @@ import * as moment from 'moment';
   ],
 })
 export class StatusToasterComponent implements OnInit, OnDestroy {
-  interval;
-  subscription: Subscription;
+  interval = timer(0, 30000);
+  pollingSubscription: Subscription;
+
+  toastSubscription: Subscription;
 
   get toasts() {
     return this.service.toasts;
@@ -93,11 +95,11 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.service.onToast().subscribe(toast => {
+    this.toastSubscription = this.service.onToast().subscribe(toast => {
       // if all saved toasts have already been dismissed, then clean the array to prevent leaks
-      if (this.service.toasts.findIndex(value => !value.dismissed) === -1) {
-        this.service.toasts = [];
-      }
+      // if (this.service.toasts.findIndex(value => !value.dismissed) === -1) {
+      this.service.toasts = [];
+      // }
       this.service.toasts.push(toast) - 1;
       this.detectChanges();
     });
@@ -105,9 +107,7 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
+    this.pollingSubscription?.unsubscribe();
   }
 
   /**
@@ -115,10 +115,9 @@ export class StatusToasterComponent implements OnInit, OnDestroy {
    */
   startPolling(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.service.update();
-      this.interval = setInterval(() => {
+      this.pollingSubscription = this.interval.subscribe(() => {
         this.service.update();
-      }, 30000);
+      });
     }
   }
 
