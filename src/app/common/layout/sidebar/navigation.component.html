@@ -19,8 +19,9 @@
         class="m-sidebarNavigation__item m-sidebarNavigation__item--compose"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="user"
       >
-        <a (click)="openComposeModal()">
+        <a (click)="openComposeModal()" data-ref="sidenav-composer">
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -44,8 +45,13 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        *ngIf="user"
       >
-        <a [routerLink]="['/newsfeed/subscriptions']" (click)="toggle()">
+        <a
+          [routerLink]="['/newsfeed/subscriptions']"
+          (click)="toggle()"
+          data-ref="sidenav-newsfeed"
+        >
           <m-tooltip
             icon="home"
             i18n="@@COMMON__NEWSFEED"
@@ -66,7 +72,11 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: plusPageActive }"
       >
-        <a routerLink="/discovery" (click)="toggle()">
+        <a
+          [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
+          (click)="toggle()"
+          data-ref="sidenav-discovery"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -85,10 +95,14 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: !plusPageActive }"
         *mIfFeature="'nav-plus-2020'"
       >
-        <a routerLink="/discovery/plus" (click)="toggle()">
+        <a
+          routerLink="/discovery/plus/overview"
+          (click)="toggle()"
+          data-ref="sidenav-plus"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -107,8 +121,13 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        *ngIf="user"
       >
-        <a [routerLink]="['/wallet']" (click)="toggle()">
+        <a
+          [routerLink]="['/wallet']"
+          (click)="toggle()"
+          data-ref="sidenav-wallet"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"
@@ -130,7 +149,12 @@
           class="m-sidebarNavigation__item"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
         >
-          <a [href]="chatUrl" target="chat" (click)="toggle()">
+          <a
+            [href]="chatUrl"
+            target="chat"
+            (click)="toggle()"
+            data-ref="sidenav-chat"
+          >
             <m-tooltip
               [enabled]="!showLabels"
               [anchor]="'left'"
@@ -154,8 +178,13 @@
       <li
         class="m-sidebarNavigation__item"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        *ngIf="user"
       >
-        <a routerLink="/analytics" (click)="toggle()">
+        <a
+          routerLink="/analytics"
+          (click)="toggle()"
+          data-ref="sidenav-analytics"
+        >
           <m-tooltip
             icon="insert_chart"
             [enabled]="false"
@@ -178,6 +207,7 @@
               routerLink="/analytics/dashboard/traffic"
               (click)="toggle()"
               i18n="@@COMMON__TRAFFIC"
+              data-ref="sidenav-analytics-traffic"
               >Traffic</a
             >
           </li>
@@ -189,6 +219,7 @@
               routerLink="/analytics/dashboard/token"
               (click)="toggle()"
               i18n="@@ANALYTICS__TOKEN"
+              data-ref="sidenav-analytics-token"
               >Tokens</a
             >
           </li>
@@ -200,6 +231,7 @@
               routerLink="/analytics/dashboard/engagement"
               (click)="toggle()"
               i18n="@@COMMON__ENGAGEMENT"
+              data-ref="sidenav-analytics-engagement"
               >Engagement</a
             >
           </li>
@@ -211,6 +243,7 @@
               routerLink="/analytics/dashboard/earnings"
               (click)="toggle()"
               i18n="@@COMMON__EARNINGS"
+              data-ref="sidenav-analytics-earnings"
               >Earnings</a
             >
           </li>
@@ -222,107 +255,122 @@
               routerLink="/analytics/dashboard/trending"
               (click)="toggle()"
               i18n="@@COMMON__TRENDING"
+              data-ref="sidenav-analytics-trending"
               >Trending</a
             >
           </li>
         </ul>
       </li>
+      <ng-container *ngIf="user">
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *mIfFeature="'earn-modal'"
+        >
+          <a (click)="openEarnModal()" data-ref="sidenav-earn-modal">
+            <m-tooltip
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+            >
+              <i class="material-icons" m-tooltip--anchor>attach_money</i>
+              <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
+            </m-tooltip>
 
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        *mIfFeature="'earn-modal'"
-      >
-        <a (click)="openEarnModal()">
-          <m-tooltip
-            [enabled]="!showLabels"
-            [anchor]="'left'"
-            [useParentPosition]="true"
-          >
-            <i class="material-icons" m-tooltip--anchor>attach_money</i>
-            <ng-container i18n="@@COMMON__EARN">Earn</ng-container>
-          </m-tooltip>
+            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN"
+              >Earn</span
+            >
+          </a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="user">
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *mIfFeature="'buy-tokens-uniswap-transak'"
+        >
+          <a (click)="buyTokens()" data-ref="sidenav-buytokens-modal">
+            <m-tooltip
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+            >
+              <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
+              <ng-container i18n="@@COMMON__BUY_CRYPTO"
+                >Buy Crypto</ng-container
+              >
+            </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__EARN"
-            >Earn</span
-          >
-        </a>
-      </li>
+            <span
+              class="m-sidebarNavigationItem__text"
+              i18n="@@COMMON__BUY_CRYPTO"
+              >Buy Crypto</span
+            >
+          </a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="user">
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *mIfFeature="'boost-modal-v2'"
+        >
+          <a (click)="openBoostModal()" data-ref="sidenav-boost-modal">
+            <m-tooltip
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+            >
+              <m-icon iconId="trending_up" m-tooltip--icon></m-icon>
+              <ng-container>Boost your channel</ng-container>
+            </m-tooltip>
 
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        *mIfFeature="'buy-tokens-uniswap-transak'"
-      >
-        <a (click)="buyTokens()">
-          <m-tooltip
-            [enabled]="!showLabels"
-            [anchor]="'left'"
-            [useParentPosition]="true"
-          >
-            <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
-            <ng-container i18n="@@COMMON__BUY_CRYPTO">Buy Crypto</ng-container>
-          </m-tooltip>
+            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST"
+              >Boost</span
+            >
+          </a>
+        </li>
+      </ng-container>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            i18n="@@COMMON__BUY_CRYPTO"
-            >Buy Crypto</span
+      <ng-container *ngIf="user">
+        <li
+          *mIfFeature="'matrix'"
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['/groups/memberships']"
+            (click)="toggle()"
+            data-ref="sidenav-groups"
           >
-        </a>
-      </li>
-
-      <li
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        *mIfFeature="'boost-modal-v2'"
-      >
-        <a (click)="openBoostModal()">
-          <m-tooltip
-            [enabled]="!showLabels"
-            [anchor]="'left'"
-            [useParentPosition]="true"
-          >
-            <m-icon iconId="trending_up" m-tooltip--icon></m-icon>
-            <ng-container>Boost your channel</ng-container>
-          </m-tooltip>
-
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST"
-            >Boost</span
-          >
-        </a>
-      </li>
-
-      <li
-        *mIfFeature="'matrix'"
-        class="m-sidebarNavigation__item"
-        [routerLinkActive]="'m-sidebarNavigation__item--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/groups/memberships']" (click)="toggle()">
-          <m-tooltip
-            [enabled]="!showLabels"
-            [anchor]="'left'"
-            [useParentPosition]="true"
-          >
-            <i class="material-icons" m-tooltip--anchor>group</i>
-            <ng-container i18n="@@COMMON__GROUPS">Groups</ng-container>
-          </m-tooltip>
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS"
-            >Groups</span
-          >
-        </a>
-      </li>
-
+            <m-tooltip
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+            >
+              <i class="material-icons" m-tooltip--anchor>group</i>
+              <ng-container i18n="@@COMMON__GROUPS">Groups</ng-container>
+            </m-tooltip>
+            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS"
+              >Groups</span
+            >
+          </a>
+        </li>
+      </ng-container>
       <li
         *ngIf="user && !matrixFeature"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
-        <a [routerLink]="['/' + user.username]" (click)="toggle()">
+        <a
+          [routerLink]="['/' + user.username]"
+          (click)="toggle()"
+          data-ref="sidenav-channel"
+        >
           <img
             [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
             alt=""
@@ -336,8 +384,13 @@
       <li
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         class="m-sidebarNavigation__item"
+        *ngIf="user"
       >
-        <a [routerLink]="[settingsLink]" (click)="toggle()">
+        <a
+          [routerLink]="[settingsLink]"
+          (click)="toggle()"
+          data-ref="sidenav-settings"
+        >
           <m-tooltip
             icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
@@ -352,6 +405,28 @@
           >
         </a>
       </li>
+      <ng-container *ngIf="!user">
+        <li
+          class="m-sidebarNavigation__item"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a (click)="openAuthModal()" data-ref="sidenav-loggedout-more">
+            <m-tooltip
+              [enabled]="!showLabels"
+              [anchor]="'left'"
+              [useParentPosition]="true"
+            >
+              <i class="material-icons" m-tooltip--anchor>more_horiz</i>
+              <ng-container i18n="@@COMMON__MORE">More</ng-container>
+            </m-tooltip>
+
+            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MORE"
+              >More</span
+            >
+          </a>
+        </li>
+      </ng-container>
     </ul>
   </nav>
 

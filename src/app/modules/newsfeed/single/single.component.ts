@@ -37,6 +37,8 @@ export class NewsfeedSingleComponent {
   private queryParamsSubscription: Subscription;
   private singleGuidSubscription: Subscription;
 
+  private shouldReuseRouteFn; // For comment focusedUrn reloading
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -81,6 +83,18 @@ export class NewsfeedSingleComponent {
         }
       }
     );
+
+    /**
+     * Comments rely on focusedCommentUrn being sent through to the comments
+     * component. It is required to allow the router to know that this query parameter
+     * has changed.
+     * It is in the component as having it in the comment can render multiple times, creating
+     * a race condition for resettig the default shouldReuseRoute (as it happens on ngOnDestroy)
+     */
+    this.shouldReuseRouteFn = this.router.routeReuseStrategy.shouldReuseRoute;
+    this.router.routeReuseStrategy.shouldReuseRoute = future => {
+      return false;
+    };
   }
 
   ngOnDestroy() {
@@ -91,6 +105,9 @@ export class NewsfeedSingleComponent {
       this.singleGuidSubscription.unsubscribe();
     }
     this.jsonLdService.removeStructuredData();
+
+    // Set the router strategy back to default
+    this.router.routeReuseStrategy.shouldReuseRoute = this.shouldReuseRouteFn;
   }
 
   /**

@@ -15,7 +15,7 @@ import {
   CookieOptionsProvider,
   COOKIE_OPTIONS,
   CookieModule,
-} from '@gorniv/ngx-universal';
+} from '@mindsorg/ngx-universal';
 
 describe('Composer', () => {
   let comp: ComposerComponent;

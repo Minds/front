@@ -1,0 +1,36 @@
+<form class="m-formWrapper" [formGroup]="form">
+  <div class="m-form__fieldsContainer">
+    <label for="showNsfwOptions" class="m-form__customInputWrapper__checkbox">
+      <ng-container i18n="@@M__NSFW_SETTINGS__ALWAYS_SHOW_NSFW"
+        >Always show NSFW content (18+)</ng-container
+      >
+      <input
+        type="checkbox"
+        value="true"
+        id="showNsfwOptions"
+        formControlName="showNsfw"
+      />
+      <span class="m-form__customInput__checkbox"></span>
+    </label>
+    <ng-container *ngIf="hasNsfwSelections">
+      <ng-container
+        *ngFor="let nsfwOption of nsfwOptions; let i = index"
+        formArrayName="nsfw"
+      >
+        <label
+          [for]="nsfwOption.id"
+          class="m-form__customInputWrapper__checkbox"
+          >{{ nsfwOption.label }}
+          <input
+            type="checkbox"
+            value="selected"
+            [id]="nsfwOption.id"
+            [formControlName]="i"
+            class="form-control"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </ng-container>
+    </ng-container>
+  </div>
+</form>

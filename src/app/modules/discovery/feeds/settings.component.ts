@@ -4,7 +4,6 @@ import { DiscoveryFeedsService } from './feeds.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 const noOp = () => {};
-
 @Component({
   selector: 'm-discovery__feedSettings',
   templateUrl: './settings.component.html',

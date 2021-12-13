@@ -13,7 +13,6 @@ import { RegisterForm } from '../forms/register/register';
 import { FeaturesService } from '../../services/features.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
-import { MetaService } from '../../common/services/meta.service';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
@@ -39,7 +38,6 @@ export class HomepageV2Component implements OnInit {
     private featuresService: FeaturesService,
     configs: ConfigsService,
     private onboardingService: OnboardingV2Service,
-    private metaService: MetaService,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
@@ -54,13 +52,6 @@ export class HomepageV2Component implements OnInit {
       this.router.navigate(['/newsfeed']);
       return;
     }
-    this.metaService
-      .setTitle(`The Leading Alternative Social Network`, true)
-      .setDescription(
-        'An open source, community-owned social network dedicated to privacy, free speech, monetization and decentralization. Break free from big censorship, algorithms and surveillance and join the leading, unbiased alternative.'
-      )
-      .setCanonicalUrl('/')
-      .setOgUrl('/');
 
     this.navigationService.setVisible(true);
     this.topbarService.toggleMarketingPages(true, false, false);

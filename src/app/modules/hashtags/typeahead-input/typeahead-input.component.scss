@@ -27,6 +27,7 @@ m-hashtags__typeaheadInput {
 
     @include m-theme() {
       background-color: themed($m-bgColor--secondary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 
@@ -43,7 +44,7 @@ m-hashtags__typeaheadInput {
     padding: 10px;
 
     @include m-theme() {
-      outline: 1px solid themed($m-borderColor--primary);
+      border-top: 1px solid themed($m-borderColor--primary);
     }
   }
 }

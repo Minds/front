@@ -197,9 +197,19 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   doRedirect(): void {
-    if (this.router.url === '/') {
-      this.router.navigate(['/newsfeed/subscriptions']);
+    if (this.router.url === '/' || this.router.url === '/about') {
+      this.router.navigate(['/newsfeed/subscriptions/latest']);
     }
+  }
+
+  /**
+   * Gets URL for main logo.
+   * @returns { string } url for main logo.
+   */
+  public getMainLogoUrl(): string {
+    return this.session.getLoggedInUser()
+      ? '/newsfeed/subscriptions/latest'
+      : '/';
   }
 
   /**

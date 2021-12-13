@@ -41,7 +41,7 @@ import { CommentsService } from '../comments.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentsTreeComponent implements OnInit, OnDestroy {
+export class CommentsTreeComponent {
   entity;
   guid: string = '';
   parent: any;
@@ -60,8 +60,6 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
   @Input() showOnlyPoster: boolean = false;
   @Input() compact: boolean = false;
 
-  private shouldReuseRouteFn;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -71,17 +69,6 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private router: Router
   ) {}
-
-  ngOnInit() {
-    this.shouldReuseRouteFn = this.router.routeReuseStrategy.shouldReuseRoute;
-    this.router.routeReuseStrategy.shouldReuseRoute = future => {
-      return false;
-    };
-  }
-
-  ngOnDestroy() {
-    this.router.routeReuseStrategy.shouldReuseRoute = this.shouldReuseRouteFn;
-  }
 
   @Input('entity')
   set _entity(value: any) {

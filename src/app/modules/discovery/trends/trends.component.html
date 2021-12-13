@@ -1,4 +1,4 @@
-<m-discovery__tabs></m-discovery__tabs>
+<m-discovery__tabs *ngIf="showTabs"></m-discovery__tabs>
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
 <m-discovery__noTagsPrompt
@@ -7,10 +7,13 @@
   @fastFade
 ></m-discovery__noTagsPrompt>
 
+<m-discovery__buildYourAlgorithm> </m-discovery__buildYourAlgorithm>
+
 <ul
   class="m-discovery__trends"
   @fastFade
   *ngIf="(trends$ | async).length > 0 || (hero$ | async)"
+  [ngClass]="{ noBorderTop: !showTabs }"
 >
   <li
     class="m-discoveryTrends__trend m-discoveryTrends__trend--hero"
@@ -28,6 +31,7 @@
   </li>
   <!-- ---------------------- -->
   <m-discovery__cardCarousel
+    *ngIf="showChannels"
     type="suggestions"
     class="m-discoveryTrends__trend"
   ></m-discovery__cardCarousel>

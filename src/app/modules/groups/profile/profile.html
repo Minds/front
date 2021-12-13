@@ -1,16 +1,14 @@
-<div [hidden]="group || error" style="width:100%; text-align:center; ">
+<div [hidden]="group || error" style="width: 100%; text-align: center">
   <div
     class="mdl-spinner mdl-js-spinner is-active"
     [mdl]
-    style="margin: 16px auto;"
+    style="margin: 16px auto"
   ></div>
 </div>
 
-<div class="m-error-splash" *ngIf="error && !group">
-  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
-  <h3 class="mdl-color-text--red-300">{{error}}</h3>
-  <span class="mdl-color-text--blue-grey-300">Check the url is correct</span>
-  <router-outlet></router-outlet>
+<div class="m-pageLayout__container" *ngIf="error && !group">
+  <m-errorSplash class="m-pageLayout__container"></m-errorSplash>
+  <div class="m-pageLayout__pane--right"><!-- Spacer --></div>
 </div>
 
 <m-explicit-overlay
@@ -55,25 +53,30 @@
           (added)="upload_avatar($event)"
         >
         </minds-avatar>
-        <div class="m-group__searchBtnWrapper">
-          <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
-            ><i class="material-icons">search</i></a
+        <div class="m-groupInfo__rightIcons">
+          <div class="m-group__searchBtnWrapper">
+            <a class="m-groupSearchBtn" (click)="openSearchModal($event)"
+              ><i class="material-icons">search</i></a
+            >
+          </div>
+          <minds-groups-settings-button
+            [(group)]="group"
+            class="m-button"
+            (change)="onOptionsChange($event)"
           >
+          </minds-groups-settings-button>
         </div>
-        <minds-groups-settings-button
-          [(group)]="group"
-          class="m-button"
-          (change)="onOptionsChange($event)"
-        >
-        </minds-groups-settings-button>
-
         <div class="m-groupInfo__member-previews">
           <m-group--member-previews [group]="group"></m-group--member-previews>
         </div>
 
         <!-- Name -->
         <div
-          class="m-groupInfo__name m-group-info-name mdl-color-text--blue-grey-800"
+          class="
+            m-groupInfo__name
+            m-group-info-name
+            mdl-color-text--blue-grey-800
+          "
         >
           <div [hidden]="editing || !group.name">
             <h1>
@@ -92,7 +95,7 @@
               >
               </minds-groups-join-button>
               <m-button
-                style="margin-left: 8;"
+                style="margin-left: 8"
                 (onAction)="videochat.activate(group)"
                 *ngIf="!group.videoChatDisabled && group['is:member']"
                 size="small"

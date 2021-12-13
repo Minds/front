@@ -1,0 +1,89 @@
+<div class="m-contentSettings">
+  <div class="m-contentSettings__section--title">
+    <span class="m-contentSettings__title">Content Settings</span>
+  </div>
+  <div class="m-contentSettings__section--tabs">
+    <div class="m-tabs__container">
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'tags' }"
+          (click)="service.activeTab$.next('tags')"
+          data-cy="content-settings-modal-tab-tags"
+          >Tags</a
+        >
+      </div>
+      <div class="m-tabs__tab">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'compass' }"
+          (click)="service.activeTab$.next('compass')"
+          data-cy="content-settings-modal-tab-compass"
+          >Compass</a
+        >
+      </div>
+      <!-- <div class="m-tabs__tab">
+        <a
+          [ngClass]="{ 'm-tabs__tab--selected': activeTab === 'nsfw' }"
+          (click)="service.activeTab$.next('nsfw')"
+          data-cy="content-settings-modal-tab-nsfw"
+          >NSFW</a
+        >
+      </div> -->
+    </div>
+  </div>
+  <div class="m-contentSettings__main">
+    <!-- ----------------------------------------- -->
+    <!-- SUBTITLE -->
+    <!-- ----------------------------------------- -->
+    <div class="m-contentSettings__section--subtitle">
+      <span class="m-contentSettings__subtitle">
+        <ng-container
+          *ngIf="activeTab === 'tags'"
+          i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__TAGS"
+          >The tags you select will allow us to recommend content relevant to
+          your areas of interest</ng-container
+        >
+        <ng-container
+          *ngIf="activeTab === 'compass'"
+          i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__COMPASS"
+          >The Compass allows Minds to best recommend content and channels. Find
+          out more.</ng-container
+        >
+        <!-- <ng-container
+        *ngIf="activeTab === 'nsfw'"
+        i18n="@@M__CONTENT_SETTINGS_MODAL__SUBTITLE__NSFW"
+        >Control how NSFW content is displayed in your newsfeed</ng-container
+      > -->
+      </span>
+    </div>
+
+    <!-- ----------------------------------------- -->
+    <!-- FORM -->
+    <!-- ----------------------------------------- -->
+    <div
+      class="m-contentSettings__formWrapper"
+      [ngClass]="{
+        'm-contentSettings__section--formWrapper': activeTab !== 'tags'
+      }"
+    >
+      <m-tagSettings *ngIf="activeTab === 'tags'"></m-tagSettings>
+      <m-compassForm *ngIf="activeTab === 'compass'"></m-compassForm>
+      <!-- <m-nsfwSettings__form *ngIf="activeTab === 'nsfw'"></m-nsfwSettings__form> -->
+    </div>
+  </div>
+  <!-- ----------------------------------------- -->
+  <!-- FORMS -->
+  <!-- ----------------------------------------- -->
+  <div class="m-contentSettings__section--toolbar">
+    <m-button
+      *ngIf="activeTab === 'tags'"
+      color="blue"
+      (onAction)="submit()"
+      [disabled]="!(discoveryTagsService.tagsChanged$ | async)"
+      [saving]="discoveryTagsService.saving$ | async"
+      >Save</m-button
+    >
+    <m-button *ngIf="activeTab === 'compass'" color="blue" (onAction)="submit()"
+      >Save</m-button
+    >
+  </div>
+</div>

@@ -206,7 +206,10 @@
   class="m-comments--start-conversation-label"
   *ngIf="!isLoggedIn && level < 1"
 >
-  <a (click)="showLoginModal(); $event.preventDefault()">
+  <a
+    *ngIf="shouldShowLoginPrompt()"
+    (click)="showLoginModal(); $event.preventDefault()"
+  >
     <ng-container
       *ngIf="!conversation; else loggedOutConversationMessage"
       i18n="@@MINDS__COMMENTS__LOGIN_TO_COMMENT"

@@ -34,6 +34,9 @@ import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 import { CardCarouselService } from './card-carousel/card-carousel.service';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { ContentSettingsModule } from '../content-settings/content-settings.module';
+import { DiscoveryTopComponent } from './top/top.component';
 
 @NgModule({
   imports: [
@@ -42,7 +45,17 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
         path: '',
         component: DiscoveryComponent,
         children: [
-          { path: '', redirectTo: 'overview' },
+          { path: '', redirectTo: 'top' },
+          {
+            path: 'top',
+            component: DiscoveryTopComponent,
+            data: {
+              title: 'Discovery / Top',
+              ogImage: '/assets/og-images/discovery-v3.png',
+              ogImageWidth: 1200,
+              ogImageHeight: 1200,
+            },
+          },
           {
             path: 'overview',
             component: DiscoveryTrendsComponent,
@@ -153,8 +166,20 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
               },
               {
                 path: 'tags',
-                component: DiscoveryTagsComponent,
-                data: { plus: true },
+                children: [
+                  {
+                    path: '',
+                    redirectTo: 'your',
+                  },
+                  {
+                    path: ':type',
+                    component: DiscoveryTagsComponent,
+                    data: {
+                      title: 'Your Tags',
+                      data: { plus: true },
+                    },
+                  },
+                ],
               },
               {
                 path: 'feeds',
@@ -187,42 +212,8 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
     HashtagsModule,
     LanguageModule,
     RouterModule,
-  ],
-  providers: [
-    DiscoveryTrendsService,
-    WirePaymentHandlersService,
-    WireModalService,
-    DiscoveryService,
-    SuggestionsService,
-    CardCarouselService,
-  ],
-  declarations: [
-    DiscoveryComponent,
-    DiscoveryTrendsComponent,
-    DiscoveryTrendsListItemComponent,
-    DiscoveryTrendComponent,
-    DiscoverySearchComponent,
-    DiscoveryTagsComponent,
-    DiscoveryFeedsComponent,
-    DiscoveryFeedsListComponent,
-    DiscoverySettingsButtonComponent,
-    DiscoveryDisclaimerComponent,
-    DiscoverySuggestionsComponent,
-    DiscoveryNoTagsPromptComponent,
-    DiscoveryPlusUpgradeComponent,
-    DiscoveryBoostFeedComponent,
-    DiscoveryTabsComponent,
-    DiscoveryLatestFeedComponent,
-    DiscoveryCardCarouselComponent,
-  ],
-  exports: [
-    DiscoveryComponent,
-    DiscoveryTrendsComponent,
-    DiscoverySearchComponent,
-    DiscoveryTagsComponent,
-    DiscoveryBoostFeedComponent,
-    DiscoveryFeedsComponent,
-    DiscoverySidebarTagsComponent,
+    NewsfeedModule,
+    ContentSettingsModule,
   ],
 })
 export class DiscoveryModule {}

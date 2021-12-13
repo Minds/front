@@ -177,6 +177,7 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
@@ -192,7 +193,12 @@ import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { StatusToasterComponent } from './components/status-toaster/status-toaster.component';
 import { StatusToasterService } from './components/status-toaster/status-toaster.service';
+import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
+import { FormInputSliderComponent } from './components/slider/slider.component';
+import { JoinBannerComponent } from './components/join-banner/join-banner.component';
+import { AutofocusDirective } from './directives/autofocus.directive';
+import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 
 const routes: Routes = [
   {
@@ -348,6 +354,7 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
@@ -357,6 +364,10 @@ const routes: Routes = [
     StatusToasterComponent,
     DateRangeModalComponent,
     HovercardComponent,
+    FormInputSliderComponent,
+    JoinBannerComponent,
+    AutofocusDirective,
+    TagSelectorComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -487,6 +498,7 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
@@ -497,6 +509,10 @@ const routes: Routes = [
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
+    FormInputSliderComponent,
+    JoinBannerComponent,
+    AutofocusDirective,
+    TagSelectorComponent,
   ],
   providers: [
     SiteService,
@@ -548,6 +564,7 @@ const routes: Routes = [
     StatusToasterService,
     DateRangeModalService,
     JsonLdService,
+    BoostRecommendationService,
   ],
 })
 export class CommonModule {}

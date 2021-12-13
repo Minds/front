@@ -57,7 +57,7 @@ import { UpgradesModule } from './modules/upgrades/upgrades.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 
 import * as Sentry from '@sentry/browser';
-import { CookieModule } from '@gorniv/ngx-universal';
+import { CookieModule } from '@mindsorg/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
@@ -66,6 +66,8 @@ import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
 import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
+import { AboutModule } from './modules/about/about.module';
+import { CompassModule } from './modules/compass/compass.module';
 
 @NgModule({
   bootstrap: [Minds],
@@ -85,6 +87,7 @@ import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     //CheckoutModule,
     PlusModule,
+    AboutModule,
     AdsModule,
     BoostModule,
     WireModule,
@@ -119,6 +122,7 @@ import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
     CodeHighlightModule,
     SharedModule,
     MessengerV2Module,
+    CompassModule,
 
     //last due to :username route
     AppRoutingModule,

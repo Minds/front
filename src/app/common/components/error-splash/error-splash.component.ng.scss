@@ -1,0 +1,43 @@
+@import 'defaults.scss';
+
+:host {
+  min-width: 100%;
+  margin-top: 100px;
+  height: calc(100vh - 75px); // subtract topbar height
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  > * + * {
+    margin-top: 40px;
+  }
+
+  span {
+    text-align: center;
+  }
+
+  .m-errorSplash__logo {
+    width: 270px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .m-errorSplash__header {
+    font-size: 24px;
+    font-weight: 700;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-errorSplash__subheader {
+    font-size: 15px;
+    font-weight: 400;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}

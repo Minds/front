@@ -77,7 +77,10 @@
 
   ::ng-deep minds-form-login {
     display: block;
-    background-color: #fcfcfc;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
 
     padding: 80px 60px;
 

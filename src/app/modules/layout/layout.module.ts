@@ -13,6 +13,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { RouterModule } from '@angular/router';
 import { ComposerModule } from '../composer/composer.module';
+import { AppPromptModule } from '../app-prompt/app-prompt.module';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ComposerModule } from '../composer/composer.module';
     LegacyModule,
     MessengerModule,
     ComposerModule,
+    AppPromptModule,
   ],
   exports: [TopbarWrapperComponent, PageComponent],
   declarations: [TopbarWrapperComponent, PageComponent],

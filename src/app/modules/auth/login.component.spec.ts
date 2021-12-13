@@ -29,7 +29,7 @@ import {
   CookieOptionsProvider,
   COOKIE_OPTIONS,
   CookieModule,
-} from '@gorniv/ngx-universal';
+} from '@mindsorg/ngx-universal';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
@@ -124,6 +124,7 @@ describe('LoginComponent', () => {
     featuresServiceMock.mock('ux-2020', false);
     featuresServiceMock.mock('navigation', false);
     featuresServiceMock.mock('localization-2020', true);
+    featuresServiceMock.mock('helpdesk-2021', false);
 
     fixture = TestBed.createComponent(LoginComponent);
 
