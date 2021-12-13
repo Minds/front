@@ -26,12 +26,12 @@ export class StatusToasterService {
   constructor(private http: HttpClient, protected configs: ConfigsService) {
     this.statusPageUrl = this.configs.get('statuspage_io')
       ? this.configs.get('statuspage_io').url
-      : 'https://status.minds.com';
+      : 'https://status.minds.com/';
   }
 
   fetchUnresolvedIncidents(): Observable<any> {
     return this.http
-      .get<any>(this.statusPageUrl + '/api/v2/incidents/unresolved.json')
+      .get<any>(this.statusPageUrl + 'api/v2/incidents/unresolved.json')
       .pipe(retry(1), catchError(this.handleError));
   }
 
