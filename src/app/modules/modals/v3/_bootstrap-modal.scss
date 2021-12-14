@@ -1,3 +1,17 @@
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 853px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+$modal-sm: 300px;
+$modal-md: 585px;
+$modal-lg: 800px;
+$modal-xl: 1140px;
+
 // Configuration
 @import '../../../../../node_modules/bootstrap/scss/functions';
 @import '../../../../../node_modules/bootstrap/scss/variables';
