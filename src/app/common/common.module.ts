@@ -191,6 +191,8 @@ import { DateRangeModalService } from './components/date-range-modal/date-range-
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { StatusToasterComponent } from './components/status-toaster/status-toaster.component';
+import { StatusToasterService } from './components/status-toaster/status-toaster.service';
 import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
@@ -359,6 +361,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    StatusToasterComponent,
     DateRangeModalComponent,
     HovercardComponent,
     FormInputSliderComponent,
@@ -502,6 +505,7 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
+    StatusToasterComponent,
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
@@ -557,6 +561,7 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
+    StatusToasterService,
     DateRangeModalService,
     JsonLdService,
     BoostRecommendationService,
