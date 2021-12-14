@@ -9,6 +9,8 @@ export class HovercardComponent implements OnInit {
   @Input() publisher: any;
   @Input() offset: Array<number>;
 
+  shown: boolean = false;
+
   // Here we are using offset modifier, but more options
   // are available at https://popper.js.org/docs/v2
   popperModifiers: any = {
@@ -22,5 +24,13 @@ export class HovercardComponent implements OnInit {
     if (this.offset.length === 2) {
       this.popperModifiers.options.offset = this.offset;
     }
+  }
+
+  onShown(): void {
+    this.shown = true;
+  }
+
+  onHidden(): void {
+    this.shown = false;
   }
 }
