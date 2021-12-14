@@ -14,8 +14,8 @@ import { SiteService } from '../../../../common/services/site.service';
 import { ProChannelService } from '../channel.service';
 import { ProUnsubscribeModalComponent } from '../unsubscribe-modal/modal.component';
 import { MindsUser } from '../../../../interfaces/entities';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Subscription } from 'rxjs';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-pro__subscribeButton',
@@ -38,7 +38,7 @@ export class SubscribeButtonComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected site: SiteService,
     protected channelService: ProChannelService,
-    protected modalService: OverlayModalService,
+    protected modalService: ModalService,
     protected injector: Injector,
     protected cd: ChangeDetectorRef
   ) {}
@@ -74,19 +74,11 @@ export class SubscribeButtonComponent implements OnInit, OnDestroy {
       await this.channelService.subscribe();
       this.updateCount();
     } else {
-      this.modalService
-        .create(
-          ProUnsubscribeModalComponent,
-          void 0,
-          {
-            class: 'm-overlayModal--unsubscribe',
-          },
-          this.injector
-        )
-        .onDidDismiss(() => {
-          this.updateCount();
-        })
-        .present();
+      await this.modalService.present(ProUnsubscribeModalComponent, {
+        modalDialogClass: 'm-overlayModal--unsubscribe',
+        injector: this.injector,
+      }).result;
+      this.updateCount();
     }
 
     this.onAction.emit();

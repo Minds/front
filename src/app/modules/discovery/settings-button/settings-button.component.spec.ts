@@ -7,13 +7,13 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { Client } from '../../../services/api';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { DiscoveryTagsService } from '../tags/tags.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { DiscoverySettingsButtonComponent } from './settings-button.component';
 import { TooltipComponent } from '../../../common/components/tooltip/tooltip.component';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 describe('DiscoverySettingsButtonComponent', () => {
   let component: DiscoverySettingsButtonComponent;
@@ -32,7 +32,7 @@ describe('DiscoverySettingsButtonComponent', () => {
             provide: DiscoveryTagsService,
             useValue: MockService(DiscoveryTagsService),
           },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           {
             provide: DiscoveryFeedsService,
             useValue: MockService(DiscoveryFeedsService),
@@ -60,14 +60,12 @@ describe('DiscoverySettingsButtonComponent', () => {
   it('should open tags modal', () => {
     component.modalType = 'tags';
     component.openSettingsModal(new MouseEvent('click'));
-    expect(overlayModalServiceMock.create).toHaveBeenCalled();
-    expect(overlayModalServiceMock.present).toHaveBeenCalled();
+    expect(modalServiceMock.present).toHaveBeenCalled();
   });
 
   it('should open feeds modal', () => {
     component.modalType = 'tags';
     component.openSettingsModal(new MouseEvent('click'));
-    expect(overlayModalServiceMock.create).toHaveBeenCalled();
-    expect(overlayModalServiceMock.present).toHaveBeenCalled();
+    expect(modalServiceMock.present).toHaveBeenCalled();
   });
 });

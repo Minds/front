@@ -19,8 +19,6 @@ import { storageMock } from '../../../tests/storage-mock.spec';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
 import { MockComponent, MockDirective } from '../../utils/mock';
-import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { NewsfeedService } from './services/newsfeed.service';
 import { newsfeedServiceMock } from '../../mocks/modules/newsfeed/services/newsfeed-service.mock';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
@@ -30,6 +28,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PagesService } from '../../common/services/pages.service';
 import { pagesServiceMock } from '../../mocks/services/pages-mock.spec';
 import { LiquiditySpotComponent } from '../boost/liquidity-spot/liquidity-spot.component';
+import { ModalService } from '../../services/ux/modal.service';
+import { modalServiceMock } from '../../../tests/modal-service-mock.spec';
 
 describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
@@ -97,7 +97,7 @@ describe('NewsfeedComponent', () => {
           },
           { provide: Storage, useValue: storageMock },
           { provide: Navigation, useValue: navigationMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           { provide: NewsfeedService, useValue: newsfeedServiceMock },
           { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: PagesService, useValue: pagesServiceMock },

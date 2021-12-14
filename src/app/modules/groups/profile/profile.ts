@@ -526,9 +526,10 @@ export class GroupsProfile {
    * Opens search modal
    */
   async openSearchModal(event): Promise<void> {
-    const query = await this.publisherSearchModal
-      .present(this.injector, this.group)
-      .toPromise();
+    const query = await this.publisherSearchModal.pick(
+      this.injector,
+      this.group
+    );
 
     if (query) {
       this.groupsSearch.query$.next(query);

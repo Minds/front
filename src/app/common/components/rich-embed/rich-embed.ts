@@ -12,8 +12,8 @@ import { RichEmbedService } from '../../../services/rich-embed';
 import { MediaProxyService } from '../../../common/services/media-proxy.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -56,7 +56,7 @@ export class MindsRichEmbed {
     private mediaProxy: MediaProxyService,
     private configs: ConfigsService,
     private site: SiteService,
-    private overlayModal: OverlayModalService
+    private modalService: ModalService
   ) {}
 
   set _src(value: any) {
@@ -133,7 +133,7 @@ export class MindsRichEmbed {
     this.inlineEmbed = inlineEmbed;
 
     if (
-      this.overlayModal.canOpenInModal() &&
+      this.modalService.canOpenInModal() &&
       this.modalRequestSubscribed &&
       this.mediaSource === 'youtube'
     ) {
@@ -152,7 +152,7 @@ export class MindsRichEmbed {
     if (
       this.modalRequestSubscribed &&
       (this.mediaSource === 'youtube' || this.mediaSource === 'minds') &&
-      this.overlayModal.canOpenInModal()
+      this.modalService.canOpenInModal()
     ) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -314,7 +314,7 @@ export class MindsRichEmbed {
       this.embeddedInline &&
       this.inlineEmbed &&
       this.inlineEmbed.html &&
-      (!this.modalRequestSubscribed || !this.overlayModal.canOpenInModal())
+      (!this.modalRequestSubscribed || !this.modalService.canOpenInModal())
     );
   }
 

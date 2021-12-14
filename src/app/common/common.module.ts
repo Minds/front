@@ -54,7 +54,6 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
 import { MindsButton } from './components/button-v1/button-v1.component';
-import { OverlayModalComponent } from './components/overlay-modal/overlay-modal.component';
 
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
@@ -144,7 +143,6 @@ import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
 import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
-import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { IconComponent } from './components/icon/icon.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
@@ -199,6 +197,7 @@ import { FormInputSliderComponent } from './components/slider/slider.component';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 
 const routes: Routes = [
   {
@@ -272,7 +271,6 @@ const routes: Routes = [
     MindsButton,
 
     ChartComponent,
-    OverlayModalComponent,
 
     AdminActionsButtonComponent,
 
@@ -329,7 +327,6 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
-    StackableModalComponent,
     FileUploadComponent,
     IconComponent,
     OverlayComponent,
@@ -368,6 +365,7 @@ const routes: Routes = [
     JoinBannerComponent,
     AutofocusDirective,
     TagSelectorComponent,
+    ModalCloseButtonComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -419,7 +417,6 @@ const routes: Routes = [
     MindsButton,
 
     ChartComponent,
-    OverlayModalComponent,
 
     AdminActionsButtonComponent,
 
@@ -475,7 +472,6 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
-    StackableModalComponent,
     FileUploadComponent,
     IconComponent,
     OverlayComponent,
@@ -513,6 +509,7 @@ const routes: Routes = [
     JoinBannerComponent,
     AutofocusDirective,
     TagSelectorComponent,
+    ModalCloseButtonComponent,
   ],
   providers: [
     SiteService,

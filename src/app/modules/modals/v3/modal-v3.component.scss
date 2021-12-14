@@ -1,0 +1,42 @@
+@import 'bootstrap-modal';
+
+.modal-content {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  pointer-events: auto;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+  background-clip: unset;
+  border: unset;
+  border-radius: 6px;
+  outline: 0;
+}
+
+// fix the weird problem of modals having a 1055 z-index which interfered with stacking ui
+.modal {
+  z-index: 1050;
+}
+
+// prevent body scrolling when modal is opened
+body.modal-open {
+  overflow: hidden;
+}
+
+.m-modalV2__body {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.modal-fullwidth {
+  max-width: 95vw !important;
+}
+
+@media screen and (min-width: 1920px) {
+  .modal-xl {
+    max-width: 1824px !important;
+  }
+}

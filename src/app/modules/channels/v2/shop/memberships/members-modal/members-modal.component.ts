@@ -32,29 +32,23 @@ export class ChannelShopMembershipsMembersComponent {
    */
   onDismissIntent: () => void = () => {};
 
-  /**
-   * Modal options
-   *
-   * @param onDismissIntent
-   */
-  set opts({ onDismissIntent }) {
-    this.onDismissIntent = onDismissIntent || (() => {});
-  }
-
-  /**
-   * Sends the provided entity to the services
-   */
-  set data(entity) {
-    this.service.entityGuid$.next(entity.guid);
-    this.supportTiersService.setEntityGuid(entity.guid);
-  }
-
   constructor(
     private service: ChannelShopMembershipsMembersService,
     private supportTiersService: SupportTiersService,
     protected dockpanes: MessengerConversationDockpanesService,
     protected conversationBuilder: MessengerConversationBuilderService
   ) {}
+
+  /**
+   * Modal options
+   * @param onDismissIntent
+   * @param channel
+   */
+  setModalData({ onDismissIntent, channel }) {
+    this.onDismissIntent = onDismissIntent || (() => {});
+    this.service.entityGuid$.next(channel.guid);
+    this.supportTiersService.setEntityGuid(channel.guid);
+  }
 
   ngOnInit() {
     this.supportTiersSubscription = this.supportTiersService.list$.subscribe(

@@ -14,12 +14,9 @@ import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
-import {
-  StackableModalService,
-  StackableModalEvent,
-} from '../../../services/ux/stackable-modal.service';
 import { NewCardModalComponent } from '../new-card-modal/new-card-modal.component';
 import { Subscription } from 'rxjs';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-payments__selectCard',
@@ -39,7 +36,7 @@ export class PaymentsSelectCard {
     public client: Client,
     public cd: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-    private stackableModal: StackableModalService
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -71,18 +68,14 @@ export class PaymentsSelectCard {
   }
 
   async onAddNewCard(): Promise<void> {
-    const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(NewCardModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
+    const modal = this.modalService.present(NewCardModalComponent, {
+      data: {
         onComplete: () => {
           this.loadCards();
-          this.stackableModal.dismiss();
+          modal.close();
         },
-        onDismissIntent: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
+      },
+    });
   }
 
   detectChanges() {

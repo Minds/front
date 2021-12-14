@@ -4,7 +4,6 @@ import { catchError, take } from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
 import { ChannelAdminConfirmationComponent } from './admin-confirmation.component';
 import {
   CompletedPayload,
@@ -12,6 +11,7 @@ import {
   SubscriptionTimespan,
   SubscriptionType,
 } from './admin-confirmation.type';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
  * Opens admin confirmation box for enabling and disabling plus and pro manually.
@@ -24,7 +24,7 @@ export class ChannelAdminConfirmationService extends AbstractSubscriberComponent
   > = new BehaviorSubject<CompletedPayload>(null);
 
   constructor(
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private api: ApiService,
     private toast: FormToastService
   ) {
@@ -42,19 +42,15 @@ export class ChannelAdminConfirmationService extends AbstractSubscriberComponent
     action: ConfirmationAction,
     userGuid: string
   ): Promise<void> {
-    await this.stackableModal
-      .present(ChannelAdminConfirmationComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
-        action: action,
+    const modal = this.modalService.present(ChannelAdminConfirmationComponent, {
+      data: {
+        action,
         onComplete: (timespan: SubscriptionTimespan) => {
           this.call(type, action, userGuid, timespan);
-          this.stackableModal.dismiss();
+          modal.close(timespan);
         },
-        onDismissIntent: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
+      },
+    });
   }
 
   /**

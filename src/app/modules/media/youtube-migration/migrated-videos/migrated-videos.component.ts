@@ -6,7 +6,6 @@ import {
   ViewRef,
   Injector,
 } from '@angular/core';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
@@ -32,7 +31,6 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
     protected youtubeService: YoutubeMigrationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    protected overlayModal: OverlayModalService,
     protected router: Router,
     private features: FeaturesService,
     private activityModalCreator: ActivityModalCreatorService,

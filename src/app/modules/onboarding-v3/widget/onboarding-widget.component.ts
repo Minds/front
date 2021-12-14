@@ -8,7 +8,7 @@ import {
   RELEASED_GROUPS,
 } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
-import { ModalService } from '../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector,
     private toast: FormToastService,
     private emailResend: EmailResendService
@@ -120,7 +120,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
                   this.composerModal
                     .setInjector(this.injector)
                     .present()
-                    .toPromise()
                     .then(response => {
                       // if activity posted, manually strike through task.
                       if (response) {

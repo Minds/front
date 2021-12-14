@@ -12,8 +12,8 @@ import { CurrencyPipe } from '@angular/common';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { Client } from '../../../../services/api/client';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 
@@ -49,7 +49,7 @@ export class BoostCreatorPaymentMethodsComponent {
     private web3Wallet: Web3WalletService,
     private client: Client,
     private tokenContract: TokenContractService,
-    private overlayService: OverlayModalService,
+    private modalService: ModalService,
     private router: Router
   ) {}
 
@@ -190,7 +190,7 @@ export class BoostCreatorPaymentMethodsComponent {
   }
 
   buyTokens() {
-    this.overlayService.dismiss();
+    this.modalService.dismissAll();
     this.router.navigate(['/token']);
   }
 }

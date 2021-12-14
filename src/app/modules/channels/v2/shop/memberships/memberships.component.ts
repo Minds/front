@@ -10,8 +10,8 @@ import { map } from 'rxjs/operators';
 import { ChannelShopMembershipsService } from './memberships.service';
 import { ChannelShopMembershipsEditModalService } from './edit-modal.service';
 import { WireModalService } from '../../../../wire/wire-modal.service';
-import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
 import { ChannelShopMembershipsMembersComponent } from './members-modal/members-modal.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-channelShop__memberships',
@@ -80,7 +80,7 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * @param service
    * @param editModal
    * @param wireModal
-   * @param StackableModalService
+   * @param modalService
    */
   constructor(
     public channel: ChannelsV2Service,
@@ -88,7 +88,7 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
     protected service: ChannelShopMembershipsService,
     protected editModal: ChannelShopMembershipsEditModalService,
     protected wireModal: WireModalService,
-    protected stackableModal: StackableModalService
+    protected modalService: ModalService
   ) {
     this.channelGuidSubscription = this.channel.guid$.subscribe(guid =>
       this.supportTiers.setEntityGuid(guid)
@@ -109,7 +109,7 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * @todo Use an observable subscription to allow modal auto-close when navigating away
    */
   async create(): Promise<void> {
-    await this.editModal.present().toPromise();
+    await this.editModal.present();
     this.supportTiers.refresh();
   }
 
@@ -118,11 +118,9 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * @param supportTier
    */
   async select(supportTier: SupportTier): Promise<void> {
-    await this.wireModal
-      .present(this.channel.channel$.getValue(), {
-        supportTier,
-      })
-      .toPromise();
+    await this.wireModal.present(this.channel.channel$.getValue(), {
+      supportTier,
+    });
 
     this.supportTiers.refresh();
   }
@@ -133,7 +131,7 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
    * @todo Use an observable subscription to allow modal auto-close when navigating away
    */
   async edit(supportTier: SupportTier): Promise<void> {
-    await this.editModal.present(supportTier).toPromise();
+    await this.editModal.present(supportTier);
     this.supportTiers.refresh();
   }
 
@@ -151,17 +149,10 @@ export class ChannelShopMembershipsComponent implements OnDestroy {
   }
 
   async openMembersModal(e: MouseEvent): Promise<void> {
-    await this.stackableModal
-      .present(
-        ChannelShopMembershipsMembersComponent,
-        this.channel.channel$.getValue(),
-        {
-          wrapperClass: 'm-modalV2__wrapper',
-          onDismissIntent: () => {
-            this.stackableModal.dismiss();
-          },
-        }
-      )
-      .toPromise();
+    this.modalService.present(ChannelShopMembershipsMembersComponent, {
+      data: {
+        channel: this.channel.channel$.getValue(),
+      },
+    });
   }
 }

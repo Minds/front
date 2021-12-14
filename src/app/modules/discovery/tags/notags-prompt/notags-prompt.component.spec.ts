@@ -10,8 +10,8 @@ import { ConfigsService } from '../../../../common/services/configs.service';
 import { DiscoveryNoTagsPromptComponent } from './notags-prompt.component';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
 import { DiscoveryTagsService } from '../tags.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { overlayModalServiceMock } from '../../../../../tests/overlay-modal-service-mock.spec';
+import { ModalService } from '../../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
 
 describe('DiscoveryNoTagsPromptComponent', () => {
   let component: DiscoveryNoTagsPromptComponent;
@@ -30,7 +30,7 @@ describe('DiscoveryNoTagsPromptComponent', () => {
             provide: DiscoveryTagsService,
             useValue: MockService(DiscoveryTagsService),
           },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
         ],
       }).compileComponents();
     })
@@ -48,7 +48,6 @@ describe('DiscoveryNoTagsPromptComponent', () => {
 
   it('should open modal', () => {
     component.openTagSettings(new MouseEvent('click'));
-    expect(overlayModalServiceMock.create).toHaveBeenCalled();
-    expect(overlayModalServiceMock.present).toHaveBeenCalled();
+    expect(modalServiceMock.present).toHaveBeenCalled();
   });
 });

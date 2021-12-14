@@ -12,17 +12,15 @@ import {
 } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import * as BN from 'bn.js';
-
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
-import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
 import { Storage } from '../../../services/storage';
+import noOp from '../../../helpers/no-op';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
@@ -109,9 +107,8 @@ export class BoostCreatorComponent implements AfterViewInit {
   wasAmountChanged: boolean = false;
   defaultAmount: number | '' = this.boost.amount;
 
-  @Input('object') set data(object) {
-    this.object = object;
-  }
+  // assigned from the modal
+  onDismiss: () => void = noOp;
 
   @ViewChild('amountEditor')
   private _amountEditor: ElementRef;
@@ -119,7 +116,6 @@ export class BoostCreatorComponent implements AfterViewInit {
   constructor(
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
     private client: Client,
     private currency: CurrencyPipe,
     private tokensContract: TokenContractService,
@@ -691,7 +687,7 @@ export class BoostCreatorComponent implements AfterViewInit {
       this.success = true;
 
       setTimeout(() => {
-        this.overlayModal.dismiss();
+        this.onDismiss();
       }, 2500);
     } catch (e) {
       if (e && e.stage === 'transaction') {
@@ -716,5 +712,10 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
 
     return { guid, checksum };
+  }
+
+  setModalData({ channel, onDismiss }) {
+    this.object = channel;
+    this.onDismiss = onDismiss;
   }
 }

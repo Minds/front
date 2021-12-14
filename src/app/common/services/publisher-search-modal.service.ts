@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { PublisherSearchModalComponent } from '../components/publisher-search-modal/publisher-search-modal.component';
+import { ModalService } from '../../services/ux/modal.service';
 
 @Injectable()
 export class PublisherSearchModalService {
@@ -9,47 +8,21 @@ export class PublisherSearchModalService {
    * Constructor
    * @param overlayModal
    */
-  constructor(protected overlayModal: OverlayModalService) {}
+  constructor(protected modalService: ModalService) {}
 
   /**
-   * Presents the languages modal
+   * Presents the publisher search modal
    * @param injector
    */
-  present(injector: Injector, publisher: any): Observable<string> {
-    return new Observable<string>(subscriber => {
-      const data = {
-        publisher: publisher,
-      };
-
-      let open = true;
-
-      this.overlayModal
-        .create(
-          PublisherSearchModalComponent,
-          data,
-          {
-            wrapperClass: 'm-modalV2__wrapper',
-            onSearch: query => {
-              subscriber.next(query);
-              this.overlayModal.dismiss();
-            },
-            onDismissIntent: () => {
-              this.overlayModal.dismiss();
-            },
-          },
-          injector
-        )
-        .onDidDismiss(() => {
-          open = false;
-          subscriber.complete();
-        })
-        .present();
-
-      return () => {
-        if (open) {
-          this.overlayModal.dismiss();
-        }
-      };
+  pick(injector: Injector, publisher: any): Promise<string> {
+    const modal = this.modalService.present(PublisherSearchModalComponent, {
+      data: {
+        publisher,
+        onSearch: query => modal.close(query),
+      },
+      injector,
     });
+
+    return modal.result;
   }
 }

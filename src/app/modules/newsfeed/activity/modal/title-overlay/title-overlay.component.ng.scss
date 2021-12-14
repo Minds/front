@@ -77,6 +77,10 @@
   }
 
   .m-activityModal__fullscreenButtonWrapper {
+    @include m-theme() {
+      text-shadow: 0 0 2px rgba(themed($m-black-always), 0.9);
+    }
+
     cursor: pointer;
     padding: 5px;
     position: absolute;
