@@ -2,6 +2,15 @@
   <ng-container *ngIf="(isPlusPage$ | async) === false; else plusTabs">
     <div class="m-tabs__tab">
       <a
+        routerLink="/discovery/top"
+        [class.m-tabs__tab--selected]="isLinkActive('/discovery/top')"
+        data-cy="discovery-tab-link-top"
+        i18n="@@DISCOVERY_TAGS__TOP"
+        >Top</a
+      >
+    </div>
+    <div class="m-tabs__tab">
+      <a
         routerLink="/discovery/overview"
         [class.m-tabs__tab--selected]="isLinkActive('/discovery/overview')"
         [queryParams]="{ reload: false }"
@@ -28,7 +37,7 @@
         >Trending</a
       >
     </div>
-    <div class="m-tabs__tab">
+    <!-- <div class="m-tabs__tab">
       <a
         routerLink="/discovery/memberships/feed"
         routerLinkActive="m-tabs__tab--selected"
@@ -36,7 +45,7 @@
         i18n="@@DISCOVERY_TAGS__MEMBERSHIPS"
         >Memberships</a
       >
-    </div>
+    </div> -->
     <div class="m-tabs__tab">
       <a
         routerLink="/discovery/boost/feed"

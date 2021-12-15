@@ -20,7 +20,6 @@ import {
   tap,
 } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
-import { FeedsService } from '../../../common/services/feeds.service';
 
 export type InteractionType =
   | 'votes-up'
@@ -89,7 +88,7 @@ export class InteractionsModalDataService {
     switchMapTo(this.rawList$.pipe())
   );
 
-  constructor(private api: ApiService, private feedsService: FeedsService) {}
+  constructor(private api: ApiService) {}
 
   apiRequest(
     entityGuid: string,
