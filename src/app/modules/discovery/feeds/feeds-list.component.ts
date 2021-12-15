@@ -6,7 +6,6 @@ import {
 } from './feeds.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FeedsService } from '../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-discovery__feedsList',

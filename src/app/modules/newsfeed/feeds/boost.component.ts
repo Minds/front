@@ -13,6 +13,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 @Component({
   selector: 'm-newsfeed--boost',
   templateUrl: 'boost.component.html',
+  providers: [FeedsService],
 })
 export class NewsfeedBoostComponent {
   newsfeed: Array<Object>;
