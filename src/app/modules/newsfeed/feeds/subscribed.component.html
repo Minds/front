@@ -54,53 +54,55 @@
         ></m-activity>
       </ng-container>
 
-      <m-top-feed-mini *ngIf="algorithm === 'top'"> </m-top-feed-mini>
+      <m-top-feed [showBoostRotator]="showBoostRotator" *ngIf="algorithm === 'top'" #topFeed></m-top-feed>
 
-      <!--boost rotator-->
-      <ng-container *ngIf="algorithm === 'latest'">
-        <ng-container *mIfFeature="'boost-rotator'">
-          <ng-container *mIfBrowser>
-            <m-newsfeed--boost-rotator
-              *ngIf="showBoostRotator"
-              #feedViewChildren
-            ></m-newsfeed--boost-rotator>
+      <ng-container *ngIf="!inProgress">
+        <!--boost rotator-->
+        <ng-container *ngIf="algorithm === 'latest'">
+          <ng-container *mIfFeature="'boost-rotator'">
+            <ng-container *mIfBrowser>
+              <m-newsfeed--boost-rotator
+                *ngIf="showBoostRotator"
+                #feedViewChildren
+              ></m-newsfeed--boost-rotator>
+            </ng-container>
           </ng-container>
+        </ng-container>
+
+        <!--actual feed-->
+        <ng-container
+          *ngFor="let activity$ of latestFeedService.feed | async; let i = index"
+        >
+          <m-featured-content
+            *ngIf="(i > 0 && i % 5 === 0) || i === 2"
+            [slot]="i + 1"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            #feedViewChildren
+          ></m-featured-content>
+          <m-activity
+            *ngIf="activity$ | async as activity"
+            [entity]="activity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            [slot]="i + 1"
+            (deleted)="delete(activity)"
+            #feedViewChildren
+          ></m-activity>
         </ng-container>
       </ng-container>
 
-      <!--actual feed-->
-      <ng-container
-        *ngFor="let activity$ of feedsService.feed | async; let i = index"
-      >
-        <m-featured-content
-          *ngIf="(i > 0 && i % 5 === 0) || i === 2"
-          [slot]="i + 1"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          #feedViewChildren
-        ></m-featured-content>
-        <m-activity
-          *ngIf="activity$ | async as activity"
-          [entity]="activity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          [slot]="i + 1"
-          (deleted)="delete(activity)"
-          #feedViewChildren
-        ></m-activity>
-      </ng-container>
-
-      <infinite-scroll
-        distance="25%"
-        (load)="loadNext()"
-        [moreData]="feedsService.hasMore | async"
-        [inProgress]="feedsService.inProgress | async"
-      >
-      </infinite-scroll>
+        <infinite-scroll
+          distance="25%"
+          (load)="loadNext()"
+          [moreData]="latestFeedService.hasMore | async"
+          [inProgress]="latestFeedService.inProgress | async"
+        >
+        </infinite-scroll>
     </div>
   </ng-container>
 </div>

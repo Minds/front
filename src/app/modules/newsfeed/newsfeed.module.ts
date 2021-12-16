@@ -39,7 +39,7 @@ import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.
 import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
-import { TopFeedMiniComponent } from './feeds/top-feed-mini/top-feed-mini.component';
+import { TopFeedComponent } from './feeds/top-feed/top-feed.component';
 import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 
 const routes: Routes = [
@@ -121,7 +121,7 @@ const routes: Routes = [
     NewsfeedTilesComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
-    TopFeedMiniComponent,
+    TopFeedComponent,
     FeedTypePopoverComponent,
   ],
   providers: [NewsfeedService],

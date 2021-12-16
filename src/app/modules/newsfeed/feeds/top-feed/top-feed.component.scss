@@ -1,5 +1,5 @@
-m-top-feed-mini {
-  .m-topFeedMini__showMore__container {
+m-top-feed {
+  .m-topFeed__showMore__container {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -21,7 +21,7 @@ m-top-feed-mini {
       }
     }
 
-    .m-topFeedMini__showMore__link {
+    .m-topFeed__showMore__link {
       padding: $minds-padding;
       text-decoration: none;
       cursor: pointer;

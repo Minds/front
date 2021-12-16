@@ -1,12 +1,12 @@
 <ng-container
-  *ngFor="let activity$ of feedsService.feed | async; let i = index"
+  *ngFor="let activity$ of topFeedService.feed | async; let i = index"
 >
   <!--boost rotator-->
   <ng-container *ngIf="i === 1">
     <ng-container *mIfFeature="'boost-rotator'">
       <ng-container *mIfBrowser>
         <m-newsfeed--boost-rotator
-          #feedViewChildren
+          *ngIf="showBoostRotator"
         ></m-newsfeed--boost-rotator>
       </ng-container>
     </ng-container>
@@ -20,20 +20,19 @@
       isFeed: true
     }"
     [slot]="i + 1"
-    #feedViewChildren
   ></m-activity>
 </ng-container>
 
 <div
-  *ngIf="(feedsService.feed | async)?.length"
-  class="m-topFeedMini__showMore__container"
+  *ngIf="(topFeedService.feed | async)?.length"
+  class="m-topFeed__showMore__container"
 >
   <m-loadingSpinner
-    [inProgress]="feedsService.inProgress | async"
+    [inProgress]="topFeedService.inProgress | async"
   ></m-loadingSpinner>
   <a
     i18n="@@MINDS__NEWSFEED__TOP_FEED__SHOW_MORE"
-    class="m-topFeedMini__showMore__link"
+    class="m-topFeed__showMore__link"
     (click)="loadNext()"
     >Show more popular posts</a
   >
