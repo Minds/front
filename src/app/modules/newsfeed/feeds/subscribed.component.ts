@@ -196,10 +196,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     try {
       if (this.algorithm === 'top') {
-        await this.topFeedService
-          .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-          .setLimit(3)
-          .fetch(true);
+        try {
+          await this.topFeedService
+            .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
+            .setLimit(3)
+            .fetch(true);
+        } catch (e) {
+          console.error('Top Feed', e);
+        }
       }
 
       await this.latestFeedService
@@ -207,7 +211,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         .setLimit(12)
         .fetch(true);
     } catch (e) {
-      console.error('SortedComponent', e);
+      console.error('Latest Feed', e);
     }
 
     this.inProgress = false;
