@@ -54,7 +54,11 @@
         ></m-activity>
       </ng-container>
 
-      <m-top-feed [showBoostRotator]="showBoostRotator" *ngIf="algorithm === 'top'" #topFeed></m-top-feed>
+      <m-top-feed
+        [showBoostRotator]="showBoostRotator"
+        *ngIf="algorithm === 'top'"
+        #topFeed
+      ></m-top-feed>
 
       <ng-container *ngIf="!inProgress">
         <!--boost rotator-->
@@ -71,7 +75,10 @@
 
         <!--actual feed-->
         <ng-container
-          *ngFor="let activity$ of latestFeedService.feed | async; let i = index"
+          *ngFor="
+            let activity$ of latestFeedService.feed | async;
+            let i = index
+          "
         >
           <m-featured-content
             *ngIf="(i > 0 && i % 5 === 0) || i === 2"
@@ -94,7 +101,6 @@
             #feedViewChildren
           ></m-activity>
         </ng-container>
-      </ng-container>
 
         <infinite-scroll
           distance="25%"
@@ -103,6 +109,9 @@
           [inProgress]="latestFeedService.inProgress | async"
         >
         </infinite-scroll>
+      </ng-container>
+
+      <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
     </div>
   </ng-container>
 </div>

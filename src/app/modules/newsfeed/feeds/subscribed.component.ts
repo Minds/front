@@ -189,7 +189,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.latestFeedService.clear(false);
 
     if (this.algorithm === 'top') {
-      this.topFeedService.clear(false);
+      this.topFeedService.clear(true);
     }
 
     this.inProgress = true;
