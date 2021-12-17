@@ -75,6 +75,7 @@ export function app() {
         console.log(`from cache: ${key}`);
         const cachedBody = myCache.get(key);
         res.send(cachedBody);
+        res.end();
         return;
       } else {
         res.sendResponse = res.send;
@@ -147,6 +148,7 @@ export function app() {
     });
     res.send(html);
     console.timeEnd(`GET: ${url}`);
+    res.end();
   };
 
   // embed route loads its own module
