@@ -7,8 +7,8 @@
   [popperTimeout]="100"
   [popperDelay]="250"
   [popperModifiers]="popperModifiers"
-  (popperOnShown)="onShown()"
-  (popperOnHidden)="onHidden()"
+  (popperOnShown)="popperOnShown()"
+  (popperOnHidden)="popperOnHidden()"
 >
   <ng-content></ng-content>
   <popper-content #popper>
