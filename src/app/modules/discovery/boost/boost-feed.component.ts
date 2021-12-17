@@ -10,6 +10,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 @Component({
   selector: 'm-discovery__boostFeed',
   templateUrl: './boost-feed.component.html',
+  providers: [FeedsService],
 })
 export class DiscoveryBoostFeedComponent implements OnInit {
   constructor(
