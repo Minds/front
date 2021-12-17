@@ -151,6 +151,17 @@
 }
 
 .m-sidebarNavigation__item {
+  &.m-sidebarNavigation__item--groups {
+    a {
+      ::ng-deep m-tooltip {
+        ::ng-deep m-icon {
+          i {
+            width: 23px;
+          }
+        }
+      }
+    }
+  }
   a {
     display: flex;
     //flex-direction: column;
