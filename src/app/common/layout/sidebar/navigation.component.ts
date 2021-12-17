@@ -35,6 +35,7 @@ import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-
 import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -76,6 +77,10 @@ export class SidebarNavigationComponent
 
   matrixFeature: boolean = false;
 
+  subscriptions: Subscription[] = [];
+
+  isDarkTheme: boolean = false;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
@@ -94,7 +99,9 @@ export class SidebarNavigationComponent
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService
+    private guestModeExperiment: GuestModeExperimentService,
+    private themeService: ThemeService,
+    private sidebarNavigationService: SidebarNavigationService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -126,6 +133,28 @@ export class SidebarNavigationComponent
     this.nav2021Feature = this.featuresService.has('nav-2021');
 
     this.settingsLink = '/settings';
+
+    this.subscriptions.push(
+      this.themeService.isDark$.subscribe(isDark => {
+        this.isDarkTheme = isDark;
+      })
+    );
+
+    this.subscriptions.push(
+      this.sidebarNavigationService.isOpened$.subscribe(isOpened => {
+        if (this.layoutMode === 'phone') {
+          this.isOpened = isOpened;
+
+          if (isOpened) {
+            document.body.classList.add('m-overlay-modal--shown--no-scroll');
+          }
+        }
+
+        if (this.layoutMode !== 'phone' || !isOpened) {
+          document.body.classList.remove('m-overlay-modal--shown--no-scroll');
+        }
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -137,6 +166,10 @@ export class SidebarNavigationComponent
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
+    }
+
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -171,9 +204,7 @@ export class SidebarNavigationComponent
   }
 
   toggle(): void {
-    if (this.layoutMode === 'phone') {
-      this.isOpened = !this.isOpened;
-    }
+    this.sidebarNavigationService.toggle();
   }
 
   async buyTokens() {
@@ -215,8 +246,12 @@ export class SidebarNavigationComponent
   /**
    * Closes the user menu if it's open
    */
-  onSidebarNavClick(): void {
+  onSidebarNavClick($event): void {
     this.userMenu.isOpen$.next(false);
+
+    if (this.layoutMode === 'phone') {
+      $event.stopPropagation();
+    }
   }
 
   @HostListener('window:resize')
@@ -233,7 +268,7 @@ export class SidebarNavigationComponent
     }
 
     if (this.layoutMode !== 'phone') {
-      this.isOpened = false;
+      this.sidebarNavigationService.isOpened$.next(false);
     }
 
     if (this.groupsSidebar) {

@@ -7,6 +7,7 @@
         m-sidebarMoreDropdown__item
       "
       *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
     >
       <a [routerLink]="'/settings'" data-ref="sidebarmore-settings">
         <i class="material-icons">settings</i>
@@ -21,8 +22,8 @@
         m-dropdownList__item
         m-sidebarMoreDropdown__item
       "
-      (click)="buyTokens()"
       *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
     >
       <a (click)="buyTokens()" data-ref="sidebarmore-buytokens-modal">
         <m-icon from="custom" iconId="wallet"></m-icon>
@@ -39,6 +40,7 @@
         m-sidebarMoreDropdown__item
       "
       *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
     >
       <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
         <i class="material-icons">insert_chart</i>
@@ -51,6 +53,7 @@
     <li
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
     >
       <a (click)="openBoostModal()" data-ref="sidebarmore-boost-modal">
         <i class="material-icons">trending_up</i>
@@ -61,6 +64,7 @@
     <li
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
+      (click)="toggleSidebar()"
     >
       <a (click)="openEarnModal()" data-ref="sidebarmore-earn-modal">
         <i class="material-icons">attach_money</i>
@@ -78,9 +82,9 @@
     <li
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
       *ngIf="getCurrentUser()"
-      (click)="toggleTheme()"
+      (click)="toggleSidebar()"
     >
-      <a>
+      <a (click)="toggleTheme()">
         <ng-container *ngIf="isDark">
           <i class="material-icons">flare</i>
           <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
@@ -92,7 +96,10 @@
       </a>
     </li>
     <!-- ------------------------------------------------------------ -->
-    <li class="m-dropdownList__item m-sidebarMoreDropdown__item">
+    <li
+      class="m-dropdownList__item m-sidebarMoreDropdown__item"
+      (click)="toggleSidebar()"
+    >
       <!--Endpoint handles authentication and redirection-->
       <a
         href="/api/v3/helpdesk/zendesk"
@@ -124,11 +131,16 @@
           *ngIf="link.routerLink"
           [routerLink]="link.routerLink"
           [data-ref]="'sidebarmore-footer' + link.label"
+          (click)="toggleSidebar()"
           >{{ link.label }}</a
         >
-        <a *ngIf="link.href" [href]="link.href" target="_blank">{{
-          link.label
-        }}</a>
+        <a
+          *ngIf="link.href"
+          [href]="link.href"
+          target="_blank"
+          (click)="toggleSidebar()"
+          >{{ link.label }}</a
+        >
         <span> · </span>
       </ng-container>
       <a

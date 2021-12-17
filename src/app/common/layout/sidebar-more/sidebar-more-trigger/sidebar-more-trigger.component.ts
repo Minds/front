@@ -12,15 +12,25 @@ import { NgxPopperjsContentComponent } from 'ngx-popperjs';
   styleUrls: ['./sidebar-more-trigger.component.ng.scss'],
 })
 export class SidebarMoreTriggerComponent implements AfterViewInit {
-  mobileScreenOffset: Array<number> = [-90, -250];
-  mediumScreenOffset: Array<number> = [0, -50];
-  largeScreenOffset: Array<number> = [0, -250];
+  popperPlacement: string = 'right';
 
   popperModifiers: Array<any> = [
+    // Optimizes performance by disabling listeners
+    // when the popper isn't visible
+    {
+      name: 'eventListeners',
+      enabled: false,
+    },
     {
       name: 'offset',
       options: {
-        offset: this.largeScreenOffset,
+        offset: [180, -70],
+      },
+    },
+    {
+      name: 'preventOverflow',
+      options: {
+        padding: { top: 10, bottom: 65 },
       },
     },
   ];
@@ -29,26 +39,17 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
 
   shown: boolean = false;
 
-  constructor() {}
-
   ngAfterViewInit(): void {
-    const boundaryEl = this.popper.referenceObject.parentElement.parentElement;
-
-    this.popperModifiers.push({
-      name: 'preventOverflow',
-      options: {
-        boundary: boundaryEl,
-        altBoundary: true,
-      },
-    });
-
     this.onResize();
   }
 
-  popperOnShown() {
+  popperOnShown($event): void {
+    this.calculateOffset();
+    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = true;
     this.shown = true;
   }
-  popperOnHide() {
+  popperOnHide($event): void {
+    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = false;
     this.shown = false;
   }
 
@@ -59,21 +60,47 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
     ) {
       this.popper.hide();
       this.shown = false;
+    } else {
+      this.calculateOffset();
     }
   }
 
   @HostListener('window:resize')
   onResize() {
-    let offset = this.largeScreenOffset;
+    this.calculateOffset();
+  }
 
+  /**
+   * Moves the popper in relation to its default position
+   * (which is middle-right side of trigger)
+   */
+  calculateOffset(): void {
+    /************************************************
+     * HORIZONTAL AXIS
+     * Moves popperEl from trigger's right side to left side
+     *
+     */
+    // Medium screens
+    let y = -70;
     if (window.innerWidth < 480) {
-      offset = this.mobileScreenOffset;
-    } else if (window.innerWidth < 1220) {
-      // 1220 is the width when the nav text is visible (vs. icons only)
+      // Mobile screens
+      y = -275;
+    } else if (window.innerWidth >= 1220) {
+      // Large screens
+      // 1220 is the width when the nav text is visible
+      // (vs. icons only)
       // See $layoutMax3ColWidth in common/layout/layout.scss
-      offset = this.mediumScreenOffset;
+      y = -250;
     }
+    /************************************************
+     * VERTICAL AXIS
+     * Align popperEl top with triggerEl top to start
+     */
+    const triggerHeight = 35;
+    const popperHeight = 396;
 
-    this.popperModifiers.find(x => x.name === 'offset').options.offset = offset;
+    let x = popperHeight / 2 - triggerHeight / 2;
+    // ************************************************
+    this.popperModifiers.find(x => x.name === 'offset').options.offset = [x, y];
   }
 }

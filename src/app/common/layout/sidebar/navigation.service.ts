@@ -1,19 +1,21 @@
 import { SidebarNavigationComponent } from './navigation.component';
 import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class SidebarNavigationService {
   container: SidebarNavigationComponent;
   visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  // Relates to sidebar state on mobile
+  isOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   setContainer(container: SidebarNavigationComponent): void {
     this.container = container;
   }
 
   toggle(): void {
-    if (this.container) {
-      this.container.toggle();
-    }
+    this.isOpened$.next(!this.isOpened$.getValue());
   }
 
   isVisible() {

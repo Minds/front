@@ -4,12 +4,30 @@
   [ngClass]="{
     'm-sidebarNavigation--matrixFeature': matrixFeature
   }"
-  (click)="onSidebarNavClick()"
+  (click)="onSidebarNavClick($event)"
 >
   <nav>
     <div class="m-sidebarNavigation__top">
-      <a routerLink="/" title="Home" i18n-title="@@COMMON__HOME">
-        <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
+      <a
+        routerLink="/"
+        title="Home"
+        i18n-title="@@COMMON__HOME"
+        (click)="toggle()"
+      >
+        <img
+          *ngIf="layoutMode !== 'phone'"
+          [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+        />
+        <ng-container *ngIf="layoutMode === 'phone'">
+          <img
+            *ngIf="!isDarkTheme"
+            [src]="cdnAssetsUrl + 'assets/logos/medium-production.png'"
+          />
+          <img
+            *ngIf="isDarkTheme"
+            [src]="cdnAssetsUrl + 'assets/logos/medium-white.png'"
+          />
+        </ng-container>
         <m-canaryFlag class="m-sidebarNavigation__canaryFlag"></m-canaryFlag>
       </a>
 
@@ -32,13 +50,16 @@
             <m-icon
               from="assets-file"
               iconId="assets/icons/compose.svg"
-              [sizeFactor]="40"
+              [sizeFactor]="nav2021Feature ? 90 : 35"
               m-tooltip--icon
             ></m-icon>
             <ng-container>Speak your mind</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__COMPOSE">
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__COMPOSE"
+          >
             Compose
           </span>
         </a>
@@ -55,15 +76,23 @@
           data-ref="sidenav-newsfeed"
         >
           <m-tooltip
-            icon="home"
-            i18n="@@COMMON__NEWSFEED"
             [enabled]="!showLabels"
             [anchor]="'left'"
             [useParentPosition]="true"
-            >Newsfeed</m-tooltip
+          >
+            <m-icon
+              iconId="home"
+              [sizeFactor]="nav2021Feature ? 8 : 35"
+              m-tooltip--icon
+            ></m-icon
+            ><ng-container i18n="@@COMMON__NEWSFEED"
+              >Newsfeed</ng-container
+            ></m-tooltip
           >
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__NEWSFEED"
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__NEWSFEED"
             >Newsfeed</span
           >
         </a>
@@ -88,7 +117,9 @@
             <ng-container i18n="@@COMMON__DISCOVERY">Discovery</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__DISCOVERY"
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__DISCOVERY"
             >Discovery</span
           >
         </a>
@@ -114,7 +145,9 @@
             <ng-container i18n="@@COMMON__MINDS+">Minds+</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MINDS+"
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__MINDS+"
             >Minds+</span
           >
         </a>
@@ -135,11 +168,17 @@
             [anchor]="'left'"
             [useParentPosition]="true"
           >
-            <m-icon iconId="account_balance" m-tooltip--icon></m-icon>
+            <m-icon
+              iconId="account_balance"
+              [sizeFactor]="nav2021Feature ? 8 : 35"
+              m-tooltip--icon
+            ></m-icon>
             <ng-container i18n="@@COMMON__WALLET">Wallet</ng-container>
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__WALLET"
+          <span
+            class="m-sidebarNavigationItem__text m-legible"
+            i18n="@@COMMON__WALLET"
             >Wallet</span
           >
         </a>
@@ -166,7 +205,7 @@
               <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
             </m-tooltip>
 
-            <span class="m-sidebarNavigationItem__text">
+            <span class="m-sidebarNavigationItem__text m-legible">
               <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
               <m-icon
                 iconId="open_in_new"
@@ -196,7 +235,7 @@
               <ng-container i18n="@@COMMON__ANALYTICS">Analytics</ng-container>
             </m-tooltip>
             <span
-              class="m-sidebarNavigationItem__text"
+              class="m-sidebarNavigationItem__text m-legible"
               i18n="@@COMMON__ANALYTICS"
               >Analytics</span
             >
@@ -284,7 +323,7 @@
                 </m-tooltip>
 
                 <span
-                  class="m-sidebarNavigationItem__text"
+                  class="m-sidebarNavigationItem__text m-legible"
                   i18n="@@COMMON__EARN"
                   >Earn</span
                 >
@@ -307,14 +346,19 @@
                 [anchor]="'left'"
                 [useParentPosition]="true"
               >
-                <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
+                <m-icon
+                  from="custom"
+                  iconId="wallet"
+                  [sizeFactor]="nav2021Feature ? 8 : 35"
+                  m-tooltip--icon
+                ></m-icon>
                 <ng-container i18n="@@COMMON__BUY_CRYPTO"
                   >Buy Crypto</ng-container
                 >
               </m-tooltip>
 
               <span
-                class="m-sidebarNavigationItem__text"
+                class="m-sidebarNavigationItem__text m-legible"
                 i18n="@@COMMON__BUY_CRYPTO"
                 >Buy Crypto</span
               >
@@ -340,7 +384,9 @@
                 <ng-container>Boost your channel</ng-container>
               </m-tooltip>
 
-              <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__BOOST"
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__BOOST"
                 >Boost</span
               >
             </a>
@@ -365,10 +411,16 @@
               [anchor]="'left'"
               [useParentPosition]="true"
             >
-              <i class="material-icons" m-tooltip--anchor>groups</i>
+              <m-icon
+                iconId="groups"
+                [sizeFactor]="nav2021Feature ? 8 : 35"
+                m-tooltip--icon
+              ></m-icon>
               <ng-container i18n="@@COMMON__GROUPS">Groups</ng-container>
             </m-tooltip>
-            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__GROUPS"
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__GROUPS"
               >Groups</span
             >
           </a>
@@ -388,7 +440,7 @@
             [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
             alt=""
           />
-          <span class="m-sidebarNavigationItem__text">
+          <span class="m-sidebarNavigationItem__text m-legible">
             @{{ user.username }}
           </span>
         </a>
@@ -414,7 +466,7 @@
             >
 
             <span
-              class="m-sidebarNavigationItem__text"
+              class="m-sidebarNavigationItem__text m-legible"
               i18n="@@COMMON__SETTINGS"
               >Settings</span
             >
@@ -437,7 +489,9 @@
               <ng-container i18n="@@COMMON__MORE">More</ng-container>
             </m-tooltip>
 
-            <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MORE"
+            <span
+              class="m-sidebarNavigationItem__text m-legible"
+              i18n="@@COMMON__MORE"
               >More</span
             >
           </a>
@@ -457,11 +511,15 @@
                 [anchor]="'left'"
                 [useParentPosition]="true"
               >
-                <i class="material-icons" m-tooltip--anchor>more_horiz</i>
+                <i class="material-icons m-icon--more" m-tooltip--anchor
+                  >more_horiz</i
+                >
                 <ng-container i18n="@@COMMON__MORE">More</ng-container>
               </m-tooltip>
 
-              <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__MORE"
+              <span
+                class="m-sidebarNavigationItem__text m-legible"
+                i18n="@@COMMON__MORE"
                 >More</span
               >
             </a>
@@ -475,3 +533,11 @@
     <ng-template dynamic-host></ng-template>
   </div>
 </div>
+
+<ng-container *mIfFeature="'nav-2021'">
+  <div
+    class="minds-bg-overlay m-sidebarNavigation__overlay"
+    *ngIf="isOpened && layoutMode === 'phone'"
+    (click)="toggle()"
+  ></div>
+</ng-container>

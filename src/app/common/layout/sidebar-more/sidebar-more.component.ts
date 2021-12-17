@@ -15,6 +15,7 @@ import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.servi
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
+import { SidebarNavigationService } from '../sidebar/navigation.service';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -55,7 +56,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private web3WalletService: Web3WalletService,
     private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,
-    private boostModalService: BoostModalLazyService
+    private boostModalService: BoostModalLazyService,
+    private sidebarNavigationService: SidebarNavigationService
   ) {}
 
   ngOnInit(): void {
@@ -94,6 +96,11 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
 
   toggleTheme(): void {
     this.themeService.toggleUserThemePreference();
+  }
+
+  /** Only relevant for mobile widths */
+  toggleSidebar(): void {
+    this.sidebarNavigationService.toggle();
   }
 
   toggleFooterLinks(): void {

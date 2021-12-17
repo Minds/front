@@ -1,13 +1,14 @@
 <div
   class="m-sidebarMore__trigger"
   [popper]="popper"
-  [popperPlacement]="'right'"
-  [popperPositionFixed]="true"
+  [popperPlacement]="popperPlacement"
   [popperTrigger]="'click'"
-  [popperDelay]="0"
+  [popperDelay]="250"
   [popperModifiers]="popperModifiers"
-  (popperOnShown)="popperOnShown()"
-  (popperOnHide)="popperOnHide()"
+  [popperDisabled]="shown"
+  [popperDisableAnimation]="true"
+  (popperOnShown)="popperOnShown($event)"
+  (popperOnHide)="popperOnHide($event)"
 >
   <ng-content></ng-content>
 </div>
