@@ -276,6 +276,7 @@ review:start:
     - "helm upgrade \
       --install \
       --reuse-values \
+      --values ./helm-charts/sandbox-values.yaml \
       --set front.image.repository=$CI_REGISTRY_IMAGE/server \
       --set-string front.image.tag=$CI_PIPELINE_ID \
       --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
