@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
@@ -25,6 +26,7 @@ export class JoinBannerComponent implements OnInit {
     private sessionStorage: SessionsStorageService,
     private authModal: AuthModalService,
     private guestModeExperiment: GuestModeExperimentService,
+    private router: Router,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -62,6 +64,10 @@ export class JoinBannerComponent implements OnInit {
   public async join(): Promise<void> {
     try {
       await this.authModal.open();
+
+      if (this.router.url === '/' || this.router.url === '/about') {
+        this.router.navigate(['/newsfeed/subscriptions/latest']);
+      }
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing

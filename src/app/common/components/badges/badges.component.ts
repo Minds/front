@@ -112,6 +112,6 @@ export class ChannelBadgesComponent {
   }
 
   ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
+    this.themeSubscription?.unsubscribe();
   }
 }
