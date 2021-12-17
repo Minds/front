@@ -12,7 +12,7 @@ import {
 } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
@@ -36,6 +36,18 @@ export class DiscoverySearchComponent {
   cardCarouselInProgress$ = this.cardCarouselService.inProgress$;
   subscriptions: Subscription[];
   readonly cdnUrl: string;
+
+  showSuggestedChannels$: Observable<boolean> = combineLatest([
+    this.inProgress$,
+    this.cardCarouselInProgress$,
+    this.cardCarouselService.searchCards$,
+  ]).pipe(
+    map(([inProgress, cardCarouselInProgress, searchCards]) => {
+      return (
+        searchCards?.length > 0 || (!inProgress && !cardCarouselInProgress)
+      );
+    })
+  );
 
   constructor(
     private route: ActivatedRoute,

@@ -7,6 +7,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
  */
 @Component({
   selector: 'm-defaultFeed',
+  providers: [FeedsService],
   templateUrl: 'feed.component.html',
   styleUrls: ['./feed.component.ng.scss'],
 })

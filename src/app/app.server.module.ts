@@ -37,7 +37,7 @@ export class SentryServerErrorHandler implements ErrorHandler {
   constructor(@Inject(SENTRY) private sentry) {}
   handleError(error: Error) {
     this.sentry.captureException(error);
-    console.error(error);
+    //console.error(error);
   }
 }
 
