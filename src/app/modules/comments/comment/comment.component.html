@@ -5,7 +5,7 @@
   [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
-    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 10]">
+    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 20]">
       <div class="minds-avatar">
         <a [routerLink]="['/', comment.ownerObj.username]">
           <img [src]="getAvatarSrc() | async" class="m-border" />
