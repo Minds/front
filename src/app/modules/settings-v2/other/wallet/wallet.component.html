@@ -1,0 +1,35 @@
+<div class="m-settingsV2__headerWrapper">
+  <div class="m-settingsV2__backButton">
+    <a routerLink="..">
+      <i class="material-icons">arrow_back</i
+      ><span i18n="@@COMMON__ACTIONS__BACK">Back</span>
+    </a>
+  </div>
+  <div class="m-settingsV2__headerLabel">
+    <span i18n="@@SETTINGS__OTHER__WALLET__LABEL">Wallet</span>
+  </div>
+</div>
+
+<form *ngIf="form" [formGroup]="form" class="m-settingsV2Wallet__form">
+  <m-formInput__checkbox formControlName="displayWalletBalance">
+    <span
+      class="m-settingsV2Wallet__title"
+      i18n="@@SETTINGS__OTHER__WALLET__DISPLAY_HEADER__TITLE"
+      >Display wallet balance in the page header</span
+    >
+  </m-formInput__checkbox>
+
+  <p
+    class="m-settingsV2Wallet__description"
+    i18n="@@SETTINGS__OTHER__WALLET__DISPLAY_HEADER__DESCRIPTION"
+  >
+    This setting is bound to your current session, and will reset the next time
+    your sign in to minds.com
+  </p>
+
+  <m-button color="blue" (onAction)="submit()">
+    <ng-container i18n="@@SETTINGS_V2_WALLET_BUTTONS__UPDATE_SETTINGS">
+      Update Settings
+    </ng-container>
+  </m-button>
+</form>
