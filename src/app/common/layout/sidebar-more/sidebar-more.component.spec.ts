@@ -11,6 +11,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { Session } from '../../../services/session';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ThemeService } from '../../services/theme.service';
+import { SidebarNavigationService } from '../sidebar/navigation.service';
 
 import { SidebarMoreComponent } from './sidebar-more.component';
 
@@ -46,6 +47,10 @@ describe('SidebarMoreComponent', () => {
         {
           provide: BoostModalLazyService,
           useValue: MockService(BoostModalLazyService),
+        },
+        {
+          provide: SidebarNavigationService,
+          useValue: MockService(SidebarNavigationService),
         },
       ],
     }).compileComponents();
