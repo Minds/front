@@ -39,7 +39,7 @@ m-analytics__chart {
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
     box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
-    color: themed($m-grey-300);
+    color: themed($m-textColor--secondary);
   }
 
   [class*='m-analyticsChart__hoverInfo__row'] {
@@ -53,7 +53,7 @@ m-analytics__chart {
     font-weight: 400;
     font-size: 15px;
     @include m-theme() {
-      color: themed($m-grey-600);
+      color: themed($m-textColor--primary);
     }
   }
 
@@ -66,11 +66,11 @@ m-analytics__chart {
     right: 10px;
     transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
-      color: themed($m-grey-300);
+      color: themed($m-textColor--tertiary);
     }
     &:hover {
       @include m-theme() {
-        color: themed($m-grey-500);
+        color: themed($m-textColor--secondary);
       }
     }
   }
