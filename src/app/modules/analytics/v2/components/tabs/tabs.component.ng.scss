@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+:host {
+  .m-tabs__container {
+    padding: 30px 40px 0;
+
+    @media screen and (max-width: $min-tablet) {
+      padding: 30px 20px 0;
+    }
+  }
+}

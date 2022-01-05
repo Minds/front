@@ -19,6 +19,7 @@ import { ChartV2Module } from './components/chart-v2/chart-v2.module';
 import { AnalyticsGlobalTokensComponent } from './global-tokens/global-tokens.component';
 import { AnalyticsGlobalTokensMetricItemComponent } from './global-tokens/metric-item/metric-item.component';
 import { WalletSharedModule } from '../wallet/wallet-shared.module';
+import { AnalyticsTabsComponent } from './v2/components/tabs/tabs.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,7 @@ const routes: Routes = [
     AnalyticsBenchmarkComponent,
     AnalyticsGlobalTokensComponent,
     AnalyticsGlobalTokensMetricItemComponent,
+    AnalyticsTabsComponent,
   ],
   providers: [AnalyticsDashboardService],
 })
