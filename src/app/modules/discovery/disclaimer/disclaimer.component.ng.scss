@@ -1,0 +1,43 @@
+@import 'defaults';
+@import '../../../common/layout/layout.scss';
+
+:host {
+  .m-discoveryDisclaimer__list {
+    padding-inline-start: 20px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+
+    .m-discoveryDisclaimer__listItem {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      a {
+        text-decoration: underline;
+        font-weight: initial;
+        @include m-theme() {
+          color: themed($m-link);
+        }
+      }
+    }
+  }
+
+  .m-discovery__disclaimer--popover m-sidebarWidget {
+    display: none;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      display: block;
+      position: fixed;
+      bottom: 20px;
+      left: 20vw;
+      right: 20vw;
+      @include z-index(toast);
+      box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
+    }
+
+    @media screen and (max-width: $layoutMax2ColFixedWidth) {
+      left: 20px;
+      right: 20px;
+    }
+  }
+}
