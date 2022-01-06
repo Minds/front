@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { GroupsService } from './groups.service';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import { FormToastService } from '../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-groups-join-button',
@@ -32,7 +33,8 @@ export class GroupsJoinButton {
     public session: Session,
     public service: GroupsService,
     private router: Router,
-    private loginReferrer: LoginReferrerService
+    private loginReferrer: LoginReferrerService,
+    private toast: FormToastService
   ) {}
 
   set _group(value: any) {
@@ -85,6 +87,10 @@ export class GroupsJoinButton {
       })
       .catch(e => {
         let error = e.error;
+        this.toast.error(
+          error ?? 'An unknown error has occurred whilst joining'
+        );
+
         switch (e.error) {
           case 'You are banned from this group':
             error = 'banned';
