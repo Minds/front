@@ -89,7 +89,7 @@ lint:
       - .npm
       - cache/Cypress
 
-.qa:sandbox:
+qa:sandbox:
   parallel: 2
   allow_failure: false
   except:
@@ -104,7 +104,7 @@ lint:
 #     - /^master$/
 #   <<: *cypress_tests
 
-.qa:manual:
+qa:manual:
   stage: qa
   script:
     - echo "Manually approved"
