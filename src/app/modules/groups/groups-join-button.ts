@@ -60,8 +60,11 @@ export class GroupsJoinButton {
   /**
    * Join a group
    */
-  join() {
-    event.preventDefault();
+  public join($event: MouseEvent = null): void {
+    if ($event) {
+      $event.preventDefault();
+    }
+
     if (!this.session.isLoggedIn()) {
       //this.showModal = true;
       this.loginReferrer.register(
