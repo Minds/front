@@ -21,6 +21,7 @@ export type PublisherCardSize = 'small' | 'medium' | 'large';
   styleUrls: ['./publisher-card.component.ng.scss'],
 })
 export class PublisherCardComponent implements AfterViewInit {
+  // ojm testing, remove this line later
   @Input() publisher: any;
 
   @Input() showDescription: boolean = true;
