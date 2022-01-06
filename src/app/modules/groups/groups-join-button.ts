@@ -58,7 +58,9 @@ export class GroupsJoinButton {
   }
 
   /**
-   * Join a group
+   * Join a group.
+   * @param { MouseEvent } - mouse event.
+   * @returns { void }
    */
   public join($event: MouseEvent = null): void {
     if ($event) {
