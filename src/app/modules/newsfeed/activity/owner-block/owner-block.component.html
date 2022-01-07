@@ -33,8 +33,9 @@
   <div class="m-activityOwnerBlock__body">
     <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
       <strong [title]="displayName">{{ displayName }}</strong>
+
       <m-channel--badges
-        class="m-channel--badges-activity"
+        class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
         [user]="owner"
         badges="[ 'admin', 'verified' ]"
       ></m-channel--badges>
