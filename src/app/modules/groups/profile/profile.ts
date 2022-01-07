@@ -106,7 +106,6 @@ export class GroupsProfile {
     this.context.set('activity');
     this.listenForNewMessages();
     this.detectWidth(true);
-    this.detectConversationsState();
 
     const params = this.route.snapshot.queryParamMap;
     if (params.has('query')) {
@@ -498,19 +497,6 @@ export class GroupsProfile {
       entity_type: 'group',
       marker: 'conversation',
     });
-  }
-
-  detectConversationsState() {
-    const state = this.cookieService.get('groups:conversations:minimized');
-    this.showRight = !state || state === 'false'; // it's maximized by default
-  }
-
-  toggleConversations() {
-    this.showRight = !this.showRight;
-    this.cookieService.put(
-      'groups:conversations:minimized',
-      (!this.showRight).toString()
-    );
   }
 
   private updateMeta(): void {
