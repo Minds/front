@@ -63,25 +63,26 @@
       <div class="m-v3Topbar__rightColumn">
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
           <div class="m-v3TopbarContainer__loginWrapper">
-            <a
+            <m-button
               class="m-v3TopbarLoginWrapper__login"
-              (click)="onLoginClick()"
+              (onAction)="onLoginClick()"
               title="Login"
               i18n-title="@@COMMON__LOGIN"
               data-ref="topnav-login"
             >
               Login
-            </a>
+            </m-button>
 
-            <a
+            <m-button
               class="m-v3TopbarLoginWrapper__joinMindsNow"
-              (click)="onJoinNowClick()"
+              (onAction)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
               data-ref="topnav-join-now"
+              color="blue"
             >
               Join Now
-            </a>
+            </m-button>
           </div>
         </ng-container>
 
