@@ -16,7 +16,7 @@
             m-channelAboutField__content
             m-channelAboutField__content--preserveBlanks
           "
-          [innerHtml]="channel.briefdescription | tags"
+          [innerHtml]="channel.briefdescription | slice: 0:5000 | tags"
         ></div>
       </div>
 

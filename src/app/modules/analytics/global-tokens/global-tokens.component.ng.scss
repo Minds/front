@@ -41,6 +41,14 @@
     }
   }
 
+  .m-tabs__container.m-analyticsGlobalTokens__tabs {
+    padding: 0 40px;
+
+    @media screen and (max-width: $min-tablet) {
+      padding: 0 20px;
+    }
+  }
+
   .m-analyticsGlobalTokens__metrics {
     display: grid;
     padding: 40px;
@@ -49,7 +57,7 @@
     grid-row-gap: 20px;
   }
 
-  @media screen and (max-width: $layoutMin3ColWidth) {
+  @media screen and (max-width: $min-tablet) {
     .m-analyticsGlobalTokens__header,
     .m-analyticsGlobalTokens__metrics {
       padding: 20px;

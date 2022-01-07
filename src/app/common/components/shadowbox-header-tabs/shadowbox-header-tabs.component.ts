@@ -12,6 +12,7 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-shadowboxHeader__tabs',
+  styleUrls: ['./shadowbox-header-tabs.component.ng.scss'],
   templateUrl: './shadowbox-header-tabs.component.html',
 })
 export class ShadowboxHeaderTabsComponent implements AfterViewInit {
