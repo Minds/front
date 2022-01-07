@@ -31,3 +31,5 @@
 - [ ] Localization
 - [ ] Dark/light mode
 - [ ] Guest mode
+
+/label mr-has-template
