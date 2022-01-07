@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { Web3WalletService } from '../../../../modules/blockchain/web3-wallet.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 import {
   Network,
   NetworkSiteName,
@@ -16,35 +16,24 @@ import {
 })
 export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
   implements OnInit {
-  // public readonly selectedNetworkSiteName$: BehaviorSubject<
-  //   NetworkSiteName
-  // > = new BehaviorSubject<NetworkSiteName>('Polygon');
+  // whether load is in progress.
+  public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(true);
 
-  public selectedNetworkSiteName$: BehaviorSubject<
+  public readonly selectedNetworkSiteName$: BehaviorSubject<
     NetworkSiteName
   > = new BehaviorSubject<NetworkSiteName>('Mainnet');
 
+  // networks that can be swapped between.
   public swappableNetworks: Network[] = [];
-
-  // Completion intent.
-  onComplete: () => any = () => {};
-
-  // Dismiss intent.
-  onDismissIntent: () => void = () => {};
 
   constructor(
     private networkSwitcher: NetworkSwitchService,
-    private web3Wallet: Web3WalletService
+    private web3Wallet: Web3WalletService,
+    private toast: FormToastService
   ) {
     super();
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
-    const activeChainId = await this.web3Wallet.getCurrentChainId();
-
-    console.log(this.swappableNetworks);
-    this.setSelectedToActiveNetwork();
   }
 
   /**
@@ -57,31 +46,65 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
     this.onDismissIntent = onDismissIntent || (() => {});
   }
 
-  get activeNetwork$(): Observable<Network> {
-    return this.networkSwitcher.getActiveNetwork$();
+  /**
+   * Currently active network from service.
+   * @returns { Network } - currently active network.
+   */
+  get activeNetwork(): Network {
+    return this.networkSwitcher.getActiveNetwork();
   }
 
+  // Completion intent.
+  onComplete: () => any = () => {};
+
+  // Dismiss intent.
+  onDismissIntent: () => void = () => {};
+
+  async ngOnInit(): Promise<void> {
+    this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
+    await this.setSelectedToActiveNetwork();
+  }
+
+  /**
+   * Set selected tab to param.
+   * @param { NetworkSiteName } tab - new tab to switch to.
+   * @returns { void }
+   */
   public setTab(tab: NetworkSiteName): void {
     this.selectedNetworkSiteName$.next(tab);
   }
 
-  private setSelectedToActiveNetwork(): void {
-    this.subscriptions.push(
-      this.activeNetwork$.pipe(take(1)).subscribe(network => {
-        const swappableSiteNames = this.swappableNetworks.map(
-          network => network.siteName
+  /**
+   * Sets currently selected network to active network.
+   * @returns { Promise<void> }
+   */
+  private async setSelectedToActiveNetwork(): Promise<void> {
+    if (!this.activeNetwork) {
+      try {
+        await this.networkSwitcher.switch(
+          this.networkSwitcher.networks.mainnet.id
         );
-        if (
-          network?.siteName &&
-          swappableSiteNames.includes(network.siteName)
-        ) {
-          console.log(network);
-          console.log(swappableSiteNames.includes(network.siteName));
-          this.selectedNetworkSiteName$.next(network.siteName);
-          return;
-        }
-        this.selectedNetworkSiteName$.next('SKALE');
-      })
+      } catch (e) {
+        this.toast.error(
+          'An unknown error has occurred, please ensure you are connected to a supported network'
+        );
+        this.onDismissIntent();
+      }
+    }
+
+    const swappableSiteNames = this.swappableNetworks.map(
+      network => network.siteName
     );
+
+    if (
+      this.activeNetwork?.siteName &&
+      swappableSiteNames.includes(this.activeNetwork.siteName)
+    ) {
+      this.selectedNetworkSiteName$.next(this.activeNetwork.siteName);
+      this.inProgress$.next(false);
+      return;
+    }
+    this.selectedNetworkSiteName$.next('SKALE');
+    this.inProgress$.next(false);
   }
 }

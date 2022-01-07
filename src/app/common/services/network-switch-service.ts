@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { FormToastService } from './form-toast.service';
 import { ConfigsService } from './configs.service';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { Web3WalletService } from '../../modules/blockchain/web3-wallet.service';
-import { catchError, map } from 'rxjs/operators';
 import { FeaturesService } from '../../services/features.service';
+import { BehaviorSubject } from 'rxjs';
+import { ethers } from 'ethers';
+import { isPlatformBrowser } from '@angular/common';
+import { Provider } from '@ethersproject/abstract-provider';
 
 // Interface for adding new Ethereum chains
 export interface AddEthereumChainParameter {
@@ -47,11 +49,14 @@ export type Network = {
   swappable: boolean; // whether swapping is enabled for the network or not.
 };
 
+export const UNKNOWN_NETWORK_LOGO_PATH_DARK = 'assets/ext/unknown-dark.png';
+export const UNKNOWN_NETWORK_LOGO_PATH_LIGHT = 'assets/ext/unknown-light.png';
+
 /**
  * Service for the switching of blockchain networks.
  */
 @Injectable({ providedIn: 'root' })
-export class NetworkSwitchService {
+export class NetworkSwitchService implements OnDestroy {
   // network map.
   public networks: NetworkMap = {
     mainnet: {
@@ -72,15 +77,19 @@ export class NetworkSwitchService {
     },
   };
 
-  // currently active network's chainId - NOT read from web3, should be updated on network switch.
-  public activeChainId$: BehaviorSubject<NetworkChainId> = new BehaviorSubject<
-    NetworkChainId
-  >(null);
+  // provider with the sole responsibility of listening to network changes.
+  private networkChangeProvider: Provider = null;
+
+  // fires on network change
+  public readonly networkChanged$: BehaviorSubject<any> = new BehaviorSubject<
+    any
+  >(true);
 
   constructor(
     private toast: FormToastService,
     private wallet: Web3WalletService,
     private features: FeaturesService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     config: ConfigsService
   ) {
     const blockchainConfig = config.get('blockchain');
@@ -124,8 +133,14 @@ export class NetworkSwitchService {
         ? '0x1' // mainnet
         : '0x4'; // rinkeby
 
-    // fires async.
-    this.initCurrentNetwork();
+    this.setupNetworkChangeListener();
+  }
+
+  ngOnDestroy(): void {
+    if (this.networkChangeProvider) {
+      this.networkChangeProvider.removeAllListeners();
+      this.networkChangeProvider = null;
+    }
   }
 
   /**
@@ -155,8 +170,6 @@ export class NetworkSwitchService {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainId }],
       });
-      // window.location.reload();
-      this.activeChainId$.next(chainId);
     } catch (switchError) {
       const rpcUrl = networkData.rpcUrl ?? false;
       const networkName = networkData.networkName ?? false;
@@ -173,8 +186,6 @@ export class NetworkSwitchService {
             method: 'wallet_addEthereumChain',
             params: [params],
           });
-          // window.location.reload();
-          this.activeChainId$.next(chainId);
         } catch (addError) {
           console.error(addError);
         }
@@ -194,23 +205,20 @@ export class NetworkSwitchService {
         return network[1];
       }
     }
-    throw new Error('Unknown network chain id.');
+    return null;
   }
 
   /**
    * Gets currently active network's data using currently activeChainId$.
-   * @returns { Observable<Network> } - network data with matching chain id.
+   * @returns { Network } - network data with matching chain id.
    */
-  public getActiveNetwork$(): Observable<Network> {
-    return this.activeChainId$.pipe(
-      map(activeChainId => this.getNetworkDataById(activeChainId)),
-      catchError(e => EMPTY)
-    );
+  public getActiveNetwork(): Network {
+    return this.getNetworkDataById(this.wallet.getCurrentChainId());
   }
 
   /**
    * Gets all networks with swap functionality enabled.
-   * @param { Network[] } - networks with swap functionality enabled.
+   * @returns { Network[] } - networks with swap functionality enabled.
    */
   public getSwappableNetworks(): Network[] {
     const enabledNetworks = Object.entries(this.networks);
@@ -223,17 +231,37 @@ export class NetworkSwitchService {
     return swappableNetworks;
   }
 
-  public isOnNetwork(chainId: NetworkChainId) {
-    const activeChainId = this.activeChainId$.getValue();
+  /**
+   * True if provider currently is on network passed in as param.
+   * @param { NetworkChainId } chainId - chain id of network to check.
+   * @returns { boolean } - whether user is on network or not.
+   */
+  public isOnNetwork(chainId: NetworkChainId): boolean {
+    const activeChainId = this.wallet.getCurrentChainId();
     return activeChainId === chainId;
   }
 
   /**
-   * Checks which network we are currently on and updates local chainId value.
-   * @param { Promise<void> }
+   * Sets up network change listener. - will respond to change by reinitializing provider
+   * and pushing new network to networkChanged$ BehaviorSubject.
+   * @returns { void }
    */
-  private async initCurrentNetwork(): Promise<void> {
-    const chainId: string = this.wallet.getCurrentChainId();
-    this.activeChainId$.next(chainId);
+  private setupNetworkChangeListener(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.networkChangeProvider = new ethers.providers.Web3Provider(
+        window.ethereum,
+        'any'
+      );
+      this.networkChangeProvider.on(
+        'network',
+        async (newNetwork, oldNetwork) => {
+          // console.log("Network changed from", oldNetwork, "to", newNetwork);
+          if (oldNetwork) {
+            await this.wallet.reinitializeProvider();
+            this.networkChanged$.next(newNetwork);
+          }
+        }
+      );
+    }
   }
 }

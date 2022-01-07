@@ -15,8 +15,7 @@
       </button>
     </div>
   </div>
-
-  <div class="m-networkSwapBridge__body">
+  <div class="m-networkSwapBridge__body" *ngIf="!(inProgress$ | async)">
     <m-wallet__skale
       *ngIf="(selectedNetworkSiteName$ | async) === 'SKALE'"
     ></m-wallet__skale>
@@ -25,4 +24,5 @@
       *ngIf="(selectedNetworkSiteName$ | async) === 'Polygon'"
     ></m-wallet__polygon>
   </div>
+  <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
 </div>

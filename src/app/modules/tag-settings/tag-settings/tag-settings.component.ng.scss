@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+
+:host {
+  .m-tagSettings__section {
+    display: block;
+  }
+  ::ng-deep m-hashtags__typeaheadInput {
+    margin-bottom: 20px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-hashtags__typeaheadInput {
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    input {
+      border-color: transparent !important;
+      width: 100% !important;
+      padding: 15px 0 !important;
+
+      &:focus {
+        border-color: transparent !important;
+      }
+    }
+
+    .m-hashtagsTypeaheadInputList__item {
+      padding: 12px 45px;
+      outline-width: 0px !important;
+
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  }
+}

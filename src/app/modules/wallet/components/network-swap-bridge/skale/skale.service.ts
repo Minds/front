@@ -22,21 +22,11 @@ export class SkaleService {
   ) {}
 
   /**
-   * Reinitialize wallet by resetting then initializing.
-   * @returns { Promise<void> }
-   */
-  public async reinitializeWallet(): Promise<void> {
-    this.web3Wallet.resetProvider();
-    await this.web3Wallet.initializeProvider();
-  }
-
-  /**
    * Calls to switch network to mainnet / rinkeby.
    * @returns { Promise<void> }
    */
   public async switchNetworkMainnet(): Promise<void> {
     await this.networkSwitch.switch(this.networkSwitch.networks.mainnet.id);
-    await this.reinitializeWallet();
   }
 
   /**
@@ -45,7 +35,6 @@ export class SkaleService {
    */
   public async switchNetworkSkale(): Promise<void> {
     await this.networkSwitch.switch(this.networkSwitch.networks.skale.id);
-    await this.reinitializeWallet();
   }
 
   /**

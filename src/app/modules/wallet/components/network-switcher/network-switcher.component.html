@@ -4,7 +4,7 @@
 >
   <img
     class="m-networkSwitcher__currentNetworkLogo"
-    [src]="cdnAssetsUrl + (activeNetworkLogo$ | async)"
+    [src]="cdnAssetsUrl + activeNetworkLogo"
   />
 </div>
 
@@ -30,7 +30,7 @@
         </div>
         <i
           class="material-icons m-networkSwitcher__optionIcon"
-          *ngIf="network.value.id == (activeChainId$ | async)"
+          *ngIf="network.value.id == activeNetwork?.id"
         >
           done
         </i>

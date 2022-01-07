@@ -35,6 +35,7 @@ import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.co
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { ContentSettingsModule } from '../content-settings/content-settings.module';
 
 @NgModule({
   imports: [
@@ -201,6 +202,7 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
     LanguageModule,
     RouterModule,
     NewsfeedModule,
+    ContentSettingsModule,
   ],
 })
 export class DiscoveryModule {}

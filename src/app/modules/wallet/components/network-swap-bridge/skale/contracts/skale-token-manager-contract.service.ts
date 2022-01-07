@@ -62,8 +62,6 @@ export class SkaleTokenManagerContractService extends AbstractSkaleMindsContract
       throw new Error('You must provide an amount of tokens');
     }
 
-    const currentWalletAddress = await this.getWalletAddress();
-
     const amountWei = this.web3Wallet.toWei(amount);
 
     const tokenManager = this.getContract();
@@ -71,7 +69,6 @@ export class SkaleTokenManagerContractService extends AbstractSkaleMindsContract
     // Bypassing web3 wallet so we can send envelope 1 tx.
     const withdrawReceipt = await tokenManager.exitToMainERC20(
       this.web3Wallet.config.token.address,
-      currentWalletAddress,
       amountWei
     );
 
