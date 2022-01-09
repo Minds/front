@@ -22,7 +22,7 @@
       .m-networkSwapBridge__tabs {
         display: flex;
         flex-flow: row nowrap;
-        margin: 40px 0;
+        margin: 24px 0 8px 0;
 
         @include m-theme() {
           border-bottom: 1px solid themed($m-borderColor--primary);

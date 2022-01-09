@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { InputBalance, TransactableCurrency } from './polygon.types';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { InputBalance } from './polygon.types';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PolygonService } from './polygon.service';
+import { ethers } from 'ethers';
 
 /**
  * SKALE component, giving users the ability to swap between networks.
@@ -17,102 +13,48 @@ import { PolygonService } from './polygon.service';
   styleUrls: ['./polygon.component.ng.scss'],
 })
 export class WalletPolygonComponent implements OnInit {
-  // loading in progress
-  public inProgress: boolean = false;
-
   // amount we are transacting.
-  public amount: number = 0;
-
-  // current input currency we and converting FROM.
-  public inputCurrency: TransactableCurrency = 'MINDS';
+  public amount = '0';
 
   // balance, held with active input currency for display purposes.
   public balance: InputBalance = {
-    currency: 'MINDS',
-    amount: 0,
+    root: 0,
+    child: 0,
   };
 
   // token allowance
-  public allowance: number = 0;
+  public allowance = 0;
 
   // form for input amount
   public form: FormGroup;
 
   constructor(private service: PolygonService) {}
 
-  async ngOnInit(): Promise<void> {
-    this.initBalance(); // async
-    this.updateAllowance();
-
-    this.form = new FormGroup({
-      amount: new FormControl('', {
-        validators: [
-          Validators.required,
-          Validators.min(0.001),
-          // will update as max changes
-          (control: AbstractControl) =>
-            Validators.max(this.maxInputAmount)(control),
-        ],
-      }),
-    });
-  }
-
-  /**
-   * Current output currency (inverse of inputCurrency)
-   * @returns { TransactableCurrency } - 'MINDS', or 'skMINDS'.
-   */
-  get ouputCurrency(): TransactableCurrency {
-    return this.inputCurrency === 'MINDS' ? 'maticMINDS' : 'MINDS';
-  }
-
   /**
    * Max amount a user can input - returns the lowest of allowance and balance amount.
    * @returns { number } - maximum amount a user can input.
    */
-  get maxInputAmount(): number {
-    return Math.min(this.allowance, this.balance.amount);
+  setMaxAmount() {
+    this.amount = this.balance.root.toString();
   }
 
-  /**
-   * Calls either withdraw or deposit depending on the currency inputCurrency.
-   * @returns { Promise<void> }
-   */
-  public async transfer(): Promise<void> {
-    if (this.inputCurrency === 'MINDS') {
-      this.deposit();
-    } else {
-      this.withdraw();
-    }
+  async ngOnInit(): Promise<void> {
+    this.form = new FormGroup({
+      amount: new FormControl('', {
+        validators: [Validators.required, Validators.min(0.001)],
+      }),
+    });
+
+    await this.service.initialize();
+    await this.initBalance();
   }
 
   /**
    * Calls to approve amount via the service.
    * @returns { void }
    */
-  public approve(): void {
-    this.service.approve(this.amount ?? 0);
-  }
-
-  /**
-   * Calls to switch network to Rinkeby via service.
-   * @returns { Promise<void> }
-   */
-  public async switchNetworkMainnet(): Promise<void> {
-    this.inProgress = true;
-    await this.service.switchNetworkMainnet();
-    await this.initBalance();
-    this.inProgress = false;
-  }
-
-  /**
-   * Calls to switch network to SKALE via service.
-   * @returns { Promise<void> }
-   */
-  public async switchNetworkSkale(): Promise<void> {
-    this.inProgress = true;
-    await this.service.switchNetworkPolygon();
-    await this.initBalance();
-    this.inProgress = false;
+  public async approve() {
+    await this.service.approve(ethers.utils.parseUnits(this.amount, 18));
   }
 
   /**
@@ -120,55 +62,29 @@ export class WalletPolygonComponent implements OnInit {
    * and triggering a reload.
    * @returns { void }
    */
-  public swapCurrencyFields(): void {
-    if (this.inputCurrency === 'MINDS') {
-      this.switchNetworkSkale();
+  public async swapNetworks() {
+    if (this.service.isOnMainnet()) {
+      await this.service.switchNetworkPolygon();
     } else {
-      this.switchNetworkMainnet();
+      await this.service.switchNetworkMainnet();
     }
+    await this.initBalance();
   }
 
   /**
    * Calls to deposit via service.
    * @returns { void }
    */
-  private async deposit(): Promise<void> {
-    this.service.deposit(this.amount ?? 0);
+  async deposit() {
+    await this.service.deposit(ethers.utils.parseUnits(this.amount, 18));
   }
 
   /**
    * Calls to withdraw via the service.
    * @returns { void }
    */
-  private withdraw(): void {
-    // this.service.withdraw(this.amount ?? 0);
-  }
-
-  /**
-   * Calls to get mainnet token balance from service
-   * @returns { Promise<number> }
-   */
-  private async getMainnetTokenBalance(): Promise<number> {
-    return this.service.getMainnetTokenBalance();
-  }
-
-  /**
-   * Calls to get mainnet token balance from service
-   * @returns { Promise<number> }
-   */
-  private async getSkaleTokenBalance(): Promise<number> {
-    // return this.service.getSkaleTokenBalance();
-    return 0;
-  }
-
-  /**
-   * Call to get the users allowance, and set class variable 'allowance' to the value.
-   * @returns { Promise<void> }
-   */
-  private async updateAllowance(): Promise<void> {
-    this.allowance = await this.service.getPolygonTokenAllowance();
-    console.log(this.allowance);
-    this.inProgress = false;
+  async withdraw() {
+    await this.service.withdraw(ethers.utils.parseUnits(this.amount, 18));
   }
 
   /**
@@ -176,28 +92,14 @@ export class WalletPolygonComponent implements OnInit {
    * @returns { Promise<void> }
    */
   private async initBalance(): Promise<void> {
-    if (await this.service.isOnMainnet()) {
-      this.inputCurrency = 'MINDS';
-
-      const balance = await this.getMainnetTokenBalance();
-
+    try {
+      const balances = await this.service.getBalances();
       this.balance = {
-        currency: 'MINDS',
-        amount: balance / 1000000000000000000,
+        root: parseFloat(ethers.utils.formatEther(balances.root)),
+        child: parseFloat(ethers.utils.formatEther(balances.child)),
       };
-    } else if (await this.service.isOnPolygonNetwork()) {
-      this.inputCurrency = 'maticMINDS';
-
-      const balance = await this.service.getMaticTokenBalance();
-      this.balance = {
-        currency: 'maticMINDS',
-        amount: balance / 1000000000000000000,
-      };
-    } else {
-      console.warn('Unsupported network, please switch');
-      await this.switchNetworkMainnet();
+    } catch (err) {
+      console.warn('error fetching balances', err);
     }
-
-    this.updateAllowance();
   }
 }

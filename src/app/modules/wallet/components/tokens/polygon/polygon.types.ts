@@ -1,6 +1,4 @@
-export type TransactableCurrency = 'MINDS' | 'maticMINDS';
-
-export type InputBalance = {
-  currency: TransactableCurrency;
-  amount: number;
-};
+export interface InputBalance {
+  root: number;
+  child: number;
+}

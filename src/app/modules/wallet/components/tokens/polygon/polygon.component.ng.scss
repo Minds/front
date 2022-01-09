@@ -17,13 +17,46 @@
     flex-flow: column nowrap;
     align-items: center;
 
-    .m-skale__tokenConverter {
-      width: 400px;
+    .m-polygon__tabs {
+      display: grid;
+      width: 100%;
+      margin: 8px 0;
+      border-radius: 8px;
+      grid-template-columns: repeat(2, 1fr);
+
+      @include m-theme() {
+        background: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+
+      .m-polygon__tab {
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+
+        & span {
+          opacity: 0.2;
+        }
+        &.m-polygon__active span {
+          opacity: 1;
+        }
+      }
+      .m-polygon__tab:not(:first-child) {
+        @include m-theme() {
+          border-left: 1px solid themed($m-borderColor--primary);
+        }
+      }
+    }
+
+    .m-polygon__tokenConverter {
       display: flex;
-      flex-flow: column nowrap;
+      width: 100%;
+      padding: 16px;
+      border-radius: 8px;
       align-items: center;
-      padding: 20px;
-      border-radius: 25px;
+      flex-flow: column nowrap;
+      box-sizing: border-box;
 
       @include m-theme() {
         background: themed($m-bgColor--secondary);
@@ -34,7 +67,7 @@
         cursor: pointer;
         padding: 10px;
         border-radius: 25px;
-        margin-top: 20px;
+        margin: 8px 0 0 0;
 
         @include m-theme() {
           background: themed($m-bgColor--primary);
@@ -44,6 +77,93 @@
             background: themed($m-bgColor--secondary);
           }
         }
+      }
+
+      .m-polygon__boxTitle {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 4px;
+        font-weight: bold;
+        font-size: 12px;
+        text-align: left;
+      }
+
+      .m-polygon__inputAmountContainer {
+        width: 100%;
+        border-radius: 8px;
+        background-color: rgba(50, 50, 50, 0.2);
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+        }
+
+        .m-polygon__row {
+          display: flex;
+          padding: 16px;
+          align-items: center;
+          flex-direction: row;
+        }
+
+        .m-polygon__input-container {
+          position: relative;
+
+          .m-polygon__input {
+            border: 0;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            width: 100%;
+            padding: 16px;
+            @include m-theme() {
+              border-top: 1px solid themed($m-borderColor--primary);
+            }
+          }
+
+          .m-polygon__max-button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translate(0, -50%);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 4px 8px;
+            font-size: 12px;
+            opacity: 0.8;
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+
+        .m-polygon__balance-placeholder {
+          font-size: 10px;
+          opacity: 0.3;
+          margin-right: 8px;
+        }
+
+        .m-polygon__balance {
+          font-size: 12px;
+        }
+
+        .m-polygon__chainLogo {
+          width: 18px;
+          height: 18px;
+          margin-right: 8px;
+        }
+      }
+
+      .m-polygon__grow {
+        flex-grow: 1;
+      }
+
+      .m-polygon__button-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        margin-top: 16px;
       }
 
       .m-skale__outputAmount {

@@ -30,7 +30,7 @@ export class WalletSkaleComponent {
    * @returns { Observable<Network> } - currently active network from service.
    */
   get activeNetwork$(): Observable<Network> {
-    return this.networkSwitch.getActiveNetwork$();
+    return new BehaviorSubject(this.networkSwitch.getActiveNetwork());
   }
 
   // currently active subtab.

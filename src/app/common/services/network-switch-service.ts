@@ -34,12 +34,17 @@ export type NetworkName =
   | 'Polygon'
   | 'Goerli'
   | 'Mumbai';
-export type NetworkSiteName = 'Mainnet' | 'SKALE' | 'Polygon' | 'Goerli';
+export type NetworkSiteName =
+  | 'Mainnet'
+  | 'SKALE'
+  | 'Polygon'
+  | 'Goerli'
+  | 'Mumbai';
 export type NetworkDescription = string;
 export type NetworkLogoPath = string;
 export type NetworkRpcUrl = string;
 
-export type Network = {
+export interface Network {
   id: NetworkChainId; // chain id (hex).
   networkName: NetworkName; // human readable name for Metamask.
   siteName: NetworkSiteName; // label to be used on-site.
@@ -47,7 +52,7 @@ export type Network = {
   description: NetworkLogoPath; // short description to be used on site.
   logoPath: NetworkRpcUrl; // path to logo file `assets/...`.
   swappable: boolean; // whether swapping is enabled for the network or not.
-};
+}
 
 export const UNKNOWN_NETWORK_LOGO_PATH_DARK = 'assets/ext/unknown-dark.png';
 export const UNKNOWN_NETWORK_LOGO_PATH_LIGHT = 'assets/ext/unknown-light.png';
@@ -74,6 +79,22 @@ export class NetworkSwitchService implements OnDestroy {
       description: "ETH's Internet of Blockchains.",
       logoPath: 'assets/ext/polygon.png',
       swappable: true,
+    },
+    goerli: {
+      id: '0x5',
+      siteName: 'Goerli',
+      networkName: 'Goerli',
+      description: 'Goerli Testnet.',
+      logoPath: 'assets/ext/ethereum.png',
+      swappable: false,
+    },
+    mumbai: {
+      id: '0x13881',
+      siteName: 'Mumbai',
+      networkName: 'Mumbai',
+      description: "Polygon's testnet.",
+      logoPath: 'assets/ext/polygon.png',
+      swappable: false,
     },
   };
 
@@ -200,7 +221,7 @@ export class NetworkSwitchService implements OnDestroy {
    */
   public getNetworkDataById(id: NetworkChainId): Network {
     const networksArray = Object.entries(this.networks);
-    for (let network of networksArray) {
+    for (const network of networksArray) {
       if (network[1].id === id) {
         return network[1];
       }
@@ -223,7 +244,7 @@ export class NetworkSwitchService implements OnDestroy {
   public getSwappableNetworks(): Network[] {
     const enabledNetworks = Object.entries(this.networks);
     const swappableNetworks = [];
-    for (let chain of enabledNetworks) {
+    for (const chain of enabledNetworks) {
       if (chain[1].swappable) {
         swappableNetworks.push(chain[1]);
       }

@@ -2,47 +2,36 @@ import { Injectable } from '@angular/core';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { NetworkSwitchService } from '../../../../../common/services/network-switch-service';
-import { MaticPOSClient } from '@maticnetwork/maticjs';
 import { PolygonMindsTokenContractService } from './contracts/minds-token-polygon.service';
-import { PolygonDepositBoxContractService } from './contracts/polygon-deposit-box-contract.service';
 import { MindsTokenMainnetSignedContractService } from '../../network-swap-bridge/skale/contracts/minds-token-mainnet-signed-contract.service';
+import { BigNumber, ethers } from 'ethers';
+import { POSClient, setProofApi, use } from '@maticnetwork/maticjs';
+import { Web3ClientPlugin } from '@maticnetwork/maticjs-ethers';
+
+const MAINNET_RPC_URL =
+  'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
+const POLYGON_RPC_URL = 'https://rpc-mumbai.maticvigil.com';
+
+const MIND_TOKEN_ADDRESS = '0x8bda9f5c33fbcb04ea176ea5bc1f5102e934257f';
+const MIND_CHILD_TOKEN_ADDRESS = '0x22E993D9108DbDe9F32553C3fD0A404aCD2B7150';
+
+use(Web3ClientPlugin);
+setProofApi('https://apis.matic.network/');
 
 @Injectable({ providedIn: 'root' })
 export class PolygonService {
-  public Network = require('@maticnetwork/meta/network');
-
-  public parentProvider =
-    'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
-  public maticProvider = 'https://rpc-endpoints.superfluid.dev/mumbai';
-
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
     private networkSwitch: NetworkSwitchService,
     private mindsToken: MindsTokenMainnetSignedContractService,
-    private maticService: PolygonMindsTokenContractService,
-    private boxService: PolygonDepositBoxContractService
+    private maticService: PolygonMindsTokenContractService
   ) {}
 
-  // for goerli testnet
-  public maticPOSClient = new MaticPOSClient({
-    network: 'testnet',
-    version: 'mumbai',
-    parentProvider: this.parentProvider,
-    maticProvider: this.maticProvider,
-    parentDefaultOptions: {
-      from: '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C',
-    },
-    maticDefaultOptions: { from: '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C' },
-  });
+  public async initialize() {
+    await this.web3Wallet.initializeProvider();
+  }
 
-  // for mumbai testnet
-  public maticPOSClientMatic = new MaticPOSClient({
-    network: 'testnet',
-    version: 'mumbai',
-    parentProvider: this.maticProvider,
-    maticProvider: this.parentProvider,
-  });
   /**
    * Reinitialize wallet by resetting then initializing.
    * @returns { Promise<void> }
@@ -123,32 +112,17 @@ export class PolygonService {
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }
    */
-  public async approve(amount: number): Promise<any> {
-    if (!amount) {
+  public async approve(amount: BigNumber): Promise<any> {
+    if (amount.isZero()) {
       this.toast.warn('You must provide an amount of tokens');
       return;
     }
 
-    if (this.isOnMainnet()) {
-      // return this.depositBox.approveForThisContract(amount);
-    } else if (this.isOnPolygonNetwork()) {
-      const web3Provider = await this.web3Wallet.provider.provider;
-      const from = await this.web3Wallet.getSigner().getAddress();
-      this.maticPOSClient.web3Client.setParentProvider(web3Provider);
+    const { root: posClient } = await this.getPOSClients();
 
-      // rootToken
-      const tx = await this.maticPOSClient.approveERC20ForDeposit(
-        '0x655F2166b0709cd575202630952D71E2bB0d61Af',
-        amount,
-        { from }
-      );
-
-      console.log('transaciton hash', tx);
-      // this.maticService.approve(amount);
-    } else {
-      this.toast.warn('Unable to approve for this network');
-      throw new Error('Approving for an unsupported network');
-    }
+    const approveTx = await posClient.erc20(MIND_TOKEN_ADDRESS).approveMax();
+    const receipt = await approveTx.getReceipt();
+    console.log('receipt', receipt);
   }
 
   /**
@@ -156,39 +130,122 @@ export class PolygonService {
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }
    */
-  public async deposit(amount: number): Promise<any> {
-    if (!amount) {
+  public async deposit(amount: BigNumber): Promise<any> {
+    if (amount.isZero()) {
       this.toast.warn('You must provide an amount of tokens');
       return;
     }
 
-    if (this.isOnMainnet()) {
-      // return this.depositBox.approveForThisContract(amount);
-    } else if (this.isOnPolygonNetwork()) {
-      const web3Provider = await this.web3Wallet.provider.provider;
-      const fromUser = await this.web3Wallet.getSigner().getAddress();
+    const signer = this.web3Wallet.getSigner();
+    const userAddress = await signer.getAddress();
+    const { root: posClient } = await this.getPOSClients();
 
-      this.maticPOSClientMatic.web3Client.setParentProvider(web3Provider);
+    const depositTx = await posClient
+      .erc20(MIND_TOKEN_ADDRESS)
+      .deposit(amount.toString(), userAddress);
+    await depositTx.getReceipt();
+  }
 
-      const gasPriceValue = await this.maticPOSClientMatic.web3Client.web3.eth.getGasPrice();
-
-      const amountWei = this.web3Wallet.toWei(1000000);
-
-      // rootToken
-      const tx = await this.maticPOSClientMatic
-        .depositERC20ForUser(
-          '0x655F2166b0709cd575202630952D71E2bB0d61Af',
-          fromUser,
-          5000000000000000,
-          {
-            from: fromUser,
-          }
-        )
-        .then(() => console.log('exito'))
-        .catch(e => console.log(e));
-    } else {
-      this.toast.warn('Unable to approve for this network');
-      throw new Error('Approving for an unsupported network');
+  /**
+   * Withdraw token from Polygon to Mainnet.
+   * @param { number } amount - amount of tokens to approve.
+   * @returns { Promise<void> }
+   */
+  public async withdraw(amount: BigNumber): Promise<any> {
+    if (amount.isZero()) {
+      this.toast.warn('You must provide an amount of tokens');
+      return;
     }
+
+    const { child: posClientChild } = await this.getPOSClients();
+
+    const erc20ChildToken = posClientChild.erc20(
+      MIND_CHILD_TOKEN_ADDRESS,
+      false
+    );
+    const withdrawTx = await erc20ChildToken.withdrawStart(amount.toString());
+    const withdrawReceipt = await withdrawTx.getReceipt();
+
+    console.log('withdrawReceipt', withdrawReceipt);
+  }
+
+  public async exit() {
+    const { root: posClient } = await this.getPOSClients();
+
+    const burnTxHash =
+      '0x0c87414cd8ddc442450cee5ee655c15754c2636a4098d6b45b89747f452bdb68';
+
+    const erc20RootToken = posClient.erc20(MIND_TOKEN_ADDRESS, true);
+    const result = await erc20RootToken.withdrawExitFaster(burnTxHash);
+    console.log('result', result);
+
+    const txHash = await result.getTransactionHash();
+    console.log('txHash', txHash);
+
+    const txReceipt = await result.getReceipt();
+    console.log('txReceipt', txReceipt);
+  }
+
+  private async getPOSClients() {
+    const signer = this.web3Wallet.getSigner();
+    const network = await signer.provider.getNetwork();
+    const rpcUrl = network.chainId === 5 ? POLYGON_RPC_URL : MAINNET_RPC_URL;
+
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const from = await signer.getAddress();
+
+    const baseConfig = {
+      network: 'testnet',
+      version: 'mumbai',
+      log: true,
+    };
+
+    const signerConfig = { provider: signer, defaultConfig: { from } };
+    const providerConfig = { provider, defaultConfig: { from } };
+
+    const posClientRoot = new POSClient();
+    await posClientRoot.init({
+      ...baseConfig,
+      parent: signerConfig,
+      child: providerConfig,
+    });
+    const posClientChild = new POSClient();
+    await posClientChild.init({
+      ...baseConfig,
+      parent: providerConfig,
+      child: signerConfig,
+    });
+    return { root: posClientRoot, child: posClientChild };
+  }
+
+  public async getBalances() {
+    const from = await this.web3Wallet.provider.getSigner().getAddress();
+
+    const providerMainnet = new ethers.providers.JsonRpcProvider(
+      MAINNET_RPC_URL,
+      5
+    );
+    const providerPolygon = new ethers.providers.JsonRpcProvider(
+      POLYGON_RPC_URL,
+      80001
+    );
+    const erc20_abi = [
+      'function balanceOf(address account) view returns (uint256)',
+    ];
+    const rootToken = new ethers.Contract(
+      MIND_TOKEN_ADDRESS,
+      erc20_abi,
+      providerMainnet
+    );
+    const childToken = new ethers.Contract(
+      MIND_CHILD_TOKEN_ADDRESS,
+      erc20_abi,
+      providerPolygon
+    );
+
+    return {
+      root: await rootToken.balanceOf(from),
+      child: await childToken.balanceOf(from),
+    };
   }
 }
