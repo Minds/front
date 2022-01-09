@@ -104,7 +104,7 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
       this.inProgress$.next(false);
       return;
     }
-    this.selectedNetworkSiteName$.next('SKALE');
+    // this.selectedNetworkSiteName$.next('SKALE');
     this.inProgress$.next(false);
   }
 }

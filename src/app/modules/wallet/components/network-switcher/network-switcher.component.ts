@@ -52,6 +52,7 @@ export class WalletNetworkSwitcherComponent {
    * @returns { NetworkMap } - data of all active networks from service.
    */
   get networks(): NetworkMap {
+    console.log(this.service.networks);
     return this.service.networks;
   }
 

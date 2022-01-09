@@ -46,16 +46,16 @@ export class PolygonService {
    * @returns { Promise<void> }
    */
   public async switchNetworkMainnet(): Promise<void> {
-    await this.networkSwitch.switch(this.networkSwitch.networks.mainnet.id);
+    await this.networkSwitch.switch(this.networkSwitch.networks.goerli.id);
     await this.reinitializeWallet();
   }
 
   /**
-   * Calls to switch network to SKALE.
+   * Calls to switch network to Polygon.
    * @returns { Promise<void> }
    */
   public async switchNetworkPolygon(): Promise<void> {
-    await this.networkSwitch.switch(this.networkSwitch.networks.polygon.id);
+    await this.networkSwitch.switch(this.networkSwitch.networks.mumbai.id);
     await this.reinitializeWallet();
   }
 
@@ -65,7 +65,7 @@ export class PolygonService {
    */
   public isOnPolygonNetwork(): boolean {
     return this.networkSwitch.isOnNetwork(
-      this.networkSwitch.networks.polygon.id
+      this.networkSwitch.networks.mumbai.id
     );
   }
 
@@ -75,7 +75,7 @@ export class PolygonService {
    */
   public isOnMainnet(): boolean {
     return this.networkSwitch.isOnNetwork(
-      this.networkSwitch.networks.mainnet.id
+      this.networkSwitch.networks.goerli.id
     );
   }
 
@@ -112,8 +112,9 @@ export class PolygonService {
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }
    */
-  public async approve(amount: BigNumber): Promise<any> {
-    if (amount.isZero()) {
+  public async approve(amount?: BigNumber): Promise<any> {
+    console.log('se llama');
+    if (amount && amount.isZero()) {
       this.toast.warn('You must provide an amount of tokens');
       return;
     }
@@ -121,6 +122,7 @@ export class PolygonService {
     const { root: posClient } = await this.getPOSClients();
 
     const approveTx = await posClient.erc20(MIND_TOKEN_ADDRESS).approveMax();
+    console.log(approveTx);
     const receipt = await approveTx.getReceipt();
     console.log('receipt', receipt);
   }

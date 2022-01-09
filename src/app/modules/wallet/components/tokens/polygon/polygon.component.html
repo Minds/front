@@ -1,23 +1,35 @@
 <div class="m-skale__body">
   <div class="m-polygon__tabs">
-    <div class="m-polygon__tab m-polygon__active"><span>Bridge</span></div>
-    <div class="m-polygon__tab"><span>History</span></div>
+    <div
+      (click)="changeTab()"
+      class="m-polygon__tab"
+      [ngClass]="bridge ? 'm-polygon__active' : ''"
+    >
+      <span>Bridge</span>
+    </div>
+    <div
+      (click)="changeTab()"
+      class="m-polygon__tab"
+      [ngClass]="!bridge ? 'm-polygon__active' : ''"
+    >
+      <span>History</span>
+    </div>
   </div>
 
-  <div class="m-polygon__tokenConverter" [formGroup]="form">
+  <div class="m-polygon__tokenConverter" [formGroup]="form" *ngIf="bridge">
     <span class="m-polygon__boxTitle">From</span>
     <div class="m-polygon__inputAmountContainer">
       <div class="m-polygon__row">
         <img
-          src="assets/ext/ethereum.png"
+          [src]="currentNetwork.img"
           alt="polygon"
           class="m-polygon__chainLogo"
         />
-        Mainnet chain
+        {{ currentNetwork.displayName }} chain
         <div class="m-polygon__grow"></div>
         <span class="m-polygon__balance-placeholder">Balance: </span>
         <span class="m-polygon__balance">
-          {{ (balance.root | number) ?? '0'}} MINDS
+          {{ (currentNetwork.balance | number) ?? '0'}} MINDS
         </span>
       </div>
       <div class="m-polygon__input-container">
@@ -40,15 +52,15 @@
     <div class="m-polygon__inputAmountContainer">
       <div class="m-polygon__row">
         <img
-          src="assets/ext/polygon.png"
+          [src]="receivingNetwork.img"
           alt="polygon"
           class="m-polygon__chainLogo"
         />
-        Polygon chain
+        {{ receivingNetwork.displayName }} chain
         <div class="m-polygon__grow"></div>
         <span class="m-polygon__balance-placeholder">Balance: </span>
         <span class="m-polygon__balance">
-          {{ (balance.child | number) ?? '0'}} MINDS
+          {{ (receivingNetwork.balance | number) ?? '0'}} MINDS
         </span>
       </div>
     </div>
@@ -57,7 +69,7 @@
       <m-button
         color="primary"
         (onAction)="withdraw()"
-        [disabled]="amount.length && amount !== '0'"
+        [disabled]="amount.length && amount === '0'"
       >
         Transfer
       </m-button>

@@ -21,7 +21,10 @@
     ></m-wallet__skale>
     <!-- Add templates for other swap modals here -->
     <m-wallet__polygon
-      *ngIf="(selectedNetworkSiteName$ | async) === 'Polygon'"
+      *ngIf="
+        (selectedNetworkSiteName$ | async) === 'Polygon' ||
+        (selectedNetworkSiteName$ | async) === 'Goerli'
+      "
     ></m-wallet__polygon>
   </div>
   <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>

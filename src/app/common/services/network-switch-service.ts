@@ -72,22 +72,16 @@ export class NetworkSwitchService implements OnDestroy {
       logoPath: 'assets/ext/ethereum.png',
       swappable: false,
     },
-    polygon: {
-      id: '0x5',
-      siteName: 'Polygon',
-      networkName: 'Polygon',
-      description: "ETH's Internet of Blockchains.",
-      logoPath: 'assets/ext/polygon.png',
-      swappable: true,
-    },
+    // eth testnet
     goerli: {
       id: '0x5',
-      siteName: 'Goerli',
+      siteName: 'Polygon',
       networkName: 'Goerli',
       description: 'Goerli Testnet.',
       logoPath: 'assets/ext/ethereum.png',
-      swappable: false,
+      swappable: true,
     },
+    // polygon testnet
     mumbai: {
       id: '0x13881',
       siteName: 'Mumbai',
@@ -139,7 +133,7 @@ export class NetworkSwitchService implements OnDestroy {
        *   for testnet / non testnet.
        */
       this.networks.polygon = {
-        id: '0x5',
+        id: '0x80001',
         siteName: 'Polygon',
         networkName: 'Polygon',
         description: "ETH's Internet of Blockchains.",
@@ -195,9 +189,12 @@ export class NetworkSwitchService implements OnDestroy {
       const rpcUrl = networkData.rpcUrl ?? false;
       const networkName = networkData.networkName ?? false;
 
+      console.log(switchError);
+      console.log(networkName);
       // network has not yet been added to MetaMask and we have params to add it.
       if (switchError.code === 4902 && rpcUrl && networkName) {
         try {
+          console.log(chainId);
           const params: AddEthereumChainParameter = {
             chainId: chainId,
             chainName: networkName,

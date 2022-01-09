@@ -726,3 +726,16 @@ export const ChildAbi = {
     },
   ],
 };
+
+export const NetworksInfo = [
+  {
+    img: 'assets/ext/ethereum.png',
+    networkName: 'Goerli',
+    displayName: 'Mainnet',
+  },
+  {
+    img: 'assets/ext/polygon.png',
+    networkName: 'Mumbai',
+    displayName: 'Polygon',
+  },
+];
