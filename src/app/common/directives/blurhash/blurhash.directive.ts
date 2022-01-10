@@ -9,36 +9,30 @@ import {
 } from '@angular/core';
 import { decode } from 'blurhash';
 import { timer } from 'rxjs';
+import { ActivityEntity } from '../../../modules/newsfeed/activity/activity.service';
 
+/**
+ * Blurhash directive. apply it to any <img /> tag like so: <img m-blurhash="entity" />
+ */
 @Directive({
   selector: 'img[m-blurhash]',
 })
 export class BlurhashDirective implements AfterViewInit, OnDestroy {
   private RESOLUTION = 128;
-  private _src: string;
 
   @HostBinding('attr.src')
   @Input()
-  set src(src: string) {
-    this._src = src;
-  }
-
-  get src() {
-    return this._src;
-  }
+  src: string;
 
   @HostListener('load')
   onLoad() {
     if (this.canvas && !this.paywalled) {
-      // TODO: also remove the canvas after transition is done
-      this.canvas.style.opacity = 0;
+      this.canvas.style.opacity = '0';
     }
   }
 
   @HostListener('error')
-  onError() {
-    // TODO
-  }
+  onError() {}
 
   @HostBinding('style.width.px')
   width: number;
@@ -46,10 +40,10 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
   @HostBinding('style.height.px')
   height: number;
 
-  canvas;
+  canvas: HTMLCanvasElement;
 
   @Input('m-blurhash')
-  entity;
+  entity: ActivityEntity;
 
   @Input('paywalled')
   paywalled;
@@ -68,22 +62,19 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
       .then(() => this.drawCanvas());
   }
 
+  /**
+   * draws the blurhash canvas over the image
+   * @returns { void }
+   */
   drawCanvas() {
     const elementWidth = this.el?.nativeElement?.width;
     const elementHeight = this.el?.nativeElement?.height;
 
-    let { blurhash, width, height } = Object.assign(
-      {},
-      {
-        // NOTE: not sure if we should have a default blurhash
-        // blurhash: 'LyHnO9n$tUt7}qoOxAs:-BskngRj',
-        width: elementWidth,
-        height: elementHeight,
-        // the blurhash might also be on this key
-        blurhash: this.entity.blurhash,
-      },
-      this.entity.custom_data[0]
-    );
+    let [blurhash, width, height] = [
+      this.entity.blurhash || this.entity.custom_data[0]?.blurhash,
+      elementWidth || this.entity.custom_data[0]?.width,
+      elementHeight || this.entity.custom_data[0]?.height,
+    ];
 
     if (!blurhash) {
       return null;
@@ -97,25 +88,29 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
       return null;
     }
 
-    const pixels = decode(blurhash, this.RESOLUTION, this.RESOLUTION);
-    this.canvas = document.createElement('canvas');
-    const ctx = this.canvas.getContext('2d');
+    try {
+      const pixels = decode(blurhash, this.RESOLUTION, this.RESOLUTION);
+      this.canvas = document.createElement('canvas');
+      const ctx = this.canvas.getContext('2d');
 
-    ctx.canvas.width = this.RESOLUTION;
-    ctx.canvas.height = this.RESOLUTION;
+      ctx.canvas.width = this.RESOLUTION;
+      ctx.canvas.height = this.RESOLUTION;
 
-    const imageData = ctx.createImageData(this.RESOLUTION, this.RESOLUTION);
-    imageData.data.set(pixels);
-    ctx.putImageData(imageData, 0, 0);
+      const imageData = ctx.createImageData(this.RESOLUTION, this.RESOLUTION);
+      imageData.data.set(pixels);
+      ctx.putImageData(imageData, 0, 0);
 
-    const scaleX = width / this.RESOLUTION;
-    const scaleY = height / this.RESOLUTION;
+      const scaleX = width / this.RESOLUTION;
+      const scaleY = height / this.RESOLUTION;
 
-    this.canvas.setAttribute(
-      'style',
-      `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; transform: scaleX(${scaleX}) scaleY(${scaleY})`
-    );
-    this.el.nativeElement.parentElement.append(this.canvas);
+      this.canvas.setAttribute(
+        'style',
+        `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; transform: scaleX(${scaleX}) scaleY(${scaleY})`
+      );
+      this.el.nativeElement.parentElement.append(this.canvas);
+    } catch (e) {
+      console.error('Blurhash: failed to draw canvas', e);
+    }
   }
 
   ngOnDestroy() {
