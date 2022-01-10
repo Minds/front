@@ -148,12 +148,23 @@ describe('RejectionReasonModalComponent', () => {
   });
 
   it('should have a confirm button', () => {
+    confirmButton = fixture.debugElement.query(
+      By.css('.m-modal-confirm-buttons > m-button:first-child button')
+    );
+    
     expect(confirmButton).not.toBeNull();
   });
   it('confirm button should be disabled if no reason is selected', () => {
+    confirmButton = fixture.debugElement.query(
+      By.css('.m-modal-confirm-buttons > m-button:first-child button')
+    );
+
     expect(confirmButton.nativeElement.disabled).toBeTruthy();
   });
   it('clicking on confirm button should call action()', () => {
+    confirmButton = fixture.debugElement.query(
+      By.css('.m-modal-confirm-buttons > m-button:first-child button')
+    );
     const listItem: DebugElement = fixture.debugElement.query(
       By.css('ul.m-modal-reasons--reasons > li:first-child')
     );
