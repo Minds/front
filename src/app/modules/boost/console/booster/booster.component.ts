@@ -20,6 +20,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Component({
   selector: 'm-boost-console-booster',
   templateUrl: 'booster.component.html',
+  providers: [FeedsService],
 })
 export class BoostConsoleBooster {
   /* type of the feed to display */

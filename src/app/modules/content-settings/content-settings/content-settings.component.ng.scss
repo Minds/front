@@ -1,0 +1,114 @@
+@import 'defaults.scss';
+
+:host {
+  z-index: 1;
+
+  .m-contentSettings {
+    width: 75vw;
+    height: 80vh;
+    max-width: 900px;
+    max-height: 900px;
+    display: flex;
+    flex-flow: column;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      height: 90vh;
+      width: 80vw;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      height: 100vh;
+      width: 100vw;
+    }
+  }
+
+  span {
+    display: block;
+  }
+
+  [class*='m-contentSettings__section'],
+  ::ng-deep .m-tagSettings__section {
+    padding-left: 45px;
+    padding-right: 45px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+  .m-contentSettings__section--title {
+    padding-top: 45px;
+
+    .m-contentSettings__title {
+      font-size: 24px;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        margin-top: 30px;
+      }
+    }
+  }
+  .m-contentSettings__section--tabs {
+    padding: 30px 0 0 0;
+
+    .m-tabs__container {
+      padding: 0 45px;
+
+      @media screen and (max-width: $max-mobile) {
+        padding: 0 20px;
+      }
+    }
+  }
+  .m-contentSettings__main {
+    // min-height: 60%;
+    // max-height: 60%;
+    height: 60%;
+
+    overflow: scroll;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    @media screen and (max-width: $min-tablet) {
+      height: 70%;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      // min-height: 70% !important;
+      // max-height: 70% !important;
+    }
+
+    .m-contentSettings__section--subtitle {
+      margin-bottom: 30px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        padding-top: 20px;
+      }
+    }
+
+    .m-contentSettings__formWrapper {
+      margin-bottom: 40px;
+    }
+  }
+  .m-contentSettings__section--toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 20px;
+    }
+  }
+}

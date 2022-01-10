@@ -52,9 +52,7 @@
   <m-discovery__tagWidget></m-discovery__tagWidget>
 
   <div class="m-discoveryFeeds__feed">
-    <ng-container
-      *ngFor="let entity$ of service.entities$ | async; let i = index"
-    >
+    <ng-container *ngFor="let entity$ of entities; let i = index">
       <!-- ---------------------- -->
       <!-- SEARCH RESULTS -->
       <!-- ---------------------- -->
@@ -65,12 +63,7 @@
       <!-- ---------------------- -->
       <!-- SUGGESTED CHANNELS -->
       <!-- ---------------------- -->
-      <ng-container
-        *ngIf="
-          !(inProgress$ | async) &&
-          !(cardCarouselInProgress$ | async) &&
-          i === 1
-        "
+      <ng-container *ngIf="(showSuggestedChannels$ | async) && i === 1"
         ><m-discovery__cardCarousel
           *ngIf="
             (cardCarouselService.searchCards$ | async) &&
@@ -83,14 +76,16 @@
       <!-- ---------------------- -->
       <!-- BOOSTS -->
       <!-- ---------------------- -->
-      <m-featured-content
-        *ngIf="(i > 0 && i % 5 === 0) || i === 1"
-        [slot]="i + 1"
-        [displayOptions]="{
-          showOnlyCommentsInput: true,
-          isFeed: true
-        }"
-      ></m-featured-content>
+      <ng-container *ngIf="isLoggedIn()">
+        <m-featured-content
+          *ngIf="(i > 0 && i % 5 === 0) || i === 1"
+          [slot]="i + 1"
+          [displayOptions]="{
+            showOnlyCommentsInput: true,
+            isFeed: true
+          }"
+        ></m-featured-content>
+      </ng-container>
       <!-- ---------------------- -->
     </ng-container>
     <infinite-scroll

@@ -104,7 +104,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    * @param { void }
    */
   public toggleSidebarNav(): void {
-    this.sidebarService.toggle();
+    this.sidebarService.isOpened$.next(true);
   }
 
   private listen() {
@@ -198,8 +198,18 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   doRedirect(): void {
     if (this.router.url === '/' || this.router.url === '/about') {
-      this.router.navigate(['/newsfeed/subscriptions']);
+      this.router.navigate(['/newsfeed/subscriptions/latest']);
     }
+  }
+
+  /**
+   * Gets URL for main logo.
+   * @returns { string } url for main logo.
+   */
+  public getMainLogoUrl(): string {
+    return this.session.getLoggedInUser()
+      ? '/newsfeed/subscriptions/latest'
+      : '/';
   }
 
   /**

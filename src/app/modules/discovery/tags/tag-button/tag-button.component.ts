@@ -47,6 +47,10 @@ export class DiscoveryTagButtonComponent implements OnDestroy {
   }
 
   async removeTag(): Promise<void> {
+    if (!this.session.isLoggedIn()) {
+      await this.authModal.open({ formDisplay: 'login' });
+    }
+
     this.tag.selected = false;
     this.recentlyToggled = true;
 

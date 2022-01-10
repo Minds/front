@@ -1,0 +1,23 @@
+<div
+  class="m-pageLayout__container m-defaultFeedContainer__pageContainer"
+  m-pageLayout__container
+>
+  <div
+    class="m-pageLayout__pane--main m-defaultFeedContainer__feedContainer"
+    m-pageLayout__pane="main"
+    style="position: relative;"
+  >
+    <m-defaultFeed></m-defaultFeed>
+  </div>
+  <div class="m-defaultFeedContainer__sidebar" m-pageLayout__pane="right">
+    <div class="m-pageLayoutPane__inner">
+      <div class="m-pageLayoutPane__sticky" m-stickySidebar>
+        <m-discovery__disclaimer></m-discovery__disclaimer>
+        <m-suggestions__sidebar
+          type="user"
+          customTitle="popular_channels"
+        ></m-suggestions__sidebar>
+      </div>
+    </div>
+  </div>
+</div>

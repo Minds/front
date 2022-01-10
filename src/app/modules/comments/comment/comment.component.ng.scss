@@ -4,6 +4,9 @@
   .m-comment {
     position: relative;
   }
+  .minds-body {
+    margin-left: 15px;
+  }
   .m-comment--compact {
     padding: 5px 30px 20px;
     .m-dropdown--v2 {
@@ -30,6 +33,7 @@
     }
     .minds-body {
       max-width: 100%;
+      margin-left: 10px;
     }
   }
 
@@ -286,7 +290,7 @@
     }
 
     .minds-avatar {
-      margin: 0 15px 0 0;
+      margin: 0;
       min-width: 38px;
       min-height: 38px;
 

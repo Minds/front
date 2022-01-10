@@ -23,6 +23,6 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
   ],
   declarations: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
   exports: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
-  providers: [AutocompleteSuggestionsService, FeedService],
+  providers: [AutocompleteSuggestionsService],
 })
 export class SuggestionsModule {}

@@ -3,12 +3,18 @@ import { BehaviorSubject } from 'rxjs';
 import { ExperimentsService } from '../../modules/experiments/experiments.service';
 import { Storage } from '../../services/storage';
 
+/**
+ * the duration in ms within which a boost prompt should be shown once
+ **/
+const PROMPT_DISMISS_DURATION = 3 * 24 * 60 * 60 * 1000; // 3 days in ms
+const BOOST_RECOMMENDED_KEY = 'boost:recommendedAt';
+
 @Injectable()
 export class BoostRecommendationService {
   /**
    * a list of guids that have to be recommended
    **/
-  public boostRecommendations: BehaviorSubject<string[]> = new BehaviorSubject<
+  public boostRecommendations$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
   /**
@@ -16,28 +22,26 @@ export class BoostRecommendationService {
    * if it was already recommended, the button will shimmer,
    * otherwise, a tooltip will be shown
    **/
-  public boostRecommended: boolean = false;
+  public boostRecommended$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
 
   constructor(
     protected storage: Storage,
     protected experimentsService: ExperimentsService
   ) {
-    this.boostRecommended = Boolean(this.storage.get('boost:recommended'));
-  }
+    const recommendedAt = this.storage.get(BOOST_RECOMMENDED_KEY);
+    if (!recommendedAt) {
+      return;
+    }
 
-  shouldShowTooltip(entityGuid) {
-    return (
-      !this.boostRecommended &&
-      Boolean(
-        this.boostRecommendations.getValue().find(guid => guid === entityGuid)
-      )
-    );
-  }
+    // if the last recommendation was more than 3 days ago
+    if (Date.now() - Number(recommendedAt) > PROMPT_DISMISS_DURATION) {
+      this.storage.destroy(BOOST_RECOMMENDED_KEY);
+      return;
+    }
 
-  shouldShowBoost(entityGuid) {
-    return this.boostRecommendations
-      .getValue()
-      .find(guid => guid === entityGuid);
+    this.boostRecommended$.next(true);
   }
 
   /**
@@ -45,22 +49,22 @@ export class BoostRecommendationService {
    * and removing it after some time.
    **/
   recommendBoost(guid: string) {
-    if (this.experimentsService.run('boost-prompt') !== 'on') {
+    if (this.experimentsService.run('boost-prompt-2') !== 'on') {
       return;
     }
-    this.boostRecommendations.next([
-      ...this.boostRecommendations.getValue(),
+    this.boostRecommendations$.next([
+      ...this.boostRecommendations$.getValue(),
       guid,
     ]);
     setTimeout(
       () => {
-        this.boostRecommendations.next(
-          this.boostRecommendations.getValue().filter(p => p !== guid)
+        this.boostRecommendations$.next(
+          this.boostRecommendations$.getValue().filter(p => p !== guid)
         );
-        this.storage.set('boost:recommended', true); // save to storage
-        this.boostRecommended = true;
+        this.storage.set(BOOST_RECOMMENDED_KEY, String(Date.now())); // save to storage
+        this.boostRecommended$.next(true);
       },
-      this.boostRecommended ? 12000 : 6000
+      this.boostRecommended$.getValue() ? 12000 : 6000
     );
   }
 }

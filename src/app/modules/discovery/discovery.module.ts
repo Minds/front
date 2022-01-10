@@ -29,12 +29,13 @@ import { DiscoveryService } from './discovery.service';
 import { DiscoveryBoostFeedComponent } from './boost/boost-feed.component';
 import { DiscoveryTabsComponent } from './tabs/tabs.component';
 import { DiscoveryFeedsService } from './feeds/feeds.service';
-import { FeedsService } from '../../common/services/feeds.service';
 import { DiscoveryLatestFeedComponent } from './latest/latest.component';
 import { DiscoveryCardCarouselComponent } from './card-carousel/card-carousel.component';
 import { SuggestionsService } from '../suggestions/channel/channel-suggestions.service';
 import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { ContentSettingsModule } from '../content-settings/content-settings.module';
+import { DiscoveryTopComponent } from './top/top.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,17 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
         path: '',
         component: DiscoveryComponent,
         children: [
-          { path: '', redirectTo: 'overview' },
+          { path: '', redirectTo: 'top' },
+          {
+            path: 'top',
+            component: DiscoveryTopComponent,
+            data: {
+              title: 'Discovery / Top',
+              ogImage: '/assets/og-images/discovery-v3.png',
+              ogImageWidth: 1200,
+              ogImageHeight: 1200,
+            },
+          },
           {
             path: 'overview',
             component: DiscoveryTrendsComponent,
@@ -201,42 +212,7 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
     LanguageModule,
     RouterModule,
     NewsfeedModule,
-  ],
-  providers: [
-    DiscoveryTrendsService,
-    WirePaymentHandlersService,
-    WireModalService,
-    DiscoveryService,
-    SuggestionsService,
-    CardCarouselService,
-  ],
-  declarations: [
-    DiscoveryComponent,
-    DiscoveryTrendsComponent,
-    DiscoveryTrendsListItemComponent,
-    DiscoveryTrendComponent,
-    DiscoverySearchComponent,
-    DiscoveryTagsComponent,
-    DiscoveryFeedsComponent,
-    DiscoveryFeedsListComponent,
-    DiscoverySettingsButtonComponent,
-    DiscoveryDisclaimerComponent,
-    DiscoverySuggestionsComponent,
-    DiscoveryNoTagsPromptComponent,
-    DiscoveryPlusUpgradeComponent,
-    DiscoveryBoostFeedComponent,
-    DiscoveryTabsComponent,
-    DiscoveryLatestFeedComponent,
-    DiscoveryCardCarouselComponent,
-  ],
-  exports: [
-    DiscoveryComponent,
-    DiscoveryTrendsComponent,
-    DiscoverySearchComponent,
-    DiscoveryTagsComponent,
-    DiscoveryBoostFeedComponent,
-    DiscoveryFeedsComponent,
-    DiscoverySidebarTagsComponent,
+    ContentSettingsModule,
   ],
 })
 export class DiscoveryModule {}

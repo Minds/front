@@ -12,10 +12,11 @@ import {
 } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MetaService } from '../../../common/services/meta.service';
 import { CardCarouselService } from '../card-carousel/card-carousel.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-discovery__search',
@@ -36,6 +37,18 @@ export class DiscoverySearchComponent {
   subscriptions: Subscription[];
   readonly cdnUrl: string;
 
+  showSuggestedChannels$: Observable<boolean> = combineLatest([
+    this.inProgress$,
+    this.cardCarouselInProgress$,
+    this.cardCarouselService.searchCards$,
+  ]).pipe(
+    map(([inProgress, cardCarouselInProgress, searchCards]) => {
+      return (
+        searchCards?.length > 0 || (!inProgress && !cardCarouselInProgress)
+      );
+    })
+  );
+
   constructor(
     private route: ActivatedRoute,
     public service: DiscoveryFeedsService,
@@ -43,6 +56,7 @@ export class DiscoverySearchComponent {
     configs: ConfigsService,
     private metaService: MetaService,
     private cd: ChangeDetectorRef,
+    private session: Session,
     public cardCarouselService: CardCarouselService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -116,6 +130,14 @@ export class DiscoverySearchComponent {
       return;
     }
     this.service.loadMore();
+  }
+
+  /**
+   * Whether user is logged in.
+   * @returns { boolean } - True if user is logged in.
+   */
+  public isLoggedIn(): boolean {
+    return !!this.session.getLoggedInUser();
   }
 
   detectChanges(): void {

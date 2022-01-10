@@ -1,6 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Observable, Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { FeaturesService } from '../../../services/features.service';
 import { Session } from '../../../services/session';
 import { Client } from '../../api/client.service';
 import { ConfigsService } from '../../services/configs.service';
@@ -19,12 +20,15 @@ export class ChatIconComponent implements OnInit {
   unread: number;
   unreadSubscripton: Subscription;
 
+  nav2021Feature: boolean = false;
+
   @Input() floating: boolean = false;
 
   constructor(
     protected chatIconService: ChatIconService,
     protected session: Session,
-    protected configs: ConfigsService
+    protected configs: ConfigsService,
+    protected featuresService: FeaturesService
   ) {
     this.chatUrl = this.configs.get('matrix')?.chat_url;
   }
@@ -35,6 +39,8 @@ export class ChatIconComponent implements OnInit {
         unread => (this.unread = unread)
       );
     }
+
+    this.nav2021Feature = this.featuresService.has('nav-2021');
   }
 
   ngOnDestroy() {

@@ -28,7 +28,7 @@ export class PaywallBadgeComponent {
   readonly plusSupportTierUrn: string;
 
   constructor(private config: ConfigsService) {
-    this.plusSupportTierUrn = config.get('plus').support_tier_urn;
+    this.plusSupportTierUrn = config.get('plus')?.support_tier_urn;
   }
 
   load(): void {

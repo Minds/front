@@ -42,7 +42,7 @@ import { localWalletServiceMock } from '../../../../tests/local-wallet-service-m
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { CookieModule, CookieService } from '@mindsorg/ngx-universal';
 import { Storage } from '../../../services/storage';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 

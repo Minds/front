@@ -1,0 +1,49 @@
+@import 'defaults.scss';
+
+:host {
+  ::ng-deep.m-tagSelector__button {
+    margin-right: 10px;
+    .m-button {
+      margin-bottom: 10px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--primary) !important;
+        }
+      }
+      [class*='m-button__text'] {
+        font-size: 14px !important;
+      }
+      i {
+        margin: 0 0 0 16px !important;
+        font-size: 22px !important;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    &.m-tagSelector__button--selected {
+      .m-button {
+        @include m-theme() {
+          color: themed($m-white-always);
+          background-color: themed($m-link);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-link) !important;
+          }
+        }
+
+        i {
+          @include m-theme() {
+            color: themed($m-white-always);
+          }
+        }
+      }
+    }
+  }
+}
