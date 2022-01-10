@@ -14,6 +14,10 @@
   @include m-theme() {
     border-top: 6px solid themed($m-borderColor--primary);
   }
+
+  &.noBorderTop {
+    border-top: unset !important;
+  }
 }
 
 .m-discoveryTrends__trend {

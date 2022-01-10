@@ -1,4 +1,5 @@
 export let analyticsServiceMock = new (function() {
+  this.contexts = [];
   this.send = jasmine.createSpy('send').and.stub();
   this.onRouterInit = jasmine.createSpy('onRouterInit').and.stub();
   this.onRouteChanged = jasmine.createSpy('onRouteChanged').and.stub();
@@ -6,4 +7,5 @@ export let analyticsServiceMock = new (function() {
   this.wasDefaultPrevented = jasmine
     .createSpy('wasDefaultPrevented')
     .and.stub();
+  this.getContexts = () => [];
 })();

@@ -319,6 +319,14 @@
     }
   }
   ////////////////////////////////////////////
+  // FIELD -- RANGE (SLIDER)  ////////////////
+  ////////////////////////////////////////////
+  .m-form__field--range {
+    .m-form__row--input {
+      flex-flow: row nowrap;
+    }
+  }
+  ////////////////////////////////////////////
   // FIELD -- TEXTBOX TOGGLE  ////////////////
   ////////////////////////////////////////////
   .m-form__field--textboxToggle {
@@ -493,7 +501,7 @@
     }
   }
 
-  input:not(.m-phoneInput__input):not(.m-draggableList__cell):not(.m-copyableLink),
+  input:not(.m-phoneInput__input):not(.m-draggableList__cell):not(.m-copyableLink):not(.m-formInputSlider__input),
   .m-phoneInput__wrapper,
   textarea,
   select {

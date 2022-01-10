@@ -1,4 +1,8 @@
-export type Reason = { code: number; label: string };
+export type Reason = {
+  code: number; // numerical code for the reason
+  label: string; // text label for the reason
+  deprecated?: boolean; // hide the option from selection by admins.
+};
 
 export const rejectionReasons: Array<Reason> = [
   { code: 0, label: 'Illegal' },
@@ -19,6 +23,11 @@ export const rejectionReasons: Array<Reason> = [
   },
   { code: 7, label: 'Spam' },
   { code: 8, label: 'Appeals on Boost decisions' },
+  {
+    code: 12,
+    label: 'Onchain payment failed or High Boost backlog',
+    deprecated: true,
+  },
   { code: 13, label: 'Original post removed' },
   { code: 14, label: 'High Boost backlog' },
   { code: 15, label: 'Support Request' },

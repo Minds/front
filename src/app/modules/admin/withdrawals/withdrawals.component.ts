@@ -189,6 +189,39 @@ export class AdminWithdrawals {
   }
 
   /**
+   * Force fail state of an individual withdrawal.
+   * @param { any } request - request object.
+   * @returns { Promise<void> }
+   */
+  async forceFail(request: any): Promise<void> {
+    this.inProgress = true;
+
+    if (!confirm('Force transaction failure')) {
+      this.toasterService.warn('Cancelled - no action taken');
+      this.inProgress = false;
+      return;
+    }
+
+    try {
+      const response: { message?: string } = await this.client.post(
+        'api/v3/rewards/admin/gc-single',
+        {
+          request_txid: request.tx,
+          user_guid: request.user_guid,
+          timestamp: request.timestamp,
+        }
+      );
+      this.toasterService.success(
+        response.message ?? 'Submitted for garbage collection'
+      );
+      this.load(true);
+    } catch (e) {
+      this.toasterService.error(e.message);
+    }
+    this.inProgress = false;
+  }
+
+  /**
    * Redispatch completed withdrawal.
    * @param { any } request - request object.
    * @returns { Promise<void> }

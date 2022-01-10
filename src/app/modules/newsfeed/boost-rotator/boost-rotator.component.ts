@@ -285,6 +285,26 @@ export class NewsfeedBoostRotatorComponent {
     this.viewsCollector$.next(this.currentPosition);
   }
 
+  shouldRender(index: number) {
+    const lastBoostIndex = this.boosts.length - 1;
+
+    const previousBoostIndex = index - 1 < 0 ? lastBoostIndex : index - 1;
+    const currentBoostIndex = index;
+    const nextBoostIndex = index + 1;
+
+    // show the current boost and an additional boost
+    // on each side to pre-render the entities and their video
+    // and improve user experience and plyr initial render issues
+    switch (index) {
+      case previousBoostIndex:
+      case currentBoostIndex:
+      case nextBoostIndex:
+        return true;
+      default:
+        return false;
+    }
+  }
+
   onEnableChanged(value) {
     this.disabled = !value;
     this.detectChanges();

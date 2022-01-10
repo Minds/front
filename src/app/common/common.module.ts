@@ -129,7 +129,6 @@ import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdow
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
-import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { RelatedContentService } from './services/related-content.service';
@@ -178,6 +177,7 @@ import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
 import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
 import { SubscribeButtonComponent } from './components/subscribe-button/subscribe-button.component';
@@ -191,7 +191,14 @@ import { DateRangeModalService } from './components/date-range-modal/date-range-
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
+import { FormInputSliderComponent } from './components/slider/slider.component';
+import { JoinBannerComponent } from './components/join-banner/join-banner.component';
+import { AutofocusDirective } from './directives/autofocus.directive';
+import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
+import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
+import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 
 const routes: Routes = [
   {
@@ -347,6 +354,7 @@ const routes: Routes = [
     DragAndDropDirective,
     ConfirmV2Component,
     CanaryFlagComponent,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
@@ -355,6 +363,12 @@ const routes: Routes = [
     PublisherSearchModalComponent,
     DateRangeModalComponent,
     HovercardComponent,
+    FormInputSliderComponent,
+    JoinBannerComponent,
+    AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
+    TagSelectorComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -485,6 +499,7 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
+    ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
     SubscribeButtonComponent,
@@ -494,6 +509,12 @@ const routes: Routes = [
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
+    FormInputSliderComponent,
+    JoinBannerComponent,
+    AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
+    TagSelectorComponent,
   ],
   providers: [
     SiteService,
@@ -527,7 +548,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    MetaService,
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
@@ -545,6 +565,7 @@ const routes: Routes = [
     PublisherSearchModalService,
     DateRangeModalService,
     JsonLdService,
+    BoostRecommendationService,
   ],
 })
 export class CommonModule {}

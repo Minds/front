@@ -1,0 +1,18 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingsV2__desc {
+    margin-bottom: 20px;
+  }
+
+  .m-tweetSync__tweetMessage {
+    padding: 20px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: default;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

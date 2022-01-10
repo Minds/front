@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Session } from '../../../services/session';
 import { FeaturesService } from '../../../services/features.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
@@ -8,6 +8,8 @@ import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { Router } from '@angular/router';
 import { Storage } from '../../../services/storage';
 import { MessengerService } from '../../messenger/messenger.service';
+import { isPlatformBrowser } from '@angular/common';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-page',
@@ -28,7 +30,8 @@ export class PageComponent implements OnInit {
     public pageLayoutService: PageLayoutService,
     private router: Router,
     private storage: Storage,
-    private messengerService: MessengerService
+    private messengerService: MessengerService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -66,5 +69,16 @@ export class PageComponent implements OnInit {
 
   hasMarkersSidebar() {
     return this.session.isLoggedIn() && !this.isProDomain && false;
+  }
+
+  /**
+   * Checks whether device is mobile or tablet
+   * @returns { boolean }
+   */
+  public isMobileOrTablet(): boolean {
+    if (!isPlatformBrowser(this.platformId)) {
+      return false;
+    }
+    return isMobileOrTablet();
   }
 }

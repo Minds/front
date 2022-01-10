@@ -20,9 +20,10 @@
       <nav class="m-v3Topbar__nav">
         <a
           class="m-v3TopbarNav__item m-v3TopbarNav__item--logo"
-          routerLink="/"
+          [routerLink]="getMainLogoUrl()"
           title="Home"
           i18n-title="@@COMMON__HOME"
+          data-ref="topnav-logo"
         >
           <img
             [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
@@ -67,6 +68,7 @@
               (click)="onLoginClick()"
               title="Login"
               i18n-title="@@COMMON__LOGIN"
+              data-ref="topnav-login"
             >
               Login
             </a>
@@ -76,13 +78,14 @@
               (click)="onJoinNowClick()"
               title="Join Minds Now"
               i18n-title="@@COMMON__JOIN_MINDS_NOW"
+              data-ref="topnav-join-now"
             >
-              Join Minds Now
+              Join Now
             </a>
           </div>
         </ng-container>
 
-        <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
+        <div class="m-v3Topbar__userMenu">
           <div class="m-v3Topbar__spacer"></div>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>

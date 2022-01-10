@@ -1,0 +1,28 @@
+@import 'defaults';
+
+:host {
+  .m-defaultFeedContainer__pageContainer {
+    .m-defaultFeedContainer__feedContainer {
+      padding: 20px 40px;
+    }
+
+    .m-defaultFeedContainer__sidebar {
+      padding: 20px 0 20px 40px;
+
+      .m-pageLayoutPane__sticky {
+        display: flex;
+        flex-flow: column nowrap;
+        max-width: none;
+
+        // all direct children except for the first.
+        > * + * {
+          margin-top: 20px;
+        }
+        // last direct child.
+        > *:last-child {
+          margin-bottom: 80px;
+        }
+      }
+    }
+  }
+}

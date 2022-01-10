@@ -7,7 +7,7 @@ import * as xhr2 from 'xhr2';
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 import { PlotlyModule } from 'angular-plotly.js';
-import { CookieService, CookieBackendService } from '@gorniv/ngx-universal';
+import { CookieService, CookieBackendService } from '@mindsorg/ngx-universal';
 import {
   ServerRedirectService,
   RedirectService,
@@ -37,7 +37,7 @@ export class SentryServerErrorHandler implements ErrorHandler {
   constructor(@Inject(SENTRY) private sentry) {}
   handleError(error: Error) {
     this.sentry.captureException(error);
-    console.error(error);
+    //console.error(error);
   }
 }
 

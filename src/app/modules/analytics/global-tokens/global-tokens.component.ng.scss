@@ -41,6 +41,14 @@
     }
   }
 
+  .m-tabs__container.m-analyticsGlobalTokens__tabs {
+    padding: 0 40px;
+
+    @media screen and (max-width: $min-tablet) {
+      padding: 0 20px;
+    }
+  }
+
   .m-analyticsGlobalTokens__metrics {
     display: grid;
     padding: 40px;
@@ -49,7 +57,7 @@
     grid-row-gap: 20px;
   }
 
-  @media screen and (max-width: $layoutMin3ColWidth) {
+  @media screen and (max-width: $min-tablet) {
     .m-analyticsGlobalTokens__header,
     .m-analyticsGlobalTokens__metrics {
       padding: 20px;
@@ -112,6 +120,37 @@
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
+      }
+    }
+  }
+
+  .m-analyticsGlobalTokens__dateSelectorContainer {
+    padding: 20px 20px 10px 20px;
+  }
+
+  ::ng-deep m-date-selector {
+    display: inline-block;
+
+    .m-dateSelector__label {
+      margin-right: 10px;
+      text-transform: capitalize;
+      letter-spacing: inherit;
+      font-size: 15px;
+    }
+    .m-dateSelector__input {
+      font-size: 15px;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  ::ng-deep m-tooltip {
+    margin-left: 10px;
+    i {
+      font-size: 17px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
       }
     }
   }

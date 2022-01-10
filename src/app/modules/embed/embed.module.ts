@@ -1,3 +1,4 @@
+import { FeaturesService } from './../../services/features.service';
 import { APP_BASE_HREF, CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule, PLATFORM_ID } from '@angular/core';
@@ -7,12 +8,11 @@ import {
   TransferState,
 } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { CookieModule, CookieService } from '@mindsorg/ngx-universal';
 import { MindsHttpClient } from '../../common/api/client.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { EntitiesService } from '../../common/services/entities.service';
-import { MetaService } from '../../common/services/meta.service';
 import { RelatedContentService } from '../../common/services/related-content.service';
 import { SiteService } from '../../common/services/site.service';
 import { Client } from '../../services/api/client';
@@ -40,7 +40,6 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
   ],
   providers: [
     SiteService,
-    MetaService,
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
@@ -70,6 +69,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
     Session,
     Storage,
     RecentService,
+    FeaturesService,
     {
       provide: BlockListService,
       useFactory: BlockListService._,

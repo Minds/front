@@ -9,18 +9,37 @@ export class HovercardComponent implements OnInit {
   @Input() publisher: any;
   @Input() offset: Array<number>;
 
-  // Here we are using offset modifier, but more options
-  // are available at https://popper.js.org/docs/v2
-  popperModifiers: any = {
-    name: 'offset',
-    options: {
-      offset: [0, 0],
+  shown: boolean = false;
+
+  popperModifiers: Array<any> = [
+    {
+      name: 'eventListeners',
+      enabled: false,
     },
-  };
+    {
+      name: 'offset',
+      options: {
+        offset: [0, 0],
+      },
+    },
+  ];
 
   ngOnInit(): void {
     if (this.offset.length === 2) {
-      this.popperModifiers.options.offset = this.offset;
+      this.popperModifiers.find(
+        x => x.name === 'offset'
+      ).options.offset = this.offset;
     }
+  }
+
+  // Only calculate popper positioning changes when popper is visible
+  popperOnShown() {
+    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = true;
+    this.shown = true;
+  }
+
+  popperOnHide() {
+    this.popperModifiers.find(x => x.name === 'eventListeners').enabled = false;
+    this.shown = false;
   }
 }

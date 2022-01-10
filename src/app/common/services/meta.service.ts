@@ -13,7 +13,9 @@ const DEFAULT_OG_IMAGE = '/assets/og-images/default-v3.png';
 const DEFAULT_OG_IMAGE_WIDTH = 1200;
 const DEFAULT_OG_IMAGE_HEIGHT = 1200;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MetaService {
   private counter: number;
   private sep = ' | ';

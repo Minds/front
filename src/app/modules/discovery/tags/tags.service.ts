@@ -4,6 +4,9 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HashtagDefaultsService } from '../../hashtags/service/defaults.service';
 import { isPlatformServer } from '@angular/common';
+import { DiscoveryService } from '../discovery.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 
 export type DiscoveryTag = any;
 
@@ -13,6 +16,7 @@ export class DiscoveryTagsService {
   trending$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   foryou$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   activityRelated$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+  userAndDefault$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
   other$: Observable<DiscoveryTag[]> = combineLatest(
     this.tags$,
     this.trending$
@@ -50,16 +54,31 @@ export class DiscoveryTagsService {
   // Add/Remove tracker
   remove$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
 
+  /**
+   * A very unsophsticated check of whether tags have been changed and not yet saved.
+   * Unsophisticated bc if you add and remove the same tag
+   * (a.k.a. no net change) it will still return true
+   */
+  tagsChanged$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  plusHandler;
 
   constructor(
     private client: Client,
     private hashtagDefaults: HashtagDefaultsService,
+    private discoveryService: DiscoveryService,
+    private featuresService: FeaturesService,
+    configs: ConfigsService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    const handlers = configs.get('handlers');
+    if (handlers) {
+      this.plusHandler = handlers.plus;
+    }
+  }
 
-  // TODOPLUS add optional 'plus' bool input
   async loadTags(refresh = false, entityGuid = null) {
     this.inProgress$.next(true);
 
@@ -75,11 +94,19 @@ export class DiscoveryTagsService {
     let endpoint = 'api/v3/discovery/tags',
       params = entityGuid ? { entity_guid: entityGuid } : {};
 
+    if (
+      this.discoveryService.isPlusPage$.value &&
+      this.featuresService.has('plus-discovery-filter')
+    ) {
+      params['wire_support_tier'] = this.plusHandler;
+    }
+
     try {
       const response: any = await this.client.get(endpoint, params);
 
       this.tags$.next(response.tags);
       this.trending$.next(response.trending);
+      this.userAndDefault$.next(response.default);
 
       this.foryou$.next(
         response.for_you
@@ -113,6 +140,7 @@ export class DiscoveryTagsService {
   addTag(tag: DiscoveryTag): void {
     if (this.tags$.value.findIndex(i => i.value === tag.value) === -1) {
       this.tags$.next([...this.tags$.value, tag]);
+      this.tagsChanged$.next(true);
     }
   }
 
@@ -125,6 +153,7 @@ export class DiscoveryTagsService {
 
     this.tags$.next(selected);
     this.remove$.next([...this.remove$.value, tag]);
+    this.tagsChanged$.next(true);
   }
 
   async addSingleTag(tag: DiscoveryTag): Promise<boolean> {
@@ -148,6 +177,7 @@ export class DiscoveryTagsService {
           )
           .map(tag => tag.value),
       });
+      this.tagsChanged$.next(false);
       return true;
     } catch (err) {
       return false;

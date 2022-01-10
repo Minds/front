@@ -35,7 +35,7 @@
             >{{ publisher.name }}</a
           ><m-channel--badges
             *ngIf="type === 'user'"
-            class="m-publisher--badges-activity"
+            class="m-channel--badges-activity"
             [user]="publisher"
             badges="[ 'admin', 'verified', 'plus', 'pro' ]"
           ></m-channel--badges>
@@ -51,12 +51,16 @@
         </div>
       </div>
       <!-- SUBSCRIBE BUTTON -->
+      <!-- For channels -->
       <m-subscribeButton
         *ngIf="showSubscribeButton && type === 'user'"
         [user]="publisher"
+        [sized]="sized"
         [iconOnly]="btnIconOnly"
         [disableSubscribe]="disableSubscribe"
+        [enableRecheck]="recheckSubscribed"
       ></m-subscribeButton>
+      <!-- For groups -->
       <ng-content
         *ngIf="showSubscribeButton"
         select=".m-publisherCard__button"
@@ -108,7 +112,7 @@
       m-read-more
       maxHeightAllowed="52"
     >
-      <p [innerHtml]="publisher.briefdescription | tags">
+      <p [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags">
         {{ publisher.briefdescription }}
       </p>
       <m-read-more--button

@@ -75,6 +75,7 @@ import { MessengerModule } from '../messenger/messenger.module';
 import { SettingsV2PushNotificationsV3Component } from './account/notifications-v3/push-notifications/push-notifications.component';
 import { SettingsV2EmailNotificationsV3Component } from './account/notifications-v3/email-notifications-v3/email-notifications-v3.component';
 import { SettingsV2ProfileComponent } from './account/profile/profile.component';
+import { SettingsV2WalletComponent } from './other/wallet/wallet.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -391,6 +392,15 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
+            path: 'wallet',
+            component: SettingsV2WalletComponent,
+            data: {
+              title: 'Wallet',
+              description: 'Your wallet privacy settings',
+              id: 'wallet',
+            },
+          },
+          {
             path: 'reported-content/strikes',
             component: StrikesComponent,
             data: {
@@ -458,6 +468,17 @@ const SETTINGS_V2_ROUTES: Routes = [
                 ],
               },
             ],
+          },
+          {
+            path: 'twitter-sync',
+            loadChildren: () =>
+              import('../newsfeed/twitter-sync/twitter-sync.module').then(
+                m => m.TwitterSyncModule
+              ),
+            data: {
+              title: 'Twitter Sync',
+              standardHeader: false,
+            },
           },
           {
             path: 'deactivate-account',
@@ -559,6 +580,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsTwoFactorComponent,
     SettingsReportedContentComponent,
     SettingsV2MessengerComponent,
+    SettingsV2WalletComponent,
   ],
   providers: [SettingsV2Service, WalletV2Service],
   exports: [SettingsV2Component],

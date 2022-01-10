@@ -4,6 +4,7 @@ import { Client } from '../../../services/api';
 @Component({
   selector: 'm-admin--interactions',
   templateUrl: 'interactions.component.html',
+  styleUrls: ['interactions.component.ng.scss'],
 })
 export class AdminInteractions {
   metrics = [
@@ -30,6 +31,10 @@ export class AdminInteractions {
     {
       title: 'Referrals',
       metric: 'referral',
+    },
+    {
+      title: 'Offchain Wires',
+      metric: 'offchain',
     },
   ];
 

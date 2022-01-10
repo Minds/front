@@ -47,7 +47,8 @@
   </ng-template>
 </div>
 
-<div class="m-twoFactor__optionContainer">
+<!-- Deprecated - only show if SMS is already enabled -->
+<div class="m-twoFactor__optionContainer" *ngIf="smsEnabled$ | async">
   <h4 class="m-twoFactor__optionTitle">
     <ng-container i18n="@@MFA_SETTINGS_ROOT__SMS">SMS</ng-container>
     <span
@@ -82,4 +83,23 @@
       Disable SMS authentication
     </ng-container>
   </m-button>
+</div>
+
+<!-- Email 2FA is always on when TOTP and SMS are not enabled -->
+<div
+  class="m-twoFactor__optionContainer"
+  *ngIf="!(smsEnabled$ | async) && !(totpEnabled$ | async)"
+>
+  <h4 class="m-twoFactor__optionTitle">
+    <ng-container i18n="@@MFA_SETTINGS_ROOT__EMAIL">Email</ng-container>
+    <!-- Always enabled if this is showing -->
+    <span i18n="is enabled|@@MFA_SETTINGS_ROOT__ENABLED">Enabled</span>
+  </h4>
+  <p
+    class="m-twoFactor__optionDescription"
+    i18n="@@MFA_SETTINGS_ROOT__MINDS_WILL_SEND_EMAIL"
+  >
+    Minds will send you an email with a two-factor authentication code when no
+    other Two-factor authentication is set-up.
+  </p>
 </div>

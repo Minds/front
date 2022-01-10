@@ -94,7 +94,7 @@
     flex-direction: row;
   }
 
-  .m-activityOwnerBlock__displayName {
+  a.m-activityOwnerBlock__displayName {
     display: flex;
     font-size: 16px;
 
@@ -113,7 +113,6 @@
       vertical-align: middle;
       max-width: 100%;
       text-overflow: ellipsis;
-      overflow: hidden;
     }
 
     &:hover {

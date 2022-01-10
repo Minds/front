@@ -35,8 +35,8 @@ export class ServerDiagnosticsService implements DiagnosticsInterface {
       id: userId,
     });
 
-    console.info(
-      `Diagnostics ID: ${userId} | Environment: ${this.environment}`
-    );
+    // console.info(
+    //   `Diagnostics ID: ${userId} | Environment: ${this.environment}`
+    // );
   }
 }

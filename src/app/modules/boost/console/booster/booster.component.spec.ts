@@ -13,7 +13,6 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs/internal/observable/of';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { feedsServiceMock } from '../../../../../tests/feed-service-mock.spec';
-import { BehaviorSubject } from 'rxjs';
 
 describe('BoostConsoleBooster', () => {
   let comp: BoostConsoleBooster;
@@ -47,9 +46,19 @@ describe('BoostConsoleBooster', () => {
             provide: ActivatedRoute,
             useValue: { parent: { url: of([{ path: 'newsfeed' }]) } },
           },
-          { provide: FeedsService, useValue: feedsServiceMock },
         ],
-      }).compileComponents();
+      })
+        .overrideComponent(BoostConsoleBooster, {
+          set: {
+            providers: [
+              {
+                provide: FeedsService,
+                useValue: feedsServiceMock,
+              },
+            ],
+          },
+        })
+        .compileComponents();
     })
   );
 
