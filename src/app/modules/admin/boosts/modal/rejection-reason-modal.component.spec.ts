@@ -151,7 +151,7 @@ describe('RejectionReasonModalComponent', () => {
     confirmButton = fixture.debugElement.query(
       By.css('.m-modal-confirm-buttons > m-button:first-child button')
     );
-    
+
     expect(confirmButton).not.toBeNull();
   });
   it('confirm button should be disabled if no reason is selected', () => {
