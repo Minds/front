@@ -135,7 +135,8 @@
             <textarea
               name="briefdescription"
               [autoGrow]
-              [(ngModel)]="group.briefdescription"
+              [ngModel]="group.briefdescription | decodeHtmlString"
+              (ngModelChange)="group.briefdescription = $event"
               placeholder="Enter a brief description"
               i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
               mTextInputAutocomplete
