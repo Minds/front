@@ -52,6 +52,8 @@ import { RedirectService } from '../common/services/redirect.service';
 import { StackableModalService } from './ux/stackable-modal.service';
 import { MessengerService } from '../modules/messenger/messenger.service';
 import { MultiFactorHttpInterceptorService } from '../modules/auth/multi-factor-auth/services/multi-factor-http-interceptor.service';
+import { CompassHookService } from '../common/services/compass-hook.service';
+import { CompassService } from '../modules/compass/compass.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -131,11 +133,7 @@ export const MINDS_PROVIDERS: any[] = [
   },
   Session,
   ThirdPartyNetworksService,
-  {
-    provide: AnalyticsService,
-    useFactory: AnalyticsService._,
-    deps: [Router, Client, SiteService, PLATFORM_ID],
-  },
+  AnalyticsService,
   Navigation,
   {
     provide: WalletService,
@@ -218,6 +216,11 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: StackableModalService,
     useFactory: StackableModalService._,
+  },
+  {
+    provide: CompassHookService,
+    useFactory: CompassHookService._,
+    deps: [Session, CookieService, CompassService],
   },
   ThemeService,
   AuthService,

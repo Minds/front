@@ -92,6 +92,7 @@ $themes: (
     m-textColor--primary: #43434d,
     m-textColor--primaryInverted: #ffffff,
     m-textColor--secondary: #72727c,
+    m-textColor--secondaryInverted: #b8c1ca,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
     m-bgColor--primaryInverted: #242a30,
@@ -101,6 +102,7 @@ $themes: (
     m-bgColor--secondaryAlt: #e6ebed,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--btnHover: #f0f3f7,
+    m-bgColor--btnHoverLightAlways: #f0f3f7,
     m-bgColor--btnActive: #dadfe5,
     m-borderColor--primary: #d3dbe3,
     m-borderColor--secondary: #979797,
@@ -168,6 +170,7 @@ $themes: (
     m-textColor--primary: #ffffff,
     m-textColor--primaryInverted: #43434d,
     m-textColor--secondary: #b8c1ca,
+    m-textColor--secondaryInverted: #72727c,
     m-textColor--tertiary: #797b82,
     m-bgColor--primary: #242a30,
     m-bgColor--primaryInverted: #ffffff,
@@ -177,6 +180,7 @@ $themes: (
     m-bgColor--secondaryAlt: #232b31,
     m-bgColor--contrast: #d8d8d8,
     m-bgColor--btnHover: #343c44,
+    m-bgColor--btnHoverLightAlways: #f0f3f7,
     m-bgColor--btnActive: #48525b,
     m-borderColor--primary: #414c57,
     m-borderColor--secondary: #979797,
@@ -305,6 +309,7 @@ $m-linkedin: 'm-linkedin';
 $m-textColor--primary: 'm-textColor--primary';
 $m-textColor--primaryInverted: 'm-textColor--primaryInverted';
 $m-textColor--secondary: 'm-textColor--secondary';
+$m-textColor--secondaryInverted: 'm-textColor--secondaryInverted';
 $m-textColor--tertiary: 'm-textColor--tertiary';
 $m-bgColor--primary: 'm-bgColor--primary';
 $m-bgColor--primaryInverted: 'm-bgColor--primaryInverted';
@@ -314,6 +319,7 @@ $m-bgColor--secondary: 'm-bgColor--secondary';
 $m-bgColor--secondaryAlt: 'm-bgColor--secondaryAlt';
 $m-bgColor--contrast: 'm-bgColor--contrast';
 $m-bgColor--btnHover: 'm-bgColor--btnHover';
+$m-bgColor--btnHoverLightAlways: 'm-bgColor--btnHoverLightAlways';
 $m-bgColor--btnActive: 'm-bgColor--btnActive';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';

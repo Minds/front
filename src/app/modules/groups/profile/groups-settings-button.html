@@ -81,22 +81,24 @@
   </li>
 
   <!-- Member functions -->
-  <li
-    class="mdl-menu__item"
-    [hidden]="group['is:muted']"
-    (click)="mute()"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
-  >
-    Disable notifications
-  </li>
-  <li
-    class="mdl-menu__item"
-    [hidden]="!group['is:muted']"
-    (click)="unmute()"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
-  >
-    Enable notifications
-  </li>
+  <ng-container *ngIf="group['is:member']">
+    <li
+      class="mdl-menu__item"
+      [hidden]="group['is:muted']"
+      (click)="mute()"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS"
+    >
+      Disable notifications
+    </li>
+    <li
+      class="mdl-menu__item"
+      [hidden]="!group['is:muted']"
+      (click)="unmute()"
+      i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS"
+    >
+      Enable notifications
+    </li>
+  </ng-container>
 
   <!-- admin functions -->
   <li

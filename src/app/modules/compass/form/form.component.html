@@ -1,0 +1,21 @@
+<ng-container *ngIf="init">
+  <div class="m-formWrapper">
+    <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonInline">
+      <div class="m-form__fieldsContainer">
+        <ng-container *ngFor="let q of questions">
+          <m-formInput__slider
+            [id]="q.questionId"
+            [formControlName]="q.questionId"
+            [min]="q.minimumRangeValue"
+            [max]="q.maximumRangeValue"
+            [minLabel]="q.minimumStepLabel"
+            [maxLabel]="q.maximumStepLabel"
+            [step]="q.stepSize"
+            [startValue]="q.currentValue"
+            [title]="q.questionText"
+          ></m-formInput__slider>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+</ng-container>

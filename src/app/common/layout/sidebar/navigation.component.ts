@@ -33,6 +33,10 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
+import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
+import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { ThemeService } from '../../services/theme.service';
+
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
@@ -57,6 +61,9 @@ export class SidebarNavigationComponent
 
   settingsLink: string = '/settings';
 
+  @HostBinding('class.m-sidebarNavigation--nav2021Feature')
+  nav2021Feature: boolean = false;
+
   @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
 
@@ -69,6 +76,10 @@ export class SidebarNavigationComponent
   routerSubscription: Subscription;
 
   matrixFeature: boolean = false;
+
+  subscriptions: Subscription[] = [];
+
+  isDarkTheme: boolean = false;
 
   constructor(
     public navigation: NavigationService,
@@ -86,7 +97,11 @@ export class SidebarNavigationComponent
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
     private composerModalService: ComposerModalService,
-    private injector: Injector
+    private injector: Injector,
+    private authModal: AuthModalService,
+    private guestModeExperiment: GuestModeExperimentService,
+    private themeService: ThemeService,
+    private sidebarNavigationService: SidebarNavigationService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -115,7 +130,31 @@ export class SidebarNavigationComponent
 
     this.matrixFeature = this.featuresService.has('matrix');
 
+    this.nav2021Feature = this.featuresService.has('nav-2021');
+
     this.settingsLink = '/settings';
+
+    this.subscriptions.push(
+      this.themeService.isDark$.subscribe(isDark => {
+        this.isDarkTheme = isDark;
+      })
+    );
+
+    this.subscriptions.push(
+      this.sidebarNavigationService.isOpened$.subscribe(isOpened => {
+        if (this.layoutMode === 'phone') {
+          this.isOpened = isOpened;
+
+          if (isOpened) {
+            document.body.classList.add('m-overlay-modal--shown--no-scroll');
+          }
+        }
+
+        if (this.layoutMode !== 'phone' || !isOpened) {
+          document.body.classList.remove('m-overlay-modal--shown--no-scroll');
+        }
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -127,6 +166,10 @@ export class SidebarNavigationComponent
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
+    }
+
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -161,9 +204,7 @@ export class SidebarNavigationComponent
   }
 
   toggle(): void {
-    if (this.layoutMode === 'phone') {
-      this.isOpened = !this.isOpened;
-    }
+    this.sidebarNavigationService.toggle();
   }
 
   async buyTokens() {
@@ -205,8 +246,12 @@ export class SidebarNavigationComponent
   /**
    * Closes the user menu if it's open
    */
-  onSidebarNavClick(): void {
+  onSidebarNavClick($event): void {
     this.userMenu.isOpen$.next(false);
+
+    if (this.layoutMode === 'phone') {
+      $event.stopPropagation();
+    }
   }
 
   @HostListener('window:resize')
@@ -223,11 +268,34 @@ export class SidebarNavigationComponent
     }
 
     if (this.layoutMode !== 'phone') {
-      this.isOpened = false;
+      this.sidebarNavigationService.isOpened$.next(false);
     }
 
     if (this.groupsSidebar) {
       this.groupsSidebar.showLabels = this.showLabels;
     }
+  }
+
+  /**
+   * Opens auth modal.
+   * @returns { Promise<void> }
+   */
+  public async openAuthModal(): Promise<void> {
+    try {
+      await this.authModal.open({ formDisplay: 'login' });
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
+    }
+  }
+
+  /**
+   * Returns if link should be to discovery homepage
+   * @returns { boolean } true if link should be '/'.
+   */
+  public shouldBeDiscoveryHomepage(): boolean {
+    return this.guestModeExperiment.isActive() && !this.user; // logged out
   }
 }

@@ -64,3 +64,5 @@
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 <m-formToast></m-formToast>
+<m-joinBanner *ngIf="!isMobileOrTablet()"></m-joinBanner>
+<m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt>

@@ -42,6 +42,13 @@ export class PublisherCardComponent implements AfterViewInit {
   btnIconOnly: boolean = false;
   size: PublisherCardSize = 'medium';
 
+  // Don't show subscribe button until the card size has been determined
+  // to prevent flashing on resize
+  sized: boolean = false;
+
+  // use channel api to double check that the subscription status is correct
+  recheckSubscribed: boolean = false;
+
   constructor(
     protected userAvatar: UserAvatarService,
     protected session: Session,
@@ -56,6 +63,7 @@ export class PublisherCardComponent implements AfterViewInit {
     this._isHovercard = value;
     if (value) {
       this.showSubs = true;
+      this.recheckSubscribed = true;
     }
   }
 
@@ -86,6 +94,7 @@ export class PublisherCardComponent implements AfterViewInit {
     }
 
     this.btnIconOnly = this.size === 'medium';
+    this.sized = true;
   }
 
   public getAvatarSrc(): Observable<string> {

@@ -15,7 +15,7 @@ import {
   CookieOptionsProvider,
   COOKIE_OPTIONS,
   CookieModule,
-} from '@gorniv/ngx-universal';
+} from '@mindsorg/ngx-universal';
 import { ApiService } from '../../../common/api/api.service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';

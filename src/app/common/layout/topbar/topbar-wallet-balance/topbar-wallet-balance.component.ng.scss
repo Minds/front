@@ -5,9 +5,12 @@
     display: flex;
     cursor: pointer;
     transition: all 0.07s ease-in;
+    text-decoration: none;
+    line-height: 22px;
 
     @include m-theme() {
       border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--secondary);
     }
 
     border-radius: 20px;
@@ -18,6 +21,10 @@
       @include m-theme() {
         border: 1px solid themed($m-textColor--secondary) !important;
       }
+    }
+
+    m-icon {
+      line-height: 22px;
     }
 
     &__tokens {

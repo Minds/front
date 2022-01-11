@@ -193,6 +193,12 @@ import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
+import { FormInputSliderComponent } from './components/slider/slider.component';
+import { JoinBannerComponent } from './components/join-banner/join-banner.component';
+import { AutofocusDirective } from './directives/autofocus.directive';
+import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
+import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
+import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 
 const routes: Routes = [
   {
@@ -357,6 +363,12 @@ const routes: Routes = [
     PublisherSearchModalComponent,
     DateRangeModalComponent,
     HovercardComponent,
+    FormInputSliderComponent,
+    JoinBannerComponent,
+    AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
+    TagSelectorComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -497,6 +509,12 @@ const routes: Routes = [
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
+    FormInputSliderComponent,
+    JoinBannerComponent,
+    AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
+    TagSelectorComponent,
   ],
   providers: [
     SiteService,
