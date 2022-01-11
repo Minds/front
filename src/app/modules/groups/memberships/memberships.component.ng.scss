@@ -1,5 +1,9 @@
 @import 'defaults.scss';
 :host {
+  .m-pageLayout__pane--main {
+    width: 100%;
+  }
+
   .m-groupsMemberships {
     margin: 30px;
     @media screen and (max-width: $max-mobile) {
