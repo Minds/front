@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DiscoveryTagSettingsComponent } from './settings.component';
 import { DiscoveryService } from '../discovery.service';
 
+type DiscoveryTagsType = 'trending' | 'your';
+
 @Component({
   selector: 'm-discovery__tags',
   templateUrl: './tags.component.html',
@@ -18,10 +20,10 @@ export class DiscoveryTagsComponent implements OnInit, OnDestroy {
 
   parentPathSubscription: Subscription;
   parentPath: string = '';
-  type$: BehaviorSubject<any> = new BehaviorSubject(null);
+  type$: BehaviorSubject<DiscoveryTagsType> = new BehaviorSubject(null);
 
   @Input()
-  type: 'trending' | 'your';
+  type: DiscoveryTagsType;
 
   /**
    * only shows the tags list. doesn't show the feedLink button
