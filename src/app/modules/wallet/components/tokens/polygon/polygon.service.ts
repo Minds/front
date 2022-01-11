@@ -113,13 +113,12 @@ export class PolygonService {
    * @returns { Promise<void> }
    */
   public async approve(amount?: BigNumber): Promise<any> {
-    console.log('se llama');
     if (amount && amount.isZero()) {
       this.toast.warn('You must provide an amount of tokens');
       return;
     }
 
-    const { root: posClient } = await this.getPOSClients();
+    const posClient = await this.getPOSClientRoot();
 
     const approveTx = await posClient.erc20(MIND_TOKEN_ADDRESS).approveMax();
     console.log(approveTx);
@@ -140,7 +139,7 @@ export class PolygonService {
 
     const signer = this.web3Wallet.getSigner();
     const userAddress = await signer.getAddress();
-    const { root: posClient } = await this.getPOSClients();
+    const posClient = await this.getPOSClientRoot();
 
     const depositTx = await posClient
       .erc20(MIND_TOKEN_ADDRESS)
@@ -159,7 +158,7 @@ export class PolygonService {
       return;
     }
 
-    const { child: posClientChild } = await this.getPOSClients();
+    const posClientChild = await this.getPOSClientChild();
 
     const erc20ChildToken = posClientChild.erc20(
       MIND_CHILD_TOKEN_ADDRESS,
@@ -172,7 +171,7 @@ export class PolygonService {
   }
 
   public async exit() {
-    const { root: posClient } = await this.getPOSClients();
+    const posClient = await this.getPOSClientRoot();
 
     const burnTxHash =
       '0x0c87414cd8ddc442450cee5ee655c15754c2636a4098d6b45b89747f452bdb68';
@@ -188,38 +187,6 @@ export class PolygonService {
     console.log('txReceipt', txReceipt);
   }
 
-  private async getPOSClients() {
-    const signer = this.web3Wallet.getSigner();
-    const network = await signer.provider.getNetwork();
-    const rpcUrl = network.chainId === 5 ? POLYGON_RPC_URL : MAINNET_RPC_URL;
-
-    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-    const from = await signer.getAddress();
-
-    const baseConfig = {
-      network: 'testnet',
-      version: 'mumbai',
-      log: true,
-    };
-
-    const signerConfig = { provider: signer, defaultConfig: { from } };
-    const providerConfig = { provider, defaultConfig: { from } };
-
-    const posClientRoot = new POSClient();
-    await posClientRoot.init({
-      ...baseConfig,
-      parent: signerConfig,
-      child: providerConfig,
-    });
-    const posClientChild = new POSClient();
-    await posClientChild.init({
-      ...baseConfig,
-      parent: providerConfig,
-      child: signerConfig,
-    });
-    return { root: posClientRoot, child: posClientChild };
-  }
-
   public async getBalances() {
     const from = await this.web3Wallet.provider.getSigner().getAddress();
 
@@ -233,6 +200,7 @@ export class PolygonService {
     );
     const erc20_abi = [
       'function balanceOf(address account) view returns (uint256)',
+      'function allowance(address owner, address spender) view returns (uint256)',
     ];
     const rootToken = new ethers.Contract(
       MIND_TOKEN_ADDRESS,
@@ -245,9 +213,51 @@ export class PolygonService {
       providerPolygon
     );
 
+    const posClient = await this.getPOSClientRoot();
+    const rootChainManager = await posClient.rootChainManager.getContract();
+
     return {
       root: await rootToken.balanceOf(from),
       child: await childToken.balanceOf(from),
+      approved: await rootToken.allowance(from, rootChainManager.address),
     };
+  }
+
+  private async getPOSClientRoot() {
+    const signer = this.web3Wallet.getSigner();
+    const network = await signer.provider.getNetwork();
+    const rpcUrl = network.chainId === 5 ? POLYGON_RPC_URL : MAINNET_RPC_URL;
+
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const from = await signer.getAddress();
+
+    return this.getPOSClient(from, signer, provider);
+  }
+
+  private async getPOSClientChild() {
+    const signer = this.web3Wallet.getSigner();
+    const network = await signer.provider.getNetwork();
+    const rpcUrl = network.chainId === 5 ? POLYGON_RPC_URL : MAINNET_RPC_URL;
+
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const from = await signer.getAddress();
+
+    return this.getPOSClient(from, provider, signer);
+  }
+
+  private async getPOSClient(
+    from: string,
+    parentProvider: ethers.providers.JsonRpcProvider | ethers.Signer,
+    childProvider: ethers.providers.JsonRpcProvider | ethers.Signer
+  ) {
+    const posClientChild = new POSClient();
+    await posClientChild.init({
+      log: true,
+      network: 'testnet',
+      version: 'mumbai',
+      parent: { provider: parentProvider, defaultConfig: { from } },
+      child: { provider: childProvider, defaultConfig: { from } },
+    });
+    return posClientChild;
   }
 }

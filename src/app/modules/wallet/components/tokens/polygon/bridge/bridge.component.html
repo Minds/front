@@ -3,15 +3,15 @@
   <div class="m-polygon__inputAmountContainer">
     <div class="m-polygon__row">
       <img
-        [src]="currentNetwork.img"
+        [src]="currentNetwork.logoPath"
         alt="polygon"
         class="m-polygon__chainLogo"
       />
-      {{ currentNetwork.displayName }} chain
+      {{ currentNetwork.networkName }} chain
       <div class="m-polygon__grow"></div>
       <span class="m-polygon__balance-placeholder">Balance: </span>
       <span class="m-polygon__balance">
-        {{ (currentNetwork.balance | number) ?? '0'}} MINDS
+        {{ (currentNetworkBalance | number) ?? '0'}} MINDS
       </span>
     </div>
     <div class="m-polygon__input-container">
@@ -34,24 +34,32 @@
   <div class="m-polygon__inputAmountContainer">
     <div class="m-polygon__row">
       <img
-        [src]="receivingNetwork.img"
+        [src]="receivingNetwork.logoPath"
         alt="polygon"
         class="m-polygon__chainLogo"
       />
-      {{ receivingNetwork.displayName }} chain
+      {{ receivingNetwork.networkName }} chain
       <div class="m-polygon__grow"></div>
       <span class="m-polygon__balance-placeholder">Balance: </span>
       <span class="m-polygon__balance">
-        {{ (receivingNetwork.balance | number) ?? '0'}} MINDS
+        {{ (receivingNetworkBalance | number) ?? '0'}} MINDS
       </span>
     </div>
   </div>
 
   <div class="m-polygon__button-container">
     <m-button
+      [hidden]="currentNetwork.networkName !== MAINNET_NETWORK.networkName"
+      color="primary"
+      (onAction)="approve()"
+      [disabled]="!needsApproval"
+    >
+      Approve
+    </m-button>
+    <m-button
       color="primary"
       (onAction)="withdraw()"
-      [disabled]="amount.length && amount === '0'"
+      [disabled]="amount === '0' || needsApproval"
     >
       Transfer
     </m-button>
