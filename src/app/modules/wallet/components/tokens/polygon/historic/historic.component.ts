@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MockData } from '../constants';
 /**
  * Polygon Historic component, giving users the ability to swap between networks.
  */
@@ -9,6 +10,8 @@ import { Component } from '@angular/core';
 })
 export class WalletPolygonHistoricComponent {
   pending = true;
+
+  transactions = MockData;
 
   /**
    * Changes active tab.

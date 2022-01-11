@@ -1,17 +1,40 @@
 <div class="m-polygon__transactions">
-  <div class="m-polygon__tabs-transactions">
-    <div
-      class="m-polygon__tab-transactions"
-      [ngClass]="pending ? 'm-polygon__active' : ''"
-    >
-      <span>All transactions</span>
-    </div>
-    <div
-      class="m-polygon__tab-transactions"
-      [ngClass]="!pending ? 'm-polygon__active' : ''"
-    >
-      <span>Pending</span>
+  <div class="m-polygon__transactions-container">
+    <div class="m-polygon__tabs-transactions">
+      <div
+        (click)="changeTab()"
+        class="m-polygon__tab-transactions"
+        [ngClass]="pending ? 'm-polygon__active' : ''"
+      >
+        <span>All transactions</span>
+      </div>
+      <div
+        (click)="changeTab()"
+        class="m-polygon__tab-transactions"
+        [ngClass]="!pending ? 'm-polygon__active' : ''"
+      >
+        <span>Pending</span>
+        <div class="m-polygon__badge">1</div>
+      </div>
     </div>
   </div>
-  <!-- <span class="m-polygon__boxTitle">From</span> -->
+
+  <div class="m-polygon__date" *ngFor="let transaction of transactions">
+    <span class="m-polygon__boxTitle">January 10, 2022</span>
+    <div class="m-polygon__boxContainer">
+      <div class="m-grid__column-2">
+        <div class="m-polygon__statusCircle">
+          <div
+            *ngIf="transaction.status === 'pending'"
+            class="mdl-spinner mdl-js-spinner is-active"
+            [mdl]
+          ></div>
+          <m-icon
+            iconId="check"
+            *ngIf="transaction.status === 'success'"
+          ></m-icon>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

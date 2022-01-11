@@ -14,7 +14,7 @@
   }
 
   .m-polygon__transactions {
-    display: flex;
+    display: inline-table;
     width: 100%;
     padding: 16px;
     border-radius: 8px;
@@ -32,8 +32,15 @@
       width: 100%;
       margin-bottom: 4px;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 13px;
       text-align: left;
+    }
+
+    .m-polygon__transactions-container {
+      width: 100%;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
     }
 
     .m-polygon__tabs-transactions {
@@ -41,9 +48,8 @@
       margin: 8px 0;
       grid-template-columns: repeat(2, 1fr);
       align-items: baseline;
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
+      margin-bottom: 0px;
+      width: 60%;
 
       @include m-theme() {
         background: themed($m-bgColor--secondary);
@@ -54,18 +60,74 @@
         text-align: center;
         cursor: pointer;
         user-select: none;
-        margin-right: 40px;
+        display: flex;
+        justify-content: center;
+
+        &.m-polygon__active {
+          @include m-theme() {
+            border-bottom: 2px solid themed($m-blue-dark);
+          }
+        }
 
         & span {
           opacity: 0.2;
         }
         &.m-polygon__active span {
           opacity: 1;
-          @include m-theme() {
-            border-bottom: 2px solid themed($m-borderColor--primary);
-          }
         }
       }
+    }
+
+    .m-polygon__badge {
+      margin-left: 8px;
+      padding: 1px;
+      width: 16px;
+
+      @include m-theme() {
+        background: themed($m-blue-dark);
+      }
+
+      border-radius: 4px;
+      border: none;
+      font-size: smaller;
+    }
+
+    .m-polygon__date {
+      margin-top: 20px;
+    }
+
+    .m-polygon__boxContainer {
+      display: flex;
+      width: 98%;
+      padding: 16px;
+      border-radius: 8px;
+      align-items: center;
+      box-sizing: border-box;
+      justify-content: flex-start;
+      margin-top: 8px;
+      margin-left: 6px;
+
+      @include m-theme() {
+        background: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+    }
+
+    .m-polygon__statusCircle {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      font-size: 22px;
+      color: #fff;
+      background: #000;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    m-icon {
+      color: greenyellow !important;
     }
   }
 }
