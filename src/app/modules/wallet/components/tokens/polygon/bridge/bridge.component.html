@@ -1,0 +1,59 @@
+<div class="m-polygon__tokenConverter" [formGroup]="form">
+  <span class="m-polygon__boxTitle">From</span>
+  <div class="m-polygon__inputAmountContainer">
+    <div class="m-polygon__row">
+      <img
+        [src]="currentNetwork.img"
+        alt="polygon"
+        class="m-polygon__chainLogo"
+      />
+      {{ currentNetwork.displayName }} chain
+      <div class="m-polygon__grow"></div>
+      <span class="m-polygon__balance-placeholder">Balance: </span>
+      <span class="m-polygon__balance">
+        {{ (currentNetwork.balance | number) ?? '0'}} MINDS
+      </span>
+    </div>
+    <div class="m-polygon__input-container">
+      <input
+        type="text"
+        class="m-polygon__input"
+        placeholder="Enter amount"
+        formControlName="amount"
+        [(ngModel)]="amount"
+      />
+
+      <div class="m-polygon__max-button" (click)="setMaxAmount()">MAX</div>
+    </div>
+  </div>
+  <span class="material-icons m-skale__swapButton" (click)="swapNetworks()">
+    swap_vert
+  </span>
+
+  <span class="m-polygon__boxTitle">To</span>
+  <div class="m-polygon__inputAmountContainer">
+    <div class="m-polygon__row">
+      <img
+        [src]="receivingNetwork.img"
+        alt="polygon"
+        class="m-polygon__chainLogo"
+      />
+      {{ receivingNetwork.displayName }} chain
+      <div class="m-polygon__grow"></div>
+      <span class="m-polygon__balance-placeholder">Balance: </span>
+      <span class="m-polygon__balance">
+        {{ (receivingNetwork.balance | number) ?? '0'}} MINDS
+      </span>
+    </div>
+  </div>
+
+  <div class="m-polygon__button-container">
+    <m-button
+      color="primary"
+      (onAction)="withdraw()"
+      [disabled]="amount.length && amount === '0'"
+    >
+      Transfer
+    </m-button>
+  </div>
+</div>

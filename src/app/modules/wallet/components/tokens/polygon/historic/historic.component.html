@@ -1,0 +1,17 @@
+<div class="m-polygon__transactions">
+  <div class="m-polygon__tabs-transactions">
+    <div
+      class="m-polygon__tab-transactions"
+      [ngClass]="pending ? 'm-polygon__active' : ''"
+    >
+      <span>All transactions</span>
+    </div>
+    <div
+      class="m-polygon__tab-transactions"
+      [ngClass]="!pending ? 'm-polygon__active' : ''"
+    >
+      <span>Pending</span>
+    </div>
+  </div>
+  <!-- <span class="m-polygon__boxTitle">From</span> -->
+</div>

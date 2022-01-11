@@ -1,0 +1,71 @@
+@import 'defaults.scss';
+
+:host {
+  font-weight: 400;
+  font-size: 15px;
+
+  h6 {
+    font-weight: 500;
+  }
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    width: 100%;
+  }
+
+  .m-polygon__transactions {
+    display: flex;
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: flex-start;
+
+    @include m-theme() {
+      background: themed($m-bgColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+
+    .m-polygon__boxTitle {
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 4px;
+      font-weight: bold;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .m-polygon__tabs-transactions {
+      display: grid;
+      margin: 8px 0;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: baseline;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+
+      @include m-theme() {
+        background: themed($m-bgColor--secondary);
+      }
+
+      .m-polygon__tab-transactions {
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        margin-right: 40px;
+
+        & span {
+          opacity: 0.2;
+        }
+        &.m-polygon__active span {
+          opacity: 1;
+          @include m-theme() {
+            border-bottom: 2px solid themed($m-borderColor--primary);
+          }
+        }
+      }
+    }
+  }
+}
