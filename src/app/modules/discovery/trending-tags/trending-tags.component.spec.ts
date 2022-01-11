@@ -1,3 +1,4 @@
+import { FeedsService } from './../../../common/services/feeds.service';
 import { MockService } from '../../../utils/mock';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
@@ -15,6 +16,10 @@ describe('TrendingTagsComponent', () => {
         {
           provide: DiscoveryFeedsService,
           useValue: MockService(DiscoveryFeedsService),
+        },
+        {
+          provide: FeedsService,
+          useValue: MockService(FeedsService),
         },
       ],
     }).compileComponents();

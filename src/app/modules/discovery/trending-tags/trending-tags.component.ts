@@ -6,7 +6,7 @@ import { DiscoveryFeedsService } from '../feeds/feeds.service';
   selector: 'm-discovery__trendingTags',
   templateUrl: './trending-tags.component.html',
   styleUrls: ['./trending-tags.component.scss'],
-  providers: [DiscoveryFeedsService, FeedsService]
+  providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoveryTrendingTagsComponent implements OnInit {
   constructor(private service: DiscoveryFeedsService) {}
