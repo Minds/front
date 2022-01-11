@@ -36,6 +36,7 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
+import { DiscoveryTrendingTagsComponent } from './trending-tags/trending-tags.component';
 
 @NgModule({
   imports: [

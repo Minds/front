@@ -1,3 +1,4 @@
+import { DiscoveryTrendingTagsComponent } from './trending-tags/trending-tags.component';
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -80,6 +81,7 @@ import { DefaultFeedModule } from '../default-feed/default-feed.module';
     DiscoveryCardCarouselComponent,
     DiscoveryBuildYourAlgorithmComponent,
     DiscoveryTopComponent,
+    DiscoveryTrendingTagsComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
@@ -96,6 +98,7 @@ import { DefaultFeedModule } from '../default-feed/default-feed.module';
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,
     DiscoveryTopComponent,
+    DiscoveryTrendingTagsComponent,
   ],
   providers: [
     DiscoveryTrendsService,
