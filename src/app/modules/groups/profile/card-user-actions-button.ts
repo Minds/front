@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { GroupsService } from '../groups.service';
 
@@ -146,6 +146,8 @@ export class GroupsCardUserActionsButton {
 
   showMenu: boolean = false;
 
+  @Output('onKick') onKick: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(public service: GroupsService) {}
 
   toggleMenu(e) {
@@ -170,24 +172,26 @@ export class GroupsCardUserActionsButton {
     this.kickPrompt = false;
   }
 
-  kick(ban: boolean = false) {
-    let action;
+  async kick(ban: boolean = false) {
+    let kicked;
 
     this.kickPrompt = false;
 
     if (ban) {
-      action = this.service.ban(this.group, this.user.guid);
+      kicked = await this.service.ban(this.group, this.user.guid);
+      console.log('ojm action', kicked);
     } else {
-      action = this.service.kick(this.group, this.user.guid);
+      kicked = await this.service.kick(this.group, this.user.guid);
+      console.log('ojm action', kicked);
     }
 
-    action.then((done: boolean) => {
-      this.user['is:member'] = !done;
-      this.user['is:banned'] = done && ban;
+    this.user['is:member'] = !kicked;
+    this.user['is:banned'] = kicked && ban;
 
-      this.kickPrompt = !done;
-      this.changeCounter('members:count', -1);
-    });
+    this.kickPrompt = !kicked;
+    this.changeCounter('members:count', -1);
+
+    this.onKick.emit({ userGuid: this.user.guid });
 
     this.showMenu = false;
   }
