@@ -3,11 +3,11 @@ import { InputBalance } from '../polygon.types';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PolygonService } from '../polygon.service';
 import { ethers } from 'ethers';
-import { NetworksInfo } from '../constants';
 import {
   Network,
   NetworkSwitchService,
 } from '../../../../../../common/services/network-switch-service';
+
 /**
  * Polygon component, giving users the ability to swap between networks.
  */
@@ -26,23 +26,25 @@ export class WalletPolygonBridgeComponent implements OnInit {
     child: 0,
   };
 
+  public readonly POLYGON_NETWORK: Network;
+  public readonly MAINNET_NETWORK: Network;
+
   // handle of networks
-  currentNetwork;
-  receivingNetwork;
-
-  // handle current tab
-  bridge = true;
-
-  // token allowance
-  public allowance = 0;
+  currentNetwork: Network;
+  receivingNetwork: Network;
 
   // form for input amount
   public form: FormGroup;
 
+  private allowance = ethers.BigNumber.from(0);
+
   constructor(
     private service: PolygonService,
     private networkSwitch: NetworkSwitchService
-  ) {}
+  ) {
+    this.MAINNET_NETWORK = this.networkSwitch.networks.goerli;
+    this.POLYGON_NETWORK = this.networkSwitch.networks.mumbai;
+  }
 
   /**
    * Current active network from service.
@@ -50,6 +52,22 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   get activeNetwork(): Network {
     return this.networkSwitch.getActiveNetwork();
+  }
+
+  get currentNetworkBalance() {
+    return this.currentNetwork.networkName === this.MAINNET_NETWORK.networkName
+      ? this.balance.root
+      : this.balance.child;
+  }
+
+  get receivingNetworkBalance() {
+    return this.currentNetwork.networkName === this.MAINNET_NETWORK.networkName
+      ? this.balance.child
+      : this.balance.root;
+  }
+
+  get needsApproval() {
+    return ethers.utils.parseEther(this.amount).gt(this.allowance);
   }
 
   async ngOnInit(): Promise<void> {
@@ -62,7 +80,8 @@ export class WalletPolygonBridgeComponent implements OnInit {
     });
 
     await this.service.initialize();
-    await this.initBalance();
+    this.initBalance();
+    this.fetchApprovedBalance();
   }
 
   /**
@@ -74,16 +93,16 @@ export class WalletPolygonBridgeComponent implements OnInit {
   }
 
   /**
-    // Finds current and receiving networks
-    */
+   // Finds current and receiving networks
+   */
   findNetworksInfo() {
-    NetworksInfo.map(current => {
-      if (current.networkName === this.activeNetwork.networkName) {
-        this.currentNetwork = current;
-      } else {
-        this.receivingNetwork = current;
-      }
-    });
+    if (this.activeNetwork.networkName === this.POLYGON_NETWORK.networkName) {
+      this.currentNetwork = this.POLYGON_NETWORK;
+      this.receivingNetwork = this.MAINNET_NETWORK;
+    } else {
+      this.currentNetwork = this.MAINNET_NETWORK;
+      this.receivingNetwork = this.POLYGON_NETWORK;
+    }
   }
 
   /**
@@ -136,24 +155,11 @@ export class WalletPolygonBridgeComponent implements OnInit {
         root: parseFloat(ethers.utils.formatEther(balances.root)),
         child: parseFloat(ethers.utils.formatEther(balances.child)),
       };
-      this.matchBalances();
+      this.allowance = ethers.BigNumber.from(balances.approved);
     } catch (err) {
       console.warn('error fetching balances', err);
     }
   }
 
-  /**
-   * Matches balances with current and receiving balance.
-   * @returns { void }
-   */
-  matchBalances() {
-    if (this.currentNetwork.networkName === 'Goerli') {
-      this.currentNetwork.balance = this.balance.root;
-      this.receivingNetwork.balance = this.balance.child;
-    } else {
-      this.currentNetwork.balance = this.balance.child;
-      this.receivingNetwork.balance = this.balance.root;
-    }
-  }
-  // amount we are transacting
+  private fetchApprovedBalance() {}
 }
