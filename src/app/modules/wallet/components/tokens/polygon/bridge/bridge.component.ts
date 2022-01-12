@@ -81,6 +81,7 @@ export class WalletPolygonBridgeComponent implements OnInit {
 
     await this.service.initialize();
     this.initBalance();
+    this.service.getHistory();
     this.fetchApprovedBalance();
   }
 
@@ -125,7 +126,7 @@ export class WalletPolygonBridgeComponent implements OnInit {
       await this.service.switchNetworkMainnet();
     }
     this.findNetworksInfo();
-    await this.initBalance();
+    this.initBalance();
   }
 
   /**

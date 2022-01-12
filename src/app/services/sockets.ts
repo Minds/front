@@ -42,7 +42,7 @@ export class SocketsService {
       }
 
       this.socket = io(this.SOCKET_IO_SERVER, {
-        reconnection: true,
+        reconnection: false,
         timeout: 40000,
         autoConnect: false,
         withCredentials: true,

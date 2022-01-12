@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { MockData } from '../constants';
-import { Record, RecordStatus, RecordType } from '../polygon.types';
+import {
+  HistoryRecord,
+  Record,
+  RecordStatus,
+  RecordType,
+} from '../polygon.types';
 /**
  * Polygon Historic component, giving users the ability to swap between networks.
  */
@@ -14,7 +19,7 @@ export class WalletPolygonHistoricComponent {
   pending = false;
 
   // list of transactions
-  transactions: Record[] = MockData;
+  transactions: HistoryRecord[] = MockData;
 
   /**
    * Changes active tab.
@@ -45,7 +50,8 @@ export class WalletPolygonHistoricComponent {
    * Truncates transaction hash
    * @returns { string }
    */
-  truncatedHash(transactionHash: string): string {
+  truncatedHash(transactionHash?: string): string {
+    if (!transactionHash) return transactionHash;
     return transactionHash.substr(0, 4) + '...' + transactionHash.substr(-4);
   }
 

@@ -9,6 +9,8 @@ export enum RecordType {
 }
 
 export enum RecordStatus {
+  PENDING,
+  UNKNOWN,
   ACTION_REQUIRED,
   SUCCESS,
   ERROR,
@@ -16,24 +18,18 @@ export enum RecordStatus {
 
 export type HistoryRecord = DepositRecord | WithdrawRecord;
 
-export type HistoryStatus =
-  | RecordStatus.ACTION_REQUIRED
-  | RecordStatus.SUCCESS
-  | RecordStatus.ERROR;
-
 export interface Record {
-  type: HistoryRecord;
+  type: RecordType;
+  status: RecordStatus;
   amount: string; // in wei
-  createdAt: Date;
-  status: HistoryStatus;
 }
 
-export interface DepositRecord {
+export interface DepositRecord extends Record {
   type: RecordType.DEPOSIT;
   txHash: string;
 }
 
-export interface WithdrawRecord {
+export interface WithdrawRecord extends Record {
   type: RecordType.WITHDRAW;
   txHash?: string;
   txBurn: string;

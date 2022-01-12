@@ -1,3 +1,5 @@
+import { HistoryRecord, RecordType } from './polygon.types';
+
 export const Polygon = {
   Main: {
     NetworkName: 'Goerli',
@@ -740,25 +742,19 @@ export const NetworksInfo = [
   },
 ];
 
-export const MockData = [
+export const MockData: HistoryRecord[] = [
   {
-    type: {
-      type: 0,
-      txHash:
-        '0xd85e419095930ec4486168c501d6f7e3bc55444c7ca589d8ad464d38c9debf15',
-    },
+    type: RecordType.DEPOSIT,
+    txHash:
+      '0xd85e419095930ec4486168c501d6f7e3bc55444c7ca589d8ad464d38c9debf15',
     amount: '10',
-    createdAt: ('Tue, 11 Jan 2022 21:29:31 GMT' as unknown) as Date,
     status: 0,
   },
   {
-    type: {
-      type: 1,
-      txHash:
-        '0x4ad4dd4d12c62b8abc660d938ae1fcd45d18e19981ccda948d4bbd5d8b4ed960',
-    },
+    type: RecordType.WITHDRAW,
+    txBurn:
+      '0x4ad4dd4d12c62b8abc660d938ae1fcd45d18e19981ccda948d4bbd5d8b4ed960',
     amount: '2',
-    createdAt: ('Tue, 11 Jan 2022 21:29:31 GMT' as unknown) as Date,
     status: 1,
   },
 ];
