@@ -33,11 +33,11 @@
 
   ::ng-deep popper-content {
     .ngxp__container {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
       max-width: 300px;
       min-width: 300px;
-      border-radius: $m-borderRadius;
+      border-radius: $m-borderRadius * 2;
       padding: 0;
-      box-shadow: none;
 
       @include z-index(tooltip);
 
@@ -76,6 +76,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        border-radius: $m-borderRadius * 2;
 
         &:hover {
           @include m-theme() {
@@ -86,7 +87,7 @@
         .m-feedTypePopper__title {
           font-size: 16px;
           margin-bottom: 0;
-          font-weight: 500;
+          font-weight: bold;
         }
 
         .m-feedTypePopper__desc {
@@ -99,6 +100,7 @@
           top: -5px;
           position: relative;
           padding-left: $minds-padding * 2;
+          transition: opacity 0.3s;
         }
       }
     }

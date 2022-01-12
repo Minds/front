@@ -45,7 +45,9 @@
             newsfeed</span
           >
         </div>
-        <i *ngIf="type === 'top'" class="m-feedTypePopper__icon material-icons"
+        <i
+          class="m-feedTypePopper__icon material-icons"
+          [ngStyle]="{ opacity: type === 'top' ? 1 : 0 }"
           >check</i
         >
       </div>
@@ -64,8 +66,8 @@
           >
         </div>
         <i
-          *ngIf="type === 'latest'"
           class="m-feedTypePopper__icon material-icons"
+          [ngStyle]="{ opacity: type === 'latest' ? 1 : 0 }"
           >check</i
         >
       </div>
