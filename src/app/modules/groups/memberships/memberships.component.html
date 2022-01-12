@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div *ngIf="groups.length">
+      <div *ngIf="groups && groups.length">
         <m-publisherCard
           *ngFor="let group of groups"
           [publisher]="group"
@@ -61,10 +61,10 @@
           [inProgress]="this.inProgress"
         ></infinite-scroll>
       </div>
-      <div *ngIf="!groups.length && !inProgress">
+      <div *ngIf="!groups?.length && !inProgress">
         <p>
-          You aren't a member of any groups yet.
-          <a routerLink="/discovery/suggestions/group">Discover groups</a>
+          You aren't a member of any groups yet.<br />
+          <a routerLink="/discovery/suggestions/group">Discover groups</a>.
         </p>
       </div>
     </div>
