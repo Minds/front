@@ -1,0 +1,34 @@
+<div class="m-skaleCommunityPool__container" [formGroup]="form">
+  <div class="m-networkSwapBridge__amountContainer">
+    <span class="m-networkSwapBridge__inputLabel">
+      Fund Exits
+      <m-tooltip class="m-networkSwapBridge__info" icon="help">
+        To fund exits from the SKALE chain to the mainnet, ETH must be used from
+        a users Community Pool balance. You can deposit funds here to add to
+        your Community Pool balance, and withdraw as you like.
+      </m-tooltip>
+    </span>
+    <input
+      type="number"
+      class="m-input"
+      [(ngModel)]="amount"
+      placeholder="Enter amount"
+      formControlName="amount"
+    />
+    <div class="m-networkSwapBridge__inputBalances">
+      Deposited: {{ (communityPoolBalance | number) ?? 0 }} ETH
+    </div>
+  </div>
+
+  <div class="m-networkSwapBridge__buttonContainer">
+    <m-button
+      color="primary"
+      (onAction)="withdrawCommunityPool()"
+      [disabled]="!form.valid"
+      >Withdraw</m-button
+    >
+    <m-button color="blue" (onAction)="depositCommunityPool()"
+      >Deposit</m-button
+    >
+  </div>
+</div>

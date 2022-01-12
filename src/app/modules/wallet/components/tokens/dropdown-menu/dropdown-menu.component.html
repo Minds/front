@@ -9,6 +9,11 @@
 
 <ng-template #menu>
   <ul>
+    <li (click)="onSwapChainsClick($event)">
+      <span i18n="swap Ethereum chains|@@WALLET_TOKENS_DROPDOWN__NETWORK_SWAP"
+        >Network Swap</span
+      >
+    </li>
     <li>
       <span routerLink="/analytics/dashboard/token">Token analytics</span>
     </li>

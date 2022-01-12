@@ -1,6 +1,26 @@
 @import 'defaults.scss';
 
 :host {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  @media screen and (max-width: $min-tablet) {
+    flex-flow: column nowrap;
+    align-items: unset;
+  }
+
+  .m-wallet__balance__leftContainer {
+    flex-grow: 1;
+  }
+
+  .m-wallet__balance__rightContainer {
+    @media screen and (max-width: $min-tablet) {
+      margin: 20px 0 0 5px;
+    }
+  }
+
   .m-walletBalance__address--connect {
     display: inline-block;
     cursor: pointer;
