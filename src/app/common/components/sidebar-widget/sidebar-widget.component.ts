@@ -8,6 +8,7 @@ import { Client } from '../../api/client.service';
 })
 export class SidebarWidgetComponent {
   @Input() title: string;
+  @Input() headerLevel = 2; // whether title should be h1 or h2 - defaults to h2
   @Input() dismissibleId: string;
   @HostBinding('hidden') hidden: boolean = false;
 
