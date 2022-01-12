@@ -81,8 +81,7 @@
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
               "node_modules/highlight.js/styles/github.css",
-              "src/main.css",
-              "node_modules/material-icons/iconfont/material-icons.css"
+              "src/main.css"
             ],
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
