@@ -1,0 +1,56 @@
+<m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
+
+<div
+  class="m-skaleTransferBridge__tokenBridge"
+  [formGroup]="form"
+  *ngIf="!inProgress"
+>
+  <div class="m-networkSwapBridge__amountContainer">
+    <span class="m-networkSwapBridge__inputLabel">{{
+      inputCurrencyLabel$ | async
+    }}</span>
+    <input
+      type="number"
+      class="m-input m-networkSwapBridge__input"
+      placeholder="Enter amount"
+      formControlName="inputAmount"
+    />
+    <div class="m-networkSwapBridge__inputBalances">
+      <span
+        >Approved {{ allowance | number }}
+        {{ inputCurrency$ | async }}&nbsp;-&nbsp;</span
+      >
+      <span
+        >Balance {{ (balance?.amount | number) ?? '0'}}
+        {{ balance.currency }}</span
+      >
+    </div>
+  </div>
+  <div class="m-skaleTransferBridge__swapButtonContainer">
+    <i
+      class="material-icons m-skaleTransferBridge__swapButton"
+      (click)="swapCurrencyFields()"
+    >
+      swap_vert
+    </i>
+  </div>
+  <div class="m-networkSwapBridge__amountContainer">
+    <span class="m-networkSwapBridge__inputLabel">{{
+      outputCurrencyLabel$ | async
+    }}</span>
+    <input
+      type="number"
+      class="m-input m-networkSwapBridge__input"
+      placeholder="Enter amount"
+      formControlName="outputAmount"
+    />
+  </div>
+  <div class="m-networkSwapBridge__buttonContainer">
+    <m-button color="primary" (onAction)="approve()" [disabled]="amount === 0"
+      >Approve</m-button
+    >
+    <m-button color="blue" (onAction)="transfer()" [disabled]="!form.valid"
+      >Transfer</m-button
+    >
+  </div>
+</div>

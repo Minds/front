@@ -1,0 +1,132 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkSwitcher__currentNetworkLogoContainer {
+    .m-networkSwitcher__currentNetworkLogo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+
+        &:hover {
+          background-color: themed($m-borderColor--tertiary);
+          border: 1px solid themed($m-borderColor--tertiary);
+        }
+      }
+    }
+  }
+
+  .m-networkSwitcher__optionDropdown {
+    position: absolute;
+    right: -5px;
+    margin-top: 10px;
+    border-radius: 3px;
+    width: 300px;
+
+    @media screen and (max-width: $min-tablet) {
+      right: unset;
+      left: 0;
+    }
+
+    @include z-index(tooltip);
+
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primaryAlt);
+    }
+
+    .m-networkSwitcher__optionContainer {
+      padding: 20px;
+      display: flex;
+      flex-flow: column nowrap;
+      cursor: pointer;
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondaryAlt);
+        }
+      }
+
+      .m-networkSwitcher__option {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        img {
+          max-width: 35px;
+          max-height: 35px;
+          margin-right: 15px;
+        }
+
+        .m-networkSwitcher__networkInformation {
+          .m-networkSwitcher__optionName {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+
+          .m-networkSwitcher__optionDescription {
+            font-size: 14px;
+            font-weight: 400;
+
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+
+        .m-networkSwitcher__optionIcon {
+          position: absolute;
+          right: 25px;
+          width: 15px;
+          height: 15px;
+
+          @include m-theme() {
+            fill: themed($m-black);
+          }
+        }
+      }
+    }
+  }
+
+  // adapted from arrow box generated at https://cssarrowplease.com/
+  .m-networkSwitcher__arrowBox:after,
+  .m-networkSwitcher__arrowBox:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .m-networkSwitcher__arrowBox:after {
+    border-width: 8px;
+    margin-left: -8px;
+    border-color: rgba(0, 0, 0, 0);
+
+    @include m-theme() {
+      border-bottom-color: themed($m-bgColor--secondaryAlt);
+    }
+  }
+
+  .m-networkSwitcher__arrowBox:before {
+    border-width: 9px;
+    margin-left: -9px;
+    border-color: rgba(0, 0, 0, 0);
+
+    @include m-theme() {
+      border-bottom-color: themed($m-borderColor--primary);
+    }
+  }
+}

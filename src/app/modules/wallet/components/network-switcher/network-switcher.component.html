@@ -1,0 +1,40 @@
+<div
+  class="m-networkSwitcher__currentNetworkLogoContainer"
+  (click)="expanded = !expanded"
+>
+  <img
+    class="m-networkSwitcher__currentNetworkLogo"
+    [src]="cdnAssetsUrl + activeNetworkLogo"
+  />
+</div>
+
+<div
+  *ngIf="expanded"
+  class="m-networkSwitcher__optionDropdown m-networkSwitcher__arrowBox"
+>
+  <ng-container *ngFor="let network of networks | keyvalue">
+    <div
+      *ngIf="shouldShowNetwork(network.value)"
+      (click)="onNetworkChange(network.value.id)"
+      class="m-networkSwitcher__optionContainer"
+    >
+      <span class="m-networkSwitcher__option">
+        <img [src]="cdnAssetsUrl + network.value.logoPath" />
+        <div class="m-networkSwitcher__networkInformation">
+          <div class="m-networkSwitcher__optionName">
+            {{ network.value.siteName }}
+          </div>
+          <span class="m-networkSwitcher__optionDescription">{{
+            network.value.description
+          }}</span>
+        </div>
+        <i
+          class="material-icons m-networkSwitcher__optionIcon"
+          *ngIf="network.value.id == activeNetwork?.id"
+        >
+          done
+        </i>
+      </span>
+    </div>
+  </ng-container>
+</div>
