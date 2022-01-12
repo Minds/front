@@ -742,21 +742,23 @@ export const NetworksInfo = [
 
 export const MockData = [
   {
-    type: 'deposit',
-    timestamp: '',
-    status: 'success',
-    receiver: 'Mumbai',
-    txhash:
-      '0xd85e419095930ec4486168c501d6f7e3bc55444c7ca589d8ad464d38c9debf15',
-    amount: '2',
+    type: {
+      type: 0,
+      txHash:
+        '0xd85e419095930ec4486168c501d6f7e3bc55444c7ca589d8ad464d38c9debf15',
+    },
+    amount: '10',
+    createdAt: ('Tue, 11 Jan 2022 21:29:31 GMT' as unknown) as Date,
+    status: 0,
   },
   {
-    type: 'withdraw',
-    timestamp: '',
-    status: 'pending',
-    receiver: 'Goerli',
-    txhash:
-      '0x4ad4dd4d12c62b8abc660d938ae1fcd45d18e19981ccda948d4bbd5d8b4ed960',
-    amount: '10',
+    type: {
+      type: 1,
+      txHash:
+        '0x4ad4dd4d12c62b8abc660d938ae1fcd45d18e19981ccda948d4bbd5d8b4ed960',
+    },
+    amount: '2',
+    createdAt: ('Tue, 11 Jan 2022 21:29:31 GMT' as unknown) as Date,
+    status: 1,
   },
 ];

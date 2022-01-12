@@ -8,13 +8,24 @@
     font-weight: 500;
   }
 
+  ::ng-deep i {
+    font-weight: 900 !important;
+  }
+
+  ::ng-deep svg {
+    width: 14px !important;
+    height: 24px !important;
+    margin-left: 4px;
+    margin-top: -2px;
+  }
+
   @include m-theme() {
     color: themed($m-textColor--primary);
     width: 100%;
   }
 
   .m-polygon__transactions {
-    display: inline-table;
+    display: inline-block;
     width: 100%;
     padding: 16px;
     border-radius: 8px;
@@ -33,6 +44,13 @@
       margin-bottom: 4px;
       font-weight: bold;
       font-size: 13px;
+      text-align: left;
+    }
+
+    .m-polygon__boxTitleType {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 14px;
       text-align: left;
     }
 
@@ -127,7 +145,78 @@
     }
 
     m-icon {
-      color: greenyellow !important;
+      &.m-polygon__success {
+        color: greenyellow !important;
+      }
+      &.m-polygon__error {
+        color: red !important;
+      }
+    }
+
+    .m-polygon__boxSubTitle {
+      font-size: 12px;
+      opacity: 0.4;
+      margin-left: 8px;
+    }
+
+    .m-grid__row {
+      display: block;
+      min-width: 132px;
+    }
+
+    .m-grid__row-hash {
+      display: block;
+      min-width: 100px;
+    }
+
+    .m-grid__row-last {
+      display: grid;
+    }
+
+    img {
+      width: 15px;
+      border-radius: 50%;
+      background: white;
+      padding: 4px;
+      height: 17px;
+    }
+
+    .m-polygon__price {
+      font-size: 12px;
+      font-weight: 500;
+      margin-left: 8px;
+      cursor: default;
+    }
+
+    .m-polygon__hash {
+      opacity: 0.8;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: default;
+    }
+
+    .m-polygon__status {
+      margin-left: 0;
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .m-polygon_txhash {
+      font-size: 12px;
+      opacity: 0.9;
+      cursor: pointer;
+      align-items: center;
+      display: flex;
+
+      m-icon {
+        visibility: hidden;
+        width: 10px;
+      }
+
+      &:hover m-icon {
+        visibility: visible;
+        width: 10px;
+      }
     }
   }
 }

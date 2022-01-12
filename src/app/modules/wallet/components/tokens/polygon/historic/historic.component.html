@@ -4,14 +4,14 @@
       <div
         (click)="changeTab()"
         class="m-polygon__tab-transactions"
-        [ngClass]="pending ? 'm-polygon__active' : ''"
+        [ngClass]="!pending ? 'm-polygon__active' : ''"
       >
         <span>All transactions</span>
       </div>
       <div
         (click)="changeTab()"
         class="m-polygon__tab-transactions"
-        [ngClass]="!pending ? 'm-polygon__active' : ''"
+        [ngClass]="pending ? 'm-polygon__active' : ''"
       >
         <span>Pending</span>
         <div class="m-polygon__badge">1</div>
@@ -20,19 +20,57 @@
   </div>
 
   <div class="m-polygon__date" *ngFor="let transaction of transactions">
-    <span class="m-polygon__boxTitle">January 10, 2022</span>
-    <div class="m-polygon__boxContainer">
+    <span class="m-polygon__boxTitle">January 10, 2022 </span>
+    <div class="m-polygon__boxContainer m-grid">
       <div class="m-grid__column-2">
         <div class="m-polygon__statusCircle">
           <div
-            *ngIf="transaction.status === 'pending'"
+            *ngIf="transaction.status === 0"
             class="mdl-spinner mdl-js-spinner is-active"
             [mdl]
           ></div>
           <m-icon
-            iconId="check"
-            *ngIf="transaction.status === 'success'"
+            [iconId]="transaction.status === 1 ? 'check' : 'close'"
+            *ngIf="transaction.status === 1"
+            [ngClass]="
+              transaction.status === 1
+                ? 'm-polygon__success'
+                : 'm-polygon__error'
+            "
           ></m-icon>
+        </div>
+      </div>
+      <div class="m-grid__column-6">
+        <div class="m-grid__row">
+          <span class="m-polygon__boxTitleType">{{
+            getTitle(transaction.type.type) | titlecase
+          }}</span>
+          <span class="m-polygon__boxSubTitle">• 1 days ago</span>
+        </div>
+        <span class="m-polygon__status">{{
+          getStatus(transaction.status)
+        }}</span>
+      </div>
+      <div class="m-grid__column-2">
+        <div class="m-grid__row-hash">
+          <img
+            src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
+            alt="bulb"
+          />
+          <span class="m-polygon__price"> {{ transaction.amount }} MINDS</span>
+        </div>
+      </div>
+
+      <div class="m-grid__column-2">
+        <div class="m-grid__row-last">
+          <span class="m-polygon__hash">Tx Hash</span>
+          <span
+            class="m-polygon_txhash"
+            (click)="copyToClipboard(transaction.type.txHash)"
+          >
+            {{ truncatedHash(transaction.type.txHash) }}
+            <m-icon iconId="copy" from="custom" [sizeFactor]="5"></m-icon>
+          </span>
         </div>
       </div>
     </div>
