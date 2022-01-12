@@ -2,7 +2,7 @@
   class="m-topbar-wallet-balance"
   routerLink="/wallet/tokens/rewards"
   data-ref="topnav-wallet"
-  *ngIf="isConnected && tokenBalance >= 0 && usdBalance >= 0"
+  *ngIf="showWalletBalance()"
 >
   <div class="m-topbar-wallet-balance__tokens">
     <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>

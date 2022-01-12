@@ -35,7 +35,7 @@
             >{{ publisher.name }}</a
           ><m-channel--badges
             *ngIf="type === 'user'"
-            class="m-publisher--badges-activity"
+            class="m-channel--badges-activity"
             [user]="publisher"
             badges="[ 'admin', 'verified', 'plus', 'pro' ]"
           ></m-channel--badges>
@@ -112,7 +112,7 @@
       m-read-more
       maxHeightAllowed="52"
     >
-      <p [innerHtml]="publisher.briefdescription | tags">
+      <p [innerHtml]="publisher.briefdescription | slice: 0:5000 | tags">
         {{ publisher.briefdescription }}
       </p>
       <m-read-more--button

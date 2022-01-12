@@ -2,13 +2,13 @@
   *ngIf="publisher"
   class="m-hovercard"
   [popper]="popper"
-  popperPlacement="bottom"
-  popperTrigger="hover"
-  popperTimeout="100"
-  popperDelay="500"
+  [popperPlacement]="'top'"
+  [popperTrigger]="'hover'"
+  [popperTimeout]="100"
+  [popperDelay]="250"
   [popperModifiers]="popperModifiers"
-  (popperOnShown)="shown = true"
-  (popperOnHide)="shown = false"
+  (popperOnShown)="popperOnShown()"
+  (popperOnHidden)="popperOnHidden()"
 >
   <ng-content></ng-content>
   <popper-content #popper>

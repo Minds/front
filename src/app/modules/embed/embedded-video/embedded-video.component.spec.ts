@@ -1,3 +1,4 @@
+import { XhrFactory } from '@angular/common';
 import {
   ComponentFixture,
   fakeAsync,
@@ -6,22 +7,39 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { NgxRequest, NgxResponse } from '@mindsorg/ngx-universal';
+import {
+  CookieBackendService,
+  CookieService,
+  NgxRequest,
+  NgxResponse,
+} from '@mindsorg/ngx-universal';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { DefaultPlyrDriver } from 'ngx-plyr';
 import { BehaviorSubject, of } from 'rxjs';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { SERVER_PROVIDERS } from '../../../app.server.module';
+import { ServerXhr } from '../../../app.server.module';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { DiagnosticsService } from '../../../common/services/diagnostics/diagnostics.service';
+import { ServerDiagnosticsService } from '../../../common/services/diagnostics/server-diagnostics.service';
+import {
+  HeadersService,
+  ServerHeadersService,
+} from '../../../common/services/headers.service';
 import { SENTRY } from '../../../common/services/diagnostics/diagnostics.service';
 import { MetaService } from '../../../common/services/meta.service';
+import {
+  RedirectService,
+  ServerRedirectService,
+} from '../../../common/services/redirect.service';
 import { RelatedContentService } from '../../../common/services/related-content.service';
 import { Client } from '../../../services/api/client';
 import { MockService } from '../../../utils/mock';
+import { HlsjsPlyrDriver } from '../../media/components/video-player/hls-driver';
 import { siteServiceMock } from '../../notifications/notification.service.spec';
 import { EmbedModule } from '../embed.module';
 import * as Sentry from '@sentry/browser';
-
 import { EmbeddedVideoComponent } from './embedded-video.component';
+import { By } from '@angular/platform-browser';
 
 const GUID = '1155576347020644352';
 const OWNER_GUID = '1153095520021913602';
@@ -188,10 +206,7 @@ const CLIENT_RESPONSE = {
   transcode_status: 'completed',
 };
 
-// TODO resolve this error to allow tests to pass:
-// "Error: This constructor is not compatible with Angular Dependency Injection because its dependency at index 0 of the parameter list is invalid."
-
-xdescribe('EmbeddedVideoComponent', () => {
+describe('EmbeddedVideoComponent', () => {
   let component: EmbeddedVideoComponent;
   let fixture: ComponentFixture<EmbeddedVideoComponent>;
   let metaServiceMock: MetaService = MockService(MetaService) as any;
@@ -223,7 +238,24 @@ xdescribe('EmbeddedVideoComponent', () => {
       TestBed.configureTestingModule({
         declarations: [EmbeddedVideoComponent],
         providers: [
-          ...SERVER_PROVIDERS,
+          { provide: DiagnosticsService, useClass: ServerDiagnosticsService },
+          { provide: XhrFactory, useClass: ServerXhr },
+          {
+            provide: CookieService,
+            useClass: CookieBackendService,
+          },
+          {
+            provide: RedirectService,
+            useClass: ServerRedirectService,
+          },
+          {
+            provide: HeadersService,
+            useClass: ServerHeadersService,
+          },
+          {
+            provide: HlsjsPlyrDriver,
+            useClass: DefaultPlyrDriver,
+          },
           { provide: Client, useValue: clientMock },
           { provide: MetaService, useValue: metaServiceMock },
           {
@@ -368,4 +400,16 @@ xdescribe('EmbeddedVideoComponent', () => {
     component.onControlsHidden();
     expect(component.topVisible).toBe(false);
   }));
+
+  it('should have links with _blank target attributes', () => {
+    const links = fixture.debugElement.queryAll(
+      By.css(`.m-embedded-video__top a`)
+    );
+
+    expect(links).toHaveSize(2);
+
+    for (let link of links) {
+      expect(link.nativeElement.target).toBe('_blank');
+    }
+  });
 });

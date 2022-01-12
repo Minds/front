@@ -144,6 +144,8 @@
         }
       }
       .m-publisherCardOwnerRowItem__username {
+        font-size: 15px;
+        line-height: 20px;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
@@ -152,6 +154,11 @@
     ::ng-deep {
       m-subscribeButton {
         flex: auto 0 0;
+        ::ng-deep m-button {
+          .m-button i {
+            font-size: 16px !important;
+          }
+        }
       }
     }
   }

@@ -189,13 +189,13 @@ import { DateRangeModalService } from './components/date-range-modal/date-range-
 import { NgxPopperjsModule } from 'ngx-popperjs';
 import { HovercardComponent } from './components/hovercard/hovercard.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { StatusToasterComponent } from './components/status-toaster/status-toaster.component';
-import { StatusToasterService } from './components/status-toaster/status-toaster.service';
 import { BoostRecommendationService } from './services/boost-recommendation.service';
 import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
+import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 
@@ -358,12 +358,13 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
-    StatusToasterComponent,
     DateRangeModalComponent,
     HovercardComponent,
     FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
     TagSelectorComponent,
     ModalCloseButtonComponent,
   ],
@@ -501,13 +502,14 @@ const routes: Routes = [
     HotkeyScrollDirective,
     ChatIconComponent,
     PublisherSearchModalComponent,
-    StatusToasterComponent,
     DateRangeModalComponent,
     NgxPopperjsModule,
     HovercardComponent,
     FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
     TagSelectorComponent,
     ModalCloseButtonComponent,
   ],
@@ -558,7 +560,6 @@ const routes: Routes = [
     UserMenuService,
     DownloadActivityMediaService,
     PublisherSearchModalService,
-    StatusToasterService,
     DateRangeModalService,
     JsonLdService,
     BoostRecommendationService,

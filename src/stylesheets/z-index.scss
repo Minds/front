@@ -34,6 +34,8 @@ $z-index: (
   // TOOLTIP: informative popup usually triggered by mouseover
     tooltip--stackable: 61,
   tooltip: 60,
+  // SIDEBAR: sidebar navigation. On mobile, needs to go over topbar on mobile so we can use a background overlay when the menu is open
+    sidebar--mobile: 55,
   // TOPBAR: top navigation bar. Almost always visible. Goes on top of the page body but below the body's tooltips
     topbar: 50,
   // MESSENGER: messenger dockpane and chat tabs
