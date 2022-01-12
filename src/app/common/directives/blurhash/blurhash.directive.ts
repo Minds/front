@@ -51,8 +51,7 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
-    // if image was loaded, don't bother
-    if (this.el.nativeElement.complete) {
+    if (this.el.nativeElement.complete && !this.paywalled) {
       return null;
     }
 
