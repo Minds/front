@@ -3,17 +3,29 @@ export interface InputBalance {
   child: number;
 }
 
-enum RecordType {
+export enum RecordType {
   DEPOSIT,
   WITHDRAW,
 }
 
+export enum RecordStatus {
+  ACTION_REQUIRED,
+  SUCCESS,
+  ERROR,
+}
+
 export type HistoryRecord = DepositRecord | WithdrawRecord;
 
+export type HistoryStatus =
+  | RecordStatus.ACTION_REQUIRED
+  | RecordStatus.SUCCESS
+  | RecordStatus.ERROR;
+
 export interface Record {
-  type: RecordType;
+  type: HistoryRecord;
   amount: string; // in wei
   createdAt: Date;
+  status: HistoryStatus;
 }
 
 export interface DepositRecord {
