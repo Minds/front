@@ -24,14 +24,38 @@
     width: 100%;
   }
 
+  .m-polygon__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+
+  .m-polygon__tx-title {
+    display: flex;
+    flex-direction: column;
+
+    .m-polygon__tx-title-description {
+      opacity: 0.7;
+      font-size: 10px;
+    }
+
+    .m-polygon__title-icon {
+      width: 10px;
+      padding: 0 1px 0 2px;
+    }
+  }
+
   .m-polygon__transactions {
     display: inline-block;
     width: 100%;
-    padding: 16px;
+    padding: 0 16px 16px 16px;
     border-radius: 8px;
     align-items: center;
     box-sizing: border-box;
     justify-content: flex-start;
+    max-height: 500px;
+    overflow-y: auto;
 
     @include m-theme() {
       background: themed($m-bgColor--secondary);
@@ -54,68 +78,12 @@
       text-align: left;
     }
 
-    .m-polygon__transactions-container {
-      width: 100%;
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
-    }
-
-    .m-polygon__tabs-transactions {
-      display: grid;
-      margin: 8px 0;
-      grid-template-columns: repeat(2, 1fr);
-      align-items: baseline;
-      margin-bottom: 0px;
-      width: 60%;
-
-      @include m-theme() {
-        background: themed($m-bgColor--secondary);
-      }
-
-      .m-polygon__tab-transactions {
-        padding: 8px;
-        text-align: center;
-        cursor: pointer;
-        user-select: none;
-        display: flex;
-        justify-content: center;
-
-        &.m-polygon__active {
-          @include m-theme() {
-            border-bottom: 2px solid themed($m-blue-dark);
-          }
-        }
-
-        & span {
-          opacity: 0.2;
-        }
-        &.m-polygon__active span {
-          opacity: 1;
-        }
-      }
-    }
-
-    .m-polygon__badge {
-      margin-left: 8px;
-      padding: 1px;
-      width: 16px;
-
-      @include m-theme() {
-        background: themed($m-blue-dark);
-      }
-
-      border-radius: 4px;
-      border: none;
-      font-size: smaller;
-    }
-
     .m-polygon__date {
       margin-top: 20px;
     }
 
     .m-polygon__boxContainer {
-      display: flex;
+      display: grid;
       width: 98%;
       padding: 16px;
       border-radius: 8px;
@@ -129,6 +97,18 @@
         background: themed($m-bgColor--secondary);
         border: 1px solid themed($m-borderColor--primary);
       }
+    }
+
+    .m-polygon__view-button {
+      width: 24px;
+      cursor: pointer;
+      opacity: 0.3;
+    }
+
+    .m-polygon__next-button {
+      width: 32px;
+      transform: rotate(-90deg);
+      cursor: pointer;
     }
 
     .m-polygon__statusCircle {
@@ -159,26 +139,12 @@
       margin-left: 8px;
     }
 
-    .m-grid__row {
-      display: block;
-      min-width: 132px;
-    }
-
-    .m-grid__row-hash {
-      display: block;
-      min-width: 100px;
-    }
-
     .m-grid__row-last {
       display: grid;
     }
 
-    img {
+    .m-polygon__minds-logo {
       width: 15px;
-      border-radius: 50%;
-      background: white;
-      padding: 4px;
-      height: 17px;
     }
 
     .m-polygon__price {

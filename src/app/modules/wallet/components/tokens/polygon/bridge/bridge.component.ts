@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { InputBalance } from '../polygon.types';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PolygonService } from '../polygon.service';
@@ -7,6 +7,8 @@ import {
   Network,
   NetworkSwitchService,
 } from '../../../../../../common/services/network-switch-service';
+import { Web3WalletService } from '../../../../../blockchain/web3-wallet.service';
+import { filter } from 'rxjs/operators';
 
 /**
  * Polygon component, giving users the ability to swap between networks.
@@ -20,6 +22,8 @@ export class WalletPolygonBridgeComponent implements OnInit {
   // amount we are transacting.
   public amount = '0';
 
+  @Output() changeTab = new EventEmitter<void>();
+
   // balance, held with active input currency for display purposes.
   public balance: InputBalance = {
     root: 0,
@@ -30,17 +34,19 @@ export class WalletPolygonBridgeComponent implements OnInit {
   public readonly MAINNET_NETWORK: Network;
 
   // handle of networks
-  currentNetwork: Network;
+  fromNetwork: Network;
   receivingNetwork: Network;
 
   // form for input amount
   public form: FormGroup;
 
   private allowance = ethers.BigNumber.from(0);
+  private currentChainId: number;
 
   constructor(
     private service: PolygonService,
-    private networkSwitch: NetworkSwitchService
+    private networkSwitch: NetworkSwitchService,
+    private web3Wallet: Web3WalletService
   ) {
     this.MAINNET_NETWORK = this.networkSwitch.networks.goerli;
     this.POLYGON_NETWORK = this.networkSwitch.networks.mumbai;
@@ -54,20 +60,30 @@ export class WalletPolygonBridgeComponent implements OnInit {
     return this.networkSwitch.getActiveNetwork();
   }
 
+  get validNetwork() {
+    return (
+      this.currentChainId ===
+      ethers.BigNumber.from(this.fromNetwork.id).toNumber()
+    );
+  }
+
   get currentNetworkBalance() {
-    return this.currentNetwork.networkName === this.MAINNET_NETWORK.networkName
+    return this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName
       ? this.balance.root
       : this.balance.child;
   }
 
   get receivingNetworkBalance() {
-    return this.currentNetwork.networkName === this.MAINNET_NETWORK.networkName
+    return this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName
       ? this.balance.child
       : this.balance.root;
   }
 
   get needsApproval() {
-    return ethers.utils.parseEther(this.amount).gt(this.allowance);
+    return (
+      this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName &&
+      ethers.utils.parseEther(this.amount).gt(this.allowance)
+    );
   }
 
   async ngOnInit(): Promise<void> {
@@ -79,10 +95,14 @@ export class WalletPolygonBridgeComponent implements OnInit {
       }),
     });
 
-    await this.service.initialize();
-    this.initBalance();
-    this.service.getHistory();
-    this.fetchApprovedBalance();
+    this.networkSwitch.networkChanged$.subscribe(chainId => {
+      console.log('chainId', chainId);
+      this.currentChainId = chainId;
+    });
+
+    this.web3Wallet.provider$
+      .pipe(filter(provider => provider !== null))
+      .subscribe(() => this.initBalance());
   }
 
   /**
@@ -90,7 +110,10 @@ export class WalletPolygonBridgeComponent implements OnInit {
    * @returns { number } - maximum amount a user can input.
    */
   setMaxAmount() {
-    this.amount = this.balance.root.toString();
+    this.amount =
+      this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName
+        ? this.balance.root.toString()
+        : this.balance.child.toString();
   }
 
   /**
@@ -98,10 +121,10 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   findNetworksInfo() {
     if (this.activeNetwork.networkName === this.POLYGON_NETWORK.networkName) {
-      this.currentNetwork = this.POLYGON_NETWORK;
+      this.fromNetwork = this.POLYGON_NETWORK;
       this.receivingNetwork = this.MAINNET_NETWORK;
     } else {
-      this.currentNetwork = this.MAINNET_NETWORK;
+      this.fromNetwork = this.MAINNET_NETWORK;
       this.receivingNetwork = this.POLYGON_NETWORK;
     }
   }
@@ -112,6 +135,8 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   public async approve() {
     await this.service.approve(ethers.utils.parseUnits(this.amount, 18));
+    this.initBalance();
+    setTimeout(() => this.initBalance(), 10000);
   }
 
   /**
@@ -135,6 +160,7 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   async deposit() {
     await this.service.deposit(ethers.utils.parseUnits(this.amount, 18));
+    this.changeTab.emit();
   }
 
   /**
@@ -143,6 +169,14 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   async withdraw() {
     await this.service.withdraw(ethers.utils.parseUnits(this.amount, 18));
+    this.changeTab.emit();
+  }
+
+  transfer() {
+    if (this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName) {
+      return this.deposit();
+    }
+    return this.withdraw();
   }
 
   /**
@@ -152,6 +186,8 @@ export class WalletPolygonBridgeComponent implements OnInit {
   private async initBalance(): Promise<void> {
     try {
       const balances = await this.service.getBalances();
+      console.log('initBalance', balances);
+
       this.balance = {
         root: parseFloat(ethers.utils.formatEther(balances.root)),
         child: parseFloat(ethers.utils.formatEther(balances.child)),
@@ -161,6 +197,4 @@ export class WalletPolygonBridgeComponent implements OnInit {
       console.warn('error fetching balances', err);
     }
   }
-
-  private fetchApprovedBalance() {}
 }

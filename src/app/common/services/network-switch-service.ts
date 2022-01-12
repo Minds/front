@@ -96,9 +96,7 @@ export class NetworkSwitchService implements OnDestroy {
   private networkChangeProvider: Provider = null;
 
   // fires on network change
-  public readonly networkChanged$: BehaviorSubject<any> = new BehaviorSubject<
-    any
-  >(true);
+  public readonly networkChanged$ = new BehaviorSubject<number | null>(null);
 
   constructor(
     private toast: FormToastService,
@@ -265,21 +263,20 @@ export class NetworkSwitchService implements OnDestroy {
    * @returns { void }
    */
   private setupNetworkChangeListener(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && window.ethereum) {
       this.networkChangeProvider = new ethers.providers.Web3Provider(
         window.ethereum,
         'any'
       );
-      this.networkChangeProvider.on(
-        'network',
-        async (newNetwork, oldNetwork) => {
-          // console.log("Network changed from", oldNetwork, "to", newNetwork);
-          if (oldNetwork) {
-            await this.wallet.reinitializeProvider();
-            this.networkChanged$.next(newNetwork);
-          }
+      this.networkChangeProvider.getNetwork().then(network => {
+        this.networkChanged$.next(network.chainId);
+      });
+      window.ethereum.on('networkChanged', async chain => {
+        this.networkChanged$.next(ethers.BigNumber.from(chain).toNumber());
+        if (this.networkChanged$.value) {
+          await this.wallet.reinitializeProvider();
         }
-      );
+      });
     }
   }
 }

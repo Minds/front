@@ -1,78 +1,122 @@
 <div class="m-polygon__transactions">
-  <div class="m-polygon__transactions-container">
-    <div class="m-polygon__tabs-transactions">
-      <div
-        (click)="changeTab()"
-        class="m-polygon__tab-transactions"
-        [ngClass]="!pending ? 'm-polygon__active' : ''"
-      >
-        <span>All transactions</span>
-      </div>
-      <div
-        (click)="changeTab()"
-        class="m-polygon__tab-transactions"
-        [ngClass]="pending ? 'm-polygon__active' : ''"
-      >
-        <span>Pending</span>
-        <div class="m-polygon__badge">1</div>
+  <div
+    class="m-polygon__loader"
+    *ngIf="
+      (polygonService.historyLoading$ | async) &&
+      !(polygonService.history$ | async)?.length
+    "
+  >
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+  <ng-container
+    *ngIf="
+      !(
+        (polygonService.historyLoading$ | async) &&
+        !(polygonService.history$ | async)?.length
+      )
+    "
+  >
+    <div
+      class="m-polygon__date"
+      *ngFor="let transaction of polygonService.history$ | async"
+    >
+      <div class="m-polygon__boxContainer m-grid">
+        <div class="m-grid__column-2">
+          <div class="m-polygon__statusCircle">
+            <div
+              *ngIf="displaySpinner(transaction)"
+              class="mdl-spinner mdl-js-spinner is-active"
+              [mdl]
+            ></div>
+            <m-icon
+              *ngIf="isSuccess(transaction)"
+              iconId="check"
+              class="m-polygon__success"
+            ></m-icon>
+          </div>
+        </div>
+        <div class="m-grid__column-5">
+          <div class="m-polygon__tx-title">
+            <span class="m-polygon__boxTitleType">{{
+              getTitle(transaction.type) | titlecase
+            }}</span>
+            <span class="m-polygon__status">{{
+              getStatus(transaction.status)
+            }}</span>
+            <span
+              *ngIf="transaction.type === 0"
+              class="m-polygon__tx-title-description"
+            >
+              From
+              <img
+                class="m-polygon__title-icon"
+                src="assets/ext/ethereum.png"
+                alt="eth"
+              />
+              Mainnet to
+              <img
+                class="m-polygon__title-icon"
+                src="assets/ext/polygon.png"
+                alt="polygon"
+              />
+              Polygon
+            </span>
+            <span
+              *ngIf="transaction.type === 1"
+              class="m-polygon__tx-title-description"
+            >
+              From
+              <img
+                class="m-polygon__title-icon"
+                src="assets/ext/polygon.png"
+                alt="polygon"
+              />
+              Polygon to
+              <img
+                class="m-polygon__title-icon"
+                src="assets/ext/ethereum.png"
+                alt="eth"
+              />
+              Mainnet</span
+            >
+          </div>
+        </div>
+        <div class="m-grid__column-4">
+          <div class="m-grid__row-hash">
+            <img
+              class="m-polygon__minds-logo"
+              src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
+              alt="bulb"
+            />
+            <span class="m-polygon__price">
+              {{ formatAmount(transaction.amount) }} MINDS</span
+            >
+          </div>
+        </div>
+        <div class="m-grid__column-1">
+          <div class="m-grid__row-last">
+            <a
+              *ngIf="getExplorerUrl(transaction)"
+              [href]="getExplorerUrl(transaction)"
+              target="_blank"
+            >
+              <img
+                src="assets/icons/play.svg"
+                alt="view"
+                class="m-polygon__view-button"
+              />
+            </a>
+
+            <img
+              *ngIf="needsAction(transaction)"
+              (click)="exit(transaction)"
+              src="assets/icons/arrow-drop-down-white.svg"
+              alt="arrow"
+              class="m-polygon__next-button"
+            />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="m-polygon__date" *ngFor="let transaction of transactions">
-    <span class="m-polygon__boxTitle">January 10, 2022 </span>
-    <div class="m-polygon__boxContainer m-grid">
-      <div class="m-grid__column-2">
-        <div class="m-polygon__statusCircle">
-          <div
-            *ngIf="transaction.status === 0"
-            class="mdl-spinner mdl-js-spinner is-active"
-            [mdl]
-          ></div>
-          <m-icon
-            [iconId]="transaction.status === 1 ? 'check' : 'close'"
-            *ngIf="transaction.status === 1"
-            [ngClass]="
-              transaction.status === 1
-                ? 'm-polygon__success'
-                : 'm-polygon__error'
-            "
-          ></m-icon>
-        </div>
-      </div>
-      <div class="m-grid__column-6">
-        <div class="m-grid__row">
-          <span class="m-polygon__boxTitleType">{{
-            getTitle(transaction.type.type) | titlecase
-          }}</span>
-          <span class="m-polygon__boxSubTitle">• 1 days ago</span>
-        </div>
-        <span class="m-polygon__status">{{
-          getStatus(transaction.status)
-        }}</span>
-      </div>
-      <div class="m-grid__column-2">
-        <div class="m-grid__row-hash">
-          <img
-            src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg"
-            alt="bulb"
-          />
-          <span class="m-polygon__price"> {{ transaction.amount }} MINDS</span>
-        </div>
-      </div>
-
-      <div class="m-grid__column-2">
-        <div class="m-grid__row-last">
-          <span class="m-polygon__hash">Tx Hash</span>
-          <span
-            class="m-polygon_txhash"
-            (click)="copyToClipboard(transaction.type.txHash)"
-          >
-            {{ truncatedHash(transaction.type.txHash) }}
-            <m-icon iconId="copy" from="custom" [sizeFactor]="5"></m-icon>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+  </ng-container>
 </div>

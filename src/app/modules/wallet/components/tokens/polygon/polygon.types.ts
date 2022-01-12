@@ -27,10 +27,12 @@ export interface Record {
 export interface DepositRecord extends Record {
   type: RecordType.DEPOSIT;
   txHash: string;
+  txBlock: number;
 }
 
 export interface WithdrawRecord extends Record {
   type: RecordType.WITHDRAW;
-  txHash?: string;
   txBurn: string;
+  txHash?: string;
+  txBlock?: number;
 }

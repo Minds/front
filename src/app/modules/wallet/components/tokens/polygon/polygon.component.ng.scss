@@ -17,6 +17,10 @@
     flex-flow: column nowrap;
     align-items: center;
 
+    .m-polygon__hidden {
+      display: none;
+    }
+
     .m-polygon__tabs {
       display: grid;
       width: 100%;
@@ -41,12 +45,35 @@
         &.m-polygon__active span {
           opacity: 1;
         }
+        .m-polygon__badge {
+          border-radius: 32px;
+          display: inline-block;
+          margin-left: 4px;
+          font-size: 12px;
+          min-width: 20px;
+
+          @include m-theme() {
+            background-color: rgba(themed($m-bgColor--contrast), 0.2);
+          }
+        }
       }
       .m-polygon__tab:not(:first-child) {
         @include m-theme() {
           border-left: 1px solid themed($m-borderColor--primary);
         }
       }
+    }
+  }
+
+  .m-polygon__loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+
+    & h4 {
+      font-size: 18px;
     }
   }
 }

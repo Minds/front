@@ -1,21 +1,34 @@
-<div class="m-skale__body">
+<div class="m-skale__body" *ngIf="!waitingForNetwork">
   <div class="m-polygon__tabs">
     <div
-      (click)="changeTab()"
+      (click)="bridge = true"
       class="m-polygon__tab"
       [ngClass]="bridge ? 'm-polygon__active' : ''"
     >
       <span>Bridge</span>
     </div>
     <div
-      (click)="changeTab()"
+      (click)="bridge = false"
       class="m-polygon__tab"
       [ngClass]="!bridge ? 'm-polygon__active' : ''"
     >
-      <span>Historic</span>
+      <span>History</span>
+      <span *ngIf="(pendingTxs | async) > 0" class="m-polygon__badge">{{
+        pendingTxs | async
+      }}</span>
     </div>
   </div>
 
-  <m-wallet__polygon-bridge *ngIf="bridge"></m-wallet__polygon-bridge>
-  <m-wallet__polygon-historic *ngIf="!bridge"></m-wallet__polygon-historic>
+  <m-wallet__polygon-bridge
+    (changeTab)="bridge = false"
+    [class.m-polygon__hidden]="!bridge"
+  ></m-wallet__polygon-bridge>
+  <m-wallet__polygon-historic
+    [class.m-polygon__hidden]="bridge"
+  ></m-wallet__polygon-historic>
+</div>
+
+<div class="m-polygon__loader" *ngIf="waitingForNetwork">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  <h4>Please select the Mainnet Network</h4>
 </div>

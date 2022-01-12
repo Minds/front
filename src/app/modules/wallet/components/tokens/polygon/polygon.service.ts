@@ -14,12 +14,14 @@ import {
 import { Web3ClientPlugin } from '@maticnetwork/maticjs-ethers';
 import {
   DepositRecord,
+  HistoryRecord,
   RecordStatus,
   RecordType,
   WithdrawRecord,
 } from './polygon.types';
 import { providers } from '@0xsequence/multicall';
 import { JsonRpcProviderMemoize } from './utils/JsonUrlProviderMemoize';
+import { BehaviorSubject } from 'rxjs';
 
 const MAINNET_RPC_URL =
   'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
@@ -50,14 +52,14 @@ const ERC20_ABI = [
   'function allowance(address owner, address spender) view returns (uint256)',
 ];
 
+const ROOT_CHAIN_ABI = [
+  'function currentHeaderBlock() view returns (uint256)',
+  'function getLastChildBlock() view returns (uint256)',
+];
+
 use(Web3ClientPlugin);
 setProofApi('https://apis.matic.network/');
 
-// console.dir(
-//   JSON.stringify(
-//     new ethers.utils.Interface().fragments.map(f => f.format('full'))
-//   )
-// );
 const MAINNET_CHAIN_ID = 5;
 const POLYGON_CHAIN_ID = 80001;
 const MAINNET_PROVIDER = new JsonRpcProviderMemoize(
@@ -71,6 +73,9 @@ const POLYGON_PROVIDER = new JsonRpcProviderMemoize(
 
 @Injectable({ providedIn: 'root' })
 export class PolygonService {
+  public history$ = new BehaviorSubject<HistoryRecord[]>([]);
+  public historyLoading$ = new BehaviorSubject(false);
+
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
@@ -79,33 +84,14 @@ export class PolygonService {
     private maticService: PolygonMindsTokenContractService
   ) {}
 
-  // private getWithdrawStatus = memoize(
-  //   async (
-  //     withdraw,
-  //     posClient: POSClient,
-  //     rootChainManager: ethers.Contract
-  //   ): Promise<RecordStatus> => {
-  //     const { txBurn, status: _status } = withdraw;
-  //     try {
-  //       const exitHash = await posClient.exitUtil.getExitHash(
-  //         txBurn,
-  //         Log_Event_Signature.Erc20Transfer
-  //       );
-  //       const hasExited = await rootChainManager.processedExits(exitHash);
-  //       if (hasExited) {
-  //         return RecordStatus.SUCCESS;
-  //       }
-  //       return _status;
-  //     } catch (err) {
-  //       console.warn('error determining status', err);
-  //     }
-  //     return RecordStatus.UNKNOWN;
-  //   },
-  //   withdraw => withdraw.txBurn
-  // );
-
   public async initialize() {
     await this.web3Wallet.initializeProvider();
+    this.web3Wallet.provider$.subscribe(async provider => {
+      const network = await provider.getNetwork();
+      if (network.chainId === 5) {
+        this.getHistory();
+      }
+    });
   }
 
   /**
@@ -183,6 +169,18 @@ export class PolygonService {
     return this.maticService.increasePolygonTokenAllowance(amount);
   }
 
+  public async getLastChildBlock() {
+    const posClient = await this.getPOSClientRoot();
+    const rootChainContract = new ethers.Contract(
+      posClient.client.config.rootChain,
+      ROOT_CHAIN_ABI,
+      MAINNET_PROVIDER
+    );
+    const block: BigNumber = await rootChainContract.getLastChildBlock();
+    console.log('block', block);
+    return block.toNumber();
+  }
+
   /**
    * Approve the spend of X tokens.
    * @param { number } amount - amount of tokens to approve.
@@ -195,10 +193,8 @@ export class PolygonService {
     }
 
     const posClient = await this.getPOSClientRoot();
-    const erc20Contract = posClient.erc20(MIND_TOKEN_ADDRESS);
-
+    const erc20Contract = posClient.erc20(MIND_TOKEN_ADDRESS, true);
     const approveTx = await erc20Contract.approveMax();
-    console.log(approveTx);
     const receipt = await approveTx.getReceipt();
     console.log('receipt', receipt);
   }
@@ -219,9 +215,21 @@ export class PolygonService {
     const posClient = await this.getPOSClientRoot();
 
     const depositTx = await posClient
-      .erc20(MIND_TOKEN_ADDRESS)
+      .erc20(MIND_TOKEN_ADDRESS, true)
       .deposit(amount.toString(), userAddress);
-    await depositTx.getReceipt();
+    const receipt = await depositTx.getReceipt();
+    const record: DepositRecord = {
+      type: RecordType.DEPOSIT,
+      status: RecordStatus.SUCCESS,
+      amount: amount.toString(),
+      txBlock: receipt.blockNumber,
+      txHash: receipt.transactionHash,
+    };
+    this.addToHistory(record);
+  }
+
+  private addToHistory(record: HistoryRecord) {
+    this.history$.next(this.sortHistory([record, ...this.history$.getValue()]));
   }
 
   /**
@@ -245,6 +253,14 @@ export class PolygonService {
     const withdrawReceipt = await withdrawTx.getReceipt();
 
     console.log('withdrawReceipt', withdrawReceipt);
+
+    const record: WithdrawRecord = {
+      type: RecordType.WITHDRAW,
+      status: RecordStatus.PENDING,
+      amount: amount.toString(),
+      txBurn: withdrawReceipt.transactionHash,
+    };
+    this.addToHistory(record);
   }
 
   public async exit(burnTxHash: string) {
@@ -252,21 +268,36 @@ export class PolygonService {
 
     const erc20RootToken = posClient.erc20(MIND_TOKEN_ADDRESS, true);
     const result = await erc20RootToken.withdrawExitFaster(burnTxHash);
-    console.log('result', result);
-
-    const txHash = await result.getTransactionHash();
-    console.log('txHash', txHash);
-
     const txReceipt = await result.getReceipt();
-    console.log('txReceipt', txReceipt);
+
+    const history = this.history$.getValue().map(record => {
+      if (record.type === RecordType.WITHDRAW && record.txBurn === burnTxHash) {
+        return {
+          ...record,
+          status: RecordStatus.SUCCESS,
+          txBlock: txReceipt.blockNumber,
+          txHash: txReceipt.transactionHash,
+        };
+      }
+      return record;
+    });
+    this.history$.next(history);
   }
 
   public async getHistory() {
-    const [deposits, withdrawals] = await Promise.all([
-      this.getDepositHistory(),
-      this.getWithdrawHistory(),
-    ]);
-    console.log({ deposits, withdrawals });
+    this.historyLoading$.next(true);
+    try {
+      const [deposits, withdrawals] = await Promise.all([
+        this.getDepositHistory(),
+        this.getWithdrawHistory(),
+      ]);
+      const history: HistoryRecord[] = [...deposits, ...withdrawals];
+      this.history$.next(this.sortHistory(history));
+    } catch (err) {
+      console.warn('error fetching history', err);
+    } finally {
+      this.historyLoading$.next(false);
+    }
   }
 
   public async getDepositHistory() {
@@ -294,6 +325,7 @@ export class PolygonService {
           status: RecordStatus.SUCCESS,
           amount: amount.toString(),
           txHash: event.transactionHash,
+          txBlock: event.blockNumber,
         };
       }
     );
@@ -303,6 +335,7 @@ export class PolygonService {
     const from = await this.web3Wallet.provider.getSigner().getAddress();
     const multicallProvider = new providers.MulticallProvider(MAINNET_PROVIDER);
     const posClient = await this.getPOSClientRoot();
+    const lastChildBlock = await this.getLastChildBlock();
     const childTokenContract = new ethers.Contract(
       MIND_CHILD_TOKEN_ADDRESS,
       ERC20_ABI,
@@ -331,9 +364,13 @@ export class PolygonService {
       withdrawalEvents.map(
         async (event): Promise<WithdrawRecord> => {
           const amount = event.args.value as BigNumber;
+          const status =
+            event.blockNumber < lastChildBlock
+              ? RecordStatus.ACTION_REQUIRED
+              : RecordStatus.PENDING;
           return {
+            status,
             type: RecordType.WITHDRAW,
-            status: RecordStatus.PENDING,
             amount: amount.toString(),
             txBurn: event.transactionHash,
           };
@@ -342,21 +379,32 @@ export class PolygonService {
     );
 
     const txExitHashesPromises = records.map(async record => {
-      const payload = await posClient.exitUtil.buildPayloadForExit(
-        record.txBurn,
-        Log_Event_Signature.Erc20Transfer,
-        true
-      );
-      const exitTx = await rootChainManager.populateTransaction.exit(payload);
-      return { txBurn: record.txBurn, data: exitTx.data };
+      try {
+        const payload = await posClient.exitUtil.buildPayloadForExit(
+          record.txBurn,
+          Log_Event_Signature.Erc20Transfer,
+          true
+        );
+        const exitTx = await rootChainManager.populateTransaction.exit(payload);
+        return { txBurn: record.txBurn, data: exitTx.data };
+      } catch (err) {
+        console.warn('error retrieving exit tx', err);
+      }
+      return null;
     });
-    const txExitHashes = await Promise.all(txExitHashesPromises);
+    const txExitHashes = (await Promise.all(txExitHashesPromises)).filter(
+      tx => tx !== null
+    );
 
     const exitTxs = await Promise.all(
       exitEvents.map(async event => {
         const tx = await event.getTransaction();
         const hash = txExitHashes.find(_hash => _hash.data === tx.data);
-        return { ...hash, txHash: event.transactionHash };
+        return {
+          ...hash,
+          txBlock: tx.blockNumber,
+          txHash: event.transactionHash,
+        };
       })
     );
 
@@ -366,6 +414,7 @@ export class PolygonService {
         return {
           ...record,
           status: RecordStatus.SUCCESS,
+          txBlock: exitTx.txBlock,
           txHash: exitTx.txHash,
         };
       }
@@ -374,17 +423,12 @@ export class PolygonService {
   }
 
   public async getBalances() {
-    const posClient = await this.getPOSClientRoot();
     const { childToken, rootToken } = this.getTokenContracts();
     const from = await this.web3Wallet.provider.getSigner().getAddress();
-
     return {
       root: await rootToken.balanceOf(from),
       child: await childToken.balanceOf(from),
-      approved: await rootToken.allowance(
-        from,
-        posClient.client.config.rootChainManager
-      ),
+      approved: await rootToken.allowance(from, ERC20_PREDICATE_ADDRESS),
     };
   }
 
@@ -444,5 +488,21 @@ export class PolygonService {
       child: { provider: childProvider, defaultConfig: { from } },
     });
     return posClientChild;
+  }
+
+  private sortHistory(history: HistoryRecord[]) {
+    return history.sort((record1, record2) => {
+      if (
+        record1.status === RecordStatus.SUCCESS &&
+        record2.status === RecordStatus.SUCCESS
+      ) {
+        return record1.txBlock > record2.txBlock ? -1 : 1;
+      } else if (record1.status === RecordStatus.SUCCESS) {
+        return 1;
+      } else if (record2.status === RecordStatus.SUCCESS) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }

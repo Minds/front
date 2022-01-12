@@ -1,5 +1,3 @@
-import { HistoryRecord, RecordType } from './polygon.types';
-
 export const Polygon = {
   Main: {
     NetworkName: 'Goerli',
@@ -728,33 +726,3 @@ export const ChildAbi = {
     },
   ],
 };
-
-export const NetworksInfo = [
-  {
-    img: 'assets/ext/ethereum.png',
-    networkName: 'Goerli',
-    displayName: 'Mainnet',
-  },
-  {
-    img: 'assets/ext/polygon.png',
-    networkName: 'Mumbai',
-    displayName: 'Polygon',
-  },
-];
-
-export const MockData: HistoryRecord[] = [
-  {
-    type: RecordType.DEPOSIT,
-    txHash:
-      '0xd85e419095930ec4486168c501d6f7e3bc55444c7ca589d8ad464d38c9debf15',
-    amount: '10',
-    status: 0,
-  },
-  {
-    type: RecordType.WITHDRAW,
-    txBurn:
-      '0x4ad4dd4d12c62b8abc660d938ae1fcd45d18e19981ccda948d4bbd5d8b4ed960',
-    amount: '2',
-    status: 1,
-  },
-];
