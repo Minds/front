@@ -7,6 +7,7 @@ import { TransactionOverlayService } from './transaction-overlay/transaction-ove
 import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
 import { FormToastService } from '../../common/services/form-toast.service';
+import { isPlatformBrowser } from '@angular/common';
 
 type Address = string;
 
@@ -36,6 +37,15 @@ export class Web3WalletService {
     }
 
     return this.provider;
+  }
+
+  /**
+   * Reinitialize wallet by resetting then initializing.
+   * @returns { Promise<void> }
+   */
+  public async reinitializeProvider(): Promise<void> {
+    this.resetProvider();
+    await this.initializeProvider();
   }
 
   getSigner() {
@@ -268,6 +278,27 @@ export class Web3WalletService {
     }
 
     return 'Local Interface';
+  }
+
+  /**
+   * Gets current chain ID as a number. Gets direct from window.web3
+   * to save the need for provider instantiation.
+   * @returns { number } current chain id.
+   */
+  public getCurrentChainId(): string {
+    return isPlatformBrowser(this.platformId)
+      ? window.web3?.currentProvider?.chainId
+      : '0x1';
+  }
+
+  /**
+   * Whether or not MetaMask is the current provider.
+   * @returns { boolean } true if MetaMask is the current provider.
+   */
+  public isMetaMask(): boolean {
+    return isPlatformBrowser(this.platformId)
+      ? window.web3?.currentProvider?.isMetaMask
+      : false;
   }
 
   /**

@@ -1,0 +1,34 @@
+<div class="m-skale__subTabs">
+  <button
+    class="m-skale__subTab"
+    *ngFor="let tab of subTabs"
+    [ngClass]="{
+      'm-skale__subTab--active': (activeSubTab$ | async) === tab
+    }"
+    (click)="setSubTab(tab)"
+  >
+    <ng-container [ngSwitch]="tab">
+      <ng-container *ngSwitchCase="'bridge'">
+        Bridge
+      </ng-container>
+      <ng-container *ngSwitchCase="'community-pool'">
+        Fund Exits
+      </ng-container>
+      <ng-container *ngSwitchCase="'faucet'">
+        Faucet
+      </ng-container>
+    </ng-container>
+  </button>
+</div>
+
+<div class="m-skale__body">
+  <ng-container [ngSwitch]="activeSubTab$ | async">
+    <m-wallet__skaleCommunityPool
+      *ngSwitchCase="'community-pool'"
+    ></m-wallet__skaleCommunityPool>
+    <!-- <m-wallet__skaleFaucet *ngSwitchCase="'faucet'"></m-wallet__skaleFaucet> -->
+    <m-wallet__skaleTransferBridge
+      *ngSwitchDefault
+    ></m-wallet__skaleTransferBridge>
+  </ng-container>
+</div>
