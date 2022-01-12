@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Web3WalletService } from '../../../../modules/blockchain/web3-wallet.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import {
@@ -23,17 +22,27 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
 
   public readonly selectedNetworkSiteName$: BehaviorSubject<
     NetworkSiteName
-  > = new BehaviorSubject<NetworkSiteName>('Mainnet');
+  > = new BehaviorSubject<NetworkSiteName>('SKALE');
 
   // networks that can be swapped between.
   public swappableNetworks: Network[] = [];
 
+  // Completion intent.
+  onComplete: () => any = () => {};
+
+  // Dismiss intent.
+  onDismissIntent: () => void = () => {};
+
   constructor(
     private networkSwitcher: NetworkSwitchService,
-    private web3Wallet: Web3WalletService,
     private toast: FormToastService
   ) {
     super();
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
+    await this.setSelectedToActiveNetwork();
   }
 
   /**
@@ -52,17 +61,6 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
    */
   get activeNetwork(): Network {
     return this.networkSwitcher.getActiveNetwork();
-  }
-
-  // Completion intent.
-  onComplete: () => any = () => {};
-
-  // Dismiss intent.
-  onDismissIntent: () => void = () => {};
-
-  async ngOnInit(): Promise<void> {
-    this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
-    await this.setSelectedToActiveNetwork();
   }
 
   /**
@@ -104,7 +102,7 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
       this.inProgress$.next(false);
       return;
     }
-    // this.selectedNetworkSiteName$.next('SKALE');
+    this.selectedNetworkSiteName$.next('SKALE');
     this.inProgress$.next(false);
   }
 }

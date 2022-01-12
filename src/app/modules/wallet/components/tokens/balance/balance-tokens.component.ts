@@ -190,6 +190,5 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
    */
   public shouldShowNetworkSwitcher(): boolean {
     return this.features.has('skale') || this.features.has('polygon');
-    // return true;
   }
 }

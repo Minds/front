@@ -320,8 +320,6 @@ export class Web3WalletService {
       : false;
   }
 
-  // Service provider
-
   /**
    * Handles errors on estimateGas failure.
    * @param {code?: string} e - error object.
