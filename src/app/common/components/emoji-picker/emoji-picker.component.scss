@@ -1,0 +1,19 @@
+@import 'defaults.scss';
+
+m-emojiPicker {
+  margin-right: $minds-margin;
+
+  .ngxp__container {
+    border: none;
+    padding: 0;
+    z-index: 1;
+  }
+}
+
+.m-emojiPicker__icon {
+  padding-right: $minds-padding;
+  cursor: pointer;
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}

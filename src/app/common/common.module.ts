@@ -199,6 +199,8 @@ import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
+import { EmojiPickerComponent } from './components/emoji-picker/emoji-picker.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 const routes: Routes = [
   {
@@ -214,6 +216,7 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    PickerModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
@@ -369,6 +372,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    EmojiPickerComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -515,6 +519,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    EmojiPickerComponent,
   ],
   providers: [
     SiteService,

@@ -1,0 +1,17 @@
+<div
+  [popper]="popper"
+  [popperPlacement]="'bottom'"
+  [popperTrigger]="'click'"
+  [popperModifiers]="popperModifiers"
+>
+  <i class="m-emojiPicker__icon material-icons">insert_emoticon</i>
+</div>
+
+<popper-content #popper>
+  <emoji-mart
+    title="Pick your emoji…"
+    emoji="point_up"
+    [darkMode]="themeService.isDark$ | async"
+    (emojiSelect)="emojiSelectEmitter.emit($event.emoji)"
+  ></emoji-mart>
+</popper-content>
