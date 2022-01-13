@@ -27,7 +27,7 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
   @HostListener('load')
   onLoad() {
     if (this.canvas && !this.paywalled) {
-      this.canvas.style.opacity = '0';
+      this.removeCanvas();
     }
   }
 
@@ -110,6 +110,16 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
     } catch (e) {
       console.error('Blurhash: failed to draw canvas', e);
     }
+  }
+
+  /**
+   * removes the canvas element from DOM with a transition
+   */
+  removeCanvas() {
+    this.canvas.style.opacity = '0';
+    setTimeout(() => {
+      this.canvas?.remove();
+    }, 300);
   }
 
   ngOnDestroy() {
