@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgxPopperjsContentComponent } from 'ngx-popperjs';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '../../../../services/storage';
 
@@ -23,6 +24,7 @@ export class FeedTypePopoverComponent implements OnInit {
       offset: [10, 10],
     },
   };
+  @ViewChild('popper') popper: NgxPopperjsContentComponent;
 
   constructor(private storage: Storage) {}
 
@@ -54,5 +56,8 @@ export class FeedTypePopoverComponent implements OnInit {
 
   onChangeType(type: 'top' | 'latest'): void {
     this.changeType.emit(type);
+    setTimeout(() => {
+      this.popper.hide();
+    }, 0)
   }
 }
