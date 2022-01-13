@@ -8,6 +8,9 @@ import { Component, Output, ViewChild, EventEmitter } from '@angular/core';
   styleUrls: ['./emoji-picker.component.scss'],
 })
 export class EmojiPickerComponent {
+  popperPlacement: string = 'bottom';
+  shown: boolean = false;
+
   /**
    * On Post event emitter
    */
@@ -20,4 +23,12 @@ export class EmojiPickerComponent {
   @ViewChild('popper') popper: NgxPopperjsContentComponent;
 
   constructor(public themeService: ThemeService) {}
+
+  popperOnShown($event): void {
+    this.shown = true;
+  }
+
+  popperOnHide($event): void {
+    this.shown = false;
+  }
 }
