@@ -7,7 +7,6 @@ import {
 
 // tabs for different components that can be shown
 export type SkaleBridgeSubTab = 'bridge' | 'skale-bridge' | 'community-pool';
-// | 'faucet';
 
 /**
  * Wrapper for SKALE transfer bridge that allows access to bridge, and depending on network

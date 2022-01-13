@@ -47,7 +47,6 @@ import { NetworkSwapBridgeModalComponent } from './components/network-swap-bridg
 import { WalletSkaleComponent } from './components/network-swap-bridge/skale/skale.component';
 import { WalletSkaleCommunityPoolComponent } from './components/network-swap-bridge/skale/community-pool/community-pool.component';
 import { WalletSkaleTransferBridgeComponent } from './components/network-swap-bridge/skale/transfer-bridge/transfer-bridge.component';
-import { WalletSkaleFaucetComponent } from './components/network-swap-bridge/skale/faucet/faucet.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -220,7 +219,6 @@ export const WALLET_ROUTES: Routes = [
     WalletSkaleComponent,
     WalletSkaleCommunityPoolComponent,
     WalletSkaleTransferBridgeComponent,
-    WalletSkaleFaucetComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [
