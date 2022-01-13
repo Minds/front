@@ -12,7 +12,7 @@ export class TopFeedComponent {
   constructor(public topFeedService: TopFeedService) {}
 
   loadNext() {
-    this.topFeedService.setLimit(12);
+    this.topFeedService.setLimit(6);
     if (
       this.topFeedService.canFetchMore &&
       !this.topFeedService.inProgress.getValue() &&

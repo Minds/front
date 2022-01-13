@@ -60,6 +60,17 @@
         #topFeed
       ></m-top-feed>
 
+      <div
+        *ngIf="!inProgress && algorithm === 'top'"
+        class="m-newsfeed__subscribed__feedType"
+      >
+        <span
+          i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
+          class="m-newsfeed__subscribed__feedType__title"
+          >Latest Posts</span
+        >
+      </div>
+
       <ng-container *ngIf="!inProgress">
         <!--boost rotator-->
         <ng-container *ngIf="algorithm === 'latest'">
