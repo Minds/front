@@ -199,6 +199,8 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
 import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { EmojiPickerComponent } from './components/emoji-picker/emoji-picker.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 const routes: Routes = [
   {
@@ -214,6 +216,7 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    PickerModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
@@ -369,6 +372,7 @@ const routes: Routes = [
     SidebarMoreComponent,
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    EmojiPickerComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -515,6 +519,7 @@ const routes: Routes = [
     SidebarMoreComponent,
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    EmojiPickerComponent,
   ],
   providers: [
     SiteService,

@@ -391,6 +391,18 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Inserts the emoji in the message input at the caret position
+   * @param emoji
+   */
+  onEmoji(emoji: any): void {
+    const message = this.service.message$.getValue();
+    const caretPosition = this.service.selection$.getValue().start;
+    const preText = message.substring(0, caretPosition);
+    const postText = message.substring(caretPosition);
+    this.service.message$.next(preText + emoji.native + postText);
+  }
+
+  /**
    * Triggers change detection
    */
   detectChanges() {
