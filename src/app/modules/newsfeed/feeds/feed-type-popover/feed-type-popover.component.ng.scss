@@ -33,10 +33,9 @@
 
   ::ng-deep popper-content {
     .ngxp__container {
-      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
       max-width: 300px;
       min-width: 300px;
-      border-radius: $m-borderRadius * 2;
       padding: 0;
 
       @include z-index(tooltip);
@@ -62,6 +61,8 @@
     }
 
     .ngxp__inner {
+      border-radius: $m-borderRadius;
+      overflow: hidden;
       @include m-theme() {
         background: themed($m-bgColor--primary);
       }
@@ -76,7 +77,6 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        border-radius: $m-borderRadius * 2;
 
         &:hover {
           @include m-theme() {
