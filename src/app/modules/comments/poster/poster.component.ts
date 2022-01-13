@@ -279,6 +279,9 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  onEmoji(emoji) {
+    this.content = this.content + emoji.native;
+  }
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
