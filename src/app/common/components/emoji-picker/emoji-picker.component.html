@@ -3,8 +3,8 @@
   [popperPlacement]="'bottom'"
   [popperTrigger]="'click'"
   [popperModifiers]="popperModifiers"
-  (popperOnShown)="popperOnShown($event)"
-  (popperOnHide)="popperOnHide($event)"
+  (popperOnShown)="shown = true"
+  (popperOnHidden)="shown = false"
 >
   <i class="m-emojiPicker__icon material-icons">insert_emoticon</i>
 </div>
@@ -12,6 +12,8 @@
 <popper-content #popper>
   <emoji-mart
     *ngIf="shown"
+    [autoFocus]="true"
+    [isNative]="true"
     title="Pick your emoji…"
     emoji="point_up"
     [darkMode]="themeService.isDark$ | async"
