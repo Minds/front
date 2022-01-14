@@ -67,7 +67,8 @@ export class SkaleTokenManagerContractService extends AbstractSkaleMindsContract
     // Bypassing web3 wallet so we can send envelope 1 tx.
     const withdrawReceipt = await tokenManager.exitToMainERC20(
       this.web3Wallet.config.token.address,
-      amountWei
+      amountWei,
+      { gasLimit: 200000 }
     );
 
     return withdrawReceipt;
