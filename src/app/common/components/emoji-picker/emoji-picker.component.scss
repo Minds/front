@@ -1,18 +1,83 @@
 @import 'defaults.scss';
 
 m-emojiPicker {
+  text-align: left !important;
   margin-right: $minds-margin;
+
+  .emoji-mart-emoji,
+  .emoji-mart-emoji span {
+    cursor: pointer !important;
+  }
 
   .ngxp__container {
     border: none;
     padding: 0;
     z-index: 1;
+
+    .ngxp__arrow:before {
+      @include m-theme() {
+        background-color: themed($m-borderColor--primary);
+      }
+    }
+  }
+
+  /*
+ * Dark mode styles
+ */
+  .emoji-mart-dark {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      border-color: themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  .emoji-mart-dark .emoji-mart-bar {
+    @include m-theme() {
+      border-color: themed($m-borderColor--primary);
+    }
+  }
+
+  .emoji-mart-dark .emoji-mart-search input {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      border-color: themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .emoji-mart-dark .emoji-mart-search-icon svg {
+    @include m-theme() {
+      fill: themed($m-white);
+    }
+  }
+
+  .emoji-mart-dark .emoji-mart-category .emoji-mart-emoji:hover:before {
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .emoji-mart-dark .emoji-mart-category-label span {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+
+  .emoji-mart-dark .emoji-mart-skin-swatches {
+
+    @include m-theme() {
+      border-color: themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--secondary);
+    }
   }
 }
 
 .m-emojiPicker__icon {
   padding-right: $minds-padding;
   cursor: pointer;
+
   @include m-theme() {
     color: themed($m-textColor--secondary);
   }
