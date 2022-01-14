@@ -7,7 +7,8 @@ import { SkaleMindsTokenContractService } from './contracts/minds-token-skale.se
 import { SkaleTokenManagerContractService } from './contracts/skale-token-manager-contract.service';
 import { SkaleCommunityPoolContractService } from './contracts/skale-community-pool-contract.service';
 import { MindsTokenMainnetSignedContractService } from './contracts/minds-token-mainnet-signed-contract.service';
-import { SkaleFaucetService } from './faucet/faucet.service';
+import { SkaleFaucetService } from './services/faucet.service';
+import { SkaleCommunityPoolExitService } from './community-pool/community-pool-exit.service';
 
 @Injectable({ providedIn: 'root' })
 export class SkaleService {
@@ -20,7 +21,8 @@ export class SkaleService {
     private tokenManager: SkaleTokenManagerContractService,
     private communityPool: SkaleCommunityPoolContractService,
     private mindsToken: MindsTokenMainnetSignedContractService,
-    private faucet: SkaleFaucetService
+    private faucet: SkaleFaucetService,
+    private communityPoolExit: SkaleCommunityPoolExitService
   ) {}
 
   /**
@@ -145,6 +147,20 @@ export class SkaleService {
    * @returns { Promise<void> }
    */
   public async withdraw(amount: number): Promise<unknown> {
+    const walletAddress = await this.web3Wallet.getCurrentWallet();
+
+    if (!walletAddress) {
+      this.toast.error('No wallet connected');
+      return;
+    }
+
+    if (!(await this.communityPoolExit.canExit(walletAddress).toPromise())) {
+      this.toast.error(
+        'Your community pool balance is not high enough to exit from the SKALE chain.'
+      );
+      return;
+    }
+
     return this.tokenManager.withdraw(amount);
   }
 

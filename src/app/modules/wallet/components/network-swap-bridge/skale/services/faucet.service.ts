@@ -9,6 +9,9 @@ import { FormToastService } from '../../../../../../common/services/form-toast.s
 import { NetworkSwitchService } from '../../../../../../common/services/network-switch-service';
 import { Web3WalletService } from '../../../../../blockchain/web3-wallet.service';
 
+/**
+ * Service for requesting funds from the SKALE faucet.
+ */
 @Injectable({ providedIn: 'root' })
 export class SkaleFaucetService {
   constructor(
@@ -20,9 +23,9 @@ export class SkaleFaucetService {
   ) {}
 
   /**
-   * Request from the faucet
-   * @param { string } address - address to request for
-   * @returns { Observable<HttpResponse<any>> | void } - observable of http response or void.
+   * Request from the faucet.
+   * @param { string } address - address to request for.
+   * @returns { Observable<HttpResponse<any> | void> } - observable of http response or void.
    */
   public request(address: string): Observable<HttpResponse<any> | void> {
     this.toast.warn('Sending request for skETH - please wait');
