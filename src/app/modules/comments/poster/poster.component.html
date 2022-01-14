@@ -29,7 +29,8 @@
             (ascendingInProgress || descendingInProgress) &&
             attachment.hasFile()
           "
-          (keyup)="getPostPreview(content)"
+          (keyup)="keyup($event)"
+          (click)="updateCaretPosition()"
           (keypress)="keypress($event)"
           (keydown)="keydown($event)"
           [placeholder]="

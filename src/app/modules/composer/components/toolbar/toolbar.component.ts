@@ -400,6 +400,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     const preText = message.substring(0, caretPosition);
     const postText = message.substring(caretPosition);
     this.service.message$.next(preText + emoji.native + postText);
+    // move cursor after the emoji
+    this.service.selection$.next({
+      start: this.service.selection$.getValue().start + emoji.native.length,
+      end: this.service.selection$.getValue().end + emoji.native.length,
+    });
   }
 
   /**
