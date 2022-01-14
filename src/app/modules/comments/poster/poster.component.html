@@ -61,7 +61,10 @@
     <!-- --------------------- -->
     <div class="mdl-card__actions m-commentPoster__actions">
       <div>
-        <m-emojiPicker *ngIf="!isMobile()" (emojiSelect)="onEmoji($event)"></m-emojiPicker>
+        <m-emojiPicker
+          *ngIf="!isMobile()"
+          (emojiSelect)="onEmoji($event)"
+        ></m-emojiPicker>
 
         <!-- Dropdown meatball -->
         <div class="m-dropdown--v2">

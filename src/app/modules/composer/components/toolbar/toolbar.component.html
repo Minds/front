@@ -4,7 +4,10 @@
   [class.m-composer__toolbar--small]="isCompactMode$ | async"
   #toolbarWrapper
 >
-  <m-emojiPicker *ngIf="!isMobile()" (emojiSelect)="onEmoji($event)"></m-emojiPicker>
+  <m-emojiPicker
+    *ngIf="!isMobile()"
+    (emojiSelect)="onEmoji($event)"
+  ></m-emojiPicker>
 
   <m-file-upload
     [wrapperClass]="[
