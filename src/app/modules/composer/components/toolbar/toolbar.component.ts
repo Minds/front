@@ -38,6 +38,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
+import isMobile from '../../../../helpers/is-mobile';
 
 /**
  * Toolbar component. Interacts directly with the service.
@@ -405,6 +406,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       start: this.service.selection$.getValue().start + emoji.native.length,
       end: this.service.selection$.getValue().end + emoji.native.length,
     });
+  }
+
+  isMobile() {
+    return isMobile();
   }
 
   /**

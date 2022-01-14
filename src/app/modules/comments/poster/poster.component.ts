@@ -27,6 +27,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { IsCommentingService } from './is-commenting.service';
 import { Router } from '@angular/router';
+import isMobile from '../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-comment__poster',
@@ -312,6 +313,10 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     this.content = preText + emoji.native + postText;
     // move caret after emoji
     this.caretOffset += emoji.native.length;
+  }
+
+  isMobile() {
+    return isMobile();
   }
 
   detectChanges() {
