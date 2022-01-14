@@ -57,29 +57,6 @@
     Make closed
   </li>
 
-  <li
-    class="mdl-menu__item"
-    *ngIf="
-          (group['is:owner'] || group['is:moderator']) &&
-          group.conversationDisabled
-        "
-    (click)="toggleConversation(true); showMenu = false"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_CONVERSATION"
-  >
-    Enable conversation
-  </li>
-  <li
-    class="mdl-menu__item"
-    *ngIf="
-          (group['is:owner'] || group['is:moderator']) &&
-          !group.conversationDisabled
-        "
-    (click)="toggleConversation(false); showMenu = false"
-    i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_CONVERSATION"
-  >
-    Disable conversation
-  </li>
-
   <!-- Member functions -->
   <ng-container *ngIf="group['is:member']">
     <li

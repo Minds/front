@@ -8,7 +8,7 @@
 }
 
 .m-pageLayout__container--fullWidth :host {
-  display: none;
+  display: none !important;
   @media screen and (max-width: $layoutMax1ColWidth) {
     display: block;
   }
@@ -231,6 +231,11 @@
       width: 26px;
       height: 26px;
       border-radius: 50%;
+    }
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 
