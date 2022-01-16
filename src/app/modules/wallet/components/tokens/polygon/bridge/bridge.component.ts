@@ -44,7 +44,7 @@ export class WalletPolygonBridgeComponent implements OnInit {
   private currentChainId: number;
 
   constructor(
-    private service: PolygonService,
+    public service: PolygonService,
     private networkSwitch: NetworkSwitchService,
     private web3Wallet: Web3WalletService
   ) {
@@ -160,7 +160,9 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   async deposit() {
     await this.service.deposit(ethers.utils.parseUnits(this.amount, 18));
-    this.changeTab.emit();
+    if (!this.service.hasError$) {
+      this.changeTab.emit();
+    }
   }
 
   /**

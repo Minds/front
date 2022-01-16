@@ -52,6 +52,14 @@
       text-align: left;
     }
 
+    m-icon {
+      &.m-polygon__error {
+        font-size: 40px;
+        color: red;
+        padding: 8px;
+      }
+    }
+
     .m-polygon__inputAmountContainer {
       width: 100%;
       border-radius: 8px;
@@ -140,6 +148,27 @@
 
     .m-skale__networkSwapButtonContainer {
       margin: 10px;
+    }
+
+    .m-polygon-swapTitle {
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .m-polygon-swapSubtitle {
+      text-align: center;
+      opacity: 0.8;
+      padding: 8px;
+    }
+
+    .m-polygon-errorTitle {
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px;
     }
   }
 

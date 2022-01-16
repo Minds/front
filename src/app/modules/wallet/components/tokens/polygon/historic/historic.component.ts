@@ -52,7 +52,7 @@ export class WalletPolygonHistoricComponent {
     return ethers.utils.formatEther(amount);
   }
 
-  displaySpinner(record: HistoryRecord): boolean {
+  isPendingAction(record: HistoryRecord): boolean {
     return (
       record.status === RecordStatus.PENDING ||
       record.status === RecordStatus.ACTION_REQUIRED
