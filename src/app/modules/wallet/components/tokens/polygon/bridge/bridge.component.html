@@ -1,7 +1,7 @@
 <div
   class="m-polygon__tokenConverter"
   [formGroup]="form"
-  *ngIf="(service.isLoading$ | async) && !(service.hasError$ | async)"
+  *ngIf="!(service.isLoading$ | async) && !(service.hasError$ | async)"
 >
   <span class="m-polygon__boxTitle">From</span>
   <div class="m-polygon__inputAmountContainer">
@@ -86,11 +86,16 @@
   >
 </div>
 
-<div class="m-polygon__tokenConverter" *ngIf="!(service.hasError$ | async)">
+<div class="m-polygon__tokenConverter" *ngIf="service.hasError$ | async">
   <m-icon class="m-polygon__error" iconId="error_outline"></m-icon>
   <span class="m-polygon-errorTitle ">Something went wrong</span>
   <span class="m-polygon-swapSubtitle ">Please try again</span>
-  <m-button color="primary" (onAction)="transfer()">
+  <m-button
+    class="m-polygon-errorButton"
+    color="primary"
+    size="small"
+    (onAction)="retry()"
+  >
     Retry
   </m-button>
 </div>

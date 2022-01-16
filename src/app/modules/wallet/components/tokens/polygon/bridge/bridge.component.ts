@@ -160,7 +160,7 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   async deposit() {
     await this.service.deposit(ethers.utils.parseUnits(this.amount, 18));
-    if (!this.service.hasError$) {
+    if (!this.service.hasError$.value) {
       this.changeTab.emit();
     }
   }
@@ -179,6 +179,10 @@ export class WalletPolygonBridgeComponent implements OnInit {
       return this.deposit();
     }
     return this.withdraw();
+  }
+
+  retry() {
+    this.service.hasError$.next(false);
   }
 
   /**
