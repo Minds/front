@@ -262,18 +262,29 @@ export class PolygonService {
       MIND_CHILD_TOKEN_ADDRESS,
       false
     );
-    const withdrawTx = await erc20ChildToken.withdrawStart(amount.toString());
-    const withdrawReceipt = await withdrawTx.getReceipt();
+    this.isLoading$.next(true);
+    const withdrawTx = await erc20ChildToken
+      .withdrawStart(amount.toString())
+      .then(async tx => {
+        const withdrawReceipt = await tx.getReceipt();
 
-    console.log('withdrawReceipt', withdrawReceipt);
+        console.log('withdrawReceipt', withdrawReceipt);
 
-    const record: WithdrawRecord = {
-      type: RecordType.WITHDRAW,
-      status: RecordStatus.PENDING,
-      amount: amount.toString(),
-      txBurn: withdrawReceipt.transactionHash,
-    };
-    this.addToHistory(record);
+        const record: WithdrawRecord = {
+          type: RecordType.WITHDRAW,
+          status: RecordStatus.PENDING,
+          amount: amount.toString(),
+          txBurn: withdrawReceipt.transactionHash,
+        };
+        this.addToHistory(record);
+        this.isLoading$.next(false);
+      })
+      .catch(e => {
+        if (e.code === 4001) {
+          this.hasError$.next(true);
+          this.isLoading$.next(false);
+        }
+      });
   }
 
   public async exit(burnTxHash: string) {

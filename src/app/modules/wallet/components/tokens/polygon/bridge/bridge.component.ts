@@ -171,7 +171,9 @@ export class WalletPolygonBridgeComponent implements OnInit {
    */
   async withdraw() {
     await this.service.withdraw(ethers.utils.parseUnits(this.amount, 18));
-    this.changeTab.emit();
+    if (!this.service.hasError$.value) {
+      this.changeTab.emit();
+    }
   }
 
   transfer() {

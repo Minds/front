@@ -23,11 +23,12 @@
       <div class="m-polygon__boxContainer m-grid">
         <div class="m-grid__column-2">
           <div class="m-polygon__statusCircle">
-            <div
+            <m-icon
               *ngIf="isPendingAction(transaction)"
-              class="mdl-spinner mdl-js-spinner is-active"
-              [mdl]
-            ></div>
+              iconId="action_pending"
+              from="custom"
+              class="m-polygon__pending"
+            ></m-icon>
             <m-icon
               *ngIf="isSuccess(transaction)"
               iconId="check"
