@@ -37,7 +37,7 @@ export class SkaleFaucetService {
         take(1),
         map(response => {
           this.toast.success(
-            'Sent funds to your wallet for gas - please wait for a short while and try again'
+            'Sent skETH to your wallet for gas - please wait for a short while'
           );
         }),
         catchError(e => {
