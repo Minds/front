@@ -90,7 +90,11 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
     const amountWei = this.web3Wallet.toWei(amountEther);
 
     const communityPool = this.getContract();
-    return communityPool.withdrawFunds(this.skaleChainName, amountWei);
+    return communityPool.withdrawFunds(
+      this.skaleChainName,
+      amountWei,
+      { gasLimit: 100000 } // TODO: Adjust gas limit before release.
+    );
   }
 
   /**
@@ -111,6 +115,8 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
       currentAddress,
       this.skaleChainName
     );
+
+    console.log(balance);
 
     return parseFloat(this.web3Wallet.fromWei(balance));
   }
