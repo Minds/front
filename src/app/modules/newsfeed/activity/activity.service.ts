@@ -67,6 +67,7 @@ export type ActivityEntity = {
   subtype?: string;
   reminds?: number; // count of reminds
   quotes?: number; // count of quotes
+  blurhash?: string;
 };
 
 // Constants of blocks

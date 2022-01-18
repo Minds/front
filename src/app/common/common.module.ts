@@ -199,6 +199,7 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
 import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 
 const routes: Routes = [
   {
@@ -369,6 +370,7 @@ const routes: Routes = [
     SidebarMoreComponent,
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    BlurhashDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -515,6 +517,7 @@ const routes: Routes = [
     SidebarMoreComponent,
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    BlurhashDirective,
   ],
   providers: [
     SiteService,
