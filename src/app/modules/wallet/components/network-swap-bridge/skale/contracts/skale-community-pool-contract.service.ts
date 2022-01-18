@@ -116,8 +116,6 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
       this.skaleChainName
     );
 
-    console.log(balance);
-
     return parseFloat(this.web3Wallet.fromWei(balance));
   }
 }
