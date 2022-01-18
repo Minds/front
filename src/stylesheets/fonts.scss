@@ -408,19 +408,17 @@
 
 /**
  * NOTE: these are not relative to app path as we need preloading of the icons
+ * IE is not supported
  */
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url('https://cdn-assets.minds.com/front/fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
   src: local('Material Icons'), local('MaterialIcons-Regular'),
-    url('https://cdn-assets.minds.com/front/fonts/MaterialIcons-Regular.woff2')
+    url('https://cdn-assets.minds.com/front/fonts/material-icons-v2.woff2')
       format('woff2'),
-    url('https://cdn-assets.minds.com/front/fonts/MaterialIcons-Regular.woff')
-      format('woff'),
-    url('https://cdn-assets.minds.com/front/fonts/MaterialIcons-Regular.ttf')
-      format('truetype');
+    url('https://cdn-assets.minds.com/front/fonts/material-icons-v2.woff')
+      format('woff');
 }
 
 .material-icons {
