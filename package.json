@@ -61,6 +61,7 @@
     "angular-plotly.js": "^4.0.4",
     "angularx-qrcode": "^11.0.0",
     "assert": "^2.0.0",
+    "blurhash": "^1.1.4",
     "bn.js": "^5.2.0",
     "braintree-web": "3.79.1",
     "cookie-parser": "^1.4.5",
