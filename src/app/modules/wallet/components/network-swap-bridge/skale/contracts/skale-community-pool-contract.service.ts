@@ -93,7 +93,7 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
     return communityPool.withdrawFunds(
       this.skaleChainName,
       amountWei,
-      { gasLimit: 100000 } // TODO: Adjust gas limit before release.
+      { gasLimit: 80000 } // TODO: Adjust gas limit before release.
     );
   }
 
