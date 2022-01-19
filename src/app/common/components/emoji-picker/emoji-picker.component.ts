@@ -1,5 +1,6 @@
 import { ThemeService } from './../../services/theme.service';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 
 @Component({
   selector: 'm-emojiPicker',
@@ -17,6 +18,12 @@ export class EmojiPickerComponent {
     any
   > = new EventEmitter();
   popperModifiers: Array<any> = [];
+  @ViewChild('popper') popper: NgxPopperjsContentComponent;
 
   constructor(public themeService: ThemeService) {}
+
+  emojiSelect($event) {
+    this.emojiSelectEmitter.emit($event.emoji);
+    this.popper?.hide();
+  }
 }
