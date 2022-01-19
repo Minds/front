@@ -3,6 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute, Route } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
+import { DiscoveryOnRegisterExperimentService } from '../experiments/sub-services/discovery-on-register-experiment.service';
 @Component({
   selector: 'm-discovery',
   templateUrl: './discovery.component.html',
@@ -11,11 +12,13 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
   isPlusPageSubscription: Subscription;
   isPlusPage: boolean = false;
+  discoveryOnRegisterExperiment: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private service: DiscoveryService
+    private service: DiscoveryService,
+    private discoveryOnRegisterExperimentService: DiscoveryOnRegisterExperimentService
   ) {
     /**
      * Determine if on Minds+ page
@@ -42,6 +45,8 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
         this.isPlusPage = isPlusPage;
       }
     );
+
+    this.discoveryOnRegisterExperiment = this.discoveryOnRegisterExperimentService.isActive();
   }
 
   ngOnDestroy(): void {

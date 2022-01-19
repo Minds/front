@@ -55,6 +55,8 @@ export class AuthModalService {
           ) {
             try {
               await this.onboardingV3.open();
+              // ojm this is how we know that it was a register form
+              // ojm change growthbook group here??
             } catch (e) {
               if (e === 'DismissedModalException') {
                 // reload so that widget updates with save.

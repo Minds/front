@@ -22,6 +22,7 @@ import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
+import { DiscoveryOnRegisterExperimentService } from '../../../modules/experiments/sub-services/discovery-on-register-experiment.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -60,7 +61,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -198,7 +200,10 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   doRedirect(): void {
     if (this.router.url === '/' || this.router.url === '/about') {
-      this.router.navigate(['/newsfeed/subscriptions/latest']);
+      const url = this.discoveryOnRegisterExperiment.redirectUrl();
+      this.router.navigate([url]);
+      //ojm remove below
+      // this.router.navigate(['/newsfeed/subscriptions/latest']);
     }
   }
 

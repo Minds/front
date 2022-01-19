@@ -24,6 +24,7 @@ export class ExperimentsService {
    * Initialize Growthbook, only want to do this once
    */
   initGrowthbook(): void {
+    console.log('ojm initGrowthbook');
     if (!this.growthbook) {
       // ID field required by SDK even though we are forcing.
       const userId = this.getUserId();
@@ -41,6 +42,8 @@ export class ExperimentsService {
     }
 
     const experiments = this.configs.get('experiments');
+
+    console.log('ojm experiments', experiments);
 
     if (experiments && experiments.length > 0) {
       for (let experiment of experiments) {

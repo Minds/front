@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { DiscoveryOnRegisterExperimentService } from '../../../modules/experiments/sub-services/discovery-on-register-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { ConfigsService } from '../../services/configs.service';
@@ -25,7 +25,7 @@ export class JoinBannerComponent implements OnInit {
     private session: Session,
     private sessionStorage: SessionsStorageService,
     private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService,
+    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService,
     private router: Router,
     configs: ConfigsService
   ) {
@@ -41,8 +41,10 @@ export class JoinBannerComponent implements OnInit {
    * @returns { boolean } - true if banner should be shown.
    */
   public shouldShow(): boolean {
+    // ojm guestmoderef
+    // only show banner if guest mode experiment and logged out
     return (
-      this.guestModeExperiment.isActive() &&
+      this.discoveryOnRegisterExperiment.isActive() &&
       !this.session.getLoggedInUser() &&
       !this.dismissed
     );
@@ -65,8 +67,14 @@ export class JoinBannerComponent implements OnInit {
     try {
       await this.authModal.open();
 
+      this.router.navigate;
+
       if (this.router.url === '/' || this.router.url === '/about') {
-        this.router.navigate(['/newsfeed/subscriptions/latest']);
+        // Redirect goes to newsfeed or discovery, depending on experiment
+        // ojm this is how we know that the user should be in the group "registered-from-homepage"
+        // this.experimentsService.initGrowthbook();
+        const url = this.discoveryOnRegisterExperiment.redirectUrl();
+        this.router.navigate([url]);
       }
     } catch (e) {
       if (e === 'DismissedModalException') {

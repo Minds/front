@@ -16,9 +16,12 @@ export class SuggestionsService {
     private client: Client,
     private storage: Storage,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    console.log('ojm sugg service constructor');
+  }
 
   async load(opts: { limit: number; refresh: boolean; type: string }) {
+    console.log('ojm load suggestions');
     this.error$.next(null);
     this.inProgress$.next(true);
 
@@ -50,6 +53,8 @@ export class SuggestionsService {
         }
       }
       this.hasMoreData$.next(response.suggestions.length >= opts.limit);
+
+      console.log('ojm suggestsions', this.suggestions$.getValue());
     } catch (err) {
       this.error$.next(err.message);
     } finally {

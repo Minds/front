@@ -13,6 +13,8 @@ import { Session } from '../../services/session';
 export class DefaultFeedContainerComponent implements OnInit {
   constructor(private router: Router, private session: Session) {}
 
+  // ojm currently, guestmode uses this until logged in
+  // ojm get rid of this?
   public ngOnInit(): void {
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);

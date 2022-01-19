@@ -31,6 +31,7 @@ export class DiscoveryOnRegisterExperimentService {
   }
 
   public redirectUrl(): string {
+    // ojm NO! this needs to be a subscription because isActive should change on register
     if (this.isActive()) {
       return '/discovery/top';
     } else {

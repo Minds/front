@@ -34,7 +34,7 @@ import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.co
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { DiscoveryOnRegisterExperimentService } from '../../../modules/experiments/sub-services/discovery-on-register-experiment.service';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -99,7 +99,7 @@ export class SidebarNavigationComponent
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService,
+    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService,
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService
   ) {
@@ -289,13 +289,5 @@ export class SidebarNavigationComponent
       }
       console.error(e);
     }
-  }
-
-  /**
-   * Returns if link should be to discovery homepage
-   * @returns { boolean } true if link should be '/'.
-   */
-  public shouldBeDiscoveryHomepage(): boolean {
-    return this.guestModeExperiment.isActive() && !this.user; // logged out
   }
 }

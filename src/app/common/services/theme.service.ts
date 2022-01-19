@@ -9,7 +9,7 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
-import { GuestModeExperimentService } from '../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { DiscoveryOnRegisterExperimentService } from '../../modules/experiments/sub-services/discovery-on-register-experiment.service';
 
 @Injectable()
 export class ThemeService {
@@ -25,7 +25,7 @@ export class ThemeService {
     rendererFactory: RendererFactory2,
     private client: Client,
     private session: Session,
-    private guestModeExperiment: GuestModeExperimentService,
+    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService,
     @Inject(PLATFORM_ID) private platformId,
     @Inject(DOCUMENT) private dom
   ) {
@@ -39,10 +39,6 @@ export class ThemeService {
       }
     );
   }
-
-  // TODO after release of MacOS 10.14.4
-  // Setup a listener for below to automatically toggle into dark mode for Macs --
-  // prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   setUp(): void {
     this.setup = true;
@@ -72,14 +68,15 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
-    if (this.guestModeExperiment.isActive()) {
-      const shouldBeDark: boolean =
-        !this.session.isLoggedIn() ||
-        this.session.getLoggedInUser().theme !== 'light';
+    // ojm delete?
+    // if (this.discoveryOnRegisterExperiment.isActive()) {
+    //   const shouldBeDark: boolean =
+    //     !this.session.isLoggedIn() ||
+    //     this.session.getLoggedInUser().theme !== 'light';
 
-      this.isDark$.next(shouldBeDark);
-      return;
-    }
+    //   this.isDark$.next(shouldBeDark);
+    //   return;
+    // }
 
     const shouldBeDark: boolean =
       this.session.isLoggedIn() &&
