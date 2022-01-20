@@ -179,10 +179,8 @@ export class GroupsCardUserActionsButton {
 
     if (ban) {
       kicked = await this.service.ban(this.group, this.user.guid);
-      console.log('ojm action', kicked);
     } else {
       kicked = await this.service.kick(this.group, this.user.guid);
-      console.log('ojm action', kicked);
     }
 
     this.user['is:member'] = !kicked;
