@@ -70,6 +70,9 @@ export class SidebarNavigationComponent
   @HostBinding('hidden')
   hidden: boolean = false;
 
+  @HostBinding('class.m-sidebarNavigation--sidebarMoreOpened')
+  sidebarMoreOpened: boolean = false;
+
   groupSelectedSubscription: Subscription = null;
   plusPageActive: boolean = false;
 
@@ -297,5 +300,16 @@ export class SidebarNavigationComponent
    */
   public shouldBeDiscoveryHomepage(): boolean {
     return this.guestModeExperiment.isActive() && !this.user; // logged out
+  }
+
+  /**
+   *
+   * We dynamically change the z-index when the
+   * "sidebar more" popper is opened
+   * So that users can still click on the top left logo
+   * when the popper is closed
+   */
+  public onSidebarMoreToggle($event) {
+    this.sidebarMoreOpened = $event;
   }
 }

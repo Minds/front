@@ -499,7 +499,7 @@
       </ng-container>
       <ng-container *ngIf="nav2021Feature">
         <!-- Click event is handled by popperjs inside trigger component -->
-        <m-sidebarMore__trigger>
+        <m-sidebarMore__trigger (toggle)="onSidebarMoreToggle($event)">
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
