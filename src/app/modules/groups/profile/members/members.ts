@@ -142,7 +142,6 @@ export class GroupsProfileMembers {
     });
 
     if (index > -1) {
-      console.log('ojm index is :', index);
       this.members.splice(index, 1);
     }
   }
