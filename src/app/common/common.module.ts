@@ -196,7 +196,10 @@ import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
+import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 
 const routes: Routes = [
   {
@@ -364,7 +367,10 @@ const routes: Routes = [
     FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    BlurhashDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -508,7 +514,10 @@ const routes: Routes = [
     FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    BlurhashDirective,
   ],
   providers: [
     SiteService,

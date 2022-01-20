@@ -80,6 +80,9 @@ export class CompassService {
         this.submitRequested$.next(false);
         this.clearEphemeralAnswers();
 
+        this.toasterService.success(
+          'Thank you for your feedback and supporting the Minds Community'
+        );
         return true;
       }
     } catch (e) {
