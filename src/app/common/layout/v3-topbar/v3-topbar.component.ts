@@ -202,8 +202,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     if (this.router.url === '/' || this.router.url === '/about') {
       const url = this.discoveryOnRegisterExperiment.redirectUrl();
       this.router.navigate([url]);
-      //ojm remove below
-      // this.router.navigate(['/newsfeed/subscriptions/latest']);
     }
   }
 

@@ -70,7 +70,7 @@ export class DiscoveryTrendComponent {
   }
 
   /**
-   * Returns if link should be to discovery homepage
+   * Returns if "back" link should be to discovery homepage
    * @returns { boolean } true if link should be '/'.
    */
   public shouldBeDiscoveryHomepage(): boolean {

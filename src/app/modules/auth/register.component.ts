@@ -17,6 +17,7 @@ import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { DiscoveryOnRegisterExperimentService } from '../experiments/sub-services/discovery-on-register-experiment.service';
 
 @Component({
   selector: 'm-register',
@@ -65,7 +66,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
     private metaService: MetaService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -137,6 +139,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.redirectTo) {
       this.navigateToRedirection();
       return;
+    }
+
+    // ojm might need to move this to onboarding
+    /**
+     * If a redirect hasn't already been defined,
+     * use the experiment to determine where to go
+     */
+    if (this.discoveryOnRegisterExperiment.isActive()) {
+      const url = this.discoveryOnRegisterExperiment.redirectUrl();
+      this.router.navigate([url]);
     }
 
     if (this.featuresService.has('ux-2020')) {

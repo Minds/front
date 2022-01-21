@@ -68,16 +68,6 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
-    // ojm delete?
-    // if (this.discoveryOnRegisterExperiment.isActive()) {
-    //   const shouldBeDark: boolean =
-    //     !this.session.isLoggedIn() ||
-    //     this.session.getLoggedInUser().theme !== 'light';
-
-    //   this.isDark$.next(shouldBeDark);
-    //   return;
-    // }
-
     const shouldBeDark: boolean =
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().theme === 'dark';

@@ -41,8 +41,6 @@ export class JoinBannerComponent implements OnInit {
    * @returns { boolean } - true if banner should be shown.
    */
   public shouldShow(): boolean {
-    // ojm guestmoderef
-    // only show banner if guest mode experiment and logged out
     return (
       this.discoveryOnRegisterExperiment.isActive() &&
       !this.session.getLoggedInUser() &&
@@ -70,9 +68,8 @@ export class JoinBannerComponent implements OnInit {
       this.router.navigate;
 
       if (this.router.url === '/' || this.router.url === '/about') {
-        // Redirect goes to newsfeed or discovery, depending on experiment
-        // ojm this is how we know that the user should be in the group "registered-from-homepage"
-        // this.experimentsService.initGrowthbook();
+        // Redirect goes to newsfeed or discovery top,
+        // depending on experiment variation
         const url = this.discoveryOnRegisterExperiment.redirectUrl();
         this.router.navigate([url]);
       }

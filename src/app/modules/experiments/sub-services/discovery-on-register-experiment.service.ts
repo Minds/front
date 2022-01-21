@@ -24,14 +24,13 @@ export class DiscoveryOnRegisterExperimentService {
     //  return (
     //    this.featuresService.has('guest-mode') &&
     //    this.experiments.hasVariation(
-    //      'discovery-on-register',
+    //      'discovery-homepage',
     //      'on'
     //    )
     //  );
   }
 
   public redirectUrl(): string {
-    // ojm NO! this needs to be a subscription because isActive should change on register
     if (this.isActive()) {
       return '/discovery/top';
     } else {
