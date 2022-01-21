@@ -1,21 +1,20 @@
 import { Injectable, Injector } from '@angular/core';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { FeaturesService } from '../../../../services/features.service';
 import { Router } from '@angular/router';
 import { ActivityEntity } from '../activity.service';
 import { ActivityModalComponent } from './modal.component';
-import { MediaModalComponent } from '../../../media/modal/modal.component';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Injectable()
 export class ActivityModalCreatorService {
   constructor(
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private features: FeaturesService,
     private router: Router
   ) {}
 
   create(entity: ActivityEntity, injector: Injector): void {
-    if (!this.overlayModal.canOpenInModal()) {
+    if (!this.modalService.canOpenInModal()) {
       return;
     }
 
@@ -29,17 +28,13 @@ export class ActivityModalCreatorService {
       entity.entity_guid = (entity as any).attachment_guid;
     }
 
-    const modal = ActivityModalComponent;
-
-    this.overlayModal
-      .create(
-        modal,
-        { entity: entity },
-        {
-          class: 'm-overlayModal--media',
-        },
-        injector
-      )
-      .present();
+    this.modalService.present(ActivityModalComponent, {
+      modalDialogClass: 'modal-fullwidth',
+      size: 'xl',
+      data: {
+        entity,
+      },
+      injector,
+    });
   }
 }

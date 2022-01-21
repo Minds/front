@@ -14,7 +14,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProChannelService } from '../channel.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { isPlatformServer } from '@angular/common';
 
 @Component({
@@ -35,7 +34,6 @@ export class ProChannelContentListComponent implements OnChanges {
 
   constructor(
     public feedsService: FeedsService,
-    protected modalService: OverlayModalService,
     protected channelService: ProChannelService,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -99,10 +97,6 @@ export class ProChannelContentListComponent implements OnChanges {
 
   loadMore() {
     this.feedsService.loadMore();
-  }
-
-  onTileClicked(entity: any) {
-    return this.channelService.open(entity, this.modalService);
   }
 
   /**

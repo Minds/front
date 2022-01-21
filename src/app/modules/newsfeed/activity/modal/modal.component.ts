@@ -22,7 +22,6 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { AnalyticsService } from '../../../../services/analytics';
 import { TranslationService } from '../../../../services/translation';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { SiteService } from '../../../../common/services/site.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
@@ -39,7 +38,7 @@ import { MediaModalParams } from '../../../media/modal/modal.component';
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;
 export const ACTIVITY_MODAL_MIN_STAGE_WIDTH = 660;
 export const ACTIVITY_MODAL_CONTENT_WIDTH = 360;
-export const ACTIVITY_MODAL_PADDING = 40; // 20px on each side
+export const ACTIVITY_MODAL_PADDING = 60; // 20px on each side
 export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
   ACTIVITY_MODAL_CONTENT_WIDTH + ACTIVITY_MODAL_PADDING;
 
@@ -58,25 +57,6 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
   ],
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
-  @Input('entity') set data(params: MediaModalParams) {
-    this.service.setActivityService(this.activityService);
-
-    this.service.setSourceUrl(this.router.url);
-
-    this.service.setEntity(params.entity);
-
-    this.activityService.setDisplayOptions({
-      showOnlyCommentsInput: false,
-      showInteractions: true,
-      isModal: true,
-      fixedHeight: false,
-      autoplayVideo: true,
-    });
-
-    // Prepare pager
-    this.relatedContent.setBaseEntity(params.entity);
-  }
-
   entity: any;
   entitySubscription: Subscription;
   routerSubscription: Subscription;
@@ -112,7 +92,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public session: Session,
     public analyticsService: AnalyticsService,
     public translationService: TranslationService,
-    private overlayModal: OverlayModalService,
     private router: Router,
     private location: Location,
     private site: SiteService,
@@ -195,7 +174,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   /**
    * Re-calculate height/width when window resizes
-   *
    */
   @HostListener('window:resize', ['$resizeEvent'])
   onResize(resizeEvent) {
@@ -247,20 +225,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   /////////////////////////////////////////////////////////////////
   // MODAL DISMISSAL
   /////////////////////////////////////////////////////////////////
-
-  // Dismiss modal when backdrop is clicked and modal is open
-  @HostListener('document:click', ['$event'])
-  clickedBackdrop($event) {
-    if ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
-    if (this.isOpen) {
-      this.service.dismiss();
-    }
-  }
-
-  // Don't dismiss modal if click somewhere other than backdrop
   clickedModal($event) {
     $event.stopPropagation();
   }
@@ -634,5 +598,24 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   get isQuote(): boolean {
     return this.entity.activity_type === 'quote';
+  }
+
+  setModalData(params: MediaModalParams) {
+    this.service.setActivityService(this.activityService);
+
+    this.service.setSourceUrl(this.router.url);
+
+    this.service.setEntity(params.entity);
+
+    this.activityService.setDisplayOptions({
+      showOnlyCommentsInput: false,
+      showInteractions: true,
+      isModal: true,
+      fixedHeight: false,
+      autoplayVideo: true,
+    });
+
+    // Prepare pager
+    this.relatedContent.setBaseEntity(params.entity);
   }
 }

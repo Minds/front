@@ -1,6 +1,6 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DiscoveryTagsService, DiscoveryTag } from './tags.service';
+import { DiscoveryTag, DiscoveryTagsService } from './tags.service';
 
 const noOp = () => {};
 
@@ -16,17 +16,15 @@ export class DiscoveryTagSettingsComponent {
   onDismissIntent: () => void = noOp;
   onSaveIntent: (tags: DiscoveryTag[]) => void = noOp;
 
-  /**
-   * Modal options
-   *
-   * @param onDismissIntent
-   */
-  set opts({ onSave, onDismissIntent }) {
-    this.onDismissIntent = onDismissIntent || noOp;
-    this.onSaveIntent = onSave || noOp;
-  }
-
   constructor(private service: DiscoveryTagsService) {}
+
+  setModalData(data: {
+    onSave: (tags: DiscoveryTag[]) => void;
+    onDismissIntent: () => void;
+  }) {
+    this.onDismissIntent = data.onDismissIntent || noOp;
+    this.onSaveIntent = data.onSave || noOp;
+  }
 
   ngOnInit() {
     if (!this.service.trending$.value.length) this.service.loadTags();

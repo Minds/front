@@ -2,17 +2,18 @@ import { Component, ElementRef, SkipSelf } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DiscoveryFeedsService } from './feeds.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Modal } from '../../../services/ux/modal.service';
 
 const noOp = () => {};
 @Component({
   selector: 'm-discovery__feedSettings',
   templateUrl: './settings.component.html',
 })
-export class DiscoveryFeedsSettingsComponent {
+export class DiscoveryFeedsSettingsComponent implements Modal<any> {
   saving$: Observable<boolean> = this.service.saving$;
   filter$: Observable<string> = this.service.filter$;
   subscriptions: Subscription[];
-  onSaveIntent: () => void = noOp;
+  onSaveIntent: (data?: any) => void = noOp;
 
   form: FormGroup;
   readonly periodOptions: { id: string; label: string }[] = [
@@ -39,15 +40,6 @@ export class DiscoveryFeedsSettingsComponent {
     return { id: reason.value, label: reason.label, selected: reason.selected };
   });
 
-  /**
-   * Modal options
-   *
-   * @param onSave
-   */
-  set opts({ onSave }) {
-    this.onSaveIntent = onSave || noOp;
-  }
-
   constructor(private service: DiscoveryFeedsService, private fb: FormBuilder) {
     this.form = fb.group({
       period: fb.control(''),
@@ -57,6 +49,14 @@ export class DiscoveryFeedsSettingsComponent {
       ),
       nsfw: fb.array(this.nsfwOptions.map(reason => reason.selected)),
     });
+  }
+
+  /**
+   * Modal data
+   * @param data
+   */
+  setModalData(data: { onSave: (payload: any) => void }) {
+    this.onSaveIntent = data.onSave;
   }
 
   ngOnInit() {

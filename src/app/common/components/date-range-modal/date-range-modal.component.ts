@@ -68,16 +68,6 @@ export class DateRangeModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Modal options
-   * @param onApply
-   * @param onDismissIntent
-   */
-  set opts({ onApply, onDismissIntent }) {
-    this.onApplyIntent = onApply || noOp;
-    this.onDismissIntent = onDismissIntent || noOp;
-  }
-
   onFromDateChange(newDate): void {
     this.fromDate = moment(new Date(newDate))
       .startOf('day')
@@ -124,5 +114,15 @@ export class DateRangeModalComponent implements OnInit, OnDestroy {
 
   get dateRange(): FeedFilterDateRange {
     return { fromDate: this.fromDate, toDate: this.toDate };
+  }
+
+  /**
+   * Modal options
+   * @param onApply
+   * @param onDismissIntent
+   */
+  setModalData({ onApply, onDismiss }) {
+    this.onApplyIntent = onApply || noOp;
+    this.onDismissIntent = onDismiss || noOp;
   }
 }

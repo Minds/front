@@ -1,9 +1,9 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../common/api/client.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { PaymentsNewCard } from '../../../payments/new-card/new-card.component';
 import * as moment from 'moment';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-settingsV2__paymentMethods',
@@ -18,7 +18,7 @@ export class SettingsV2PaymentMethodsComponent {
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
-    private overlayModal: OverlayModalService
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -66,19 +66,14 @@ export class SettingsV2PaymentMethodsComponent {
   }
 
   addNewCard() {
-    this.overlayModal
-      .create(
-        PaymentsNewCard,
-        {},
-        {
-          class: '',
-          onCompleted: () => {
-            this.loadSavedCards(); //refresh list
-            this.overlayModal.dismiss();
-          },
-        }
-      )
-      .present();
+    const modal = this.modalService.present(PaymentsNewCard, {
+      data: {
+        onCompleted: () => {
+          this.loadSavedCards(); //refresh list
+          modal.dismiss();
+        },
+      },
+    });
   }
 
   cardExpired(expiry) {

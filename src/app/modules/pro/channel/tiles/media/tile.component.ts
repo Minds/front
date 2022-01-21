@@ -7,7 +7,6 @@ import {
   Injector,
 } from '@angular/core';
 import { FeaturesService } from '../../../../../services/features.service';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import { ProChannelService } from '../../channel.service';
 import isMobile from '../../../../../helpers/is-mobile';
@@ -28,7 +27,6 @@ export class ProTileComponent {
   constructor(
     protected featuresService: FeaturesService,
     protected channelService: ProChannelService,
-    protected modalService: OverlayModalService,
     protected router: Router,
     protected site: SiteService,
     private activityModalCreator: ActivityModalCreatorService,

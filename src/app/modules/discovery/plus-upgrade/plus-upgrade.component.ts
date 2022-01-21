@@ -5,7 +5,7 @@ import { WireEventType } from '../../wire/v2/wire-v2.service';
 import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
 import { Session } from '../../../services/session';
 import { ComposerService } from '../../composer/services/composer.service';
-import { ModalService } from '../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
     private session: Session,
     private configs: ConfigsService,
     private composerService: ComposerService,
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector
   ) {}
 
@@ -39,14 +39,12 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
 
   async showUpgradeModal(): Promise<void> {
     const plusGuid = await this.wirePaymentHandlers.get('plus');
-    const wireEvent = await this.wireModal
-      .present(plusGuid, {
-        default: {
-          type: 'money',
-          upgradeType: 'plus',
-        },
-      })
-      .toPromise();
+    const wireEvent = await this.wireModal.present(plusGuid, {
+      default: {
+        type: 'money',
+        upgradeType: 'plus',
+      },
+    });
     if (wireEvent.type === WireEventType.Completed) {
       this.isPlus = true;
     }
@@ -65,9 +63,6 @@ export class DiscoveryPlusUpgradeComponent implements OnInit {
       support_tier: support_tier,
     });
 
-    this.composerModal
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    this.composerModal.setInjector(this.injector).present();
   }
 }

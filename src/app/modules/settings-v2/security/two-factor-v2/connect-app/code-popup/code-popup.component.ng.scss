@@ -3,6 +3,7 @@
 :host {
   display: flex;
   flex-flow: column nowrap;
+  padding: $minds-padding * 4;
 
   .m-twoFactorSecret__title {
     font-weight: 700;

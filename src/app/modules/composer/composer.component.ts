@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ComposerService, ComposerSize } from './services/composer.service';
-import { ModalService } from './components/modal/modal.service';
+import { ComposerModalService } from './components/modal/modal.service';
 import { BaseComponent } from './components/base/base.component';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Subscription } from 'rxjs';
@@ -106,14 +106,14 @@ export class ComposerComponent implements OnInit, OnDestroy {
 
   /**
    * Constructor
-   * @param modalService
+   * @param composerModalService
    * @param formToast
    * @param service
    * @param cd
    * @param injector
    */
   constructor(
-    protected modalService: ModalService,
+    protected composerModalService: ComposerModalService,
     protected formToast: FormToastService,
     protected service: ComposerService /* NOTE: Used for DI. DO NOT REMOVE OR CHANGE !!! */,
     protected cd: ChangeDetectorRef,
@@ -162,7 +162,7 @@ export class ComposerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed = true;
     this.tooManyTagsSubscription.unsubscribe();
-    this.modalService.dismiss();
+    this.composerModalService.dismiss();
     this.querySubscription.unsubscribe();
   }
 
@@ -177,18 +177,17 @@ export class ComposerComponent implements OnInit, OnDestroy {
     //
 
     try {
-      const $event = await this.modalService
+      const event = await this.composerModalService
         .setInjector(this.injector)
-        .present()
-        .toPromise();
+        .present();
 
       if (this.destroyed) {
         // If the component was destroyed (i.e navigated away), do nothing
         return;
       }
 
-      if ($event) {
-        this.onPostEmitter.emit($event);
+      if (event) {
+        this.onPostEmitter.emit(event);
       }
     } catch (e) {
       console.error('Composer.onTriggerClick', e);

@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 export class SettingsTwoFactorCodePopupComponent {
   public code: string = '';
 
-  set opts({ code }) {
+  setModalData({ code }: { code: string }) {
     this.code = code || '';
   }
 }
