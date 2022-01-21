@@ -15,7 +15,6 @@ import {
   ProChannelService,
   RouterLinkToType,
 } from '../channel.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-proChannel__list',
@@ -33,7 +32,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   constructor(
     public feedsService: FeedsService,
-    protected modalService: OverlayModalService,
     protected channelService: ProChannelService,
     protected route: ActivatedRoute,
     protected router: Router,

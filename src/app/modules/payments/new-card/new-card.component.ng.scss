@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 :host {
+  padding: $minds-padding * 4;
+
   iframe {
     height: 152px;
 

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { FeaturesService } from '../../../../services/features.service';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 /**
  * Boost button (owner)
@@ -16,7 +16,7 @@ import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.ser
 export class ChannelActionsBoostComponent {
   constructor(
     public service: ChannelsV2Service,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     private features: FeaturesService,
     private boostModal: BoostModalLazyService
   ) {}
@@ -30,10 +30,10 @@ export class ChannelActionsBoostComponent {
       return;
     }
 
-    const creator = this.overlayModal.create(
-      BoostCreatorComponent,
-      this.service.channel$.getValue()
-    );
-    creator.present();
+    this.modalService.present(BoostCreatorComponent, {
+      data: {
+        channel: this.service.channel$.getValue(),
+      },
+    });
   }
 }

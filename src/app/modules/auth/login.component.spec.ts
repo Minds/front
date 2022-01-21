@@ -41,8 +41,8 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { LanguageBarComponent } from '../language/language-bar.component';
 import { LanguageModalComponent } from '../language/language-modal/language-modal.component';
 import { RedirectService } from '../../common/services/redirect.service';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
-import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
+import { ModalService } from '../../services/ux/modal.service';
+import { modalServiceMock } from '../../../tests/modal-service-mock.spec';
 
 @Component({
   selector: 'minds-form-login',
@@ -109,7 +109,7 @@ describe('LoginComponent', () => {
             useValue: null,
           },
           RedirectService,
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           PageLayoutService,
         ],
       }).compileComponents();

@@ -5,9 +5,6 @@ m-channel__edit {
 }
 
 .m-modalV2__inner.m-channel__edit {
-  width: 710px;
-  max-width: 710px;
-
   @media screen and (max-width: $max-mobile) {
     margin: 0;
     padding: 0;
@@ -42,6 +39,7 @@ m-channel__edit {
       font-size: 15px;
       line-height: 20px;
       text-decoration: none;
+      margin-right: 20px;
 
       @include m-theme() {
         color: themed($m-textColor--primary);

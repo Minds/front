@@ -20,13 +20,3 @@
   font-weight: 700;
   color: #ffffff;
 }
-
-.m-modalV2__inner {
-  max-width: 900px;
-  margin: 20px 0;
-
-  @media screen and (max-width: $max-mobile) {
-    max-width: calc(100% - 20px);
-    margin: 10px;
-  }
-}

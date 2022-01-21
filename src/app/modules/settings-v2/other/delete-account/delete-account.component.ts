@@ -8,9 +8,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-settingsV2__deleteAccount',
@@ -25,7 +25,7 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     public client: Client,
     public router: Router,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected toasterService: FormToastService
   ) {}
 
@@ -40,11 +40,8 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
   }
 
   submit() {
-    const creator = this.overlayModal.create(
-      ConfirmPasswordModalComponent,
-      {},
-      {
-        class: 'm-overlay-modal--small',
+    const modal = this.modalService.present(ConfirmPasswordModalComponent, {
+      data: {
         onComplete: ({ password }) => {
           this.client
             .post('api/v2/settings/delete', { password })
@@ -56,11 +53,13 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
                 'Sorry, we could not delete your account'
               );
               this.detectChanges();
+            })
+            .finally(() => {
+              modal.dismiss();
             });
         },
-      }
-    );
-    creator.present();
+      },
+    });
   }
 
   canSubmit(): boolean {

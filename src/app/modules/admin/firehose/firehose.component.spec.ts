@@ -13,13 +13,13 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { AdminFirehoseComponent } from './firehose.component';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { EventEmitter } from '@angular/core';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { MockComponent } from '../../../utils/mock';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 @Component({
   selector: 'minds-activity',
@@ -75,7 +75,7 @@ xdescribe('AdminFirehose', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           { provide: ActivityService, useValue: activityServiceMock },
         ],
       }).compileComponents();

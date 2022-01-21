@@ -21,7 +21,6 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../modules/newsfeed/activity/activity.service';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
@@ -31,6 +30,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-blog-view',
@@ -115,7 +115,7 @@ export class BlogView implements OnInit, OnDestroy {
     public analyticsService: AnalyticsService,
     protected activityService: ActivityService,
     private cd: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private clientMetaService: ClientMetaService,
     public featuresService: FeaturesService,
     protected toasterService: FormToastService,
@@ -270,15 +270,12 @@ export class BlogView implements OnInit, OnDestroy {
       this.siteUrl +
       (this.blog.route ? this.blog.route : 'blog/view/' + this.blog.guid);
 
-    this.overlayModal
-      .create(
-        ShareModalComponent,
-        { url },
-        {
-          class: 'm-overlay-modal--medium m-overlayModal__share',
-        }
-      )
-      .present();
+    this.modalService.present(ShareModalComponent, {
+      data: {
+        url,
+      },
+      modalDialogClass: 'm-overlayModal__share',
+    });
   }
 
   isScheduled(time_created) {

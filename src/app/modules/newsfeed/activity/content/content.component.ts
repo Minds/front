@@ -27,7 +27,6 @@ import {
   ActivityEntity,
   ActivityService,
 } from '../activity.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { RedirectService } from '../../../../common/services/redirect.service';
@@ -48,6 +47,7 @@ import {
 } from '../modal/modal.component';
 import { FeaturesService } from '../../../../services/features.service';
 import { ActivityModalCreatorService } from '../modal/modal-creator.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-activity__content',
@@ -126,7 +126,7 @@ export class ActivityContentComponent
 
   constructor(
     public service: ActivityService,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private router: Router,
     private el: ElementRef,
     private redirectService: RedirectService,
@@ -470,7 +470,7 @@ export class ActivityContentComponent
   }
 
   onModalRequested(event: MouseEvent) {
-    if (!this.overlayModal.canOpenInModal() || this.isModal) {
+    if (!this.modalService.canOpenInModal() || this.isModal) {
       return;
     }
 

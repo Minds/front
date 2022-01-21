@@ -23,14 +23,24 @@ $modal-padding: 20px;
   text-align: center;
   vertical-align: middle;
   width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+
+  .m-activityModal {
+    display: flex;
+    flex: 1;
+  }
 
   .m-activityModal__wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+
     // new stacking context
     position: static;
     z-index: 0;
 
-    margin: 20px;
-    display: inline-block;
     text-align: left;
 
     .m-activityModal__theater {
@@ -48,12 +58,14 @@ $modal-padding: 20px;
   }
 
   .m-activityModal__stageWrapper {
-    float: left;
+    display: flex;
+    flex: 1;
     height: 100%;
     min-height: 480px;
     position: relative;
     text-align: center;
     z-index: 2;
+
     @include m-theme() {
       background-color: themed($m-bgColor--primaryDarkAlways);
       box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
@@ -242,7 +254,7 @@ $modal-padding: 20px;
 
   .m-activityModal__stage {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     height: 100%;
     min-height: 402px;
@@ -251,8 +263,8 @@ $modal-padding: 20px;
   }
 
   .m-activityModal__mediaWrapper {
-    display: inline-block;
-    margin: 0 auto;
+    display: flex;
+    flex: 1;
     vertical-align: middle;
     height: auto;
     position: relative;
@@ -261,15 +273,11 @@ $modal-padding: 20px;
       background: themed($m-bgColor--secondary);
     }
 
-    &:not(.m-activityModal__mediaWrapper--statusLong):not(.m-activityModal__mediaWrapper--quote):not(.m-activityModal__mediaWrapper--richEmbed) {
-      ::ng-deep m-activity__content {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-
     ::ng-deep m-activity__content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       &.missingDimensions {
         .m-activityContent__media--image img {
           max-height: 520px;
@@ -279,6 +287,7 @@ $modal-padding: 20px;
 
       .m-activityContent__media--image img {
         max-height: none;
+        height: 100% !important;
       }
 
       ::ng-deep minds-rich-embed {
@@ -316,9 +325,9 @@ $modal-padding: 20px;
   // ******************************************************
 
   .m-activityModal__contentContainer {
+    width: 350px;
     height: 100%;
     max-height: 100%;
-    overflow: hidden;
     position: relative;
     word-wrap: break-word;
     box-sizing: border-box;

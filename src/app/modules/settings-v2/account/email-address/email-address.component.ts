@@ -15,8 +15,8 @@ import { Observable, Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-settingsV2__emailAddress',
@@ -37,7 +37,7 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
     private session: Session,
     protected settingsService: SettingsV2Service,
     private dialogService: DialogService,
-    protected overlayModal: OverlayModalService
+    protected modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -66,17 +66,14 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const creator = this.overlayModal.create(
-      ConfirmPasswordModalComponent,
-      {},
-      {
-        class: 'm-overlay-modal--small',
+    const modal = this.modalService.present(ConfirmPasswordModalComponent, {
+      data: {
         onComplete: wire => {
           this.submit();
+          modal.close(wire);
         },
-      }
-    );
-    creator.present();
+      },
+    });
   }
 
   async submit() {

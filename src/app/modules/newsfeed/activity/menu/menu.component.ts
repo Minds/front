@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { Client } from '../../../../services/api/client';
 import { ComposerService } from '../../../composer/services/composer.service';
-import { ModalService } from '../../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { TranslationService } from '../../../../services/translation';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -36,7 +36,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private router: Router,
     private features: FeaturesService,
     private composer: ComposerService,
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector,
     public translationService: TranslationService,
     private toasterService: FormToastService,
@@ -115,7 +115,6 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
         this.composerModal
           .setInjector(this.injector)
           .present()
-          .toPromise()
           .then(activity => {
             if (activity) {
               this.service.setEntity(activity);
