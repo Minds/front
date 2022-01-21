@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -20,15 +20,12 @@ export class ConfirmPasswordModalComponent {
 
   protected submitted: boolean;
 
-  _opts: any;
-  set opts(opts: any) {
-    this._opts = opts;
-  }
+  onComplete?: ({ password: string }) => void;
 
   constructor(
     public session: Session,
     private cd: ChangeDetectorRef,
-    public overlayModal: OverlayModalService,
+    public modalService: ModalService,
     private client: Client,
     public fb: FormBuilder,
     protected toasterService: FormToastService
@@ -36,6 +33,10 @@ export class ConfirmPasswordModalComponent {
     this.form = fb.group({
       password: ['', Validators.required],
     });
+  }
+
+  setModalData(opts: { onComplete: ({ password: string }) => void }) {
+    this.onComplete = opts.onComplete;
   }
 
   validate() {
@@ -87,11 +88,11 @@ export class ConfirmPasswordModalComponent {
         password: this.form.value.password,
       });
 
-      if (this._opts && this._opts.onComplete) {
-        this._opts.onComplete({
+      if (this.onComplete) {
+        this.onComplete({
           password: this.form.value.password,
         });
-        this.overlayModal.dismiss();
+        this.modalService.dismissAll();
       }
     } catch (e) {
       this.inProgress = false;

@@ -29,10 +29,9 @@ import { BuyTokensModalService } from '../../../modules/blockchain/token-purchas
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
-import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
+import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { ThemeService } from '../../services/theme.service';
@@ -225,10 +224,7 @@ export class SidebarNavigationComponent
 
   async openComposeModal() {
     this.toggle();
-    await this.composerModalService
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    await this.composerModalService.setInjector(this.injector).present();
   }
 
   setVisible(value: boolean): void {

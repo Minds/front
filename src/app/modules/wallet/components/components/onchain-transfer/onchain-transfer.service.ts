@@ -1,8 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { WalletOnchainTransferComponent } from './onchain-transfer.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
  * Global service to open on-chain transfer modal
@@ -12,7 +12,7 @@ export class OnchainTransferModalService {
   protected injector: Injector;
 
   constructor(
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected router: Router,
     protected route: ActivatedRoute
   ) {}
@@ -38,26 +38,17 @@ export class OnchainTransferModalService {
     }
 
     return new Observable<any>(subscriber => {
-      let modalOpen = true;
+      let modal;
 
       try {
-        this.overlayModal
-          .create(
-            WalletOnchainTransferComponent,
-            null,
-            {
-              wrapperClass: 'm-modalV2__wrapper',
-              onDismissIntent: () => {
-                this.dismiss();
-              },
-            },
-            this.injector
-          )
-          .onDidDismiss(() => {
-            modalOpen = false;
-            subscriber.complete();
-          })
-          .present();
+        modal = this.modalService.present(WalletOnchainTransferComponent, {
+          injector: this.injector,
+        });
+
+        modal.result.then(() => {
+          modal = null;
+          subscriber.complete();
+        });
       } catch (e) {
         subscriber.error(e);
       }
@@ -65,8 +56,8 @@ export class OnchainTransferModalService {
       return () => {
         this.injector = void 0;
 
-        if (modalOpen) {
-          this.dismiss();
+        if (modal) {
+          modal.dismiss();
         }
       };
     });
@@ -76,6 +67,6 @@ export class OnchainTransferModalService {
    * Dismisses the modal
    */
   dismiss() {
-    this.overlayModal.dismiss();
+    this.modalService.dismissAll();
   }
 }

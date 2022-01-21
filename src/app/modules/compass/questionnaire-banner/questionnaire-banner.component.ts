@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { CompassQuestionnaireModalComponent } from '../questionnaire-modal/questionnaire-modal.component';
 import { CompassService } from '../compass.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 export const SOCIAL_COMPASS_DISMISSED_KEY: string =
   'social-compass-banner-dismissed';
@@ -23,7 +23,7 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
     private session: Session,
     private compassService: CompassService,
     private storage: Storage,
-    private overlayModal: OverlayModalService
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
         this.answersProvided = provided;
 
         if (provided) {
-          this.overlayModal.dismiss();
+          this.modalService.dismissAll();
         }
       }
     );
@@ -49,11 +49,7 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
   }
 
   async openModal(): Promise<void> {
-    this.overlayModal
-      .create(CompassQuestionnaireModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
-      })
-      .present();
+    this.modalService.present(CompassQuestionnaireModalComponent);
   }
 
   dismiss(): void {

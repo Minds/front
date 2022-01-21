@@ -1,51 +1,27 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LanguageModalComponent } from './language-modal.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Injectable()
 export class LanguageModalService {
   /**
    * Constructor
-   * @param overlayModal
+   * @param modalService
    */
-  constructor(protected overlayModal: OverlayModalService) {}
+  constructor(protected modalService: ModalService) {}
 
   /**
    * Presents the languages modal
    * @param injector
    */
-  present(injector: Injector): Observable<string> {
-    return new Observable<string>(subscriber => {
-      let open = true;
-
-      this.overlayModal
-        .create(
-          LanguageModalComponent,
-          null,
-          {
-            wrapperClass: 'm-modalV2__wrapper',
-            onSave: language => {
-              subscriber.next(language);
-              this.overlayModal.dismiss();
-            },
-            onDismissIntent: () => {
-              this.overlayModal.dismiss();
-            },
-          },
-          injector
-        )
-        .onDidDismiss(() => {
-          open = false;
-          subscriber.complete();
-        })
-        .present();
-
-      return () => {
-        if (open) {
-          this.overlayModal.dismiss();
-        }
-      };
+  present(injector: Injector): Promise<string> {
+    const modal = this.modalService.present(LanguageModalComponent, {
+      data: {
+        onSave: language => modal.close(language),
+      },
+      injector,
     });
+
+    return modal.result;
   }
 }

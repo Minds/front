@@ -2,7 +2,6 @@ import { OnInit } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { LazyComponent } from '../../../common/services/modal-lazy-load.service';
 import {
   MultiFactorAuthService,
   MultiFactorPanel,
@@ -21,7 +20,7 @@ import {
   templateUrl: './multi-factor-auth.component.html',
   styleUrls: ['./multi-factor-auth.component.ng.scss'],
 })
-export class MultiFactorAuthBaseComponent implements LazyComponent {
+export class MultiFactorAuthBaseComponent {
   public readonly cdnAssetsUrl: string;
 
   /**
@@ -34,18 +33,6 @@ export class MultiFactorAuthBaseComponent implements LazyComponent {
    */
   @Input() set authType(type: MultiFactorRootPanel) {
     this.service.activePanel$.next(type);
-  }
-
-  /**
-   * Sets modal options.
-   * @param { Function } onDismissIntent - set dismiss intent callback.
-   * @param { Function } onSaveIntent - set save intent callback.
-   * @param { MultiFactorAuthType } authType - set auth type.
-   */
-  set opts({ onDismissIntent, onSaveIntent, authType }) {
-    this.onDismissIntent = onDismissIntent || (() => {});
-    this.onSaveIntent = onSaveIntent || (() => {});
-    this.authType = authType;
   }
 
   /**
@@ -81,5 +68,17 @@ export class MultiFactorAuthBaseComponent implements LazyComponent {
     return {
       backgroundImage: `url('${this.cdnAssetsUrl}assets/photos/banner2FA.jpg')`,
     };
+  }
+
+  /**
+   * Sets modal options.
+   * @param { Function } onDismissIntent - set dismiss intent callback.
+   * @param { Function } onSaveIntent - set save intent callback.
+   * @param { MultiFactorAuthType } authType - set auth type.
+   */
+  setModalData({ onDismissIntent, onSaveIntent, authType }) {
+    this.onDismissIntent = onDismissIntent || (() => {});
+    this.onSaveIntent = onSaveIntent || (() => {});
+    this.authType = authType;
   }
 }

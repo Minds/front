@@ -1,13 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
-import { WireModalService } from '../wire-modal.service';
-import { WireEventType } from '../v2/wire-v2.service';
 import { FeaturesService } from '../../../services/features.service';
-import { StackableModalService } from '../../../services/ux/stackable-modal.service';
 import { WireCreatorComponent } from '../v2/creator/wire-creator.component';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-wire-button',
@@ -20,11 +17,9 @@ export class WireButtonComponent {
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService,
     private modal: SignupModalService,
-    private wireModal: WireModalService,
     public features: FeaturesService,
-    private stackableModal: StackableModalService
+    private modalService: ModalService
   ) {}
 
   async wire() {
@@ -34,14 +29,13 @@ export class WireButtonComponent {
       return;
     }
 
-    await this.stackableModal
-      .present(WireCreatorComponent, this.object, {
-        wrapperClass: 'm-modalV2__wrapper',
+    const modal = this.modalService.present(WireCreatorComponent, {
+      size: 'lg',
+      data: {
+        entity: this.object,
         default: this.object && this.object.wire_threshold,
-        onComplete: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
+        onComplete: () => modal.close(),
+      },
+    });
   }
 }

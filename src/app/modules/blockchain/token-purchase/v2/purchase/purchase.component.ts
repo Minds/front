@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../../../../services/api/client';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { Session } from '../../../../../services/session';
 import { Web3WalletService } from '../../../web3-wallet.service';
 import { TokenDistributionEventService } from '../../../contracts/token-distribution-event.service';
@@ -68,7 +67,6 @@ export class BlockchainPurchaseV2Component implements OnInit {
   constructor(
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected overlayModal: OverlayModalService,
     protected web3modalService: Web3ModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,

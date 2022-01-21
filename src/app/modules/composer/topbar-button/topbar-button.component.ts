@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { ComposerService } from '../services/composer.service';
-import { ModalService } from '../components/modal/modal.service';
+import { ComposerModalService } from '../components/modal/modal.service';
 
 @Component({
   selector: 'm-composer__topbarButton',
@@ -10,14 +10,11 @@ import { ModalService } from '../components/modal/modal.service';
 export class ComposerTopbarButtonComponent {
   constructor(
     private composer: ComposerService,
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector
   ) {}
 
   onClick(e: MouseEvent) {
-    this.composerModal
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    this.composerModal.setInjector(this.injector).present();
   }
 }

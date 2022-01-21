@@ -1,5 +1,4 @@
 import { Component, Injector } from '@angular/core';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { LanguageModalComponent } from './language-modal/language-modal.component';
 import { LanguageService } from './language.service';
 import { LanguageModalService } from './language-modal/language-modal.service';
@@ -29,9 +28,7 @@ export class LanguageBarComponent {
    * Opens language selection modal.
    */
   async openLanguageModal(): Promise<void> {
-    const language = await this.languageModal
-      .present(this.injector)
-      .toPromise();
+    const language = await this.languageModal.present(this.injector);
 
     if (language) {
       await this.onLanguageSelect(language);

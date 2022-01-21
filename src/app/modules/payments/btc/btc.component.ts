@@ -13,9 +13,9 @@ export class BTCComponent {
   address: string = '1DWPuJjcZWzsRPCwss4gYqgeUpkj5AD1yu';
   amount: string = '0.01';
 
-  set data(data) {
+  setModalData(data: { address: string; amount: number }) {
     this.address = data.address;
-    this.amount = data.amount;
+    this.amount = String(data.amount);
   }
 
   get qrdata() {

@@ -9,21 +9,20 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
   OnInit,
+  Output,
 } from '@angular/core';
 import { EmbedServiceV2 } from '../../../services/embedV2.service';
 import { Session } from '../../../services/session';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
-import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { FormToastService } from '../../services/form-toast.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 type Option =
   | 'edit'
@@ -79,7 +78,7 @@ export class PostMenuComponent implements OnInit {
     public session: Session,
     private client: Client,
     private cd: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
@@ -256,7 +255,11 @@ export class PostMenuComponent implements OnInit {
       this.session.getLoggedInUser().guid,
       this.entity.ownerObj.guid
     );
-    this.overlayModal.create(ReportCreatorComponent, this.entity).present();
+    this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: this.entity,
+      },
+    });
     this.selectOption('report');
   }
 
@@ -367,11 +370,7 @@ export class PostMenuComponent implements OnInit {
         this.embedService.getIframeFromObject(this.entity),
     };
 
-    this.overlayModal
-      .create(ShareModalComponent, data, {
-        class: 'm-overlay-modal--medium m-overlayModal__share',
-      })
-      .present();
+    this.modalService.present(ShareModalComponent, { data });
 
     this.selectOption('share');
   }

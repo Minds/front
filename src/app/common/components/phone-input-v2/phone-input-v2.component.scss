@@ -23,6 +23,8 @@ m-phoneInput {
     justify-content: flex-start;
     flex-flow: row nowrap;
     align-items: center;
+    margin-bottom: $minds-margin * 2;
+
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
       border: 1px solid themed($m-borderColor--primary);

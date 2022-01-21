@@ -1,11 +1,8 @@
-import { Injectable } from '@angular/core';
-import {
-  LazyLoadingService,
-  ModalLazyLoadService,
-} from '../../../../common/services/modal-lazy-load.service';
+import { Injectable, Injector } from '@angular/core';
 import { MultiFactorRootPanel } from './multi-factor-auth-service';
 import { MultiFactorAuthBaseComponent } from '../multi-factor-auth.component';
 import { MultiFactorAuthConfirmationService } from './multi-factor-auth-confirmation.service';
+import { ModalRef, ModalService } from '../../../../services/ux/modal.service';
 
 export type MultiFactorModalOpts = {
   authType: MultiFactorRootPanel;
@@ -15,44 +12,39 @@ export type MultiFactorModalOpts = {
  * Lazy loads MFA modal.
  */
 @Injectable({ providedIn: 'root' })
-export class MultiFactorLazyService implements LazyLoadingService {
+export class MultiFactorLazyService {
+  modal?: ModalRef<any>;
+
   constructor(
-    private lazyModal: ModalLazyLoadService,
+    private modalService: ModalService,
+    private injector: Injector,
     private multiFactorAuthConfirmation: MultiFactorAuthConfirmationService
   ) {}
 
   /**
    * Lazy load modules and open modal.
-   * @param { MultiFactorAuthType } - totp or sms.
+   * @param { MultiFactorModalOpts } opts
    * @returns { Promise<any> } - awaitable.
    */
   public async open(
     opts: MultiFactorModalOpts = { authType: 'totp' }
   ): Promise<void> {
+    this.modal?.dismiss();
+
     const { MultiFactorAuthLazyModule } = await import(
       '../multi-factor-auth-lazy.module'
     );
 
-    try {
-      await this.lazyModal
-        .setComponent(MultiFactorAuthBaseComponent)
-        .setLazyModule(MultiFactorAuthLazyModule)
-        .setOpts({
-          wrapperClass: 'm-modalV2__wrapper',
-          ...opts,
-          onSaveIntent: () => {
-            this.lazyModal.dismiss();
-          },
-          onDismissIntent: () => {
-            this.lazyModal.dismiss();
-          },
-        })
-        .open();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return;
-      }
-    }
+    this.modal = this.modalService.present(MultiFactorAuthBaseComponent, {
+      data: {
+        ...opts,
+        onSaveIntent: () => this.modal?.close(),
+      },
+      injector: this.injector,
+      lazyModule: MultiFactorAuthLazyModule,
+    });
+
+    return this.modal.result;
   }
 
   /**
@@ -60,7 +52,7 @@ export class MultiFactorLazyService implements LazyLoadingService {
    * @param { success?: boolean } params - success will call the success service.
    */
   public dismiss(params: { success?: boolean } = {}): void {
-    this.lazyModal.dismiss();
+    this.modal?.dismiss();
 
     if (params.success) {
       this.multiFactorAuthConfirmation.success$.next(true);

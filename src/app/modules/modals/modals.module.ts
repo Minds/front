@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CommonModule } from '../../common/common.module';
 import { MindsFormsModule } from '../forms/forms.module';
@@ -22,6 +23,7 @@ import { ConcertColorsModalComponent } from './concert-colors/concert-colors-mod
     CommonModule,
     RouterModule.forChild([]),
     FormsModule,
+    NgbModalModule,
     ReactiveFormsModule,
     MindsFormsModule,
     TextInputAutocompleteModule,
