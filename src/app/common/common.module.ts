@@ -198,6 +198,7 @@ import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.compone
 import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
+import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 
 const routes: Routes = [
   {
@@ -367,6 +368,7 @@ const routes: Routes = [
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
     ModalCloseButtonComponent,
+    BlurhashDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -512,6 +514,7 @@ const routes: Routes = [
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
     ModalCloseButtonComponent,
+    BlurhashDirective,
   ],
   providers: [
     SiteService,

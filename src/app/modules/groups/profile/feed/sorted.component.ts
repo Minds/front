@@ -89,7 +89,6 @@ export class GroupProfileFeedSortedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initialized = true;
-    this.load(true);
 
     this.groupsSearchQuerySubscription = this.groupsSearch.query$.subscribe(
       query => {
