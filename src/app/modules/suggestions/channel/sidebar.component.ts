@@ -47,7 +47,6 @@ export class SuggestionsSidebar {
   }
 
   async ngOnInit() {
-    console.log('ojm sidebar init');
     if (this.suggestions$.getValue().length === 0) {
       this.service.load({
         limit: this.limit,

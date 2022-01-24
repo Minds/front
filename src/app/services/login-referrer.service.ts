@@ -10,7 +10,6 @@ type NavigateOptions = {
   defaultUrl?: string;
 };
 
-// ojm are we still using this too??
 @Injectable()
 export class LoginReferrerService {
   private static DEFAULT_URL = '/newsfeed/subscriptions';

@@ -12,13 +12,12 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
   isPlusPageSubscription: Subscription;
   isPlusPage: boolean = false;
-  discoveryOnRegisterExperiment: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private service: DiscoveryService,
-    private discoveryOnRegisterExperimentService: DiscoveryOnRegisterExperimentService
+    public discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService
   ) {
     /**
      * Determine if on Minds+ page
@@ -45,8 +44,6 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
         this.isPlusPage = isPlusPage;
       }
     );
-
-    this.discoveryOnRegisterExperiment = this.discoveryOnRegisterExperimentService.isActive();
   }
 
   ngOnDestroy(): void {

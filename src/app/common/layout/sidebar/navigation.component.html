@@ -103,7 +103,11 @@
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
         [routerLinkActiveOptions]="{ exact: plusPageActive }"
       >
-        <a routerLink="'/'" (click)="toggle()" data-ref="sidenav-discovery">
+        <a
+          [routerLink]="shouldBeDiscoveryHomepage() ? '/' : '/discovery'"
+          (click)="toggle()"
+          data-ref="sidenav-discovery"
+        >
           <m-tooltip
             [enabled]="!showLabels"
             [anchor]="'left'"

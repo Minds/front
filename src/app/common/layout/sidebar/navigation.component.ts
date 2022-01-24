@@ -29,12 +29,10 @@ import { BuyTokensModalService } from '../../../modules/blockchain/token-purchas
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
 import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
-import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
+import { ModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { DiscoveryOnRegisterExperimentService } from '../../../modules/experiments/sub-services/discovery-on-register-experiment.service';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -96,10 +94,9 @@ export class SidebarNavigationComponent
     private web3WalletService: Web3WalletService,
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
-    private composerModalService: ComposerModalService,
+    private composerModalService: ModalService,
     private injector: Injector,
     private authModal: AuthModalService,
-    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService,
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService
   ) {
@@ -225,10 +222,7 @@ export class SidebarNavigationComponent
 
   async openComposeModal() {
     this.toggle();
-    await this.composerModalService
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    await this.composerModalService.setInjector(this.injector).present();
   }
 
   setVisible(value: boolean): void {
@@ -289,5 +283,18 @@ export class SidebarNavigationComponent
       }
       console.error(e);
     }
+  }
+
+  /**
+   * Returns if link should be to discovery homepage
+   * @returns { boolean } true if link should be '/'.
+   */
+  public shouldBeDiscoveryHomepage(): boolean {
+    /**
+     * Logged out guests should see discovery as the homepage
+     * when guest-mode flag is on
+     * */
+
+    return this.featuresService.has('guest-mode') && !this.user; // logged out
   }
 }

@@ -11,7 +11,6 @@ import { AutocompleteSuggestionsService } from './services/autocomplete-suggesti
 import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
 import { FeedService } from '../channels/v2/feed/feed.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
-import { SuggestionsService } from './channel/channel-suggestions.service';
 
 @NgModule({
   imports: [
@@ -24,6 +23,6 @@ import { SuggestionsService } from './channel/channel-suggestions.service';
   ],
   declarations: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
   exports: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
-  providers: [AutocompleteSuggestionsService, SuggestionsService],
+  providers: [AutocompleteSuggestionsService],
 })
 export class SuggestionsModule {}

@@ -172,7 +172,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onJoinNowClick() {
     try {
       await this.authModal.open();
-      this.doRedirect();
+      this.doRedirect(true);
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
@@ -198,10 +198,12 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  doRedirect(): void {
-    if (this.router.url === '/' || this.router.url === '/about') {
+  doRedirect(isRegistration: boolean = false): void {
+    if (isRegistration && this.discoveryOnRegisterExperiment.isActive()) {
       const url = this.discoveryOnRegisterExperiment.redirectUrl();
       this.router.navigate([url]);
+    } else {
+      this.router.navigate(['/newsfeed/subscriptions/latest']);
     }
   }
 

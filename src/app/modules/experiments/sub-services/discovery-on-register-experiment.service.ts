@@ -22,9 +22,8 @@ export class DiscoveryOnRegisterExperimentService {
     // ojm uncomment below
 
     //  return (
-    //    this.featuresService.has('guest-mode') &&
     //    this.experiments.hasVariation(
-    //      'discovery-homepage',
+    //      'discovery-redirect',
     //      'on'
     //    )
     //  );

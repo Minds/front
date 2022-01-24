@@ -11,7 +11,7 @@
     <!-- We place an additional disclaimer here for popover -->
     <m-discovery__disclaimer
       class="m-discovery__disclaimer--popover"
-      *ngIf="!discoveryOnRegisterExperiment"
+      *ngIf="!discoveryOnRegisterExperiment.isActive()"
     ></m-discovery__disclaimer>
   </div>
   <div class="m-discovery__sidebar" m-pageLayout__pane="right">
@@ -22,9 +22,8 @@
           *ngIf="!isPlusPage"
         ></m-language__sidebarPrompt>
         <m-discovery__disclaimer *ngIf="!isPlusPage"></m-discovery__disclaimer>
-        <!-- ojm todo: figure out why this isn't initializing -->
         <m-suggestions__sidebar
-          *ngIf="discoveryOnRegisterExperiment"
+          *ngIf="discoveryOnRegisterExperiment.isActive()"
           type="user"
           customTitle="popular_channels"
         ></m-suggestions__sidebar>

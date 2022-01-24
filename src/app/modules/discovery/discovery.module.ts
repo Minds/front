@@ -213,7 +213,6 @@ import { DiscoveryTopComponent } from './top/top.component';
     RouterModule,
     NewsfeedModule,
     ContentSettingsModule,
-    SuggestionsModule,
   ],
 })
 export class DiscoveryModule {}

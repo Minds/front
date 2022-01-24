@@ -1,5 +1,3 @@
-<!-- ojmtodo make this render -->
-ojm
 <ng-template #suggestionsBody>
   <span
     *ngIf="(error$ | async) && !(inProgress$ | async)"
@@ -86,10 +84,8 @@ ojm
 </ng-template>
 
 <!-- Outlets -->
-<!-- ojm
-*ngIf="(suggestions$ | async).length" -->
 
-<m-sidebarWidget [title]="title">
+<m-sidebarWidget [title]="title" *ngIf="(suggestions$ | async).length">
   <div class="m-sidebarWidget__body">
     <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
   </div>
