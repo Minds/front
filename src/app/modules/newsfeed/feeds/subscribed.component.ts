@@ -10,6 +10,8 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  Injectable,
+  Self,
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -25,7 +27,6 @@ import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
-import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { isPlatformServer } from '@angular/common';
@@ -34,11 +35,22 @@ import { FeedsUpdateService } from '../../../common/services/feeds-update.servic
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { TopFeedExperimentService } from '../../experiments/sub-services/top-feed-experiment.service';
+
+const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
+type FeedAlgorithm = 'top' | 'latest';
+
+@Injectable()
+export class LatestFeedService extends FeedsService {}
+
+@Injectable()
+export class TopFeedService extends FeedsService {}
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [FeedsService],
+  providers: [LatestFeedService, TopFeedService],
   templateUrl: 'subscribed.component.html',
+  styleUrls: ['subscribed.component.ng.scss'],
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
@@ -47,7 +59,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  algorithm: string = 'latest';
+  algorithm: FeedAlgorithm = 'latest';
 
   attachment_preview;
 
@@ -83,8 +95,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private storage: Storage,
     private context: ContextService,
-    protected featuresService: FeaturesService,
-    public feedsService: FeedsService,
+    public topFeedExperiment: TopFeedExperimentService,
+    @Self() public latestFeedService: LatestFeedService,
+    @Self() public topFeedService: TopFeedService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
@@ -92,14 +105,23 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     private experiments: ExperimentsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    if (isPlatformServer(this.platformId)) return;
+
+    if (this.topFeedExperiment.isActive()) {
+      const storedfeedAlgorithm = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
+      if (storedfeedAlgorithm) {
+        this.algorithm = storedfeedAlgorithm as FeedAlgorithm;
+      }
+    }
+  }
 
   ngOnInit() {
     this.routerSubscription = this.router.events
       .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.showBoostRotator = false;
-        this.load(true, true);
+        this.load();
         setTimeout(() => {
           this.showBoostRotator = true;
         }, 100);
@@ -107,16 +129,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
       () => {
-        this.load(true, true);
+        this.load();
       }
     );
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['algorithm']) {
-        this.algorithm = params['algorithm'];
-        this.load(true, true);
-      }
+    this.load();
 
+    this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['message']) {
         this.message = params['message'];
       }
@@ -164,32 +183,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.feedsUpdatedSubscription.unsubscribe();
   }
 
-  load(refresh: boolean = false, forceSync: boolean = false) {
+  async load() {
     if (isPlatformServer(this.platformId)) return;
 
-    this.loadFromService(refresh, forceSync);
-  }
+    this.moreData = true;
+    this.offset = 0;
+    this.latestFeedService.clear(false);
 
-  loadNext() {
-    if (
-      this.feedsService.canFetchMore &&
-      !this.feedsService.inProgress.getValue() &&
-      this.feedsService.offset.getValue()
-    ) {
-      this.feedsService.fetch(); // load the next 150 in the background
-    }
-    this.feedsService.loadMore();
-  }
-
-  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
-    if (!refresh) {
-      return;
-    }
-
-    if (refresh) {
-      this.moreData = true;
-      this.offset = 0;
-      this.feedsService.clear(true);
+    if (this.algorithm === 'top') {
+      this.topFeedService.clear(true);
     }
 
     this.inProgress = true;
@@ -198,19 +200,43 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       algorithm: this.algorithm,
     };
 
-    if (this.experiments.hasVariation('newsfeed-group-posts', 'on')) {
+    if (this.experiments.hasVariation('newsfeed-group-posts', true)) {
       queryParams['include_group_posts'] = true;
     }
 
     try {
-      this.feedsService
+      if (this.algorithm === 'top') {
+        try {
+          await this.topFeedService
+            .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
+            .setLimit(3)
+            .fetch(true);
+        } catch (e) {
+          console.error('Top Feed', e);
+        }
+      }
+
+      await this.latestFeedService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
         .setParams(queryParams)
         .setLimit(12)
-        .fetch(refresh);
+        .fetch(true);
     } catch (e) {
-      console.error('SortedComponent', e);
+      console.error('Latest Feed', e);
     }
+
+    this.inProgress = false;
+  }
+
+  loadNext() {
+    if (
+      this.latestFeedService.canFetchMore &&
+      !this.latestFeedService.inProgress.getValue() &&
+      this.latestFeedService.offset.getValue()
+    ) {
+      this.latestFeedService.fetch(); // load the next 150 in the background
+    }
+    this.latestFeedService.loadMore();
   }
 
   prepend(activity: any) {
@@ -245,7 +271,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.feedsService.deleteItem(activity, (item, obj) => {
+    this.latestFeedService.deleteItem(activity, (item, obj) => {
       return item.urn === obj.urn;
     });
   }
@@ -254,5 +280,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (this.composer) {
       return this.composer.canDeactivate();
     }
+  }
+
+  /**
+   * change feed type
+   **/
+  changeFeedAlgorithm(type: 'latest' | 'top') {
+    this.algorithm = type;
+    this.storage.set(FEED_ALGORITHM_STORAGE_KEY, type);
+    this.load();
   }
 }
