@@ -198,9 +198,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       algorithm: this.algorithm,
     };
 
-    // if (this.experiments.hasVariation('newsfeed-group-posts', 'on')) {
-    queryParams['include_group_posts'] = true;
-    // }
+    if (this.experiments.hasVariation('newsfeed-group-posts', 'on')) {
+      queryParams['include_group_posts'] = true;
+    }
 
     try {
       this.feedsService
