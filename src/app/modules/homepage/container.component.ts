@@ -8,8 +8,6 @@ import { MetaService } from '../../common/services/meta.service';
 export class HomepageContainerComponent implements OnInit {
   constructor(private metaService: MetaService) {}
 
-  discoveryOnRegister: boolean;
-
   ngOnInit(): void {
     this.metaService
       .setTitle(`The Leading Alternative Social Network`, true)

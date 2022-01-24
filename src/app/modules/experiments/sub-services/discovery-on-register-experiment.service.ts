@@ -18,15 +18,7 @@ export class DiscoveryOnRegisterExperimentService {
    * @returns { boolean } whether guest mode experiment is active.
    */
   public isActive(): boolean {
-    return true;
-    // ojm uncomment below
-
-    //  return (
-    //    this.experiments.hasVariation(
-    //      'discovery-redirect',
-    //      'on'
-    //    )
-    //  );
+    return this.experiments.hasVariation('discovery-redirect', 'on');
   }
 
   public redirectUrl(): string {
