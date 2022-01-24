@@ -94,7 +94,7 @@ export class SidebarNavigationComponent
     private web3WalletService: Web3WalletService,
     private boostModalService: BoostModalLazyService,
     private earnModalService: EarnModalService,
-    private composerModalService: ModalService,
+    private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
     private themeService: ThemeService,
