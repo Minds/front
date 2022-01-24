@@ -4,9 +4,9 @@ import { map, take } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Session } from '../../../../../services/session';
-import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
 import { SettingsTwoFactorV2Service } from '../two-factor-v2.service';
 import { SettingsTwoFactorCodePopupComponent } from './code-popup/code-popup.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
  * Connect app panel - used so the user can scan their QR and verify the code given
@@ -70,7 +70,7 @@ export class SettingsTwoFactorConnectAppComponent
   constructor(
     private service: SettingsTwoFactorV2Service,
     private session: Session,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private toast: FormToastService
   ) {
     super();
@@ -126,13 +126,11 @@ export class SettingsTwoFactorConnectAppComponent
   public async onEnterTextCodeClick(): Promise<void> {
     this.subscriptions.push(
       this.secret$.pipe(take(1)).subscribe(async (value: string) => {
-        try {
-          await this.stackableModal
-            .present(SettingsTwoFactorCodePopupComponent, null, {
-              code: value,
-            })
-            .toPromise();
-        } catch (e) {}
+        this.modalService.present(SettingsTwoFactorCodePopupComponent, {
+          data: {
+            code: value,
+          },
+        });
       })
     );
   }

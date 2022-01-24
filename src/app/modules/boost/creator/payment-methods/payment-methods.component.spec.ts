@@ -25,9 +25,8 @@ import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { localWalletServiceMock } from '../../../../../tests/local-wallet-service-mock.spec';
 import { transactionOverlayServiceMock } from '../../../../../tests/transaction-overlay-service-mock.spec';
 import { TransactionOverlayService } from '../../../blockchain/transaction-overlay/transaction-overlay.service';
-
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { overlayModalServiceMock } from '../../../../../tests/overlay-modal-service-mock.spec';
+import { ModalService } from '../../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../../tests/modal-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -147,7 +146,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
             useValue: transactionOverlayServiceMock,
           },
           { provide: TokenContractService, useValue: tokenContractServiceMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
         ],
       }).compileComponents();
     })

@@ -23,15 +23,14 @@ import { AbbrPipe } from '../../../common/pipes/abbr';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-
 import { REASONS } from '../../../services/list-options';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 /* tslint:disable */
 @Directive({
@@ -65,7 +64,7 @@ describe('ReportCreatorComponent', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),

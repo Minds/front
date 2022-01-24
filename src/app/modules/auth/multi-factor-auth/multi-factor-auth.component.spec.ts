@@ -57,11 +57,11 @@ describe('MultiFactorAuthBaseComponent', () => {
       MultiFactorRootPanel
     >('totp');
 
-    comp.opts = {
+    comp.setModalData({
       onDismissIntent: () => {},
       onSaveIntent: () => {},
       authType: 'sms',
-    };
+    });
 
     const sub = (comp as any).service.activePanel$.subscribe(val => {
       expect(val).toBe('sms');

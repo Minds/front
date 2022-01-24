@@ -1,17 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { BoostModalComponent } from './boost-modal.component';
-import {
-  LazyLoadingService,
-  ModalLazyLoadService,
-} from '../../../common/services/modal-lazy-load.service';
 import { BoostableEntity } from './boost-modal.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 /**
  * Lazy loads boost modal.
  */
 @Injectable({ providedIn: 'root' })
-export class BoostModalLazyService implements LazyLoadingService {
-  constructor(private lazyModal: ModalLazyLoadService) {}
+export class BoostModalLazyService {
+  constructor(private modalService: ModalService, private injector: Injector) {}
   /**
    * Lazy load modules and open modal.
    * @param { BoostableEntity } entity - entity that can be boosted.
@@ -19,26 +16,14 @@ export class BoostModalLazyService implements LazyLoadingService {
    */
   public async open(entity: BoostableEntity = {}): Promise<any> {
     const { BoostModalLazyModule } = await import('./boost-modal-lazy.module');
-    try {
-      await this.lazyModal
-        .setComponent(BoostModalComponent)
-        .setLazyModule(BoostModalLazyModule)
-        .setOpts({
-          wrapperClass: 'm-modalV2__wrapper',
-          entity: entity,
-          onSaveIntent: () => {
-            this.lazyModal.dismiss();
-          },
-          onDismissIntent: () => {
-            this.lazyModal.dismiss();
-          },
-        })
-        .open();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // do nothing
-      }
-      console.error(e);
-    }
+    const modal = this.modalService.present(BoostModalComponent, {
+      data: {
+        entity: entity,
+        onSaveIntent: () => modal.close(),
+      },
+      size: 'lg',
+      injector: this.injector,
+      lazyModule: BoostModalLazyModule,
+    });
   }
 }

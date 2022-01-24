@@ -35,7 +35,7 @@ export class ModalComponent implements AfterViewInit {
    * @param onPost
    * @param onDismissIntent
    */
-  set opts({ onPost, onDismissIntent }) {
+  setModalData({ onPost, onDismissIntent }) {
     this.onPost = onPost || noOp;
     this.onDismissIntent = onDismissIntent || noOp;
   }

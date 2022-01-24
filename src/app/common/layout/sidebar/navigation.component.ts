@@ -31,7 +31,7 @@ import { UniswapModalService } from '../../../modules/blockchain/token-purchase/
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
-import { ModalService } from '../../../modules/composer/components/modal/modal.service';
+import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { ThemeService } from '../../services/theme.service';
 

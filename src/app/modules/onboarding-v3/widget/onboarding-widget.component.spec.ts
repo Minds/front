@@ -6,7 +6,7 @@ import { OnboardingV3Service } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { Injector } from '@angular/core';
-import { ModalService } from '../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
@@ -38,7 +38,10 @@ describe('OnboardingV3WidgetComponent', () => {
             provide: OnboardingV3PanelService,
             useValue: MockService(OnboardingV3PanelService),
           },
-          { provide: ModalService, useValue: MockService(ModalService) },
+          {
+            provide: ComposerModalService,
+            useValue: MockService(ComposerModalService),
+          },
           { provide: Injector, useValue: MockService(Injector) },
           {
             provide: FormToastService,

@@ -26,6 +26,8 @@ const DEFAULT_BODY = 'Are you sure?';
         Confirm
       </m-button>
     </div>
+
+    <m-modalCloseButton></m-modalCloseButton>
   `,
   styleUrls: ['./confirm.ng.scss'],
 })
@@ -57,7 +59,7 @@ export class ConfirmV2Component {
    * @param { function } onConfirm - callback on call for confirmation.
    * @param { function } onDismiss - callback on call to dismiss modal.
    */
-  set opts({ title, body, onConfirm, onDismiss }) {
+  setModalData({ title, body, onConfirm, onDismiss }) {
     this.title = title || DEFAULT_TITLE;
     this.body = body || DEFAULT_BODY;
     this.onConfirm = onConfirm || noOp;

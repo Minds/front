@@ -13,6 +13,12 @@
       padding: 40px 60px;
     }
 
+    @media screen and (max-width: 991px) {
+      > div {
+        padding: 25px;
+      }
+    }
+
     @media screen and (max-width: $max-mobile) {
       grid-template-columns: repeat(1, 1fr);
 
@@ -31,7 +37,7 @@
   }
 
   .m-earnModal__left {
-    width: 320px;
+    max-width: 320px;
 
     @media screen and (max-width: $max-mobile) {
       width: unset;

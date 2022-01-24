@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ComposerComponent } from './composer.component';
 import { ComposerService } from './services/composer.service';
 import { MockComponent, MockService } from '../../utils/mock';
-import { ModalService } from './components/modal/modal.service';
+import { ComposerModalService } from './components/modal/modal.service';
 import { By } from '@angular/platform-browser';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { composerMockService } from '../../mocks/modules/composer/services/composer.service.mock';
@@ -39,8 +39,8 @@ describe('Composer', () => {
         imports: [CookieModule],
         providers: [
           {
-            provide: ModalService,
-            useValue: MockService(ModalService),
+            provide: ComposerModalService,
+            useValue: MockService(ComposerModalService),
           },
           {
             provide: FormToastService,

@@ -10,7 +10,7 @@ import { OrderData } from './order-received-modal.service';
 export class OrderReceivedModalComponent {
   orderData: OrderData;
 
-  @Input('orderData') set data(orderData) {
+  setModalData({ orderData }) {
     this.orderData = orderData;
   }
 }

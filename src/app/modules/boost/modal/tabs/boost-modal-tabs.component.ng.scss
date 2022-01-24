@@ -86,9 +86,11 @@ $collapse-width: 830px;
 
     .m-boostModal__contentDescriptionContainer {
       width: 250px;
+      padding-left: 16px;
 
       @media screen and (max-width: $collapse-width) {
         width: 100%;
+        padding-left: 0;
       }
 
       .m-boostModal__mainPanelDescription {

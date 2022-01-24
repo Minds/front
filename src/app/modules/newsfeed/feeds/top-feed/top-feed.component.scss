@@ -1,0 +1,60 @@
+m-top-feed {
+  .m-topFeed__showMore__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: $minds-padding 0 $minds-padding * 2;
+
+    m-loadingSpinner {
+      width: unset;
+      margin: unset;
+
+      .m-loadingSpinner__wrapper {
+        padding: 0;
+        top: -1px;
+
+        .m-loadingSpinner__container {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    .m-topFeed__showMore__link {
+      padding: $minds-padding;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: $m-borderRadius;
+      transition: color 0.3s;
+      font-size: 16px;
+
+      @include m-theme() {
+        color: themed($m-link) !important;
+      }
+
+      &:hover {
+        @include m-theme() {
+          color: themed($m-link--hover) !important;
+        }
+      }
+    }
+  }
+
+  > m-activity:nth-child(n + 4) {
+    animation-duration: 0.5s;
+    animation-name: fadeFromBottom;
+  }
+}
+
+@keyframes fadeFromBottom {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

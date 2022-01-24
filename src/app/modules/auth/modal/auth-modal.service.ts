@@ -1,22 +1,18 @@
 import { Injectable, Compiler, Injector } from '@angular/core';
-import {
-  StackableModalService,
-  StackableModalEvent,
-  StackableModalState,
-} from '../../../services/ux/stackable-modal.service';
 import { AuthModalComponent } from './auth-modal.component';
 import { Subject, combineLatest, Observable, concat, merge } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { Session } from '../../../services/session';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Injectable()
 export class AuthModalService {
   constructor(
     private compiler: Compiler,
     private injector: Injector,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private features: FeaturesService,
     private onboardingV3: OnboardingV3Service,
     private session: Session
@@ -30,24 +26,15 @@ export class AuthModalService {
     }
 
     const { AuthModalModule } = await import('./auth-modal.module');
-
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      AuthModalModule
-    );
-    const moduleRef = moduleFactory.create(this.injector);
-
-    const componentFactory = moduleRef.instance.resolveComponent();
-
     const onSuccess$: Subject<MindsUser> = new Subject();
 
-    const evt: StackableModalEvent = await this.stackableModal
-      .present(AuthModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
+    const modal = this.modalService.present(AuthModalComponent, {
+      data: {
         formDisplay: opts.formDisplay,
         onComplete: async (user: MindsUser) => {
           onSuccess$.next(user);
           onSuccess$.complete(); // Ensures promise can be called below
-          this.stackableModal.dismiss();
+          modal.close(user);
 
           if (
             this.features.has('onboarding-october-2020') &&
@@ -64,14 +51,16 @@ export class AuthModalService {
             }
           }
         },
-        onDismissIntent: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
+      },
+      keyboard: false,
+      injector: this.injector,
+      lazyModule: AuthModalModule,
+    });
+
+    const result = await modal.result;
 
     // Modal was closed before login completed
-    if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
+    if (!result) {
       throw 'DismissedModalException';
     }
 

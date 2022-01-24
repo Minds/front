@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Session } from '../../../../../services/session';
-import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
 import { MockService } from '../../../../../utils/mock';
 import { SettingsTwoFactorRecoveryCodeComponent } from './recovery-codes.component';
 import {
@@ -11,6 +10,8 @@ import {
   TwoFactorSetupPanel,
 } from '../two-factor-v2.service';
 import { ButtonComponentMock } from '../../../../../mocks/common/components/button/button.component';
+import { modalServiceMock } from '../../../../../../tests/modal-service-mock.spec';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 describe('SettingsTwoFactorRecoveryCodeComponent', () => {
   let comp: SettingsTwoFactorRecoveryCodeComponent;
@@ -33,8 +34,8 @@ describe('SettingsTwoFactorRecoveryCodeComponent', () => {
             useValue: sessionMock,
           },
           {
-            provide: StackableModalService,
-            useValue: MockService(StackableModalService),
+            provide: ModalService,
+            useValue: modalServiceMock,
           },
           {
             provide: FormToastService,

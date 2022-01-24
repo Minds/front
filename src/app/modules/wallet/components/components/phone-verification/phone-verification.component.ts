@@ -35,7 +35,7 @@ export class WalletPhoneVerificationComponent implements OnInit {
    * @param onComplete
    * @param onDismissIntent
    */
-  set opts({ onComplete, onDismissIntent }) {
+  setModalData({ onComplete, onDismissIntent }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
   }

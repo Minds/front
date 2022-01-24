@@ -39,7 +39,7 @@ export class InteractionsModalComponent {
     this.listSubscription.unsubscribe();
   }
 
-  set data(data: { type: InteractionType; entityGuid: string }) {
+  setModalData(data: { type: InteractionType; entityGuid: string }) {
     this.type = data.type;
 
     this.interactionsDataService.type$.next(data.type);

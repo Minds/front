@@ -39,10 +39,6 @@ export class PublisherSearchModalComponent implements OnInit {
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
-  @Input('data') set data({ publisher }) {
-    this.publisher = publisher;
-  }
-
   constructor(public router: Router) {}
 
   ngOnInit(): void {
@@ -54,11 +50,14 @@ export class PublisherSearchModalComponent implements OnInit {
   }
 
   /**
-   * Modal options
+   * @param publisher
    * @param onSearch
+   * @param onDismissIntent
    */
-  set opts({ onSearch }) {
+  setModalData({ publisher, onSearch, onDismissIntent }) {
+    this.publisher = publisher;
     this.onSearchIntent = onSearch || noOp;
+    this.onDismissIntent = onDismissIntent || noOp;
   }
 
   onSearch(): void {

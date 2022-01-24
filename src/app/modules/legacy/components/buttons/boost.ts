@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 
 import { Session } from '../../../../services/session';
-import { Client } from '../../../../services/api';
-import { WalletService } from '../../../../services/wallet';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'minds-button-boost',
@@ -26,7 +24,7 @@ export class BoostButton {
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private boostLazyModal: BoostModalLazyService,
     private features: FeaturesService
   ) {}
@@ -41,10 +39,10 @@ export class BoostButton {
       return;
     }
 
-    const creator = this.overlayModal.create(
-      BoostCreatorComponent,
-      this.object
-    );
-    creator.present();
+    this.modalService.present(BoostCreatorComponent, {
+      data: {
+        channel: this.object,
+      },
+    });
   }
 }

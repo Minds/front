@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { Session } from '../../../services/session';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
@@ -28,18 +28,18 @@ export class ShareModalComponent implements OnInit, OnDestroy {
   flashing: boolean = false;
   flashTimeout;
 
-  @Input('data') set data({ url, embedCode }) {
-    this.embedCode = embedCode;
-    this.rawUrl = url;
-    this.encodedRawUrl = encodeURI(this.rawUrl);
-  }
-
   constructor(
     public session: Session,
     configs: ConfigsService,
     private toasterService: FormToastService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
+
+  setModalData({ embedCode, url }: { embedCode?: string; url: string }) {
+    this.embedCode = embedCode;
+    this.rawUrl = url;
+    this.encodedRawUrl = encodeURI(this.rawUrl);
   }
 
   ngOnInit() {

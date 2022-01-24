@@ -1,20 +1,18 @@
 import {
   Component,
+  EventEmitter,
   HostListener,
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
-  ComponentRef,
-  EventEmitter,
   Optional,
   SkipSelf,
+  ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
@@ -28,13 +26,9 @@ import { TranslationService } from '../../../services/translation';
 import { Client } from '../../../services/api/client';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import {
-  StackableModalService,
-  StackableModalState,
-  StackableModalEvent,
-} from '../../../services/ux/stackable-modal.service';
 import { MediumFadeAnimation, SlowFadeAnimation } from '../../../animations';
 import isFullscreen, { toggleFullscreen } from '../../../helpers/fullscreen';
+import { ModalService } from '../../../services/ux/modal.service';
 
 export type MediaModalParams = {
   entity: any;
@@ -164,8 +158,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     public session: Session,
     public analyticsService: AnalyticsService,
     public translationService: TranslationService,
-    private overlayModal: OverlayModalService,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private router: Router,
     private location: Location,
     private site: SiteService,
@@ -256,7 +249,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           // Go to the intended destination
           this.router.navigate([event.url]);
 
-          this.overlayModal.dismiss();
+          this.modalService.dismissAll();
         }
       }
     });
@@ -734,7 +727,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         break;
       case 'Escape':
         if (this.isOpen) {
-          this.overlayModal.dismiss();
+          this.modalService.dismissAll();
         }
         break;
     }
@@ -752,7 +745,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       $event.stopPropagation();
     }
     if (this.isOpen) {
-      this.overlayModal.dismiss();
+      this.modalService.dismissAll();
     }
   }
 
@@ -851,16 +844,12 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   }
 
   async openShareModal(): Promise<void> {
-    const data = {
-      url: this.site.baseUrl + this.pageUrl.substr(1),
-    };
-    const opts = {
-      class: 'm-overlayModal__share m-overlay-modal--medium',
-    };
-
-    const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(ShareModalComponent, data, opts)
-      .toPromise();
+    return this.modalService.present(ShareModalComponent, {
+      data: {
+        url: this.site.baseUrl + this.pageUrl.substr(1),
+      },
+      modalDialogClass: 'm-overlayModal__share',
+    }).result;
   }
 
   toggleMatureVisibility() {

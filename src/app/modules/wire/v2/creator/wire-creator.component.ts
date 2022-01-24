@@ -22,14 +22,6 @@ import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 })
 export class WireCreatorComponent implements OnDestroy {
   /**
-   * Sets the entity that will receive the payment
-   * @param object
-   */
-  @Input('object') set data(object) {
-    this.service.setEntity(object);
-  }
-
-  /**
    * Prices for yearly/monthly upgrades to pro/plus
    */
   readonly upgrades: any;
@@ -57,20 +49,50 @@ export class WireCreatorComponent implements OnDestroy {
   protected supportTierSubscription: Subscription;
 
   /**
+   * Constructor
+   * @param service
+   * @param supportTiers
+   */
+  constructor(
+    public service: WireV2Service,
+    public supportTiers: SupportTiersService,
+    private configs: ConfigsService,
+    private cd: ChangeDetectorRef,
+    private session: Session,
+    private authModal: AuthModalService
+  ) {
+    this.ownerSubscription = this.service.owner$.subscribe(owner =>
+      this.supportTiers.setEntityGuid(owner && owner.guid)
+    );
+    this.upgrades = configs.get('upgrades');
+  }
+
+  /**
    * Modal options
    *
    * @param onComplete
    * @param onDismissIntent
    * @param defaults
    */
-  set opts({
+  setModalData({
     onComplete,
     onDismissIntent,
     default: defaultValues,
+    entity,
     supportTier,
+  }: {
+    onComplete;
+    onDismissIntent;
+    default?;
+    entity;
+    supportTier?;
   }) {
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});
+
+    if (entity) {
+      this.service.setEntity(entity);
+    }
 
     if (supportTier) {
       this.service.supportTier$.next(supportTier);
@@ -102,25 +124,6 @@ export class WireCreatorComponent implements OnDestroy {
       }
       this.service.setAmount(parseFloat(defaultValues.min || '0'));
     }
-  }
-
-  /**
-   * Constructor
-   * @param service
-   * @param supportTiers
-   */
-  constructor(
-    public service: WireV2Service,
-    public supportTiers: SupportTiersService,
-    private configs: ConfigsService,
-    private cd: ChangeDetectorRef,
-    private session: Session,
-    private authModal: AuthModalService
-  ) {
-    this.ownerSubscription = this.service.owner$.subscribe(owner =>
-      this.supportTiers.setEntityGuid(owner && owner.guid)
-    );
-    this.upgrades = configs.get('upgrades');
   }
 
   ngOnInit() {
