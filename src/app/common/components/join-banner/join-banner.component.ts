@@ -65,8 +65,6 @@ export class JoinBannerComponent implements OnInit {
     try {
       await this.authModal.open();
 
-      this.router.navigate;
-
       if (this.router.url === '/' || this.router.url === '/about') {
         // Redirect goes to newsfeed or discovery top,
         // depending on experiment variation
