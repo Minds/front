@@ -20,7 +20,7 @@ export class GuestModeExperimentService {
   public isActive(): boolean {
     return (
       this.featuresService.has('guest-mode') &&
-      this.experiments.hasVariation('discovery-homepage', 'on')
+      this.experiments.hasVariation('discovery-homepage', true)
     );
   }
 }

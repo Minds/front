@@ -12,9 +12,6 @@
     [style.top.px]="useParentPosition ? offsetTop : false"
     [style.right.px]="useParentPosition ? offsetRight : false"
     [style.left.px]="useParentPosition ? offsetLeft : false"
-    [class.m-tooltip--bubble--anchor-top]="
-      !useParentPosition && anchor == 'top'
-    "
     [class.m-tooltip--bubble--anchor-bottom]="
       !useParentPosition && anchor == 'bottom'
     "
@@ -29,7 +26,6 @@
     <div
       *ngIf="showArrow"
       class="m-tooltip__triangle"
-      [class.m-tooltip__triangle--top]="anchor === 'top'"
       [style.right.px]="
         anchor === 'top' || anchor === 'bottom' ? triangleOffset : undefined
       "
