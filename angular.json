@@ -143,6 +143,20 @@
                   "with": "src/environments/environment.hmr.ts"
                 }
               ]
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
+              "outputHashing": "all",
+              "namedChunks": false,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": ""
@@ -159,6 +173,10 @@
             "hmr": {
               "hmr": true,
               "browserTarget": "minds:build:hmr"
+            },
+            "dev": {
+              "hmr": true,
+              "browserTarget": "minds:build:dev"
             }
           }
         },

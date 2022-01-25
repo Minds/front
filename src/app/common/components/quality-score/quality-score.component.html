@@ -1,0 +1,22 @@
+<ng-container *ngIf="isAdmin()">
+  <ul class="m-channel--quality-score p-0 m-0">
+    <li class="px-1">
+      &middot;
+    </li>
+    <li class="px-1">
+      <m-sizeable-loading-spinner
+        [spinnerWidth]="'1rem'"
+        [spinnerHeight]="'1rem'"
+        [inProgress]="inProgress"
+      >
+      </m-sizeable-loading-spinner>
+      <div
+        class="m-channel--quality-score-content text-base base-line-height px-1 py-0_25"
+        [style.--score-color]="color"
+        *ngIf="!inProgress"
+      >
+        {{ qualityScore * 100 | number: '1.0' }}
+      </div>
+    </li>
+  </ul>
+</ng-container>

@@ -30,6 +30,7 @@ export class ChannelBadgesComponent {
     'admin',
     'onchain_booster',
   ];
+  @Input() isFromPublisherCard = false;
 
   isDark: boolean = false;
   themeSubscription: Subscription;
