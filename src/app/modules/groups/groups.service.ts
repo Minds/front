@@ -171,7 +171,7 @@ export class GroupsService {
     return this.leave(group, target);
   }
 
-  kick(group: any, user: string) {
+  async kick(group: any, user: string): Promise<boolean> {
     return this.clientService
       .post(`${this.base}membership/${group.guid}/kick`, { user })
       .then((response: any) => {
@@ -182,7 +182,7 @@ export class GroupsService {
       });
   }
 
-  ban(group: any, user: string) {
+  async ban(group: any, user: string): Promise<boolean> {
     return this.clientService
       .post(`${this.base}membership/${group.guid}/ban`, { user })
       .then((response: any) => {

@@ -1,7 +1,9 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   HostListener,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
@@ -13,6 +15,10 @@ import { Session } from '../../../../services/session';
   styleUrls: ['./sidebar-more-trigger.component.ng.scss'],
 })
 export class SidebarMoreTriggerComponent implements AfterViewInit {
+  @Output('toggle') onToggle: EventEmitter<Boolean> = new EventEmitter<
+    Boolean
+  >();
+
   popperPlacement: string = 'right';
 
   popperModifiers: Array<any> = [
@@ -49,11 +55,11 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
   popperOnShown($event): void {
     this.calculateOffset();
     this.popperModifiers.find(x => x.name === 'eventListeners').enabled = true;
-    this.shown = true;
+    this.show(true);
   }
   popperOnHide($event): void {
     this.popperModifiers.find(x => x.name === 'eventListeners').enabled = false;
-    this.shown = false;
+    this.show(false);
   }
 
   clickPopperContent($event) {
@@ -71,6 +77,11 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
   @HostListener('window:resize')
   onResize() {
     this.calculateOffset();
+  }
+
+  show(isShown: boolean): void {
+    this.shown = isShown;
+    this.onToggle.emit(this.shown);
   }
 
   /**

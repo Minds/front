@@ -34,6 +34,10 @@
     }
   }
 
+  &.m-sidebarNavigation--sidebarMoreOpened {
+    @include z-index(sidebar--mobile);
+  }
+
   .m-sidebarNavigation {
     @include z-index(sidebar);
     min-width: 0;
@@ -379,13 +383,15 @@
   &.m-sidebarNavigation--nav2021Feature {
     display: block;
     position: relative;
-    @include z-index(sidebar--mobile);
 
     .m-sidebarNavigation {
       overflow: visible;
 
       @include m-theme() {
         border-right: 1px solid transparent;
+      }
+      &.m-sidebarNavigation--slide {
+        @include z-index(sidebar--mobile);
       }
 
       &:not(.m-sidebarNavigation--slide) {
