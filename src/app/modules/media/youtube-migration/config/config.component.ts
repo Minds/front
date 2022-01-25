@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-youtubeMigration__config',
   templateUrl: './config.component.html',
+  styleUrls: ['./config.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
