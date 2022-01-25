@@ -205,9 +205,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     try {
       this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
-        .setParams({
-          algorithm: this.algorithm,
-        })
+        .setParams(queryParams)
         .setLimit(12)
         .fetch(refresh);
     } catch (e) {
