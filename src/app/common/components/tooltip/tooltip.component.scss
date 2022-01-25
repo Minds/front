@@ -28,10 +28,6 @@ m-tooltip {
     line-height: 1.2em;
   }
 
-  &.m-tooltip--bubble--anchor-top {
-    top: 35px !important;
-  }
-
   &.m-tooltip--bubble--anchor-bottom {
     bottom: 24px;
   }
@@ -62,9 +58,5 @@ m-tooltip {
 
   @include m-theme() {
     background: $blue;
-  }
-
-  &.m-tooltip__triangle--top {
-    top: -5px;
   }
 }

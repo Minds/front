@@ -39,15 +39,13 @@ import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.
 import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
-import { TopFeedComponent } from './feeds/top-feed/top-feed.component';
-import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
 
 const routes: Routes = [
   {
     path: 'newsfeed',
     component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions/latest', pathMatch: 'full' },
       { path: 'suggested', redirectTo: 'subscriptions' },
       { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
@@ -55,6 +53,11 @@ const routes: Routes = [
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       {
         path: 'subscriptions',
+        redirectTo: 'subscriptions/latest',
+        pathMatch: 'full',
+      },
+      {
+        path: 'subscriptions/:algorithm',
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
@@ -121,8 +124,6 @@ const routes: Routes = [
     NewsfeedTilesComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
-    TopFeedComponent,
-    FeedTypePopoverComponent,
   ],
   providers: [NewsfeedService],
   exports: [
