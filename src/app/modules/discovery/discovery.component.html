@@ -11,6 +11,7 @@
     <!-- We place an additional disclaimer here for popover -->
     <m-discovery__disclaimer
       class="m-discovery__disclaimer--popover"
+      *mExperiment="'discovery-homepage'; variation: 'off'"
     ></m-discovery__disclaimer>
   </div>
   <div class="m-discovery__sidebar" m-pageLayout__pane="right">
@@ -22,7 +23,7 @@
         ></m-language__sidebarPrompt>
         <m-discovery__disclaimer *ngIf="!isPlusPage"></m-discovery__disclaimer>
         <m-suggestions__sidebar
-          *ngIf="discoveryOnRegisterExperiment.isActive()"
+          *ngIf="discoveryRedirectExperiment.shouldBeUsed()"
           type="user"
           customTitle="popular_channels"
         ></m-suggestions__sidebar>

@@ -16,7 +16,7 @@ import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
-import { DiscoveryOnRegisterExperimentService } from '../experiments/sub-services/discovery-on-register-experiment.service';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 @Component({
   selector: 'm-register',
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
-    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService
+    private authRedirectService: AuthRedirectService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -143,8 +143,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      * If a redirect hasn't already been defined,
      * use the experiment to determine where to go
      */
-    const url = this.discoveryOnRegisterExperiment.redirectUrl();
-    this.router.navigate([url]);
+    this.router.navigate([this.authRedirectService.redirectUrl()]);
   }
 
   onSourceError() {

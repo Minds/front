@@ -100,7 +100,10 @@ export class ExperimentsService {
    * @param { string } variation - variation to check, e.g. 'on' or 'off'.
    * @returns { boolean } - true if params reflect current variation.
    */
-  public hasVariation(experimentId: string, variation: string = 'on'): boolean {
+  public hasVariation(
+    experimentId: string,
+    variation: string | boolean = 'on'
+  ): boolean {
     try {
       return this.run(experimentId) === variation;
     } catch (e) {

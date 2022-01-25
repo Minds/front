@@ -3,11 +3,11 @@ import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../experiments.service';
 
 /**
- * Returns whether discovery on register experiment is active, based upon whether
+ * Returns whether guest mode experiment is active, based upon whether
  * the user has been assigned the experimental variant the feature flag is enabled.
  */
 @Injectable({ providedIn: 'root' })
-export class DiscoveryOnRegisterExperimentService {
+export class GuestModeExperimentService {
   constructor(
     private featuresService: FeaturesService,
     private experiments: ExperimentsService
@@ -18,14 +18,9 @@ export class DiscoveryOnRegisterExperimentService {
    * @returns { boolean } whether guest mode experiment is active.
    */
   public isActive(): boolean {
-    return this.experiments.hasVariation('discovery-redirect', 'on');
-  }
-
-  public redirectUrl(): string {
-    if (this.isActive()) {
-      return '/discovery/top';
-    } else {
-      return '/newsfeed/subscriptions/latest';
-    }
+    return (
+      this.featuresService.has('guest-mode') &&
+      this.experiments.hasVariation('discovery-homepage', 'on')
+    );
   }
 }

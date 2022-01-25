@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { DiscoveryOnRegisterExperimentService } from '../../../modules/experiments/sub-services/discovery-on-register-experiment.service';
+import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
+import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { ConfigsService } from '../../services/configs.service';
 
 /**
@@ -25,8 +26,9 @@ export class JoinBannerComponent implements OnInit {
     private session: Session,
     private sessionStorage: SessionsStorageService,
     private authModal: AuthModalService,
-    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService,
+    private guestModeExperiment: GuestModeExperimentService,
     private router: Router,
+    private authRedirectService: AuthRedirectService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -42,7 +44,7 @@ export class JoinBannerComponent implements OnInit {
    */
   public shouldShow(): boolean {
     return (
-      this.discoveryOnRegisterExperiment.isActive() &&
+      this.guestModeExperiment.isActive() &&
       !this.session.getLoggedInUser() &&
       !this.dismissed
     );
@@ -66,10 +68,7 @@ export class JoinBannerComponent implements OnInit {
       await this.authModal.open();
 
       if (this.router.url === '/' || this.router.url === '/about') {
-        // Redirect goes to newsfeed or discovery top,
-        // depending on experiment variation
-        const url = this.discoveryOnRegisterExperiment.redirectUrl();
-        this.router.navigate([url]);
+        this.router.navigate([this.authRedirectService.redirectUrl()]);
       }
     } catch (e) {
       if (e === 'DismissedModalException') {

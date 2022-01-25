@@ -12,7 +12,7 @@ import { DiscoveryService } from '../../discovery.service';
 import { PaywallService } from '../../../wire/v2/paywall.service';
 import { MetaService } from '../../../../common/services/meta.service';
 import { Session } from '../../../../services/session';
-import { FeaturesService } from '../../../../services/features.service';
+import { GuestModeExperimentService } from '../../../experiments/sub-services/guest-mode-experiment.service';
 
 @Component({
   selector: 'm-discovery__trend',
@@ -32,7 +32,7 @@ export class DiscoveryTrendComponent {
     private paywallService: PaywallService,
     private metaService: MetaService,
     private session: Session,
-    private featuresService: FeaturesService
+    private guestModeExperiment: GuestModeExperimentService
   ) {}
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class DiscoveryTrendComponent {
    */
   public shouldBeDiscoveryHomepage(): boolean {
     return (
-      this.featuresService.has('guest-mode') && !this.session.getLoggedInUser()
+      this.guestModeExperiment.isActive() && !this.session.getLoggedInUser()
     ); // logged out
   }
 }

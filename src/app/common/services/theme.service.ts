@@ -9,7 +9,7 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
-import { DiscoveryOnRegisterExperimentService } from '../../modules/experiments/sub-services/discovery-on-register-experiment.service';
+import { GuestModeExperimentService } from '../../modules/experiments/sub-services/guest-mode-experiment.service';
 
 @Injectable()
 export class ThemeService {
@@ -25,7 +25,7 @@ export class ThemeService {
     rendererFactory: RendererFactory2,
     private client: Client,
     private session: Session,
-    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService,
+    private guestModeExperiment: GuestModeExperimentService,
     @Inject(PLATFORM_ID) private platformId,
     @Inject(DOCUMENT) private dom
   ) {
@@ -68,6 +68,15 @@ export class ThemeService {
    * Emits an events that others can listen to
    */
   emitThemePreference(): void {
+    if (this.guestModeExperiment.isActive()) {
+      const shouldBeDark: boolean =
+        !this.session.isLoggedIn() ||
+        this.session.getLoggedInUser().theme !== 'light';
+
+      this.isDark$.next(shouldBeDark);
+      return;
+    }
+
     const shouldBeDark: boolean =
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().theme === 'dark';

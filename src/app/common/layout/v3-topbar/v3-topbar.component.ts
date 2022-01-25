@@ -22,7 +22,7 @@ import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
-import { DiscoveryOnRegisterExperimentService } from '../../../modules/experiments/sub-services/discovery-on-register-experiment.service';
+import { AuthRedirectService } from '../../services/auth-redirect.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -62,7 +62,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
-    private discoveryOnRegisterExperiment: DiscoveryOnRegisterExperimentService
+    private authRedirectService: AuthRedirectService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -172,7 +172,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   async onJoinNowClick() {
     try {
       await this.authModal.open();
-      this.doRedirect(true);
+      this.doRedirect();
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing
@@ -198,12 +198,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  doRedirect(isRegistration: boolean = false): void {
-    if (isRegistration && this.discoveryOnRegisterExperiment.isActive()) {
-      const url = this.discoveryOnRegisterExperiment.redirectUrl();
-      this.router.navigate([url]);
-    } else {
-      this.router.navigate(['/newsfeed/subscriptions/latest']);
+  doRedirect(): void {
+    if (this.router.url === '/' || this.router.url === '/about') {
+      this.router.navigate([this.authRedirectService.redirectUrl()]);
     }
   }
 

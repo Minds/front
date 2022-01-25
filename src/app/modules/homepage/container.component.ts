@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
+import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
 
 @Component({
   selector: 'm-homepagecontainer',
   templateUrl: 'container.component.html',
 })
 export class HomepageContainerComponent implements OnInit {
-  constructor(private metaService: MetaService) {}
+  constructor(
+    private metaService: MetaService,
+    private guestModeExperiment: GuestModeExperimentService
+  ) {}
+
+  isGuestMode: boolean;
 
   ngOnInit(): void {
     this.metaService
@@ -16,5 +22,7 @@ export class HomepageContainerComponent implements OnInit {
       )
       .setCanonicalUrl('/')
       .setOgUrl('/');
+
+    this.isGuestMode = this.guestModeExperiment.isActive();
   }
 }
