@@ -252,7 +252,7 @@ prepare:production:sentry:
 .cleanup_review: &cleanup_review
   image: minds/aws-helm:latest
   script:
-    - aws eks update-kubeconfig --name=sandbox
+    - aws eks --region us-east-1 update-kubeconfig --name sandbox --role-arn=$AWS_IAM_ROLE_ARN
     - helm del $CI_BUILD_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
