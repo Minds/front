@@ -23,7 +23,7 @@
         ></m-language__sidebarPrompt>
         <m-discovery__disclaimer *ngIf="!isPlusPage"></m-discovery__disclaimer>
         <m-suggestions__sidebar
-          *ngIf="discoveryRedirectExperiment.shouldBeUsed()"
+          *ngIf="discoveryRedirectExperiment.shouldUseExperiment()"
           type="user"
           customTitle="popular_channels"
         ></m-suggestions__sidebar>

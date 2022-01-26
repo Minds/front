@@ -99,7 +99,9 @@ export class HomepageV2Component implements OnInit {
     if (this.featuresService.has('onboarding-october-2020')) {
       try {
         await this.authModal.open();
-        this.router.navigate[this.authRedirectService.redirectUrl()];
+
+        const url = this.authRedirectService.redirectUrl();
+        this.router.navigate([url]);
         return;
       } catch (e) {
         if (e === 'DismissedModalException') {

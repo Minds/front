@@ -27,8 +27,9 @@ export class DiscoveryRedirectExperimentService {
   }
 
   public redirectUrl(): string {
-    if (this.isRegistration && this.isOnHomepage) {
+    if (this.isRegistration() && this.isOnHomepage()) {
       this.experiments.run('discovery-redirect');
+
       if (this.shouldUseExperiment()) {
         return '/discovery/top';
       }
@@ -46,14 +47,8 @@ export class DiscoveryRedirectExperimentService {
     const user = this.session.getLoggedInUser();
     const fiveMinsAgo = moment().subtract(5, 'minutes');
 
-    console.log(
-      'ojm isRegistration test',
-      user.time_created,
-      moment(user.time_created).isAfter(fiveMinsAgo)
-    );
-
     if (user && user.time_created) {
-      return moment(user.time_created).isAfter(fiveMinsAgo);
+      return moment(user.time_created * 1000).isAfter(fiveMinsAgo);
     } else {
       false;
     }
