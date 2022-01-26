@@ -68,6 +68,8 @@ export class ExperimentsService implements OnDestroy {
       ...this.configs.get('growthbook')?.attributes,
       ...this.growthbook.getAttributes(),
       id: this.getUserId(),
+      loggedIn: this.session.isLoggedIn(),
+      route: this.router.url,
     });
   }
 
