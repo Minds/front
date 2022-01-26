@@ -24,11 +24,16 @@ export class QualityScoreComponent implements OnInit {
   async ngOnInit() {
     await this.setQualityScoreSubscriptionAsync();
     this.setColor();
+    this.formatQualityScore();
     this.inProgress = false;
   }
 
   public isAdmin(): boolean {
     return this.session.isAdmin();
+  }
+
+  private formatQualityScore(): void {
+    this.qualityScore = Math.floor(this.qualityScore * 100);
   }
 
   private setColor(): void {
