@@ -14,10 +14,6 @@ export class GuestModeExperimentService {
    * @returns { boolean } whether guest mode experiment is active.
    */
   public isActive(): boolean {
-    console.log(
-      'mh experiment discovery-homepage',
-      this.experiments.hasVariation('discovery-homepage', true)
-    );
     return this.experiments.hasVariation('discovery-homepage', true);
   }
 }
