@@ -49,7 +49,7 @@
       You can simply disconnect your YouTube account from Minds. In doing so,
       any previously posted videos will continue to be available on Minds.
     </p>
-    <p>
+    <p *ngIf="!inProgress">
       <a
         (click)="disconnectAccount()"
         i18n="@@YOUTUBE_MIGRATOR__DISCONNECT_YOUTUBE_ACCOUNT"
