@@ -8,6 +8,9 @@
     padding-bottom: $minds-padding * 3;
 
     .m-newsfeed__subscribed__feedType__title {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
       font-size: 18px;
       font-weight: bold;
       position: relative;

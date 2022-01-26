@@ -85,6 +85,9 @@
         }
 
         .m-feedTypePopper__title {
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
           font-size: 16px;
           margin-bottom: 0;
           font-weight: bold;
