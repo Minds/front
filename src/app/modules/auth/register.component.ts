@@ -143,7 +143,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      * If a redirect hasn't already been defined,
      * use the experiment to determine where to go
      */
-    this.router.navigate([this.authRedirectService.redirectUrl()]);
+    this.router.navigate([this.authRedirectService.getRedirectUrl()]);
   }
 
   onSourceError() {

@@ -200,7 +200,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   doRedirect(): void {
     if (this.router.url === '/' || this.router.url === '/about') {
-      this.router.navigate([this.authRedirectService.redirectUrl()]);
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
   }
 

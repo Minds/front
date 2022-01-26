@@ -26,13 +26,13 @@ export class DiscoveryRedirectExperimentService {
     return this.experiments.hasVariation('discovery-redirect', true);
   }
 
-  public redirectUrl(): string {
-    if (this.isRegistration() && this.isOnHomepage()) {
-      this.experiments.run('discovery-redirect');
-
-      if (this.shouldUseExperiment()) {
-        return '/discovery/top';
-      }
+  public getRedirectUrl(): string {
+    if (
+      this.isRegistration() &&
+      this.isOnHomepage() &&
+      this.shouldUseExperiment()
+    ) {
+      return '/discovery/top';
     } else {
       return '/newsfeed/subscriptions/latest';
     }
