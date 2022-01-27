@@ -64,11 +64,7 @@ export class ExperimentsService implements OnDestroy {
 
     this.growthbook.setFeatures(this.configs.get('growthbook')?.features);
 
-    this.growthbook.setAttributes({
-      ...this.configs.get('growthbook')?.attributes,
-      ...this.growthbook.getAttributes(),
-      id: this.getUserId(),
-    });
+    this.growthbook.setAttributes(this.getAttributes());
   }
 
   /**
@@ -152,6 +148,39 @@ export class ExperimentsService implements OnDestroy {
     }
 
     return cookieValue;
+  }
+
+  /**
+   * Get the users age in seconds based on how long ago their account was created.
+   * @returns { number } - age in seconds.
+   */
+  private getUserAge(): number {
+    if (this.session.getLoggedInUser()) {
+      return Math.floor(
+        Date.now() / 1000 - this.session.getLoggedInUser().time_created
+      );
+    }
+  }
+
+  /**
+   * Constructs growthbook attributes object.
+   * @returns { Object } - Growthbook attributes object.
+   */
+  private getAttributes(): Object {
+    let attributes = {
+      ...this.configs.get('growthbook')?.attributes,
+      ...this.growthbook.getAttributes(),
+      id: this.getUserId(),
+    };
+
+    const userAge = this.getUserAge();
+
+    if (userAge) {
+      attributes['userAge'] = userAge;
+    }
+
+    console.log('attributes', attributes);
+    return attributes;
   }
 
   ngOnDestroy() {
