@@ -7,6 +7,8 @@ import { SkaleMindsTokenContractService } from './contracts/minds-token-skale.se
 import { SkaleTokenManagerContractService } from './contracts/skale-token-manager-contract.service';
 import { SkaleCommunityPoolContractService } from './contracts/skale-community-pool-contract.service';
 import { MindsTokenMainnetSignedContractService } from './contracts/minds-token-mainnet-signed-contract.service';
+import { SkaleFaucetService } from './services/faucet.service';
+import { SkaleCommunityPoolExitService } from './community-pool/community-pool-exit.service';
 
 @Injectable({ providedIn: 'root' })
 export class SkaleService {
@@ -18,7 +20,9 @@ export class SkaleService {
     private skMindsToken: SkaleMindsTokenContractService,
     private tokenManager: SkaleTokenManagerContractService,
     private communityPool: SkaleCommunityPoolContractService,
-    private mindsToken: MindsTokenMainnetSignedContractService
+    private mindsToken: MindsTokenMainnetSignedContractService,
+    private faucet: SkaleFaucetService,
+    private communityPoolExit: SkaleCommunityPoolExitService
   ) {}
 
   /**
@@ -61,6 +65,26 @@ export class SkaleService {
    */
   public async getSkaleTokenBalance(): Promise<number> {
     return this.skMindsToken.getSkaleTokenBalance();
+  }
+
+  /**
+   * Requests funds from faucet if user can.
+   * @returns { void }
+   */
+  public async requestFromFaucet(): Promise<void> {
+    const walletAddress = await this.web3Wallet.getCurrentWallet();
+    if ((await this.canRequestFromFaucet()) && walletAddress) {
+      await this.faucet.request(walletAddress).toPromise();
+      return;
+    }
+  }
+
+  /**
+   * Whether user can request funds from faucet.
+   * @returns { boolean } - true if user can request funds.
+   */
+  public async canRequestFromFaucet(): Promise<boolean> {
+    return this.faucet.canRequest();
   }
 
   /**
@@ -123,6 +147,20 @@ export class SkaleService {
    * @returns { Promise<void> }
    */
   public async withdraw(amount: number): Promise<unknown> {
+    const walletAddress = await this.web3Wallet.getCurrentWallet();
+
+    if (!walletAddress) {
+      this.toast.error('No wallet connected');
+      return;
+    }
+
+    if (!(await this.communityPoolExit.canExit(walletAddress).toPromise())) {
+      this.toast.error(
+        'Your community pool balance is not high enough to exit from the SKALE chain.'
+      );
+      return;
+    }
+
     return this.tokenManager.withdraw(amount);
   }
 

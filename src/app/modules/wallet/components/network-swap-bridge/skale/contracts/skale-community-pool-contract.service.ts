@@ -90,7 +90,12 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
     const amountWei = this.web3Wallet.toWei(amountEther);
 
     const communityPool = this.getContract();
-    return communityPool.withdrawFunds(this.skaleChainName, amountWei);
+
+    // gas limit here can vary - especially when draining a pool.
+    // ethers struggles to estimate this.
+    return communityPool.withdrawFunds(this.skaleChainName, amountWei, {
+      gasLimit: 100000,
+    });
   }
 
   /**
