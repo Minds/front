@@ -38,6 +38,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
+import isMobile from '../../../../helpers/is-mobile';
 
 /**
  * Toolbar component. Interacts directly with the service.
@@ -388,6 +389,27 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   onPost($event: MouseEvent): void {
     this.onPostEmitter.emit($event);
+  }
+
+  /**
+   * Inserts the emoji in the message input at the caret position
+   * @param emoji
+   */
+  onEmoji(emoji: any): void {
+    const message = this.service.message$.getValue();
+    const caretPosition = this.service.selection$.getValue().start;
+    const preText = message.substring(0, caretPosition);
+    const postText = message.substring(caretPosition);
+    this.service.message$.next(preText + emoji.native + postText);
+    // move cursor after the emoji
+    this.service.selection$.next({
+      start: this.service.selection$.getValue().start + emoji.native.length,
+      end: this.service.selection$.getValue().end + emoji.native.length,
+    });
+  }
+
+  isMobile() {
+    return isMobile();
   }
 
   /**

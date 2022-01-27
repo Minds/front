@@ -156,4 +156,17 @@ export class TextAreaComponent implements AfterViewInit {
     textareaEl.style.height = 'auto';
     textareaEl.style.height = `${textareaEl.scrollHeight}px`;
   }
+
+  /**
+   * sets message input text selection
+   * @param input textarea reference
+   */
+  setSelection(input) {
+    if (input.selectionStart || input.selectionStart == '0') {
+      this.service.selection$.next({
+        start: input.selectionStart,
+        end: input.selectionEnd,
+      });
+    }
+  }
 }
