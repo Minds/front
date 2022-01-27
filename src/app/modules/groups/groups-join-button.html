@@ -1,6 +1,6 @@
 <ng-container *ngIf="iconsOnly; else normalView">
   <m-button
-    (onAction)="join()"
+    (onAction)="join($event)"
     *ngIf="
           !group['is:banned'] &&
           !group['is:awaiting'] &&
@@ -26,7 +26,7 @@
           !group['is:invited'] &&
           !group['is:member']
         "
-    (onAction)="join()"
+    (onAction)="join($event)"
     i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION_SINGLE_NG_CONTAINER"
     [saving]="inProgress"
     size="small"
@@ -71,7 +71,7 @@
   >
   <m-modal-signup-on-action
     [open]="showModal"
-    (closed)="join(); showModal = false"
+    (closed)="join($event); showModal = false"
     action="join a group"
     i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
     [overrideOnboarding]="true"
