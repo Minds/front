@@ -102,6 +102,11 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
       const scaleX = width / this.RESOLUTION;
       const scaleY = height / this.RESOLUTION;
 
+      // if image has loaded in the time we've been processing - do not set canvas.
+      if (this.el.nativeElement?.complete) {
+        return;
+      }
+
       this.canvas.setAttribute(
         'style',
         `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; transform: scaleX(${scaleX}) scaleY(${scaleY})`
