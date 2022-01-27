@@ -79,6 +79,10 @@
     }
   }
 
+  m-emojiPicker {
+    margin-right: $minds-margin * 2;
+  }
+
   &.m-composer__toolbar--narrow
     .m-composerToolbarItem__icon
     + .m-composerToolbarItem__label {
