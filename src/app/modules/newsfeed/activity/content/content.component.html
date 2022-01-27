@@ -103,9 +103,9 @@
         service.displayOptions.autoplayVideo &&
         !(service.shouldShowPaywall$ | async)
       "
-      [style.height]="videoHeight"
+      [style.height]="isModal ? 'unset' : videoHeight"
       [isModal]="isModal"
-      [style.overflow]="videoHeight ? 'hidden' : null"
+      [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
     ></m-videoPlayer--scrollaware>
 
     <div class="m-activityContent__fixedHeightSpacer"></div>
