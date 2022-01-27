@@ -91,7 +91,10 @@
     class="m-activityContent__media--video"
     #mediaEl
     *ngIf="isVideo"
-    [ngClass]="{ isPaywall: service.shouldShowPaywall$ | async }"
+    [ngClass]="{
+      isPaywall: service.shouldShowPaywall$ | async,
+      'm-activityContent__media--video--modal': isModal
+    }"
   >
     <div class="m-activityContent__fixedHeightSpacer"></div>
 
