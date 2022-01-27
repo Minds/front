@@ -49,7 +49,7 @@
 
   .m-commentPoster__form {
     flex-grow: 2;
-    max-width: calc(100% - 160px);
+    max-width: calc(100% - 130px);
     margin-block-end: 0;
     minds-textarea {
       padding: 0;
@@ -86,8 +86,7 @@
       margin: 3px 10px 0;
     }
     .m-dropdown--v2 {
-      margin: 0 $minds-margin;
-
+      margin: 0;
       .m-commentPoster__menuButton {
         i {
           font-size: 23px;

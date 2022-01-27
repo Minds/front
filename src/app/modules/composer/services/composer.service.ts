@@ -223,7 +223,7 @@ export class ComposerService implements OnDestroy {
   /**
    * Message subject
    */
-  public message$: BehaviorSubject<MessageSubjectValue> = new BehaviorSubject<
+  readonly message$: BehaviorSubject<MessageSubjectValue> = new BehaviorSubject<
     MessageSubjectValue
   >(DEFAULT_MESSAGE_VALUE);
 
@@ -451,14 +451,6 @@ export class ComposerService implements OnDestroy {
    * Current payload to be consumed by DTO builder
    */
   protected payload: any = null;
-
-  /**
-   * message input selection range
-   */
-  public selection$: BehaviorSubject<{
-    start: number;
-    end: number;
-  }> = new BehaviorSubject({ start: 0, end: 0 });
 
   /**
    * Sets up data observable and its subscription

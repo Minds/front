@@ -197,8 +197,6 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
 import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
-import { EmojiPickerComponent } from './components/emoji-picker/emoji-picker.component';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 
@@ -216,7 +214,6 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    PickerModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
@@ -370,7 +367,6 @@ const routes: Routes = [
     SidebarMoreComponent,
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
-    EmojiPickerComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
   ],
@@ -517,7 +513,6 @@ const routes: Routes = [
     SidebarMoreComponent,
     SidebarMoreTriggerComponent,
     TagSelectorComponent,
-    EmojiPickerComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
   ],
