@@ -65,6 +65,14 @@ export class ExperimentsService implements OnDestroy {
     this.growthbook.setFeatures(this.configs.get('growthbook')?.features);
 
     this.growthbook.setAttributes(this.getAttributes());
+
+    this.growthbook.setAttributes({
+      ...this.configs.get('growthbook')?.attributes,
+      ...this.growthbook.getAttributes(),
+      id: this.getUserId(),
+      loggedIn: this.session.isLoggedIn(),
+      route: this.router.url,
+    });
   }
 
   /**
@@ -170,6 +178,8 @@ export class ExperimentsService implements OnDestroy {
     let attributes = {
       ...this.configs.get('growthbook')?.attributes,
       ...this.growthbook.getAttributes(),
+      loggedIn: this.session.isLoggedIn(),
+      route: this.router.url,
       id: this.getUserId(),
     };
 
@@ -179,7 +189,6 @@ export class ExperimentsService implements OnDestroy {
       attributes['userAge'] = userAge;
     }
 
-    console.log('attributes', attributes);
     return attributes;
   }
 
