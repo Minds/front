@@ -22,6 +22,7 @@ import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
+import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -61,7 +62,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private guestModeExperiment: GuestModeExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -128,7 +130,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   private setPages(url) {
     this.onAuthPages = url === '/login' || url === '/register';
-    this.onHomepage = url === '/' || url === '/about';
+    this.onHomepage =
+      (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
     this.detectChanges();
   }
 
