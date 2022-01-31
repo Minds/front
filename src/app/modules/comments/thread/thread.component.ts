@@ -9,20 +9,14 @@ import {
   Renderer2,
   ViewChild,
   OnInit,
-  OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 
-import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { Upload } from '../../../services/api/upload';
-import { AttachmentService } from '../../../services/attachment';
-import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
-import { Subscription } from 'rxjs';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'm-comments__thread',
@@ -31,7 +25,7 @@ import { TouchSequence } from 'selenium-webdriver';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CommentsService],
 })
-export class CommentsThreadComponent implements OnInit {
+export class CommentsThreadComponent implements OnInit, AfterViewInit {
   @Input() parent;
   @Input() entity;
   @Input() entityGuid;
@@ -47,8 +41,13 @@ export class CommentsThreadComponent implements OnInit {
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
     true
   );
+  @Output() onHeightChange: EventEmitter<{
+    oldHeight: number;
+    newHeight: number;
+  }> = new EventEmitter();
   @ViewChild('poster') poster;
-
+  /** the height of the container of this component */
+  threadHeight = 0;
   @Input() scrollable: boolean = false;
   @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
@@ -58,8 +57,8 @@ export class CommentsThreadComponent implements OnInit {
   inProgress: boolean = false;
   error: string = '';
 
-  loadNext: string;
-  loadPrevious: string;
+  loadNextToken: string;
+  loadPreviousToken: string;
   moreNext: boolean = true;
   morePrevious: boolean = true;
 
@@ -67,6 +66,7 @@ export class CommentsThreadComponent implements OnInit {
   socketSubscriptions: any = {
     comment: null,
   };
+  direction: 'asc' | 'desc' = 'desc';
 
   constructor(
     public session: Session,
@@ -79,15 +79,26 @@ export class CommentsThreadComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.level > 0) {
+      this.direction = 'asc';
+    }
+
     this.load(true);
-    // this.listen();
+  }
+
+  ngAfterViewInit(): void {
+    this.threadHeight = this.scrollView?.nativeElement?.offsetHeight ?? 0;
   }
 
   get guid(): string {
     return this.entity.entity_guid ? this.entity.entity_guid : this.entity.guid;
   }
 
-  async load(refresh: boolean = false, direction: string = 'asc') {
+  async load(
+    refresh: boolean = false,
+    keepScrollPosition = false,
+    additionalOpts?: any
+  ) {
     if (refresh) {
       this.comments = [];
 
@@ -101,11 +112,11 @@ export class CommentsThreadComponent implements OnInit {
     this.inProgress = true;
     this.detectChanges();
 
-    const descending: boolean = direction === 'desc';
+    const descending: boolean =
+      additionalOpts?.descending || this.direction === 'desc';
     const parent_path = this.parent.child_path || '0:0:0';
 
     let el = this.scrollView.nativeElement;
-    const previousScrollHeightMinusTop = el.scrollHeight - el.scrollTop;
 
     let response: any = null;
     try {
@@ -115,9 +126,8 @@ export class CommentsThreadComponent implements OnInit {
           parent_path,
           level: this.level,
           limit: 12,
-          loadNext: descending ? null : this.loadNext,
-          loadPrevious: descending ? this.loadPrevious : null,
-          descending: descending,
+          descending,
+          ...additionalOpts,
         })
       );
     } catch (e) {}
@@ -126,18 +136,18 @@ export class CommentsThreadComponent implements OnInit {
       return;
     }
 
-    // if it's the first time we load, update loadPrevious and loadNext
+    // if it's the first time we load, update loadPreviousToken and loadNextToken
     if (this.comments.length === 0) {
-      this.loadPrevious = response['load-previous'];
-      this.loadNext = response['load-next'];
+      this.loadPreviousToken = response['load-previous'];
+      this.loadNextToken = response['load-next'];
     } else if (descending && this.morePrevious) {
-      this.loadPrevious = response['load-previous']; // if we're loading previous comments, then only update loadPrevious
+      this.loadPreviousToken = response['load-previous']; // if we're loading previous comments, then only update loadPreviousToken
     } else if (this.moreNext) {
-      this.loadNext = response['load-next']; // if we're loading next comments, then only update loadNext
+      this.loadNextToken = response['load-next']; // if we're loading next comments, then only update loadNextToken
     }
 
-    this.moreNext = !!this.loadNext;
-    this.morePrevious = !!this.loadPrevious;
+    this.moreNext = !!this.loadNextToken;
+    this.morePrevious = !!this.loadPreviousToken;
 
     const comments = response.comments;
 
@@ -154,18 +164,48 @@ export class CommentsThreadComponent implements OnInit {
 
     if (refresh && this.level === 0) {
       this.commentsScrollEmitter.emit('bottom');
-    } else if (this.scrollView && this.scrollable) {
+    }
+
+    if (keepScrollPosition) {
       this.detectChanges();
-      el.scrollTop = el.scrollHeight - previousScrollHeightMinusTop;
-      console.log(el.scrollTop);
+      this.onHeightChange.emit({
+        oldHeight: this.threadHeight,
+        newHeight: el.offsetHeight,
+      });
     }
 
     this.inProgress = false;
     this.detectChanges();
+    this.threadHeight = el.offsetHeight;
+  }
+
+  /**
+   * Loads the next page
+   */
+  loadNext() {
+    this.load(false, false, {
+      // offset
+      loadNext: this.loadNextToken,
+    });
+  }
+
+  /**
+   * Loads the previous page
+   */
+  loadPrevious() {
+    this.load(false, true, {
+      descending: this.direction === 'asc' ? 'desc' : 'asc',
+      // token
+      loadPrevious: this.loadPreviousToken,
+    });
   }
 
   getComments() {
-    return this.comments;
+    if (this.direction === 'asc') {
+      return this.comments;
+    }
+
+    return this.comments.slice().reverse();
   }
 
   isThreadBlocked() {
@@ -332,8 +372,6 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   ngOnChanges(changes) {
-    // console.log('[comment:thread]: on changes', changes);
-
     // reload on entity change.
     if (
       changes.entity &&

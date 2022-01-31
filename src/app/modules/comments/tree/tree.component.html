@@ -23,6 +23,7 @@
     [scrollable]="scrollable"
     [conversation]="conversation"
     [compact]="compact"
+    (onHeightChange)="onHeightChange.emit($event)"
   >
   </m-comments__thread>
 </ng-container>

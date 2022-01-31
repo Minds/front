@@ -64,6 +64,7 @@ export class CommentsService {
       entity_guid: opts.entity_guid,
       parent_path: opts.parent_path,
       limit: opts.limit,
+      desc: opts.descending,
       include_offset: opts.includeOffset || false,
     };
 

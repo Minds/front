@@ -71,6 +71,7 @@
       [canDelete]="canDelete$ | async"
       [showOnlyPoster]="service.displayOptions.showOnlyCommentsInput"
       [fixedHeight]="service.displayOptions.fixedHeight"
+      (onHeightChange)="onCommentsHeightChange($event)"
     >
     </m-comments__entityOutlet>
   </ng-container>
