@@ -185,7 +185,9 @@ export class CommentsThreadComponent implements OnInit, AfterViewInit {
   loadNext() {
     this.load(false, false, {
       // offset
-      loadNext: this.loadNextToken,
+      loadPrevious:
+        this.direction === 'desc' ? this.loadPreviousToken : undefined,
+      loadNext: this.direction === 'desc' ? undefined : this.loadNextToken,
     });
   }
 
