@@ -19,7 +19,7 @@ export class ConnectWalletModalComponent {
 
   onComplete: (result: string) => void = () => {};
 
-  set opts({ onDismissIntent, onComplete }) {
+  setModalData({ onDismissIntent, onComplete }) {
     this.onDismissIntent = onDismissIntent || (() => {});
     this.onComplete = onComplete || (() => {});
   }

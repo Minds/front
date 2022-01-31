@@ -3,7 +3,7 @@ m-composer__modal {
   display: block;
   width: 100%;
   max-width: 585px;
-  margin: 29px 0 34px;
+  padding: 29px 0 34px;
   border-radius: 5px;
   box-sizing: border-box;
 
@@ -12,8 +12,6 @@ m-composer__modal {
   }
 
   @media screen and (max-width: $max-mobile) {
-    margin: 0;
-    padding: 0;
     height: var(--mobileVH);
 
     border-radius: 0;
@@ -41,6 +39,12 @@ m-composer__modal {
           height: inherit;
         }
       }
+    }
+  }
+
+  @media screen and (min-width: $max-mobile) {
+    m-modalCloseButton {
+      display: none;
     }
   }
 }

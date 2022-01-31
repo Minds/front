@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { ModalService } from '../../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { OnchainTransferModalService } from '../../../wallet/components/components/onchain-transfer/onchain-transfer.service';
 import { EarnModalService } from '../../earn/earn-modal.service';
 import { BuyTokensModalService } from '../../token-purchase/v2/buy-tokens-modal.service';
@@ -17,7 +17,7 @@ export class BlockchainMarketingLinksService {
   private siteUrl: string;
 
   constructor(
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector,
     private web3WalletService: Web3WalletService,
     private buyTokensModalService: BuyTokensModalService,
@@ -69,10 +69,7 @@ export class BlockchainMarketingLinksService {
    */
   public openComposerModal(): BlockchainMarketingLinksService {
     try {
-      this.composerModal
-        .setInjector(this.injector)
-        .present()
-        .toPromise();
+      this.composerModal.setInjector(this.injector).present();
     } catch (e) {
       // do nothing
     }

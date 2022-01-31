@@ -42,7 +42,7 @@ export class ChannelAdminConfirmationComponent extends AbstractSubscriberCompone
   /**
    * Opts to pass into component.
    */
-  set opts({ action, onComplete, onDismissIntent }) {
+  setModalData({ action, onComplete, onDismissIntent }) {
     this.action$.next(action ?? '');
     this.onComplete = onComplete || (() => {});
     this.onDismissIntent = onDismissIntent || (() => {});

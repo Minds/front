@@ -135,7 +135,8 @@
             <textarea
               name="briefdescription"
               [autoGrow]
-              [(ngModel)]="group.briefdescription"
+              [ngModel]="group.briefdescription | decodeHtmlString"
+              (ngModelChange)="group.briefdescription = $event"
               placeholder="Enter a brief description"
               i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
               mTextInputAutocomplete
@@ -158,24 +159,7 @@
   </div>
   <!-- END LEFT BLOCK -->
 
-  <ng-container *ngIf="!group.conversationDisabled">
-    <div class="m-groupGrid__toggleBtn" (click)="toggleConversations()">
-      <i class="material-icons" *ngIf="showRight">keyboard_arrow_right</i>
-      <i class="material-icons" *ngIf="!showRight">keyboard_arrow_left</i>
-    </div>
-
-    <div
-      class="m-groupGrid__right"
-      [m-pageLayout__pane]="hasNewNavigation ? 'right' : null"
-      [hidden]="!showRight"
-      *ngIf="!hasNewNavigation || showRight"
-    >
-      <!-- Conversation filter -->
-      <minds-groups-profile-conversation [group]="group" *mIfBrowser>
-      </minds-groups-profile-conversation>
-      <!-- END: Conversation filter -->
-    </div>
-  </ng-container>
+  <div class="m-groupGrid__right" [m-pageLayout__pane]="'right'"></div>
   <!-- END RIGHT BLOCK -->
 </div>
 

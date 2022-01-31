@@ -12,7 +12,6 @@
 
     @media screen and (max-width: $max-mobile) {
       padding: 24px;
-      margin: 20vh 0;
     }
 
     @include m-theme() {

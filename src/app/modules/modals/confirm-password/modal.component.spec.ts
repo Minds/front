@@ -23,8 +23,6 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { AbbrPipe } from '../../../common/pipes/abbr';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { Session } from '../../../services/session';
 import {
@@ -37,6 +35,8 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 /* tslint:disable */
 
 describe('ConfirmPasswordCreatorComponent', () => {
@@ -58,7 +58,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
@@ -109,9 +109,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
   it('password should update from form changes and call endpoint', fakeAsync(() => {
     comp.form.controls['password'].setValue('value');
     expect(comp.form.value.password).toEqual('value');
-    comp._opts = {
-      onComplete: () => {},
-    };
+    comp.onComplete = () => {};
 
     fixture.detectChanges();
     comp.submit();
@@ -121,7 +119,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
       'api/v2/settings/password/validate'
     );
 
-    expect(comp.overlayModal.dismiss).toHaveBeenCalled();
+    expect(comp.modalService.dismissAll).toHaveBeenCalled();
   }));
 
   it('password should update from form change and call endpoint', fakeAsync(() => {

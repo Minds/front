@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { PostMenuService } from '../../../../common/components/post-menu/post-menu.service';
 import { ActivityService } from '../../../../common/services/activity.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { ChannelAdminConfirmationService } from './admin-confirmation/admin-confirmation.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+
 export interface ProToggleResponse {
   status?: string;
 }
@@ -25,14 +25,12 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
   /**
    * Constructor
    * @param service
-   * @param overlayModalService
    * @param postMenu
    * @param router
    * @param activity
    */
   constructor(
     public service: ChannelsV2Service,
-    protected overlayModalService: OverlayModalService,
     protected postMenu: PostMenuService,
     protected router: Router,
     private client: Client,

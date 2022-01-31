@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { BlogsEditService } from '../blog-edit.service';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { CaptchaModalComponent } from '../../../../captcha/captcha-modal/captcha-modal.component';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Captcha } from '../../../../captcha/captcha.component';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 export type BlogsBottomBarContainerType = 'tags' | 'meta' | 'monetize' | '';
 
@@ -38,7 +38,7 @@ export class BlogEditorBottomBarComponent {
   constructor(
     public service: BlogsEditService,
     private toast: FormToastService,
-    private overlay: OverlayModalService
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -68,18 +68,14 @@ export class BlogEditorBottomBarComponent {
     if (!(await this.validate())) {
       return;
     }
-    const modal = this.overlay.create(
-      CaptchaModalComponent,
-      {},
-      {
-        class: 'm-captcha--modal-wrapper',
+    this.modalService.present(CaptchaModalComponent, {
+      data: {
         onComplete: (captcha: Captcha): void => {
           this.service.captcha$.next(captcha);
           this.service.save(draft);
         },
-      }
-    );
-    modal.present();
+      },
+    });
   }
 
   /**

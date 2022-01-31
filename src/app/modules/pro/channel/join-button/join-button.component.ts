@@ -48,11 +48,9 @@ export class JoinButtonComponent {
     if (this.service.lowestSupportTier$.getValue()) {
       const channel: MindsUser = this.service.currentChannel;
 
-      const wireEvent: WireEvent = await this.wireModal
-        .present(channel, {
-          supportTier: this.service.lowestSupportTier$.getValue(),
-        })
-        .toPromise();
+      const wireEvent: WireEvent = await this.wireModal.present(channel, {
+        supportTier: this.service.lowestSupportTier$.getValue(),
+      });
       if (wireEvent.type === WireEventType.Completed) {
         this.subscribe();
         this.service.userIsMember$.next(true);

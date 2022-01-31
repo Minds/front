@@ -135,4 +135,14 @@ export class GroupsProfileMembers {
       this.load(true);
     }, 300);
   }
+
+  onKick($event) {
+    const index: number = this.members.findIndex(user => {
+      return user.guid === $event.userGuid;
+    });
+
+    if (index > -1) {
+      this.members.splice(index, 1);
+    }
+  }
 }

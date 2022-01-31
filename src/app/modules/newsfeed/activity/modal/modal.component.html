@@ -6,7 +6,6 @@
   <div class="m-activityModal__theater" (click)="clickedModal($event)">
     <div
       class="m-activityModal m-activityModal__clearFix"
-      [style.width]="modalWidth + 'px'"
       [style.height]="stageHeight + 'px'"
     >
       <!-- -------------------------------------------------- -->
@@ -15,7 +14,6 @@
       <!-- (this is the element that goes into fullscreen) -->
       <div
         class="m-activityModal__stageWrapper"
-        [style.width]="stageWidth + 'px'"
         [style.line-height]="stageHeight + 'px'"
         (mouseenter)="onMouseEnterStage()"
         (mouseleave)="onMouseLeaveStage()"
@@ -41,8 +39,6 @@
         <div class="m-activityModal__stage">
           <div
             class="m-activityModal__mediaWrapper"
-            [style.width]="mediaWrapperWidth"
-            [style.height]="mediaWrapperHeight"
             [ngClass]="{
               'm-activityModal__mediaWrapper--image':
                 entity.content_type === 'image',
@@ -60,7 +56,11 @@
             }"
           >
             <m-activity__content
-              *ngIf="!isQuote && (activityService.shouldShowContent$ | async)"
+              *ngIf="
+                !isQuote &&
+                (activityService.shouldShowContent$ | async) &&
+                isContentReady
+              "
               [hideText]="
                 entity.content_type !== 'status' &&
                 entity.activity_type !== 'rich-embed' &&

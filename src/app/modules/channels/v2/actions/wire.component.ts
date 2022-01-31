@@ -26,6 +26,6 @@ export class ChannelActionsWireComponent {
    * Wires the active channel
    */
   async wire(): Promise<void> {
-    await this.wireModal.present(this.service.channel$.getValue()).toPromise();
+    await this.wireModal.present(this.service.channel$.getValue());
   }
 }

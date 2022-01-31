@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { BanModalComponent } from '../../../ban/modal/modal.component';
 import { ReportCreatorComponent } from '../../../report/creator/creator.component';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../common/services/block-list.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -165,12 +165,12 @@ import { FormToastService } from '../../../../common/services/form-toast.service
     >
       <p confirm-message>
         <ng-container i18n="@@MINDS__BAN__CONFIRMATION"
-          >Are you sure you want to ban this user?</ng-container
-        ><br /><br />
+          >Are you sure you want to ban this user?
+        </ng-container>
+        <br /><br />
         <ng-container i18n
-          >This will close all open sessions and lock them out from
-          Minds.</ng-container
-        >
+          >This will close all open sessions and lock them out from Minds.
+        </ng-container>
       </p>
       <p
         confirm-success-message
@@ -190,17 +190,17 @@ import { FormToastService } from '../../../../common/services/form-toast.service
     >
       <p confirm-message>
         <ng-container i18n="@@BAN__FROM__MONETIZATION"
-          >Are you sure you want to ban this user from
-          monetization?</ng-container
-        ><br /><br />
+          >Are you sure you want to ban this user from monetization?
+        </ng-container>
+        <br /><br />
         <ng-container
           i18n="@@MINDS_BUTTON__USER_DROPDOWN__WILL_CLOSE_SESSIONS_TEXT"
-          >This will close all open sessions and decline pending
-          payments.</ng-container
-        ><br />
+          >This will close all open sessions and decline pending payments.
+        </ng-container>
+        <br />
         <ng-container i18n="@@MINDS_BUTTON__USER_DROPDOWN__THERE_IS_NO_UNDO"
-          >There's no UNDO. This will NOT ban the user from Minds.</ng-container
-        >
+          >There's no UNDO. This will NOT ban the user from Minds.
+        </ng-container>
       </p>
       <p
         confirm-success-message
@@ -243,7 +243,7 @@ export class UserDropdownButton {
   constructor(
     public session: Session,
     public client: Client,
-    public overlayService: OverlayModalService,
+    public modalService: ModalService,
     public router: Router,
     protected blockListService: BlockListService,
     private toasterService: FormToastService
@@ -318,7 +318,7 @@ export class UserDropdownButton {
 
   ban() {
     this.user.banned = 'yes';
-    this.overlayService.create(BanModalComponent, this.user).present();
+    this.modalService.present(BanModalComponent, { data: { user: this.user } });
 
     this.banToggle = false;
   }
@@ -392,7 +392,11 @@ export class UserDropdownButton {
   }
 
   report() {
-    this.overlayService.create(ReportCreatorComponent, this.user).present();
+    this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: this.user,
+      },
+    });
   }
 
   async setSpam(value: boolean) {

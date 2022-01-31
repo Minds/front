@@ -12,6 +12,7 @@ import { TimediffPipe } from './timediff.pipe';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
 import { AsyncStatePipe } from './async-state.pipe';
 import { FileSizePipe } from './filesize';
+import { DecodeHtmlStringPipe } from './decode-html-string';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -30,4 +31,5 @@ export const MINDS_PIPES = [
   SafeStylePipe,
   AsyncStatePipe,
   FileSizePipe,
+  DecodeHtmlStringPipe,
 ];

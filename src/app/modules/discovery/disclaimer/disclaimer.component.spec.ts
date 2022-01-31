@@ -55,4 +55,102 @@ describe('DiscoveryDisclaimerComponent', () => {
     const widget = fixture.debugElement.query(By.css('m-sidebarWidget'));
     expect(widget.properties.hidden).toBeTruthy();
   });
+
+  it('should have a link to content policy page in anchor tag for speak your mind', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css(
+        'm-sidebarWidget [data-ref="discovery-disclaimer-speak-your-mind"]'
+      )
+    );
+    expect(anchorTag.nativeElement.href).toBe(
+      'https://www.minds.com/content-policy'
+    );
+  });
+
+  it('should have a link to boost page in anchor tag for expand your audience', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css(
+        'm-sidebarWidget [data-ref="discovery-disclaimer-expand-your-audience"]'
+      )
+    );
+    expect(anchorTag.nativeElement.href).toBe('https://www.minds.com/boost');
+  });
+
+  it('should have a link to chat in anchor tag for chat privately with friends', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css(
+        'm-sidebarWidget [data-ref="discovery-disclaimer-chat-with-friends"]'
+      )
+    );
+    expect(anchorTag.nativeElement.href).toBe('https://chat.minds.com/');
+  });
+
+  it('should have a link to change minds in anchor tag for engage with diverse opinions', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css(
+        'm-sidebarWidget [data-ref="discovery-disclaimer-engage-diverse-opinions"]'
+      )
+    );
+    expect(anchorTag.nativeElement.href).toBe('https://change.minds.com/');
+  });
+
+  it('should have a link to upgrades page in anchor tag for make money', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css('m-sidebarWidget [data-ref="discovery-disclaimer-make-money"]')
+    );
+    expect(anchorTag.nativeElement.href).toBe('https://www.minds.com/upgrades');
+  });
+
+  it('should have a link to token page in anchor tag for earn crypto rewards', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css(
+        'm-sidebarWidget [data-ref="discovery-disclaimer-earn-crypto-rewards"]'
+      )
+    );
+    expect(anchorTag.nativeElement.href).toBe('https://www.minds.com/token');
+  });
+
+  it('should have a link to developer docs page in anchor tag for open source and decentralized', () => {
+    sessionMock.user.dismissed_widgets = ['some-other-disclaimer'];
+
+    fixture = TestBed.createComponent(DiscoveryDisclaimerComponent);
+    fixture.detectChanges();
+
+    const anchorTag = fixture.debugElement.query(
+      By.css(
+        'm-sidebarWidget [data-ref="discovery-disclaimer-open-source-decentralized"]'
+      )
+    );
+    expect(anchorTag.nativeElement.href).toBe('https://developers.minds.com/');
+  });
 });

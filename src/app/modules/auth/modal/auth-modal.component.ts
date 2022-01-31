@@ -20,19 +20,6 @@ export class AuthModalComponent implements OnInit {
    */
   onDismissIntent: () => void = () => {};
 
-  /**
-   * Modal options
-   *
-   * @param onComplete
-   * @param onDismissIntent
-   * @param defaults
-   */
-  set opts({ formDisplay, onComplete, onDismissIntent }) {
-    this.formDisplay = formDisplay;
-    this.onComplete = onComplete || (() => {});
-    this.onDismissIntent = onDismissIntent || (() => {});
-  }
-
   constructor(public siteService: SiteService) {}
 
   ngOnInit(): void {}
@@ -67,5 +54,18 @@ export class AuthModalComponent implements OnInit {
    */
   showRegisterForm(e: MouseEvent): void {
     this.formDisplay = 'register';
+  }
+
+  /**
+   * Modal options
+   *
+   * @param onComplete
+   * @param onDismissIntent
+   * @param defaults
+   */
+  setModalData({ formDisplay, onComplete, onDismissIntent }) {
+    this.formDisplay = formDisplay;
+    this.onComplete = onComplete || (() => {});
+    this.onDismissIntent = onDismissIntent || (() => {});
   }
 }

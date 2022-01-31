@@ -7,8 +7,8 @@ import { Client } from '../../../services/api';
 import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.component';
 import { Reason, rejectionReasons } from '../../boost/rejection-reasons';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -42,7 +42,7 @@ export class AdminBoosts {
 
   constructor(
     public client: Client,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private route: ActivatedRoute,
     protected activityService: ActivityService
   ) {}
@@ -167,7 +167,11 @@ export class AdminBoosts {
       boost = this.boosts[0];
     }
 
-    this.overlayModal.create(ReportCreatorComponent, boost.entity).present();
+    return this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: boost.entity,
+      },
+    }).result;
   }
 
   /**

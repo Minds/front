@@ -20,11 +20,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../modals/signup/service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
-import { ScrollService } from '../../../services/ux/scroll';
 import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
@@ -34,13 +31,13 @@ import {
   SupportTiersService,
   SupportTier,
 } from '../../wire/v2/support-tiers.service';
-import { WireModalService } from '../../wire/wire-modal.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   providers: [
     ProChannelService,
-    OverlayModalService,
+    ModalService,
     SignupModalService,
     SupportTiersService,
   ],
@@ -88,9 +85,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   protected routerEventsSubscription: Subscription;
 
   protected supportTiersSubscription: Subscription;
-
-  @ViewChild('overlayModal', { static: true })
-  protected overlayModal: OverlayModalComponent;
 
   get currentUser() {
     if (!this.session.isLoggedIn()) {
@@ -200,7 +194,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
     protected modal: SignupModalService,
-    protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
     protected injector: Injector,
@@ -224,9 +217,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.modalService
-      .setContainer(this.overlayModal)
-      .setRoot(this.element.nativeElement);
+    // TODO: make sure this is okay
+    // this.modalService
+    //   .setContainer(this.overlayModal)
+    //   .setRoot(this.element.nativeElement);
   }
 
   listen() {

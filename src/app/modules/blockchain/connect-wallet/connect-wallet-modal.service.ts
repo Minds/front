@@ -3,20 +3,17 @@ import { Observable, of, Subject, Subscription } from 'rxjs';
 import { map, skipWhile, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import {
-  StackableModalEvent,
-  StackableModalService,
-} from '../../../services/ux/stackable-modal.service';
 import { PhoneVerificationService } from '../../wallet/components/components/phone-verification/phone-verification.service';
 import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
 import { ConnectWalletModalComponent } from './connect-wallet-modal.component';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Injectable({ providedIn: 'root' })
 export class ConnectWalletModalService {
   public isConnected$: Observable<boolean>;
 
   constructor(
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private compiler: Compiler,
     private injector: Injector,
     private phoneVerificationService: PhoneVerificationService,
@@ -46,29 +43,22 @@ export class ConnectWalletModalService {
       './connect-wallet-modal.module'
     );
 
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      ConnectWalletModalModule
-    );
-    const moduleRef = moduleFactory.create(this.injector);
-
-    const componentFactory = moduleRef.instance.resolveComponent();
-
     const onSuccess$: Subject<string> = new Subject();
 
-    const evt: StackableModalEvent = await this.stackableModal
-      .present(ConnectWalletModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
+    const modal = this.modalService.present(ConnectWalletModalComponent, {
+      data: {
         onComplete: (address: string) => {
           onSuccess$.next(address);
           onSuccess$.complete(); // Ensures promise can be called below
-          this.stackableModal.dismiss();
+          modal.close(address);
         },
-        onDismissIntent: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
+      },
+      animation: false,
+      injector: this.injector,
+      lazyModule: ConnectWalletModalModule,
+    });
 
+    await modal.result;
     return await onSuccess$.toPromise();
   }
 
