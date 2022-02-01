@@ -19,7 +19,7 @@ variables:
 cache:
   key:
     files:
-      - package.json
+      - package-lock.json
     prefix: ${CI_JOB_NAME}
   paths:
     - node_modules/
