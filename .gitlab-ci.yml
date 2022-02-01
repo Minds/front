@@ -79,7 +79,7 @@ lint:
       --key $CYPRESS_RECORD_ID
       --config baseUrl=$E2E_DOMAIN
       --env shared_key=$CYPRESS_shared_key
-  artifacts:
+  artifacts: 
     when: always
     paths:
       - cypress/screenshots
