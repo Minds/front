@@ -170,6 +170,10 @@
   }
 
   .m-v3TopbarContainer__loginWrapper {
+    m-button:first-child {
+      margin-right: 10px;
+    }
+
     > a {
       text-decoration: none;
       height: 32px;
@@ -410,6 +414,10 @@
 }
 
 .m-v3TopbarContainer__loginWrapper {
+  &.m-v3TopbarContainer__loginWrapper--roundButtons {
+    display: flex;
+  }
+
   @media screen and (max-width: 480px) {
     // display: none;
   }
