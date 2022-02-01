@@ -607,7 +607,13 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   /**
    * when comments height changes we want to move keep scroll position
    */
-  onCommentsHeightChange({ newHeight, oldHeight }: { newHeight: number, oldHeight: number }) {
+  onCommentsHeightChange({
+    newHeight,
+    oldHeight,
+  }: {
+    newHeight: number;
+    oldHeight: number;
+  }) {
     if (this.commentsScroll?.nativeElement) {
       this.commentsScroll.nativeElement.scrollTop += newHeight - oldHeight;
     }

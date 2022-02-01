@@ -105,7 +105,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() poster: any;
 
   @Output() onReply = new EventEmitter();
-  
+
   @Output() onHeightChange: EventEmitter<{
     oldHeight: number;
     newHeight: number;
