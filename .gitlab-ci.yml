@@ -16,13 +16,13 @@ variables:
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
   FF_USE_FASTZIP: "1"
 
-cache:
-  key:
-    files:
-      - package.json
-    prefix: ${CI_JOB_NAME}
-  paths:
-    - node_modules/
+# cache:
+#   key:
+#     files:
+#       - package.json
+#     prefix: ${CI_JOB_NAME}
+#   paths:
+#     - node_modules/
 
 test:
   image: circleci/node:14-browsers
