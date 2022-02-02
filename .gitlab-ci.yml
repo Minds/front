@@ -72,7 +72,7 @@ lint:
     - echo "Running Cypress"
     - >
       ./node_modules/.bin/cypress run --browser chrome
-      --parallel
+      --parallel 
       --record
       --ci-build-id $CI_PIPELINE_ID
       --group "minds-e2e"
