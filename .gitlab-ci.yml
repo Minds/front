@@ -78,7 +78,7 @@ lint:
       --group "minds-e2e"
       --key $CYPRESS_RECORD_ID
       --config baseUrl=$E2E_DOMAIN
-      --env shared_key=$CYPRESS_shared_key
+      --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION,captcha_shared_key=$CYPRESS_shared_key,shared_key=$CYPRESS_shared_key
   artifacts: 
     when: always
     paths:
