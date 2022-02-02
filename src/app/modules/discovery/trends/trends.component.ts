@@ -25,6 +25,7 @@ import { FastFadeAnimation } from '../../../animations';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { SuggestionsService } from '../../suggestions/channel/channel-suggestions.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-discovery__trends',
@@ -52,6 +53,7 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private discoveryService: DiscoveryTrendsService,
     private discoveryFeedsService: DiscoveryFeedsService,
+    private experiments: ExperimentsService,
     protected suggestionsService: SuggestionsService
   ) {}
 
@@ -98,5 +100,13 @@ export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
 
   refresh(): void {
     this.discoveryService.loadTrends();
+  }
+
+  /**
+   * Whether the discovery for you experiment should be shown.
+   * @returns { boolean } - true if discovery for you experiment should be shown.
+   */
+  public showDiscoveryForYouExperiment(): boolean {
+    return this.experiments.hasVariation('discovery-you', true);
   }
 }

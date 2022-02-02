@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import {
   DiscoveryFeedsService,
@@ -17,13 +17,22 @@ export class DiscoveryFeedsListComponent implements OnInit, OnDestroy {
   hasMoreData$ = this.service.hasMoreData$;
   feedsSubscription: Subscription;
 
+  /**
+   * Set wider network endpoint in service.
+   * @param { boolean } value - true if wider network endpoint should be used.
+   */
+  @Input() set widerNetwork(value: boolean) {
+    this.service.widerNetwork$.next(value);
+  }
+
   constructor(private service: DiscoveryFeedsService) {}
 
   ngOnInit() {
     this.feedsSubscription = combineLatest(
       this.service.nsfw$,
       this.service.type$,
-      this.service.period$
+      this.service.period$,
+      this.service.widerNetwork$
     )
       .pipe(debounceTime(300))
       .subscribe(() => {

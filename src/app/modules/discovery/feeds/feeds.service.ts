@@ -37,7 +37,7 @@ export class DiscoveryFeedsService {
   type$: BehaviorSubject<DiscoveryFeedsContentType> = new BehaviorSubject(
     'all'
   );
-
+  widerNetwork$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -69,9 +69,16 @@ export class DiscoveryFeedsService {
     }
 
     const type = this.type$.value;
+
+    let endpoint = `api/v2/feeds/global/${algorithm}/${type}`;
+
+    if (this.widerNetwork$.getValue()) {
+      endpoint = 'api/v3/discovery/for-you';
+    }
+
     this.feedsService.clear();
     this.feedsService
-      .setEndpoint(`api/v2/feeds/global/${algorithm}/${type}`)
+      .setEndpoint(endpoint)
       .setParams({
         all: this.filter$.value === 'trending' || isPlusPage ? 1 : 0,
         period: this.period$.value,
