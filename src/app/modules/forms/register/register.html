@@ -153,6 +153,12 @@
         >
           Invalid password
         </ng-container>
+        <ng-container
+          *ngIf="this.form.get('password').errors?.passwordSecurityFailed"
+          i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORD_SECURITY_CHECK_FAILED"
+        >
+          Passwords security check failed
+        </ng-container>
       </div>
     </div>
     <div
@@ -250,7 +256,7 @@
 
     <m-button
       *ngIf="showBigButton"
-      [disabled]="!this.form.valid|| this.passwordFieldValid || inProgress"
+      [disabled]="!this.form.valid|| !this.isSecurityValidationStateSuccess() || inProgress"
       [saving]="inProgress"
       color="blue"
       (onAction)="register($event)"

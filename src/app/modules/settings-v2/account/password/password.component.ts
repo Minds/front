@@ -22,7 +22,11 @@ import { Observable } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
-import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
+import {
+  PopoverComponent,
+  SecurityValidationState,
+  SecurityValidationStateValue,
+} from '../../../forms/popover-validation/popover.component';
 import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -144,8 +148,12 @@ export class SettingsV2PasswordComponent implements OnInit {
     }
   }
 
-  onPopoverChange(valid: boolean) {
-    this.newPasswordValid = valid ? true : false;
+  /**
+   * Fired on password validation popover change - emitted around password security checks.
+   * @param { SecurityValidationStateValue } state - state of the password security check.
+   */
+  onPopoverChange(state: SecurityValidationStateValue): void {
+    this.newPasswordValid = state === SecurityValidationState.SUCCESS;
     this.detectChanges();
   }
 
