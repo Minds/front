@@ -73,7 +73,7 @@ lint:
     - >
       ./node_modules/.bin/cypress run --browser chrome
       --parallel 
-      --record
+      --record 
       --ci-build-id $CI_PIPELINE_ID
       --group "minds-e2e"
       --key $CYPRESS_RECORD_ID
