@@ -1,5 +1,5 @@
 <ng-container *ngIf="isAdmin()">
-  <ul class="m-channel--quality-score p-0 m-0">
+  <ul class="m-accountQualityScore__container p-0 m-0">
     <li class="px-1">
       &middot;
     </li>
@@ -11,7 +11,7 @@
       >
       </m-sizeable-loading-spinner>
       <div
-        class="m-channel--quality-score-content text-base base-line-height px-1 py-0_25"
+        class="m-accountQualityScore__badge text-base base-line-height px-1 py-0_25"
         [style.--score-color]="color"
         *ngIf="!inProgress"
       >

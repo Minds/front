@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiService, ApiResponse } from '../../api/api.service';
+import { ApiResponse, ApiService } from '../../api/api.service';
 import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
+/**
+ * Service responsible to interact with Minds engine to fetch results on account quality
+ */
 @Injectable()
 export class QualityScoreService {
   constructor(private apiService: ApiService) {}

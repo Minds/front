@@ -4,14 +4,14 @@
 @import 'margin';
 
 :host {
-  .m-channel--quality-score {
+  .m-accountQualityScore__container {
     list-style: none;
     display: flex;
     flex-direction: row;
     align-items: center;
     cursor: pointer;
 
-    .m-channel--quality-score-content {
+    .m-accountQualityScore__badge {
       color: var(--score-color);
       border: 1px solid var(--score-color);
       border-radius: 3px;

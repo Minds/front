@@ -1,6 +1,9 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { FastFadeAnimation } from '../../../animations';
 
+/**
+ * Spinner with adjustable size
+ */
 @Component({
   selector: 'm-sizeable-loading-spinner',
   templateUrl: 'sizeable-loading-spinner.component.html',

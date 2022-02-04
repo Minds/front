@@ -3,8 +3,11 @@ import { Session } from '../../../services/session';
 import { QualityScoreService } from './quality-score.service';
 import { MindsUser } from '../../../interfaces/entities';
 
+/**
+ * The logic that handles the `m-accountQualityScore` component
+ */
 @Component({
-  selector: 'm-channel--quality-score',
+  selector: 'm-accountQualityScore',
   templateUrl: 'quality-score.component.html',
   styleUrls: ['./quality-score.component.scss'],
   providers: [QualityScoreService],
@@ -22,7 +25,7 @@ export class QualityScoreComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.setQualityScoreSubscriptionAsync();
+    await this.setQualityScoreAsync();
     this.setColor();
     this.formatQualityScore();
     this.inProgress = false;
@@ -41,7 +44,7 @@ export class QualityScoreComponent implements OnInit {
     this.color = `hsl(${hue}, 55%, 45%)`;
   }
 
-  private async setQualityScoreSubscriptionAsync(): Promise<any> {
+  private async setQualityScoreAsync(): Promise<void> {
     this.qualityScore = await this.qualityScoreService
       .getUserQualityScore(this.targetUser.guid)
       .toPromise();

@@ -109,7 +109,6 @@
     "@types/jasmine": "~3.8.1",
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "~16.4.0",
-    "codelyzer": "^6.0.2",
     "cross-env": "^7.0.3",
     "gulp": "~4.0.2",
     "gulp-autoprefixer": "^8.0.0",

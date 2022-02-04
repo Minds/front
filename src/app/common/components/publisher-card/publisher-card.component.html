@@ -34,9 +34,9 @@
             title="{{ publisher.name }}"
             >{{ publisher.name }}</a
           >
-          <m-channel--quality-score
+          <m-accountQualityScore
             [targetUser]="publisher"
-          ></m-channel--quality-score>
+          ></m-accountQualityScore>
           <m-channel--badges
             *ngIf="type === 'user'"
             class="m-channel--badges-activity"
