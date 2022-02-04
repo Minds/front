@@ -1,12 +1,9 @@
 m-activity__paywall {
   display: block;
   width: 100%;
-
-  &.isPaywall2020 {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-  }
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }

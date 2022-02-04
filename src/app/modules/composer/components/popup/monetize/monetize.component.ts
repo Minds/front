@@ -17,6 +17,7 @@ import {
 import { Session } from '../../../../../services/session';
 import { FeaturesService } from '../../../../../services/features.service';
 
+//ojm do we need this file? The template is just a reference to v2
 interface MonetizationState {
   enabled: boolean;
   type: 'tokens' | 'money';

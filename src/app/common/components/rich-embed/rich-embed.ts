@@ -10,7 +10,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
 import { MediaProxyService } from '../../../common/services/media-proxy.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
@@ -52,7 +51,6 @@ export class MindsRichEmbed {
     private session: Session,
     private service: RichEmbedService,
     private cd: ChangeDetectorRef,
-    protected featureService: FeaturesService,
     private mediaProxy: MediaProxyService,
     private configs: ConfigsService,
     private site: SiteService,
@@ -81,10 +79,7 @@ export class MindsRichEmbed {
       this.src.ownerObj.guid === this.session.getLoggedInUser().guid;
 
     this.isPaywalled =
-      this.src.paywall &&
-      !this.src.paywall_unlocked &&
-      !isOwner &&
-      this.featureService.has('paywall-2020');
+      this.src.paywall && !this.src.paywall_unlocked && !isOwner;
 
     this.init();
   }

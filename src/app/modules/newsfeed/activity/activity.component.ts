@@ -31,8 +31,6 @@ import {
 import { ComposerService } from '../../composer/services/composer.service';
 import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { FeaturesService } from '../../../services/features.service';
-import { TranslationService } from '../../../services/translation';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
@@ -108,8 +106,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private el: ElementRef,
     private cd: ChangeDetectorRef,
     private elementVisibilityService: ElementVisibilityService,
-    private newsfeedService: NewsfeedService,
-    public featuresService: FeaturesService
+    private newsfeedService: NewsfeedService
   ) {}
 
   ngOnInit() {
@@ -175,9 +172,5 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete() {
     this.deleted.next(this.service.entity$.value);
-  }
-
-  get isPaywall2020(): boolean {
-    return this.featuresService.has('paywall-2020');
   }
 }
