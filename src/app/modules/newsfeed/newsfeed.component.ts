@@ -16,7 +16,6 @@ import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { NewsfeedService } from './services/newsfeed.service';
 import { PagesService } from '../../common/services/pages.service';
-import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -65,7 +64,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public featuresService: FeaturesService,
     public pagesService: PagesService,
     protected storage: Storage,
     protected context: ContextService,

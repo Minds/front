@@ -122,7 +122,6 @@ describe('NewsfeedComponent', () => {
     featuresServiceMock.mock('pro', false);
     featuresServiceMock.mock('navigation', false);
     featuresServiceMock.mock('liquidity-spot', false);
-    featuresServiceMock.mock('social-compass', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;
