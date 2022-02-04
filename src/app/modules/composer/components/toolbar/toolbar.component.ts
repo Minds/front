@@ -36,7 +36,6 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
 import { FormToastService } from '../../../../common/services/form-toast.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
 
 /**
@@ -109,7 +108,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
     protected toaster: FormToastService,
-    protected features: FeaturesService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -347,10 +345,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   async onMonetizeClick($event?: MouseEvent): Promise<void> {
-    if (
-      this.features.has('permaweb') &&
-      this.service.postToPermaweb$.getValue()
-    ) {
+    if (this.service.postToPermaweb$.getValue()) {
       this.toaster.warn('You cannot monetize permaweb posts');
       return;
     }

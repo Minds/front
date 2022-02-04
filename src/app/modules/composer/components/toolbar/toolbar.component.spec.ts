@@ -8,7 +8,6 @@ import { MonetizeComponent } from '../popup/monetize/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { ButtonComponent } from '../../../../common/components/button/button.component';
 import { BehaviorSubject } from 'rxjs';
 
@@ -92,10 +91,6 @@ describe('Composer Toolbar', () => {
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
-          },
-          {
-            provide: FeaturesService,
-            useValue: MockService(FeaturesService),
           },
         ],
       }).compileComponents();
