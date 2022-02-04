@@ -1,62 +1,60 @@
 @import 'defaults.scss';
 
 :host {
-  &.v3 {
-    @include m-theme() {
-      background-color: themed($m-bgColor--primary);
-      border: 1px solid themed($m-borderColor--primary);
-      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
-    }
-    min-width: 320px;
-    max-width: 500px;
-    width: 50vw;
-    right: -70px;
-    top: 40px;
-    max-height: calc(100vh - 72px);
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
+  }
+  min-width: 320px;
+  max-width: 500px;
+  width: 50vw;
+  right: -70px;
+  top: 40px;
+  max-height: calc(100vh - 72px);
 
+  @media screen and (max-width: $min-tablet) {
+    right: -25px;
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    top: 75px;
+    width: 85vw;
+    min-width: 85vw;
+  }
+
+  &::before,
+  &::after {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    bottom: 100%;
+    right: 70px;
+    width: 0;
+    height: 0;
+    border: solid transparent;
     @media screen and (max-width: $min-tablet) {
-      right: -25px;
+      right: 25px;
     }
-
     @media screen and (max-width: $max-mobile) {
-      top: 75px;
-      width: 85vw;
-      min-width: 85vw;
+      right: 45px;
     }
-
-    &::before,
-    &::after {
-      content: ' ';
-      position: absolute;
-      pointer-events: none;
-      bottom: 100%;
-      right: 70px;
-      width: 0;
-      height: 0;
-      border: solid transparent;
-      @media screen and (max-width: $min-tablet) {
-        right: 25px;
-      }
-      @media screen and (max-width: $max-mobile) {
-        right: 45px;
-      }
+  }
+  &::after {
+    @include m-theme() {
+      border-color: rgba(themed($m-bgColor--primary), 0);
+      border-bottom-color: themed($m-bgColor--primary);
     }
-    &::after {
-      @include m-theme() {
-        border-color: rgba(themed($m-bgColor--primary), 0);
-        border-bottom-color: themed($m-bgColor--primary);
-      }
-      border-width: 10px;
-      margin-left: 10px;
+    border-width: 10px;
+    margin-left: 10px;
+  }
+  &::before {
+    @include m-theme() {
+      border-color: rgba(themed($m-borderColor--primary), 0);
+      border-bottom-color: themed($m-borderColor--primary);
     }
-    &::before {
-      @include m-theme() {
-        border-color: rgba(themed($m-borderColor--primary), 0);
-        border-bottom-color: themed($m-borderColor--primary);
-      }
-      border-width: 12px;
-      margin-right: -2px;
-    }
+    border-width: 12px;
+    margin-right: -2px;
   }
 
   .m-notificationsFlyout__scrollable {

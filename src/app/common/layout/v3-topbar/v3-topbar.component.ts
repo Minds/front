@@ -73,9 +73,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.featuresService.has('notifications-v3')) {
-      this.loadComponent();
-    }
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
@@ -83,18 +80,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   getCurrentUser() {
     return this.session.getLoggedInUser();
-  }
-
-  loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        NotificationsToasterComponent
-      ),
-      viewContainerRef = this.notificationsToasterHost.viewContainerRef;
-
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.componentInstance = this.componentRef.instance;
   }
 
   detectChanges() {
