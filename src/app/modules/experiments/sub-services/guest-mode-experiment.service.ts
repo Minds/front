@@ -8,19 +8,13 @@ import { ExperimentsService } from '../experiments.service';
  */
 @Injectable({ providedIn: 'root' })
 export class GuestModeExperimentService {
-  constructor(
-    private featuresService: FeaturesService,
-    private experiments: ExperimentsService
-  ) {}
+  constructor(private experiments: ExperimentsService) {}
 
   /**
    * Returns true if the guest mode experiment is active.
    * @returns { boolean } whether guest mode experiment is active.
    */
   public isActive(): boolean {
-    return (
-      this.featuresService.has('guest-mode') &&
-      this.experiments.hasVariation('discovery-homepage', true)
-    );
+    return this.experiments.hasVariation('discovery-homepage', true);
   }
 }
