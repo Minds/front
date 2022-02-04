@@ -68,7 +68,7 @@ export class JoinBannerComponent implements OnInit {
       await this.authModal.open();
 
       if (this.router.url === '/' || this.router.url === '/about') {
-        this.router.navigate([this.authRedirectService.redirectUrl()]);
+        this.router.navigate([this.authRedirectService.getRedirectUrl()]);
       }
     } catch (e) {
       if (e === 'DismissedModalException') {

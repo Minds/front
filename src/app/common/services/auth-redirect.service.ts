@@ -13,7 +13,7 @@ export class AuthRedirectService {
     public discoveryRedirectExperiment: DiscoveryRedirectExperimentService
   ) {}
 
-  redirectUrl(): string {
-    return this.discoveryRedirectExperiment.redirectUrl();
+  getRedirectUrl(): string {
+    return this.discoveryRedirectExperiment.getRedirectUrl();
   }
 }
