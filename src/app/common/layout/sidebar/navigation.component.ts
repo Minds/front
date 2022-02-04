@@ -19,17 +19,13 @@ import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-m
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
-import { MindsUser } from '../../../interfaces/entities';
-import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
-import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
@@ -60,9 +56,6 @@ export class SidebarNavigationComponent
 
   settingsLink: string = '/settings';
 
-  @HostBinding('class.m-sidebarNavigation--nav2021Feature')
-  nav2021Feature: boolean = false;
-
   @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
 
@@ -88,7 +81,6 @@ export class SidebarNavigationComponent
     protected configs: ConfigsService,
     private _componentFactoryResolver: ComponentFactoryResolver,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private featuresService: FeaturesService,
     private route: ActivatedRoute,
     private router: Router,
     private userMenu: UserMenuService,
@@ -127,8 +119,6 @@ export class SidebarNavigationComponent
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
     }
-
-    this.nav2021Feature = this.featuresService.has('nav-2021');
 
     this.settingsLink = '/settings';
 
