@@ -1,0 +1,20 @@
+@import 'defaults.scss';
+
+:host {
+  .m-newsfeed__subscribed__feedType {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: $minds-padding * 3;
+
+    .m-newsfeed__subscribed__feedType__title {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      font-size: 18px;
+      font-weight: bold;
+      position: relative;
+      top: 2px;
+    }
+  }
+}

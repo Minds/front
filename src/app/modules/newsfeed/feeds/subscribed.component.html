@@ -1,30 +1,3 @@
-<div class="m-tabs__container">
-  <div class="m-tabs__tab">
-    <a
-      routerLink="../top"
-      routerLinkActive="m-tabs__tab--selected"
-      i18n="@@DISCOVERY_SEARCH__TOP"
-      >Top</a
-    >
-  </div>
-  <!-- <div class="m-tabs__tab">
-    <a
-      routerLink="../relevant"
-      routerLinkActive="m-tabs__tab--selected"
-      i18n="@@DISCOVERY_SEARCH__LATEST"
-      >Relevant</a
-    >
-  </div> -->
-  <div class="m-tabs__tab">
-    <a
-      routerLink="../latest"
-      routerLinkActive="m-tabs__tab--selected"
-      i18n="@@DISCOVERY_SEARCH__LATEST"
-      >Latest</a
-    >
-  </div>
-</div>
-
 <div class="m-newsfeed__inner">
   <m-emailConfirmation></m-emailConfirmation>
   <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
@@ -34,8 +7,8 @@
     >
       <i class="material-icons">trending_up</i>
       <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS"
-        >Have 200 free views on us. Hit post to be boosted.</ng-container
-      >
+        >Have 200 free views on us. Hit post to be boosted.
+      </ng-container>
     </div>
 
     <ng-container>
@@ -45,6 +18,29 @@
         #composer
       ></m-composer>
     </ng-container>
+
+    <div
+      *ngIf="topFeedExperiment.isActive()"
+      class="m-newsfeed__subscribed__feedType"
+    >
+      <span
+        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
+        *ngIf="algorithm === 'top'"
+        class="m-newsfeed__subscribed__feedType__title"
+        >Top Posts</span
+      >
+      <span
+        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
+        *ngIf="algorithm === 'latest'"
+        class="m-newsfeed__subscribed__feedType__title"
+        >Latest Posts</span
+      >
+
+      <m-feedTypePopover
+        [type]="algorithm"
+        (changeType)="changeFeedAlgorithm($event)"
+      ></m-feedTypePopover>
+    </div>
 
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngFor="let preActivity of prepended">
@@ -58,7 +54,8 @@
         ></m-activity>
       </ng-container>
 
-      <ng-container *ngIf="algorithm === 'latest'">
+      <ng-container *ngIf="!inProgress">
+        <!--boost rotator-->
         <ng-container *mIfFeature="'boost-rotator'">
           <ng-container *mIfBrowser>
             <m-newsfeed--boost-rotator
@@ -67,40 +64,47 @@
             ></m-newsfeed--boost-rotator>
           </ng-container>
         </ng-container>
+
+        <!--actual feed-->
+        <ng-container
+          *ngFor="let activity$ of feedService.feed | async; let i = index"
+        >
+          <m-featured-content
+            *ngIf="(i > 0 && i % 5 === 0) || i === 2"
+            [slot]="i + 1"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            #feedViewChildren
+          ></m-featured-content>
+          <m-topHighlights
+            (onSeeMore)="onShowMoreTopFeed()"
+            *ngIf="shouldShowTopHighlights(i)"
+          ></m-topHighlights>
+          <m-activity
+            *ngIf="activity$ | async as activity"
+            [entity]="activity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            [slot]="i + 1"
+            (deleted)="delete(activity)"
+            #feedViewChildren
+          ></m-activity>
+        </ng-container>
+
+        <infinite-scroll
+          distance="25%"
+          (load)="loadNext()"
+          [moreData]="feedService.hasMore | async"
+          [inProgress]="feedService.inProgress | async"
+        >
+        </infinite-scroll>
       </ng-container>
 
-      <ng-container
-        *ngFor="let activity$ of feedsService.feed | async; let i = index"
-      >
-        <m-featured-content
-          *ngIf="(i > 0 && i % 5 === 0) || i === 2"
-          [slot]="i + 1"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          #feedViewChildren
-        ></m-featured-content>
-        <m-activity
-          *ngIf="activity$ | async as activity"
-          [entity]="activity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          [slot]="i + 1"
-          (deleted)="delete(activity)"
-          #feedViewChildren
-        ></m-activity>
-      </ng-container>
-
-      <infinite-scroll
-        distance="25%"
-        (load)="loadNext()"
-        [moreData]="feedsService.hasMore | async"
-        [inProgress]="feedsService.inProgress | async"
-      >
-      </infinite-scroll>
+      <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
     </div>
   </ng-container>
 </div>
