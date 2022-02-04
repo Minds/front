@@ -94,18 +94,14 @@ export class HomepageV2Component implements OnInit {
    * @returns { void }
    */
   public async register(): Promise<void> {
-    if (this.featuresService.has('onboarding-october-2020')) {
-      try {
-        await this.authModal.open();
-      } catch (e) {
-        if (e === 'DismissedModalException') {
-          return; // modal dismissed, do nothing
-        }
-        console.error(e);
+    try {
+      await this.authModal.open();
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
       }
-      return;
+      console.error(e);
     }
-    this.router.navigate(['/register']);
   }
 
   isMobile() {
