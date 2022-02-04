@@ -23,6 +23,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
+import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -45,7 +46,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   isMobile: boolean = false;
 
-  onAuthPages: boolean = false; // sets to false if we're on login or register pages
+  onAuthPages: boolean = false; // sets to true if we're on login or register pages
+  onHomepage: boolean = false; // sets to true if we're on home or about pages
 
   router$;
 
@@ -62,7 +64,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
-    private authRedirectService: AuthRedirectService
+    private authRedirectService: AuthRedirectService,
+    private guestModeExperiment: GuestModeExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -110,7 +113,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   private listen() {
-    this.setOnAuthPages(this.router.url);
+    this.setPages(this.router.url);
 
     this.router$ = this.router.events.subscribe(
       (navigationEvent: NavigationEnd) => {
@@ -119,7 +122,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.setOnAuthPages(
+          this.setPages(
             navigationEvent.urlAfterRedirects || navigationEvent.url
           );
         }
@@ -127,8 +130,10 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private setOnAuthPages(url) {
+  private setPages(url) {
     this.onAuthPages = url === '/login' || url === '/register';
+    this.onHomepage =
+      (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
     this.detectChanges();
   }
 
