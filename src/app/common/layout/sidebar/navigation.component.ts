@@ -77,8 +77,6 @@ export class SidebarNavigationComponent
 
   routerSubscription: Subscription;
 
-  matrixFeature: boolean = false;
-
   subscriptions: Subscription[] = [];
 
   isDarkTheme: boolean = false;
@@ -130,8 +128,6 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
-    this.matrixFeature = this.featuresService.has('matrix');
-
     this.nav2021Feature = this.featuresService.has('nav-2021');
 
     this.settingsLink = '/settings';
@@ -182,9 +178,6 @@ export class SidebarNavigationComponent
   }
 
   createGroupsSideBar() {
-    if (this.matrixFeature) {
-      return;
-    }
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
         GroupsSidebarMarkersComponent
       ),

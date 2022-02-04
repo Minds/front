@@ -1,9 +1,6 @@
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
-  [ngClass]="{
-    'm-sidebarNavigation--matrixFeature': matrixFeature
-  }"
   (click)="onSidebarNavClick($event)"
 >
   <nav>
@@ -184,37 +181,35 @@
         </a>
       </li>
 
-      <ng-container *mIfFeature="'matrix'">
-        <li
-          *ngIf="user"
-          class="m-sidebarNavigation__item"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      <li
+        *ngIf="user"
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a
+          [href]="chatUrl"
+          target="chat"
+          (click)="toggle()"
+          data-ref="sidenav-chat"
         >
-          <a
-            [href]="chatUrl"
-            target="chat"
-            (click)="toggle()"
-            data-ref="sidenav-chat"
+          <m-tooltip
+            [enabled]="!showLabels"
+            [anchor]="'left'"
+            [useParentPosition]="true"
           >
-            <m-tooltip
-              [enabled]="!showLabels"
-              [anchor]="'left'"
-              [useParentPosition]="true"
-            >
-              <m-chatIcon m-tooltip--icon></m-chatIcon>
-              <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
-            </m-tooltip>
+            <m-chatIcon m-tooltip--icon></m-chatIcon>
+            <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
+          </m-tooltip>
 
-            <span class="m-sidebarNavigationItem__text m-legible">
-              <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
-              <m-icon
-                iconId="open_in_new"
-                class="m-sidebarNavigation__newWindowIcon"
-              ></m-icon>
-            </span>
-          </a>
-        </li>
-      </ng-container>
+          <span class="m-sidebarNavigationItem__text m-legible">
+            <ng-container i18n="@@COMMON__CHAT">Chat</ng-container>
+            <m-icon
+              iconId="open_in_new"
+              class="m-sidebarNavigation__newWindowIcon"
+            ></m-icon>
+          </span>
+        </a>
+      </li>
       <ng-container *ngIf="!nav2021Feature">
         <li
           class="m-sidebarNavigation__item"
@@ -393,7 +388,6 @@
 
       <ng-container *ngIf="user">
         <li
-          *mIfFeature="'matrix'"
           class="m-sidebarNavigation__item m-sidebarNavigation__item--groups"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -424,7 +418,7 @@
         </li>
       </ng-container>
       <li
-        *ngIf="user && (!matrixFeature || nav2021Feature)"
+        *ngIf="user && nav2021Feature"
         class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
         [routerLinkActive]="'m-sidebarNavigation__item--active'"
       >
@@ -525,10 +519,6 @@
       </ng-container>
     </ul>
   </nav>
-
-  <div class="m-sidebar--groups" [hidden]="!user || matrixFeature">
-    <ng-template dynamic-host></ng-template>
-  </div>
 </div>
 
 <ng-container *mIfFeature="'nav-2021'">
