@@ -44,3 +44,4 @@ cypress/videos
 !.gitkeep
 !/.nvmrc
 !/.husky
+cypress-tests
