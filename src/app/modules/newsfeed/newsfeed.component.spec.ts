@@ -118,13 +118,6 @@ describe('NewsfeedComponent', () => {
 
     clientMock.response = {};
 
-    //ojm remove all of these
-    // featuresServiceMock.mock('top-feeds', false);
-    // featuresServiceMock.mock('suggested-users', false);
-    // featuresServiceMock.mock('pro', false);
-    // featuresServiceMock.mock('navigation', false);
-    // featuresServiceMock.mock('liquidity-spot', false);
-
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;
 

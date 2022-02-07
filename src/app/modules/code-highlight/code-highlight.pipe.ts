@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { CodeHighlightService } from './code-highlight.service';
-import { FeaturesService } from '../../services/features.service';
 
 /**
  * Pipe that replaces code fences with <pre><code> and highlights code syntax
@@ -11,8 +10,6 @@ import { FeaturesService } from '../../services/features.service';
  * the <code> block's class using this information. If no language hint is
  * present or a language is not supported then automatic code highlighting
  * will be used.
- *
- * Does nothing if `code-highlight` feature is not enabled.
  *
  * @example
  * const input = '```js console.log(\'hi\');```';
@@ -33,23 +30,17 @@ import { FeaturesService } from '../../services/features.service';
   name: 'codeHighlight',
 })
 export class CodeHighlightPipe implements PipeTransform {
-  constructor(
-    private codeHighlightService: CodeHighlightService,
-    private featuresService: FeaturesService
-  ) {}
+  constructor(private codeHighlightService: CodeHighlightService) {}
 
   /**
    * Transforms a string by replacing code fences with <pre><code> blocks and
    * highlights the contents.
    *
-   * Does nothing if `code-highlight` feature is not enabled.
-   *
    * @param {string} text
-   * @returns {string} Transformed string, or the original text if feature is
-   * not enabled
+   * @returns {string} Transformed string
    */
   transform(text: string): string {
-    if (!text || !this.featuresService.has('code-highlight')) {
+    if (!text) {
       return text;
     }
 

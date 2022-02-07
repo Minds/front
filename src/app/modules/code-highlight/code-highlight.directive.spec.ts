@@ -42,14 +42,6 @@ describe('CodeHighlightDirective', () => {
   };
 
   describe('when feature enabled', () => {
-    beforeEach(() => {
-      featuresServiceMock.mock('code-highlight', true);
-
-      createComponent([
-        { provide: FeaturesService, useValue: featuresServiceMock },
-      ]);
-    });
-
     afterEach(() => {
       codeHighlightServiceMock.reset();
     });
@@ -66,31 +58,6 @@ describe('CodeHighlightDirective', () => {
       );
       expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
         noHighlight.nativeElement
-      );
-    });
-  });
-
-  describe('when feature disabled', () => {
-    beforeEach(() => {
-      featuresServiceMock.mock('code-highlight', false);
-
-      createComponent([
-        { provide: FeaturesService, useValue: featuresServiceMock },
-      ]);
-    });
-
-    afterEach(() => {
-      codeHighlightServiceMock.reset();
-    });
-
-    it("shouldn't highlight when feature is disabled", () => {
-      const code = directiveElement.queryAll(By.css('code'));
-
-      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-        code[0].nativeElement
-      );
-      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-        code[1].nativeElement
       );
     });
   });
