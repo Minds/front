@@ -121,9 +121,7 @@ export class MonetizeComponent implements OnInit {
         min: this.state.amount,
       };
 
-      if (this.features.has('channels-shop')) {
-        payload.support_tier = this.state.supportTier || null;
-      }
+      payload.support_tier = this.state.supportTier || null;
     }
 
     this.service.monetization$.next(payload);
