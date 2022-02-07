@@ -7,6 +7,7 @@ import {
   Optional,
   SkipSelf,
   Self,
+  ChangeDetectorRef,
   ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
@@ -87,6 +88,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   entityWidth: number = 0;
   entityHeight: number = 0;
 
+  isContentReady = false;
+
   @ViewChild('commentsScroll')
   commentsScroll;
 
@@ -104,7 +107,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public attachment: AttachmentService,
     public service: ActivityModalService,
     private relatedContent: RelatedContentService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    private cd: ChangeDetectorRef
   ) {}
 
   /////////////////////////////////////////////////////////////////
@@ -120,7 +124,18 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
           return;
         }
 
+        // Clears content component
+        this.isContentReady = false;
+        this.cd.detectChanges();
+
+        // Set the new entity
         this.entity = entity;
+
+        // Re-display content component
+        this.isContentReady = true;
+        this.cd.detectChanges();
+
+        // Set dimenions
         this.calculateDimensions();
       }
     );

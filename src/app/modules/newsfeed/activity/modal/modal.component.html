@@ -56,7 +56,11 @@
             }"
           >
             <m-activity__content
-              *ngIf="!isQuote && (activityService.shouldShowContent$ | async)"
+              *ngIf="
+                !isQuote &&
+                (activityService.shouldShowContent$ | async) &&
+                isContentReady
+              "
               [hideText]="
                 entity.content_type !== 'status' &&
                 entity.activity_type !== 'rich-embed' &&
