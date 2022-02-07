@@ -159,7 +159,8 @@
             "dev": {
               "browserTarget": "minds:build:dev",
               "servePath": "/",
-              "sourceMap": true
+              "sourceMap": true,
+              "deployUrl": "http://localhost:4200/"
             },
             "hmr": {
               "hmr": true,
