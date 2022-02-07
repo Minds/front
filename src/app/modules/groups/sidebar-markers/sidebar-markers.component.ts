@@ -42,7 +42,6 @@ export class GroupsSidebarMarkersComponent
   groups = [];
   offset = 0;
   moreData: boolean = true;
-  readonly hasNewNavigation: boolean;
   readonly cdnUrl: string;
 
   @ViewChild('list', { static: true }) list;
@@ -60,7 +59,6 @@ export class GroupsSidebarMarkersComponent
     private featuresService: FeaturesService,
     private configs: ConfigsService
   ) {
-    this.hasNewNavigation = true;
     this.cdnUrl = configs.get('cdn_url');
   }
 

@@ -18,8 +18,7 @@
 ></m-explicit-overlay>
 
 <div
-  class="m-group__grid"
-  [class.m-pageLayout__container]="hasNewNavigation"
+  class="m-group__grid m-pageLayout__container"
   *ngIf="group && (group['is:member'] || group.membership == 2)"
 >
   <!-- Sidebar -->

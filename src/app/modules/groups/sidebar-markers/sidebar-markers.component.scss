@@ -103,6 +103,12 @@ m-group--sidebar-markers {
       infinite-scroll {
         padding: 2px 0 !important;
         width: 48px !important;
+        margin-bottom: 40px;
+        display: block;
+
+        @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMin2ColWidth) {
+          display: flex;
+        }
 
         .m-infinite-scroll-manual {
           font-size: 10px;
@@ -110,19 +116,10 @@ m-group--sidebar-markers {
           background-color: transparent !important;
           transform: rotate(0) !important;
           text-align: left;
-        }
-        &.hasNewNavigation {
-          margin-bottom: 40px;
-          display: block;
-          .m-infinite-scroll-manual {
-            i {
-              @include m-theme() {
-                color: themed($m-textColor--secondary);
-              }
+          i {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
             }
-          }
-          @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMin2ColWidth) {
-            display: flex;
           }
         }
       }

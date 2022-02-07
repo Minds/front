@@ -55,8 +55,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   all: boolean;
 
-  newNavigation: boolean = false;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -69,7 +67,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected context: ContextService,
     protected newsfeedService: NewsfeedService
   ) {
-    this.newNavigation = true;
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 

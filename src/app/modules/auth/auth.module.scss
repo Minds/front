@@ -1,8 +1,8 @@
 //** FOOTER -----------------------------------------
 
 @media screen and(max-width: $m-grid-max-mobile) {
-  m-body m-register.m-register--newDesign,
-  m-body m-login.m-login--newDesign {
+  m-body m-register,
+  m-body m-login {
     margin-bottom: 50;
     .m-marketing__footer {
       padding-top: 0px;
@@ -14,8 +14,8 @@
   }
 }
 
-m-body m-register.m-register--newDesign,
-m-body m-login.m-login--newDesign {
+m-body m-register,
+m-body m-login {
   @include m-theme() {
     background: themed($m-bgColor--primary);
   }

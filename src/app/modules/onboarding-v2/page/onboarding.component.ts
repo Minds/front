@@ -23,9 +23,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   @HostBinding('class.m-onboarding__iosFallback')
   iosFallback: boolean = false;
 
-  @HostBinding('class.m-onboarding--newNavigation')
-  newNavigation: boolean = false;
-
   loadingSubscription: Subscription;
   slideChangedSubscription: Subscription;
   closeSubscription: Subscription;
@@ -43,18 +40,13 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private pageLayoutService: PageLayoutService
   ) {
-    this.newNavigation = true;
     this.routerSubscription = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(data => {
         this.topbarService.toggleVisibility(false);
 
-        if (this.newNavigation) {
-          this.navigationService.setVisible(false);
-          this.pageLayoutService.useFullWidth();
-        } else {
-          this.sidebarMarkersService.toggleVisibility(false);
-        }
+        this.navigationService.setVisible(false);
+        this.pageLayoutService.useFullWidth();
       });
   }
 
@@ -117,10 +109,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 
     this.topbarService.toggleVisibility(true);
 
-    if (this.newNavigation) {
-      this.navigationService.setVisible(true);
-    } else {
-      this.sidebarMarkersService.toggleVisibility(true);
-    }
+    this.navigationService.setVisible(true);
   }
 }

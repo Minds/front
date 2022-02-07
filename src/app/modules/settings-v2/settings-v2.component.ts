@@ -28,7 +28,6 @@ export class SettingsV2Component implements OnInit {
   standardHeader: boolean = true;
   menuHeaderId: string = 'account';
   routeData: any;
-  newNavigation: boolean = false;
   user: string | null = null;
   onMainNav: boolean = false;
   hasYoutubeFeature: boolean = false;
@@ -332,8 +331,7 @@ export class SettingsV2Component implements OnInit {
     protected toasterService: FormToastService,
     public featuresService: FeaturesService
   ) {
-    this.newNavigation = true; // ojm
-    this.hasYoutubeFeature = this.featuresService.has('yt-importer'); //ojm
+    this.hasYoutubeFeature = this.featuresService.has('yt-importer');
   }
 
   ngOnInit() {

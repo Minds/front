@@ -40,11 +40,7 @@
         m-groupSidebarMarkersList__item
         m-groupSidebarMarkersList__item--discoverGroups
       "
-      [routerLink]="
-        hasNewNavigation
-          ? ['/discovery/suggestions/group']
-          : ['/newsfeed/global/top', { period: '12h', type: 'groups', all: 1 }]
-      "
+      [routerLink]="['/discovery/suggestions/group']"
     >
       <m-tooltip
         anchor="left"
@@ -71,7 +67,7 @@
   <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker">
     <a
       class="m-groupSidebarMarkersList__item"
-      [class.has-gathering]="hasNewNavigation && (group.hasGathering$ | async)"
+      [class.has-gathering]="group.hasGathering$ | async"
       [routerLink]="['/groups/profile', group.guid]"
       (click)="onGroupClick()"
     >
@@ -81,9 +77,6 @@
         [enabled]="!showLabels"
       >
         <img
-          [class.m-pulsating--small]="
-            !hasNewNavigation && (group.hasGathering$ | async)
-          "
           [src]="cdnUrl + 'fs/v1/avatars/' + group.guid + '/' + group.icontime"
           m-tooltip--anchor
         />
@@ -137,7 +130,6 @@
     [inProgress]="inProgress"
     [iconOnly]="true"
     *ngIf="moreData"
-    [ngClass]="{ hasNewNavigation: hasNewNavigation }"
   >
   </infinite-scroll>
 </ul>
