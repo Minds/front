@@ -9,7 +9,6 @@ import {
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NavItems, ProChannelService } from '../channel.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MetaService } from '../../../../common/services/meta.service';
 
 @Component({
@@ -32,7 +31,6 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
   constructor(
     protected router: Router,
     protected channelService: ProChannelService,
-    protected modalService: OverlayModalService,
     protected cd: ChangeDetectorRef,
     protected metaService: MetaService
   ) {}
@@ -83,10 +81,6 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
     }
 
     return this.channelService.getRouterLink('all', { hashtag: tag });
-  }
-
-  onContentClick(entity: any) {
-    return this.channelService.open(entity, this.modalService);
   }
 
   navigateToCategory(tag) {

@@ -2,12 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Session } from '../../../../../services/session';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
-import {
-  StackableModalEvent,
-  StackableModalService,
-} from '../../../../../services/ux/stackable-modal.service';
 import { WalletPhoneVerificationComponent } from './phone-verification.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 /**
  * Global service to open a phone verification modal
@@ -21,10 +17,7 @@ export class PhoneVerificationService {
     false
   );
 
-  constructor(
-    private stackableModal: StackableModalService,
-    private session: Session
-  ) {
+  constructor(private modalService: ModalService, private session: Session) {
     if (this.session.getLoggedInUser().rewards) {
       this.phoneVerified$.next(true);
     }
@@ -35,17 +28,15 @@ export class PhoneVerificationService {
       return;
     }
 
-    const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(WalletPhoneVerificationComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
+    const modal = this.modalService.present(WalletPhoneVerificationComponent, {
+      data: {
         onComplete: () => {
           this.phoneVerified$.next(true);
-          this.stackableModal.dismiss();
+          modal.close();
         },
-        onDismissIntent: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
+      },
+    });
+
+    return modal.result;
   }
 }

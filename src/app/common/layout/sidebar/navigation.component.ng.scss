@@ -8,7 +8,7 @@
 }
 
 .m-pageLayout__container--fullWidth :host {
-  display: none;
+  display: none !important;
   @media screen and (max-width: $layoutMax1ColWidth) {
     display: block;
   }
@@ -32,6 +32,10 @@
         padding-top: 12px;
       }
     }
+  }
+
+  &.m-sidebarNavigation--sidebarMoreOpened {
+    @include z-index(sidebar--mobile);
   }
 
   .m-sidebarNavigation {
@@ -232,6 +236,11 @@
       height: 26px;
       border-radius: 50%;
     }
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   m-tooltip {
@@ -374,13 +383,15 @@
   &.m-sidebarNavigation--nav2021Feature {
     display: block;
     position: relative;
-    @include z-index(sidebar--mobile);
 
     .m-sidebarNavigation {
       overflow: visible;
 
       @include m-theme() {
         border-right: 1px solid transparent;
+      }
+      &.m-sidebarNavigation--slide {
+        @include z-index(sidebar--mobile);
       }
 
       &:not(.m-sidebarNavigation--slide) {

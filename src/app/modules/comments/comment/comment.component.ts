@@ -25,7 +25,6 @@ import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
@@ -40,6 +39,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-comment',
@@ -127,7 +127,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     public attachment: AttachmentService,
     public translationService: TranslationService,
     public userAvatar: UserAvatarService,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
     private el: ElementRef,
@@ -413,7 +413,11 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
 
   showReport() {
-    this.overlayModal.create(ReportCreatorComponent, this.comment).present();
+    this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: this.comment,
+      },
+    });
   }
 
   /**

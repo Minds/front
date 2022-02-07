@@ -5,15 +5,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  .m-modalV2__inner {
-    min-width: 900px;
-
-    @media screen and (max-width: 900px) {
-      min-width: unset;
-      max-width: 100%;
-    }
-  }
-
   .m-modalV2__header {
     height: 150px;
     background-size: cover;

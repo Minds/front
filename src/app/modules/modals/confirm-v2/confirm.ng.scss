@@ -1,19 +1,8 @@
 @import 'defaults.scss';
 
-$default-width: 500px;
-$default-height: 200px;
-
 :host {
-  width: $default-width;
-  min-height: $default-height;
-  position: absolute;
-  top: 200px;
   padding: 40px;
   border-radius: 5px;
-
-  @media screen and (max-width: $default-width) {
-    width: 100%;
-  }
 
   @include z-index(body);
   @include m-theme() {
@@ -38,9 +27,11 @@ $default-height: 200px;
     }
   }
   .m-confirmV2Modal__buttonWrapper {
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
+    margin-top: $minds-margin * 4;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 
     .m-confirmV2Modal__cancelButton {
       margin: 0 10px;

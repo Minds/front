@@ -27,11 +27,7 @@ export class PaymentsNewCard {
   intentId: string = '';
   @ViewChild('iframe') iframe: ElementRef;
   @Output() completed: EventEmitter<void> = new EventEmitter();
-
   _opts: any;
-  set opts(opts: any) {
-    this._opts = opts;
-  }
 
   constructor(
     public session: Session,
@@ -39,6 +35,10 @@ export class PaymentsNewCard {
     public cd: ChangeDetectorRef,
     private sanitizer: DomSanitizer
   ) {}
+
+  setModalData(opts: { onCompleted: () => void }) {
+    this._opts = opts;
+  }
 
   ngOnInit() {
     window.addEventListener(
@@ -77,7 +77,7 @@ export class PaymentsNewCard {
     );
     this.intentKey = '';
     this.completed.next();
-    this._opts.onCompleted();
+    this._opts?.onCompleted?.();
     this.detectChanges();
   }
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable } from 'rxjs';
 import { WireEvent, WireEventType } from './v2/wire-v2.service';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { FeaturesService } from '../../services/features.service';
 import { WireCreatorComponent as WireV2CreatorComponent } from './v2/creator/wire-creator.component';
 import { SupportTier } from './v2/support-tiers.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { Session } from '../../services/session';
+import { ModalService } from '../../services/ux/modal.service';
 
 /**
  * WireModal.present() options.default interface
@@ -34,11 +34,13 @@ export class WireModalService {
   /**
    * Constructor
    * @param features
-   * @param overlayModal
+   * @param modalService
+   * @param session
+   * @param authModal
    */
   constructor(
     protected features: FeaturesService,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     private session: Session,
     private authModal: AuthModalService
   ) {}
@@ -48,66 +50,36 @@ export class WireModalService {
    * @param entity
    * @param options
    */
-  present(
+  async present(
     entity,
     options: WireModalPresentOptions = {}
-  ): Observable<WireEvent | any> {
-    const component = WireV2CreatorComponent;
-    const wrapperClass = 'm-modalV2__wrapper';
-
-    // if (!this.session.isLoggedIn()) {
-    //   return from(
-    //     this.authModal.open().then(() => this.present(entity, options))
-    //   );
-    // }
-
-    return new Observable<WireEvent>(subscriber => {
-      let completed = false;
-
-      this.overlayModal
-        .create(component, entity, {
-          ...options,
-
-          onComplete: wire => {
-            completed = true;
-
-            subscriber.next({
-              type: WireEventType.Completed,
-              payload: wire,
-            });
-
-            this.dismiss();
-          },
-          onDismissIntent: () => this.dismiss(),
-          wrapperClass,
-        })
-        .onDidDismiss(() => {
-          if (!completed) {
-            subscriber.next({
-              type: WireEventType.Cancelled,
-            });
-          }
-
-          subscriber.complete();
-        })
-        .present();
-
-      return () => {
-        if (!completed) {
-          try {
-            this.overlayModal.dismiss();
-          } catch (e) {
-            console.error('WireModalService.present', component, e);
-          }
-        }
-      };
+  ): Promise<WireEvent | any> {
+    const modal = this.modalService.present(WireV2CreatorComponent, {
+      size: 'lg',
+      data: {
+        ...options,
+        entity,
+        onComplete: wire =>
+          modal.close({
+            type: WireEventType.Completed,
+            payload: wire,
+          }),
+      },
     });
+
+    const result = await modal.result;
+    if (!result) {
+      return {
+        type: WireEventType.Cancelled,
+      };
+    }
+    return result;
   }
 
   /**
    * Dismisses the modal
    */
   dismiss() {
-    this.overlayModal.dismiss();
+    this.modalService.dismissAll();
   }
 }

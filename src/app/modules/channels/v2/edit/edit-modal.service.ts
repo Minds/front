@@ -1,10 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ChannelEditComponent } from './edit.component';
 import { MindsUser } from '../../../../interfaces/entities';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Session } from '../../../../services/session';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 /**
  * Help showing Edit modal and handling its response
@@ -12,82 +12,41 @@ import { Session } from '../../../../services/session';
 @Injectable()
 export class ChannelEditModalService {
   /**
-   * DI Injector for component tree
-   */
-  protected injector: Injector;
-
-  /**
    * Constructor
-   * @param overlayModal
+   * @param modalService
+   * @param router
+   * @param route
+   * @param session
    */
   constructor(
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected router: Router,
     protected route: ActivatedRoute,
     protected session: Session
   ) {}
 
   /**
-   * Sets the calling component's injector for DI.
-   *
-   * @param injector
-   */
-  setInjector(injector: Injector): ChannelEditModalService {
-    this.injector = injector;
-    return this;
-  }
-
-  /**
    * Presents the channel edit modal with a custom injector tree
    */
-  present(channel: MindsUser): Observable<MindsUser | null> {
-    if (!this.injector) {
-      throw new Error(
-        "You need to set the caller component's dependency injector before calling .present()"
-      );
-    }
-
+  async present(
+    channel: MindsUser,
+    injector: Injector
+  ): Promise<MindsUser | null> {
     if (channel.guid !== this.session.getLoggedInUser().guid) {
       this.removeQueryParams();
       throw new Error('You may only edit your own channel');
     }
 
-    return new Observable<any>(subscriber => {
-      let modalOpen = true;
-
-      try {
-        this.overlayModal
-          .create(
-            ChannelEditComponent,
-            channel,
-            {
-              wrapperClass: 'm-modalV2__wrapper',
-              onSave: response => {
-                subscriber.next(response);
-                this.dismiss();
-              },
-              onDismissIntent: () => this.dismiss(),
-            },
-            this.injector
-          )
-          .onDidDismiss(() => {
-            modalOpen = false;
-            subscriber.complete();
-          })
-          .present();
-      } catch (e) {
-        subscriber.error(e);
-      }
-
-      return () => {
-        this.injector = void 0;
-
-        if (modalOpen) {
-          this.dismiss();
-        }
-        this.removeQueryParams();
-      };
+    const modal = this.modalService.present(ChannelEditComponent, {
+      data: {
+        channel,
+        onSave: response => modal.close(response),
+      },
+      size: 'lg',
+      injector,
     });
+
+    return modal.result.finally(() => this.removeQueryParams());
   }
 
   removeQueryParams(): void {
@@ -99,12 +58,5 @@ export class ChannelEditModalService {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
-  }
-
-  /**
-   * Dismisses the modal
-   */
-  dismiss() {
-    this.overlayModal.dismiss();
   }
 }

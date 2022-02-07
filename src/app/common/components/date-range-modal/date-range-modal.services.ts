@@ -1,52 +1,30 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { DateRangeModalComponent } from '../date-range-modal/date-range-modal.component';
 import { FeedFilterDateRange } from '../feed-filter/feed-filter.component';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Injectable()
 export class DateRangeModalService {
   /**
    * Constructor
-   * @param overlayModal
+   * @param modalService
    */
-  constructor(protected overlayModal: OverlayModalService) {}
+  constructor(protected modalService: ModalService) {}
 
   /**
-   * Presents the languages modal
+   * Presents the date range modal
    * @param injector
    */
-  present(injector: Injector): Observable<FeedFilterDateRange> {
-    return new Observable<FeedFilterDateRange>(subscriber => {
-      let open = true;
-
-      this.overlayModal
-        .create(
-          DateRangeModalComponent,
-          null,
-          {
-            wrapperClass: 'm-modalV2__wrapper',
-            onApply: dateRange => {
-              subscriber.next(dateRange);
-              this.overlayModal.dismiss();
-            },
-            onDismissIntent: () => {
-              this.overlayModal.dismiss();
-            },
-          },
-          injector
-        )
-        .onDidDismiss(() => {
-          open = false;
-          subscriber.complete();
-        })
-        .present();
-
-      return () => {
-        if (open) {
-          this.overlayModal.dismiss();
-        }
-      };
+  pick(injector: Injector): Promise<FeedFilterDateRange> {
+    const modal = this.modalService.present(DateRangeModalComponent, {
+      data: {
+        onApply: dateRange => {
+          modal.close(dateRange);
+        },
+      },
+      injector,
     });
+
+    return modal.result;
   }
 }

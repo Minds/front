@@ -1,68 +1,37 @@
 import { Injectable, Injector } from '@angular/core';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
-import { Observable } from 'rxjs';
 import { SupportTier } from '../../../../wire/v2/support-tiers.service';
 import { ChannelShopMembershipsEditComponent } from './edit.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 @Injectable()
 export class ChannelShopMembershipsEditModalService {
   /**
    * Constructor
-   * @param overlayModal
+   * @param modalService
    * @param injector
    */
   constructor(
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected injector: Injector
   ) {}
 
   /**
    * Presents the composer modal with a custom injector tree
    */
-  present(supportTier?: SupportTier | null): Observable<SupportTier> {
-    return new Observable<any>(subscriber => {
-      let modalOpen = true;
-
-      try {
-        this.overlayModal
-          .create(
-            ChannelShopMembershipsEditComponent,
-            supportTier || null,
-            {
-              wrapperClass: 'm-modalV2__wrapper',
-              onSave: response => {
-                subscriber.next(response);
-                this.dismiss();
-              },
-              onDismissIntent: () => {
-                this.dismiss();
-              },
-            },
-            this.injector
-          )
-          .onDidDismiss(() => {
-            modalOpen = false;
-            subscriber.complete();
-          })
-          .present();
-      } catch (e) {
-        subscriber.error(e);
+  present(supportTier?: SupportTier | null): Promise<SupportTier> {
+    const modal = this.modalService.present(
+      ChannelShopMembershipsEditComponent,
+      {
+        data: {
+          supportTier: supportTier || null,
+          onSave: response => modal.close(response),
+        },
+        injector: this.injector,
       }
+    );
 
-      return () => {
-        this.injector = void 0;
-
-        if (modalOpen) {
-          this.dismiss();
-        }
-      };
+    return modal.result.finally(() => {
+      this.injector = void 0;
     });
-  }
-
-  /**
-   * Dismisses the modal
-   */
-  dismiss() {
-    this.overlayModal.dismiss();
   }
 }

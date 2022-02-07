@@ -23,14 +23,14 @@ import { MaterialSliderMock } from '../../../../tests/material-slider.mock.spec'
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockComponent } from '../../../utils/mock';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 @Component({
   selector: 'minds-card-video',
@@ -156,7 +156,7 @@ describe('AdminBoosts', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           { provide: ActivityService, useValue: activityServiceMock },
         ],
       }).compileComponents(); // compile template and css

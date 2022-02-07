@@ -8,17 +8,12 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { WirePaymentHandlersService } from '../../../../../../../wire/wire-payment-handlers.service';
-import { WireModalService } from '../../../../../../../wire/wire-modal.service';
 import { Session } from '../../../../../../../../services/session';
 import { WireCreatorComponent } from '../../../../../../../wire/v2/creator/wire-creator.component';
-import {
-  StackableModalService,
-  StackableModalState,
-  StackableModalEvent,
-} from '../../../../../../../../services/ux/stackable-modal.service';
 import { ComposerService } from '../../../../../../services/composer.service';
 import { ConfigsService } from '../../../../../../../../common/services/configs.service';
 import { DialogService } from '../../../../../../../../common/services/confirm-leave-dialog.service';
+import { ModalService } from '../../../../../../../../services/ux/modal.service';
 
 export type PlusPostExpiry = number | null;
 
@@ -67,7 +62,7 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
     private service: ComposerService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     private cd: ChangeDetectorRef,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private session: Session,
     private dialogService: DialogService,
     configs: ConfigsService
@@ -113,9 +108,10 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
     const plusEntity = await this.wirePaymentHandlers.get('plus');
     let completed = false;
 
-    const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(WireCreatorComponent, plusEntity, {
-        wrapperClass: 'm-modalV2__wrapper',
+    const modal = this.modalService.present(WireCreatorComponent, {
+      size: 'lg',
+      data: {
+        entity: plusEntity,
         default: {
           type: 'money',
           upgradeType: 'plus',
@@ -124,11 +120,14 @@ export class ComposerMonetizeV2PlusComponent implements OnInit {
           completed = true;
           this.isPlus = true;
           this.detectChanges();
-          this.stackableModal.dismiss();
+          modal.close(wire);
         },
-      })
-      .toPromise();
-    if (stackableModalEvent.state === StackableModalState.Dismissed) {
+      },
+    });
+
+    const result = await modal.result;
+
+    if (!result) {
       this.isPlus = completed;
     }
   }

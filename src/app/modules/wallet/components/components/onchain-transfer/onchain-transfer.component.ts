@@ -12,24 +12,19 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service } from '../../wallet-v2.service';
 import { WithdrawContractService } from '../../../../blockchain/contracts/withdraw-contract.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { PhoneVerificationService } from '../phone-verification/phone-verification.service';
 import { WireCreatorComponent } from '../../../../wire/v2/creator/wire-creator.component';
-import {
-  StackableModalEvent,
-  StackableModalService,
-} from '../../../../../services/ux/stackable-modal.service';
 import { WirePaymentHandlersService } from '../../../../wire/wire-payment-handlers.service';
-import { BigNumber } from 'ethers';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
+import { ModalService } from '../../../../../services/ux/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -72,9 +67,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
     protected contract: WithdrawContractService,
     protected walletService: WalletV2Service,
     protected toasterService: FormToastService,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected phoneVerificationService: PhoneVerificationService,
-    protected stackableModal: StackableModalService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected web3Wallet: Web3WalletService,
     configs: ConfigsService
@@ -83,6 +77,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
     this.transferLimit = configs.get('blockchain').withdraw_limit;
   }
+
+  setModalData() {}
 
   async ngOnInit() {
     this.phoneVerifiedSubscription = this.phoneVerificationService.phoneVerified$.subscribe(
@@ -232,33 +228,27 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const stackableModalEvent: StackableModalEvent = await this.stackableModal
-      .present(
-        WireCreatorComponent,
-        await this.wirePaymentHandlers.get('plus'),
-        {
-          wrapperClass: 'm-modalV2__wrapper',
-          default: {
-            type: 'money',
-            upgradeType: 'plus',
-          },
-          onComplete: () => {
-            this.isPlus = true;
-            this.session.getLoggedInUser().plus = true;
-            this.toasterService.success('Welcome to Minds+');
-            this.stackableModal.dismiss();
-          },
-          onDismissIntent: () => {
-            this.stackableModal.dismiss();
-          },
-        }
-      )
-      .toPromise();
+    const modal = this.modalService.present(WireCreatorComponent, {
+      size: 'lg',
+      data: {
+        entity: await this.wirePaymentHandlers.get('plus'),
+        default: {
+          type: 'money',
+          upgradeType: 'plus',
+        },
+        onComplete: () => {
+          this.isPlus = true;
+          this.session.getLoggedInUser().plus = true;
+          this.toasterService.success('Welcome to Minds+');
+          modal.dismiss();
+        },
+      },
+    });
   }
 
   transferComplete(): void {
     this.toasterService.success('On-chain transfer request submitted.');
-    this.overlayModal.dismiss();
+    this.modalService.dismissAll();
   }
 
   async onPurchaseTokensClick(e: MouseEvent): Promise<void> {
@@ -266,7 +256,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.overlayModal.dismiss();
+    this.modalService.dismissAll();
     if (this.amountSubscription) {
       this.amountSubscription.unsubscribe();
     }

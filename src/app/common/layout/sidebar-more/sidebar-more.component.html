@@ -43,7 +43,7 @@
       (click)="toggleSidebar()"
     >
       <a [routerLink]="'/analytics'" data-ref="sidebarmore-analytics">
-        <i class="material-icons">insert_chart</i>
+        <i class="material-icons">insights</i>
         <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__ANALYTICS"
           >Analytics</span
         >
@@ -77,6 +77,7 @@
         m-dropdownList__item
         m-sidebarMoreDropdown__item m-sidebarMoreDropdown__spacer
       "
+      *ngIf="getCurrentUser()"
     ></li>
     <!--./././././././././././././././././././././././././././././././.-->
     <li
@@ -86,11 +87,11 @@
     >
       <a (click)="toggleTheme()">
         <ng-container *ngIf="isDark">
-          <i class="material-icons">flare</i>
+          <i class="material-icons">light_mode</i>
           <span i18n="@@COMMON__LIGHT_MODE">Enter Light Mode</span>
         </ng-container>
         <ng-container *ngIf="!isDark">
-          <i class="material-icons">flare</i>
+          <i class="material-icons">dark_mode</i>
           <span i18n="@@COMMON__DARK_MODE">Enter Dark Mode</span>
         </ng-container>
       </a>
