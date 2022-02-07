@@ -1,3 +1,4 @@
+/.angular/cache
 # Ignore front end plugins
 #app/src/plugins
 #app/templates/plugins
