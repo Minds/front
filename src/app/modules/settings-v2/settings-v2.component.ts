@@ -242,6 +242,18 @@ export class SettingsV2Component implements OnInit {
     other: [
       {
         header: {
+          label: $localize`:@@SETTINGS__OTHER__REFERRALS__HEADER__LABEL:Referrals`,
+          id: 'referrals',
+        },
+        items: [
+          {
+            label: $localize`:@@SETTINGS__OTHER__REFERRALS__REFERRALS__LABEL:Referrals`,
+            id: 'referrals',
+          },
+        ],
+      },
+      {
+        header: {
           label: $localize`:@@SETTINGS__OTHER__PRIVACY__HEADER__LABEL:Privacy`,
           id: 'privacy',
         },
@@ -282,10 +294,15 @@ export class SettingsV2Component implements OnInit {
       },
       {
         header: {
-          label: 'Content Migration',
+          label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__HEADER__LABEL:Content Migration`,
           id: 'content-migration',
         },
-        items: [],
+        items: [
+          {
+            label: $localize`:@@SETTINGS__OTHER__CONTENTMIGRATION__TWITTER__LABEL:Twitter`,
+            id: 'twitter-sync',
+          },
+        ],
       },
       {
         header: {
@@ -355,7 +372,9 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    const contentMigrationMenu = this.secondaryMenus.other[2];
+    const contentMigrationMenu = this.secondaryMenus.other.find(
+      x => x.header.id === 'content-migration'
+    );
 
     // Conditionally show feature flagged items
     if (this.hasYoutubeFeature) {
@@ -363,21 +382,6 @@ export class SettingsV2Component implements OnInit {
         label: 'Youtube',
         id: 'youtube-migration',
       });
-    }
-
-    if (this.featuresService.has('twitter-sync')) {
-      contentMigrationMenu.items.push({ label: 'Twitter', id: 'twitter-sync' });
-    }
-
-    if (this.featuresService.has('settings-referrals')) {
-      const referralsMenuItem = {
-        header: {
-          label: 'Referrals',
-          id: 'referrals',
-        },
-        items: [{ label: 'Referrals', id: 'referrals' }],
-      };
-      this.secondaryMenus.other.splice(0, 0, referralsMenuItem);
     }
 
     this.setProRoutes();
