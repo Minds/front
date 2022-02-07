@@ -1,5 +1,5 @@
 <ul class="m-channel--badges">
-  <li *ngIf="isFromPublisherCard">
+  <li *ngIf="showMidDot">
     &middot;
   </li>
   <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
