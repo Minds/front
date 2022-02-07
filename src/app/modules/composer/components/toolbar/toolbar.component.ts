@@ -31,7 +31,7 @@ import {
 } from '../../../../common/components/file-upload/file-upload.component';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
-import { MonetizeComponent } from '../popup/monetize/monetize.component';
+import { ComposerMonetizeV2Component } from '../popup/monetize/v2/components/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
@@ -350,7 +350,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     await this.popup
-      .create(MonetizeComponent)
+      .create(ComposerMonetizeV2Component)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
   }

@@ -4,7 +4,7 @@ import { ToolbarComponent } from './toolbar.component';
 import { ComposerService, ComposerSize } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
-import { MonetizeComponent } from '../popup/monetize/monetize.component';
+import { ComposerMonetizeV2Component } from '../popup/monetize/v2/components/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -153,7 +153,9 @@ describe('Composer Toolbar', () => {
 
   it('should emit on monetize popup', () => {
     comp.onMonetizeClick();
-    expect(popupServiceMock.create).toHaveBeenCalledWith(MonetizeComponent);
+    expect(popupServiceMock.create).toHaveBeenCalledWith(
+      ComposerMonetizeV2Component
+    );
     expect(popupServiceMock.present).toHaveBeenCalled();
   });
 
