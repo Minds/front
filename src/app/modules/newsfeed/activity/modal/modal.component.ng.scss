@@ -101,6 +101,7 @@ $modal-padding: 20px;
     ::ng-deep {
       m-activity__content {
         overflow: auto;
+        @include vertical-scroll;
 
         .m-activityContent__messageWrapper {
           padding: 0;
@@ -108,6 +109,7 @@ $modal-padding: 20px;
 
         .m-activityContent__message--isTextOnly {
           max-height: 100% !important;
+          margin: 9vh 40px !important;
 
           &.m-activityContent__message--short {
             margin: 0 50px;
@@ -147,6 +149,7 @@ $modal-padding: 20px;
         flex-direction: column;
         justify-content: flex-start !important;
         overflow-y: auto;
+        @include vertical-scroll;
 
         .m-activityContent__media--richEmbed {
           width: 100%;
@@ -286,6 +289,11 @@ $modal-padding: 20px;
       align-items: center;
       justify-content: center;
 
+      .m-activityContent__media--image {
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+
       &.missingDimensions {
         .m-activityContent__media--image img {
           max-height: 520px;
@@ -335,10 +343,13 @@ $modal-padding: 20px;
   .m-activityModal__contentContainer {
     width: 350px;
     height: 100%;
-    overflow-y: auto;
     position: relative;
     word-wrap: break-word;
     box-sizing: border-box;
+
+    overflow-y: auto;
+    @include vertical-scroll;
+
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
       border-left: 1px solid themed($m-borderColor--primary);
@@ -600,7 +611,7 @@ $modal-padding: 20px;
 
   ::ng-deep {
     m-activity__content {
-      overflow: hidden;
+      overflow: auto;
 
       .m-rich-embed-has-thumbnail,
       .m-rich-embed-src {
