@@ -54,8 +54,6 @@ describe('LanguageSidebarPromptComponent', () => {
   );
 
   beforeEach(() => {
-    featuresServiceMock.mock('language-prompts', true);
-
     fixture = TestBed.createComponent(LanguageSidebarPromptComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
