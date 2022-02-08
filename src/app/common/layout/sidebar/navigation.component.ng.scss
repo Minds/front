@@ -91,6 +91,8 @@
 
         a {
           text-decoration: none;
+          display: flex;
+          align-items: end;
 
           & > img {
             height: 36px;

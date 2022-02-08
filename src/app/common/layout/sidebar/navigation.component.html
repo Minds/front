@@ -25,7 +25,9 @@
             [src]="cdnAssetsUrl + 'assets/logos/medium-white.png'"
           />
         </ng-container>
-        <m-canaryFlag class="m-sidebarNavigation__canaryFlag"></m-canaryFlag>
+        <m-environmentFlag
+          class="m-sidebarNavigation__environmentFlag"
+        ></m-environmentFlag>
       </a>
 
       <i class="material-icons" (click)="toggle()">close</i>
