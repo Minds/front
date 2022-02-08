@@ -197,6 +197,7 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
 import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 

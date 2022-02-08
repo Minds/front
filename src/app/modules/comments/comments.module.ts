@@ -17,6 +17,7 @@ import { CommentsService } from './comments.service';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.component';
+import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.com
     ModalsModule,
     TextInputAutocompleteModule,
     CodeHighlightModule,
+    EmojiPickerModule,
   ],
   declarations: [
     CommentsScrollDirective,
