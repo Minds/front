@@ -11,7 +11,7 @@
   #scrollArea
 >
   <ng-container *ngIf="direction === 'desc'">
-    <ng-container *ngTemplateOutlet="poster"></ng-container>
+    <ng-container *ngTemplateOutlet="posterOutlet"></ng-container>
   </ng-container>
 
   <!-- --------------------------------  -->
@@ -146,12 +146,12 @@
   </span>
 
   <ng-container *ngIf="direction === 'asc'">
-    <ng-container *ngTemplateOutlet="poster"></ng-container>
+    <ng-container *ngTemplateOutlet="posterOutlet"></ng-container>
   </ng-container>
 </div>
 <!-- --------------------------------  -->
 
-<ng-template #poster>
+<ng-template #posterOutlet>
   <m-comment__poster
     #poster
     *ngIf="activityService.allowComment$ | async"
