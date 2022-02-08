@@ -115,7 +115,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
       return;
     }
 
-    if (this.service.postToPermaweb$.getValue() && $event !== 2) {
+    if (this.service.postToPermaweb$?.getValue() && $event !== 2) {
       this.toaster.warn(
         'Cannot set visibility to non-public on permaweb posts.'
       );
