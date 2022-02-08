@@ -52,7 +52,7 @@ export class EmojiPickerComponent {
   onShowSelector() {
     this.showSelector = true;
     this.detectChanges();
-    //this.loadEmojiMartComponent();
+    this.loadEmojiMartComponent();
   }
 
   onHideSelector() {
@@ -63,50 +63,48 @@ export class EmojiPickerComponent {
   /**
    * Asyncronously loads in the emoji mark module
    */
-  // async loadEmojiMartComponent() {
-  //   // Import our module
-  //   const { PickerModule, PickerComponent } = await import(
-  //     '@ctrl/ngx-emoji-mart'
-  //   );
+  async loadEmojiMartComponent() {
+    // Import our module
+    const { PickerComponent } = await import('@ctrl/ngx-emoji-mart');
 
-  //   const moduleFactory = await this.compiler.compileModuleAsync(PickerModule);
-  //   const moduleRef = moduleFactory.create(this.injector);
+    // const moduleFactory = await this.compiler.compileModuleAsync(PickerModule);
+    // const moduleRef = moduleFactory.create(this.injector);
 
-  //   // Resolves the available components
-  //   const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-  //     PickerComponent
-  //   );
+    // Resolves the available components
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+      PickerComponent
+    );
 
-  //   if (!this.emojiPickerOutlet) {
-  //     console.error('Could not find emoji picker outlet');
-  //   }
+    if (!this.emojiPickerOutlet) {
+      console.error('Could not find emoji picker outlet');
+    }
 
-  //   // Clear previous component
-  //   this.emojiPickerOutlet.clear();
+    // Clear previous component
+    this.emojiPickerOutlet.clear();
 
-  //   // Attach the component
-  //   const componentRef = this.emojiPickerOutlet.createComponent(
-  //     componentFactory
-  //   );
+    // Attach the component
+    const componentRef = this.emojiPickerOutlet.createComponent(
+      componentFactory
+    );
 
-  //   componentRef.instance.autoFocus = true;
-  //   componentRef.instance.isNative = true;
-  //   componentRef.instance.title = 'Pick your emoji…';
-  //   componentRef.instance.emoji = 'point_up';
-  //   componentRef.instance.color = '#1b85d6';
-  //   componentRef.instance.darkMode = this.themeService.isDark$.getValue();
+    componentRef.instance.autoFocus = true;
+    componentRef.instance.isNative = true;
+    componentRef.instance.title = 'Pick your emoji…';
+    componentRef.instance.emoji = 'point_up';
+    componentRef.instance.color = '#1b85d6';
+    componentRef.instance.darkMode = this.themeService.isDark$.getValue();
 
-  //   this.onSelectSubscription?.unsubscribe();
+    this.onSelectSubscription?.unsubscribe();
 
-  //   this.onSelectSubscription = componentRef.instance.emojiSelect.subscribe(
-  //     event => {
-  //       this.emojiSelect(event);
-  //     }
-  //   );
+    this.onSelectSubscription = componentRef.instance.emojiSelect.subscribe(
+      event => {
+        this.emojiSelect(event);
+      }
+    );
 
-  //   // Trigger change detection
-  //   this.detectChanges();
-  // }
+    // Trigger change detection
+    this.detectChanges();
+  }
 
   ngOnDestroy() {
     this.onSelectSubscription?.unsubscribe();
