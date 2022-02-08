@@ -204,6 +204,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         case 'latest':
           this.latestFeedService.clear(false);
           this.topFeedService.clear(true);
+          this.prepended = [];
           await Promise.all([
             this.topFeedService
               .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
