@@ -34,6 +34,12 @@ describe('Composer Toolbar', () => {
     subscribe: { unsubscribe: () => {} },
   });
 
+  const postToPermaweb$ = jasmine.createSpyObj('postToPermaweb$', {
+    next: () => {},
+    getValue: () => true,
+    subscribe: { unsubscribe: () => {} },
+  });
+
   const size$ = new BehaviorSubject<ComposerSize>('full');
 
   const composerServiceMock: any = MockService(ComposerService, {
@@ -43,6 +49,7 @@ describe('Composer Toolbar', () => {
       'monetization$',
       'size$',
       'attachmentError$',
+      'postToPermaweb$',
     ],
     props: {
       attachment$: { get: () => attachment$ },
@@ -50,6 +57,7 @@ describe('Composer Toolbar', () => {
       monetization$: { get: () => monetization$ },
       size$: { get: () => size$ },
       attachmentError$: { get: () => attachmentError$ },
+      postToPermaweb$: { get: () => postToPermaweb$ },
     },
   });
 
@@ -153,6 +161,7 @@ describe('Composer Toolbar', () => {
 
   it('should emit on monetize popup', () => {
     comp.onMonetizeClick();
+    expect(postToPermaweb$.getValue).toHaveBeenCalled;
     expect(popupServiceMock.create).toHaveBeenCalledWith(
       ComposerMonetizeV2Component
     );
@@ -161,6 +170,7 @@ describe('Composer Toolbar', () => {
 
   it('should emit on tags popup', () => {
     comp.onTagsClick();
+
     expect(popupServiceMock.create).toHaveBeenCalledWith(TagsComponent);
     expect(popupServiceMock.present).toHaveBeenCalled();
   });

@@ -42,6 +42,12 @@ describe('CodeHighlightDirective', () => {
   };
 
   describe('when feature enabled', () => {
+    beforeEach(() => {
+      createComponent([
+        { provide: FeaturesService, useValue: featuresServiceMock },
+      ]);
+    });
+
     afterEach(() => {
       codeHighlightServiceMock.reset();
     });
