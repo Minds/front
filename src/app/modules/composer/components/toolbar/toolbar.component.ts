@@ -345,7 +345,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   async onMonetizeClick($event?: MouseEvent): Promise<void> {
-    if (this.service.postToPermaweb$.getValue()) {
+    if (this.service.postToPermaweb$?.getValue()) {
       this.toaster.warn('You cannot monetize permaweb posts');
       return;
     }
