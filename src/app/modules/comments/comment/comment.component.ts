@@ -1,3 +1,4 @@
+import { CommentPosterComponent } from './../poster/poster.component';
 import {
   Component,
   EventEmitter,
@@ -102,7 +103,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
 
-  @Input() poster: any;
+  @Input() poster: CommentPosterComponent;
 
   @Output() onReply = new EventEmitter();
 
@@ -434,11 +435,22 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     if (this.level === 2 && this.poster) {
       const targetTag = `@${this.comment.ownerObj.username}`;
 
-      if (this.poster.content.indexOf(targetTag) === -1) {
-        this.poster.content = `${targetTag} ${this.poster.content}`;
-        this.poster.detectChanges();
-      }
+      const posterEl = this.poster?.elRef?.nativeElement;
+      if (posterEl) {
+        // set input content
+        if (this.poster.content.indexOf(targetTag) === -1) {
+          this.poster.content = `${targetTag} ${this.poster.content}`;
+          this.poster.detectChanges();
+        }
+        // scroll poster into view and stick it to the bottom (with 10vh offset)
+        posterEl?.scrollIntoView?.({
+          behavior: 'smooth',
+          block: 'end',
+        });
 
+        // focus the input
+        this.poster?.focus();
+      }
       return;
     }
     this.showReplies = !this.showReplies;
