@@ -251,7 +251,7 @@
   flex-direction: row;
   align-items: flex-end;
 
-  m-canaryFlag > span {
+  m-environmentFlag > span {
     @media screen and (max-width: $layoutMax3ColWidth) {
       display: none;
     }
