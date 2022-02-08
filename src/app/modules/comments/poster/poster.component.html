@@ -29,7 +29,8 @@
             (ascendingInProgress || descendingInProgress) &&
             attachment.hasFile()
           "
-          (keyup)="getPostPreview(content)"
+          (keyup)="keyup($event)"
+          (click)="updateCaretPosition()"
           (keypress)="keypress($event)"
           (keydown)="keydown($event)"
           [placeholder]="
@@ -60,6 +61,11 @@
     <!-- --------------------- -->
     <div class="mdl-card__actions m-commentPoster__actions">
       <div>
+        <m-emojiPicker
+          *ngIf="!isMobile()"
+          (emojiSelect)="onEmoji($event)"
+        ></m-emojiPicker>
+
         <!-- Dropdown meatball -->
         <div class="m-dropdown--v2">
           <div
