@@ -6,7 +6,8 @@
   <div class="m-activityModal__theater" (click)="clickedModal($event)">
     <div
       class="m-activityModal m-activityModal__clearFix"
-      [style.height]="stageHeight + 'px'"
+      [style.max-height]="stageHeight"
+      [style.height]="stageHeight"
     >
       <!-- -------------------------------------------------- -->
       <!-- --LEFT SIDE--------------------------------------- -->
@@ -22,6 +23,8 @@
           'm-activityModal__stageWrapper--status':
             entity.content_type === 'status'
         }"
+        [style.max-width]="stageWidth + 'px'"
+        [style.width]="stageWidth + 'px'"
       >
         <!-- LOADING PANEL -->
         <div

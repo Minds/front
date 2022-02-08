@@ -35,6 +35,10 @@ body.modal-open {
   max-width: 95vw !important;
 }
 
+.modal-fitcontent {
+  max-width: fit-content;
+}
+
 @media screen and (min-width: 1920px) {
   .modal-xl {
     max-width: 1824px !important;

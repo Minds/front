@@ -485,7 +485,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
       this.mediaHeight = this.entityHeight;
       this.stageHeight = Math.max(
         this.mediaHeight,
-        ACTIVITY_MODAL_MIN_STAGE_HEIGHT
+        ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
+        this.stageHeight
       );
     } else {
       // Either: Image is taller than stage; scale it down so it fits inside stage

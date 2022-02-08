@@ -29,8 +29,7 @@ export class ActivityModalCreatorService {
     }
 
     this.modalService.present(ActivityModalComponent, {
-      modalDialogClass: 'modal-fullwidth',
-      size: 'xl',
+      modalDialogClass: 'modal-fitcontent',
       data: {
         entity,
       },

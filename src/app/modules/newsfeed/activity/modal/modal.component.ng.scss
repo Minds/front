@@ -100,11 +100,15 @@ $modal-padding: 20px;
 
     ::ng-deep {
       m-activity__content {
+        overflow: auto;
+
         .m-activityContent__messageWrapper {
           padding: 0;
         }
 
         .m-activityContent__message--isTextOnly {
+          max-height: 100% !important;
+
           &.m-activityContent__message--short {
             margin: 0 50px;
             span {
@@ -117,7 +121,7 @@ $modal-padding: 20px;
           &:not(.m-activityContent__message--short) {
             line-height: 21px;
             text-align: left;
-            margin: 9vh 10px;
+            margin: 9vh 10px 0 0;
             span {
               @include m-theme() {
                 color: themed($m-textColor--secondary);
@@ -140,8 +144,13 @@ $modal-padding: 20px;
     ::ng-deep {
       m-activity__content {
         line-height: initial;
+        flex-direction: column;
+        justify-content: flex-start !important;
+        overflow-y: auto;
 
         .m-activityContent__media--richEmbed {
+          width: 100%;
+
           img {
             max-height: 400px;
           }
@@ -256,7 +265,6 @@ $modal-padding: 20px;
     display: flex;
     align-items: stretch;
     justify-content: center;
-    height: 100%;
     min-height: 402px;
     position: relative;
     width: 100%;
@@ -327,7 +335,7 @@ $modal-padding: 20px;
   .m-activityModal__contentContainer {
     width: 350px;
     height: 100%;
-    max-height: 100%;
+    overflow-y: auto;
     position: relative;
     word-wrap: break-word;
     box-sizing: border-box;
@@ -619,6 +627,10 @@ $modal-padding: 20px;
 
       .m-activityContent__messageWrapper {
         padding: 0;
+        cursor: default !important;
+        max-height: 100% !important;
+        overflow: auto !important;
+        @include vertical-scroll;
       }
     }
   }
