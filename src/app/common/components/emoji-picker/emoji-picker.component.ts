@@ -16,7 +16,6 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-emojiPicker',
   templateUrl: './emoji-picker.component.html',
-  styleUrls: ['./emoji-picker.component.scss'],
 })
 export class EmojiPickerComponent {
   popperPlacement: string = 'bottom';
