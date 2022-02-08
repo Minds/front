@@ -398,8 +398,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         ACTIVITY_MODAL_MIN_STAGE_WIDTH
       );
 
-      if (this.mediaWidth >= this.maxStageWidth) {
-        // Too wide :(
+      // rescale heights for max width if media width is greater than max, or force it if content type is rich embed.
+      if (
+        this.mediaWidth >= this.maxStageWidth ||
+        this.entity.content_type === 'rich-embed'
+      ) {
         this.rescaleHeightsForMaxWidth();
       } else if (
         this.mediaWidth >
