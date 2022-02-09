@@ -49,6 +49,7 @@ m-activity__content {
 .m-activityContent__message {
   font-size: 15px;
   white-space: pre-line;
+  flex: 1;
 
   &.m-activityContent__message--isTextOnly {
     word-break: break-word;

@@ -113,11 +113,15 @@ $modal-padding: 20px;
             m-read-more--button {
               display: none;
             }
+
+            .m-activityContent__messageWrapper {
+              align-items: center;
+            }
           }
           &:not(.m-activityContent__message--short) {
             line-height: 21px;
             text-align: left;
-            margin: 9vh 10px;
+            padding: 9vh 10px;
             span {
               @include m-theme() {
                 color: themed($m-textColor--secondary);
@@ -136,6 +140,10 @@ $modal-padding: 20px;
     overflow-y: overlay;
 
     @extend %disable-scrollbars;
+
+    @include m-theme() {
+      background: themed($m-bgColor--secondary);
+    }
 
     ::ng-deep {
       m-activity__content {
@@ -269,14 +277,11 @@ $modal-padding: 20px;
     height: auto;
     position: relative;
 
-    @include m-theme() {
-      background: themed($m-bgColor--secondary);
-    }
-
     ::ng-deep m-activity__content {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: stretch;
+      justify-content: flex-start;
+      flex-direction: column;
 
       &.missingDimensions {
         .m-activityContent__media--image img {
@@ -286,7 +291,6 @@ $modal-padding: 20px;
       }
 
       .m-activityContent__media--image img {
-        max-height: none;
         height: 100% !important;
       }
 
@@ -592,7 +596,7 @@ $modal-padding: 20px;
 
   ::ng-deep {
     m-activity__content {
-      overflow: hidden;
+      overflow: auto;
 
       .m-rich-embed-has-thumbnail,
       .m-rich-embed-src {
@@ -612,6 +616,7 @@ $modal-padding: 20px;
 
       .m-activityContent__media--video,
       .m-activityContent__media--image {
+        height: 100%;
         @include m-theme() {
           background: rgba(themed($m-black), 0);
         }
@@ -619,6 +624,9 @@ $modal-padding: 20px;
 
       .m-activityContent__messageWrapper {
         padding: 0;
+        height: 100%;
+        justify-content: center;
+        display: flex;
       }
     }
   }
