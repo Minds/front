@@ -199,6 +199,7 @@ import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
+import { AuthRedirectService } from './services/auth-redirect.service';
 
 const routes: Routes = [
   {
@@ -566,6 +567,7 @@ const routes: Routes = [
     DateRangeModalService,
     JsonLdService,
     BoostRecommendationService,
+    AuthRedirectService,
   ],
 })
 export class CommonModule {}

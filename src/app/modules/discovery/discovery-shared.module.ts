@@ -40,6 +40,7 @@ import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/bui
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { DiscoveryTopComponent } from './top/top.component';
 import { DefaultFeedModule } from '../default-feed/default-feed.module';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { DefaultFeedModule } from '../default-feed/default-feed.module';
     ExperimentsModule,
     DiscoveryDisclaimerModule,
     DefaultFeedModule,
+    SuggestionsModule,
   ],
   declarations: [
     DiscoverySidebarTagsComponent,
