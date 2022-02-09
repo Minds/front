@@ -29,6 +29,11 @@ export interface ModalOptions<T> extends NgbModalOptions {
 
 type ModalComponent<T> = ComponentType<Modal<T>>;
 
+/**
+ * Minimum width for a modal to open.
+ */
+const MINIMUM_MODAL_OPEN_WIDTH: number = 768;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -86,9 +91,15 @@ export class ModalService {
     };
   }
 
+  /**
+   * Whether modal can be opened given device / screen size.
+   * @returns { boolean } true if modal can be opened given device / screen size.
+   */
   public canOpenInModal(): boolean {
-    const isNotTablet = Math.min(screen.width, screen.height) < 768;
-    const tooSmallForModal: boolean = screen.width < 768;
+    const isNotTablet =
+      Math.min(screen.width, screen.height) < MINIMUM_MODAL_OPEN_WIDTH;
+    const tooSmallForModal: boolean =
+      Math.min(screen.width, window.innerWidth) < MINIMUM_MODAL_OPEN_WIDTH;
 
     return !((isMobile() && isNotTablet) || tooSmallForModal);
   }
