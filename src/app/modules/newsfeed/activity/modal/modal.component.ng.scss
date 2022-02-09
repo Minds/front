@@ -597,6 +597,7 @@ $modal-padding: 20px;
   ::ng-deep {
     m-activity__content {
       overflow: auto;
+      @include vertical-scroll;
 
       .m-rich-embed-has-thumbnail,
       .m-rich-embed-src {
@@ -611,6 +612,7 @@ $modal-padding: 20px;
         }
         img {
           max-height: none;
+          object-fit: contain;
         }
       }
 
@@ -620,6 +622,14 @@ $modal-padding: 20px;
         @include m-theme() {
           background: rgba(themed($m-black), 0);
         }
+      }
+
+      .m-activityContent__message {
+        flex: 1;
+      }
+
+      .m-activityContent__media--image img {
+        max-height: unset;
       }
 
       .m-activityContent__messageWrapper {
