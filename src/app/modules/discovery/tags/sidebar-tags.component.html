@@ -35,6 +35,7 @@
       (click)="seeMore()"
       *ngIf="limit === 5 && !(inProgress$ | async) && !entityGuid"
       i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
+      data-ref="sidebar-tags-more"
       >See more</a
     >
   </m-sidebarWidget>
@@ -44,6 +45,7 @@
       <a
         [routerLink]="parentPath + '/search'"
         [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+        data-ref="sidebar-tags-tag"
       >
         <div>
           <h4>#{{ tag.value }}</h4>
