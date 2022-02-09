@@ -72,6 +72,7 @@
               "
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [ngClass]="{ missingDimensions: mediaHeight === 0 }"
+              [maxHeightAllowed]="stageHeight"
             ></m-activity__content>
             <m-activity__modalQuote
               *ngIf="isQuote && entity"

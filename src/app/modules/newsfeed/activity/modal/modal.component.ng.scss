@@ -67,7 +67,7 @@ $modal-padding: 20px;
     z-index: 2;
 
     @include m-theme() {
-      background-color: themed($m-bgColor--primaryDarkAlways);
+      background-color: themed($m-bgColor--primary);
       box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
     }
     &.m-activityModal__stageWrapper--status {
@@ -84,6 +84,14 @@ $modal-padding: 20px;
   .m-activityModal__mediaWrapper--quote {
     overflow-y: scroll;
     overflow-y: overlay;
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep {
+      m-activity {
+        margin-top: 0;
+      }
+    }
 
     @extend %disable-scrollbars;
   }
@@ -173,6 +181,7 @@ $modal-padding: 20px;
         .m-activityContent__messageWrapper {
           line-height: 22px;
           text-align: left;
+          box-sizing: border-box;
           padding: $modal-padding $modal-padding * 3;
           @include m-theme() {
             background-color: themed($m-bgColor--secondary);
@@ -633,7 +642,6 @@ $modal-padding: 20px;
       }
 
       .m-activityContent__messageWrapper {
-        padding: 0;
         height: 100%;
         justify-content: center;
         display: flex;
