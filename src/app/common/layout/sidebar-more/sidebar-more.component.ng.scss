@@ -53,6 +53,7 @@
           ::ng-deep m-icon,
           i {
             margin-right: 15px;
+            font-size: 22px;
             @include m-theme() {
               color: themed($m-textColor--secondary);
               fill: themed($m-textColor--secondary);
@@ -96,7 +97,7 @@
           span {
             text-decoration: none;
             font-size: 13px;
-            line-height: 20px;
+            line-height: 16px;
             width: auto;
             white-space: pre-wrap;
             word-break: break-all;
