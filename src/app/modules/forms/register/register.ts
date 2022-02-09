@@ -19,7 +19,11 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { PopoverComponent } from '../popover-validation/popover.component';
+import {
+  PopoverComponent,
+  SecurityValidationState,
+  SecurityValidationStateValue,
+} from '../popover-validation/popover.component';
 import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
@@ -48,7 +52,7 @@ export class RegisterForm {
   inProgress: boolean = false;
   captcha: string;
   usernameValidationTimeout: any;
-  passwordFieldValid: boolean = false;
+  securityValidationState: SecurityValidationStateValue = null;
 
   alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
@@ -81,7 +85,14 @@ export class RegisterForm {
           [this.usernameValidator.existingUsernameValidator()],
         ],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, PASSWORD_VALIDATOR]],
+        password: [
+          '',
+          [
+            Validators.required,
+            PASSWORD_VALIDATOR,
+            this.passwordSecurityValidator.bind(this),
+          ],
+        ],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
         exclusive_promotions: [true],
@@ -105,6 +116,20 @@ export class RegisterForm {
     if (c.get('password').value !== c.get('password2').value) {
       return { passwordConfirming: true };
     }
+  }
+
+  /**
+   * Check if the password security check has failed, return error if it has.
+   * We ignore pending state here because we don't want to trigger form errors when pending.
+   * @param { AbstractControl } control - specifies the form control - unused.
+   * @returns { ValidationErrors | null } - returns validation errors in the event the state is failed.
+   */
+  private passwordSecurityValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    return this.securityValidationState === SecurityValidationState.FAILED
+      ? { passwordSecurityFailed: true }
+      : null;
   }
 
   register(e) {
@@ -181,8 +206,21 @@ export class RegisterForm {
     }
   }
 
-  onPopoverChange(valid: boolean) {
-    this.passwordFieldValid = !valid;
+  /**
+   * Fired on password validation popover change - emitted around password security checks.
+   * @param { SecurityValidationStateValue } state - state of the password security check.
+   */
+  public onPopoverChange(state: SecurityValidationStateValue): void {
+    this.securityValidationState = state;
+    this.form.get('password').updateValueAndValidity();
+  }
+
+  /**
+   * Whether security validation state is successful.
+   * @returns { boolean } true if security validation state is successful.
+   */
+  public isSecurityValidationStateSuccess(): boolean {
+    return this.securityValidationState === SecurityValidationState.SUCCESS;
   }
 
   get username() {
