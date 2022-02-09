@@ -109,13 +109,21 @@ $modal-padding: 20px;
 
         .m-activityContent__message--isTextOnly {
           max-height: 100% !important;
-          margin: 9vh 40px !important;
+          height: 100%;
+
+          // does not affect span inside read more
+          .m-activityContent__messageWrapper > span {
+            margin: 40px;
+          }
 
           &.m-activityContent__message--short {
             margin: 0 50px;
+
             span {
+              display: flex;
               font-size: 24px;
             }
+
             m-read-more--button {
               display: none;
             }
@@ -123,8 +131,10 @@ $modal-padding: 20px;
           &:not(.m-activityContent__message--short) {
             line-height: 21px;
             text-align: left;
-            margin: 9vh 10px 0 0;
+
             span {
+              display: flex;
+
               @include m-theme() {
                 color: themed($m-textColor--secondary);
               }
