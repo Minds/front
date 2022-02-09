@@ -86,10 +86,12 @@ $modal-padding: 20px;
     overflow-y: overlay;
     align-items: center;
     justify-content: center;
+    max-width: 540px; // find a logic for this number
 
     ::ng-deep {
       m-activity {
-        margin-top: 0;
+        height: auto !important;
+        margin: $minds-margin * 2 0;
       }
     }
 
