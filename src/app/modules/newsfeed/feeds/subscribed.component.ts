@@ -194,6 +194,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.moreData = true;
     this.offset = 0;
+    this.showBoostRotator = false;
     this.inProgress = true;
 
     let queryParams = {
@@ -234,6 +235,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     }
 
     this.inProgress = false;
+    this.showBoostRotator = true;
   }
 
   loadNext() {
