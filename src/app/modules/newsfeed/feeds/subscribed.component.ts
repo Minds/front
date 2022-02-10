@@ -70,6 +70,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
+  topFeedExperimentActive: boolean = this.experiments.hasVariation(
+    'top-feed-2',
+    true
+  );
 
   /**
    * Listening for new posts.
@@ -88,7 +92,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private storage: Storage,
     private context: ContextService,
-    public topFeedExperiment: TopFeedExperimentService,
     @Self() public latestFeedService: LatestFeedService,
     @Self() public topFeedService: TopFeedService,
     protected newsfeedService: NewsfeedService,
@@ -101,7 +104,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   ) {
     if (isPlatformServer(this.platformId)) return;
 
-    if (this.topFeedExperiment.isActive()) {
+    if (this.topFeedExperimentActive) {
       const storedfeedAlgorithm = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
       if (storedfeedAlgorithm) {
         this.algorithm = storedfeedAlgorithm as FeedAlgorithm;
@@ -317,7 +320,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * @param { number } index the index of the feed
    */
   shouldShowTopHighlights(index: number) {
-    if (!this.topFeedExperiment.isActive()) {
+    if (!this.topFeedExperimentActive) {
       return false;
     }
 
