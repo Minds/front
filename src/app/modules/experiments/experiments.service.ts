@@ -1,5 +1,10 @@
-import { Injectable, OnDestroy } from '@angular/core';
-
+import {
+  Injectable,
+  OnDestroy,
+  Renderer2,
+  PLATFORM_ID,
+  Inject,
+} from '@angular/core';
 import { GrowthBook, Experiment } from '@growthbook/growthbook';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AnalyticsService } from '../../services/analytics';
@@ -9,6 +14,7 @@ import { Storage } from '../../services/storage';
 import * as snowplow from '@snowplow/browser-tracker';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 export { Experiment } from '@growthbook/growthbook';
 
@@ -24,6 +30,7 @@ export class ExperimentsService implements OnDestroy {
     private analytics: AnalyticsService,
     private cookieService: CookieService,
     private storage: Storage,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router
   ) {
     this.routerEventsSubscription = this.router.events.subscribe(
@@ -154,6 +161,24 @@ export class ExperimentsService implements OnDestroy {
     }
 
     return cookieValue;
+  }
+
+  /**
+   * Append the growthbook devTool JS tag to the Document Body
+   * @param renderer The Angular Renderer
+   * @returns the script element
+   */
+  public injectDevTool(renderer: Renderer2): HTMLScriptElement {
+    if (!isPlatformBrowser(this.platformId)) {
+      return null;
+    }
+
+    const script = renderer.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://unpkg.com/@growthbook/dev/dist/bundles/index.min.js';
+    script.async = true;
+    renderer.appendChild(document.body, script);
+    return script;
   }
 
   ngOnDestroy() {

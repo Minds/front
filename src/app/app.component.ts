@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   PLATFORM_ID,
+  Renderer2,
 } from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
@@ -36,6 +37,7 @@ import { EmailConfirmationService } from './common/components/email-confirmation
 import { ExperimentsService } from './modules/experiments/experiments.service';
 import { MultiFactorAuthConfirmationService } from './modules/auth/multi-factor-auth/services/multi-factor-auth-confirmation.service';
 import { CompassHookService } from './common/services/compass-hook.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-app',
@@ -85,7 +87,8 @@ export class Minds implements OnInit, OnDestroy {
     private socketsService: SocketsService,
     private experimentsService: ExperimentsService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
-    private compassHook: CompassHookService
+    private compassHook: CompassHookService,
+    private renderer: Renderer2
   ) {
     this.name = 'Minds';
 
@@ -131,7 +134,9 @@ export class Minds implements OnInit, OnDestroy {
 
       // Setup our AB testing
       this.experimentsService.initGrowthbook();
-
+      if (this.configs.get('environment') === 'sandbox') {
+        this.experimentsService.injectDevTool(this.renderer);
+      }
       // if (this.sso.isRequired()) {
       //   this.sso.connect();
       // }
