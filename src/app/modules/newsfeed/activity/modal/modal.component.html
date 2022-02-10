@@ -6,7 +6,6 @@
   <div class="m-activityModal__theater" (click)="clickedModal($event)">
     <div
       class="m-activityModal m-activityModal__clearFix"
-      [style.height]="stageHeight + 'px'"
     >
       <!-- -------------------------------------------------- -->
       <!-- --LEFT SIDE--------------------------------------- -->
@@ -14,7 +13,6 @@
       <!-- (this is the element that goes into fullscreen) -->
       <div
         class="m-activityModal__stageWrapper"
-        [style.line-height]="stageHeight + 'px'"
         (mouseenter)="onMouseEnterStage()"
         (mouseleave)="onMouseLeaveStage()"
         (touchend)="showOverlaysOnTablet()"
@@ -71,8 +69,7 @@
                 activityService.shouldShowPaywallBadge$ | async
               "
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
-              [ngClass]="{ missingDimensions: mediaHeight === 0 }"
-              [maxHeightAllowed]="stageHeight"
+              [maxHeightAllowed]="modalHeight"
             ></m-activity__content>
             <m-activity__modalQuote
               *ngIf="isQuote && entity"

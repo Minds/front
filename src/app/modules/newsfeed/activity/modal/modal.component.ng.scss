@@ -25,10 +25,12 @@ $modal-padding: 20px;
   width: 100%;
   border-radius: 6px;
   overflow: hidden;
+  height: 100%;
 
   .m-activityModal {
     display: flex;
     flex: 1;
+    height: calc(100vh - 3.5rem);
   }
 
   .m-activityModal__wrapper {
@@ -36,6 +38,7 @@ $modal-padding: 20px;
     flex: 1;
     flex-direction: column;
     align-items: stretch;
+    height: 100%;
 
     // new stacking context
     position: static;
@@ -46,6 +49,8 @@ $modal-padding: 20px;
     .m-activityModal__theater {
       position: relative;
       z-index: 1;
+      height: 100%;
+
       @include m-theme() {
         box-shadow: 0 12px 24px rgba(themed($m-black-always), 0.3);
       }

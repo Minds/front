@@ -85,6 +85,7 @@ export class ActivityModalPagerComponent implements OnInit, OnDestroy {
     this.asyncEntitySubscription = asyncEntity.subscribe(entity => {
       if (entity) {
         this.service.setEntity(entity);
+        this.service.loading$.next(false)
       }
     });
   }
