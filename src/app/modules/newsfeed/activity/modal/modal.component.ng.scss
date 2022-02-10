@@ -344,7 +344,9 @@ $modal-padding: 20px;
   // ******************************************************
 
   .m-activityModal__contentContainer {
-    width: 350px;
+    min-width: 350px;
+    width: 30vw;
+    max-width: 500px;
     height: 100%;
     max-height: 100%;
     position: relative;
