@@ -93,7 +93,8 @@ export class DiscoverySidebarTagsComponent implements OnInit, OnDestroy {
       case 'activity':
         return 'Related tags';
       default:
-        return 'Tags for you';
+        // return 'Tags for you';
+        return 'Trending tags';
     }
   }
 }

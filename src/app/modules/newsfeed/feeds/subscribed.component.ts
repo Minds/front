@@ -94,6 +94,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
     private toast: FormToastService,
+    private experiments: ExperimentsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -191,6 +192,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.moreData = true;
     this.offset = 0;
     this.inProgress = true;
+
+    let queryParams = {
+      algorithm: this.algorithm,
+    };
+
+    if (this.experiments.hasVariation('newsfeed-group-posts', true)) {
+      queryParams['include_group_posts'] = true;
+    }
 
     try {
       switch (this.algorithm) {

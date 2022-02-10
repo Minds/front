@@ -4,6 +4,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
+import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { ConfigsService } from '../../services/configs.service';
 
 /**
@@ -27,6 +28,7 @@ export class JoinBannerComponent implements OnInit {
     private authModal: AuthModalService,
     private guestModeExperiment: GuestModeExperimentService,
     private router: Router,
+    private authRedirectService: AuthRedirectService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -66,7 +68,7 @@ export class JoinBannerComponent implements OnInit {
       await this.authModal.open();
 
       if (this.router.url === '/' || this.router.url === '/about') {
-        this.router.navigate(['/newsfeed/subscriptions/latest']);
+        this.router.navigate([this.authRedirectService.getRedirectUrl()]);
       }
     } catch (e) {
       if (e === 'DismissedModalException') {

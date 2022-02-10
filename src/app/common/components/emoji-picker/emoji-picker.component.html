@@ -1,0 +1,16 @@
+<div
+  [popper]="popper"
+  [popperPlacement]="'bottom'"
+  [popperTrigger]="'click'"
+  [popperModifiers]="popperModifiers"
+  (popperOnShown)="onShowSelector()"
+  (popperOnHidden)="onHideSelector()"
+>
+  <i class="m-emojiPicker__icon material-icons">insert_emoticon</i>
+</div>
+
+<popper-content #popper>
+  <div class="m-emojiPicker__placeholder">
+    <ng-template #emojiPickerOutlet></ng-template>
+  </div>
+</popper-content>
