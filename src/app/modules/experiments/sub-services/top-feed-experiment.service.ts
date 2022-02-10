@@ -18,9 +18,6 @@ export class TopFeedExperimentService {
    * @returns { boolean } whether top feed experiment is active.
    */
   public isActive(): boolean {
-    return (
-      this.featuresService.has('top-feed') &&
-      this.experiments.hasVariation('top-feed-2', 'on')
-    );
+    return this.experiments.hasVariation('top-feed-2', 'on');
   }
 }
