@@ -32,7 +32,6 @@ import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { TopFeedExperimentService } from '../../experiments/sub-services/top-feed-experiment.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 
 const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
