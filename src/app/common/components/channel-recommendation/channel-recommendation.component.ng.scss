@@ -1,0 +1,75 @@
+@import 'defaults';
+
+:host {
+  article {
+    padding: $minds-padding * 4;
+    margin: $minds-margin * 2 $minds-margin * -5;
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+
+    header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-bottom: $minds-padding * 4;
+
+      h2 {
+        flex: 1;
+        font-size: 20px;
+        margin: 0;
+        font-weight: bold;
+        line-height: inherit;
+      }
+
+      a {
+        //
+      }
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li section {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: $minds-margin * 2;
+
+        .avatarContainer {
+          margin-right: $minds-margin * 2;
+          ::ng-deep minds-avatar {
+            .minds-avatar {
+              border-radius: 50%;
+              height: 35px;
+              width: 35px;
+              background-size: cover;
+              margin: 0;
+            }
+          }
+        }
+        .contentContainer {
+          flex: 1;
+
+          h3 {
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: bold;
+            margin: 0;
+          }
+
+          .description {
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+          }
+        }
+        .subscribeContainer {
+        }
+      }
+    }
+  }
+}
