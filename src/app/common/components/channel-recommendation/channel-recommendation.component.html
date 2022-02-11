@@ -1,35 +1,58 @@
 <article>
   <header>
     <h2>Recommended Channels</h2>
-    <a href="#">See more</a>
+    <a [routerLink]="['/discovery/suggestions/user']">See more</a>
   </header>
-  <ul>
+  <ul
+    *ngIf="
+      (channelRecommendations.result$ | async)?.suggestions?.length;
+      else loadingOrError
+    "
+  >
     <li
       *ngFor="
         let channel of (channelRecommendations.result$ | async)?.suggestions
       "
     >
       <section>
-        <div class="avatarContainer">
+        <a
+          [routerLink]="['/', channel.entity.username]"
+          class="avatarContainer"
+        >
           <minds-avatar
             [object]="channel.entity"
             [editMode]="false"
           ></minds-avatar>
-        </div>
+        </a>
         <div class="contentContainer">
-          <h3 class="title">{{ channel.entity.name }}</h3>
+          <a [routerLink]="['/', channel.entity.username]" class="title">
+            <strong>{{ channel.entity.name }}</strong>
+            <m-channel--badges
+              class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
+              [user]="channel.entity"
+              badges="[ 'admin', 'verified' ]"
+            ></m-channel--badges>
+          </a>
           <span class="description">{{ channel.entity.briefdescription }}</span>
           <!-- <span>@ottman and @jack are subscribed</span> -->
         </div>
         <div class="subscribeContainer">
           <m-subscribeButton
             [user]="channel.entity"
-            [enableRecheck]="true"
-            [sized]="true"
-            [iconOnly]="true"
+            enableRecheck="true"
+            subscribedIcon="check"
+            sized="true"
+            iconOnly="true"
           ></m-subscribeButton>
         </div>
       </section>
     </li>
   </ul>
 </article>
+
+<ng-template #loadingOrError>
+  <m-loadingSpinner
+    [inProgress]="channelRecommendations.loading$ | async"
+  ></m-loadingSpinner>
+  <!-- TODO: need a common error component with retry button here -->
+</ng-template>

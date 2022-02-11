@@ -25,7 +25,14 @@
       }
 
       a {
-        //
+        text-decoration: none;
+        @include m-theme() {
+          color: themed($m-link);
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 
@@ -54,11 +61,35 @@
         .contentContainer {
           flex: 1;
 
-          h3 {
+          .title {
+            display: block;
             font-size: 16px;
             line-height: 24px;
             font-weight: bold;
             margin: 0;
+
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+
+            strong {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            > * {
+              display: inline-block;
+              vertical-align: middle;
+              max-width: 100%;
+              text-overflow: ellipsis;
+            }
+
+            &:hover {
+              @include m-theme() {
+                color: themed($m-textColor--primary);
+              }
+            }
           }
 
           .description {
