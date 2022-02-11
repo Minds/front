@@ -255,4 +255,18 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       return this.composer.canDeactivate();
     }
   }
+
+  /**
+   * whether channel recommendation should be shown
+   * @param { number } index the index of the feed
+   * @returns { boolean }
+   */
+  public shouldShowChannelRecommendation(index: number) {
+    // if (!this.experiments.hasVariation('channel-recommendations', true)) {
+    //   return false;
+    // }
+
+    // show after 3rd post
+    return index === 2;
+  }
 }

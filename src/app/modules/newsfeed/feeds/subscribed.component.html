@@ -92,6 +92,7 @@
           (deleted)="delete(activity)"
           #feedViewChildren
         ></m-activity>
+        <m-channelRecommendation *ngIf="shouldShowChannelRecommendation(i)"></m-channelRecommendation>
       </ng-container>
 
       <infinite-scroll
