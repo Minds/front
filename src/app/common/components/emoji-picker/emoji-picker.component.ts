@@ -51,7 +51,6 @@ export class EmojiPickerComponent {
   onShowSelector() {
     this.showSelector = true;
     this.detectChanges();
-    this.loadEmojiMartComponent();
   }
 
   onHideSelector() {
@@ -65,9 +64,6 @@ export class EmojiPickerComponent {
   async loadEmojiMartComponent() {
     // Import our module
     const { PickerComponent } = await import('@ctrl/ngx-emoji-mart');
-
-    // const moduleFactory = await this.compiler.compileModuleAsync(PickerModule);
-    // const moduleRef = moduleFactory.create(this.injector);
 
     // Resolves the available components
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
@@ -103,6 +99,20 @@ export class EmojiPickerComponent {
 
     // Trigger change detection
     this.detectChanges();
+  }
+
+  /**
+   * whether emoji mart is loaded by lazy loading.
+   * @returns { boolean }
+   */
+  get isEmojiMartLoaded() {
+    return Boolean(this.onSelectSubscription);
+  }
+
+  onMouseEnter() {
+    if (!this.isEmojiMartLoaded) {
+      this.loadEmojiMartComponent();
+    }
   }
 
   ngOnDestroy() {
