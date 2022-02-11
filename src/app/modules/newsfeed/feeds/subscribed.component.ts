@@ -266,6 +266,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     //   return false;
     // }
 
+    // TODO: or if the newsfeed length was less than equal to 3
+
     // show after 3rd post
     return index === 2;
   }
