@@ -38,7 +38,7 @@ export class HovercardComponent implements OnInit {
     this.shown = true;
   }
 
-  popperOnHide() {
+  popperOnHidden() {
     this.popperModifiers.find(x => x.name === 'eventListeners').enabled = false;
     this.shown = false;
   }
