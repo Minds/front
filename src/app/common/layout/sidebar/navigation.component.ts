@@ -168,24 +168,27 @@ export class SidebarNavigationComponent
   }
 
   createGroupsSideBar() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-        GroupsSidebarMarkersComponent
-      ),
-      viewContainerRef = this.host.viewContainerRef;
+    return;
+    // This component is obsolete
 
-    viewContainerRef.clear();
+    // const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+    //     GroupsSidebarMarkersComponent
+    //   ),
+    //   viewContainerRef = this.host.viewContainerRef;
 
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.groupsSidebar = this.componentRef.instance;
-    this.groupsSidebar.showLabels = true;
-    this.groupsSidebar.leftSidebar = true;
-    this.groupSelectedSubscription = this.componentRef.instance.onGroupSelected.subscribe(
-      data => {
-        if (data) {
-          this.toggle();
-        }
-      }
-    );
+    // viewContainerRef.clear();
+
+    // this.componentRef = viewContainerRef.createComponent(componentFactory);
+    // this.groupsSidebar = this.componentRef.instance;
+    // this.groupsSidebar.showLabels = true;
+    // this.groupsSidebar.leftSidebar = true;
+    // this.groupSelectedSubscription = this.componentRef.instance.onGroupSelected.subscribe(
+    //   data => {
+    //     if (data) {
+    //       this.toggle();
+    //     }
+    //   }
+    // );
   }
 
   toggle(): void {
