@@ -33,6 +33,7 @@ import { ComposerComponent } from '../../composer/composer.component';
 import { FeedsUpdateService } from '../../../common/services/feeds-update.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -88,6 +89,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     protected clientMetaService: ClientMetaService,
     public feedsUpdate: FeedsUpdateService,
     private toast: FormToastService,
+    private experiments: ExperimentsService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -192,12 +194,18 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
     this.inProgress = true;
 
+    let queryParams = {
+      algorithm: this.algorithm,
+    };
+
+    if (this.experiments.hasVariation('newsfeed-group-posts', true)) {
+      queryParams['include_group_posts'] = true;
+    }
+
     try {
       this.feedsService
         .setEndpoint(`api/v2/feeds/subscribed/activities`)
-        .setParams({
-          algorithm: this.algorithm,
-        })
+        .setParams(queryParams)
         .setLimit(12)
         .fetch(refresh);
     } catch (e) {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FeaturesService } from '../../../services/features.service';
 import { ExperimentsService } from '../experiments.service';
 
 /**

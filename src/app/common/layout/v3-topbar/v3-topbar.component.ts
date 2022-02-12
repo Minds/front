@@ -22,6 +22,7 @@ import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
+import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 
 @Component({
@@ -63,6 +64,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
+    private authRedirectService: AuthRedirectService,
     private guestModeExperiment: GuestModeExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -188,7 +190,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   doRedirect(): void {
     if (this.router.url === '/' || this.router.url === '/about') {
-      this.router.navigate(['/newsfeed/subscriptions/latest']);
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
   }
 

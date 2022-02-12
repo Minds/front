@@ -3,7 +3,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { CompassService } from '../compass.service';
 
 import { CompassQuestionnaireBannerComponent } from './questionnaire-banner.component';
@@ -16,7 +16,12 @@ describe('CompassQuestionnaireBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompassQuestionnaireBannerComponent],
+      declarations: [
+        CompassQuestionnaireBannerComponent,
+        MockComponent({
+          selector: 'm-button',
+        }),
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: CompassService, useValue: compassServiceMock },

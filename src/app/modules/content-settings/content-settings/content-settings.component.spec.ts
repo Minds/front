@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { contentSettingsServiceMock } from '../../../mocks/modules/content-settings/content-settings.service.mock';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { CompassService } from '../../compass/compass.service';
 import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
 import { TagSettingsService } from '../../tag-settings/tag-settings.service';
@@ -15,7 +15,16 @@ describe('ContentSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ContentSettingsComponent],
+      declarations: [
+        ContentSettingsComponent,
+        MockComponent({
+          selector: 'm-tagSettings',
+        }),
+        MockComponent({
+          selector: 'm-button',
+          inputs: ['disabled', 'saving'],
+        }),
+      ],
       providers: [
         {
           provide: ContentSettingsService,
