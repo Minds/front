@@ -15,7 +15,6 @@ import { isPlatformBrowser } from '@angular/common';
 
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
-import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-markers/sidebar-markers.component';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
@@ -37,8 +36,7 @@ import { ThemeService } from '../../services/theme.service';
   templateUrl: 'navigation.component.html',
   styleUrls: ['./navigation.component.ng.scss'],
 })
-export class SidebarNavigationComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class SidebarNavigationComponent implements OnInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
   readonly chatUrl: string;
@@ -49,7 +47,6 @@ export class SidebarNavigationComponent
   user;
 
   componentRef;
-  groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   showLabels: boolean = false;
@@ -145,12 +142,6 @@ export class SidebarNavigationComponent
     );
   }
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.createGroupsSideBar();
-    }
-  }
-
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
@@ -165,30 +156,6 @@ export class SidebarNavigationComponent
     this.user = this.session.getLoggedInUser(user => {
       this.user = user;
     });
-  }
-
-  createGroupsSideBar() {
-    return;
-    // This component is obsolete
-
-    // const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-    //     GroupsSidebarMarkersComponent
-    //   ),
-    //   viewContainerRef = this.host.viewContainerRef;
-
-    // viewContainerRef.clear();
-
-    // this.componentRef = viewContainerRef.createComponent(componentFactory);
-    // this.groupsSidebar = this.componentRef.instance;
-    // this.groupsSidebar.showLabels = true;
-    // this.groupsSidebar.leftSidebar = true;
-    // this.groupSelectedSubscription = this.componentRef.instance.onGroupSelected.subscribe(
-    //   data => {
-    //     if (data) {
-    //       this.toggle();
-    //     }
-    //   }
-    // );
   }
 
   toggle(): void {
@@ -219,12 +186,10 @@ export class SidebarNavigationComponent
   setVisible(value: boolean): void {
     this.hidden = !value;
 
-    if (value) {
-      if (isPlatformBrowser(this.platformId)) {
-        this.createGroupsSideBar();
+    if (!value) {
+      if (this.host && this.host.viewContainerRef) {
+        this.host.viewContainerRef.clear();
       }
-    } else {
-      this.host.viewContainerRef.clear();
     }
   }
 
@@ -254,10 +219,6 @@ export class SidebarNavigationComponent
 
     if (this.layoutMode !== 'phone') {
       this.sidebarNavigationService.isOpened$.next(false);
-    }
-
-    if (this.groupsSidebar) {
-      this.groupsSidebar.showLabels = this.showLabels;
     }
   }
 

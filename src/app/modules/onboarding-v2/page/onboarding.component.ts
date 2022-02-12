@@ -3,7 +3,6 @@ import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Storage } from '../../../services/storage';
 import { OnboardingV2Service } from '../service/onboarding.service';
-import { SidebarMarkersService } from '../../../common/layout/sidebar/markers.service';
 import { iOSVersion } from '../../../helpers/is-safari';
 import { TopbarService } from '../../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
@@ -36,7 +35,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private onboardingService: OnboardingV2Service,
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
-    private sidebarMarkersService: SidebarMarkersService,
     private featuresService: FeaturesService,
     private pageLayoutService: PageLayoutService
   ) {

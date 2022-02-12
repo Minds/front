@@ -95,6 +95,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.closeMenu();
     this.themeSubscription.unsubscribe();
   }
 }
