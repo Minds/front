@@ -1,4 +1,4 @@
-<article>
+<article *ngIf="(channelRecommendations.result$ | async)?.suggestions?.length">
   <header>
     <h2>Recommended Channels</h2>
     <a [routerLink]="['/discovery/suggestions/user']">See more</a>
