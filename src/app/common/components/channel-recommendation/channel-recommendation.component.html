@@ -19,10 +19,12 @@
           [routerLink]="['/', channel.entity.username]"
           class="avatarContainer"
         >
-          <minds-avatar
-            [object]="channel.entity"
-            [editMode]="false"
-          ></minds-avatar>
+          <m-hovercard [publisher]="channel.entity" [offset]="[0, 15]">
+            <minds-avatar
+              [object]="channel.entity"
+              [editMode]="false"
+            ></minds-avatar>
+          </m-hovercard>
         </a>
         <div class="contentContainer">
           <a [routerLink]="['/', channel.entity.username]" class="title">
