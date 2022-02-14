@@ -538,7 +538,7 @@ $modal-padding: 20px;
     flex-direction: column;
     box-sizing: border-box;
     flex-grow: 1;
-
+    height: 100%;
     overflow: hidden;
     position: relative;
     width: 100% !important;
@@ -566,10 +566,7 @@ $modal-padding: 20px;
   }
 
   .m-activityModal__scrollableAreaBody {
-    // min-height: 320px;
-    // outline: none;
-    // position: relative;
-    // overflow: hidden;
+    height: 100%;
     max-height: 100%;
     overflow-y: scroll;
     overflow-y: overlay;
