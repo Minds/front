@@ -179,8 +179,6 @@ export class Minds implements OnInit, OnDestroy {
 
         if (user.language !== language) {
           console.log('[app]:: language change', user.language, language);
-          // window.location.reload(true);
-          // TODO: Test https://stackoverflow.com/a/65544086/7396007
           window.location.href = window.location.href;
         }
       }
