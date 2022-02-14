@@ -29,7 +29,7 @@
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="shortStatus"
       [class.m-activityContent__message--minimalMode]="minimalMode"
-      [maxHeightAllowed]="maxMessageHeight"
+      [maxHeightAllowed]="maxHeightAllowed || maxMessageHeight"
       *ngIf="message?.length >= 1"
       (click)="onMessageClick($event)"
     >
