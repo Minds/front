@@ -215,7 +215,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    */
   public getMainLogoUrl(): string {
     return this.session.getLoggedInUser()
-      ? '/newsfeed/subscriptions/latest'
+      ? '/newsfeed/subscriptions'
       : '/';
   }
 
