@@ -28,7 +28,7 @@ export class ActivityModalService {
   /**
    * Is the modal loading?
    */
-  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the modal stage element is in fullscreen mode

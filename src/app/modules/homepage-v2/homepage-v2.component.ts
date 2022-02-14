@@ -17,6 +17,7 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -41,7 +42,8 @@ export class HomepageV2Component implements OnInit {
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private authRedirectService: AuthRedirectService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -94,18 +96,18 @@ export class HomepageV2Component implements OnInit {
    * @returns { void }
    */
   public async register(): Promise<void> {
-    if (this.featuresService.has('onboarding-october-2020')) {
-      try {
-        await this.authModal.open();
-      } catch (e) {
-        if (e === 'DismissedModalException') {
-          return; // modal dismissed, do nothing
-        }
-        console.error(e);
-      }
+    try {
+      await this.authModal.open();
+
+      const url = this.authRedirectService.getRedirectUrl();
+      this.router.navigate([url]);
       return;
+    } catch (e) {
+      if (e === 'DismissedModalException') {
+        return; // modal dismissed, do nothing
+      }
+      console.error(e);
     }
-    this.router.navigate(['/register']);
   }
 
   isMobile() {

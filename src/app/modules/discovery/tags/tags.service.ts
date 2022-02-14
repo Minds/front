@@ -7,6 +7,7 @@ import { isPlatformServer } from '@angular/common';
 import { DiscoveryService } from '../discovery.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 export type DiscoveryTag = any;
 
@@ -70,6 +71,7 @@ export class DiscoveryTagsService {
     private hashtagDefaults: HashtagDefaultsService,
     private discoveryService: DiscoveryService,
     private featuresService: FeaturesService,
+    private experiments: ExperimentsService,
     configs: ConfigsService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -99,6 +101,10 @@ export class DiscoveryTagsService {
       this.featuresService.has('plus-discovery-filter')
     ) {
       params['wire_support_tier'] = this.plusHandler;
+    }
+
+    if (this.experiments.hasVariation('trending-tags-v2', true)) {
+      params['trending_tags_v2'] = true;
     }
 
     try {

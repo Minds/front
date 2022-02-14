@@ -40,10 +40,6 @@ export class ThemeService {
     );
   }
 
-  // TODO after release of MacOS 10.14.4
-  // Setup a listener for below to automatically toggle into dark mode for Macs --
-  // prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
   setUp(): void {
     this.setup = true;
     this.emitThemePreference();
