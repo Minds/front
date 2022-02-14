@@ -31,7 +31,11 @@
   </m-tooltip>
   <popper-content #popper>
     <div class="m-feedTypePopper__container">
-      <a routerLink="../top" class="m-feedTypePopper__item" (click)="onChangeType('top')">
+      <a
+        routerLink="../top"
+        class="m-feedTypePopper__item"
+        (click)="onChangeType('top')"
+      >
         <div class="m-feedTypePopper__desc__container">
           <p
             i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
@@ -51,7 +55,11 @@
           >check</i
         >
       </a>
-      <a routerLink="../latest" class="m-feedTypePopper__item" (click)="onChangeType('latest')">
+      <a
+        routerLink="../latest"
+        class="m-feedTypePopper__item"
+        (click)="onChangeType('latest')"
+      >
         <div>
           <p
             i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
