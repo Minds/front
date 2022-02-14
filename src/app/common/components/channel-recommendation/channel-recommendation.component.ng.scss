@@ -63,6 +63,8 @@
           display: flex;
           justify-content: center;
           flex-direction: column;
+          align-items: flex-start;
+          overflow: hidden;
 
           .title {
             display: block;
@@ -96,12 +98,26 @@
           }
 
           .description {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            @supports (-webkit-line-clamp: 2) {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: initial;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+            }
+
             @include m-theme() {
               color: themed($m-textColor--secondary);
             }
           }
         }
         .subscribeContainer {
+          margin-left: $minds-margin;
         }
       }
     }
