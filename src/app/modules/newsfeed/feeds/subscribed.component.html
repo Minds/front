@@ -19,28 +19,10 @@
       ></m-composer>
     </ng-container>
 
-    <div
+    <m-feedHeader
       *ngIf="topFeedExperimentActive"
-      class="m-newsfeed__subscribed__feedType"
-    >
-      <span
-        i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
-        *ngIf="algorithm === 'top'"
-        class="m-newsfeed__subscribed__feedType__title"
-        >Top Posts</span
-      >
-      <span
-        i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
-        *ngIf="algorithm === 'latest'"
-        class="m-newsfeed__subscribed__feedType__title"
-        >Latest Posts</span
-      >
-
-      <m-feedTypePopover
-        [type]="algorithm"
-        (changeType)="changeFeedAlgorithm($event)"
-      ></m-feedTypePopover>
-    </div>
+      [algorithm]="algorithm"
+    ></m-feedHeader>
 
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngIf="algorithm === 'latest'">

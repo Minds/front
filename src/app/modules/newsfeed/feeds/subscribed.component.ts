@@ -1,3 +1,4 @@
+import { FeedAlgorithmHistoryService } from './../services/feed-algorithm-history.service';
 import {
   Component,
   ElementRef,
@@ -23,7 +24,6 @@ import {
 } from '@angular/router';
 import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -34,8 +34,7 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 
-const FEED_ALGORITHM_STORAGE_KEY = 'feed:algorithm';
-type FeedAlgorithm = 'top' | 'latest';
+export type FeedAlgorithm = 'top' | 'latest';
 
 @Injectable()
 export class LatestFeedService extends FeedsService {}
@@ -47,7 +46,6 @@ export class TopFeedService extends FeedsService {}
   selector: 'm-newsfeed--subscribed',
   providers: [LatestFeedService, TopFeedService],
   templateUrl: 'subscribed.component.html',
-  styleUrls: ['subscribed.component.ng.scss'],
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   prepended: Array<any> = [];
@@ -55,7 +53,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  algorithm: FeedAlgorithm = 'latest';
+  algorithm: FeedAlgorithm;
   message: string = '';
   newUserPromo: boolean = false;
   postMeta: any = {
@@ -89,7 +87,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    private storage: Storage,
+    private feedAlgorithmHistory: FeedAlgorithmHistoryService,
     private context: ContextService,
     @Self() public latestFeedService: LatestFeedService,
     @Self() public topFeedService: TopFeedService,
@@ -104,9 +102,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (isPlatformServer(this.platformId)) return;
 
     if (this.topFeedExperimentActive) {
-      const storedfeedAlgorithm = this.storage.get(FEED_ALGORITHM_STORAGE_KEY);
+      const storedfeedAlgorithm = this.feedAlgorithmHistory.lastAlorithm;
       if (storedfeedAlgorithm) {
-        this.algorithm = storedfeedAlgorithm as FeedAlgorithm;
+        this.algorithm = storedfeedAlgorithm;
       }
     }
   }
@@ -131,6 +129,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.load();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['algorithm']) {
+        this.changeFeedAlgorithm(params['algorithm']);
+      }
+
       if (params['message']) {
         this.message = params['message'];
       }
@@ -293,16 +295,16 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * change feed type
+   * change feed algorithm
    **/
-  changeFeedAlgorithm(type: 'latest' | 'top') {
-    this.algorithm = type;
-    this.storage.set(FEED_ALGORITHM_STORAGE_KEY, type);
+  changeFeedAlgorithm(algo: FeedAlgorithm) {
+    this.algorithm = algo;
+    this.feedAlgorithmHistory.lastAlorithm = algo;
     this.load();
   }
 
   /**
-   * changes feed type and scrolls to top
+   * smooth scrolls to top and changes feed algorithm
    **/
   onShowMoreTopFeed() {
     if (isPlatformServer(this.platformId)) return;

@@ -14,7 +14,6 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
-
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
@@ -40,7 +39,10 @@ import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
 import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.component';
-import { FeedTypePopoverComponent } from './feeds/feed-type-popover/feed-type-popover.component';
+import { FeedTypePopoverComponent } from './feeds/feed-header/feed-type-popover/feed-type-popover.component';
+import { FeedHeaderComponent } from './feeds/feed-header/feed-header.component';
+import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
+import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 
 const routes: Routes = [
   {
@@ -55,6 +57,12 @@ const routes: Routes = [
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       {
         path: 'subscriptions',
+        component: NewsfeedSubscribedComponent,
+        pathMatch: 'full',
+        canActivate: [FeedAlgorithmRedirectGuard],
+      },
+      {
+        path: 'subscriptions/:algorithm',
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
         data: {
@@ -123,8 +131,13 @@ const routes: Routes = [
     NewsfeedActivitySuggestionsComponent,
     TopHighlightsComponent,
     FeedTypePopoverComponent,
+    FeedHeaderComponent,
   ],
-  providers: [NewsfeedService],
+  providers: [
+    NewsfeedService,
+    FeedAlgorithmHistoryService,
+    FeedAlgorithmRedirectGuard,
+  ],
   exports: [
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,

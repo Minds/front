@@ -31,7 +31,7 @@
   </m-tooltip>
   <popper-content #popper>
     <div class="m-feedTypePopper__container">
-      <div class="m-feedTypePopper__item" (click)="onChangeType('top')">
+      <a routerLink="../top" class="m-feedTypePopper__item" (click)="onChangeType('top')">
         <div class="m-feedTypePopper__desc__container">
           <p
             i18n="@@MINDS__NEWSFEED__TOP_POSTS__TITLE"
@@ -50,8 +50,8 @@
           [ngStyle]="{ opacity: type === 'top' ? 1 : 0 }"
           >check</i
         >
-      </div>
-      <div class="m-feedTypePopper__item" (click)="onChangeType('latest')">
+      </a>
+      <a routerLink="../latest" class="m-feedTypePopper__item" (click)="onChangeType('latest')">
         <div>
           <p
             i18n="@@MINDS__NEWSFEED__LATEST_POSTS__TITLE"
@@ -70,7 +70,7 @@
           [ngStyle]="{ opacity: type === 'latest' ? 1 : 0 }"
           >check</i
         >
-      </div>
+      </a>
     </div>
   </popper-content>
 </div>

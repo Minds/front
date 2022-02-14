@@ -1,3 +1,4 @@
+import { FeedAlgorithm } from '../../subscribed.component';
 import { NgxPopperjsContentComponent } from 'ngx-popperjs';
 import {
   Component,
@@ -8,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Storage } from '../../../../services/storage';
+import { Storage } from '../../../../../services/storage';
 
 const TOP_FEED_PROMPT_STORAGE_KEY = 'top-feed:recommended';
 
@@ -18,7 +19,7 @@ const TOP_FEED_PROMPT_STORAGE_KEY = 'top-feed:recommended';
   styleUrls: ['./feed-type-popover.component.ng.scss'],
 })
 export class FeedTypePopoverComponent implements OnInit {
-  @Input() type: 'top' | 'latest' = 'latest';
+  @Input() type: FeedAlgorithm = 'latest';
   shown: boolean = false;
   shouldShowTooltip$ = new BehaviorSubject<boolean>(false);
 
