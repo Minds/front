@@ -1,7 +1,13 @@
 <article *ngIf="(channelRecommendations.result$ | async)?.suggestions?.length">
   <header>
-    <h2>Recommended Channels</h2>
-    <a [routerLink]="['/discovery/suggestions/user']">See more</a>
+    <h2 i18n="@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS">
+      Recommended Channels
+    </h2>
+    <a
+      [routerLink]="['/discovery/suggestions/user']"
+      i18n="@@COMMON__SEE_MORE__ACTION"
+      >See more</a
+    >
   </header>
   <ul
     *ngIf="
@@ -36,7 +42,7 @@
             ></m-channel--badges>
           </a>
           <span class="description">{{ channel.entity.briefdescription }}</span>
-          <!-- <span>@ottman and @jack are subscribed</span> -->
+          <!-- <span>@userA and @userB are subscribed</span> -->
         </div>
         <div class="subscribeContainer">
           <m-subscribeButton
