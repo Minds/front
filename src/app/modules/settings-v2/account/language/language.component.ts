@@ -71,7 +71,6 @@ export class SettingsV2LanguageComponent implements OnInit, OnDestroy {
       );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
-        // TODO: Test https://stackoverflow.com/a/65544086/7396007
         window.location.href = window.location.href;
       }
     } catch (e) {
