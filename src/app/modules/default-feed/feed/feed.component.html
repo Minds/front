@@ -1,13 +1,19 @@
 <div class="m-defaultFeed__feed">
-  <m-activity
-    *ngFor="let activity$ of feedsService.feed | async"
-    [entity]="activity$ | async"
-    [displayOptions]="{
-      showComments: true,
-      isFeed: true
-    }"
-    class="m-defaultFeed__activity"
-  ></m-activity>
+  <ng-container
+    *ngFor="let activity$ of feedsService.feed | async; let i = index"
+  >
+    <m-activity
+      [entity]="activity$ | async"
+      [displayOptions]="{
+        showComments: true,
+        isFeed: true
+      }"
+      class="m-defaultFeed__activity"
+    ></m-activity>
+    <m-channelRecommendation
+      *ngIf="shouldShowChannelRecommendation(i)"
+    ></m-channelRecommendation>
+  </ng-container>
 
   <infinite-scroll
     distance="25%"

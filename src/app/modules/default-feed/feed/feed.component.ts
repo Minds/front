@@ -52,4 +52,24 @@ export class DefaultFeedComponent implements OnInit {
       console.error('DefaultFeedComponent', e);
     }
   }
+
+  /**
+   * whether channel recommendation should be shown
+   * @param { number } index the index of the feed
+   * @returns { boolean }
+   */
+  shouldShowChannelRecommendation(index: number) {
+    // if (!this.experiments.hasVariation('channel-recommendations', true)) {
+    //   return false;
+    // }
+
+    // if the newsfeed length was less than equal to 3,
+    // show the widget after last item
+    if (this.feedsService.feedLength <= 3) {
+      return this.feedsService.feedLength - 1;
+    }
+
+    // show after the 3rd post
+    return index === 2;
+  }
 }
