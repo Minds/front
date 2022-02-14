@@ -86,6 +86,8 @@ export class ActivityContentComponent
   @Input() hideText: boolean = false;
   @Input() hideMedia: boolean = false;
 
+  @Input() maxHeightAllowed: number;
+
   @ViewChild('mediaEl', { read: ElementRef })
   mediaEl: ElementRef;
 
