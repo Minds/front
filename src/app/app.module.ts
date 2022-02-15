@@ -68,6 +68,7 @@ import { SharedModule } from './common/shared.module';
 import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   bootstrap: [Minds],
@@ -123,10 +124,14 @@ import { CompassModule } from './modules/compass/compass.module';
     SharedModule,
     MessengerV2Module,
     CompassModule,
-
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: true,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     //last due to :username route
     AppRoutingModule,
-    //ChannelContainerModule,
   ],
   providers: [
     MINDS_PROVIDERS,
