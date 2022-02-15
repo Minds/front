@@ -393,6 +393,14 @@ $modal-padding: 20px;
       }
 
       .m-activityOwnerBlock__avatar {
+        ::ng-deep m-hovercard {
+          a {
+            &:focus {
+              outline: 0;
+            }
+          }
+        }
+
         img {
           height: 43px;
           width: 43px;
