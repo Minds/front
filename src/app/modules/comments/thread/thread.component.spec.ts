@@ -64,10 +64,6 @@ describe('CommentsThreadComponent', () => {
             ],
             outputs: ['emitter', 'enabled'],
           }),
-          MockComponent({
-            selector: 'div',
-            inputs: ['emitter', 'enabled'],
-          }),
           CommentsThreadComponent,
           CommentsScrollDirective,
           LoadingSpinnerComponent,

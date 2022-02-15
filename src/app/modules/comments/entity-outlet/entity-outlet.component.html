@@ -80,6 +80,7 @@
         (delete)="delete(i)"
         (saved)="edited(i, $event)"
         (onReply)="reply($event.comment)"
+        (onHeightChange)="onHeightChange.emit($event)"
       ></m-comment>
     </ng-container>
   </div>
@@ -93,5 +94,6 @@
   [entity]="entity"
   [canDelete]="canDelete"
   [compact]="compact"
+  (onHeightChange)="onHeightChange.emit($event)"
 >
 </m-comments__tree>
