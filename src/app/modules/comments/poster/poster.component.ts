@@ -335,7 +335,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   focus(shouldMoveCursorToEnd: boolean = true) {
     const el = this.textArea?.editorControl?.nativeElement;
     if (el) {
-      this.textArea?.editorControl?.nativeElement?.focus({
+      el.focus({
         preventScroll: true,
       });
       if (shouldMoveCursorToEnd) {
