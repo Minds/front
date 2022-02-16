@@ -200,6 +200,7 @@ import { TagSelectorComponent } from './components/tag-selector/tag-selector.com
 
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
+import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 
 const routes: Routes = [
@@ -541,9 +542,12 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService =>
-        new FeaturedContentService(boostedContentService),
-      deps: [FeedsService],
+      useFactory: (
+        boostedContentService: FeedsService,
+        experimentsService: ExperimentsService
+      ): FeaturedContentService =>
+        new FeaturedContentService(boostedContentService, experimentsService),
+      deps: [FeedsService, ExperimentsService],
     },
     {
       provide: RouterHistoryService,
