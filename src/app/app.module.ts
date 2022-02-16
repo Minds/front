@@ -124,11 +124,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SharedModule,
     MessengerV2Module,
     CompassModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: true,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
+      registrationStrategy: 'registerImmediately',
     }),
     //last due to :username route
     AppRoutingModule,
