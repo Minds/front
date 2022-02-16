@@ -14,3 +14,10 @@ npx gulp build.sass --deploy-url="/static/en/"
 npm run build -- --stats-json --outputPath=$BROWSER_PATH
 if [ "$?" != "0" ]; then exit 1; fi
 
+# Build embed
+npm run build:embed -- --stats-json --outputPath=$EMBED_PATH
+if [ "$?" != "0" ]; then exit 1; fi
+
+# Build SSR
+npm run build:ssr -- --outputPath=$SERVER_PATH
+if [ "$?" != "0" ]; then exit 1; fi
