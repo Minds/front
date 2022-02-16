@@ -9,7 +9,7 @@ import { Storage } from '../../services/storage';
 import * as snowplow from '@snowplow/browser-tracker';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { OverridableAttributes } from './experiments.types';
 export { Experiment } from '@growthbook/growthbook';
 
 @Injectable({ providedIn: 'root' })
@@ -29,18 +29,14 @@ export class ExperimentsService implements OnDestroy {
     this.routerEventsSubscription = this.router.events.subscribe(
       navigationState => {
         if (navigationState instanceof NavigationEnd) {
-          this.growthbook?.setAttributes({
-            ...this.growthbook.getAttributes(),
+          this.syncAttributes({
             route: navigationState.urlAfterRedirects,
           });
         }
       }
     );
     this.session.loggedinEmitter.subscribe(isLoggedIn => {
-      this.growthbook?.setAttributes({
-        ...this.growthbook.getAttributes(),
-        loggedIn: isLoggedIn,
-      });
+      this.syncAttributes();
     });
   }
 
@@ -49,7 +45,6 @@ export class ExperimentsService implements OnDestroy {
    */
   initGrowthbook(): void {
     if (!this.growthbook) {
-      // ID field required by SDK even though we are forcing.
       const userId = this.getUserId();
 
       this.growthbook = new GrowthBook({
@@ -64,13 +59,7 @@ export class ExperimentsService implements OnDestroy {
 
     this.growthbook.setFeatures(this.configs.get('growthbook')?.features);
 
-    this.growthbook.setAttributes({
-      ...this.configs.get('growthbook')?.attributes,
-      ...this.growthbook.getAttributes(),
-      id: this.getUserId(),
-      loggedIn: this.session.isLoggedIn(),
-      route: this.router.url,
-    });
+    this.syncAttributes();
   }
 
   /**
@@ -154,6 +143,43 @@ export class ExperimentsService implements OnDestroy {
     }
 
     return cookieValue;
+  }
+
+  /**
+   * Get the users age in seconds based on how long ago their account was created.
+   * @returns { number } - age in seconds.
+   */
+  private getUserAge(): number {
+    if (this.session.getLoggedInUser()) {
+      return Math.floor(
+        Date.now() / 1000 - this.session.getLoggedInUser().time_created
+      );
+    }
+  }
+
+  /**
+   * Syncs state of growthbook attributes object.
+   * @param { OverridableAttributes } attributeOverrides - override attributes to force them to a specific value.
+   * @returns { void }
+   */
+  private syncAttributes(attributeOverrides: OverridableAttributes = {}): void {
+    let attributes = {
+      ...this.configs.get('growthbook')?.attributes, // config set attributes.
+      ...(this.growthbook.getAttributes() ?? {}), // existing attributes.
+      loggedIn: this.session.isLoggedIn(),
+      route: this.router.url,
+      id: this.getUserId(),
+      ...attributeOverrides, // overrides.
+    };
+
+    delete attributes.userAge;
+    const userAge = this.getUserAge();
+
+    if (userAge) {
+      attributes['userAge'] = userAge;
+    }
+
+    this.growthbook.setAttributes(attributes);
   }
 
   ngOnDestroy() {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { filter, first, switchMap, mergeMap, skip, take } from 'rxjs/operators';
 import { FeedsService } from '../../services/feeds.service';
 import { Subscription } from 'rxjs';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 
 @Injectable()
 export class FeaturedContentService {
@@ -10,7 +11,10 @@ export class FeaturedContentService {
   feedLength = 0;
   protected feedSubscription: Subscription;
 
-  constructor(protected feedsService: FeedsService) {
+  constructor(
+    protected feedsService: FeedsService,
+    private experiments: ExperimentsService
+  ) {
     this.onInit();
   }
 
@@ -19,6 +23,10 @@ export class FeaturedContentService {
       this.feedLength = feed.length;
       this.maximumOffset = this.feedLength - 1;
     });
+
+    if (this.experiments.hasVariation('new-user-boosts', true)) {
+      this.feedsService.setParams({ show_boosts_after_x: 604800 }); // 1 week
+    }
 
     this.feedsService
       .setLimit(12)
