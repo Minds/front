@@ -4,8 +4,8 @@
   "theme_color": "#FED12F",
   "background_color": "#fafafa",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "https://feat-pwa.minds.io/",
+  "scope": "./",
+  "start_url": "./",
   "icons": [
     {
       "src": "assets/icons/windows11/SmallTile.scale-100.png",
