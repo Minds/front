@@ -8,10 +8,11 @@ import {
   SkipSelf,
   Self,
   ChangeDetectorRef,
+  ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SlowFadeAnimation } from '../../../../animations';
 import {
   ActivityService,
@@ -77,6 +78,9 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
    */
   isContentReady = false;
   modalHeight: number;
+
+  @ViewChild('commentsScroll')
+  commentsScroll;
 
   constructor(
     @Self() public activityService: ActivityService,
@@ -301,6 +305,21 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
 
   get isQuote(): boolean {
     return this.entity.activity_type === 'quote';
+  }
+
+  /**
+   * when comments height changes we want to move keep scroll position
+   */
+  onCommentsHeightChange({
+    newHeight,
+    oldHeight,
+  }: {
+    newHeight: number;
+    oldHeight: number;
+  }) {
+    if (this.commentsScroll?.nativeElement) {
+      this.commentsScroll.nativeElement.scrollTop += newHeight - oldHeight;
+    }
   }
 
   setModalData(params: MediaModalParams) {

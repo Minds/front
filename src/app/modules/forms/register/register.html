@@ -256,7 +256,7 @@
 
     <m-button
       *ngIf="showBigButton"
-      [disabled]="!this.form.valid|| !this.isSecurityValidationStateSuccess() || inProgress"
+      [disabled]="!this.form.valid || inProgress"
       [saving]="inProgress"
       color="blue"
       (onAction)="register($event)"
