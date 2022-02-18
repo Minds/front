@@ -68,7 +68,7 @@ lint:
     -    echo "Matching branch exists, checking out $CI_BUILD_REF_NAME..." 
     -    git checkout $CI_BUILD_REF_NAME 2>/dev/null
     - fi;
-    - npm i
+    - npm i 
     - echo "Running Cypress"
     - >
       ./node_modules/.bin/cypress run --browser chrome
