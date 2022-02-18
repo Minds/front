@@ -46,6 +46,11 @@
       ></m-composer>
     </ng-container>
 
+    <m-channelRecommendation
+      location="newsfeed"
+      *ngIf="shouldShowChannelRecommendation('emptyState')"
+    ></m-channelRecommendation>
+
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngFor="let preActivity of prepended">
         <m-activity
@@ -92,6 +97,10 @@
           (deleted)="delete(activity)"
           #feedViewChildren
         ></m-activity>
+        <m-channelRecommendation
+          location="newsfeed"
+          *ngIf="shouldShowChannelRecommendation('feed', i)"
+        ></m-channelRecommendation>
       </ng-container>
 
       <infinite-scroll

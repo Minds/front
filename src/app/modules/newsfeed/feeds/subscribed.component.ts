@@ -255,4 +255,31 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       return this.composer.canDeactivate();
     }
   }
+
+  /**
+   * whether channel recommendation should be shown
+   * @param { string } location the location where the widget is to be shown
+   * @param { number } index the index of the feed
+   * @returns { boolean }
+   */
+  public shouldShowChannelRecommendation(location: string, index?: number) {
+    // if (!this.experiments.hasVariation('channel-recommendations', true)) {
+    //   return false;
+    // }
+
+    switch (location) {
+      case 'emptyState':
+        return this.feedsService.feedLength === 0;
+      case 'feed':
+      default:
+        // if the newsfeed length was less than equal to 3,
+        // show the widget after last item
+        if (this.feedsService.feedLength <= 3) {
+          return this.feedsService.feedLength - 1;
+        }
+
+        // show after the 3rd post
+        return index === 2;
+    }
+  }
 }

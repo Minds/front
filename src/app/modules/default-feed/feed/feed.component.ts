@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 
 /**
@@ -12,6 +12,13 @@ import { FeedsService } from '../../../common/services/feeds.service';
   styleUrls: ['./feed.component.ng.scss'],
 })
 export class DefaultFeedComponent implements OnInit {
+  /**
+   * the location in which this feed appears. Used for
+   * recommendations widget
+   */
+  @Input()
+  location: string;
+
   constructor(public feedsService: FeedsService) {}
 
   public ngOnInit(): void {
@@ -51,5 +58,29 @@ export class DefaultFeedComponent implements OnInit {
     } catch (e) {
       console.error('DefaultFeedComponent', e);
     }
+  }
+
+  /**
+   * whether channel recommendation should be shown
+   * @param { number } index the index of the feed
+   * @returns { boolean }
+   */
+  shouldShowChannelRecommendation(index: number) {
+    if (!this.location) {
+      return false;
+    }
+
+    // if (!this.experiments.hasVariation('channel-recommendations', true)) {
+    //   return false;
+    // }
+
+    if (this.feedsService.feedLength <= 3) {
+      // if the newsfeed length was less than equal to 3,
+      // show the widget after last item
+      return this.feedsService.feedLength - 1;
+    }
+
+    // show after the 3rd post
+    return index === 2;
   }
 }
