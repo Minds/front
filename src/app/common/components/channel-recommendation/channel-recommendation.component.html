@@ -9,7 +9,7 @@
       >See more</a
     >
   </header>
-  <ul *ngIf="(recommendations$ | async).length; else loadingOrError">
+  <ul *ngIf="(recommendations$ | async).length">
     <li *ngFor="let channel of recommendations$ | async">
       <section>
         <a [routerLink]="['/', channel.username]" class="avatarContainer">
@@ -42,10 +42,3 @@
     </li>
   </ul>
 </article>
-
-<ng-template #loadingOrError>
-  <m-loadingSpinner
-    [inProgress]="channel(recommendations$ | async).loading$ | async"
-  ></m-loadingSpinner>
-  <!-- TODO: need a common error component with retry button here -->
-</ng-template>
