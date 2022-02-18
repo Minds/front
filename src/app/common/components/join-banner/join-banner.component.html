@@ -4,10 +4,7 @@
   >
   <div class="m-joinBanner__container">
     <div class="m-joinBanner__container--left">
-      <img
-        class="m-joinBanner__logo"
-        [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
-      />
+      <img class="m-joinBanner__logo" [src]="logoUrl | async" />
     </div>
     <div class="m-joinBanner__container--center">
       <span

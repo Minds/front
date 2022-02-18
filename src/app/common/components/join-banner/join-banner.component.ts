@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { ConfigsService } from '../../services/configs.service';
+import { ThemeService } from '../../services/theme.service';
 
 /**
  * Join banner, full width and fixed to bottom of page.
@@ -29,6 +32,7 @@ export class JoinBannerComponent implements OnInit {
     private guestModeExperiment: GuestModeExperimentService,
     private router: Router,
     private authRedirectService: AuthRedirectService,
+    private themes: ThemeService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -36,6 +40,20 @@ export class JoinBannerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dismissed = !!this.sessionStorage.get('dismissed_join_banner');
+  }
+
+  /**
+   * Gets logo URL dependent on theme.
+   * @returns { Observable<string> } Observable logo url.
+   */
+  get logoUrl(): Observable<string> {
+    return this.themes.isDark$.pipe(
+      map(isDark => {
+        return this.cdnAssetsUrl + isDark
+          ? '/assets/logos/logo-dark-mode.svg'
+          : '/assets/logos/logo-light-mode.svg';
+      })
+    );
   }
 
   /**
