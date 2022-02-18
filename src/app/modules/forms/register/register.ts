@@ -90,7 +90,7 @@ export class RegisterForm {
           [
             Validators.required,
             PASSWORD_VALIDATOR,
-            this.passwordSecurityValidator.bind(this),
+            //this.passwordSecurityValidator.bind(this),
           ],
         ],
         password2: ['', [Validators.required]],
@@ -124,17 +124,15 @@ export class RegisterForm {
    * @param { AbstractControl } control - specifies the form control - unused.
    * @returns { ValidationErrors | null } - returns validation errors in the event the state is failed.
    */
-  private passwordSecurityValidator(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    return this.securityValidationState === SecurityValidationState.FAILED
-      ? { passwordSecurityFailed: true }
-      : null;
-  }
+  // private passwordSecurityValidator(
+  //   control: AbstractControl
+  // ): ValidationErrors | null {
+  //   return this.securityValidationState === SecurityValidationState.FAILED
+  //     ? { passwordSecurityFailed: true }
+  //     : null;
+  // }
 
   register(e) {
-    console.log(e);
-
     e.preventDefault();
     this.errorMessage = '';
     if (!this.form.value.tos) {
@@ -204,6 +202,7 @@ export class RegisterForm {
     if (!isMobileOrTablet()) {
       this.popover.hide();
     }
+    console.log(this.form);
   }
 
   /**
@@ -219,9 +218,9 @@ export class RegisterForm {
    * Whether security validation state is successful.
    * @returns { boolean } true if security validation state is successful.
    */
-  public isSecurityValidationStateSuccess(): boolean {
-    return this.securityValidationState === SecurityValidationState.SUCCESS;
-  }
+  // public isSecurityValidationStateSuccess(): boolean {
+  //   return this.securityValidationState === SecurityValidationState.SUCCESS;
+  // }
 
   get username() {
     return this.form.get('username');

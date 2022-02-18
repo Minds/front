@@ -52,6 +52,10 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   @Input() fixedHeight = false;
   @Input() showOnlyPoster = true;
   @Input() compact = false;
+  @Output() onHeightChange: EventEmitter<{
+    oldHeight: number;
+    newHeight: number;
+  }> = new EventEmitter();
   optimisticList: Array<any> = [];
 
   constructor(
