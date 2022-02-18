@@ -45,7 +45,8 @@
 
 <ng-template #loadingOrError>
   <m-loadingSpinner
-    [inProgress]="channel(recommendations$ | async).loading$ | async"
+    [inProgress]="channelRecommendations.loading$ | async"
   ></m-loadingSpinner>
   <!-- TODO: need a common error component with retry button here -->
+  <!-- <span *ngIf="channelRecommendations.error$">Something went wrong</span> -->
 </ng-template>
