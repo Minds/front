@@ -263,6 +263,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * @returns { boolean }
    */
   public shouldShowChannelRecommendation(location: string, index?: number) {
+    return false;
     // if (!this.experiments.hasVariation('channel-recommendations', true)) {
     //   return false;
     // }

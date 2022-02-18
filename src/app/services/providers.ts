@@ -8,6 +8,7 @@ import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
 import { Client, Upload } from './api';
 import { Storage } from './storage';
+import { StorageV2 } from './storage/v2';
 import { SignupModalService } from '../modules/modals/signup/service';
 import { CacheService } from './cache';
 import { TranslationService } from './translation';
@@ -108,6 +109,10 @@ export const MINDS_PROVIDERS: any[] = [
     provide: Storage,
     useFactory: Storage._,
     deps: [PLATFORM_ID],
+  },
+  {
+    provide: StorageV2,
+    useClass: StorageV2,
   },
   {
     provide: SessionsStorageService,
