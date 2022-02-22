@@ -342,7 +342,7 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    const contentMigrationMenu = this.secondaryMenus.other[3];
+    const contentMigrationMenu = this.secondaryMenus.other[2];
 
     // Conditionally show feature flagged items
     if (this.hasYoutubeFeature) {
