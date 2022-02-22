@@ -1,4 +1,8 @@
-<div class="m-polygon__tokenConverter" [formGroup]="form">
+<div
+  class="m-polygon__tokenConverter"
+  [formGroup]="form"
+  *ngIf="!(service.isLoading$ | async) && !(service.hasError$ | async)"
+>
   <span class="m-polygon__boxTitle">From</span>
   <div class="m-polygon__inputAmountContainer">
     <div class="m-polygon__row">
@@ -64,4 +68,34 @@
       Transfer
     </m-button>
   </div>
+</div>
+
+<div class="m-polygon__tokenConverter" *ngIf="service.isLoading$ | async">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  <span class="m-polygon-swapTitle">Swap in progress</span>
+  <span
+    class="m-polygon-swapSubtitle"
+    *ngIf="fromNetwork.networkName !== MAINNET_NETWORK.networkName"
+    >You need to confirm one more step to complete the deposit
+    transaction...</span
+  >
+  <span
+    class="m-polygon-swapSubtitle"
+    *ngIf="fromNetwork.networkName === MAINNET_NETWORK.networkName"
+    >Please wait while we get your funds transferred...</span
+  >
+</div>
+
+<div class="m-polygon__tokenConverter" *ngIf="service.hasError$ | async">
+  <m-icon class="m-polygon__error" iconId="error_outline"></m-icon>
+  <span class="m-polygon-errorTitle ">Something went wrong</span>
+  <span class="m-polygon-swapSubtitle ">Please try again</span>
+  <m-button
+    class="m-polygon-errorButton"
+    color="primary"
+    size="small"
+    (onAction)="retry()"
+  >
+    Retry
+  </m-button>
 </div>

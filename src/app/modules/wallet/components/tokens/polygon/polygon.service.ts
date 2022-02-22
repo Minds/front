@@ -76,6 +76,10 @@ export class PolygonService {
   public history$ = new BehaviorSubject<HistoryRecord[]>([]);
   public historyLoading$ = new BehaviorSubject(false);
 
+  public isLoading$ = new BehaviorSubject(false);
+
+  public hasError$ = new BehaviorSubject(false);
+
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
@@ -209,23 +213,32 @@ export class PolygonService {
       this.toast.warn('You must provide an amount of tokens');
       return;
     }
-
+    this.isLoading$.next(true);
     const signer = this.web3Wallet.getSigner();
     const userAddress = await signer.getAddress();
     const posClient = await this.getPOSClientRoot();
 
     const depositTx = await posClient
       .erc20(MIND_TOKEN_ADDRESS, true)
-      .deposit(amount.toString(), userAddress);
-    const receipt = await depositTx.getReceipt();
-    const record: DepositRecord = {
-      type: RecordType.DEPOSIT,
-      status: RecordStatus.SUCCESS,
-      amount: amount.toString(),
-      txBlock: receipt.blockNumber,
-      txHash: receipt.transactionHash,
-    };
-    this.addToHistory(record);
+      .deposit(amount.toString(), userAddress)
+      .then(async tx => {
+        const receipt = await tx.getReceipt();
+        const record: DepositRecord = {
+          type: RecordType.DEPOSIT,
+          status: RecordStatus.SUCCESS,
+          amount: amount.toString(),
+          txBlock: receipt.blockNumber,
+          txHash: receipt.transactionHash,
+        };
+        this.addToHistory(record);
+        this.isLoading$.next(false);
+      })
+      .catch(e => {
+        if (e.code === 4001) {
+          this.hasError$.next(true);
+          this.isLoading$.next(false);
+        }
+      });
   }
 
   private addToHistory(record: HistoryRecord) {
@@ -249,18 +262,29 @@ export class PolygonService {
       MIND_CHILD_TOKEN_ADDRESS,
       false
     );
-    const withdrawTx = await erc20ChildToken.withdrawStart(amount.toString());
-    const withdrawReceipt = await withdrawTx.getReceipt();
+    this.isLoading$.next(true);
+    const withdrawTx = await erc20ChildToken
+      .withdrawStart(amount.toString())
+      .then(async tx => {
+        const withdrawReceipt = await tx.getReceipt();
 
-    console.log('withdrawReceipt', withdrawReceipt);
+        console.log('withdrawReceipt', withdrawReceipt);
 
-    const record: WithdrawRecord = {
-      type: RecordType.WITHDRAW,
-      status: RecordStatus.PENDING,
-      amount: amount.toString(),
-      txBurn: withdrawReceipt.transactionHash,
-    };
-    this.addToHistory(record);
+        const record: WithdrawRecord = {
+          type: RecordType.WITHDRAW,
+          status: RecordStatus.PENDING,
+          amount: amount.toString(),
+          txBurn: withdrawReceipt.transactionHash,
+        };
+        this.addToHistory(record);
+        this.isLoading$.next(false);
+      })
+      .catch(e => {
+        if (e.code === 4001) {
+          this.hasError$.next(true);
+          this.isLoading$.next(false);
+        }
+      });
   }
 
   public async exit(burnTxHash: string) {

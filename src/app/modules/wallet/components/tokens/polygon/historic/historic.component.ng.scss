@@ -131,6 +131,15 @@
       &.m-polygon__error {
         color: red !important;
       }
+      &.m-polygon__pending {
+        color: orangered !important;
+        ::ng-deep svg {
+          width: 24px !important;
+          height: 24px !important;
+          margin-left: 0px !important;
+          margin-top: 0px !important;
+        }
+      }
     }
 
     .m-polygon__boxSubTitle {
@@ -144,7 +153,11 @@
     }
 
     .m-polygon__minds-logo {
-      width: 15px;
+      padding: 8px;
+      background: white;
+      border-radius: 50%;
+      width: 14px;
+      height: 16px;
     }
 
     .m-polygon__price {
