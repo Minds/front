@@ -19,7 +19,6 @@ import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-m
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
-import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
@@ -27,13 +26,10 @@ import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
-import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -101,7 +97,6 @@ export class SidebarNavigationComponent
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService,
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService
   ) {
@@ -295,7 +290,7 @@ export class SidebarNavigationComponent
    * @returns { boolean } true if link should be '/'.
    */
   public shouldBeDiscoveryHomepage(): boolean {
-    return this.guestModeExperiment.isActive() && !this.user; // logged out
+    return !this.user; // logged out
   }
 
   /**
