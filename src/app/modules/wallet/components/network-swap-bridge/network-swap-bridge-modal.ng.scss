@@ -4,19 +4,74 @@
   display: contents;
 
   .m-modalV2__inner {
-    // max-width: 750px;
-    // display: flex;
-    // z-index: inherit;
     padding: 40px;
+    max-width: 710px;
+    min-height: 510px;
+
+    @media (min-width: 840px) {
+      .mdl-grid {
+        padding: 0px;
+      }
+    }
 
     .m-networkSwapBridge__header {
       .m-networkSwapBridge__title {
-        font-size: 22px;
-        font-weight: 700;
-        margin: 0 0 20px 0;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        margin: 0 0 5px 0;
 
         @include m-theme() {
           color: themed($m-textColor--primary);
+        }
+      }
+      .m-networkSwapBridge__subtitle {
+        color: #aeb0b8;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 39px;
+        box-sizing: border-box;
+        display: flex;
+      }
+      .m-networkSwapBridge__container {
+        cursor: default;
+        border: 1px solid #404a4e;
+        padding: 10px 24px;
+        height: 124px;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+        border-radius: 3px;
+        align-items: center;
+
+        img {
+          width: 52px;
+          height: 50px;
+          margin-right: 20px;
+        }
+
+        .m-networkSwapBridge__container--title {
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 28px;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+        .m-networkSwapBridge__container--subtitle {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 20px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        .m-networkSwapBridge__container--arrow {
+          margin-left: 24px;
+
+          i {
+            cursor: pointer;
+          }
         }
       }
       .m-networkSwapBridge__tabs {

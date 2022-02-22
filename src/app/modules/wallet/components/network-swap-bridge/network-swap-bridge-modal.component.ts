@@ -8,6 +8,8 @@ import {
   NetworkSiteName,
   NetworkSwitchService,
 } from '../../../../common/services/network-switch-service';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 @Component({
   selector: 'm-networkSwapBridge',
@@ -19,7 +21,7 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
   // whether load is in progress.
   public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
-  >(true);
+  >(false);
 
   public readonly selectedNetworkSiteName$: BehaviorSubject<
     NetworkSiteName
@@ -28,12 +30,17 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
   // networks that can be swapped between.
   public swappableNetworks: Network[] = [];
 
+  readonly cdnAssetsUrl: string;
+
   constructor(
     private networkSwitcher: NetworkSwitchService,
     private web3Wallet: Web3WalletService,
-    private toast: FormToastService
+    private toast: FormToastService,
+    configs: ConfigsService,
+    private features: FeaturesService
   ) {
     super();
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   /**
@@ -62,7 +69,6 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
 
   async ngOnInit(): Promise<void> {
     this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
-    await this.setSelectedToActiveNetwork();
   }
 
   /**
@@ -106,5 +112,13 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
     }
     // this.selectedNetworkSiteName$.next('SKALE');
     this.inProgress$.next(false);
+  }
+
+  hasSkale() {
+    return this.features.has('skale');
+  }
+
+  hasPolygon() {
+    return this.features.has('polygon');
   }
 }
