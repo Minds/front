@@ -32,6 +32,8 @@ test:
     - npm i
     - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  except:
+    - schedules
 
 lint:
   stage: test and build
@@ -40,6 +42,8 @@ lint:
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
+  except:
+    - schedules
 
 ############
 # QA Stage #
@@ -97,13 +101,6 @@ qa:sandbox:
     - feat/1732-block-refactor
   <<: *cypress_tests
 
-qa:nightly:
-  parallel: 2
-  allow_failure: false
-  only:
-    - schedules
-  <<: *cypress_tests
-
 # qa:production:
 #   parallel: 1
 #   allow_failure: true
@@ -121,6 +118,8 @@ qa:manual:
       - master
       - production
       - test/gitlab-ci
+  except:
+    - schedules
   allow_failure: true
 
 ###############
@@ -146,6 +145,7 @@ build:review:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+      - schedules
   tags:
     - angular
 
@@ -170,6 +170,8 @@ build:production:bundles:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    - schedules
   tags:
     - angular
 
@@ -205,6 +207,7 @@ prepare:review:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+      - schedules
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -216,6 +219,7 @@ prepare:review:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+      - schedules
   dependencies:
     - build:review
 
@@ -236,6 +240,8 @@ prepare:production:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    - schedules
   dependencies:
     - build:production:bundles
 
@@ -249,6 +255,8 @@ prepare:production:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    - schedules
   dependencies:
     - build:production:bundles
 
@@ -273,6 +281,7 @@ prepare:production:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+      - schedules
 
 review:start:
   stage: review
@@ -305,11 +314,14 @@ review:start:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+      - schedules
 
 review:stop:
   <<: *cleanup_review
   stage: review
   when: manual
+  except:
+    - schedules
 
 ################
 # Deploy Stage #
@@ -348,6 +360,8 @@ staging:fpm:
   only:
     refs:
       - master
+  except:
+    - schedules
 
 deploy:canary:
   <<: *deploy
@@ -362,6 +376,8 @@ deploy:canary:
   only:
     refs:
       - master
+  except:
+    - schedules
 
 deploy:production:
   <<: *deploy
@@ -376,6 +392,8 @@ deploy:production:
     refs:
       - master
       - test/gitlab-ci
+  except:
+    - schedules
 
 #################
 # Cleanup stage #
@@ -388,3 +406,4 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+      - schedules
