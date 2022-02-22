@@ -68,6 +68,7 @@
 
       <m-walletTokens__dropdownMenu></m-walletTokens__dropdownMenu>
     </div>
+
     <div
       class="m-wallet__balance__rightContainer"
       *ngIf="shouldShowNetworkSwitcher()"
@@ -75,6 +76,8 @@
       <m-walletNetworkSwitcher></m-walletNetworkSwitcher>
     </div>
   </ng-container>
+
+  <m-walletTokens__dropdownMenu></m-walletTokens__dropdownMenu>
 
   <ng-template #walletV2>
     <div class="m-walletBalance--tokens__equationWrapper">

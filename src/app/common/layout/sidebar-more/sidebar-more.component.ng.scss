@@ -1,0 +1,117 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  .m-sidebarMore {
+    width: 220px;
+
+    @media screen and (max-width: $max-mobile) {
+      width: 316px;
+      max-width: 79vw;
+    }
+
+    ul.m-sidebarMore__dropdown {
+      list-style: none;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+        color: themed($m-textColor--primary);
+        box-shadow: none;
+      }
+
+      li.m-sidebarMoreDropdown__item {
+        padding: 0;
+        font-size: 15px;
+        line-height: 20px;
+        border: 0 !important;
+
+        &:first-child {
+          margin-top: 10px;
+        }
+
+        &:not(.m-sidebarMoreDropdown__footer) {
+          cursor: pointer;
+
+          > * {
+            padding: 10px 20px;
+            @include m-theme() {
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+
+        &:not(.m-sidebarMoreDropdown__spacer):not(.m-sidebarMoreDropdown__footer):hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--secondary);
+          }
+        }
+
+        > a {
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+          ::ng-deep m-icon,
+          i {
+            margin-right: 15px;
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+              fill: themed($m-textColor--secondary);
+            }
+          }
+
+          &:hover {
+            ::ng-deep m-icon,
+            i {
+              @include m-theme() {
+                color: themed($m-textColor--primary);
+                fill: themed($m-textColor--primary);
+              }
+            }
+          }
+        }
+
+        &.m-sidebarMoreDropdown__spacer {
+          height: 1px;
+          margin: 10px 0;
+          padding: 0;
+
+          @include m-theme() {
+            background-color: themed($m-borderColor--primary);
+          }
+        }
+
+        &.m-sidebarMoreDropdown__footer {
+          flex-wrap: wrap;
+          padding: 5px 20px 15px;
+
+          a {
+            cursor: pointer;
+          }
+          span {
+            cursor: default;
+            margin: 0 1px;
+          }
+
+          a,
+          span {
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 20px;
+            width: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+
+            @include m-theme() {
+              color: themed($m-textColor--secondary) !important;
+            }
+            &:hover {
+              @include m-theme() {
+                color: themed($m-textColor--primary) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

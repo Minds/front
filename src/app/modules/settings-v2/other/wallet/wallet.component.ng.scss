@@ -1,0 +1,35 @@
+@import 'defaults.scss';
+
+:host {
+  .m-settingsV2Wallet__form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    m-formInput__checkbox {
+      margin-top: 40px;
+    }
+
+    .m-settingsV2Wallet__title {
+      font-weight: 500;
+      font-size: 15px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-settingsV2Wallet__description {
+      margin: 20px 0 40px 0;
+      font-weight: 400;
+      font-size: 15px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    m-button {
+      align-self: end;
+    }
+  }
+}

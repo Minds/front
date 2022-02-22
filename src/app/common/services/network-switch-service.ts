@@ -7,6 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 import { ethers } from 'ethers';
 import { isPlatformBrowser } from '@angular/common';
 import { Provider } from '@ethersproject/abstract-provider';
+import {
+  Abi,
+  ChildAbi,
+} from '../../modules/wallet/components/tokens/polygon/constants';
 
 // Interface for adding new Ethereum chains
 export interface AddEthereumChainParameter {
@@ -73,23 +77,23 @@ export class NetworkSwitchService implements OnDestroy {
       swappable: false,
     },
     // eth testnet
-    goerli: {
-      id: '0x5',
-      siteName: 'Polygon',
-      networkName: 'Goerli',
-      description: 'Goerli Testnet.',
-      logoPath: 'assets/ext/ethereum.png',
-      swappable: true,
-    },
-    // polygon testnet
-    mumbai: {
-      id: '0x13881',
-      siteName: 'Mumbai',
-      networkName: 'Mumbai',
-      description: "Polygon's testnet.",
-      logoPath: 'assets/ext/polygon.png',
-      swappable: false,
-    },
+    // goerli: {
+    //   id: '0x5',
+    //   siteName: 'Polygon',
+    //   networkName: 'Goerli',
+    //   description: 'Goerli Testnet.',
+    //   logoPath: 'assets/ext/ethereum.png',
+    //   swappable: true,
+    // },
+    // // polygon testnet
+    // mumbai: {
+    //   id: '0x13881',
+    //   siteName: 'Mumbai',
+    //   networkName: 'Mumbai',
+    //   description: "Polygon's testnet.",
+    //   logoPath: 'assets/ext/polygon.png',
+    //   swappable: false,
+    // },
   };
 
   // provider with the sole responsibility of listening to network changes.
