@@ -1,6 +1,7 @@
+import { ScrollRestorationService } from './scroll-restoration.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, ViewportScroller } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
 import { EmbedServiceV2 } from './embedV2.service';
 
@@ -222,6 +223,11 @@ export const MINDS_PROVIDERS: any[] = [
     provide: CompassHookService,
     useFactory: CompassHookService._,
     deps: [Session, CookieService, CompassService],
+  },
+  {
+    provide: ScrollRestorationService,
+    useFactory: router => new ScrollRestorationService(router),
+    deps: [Router],
   },
   ThemeService,
   AuthService,

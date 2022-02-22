@@ -46,9 +46,9 @@
       ></m-composer>
     </ng-container>
 
-    <m-channelRecommendation
+    <!-- <m-channelRecommendation
       location="newsfeed"
-    ></m-channelRecommendation>
+    ></m-channelRecommendation> -->
 
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngFor="let preActivity of prepended">
@@ -61,7 +61,7 @@
           (deleted)="delete(preActivity)"
         ></m-activity>
       </ng-container>
-
+      <!-- 
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *mIfFeature="'boost-rotator'">
           <ng-container *mIfBrowser>
@@ -71,12 +71,12 @@
             ></m-newsfeed--boost-rotator>
           </ng-container>
         </ng-container>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container
         *ngFor="let activity$ of feedsService.feed | async; let i = index"
       >
-        <m-featured-content
+        <!-- <m-featured-content
           *ngIf="(i > 0 && i % 5 === 0) || i === 2"
           [slot]="i + 1"
           [displayOptions]="{
@@ -84,7 +84,7 @@
             isFeed: true
           }"
           #feedViewChildren
-        ></m-featured-content>
+        ></m-featured-content> -->
         <m-activity
           *ngIf="activity$ | async as activity"
           [entity]="activity"
@@ -96,10 +96,10 @@
           (deleted)="delete(activity)"
           #feedViewChildren
         ></m-activity>
-        <m-channelRecommendation
+        <!-- <m-channelRecommendation
           location="newsfeed"
           *ngIf="shouldShowChannelRecommendation('feed', i)"
-        ></m-channelRecommendation>
+        ></m-channelRecommendation> -->
       </ng-container>
 
       <infinite-scroll

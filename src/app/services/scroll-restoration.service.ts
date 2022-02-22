@@ -16,9 +16,8 @@ export class ScrollRestorationService {
   private offsetForRoute: Map<string, number> = new Map();
 
   constructor(
-    private router: Router
-  ) // private viewportScroller: ViewportScroller
-  {}
+    private router: Router // private viewportScroller: ViewportScroller
+  ) {}
 
   listen(): this {
     this._routerListener = this.router.events

@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Injectable, OnDestroy } from '@angular/core';
 
 import { Client } from '../../services/api/client';
@@ -8,6 +9,8 @@ import { BlockListService } from './block-list.service';
 
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { switchMap, map, tap, first } from 'rxjs/operators';
+import { ApiResourceService } from '../api/api-resource.service';
+import { StorageV2 } from '../../services/storage/v2';
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -36,17 +39,19 @@ export class FeedsService implements OnDestroy {
    * feed length
    */
   feedLength: number;
+  feedResource: ApiResourceService<any>;
 
   constructor(
     protected client: Client,
     protected session: Session,
     protected entitiesService: EntitiesService,
-    protected blockListService: BlockListService
+    protected blockListService: BlockListService,
+    protected storage: StorageV2,
+    protected route: ActivatedRoute
   ) {
     this.pageSize = this.offset.pipe(
       map(offset => this.limit.getValue() + offset)
     );
-
     this.feed = this.rawFeed.pipe(
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
@@ -146,6 +151,10 @@ export class FeedsService implements OnDestroy {
    */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
+    // TODO: don't always do this
+    if (this.feedResource) {
+      this.persistOffset(offset);
+    }
     return this;
   }
 
@@ -182,7 +191,12 @@ export class FeedsService implements OnDestroy {
   /**
    * Fetches the data.
    */
-  fetch(replace: boolean = false): Promise<any> {
+  async fetch(replace: boolean = false): Promise<any> {
+    // TODO: rehydrate only if you were told to do so
+    if (this.feedResource) {
+      this.rehydrateOffset();
+    }
+
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -193,52 +207,68 @@ export class FeedsService implements OnDestroy {
       ? this.pagingToken
       : this.fromTimestamp;
 
-    return this.client
-      .get(this.endpoint, {
-        ...this.params,
-        ...{
+    let response;
+
+    try {
+      if (this.feedResource) {
+        response = await this.feedResource.load({
+          ...this.params,
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
           export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: fromTimestamp,
-        },
-      })
-      .then((response: any) => {
-        if (this.endpoint !== endpoint) {
-          // Avoid race conditions if endpoint changes
-          return;
-        }
+        });
+      } else {
+        response = await this.client.get(this.endpoint, {
+          ...this.params,
+          ...{
+            limit: 150, // Over 12 scrolls
+            as_activities: this.castToActivities ? 1 : 0,
+            export_user_counts: this.exportUserCounts ? 1 : 0,
+            from_timestamp: fromTimestamp,
+          },
+        });
+      }
 
-        if (!this.offset.getValue()) {
-          this.inProgress.next(false);
-        }
+      if (this.endpoint !== endpoint) {
+        // Avoid race conditions if endpoint changes
+        return;
+      }
 
-        if (!response.entities && response.activity) {
-          response.entities = response.activity;
-        } else if (!response.entities && response.users) {
-          response.entities = response.users;
-        }
+      if (!this.offset.getValue()) {
+        this.inProgress.next(false);
+      }
 
-        if (response.entities?.length) {
-          this.fallbackAt = response['fallback_at'];
-          this.fallbackAtIndex.next(null);
-          if (replace) {
-            this.rawFeed.next(response.entities);
-          } else {
-            this.rawFeed.next(
-              this.rawFeed.getValue().concat(response.entities)
-            );
-          }
-          this.pagingToken = response['load-next'];
+      if (!response.entities && response.activity) {
+        response.entities = response.activity;
+      } else if (!response.entities && response.users) {
+        response.entities = response.users;
+      }
 
-          if (!this.pagingToken) {
-            this.canFetchMore = false;
-          }
+      if (response.entities?.length) {
+        this.fallbackAt = response['fallback_at'];
+        this.fallbackAtIndex.next(null);
+        console.log('SETTING RAW FEED');
+
+        if (replace) {
+          this.rawFeed.next(response.entities);
         } else {
+          this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
+        }
+
+        this.pagingToken = response['load-next'];
+
+        if (!this.pagingToken) {
           this.canFetchMore = false;
         }
-      })
-      .catch(e => console.log(e));
+
+        return response;
+      } else {
+        this.canFetchMore = false;
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**
@@ -294,12 +324,53 @@ export class FeedsService implements OnDestroy {
 
   async destroy() {}
 
+  setResource(resource: ApiResourceService<any>) {
+    this.feedResource = resource;
+    return this;
+  }
+
+  /**
+   * persists the offset to memory
+   * @returns { void }
+   */
+  persistOffset(offset: number) {
+    this.storage.memory.setFeedOffset(
+      this.feedResource.options.url,
+      window.location.pathname,
+      offset
+    );
+  }
+
+  /**
+   * rehydrates the offset from memory
+   * @returns { void }
+   */
+  rehydrateOffset() {
+    const inMemoryFeedOffset = this.storage.memory.getFeedOffset(
+      this.feedResource.options.url,
+      window.location.pathname
+    );
+
+    if (inMemoryFeedOffset) {
+      this.offset.next(inMemoryFeedOffset);
+    }
+  }
+
   static _(
     client: Client,
     session: Session,
     entitiesService: EntitiesService,
-    blockListService: BlockListService
+    blockListService: BlockListService,
+    storage: StorageV2,
+    route: ActivatedRoute
   ) {
-    return new FeedsService(client, session, entitiesService, blockListService);
+    return new FeedsService(
+      client,
+      session,
+      entitiesService,
+      blockListService,
+      storage,
+      route
+    );
   }
 }

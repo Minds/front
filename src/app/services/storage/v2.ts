@@ -2,16 +2,30 @@ import { MindsUser } from './../../interfaces/entities';
 import { Session } from './../session';
 import { Injectable } from '@angular/core';
 import { UserStorageService } from './user/user-storage.service';
+import { SessionStorageService } from './session/session-storage.service';
+import { MemoryStorageService } from './memory/memory-storage.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StorageV2 {
-  // memory = new MemoryStorageService();
-  // session = new SessionStorageService();
+  /**
+   * global in-browser memory
+   */
+  memory = new MemoryStorageService();
+  /**
+   * session storage
+   */
+  session = new SessionStorageService();
+  /**
+   * Storage specific to the app
+   */
   // app = new AppStorageService();
+  /**
+   * storage specific for a user
+   */
   user: UserStorageService;
 
-  constructor(private session: Session) {
-    const user = this.session.getLoggedInUser() as MindsUser;
+  constructor(session: Session) {
+    const user = session.getLoggedInUser() as MindsUser;
 
     if (user) {
       this.user = new UserStorageService(user);

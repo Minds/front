@@ -1,3 +1,5 @@
+import { ApiService } from './../../../common/api/api.service';
+import { StorageV2 } from './../../../services/storage/v2';
 import {
   Component,
   Inject,
@@ -10,9 +12,11 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  Injectable,
+  AfterViewInit,
 } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 import {
   ActivatedRoute,
@@ -34,18 +38,32 @@ import { FeedsUpdateService } from '../../../common/services/feeds-update.servic
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { ApiResourceService } from '../../../common/api/api-resource.service';
+import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
+
+@Injectable()
+export class SubscribedFeedResource extends ApiResourceService<any> {
+  constructor(protected api: ApiService, protected storage: StorageV2) {
+    super({
+      url: 'api/v2/feeds/subscribed/activities',
+      cachePolicy: ApiResourceService.CachePolicy.cacheOnly,
+      cacheStorage: ApiResourceService.CacheStorage.Memory,
+      params: {
+        limit: 12,
+      },
+    });
+  }
+}
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [FeedsService],
+  providers: [FeedsService, SubscribedFeedResource],
   templateUrl: 'subscribed.component.html',
 })
 export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
-  feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
   prepended: Array<any> = [];
   offset: string | number = '';
   showBoostRotator: boolean = true;
-  inProgress: boolean = false;
   moreData: boolean = true;
   algorithm: string = 'latest';
 
@@ -70,6 +88,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * Listening for new posts.
    */
   private feedsUpdatedSubscription: Subscription;
+  /**
+   * whether we've restored the scroll position
+   */
+  isScrollRestored: boolean;
 
   @ViewChild('composer') private composer: ComposerComponent;
   @ViewChildren('feedViewChildren', { read: ElementRef })
@@ -90,9 +112,26 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public feedsUpdate: FeedsUpdateService,
     private toast: FormToastService,
     private experiments: ExperimentsService,
+    private subscribedFeed: SubscribedFeedResource,
+    private scrollRestoration: ScrollRestorationService,
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    this.feedsService.setResource(this.subscribedFeed);
+  }
+
+  ngAfterViewInit() {
+    // TODO: this is not smooth enough. just for demo
+    this.feedViewChildren.changes.subscribe(feedChanges => {
+      if (feedChanges.length && !this.isScrollRestored) {
+        window.scrollTo({
+          top: this.scrollRestoration.getOffsetForRoute(this.router.url),
+        });
+
+        this.isScrollRestored = true;
+      }
+    });
+  }
 
   ngOnInit() {
     this.routerSubscription = this.router.events
@@ -192,8 +231,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       this.feedsService.clear(true);
     }
 
-    this.inProgress = true;
-
     let queryParams = {
       algorithm: this.algorithm,
     };
@@ -203,11 +240,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     }
 
     try {
-      this.feedsService
-        .setEndpoint(`api/v2/feeds/subscribed/activities`)
-        .setParams(queryParams)
-        .setLimit(12)
-        .fetch(refresh);
+      this.feedsService.fetch(refresh);
     } catch (e) {
       console.error('SortedComponent', e);
     }

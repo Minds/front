@@ -4,10 +4,33 @@ import { Injectable } from '@angular/core';
 import { StorageV2 } from '../../services/storage/v2';
 
 enum CachePolicy {
+  /**
+   * fetch from remote and cache the result. return cache only
+   * when remote was unavailable
+   */
   fetchAndCache = 'fetchAndCache',
+  /**
+   * completely disregard cache
+   */
   fetchOnly = 'fetchOnly',
+  /**
+   * return cache if available, then fetch and update result
+   */
   cacheThenFetch = 'cacheThenFetch',
+  /**
+   * if cache was available, return it and don't fetch anything else.
+   * if cache wasn't available, fetch and update result
+   */
   cacheOnly = 'cacheOnly',
+}
+
+enum CacheStorage {
+  /** indexedDb user storage */
+  User = 'user',
+  /** in memory storage */
+  Memory = 'memory',
+  /** session storage */
+  Session = 'session',
 }
 
 enum UpdatePolicy {
@@ -36,6 +59,11 @@ type ApiResourceOptions = {
    * TODO
    */
   cachePolicy?: CachePolicy;
+  /**
+   * where to store the cache.
+   * the keys of this enum are the attributes of StorageV2 service
+   */
+  cacheStorage?: CacheStorage;
 };
 
 /**
@@ -54,6 +82,7 @@ export class ApiResourceService<T> {
   public call;
 
   static CachePolicy = CachePolicy;
+  static CacheStorage = CacheStorage;
   static UpdatePolicy = UpdatePolicy;
 
   constructor(private _options: ApiResourceOptions = {}) {
@@ -68,11 +97,12 @@ export class ApiResourceService<T> {
     this._options = opts;
   }
 
-  private get options() {
+  public get options() {
     return {
       method: ApiRequestMethod.GET,
       updatePolicy: UpdatePolicy.replace,
       cachePolicy: CachePolicy.cacheThenFetch,
+      cacheStorage: CacheStorage.User,
       ...this._options,
     };
   }
@@ -82,18 +112,22 @@ export class ApiResourceService<T> {
    * @returns { T }
    */
   private async fetch(params: any) {
+    if (!this.options.url) {
+      throw new Error('url not provided');
+    }
+
     // restore from cache on fetch
     if (
       this.options.cachePolicy === CachePolicy.cacheOnly ||
       this.options.cachePolicy === CachePolicy.cacheThenFetch
     ) {
-      const hydratedResult = await this.hydrate(params);
+      const rehydratedResult = await this.rehydrate(params);
 
       if (
         this.options.cachePolicy === CachePolicy.cacheOnly &&
-        hydratedResult
+        rehydratedResult
       ) {
-        return null;
+        return rehydratedResult;
       }
     }
 
@@ -122,7 +156,7 @@ export class ApiResourceService<T> {
       this.loading$.next(false);
     }
 
-    return this.result$;
+    return this.result$.getValue();
   }
 
   /**
@@ -144,7 +178,7 @@ export class ApiResourceService<T> {
    * @returns { Promise }
    */
   private persist(params) {
-    return this.storage.user.setApiResource(
+    return this.storage[this.options.cacheStorage].setApiResource(
       this.cacheKey(params),
       this.result$.getValue()
     );
@@ -166,10 +200,10 @@ export class ApiResourceService<T> {
    * @param { object } params
    * @returns { Promise } result
    */
-  private async hydrate(params?: any) {
-    const resource = await this.storage.user.getApiResource(
-      this.cacheKey(params)
-    );
+  private async rehydrate(params?: any) {
+    const resource = await this.storage[
+      this.options.cacheStorage
+    ].getApiResource(this.cacheKey(params));
     if (resource) {
       this.result$.next(resource.data);
     }
