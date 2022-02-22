@@ -1,7 +1,7 @@
 import { MindsUser } from './../../interfaces/entities';
 import { Session } from './../session';
 import { Injectable } from '@angular/core';
-import { UserStorageService } from './user/user-storage.service';
+// import { UserStorageService } from './user/user-storage.service';
 import { SessionStorageService } from './session/session-storage.service';
 import { MemoryStorageService } from './memory/memory-storage.service';
 
@@ -22,13 +22,13 @@ export class StorageV2 {
   /**
    * storage specific for a user
    */
-  user: UserStorageService;
+  // user: UserStorageService;
 
   constructor(session: Session) {
     const user = session.getLoggedInUser() as MindsUser;
 
     if (user) {
-      this.user = new UserStorageService(user);
+      // this.user = new UserStorageService(user);
     }
   }
 }
