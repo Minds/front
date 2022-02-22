@@ -1,3 +1,4 @@
+import { ScrollRestorationService } from './services/scroll-restoration.service';
 import {
   ChangeDetectorRef,
   Component,
@@ -62,6 +63,7 @@ export class Minds implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public notificationService: NotificationService,
     public scrollToTop: ScrollToTopService,
+    public scrollRestoration: ScrollRestorationService,
     public analytics: AnalyticsService,
     public sockets: SocketsService,
     public loginReferrer: LoginReferrerService,
@@ -197,6 +199,8 @@ export class Minds implements OnInit, OnDestroy {
 
     this.scrollToTop.listen();
 
+    this.scrollRestoration.listen();
+
     this.context.listen();
 
     this.web3Wallet.setUp();
@@ -213,6 +217,7 @@ export class Minds implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
+    this.scrollRestoration.unlisten();
     this.router$.unsubscribe();
     this.clientError$.unsubscribe();
     this.uploadError$.unsubscribe();
