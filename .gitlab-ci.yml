@@ -97,6 +97,13 @@ qa:sandbox:
     - feat/1732-block-refactor
   <<: *cypress_tests
 
+qa:nightly:
+  parallel: 2
+  allow_failure: false
+  only:
+    - schedules
+  <<: *cypress_tests
+
 # qa:production:
 #   parallel: 1
 #   allow_failure: true
