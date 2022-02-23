@@ -48,10 +48,12 @@ export class JoinBannerComponent implements OnInit {
    */
   get logoUrl(): Observable<string> {
     return this.themes.isDark$.pipe(
-      map(isDark => {
-        return this.cdnAssetsUrl + isDark
-          ? '/assets/logos/logo-dark-mode.svg'
-          : '/assets/logos/logo-light-mode.svg';
+      map((isDarkTheme: boolean) => {
+        return `${this.cdnAssetsUrl}${
+          !isDarkTheme
+            ? 'assets/logos/logo-dark-mode.svg'
+            : 'assets/logos/logo-light-mode.svg'
+        }`;
       })
     );
   }
