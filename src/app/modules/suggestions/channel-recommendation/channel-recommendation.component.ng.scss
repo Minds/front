@@ -51,7 +51,7 @@
         flex-direction: row;
         margin-bottom: $minds-margin * 2;
 
-        .avatarContainer {
+        .m-channelRecommendation__avatarContainer {
           margin-right: $minds-margin * 2;
           ::ng-deep minds-avatar {
             .minds-avatar {
@@ -63,7 +63,7 @@
             }
           }
         }
-        .contentContainer {
+        .m-channelRecommendation__contentContainer {
           flex: 1;
           display: flex;
           justify-content: center;
@@ -71,7 +71,7 @@
           align-items: flex-start;
           overflow: hidden;
 
-          .title {
+          .m-channelRecommendation__title {
             display: block;
             font-size: 16px;
             line-height: 24px;
@@ -102,7 +102,7 @@
             }
           }
 
-          .description {
+          .m-channelRecommendation__description {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -121,7 +121,7 @@
             }
           }
         }
-        .subscribeContainer {
+        .m-channelRecommendation__subscribeContainer {
           margin-left: $minds-margin;
         }
       }
