@@ -81,7 +81,7 @@ export class DefaultFeedComponent implements OnInit {
     if (this.feedsService.feedLength <= 3) {
       // if the newsfeed length was less than equal to 3,
       // show the widget after last item
-      return this.feedsService.feedLength - 1;
+      return index === this.feedsService.feedLength - 1;
     }
 
     // show after the 3rd post
