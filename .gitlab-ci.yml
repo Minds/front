@@ -101,6 +101,16 @@ qa:sandbox:
   except:
     - /^master$/
     - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
+  <<: *cypress_tests
+
+qa:nightly:
+  parallel: 2
+  allow_failure: false
+  only:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   <<: *cypress_tests
 
 # qa:production:
