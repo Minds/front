@@ -9,6 +9,7 @@ import { feedsServiceMock } from '../../../../tests/feed-service-mock.spec';
 import { GlobalScrollService } from '../../../services/ux/global-scroll.service';
 import { By } from '@angular/platform-browser';
 import { Session } from './../../../services/session';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 describe('DefaultFeedComponent', () => {
   let comp: DefaultFeedComponent;
@@ -42,6 +43,10 @@ describe('DefaultFeedComponent', () => {
             useValue: MockService(GlobalScrollService),
           },
           { provide: Session, useValue: MockService(Session) },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
+          },
         ],
       }).compileComponents();
     })
