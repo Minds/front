@@ -32,6 +32,9 @@ test:
     - npm i
     - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 lint:
   stage: test and build
@@ -40,6 +43,9 @@ lint:
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 ############
 # QA Stage #
@@ -114,6 +120,9 @@ qa:manual:
       - master
       - production
       - test/gitlab-ci
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   allow_failure: true
 
 ###############
@@ -139,6 +148,8 @@ build:review:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   tags:
     - angular
 
@@ -163,6 +174,9 @@ build:production:bundles:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   tags:
     - angular
 
@@ -198,6 +212,8 @@ prepare:review:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -209,6 +225,8 @@ prepare:review:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:review
 
@@ -229,6 +247,9 @@ prepare:production:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:production:bundles
 
@@ -242,6 +263,9 @@ prepare:production:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:production:bundles
 
@@ -266,6 +290,8 @@ prepare:production:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 review:start:
   stage: review
@@ -298,11 +324,16 @@ review:start:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 review:stop:
   <<: *cleanup_review
   stage: review
   when: manual
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 ################
 # Deploy Stage #
@@ -341,6 +372,9 @@ staging:fpm:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 deploy:canary:
   <<: *deploy
@@ -355,6 +389,9 @@ deploy:canary:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 deploy:production:
   <<: *deploy
@@ -369,6 +406,9 @@ deploy:production:
     refs:
       - master
       - test/gitlab-ci
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 #################
 # Cleanup stage #
@@ -381,3 +421,5 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
