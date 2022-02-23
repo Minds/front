@@ -99,8 +99,9 @@ qa:sandbox:
   parallel: 2
   allow_failure: false
   except:
-    - /^master$/
-    - feat/1732-block-refactor
+    refs:
+      - /^master$/
+      - feat/1732-block-refactor
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   <<: *cypress_tests
