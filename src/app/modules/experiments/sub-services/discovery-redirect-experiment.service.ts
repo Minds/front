@@ -34,7 +34,7 @@ export class DiscoveryRedirectExperimentService {
     ) {
       return '/discovery/top';
     } else {
-      return '/newsfeed/subscriptions/latest';
+      return '/newsfeed/subscriptions';
     }
   }
 
