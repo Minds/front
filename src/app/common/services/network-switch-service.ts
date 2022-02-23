@@ -112,20 +112,7 @@ export class NetworkSwitchService implements OnDestroy {
     const blockchainConfig = config.get('blockchain');
     const skaleConfig = blockchainConfig['skale'];
 
-    // SKALE
-    if (this.features.has('skale') && skaleConfig) {
-      this.networks.skale = {
-        id: skaleConfig['chain_id_hex'],
-        siteName: 'SKALE',
-        // Differs to avoid conflict with other SKALE chains.
-        networkName: 'SKALE Minds',
-        rpcUrl: skaleConfig['rpc_url'],
-        description: 'Lightning fast side-chain.',
-        logoPath: 'assets/ext/skale.png',
-        swappable: true,
-      };
-    }
-
+    // POLYGON
     if (this.features.has('polygon')) {
       /**
        * TODO:
@@ -138,8 +125,24 @@ export class NetworkSwitchService implements OnDestroy {
         id: '0x80001',
         siteName: 'Polygon',
         networkName: 'Polygon',
-        description: "ETH's Internet of Blockchains.",
-        logoPath: 'assets/ext/polygon.png',
+        description:
+          'Polygon combines the best of Ethereum and sovereign blockchains into a full-fledged multi-chain system. Typical fee ~ 1% - Transfer ~ 8 mins',
+        logoPath: 'assets/ext/polygon_white.svg',
+        swappable: true,
+      };
+    }
+
+    // SKALE
+    if (this.features.has('skale') && skaleConfig) {
+      this.networks.skale = {
+        id: skaleConfig['chain_id_hex'],
+        siteName: 'SKALE',
+        // Differs to avoid conflict with other SKALE chains.
+        networkName: 'SKALE Minds',
+        rpcUrl: skaleConfig['rpc_url'],
+        description:
+          'What is Skale. What’s its value. Why should I use is. Who is it suited for. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at feugiat diam.',
+        logoPath: 'assets/ext/skale_white.svg',
         swappable: true,
       };
     }

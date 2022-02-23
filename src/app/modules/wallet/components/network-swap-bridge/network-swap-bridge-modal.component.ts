@@ -10,6 +10,7 @@ import {
 } from '../../../../common/services/network-switch-service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { NetworkBridgeSwapService } from './bridge/network-bridge-swap.service';
 
 @Component({
   selector: 'm-networkSwapBridge',
@@ -37,20 +38,11 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
     private web3Wallet: Web3WalletService,
     private toast: FormToastService,
     configs: ConfigsService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    private bridgeSwapService: NetworkBridgeSwapService
   ) {
     super();
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
-  }
-
-  /**
-   * Modal options.
-   * @param onComplete
-   * @param onDismissIntent
-   */
-  set opts({ onComplete, onDismissIntent }) {
-    this.onComplete = onComplete || (() => {});
-    this.onDismissIntent = onDismissIntent || (() => {});
   }
 
   /**
@@ -69,15 +61,17 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
 
   async ngOnInit(): Promise<void> {
     this.swappableNetworks = this.networkSwitcher.getSwappableNetworks();
+    await this.setSelectedToActiveNetwork();
   }
 
   /**
-   * Set selected tab to param.
-   * @param { NetworkSiteName } tab - new tab to switch to.
-   * @returns { void }
+   * Sets modal options.
+   * @param { Function } onDismissIntent - set dismiss intent callback.
+   * @param { Function } onSaveIntent - set save intent callback.
+   * @param { BoostableEntity } entity - set entity that is the subject of the boost.
    */
-  public setTab(tab: NetworkSiteName): void {
-    this.selectedNetworkSiteName$.next(tab);
+  setModalData({ onDismissIntent, onSaveIntent, entity }) {
+    this.onDismissIntent = onDismissIntent || (() => {});
   }
 
   /**
@@ -110,15 +104,11 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
       this.inProgress$.next(false);
       return;
     }
-    // this.selectedNetworkSiteName$.next('SKALE');
     this.inProgress$.next(false);
   }
 
-  hasSkale() {
-    return this.features.has('skale');
-  }
-
-  hasPolygon() {
-    return this.features.has('polygon');
+  navigateToBridge(network) {
+    this.onDismissIntent();
+    this.bridgeSwapService.open(network);
   }
 }

@@ -52,6 +52,7 @@ import { WalletSkaleFaucetComponent } from './components/network-swap-bridge/ska
 import { WalletPolygonComponent } from './components/tokens/polygon/polygon.component';
 import { WalletPolygonBridgeComponent } from './components/tokens/polygon/bridge/bridge.component';
 import { WalletPolygonHistoricComponent } from './components/tokens/polygon/historic/historic.component';
+import { NetworkBridgeSwapModalComponent } from './components/network-swap-bridge/bridge/network-bridge-swap.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -228,6 +229,7 @@ export const WALLET_ROUTES: Routes = [
     WalletSkaleFaucetComponent,
     WalletPolygonBridgeComponent,
     WalletPolygonHistoricComponent,
+    NetworkBridgeSwapModalComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [

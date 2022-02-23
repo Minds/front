@@ -1,8 +1,13 @@
 @import 'defaults.scss';
 
-::ng-deep .modal-content--bridge {
+::ng-deep .modal-content--swap {
   min-width: 710px;
   max-height: 526px;
+  height: 526px;
+
+  .modal-content {
+    height: inherit;
+  }
 }
 
 :host {

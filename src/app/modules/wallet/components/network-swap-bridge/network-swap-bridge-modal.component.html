@@ -1,63 +1,42 @@
 <div class="m-modalV2__inner">
   <div class="m-networkSwapBridge__header">
+    <div class="m-networkSwapBridge__header--close">
+      <i class="material-icons" (click)="onDismissIntent()">close</i>
+    </div>
     <h1 class="m-networkSwapBridge__title">Network Bridge</h1>
     <span class="m-networkSwapBridge__subtitle"
       >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis diam massa
       ultrices id nunc, pellentesque tortor.</span
     >
 
-    <!-- Polygon card -->
-    <div class="mdl-grid m-networkSwapBridge__container" *ngIf="hasPolygon()">
+    <div
+      class="mdl-grid m-networkSwapBridge__container"
+      *ngFor="let network of swappableNetworks"
+    >
       <img
         class="mdl-cell mdl-cell--1-col"
-        [src]="cdnAssetsUrl + 'assets/ext/polygon_white.svg'"
+        [src]="cdnAssetsUrl + network.logoPath"
       />
       <div class="mdl-cell mdl-cell--9-col">
         <div class="mdl-grid">
-          <span class="m-networkSwapBridge__container--title">Polygon</span>
+          <span class="m-networkSwapBridge__container--title">{{
+            network.siteName
+          }}</span>
           <span class="m-networkSwapBridge__container--subtitle">
-            Polygon combines the best of Ethereum and sovereign blockchains into
-            a full-fledged multi-chain system. Typical fee ~ 1% - Transfer ~ 8
-            mins
+            {{ network.description }}
           </span>
         </div>
       </div>
       <div
         class="mdl-cell mdl-cell--1-col m-networkSwapBridge__container--arrow"
       >
-        <i class="material-icons m-walletTransactionsTable__icon--arrow"
+        <i
+          class="material-icons m-walletTransactionsTable__icon--arrow"
+          (click)="navigateToBridge(network)"
           >arrow_forward</i
         >
       </div>
     </div>
-
-    <!-- End Polygon card -->
-
-    <!-- Skale card -->
-    <div class="mdl-grid m-networkSwapBridge__container" *ngIf="hasSkale()">
-      <img
-        class="mdl-cell mdl-cell--1-col"
-        [src]="cdnAssetsUrl + 'assets/ext/skale_white.svg'"
-      />
-      <div class="mdl-cell mdl-cell--9-col">
-        <div class="mdl-grid">
-          <span class="m-networkSwapBridge__container--title">SKALE</span>
-          <span class="m-networkSwapBridge__container--subtitle">
-            What is Skale. What’s its value. Why should I use is. Who is it
-            suited for. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Vestibulum at feugiat diam.
-          </span>
-        </div>
-      </div>
-      <div
-        class="mdl-cell mdl-cell--1-col m-networkSwapBridge__container--arrow"
-      >
-        <i class="material-icons m-walletTransactionsTable__icon--arrow"
-          >arrow_forward</i
-        >
-      </div>
-    </div>
-    <!-- End Skale card -->
   </div>
   <div class="m-networkSwapBridge__body" *ngIf="!(inProgress$ | async)">
     <m-wallet__skale
