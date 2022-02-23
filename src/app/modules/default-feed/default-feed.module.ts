@@ -18,7 +18,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     ActivityModule,
     DiscoveryDisclaimerModule,
     SuggestionsModule,
-    ExperimentsModule
+    ExperimentsModule,
   ],
   declarations: [DefaultFeedComponent, DefaultFeedContainerComponent],
   exports: [DefaultFeedComponent, DefaultFeedContainerComponent],
