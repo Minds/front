@@ -76,8 +76,11 @@ export class ProService {
     }
 
     this.proSettings = settings;
-    this.proSettings.is_active = isActive;
-    this.proSettings$.next(this.proSettings);
+
+    if (this.proSettings) {
+      this.proSettings.is_active = isActive;
+      this.proSettings$.next(this.proSettings);
+    }
 
     return { isActive, settings };
   }

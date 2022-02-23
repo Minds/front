@@ -29,9 +29,9 @@ xdescribe('SettingsTwoFactorCodePopupComponent', () => {
   });
 
   it('should set code when opts passed in', () => {
-    comp.opts = {
+    comp.setModalData({
       code: '123',
-    };
+    });
     expect(comp.code).toBe('123');
   });
 });

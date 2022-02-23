@@ -3,7 +3,7 @@ import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 
-import { CookieModule } from '@gorniv/ngx-universal';
+import { CookieModule } from '@mindsorg/ngx-universal';
 import {
   RedirectService,
   BrowserRedirectService,

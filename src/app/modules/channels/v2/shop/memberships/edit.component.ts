@@ -32,24 +32,6 @@ export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {
    */
   onDismissIntent: () => void = noOp;
 
-  /**
-   * Modal options
-   * @param onSave
-   * @param onDismissIntent
-   */
-  set opts({ onSave, onDismissIntent }) {
-    this.onSave = onSave || noOp;
-    this.onDismissIntent = onDismissIntent || noOp;
-  }
-
-  /**
-   *
-   * @param supportTier
-   */
-  @Input('supportTier') set data(supportTier: SupportTier | null) {
-    this.load(supportTier);
-  }
-
   canSaveSubscription: Subscription;
   canSave: boolean = false;
 
@@ -62,6 +44,20 @@ export class ChannelShopMembershipsEditComponent implements OnInit, OnDestroy {
     private configs: ConfigsService
   ) {
     this.tokenExchangeRate = configs.get('token_exchange_rate') || 1.25;
+  }
+
+  /**
+   * Modal options
+   * @param onSave
+   * @param onDismissIntent
+   * @param {SupportTier} supportTier
+   */
+  setModalData({ onSave, onDismissIntent, supportTier }) {
+    this.onSave = onSave || noOp;
+    this.onDismissIntent = onDismissIntent || noOp;
+    if (supportTier) {
+      this.load(supportTier);
+    }
   }
 
   ngOnInit(): void {

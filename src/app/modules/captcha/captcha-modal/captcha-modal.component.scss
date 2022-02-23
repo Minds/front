@@ -1,4 +1,6 @@
 .m-captcha__container {
+  padding: 32px;
+
   .m-captcha__header {
     @include m-theme() {
       color: themed($m-textColor--primary);

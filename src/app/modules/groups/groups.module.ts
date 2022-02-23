@@ -15,7 +15,6 @@ import { GroupsCardUserActionsButton } from './profile/card-user-actions-button'
 import { GroupsSettingsButton } from './profile/groups-settings-button';
 import { GroupsProfileMembers } from './profile/members/members';
 import { GroupsProfileRequests } from './profile/requests/requests';
-import { GroupsProfileConversation } from './profile/conversation/conversation.component';
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
@@ -98,7 +97,6 @@ const routes: Routes = [
     GroupProfileFeedSortedComponent,
     GroupsProfileRequests,
     GroupsSettingsButton,
-    GroupsProfileConversation,
     GroupsProfileFilterSelector,
     GroupsMembersModuleComponent,
     GroupsTileComponent,
@@ -118,7 +116,6 @@ const routes: Routes = [
     GroupsProfileMembers,
     GroupsProfileRequests,
     GroupsSettingsButton,
-    GroupsProfileConversation,
     GroupsProfileFilterSelector,
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,

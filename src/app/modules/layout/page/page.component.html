@@ -36,9 +36,6 @@
   ></m-messenger>
 </ng-container>
 
-<m-overlay-modal></m-overlay-modal>
-<m-stackableModal></m-stackableModal>
-
 <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
 
 <m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
@@ -64,5 +61,5 @@
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 <m-formToast></m-formToast>
-<m-joinBanner></m-joinBanner>
-<m-appPrompt></m-appPrompt>
+<m-joinBanner *ngIf="!isMobileOrTablet()"></m-joinBanner>
+<m-appPrompt *ngIf="isMobileOrTablet()"></m-appPrompt>

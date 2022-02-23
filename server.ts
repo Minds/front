@@ -13,7 +13,7 @@ import './server-polyfills';
 
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
-import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
+import { NgxRequest, NgxResponse } from '@mindsorg/ngx-universal';
 import { EmbedServerModule } from './src/app/modules/embed/embed.server.module';
 import { AppServerModule } from './src/main.server';
 
@@ -75,6 +75,7 @@ export function app() {
         console.log(`from cache: ${key}`);
         const cachedBody = myCache.get(key);
         res.send(cachedBody);
+        res.end();
         return;
       } else {
         res.sendResponse = res.send;
@@ -147,6 +148,7 @@ export function app() {
     });
     res.send(html);
     console.timeEnd(`GET: ${url}`);
+    res.end();
   };
 
   // embed route loads its own module

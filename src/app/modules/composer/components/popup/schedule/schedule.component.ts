@@ -64,8 +64,8 @@ export class ScheduleComponent {
     this.maxDate = new Date();
     this.maxDate.setMonth(this.maxDate.getMonth() + 3);
 
-    // Set current state (now + 1h)
-    this.setState(new Date(Date.now() + 3600000));
+    // Set current state (now + 10m)
+    this.setState(new Date(Date.now() + 600000));
   }
 
   /**

@@ -8,7 +8,7 @@ import {
   TransferState,
 } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { CookieModule, CookieService } from '@mindsorg/ngx-universal';
 import { MindsHttpClient } from '../../common/api/client.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ConfigsService } from '../../common/services/configs.service';
@@ -18,11 +18,11 @@ import { SiteService } from '../../common/services/site.service';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { RecentService } from '../../services/ux/recent';
 import { VideoModule } from '../media/components/video/video.module';
 import { EmbedComponent } from './embed.component';
 import { EmbeddedVideoComponent } from './embedded-video/embedded-video.component';
+import { ModalService } from '../../services/ux/modal.service';
 
 const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
 
@@ -64,7 +64,7 @@ const routes = [{ path: 'embed/:guid', component: EmbeddedVideoComponent }];
       multi: true,
     },
     { provide: APP_BASE_HREF, useValue: '/' },
-    OverlayModalService,
+    ModalService,
     RelatedContentService,
     Session,
     Storage,

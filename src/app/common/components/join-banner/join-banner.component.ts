@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { Session } from '../../../services/session';
 import { SessionsStorageService } from '../../../services/session-storage.service';
+import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { ConfigsService } from '../../services/configs.service';
 
 /**
@@ -18,22 +20,22 @@ export class JoinBannerComponent implements OnInit {
   public readonly cdnAssetsUrl: string = '';
 
   // whether modal has been dismissed in this session.
-  public dismissed = false;
+  public dismissed = true;
 
   constructor(
     private session: Session,
     private sessionStorage: SessionsStorageService,
     private authModal: AuthModalService,
     private guestModeExperiment: GuestModeExperimentService,
+    private router: Router,
+    private authRedirectService: AuthRedirectService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit(): void {
-    if (this.sessionStorage.get('dismissed_join_banner')) {
-      this.dismissed = true;
-    }
+    this.dismissed = !!this.sessionStorage.get('dismissed_join_banner');
   }
 
   /**
@@ -64,6 +66,10 @@ export class JoinBannerComponent implements OnInit {
   public async join(): Promise<void> {
     try {
       await this.authModal.open();
+
+      if (this.router.url === '/' || this.router.url === '/about') {
+        this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+      }
     } catch (e) {
       if (e === 'DismissedModalException') {
         return; // modal dismissed, do nothing

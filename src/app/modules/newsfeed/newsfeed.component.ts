@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { Client, Upload } from '../../services/api';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
@@ -69,7 +68,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     public featuresService: FeaturesService,
     public pagesService: PagesService,
     protected storage: Storage,
-    protected overlayModal: OverlayModalService,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService
   ) {

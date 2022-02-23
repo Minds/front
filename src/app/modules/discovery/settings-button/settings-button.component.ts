@@ -6,7 +6,6 @@ import {
   Optional,
   SkipSelf,
 } from '@angular/core';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { DiscoveryFeedsSettingsComponent } from '../feeds/settings.component';
 import { DiscoveryTagSettingsComponent } from '../tags/settings.component';
 import { DiscoveryTagsService } from '../tags/tags.service';
@@ -14,6 +13,8 @@ import { DiscoveryFeedsService } from '../feeds/feeds.service';
 import { DiscoveryTrendsService } from '../trends/trends.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ContentSettingsComponent } from '../../content-settings/content-settings/content-settings.component';
+import { ModalService } from '../../../services/ux/modal.service';
+import { ComponentType } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'm-discovery__settingsButton',
@@ -26,7 +27,7 @@ export class DiscoverySettingsButtonComponent implements OnInit {
 
   constructor(
     private service: DiscoveryTagsService,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private injector: Injector,
     private featuresService: FeaturesService,
     @Optional() @SkipSelf() private feeds: DiscoveryFeedsService,
@@ -43,7 +44,11 @@ export class DiscoverySettingsButtonComponent implements OnInit {
   }
 
   openSettingsModal(e: MouseEvent): void {
-    let component: Object;
+    let component: ComponentType<
+      | DiscoveryFeedsSettingsComponent
+      | DiscoveryTagSettingsComponent
+      | ContentSettingsComponent
+    >;
 
     switch (this.modalType) {
       case 'feed':
@@ -59,35 +64,24 @@ export class DiscoverySettingsButtonComponent implements OnInit {
         return;
     }
 
-    this.overlayModal
-      .create(
-        component,
-        null,
-        {
-          wrapperClass: 'm-modalV2__wrapper',
-          onSave: payload => {
-            if (this.modalType === 'tags') {
-              const tags = payload;
-              this.service.tags$.next(tags);
+    const modal = this.modalService.present(component, {
+      data: {
+        onSave: payload => {
+          if (this.modalType === 'tags') {
+            const tags = payload;
+            this.service.tags$.next(tags);
 
-              if (this.feeds !== null) {
-                this.feeds.load();
-              }
-              if (this.trends !== null) {
-                this.trends.loadTrends();
-              }
+            if (this.feeds !== null) {
+              this.feeds.load();
             }
-            this.overlayModal.dismiss();
-          },
-          onDismissIntent: () => {
-            this.overlayModal.dismiss();
-          },
+            if (this.trends !== null) {
+              this.trends.loadTrends();
+            }
+          }
+          modal.dismiss();
         },
-        this.injector
-      )
-      .onDidDismiss(() => {
-        // Do nothing.
-      })
-      .present();
+      },
+      injector: this.injector,
+    });
   }
 }

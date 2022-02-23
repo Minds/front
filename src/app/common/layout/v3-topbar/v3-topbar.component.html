@@ -23,6 +23,7 @@
           [routerLink]="getMainLogoUrl()"
           title="Home"
           i18n-title="@@COMMON__HOME"
+          data-ref="topnav-logo"
         >
           <img
             [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
@@ -39,7 +40,7 @@
             class="m-v3Topbar__logo--full"
           />
         </a>
-        <m-canaryFlag></m-canaryFlag>
+        <m-environmentFlag></m-environmentFlag>
         <div
           class="m-v3TopbarNav__item m-v3TopbarNav__item--hamburger"
           (click)="toggleSidebarNav()"
@@ -61,28 +62,61 @@
 
       <div class="m-v3Topbar__rightColumn">
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
-          <div class="m-v3TopbarContainer__loginWrapper">
-            <a
-              class="m-v3TopbarLoginWrapper__login"
-              (click)="onLoginClick()"
-              title="Login"
-              i18n-title="@@COMMON__LOGIN"
-            >
-              Login
-            </a>
+          <div
+            class="m-v3TopbarContainer__loginWrapper"
+            [ngClass]="{
+              'm-v3TopbarContainer__loginWrapper--roundButtons': !onHomepage
+            }"
+          >
+            <ng-container *ngIf="!onHomepage">
+              <m-button
+                class="m-v3TopbarLoginWrapper__login"
+                (onAction)="onLoginClick()"
+                title="Login"
+                i18n-title="@@COMMON__LOGIN"
+                data-ref="topnav-login"
+                size="small"
+              >
+                Login
+              </m-button>
 
-            <a
-              class="m-v3TopbarLoginWrapper__joinMindsNow"
-              (click)="onJoinNowClick()"
-              title="Join Minds Now"
-              i18n-title="@@COMMON__JOIN_MINDS_NOW"
-            >
-              Join Minds Now
-            </a>
+              <m-button
+                class="m-v3TopbarLoginWrapper__joinMindsNow"
+                (onAction)="onJoinNowClick()"
+                title="Join Minds Now"
+                i18n-title="@@COMMON__JOIN_MINDS_NOW"
+                data-ref="topnav-join-now"
+                color="blue"
+                size="small"
+              >
+                Join Now
+              </m-button>
+            </ng-container>
+            <ng-container *ngIf="onHomepage">
+              <a
+                class="m-v3TopbarLoginWrapper__login"
+                (click)="onLoginClick()"
+                title="Login"
+                i18n-title="@@COMMON__LOGIN"
+                data-ref="topnav-login"
+              >
+                Login
+              </a>
+              <a
+                class="m-v3TopbarLoginWrapper__joinMindsNow"
+                (click)="onJoinNowClick()"
+                title="Join Minds Now"
+                i18n-title="@@COMMON__JOIN_MINDS_NOW"
+                data-ref="topnav-join-now"
+                color="blue"
+              >
+                Join Now
+              </a>
+            </ng-container>
           </div>
         </ng-container>
 
-        <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
+        <div class="m-v3Topbar__userMenu">
           <div class="m-v3Topbar__spacer"></div>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>

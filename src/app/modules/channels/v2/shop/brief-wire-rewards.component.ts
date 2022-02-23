@@ -78,13 +78,11 @@ export class ChannelShopBriefWireRewardsComponent {
     channel: MindsUser,
     wireReward: WireReward
   ): Promise<void> {
-    await this.wireModal
-      .present(channel, {
-        default: {
-          min: wireReward.amount || 0,
-          type: wireReward.type,
-        },
-      })
-      .toPromise();
+    await this.wireModal.present(channel, {
+      default: {
+        min: wireReward.amount || 0,
+        type: wireReward.type,
+      },
+    });
   }
 }

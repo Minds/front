@@ -4,10 +4,7 @@
   z-index: 1;
 
   .m-contentSettings {
-    width: 75vw;
     height: 80vh;
-    max-width: 900px;
-    max-height: 900px;
     display: flex;
     flex-flow: column;
 
@@ -17,12 +14,10 @@
 
     @media screen and (max-width: $min-tablet) {
       height: 90vh;
-      width: 80vw;
     }
 
     @media screen and (max-width: $max-mobile) {
       height: 100vh;
-      width: 100vw;
     }
   }
 

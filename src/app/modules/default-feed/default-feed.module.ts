@@ -19,6 +19,6 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
     SuggestionsModule,
   ],
   declarations: [DefaultFeedComponent, DefaultFeedContainerComponent],
-  exports: [DefaultFeedContainerComponent],
+  exports: [DefaultFeedComponent, DefaultFeedContainerComponent],
 })
 export class DefaultFeedModule {}

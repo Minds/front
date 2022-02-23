@@ -4,8 +4,8 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-youtubeMigration__setupModal',
@@ -17,7 +17,7 @@ export class YoutubeMigrationSetupModalComponent {
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected cd: ChangeDetectorRef,
     protected toasterService: FormToastService
   ) {}
@@ -42,9 +42,11 @@ export class YoutubeMigrationSetupModalComponent {
       }
       this.detectChanges();
     } finally {
-      this.overlayModal.dismiss();
+      this.modalService.dismissAll();
     }
   }
+
+  setModalData() {}
 
   detectChanges() {
     this.cd.markForCheck();

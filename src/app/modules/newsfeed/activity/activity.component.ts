@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   Input,
@@ -13,6 +14,8 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -109,7 +112,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private elementVisibilityService: ElementVisibilityService,
     private newsfeedService: NewsfeedService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -179,5 +183,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get isPaywall2020(): boolean {
     return this.featuresService.has('paywall-2020');
+  }
+
+  /**
+   * Keep scroll position when comments height changes
+   */
+  onCommentsHeightChange({ newHeight, oldHeight }): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    window.scrollTo({
+      top: window.pageYOffset + (newHeight - oldHeight),
+    });
   }
 }

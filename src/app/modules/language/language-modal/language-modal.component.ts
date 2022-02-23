@@ -34,7 +34,7 @@ export class LanguageModalComponent {
    * Modal options
    * @param onSave
    */
-  set opts({ onSave }) {
+  setModalData({ onSave }) {
     this.onSaveIntent = onSave || noOp;
   }
 

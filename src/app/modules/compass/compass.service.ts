@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from '@gorniv/ngx-universal';
+import { CookieService } from '@mindsorg/ngx-universal';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { Client } from '../../services/api';
@@ -80,6 +80,9 @@ export class CompassService {
         this.submitRequested$.next(false);
         this.clearEphemeralAnswers();
 
+        this.toasterService.success(
+          'Thank you for your feedback and supporting the Minds Community'
+        );
         return true;
       }
     } catch (e) {

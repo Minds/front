@@ -229,6 +229,18 @@ export class SettingsV2Component implements OnInit {
     other: [
       {
         header: {
+          label: $localize`:@@SETTINGS__OTHER__PRIVACY__HEADER__LABEL:Privacy`,
+          id: 'privacy',
+        },
+        items: [
+          {
+            label: $localize`:@@SETTINGS__OTHER__PRIVACY__WALLET__LABEL:Wallet`,
+            id: 'wallet',
+          },
+        ],
+      },
+      {
+        header: {
           label: $localize`:@@SETTINGS__OTHER__CONTENTADMIN__HEADER__LABEL:Content Admin`,
           id: 'content-admin',
         },
@@ -330,7 +342,7 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    const contentMigrationMenu = this.secondaryMenus.other[2];
+    const contentMigrationMenu = this.secondaryMenus.other[3];
 
     // Conditionally show feature flagged items
     if (this.hasYoutubeFeature) {

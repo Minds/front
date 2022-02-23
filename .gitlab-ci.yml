@@ -32,6 +32,9 @@ test:
     - npm i
     - NODE_OPTIONS=--max_old_space_size=4096
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 lint:
   stage: test and build
@@ -40,6 +43,9 @@ lint:
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 ############
 # QA Stage #
@@ -78,7 +84,7 @@ lint:
       --group "minds-e2e"
       --key $CYPRESS_RECORD_ID
       --config baseUrl=$E2E_DOMAIN
-      --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION,captcha_shared_key=$CYPRESS_shared_key
+      --env shared_key=$CYPRESS_bypass_key,production=$PRODUCTION
   artifacts:
     when: always
     paths:
@@ -114,7 +120,10 @@ qa:manual:
       - master
       - production
       - test/gitlab-ci
-  allow_failure: false
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
+  allow_failure: true
 
 ###############
 # Build Stage #
@@ -139,6 +148,8 @@ build:review:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   tags:
     - angular
 
@@ -163,6 +174,9 @@ build:production:bundles:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   tags:
     - angular
 
@@ -198,6 +212,8 @@ prepare:review:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -209,6 +225,8 @@ prepare:review:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:review
 
@@ -229,6 +247,9 @@ prepare:production:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:production:bundles
 
@@ -242,6 +263,9 @@ prepare:production:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   dependencies:
     - build:production:bundles
 
@@ -252,7 +276,7 @@ prepare:production:sentry:
 .cleanup_review: &cleanup_review
   image: minds/aws-helm:latest
   script:
-    - aws eks update-kubeconfig --name=sandbox
+    - aws eks --region us-east-1 update-kubeconfig --name sandbox --role-arn=$AWS_IAM_ROLE_ARN
     - helm del $CI_BUILD_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
@@ -266,21 +290,25 @@ prepare:production:sentry:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 review:start:
   stage: review
   image: minds/aws-helm:latest
   script:
-    - aws eks update-kubeconfig --name=sandbox
+    - aws eks --region us-east-1 update-kubeconfig --name sandbox --role-arn=$AWS_IAM_ROLE_ARN
     - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
     - "helm upgrade \
       --install \
       --reuse-values \
+      --values ./helm-charts/minds/sandbox-values.yaml \
       --set front.image.repository=$CI_REGISTRY_IMAGE/server \
       --set-string front.image.tag=$CI_PIPELINE_ID \
       --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
       --set cdn_domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
       --set siteUrl=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN/
+      --set-string environments.sandbox.routingCookie=false
       --wait \
       $CI_BUILD_REF_SLUG \
       ./helm-charts/minds"
@@ -296,11 +324,16 @@ review:start:
       - production
       - test/gitlab-ci
       - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 review:stop:
   <<: *cleanup_review
   stage: review
   when: manual
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 ################
 # Deploy Stage #
@@ -339,6 +372,9 @@ staging:fpm:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 deploy:canary:
   <<: *deploy
@@ -353,6 +389,9 @@ deploy:canary:
   only:
     refs:
       - master
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 deploy:production:
   <<: *deploy
@@ -367,6 +406,9 @@ deploy:production:
     refs:
       - master
       - test/gitlab-ci
+  except:
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
 
 #################
 # Cleanup stage #
@@ -379,3 +421,5 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"

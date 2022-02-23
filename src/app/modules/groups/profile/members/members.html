@@ -53,6 +53,7 @@
             *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != member.guid"
             [group]="group"
             [user]="member"
+            (onKick)="onKick($event)"
           >
           </minds-groups-card-user-actions-button>
         </div>

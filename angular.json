@@ -81,6 +81,7 @@
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
               "node_modules/highlight.js/styles/github.css",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css",
               "src/main.css"
             ],
             "scripts": [
@@ -196,7 +197,8 @@
             "polyfills": "src/polyfills.ts",
             "stylePreprocessorOptions": {
               "includePaths": ["src/stylesheets"]
-            }
+            },
+            "preserveSymlinks": true
           }
         },
         "lint": {
@@ -227,7 +229,8 @@
                 }
               ],
               "sourceMap": false,
-              "optimization": true
+              "optimization": true,
+              "preserveSymlinks": true
             }
           },
           "defaultConfiguration": ""

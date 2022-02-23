@@ -10,13 +10,11 @@ import {
 import { EmbedServiceV2 } from '../../../services/embedV2.service';
 
 import { Session } from '../../../services/session';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 import { By } from '@angular/platform-browser';
 import { PostMenuComponent } from './post-menu.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +28,8 @@ import { featuresServiceMock } from '../../../../tests/features-service-mock.spe
 import { FormToastService } from '../../services/form-toast.service';
 import { MockService } from '../../../utils/mock';
 import { recentServiceMock } from '../../../mocks/services/ux/recent-mock.spec';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
+import { ModalService } from '../../../services/ux/modal.service';
 /* tslint:disable */
 
 /* Mock section */
@@ -101,7 +101,7 @@ describe('PostMenuComponent', () => {
           { provide: SignupModalService, useValue: scrollServiceMock },
           { provide: Client, useValue: clientMock },
           { provide: Session, useValue: sessionMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           { provide: ActivityService, useValue: activityServiceMock },
           { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: Storage, useValue: storageMock },

@@ -5,7 +5,7 @@
   [class.m-comment--compact]="_compact"
 >
   <ng-template #avatar>
-    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 10]">
+    <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 20]">
       <div class="minds-avatar">
         <a [routerLink]="['/', comment.ownerObj.username]">
           <img [src]="getAvatarSrc() | async" class="m-border" />
@@ -62,8 +62,7 @@
           <span
             class="m-comment__timestamp m-commentOwnerRowItem__timestamp"
             [title]="comment.time_created * 1000 | date: 'medium'"
-            *ngIf="commentAge$ | async as commentAge"
-            >{{ commentAge | friendlydatediff }}</span
+            >{{ commentAge$ | async | friendlydatediff }}</span
           >
           <ng-container *ngIf="comment.edited">
             <span class="m-commentOwnerRow__dot">·</span>
@@ -590,6 +589,7 @@
       [canEdit]="canEdit"
       [canDelete]="canDelete"
       [showReplies]="showReplies"
+      (onHeightChange)="onHeightChange.emit($event)"
       *ngIf="comment.can_reply && showReplies"
     >
     </m-comments__thread>

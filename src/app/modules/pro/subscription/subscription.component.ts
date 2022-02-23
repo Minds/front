@@ -11,7 +11,6 @@ import { Subscription, config } from 'rxjs';
 
 import { Session } from '../../../services/session';
 import { ProService } from '../pro.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
 import {
   UpgradeOptionCurrency,
@@ -22,6 +21,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { WireCreatorComponent } from '../../wire/v2/creator/wire-creator.component';
 import * as moment from 'moment';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-pro--subscription',
@@ -59,7 +59,7 @@ export class ProSubscriptionComponent implements OnInit {
   constructor(
     protected service: ProService,
     public session: Session,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected cd: ChangeDetectorRef,
     protected route: ActivatedRoute,
@@ -117,28 +117,24 @@ export class ProSubscriptionComponent implements OnInit {
     this.detectChanges();
 
     try {
-      this.overlayModal
-        .create(
-          WireCreatorComponent,
-          await this.wirePaymentHandlers.get('pro'),
-          {
-            wrapperClass: 'm-modalV2__wrapper',
-            default: {
-              type: this.currency === 'usd' ? 'money' : 'tokens',
-              upgradeType: 'pro',
-              upgradeInterval: this.interval,
-            },
-            onComplete: () => {
-              this.paymentComplete();
-              this.overlayModal.dismiss();
-            },
-          }
-        )
-        .onDidDismiss(() => {
-          this.inProgress = false;
-          this.detectChanges();
-        })
-        .present();
+      const modal = this.modalService.present(WireCreatorComponent, {
+        size: 'lg',
+        data: {
+          entity: await this.wirePaymentHandlers.get('pro'),
+          default: {
+            type: this.currency === 'usd' ? 'money' : 'tokens',
+            upgradeType: 'pro',
+            upgradeInterval: this.interval,
+          },
+          onComplete: () => {
+            this.paymentComplete();
+            modal.close();
+          },
+        },
+      });
+      await modal.result;
+      this.inProgress = false;
+      this.detectChanges();
     } catch (e) {
       this.active = false;
       this.hasSubscription = false;

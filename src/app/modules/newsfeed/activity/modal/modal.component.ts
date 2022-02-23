@@ -7,10 +7,12 @@ import {
   Optional,
   SkipSelf,
   Self,
+  ChangeDetectorRef,
+  ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SlowFadeAnimation } from '../../../../animations';
 import {
   ActivityService,
@@ -22,7 +24,6 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { AnalyticsService } from '../../../../services/analytics';
 import { TranslationService } from '../../../../services/translation';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { SiteService } from '../../../../common/services/site.service';
 import { ClientMetaDirective } from '../../../../common/directives/client-meta.directive';
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
@@ -39,7 +40,7 @@ import { MediaModalParams } from '../../../media/modal/modal.component';
 export const ACTIVITY_MODAL_MIN_STAGE_HEIGHT = 520;
 export const ACTIVITY_MODAL_MIN_STAGE_WIDTH = 660;
 export const ACTIVITY_MODAL_CONTENT_WIDTH = 360;
-export const ACTIVITY_MODAL_PADDING = 40; // 20px on each side
+export const ACTIVITY_MODAL_PADDING = 60; // 20px on each side
 export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
   ACTIVITY_MODAL_CONTENT_WIDTH + ACTIVITY_MODAL_PADDING;
 
@@ -58,25 +59,6 @@ export const ACTIVITY_MODAL_WIDTH_EXCL_STAGE =
   ],
 })
 export class ActivityModalComponent implements OnInit, OnDestroy {
-  @Input('entity') set data(params: MediaModalParams) {
-    this.service.setActivityService(this.activityService);
-
-    this.service.setSourceUrl(this.router.url);
-
-    this.service.setEntity(params.entity);
-
-    this.activityService.setDisplayOptions({
-      showOnlyCommentsInput: false,
-      showInteractions: true,
-      isModal: true,
-      fixedHeight: false,
-      autoplayVideo: true,
-    });
-
-    // Prepare pager
-    this.relatedContent.setBaseEntity(params.entity);
-  }
-
   entity: any;
   entitySubscription: Subscription;
   routerSubscription: Subscription;
@@ -94,17 +76,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   /**
    * Dimensions
    */
-  maxHeight: number;
+  isContentReady = false;
+  modalHeight: number;
 
-  stageWidth: number;
-  stageHeight: number;
-  maxStageWidth: number;
-
-  mediaWidth: number = 0;
-  mediaHeight: number;
-
-  entityWidth: number = 0;
-  entityHeight: number = 0;
+  @ViewChild('commentsScroll')
+  commentsScroll;
 
   constructor(
     @Self() public activityService: ActivityService,
@@ -112,7 +88,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public session: Session,
     public analyticsService: AnalyticsService,
     public translationService: TranslationService,
-    private overlayModal: OverlayModalService,
     private router: Router,
     private location: Location,
     private site: SiteService,
@@ -121,7 +96,8 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     public attachment: AttachmentService,
     public service: ActivityModalService,
     private relatedContent: RelatedContentService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    private cd: ChangeDetectorRef
   ) {}
 
   /////////////////////////////////////////////////////////////////
@@ -130,15 +106,23 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
-
+    this.modalHeight = window.innerHeight - ACTIVITY_MODAL_PADDING;
     this.entitySubscription = this.activityService.entity$.subscribe(
       (entity: ActivityEntity) => {
         if (!entity) {
           return;
         }
 
+        // Clears content component
+        this.isContentReady = false;
+        this.cd.detectChanges();
+
+        // Set the new entity
         this.entity = entity;
-        this.calculateDimensions();
+
+        // Re-display content component
+        this.isContentReady = true;
+        this.cd.detectChanges();
       }
     );
 
@@ -185,21 +169,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
         }
       }
     });
-
-    this.fullscreenSubscription = this.service.isFullscreen$.subscribe(
-      isFullscreen => {
-        this.calculateDimensions();
-      }
-    );
-  }
-
-  /**
-   * Re-calculate height/width when window resizes
-   *
-   */
-  @HostListener('window:resize', ['$resizeEvent'])
-  onResize(resizeEvent) {
-    this.calculateDimensions();
   }
 
   /////////////////////////////////////////////////////////////////
@@ -241,26 +210,11 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
   @HostListener('document:MSFullscreenChange', ['$event'])
   onFullscreenChange(event) {
     this.service.isFullscreen$.next(isFullscreen());
-    this.calculateDimensions();
   }
 
   /////////////////////////////////////////////////////////////////
   // MODAL DISMISSAL
   /////////////////////////////////////////////////////////////////
-
-  // Dismiss modal when backdrop is clicked and modal is open
-  @HostListener('document:click', ['$event'])
-  clickedBackdrop($event) {
-    if ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
-    if (this.isOpen) {
-      this.service.dismiss();
-    }
-  }
-
-  // Don't dismiss modal if click somewhere other than backdrop
   clickedModal($event) {
     $event.stopPropagation();
   }
@@ -331,260 +285,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
-  /////////////////////////////////////////////////////////////////
-  // DIMENSIONS CAlCULATIONS
-  /////////////////////////////////////////////////////////////////
-
-  // TODO de-spaghetti ლ(¯ロ¯"ლ)
-  calculateDimensions() {
-    if (!this.entity) {
-      return;
-    }
-
-    /**
-     * Get intrinsic dimensions
-     */
-    switch (this.entity.content_type) {
-      case 'image':
-        this.entityWidth = this.entity.custom_data[0].width;
-        this.entityHeight =
-          this.entity.custom_data[0].height !== '0'
-            ? this.entity.custom_data[0].height
-            : ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
-        break;
-      case 'quote':
-        this.entityWidth = 500;
-        this.entityHeight = 600;
-        break;
-      case 'blog':
-        this.entityWidth = window.innerWidth * 0.4;
-        this.entityHeight = window.innerHeight * 0.6;
-        break;
-      case 'video':
-      case 'rich-embed':
-      case 'status':
-        let providedCustomWidth,
-          providedCustomHeight,
-          providedWidth,
-          providedHeight;
-        if (this.entity.custom_data) {
-          if (this.entity.custom_data.dimensions) {
-            providedCustomWidth = this.entity.custom_data.dimensions.width;
-            providedCustomHeight = this.entity.custom_data.dimensions.height;
-          }
-          if (this.entity.custom_data.width) {
-            providedCustomWidth = this.entity.custom_data.width;
-          }
-          if (this.entity.custom_data.height) {
-            providedCustomHeight = this.entity.custom_data.height;
-          }
-        }
-        if (this.entity.width) providedWidth = this.entity.width;
-        if (this.entity.height) providedHeight = this.entity.height;
-
-        this.entityWidth = providedCustomWidth || providedWidth || 1280;
-        this.entityHeight = providedCustomHeight || providedHeight || 720;
-    }
-
-    /**
-     * NOT FULLSCREEN
-     */
-    if (!this.service.isFullscreen$.getValue()) {
-      /**
-       * NON-FULLSCREEN BLOG
-       */
-      if (this.entity.content_type === 'blog') {
-        this.mediaHeight = Math.max(
-          ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
-          this.aBitLessThan(window.innerHeight) - ACTIVITY_MODAL_PADDING
-        );
-        this.mediaWidth = Math.max(
-          ACTIVITY_MODAL_MIN_STAGE_WIDTH,
-          this.aBitLessThan(window.innerWidth) - ACTIVITY_MODAL_WIDTH_EXCL_STAGE
-        );
-        this.stageHeight = this.mediaHeight;
-        this.stageWidth = this.mediaWidth;
-
-        this.service.loading$.next(false);
-        return;
-      }
-
-      this.setHeightsAsTallAsPossible();
-
-      // After heights are set, check that scaled width isn't too wide or narrow
-      this.maxStageWidth = Math.max(
-        window.innerWidth -
-          ACTIVITY_MODAL_CONTENT_WIDTH -
-          ACTIVITY_MODAL_PADDING,
-        ACTIVITY_MODAL_MIN_STAGE_WIDTH
-      );
-
-      if (this.mediaWidth >= this.maxStageWidth) {
-        // Too wide :(
-        this.rescaleHeightsForMaxWidth();
-      } else if (
-        this.mediaWidth >
-        ACTIVITY_MODAL_MIN_STAGE_WIDTH - ACTIVITY_MODAL_PADDING
-      ) {
-        // Not too wide or too narrow :)
-        this.stageWidth = this.mediaWidth;
-      } else {
-        // Too narrow :(
-        // If black stage background is visible on left/right, each strip should be at least 20px wide
-        this.stageWidth = ACTIVITY_MODAL_MIN_STAGE_WIDTH;
-        // Continue to resize height after reaching min width
-        this.handleNarrowWindow();
-      }
-
-      // If black stage background is visible on top/bottom, each strip should be at least 20px high
-      const heightDiff = this.stageHeight - this.mediaHeight;
-      if (0 < heightDiff && heightDiff <= ACTIVITY_MODAL_PADDING) {
-        this.stageHeight += ACTIVITY_MODAL_PADDING;
-      }
-    } else {
-      /**
-       * IS FULLSCREEN
-       */
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-
-      this.stageWidth = windowWidth;
-      this.stageHeight = windowHeight;
-
-      switch (this.entity.content_type) {
-        case 'image':
-          // For images, set mediaHeight as tall as possible but not taller than instrinsic height
-          this.mediaHeight =
-            this.entityHeight < windowHeight ? this.entityHeight : windowHeight;
-          break;
-        case 'video':
-          // It's ok if videos are taller than intrinsic height
-          this.mediaHeight = windowHeight;
-        case 'blog':
-        case 'rich-embed':
-        case 'default':
-          this.mediaHeight = windowHeight;
-          this.mediaWidth = windowWidth;
-      }
-
-      if (this.entity.content_type === 'blog') {
-        this.mediaWidth = windowWidth;
-      } else if (this.mediaWidth >= 1) {
-        this.scaleWidth;
-      }
-
-      if (this.mediaWidth > windowWidth) {
-        // Width was too wide, need to rescale heights so width fits
-        this.mediaWidth = windowWidth;
-        this.mediaHeight = this.scaleHeight();
-      }
-    }
-
-    if (this.entity.content_type === 'video') {
-      this.entityHeight = this.mediaHeight;
-      this.entityWidth = this.mediaWidth;
-    }
-
-    this.service.loading$.next(false);
-  }
-
-  setHeightsAsTallAsPossible() {
-    this.maxHeight = window.innerHeight - ACTIVITY_MODAL_PADDING;
-
-    // Initialize stageHeight to be as tall as possible and not smaller than minimum
-    this.stageHeight = Math.max(
-      this.maxHeight,
-      ACTIVITY_MODAL_MIN_STAGE_HEIGHT
-    );
-
-    // Set mediaHeight as tall as stage but no larger than intrinsic height
-    if (
-      this.entity.content_type !== 'video' &&
-      this.entityHeight < this.stageHeight
-    ) {
-      // Image is shorter than stage; scale down stage
-      this.mediaHeight = this.entityHeight;
-      this.stageHeight = Math.max(
-        this.mediaHeight,
-        ACTIVITY_MODAL_MIN_STAGE_HEIGHT
-      );
-    } else {
-      // Either: Image is taller than stage; scale it down so it fits inside stage
-      // Or:     Video should be as tall as possible but not taller than stage
-      this.mediaHeight = this.stageHeight;
-    }
-
-    // Scale width according to aspect ratio
-    this.mediaWidth = this.scaleWidth();
-  }
-
-  /**
-   * Media is intrinsically too wide, set width to max and rescale heights
-   */
-  rescaleHeightsForMaxWidth() {
-    this.mediaWidth = this.maxStageWidth;
-    this.stageWidth = this.maxStageWidth;
-
-    this.mediaHeight = this.scaleHeight();
-    this.stageHeight = Math.max(
-      this.mediaHeight,
-      ACTIVITY_MODAL_MIN_STAGE_HEIGHT
-    );
-  }
-
-  /**
-   * When at minStageWidth and windowWidth falls below threshold,
-   * shrink vertically until it hits minStageHeight
-   */
-  handleNarrowWindow() {
-    // When window is narrower than this, start to shrink height
-    const verticalShrinkWidthThreshold =
-      this.mediaWidth + ACTIVITY_MODAL_WIDTH_EXCL_STAGE;
-
-    const widthDiff = verticalShrinkWidthThreshold - window.innerWidth;
-    // Is window narrow enough to start shrinking vertically?
-    if (widthDiff >= 1) {
-      // What mediaHeight would be if it shrunk proportionally to difference in width
-      const mediaHeightPreview = Math.round(
-        (this.mediaWidth - widthDiff) / this.aspectRatio
-      );
-
-      // Shrink media if mediaHeight is still above min
-      if (mediaHeightPreview > ACTIVITY_MODAL_MIN_STAGE_HEIGHT) {
-        this.mediaWidth -= widthDiff;
-        this.mediaHeight = this.scaleHeight();
-        this.stageHeight = this.mediaHeight;
-      } else {
-        this.stageHeight = ACTIVITY_MODAL_MIN_STAGE_HEIGHT;
-        this.mediaHeight = Math.min(
-          ACTIVITY_MODAL_MIN_STAGE_HEIGHT,
-          this.entityHeight
-        );
-        this.mediaWidth = this.scaleWidth();
-      }
-    }
-  }
-
-  scaleHeight() {
-    return Math.round(this.mediaWidth / this.aspectRatio);
-  }
-
-  scaleWidth() {
-    return Math.round(this.mediaHeight * this.aspectRatio);
-  }
-
-  aBitLessThan(number: number) {
-    return number * 0.9;
-  }
-  ////////////////////////////////////////
-  get aspectRatio(): number {
-    return this.entityWidth / this.entityHeight;
-  }
-
-  get modalWidth(): number {
-    return this.stageWidth + ACTIVITY_MODAL_CONTENT_WIDTH;
-  }
-
   get showContentMessageOnRight(): boolean {
     return (
       (this.entity.content_type === 'image' ||
@@ -603,36 +303,41 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     );
   }
 
-  get mediaWrapperWidth(): string {
-    if (
-      this.entity.content_type === status ||
-      !this.mediaWidth ||
-      this.mediaWidth <= 0
-    ) {
-      return '100%';
-    } else {
-      return `${this.mediaWidth}px`;
-    }
-  }
-
-  get mediaWrapperHeight(): string {
-    if (this.entity.content_type === 'status') {
-      return '100%';
-    }
-
-    if (
-      this.entity.activity_type === 'rich-embed' &&
-      this.entity.content_type === 'rich-embed'
-    ) {
-      return `${this.stageHeight}px`;
-    }
-
-    return this.mediaHeight === 0
-      ? ACTIVITY_MODAL_MIN_STAGE_HEIGHT + 'px'
-      : this.mediaHeight + 'px';
-  }
-
   get isQuote(): boolean {
     return this.entity.activity_type === 'quote';
+  }
+
+  /**
+   * when comments height changes we want to move keep scroll position
+   */
+  onCommentsHeightChange({
+    newHeight,
+    oldHeight,
+  }: {
+    newHeight: number;
+    oldHeight: number;
+  }) {
+    if (this.commentsScroll?.nativeElement) {
+      this.commentsScroll.nativeElement.scrollTop += newHeight - oldHeight;
+    }
+  }
+
+  setModalData(params: MediaModalParams) {
+    this.service.setActivityService(this.activityService);
+
+    this.service.setSourceUrl(this.router.url);
+
+    this.service.setEntity(params.entity);
+
+    this.activityService.setDisplayOptions({
+      showOnlyCommentsInput: false,
+      showInteractions: true,
+      isModal: true,
+      fixedHeight: false,
+      autoplayVideo: true,
+    });
+
+    // Prepare pager
+    this.relatedContent.setBaseEntity(params.entity);
   }
 }

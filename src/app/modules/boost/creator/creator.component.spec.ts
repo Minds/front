@@ -24,8 +24,6 @@ import { AbbrPipe } from '../../../common/pipes/abbr';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Scheduler } from '../../../common/components/scheduler/scheduler';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
@@ -42,9 +40,11 @@ import { localWalletServiceMock } from '../../../../tests/local-wallet-service-m
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { CookieModule, CookieService } from '@mindsorg/ngx-universal';
 import { Storage } from '../../../services/storage';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -418,7 +418,7 @@ describe('BoostCreatorComponent', () => {
           BoostService,
           { provide: Web3WalletService, useValue: web3WalletServiceMock },
           OffchainPaymentService,
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           { provide: TokenContractService, useValue: tokenContractServiceMock },
           {
             provide: BoostContractService,

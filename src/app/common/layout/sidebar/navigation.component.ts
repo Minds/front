@@ -19,7 +19,6 @@ import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-m
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
-import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
@@ -27,14 +26,11 @@ import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
-import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
-import { ModalService as ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
+import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -60,11 +56,17 @@ export class SidebarNavigationComponent
 
   settingsLink: string = '/settings';
 
+  @HostBinding('class.m-sidebarNavigation--nav2021Feature')
+  nav2021Feature: boolean = false;
+
   @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
 
   @HostBinding('hidden')
   hidden: boolean = false;
+
+  @HostBinding('class.m-sidebarNavigation--sidebarMoreOpened')
+  sidebarMoreOpened: boolean = false;
 
   groupSelectedSubscription: Subscription = null;
   plusPageActive: boolean = false;
@@ -72,6 +74,10 @@ export class SidebarNavigationComponent
   routerSubscription: Subscription;
 
   matrixFeature: boolean = false;
+
+  subscriptions: Subscription[] = [];
+
+  isDarkTheme: boolean = false;
 
   constructor(
     public navigation: NavigationService,
@@ -91,7 +97,8 @@ export class SidebarNavigationComponent
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService
+    private themeService: ThemeService,
+    private sidebarNavigationService: SidebarNavigationService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -120,7 +127,31 @@ export class SidebarNavigationComponent
 
     this.matrixFeature = this.featuresService.has('matrix');
 
+    this.nav2021Feature = this.featuresService.has('nav-2021');
+
     this.settingsLink = '/settings';
+
+    this.subscriptions.push(
+      this.themeService.isDark$.subscribe(isDark => {
+        this.isDarkTheme = isDark;
+      })
+    );
+
+    this.subscriptions.push(
+      this.sidebarNavigationService.isOpened$.subscribe(isOpened => {
+        if (this.layoutMode === 'phone') {
+          this.isOpened = isOpened;
+
+          if (isOpened) {
+            document.body.classList.add('m-overlay-modal--shown--no-scroll');
+          }
+        }
+
+        if (this.layoutMode !== 'phone' || !isOpened) {
+          document.body.classList.remove('m-overlay-modal--shown--no-scroll');
+        }
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -132,6 +163,10 @@ export class SidebarNavigationComponent
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
+    }
+
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -166,9 +201,7 @@ export class SidebarNavigationComponent
   }
 
   toggle(): void {
-    if (this.layoutMode === 'phone') {
-      this.isOpened = !this.isOpened;
-    }
+    this.sidebarNavigationService.toggle();
   }
 
   async buyTokens() {
@@ -189,10 +222,7 @@ export class SidebarNavigationComponent
 
   async openComposeModal() {
     this.toggle();
-    await this.composerModalService
-      .setInjector(this.injector)
-      .present()
-      .toPromise();
+    await this.composerModalService.setInjector(this.injector).present();
   }
 
   setVisible(value: boolean): void {
@@ -210,8 +240,12 @@ export class SidebarNavigationComponent
   /**
    * Closes the user menu if it's open
    */
-  onSidebarNavClick(): void {
+  onSidebarNavClick($event): void {
     this.userMenu.isOpen$.next(false);
+
+    if (this.layoutMode === 'phone') {
+      $event.stopPropagation();
+    }
   }
 
   @HostListener('window:resize')
@@ -228,7 +262,7 @@ export class SidebarNavigationComponent
     }
 
     if (this.layoutMode !== 'phone') {
-      this.isOpened = false;
+      this.sidebarNavigationService.isOpened$.next(false);
     }
 
     if (this.groupsSidebar) {
@@ -256,6 +290,17 @@ export class SidebarNavigationComponent
    * @returns { boolean } true if link should be '/'.
    */
   public shouldBeDiscoveryHomepage(): boolean {
-    return this.guestModeExperiment.isActive() && !this.user; // logged out
+    return !this.user; // logged out
+  }
+
+  /**
+   *
+   * We dynamically change the z-index when the
+   * "sidebar more" popper is opened
+   * So that users can still click on the top left logo
+   * when the popper is closed
+   */
+  public onSidebarMoreToggle($event) {
+    this.sidebarMoreOpened = $event;
   }
 }

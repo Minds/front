@@ -1,17 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CompassService } from '../../compass/compass.service';
-import {
-  DiscoveryTag,
-  DiscoveryTagsService,
-} from '../../discovery/tags/tags.service';
+import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
 import { TagSettingsService } from '../../tag-settings/tag-settings.service';
 import {
   ContentSettingsTab,
   ContentSettingsService,
 } from '../content-settings.service';
-
-const noOp = () => {};
 
 @Component({
   selector: 'm-contentSettings',
@@ -22,14 +17,14 @@ export class ContentSettingsComponent implements OnInit, OnDestroy {
   activeTab: ContentSettingsTab;
   private subscriptions: Subscription[] = [];
 
-  onSaveIntent: () => void = noOp;
-
   constructor(
     public service: ContentSettingsService,
     protected compassService: CompassService,
     protected tagSettingsService: TagSettingsService,
     protected discoveryTagsService: DiscoveryTagsService
   ) {}
+
+  setModalData() {}
 
   ngOnInit(): void {
     this.subscriptions.push(

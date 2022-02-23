@@ -7,13 +7,12 @@ import {
   ElementRef,
 } from '@angular/core';
 import { Client } from '../../../services/api';
-import { Session } from '../../../services/session';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
 import { skip } from 'rxjs/operators';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -49,7 +48,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     protected activityService: ActivityService
   ) {
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -174,16 +173,15 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   }
 
   public reject() {
-    const options = {
-      onReported: (guid, reason, subreason) => {
-        this.save(guid, reason, subreason);
-        this.initializeEntity();
+    return this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: this.entity,
+        onReported: (guid, reason, subreason) => {
+          this.save(guid, reason, subreason);
+          this.initializeEntity();
+        },
       },
-    };
-
-    this.overlayModal
-      .create(ReportCreatorComponent, this.entity, options)
-      .present();
+    }).result;
   }
 
   public accept() {

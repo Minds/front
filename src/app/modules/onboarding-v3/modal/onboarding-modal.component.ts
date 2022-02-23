@@ -65,7 +65,7 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    * Sets modal options.
    * @param onDismissIntent - set dismiss intent callback.
    */
-  set opts({ onDismissIntent, onSaveIntent }) {
+  setModalData({ onDismissIntent, onSaveIntent }) {
     this.onDismissIntent = onDismissIntent || (() => {});
     this.onSaveIntent = onSaveIntent || (() => {});
   }

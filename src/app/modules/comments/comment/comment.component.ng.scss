@@ -4,8 +4,12 @@
   .m-comment {
     position: relative;
   }
+  .minds-body {
+    margin-left: 15px;
+  }
   .m-comment--compact {
     padding: 5px 30px 20px;
+
     .m-dropdown--v2 {
       margin-right: 0;
     }
@@ -15,7 +19,6 @@
     .m-commentOwnerRow__text {
       flex-direction: column;
       align-items: flex-start;
-      max-width: calc(100% - 50px);
 
       > div {
         display: flex;
@@ -25,11 +28,13 @@
 
       .m-commentOwnerRowItem__name,
       .m-commentOwnerRowItem__username {
-        max-width: 50%;
+        max-width: 70%;
       }
     }
+
     .minds-body {
       max-width: 100%;
+      margin-left: 10px;
     }
   }
 
@@ -275,6 +280,7 @@
   }
 
   .m-comment__timestamp {
+    min-height: 20px;
     @include m-theme() {
       color: themed($m-textColor--tertiary);
     }
@@ -286,7 +292,7 @@
     }
 
     .minds-avatar {
-      margin: 0 15px 0 0;
+      margin: 0;
       min-width: 38px;
       min-height: 38px;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CompassService } from '../compass.service';
 
 @Component({
@@ -12,4 +12,6 @@ export class CompassQuestionnaireModalComponent {
   submit($event): void {
     this.compassService.submitRequested$.next(true);
   }
+
+  setModalData() {}
 }

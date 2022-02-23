@@ -54,7 +54,6 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
 import { MindsButton } from './components/button-v1/button-v1.component';
-import { OverlayModalComponent } from './components/overlay-modal/overlay-modal.component';
 
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
@@ -144,7 +143,6 @@ import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
 import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
-import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { IconComponent } from './components/icon/icon.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
@@ -176,7 +174,7 @@ import { LoadingEllipsisComponent } from './components/loading-ellipsis/loading-
 import { MarkedDirective } from './directives/marked.directive';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ConfirmV2Component } from '../modules/modals/confirm-v2/confirm';
-import { CanaryFlagComponent } from '../common/components/canary-flag/canary-flag.component';
+import { EnvironmentFlagComponent } from '../common/components/environment-flag/environment-flag.component';
 import { ErrorSplashComponent } from './components/error-splash/error-splash.component';
 import { LaunchButtonComponent } from './components/launch-button/launch-button.component';
 import { PublisherCardComponent } from './components/publisher-card/publisher-card.component';
@@ -196,7 +194,14 @@ import { JsonLdService } from './services/jsonld.service';
 import { FormInputSliderComponent } from './components/slider/slider.component';
 import { JoinBannerComponent } from './components/join-banner/join-banner.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { SidebarMoreComponent } from './layout/sidebar-more/sidebar-more.component';
+import { SidebarMoreTriggerComponent } from './layout/sidebar-more/sidebar-more-trigger/sidebar-more-trigger.component';
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
+
+import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
+import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
+import { ExperimentsService } from '../modules/experiments/experiments.service';
+import { AuthRedirectService } from './services/auth-redirect.service';
 
 const routes: Routes = [
   {
@@ -270,7 +275,6 @@ const routes: Routes = [
     MindsButton,
 
     ChartComponent,
-    OverlayModalComponent,
 
     AdminActionsButtonComponent,
 
@@ -327,7 +331,6 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
-    StackableModalComponent,
     FileUploadComponent,
     IconComponent,
     OverlayComponent,
@@ -351,7 +354,7 @@ const routes: Routes = [
     MarkedDirective,
     DragAndDropDirective,
     ConfirmV2Component,
-    CanaryFlagComponent,
+    EnvironmentFlagComponent,
     ErrorSplashComponent,
     LaunchButtonComponent,
     PublisherCardComponent,
@@ -364,7 +367,11 @@ const routes: Routes = [
     FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    ModalCloseButtonComponent,
+    BlurhashDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -416,7 +423,6 @@ const routes: Routes = [
     MindsButton,
 
     ChartComponent,
-    OverlayModalComponent,
 
     AdminActionsButtonComponent,
 
@@ -472,7 +478,6 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
-    StackableModalComponent,
     FileUploadComponent,
     IconComponent,
     OverlayComponent,
@@ -508,7 +513,11 @@ const routes: Routes = [
     FormInputSliderComponent,
     JoinBannerComponent,
     AutofocusDirective,
+    SidebarMoreComponent,
+    SidebarMoreTriggerComponent,
     TagSelectorComponent,
+    ModalCloseButtonComponent,
+    BlurhashDirective,
   ],
   providers: [
     SiteService,
@@ -533,9 +542,12 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService =>
-        new FeaturedContentService(boostedContentService),
-      deps: [FeedsService],
+      useFactory: (
+        boostedContentService: FeedsService,
+        experimentsService: ExperimentsService
+      ): FeaturedContentService =>
+        new FeaturedContentService(boostedContentService, experimentsService),
+      deps: [FeedsService, ExperimentsService],
     },
     {
       provide: RouterHistoryService,
@@ -560,6 +572,7 @@ const routes: Routes = [
     DateRangeModalService,
     JsonLdService,
     BoostRecommendationService,
+    AuthRedirectService,
   ],
 })
 export class CommonModule {}

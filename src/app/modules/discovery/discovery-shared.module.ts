@@ -38,6 +38,9 @@ import { DiscoveryTrendsService } from './trends/trends.service';
 import { DiscoveryTrendComponent } from './trends/trend/trend.component';
 import { DiscoveryBuildYourAlgorithmComponent } from './build-your-algorithm/build-your-algorithm.component';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { DiscoveryTopComponent } from './top/top.component';
+import { DefaultFeedModule } from '../default-feed/default-feed.module';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
 
 @NgModule({
   imports: [
@@ -50,6 +53,8 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     ActivityModule,
     ExperimentsModule,
     DiscoveryDisclaimerModule,
+    DefaultFeedModule,
+    SuggestionsModule,
   ],
   declarations: [
     DiscoverySidebarTagsComponent,
@@ -76,6 +81,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     DiscoveryLatestFeedComponent,
     DiscoveryCardCarouselComponent,
     DiscoveryBuildYourAlgorithmComponent,
+    DiscoveryTopComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
@@ -91,6 +97,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     DiscoveryFeedsComponent,
     DiscoverySidebarTagsComponent,
     DiscoveryBuildYourAlgorithmComponent,
+    DiscoveryTopComponent,
   ],
   providers: [
     DiscoveryTrendsService,

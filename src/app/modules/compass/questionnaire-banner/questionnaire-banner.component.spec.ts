@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { CompassService } from '../compass.service';
 
 import { CompassQuestionnaireBannerComponent } from './questionnaire-banner.component';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 describe('CompassQuestionnaireBannerComponent', () => {
   let component: CompassQuestionnaireBannerComponent;
@@ -16,12 +16,17 @@ describe('CompassQuestionnaireBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompassQuestionnaireBannerComponent],
+      declarations: [
+        CompassQuestionnaireBannerComponent,
+        MockComponent({
+          selector: 'm-button',
+        }),
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: CompassService, useValue: compassServiceMock },
         { provide: Storage, useValue: MockService(Storage) },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: ModalService, useValue: modalServiceMock },
       ],
     }).compileComponents();
   });

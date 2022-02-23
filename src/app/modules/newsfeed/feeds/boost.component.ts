@@ -9,10 +9,12 @@ import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-newsfeed--boost',
   templateUrl: 'boost.component.html',
+  providers: [FeedsService],
 })
 export class NewsfeedBoostComponent {
   newsfeed: Array<Object>;
@@ -37,6 +39,7 @@ export class NewsfeedBoostComponent {
     public route: ActivatedRoute,
     private storage: Storage,
     private context: ContextService,
+    private experiments: ExperimentsService,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService
   ) {}
@@ -68,11 +71,17 @@ export class NewsfeedBoostComponent {
       this.feedsService.clear();
     }
 
+    let params = {
+      boostfeed: true,
+    };
+
+    if (this.experiments.hasVariation('new-user-boosts', true)) {
+      params['show_boosts_after_x'] = 604800; // 1 week
+    }
+
     this.feedsService
       .setEndpoint('api/v2/boost/feed')
-      .setParams({
-        boostfeed: true,
-      })
+      .setParams(params)
       .setLimit(6)
       .setOffset(0)
       .fetch();
