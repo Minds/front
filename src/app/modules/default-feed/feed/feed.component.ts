@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 /**
  * A default recommendations feed - can be accessed by logged-out users.
@@ -19,7 +20,10 @@ export class DefaultFeedComponent implements OnInit {
   @Input()
   location: string;
 
-  constructor(public feedsService: FeedsService) {}
+  constructor(
+    public feedsService: FeedsService,
+    public experiments: ExperimentsService
+  ) {}
 
   public ngOnInit(): void {
     this.load(true);
@@ -70,9 +74,9 @@ export class DefaultFeedComponent implements OnInit {
       return false;
     }
 
-    // if (!this.experiments.hasVariation('channel-recommendations', true)) {
-    //   return false;
-    // }
+    if (!this.experiments.hasVariation('channel-recommendations', true)) {
+      return false;
+    }
 
     if (this.feedsService.feedLength <= 3) {
       // if the newsfeed length was less than equal to 3,

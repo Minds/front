@@ -21,6 +21,10 @@
 
         <m-chat__sidebarPrompt></m-chat__sidebarPrompt>
         <m-language__sidebarPrompt></m-language__sidebarPrompt>
+        <m-suggestions__sidebar
+          type="user"
+          *mExperiment="'channel-recommendations'; variation: false"
+        ></m-suggestions__sidebar>
 
         <ng-container *mIfFeature="'liquidity-spot'">
           <m-liquiditySpot> </m-liquiditySpot>
