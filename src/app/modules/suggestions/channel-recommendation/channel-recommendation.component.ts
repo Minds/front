@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import { MindsUser } from './../../../interfaces/entities';
-import { ApiService } from './../../api/api.service';
+import { MindsUser } from '../../../interfaces/entities';
+import { ApiService } from '../../../common/api/api.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

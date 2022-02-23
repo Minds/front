@@ -1,5 +1,5 @@
-import { apiServiceMock } from './../../../modules/boost/modal/boost-modal.service.spec';
-import { ApiService } from './../../api/api.service';
+import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
+import { ApiService } from '../../../common/api/api.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
