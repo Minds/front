@@ -19,7 +19,7 @@
         </ng-container>
         <ng-template #forYou>
           <li
-            *ngFor="let tag of foryou$ | async | slice: 0:limit"
+            *ngFor="let tag of trending$ | async | slice: 0:limit"
             class="m-discoveryTrends__trend"
           >
             <ng-container
@@ -35,6 +35,7 @@
       (click)="seeMore()"
       *ngIf="limit === 5 && !(inProgress$ | async) && !entityGuid"
       i18n="@@DISCOVERY_SIDEBAR_TAGS__SEE_MORE"
+      data-ref="sidebar-tags-more"
       >See more</a
     >
   </m-sidebarWidget>
@@ -44,6 +45,7 @@
       <a
         [routerLink]="parentPath + '/search'"
         [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+        data-ref="sidebar-tags-tag"
       >
         <div>
           <h4>#{{ tag.value }}</h4>

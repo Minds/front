@@ -35,6 +35,7 @@ import { RouterModule } from '@angular/router';
 import { ComposerTitleBarDropdownComponent } from './components/title-bar/dropdown/dropdown.component';
 import { RemindPreviewComponent } from './components/preview/remind-preview.component';
 import { AttachmentErrorComponent } from './components/popup/attachment-error/attachment-error.component';
+import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
 /**
  * Exported components
  */
@@ -91,6 +92,7 @@ const PROVIDERS = [
     HashtagsModule,
     TextInputAutocompleteModule,
     RouterModule,
+    EmojiPickerModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

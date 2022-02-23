@@ -4,20 +4,7 @@ import { GuestModeExperimentService } from '../experiments/sub-services/guest-mo
 
 @Component({
   selector: 'm-homepagecontainer',
-  template: `
-    <m-defaultFeed__container
-      *ngIf="isGuestMode; else notGuestMode"
-    ></m-defaultFeed__container>
-    <!-- <m-discovery *ngIf="isGuestMode; else notGuestMode">
-      <m-discovery__trends
-        [showTabs]="false"
-        [showChannels]="false"
-      ></m-discovery__trends>
-    </m-discovery> -->
-    <ng-template #notGuestMode>
-      <m-homepage__v2></m-homepage__v2>
-    </ng-template>
-  `,
+  templateUrl: 'container.component.html',
 })
 export class HomepageContainerComponent implements OnInit {
   constructor(
