@@ -35,6 +35,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 import { SettingsV2Service } from '../../settings-v2/settings-v2.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 const BOOST_VIEW_THRESHOLD = 1000;
 
@@ -111,6 +112,7 @@ export class NewsfeedBoostRotatorComponent {
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
+    private experiments: ExperimentsService,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
@@ -185,13 +187,19 @@ export class NewsfeedBoostRotatorComponent {
 
   load() {
     try {
+      let params = {
+        rating: this.rating,
+        rotator: 1,
+      };
+
+      if (this.experiments.hasVariation('new-user-boosts', true)) {
+        params['show_boosts_after_x'] = 604800; // 1 week
+      }
+
       this.feedsService.clear(); // Fresh each time
       this.feedsService
         .setEndpoint('api/v2/boost/feed')
-        .setParams({
-          rating: this.rating,
-          rotator: 1,
-        })
+        .setParams(params)
         .setLimit(12)
         .setOffset(0)
         .fetch();

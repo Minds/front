@@ -28,11 +28,13 @@ import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { IsCommentingService } from './is-commenting.service';
 import { Router } from '@angular/router';
 import isMobile from '../../../helpers/is-mobile';
+import moveCursorToEnd from '../../../helpers/move-cursor-to-end';
 
 @Component({
   selector: 'm-comment__poster',
   templateUrl: 'poster.component.html',
   providers: [AttachmentService],
+  styleUrls: ['poster.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentPosterComponent implements OnInit, OnDestroy {
@@ -49,7 +51,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   @Output('posted') posted$: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('message')
-  messageTextarea: Textarea;
+  textArea: Textarea;
 
   menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -76,7 +78,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private configs: ConfigsService,
     private authModalService: AuthModalService,
-    private isCommentingService: IsCommentingService
+    private isCommentingService: IsCommentingService,
+    public elRef: ElementRef
   ) {}
 
   ngOnInit() {
@@ -258,7 +261,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
    * sets caret position
    */
   updateCaretPosition() {
-    const element = this.messageTextarea?.editorControl?.nativeElement;
+    const element = this.textArea?.editorControl?.nativeElement;
     var caretOffset = 0;
 
     if (element && window.getSelection) {
@@ -322,5 +325,22 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * focuses the input
+   * @param { boolean } shouldMoveCursorToEnd should move cursor to end
+   * @returns { void }
+   */
+  focus(shouldMoveCursorToEnd: boolean = true) {
+    const el = this.textArea?.editorControl?.nativeElement;
+    if (el) {
+      el.focus({
+        preventScroll: true,
+      });
+      if (shouldMoveCursorToEnd) {
+        moveCursorToEnd(el);
+      }
+    }
   }
 }

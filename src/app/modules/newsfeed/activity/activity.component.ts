@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   Input,
@@ -13,6 +14,8 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -106,7 +109,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     private el: ElementRef,
     private cd: ChangeDetectorRef,
     private elementVisibilityService: ElementVisibilityService,
-    private newsfeedService: NewsfeedService
+    private newsfeedService: NewsfeedService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -172,5 +176,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete() {
     this.deleted.next(this.service.entity$.value);
+  }
+
+  /**
+   * Keep scroll position when comments height changes
+   */
+  onCommentsHeightChange({ newHeight, oldHeight }): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    window.scrollTo({
+      top: window.pageYOffset + (newHeight - oldHeight),
+    });
   }
 }
