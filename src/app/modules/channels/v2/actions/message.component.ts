@@ -41,33 +41,25 @@ export class ChannelActionsMessageComponent {
    * Opens conversation pane
    */
   async message(): Promise<void> {
-    if (this.features.has('matrix')) {
-      this.inProgress = true;
-      try {
-        const response = await this.api
-          .put('api/v3/matrix/room/' + this.service.channel$.getValue().guid)
-          .toPromise();
+    this.inProgress = true;
+    try {
+      const response = await this.api
+        .put('api/v3/matrix/room/' + this.service.channel$.getValue().guid)
+        .toPromise();
 
-        this.inProgress = false;
-        this.detectChanges();
+      this.inProgress = false;
+      this.detectChanges();
 
-        const roomId = response?.room?.id;
-        window.open(
-          this.configs.get('matrix')?.chat_url + '/#/room/' + roomId,
-          'chat'
-        );
-      } catch {
-      } finally {
-        this.inProgress = false;
-        this.detectChanges();
-      }
-      return;
+      const roomId = response?.room?.id;
+      window.open(
+        this.configs.get('matrix')?.chat_url + '/#/room/' + roomId,
+        'chat'
+      );
+    } catch {
+    } finally {
+      this.inProgress = false;
+      this.detectChanges();
     }
-    this.dockpanes.open(
-      this.conversationBuilder.buildConversation(
-        this.service.channel$.getValue()
-      )
-    );
   }
 
   detectChanges() {

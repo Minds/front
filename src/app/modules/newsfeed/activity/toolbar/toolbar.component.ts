@@ -65,17 +65,7 @@ export class ActivityToolbarComponent {
 
   async openBoostModal(e: MouseEvent): Promise<void> {
     try {
-      if (this.features.has('boost-modal-v2')) {
-        await this.boostModal.open(this.entity);
-        return;
-      }
-
-      this.modalService.present(BoostCreatorComponent, {
-        data: {
-          channel: this.entity,
-        },
-        injector: this.injector,
-      });
+      await this.boostModal.open(this.entity);
     } catch (e) {
       // do nothing.
     }

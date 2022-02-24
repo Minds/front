@@ -3,7 +3,6 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { OnboardingV3ModalComponent } from './onboarding-modal.component';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -48,8 +47,6 @@ describe('OnboardingV3ModalComponent', () => {
   );
 
   beforeEach(() => {
-    featuresServiceMock.mock('onboarding-october-2020', true);
-
     fixture = TestBed.createComponent(OnboardingV3ModalComponent);
 
     comp = fixture.componentInstance;

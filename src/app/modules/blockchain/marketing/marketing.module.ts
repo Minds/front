@@ -5,8 +5,6 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockchainModule } from '../blockchain.module';
-import { BlockchainMarketingTokenComponent } from './token.component';
-import { BlockchainMarketingRewardsComponent } from './rewards.component';
 import { MarketingModule } from '../../marketing/marketing.module';
 import { ComposerService } from '../../composer/services/composer.service';
 import { BlockchainMarketingTokenV2Component } from './v2/token.component';
@@ -21,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'token',
-    component: BlockchainMarketingTokenComponent,
+    component: BlockchainMarketingTokenV2Component,
     data: {
       title:
         'Buy, Support, & Expand Your Audience with Social Media Cryptocurrency',
@@ -39,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'rewards',
-    component: BlockchainMarketingRewardsComponent,
+    component: BlockchainMarketingRewardsV2Component,
     data: {
       title: 'Rewards',
       description: 'Earn tokens for your contributions to the network',
@@ -62,8 +60,6 @@ const routes: Routes = [
   ],
   providers: [ComposerService, OnchainTransferModalService, WalletV2Service],
   declarations: [
-    BlockchainMarketingTokenComponent,
-    BlockchainMarketingRewardsComponent,
     BlockchainMarketingTokenV2Component,
     BlockchainMarketingRewardsV2Component,
   ],

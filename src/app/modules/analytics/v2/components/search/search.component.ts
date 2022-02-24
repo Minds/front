@@ -24,24 +24,8 @@ export class AnalyticsSearchComponent implements OnInit {
 
   ngOnInit() {}
 
-  search() {
-    // const qs: { q; ref; id? } = { q: this.q, ref: 'top' };
-    // if (this.id) {
-    //   qs.id = this.id;
-    // }
-    // if (this.featureService.has('top-feeds')) {
-    //   this.router.navigate([
-    //     '/newsfeed/global/top',
-    //     { query: this.q, period: '24h' },
-    //   ]);
-    // } else {
-    //   this.router.navigate(['search', qs]);
-    // }
-  }
-
   keyup(e) {
     if (e.keyCode === 13 && this.session.isLoggedIn()) {
-      this.search();
       this.unsetFocus();
     }
     // TODO: allow to tab through suggestions?

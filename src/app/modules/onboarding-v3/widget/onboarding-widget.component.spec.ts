@@ -4,12 +4,9 @@ import { MockService } from '../../../utils/mock';
 import { OnboardingV3WidgetComponent } from './onboarding-widget.component';
 import { OnboardingV3Service } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { Injector } from '@angular/core';
 import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { BehaviorSubject } from 'rxjs';
-import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
-import { FeaturesService } from '../../../services/features.service';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 
 describe('OnboardingV3WidgetComponent', () => {
@@ -28,7 +25,7 @@ describe('OnboardingV3WidgetComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [OnboardingV3WidgetComponent, IfFeatureDirective],
+        declarations: [OnboardingV3WidgetComponent],
         providers: [
           {
             provide: OnboardingV3Service,
@@ -48,10 +45,6 @@ describe('OnboardingV3WidgetComponent', () => {
             useValue: MockService(FormToastService),
           },
           {
-            provide: FeaturesService,
-            useValue: MockService(FeaturesService),
-          },
-          {
             provide: EmailConfirmationService,
             useValue: MockService(EmailConfirmationService),
           },
@@ -62,8 +55,6 @@ describe('OnboardingV3WidgetComponent', () => {
   );
 
   beforeEach(() => {
-    featuresServiceMock.mock('onboarding-october-2020', true);
-
     fixture = TestBed.createComponent(OnboardingV3WidgetComponent);
 
     comp = fixture.componentInstance;

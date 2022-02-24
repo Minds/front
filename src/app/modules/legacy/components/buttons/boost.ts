@@ -34,15 +34,6 @@ export class BoostButton {
    * @returns { void }
    */
   public boost(): void {
-    if (this.features.has('boost-modal-v2')) {
-      this.boostLazyModal.open(this.object);
-      return;
-    }
-
-    this.modalService.present(BoostCreatorComponent, {
-      data: {
-        channel: this.object,
-      },
-    });
+    this.boostLazyModal.open(this.object);
   }
 }
