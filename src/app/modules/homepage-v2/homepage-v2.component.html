@@ -38,30 +38,16 @@
           Take back control of your social media!
         </p>
 
-        <ng-container *mIfFeature="'!onboarding-october-2020'">
-          <m-button
-            class="
-              mf-button mf-button--alt
-              m-homepage__joinButton m-homepage__joinButton--first
-            "
-            (click)="register()"
-            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-          >
-            Join Minds Now
-          </m-button>
-        </ng-container>
-        <ng-container *mIfFeature="'onboarding-october-2020'">
-          <m-button
-            class="m-homepage__joinButton--blueOutline"
-            (click)="register()"
-            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-            data-cy="data-minds-homepage-join-button-main"
-            color="blue"
-            size="large"
-          >
-            Join Minds Now
-          </m-button>
-        </ng-container>
+        <m-button
+          class="m-homepage__joinButton--blueOutline"
+          (click)="register()"
+          i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+          data-cy="data-minds-homepage-join-button-main"
+          color="blue"
+          size="large"
+        >
+          Join Minds Now
+        </m-button>
 
         <div class="m-homepage__appButtons">
           <a [href]="siteUrl + 'mobile'" target="_blank">
@@ -76,38 +62,17 @@
         </div>
       </div>
 
-      <ng-container *mIfFeature="'!onboarding-october-2020'">
-        <div
-          class="
-            m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
-            m-homepage__registerForm
-          "
-        >
-          <minds-form-register
-            [showTitle]="true"
-            [showBigButton]="true"
-            [showPromotions]="false"
-            [showLabels]="true"
-            [showInlineErrors]="true"
-            (done)="registered()"
-            #registerForm
-          >
-          </minds-form-register>
-        </div>
-      </ng-container>
-      <ng-container *mIfFeature="'onboarding-october-2020'">
-        <div
-          class="
+      <div
+        class="
             m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
             m-homepage__phoneImageContainer
           "
-        >
-          <img
-            class="m-homepage__phoneImage"
-            [src]="cdnAssetsUrl + 'assets/homepage/phone1x.png'"
-          />
-        </div>
-      </ng-container>
+      >
+        <img
+          class="m-homepage__phoneImage"
+          [src]="cdnAssetsUrl + 'assets/homepage/phone1x.png'"
+        />
+      </div>
     </div>
   </div>
 
@@ -300,26 +265,15 @@
           </h3>
 
           <div class="m-marketing__actionButtons">
-            <ng-container *mIfFeature="'!onboarding-october-2020'">
-              <m-button
-                class="mf-button mf-button--alt m-homepage__joinButton"
-                (click)="register()"
-                i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-              >
-                Join Minds Now
-              </m-button>
-            </ng-container>
-            <ng-container *mIfFeature="'onboarding-october-2020'">
-              <m-button
-                class="m-homepage__joinButton--blueOutline"
-                (click)="register()"
-                i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
-                color="blue"
-                pulsating="true"
-              >
-                Join Minds Now
-              </m-button>
-            </ng-container>
+            <m-button
+              class="m-homepage__joinButton--blueOutline"
+              (click)="register()"
+              i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+              color="blue"
+              pulsating="true"
+            >
+              Join Minds Now
+            </m-button>
           </div>
         </div>
       </div>

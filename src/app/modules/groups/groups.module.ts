@@ -18,7 +18,6 @@ import { GroupsProfileRequests } from './profile/requests/requests';
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
-import { GroupsSidebarMarkersComponent } from './sidebar-markers/sidebar-markers.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
@@ -101,7 +100,6 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsTileComponent,
     GroupMemberPreviews,
-    GroupsSidebarMarkersComponent,
     GroupsProfileReviewComponent,
     GroupsKickModalComponent,
     GroupsMembershipsComponent,
@@ -118,7 +116,6 @@ const routes: Routes = [
     GroupsSettingsButton,
     GroupsProfileFilterSelector,
     GroupsMembersModuleComponent,
-    GroupsSidebarMarkersComponent,
   ],
   providers: [CanDeactivateGroupService, GroupsSearchService],
 })

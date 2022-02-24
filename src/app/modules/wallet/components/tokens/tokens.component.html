@@ -1,19 +1,9 @@
 <div class="m-walletDashboardBalance__wrapper">
-  <ng-container *mIfFeature="'!wallet-v3'">
-    <m-walletTokenOnboarding
-      *ngIf="!tokenOnboardingComplete"
-      [hasAddress]="hasOnchainAddress"
-      [phoneVerified]="phoneVerified"
-      [dashboardView]="dashboardView"
-      (onboardingComplete)="onTokenOnboardingCompleted()"
-    ></m-walletTokenOnboarding>
-  </ng-container>
-
   <m-walletBalance--tokens></m-walletBalance--tokens>
 </div>
 
 <div class="m-tabs__container">
-  <li class="m-tabs__tab" *mIfFeature="'wallet-v3'">
+  <li class="m-tabs__tab">
     <a
       routerLink="rewards"
       routerLinkActive="selected"
@@ -22,7 +12,7 @@
       Rewards
     </a>
   </li>
-  <li class="m-tabs__tab" *mIfFeature="'wallet-v3'">
+  <li class="m-tabs__tab">
     <a
       routerLink="earnings"
       routerLinkActive="selected"

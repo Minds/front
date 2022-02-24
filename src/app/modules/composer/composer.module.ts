@@ -18,7 +18,6 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { NsfwComponent } from './components/popup/nsfw/nsfw.component';
-import { MonetizeComponent } from './components/popup/monetize/monetize.component';
 import { TagsComponent } from './components/popup/tags/tags.component';
 import { ScheduleComponent } from './components/popup/schedule/schedule.component';
 import { PermawebTermsComponent } from './components/popup/permaweb/permaweb-terms.component';
@@ -43,7 +42,6 @@ const COMPONENTS = [
   ComposerComponent,
   ModalComponent,
   NsfwComponent,
-  MonetizeComponent,
   TagsComponent,
   ScheduleComponent,
   PermawebTermsComponent,

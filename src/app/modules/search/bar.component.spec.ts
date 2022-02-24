@@ -86,8 +86,6 @@ describe('SearchBarComponent', () => {
     fixture = TestBed.createComponent(SearchBarComponent);
     comp = fixture.componentInstance;
 
-    featuresServiceMock.mock('top-feeds', false);
-
     fixture.detectChanges();
 
     if (fixture.isStable()) {
