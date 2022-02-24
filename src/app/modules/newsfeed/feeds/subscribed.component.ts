@@ -40,6 +40,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ApiResourceService } from '../../../common/api/api-resource.service';
 import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
+import { IPageInfo } from 'ngx-virtual-scroller';
 
 @Injectable()
 export class SubscribedFeedResource extends ApiResourceService<any> {
@@ -209,7 +210,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.loadFromService(refresh, forceSync);
   }
 
-  loadNext() {
+  loadNext(event: IPageInfo) {
+    if (this.feedsService.feedLength - event.endIndex > 2) return;
+
     if (
       this.feedsService.canFetchMore &&
       !this.feedsService.inProgress.getValue() &&

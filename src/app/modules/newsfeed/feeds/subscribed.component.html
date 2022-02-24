@@ -73,10 +73,17 @@
         </ng-container>
       </ng-container> -->
 
-      <ng-container
-        *ngFor="let activity$ of feedsService.feed | async; let i = index"
+      <virtual-scroller
+        #scroll
+        [items]="feedsService.feed | async"
+        [parentScroll]="scroll.window"
+        [enableUnequalChildrenSizes]="true"
+        (vsEnd)="loadNext($event)"
       >
-        <!-- <m-featured-content
+        <ng-container
+          *ngFor="let activity$ of scroll.viewPortItems; let i = index"
+        >
+          <!-- <m-featured-content
           *ngIf="(i > 0 && i % 5 === 0) || i === 2"
           [slot]="i + 1"
           [displayOptions]="{
@@ -85,30 +92,31 @@
           }"
           #feedViewChildren
         ></m-featured-content> -->
-        <m-activity
-          *ngIf="activity$ | async as activity"
-          [entity]="activity"
-          [displayOptions]="{
-            showOnlyCommentsInput: true,
-            isFeed: true
-          }"
-          [slot]="i + 1"
-          (deleted)="delete(activity)"
-          #feedViewChildren
-        ></m-activity>
-        <!-- <m-channelRecommendation
+          <m-activity
+            *ngIf="activity$ | async as activity"
+            [entity]="activity"
+            [displayOptions]="{
+              showOnlyCommentsInput: true,
+              isFeed: true
+            }"
+            [slot]="i + 1"
+            (deleted)="delete(activity)"
+            #feedViewChildren
+          ></m-activity>
+          <!-- <m-channelRecommendation
           location="newsfeed"
           *ngIf="shouldShowChannelRecommendation('feed', i)"
         ></m-channelRecommendation> -->
-      </ng-container>
+        </ng-container>
 
-      <infinite-scroll
-        distance="25%"
-        (load)="loadNext()"
-        [moreData]="feedsService.hasMore | async"
-        [inProgress]="feedsService.inProgress | async"
-      >
-      </infinite-scroll>
+        <!-- <infinite-scroll
+          distance="25%"
+          (load)="loadNext()"
+          [moreData]="feedsService.hasMore | async"
+          [inProgress]="feedsService.inProgress | async"
+        >
+        </infinite-scroll> -->
+      </virtual-scroller>
     </div>
   </ng-container>
 </div>
