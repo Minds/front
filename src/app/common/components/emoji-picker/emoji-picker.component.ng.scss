@@ -112,4 +112,9 @@
       width: 338px;
     }
   }
+
+  .emoji-mart-scroll {
+    overflow-x: hidden;
+    @include vertical-scroll;
+  }
 }
