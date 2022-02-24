@@ -108,8 +108,10 @@ qa:sandbox:
 
 qa:nightly:
   parallel: 2
-  allow_failure: false
+  allow_failure: true
   only:
+    refs:
+      - /^master$/
     variables:
       - $CI_NIGHTLY_TESTS == "true"
   <<: *cypress_tests
