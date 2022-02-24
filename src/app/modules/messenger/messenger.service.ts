@@ -20,10 +20,9 @@ export class MessengerService {
    * (don't show if feature enabled)
    */
   public setupLegacyMessengerVisibility(): void {
-    const matrixFeature = this.featuresService.has('matrix');
     const storage = this.storage.get('legacy_messenger');
 
-    const show = storage === null ? !matrixFeature : JSON.parse(storage);
+    const show = storage === null ? false : JSON.parse(storage);
 
     this.showLegacyMessenger$.next(show);
   }

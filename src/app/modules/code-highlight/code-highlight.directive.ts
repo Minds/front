@@ -1,13 +1,10 @@
 import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
 import { CodeHighlightService } from './code-highlight.service';
-import { FeaturesService } from '../../services/features.service';
 
 /**
  * Directive that searches an HTMLElement's children for <pre><code> blocks to
  * highlight using the CodeHighlightService.
- *
- * Does nothing if `code-highlight` feature is not enabled.
  *
  * @example
  * <div m-code-highlight>
@@ -25,15 +22,10 @@ import { FeaturesService } from '../../services/features.service';
 export class CodeHighlightDirective implements AfterViewInit {
   constructor(
     private element: ElementRef,
-    private codeHighlightService: CodeHighlightService,
-    private featuresService: FeaturesService
+    private codeHighlightService: CodeHighlightService
   ) {}
 
   ngAfterViewInit() {
-    if (!this.featuresService.has('code-highlight')) {
-      return;
-    }
-
     this.highlightBlocks(
       this.element.nativeElement.querySelectorAll('pre > code')
     );

@@ -197,7 +197,6 @@
   <!-- ALLOW COMMENTS -->
   <ng-container
     *ngIf="
-      featuresService.has('allow-comments-toggle') &&
       options.indexOf('allow-comments') !== -1 &&
       entity.ownerObj.guid == session.getLoggedInUser().guid
     "

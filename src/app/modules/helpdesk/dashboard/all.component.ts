@@ -3,7 +3,6 @@ import { isPlatformServer } from '@angular/common';
 import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { FeaturesService } from '../../../services/features.service';
 
 /**
  * Category returned from api/v2/helpdesk/categories.
@@ -42,15 +41,11 @@ export class AllHelpdeskDashboardComponent implements OnInit {
     public router: Router,
     public client: Client,
     public session: Session,
-    private features: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async ngOnInit(): Promise<void> {
-    if (
-      this.features.has('helpdesk-2021') &&
-      !isPlatformServer(this.platformId)
-    ) {
+    if (!isPlatformServer(this.platformId)) {
       // API handles authentication and redirection.
       window.location.href = '/api/v3/helpdesk/zendesk';
     }

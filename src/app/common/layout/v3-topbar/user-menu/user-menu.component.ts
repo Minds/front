@@ -29,6 +29,10 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
 
   footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
     { label: 'Canary Mode', routerLink: ['/canary'] },
+    {
+      label: 'Referrals',
+      routerLink: ['/settings/other/referrals'],
+    },
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
@@ -55,14 +59,6 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
-
-    if (this.featuresService.has('settings-referrals')) {
-      const referralsLink = {
-        label: 'Referrals',
-        routerLink: ['/settings/other/referrals'],
-      };
-      this.footerLinks.splice(1, 0, referralsLink);
-    }
   }
 
   getCurrentUser(): MindsUser {
@@ -99,6 +95,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.closeMenu();
     this.themeSubscription.unsubscribe();
   }
 }
