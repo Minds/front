@@ -347,6 +347,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       return false;
     }
 
+    if (this.feedService.inProgress && this.feedService.feedLength === 0) {
+      return false;
+    }
+
     switch (location) {
       case 'emptyState':
         return this.feedService.feedLength === 0;
@@ -355,7 +359,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         // if the newsfeed length was less than equal to 3,
         // show the widget after last item
         if (this.feedService.feedLength <= 3) {
-          return this.feedService.feedLength - 1;
+          return index === this.feedService.feedLength - 1;
         }
 
         // show after the 3rd post

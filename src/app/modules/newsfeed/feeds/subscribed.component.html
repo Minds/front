@@ -24,11 +24,6 @@
       [algorithm]="algorithm"
     ></m-feedHeader>
 
-    <m-channelRecommendation
-      location="newsfeed"
-      *ngIf="shouldShowChannelRecommendation('emptyState')"
-    ></m-channelRecommendation>
-
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended">
@@ -52,6 +47,11 @@
           ></m-newsfeed--boost-rotator>
         </ng-container>
       </ng-container>
+
+      <m-channelRecommendation
+        location="newsfeed"
+        *ngIf="shouldShowChannelRecommendation('emptyState')"
+      ></m-channelRecommendation>
 
       <!--actual feed-->
       <ng-container
