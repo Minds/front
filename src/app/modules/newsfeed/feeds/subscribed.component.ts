@@ -13,18 +13,17 @@ import {
   QueryList,
   ElementRef,
   Injectable,
-  AfterViewInit,
 } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
-
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import {
   ActivatedRoute,
   NavigationEnd,
   Router,
   RouterEvent,
 } from '@angular/router';
-
+import { IPageInfo, VirtualScrollerComponent } from 'ngx-virtual-scroller';
+import { ResizedEvent } from 'angular-resize-event';
 import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Storage } from '../../../services/storage';
@@ -40,7 +39,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { ApiResourceService } from '../../../common/api/api-resource.service';
 import { ScrollRestorationService } from '../../../services/scroll-restoration.service';
-import { IPageInfo } from 'ngx-virtual-scroller';
+import { EntityObservable } from './../../../common/services/entities.service';
 
 @Injectable()
 export class SubscribedFeedResource extends ApiResourceService<any> {
@@ -95,6 +94,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   isScrollRestored: boolean;
 
   @ViewChild('composer') private composer: ComposerComponent;
+  @ViewChild('scroll')
+  virtualScroller: VirtualScrollerComponent;
   @ViewChildren('feedViewChildren', { read: ElementRef })
   feedViewChildren: QueryList<ElementRef>;
 
@@ -121,13 +122,20 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.feedsService.setResource(this.subscribedFeed);
   }
 
+  // when an entity is updated in a way that their height is changed, invalidate the cachedMeasurement
   ngAfterViewInit() {
     // TODO: this is not smooth enough. just for demo
     this.feedViewChildren.changes.subscribe(feedChanges => {
       if (feedChanges.length && !this.isScrollRestored) {
-        window.scrollTo({
-          top: this.scrollRestoration.getOffsetForRoute(this.router.url),
-        });
+        const scrollOffsetTop = this.scrollRestoration.getOffsetForRoute(
+          this.router.url
+        );
+
+        if (scrollOffsetTop) {
+          window.scrollTo({
+            top: scrollOffsetTop,
+          });
+        }
 
         this.isScrollRestored = true;
       }
@@ -202,6 +210,21 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     this.reloadFeedSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
     this.feedsUpdatedSubscription.unsubscribe();
+  }
+
+  /**
+   * called when activity size changed. we want to invalidate the
+   * height measurement cache of the virtual scroller when the activity
+   * height changed.
+   * @param { ResizedEvent } event
+   * @param { object } activity
+   * @param { number } index
+   * @returns { void }
+   */
+  onResized(event: ResizedEvent, activity: any, index: number) {
+    if (event.isFirst) return null;
+
+    this.virtualScroller.invalidateCachedMeasurementAtIndex(index);
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
@@ -290,6 +313,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     if (this.composer) {
       return this.composer.canDeactivate();
     }
+  }
+
+  compareItems(item1: EntityObservable, item2: EntityObservable) {
+    return item1.getValue().guid === item2.getValue().guid;
+  }
+
+  activityTrackBy(index: number, activity: any) {
+    return activity.getValue().guid;
   }
 
   /**

@@ -102,7 +102,7 @@ export class ApiResourceService<T> {
       method: ApiRequestMethod.GET,
       updatePolicy: UpdatePolicy.replace,
       cachePolicy: CachePolicy.cacheThenFetch,
-      cacheStorage: CacheStorage.User,
+      cacheStorage: CacheStorage.Memory,
       ...this._options,
     };
   }

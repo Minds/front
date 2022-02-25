@@ -203,6 +203,7 @@ import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 import { ChannelRecommendationComponent } from './components/channel-recommendation/channel-recommendation.component';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 const routes: Routes = [
   {
@@ -222,6 +223,7 @@ const routes: Routes = [
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
     QRCodeModule,
+    AngularResizeEventModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
@@ -521,6 +523,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     ChannelRecommendationComponent,
+    AngularResizeEventModule,
   ],
   providers: [
     SiteService,

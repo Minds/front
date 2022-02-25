@@ -75,13 +75,21 @@
 
       <virtual-scroller
         #scroll
+        [bufferAmount]="20"
         [items]="feedsService.feed | async"
         [parentScroll]="scroll.window"
         [enableUnequalChildrenSizes]="true"
+        [modifyOverflowStyleOfParentScroll]="false"
+        [compareItems]="compareItems"
+        [ssrChildHeight]="300"
         (vsEnd)="loadNext($event)"
       >
         <ng-container
-          *ngFor="let activity$ of scroll.viewPortItems; let i = index"
+          *ngFor="
+            let activity$ of scroll.viewPortItems;
+            let i = index;
+            trackBy: activityTrackBy
+          "
         >
           <!-- <m-featured-content
           *ngIf="(i > 0 && i % 5 === 0) || i === 2"
@@ -101,6 +109,7 @@
             }"
             [slot]="i + 1"
             (deleted)="delete(activity)"
+            (resized)="onResized($event, activity, i)"
             #feedViewChildren
           ></m-activity>
           <!-- <m-channelRecommendation

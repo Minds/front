@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
 
-export type EntityObservable = BehaviorSubject<Object>;
+export type EntityObservable = BehaviorSubject<any>;
 type EntityObservables = Map<string, EntityObservable>;
 
 @Injectable()
@@ -123,7 +123,6 @@ export class EntitiesService {
       }
 
       const existingEntity = this.entities.get(urn);
-      debugger;
       if (existingEntity) {
         observer.next(existingEntity);
       }
