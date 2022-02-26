@@ -1,0 +1,132 @@
+@import 'defaults.scss';
+
+:host {
+  display: contents;
+
+  .m-networkSwapBox__container {
+    padding: 25px 90px 100px;
+    display: grid;
+    justify-content: center;
+
+    @media (min-width: 480px) and (max-width: 839px) {
+      padding-top: 0px !important;
+    }
+
+    .m-networkSwapBox__container-title {
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: 500px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      cursor: default;
+    }
+
+    .m-networkSwapBox__container-box {
+      min-width: 510px;
+      min-height: 103px;
+      border: 1px solid #404a4e;
+      box-sizing: border-box;
+      border-radius: 3px;
+      margin-top: 23px;
+      padding: 13px 39px 0px 39px;
+      display: inline-table;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      height: 103px;
+    }
+
+    .m-networkSwapBox__container-box-bottom {
+      min-width: 510px;
+      max-height: 109px;
+      border: 1px solid #404a4e;
+      box-sizing: border-box;
+      border-radius: 3px;
+      padding: 24px 39px;
+      display: inline-table;
+      border-top: 0px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      height: 103px;
+    }
+
+    .m-networkSwapBox__container-box-input {
+      outline: none;
+      border: none;
+      width: 100px;
+      height: 20px;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      padding: 0px;
+      margin: 0px;
+      margin-top: 7px;
+      cursor: default;
+    }
+
+    .m-networkSwapBox__container-box-chain {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      margin: 0px;
+      cursor: default;
+    }
+
+    .m-networkSwapBox__container-box-subtitle {
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      height: 20px;
+      cursor: default;
+    }
+
+    .m-networkSwapBox__container-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0px;
+    }
+
+    .m-networkSwapBox__container-row-max {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .m-networkSwapBox__container-max {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      cursor: pointer;
+    }
+
+    .m-networkSwapBox__container-swapButton {
+      position: absolute;
+      left: 47%;
+      top: 55%;
+      border-radius: 50%;
+      padding: 8px;
+      @include m-theme() {
+        color: themed($m-bgColor--secondary);
+        background-color: themed($m-textColor--primary);
+      }
+      cursor: pointer;
+    }
+
+    .m-networkSwapBox__container-transfer-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+    }
+  }
+}

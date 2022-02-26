@@ -45,6 +45,18 @@
           color: themed($m-textColor--primary);
         }
       }
+      .m-networkSwapBridge__title--swap {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+        margin-top: 0px;
+        margin-left: 10px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
       .m-networkSwapBridge__subtitle {
         color: #aeb0b8;
         font-weight: 400;
@@ -66,86 +78,47 @@
           cursor: pointer;
         }
       }
-
-      .m-networkSwapBridge__container {
-        cursor: default;
-        border: 1px solid #404a4e;
-        padding: 10px 24px;
-        height: 124px;
-        box-sizing: border-box;
-        margin-bottom: 16px;
-        border-radius: 3px;
+      .m-networkSwapBridge__container-row {
         align-items: center;
+        margin-top: -20px;
 
-        img {
-          width: 52px;
-          height: 50px;
-          margin-right: 20px;
+        @media (min-width: 480px) and (max-width: 839px) {
+          margin-top: -33px !important;
         }
 
-        .m-networkSwapBridge__container--title {
-          font-weight: 700;
-          font-size: 20px;
-          line-height: 28px;
+        img {
+          margin-bottom: 15px;
+        }
+      }
+      .m-networkSwapBridge__transactions {
+        justify-content: flex-end;
+        display: flex;
+        align-items: center;
+        padding-right: 20px;
+
+        span {
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 500;
+          margin-right: 13px;
+          cursor: pointer;
           @include m-theme() {
             color: themed($m-textColor--primary);
           }
         }
-        .m-networkSwapBridge__container--subtitle {
-          font-weight: 400;
-          font-size: 14px;
-          line-height: 20px;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-        .m-networkSwapBridge__container--arrow {
-          margin-left: 24px;
 
-          i {
-            cursor: pointer;
-          }
-        }
-      }
-      .m-networkSwapBridge__tabs {
-        display: flex;
-        flex-flow: row nowrap;
-        margin: 24px 0 8px 0;
-
-        @include m-theme() {
-          border-bottom: 1px solid themed($m-borderColor--primary);
-        }
-
-        .m-networkSwapBridge__tab {
-          background: none;
-          color: inherit;
-          border: none;
-          padding: 0;
-          font: inherit;
+        i {
           cursor: pointer;
-          outline: inherit;
-          margin-right: 20px;
-          font-weight: 700;
-          font-size: 16px;
-          border-bottom: 5px solid transparent; // alignment with selected option.
-          padding-bottom: 5px;
+        }
 
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
+        img {
+          position: absolute;
+        }
 
-          // active TODO: ngClass
-          &.m-networkSwapBridge__tab--active {
-            @include m-theme() {
-              border-bottom: 5px solid themed($m-blue-dark);
-              color: themed($m-textColor--primary);
-            }
-          }
+        @media (min-width: 480px) and (max-width: 839px) {
+          width: calc(12.5% - 16px) !important;
         }
       }
     }
-  }
-
-  .m-networkSwapBridge__body {
   }
 }

@@ -7,10 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ethers } from 'ethers';
 import { isPlatformBrowser } from '@angular/common';
 import { Provider } from '@ethersproject/abstract-provider';
-import {
-  Abi,
-  ChildAbi,
-} from '../../modules/wallet/components/tokens/polygon/constants';
 
 // Interface for adding new Ethereum chains
 export interface AddEthereumChainParameter {
@@ -56,6 +52,7 @@ export interface Network {
   description: NetworkLogoPath; // short description to be used on site.
   logoPath: NetworkRpcUrl; // path to logo file `assets/...`.
   swappable: boolean; // whether swapping is enabled for the network or not.
+  showHistoric?: boolean; // whether the transaction historical option should be displayed
 }
 
 export const UNKNOWN_NETWORK_LOGO_PATH_DARK = 'assets/ext/unknown-dark.png';
@@ -129,6 +126,7 @@ export class NetworkSwitchService implements OnDestroy {
           'Polygon combines the best of Ethereum and sovereign blockchains into a full-fledged multi-chain system. Typical fee ~ 1% - Transfer ~ 8 mins',
         logoPath: 'assets/ext/polygon_white.svg',
         swappable: true,
+        showHistoric: true,
       };
     }
 
@@ -144,6 +142,7 @@ export class NetworkSwitchService implements OnDestroy {
           'What is Skale. What’s its value. Why should I use is. Who is it suited for. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at feugiat diam.',
         logoPath: 'assets/ext/skale_white.svg',
         swappable: true,
+        showHistoric: false,
       };
     }
 

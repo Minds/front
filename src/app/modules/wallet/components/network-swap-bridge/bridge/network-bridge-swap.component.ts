@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigsService } from '../../../../../common/services/configs.service';
+import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { NetworkBridgeService } from './services/network-bridge.service';
 
 @Component({
   selector: 'm-networkBridgeSwap',
@@ -8,8 +11,24 @@ import { Component, OnInit } from '@angular/core';
     './network-bridge-swap.ng.scss',
   ],
 })
-export class NetworkBridgeSwapModalComponent implements OnInit {
-  ngOnInit(): void {}
+export class NetworkBridgeSwapModalComponent extends AbstractSubscriberComponent
+  implements OnInit {
+  public cdnAssetsUrl;
+
+  constructor(
+    private readonly networkBridgeService: NetworkBridgeService,
+    configs: ConfigsService
+  ) {
+    super();
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
+
+  // selected bridge entity
+  public entity;
+
+  ngOnInit(): void {
+    this.networkBridgeService.selectedBridge$.next(this.entity);
+  }
 
   // Completion intent.
   onComplete: () => any = () => {};
@@ -25,5 +44,6 @@ export class NetworkBridgeSwapModalComponent implements OnInit {
    */
   setModalData({ onDismissIntent, onSaveIntent, entity }) {
     this.onDismissIntent = onDismissIntent || (() => {});
+    this.entity = entity;
   }
 }

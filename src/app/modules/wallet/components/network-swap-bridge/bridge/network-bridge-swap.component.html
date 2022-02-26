@@ -1,12 +1,30 @@
 <div class="m-modalV2__inner">
+  <!-- MODAL HEADER  -->
   <div class="m-networkSwapBridge__header">
     <div class="m-networkSwapBridge__header--close">
       <i class="material-icons" (click)="onDismissIntent()">close</i>
     </div>
-    <div>
-      <h1 class="m-networkSwapBridge__title">Network Bridge</h1>
+    <div class="mdl-grid m-networkSwapBridge__container-row ">
+      <img
+        class="mdl-cell mdl-cell--1-col"
+        [src]="cdnAssetsUrl + entity.logoPath"
+      />
+      <h1 class="mdl-cell mdl-cell--5-col m-networkSwapBridge__title--swap">
+        Network Bridge
+      </h1>
+      <div
+        class="mdl-cell mdl-cell--5-col m-networkSwapBridge__transactions"
+        *ngIf="entity.showHistoric"
+      >
+        <span>Transactions</span>
+        <i class="material-icons">history</i>
+        <img [src]="cdnAssetsUrl + 'assets/ext/ellipse.svg'" alt="ellipse" />
+      </div>
     </div>
   </div>
+
+  <!-- MODAL COMPONENTS -->
+  <m-networkSwapBox></m-networkSwapBox>
 
   <!-- <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner> -->
 </div>

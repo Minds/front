@@ -11,6 +11,7 @@ import {
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { NetworkBridgeSwapService } from './bridge/network-bridge-swap.service';
+import noOp from '../../../../helpers/no-op';
 
 @Component({
   selector: 'm-networkSwapBridge',
@@ -71,7 +72,7 @@ export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
    * @param { BoostableEntity } entity - set entity that is the subject of the boost.
    */
   setModalData({ onDismissIntent, onSaveIntent, entity }) {
-    this.onDismissIntent = onDismissIntent || (() => {});
+    this.onDismissIntent = onDismissIntent || noOp;
   }
 
   /**
