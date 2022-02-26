@@ -76,6 +76,10 @@
           padding: 8px;
           border-radius: 3px;
           cursor: pointer;
+
+          @include m-theme() {
+            color: themed($m-white-always);
+          }
         }
       }
       .m-networkSwapBridge__container-row {
@@ -86,8 +90,12 @@
           margin-top: -33px !important;
         }
 
-        img {
+        .m-networkSwapBridge__container-row-img {
           margin-bottom: 15px;
+          width: 43px !important;
+          background-color: #242a30;
+          border-radius: 4px;
+          padding: 1.5px;
         }
       }
       .m-networkSwapBridge__transactions {
@@ -95,6 +103,10 @@
         display: flex;
         align-items: center;
         padding-right: 20px;
+
+        @media (min-width: 480px) and (max-width: 839px) {
+          padding-right: 0px !important;
+        }
 
         span {
           font-size: 14px;
@@ -113,6 +125,7 @@
 
         img {
           position: absolute;
+          margin-top: -12px;
         }
 
         @media (min-width: 480px) and (max-width: 839px) {

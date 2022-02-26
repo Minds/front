@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Web3WalletService } from '../../../../modules/blockchain/web3-wallet.service';
-import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../../common/services/form-toast.service';
+import { Web3WalletService } from '../../../../../../blockchain/web3-wallet.service';
+import { AbstractSubscriberComponent } from '../../../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { FormToastService } from '../../../../../../../common/services/form-toast.service';
 import {
   Network,
   NetworkSiteName,
   NetworkSwitchService,
-} from '../../../../common/services/network-switch-service';
-import { ConfigsService } from '../../../../common/services/configs.service';
-import { FeaturesService } from '../../../../services/features.service';
-import { NetworkBridgeSwapService } from './bridge/network-bridge-swap.service';
-import noOp from '../../../../helpers/no-op';
+} from '../../../../../../../common/services/network-switch-service';
+import { ConfigsService } from '../../../../../../../common/services/configs.service';
+import { FeaturesService } from '../../../../../../../services/features.service';
+import { NetworkBridgeSwapService } from '../../../bridge/components/bridge-transfer/network-bridge-transfer.service';
+import noOp from '../../../../../../../helpers/no-op';
 
 @Component({
-  selector: 'm-networkSwapBridge',
-  templateUrl: 'network-swap-bridge-modal.component.html',
-  styleUrls: ['network-swap-bridge-modal.ng.scss'],
+  selector: 'm-networkBridgePanelModal',
+  templateUrl: 'network-bridge-panel-modal.component.html',
+  styleUrls: ['network-bridge-panel-modal.ng.scss'],
 })
-export class NetworkSwapBridgeModalComponent extends AbstractSubscriberComponent
+export class NetworkBridgePanelModalComponent
+  extends AbstractSubscriberComponent
   implements OnInit {
   // whether load is in progress.
   public readonly inProgress$: BehaviorSubject<boolean> = new BehaviorSubject<

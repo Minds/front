@@ -10,6 +10,7 @@
     >
 
     <div
+      (click)="navigateToBridge(network)"
       class="mdl-grid m-networkSwapBridge__container"
       *ngFor="let network of swappableNetworks"
     >
@@ -30,25 +31,11 @@
       <div
         class="mdl-cell mdl-cell--1-col m-networkSwapBridge__container--arrow"
       >
-        <i
-          class="material-icons m-walletTransactionsTable__icon--arrow"
-          (click)="navigateToBridge(network)"
+        <i class="material-icons m-walletTransactionsTable__icon--arrow"
           >arrow_forward</i
         >
       </div>
     </div>
-  </div>
-  <div class="m-networkSwapBridge__body" *ngIf="!(inProgress$ | async)">
-    <m-wallet__skale
-      *ngIf="(selectedNetworkSiteName$ | async) === 'SKALE'"
-    ></m-wallet__skale>
-    <!-- Add templates for other swap modals here -->
-    <m-wallet__polygon
-      *ngIf="
-        (selectedNetworkSiteName$ | async) === 'Polygon' ||
-        (selectedNetworkSiteName$ | async) === 'Goerli'
-      "
-    ></m-wallet__polygon>
   </div>
   <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
 </div>

@@ -7,10 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'm-wallet__skaleFaucet',
   templateUrl: 'faucet.component.html',
-  styleUrls: [
-    './faucet.component.ng.scss',
-    '../../network-swap-bridge-common.ng.scss',
-  ],
+  styleUrls: ['./faucet.component.ng.scss'],
 })
 export class WalletSkaleFaucetComponent {
   public readonly balance$: BehaviorSubject<number> = new BehaviorSubject<

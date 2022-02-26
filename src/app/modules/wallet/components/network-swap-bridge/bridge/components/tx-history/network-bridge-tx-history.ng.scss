@@ -1,0 +1,48 @@
+@import 'defaults.scss';
+
+::ng-deep .modal-content--history {
+  min-width: 710px;
+  max-height: 526px;
+  height: 526px;
+
+  .modal-content {
+    height: inherit;
+  }
+
+  .m-tabs__tab--selected {
+    border-bottom: 5px solid #44aaff !important;
+  }
+}
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    padding: 0px !important;
+    .m-tabs__container {
+      padding-top: 0px !important;
+
+      @media (min-width: 480px) and (max-width: 839px) {
+        padding-left: 40px !important;
+      }
+    }
+    .m-networkSwapBridge__header {
+      .m-networkSwapBridge__header--close {
+        padding: 40px 40px 0px 40px;
+        box-sizing: border-box;
+      }
+      .m-networkSwapBridge__container-row {
+        padding: 0px 40px;
+      }
+    }
+
+    .m-networkSwapBridge__body {
+      padding: 17px 40px;
+      display: inline-grid;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: scroll;
+      max-height: 350px;
+    }
+  }
+}

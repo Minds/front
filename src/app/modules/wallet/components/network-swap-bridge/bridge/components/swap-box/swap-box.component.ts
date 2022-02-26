@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   selector: 'm-networkSwapBox',
   templateUrl: 'swap-box.component.html',
   styleUrls: [
-    '../../../network-swap-bridge-common.ng.scss',
+    '../bridge-panel/network-swap-bridge-common.ng.scss',
     './swap-box.ng.scss',
   ],
 })

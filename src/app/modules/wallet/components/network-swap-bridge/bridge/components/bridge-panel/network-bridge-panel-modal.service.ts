@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ModalService } from '../../../../services/ux/modal.service';
+import { ModalService } from '../../../../../../../services/ux/modal.service';
 
-import { NetworkSwapBridgeModalComponent } from './network-swap-bridge-modal.component';
+import { NetworkBridgePanelModalComponent } from './network-bridge-panel-modal.component';
 
 @Injectable({ providedIn: 'root' })
-export class NetworkSwapBridgeService {
+export class NetworkBridgePanelModalService {
   constructor(private modalService: ModalService) {}
 
   async open(entity = {}): Promise<any> {
-    const modal = this.modalService.present(NetworkSwapBridgeModalComponent, {
+    const modal = this.modalService.present(NetworkBridgePanelModalComponent, {
       data: {
         entity: entity,
         onSaveIntent: () => modal.close(),

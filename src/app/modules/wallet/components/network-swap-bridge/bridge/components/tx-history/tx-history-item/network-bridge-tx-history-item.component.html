@@ -1,0 +1,47 @@
+<div class="m-networkBridgeTxHistoryItem-container">
+  <div class="mdl-cell mdl-cell--1-col" *ngIf="isSuccess(item)">
+    <i class="material-icons m-networkBridgeTxHistoryItem-container-img-success"
+      >done</i
+    >
+  </div>
+  <div class="mdl-cell mdl-cell--1-col" *ngIf="isPendingAction(item)">
+    <i class="material-icons m-networkBridgeTxHistoryItem-container-img-pending"
+      >hourglass_empty</i
+    >
+  </div>
+  <div
+    class="mdl-cell mdl-cell--7-col m-networkBridgeTxHistoryItem-container-text "
+  >
+    <div>
+      <span class="m-networkBridgeTxHistoryItem-container-text-bold"
+        >Withdraw</span
+      >
+      <span class="m-networkBridgeTxHistoryItem-container-text-light">
+        · 29th Jan 2022
+      </span>
+    </div>
+    <span class="m-networkBridgeTxHistoryItem-container-text-light">
+      Success · From Mumbai to Goerli
+    </span>
+  </div>
+  <div class="mdl-cell mdl-cell--2-col">
+    <span class="m-networkBridgeTxHistoryItem-container-amount">100 Minds</span>
+  </div>
+  <div
+    class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"
+    *ngIf="isSuccess(item)"
+  >
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color "
+      >call_made</i
+    >
+  </div>
+  <div
+    class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"
+    *ngIf="isPendingAction(item)"
+  >
+    <i class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color"
+      >chevron_right</i
+    >
+  </div>
+</div>

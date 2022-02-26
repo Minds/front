@@ -24,6 +24,7 @@
       .m-networkSwapBridge__header {
         .m-networkSwapBridge__container {
           padding: 4px 24px !important;
+          cursor: pointer;
         }
       }
     }
@@ -35,7 +36,7 @@
         font-weight: bold;
         margin: 0 0 5px 0;
         margin-top: -20px;
-
+        cursor: pointer;
         @include m-theme() {
           color: themed($m-textColor--primary);
         }
@@ -48,6 +49,7 @@
         margin-bottom: 39px;
         box-sizing: border-box;
         display: flex;
+        cursor: pointer;
       }
       .m-networkSwapBridge__header--close {
         display: flex;
@@ -59,11 +61,13 @@
           padding: 8px;
           border-radius: 3px;
           cursor: pointer;
+          @include m-theme() {
+            color: themed($m-white-always);
+          }
         }
       }
 
       .m-networkSwapBridge__container {
-        cursor: default;
         border: 1px solid #404a4e;
         padding: 10px 24px;
         height: 124px;
@@ -71,11 +75,15 @@
         margin-bottom: 16px;
         border-radius: 3px;
         align-items: center;
+        cursor: pointer;
 
         img {
           width: 52px;
           height: 50px;
           margin-right: 20px;
+          background-color: #242a30;
+          border-radius: 4px;
+          padding: 1.5px;
         }
 
         .m-networkSwapBridge__container--title {
@@ -117,7 +125,6 @@
           border: none;
           padding: 0;
           font: inherit;
-          cursor: pointer;
           outline: inherit;
           margin-right: 20px;
           font-weight: 700;
