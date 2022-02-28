@@ -1,0 +1,157 @@
+// USAGE --------------------
+
+// .m-myComponent {
+//   @include .heading2Medium;
+// }
+
+// Format:
+//{heading/body}{size#}{weight}
+
+//- BOLD ---------------------
+@mixin heading1Bold {
+  @include heading1;
+  @include fontWeightBold;
+}
+@mixin heading2Bold {
+  @include heading2;
+  @include fontWeightBold;
+}
+@mixin heading3Bold {
+  @include heading3;
+  @include fontWeightBold;
+}
+@mixin heading4Bold {
+  @include heading4;
+  @include fontWeightBold;
+}
+@mixin body1Bold {
+  @include body1;
+  @include fontWeightBold;
+}
+@mixin body2Bold {
+  @include body2;
+  @include fontWeightBold;
+}
+@mixin body3Bold {
+  @include body3;
+  @include fontWeightBold;
+}
+// - MEDIUM ---------------------
+@mixin heading1Medium {
+  @include heading1;
+  @include fontWeightMedium;
+}
+@mixin heading2Medium {
+  @include heading2;
+  @include fontWeightMedium;
+}
+@mixin heading3Medium {
+  @include heading3;
+  @include fontWeightMedium;
+}
+@mixin heading4Medium {
+  @include heading4;
+  @include fontWeightMedium;
+}
+@mixin body1Medium {
+  @include body1;
+  @include fontWeightMedium;
+}
+@mixin body2Medium {
+  @include body2;
+  @include fontWeightMedium;
+}
+@mixin body3Medium {
+  @include body3;
+  @include fontWeightMedium;
+}
+//- REGULAR ---------------------
+@mixin heading1Regular {
+  @include heading1;
+  @include fontWeightRegular;
+}
+@mixin heading2Regular {
+  @include heading2;
+  @include fontWeightRegular;
+}
+@mixin heading3Regular {
+  @include heading3;
+  @include fontWeightRegular;
+}
+@mixin heading4Regular {
+  @include heading4;
+  @include fontWeightRegular;
+}
+@mixin body1Regular {
+  @include body1;
+  @include fontWeightRegular;
+}
+@mixin body2Regular {
+  @include body2;
+  @include fontWeightRegular;
+}
+@mixin body3Regular {
+  @include body3;
+  @include fontWeightRegular;
+}
+
+//----------------------
+// DON'T use these in your
+// component stylesheets
+
+@mixin fontWeightBold {
+  font-weight: 700;
+}
+@mixin fontWeightMedium {
+  font-weight: 500;
+}
+@mixin fontWeightRegular {
+  font-weight: 400;
+}
+//----------------------
+@mixin heading1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+@mixin heading2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+@mixin heading3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+@mixin heading4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+//----------------------
+@mixin body1 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+@mixin body2 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+@mixin body3 {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+}
+//----------------------
+// ojm remove these???
+@mixin textColor1 {
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
+@mixin textColor2 {
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
+}
+@mixin border {
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+}

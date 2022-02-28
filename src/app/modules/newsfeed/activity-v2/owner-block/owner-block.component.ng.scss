@@ -1,0 +1,197 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+
+  .m-activity__ownerBlock {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-bottom: $spacing1;
+    box-sizing: border-box;
+
+    &.m-activity__ownerBlock--minimalMode {
+      padding-left: $spacing4;
+      padding-right: $spacing2;
+      .m-activityOwnerBlock__avatar {
+        img {
+          height: 35px;
+          width: 35px;
+          @include m-theme() {
+            border: none;
+          }
+        }
+        .m-activityOwnerBlock__remindIcon--minimalMode {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          border-radius: 50%;
+          height: 17px;
+          width: 17px;
+          @include m-theme() {
+            background-color: themed($m-bgColor--contrast);
+          }
+          i {
+            font-weight: 700;
+            font-size: 11px;
+            @include m-theme() {
+              color: themed($m-link);
+            }
+          }
+        }
+      }
+      .m-activityOwnerBlock__displayName,
+      .m-activityOwnerBlock__groupName {
+        margin-left: $spacing2;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-activityOwnerBlock__permalink,
+      .m-activityOwnerBlock__right {
+        display: none;
+      }
+    }
+  }
+
+  .m-activityOwnerBlock__avatar {
+    align-self: center;
+    padding-right: $spacing2;
+    position: relative;
+    img {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+    }
+  }
+
+  .m-activityOwnerBlock__body {
+    flex: 1;
+    align-self: center;
+    overflow: hidden;
+
+    > a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .m-activityOwnerBlock__right {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  a.m-activityOwnerBlock__displayName,
+  a.m-activityOwnerBlock__groupName {
+    display: inline-flex;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    span {
+      @include body1Bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    > * {
+      display: inline-flex;
+      vertical-align: middle;
+      max-width: 100%;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      .m-activityOwnerBlock__remindIcon {
+        text-decoration: none;
+      }
+    }
+
+    ::ng-deep m-channel--badges {
+      padding: 0 0 0 $spacing1;
+      margin-left: 0;
+
+      .m-channel--badges i {
+        font-size: 20px;
+      }
+      @media screen and (max-width: $max-mobile) {
+        /* prevent badges from shown behind right container */
+        overflow: visible !important;
+      }
+    }
+  }
+
+  a.m-activityOwnerBlock__username span,
+  .m-activityOwnerBlock__dot,
+  .m-activityOwnerBlockPermalink__text {
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    padding: 0 0 0 $spacing2;
+  }
+
+  .m-activityOwnerBlock__groupName {
+    display: block;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .m-activityOwnerBlock__remindIcon {
+    font-size: 18px;
+    vertical-align: middle;
+    @include m-theme() {
+      color: themed($m-link);
+    }
+  }
+
+  .m-activityOwnerBlock__permalink {
+    .m-activityOwnerBlockPermalink__text {
+      display: inline;
+      .material-icons {
+        font-size: initial;
+        vertical-align: text-top;
+      }
+    }
+  }
+
+  .m-activity__remindUsers {
+    padding-bottom: $spacing5;
+    > * {
+      vertical-align: middle;
+    }
+
+    i {
+      font-size: 18px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    span,
+    a {
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      text-decoration: none;
+    }
+
+    span {
+      margin-left: $spacing2;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}

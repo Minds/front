@@ -1,0 +1,90 @@
+@import 'defaults.scss';
+
+:host {
+  a {
+    text-decoration: none;
+    display: contents;
+  }
+
+  .m-activity__flag {
+    padding: 4px 8px;
+    border-radius: 26px;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row;
+    cursor: default;
+    text-decoration: none;
+
+    > i,
+    > span > a > span,
+    > a > i {
+      line-height: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: 400;
+      display: flex;
+
+      @include m-theme() {
+        // border-color: transparent !important; ojm
+        border: 1px solid green;
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    &:has(& > span) i {
+      margin-right: 5px;
+    }
+
+    > span,
+    > a > span {
+      @media screen and (max-width: $min-tablet) {
+        display: none;
+      }
+    }
+
+    @include m-theme() {
+      background-color: unset;
+      color: themed($m-textColor--secondary);
+    }
+  }
+  .m-activity__flag--permaweb,
+  .m-activity__flag--pinned,
+  .m-activity__flag--boosted {
+    i {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    svg {
+      @include m-theme() {
+        fill: themed(m-textColor--secondary);
+      }
+    }
+
+    i,
+    svg {
+      font-size: 18px;
+      @media screen and (max-width: $min-tablet) {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .m-activity__flag--boosted {
+    cursor: pointer;
+  }
+
+  .m-activityMetrics__views {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+    font-size: 14px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

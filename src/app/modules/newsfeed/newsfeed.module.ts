@@ -39,6 +39,7 @@ import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.
 import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
+import { ActivityV2Module } from './activity-v2/activity.module';
 
 const routes: Routes = [
   {
@@ -102,7 +103,8 @@ const routes: Routes = [
     SuggestionsModule,
     NoticesModule,
     SearchModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     ComposerModule,
     DiscoverySharedModule,
     LanguageModule,

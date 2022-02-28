@@ -1,0 +1,128 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  padding: $spacing4 $spacing8;
+  border-radius: 0;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: $spacing4;
+  }
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  &,
+  &.m-border {
+    border-radius: $m-borderRadius;
+  }
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+
+  &.m-activity--fixedHeightContainer {
+    height: 100%;
+    width: 100%;
+  }
+
+  &.m-activity--minimalRemind {
+    .m-activity__remindUsers {
+      display: none;
+    }
+  }
+
+  &.m-activity--fixedHeight {
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+
+    ::ng-deep {
+      m-activity__nsfwConsent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    ::ng-deep m-activity__remind {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+  }
+
+  .m-activity__leftColumn,
+  ::ng-deep m-activityV2__remind .m-activity__leftColumn {
+    padding-right: $spacing4;
+  }
+
+  .m-activity__rightColumn,
+  ::ng-deep m-activityV2__remind .m-activity__rightColumn {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 56px);
+  }
+  // COMMENTS ////////////////////////////////////////
+  ::ng-deep m-comments__entityOutlet {
+    margin-top: $spacing6;
+    .m-commentsEntityOutlet__expand,
+    .m-commentsEntityOutlet__expand--hide {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .m-commentsEntityOutlet__topBar {
+      margin-left: 0 !important;
+    }
+  }
+
+  ::ng-deep .m-comment .minds-avatar {
+    @include m-theme() {
+      background: themed($m-bgColor--primary);
+    }
+  }
+
+  &
+    > ::ng-deep
+    m-comments__entityOutlet
+    > ::ng-deep
+    m-comments__tree
+    > ::ng-deep
+    m-comments__thread
+    > .m-comments__thread,
+  & > ::ng-deep m-comments__entityOutlet {
+    & > ::ng-deep m-comment__poster .m-commentPoster__wrapper {
+      margin: 10px;
+    }
+  }
+
+  // AVATAR /////////////////////////////////////////////
+  .m-activity__avatar,
+  ::ng-deep m-activityV2__remind .m-activity__avatar {
+    padding-right: $spacing4;
+
+    img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+  }
+
+  .m-activityLeftColumn__spacer {
+    height: $spacing10;
+  }
+
+  // MINIMAL MODE ////////////////////////////////////////
+  .m-activity--minimalMode {
+    ::ng-deep .m-activityContent--paywalledStatus {
+      padding-top: 30px;
+    }
+    ::ng-deep .m-videoPlayer__placeholder i {
+      font-size: 70px;
+    }
+  }
+}

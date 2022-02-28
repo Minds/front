@@ -1,0 +1,397 @@
+@import 'defaults.scss';
+
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  margin-top: $spacing4;
+  &.m-activityContent--paywalledStatus {
+    min-height: 120px;
+    padding-top: 50px;
+  }
+  &.m-activityContent--fixedHeight {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+
+    .m-activityContent__media--video,
+    .m-activityContent__media--image,
+    .m-activityContent__media--richEmbed,
+    .m-activityContent__remind {
+      flex-shrink: 1;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .m-activityContent__media--image img {
+      // max-height: 100%;
+      // height: 100%;
+    }
+
+    .m-activityContent__remind--hasMessage & {
+      ::ng-deep .m-rich-embed-src {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 80px;
+        padding: 10px;
+        position: relative;
+
+        .thumbnail {
+          width: 30%;
+          img {
+            height: 80px;
+            border-radius: 3px;
+          }
+        }
+        .meta {
+          flex: 1;
+        }
+      }
+    }
+
+    .m-activityContent__fixedHeightSpacer {
+      flex: 1;
+    }
+  }
+
+  .m-activityContent__remindDeletedNotice {
+    padding: 20px;
+    margin: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-color: themed($m-borderColor--primary);
+    }
+
+    i,
+    span {
+      vertical-align: middle;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  .m-activityContent__remind {
+    overflow: hidden;
+
+    padding: 0 !important;
+
+    &.m-activityContent__remind--minimalMode {
+      padding: 0;
+      .m-activityContent__messageWrapper {
+        padding-top: 0;
+      }
+
+      ::ng-deep m-activityV2__remind {
+        @include m-theme() {
+          border: none;
+        }
+        font-weight: 400;
+        a {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .m-activityContent__teaserFadeout {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(100% - 40px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+    @include m-theme() {
+      background: linear-gradient(
+        to bottom,
+        rgba(themed($m-bgColor--primary), 0) 0%,
+        rgba(themed($m-bgColor--primary), 0.3) 14%,
+        rgba(themed($m-bgColor--primary), 0.8) 44%,
+        rgba(themed($m-bgColor--primary), 1) 80%
+      );
+    }
+  }
+
+  // MEDIA ******************************************
+
+  .m-activityContent__mediaDescription,
+  .m-activityContent__message {
+    cursor: pointer;
+  }
+
+  .m-activityContent__media--video,
+  .m-activityContent__media--image,
+  .m-activityContent__media--richEmbed {
+    @include m-theme() {
+      background: themed($m-bgColor--primary);
+    }
+  }
+
+  // IMAGE ******************************************
+
+  .m-activityContent__media--image {
+    // padding-right: $spacing5;
+    a {
+      height: auto;
+      width: auto;
+      display: inline-block;
+    }
+    img {
+      // object-fit: contain;
+      // width: 100%;
+      max-height: 500px;
+      border-radius: 3px;
+    }
+  }
+
+  // VIDEO ******************************************
+
+  .m-activityContent__media--video {
+    ::ng-deep {
+      m-videoPlayer--scrollaware {
+        border-radius: 3px;
+        max-height: 500px; //ojm I added this?
+      }
+      .m-videoPlayer__placeholder {
+        padding-top: 56.25%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      &.isPaywall {
+        .m-videoPlayer__placeholder {
+          .minds-video-play-icon {
+            @media screen and (max-width: $max-mobile) {
+              font-size: 70px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-activityContent__media--video--modal {
+    width: 100%;
+    height: 100%;
+  }
+
+  // ojm should I make this into a separate component?
+  // ojm is rich embed used elsewhere?
+  // RICH EMBED ******************************************
+  .m-activityContent__media--richEmbed {
+    &.m-activityContent__mediaRichEmbed--minimalMode {
+      ::ng-deep .meta {
+        padding: 20px $spacing4;
+        > * {
+          font-size: 15px;
+        }
+        h2 {
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+        .m-blurb {
+          display: none;
+        }
+        .m-url {
+          @include m-theme() {
+            color: themed($m-textColor--secondary) !important;
+          }
+        }
+      }
+    }
+    ::ng-deep {
+      img {
+        width: 100%;
+        display: block;
+        height: auto;
+        max-height: 400px;
+        object-fit: cover;
+      }
+      .meta {
+        padding: $spacing5;
+        display: block;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      h2 {
+        font-size: 15px;
+        text-decoration: none;
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
+        }
+      }
+      .m-blurb {
+        display: none;
+      }
+      .m-url {
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+        @include m-theme() {
+          color: themed($m-textColor--secondary) !important;
+        }
+      }
+
+      a.m-richEmbed--paywalled {
+        position: relative;
+        cursor: default;
+        @include m-theme() {
+          background-color: themed($m-bgColor--primary);
+        }
+        .m-rich-embed--title {
+          font-size: 18px;
+          font-weight: 500;
+          margin-bottom: 8px;
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+        }
+        .m-blurb {
+          display: block;
+          font-size: 16px;
+          line-height: 24px;
+          margin-bottom: 0;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+        .m-url {
+          display: none;
+        }
+      }
+    }
+  }
+  // TEXT ******************************************
+
+  .m-activityContent__messageWrapper {
+    padding: 0 !important;
+
+    .m-code-highlight {
+      overflow-x: auto;
+      font-size: 16px;
+
+      pre {
+        overflow-x: auto;
+      }
+    }
+  }
+
+  .m-activityContent__message {
+    @include body2Regular;
+    white-space: pre-line;
+
+    &.m-activityContent__message--isTextOnly {
+      word-break: break-word;
+
+      &.m-activityContent__message--short span {
+        @include heading2Medium;
+      }
+      &.m-activityContent__message--medium span {
+        @include heading4Medium;
+      }
+    }
+    &.m-activityContent__message--minimalMode {
+      &.m-activityContent__message--quote {
+        .m-activityContent__messageWrapper {
+          font-weight: 400;
+          @include m-theme() {
+            border-bottom: 1px solid themed($m-borderColor--primary);
+          }
+        }
+      }
+
+      .m-activityContent__messageWrapper {
+        padding: $spacing4;
+      }
+      a {
+        font-weight: 400;
+      }
+    }
+  }
+
+  .m-activityContent__message,
+  .m-activityContent__mediaDescription {
+    white-space: pre-line;
+    word-break: break-word;
+    position: relative;
+
+    a {
+      text-decoration: none;
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .m-activityContent__mediaDescriptionText {
+    @include body2Regular;
+    @include textColor1;
+    padding-bottom: $spacing4;
+  }
+
+  .m-activityContent__mediaDescription {
+    margin: 0;
+    .m-activityContent__descriptionWrapper {
+      padding: 0;
+      // padding: 16px $activity-padding-lr; ojm
+      &.m-activityContent__descriptionWrapper--minimalMode {
+        padding: 0;
+
+        // padding: 16px $activity-padding-lr--minimalMode; ojm
+        // > p {
+        //   line-height: 20px;
+        // }
+        .m-activityContent__mediaTitle {
+          @include heading3Bold; // ojm ask michael what to do
+          margin-bottom: 0px;
+        }
+        // > p:not(.m-activityContent__mediaTitle) {
+        //   a {
+        //     font-weight: 400;
+        //   }
+        // }
+      }
+    }
+    p {
+      margin: 0;
+      padding: 0;
+      // font-size: inherit;
+      color: inherit;
+    }
+  }
+
+  .m-activityContent__mediaTitle {
+    &:not(.m-activityContent__mediaTitle--noDescription) {
+      @include heading3Bold; // ojm ask michael what to do
+      margin-bottom: $spacing2;
+    }
+  }
+
+  ::ng-deep m-read-more--button {
+    .m-readMoreButton--v2 > span {
+      @include body2Medium;
+      text-transform: capitalize;
+      letter-spacing: normal;
+    }
+  }
+}

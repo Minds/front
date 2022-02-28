@@ -1,0 +1,17 @@
+<a
+  *ngIf="(service.pagerVisible$ | async) && modalPager.hasPrev"
+  class="m-activityModal__pager m-activityModal__pager--previous"
+  (click)="goToPrev()"
+  @mediumFade
+>
+  <i class="material-icons">chevron_left</i>
+</a>
+
+<a
+  *ngIf="(service.pagerVisible$ | async) && modalPager.hasNext"
+  class="m-activityModal__pager m-activityModal__pager--next"
+  (click)="goToNext()"
+  @mediumFade
+>
+  <i class="material-icons">chevron_right</i>
+</a>

@@ -21,6 +21,7 @@ import { FeaturesService } from '../../services/features.service';
 @Component({
   selector: 'm-newsfeed',
   templateUrl: 'newsfeed.component.html',
+  styleUrls: ['newsfeed.component.ng.scss'],
 })
 export class NewsfeedComponent implements OnInit, OnDestroy {
   newsfeed: Array<Object>;
@@ -58,6 +59,8 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   newNavigation: boolean = false;
 
+  activityV2Feature: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -94,6 +97,9 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       this.hashtag = params.hashtag || null;
       this.all = Boolean(params.all);
     });
+
+    // ojm connect to feature flag
+    this.activityV2Feature = true;
   }
 
   ngOnInit() {

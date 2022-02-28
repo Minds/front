@@ -1,0 +1,40 @@
+<ng-container *ngIf="entity$ | async as entity">
+  <!------------------------->
+  <!-- PINNED  -------------->
+  <!------------------------->
+  <span
+    *ngIf="entity.pinned && service.displayOptions.showPinnedBadge"
+    class="m-activityV2__badge m-activityV2__badge--pinned"
+    data-cy="m-activity__pinnedFlag"
+    title="Pinned"
+  >
+    <m-icon from="custom" iconId="push_pin" m-tooltip--icon></m-icon>
+  </span>
+  <!------------------------->
+  <!-- PERMAWEB  ------------>
+  <!------------------------->
+  <span
+    *ngIf="entity.permaweb_id"
+    class="m-activityV2__badge m-activityV2__badge--permaweb"
+    data-cy="m-activity__permawebFlag"
+    title="Permaweb"
+  >
+    <a
+      [href]="
+        'https://viewblock.io/arweave/tx/' + entity.permaweb_id + '?showData'
+      "
+      target="_blank"
+    >
+      <i class="material-icons">vpn_lock</i>
+    </a>
+  </span>
+  <!------------------------->
+  <!-- PAYWALL / MINDS+ ----->
+  <!------------------------->
+  <m-paywallBadge
+    [entity]="entity"
+    [topRightPosition]="false"
+    [showTierName]="false"
+    class="m-activityV2__badge m-activityV2__badge--paywall"
+  ></m-paywallBadge>
+</ng-container>

@@ -49,6 +49,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   dateRangeEnabled: boolean = false;
 
+  // ojm sync up with feature flag
+  activityV2Feature: boolean = true;
+
   @Input('layout') set _layout(layout: string) {
     this.isGrid = layout === 'grid';
     this.detectChanges();

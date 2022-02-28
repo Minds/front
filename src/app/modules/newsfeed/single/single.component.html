@@ -2,6 +2,7 @@
   <div
     [class.m-pageLayout__container]="!showLegacyActivity"
     [class.m-newsfeed__single--legacy]="showLegacyActivity"
+    [class.m-newsfeed__single--activityV2]="activityV2Feature"
   >
     <m-errorSplash
       class="m-pageLayout__pane--main"
@@ -42,7 +43,7 @@
         ></m-activity>
       </div>
       <div class="m-newsfeedSingle__mobileSuggestions">
-        <ng-container *ngTemplateOutlet="suggestions"></ng-container>
+        | <ng-container *ngTemplateOutlet="suggestions"></ng-container>
       </div>
     </div>
 

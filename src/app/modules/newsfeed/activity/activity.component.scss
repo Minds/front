@@ -7,8 +7,13 @@ m-activity {
   box-sizing: border-box;
 
   &,
-  &.m-border {
+  &.m-border,
+  &:not(.m-activity--v2) {
     border-radius: $m-borderRadius;
+  }
+
+  &.m-activity--v2 {
+    border: none !important;
   }
 
   @include m-theme() {

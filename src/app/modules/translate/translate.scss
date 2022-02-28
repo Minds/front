@@ -2,13 +2,13 @@ m-translate {
   &.m-translate--minimalMode {
     .m-translate__hasNav2020 {
       > * {
-        padding: 10px $activity-padding-lr--minimalMode;
+        padding: 10px spacing4;
       }
     }
   }
   .m-translate__hasNav2020 {
     > * {
-      padding: 10px $activity-padding-lr;
+      padding: 10px $spacing5;
       > * {
         padding: 0;
         margin-left: 0px;

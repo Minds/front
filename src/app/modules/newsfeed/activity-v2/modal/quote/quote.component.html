@@ -1,0 +1,14 @@
+<a href="{{ canonicalUrl }}" target="_blank"></a
+><m-activityV2
+  [entity]="_entity"
+  [displayOptions]="{
+    showOnlyCommentsInput: false,
+    showComments: false,
+    autoplayVideo: true,
+    isModal: false,
+    fixedHeight: true,
+    fixedHeightContainer: true
+  }"
+  [slot]="1"
+  (click)="activityClick($event)"
+></m-activityV2>

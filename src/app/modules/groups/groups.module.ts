@@ -35,6 +35,7 @@ import { GroupsProfile } from './profile/profile';
 import { GroupsCreator } from './create/create';
 import { GroupsMembershipsComponent } from './memberships/memberships.component';
 import { GroupsSearchService } from './profile/feed/search.service';
+import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 
 const routes: Routes = [
   {
@@ -83,7 +84,8 @@ const routes: Routes = [
     VideoChatModule,
     NewsfeedModule,
     ComposerModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
   ],
   declarations: [
     GroupsProfile,

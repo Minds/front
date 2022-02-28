@@ -38,6 +38,7 @@ export class NewsfeedSingleComponent {
   private singleGuidSubscription: Subscription;
 
   private shouldReuseRouteFn; // For comment focusedUrn reloading
+  activityV2Feature: boolean = false;
 
   constructor(
     public router: Router,
@@ -58,6 +59,9 @@ export class NewsfeedSingleComponent {
   }
 
   ngOnInit() {
+    // ojm connect to feature flag
+    this.activityV2Feature = true;
+
     this.context.set('activity');
 
     this.paramsSubscription = this.route.params.subscribe(params => {

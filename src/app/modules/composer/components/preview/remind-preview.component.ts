@@ -41,15 +41,7 @@ export class RemindPreviewComponent {
   }
 
   loadActivityModule() {
-    // const { ActivityModule } = await import('../../../newsfeed/activity/activity.module');
-
-    // const moduleFactory = await this.compiler.compileModuleAsync(
-    //   ActivityModule
-    // );
-    // const moduleRef = moduleFactory.create(this.injector);
-
-    // const componentFactory = moduleRef.instance.resolveComponent();
-
+    // ojm todo - get activityV2 if feature flag
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       ActivityComponent
     );

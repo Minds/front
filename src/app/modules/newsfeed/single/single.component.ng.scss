@@ -1,9 +1,18 @@
 @import 'defaults.scss';
-@import '../activity/activity.component.scss';
 
-$padding: $activity-padding-lr--minimalMode;
+$padding: $spacing4;
 
 :host {
+  .m-newsfeed__single--activityV2 {
+    .minds-list {
+      padding: 0;
+    }
+
+    ::ng-deep m-activityV2 {
+      border-top: none !important;
+    }
+  }
+
   .m-newsfeed__single--legacy {
     max-width: 600px;
     margin: auto;

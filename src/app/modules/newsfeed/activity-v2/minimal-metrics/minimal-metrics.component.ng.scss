@@ -1,0 +1,26 @@
+@import 'defaults.scss';
+@import '../activity.component.ng.scss';
+
+:host {
+  .m-activity__minimalMetrics {
+    font-size: 16px;
+    padding: 0 $spacing4 $spacing4;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    &.addTopSpacing {
+      padding-top: 16px !important;
+    }
+  }
+  a {
+    font-weight: 400;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -12,6 +12,7 @@ export type ActivityDisplayOptions = {
   showOwnerBlock: boolean;
   showComments: boolean;
   showOnlyCommentsInput: boolean;
+  showOnlyCommentsToggle: boolean;
   showToolbar: boolean;
   showInteractions: boolean;
   showBoostMenuOptions: boolean;
@@ -28,6 +29,7 @@ export type ActivityDisplayOptions = {
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
   isFeed: boolean; // is the activity a part of a feed?
+  isV2Design: boolean; // should we use 2022 designs? ojm remove?
 };
 
 export type ActivityEntity = {
@@ -78,16 +80,19 @@ export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
 export const ACTIVITY_CONTENT_PADDING = 16;
 
 // Constants of fixed heights
-export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
+export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600; // ojm how to use this?
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
+
+export const ACTIVITY_CONTENT_MAX_HEIGHT = 500;
 
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
 
 // Constants for content-specific displays
-export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 300;
+export const ACTIVITY_SHORT_STATUS_MAX_LENGTH = 100;
+export const ACTIVITY_MEDIUM_STATUS_MAX_LENGTH = 250;
 
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
@@ -245,6 +250,7 @@ export class ActivityService {
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity && entity.subtype && entity.subtype === 'remind';
+      // ojm add this? entity.remind_users && entity.remind_users.length"
     })
   );
 
@@ -279,6 +285,7 @@ export class ActivityService {
     showOwnerBlock: true,
     showComments: true,
     showOnlyCommentsInput: true,
+    showOnlyCommentsToggle: false,
     showToolbar: true,
     showInteractions: false,
     showBoostMenuOptions: false,
@@ -295,6 +302,7 @@ export class ActivityService {
     bypassMediaModal: false,
     sidebarMode: false,
     isFeed: false,
+    isV2Design: true, // ojm this should be false by default; calculated based on growthbook
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -332,6 +340,14 @@ export class ActivityService {
    */
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
+
+    console.log('ojm settingDisplayOptions', this.displayOptions, options);
+
+    if (this.displayOptions.isV2Design) {
+      this.displayOptions.showOnlyCommentsInput = false;
+      this.displayOptions.showOnlyCommentsToggle = true;
+    }
+
     return this;
   }
 

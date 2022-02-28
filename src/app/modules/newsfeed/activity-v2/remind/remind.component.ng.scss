@@ -1,0 +1,14 @@
+@import 'defaults.scss';
+
+:host {
+  display: flex;
+  margin: auto;
+  margin-top: $spacing3;
+  padding: $spacing4;
+  border-radius: 3px;
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
+  }
+}

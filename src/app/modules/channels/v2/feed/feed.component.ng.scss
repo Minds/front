@@ -14,6 +14,30 @@
   .m-channel__feed {
     min-height: 100vh;
 
+    &.m-channel__feed--activityV2 {
+      [class*='m-pageLayout__pane'] {
+        .m-channelFeed__list {
+          padding: 0 0 $spacing7;
+        }
+      }
+
+      ::ng-deep {
+        m-composer {
+          margin-bottom: 0;
+          border: none !important;
+          border-radius: 0;
+          .m-composer__trigger {
+            @include m-theme() {
+              border-bottom: 3px solid themed($m-borderColor--primary);
+            }
+          }
+        }
+        m-newsfeed__entity {
+          margin-bottom: 0;
+        }
+      }
+    }
+
     [class*='m-pageLayout__pane'] {
       .m-channelFeed__list,
       .m-channelFeed__grid,

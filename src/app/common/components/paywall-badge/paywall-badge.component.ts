@@ -24,6 +24,7 @@ export class PaywallBadgeComponent {
   paywallType: PaywallType = 'custom';
   tierName: string;
   init: boolean = false;
+  activityV2Feature: boolean = true; // ojm connect to feature flag
 
   readonly plusSupportTierUrn: string;
 

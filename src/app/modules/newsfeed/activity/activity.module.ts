@@ -34,6 +34,7 @@ import { ActivityRemindButtonComponent } from './remind-button/remind-button.com
 import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
 import { ActivityRelativeTimeSpanComponent } from './owner-block/relative-time-span/relative-time-span.component';
 import { ActivityBoostButtonComponent } from './boost-button/boost-button.component';
+import { ActivityV2Module } from '../activity-v2/activity.module';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { ActivityBoostButtonComponent } from './boost-button/boost-button.compon
     PostMenuModule,
     WireModule,
     CodeHighlightModule,
+    ActivityV2Module,
   ],
   declarations: [
     ActivityComponent,

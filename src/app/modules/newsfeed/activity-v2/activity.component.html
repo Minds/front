@@ -1,0 +1,67 @@
+<ng-container m-clientMeta>
+  <div
+    *ngIf="!service.displayOptions.minimalMode"
+    class="m-activity__leftColumn m-activity__avatar"
+  >
+    <ng-container *ngIf="entity$ | async as entity">
+      <div
+        *ngIf="
+          entity.boosted || (entity.remind_users && entity.remind_users.length)
+        "
+        class="m-activityLeftColumn__spacer"
+      ></div>
+    </ng-container>
+    <m-hovercard
+      *ngIf="entity$ | async as entity"
+      [publisher]="entity.ownerObj"
+      [offset]="[0, 15]"
+    >
+      <a [routerLink]="['/', entity.ownerObj.username]">
+        <img [src]="avatarUrl" />
+      </a>
+    </m-hovercard>
+  </div>
+
+  <div class="m-activity__rightColumn">
+    <m-activityV2__flags></m-activityV2__flags>
+    <m-activityV2__ownerBlock
+      *ngIf="service.displayOptions.showOwnerBlock"
+      (deleted)="delete()"
+    >
+    </m-activityV2__ownerBlock>
+    <m-activityV2__content
+      *ngIf="service.shouldShowContent$ | async"
+      [showPaywall]="service.shouldShowPaywall$ | async"
+      [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
+    ></m-activityV2__content>
+    <ng-container *mIfFeature="'!paywall-2020'">
+      <m-activityV2__paywall
+        *ngIf="service.shouldShowPaywall$ | async"
+      ></m-activityV2__paywall
+    ></ng-container>
+    <m-activityV2__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
+    </m-activityV2__nsfwConsent>
+
+    <m-activityV2__toolbar
+      *ngIf="service.displayOptions.showToolbar"
+    ></m-activityV2__toolbar>
+
+    <m-activityV2__minimalMetrics
+      *ngIf="
+        service.displayOptions.minimalMode && service.displayOptions.showMetrics
+      "
+    ></m-activityV2__minimalMetrics>
+
+    <ng-container *mIfBrowser>
+      <m-comments__entityOutletV2
+        *ngIf="service.displayOptions.showComments"
+        [entity]="service.entity$ | async"
+        [canDelete]="canDelete$ | async"
+        [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
+        [fixedHeight]="service.displayOptions.fixedHeight"
+        (onHeightChange)="onCommentsHeightChange($event)"
+      >
+      </m-comments__entityOutletV2>
+    </ng-container>
+  </div>
+</ng-container>

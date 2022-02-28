@@ -8,13 +8,15 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DefaultFeedContainerComponent } from './container.component';
 import { DiscoveryDisclaimerModule } from '../discovery/disclaimer/disclaimer.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 
 @NgModule({
   imports: [
     NgCommonModule,
     NgFormsModule,
     CommonModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     DiscoveryDisclaimerModule,
     SuggestionsModule,
   ],

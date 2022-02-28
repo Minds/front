@@ -67,6 +67,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input() set displayOptions(options) {
+    console.log('ojm activity options input', options);
     this.service.setDisplayOptions(options);
   }
 
@@ -94,6 +95,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
+
+  @HostBinding('class.m-activity--v2')
+  isV2: boolean;
 
   @HostBinding('style.height')
   heightPx: string;
@@ -137,6 +141,12 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isMinimalRemind = false;
       }
     });
+
+    // ojm make this dependent on feature flag also
+    this.isV2 =
+      !this.displayOptions.isModal && !this.displayOptions.minimalMode;
+
+    console.log('ojm isV2', this.isV2);
   }
 
   ngOnDestroy() {

@@ -1,0 +1,23 @@
+// USAGE --------------------
+
+// .m-myComponent {
+//   margin: $spacing2;
+//   padding: $spacing6;
+// }
+
+// CONCEPT -------------------
+// Assuming root font-size is 16px...
+
+// We use 4px as the smallest increment
+// So we don't have to do as much math
+
+$spacing1: 0.25rem; // 4px
+$spacing2: 0.5rem; // 8px
+$spacing3: 0.75rem; // 12px
+$spacing4: 1rem; // 16px
+$spacing5: 1.25rem; // 20px
+$spacing6: 1.5rem; // 24px
+$spacing7: 1.75rem; // 28px
+$spacing8: 2rem; // 32px
+$spacing9: 2.25rem; // 36px
+$spacing10: 2.5rem; // 40px
