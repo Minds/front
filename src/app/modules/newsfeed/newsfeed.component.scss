@@ -149,10 +149,12 @@ m-newsfeed {
   // }
 
   .m-newsfeed__inner {
-    padding: 20px 40px;
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      padding: 20px;
-    }
+    padding: 0;
+    // ojm TEMP keep below, uncomment and put under feature flag
+    // padding: 20px 40px;
+    // @media screen and (max-width: $layoutMin3ColWidth) {
+    //   padding: 20px;
+    // }
   }
 
   .m-pageLayout__pane--main {
@@ -164,10 +166,6 @@ m-newsfeed {
   .m-newsfeed__sidebar {
     max-width: initial;
     padding: 20px 0px 20px 40px;
-  }
-
-  m-activity {
-    margin-bottom: 20px;
   }
 
   m-suggestions__sidebar > m-sidebarWidget {
