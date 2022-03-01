@@ -1,3 +1,4 @@
+import { PushNotificationService } from './push-notification.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -53,6 +54,7 @@ import { CompassHookService } from '../common/services/compass-hook.service';
 import { CompassService } from '../modules/compass/compass.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from './ux/modal.service';
+import { OneSignal } from 'onesignal-ngx';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -159,6 +161,12 @@ export const MINDS_PROVIDERS: any[] = [
     provide: ModalService,
     useFactory: (ngbModal, compiler) => new ModalService(ngbModal, compiler),
     deps: [NgbModal, Compiler],
+  },
+  {
+    provide: PushNotificationService,
+    useFactory: (client, oneSignal) =>
+      new PushNotificationService(client, oneSignal),
+    deps: [Client, OneSignal],
   },
   {
     provide: LoginReferrerService,
