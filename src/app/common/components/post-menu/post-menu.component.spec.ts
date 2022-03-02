@@ -132,7 +132,6 @@ describe('PostMenuComponent', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
-    featuresServiceMock.mock('allow-comments-toggle', true);
     fixture = TestBed.createComponent(PostMenuComponent);
 
     comp = fixture.componentInstance;

@@ -167,6 +167,6 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   get proEnabled() {
     // disabled for https://gitlab.com/minds/front/-/issues/4379
-    return false; //this.features.has('pro');
+    return false;
   }
 }

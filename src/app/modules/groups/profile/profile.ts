@@ -72,7 +72,6 @@ export class GroupsProfile {
   private updateMarkersSubscription;
 
   private lastWidth: number;
-  readonly hasNewNavigation: boolean;
 
   constructor(
     public session: Session,
@@ -98,7 +97,6 @@ export class GroupsProfile {
     protected publisherSearchModal: PublisherSearchModalService,
     protected groupsSearch: GroupsSearchService
   ) {
-    this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 

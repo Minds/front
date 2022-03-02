@@ -73,9 +73,6 @@ describe('SettingsV2Component', () => {
   beforeEach(() => {
     router = TestBed.inject(Router);
     featuresServiceMock.mock('yt-importer', true);
-    featuresServiceMock.mock('settings-referrals', true);
-    featuresServiceMock.mock('notifications-v3', true);
-    featuresServiceMock.mock('twitter-sync', true);
 
     clientMock.response = [];
     clientMock.response[`api/v1/settings`] = {

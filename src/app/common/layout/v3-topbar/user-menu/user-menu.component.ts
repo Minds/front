@@ -24,6 +24,22 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   isDark: boolean = false;
   themeSubscription: Subscription;
 
+  footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
+    { label: 'Canary Mode', routerLink: ['/canary'] },
+    {
+      label: 'Referrals',
+      routerLink: ['/settings/other/referrals'],
+    },
+    { label: 'Content Policy', routerLink: ['/content-policy'] },
+    { label: 'Mobile App', routerLink: ['/mobile'] },
+    { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
+    { label: 'Careers', href: 'https://jobs.lever.co/minds' },
+    { label: 'Status', href: 'https://status.minds.com/' },
+    { label: 'Terms', routerLink: ['/p/terms'] },
+    { label: 'Privacy', routerLink: ['/p/privacy'] },
+    { label: 'Contact', routerLink: ['/p/contact'] },
+    { label: 'Branding', routerLink: ['/branding'] },
+  ];
   maxFooterLinks = 5;
 
   constructor(
@@ -68,6 +84,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.closeMenu();
     this.themeSubscription.unsubscribe();
   }
 }

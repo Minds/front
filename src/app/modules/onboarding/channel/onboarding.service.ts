@@ -38,53 +38,6 @@ export class ChannelOnboardingService {
     });
   }
 
-  async checkProgress() {
-    if (!this.session.isLoggedIn() || this.featuresService.has('ux-2020')) {
-      return;
-    }
-    try {
-      const response: any = await this.client.get('api/v2/onboarding/progress');
-
-      this.completedPercentage =
-        (response.completed_items.length * 100) / response.all_items.length;
-      this.completedItems = response.completed_items;
-      this.showOnboarding = response.show_onboarding;
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  async showModal(force: boolean = false) {
-    if (!this.session.isLoggedIn() || this.featuresService.has('ux-2020')) {
-      return false;
-    }
-    if (!force) {
-      const status = localStorage.getItem('already_onboarded');
-
-      if (status !== null) {
-        return false;
-      }
-    }
-
-    if (this.completedPercentage === -1) {
-      await this.checkProgress();
-    }
-
-    if (this.completedItems.length > 1) {
-      this.next();
-    }
-
-    if (force) {
-      localStorage.setItem('already_onboarded', '1');
-      return true;
-    } else if (this.showOnboarding) {
-      localStorage.setItem('already_onboarded', '1');
-      return true;
-    }
-
-    return false;
-  }
-
   previous() {
     if (this.currentSlide === 0) {
       return;

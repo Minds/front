@@ -97,21 +97,12 @@ export class NotificationService implements OnDestroy {
       return;
     }
 
-    if (this.featuresService.has('notifications-v3')) {
-      this.client
-        .get('api/v3/notifications/unread-count', {})
-        .then((response: any) => {
-          this.count = response.count;
-          this.sync();
-        });
-    } else {
-      this.client
-        .get('api/v1/notifications/count', {})
-        .then((response: any) => {
-          this.count = response.count;
-          this.sync();
-        });
-    }
+    this.client
+      .get('api/v3/notifications/unread-count', {})
+      .then((response: any) => {
+        this.count = response.count;
+        this.sync();
+      });
   }
 
   /**
