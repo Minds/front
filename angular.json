@@ -76,7 +76,11 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "localize": ["en"],
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/OneSignalSDKWorker.js"
+            ],
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
