@@ -1,14 +1,16 @@
 @import 'defaults.scss';
 
 :host {
-  &:not(.m-newsfeed--activityV2) {
-    ::ng-deep m-activity {
-      margin-bottom: 20px;
+  .m-newsfeed {
+    &:not(.m-newsfeed--activityV2) {
+      ::ng-deep m-activity {
+        margin-bottom: 20px;
+      }
     }
-  }
-  &.m-newsfeed--activityV2 {
-    ::ng-deep m-activity {
-      border: none !important;
+    &.m-newsfeed--activityV2 {
+      ::ng-deep m-activity {
+        border: none !important;
+      }
     }
   }
 

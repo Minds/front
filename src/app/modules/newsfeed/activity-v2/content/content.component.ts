@@ -89,12 +89,13 @@ export class ActivityV2ContentComponent
 
   @Input() maxHeightAllowed: number;
 
-  @ViewChild('mediaEl', { read: ElementRef })
-  mediaEl: ElementRef;
+  @ViewChild('videoEl', { read: ElementRef })
+  videoEl: ElementRef;
 
   @ViewChild('imageEl', { read: ElementRef })
   imageEl: ElementRef;
 
+  // ojm used in calculate remind height ?
   @ViewChild('messageEl', { read: ElementRef })
   messageEl: ElementRef;
 
@@ -396,7 +397,7 @@ export class ActivityV2ContentComponent
    * Calculates the video height after the video has loaded in
    */
   calculateVideoHeight(): void {
-    if (!this.mediaEl) {
+    if (!this.videoEl) {
       return;
     }
     let aspectRatio = 16 / 9;
@@ -409,7 +410,7 @@ export class ActivityV2ContentComponent
         parseInt(this.entity.custom_data.width, 10) /
         parseInt(this.entity.custom_data.height, 10);
     }
-    const height = this.mediaEl.nativeElement.clientWidth / aspectRatio;
+    const height = this.videoEl.nativeElement.clientWidth / aspectRatio;
     this.videoHeight = `${height}px`;
 
     this.detectChanges();
@@ -561,7 +562,7 @@ export class ActivityV2ContentComponent
     } else if (this.isModal) {
       return 115;
     }
-    return 320;
+    return 230;
   }
 
   get shortStatus(): boolean {

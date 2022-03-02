@@ -1,8 +1,8 @@
 @import 'defaults';
 
 :host {
-  [class*='m-activityFlags--'] {
-    padding-bottom: $spacing5;
+  [class*='m-activityFlag--'] {
+    padding-bottom: $spacing4;
     > * {
       vertical-align: middle;
     }
@@ -22,7 +22,7 @@
     }
   }
 
-  .m-activityFlags--remind {
+  .m-activityFlag--remind {
     span,
     a,
     i {
@@ -36,7 +36,7 @@
     }
   }
 
-  .m-activityFlags--boost {
+  .m-activityFlag--boost {
     span,
     a,
     i {

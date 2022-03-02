@@ -109,6 +109,7 @@
       [src]="entity"
       [maxheight]="isModal ? null : 320"
       [isModal]="isModal"
+      [activityV2Feature]="true"
     >
     </minds-rich-embed>
     <div
@@ -126,7 +127,7 @@
   <!-- ----------------------------------- -->
   <div
     class="m-activityContent__media--video"
-    #mediaEl
+    #videoEl
     *ngIf="isVideo"
     [ngClass]="{
       isPaywall: service.shouldShowPaywall$ | async,

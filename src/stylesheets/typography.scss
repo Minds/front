@@ -138,8 +138,9 @@
   font-size: 0.8125rem;
   line-height: 1rem;
 }
+
 //----------------------
-// ojm remove these???
+// ojm remove these!!!
 @mixin textColor1 {
   @include m-theme() {
     color: themed($m-textColor--primary);
@@ -148,10 +149,5 @@
 @mixin textColor2 {
   @include m-theme() {
     color: themed($m-textColor--secondary);
-  }
-}
-@mixin border {
-  @include m-theme() {
-    border: 1px solid themed($m-borderColor--primary);
   }
 }

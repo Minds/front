@@ -187,13 +187,11 @@
     height: 100%;
   }
 
-  // ojm should I make this into a separate component?
-  // ojm is rich embed used elsewhere?
   // RICH EMBED ******************************************
   .m-activityContent__media--richEmbed {
     &.m-activityContent__mediaRichEmbed--minimalMode {
       ::ng-deep .meta {
-        padding: 20px $spacing4;
+        padding: $spacing5 $spacing4;
         > * {
           font-size: 15px;
         }
@@ -209,70 +207,6 @@
           @include m-theme() {
             color: themed($m-textColor--secondary) !important;
           }
-        }
-      }
-    }
-    ::ng-deep {
-      img {
-        width: 100%;
-        display: block;
-        height: auto;
-        max-height: 400px;
-        object-fit: cover;
-      }
-      .meta {
-        padding: $spacing5;
-        display: block;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-      h2 {
-        font-size: 15px;
-        text-decoration: none;
-        @include m-theme() {
-          color: themed($m-textColor--primary) !important;
-        }
-      }
-      .m-blurb {
-        display: none;
-      }
-      .m-url {
-        font-size: 13px;
-        padding: 0;
-        margin: 0;
-        @include m-theme() {
-          color: themed($m-textColor--secondary) !important;
-        }
-      }
-
-      a.m-richEmbed--paywalled {
-        position: relative;
-        cursor: default;
-        @include m-theme() {
-          background-color: themed($m-bgColor--primary);
-        }
-        .m-rich-embed--title {
-          font-size: 18px;
-          font-weight: 500;
-          margin-bottom: 8px;
-          @include m-theme() {
-            color: themed($m-textColor--primary) !important;
-          }
-        }
-        .m-blurb {
-          display: block;
-          font-size: 16px;
-          line-height: 24px;
-          margin-bottom: 0;
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-          }
-        }
-        .m-url {
-          display: none;
         }
       }
     }
@@ -346,44 +280,33 @@
   .m-activityContent__mediaDescriptionText {
     @include body2Regular;
     @include textColor1;
-    padding-bottom: $spacing4;
   }
 
   .m-activityContent__mediaDescription {
     margin: 0;
     .m-activityContent__descriptionWrapper {
-      padding: 0;
+      padding: 0 0 $spacing4 0;
       // padding: 16px $activity-padding-lr; ojm
       &.m-activityContent__descriptionWrapper--minimalMode {
-        padding: 0;
+        padding: $spacing4;
 
-        // padding: 16px $activity-padding-lr--minimalMode; ojm
-        // > p {
-        //   line-height: 20px;
-        // }
         .m-activityContent__mediaTitle {
-          @include heading3Bold; // ojm ask michael what to do
+          @include heading3Bold;
           margin-bottom: 0px;
         }
-        // > p:not(.m-activityContent__mediaTitle) {
-        //   a {
-        //     font-weight: 400;
-        //   }
-        // }
       }
     }
     p {
       margin: 0;
       padding: 0;
-      // font-size: inherit;
       color: inherit;
     }
   }
 
   .m-activityContent__mediaTitle {
     &:not(.m-activityContent__mediaTitle--noDescription) {
-      @include heading3Bold; // ojm ask michael what to do
-      margin-bottom: $spacing2;
+      @include heading4Bold; // ojm ask michael what to do
+      margin-bottom: $spacing1 !important;
     }
   }
 

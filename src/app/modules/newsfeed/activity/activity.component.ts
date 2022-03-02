@@ -144,7 +144,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // ojm make this dependent on feature flag also
     this.isV2 =
-      !this.displayOptions.isModal && !this.displayOptions.minimalMode;
+      !this.service.displayOptions.isModal &&
+      !this.service.displayOptions.minimalMode;
 
     console.log('ojm isV2', this.isV2);
   }

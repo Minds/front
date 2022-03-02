@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  HostBinding,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -20,6 +21,7 @@ import { ModalService } from '../../../services/ux/modal.service';
   selector: 'minds-rich-embed',
   inputs: ['_src: src', '_preview: preview', 'maxheight', 'cropImage'],
   templateUrl: 'rich-embed.html',
+  styleUrls: ['rich-embed.ng.scss'],
 })
 export class MindsRichEmbed {
   type: string = '';
@@ -36,6 +38,8 @@ export class MindsRichEmbed {
   public isPaywalled: boolean = false;
   _isModal: boolean = false;
 
+  @Input() activityV2Feature: boolean = false;
+
   @Input() set isModal(value: boolean) {
     this._isModal = value;
     if (value) {
@@ -45,6 +49,24 @@ export class MindsRichEmbed {
       }
       this.detectChanges();
     }
+  }
+
+  // Show small preview for everything except YouTube &Minds links
+  @HostBinding('class.m-richEmbed--activityV2--small')
+  get isActivityV2Small(): boolean {
+    return (
+      this.activityV2Feature &&
+      this.mediaSource !== 'youtube' &&
+      this.mediaSource !== 'minds'
+    );
+  }
+
+  @HostBinding('class.m-richEmbed--activityV2--large')
+  get isActivityV2Large(): boolean {
+    return (
+      (this.activityV2Feature && this.mediaSource === 'youtube') ||
+      this.mediaSource === 'minds'
+    );
   }
 
   constructor(

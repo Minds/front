@@ -6,16 +6,13 @@ import {
 } from '../../activity/activity.service';
 
 @Component({
-  selector: 'm-activityV2__flags',
-  templateUrl: './flags.component.html',
-  styleUrls: ['./flags.component.ng.scss'],
+  selector: 'm-activityV2__flag',
+  templateUrl: './flag.component.html',
+  styleUrls: ['./flag.component.ng.scss'],
 })
-export class ActivityV2FlagsComponent {
+export class ActivityV2FlagComponent {
   entity$: Observable<ActivityEntity> = this.service.entity$;
   subscriptions: Subscription[];
-
-  isBoost;
-  isRemind: boolean = false;
 
   constructor(public service: ActivityService) {}
 

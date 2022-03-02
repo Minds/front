@@ -34,7 +34,7 @@ import { ActivityV2RemindButtonComponent } from './remind-button/remind-button.c
 import { ActivityV2ModalQuoteComponent } from './modal/quote/quote.component';
 import { ActivityV2RelativeTimeSpanComponent } from './owner-block/relative-time-span/relative-time-span.component';
 import { ActivityV2BoostButtonComponent } from './boost-button/boost-button.component';
-import { ActivityV2FlagsComponent } from './flags/flags.component';
+import { ActivityV2FlagComponent } from './flag/flag.component';
 import { ActivityV2BadgesComponent } from './badges/badges.component';
 
 @NgModule({
@@ -72,7 +72,7 @@ import { ActivityV2BadgesComponent } from './badges/badges.component';
     ActivityV2BoostButtonComponent,
     ActivityV2ModalQuoteComponent,
     ActivityV2RelativeTimeSpanComponent,
-    ActivityV2FlagsComponent,
+    ActivityV2FlagComponent,
     ActivityV2BadgesComponent,
   ],
   providers: [ActivityV2ModalCreatorService],

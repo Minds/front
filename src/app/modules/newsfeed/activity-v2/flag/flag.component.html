@@ -2,8 +2,10 @@
   <!------------------------->
   <!-- BOOST  ---------------->
   <!------------------------->
-
-  <div class="m-activityFlags--boost" *ngIf="(entity$ | async).boosted">
+  <div
+    class="m-activityFlag--boost m-legible"
+    *ngIf="(entity$ | async).boosted"
+  >
     <i class="material-icons">trending_up</i>
     <span>Boosted Post</span>
   </div>
@@ -13,7 +15,7 @@
   <!------------------------->
   <ng-container *ngIf="entity$ | async as entity">
     <div
-      class="m-activityFlags--remind"
+      class="m-activityFlag--remind m-legible"
       *ngIf="entity.remind_users && entity.remind_users.length"
     >
       <i class="material-icons">repeat</i>

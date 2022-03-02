@@ -1,5 +1,5 @@
 <div
-  class="m-activity__ownerBlock"
+  class="m-activity__ownerBlock m-legible"
   [ngClass]="{ 'm-activity__ownerBlock--minimalMode': minimalMode }"
 >
   <!-- ---------------------------- -->
@@ -57,8 +57,8 @@
         ></m-relativeTimeSpanV2>
         <ng-template #absoluteDate>
           <div class="m-activityOwnerBlockPermalink__text ojmtempAbsolute">
-            <i *ngIf="isScheduled()" class="material-icons">schedule</i>
-            <span> {{ toReadableDate(entity.time_created) }} </span>
+            <i *ngIf="isScheduled()" class="material-icons">schedule</i
+            ><span>{{ toReadableDate(entity.time_created) }} </span>
           </div>
         </ng-template>
         <!-- ojm where does this edited tag go? -->
