@@ -130,16 +130,11 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
                 default:
                   this.panel.currentStep$.next(step);
                   try {
-                    await this.onboarding.open();
-                  } catch (e) {
-                    if (e === 'DismissedModalException') {
-                      await this.onboarding.load();
-                      this.checkCompletion();
-                      return;
-                    }
-                    console.error(e);
-                  }
-
+                    const completedStep = await this.onboarding.open();
+                    this.onboarding.forceCompletion(completedStep);
+                  } catch (e) {}
+                  await this.onboarding.load();
+                  this.checkCompletion();
                   break;
               }
             })

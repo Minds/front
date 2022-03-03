@@ -6,8 +6,6 @@
   -webkit-font-smoothing: antialiased;
 
   .m-modalV2__inner {
-    min-width: min-content;
-
     @media screen and (max-width: $min-mobile) {
       max-width: 100%;
     }
