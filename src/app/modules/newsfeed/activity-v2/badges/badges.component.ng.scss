@@ -18,10 +18,10 @@
     text-decoration: none;
 
     .m-activityV2__badge {
-      @include textColor2;
       font-size: 1.25rem;
       @include m-theme() {
         fill: themed($m-textColor--secondary);
+        color: themed($m-textColor--secondary);
       }
     }
 

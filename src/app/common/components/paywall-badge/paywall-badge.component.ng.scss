@@ -23,12 +23,14 @@
 
     &.m-paywallBadge--activityV2 {
       &.iconOnly {
-        @include textColor2;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
       }
       &.isPlus {
-        @include textColor1;
         @include m-theme() {
           background-color: none !important;
+          color: themed($m-textColor--primary);
         }
       }
       &.iconOnly {

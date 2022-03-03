@@ -214,7 +214,7 @@
   // TEXT ******************************************
 
   .m-activityContent__messageWrapper {
-    padding: 0 !important;
+    padding: 0 0 $spacing4 0 !important;
 
     .m-code-highlight {
       overflow-x: auto;
@@ -279,7 +279,9 @@
 
   .m-activityContent__mediaDescriptionText {
     @include body2Regular;
-    @include textColor1;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
   }
 
   .m-activityContent__mediaDescription {

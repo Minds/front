@@ -18,7 +18,10 @@
       [class*='m-pageLayout__pane'] {
         .m-channelFeed__list {
           padding: 0 0 $spacing7;
-          @include borderRight;
+
+          @media screen and (max-width: $layoutMax2ColWidth) {
+            @include borderRight;
+          }
         }
       }
 
