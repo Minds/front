@@ -12,8 +12,7 @@ enum MindsTextElementType {
 
 /**
  * Base text component
- *
- * example: <m-text h1 primary>
+ * example: <m-text secondary b2 thin>
  */
 @Component({
   selector: 'm-text',
