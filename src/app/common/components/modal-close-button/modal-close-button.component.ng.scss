@@ -34,5 +34,18 @@
         }
       }
     }
+
+    &.grey {
+      @include m-theme() {
+        background-color: rgba(themed($m-borderColor--primary), 0.925);
+        color: themed($m-textColor--primary);
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: rgba(themed($m-borderColor--primary), 0.95);
+        }
+      }
+    }
   }
 }

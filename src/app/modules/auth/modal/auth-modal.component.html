@@ -19,16 +19,10 @@
         [showPromotions]="false"
         [showLabels]="true"
         [showInlineErrors]="true"
+        [source]="'auth-modal'"
         (done)="onRegisterDone($event)"
       >
       </minds-form-register>
-
-      <ng-container *ngTemplateOutlet="orDivider"></ng-container>
-
-      <div class="m-authModal__alt">
-        <span>Already have a Minds account? </span>
-        <a (click)="showLoginForm($event)">Login</a>
-      </div>
     </ng-container>
     <ng-container *ngIf="formDisplay === 'login'">
       <minds-form-login
@@ -40,15 +34,17 @@
         (doneRegistered)="onRegisterDone($event)"
       >
       </minds-form-login>
-
-      <ng-container *ngTemplateOutlet="orDivider"></ng-container>
-
-      <div class="m-authModal__alt">
-        <span>Don't have an account? </span>
-        <a (click)="showRegisterForm($event)">Join now</a>
-      </div>
     </ng-container>
   </div>
+
+  <ng-container *ngIf="formDisplay === 'login'">
+    <ng-container *ngTemplateOutlet="orDivider"></ng-container>
+
+    <div class="m-authModal__alt">
+      <span>Don't have an account? </span>
+      <a (click)="showRegisterForm($event)">Join now</a>
+    </div>
+  </ng-container>
 
   <!-- START: PRO Specific -->
   <div class="m-modalV2__toolbar" *ngIf="siteService.isProDomain">
@@ -60,9 +56,7 @@
 <ng-template #orDivider>
   <div class="m-authModal__orDivider">
     <span></span>
-    <span class="m-authModalOrDivider__text">OR</span>
-    <span></span>
   </div>
 </ng-template>
 
-<m-modalCloseButton [white]="true"></m-modalCloseButton>
+<m-modalCloseButton [color]="'grey'"></m-modalCloseButton>

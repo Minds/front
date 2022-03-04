@@ -95,6 +95,27 @@
     color: transparent;
   }
 
+  .m-register__divider {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+
+    span:not(.m-register__divider__text) {
+      flex: 1;
+      @include m-theme() {
+        border-bottom: 2px solid themed($m-borderColor--primary);
+      }
+    }
+    .m-register__divider__text {
+      padding: 0 20px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+
   ::ng-deep .m-registerForm__captcha {
     input {
       width: 100%;

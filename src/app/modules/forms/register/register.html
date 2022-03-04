@@ -163,7 +163,6 @@
     </div>
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"
-      [hidden]="!form.value.password"
     >
       <div class="m-form__row--label">
         <label
@@ -202,10 +201,7 @@
       </div>
     </div>
 
-    <div
-      *ngIf="form.value.password "
-      class="m-form__field--text stretchedField m-registerForm__captcha"
-    >
+    <div class="m-form__field--text stretchedField m-registerForm__captcha">
       <div class="m-form__row--label">
         <label for="captcha" *ngIf="showLabels" i18n="@@COMMON__CAPTCHA">
           Captcha
@@ -242,18 +238,48 @@
 
     <div class="m-layout__spacer"></div>
 
-    <m-button
-      color="blue"
-      (onAction)="register($event)"
-      [saving]="inProgress"
-      [disabled]="!this.form.valid"
-      *ngIf="!showBigButton"
-    >
-      <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
-        Signup
-      </ng-container>
-    </m-button>
+    <ng-container *ngIf='this.source != "auth-modal"'>
+      <m-button
+        color="blue"
+        (onAction)="register($event)"
+        [saving]="inProgress"
+        [disabled]="!this.form.valid"
+        *ngIf="!showBigButton"
+      >
+        <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
+          Signup
+        </ng-container>
+      </m-button>
 
+      <m-button
+        *ngIf="showBigButton"
+        [disabled]="!this.form.valid || inProgress"
+        [saving]="inProgress"
+        color="blue"
+        (onAction)="register($event)"
+      >
+        <ng-container i18n="@@FORMS__REGISTER__JOIN_NOW_ACTION">
+          Join Now
+        </ng-container>
+      </m-button>
+    </ng-container>
+  </div>
+</form>
+
+<ng-container *ngIf='this.source == "auth-modal"'>
+  <div class="m-register__divider">
+    <span></span>
+  </div>
+  <ng-container class="m-register__footer">
+    <span
+      class="m-register__alreadyAUser"
+      *ngIf="showTitle"
+      i18n="@@REGISTER__ALREADY__HAVE__ACOUNT__LINK"
+    >
+      Already have an account?
+      <a [routerLink]="'/login'" queryParamsHandling="merge">Login</a>
+    </span>
+    <div class="m-layout__spacer"></div>
     <m-button
       *ngIf="showBigButton"
       [disabled]="!this.form.valid || inProgress"
@@ -265,6 +291,6 @@
         Join Now
       </ng-container>
     </m-button>
-  </div>
-</form>
+  </ng-container>
+</ng-container>
 <!-- END: Register -->
