@@ -6,6 +6,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
+import { AppPromptService } from '../../app-prompt/app-prompt.service';
 
 @Injectable()
 export class AuthModalService {
@@ -15,7 +16,8 @@ export class AuthModalService {
     private modalService: ModalService,
     private features: FeaturesService,
     private onboardingV3: OnboardingV3Service,
-    private session: Session
+    private session: Session,
+    private appPrompt: AppPromptService
   ) {}
 
   async open(
@@ -28,6 +30,8 @@ export class AuthModalService {
     const { AuthModalModule } = await import('./auth-modal.module');
     const onSuccess$: Subject<MindsUser> = new Subject();
 
+    this.appPrompt.forceHidePrompt$.next(true);
+
     const modal = this.modalService.present(AuthModalComponent, {
       data: {
         formDisplay: opts.formDisplay,
@@ -36,6 +40,7 @@ export class AuthModalService {
           onSuccess$.complete(); // Ensures promise can be called below
           modal.close(user);
 
+          this.appPrompt.forceHidePrompt$.next(false);
           if (opts.formDisplay === 'register') {
             try {
               await this.onboardingV3.open();
@@ -55,6 +60,7 @@ export class AuthModalService {
     });
 
     const result = await modal.result;
+    this.appPrompt.forceHidePrompt$.next(false);
 
     // Modal was closed before login completed
     if (!result) {

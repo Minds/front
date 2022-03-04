@@ -106,12 +106,16 @@ export class AppPromptComponent {
   }
 
   ngOnInit(): void {
-    if (this.service.shouldShowPrompt()) {
-      this.service.setPlatform();
+    // if (this.service.shouldShowPrompt()) {
+    //   this.service.setPlatform();
 
-      // open with 2000ms delay
-      setTimeout(() => this.service.activate(), 2000);
-    }
+    // open with 2000ms delay
+    setTimeout(() => this.service.activate(), 2000);
+    // }
+  }
+
+  get forceHidePrompt$(): BehaviorSubject<boolean> {
+    return this.service.forceHidePrompt$;
   }
 
   /**

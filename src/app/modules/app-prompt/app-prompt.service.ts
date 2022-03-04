@@ -74,6 +74,10 @@ export class AppPromptService implements OnDestroy {
     AppPromptState
   >('dismissed');
 
+  public readonly forceHidePrompt$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
+
   /**
    * Current user platform (defaults to non-mobile until after init)
    */

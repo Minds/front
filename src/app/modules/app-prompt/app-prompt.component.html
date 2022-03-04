@@ -1,4 +1,4 @@
-<div [@fader]="state$ | async">
+<div [@fader]="state$ | async" *ngIf="!(forceHidePrompt$ | async)">
   <div class="m-appPrompt__container">
     <div class="m-appPrompt__header" (click)="onClick($event)">
       <img
