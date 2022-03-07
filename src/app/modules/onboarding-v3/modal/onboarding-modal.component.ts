@@ -47,10 +47,13 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.subscriptions.push(
       this.panel.forceComplete$.subscribe((step: OnboardingStepName) => {
-        if (this.currentStep$.getValue()) this.onSaveIntent(step);
+        if (this.currentStep$.getValue() && step) this.onSaveIntent(step);
       }),
       this.panel.dismiss$.subscribe(dismiss => {
-        if (this.currentStep$.getValue()) this.onDismissIntent();
+        if (this.currentStep$.getValue() && dismiss) {
+          this.onDismissIntent();
+          this.panel.dismiss$.next(false);
+        }
       })
     );
   }
