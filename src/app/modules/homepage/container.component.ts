@@ -11,7 +11,7 @@ export class HomepageContainerComponent implements OnInit {
   constructor(
     private metaService: MetaService,
     private guestModeExperiment: GuestModeExperimentService,
-    private homepageV3Experiment: HomepageV3ExperimentService,
+    private homepageV3Experiment: HomepageV3ExperimentService
   ) {}
 
   isGuestMode: boolean;
