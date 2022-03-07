@@ -149,7 +149,7 @@
     </ng-container>
 
     <!-- ALLOW COMMENTS -->
-    <ng-container
+    <!-- <ng-container
       *ngIf="
         options.indexOf('allow-comments') !== -1 &&
         entity.ownerObj.guid == session.getLoggedInUser().guid
@@ -171,7 +171,7 @@
       >
         Disable Comments
       </li>
-    </ng-container>
+    </ng-container> -->
 
     <!-- ADMIN EDIT FLAGS -->
     <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
