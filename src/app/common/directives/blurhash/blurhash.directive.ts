@@ -24,6 +24,9 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
   @Input()
   src: string;
 
+  @Input('m-blurhashFullscreen')
+  fullscreen: boolean;
+
   @HostListener('load')
   onLoad() {
     if (this.canvas && !this.paywalled) {
@@ -99,8 +102,15 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
       imageData.data.set(pixels);
       ctx.putImageData(imageData, 0, 0);
 
-      const scaleX = width / this.RESOLUTION;
-      const scaleY = height / this.RESOLUTION;
+      let dimensionsStyle = '';
+
+      if (this.fullscreen) {
+        dimensionsStyle += `width: 100%; height: 100%`;
+      } else {
+        const scaleX = width / this.RESOLUTION;
+        const scaleY = height / this.RESOLUTION;
+        dimensionsStyle += `transform: scaleX(${scaleX}) scaleY(${scaleY})`;
+      }
 
       // if image has loaded in the time we've been processing - do not set canvas.
       if (this.el.nativeElement?.complete) {
@@ -109,7 +119,7 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
 
       this.canvas.setAttribute(
         'style',
-        `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; transform: scaleX(${scaleX}) scaleY(${scaleY})`
+        `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; ${dimensionsStyle}`
       );
       this.el.nativeElement.parentElement.append(this.canvas);
     } catch (e) {

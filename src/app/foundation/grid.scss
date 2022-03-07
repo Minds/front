@@ -38,3 +38,15 @@
     }
   }
 }
+
+@media screen and (max-width: $m-grid-max-mobile) {
+  .m-grid__hide--mobile {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: calc($m-grid-max-mobile + 1px)) {
+  .m-grid__only--mobile {
+    display: none !important;
+  }
+}
