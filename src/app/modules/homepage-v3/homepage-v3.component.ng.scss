@@ -5,7 +5,7 @@
   > section:first-of-type {
     .m-homepage__v3__neuralBg {
       position: absolute;
-      bottom: 0;
+      top: 0;
       right: 0;
       left: 0;
       width: 100vw;
@@ -16,10 +16,8 @@
 
     margin: -75px 0 0;
     padding-top: 75px;
-
-    height: calc(100vh - 75px);
     max-height: 1500px;
-    min-height: 600px;
+    min-height: calc(100vh - 75px);
     position: relative;
 
     display: flex;
@@ -33,7 +31,6 @@
       flex-direction: row;
       justify-content: center;
       z-index: 1;
-      padding-top: 75px;
 
       .m-homepage__v3__firstSection__actions {
         display: flex;
