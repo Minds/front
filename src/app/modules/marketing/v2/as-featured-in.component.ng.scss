@@ -49,10 +49,13 @@
     }
 
     > li {
-      margin: 0 $minds-margin * 2 $minds-margin * 2;
+      margin: 0 $minds-margin $minds-margin;
 
-      img {
-        object-fit: contain;
+      a {
+        padding: $minds-margin;
+        img {
+          object-fit: contain;
+        }
       }
     }
   }
