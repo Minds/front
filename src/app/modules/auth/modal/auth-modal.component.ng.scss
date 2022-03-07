@@ -10,13 +10,21 @@
   }
 
   .m-modalV2__header {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
     h2 {
-      position: absolute;
-      bottom: 20px;
       text-transform: capitalize;
+      padding-left: 8px;
       @include m-theme() {
-        color: themed($m-white-always);
+        color: themed($m-textColor--primary);
       }
+    }
+
+    .m-modalV2__headerLogoBulb {
+      height: 40px;
     }
   }
 

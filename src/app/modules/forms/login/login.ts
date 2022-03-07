@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -14,8 +14,9 @@ import { UserAvatarService } from '../../../common/services/user-avatar.service'
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { Router } from '@angular/router';
-import { skip } from 'rxjs/operators';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
+
+export type Source = 'auth-modal' | 'other' | null;
 
 @Component({
   moduleId: module.id,
@@ -28,6 +29,8 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
   @Input() showInlineErrors: boolean = false;
   @Input() showTitle: boolean = false;
   @Input() showLabels: boolean = false;
+  @Input() source: Source = null;
+
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter();
 

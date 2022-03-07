@@ -1,5 +1,7 @@
-m-captcha {
-  display: block;
+@import 'defaults';
+
+:host {
+  width: min-content;
   img {
     margin-bottom: $minds-margin;
   }

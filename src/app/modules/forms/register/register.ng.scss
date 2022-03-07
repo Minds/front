@@ -105,6 +105,7 @@
 
     span:not(.m-register__divider__text) {
       flex: 1;
+      margin: 0 -40px;
       @include m-theme() {
         border-bottom: 2px solid themed($m-borderColor--primary);
       }
@@ -114,6 +115,14 @@
       font-size: 15px;
       font-weight: 600;
     }
+  }
+
+  .m-register__footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0 8px 0;
   }
 
   ::ng-deep .m-registerForm__captcha {

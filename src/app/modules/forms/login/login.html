@@ -103,6 +103,20 @@
         <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
           Username
         </label>
+        <div class="m-login__error" *ngIf="!!usernameError">
+          <ng-container
+            *ngIf="usernameError == 'LoginException::EmailAddress'"
+            i18n="@@MINDS__LOGIN__EXCEPTION__ENTERED_EMAIL_ADDRESS_NOT_USERNAME"
+          >
+            Please enter a username instead of an email address.
+          </ng-container>
+          <ng-container
+            *ngIf="usernameError == 'LoginException::UsernameRequired'"
+            i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_REQUIRED"
+          >
+            Username is required.
+          </ng-container>
+        </div>
       </div>
       <div class="m-form__row--input">
         <input
@@ -115,20 +129,6 @@
           (keydown.enter)="login(); $event.preventDefault();"
           data-cy="data-minds-login-username-input"
         />
-      </div>
-      <div class="m-login__error" *ngIf="!!usernameError">
-        <ng-container
-          *ngIf="usernameError == 'LoginException::EmailAddress'"
-          i18n="@@MINDS__LOGIN__EXCEPTION__ENTERED_EMAIL_ADDRESS_NOT_USERNAME"
-        >
-          Please enter a username instead of an email address.
-        </ng-container>
-        <ng-container
-          *ngIf="usernameError == 'LoginException::UsernameRequired'"
-          i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_REQUIRED"
-        >
-          Username is required.
-        </ng-container>
       </div>
     </div>
 
@@ -181,32 +181,39 @@
         <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
       </div>
     </div>
+  </div>
+</form>
 
-    <div class="m-login__spacer" *ngIf="showBigButton"></div>
-
+<ng-container *ngIf='this.source == "auth-modal"'>
+  <div class="m-login__divider">
+    <span></span>
+  </div>
+  <div class="m-login__footer">
+    <span class="m-register__alreadyAUser">
+      Don't have an account?
+      <a
+        class="m-login__joinTheConversation"
+        (click)="onJoinNowClick()"
+        i18n="@@LOGIN__JOIN_MINDS_NOW"
+      >
+        Join Minds Now
+      </a>
+    </span>
+    <div class="m-layout__spacer"></div>
     <m-button
       class="m-login__button--login"
-      color="blue"
-      (onAction)="login()"
-      [saving]="inProgress"
-      *ngIf="!showBigButton"
-      data-cy="data-minds-login-button"
-    >
-      <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
-    </m-button>
-    <m-button
-      class="m-login__button--login"
-      *ngIf="showBigButton"
       type="button"
       [saving]="inProgress"
       (onAction)="login()"
       color="blue"
+      [solid]="true"
       data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </m-button>
   </div>
-</form>
+</ng-container>
+
 <!-- END: LOGIN -->
 
 <!-- START: TWOFACTOR -->

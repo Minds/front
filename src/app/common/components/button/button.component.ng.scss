@@ -90,6 +90,18 @@
           border-color: themed($m-link);
         }
       }
+      &.m-button-solidColor {
+        @include m-theme() {
+          background-color: themed($m-link);
+          color: themed($m-textColor--primaryInverted);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: rgba(themed($m-link), 0.4);
+          }
+        }
+      }
     }
 
     // Warning button
