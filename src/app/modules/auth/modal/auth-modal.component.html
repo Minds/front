@@ -19,6 +19,7 @@
         [showInlineErrors]="true"
         [source]="'auth-modal'"
         (done)="onRegisterDone($event)"
+        (showLoginForm)="showLoginForm($event)"
       >
       </minds-form-register>
     </ng-container>
@@ -31,6 +32,7 @@
         [source]="'auth-modal'"
         (done)="onLoginDone($event)"
         (doneRegistered)="onRegisterDone($event)"
+        (showRegisterForm)="showRegisterForm($event)"
       >
       </minds-form-login>
     </ng-container>

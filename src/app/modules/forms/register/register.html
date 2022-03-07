@@ -39,10 +39,12 @@
 >
   <div class="m-layout__grid">
     <div class="m-form__field--text stretchedField">
-      <div class="m-form__row--label">
-        <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
-          >Username</label
-        >
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label for="username" *ngIf="showLabels" i18n="@@M__COMMON__USERNAME"
+            >Username</label
+          >
+        </div>
         <div
           class="m-register__error"
           [style.visibility]="showError('username') ? 'visible' : 'hidden'"
@@ -91,10 +93,12 @@
     </div>
 
     <div class="m-form__field--text stretchedField">
-      <div class="m-form__row--label">
-        <label for="email" *ngIf="showLabels" i18n="@@COMMON__EMAIL">
-          Email
-        </label>
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label for="email" *ngIf="showLabels" i18n="@@COMMON__EMAIL">
+            Email
+          </label>
+        </div>
         <div
           class="m-register__error"
           [style.visibility]="showError('email') ? 'visible' : 'hidden'"
@@ -120,10 +124,12 @@
       </div>
     </div>
     <div class="m-form__field--text stretchedField">
-      <div class="m-form__row--label">
-        <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
-          Password
-        </label>
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label for="password" *ngIf="showLabels" i18n="@@COMMON__PASSWORD">
+            Password
+          </label>
+        </div>
         <div
           class="m-register__error"
           [style.visibility]="showError('password') ? 'visible' : 'hidden'"
@@ -164,14 +170,16 @@
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"
     >
-      <div class="m-form__row--label">
-        <label
-          for="password2"
-          *ngIf="showLabels"
-          i18n="@@MINDS_REGISTRATION__CONFIRM_YOUR_PASSWORD"
-        >
-          Confirm your password
-        </label>
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label
+            for="password2"
+            *ngIf="showLabels"
+            i18n="@@MINDS_REGISTRATION__CONFIRM_YOUR_PASSWORD"
+          >
+            Confirm your password
+          </label>
+        </div>
         <div
           class="m-register__error"
           [style.visibility]="this.form.get('password2').touched && this.form.get('password2').dirty ? 'visible' : 'hidden'"
@@ -276,7 +284,9 @@
       i18n="@@REGISTER__ALREADY__HAVE__ACOUNT__LINK"
     >
       Already have an account?
-      <a [routerLink]="'/login'" queryParamsHandling="merge">Login</a>
+      <a class="m-register__loginToMinds" (click)="onShowLoginFormClick()"
+        >Login</a
+      >
     </span>
     <div class="m-layout__spacer"></div>
     <m-button

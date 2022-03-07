@@ -33,6 +33,7 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter();
+  @Output() showRegisterForm: EventEmitter<any> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
@@ -69,6 +70,10 @@ export class LoginForm extends AbstractSubscriberComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.push();
+  }
+
+  onShowRegisterFormClick() {
+    this.showRegisterForm.emit();
   }
 
   login() {

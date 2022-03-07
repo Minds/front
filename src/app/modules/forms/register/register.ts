@@ -45,6 +45,7 @@ export class RegisterForm {
   @Input() source: Source = null;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
+  @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
@@ -101,6 +102,10 @@ export class RegisterForm {
       },
       { validators: [this.passwordConfirmingValidator] }
     );
+  }
+
+  onShowLoginFormClick() {
+    this.showLoginForm.emit();
   }
 
   showError(field: string) {

@@ -99,10 +99,12 @@
 >
   <div class="m-layout__grid">
     <div class="m-form__field--text stretchedField">
-      <div class="m-form__row--label">
-        <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
-          Username
-        </label>
+      <div class="m-form__input--details">
+        <div class="m-form__row--label">
+          <label for="username" *ngIf="showLabels" i18n="@@COMMON__USERNAME">
+            Username
+          </label>
+        </div>
         <div class="m-login__error" *ngIf="!!usernameError">
           <ng-container
             *ngIf="usernameError == 'LoginException::EmailAddress'"
@@ -193,7 +195,7 @@
       Don't have an account?
       <a
         class="m-login__joinTheConversation"
-        (click)="onJoinNowClick()"
+        (click)="onShowRegisterFormClick()"
         i18n="@@LOGIN__JOIN_MINDS_NOW"
       >
         Join Minds Now

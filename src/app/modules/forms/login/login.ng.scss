@@ -1,6 +1,18 @@
 @import 'defaults.scss';
 
 :host {
+  .m-form__row--label {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-form__input--details {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+
   .m-login__title {
     display: flex;
     align-items: center;
@@ -74,7 +86,42 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    padding: 28px 0;
+    padding: 18px 0 8px 0;
+
+    .m-register__alreadyAUser {
+      margin-top: 16px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      .m-login__joinTheConversation {
+        @include m-theme() {
+          color: themed($m-link);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .m-login__divider {
+      display: none;
+    }
+
+    .m-login__footer {
+      flex-flow: column-reverse nowrap;
+    }
+
+    .m-register__alreadyAUser {
+      margin-top: 16px;
+    }
+
+    ::ng-deep {
+      m-button,
+      button {
+        width: 100%;
+      }
+    }
   }
 
   .m-login-2fa {

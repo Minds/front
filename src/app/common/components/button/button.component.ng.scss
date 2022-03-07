@@ -96,9 +96,13 @@
           color: themed($m-textColor--primaryInverted);
         }
 
-        &:hover {
-          @include m-theme() {
-            background-color: rgba(themed($m-link), 0.4);
+        &:not(:disabled) {
+          &:not(.m-button--overlay) {
+            &:hover {
+              @include m-theme() {
+                background-color: rgba(themed($m-link), 0.6);
+              }
+            }
           }
         }
       }
