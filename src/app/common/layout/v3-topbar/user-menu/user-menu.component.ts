@@ -9,8 +9,6 @@ import {
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { Subscription } from 'rxjs';
-import { Navigation as NavigationService } from '../../../../services/navigation';
-import { RouterLink } from '@angular/router';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { UserMenuService } from './user-menu.service';
@@ -22,7 +20,6 @@ import { UserMenuService } from './user-menu.service';
 })
 export class UserMenuV3Component implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
-  @Input() showFooterLinks: boolean = false;
 
   isDark: boolean = false;
   themeSubscription: Subscription;
@@ -84,14 +81,6 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
 
   toggleTheme(): void {
     this.themeService.toggleUserThemePreference();
-  }
-
-  toggleFooterLinks(): void {
-    if (this.maxFooterLinks === 5) {
-      this.maxFooterLinks = Infinity;
-    } else {
-      this.maxFooterLinks = 5;
-    }
   }
 
   ngOnDestroy(): void {
