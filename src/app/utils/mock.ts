@@ -1,5 +1,4 @@
 import { Component, Directive, EventEmitter } from '@angular/core';
-import { SiteService } from '../common/services/site.service';
 
 export function Mock(opts: any = {}) {
   return (
@@ -59,13 +58,17 @@ export function MockService(obj: any, config: any = null) {
     );
   });
 
-  const keys = Object.keys(obj.prototype).filter(
-    key => props.indexOf(key) === -1
+  // get everything not a property (e.g. functions).
+  const keys = Object.getOwnPropertyNames(obj.prototype).filter(
+    key => props.indexOf(key) === -1 && typeof obj.prototype[key] === 'function'
   );
 
   const has = (config && config.has) || [];
 
-  for (const prop of [...props, ...has]) {
+  for (const prop of [
+    ...(props[Symbol.iterator] ? props : []),
+    ...(has[Symbol.iterator] ? has : []),
+  ]) {
     const property = {
       get: () => false,
       set: () => {},

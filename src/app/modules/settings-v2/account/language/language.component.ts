@@ -71,7 +71,7 @@ export class SettingsV2LanguageComponent implements OnInit, OnDestroy {
       );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
-        window.location.reload(true); // This is ok client side as server will never save?
+        window.location.href = window.location.href;
       }
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
