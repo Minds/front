@@ -6,6 +6,7 @@ import {
   HostListener,
   Input,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { decode } from 'blurhash';
 import { timer } from 'rxjs';
@@ -17,7 +18,7 @@ import { ActivityEntity } from '../../../modules/newsfeed/activity/activity.serv
 @Directive({
   selector: 'img[m-blurhash]',
 })
-export class BlurhashDirective implements AfterViewInit, OnDestroy {
+export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   private RESOLUTION = 128;
 
   @HostBinding('attr.src')
@@ -53,15 +54,28 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
 
   constructor(private el: ElementRef) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
     if (this.el.nativeElement.complete && !this.paywalled) {
       return null;
     }
 
     // preventing an ugly case where the canvas appears outside of image container
-    timer(0)
-      .toPromise()
-      .then(() => this.drawCanvas());
+    if (this.fullscreen) {
+      this.drawCanvas();
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.el.nativeElement.complete && !this.paywalled) {
+      return null;
+    }
+
+    if (!this.fullscreen) {
+      // preventing an ugly case where the canvas appears outside of image container
+      timer(0)
+        .toPromise()
+        .then(() => this.drawCanvas());
+    }
   }
 
   /**
@@ -71,6 +85,10 @@ export class BlurhashDirective implements AfterViewInit, OnDestroy {
   drawCanvas() {
     const elementWidth = this.el?.nativeElement?.width;
     const elementHeight = this.el?.nativeElement?.height;
+
+    if (this.canvas) {
+      return null;
+    }
 
     let [blurhash, width, height] = [
       this.entity.blurhash || this.entity.custom_data[0]?.blurhash,
