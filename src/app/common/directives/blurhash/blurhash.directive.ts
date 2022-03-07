@@ -52,10 +52,14 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   @Input('paywalled')
   paywalled;
 
+  get isLoadingComplete() {
+    return this.el.nativeElement?.src && this.el.nativeElement?.complete;
+  }
+
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
-    if (this.el.nativeElement.complete && !this.paywalled) {
+    if (this.isLoadingComplete && !this.paywalled) {
       return null;
     }
 
@@ -66,7 +70,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.el.nativeElement.complete && !this.paywalled) {
+    if (this.isLoadingComplete && !this.paywalled) {
       return null;
     }
 
@@ -131,7 +135,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       }
 
       // if image has loaded in the time we've been processing - do not set canvas.
-      if (this.el.nativeElement?.complete) {
+      if (this.isLoadingComplete) {
         return;
       }
 
