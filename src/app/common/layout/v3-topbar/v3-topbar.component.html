@@ -12,6 +12,7 @@
   [class.m-v3Topbar__top--noBackground]="
     !(pageLayoutService.hasTopbarBackground$ | async)
   "
+  [class.m-v3Topbar--homepageV3]="isHomePageV3"
   [class.m-v3Topbar__top--loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
@@ -30,12 +31,22 @@
             class="m-v3Topbar__logo--bulb"
           />
           <img
-            *ngIf="!(isDarkTheme$ | async)"
+            *ngIf="
+              isHomePageV3
+                ? !(isDarkTheme$ | async) &&
+                  (pageLayoutService.hasTopbarBackground$ | async)
+                : !(isDarkTheme$ | async)
+            "
             [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
           <img
-            *ngIf="isDarkTheme$ | async"
+            *ngIf="
+              isHomePageV3
+                ? (isDarkTheme$ | async) ||
+                  !(pageLayoutService.hasTopbarBackground$ | async)
+                : (isDarkTheme$ | async)
+            "
             [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
             class="m-v3Topbar__logo--full"
           />
@@ -71,11 +82,21 @@
             <ng-container *ngIf="!onHomepage">
               <m-button
                 class="m-v3TopbarLoginWrapper__login"
+                [ngClass]="
+                  isHomePageV3
+                    ? {
+                        'm-v3TopbarLoginWrapper__login--white': !(
+                          pageLayoutService.hasTopbarBackground$ | async
+                        )
+                      }
+                    : undefined
+                "
                 (onAction)="onLoginClick()"
                 title="Login"
                 i18n-title="@@COMMON__LOGIN"
                 data-ref="topnav-login"
                 size="small"
+                [flat]="isHomePageV3"
               >
                 Login
               </m-button>
@@ -88,6 +109,7 @@
                 data-ref="topnav-join-now"
                 color="blue"
                 size="small"
+                [overlay]="isHomePageV3"
               >
                 Join Now
               </m-button>
@@ -116,7 +138,7 @@
           </div>
         </ng-container>
 
-        <div class="m-v3Topbar__userMenu">
+        <div *ngIf="!isHomePageV3 && !onHomepage" class="m-v3Topbar__userMenu">
           <div class="m-v3Topbar__spacer"></div>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>

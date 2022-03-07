@@ -1,0 +1,284 @@
+<div class="mf-jumpAnchor" #topAnchor></div>
+
+<section>
+  <img
+    src="/assets/homepage/neural.png"
+    class="m-homepage__v3__neuralBg"
+    [m-blurhash]="blurhash"
+  />
+
+  <div class="m-homepage__v3__firstSection__container">
+    <div
+      style="display: flex; flex: 1; flex-direction: column; max-width: 1180px; padding: 0 32px"
+    >
+      <div class="m-homepage__v3__firstSection__actions">
+        <h2 class="m-homepage__v3__title" ngPreserveWhitespaces>
+          {{ headline }}
+        </h2>
+
+        <p
+          class="m-homepage__v3__description"
+          i18n="@@HOMEPAGE__V2__FREE_YOUR_MIND_HEADER"
+        >
+          {{ description }}
+        </p>
+
+        <m-button
+          class="m-homepage__joinButton--blueOutline"
+          (click)="register()"
+          i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+          data-cy="data-minds-homepage-join-button-main"
+          color="blue"
+          size="large"
+          solid="true"
+        >
+          Join Minds Now
+        </m-button>
+      </div>
+
+      <div class="m-homepage__v3__appButtons">
+        <a [href]="siteUrl + 'mobile'" target="_blank">
+          <img [src]="cdnAssetsUrl + 'assets/homepage/android.png'" />
+        </a>
+        <a
+          href="https://itunes.apple.com/app/minds-com/id961771928"
+          target="_blank"
+        >
+          <img [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'" />
+        </a>
+      </div>
+
+      <section class="m-homepage__metrics">
+        <div class="m-homepage__metric">
+          <span class="m-homepage__metric__title">6M+</span>
+          <span class="m-homepage__metric__subtitle">Members</span>
+        </div>
+        <div class="m-homepage__metric">
+          <span class="m-homepage__metric__title">100M+</span>
+          <span class="m-homepage__metric__subtitle">Conversations</span>
+        </div>
+        <div class="m-homepage__metric">
+          <span class="m-homepage__metric__title">5M+</span>
+          <span class="m-homepage__metric__subtitle">Tokens Rewarded</span>
+        </div>
+        <div class="m-homepage__metric">
+          <span class="m-homepage__metric__title">2B+</span>
+          <span class="m-homepage__metric__subtitle">Boosted Views</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <section class="m-homepage__asFeaturedIn">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+  </section>
+</section>
+
+<section class="m-homepage__v3__body">
+  <div
+    class="m-homepage__v3__bridgeTheDivide m-marketing__section m-marketing__section--style-5"
+  >
+    <div class="m-grid m-marketing__wrapper">
+      <div
+        class="
+            m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__body
+          "
+      >
+        <h3 i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__TITLE">
+          Bridge the divide
+        </h3>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__BRIDGE_THE_DIVIDE__DESCRIPTION"
+        >
+          Big tech has abused its power and lost the trust of its community.
+          Their policies and behavior have caused polarization to reach all-time
+          highs across the globe.
+        </p>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V2__EARN_DAILY_CONTRIBUTION"
+        >
+          We are on a mission to elevate global discourse through Internet
+          freedom.
+        </p>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V2__RECEIVE_DIRECT_PAYMENTS"
+        >
+          Internet freedom means:
+        </p>
+
+        <ul>
+          <li>Free speech</li>
+          <li>Privacy</li>
+          <li>Open source</li>
+          <li>Self-sovereignty</li>
+          <li>Community governance</li>
+          <li>Crypto economy</li>
+        </ul>
+
+        <div class="m-marketing__actionButtons">
+          <a
+            class="m-marketing__link"
+            [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
+            target="_blank"
+            i18n
+          >
+            Read our Whitepaper
+          </a>
+        </div>
+      </div>
+      <div
+        class="
+            m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__image
+          "
+      >
+        <span>
+          <img [src]="'/assets/homepage/bridge-the-divide.png'" />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+
+  <div
+    class="m-homepage__v3__makeSenseOfWorld m-marketing__section m-marketing__section--style-4"
+  >
+    <div class="m-grid m-marketing__wrapper">
+      <div
+        class="
+            m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__body
+          "
+      >
+        <h3 i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD">
+          Make sense of your world
+        </h3>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD__P1"
+        >
+          We hold ourselves to certain principles to ensure that you are
+          provided with unrestricted, real-time access to all information shared
+          on the network.
+        </p>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD__P2"
+        >
+          Our <a href="https://gitlab.com/minds" target="_blank">code</a> and
+          algorithms are free and open source for maximum transparency and
+          accountability. Our
+          <a routerLink="/content-policy">content policy</a> is based on the
+          First Amendment and governed by a community jury in order to minimize
+          bias and censorship.
+        </p>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__MAKE_SENSE_OF_YOUR_WORLD__P3"
+        >
+          We believe you can only
+          <a href="https://change.minds.com/" target="_blank"
+            >change someone's mind</a
+          >
+          if you provide them with a platform to speak it.
+        </p>
+      </div>
+      <div
+        class="
+            m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-marketing__image
+          "
+      >
+        <span>
+          <img [src]="'/assets/homepage/make-sense-of-your-world.png'" />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+
+  <div
+    class="m-homepage__v3__earnCrypto m-marketing__section m-marketing__section--style-4"
+  >
+    <div class="m-grid m-marketing__wrapper">
+      <div
+        class="m-grid__column-4 m-grid__column-12--mobile m-marketing__image"
+      >
+        <img [src]="'/assets/homepage/earn-crypto.png'" />
+      </div>
+      <div class="m-grid__column-8 m-grid__column-12--mobile m-marketing__body">
+        <h3 i18n="@@HOMEPAGE_V3__EARN_CRYPTO__TITLE">
+          Earn crypto and rev-share
+        </h3>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__EARN_CRYPTO__P1"
+        >
+          The value in a social network lies in its community. You deserve to be
+          rewarded for your contribution to the success and growth of the
+          network.
+        </p>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__EARN_CRYPTO__P2"
+        >
+          Minds rewards you with MINDS Tokens (ERC-20) every day for creating
+          popular content, referring friends or providing liquidity. The tokens
+          can then be used to promote your content (1 token = 1,000 impressions)
+          or send tips to content creators to show your support and unlock
+          special perks.
+        </p>
+
+        <p
+          class="m-marketing__description"
+          i18n="@@HOMEPAGE_V3__EARN_CRYPTO__P3"
+        >
+          Upgrade to Minds+ to access premium content and submit your own
+          content for a share of our revenue.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final section -->
+
+  <div class="m-marketing__section m-marketing__section--tail">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-12 m-marketing__body">
+        <h3 class="m-marketingTitle__centered">
+          <ng-container i18n="@@HOMEPAGE_V2__TAKE_BACK_CONTROL"
+            >Take back control of your social media</ng-container
+          >
+        </h3>
+
+        <div class="m-marketing__actionButtons">
+          <m-button
+            class="m-homepage__joinButton--blueOutline"
+            (click)="register()"
+            i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
+            color="blue"
+            solid="true"
+          >
+            Join Minds Now
+          </m-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<m-marketing__footer></m-marketing__footer>

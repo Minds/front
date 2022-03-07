@@ -8,5 +8,10 @@
   ></m-discovery__trends>
 </m-discovery> -->
 <ng-template #notGuestMode>
-  <m-homepage__v2></m-homepage__v2>
+  <m-homepage__v2
+    *mExperiment="'homepage-v3'; variation: false"
+  ></m-homepage__v2>
+  <m-homepage__v3
+    *mExperiment="'homepage-v3'; variation: true"
+  ></m-homepage__v3>
 </ng-template>

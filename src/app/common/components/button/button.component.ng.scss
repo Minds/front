@@ -82,8 +82,15 @@
       }
     }
     &.m-button--blue {
-      @include m-theme() {
-        border-color: themed($m-link);
+      &.m-button--solid {
+        @include m-theme() {
+          background-color: themed($m-link);
+        }
+      }
+      &:not(m-button--solid) {
+        @include m-theme() {
+          border-color: themed($m-link);
+        }
       }
       &.m-button--dropdown ::ng-deep .m-button__dropdownArrow {
         @include m-theme() {
@@ -350,7 +357,14 @@
         font-size: 9px; /* m-icon is 135% this size */
       }
     }
+
+    ///////////////////////////////////////////////////
+
+    &.m-button--flat {
+      border: none !important;
+    }
   }
+
   ///////////////////////////////////////////////////
 
   &button {
