@@ -2,7 +2,7 @@
 
 <section>
   <img
-    [src]="cdnAssetsUrl + '/assets/homepage/neural.png'"
+    [src]="cdnAssetsUrl + 'assets/homepage/neural.png'"
     class="m-homepage__v3__neuralBg"
     [m-blurhash]="blurhash"
     [m-blurhashFullscreen]="true"
@@ -222,7 +222,7 @@
         <span>
           <img
             [src]="
-              cdnAssetsUrl + '/assets/homepage/make-sense-of-your-world.png'
+              cdnAssetsUrl + 'assets/homepage/make-sense-of-your-world.png'
             "
           />
         </span>
@@ -239,7 +239,7 @@
       <div
         class="m-grid__column-4 m-grid__column-12--mobile m-marketing__image"
       >
-        <img [src]="cdnAssetsUrl + '/assets/homepage/earn-crypto.png'" />
+        <img [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
       </div>
       <div class="m-grid__column-8 m-grid__column-12--mobile m-marketing__body">
         <h3 i18n="@@HOMEPAGE_V3__EARN_CRYPTO__TITLE">
@@ -283,7 +283,7 @@
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-12 m-marketing__body">
         <h3 class="m-marketingTitle__centered">
-          <ng-container i18n="@@HOMEPAGE_V3__TITLE"
+          <ng-container i18n="@@ELEVATE_THE_GLOBAL_CONVERSATION"
             >Elevate the global conversation</ng-container
           >
         </h3>
@@ -304,4 +304,4 @@
   </div>
 </section>
 
-<m-marketing__footer></m-marketing__footer>
+<m-marketing__footer [slogan]="headline"></m-marketing__footer>

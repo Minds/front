@@ -29,7 +29,7 @@ export class HomepageV3Component implements OnInit {
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
-  readonly headline = $localize`:@@HOMEPAGE_V3__TITLE:Elevate the global conversation`;
+  readonly headline = $localize`:@@ELEVATE_THE_GLOBAL_CONVERSATION:Elevate the global conversation`;
   readonly description = $localize`:@@HOMEPAGE__V3__SUBHEADER:Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.`;
   readonly blurhash = {
     blurhash:

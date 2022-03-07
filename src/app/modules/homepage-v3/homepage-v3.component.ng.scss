@@ -196,6 +196,7 @@
         padding: 0;
         padding-left: $minds-padding * 2;
         margin-bottom: 2rem;
+        @include body1Regular;
 
         @include m-theme() {
           color: themed($m-textColor--secondary);
@@ -510,6 +511,39 @@
   @media screen and (max-width: $m-grid-max-mobile) {
     .m-marketingAsFeaturedIn__title {
       display: none;
+    }
+  }
+
+  ::ng-deep {
+    m-marketing__footer {
+      background-color: #f9fafc !important;
+      border-top-color: #ebebeb !important;
+    }
+
+    .m-marketingFooter__section--language + .m-marketingFooter__sep {
+      display: none !important;
+    }
+
+    .m-marketingFooter__sep {
+      border-color: #ebebeb !important;
+    }
+
+    .m-marketingFooter__logo {
+      width: 116px;
+      height: 43px;
+      margin-bottom: $minds-margin * 4 !important;
+      background: url('../../../assets/logos/logo-light-mode.svg') no-repeat
+        center left !important;
+      background-size: contain;
+    }
+
+    .m-languageBar__languageOptions::after {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #f9fafc,
+        #f9fafc
+      ) !important;
     }
   }
 }

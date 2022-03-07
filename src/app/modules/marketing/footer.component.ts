@@ -6,6 +6,7 @@ import {
   HostListener,
   Injector,
   SkipSelf,
+  Input,
 } from '@angular/core';
 import { ConfigsService } from '../../common/services/configs.service';
 
@@ -17,6 +18,8 @@ import { ConfigsService } from '../../common/services/configs.service';
 })
 export class MarketingFooterComponent {
   readonly year: number = new Date().getFullYear();
+  @Input()
+  readonly slogan = $localize`:@@TAKE_BACK_CONTROL:Take back control of your social media`;
 
   readonly cdnAssetsUrl: string;
 
