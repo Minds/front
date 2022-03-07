@@ -32,7 +32,8 @@ export class ThemeService {
       this.renderTheme();
     });
     this.sessionSubscription = this.session.loggedinEmitter.subscribe(
-      isLoggedIn => {
+      (isLoggedIn: boolean) => {
+        this.loaded = false; // prevent theme transition animation.
         this.emitThemePreference();
       }
     );
