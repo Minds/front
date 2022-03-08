@@ -67,7 +67,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input() set displayOptions(options) {
-    console.log('ojm activity options input', options);
     this.service.setDisplayOptions(options);
   }
 
@@ -143,11 +142,15 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     // ojm make this dependent on feature flag also
+
+    console.log(
+      'ojm isv2',
+      this.service.displayOptions.isModal,
+      this.service.displayOptions.minimalMode
+    );
     this.isV2 =
       !this.service.displayOptions.isModal &&
       !this.service.displayOptions.minimalMode;
-
-    console.log('ojm isV2', this.isV2);
   }
 
   ngOnDestroy() {

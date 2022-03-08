@@ -14,6 +14,11 @@ m-activity {
 
   &.m-activity--v2 {
     border: none !important;
+    border-radius: $m-borderRadius;
+
+    &.m-activity--fixedHeight {
+      flex-direction: row !important;
+    }
   }
 
   @include m-theme() {

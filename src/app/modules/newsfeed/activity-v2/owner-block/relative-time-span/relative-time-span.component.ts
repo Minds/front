@@ -30,8 +30,7 @@ import { ActivityEntity } from '../../../activity/activity.service';
       [title]="entity.time_created * 1000 | date: 'medium'"
       #relativeTimeSpan
       *mIfBrowser
-    >
-      {{ pauseableRelativeTimeAgo$ | async }}
+      >{{ pauseableRelativeTimeAgo$ | async }}
     </span>
   `,
   providers: [FriendlyDateDiffPipe],

@@ -99,6 +99,11 @@ export class NewsfeedBoostRotatorComponent {
 
   @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
+  @HostBinding('class.m-newsfeedBoostRotator--activityV2')
+  get activityV2Feature(): boolean {
+    return true; // ojm todo hook this up to feature flag
+  }
+
   constructor(
     public session: Session,
     public router: Router,

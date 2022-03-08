@@ -14,7 +14,6 @@ import {
 })
 export class ActivityV2RemindComponent {
   @Input('entity') set entity(entity: ActivityEntity) {
-    console.log('ojm remind entity', entity);
     this.service.setEntity(entity.remind_object);
     this.service.isNsfwConsented$.next(true); // Parent entity should have done this
 

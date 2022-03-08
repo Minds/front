@@ -6,42 +6,40 @@
     background-color: themed($m-bgColor--primary);
   }
 
-  .m-activityToolbar__actions,
-  .m-activityToolbar__metrics {
+  .m-activityToolbar__actions {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    // padding: 0 25px 20px; ojm
-    // padding-top: $minds-padding * 2; ojm
     box-sizing: border-box;
     text-align: center;
     position: relative;
     width: 100%;
   }
 
-  .m-activityToolbarMetrics__metric {
-    text-align: left;
-    padding-right: 20px;
-    cursor: pointer;
+  // ojm remove
+  // .m-activityToolbarMetrics__metric {
+  //   text-align: left;
+  //   padding-right: 20px;
+  //   cursor: pointer;
 
-    span {
-      font-size: 15px;
-    }
+  //   span {
+  //     font-size: 15px;
+  //   }
 
-    span:nth-of-type(1) {
-      font-weight: 500;
-      padding-right: 5px;
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
-    }
-    span:nth-of-type(2) {
-      font-weight: 400;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-    }
-  }
+  //   span:nth-of-type(1) {
+  //     font-weight: 500;
+  //     padding-right: 5px;
+  //     @include m-theme() {
+  //       color: themed($m-textColor--primary);
+  //     }
+  //   }
+  //   span:nth-of-type(2) {
+  //     font-weight: 400;
+  //     @include m-theme() {
+  //       color: themed($m-textColor--secondary);
+  //     }
+  //   }
+  // }
 
   .m-activityToolbar__actions {
     padding-right: $spacing8;

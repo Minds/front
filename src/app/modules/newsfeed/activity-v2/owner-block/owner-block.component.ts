@@ -59,7 +59,6 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
 
   // Show absolute dates for items outside the feed
   get isFeed(): boolean {
-    console.log('ojm isfeed', this.service.displayOptions.isFeed);
     return this.service.displayOptions.isFeed;
   }
 

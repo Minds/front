@@ -1,0 +1,31 @@
+@import 'defaults.scss';
+@import '../../common/layout/layout.scss';
+
+:host {
+  &.m-discovery--activityV2 {
+    .m-pageLayout__container {
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        padding: 0 !important; // ojm why is this breaking discovery page
+      }
+    }
+    [class*='m-pageLayout__pane'] {
+      @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
+        @include borderRight;
+      }
+    }
+
+    ::ng-deep {
+      .m-discovery__feedItem {
+        padding: 0 !important;
+      }
+
+      m-activity {
+        &:first-child {
+          m-activityV2 {
+            border-top: none !important;
+          }
+        }
+      }
+    }
+  }
+}

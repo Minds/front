@@ -1,5 +1,6 @@
 @import 'defaults.scss';
 
+// ojm style comments
 :host {
   display: block;
 
@@ -23,7 +24,7 @@
   .m-commentsEntityOutlet__topBar {
     display: flex;
     justify-content: space-between;
-    margin: 10px 10px 15px 20px;
+    margin: $spacing3 $spacing3 $spacing4 0;
   }
   .m-commentsEntityOutlet__header {
     display: flex;

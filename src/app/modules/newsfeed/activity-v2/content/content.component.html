@@ -36,6 +36,10 @@
         *ngIf="mediaDescription && !hideMediaDescription"
         class="m-activityContent__mediaDescriptionText"
         [innerHtml]="mediaDescription | tags"
+        [ngClass]="{
+          'm-activityContentText--translated':
+            service.displayOptions.showTranslation
+        }"
       ></p>
       <m-read-more--button
         *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
@@ -70,7 +74,13 @@
       *ngIf="message?.length >= 1"
       (click)="onMessageClick($event)"
     >
-      <div class="m-activityContent__messageWrapper">
+      <div
+        class="m-activityContent__messageWrapper"
+        [ngClass]="{
+          'm-activityContentText--translated':
+            service.displayOptions.showTranslation
+        }"
+      >
         <span [innerHtml]="message | tags | codeHighlight"></span>
         <m-read-more--button
           *ngIf="
@@ -154,16 +164,34 @@
   <!-- ----------------------------------- -->
   <!-- IMAGE -->
   <!-- ----------------------------------- -->
-  <div class="m-activityContent__media--image" #imageEl *ngIf="isImage">
+  <div
+    class="m-activityContent__media--image"
+    #imageEl
+    *ngIf="isImage"
+    [ngClass]="{
+      'm-activityContent__media--extraTallImage':
+        extraTallImage && !isModal && !service.displayOptions.minimalMode,
+      'm-activityContent__media--extraWideImage':
+        extraWideImage && !isModal && !service.displayOptions.minimalMode
+    }"
+  >
     <ng-container *ngIf="!isModal; else image">
       <a
         class="m-activityContentMedia__link"
         [routerLink]="['/newsfeed', imageGuid]"
         (click)="onModalRequested($event)"
-        ><ng-container [ngTemplateOutlet]="image"></ng-container
+      >
+        <div
+          *ngIf="extraTallImage || extraWideImage"
+          class="m-activityContentMedia__expandIcon"
+          (click)="onModalRequested($event)"
+        >
+          <m-icon iconId="crop_free" sizeFactor="25"></m-icon>
+        </div>
+        <ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>
     </ng-container>
-    <!-- [style.height]="imageHeight" ojm -->
+    <!-- [style.height]="imageHeight" ojm is imageHeight used in .ts? If not, can remove?-->
     <ng-template #image
       ><img
         [src]="imageUrl"

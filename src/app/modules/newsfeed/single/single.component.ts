@@ -56,6 +56,7 @@ export class NewsfeedSingleComponent {
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.activityV2Feature = true; // ojm connect to feature flag
   }
 
   ngOnInit() {

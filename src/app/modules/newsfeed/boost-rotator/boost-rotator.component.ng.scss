@@ -2,6 +2,16 @@
 @import '../../../common/layout/layout';
 
 :host {
+  &.m-newsfeedBoostRotator--activityV2 {
+    .m-newsfeed__boostRotator {
+      margin: 0;
+      border: 1px solid red; // ojm
+    }
+    [class*='m-carousel__overflowScrollButton--'] {
+      display: none !important;
+    }
+  }
+
   [class*='m-carousel__overflowScrollButton--'] {
     display: block !important;
     opacity: 1;

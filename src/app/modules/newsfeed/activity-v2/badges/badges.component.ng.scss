@@ -1,14 +1,6 @@
 @import 'defaults.scss';
 
 :host {
-  // > * {
-  //   @include body2Medium;
-  //   @include m-theme() {
-  //     color: themed($m-textColor--secondary);
-  //     fill: themed($m-textColor--secondary);
-  //   }
-  // }
-
   .m-activityV2__badge {
     margin-left: $spacing2;
     display: inline-flex;
@@ -17,12 +9,9 @@
     cursor: default;
     text-decoration: none;
 
-    .m-activityV2__badge {
-      font-size: 1.25rem;
-      @include m-theme() {
-        fill: themed($m-textColor--secondary);
-        color: themed($m-textColor--secondary);
-      }
+    @include m-theme() {
+      fill: themed($m-textColor--secondary);
+      color: themed($m-textColor--secondary);
     }
 
     > span,

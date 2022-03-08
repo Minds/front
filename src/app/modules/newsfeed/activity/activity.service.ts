@@ -29,7 +29,7 @@ export type ActivityDisplayOptions = {
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
   isFeed: boolean; // is the activity a part of a feed?
-  isV2Design: boolean; // should we use 2022 designs? ojm remove?
+  showBoostRotatorButtons: boolean;
 };
 
 export type ActivityEntity = {
@@ -295,6 +295,7 @@ export class ActivityService {
     showPostMenu: true,
     showPinnedBadge: true,
     showMetrics: true,
+    showBoostRotatorButtons: false,
     fixedHeight: false,
     fixedHeightContainer: false,
     isModal: false,
@@ -302,7 +303,6 @@ export class ActivityService {
     bypassMediaModal: false,
     sidebarMode: false,
     isFeed: false,
-    isV2Design: true, // ojm this should be false by default; calculated based on growthbook
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -341,9 +341,8 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    console.log('ojm settingDisplayOptions', this.displayOptions, options);
-
-    if (this.displayOptions.isV2Design) {
+    if (true) {
+      // ojm connect to activity V2 feature flag
       this.displayOptions.showOnlyCommentsInput = false;
       this.displayOptions.showOnlyCommentsToggle = true;
     }

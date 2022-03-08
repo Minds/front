@@ -5,7 +5,7 @@
   position: relative;
   box-sizing: border-box;
   padding: $spacing4 $spacing8;
-  border-radius: 0;
+  border-radius: 0 !important;
 
   @media screen and (max-width: $max-mobile) {
     padding: $spacing4;
@@ -13,11 +13,6 @@
 
   @include m-theme() {
     border-top: 1px solid themed($m-borderColor--primary);
-  }
-
-  &,
-  &.m-border {
-    border-radius: $m-borderRadius;
   }
 
   @include m-theme() {
@@ -38,7 +33,7 @@
   &.m-activity--fixedHeight {
     height: 750px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
     ::ng-deep {
       m-activity__nsfwConsent {
@@ -49,7 +44,7 @@
     }
     ::ng-deep m-activity__remind {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       overflow: hidden;
     }
   }
@@ -65,8 +60,23 @@
     flex-direction: column;
     width: calc(100% - 56px);
   }
+
+  .m-activity__optionalTopRow {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: $spacing4;
+    ::ng-deep m-activityFlags {
+      margin-right: $spacing4;
+    }
+
+    .m-activity__boostRotatorButtons {
+      ::ng-deep m-icon i {
+        @include heading2Bold;
+      }
+    }
+  }
   // COMMENTS ////////////////////////////////////////
-  ::ng-deep m-comments__entityOutlet {
+  ::ng-deep m-comments__entityOutletV2 {
     margin-top: $spacing6;
     .m-commentsEntityOutlet__expand,
     .m-commentsEntityOutlet__expand--hide {
@@ -87,15 +97,41 @@
 
   &
     > ::ng-deep
-    m-comments__entityOutlet
+    m-comments__entityOutletV2
     > ::ng-deep
     m-comments__tree
     > ::ng-deep
     m-comments__thread
     > .m-comments__thread,
-  & > ::ng-deep m-comments__entityOutlet {
+  & > ::ng-deep m-comments__entityOutletV2 {
     & > ::ng-deep m-comment__poster .m-commentPoster__wrapper {
-      margin: 10px;
+      margin: 50px;
+    }
+  }
+
+  /// ojm
+  &
+    > ::ng-deep
+    m-comments__entityOutlet
+    > ::ng-deep
+    m-comments__tree
+    > ::ng-deep
+    m-comments__thread {
+    .m-comments__thread--topLevel {
+      padding-left: 0;
+    }
+
+    m-comment {
+      .m-comment__message {
+        @include body2Regular;
+
+        a {
+          font-weight: inherit;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
     }
   }
 

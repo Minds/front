@@ -2,7 +2,6 @@
 
 :host {
   [class*='m-activityFlag--'] {
-    padding-bottom: $spacing4;
     > * {
       vertical-align: middle;
     }

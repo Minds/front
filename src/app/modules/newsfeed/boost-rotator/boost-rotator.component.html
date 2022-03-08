@@ -18,6 +18,7 @@
         @fastFade
         [entity]="entity"
         [displayOptions]="{
+          showBoostRotatorButtons: true,
           showOnlyCommentsInput: false,
           showComments: false,
           fixedHeight: true,
@@ -27,6 +28,8 @@
         [slot]="i + 1"
         [canRecordAnalytics]="false"
         [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
+        (nextBoost)="next()"
+        (previousBoost)="previous()"
         *ngIf="shouldRender(i)"
       ></m-activity>
     </ng-container>

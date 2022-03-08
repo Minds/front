@@ -111,8 +111,10 @@ export class ActivityV2ContentComponent
   remindWidth: number;
   remindHeight: number;
   videoHeight: string;
+
   imageHeight: string;
-  imageWidth: string;
+  imageAspectRatio: number = 0;
+  imageOriginalHeight: number;
 
   paywallUnlocked: boolean = false;
   canonicalUrl: string;
@@ -320,19 +322,11 @@ export class ActivityV2ContentComponent
   }
 
   get mediaHeight(): number | null {
-    console.log('ojm get mediaHeight');
     if (this.isImage) {
       const imageHeight = this.imageHeight || '410px';
-      console.log(
-        'ojm get mediaHeight-isImage. ImageHeight or 410 (defaut):',
-        imageHeight
-      );
-
       return parseInt(imageHeight.slice(0, -2), 10);
     }
     if (this.isVideo) {
-      console.log('ojm get mediaHeight-isVideo.', this.videoHeight);
-
       return this.videoHeight ? parseInt(this.videoHeight.slice(0, -2), 10) : 0;
     }
     if (this.isRichEmbed) {
@@ -352,6 +346,62 @@ export class ActivityV2ContentComponent
   get isMessageAbovePreview(): boolean {
     return !(this.minimalMode || (this.isRichEmbed && this.isModal));
   }
+
+  get maxMessageHeight(): number {
+    if (this.service.displayOptions.minimalMode) {
+      return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
+    } else {
+      const maxMessageHeight = this.service.displayOptions.fixedHeight
+        ? 130
+        : 320;
+
+      return this.isTextOnly ? this.maxFixedHeightContent : maxMessageHeight;
+    }
+  }
+
+  get maxDescHeight(): number {
+    if (this.service.displayOptions.minimalMode) {
+      return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
+    } else if (this.service.displayOptions.fixedHeight) {
+      return 80;
+    } else if (this.isModal) {
+      return 115;
+    }
+    return 230;
+  }
+
+  get shortStatus(): boolean {
+    return (
+      this.entity.content_type === 'status' &&
+      this.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
+    );
+  }
+
+  get mediumStatus(): boolean {
+    return (
+      this.entity.content_type === 'status' &&
+      this.message.length > ACTIVITY_SHORT_STATUS_MAX_LENGTH &&
+      this.message.length <= ACTIVITY_MEDIUM_STATUS_MAX_LENGTH
+    );
+  }
+
+  get extraTallImage(): boolean {
+    return (
+      this.imageOriginalHeight >= 500 &&
+      this.imageAspectRatio &&
+      this.imageAspectRatio > 3
+    );
+  }
+
+  get extraWideImage(): boolean {
+    return (
+      this.imageAspectRatio &&
+      this.imageAspectRatio < 0.333 &&
+      this.imageOriginalHeight >= 166
+    );
+  }
+
+  ////////////////////////////////////////////////////////////////////////////
 
   calculateFixedContentHeight(): void {
     if (!this.service.displayOptions.fixedHeight) {
@@ -417,7 +467,7 @@ export class ActivityV2ContentComponent
   }
 
   /**
-   * Calculates the image height
+   * Calculates the image height and aspect ratio
    */
   calculateImageDimensions(): void {
     if (!this.imageEl) {
@@ -439,16 +489,17 @@ export class ActivityV2ContentComponent
       const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
       const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
+      this.imageOriginalHeight = originalHeight;
+      this.imageAspectRatio = originalHeight / originalWidth;
+
       if (this.isModal) {
         this.imageHeight =
           originalHeight > 0
             ? `${originalHeight}px`
             : `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
       } else {
-        const ratio = originalHeight / originalWidth;
-
-        const height = this.el.nativeElement.clientWidth * ratio;
-        console.log('ojm height from this.el?', height);
+        const height =
+          this.el.nativeElement.clientWidth * this.imageAspectRatio;
 
         this.imageHeight = `${height}px`;
       }
@@ -474,13 +525,14 @@ export class ActivityV2ContentComponent
     }
 
     /**
-     * Don't open modal if click on link or readmore
+     * Don't open modal if click on link, readmore, or translation
      */
     if (event.target instanceof HTMLAnchorElement) {
       return;
     } else if (
       event.target.classList.contains('m-readMoreButton--v2') ||
-      event.target.classList.contains('m-readMoreButtonV2__text')
+      event.target.classList.contains('m-readMoreButtonV2__text') ||
+      event.target.closest('m-translate')
     ) {
       return;
     } else {
@@ -541,44 +593,6 @@ export class ActivityV2ContentComponent
   }
 
   onImageError(e: Event): void {}
-
-  get maxMessageHeight(): number {
-    if (this.service.displayOptions.minimalMode) {
-      return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
-    } else {
-      const maxMessageHeight = this.service.displayOptions.fixedHeight
-        ? 130
-        : 320;
-
-      return this.isTextOnly ? this.maxFixedHeightContent : maxMessageHeight;
-    }
-  }
-
-  get maxDescHeight(): number {
-    if (this.service.displayOptions.minimalMode) {
-      return ACTIVITY_GRID_LAYOUT_MAX_HEIGHT;
-    } else if (this.service.displayOptions.fixedHeight) {
-      return 80;
-    } else if (this.isModal) {
-      return 115;
-    }
-    return 230;
-  }
-
-  get shortStatus(): boolean {
-    return (
-      this.entity.content_type === 'status' &&
-      this.message.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
-    );
-  }
-
-  get mediumStatus(): boolean {
-    return (
-      this.entity.content_type === 'status' &&
-      this.message.length > ACTIVITY_SHORT_STATUS_MAX_LENGTH &&
-      this.message.length <= ACTIVITY_MEDIUM_STATUS_MAX_LENGTH
-    );
-  }
 
   detectChanges(): void {
     this.cd.markForCheck();

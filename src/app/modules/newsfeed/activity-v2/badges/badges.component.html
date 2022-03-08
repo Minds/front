@@ -1,5 +1,15 @@
 <ng-container *ngIf="entity$ | async as entity">
   <!------------------------->
+  <!-- EDITED  -------------->
+  <!------------------------->
+  <span
+    *ngIf="service.displayOptions.showEditedTag || (service.isEdited$ | async)"
+    class="m-activityV2__badge m-activityV2__badge--edited"
+    title="Edited"
+  >
+    <m-icon iconId="edit" [sizeFactor]="23"></m-icon>
+  </span>
+  <!------------------------->
   <!-- PINNED  -------------->
   <!------------------------->
   <span
@@ -8,7 +18,7 @@
     data-cy="m-activity__pinnedFlag"
     title="Pinned"
   >
-    <m-icon from="custom" iconId="push_pin" m-tooltip--icon></m-icon>
+    <m-icon iconId="push_pin" [sizeFactor]="23"></m-icon>
   </span>
   <!------------------------->
   <!-- PERMAWEB  ------------>
@@ -25,7 +35,7 @@
       "
       target="_blank"
     >
-      <i class="material-icons">vpn_lock</i>
+      <m-icon iconId="vpn_lock" [sizeFactor]="23"></m-icon>
     </a>
   </span>
   <!------------------------->

@@ -143,17 +143,64 @@
   // IMAGE ******************************************
 
   .m-activityContent__media--image {
-    // padding-right: $spacing5;
+    &.m-activityContent__media--extraTallImage,
+    &.m-activityContent__media--extraWideImage {
+      a {
+        position: relative;
+      }
+      img {
+        object-fit: cover;
+      }
+    }
+
+    &.m-activityContent__media--extraTallImage {
+      img {
+        max-height: 500px;
+        width: 166px;
+      }
+    }
+    &.m-activityContent__media--extraWideImage {
+      img {
+        height: 166px;
+        max-width: 500px;
+      }
+    }
     a {
       height: auto;
       width: auto;
       display: inline-block;
     }
     img {
-      // object-fit: contain;
-      // width: 100%;
       max-height: 500px;
       border-radius: 3px;
+    }
+
+    .m-activityContentMedia__expandIcon {
+      position: absolute;
+      top: $spacing2;
+      right: $spacing2;
+      border-radius: 50%;
+      height: $spacing8;
+      width: $spacing8;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include m-theme() {
+        background: rgba(themed($m-black-always), 0.5);
+      }
+
+      ::ng-deep m-icon i {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      &:hover,
+      ::ng-deep m-icon i {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
     }
   }
 
@@ -233,11 +280,17 @@
     &.m-activityContent__message--isTextOnly {
       word-break: break-word;
 
-      &.m-activityContent__message--short span {
-        @include heading2Medium;
+      &.m-activityContent__message--short {
+        span,
+        ::ng-deep m-translate .message span {
+          @include heading2Medium;
+        }
       }
-      &.m-activityContent__message--medium span {
-        @include heading4Medium;
+      &.m-activityContent__message--medium {
+        span,
+        ::ng-deep m-translate .message span {
+          @include heading4Medium;
+        }
       }
     }
     &.m-activityContent__message--minimalMode {
@@ -277,10 +330,18 @@
     }
   }
 
-  .m-activityContent__mediaDescriptionText {
+  p.m-activityContent__mediaDescriptionText,
+  .m-activityContent__messageWrapper,
+  ::ng-deep m-translate .m-translation-wrapper .message {
     @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--primary);
+    }
+
+    &.m-activityContentText--translated {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
 
@@ -288,7 +349,6 @@
     margin: 0;
     .m-activityContent__descriptionWrapper {
       padding: 0 0 $spacing4 0;
-      // padding: 16px $activity-padding-lr; ojm
       &.m-activityContent__descriptionWrapper--minimalMode {
         padding: $spacing4;
 
@@ -317,6 +377,33 @@
       @include body2Medium;
       text-transform: capitalize;
       letter-spacing: normal;
+    }
+  }
+
+  /////////////////////////////////////////////////@at-root
+  // TRANSLATE
+
+  ::ng-deep m-translate {
+    .m-translate__visible > * {
+      padding: $spacing3 0;
+    }
+
+    hr {
+      display: none;
+    }
+    .m-translation-wrapper {
+      padding-bottom: 0;
+      .message {
+        a {
+          font-weight: 400;
+          font-size: inherit;
+        }
+      }
+    }
+
+    .m-translate__selectWrapper {
+      padding-top: $spacing3;
+      padding-bottom: 11px;
     }
   }
 }

@@ -22,8 +22,30 @@
     </m-hovercard>
   </div>
 
-  <div class="m-activity__rightColumn">
-    <m-activityV2__flag></m-activityV2__flag>
+  <div class="m-activity__rightColumn" *ngIf="entity$ | async as entity">
+    <div
+      class="m-activity__optionalTopRow"
+      *ngIf="
+        entity.boosted ||
+        (entity.remind_users && entity.remind_users.length) ||
+        service.displayOptions.showBoostRotatorButtons
+      "
+    >
+      <m-activityV2__flag></m-activityV2__flag>
+      <div
+        class="m-activity__boostRotatorButtons"
+        *ngIf="service.displayOptions.showBoostRotatorButtons"
+      >
+        <m-icon
+          iconId="chevron_left"
+          [sizeFactor]="30"
+          (click)="previousBoost.emit()"
+        ></m-icon
+        ><m-icon iconId="chevron_right" (click)="nextBoost.emit()"></m-icon>
+        <span class="material-icons">chevron_left</span>
+        <span>❯</span>
+      </div>
+    </div>
     <m-activityV2__ownerBlock
       *ngIf="service.displayOptions.showOwnerBlock"
       (deleted)="delete()"

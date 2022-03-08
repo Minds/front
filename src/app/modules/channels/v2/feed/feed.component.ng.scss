@@ -19,7 +19,7 @@
         .m-channelFeed__list {
           padding: 0 0 $spacing7;
 
-          @media screen and (max-width: $layoutMax2ColWidth) {
+          @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
             @include borderRight;
           }
         }

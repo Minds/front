@@ -35,7 +35,7 @@
             fixedHeight: fixedHeight,
             showOnlyCommentsInput: false,
             showComments: !fixedHeight,
-            showInteractions: true,
+            showInteractions: !activityV2Feature,
             autoplayVideo: false
           }"
           [slot]="1"
@@ -43,7 +43,7 @@
         ></m-activity>
       </div>
       <div class="m-newsfeedSingle__mobileSuggestions">
-        | <ng-container *ngTemplateOutlet="suggestions"></ng-container>
+        <ng-container *ngTemplateOutlet="suggestions"></ng-container>
       </div>
     </div>
 

@@ -83,7 +83,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input() set displayOptions(options) {
-    console.log('ojm activityV2 options input', options);
     this.service.setDisplayOptions(options);
   }
 
@@ -99,6 +98,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @Input() canRecordAnalytics: boolean = true;
 
   @Output() deleted: Subject<boolean> = this.service.onDelete$;
+
+  @Output() previousBoost: EventEmitter<any> = new EventEmitter();
+  @Output() nextBoost: EventEmitter<any> = new EventEmitter();
 
   // @HostBinding('class.m-activity--boost') // ojm do I need this?
   isBoost = false;
