@@ -36,12 +36,19 @@
       justify-content: center;
       z-index: 1;
 
+      @media screen and (max-width: $m-grid-max-tablet),
+        screen and (max-height: 600px) {
+        height: calc(100vh - 75px);
+        max-height: 800px;
+        flex: unset;
+      }
+
       .m-homepage__v3__firstSection__actions {
         display: flex;
         flex-direction: column;
         flex: 1;
         justify-content: center;
-        max-width: 550px;
+        max-width: max(550px, calc(100vw - 45vh));
         box-sizing: border-box;
         align-items: flex-start;
 
@@ -72,6 +79,7 @@
         .m-homepage__v3__description {
           @include body1Regular;
           margin-bottom: 5vh;
+          max-width: 550px;
           color: rgba(255, 255, 255, 0.8);
 
           @media screen and (max-width: $m-grid-min-vp) {
@@ -129,7 +137,7 @@
         display: flex;
         flex: 1;
         flex-direction: column;
-        padding: $minds-padding * 4 $minds-padding;
+        padding: 3vh $minds-padding;
 
         .m-homepage__metric__title {
           @include heading1Bold;

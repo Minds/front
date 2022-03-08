@@ -3,7 +3,8 @@
 
 :host .m-marketing__asFeaturedInV2 {
   max-width: 1180px !important;
-  margin: 5vh auto;
+  margin: 2vh auto;
+  padding: 0 32px;
 
   .m-marketing__asFeaturedIn--noMargin & {
     margin-bottom: 0;
@@ -12,10 +13,7 @@
   @media screen and (max-width: $m-grid-min-vp) {
     &.m-grid {
       display: block;
-      margin-bottom: 45px;
     }
-
-    margin: 20px 0 50px;
   }
 
   .m-marketingAsFeaturedIn__title {
@@ -29,7 +27,7 @@
 
     @media screen and (max-width: $m-grid-min-vp) {
       text-align: center;
-      margin: 0 0 20px;
+      margin: 0 0 1vh;
     }
   }
 
