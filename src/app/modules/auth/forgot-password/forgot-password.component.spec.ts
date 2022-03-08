@@ -25,6 +25,7 @@ import { MockDirective, MockService } from '../../../utils/mock';
 import { RegexService } from '../../../common/services/regex.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: '',
@@ -93,6 +94,7 @@ describe('ForgotPasswordComponent', () => {
             provide: FormToastService,
             useValue: MockService(FormToastService),
           },
+          PageLayoutService,
         ],
       }).compileComponents();
     })

@@ -55,12 +55,12 @@ export class HomepageV2Component implements OnInit {
       return;
     }
 
-    this.navigationService.setVisible(true);
+    this.navigationService.setVisible(false);
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
 
+    this.pageLayoutService.useFullWidth();
     this.pageLayoutService.removeTopbarBackground();
-    this.pageLayoutService.removeTopbarBorder();
     this.pageLayoutService.removeTopbarBorder();
   }
 

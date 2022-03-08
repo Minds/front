@@ -19,7 +19,15 @@ import { HomepageContainerComponent } from './container.component';
 import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 import { DefaultFeedModule } from '../default-feed/default-feed.module';
 
-const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
+const routes: Routes = [
+  {
+    path: '',
+    component: HomepageContainerComponent,
+    data: {
+      preventLayoutReset: true,
+    },
+  },
+];
 
 @NgModule({
   imports: [
