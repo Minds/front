@@ -3,6 +3,10 @@
 
 :host {
   > section:first-of-type {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primaryDarkAlways);
+    }
+
     .m-homepage__v3__neuralBg {
       position: absolute;
       top: 0;
@@ -12,9 +16,6 @@
       height: 100vh;
       object-fit: cover;
       min-height: 675px;
-      @include m-theme() {
-        background-color: themed($m-bgColor--primaryDarkAlways);
-      }
     }
 
     margin: -75px 0 0;
