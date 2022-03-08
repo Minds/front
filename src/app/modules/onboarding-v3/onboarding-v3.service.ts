@@ -97,7 +97,7 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
-   * @returns { Promise<string> } the completed step
+   * @returns { Promise<OnboardingStepName> } the completed step
    */
   public async open(): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
@@ -114,14 +114,7 @@ export class OnboardingV3Service implements OnDestroy {
       lazyModule: OnboardingV3ProgressLazyModule,
     });
 
-    const onBoardingStepName = await modal.result;
-
-    // Modal was closed.
-    if (!onBoardingStepName) {
-      throw 'DismissedModalException';
-    }
-
-    return onBoardingStepName;
+    return modal.result;
   }
 
   /**
@@ -157,14 +150,7 @@ export class OnboardingV3Service implements OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   public async presentHomepageModals(): Promise<void> {
-    try {
-      await this.open();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    await this.open();
   }
 
   /**

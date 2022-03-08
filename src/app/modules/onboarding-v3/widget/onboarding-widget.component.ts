@@ -89,64 +89,57 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   public async onTaskClick(step: OnboardingStepName): Promise<void> {
-    try {
-      this.subscriptions.push(
-        this.progress$
-          .pipe(
-            take(1),
-            catchError((err: any) => {
-              console.error(err);
-              return of(null);
-            }),
-            tap(async (progress: OnboardingResponse) => {
-              switch (step) {
-                case 'VerifyEmailStep':
-                  if (this.isStepComplete(step, progress)) {
-                    this.toast.inform(
-                      'Your email address has already been confirmed.'
-                    );
-                    break;
-                  }
-                  this.resendEmailConfirmation(); // async
+    this.subscriptions.push(
+      this.progress$
+        .pipe(
+          take(1),
+          catchError((err: any) => {
+            console.error(err);
+            return of(null);
+          }),
+          tap(async (progress: OnboardingResponse) => {
+            switch (step) {
+              case 'VerifyEmailStep':
+                if (this.isStepComplete(step, progress)) {
+                  this.toast.inform(
+                    'Your email address has already been confirmed.'
+                  );
                   break;
-                case 'CreatePostStep':
-                  this.composerModal
-                    .setInjector(this.injector)
-                    .present()
-                    .then(response => {
-                      // if activity posted, manually strike through task.
-                      if (response) {
-                        this.onboarding.forceCompletion('CreatePostStep');
-                        this.checkCompletion();
-                      }
-                    });
+                }
+                this.resendEmailConfirmation(); // async
+                break;
+              case 'CreatePostStep':
+                this.composerModal
+                  .setInjector(this.injector)
+                  .present()
+                  .then(response => {
+                    // if activity posted, manually strike through task.
+                    if (response) {
+                      this.onboarding.forceCompletion('CreatePostStep');
+                      this.checkCompletion();
+                    }
+                  });
+                break;
+              case 'VerifyUniquenessStep':
+                if (this.isStepComplete(step, progress)) {
+                  this.toast.inform('You have already completed this step');
                   break;
-                case 'VerifyUniquenessStep':
-                  if (this.isStepComplete(step, progress)) {
-                    this.toast.inform('You have already completed this step');
-                    break;
-                  }
-                // else, default
-                default:
-                  this.panel.currentStep$.next(step);
-                  try {
-                    const completedStep = await this.onboarding.open();
-                    this.onboarding.forceCompletion(completedStep);
-                  } catch (e) {}
+                }
+              // else, default
+              default:
+                this.panel.currentStep$.next(step);
+                const completedStep = await this.onboarding.open();
+                if (completedStep) {
+                  this.onboarding.forceCompletion(completedStep);
                   await this.onboarding.load();
                   this.checkCompletion();
-                  break;
-              }
-            })
-          )
-          .subscribe()
-      );
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        this.checkCompletion();
-      }
-      console.error(e);
-    }
+                }
+                break;
+            }
+          })
+        )
+        .subscribe()
+    );
   }
 
   /**
