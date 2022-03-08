@@ -34,11 +34,7 @@ export class AuthModalService {
           modal.close(user);
 
           if (opts.formDisplay === 'register') {
-            const completedStep = await this.onboardingV3.open();
-            if (completedStep) {
-              // reload so that widget updates with save.
-              this.onboardingV3.load();
-            }
+            this.onboardingV3.open();
           }
         },
       },

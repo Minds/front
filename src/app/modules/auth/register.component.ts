@@ -17,6 +17,7 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-register',
@@ -59,7 +60,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private topbarService: TopbarService,
     private metaService: MetaService,
     private pageLayoutService: PageLayoutService,
-    private authRedirectService: AuthRedirectService
+    private authRedirectService: AuthRedirectService,
+    private onboardingV3: OnboardingV3Service
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -127,17 +129,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.metaService.setOgImage('/assets/og-images/default-v3.png');
   }
 
-  registered() {
+  async registered() {
     if (this.redirectTo) {
       this.navigateToRedirection();
-      return;
+    } else {
+      /**
+       * If a redirect hasn't already been defined,
+       * use the experiment to determine where to go
+       */
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
 
-    /**
-     * If a redirect hasn't already been defined,
-     * use the experiment to determine where to go
-     */
-    this.router.navigate([this.authRedirectService.getRedirectUrl()]);
+    this.onboardingV3.open();
   }
 
   onSourceError() {

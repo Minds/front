@@ -128,12 +128,7 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
               // else, default
               default:
                 this.panel.currentStep$.next(step);
-                const completedStep = await this.onboarding.open();
-                if (completedStep) {
-                  this.onboarding.forceCompletion(completedStep);
-                  await this.onboarding.load();
-                  this.checkCompletion();
-                }
+                await this.onboarding.open(() => this.checkCompletion());
                 break;
             }
           })

@@ -9,6 +9,7 @@ import { ApiService } from '../../../../common/api/api.service';
 import { catchError, take } from 'rxjs/operators';
 import { OnboardingV3ModalProgressService } from '../../modal/onboarding-modal-progress.service';
 import { UserAvatarService } from '../../../../common/services/user-avatar.service';
+import { MindsUser } from './../../../../interfaces/entities';
 
 /**
  * Channel editing component for onboarding v3.
@@ -129,9 +130,9 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
 
   /**
    * Saves bio and display name using channel service.
-   * @returns { Promise<void> } - awaitable.
+   * @returns { Promise<MindsUser> } - awaitable.
    */
-  public async saveAsync(): Promise<void> {
+  public async saveAsync(): Promise<MindsUser> {
     this.inProgressService.next(true);
 
     this.channelEditService.bio$.next(this.form.get('bio').value);
@@ -141,6 +142,8 @@ export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
     this.userAvatarService.src$.next(user.avatar_url.medium);
 
     this.inProgressService.next(false);
+
+    return user;
   }
 
   /**

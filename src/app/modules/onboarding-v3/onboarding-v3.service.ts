@@ -97,16 +97,34 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
+   * @param { Function } onLoadFinished called when the onboarding api call is finished and we have the results
    * @returns { Promise<OnboardingStepName> } the completed step
    */
-  public async open(): Promise<any> {
+  public async open(onLoadFinished?: () => void): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
 
     const modal = this.modalService.present(OnboardingV3ModalComponent, {
       data: {
-        onSaveIntent: (step: OnboardingStepName) => {
+        onSaveIntent: (step: OnboardingStepName, stepData: any) => {
+          if (step) {
+            switch (step) {
+              case 'SetupChannelStep':
+                // only force complete if the channel had a bio
+                if (stepData?.briefdescription) {
+                  this.forceCompletion(step);
+                  onLoadFinished?.();
+                }
+                this.load().then(onLoadFinished);
+                break;
+              default:
+                // force complete and get the onboarding progress from api
+                this.forceCompletion(step);
+                onLoadFinished?.();
+                this.load().then(onLoadFinished);
+            }
+          }
           modal.close(step);
         },
       },
