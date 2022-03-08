@@ -9,6 +9,20 @@
     flex-direction: column;
     justify-content: center;
     border-right: none !important;
+    width: unset !important;
+    min-width: unset !important;
+  }
+
+  .m-pageLayout__container {
+    width: 100% !important;
+    min-width: unset !important;
+    box-sizing: border-box;
+    padding: 0 32px !important;
+    max-width: 1244px !important;
+
+    .m-pageLayout__pane--main {
+      max-width: unset !important;
+    }
   }
 
   .m-v3TopbarLoginWrapper__joinMindsNow {

@@ -72,7 +72,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     private homepageV3Experiment: HomepageV3ExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
-    this.isHomePageV3 = this.homepageV3Experiment.isActive();
 
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
@@ -123,10 +122,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   private setPages(url) {
     this.onAuthPages = url === '/login' || url === '/register';
     this.onHomepage =
-      (!this.isHomePageV3 &&
-        url === '/' &&
-        !this.guestModeExperiment.isActive()) ||
-      url === '/about';
+      (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
+    this.isHomePageV3 = this.onHomepage && this.homepageV3Experiment.isActive();
     this.detectChanges();
   }
 

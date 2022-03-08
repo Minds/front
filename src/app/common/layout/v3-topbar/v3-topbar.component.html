@@ -76,10 +76,12 @@
           <div
             class="m-v3TopbarContainer__loginWrapper"
             [ngClass]="{
-              'm-v3TopbarContainer__loginWrapper--roundButtons': !onHomepage
+              'm-v3TopbarContainer__loginWrapper--roundButtons': isHomePageV3
+                ? true
+                : !onHomepage
             }"
           >
-            <ng-container *ngIf="!onHomepage">
+            <ng-container *ngIf="isHomePageV3 ? true : !onHomepage">
               <m-button
                 class="m-v3TopbarLoginWrapper__login"
                 [ngClass]="
@@ -114,7 +116,7 @@
                 Join Now
               </m-button>
             </ng-container>
-            <ng-container *ngIf="onHomepage">
+            <ng-container *ngIf="isHomePageV3 ? false : onHomepage">
               <a
                 class="m-v3TopbarLoginWrapper__login"
                 (click)="onLoginClick()"
@@ -138,7 +140,7 @@
           </div>
         </ng-container>
 
-        <div *ngIf="!isHomePageV3 && !onHomepage" class="m-v3Topbar__userMenu">
+        <div *ngIf="!onHomepage" class="m-v3Topbar__userMenu">
           <div class="m-v3Topbar__spacer"></div>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>
