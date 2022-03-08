@@ -25,6 +25,7 @@ const routes: Routes = [
     data: {
       title: 'Login',
       description: 'Login to Minds or create a channel',
+      preventLayoutReset: true,
     },
   },
   { path: 'logout/all', component: LogoutComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
       ogImage: '/assets/og-images/register-v3.png',
       ogImageWidth: 1200,
       ogImageHeight: 1200,
+      preventLayoutReset: true,
     },
   },
   {
@@ -46,6 +48,7 @@ const routes: Routes = [
     data: {
       title: 'Forgot Password',
       description: 'Reset your password on Minds',
+      preventLayoutReset: true,
     },
   },
 ];
