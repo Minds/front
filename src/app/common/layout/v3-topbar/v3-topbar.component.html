@@ -39,6 +39,7 @@
             "
             [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
             class="m-v3Topbar__logo--full"
+            alt="Minds"
           />
           <img
             *ngIf="
@@ -49,6 +50,7 @@
             "
             [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
             class="m-v3Topbar__logo--full"
+            alt="Minds"
           />
         </a>
         <m-environmentFlag></m-environmentFlag>
@@ -111,7 +113,13 @@
                 data-ref="topnav-join-now"
                 color="blue"
                 size="small"
-                [overlay]="isHomePageV3"
+                [overlay]="
+                  !(pageLayoutService.hasTopbarBackground$ | async) &&
+                  isHomePageV3
+                "
+                [solid]="
+                  isHomePageV3 && pageLayoutService.hasTopbarBackground$ | async
+                "
               >
                 Join Now
               </m-button>

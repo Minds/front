@@ -29,10 +29,21 @@
     @media screen and (max-width: $max-mobile) {
       display: none !important;
     }
+
+    .m-button--solid,
+    .m-button--overlay {
+      color: #fff !important;
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-link--hover) !important;
+        }
+      }
+    }
   }
 
   .m-v3TopbarLoginWrapper__login--white button:not(:active, :hover) {
-    color: white !important;
+    color: #fff !important;
   }
 
   .m-v3TopbarNav__item--hamburger {
