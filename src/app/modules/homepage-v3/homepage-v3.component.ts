@@ -35,7 +35,6 @@ export class HomepageV3Component implements OnInit {
     blurhash:
       '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk',
   };
-  showBg = false;
 
   constructor(
     public client: Client,
@@ -67,12 +66,9 @@ export class HomepageV3Component implements OnInit {
     this.pageLayoutService.useFullWidth();
     this.pageLayoutService.removeTopbarBackground();
     this.pageLayoutService.removeTopbarBorder();
-    this.navigationService.setVisible(true);
+    this.navigationService.setVisible(false);
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
-    setTimeout(() => {
-      this.showBg = true;
-    }, 0);
   }
 
   ngOnDestroy() {
