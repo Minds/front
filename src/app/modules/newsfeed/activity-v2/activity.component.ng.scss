@@ -12,10 +12,6 @@
   }
 
   @include m-theme() {
-    border-top: 1px solid themed($m-borderColor--primary);
-  }
-
-  @include m-theme() {
     background: themed($m-bgColor--primary);
   }
 
@@ -24,14 +20,32 @@
     width: 100%;
   }
 
+  &.m-activity--minimalMode {
+    padding: 0;
+    @include border;
+  }
+
   &.m-activity--minimalRemind {
     .m-activity__remindUsers {
       display: none;
     }
   }
 
+  &.m-activity--isFeed {
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  &.m-activity--isSidebarBoost {
+    padding: $spacing5;
+    .m-activity__rightColumn {
+      width: 100%;
+    }
+  }
+
   &.m-activity--fixedHeight {
-    height: 750px;
+    height: 750px; // ojm change?
     display: flex;
     flex-direction: row;
 
@@ -58,82 +72,85 @@
   ::ng-deep m-activityV2__remind .m-activity__rightColumn {
     display: flex;
     flex-direction: column;
-    width: calc(100% - 56px);
+    flex-grow: 1;
   }
 
   .m-activity__optionalTopRow {
     display: flex;
     flex-direction: row;
-    padding-bottom: $spacing4;
-    ::ng-deep m-activityFlags {
-      margin-right: $spacing4;
-    }
+    padding-bottom: $spacing3;
+    align-items: center;
 
     .m-activity__boostRotatorButtons {
-      ::ng-deep m-icon i {
-        @include heading2Bold;
-      }
-    }
-  }
-  // COMMENTS ////////////////////////////////////////
-  ::ng-deep m-comments__entityOutletV2 {
-    margin-top: $spacing6;
-    .m-commentsEntityOutlet__expand,
-    .m-commentsEntityOutlet__expand--hide {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-
-    .m-commentsEntityOutlet__topBar {
-      margin-left: 0 !important;
-    }
-  }
-
-  ::ng-deep .m-comment .minds-avatar {
-    @include m-theme() {
-      background: themed($m-bgColor--primary);
-    }
-  }
-
-  &
-    > ::ng-deep
-    m-comments__entityOutletV2
-    > ::ng-deep
-    m-comments__tree
-    > ::ng-deep
-    m-comments__thread
-    > .m-comments__thread,
-  & > ::ng-deep m-comments__entityOutletV2 {
-    & > ::ng-deep m-comment__poster .m-commentPoster__wrapper {
-      margin: 50px;
-    }
-  }
-
-  /// ojm
-  &
-    > ::ng-deep
-    m-comments__entityOutlet
-    > ::ng-deep
-    m-comments__tree
-    > ::ng-deep
-    m-comments__thread {
-    .m-comments__thread--topLevel {
-      padding-left: 0;
-    }
-
-    m-comment {
-      .m-comment__message {
-        @include body2Regular;
-
-        a {
-          font-weight: inherit;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
+      ::ng-deep m-icon {
+        margin-right: $spacing2;
+        i {
+          cursor: pointer;
+          @include heading2Regular;
         }
       }
     }
   }
+  // COMMENTS ////////////////////////////////////////
+  //ojm remove if working in entityOutletv2 comp
+  // ::ng-deep m-comments__entityOutletV2 {
+  //   margin-top: $spacing6;
+  //   .m-commentsEntityOutlet__expand,
+  //   .m-commentsEntityOutlet__expand--hide {
+  //     padding-left: 0 !important;
+  //     padding-right: 0 !important;
+  //   }
+
+  //   .m-commentsEntityOutlet__topBar {
+  //     margin-left: 0 !important;
+  //   }
+  // }
+
+  // ::ng-deep .m-comment .minds-avatar {
+  //   @include m-theme() {
+  //     background: themed($m-bgColor--primary);
+  //   }
+  // }
+
+  // &
+  //   > ::ng-deep
+  //   m-comments__entityOutletV2
+  //   > ::ng-deep
+  //   m-comments__tree
+  //   > ::ng-deep
+  //   m-comments__thread
+  //   > .m-comments__thread,
+  // & > ::ng-deep m-comments__entityOutletV2 {
+  //   & > ::ng-deep m-comment__poster .m-commentPoster__wrapper {
+  //     margin: 50px;
+  //   }
+  // }
+
+  // /// ojm
+  // &
+  //   > ::ng-deep
+  //   m-comments__entityOutlet
+  //   > ::ng-deep
+  //   m-comments__tree
+  //   > ::ng-deep
+  //   m-comments__thread {
+  //   .m-comments__thread--topLevel {
+  //     padding-left: 0;
+  //   }
+
+  //   m-comment {
+  //     .m-comment__message {
+  //       @include body2Regular;
+
+  //       a {
+  //         font-weight: inherit;
+  //         @include m-theme() {
+  //           color: themed($m-textColor--secondary);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   // AVATAR /////////////////////////////////////////////
   .m-activity__avatar,

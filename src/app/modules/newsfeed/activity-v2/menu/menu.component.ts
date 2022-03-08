@@ -25,6 +25,7 @@ import { DownloadActivityMediaService } from '../../../../common/services/downlo
 @Component({
   selector: 'm-activityV2__menu',
   templateUrl: 'menu.component.html',
+  styleUrls: ['menu.component.ng.scss'],
 })
 export class ActivityV2MenuComponent implements OnInit, OnDestroy {
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();

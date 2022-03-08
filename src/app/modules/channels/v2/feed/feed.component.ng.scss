@@ -32,7 +32,7 @@
           border-radius: 0;
           .m-composer__trigger {
             @include m-theme() {
-              border-bottom: 3px solid themed($m-borderColor--primary);
+              border-bottom: 4px solid themed($m-borderColor--primary);
             }
           }
         }

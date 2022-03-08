@@ -2,6 +2,7 @@
 @import '../activity.component.ng.scss';
 
 :host {
+  padding: 0;
   .m-activity__minimalMetrics {
     font-size: 16px;
     padding: 0 $spacing4 $spacing4;

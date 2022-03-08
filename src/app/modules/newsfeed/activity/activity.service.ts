@@ -20,7 +20,7 @@ export type ActivityDisplayOptions = {
   showVisibilityState: boolean;
   showTranslation: boolean;
   fixedHeight: boolean;
-  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
+  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator // ojm??
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
   bypassMediaModal: boolean; // Go to media page instead
@@ -28,8 +28,10 @@ export type ActivityDisplayOptions = {
   showPinnedBadge: boolean; // show pinned badge if a post is pinned
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
+  isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
   isFeed: boolean; // is the activity a part of a feed?
   showBoostRotatorButtons: boolean;
+  isV2: boolean; // isV2 design
 };
 
 export type ActivityEntity = {
@@ -80,7 +82,8 @@ export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
 export const ACTIVITY_CONTENT_PADDING = 16;
 
 // Constants of fixed heights
-export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600; // ojm how to use this?
+// export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600; // ojm how to use this?
+export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 538; // ojm new
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
@@ -302,7 +305,9 @@ export class ActivityService {
     minimalMode: false,
     bypassMediaModal: false,
     sidebarMode: false,
+    isSidebarBoost: false,
     isFeed: false,
+    isV2: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
@@ -341,10 +346,12 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
+    // ojm connect to activity V2 feature flag instead of 'true'
     if (true) {
-      // ojm connect to activity V2 feature flag
+      this.displayOptions.isV2 = true;
       this.displayOptions.showOnlyCommentsInput = false;
       this.displayOptions.showOnlyCommentsToggle = true;
+      // }
     }
 
     return this;

@@ -10,6 +10,7 @@ import {
   ElementRef,
   Injector,
   SkipSelf,
+  OnInit,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -29,7 +30,7 @@ import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.c
   styleUrls: ['./card.component.ng.scss'],
   providers: [ActivityService],
 })
-export class MindsCard implements AfterViewInit {
+export class MindsCard implements OnInit, AfterViewInit {
   @Input() forceShowSubscribe = false;
   @ViewChild(DynamicHostDirective, { static: true })
   cardHost: DynamicHostDirective;
@@ -43,6 +44,7 @@ export class MindsCard implements AfterViewInit {
 
   cssClasses: string = '';
   flags: any = {};
+  activityV2Feature: boolean = false;
 
   private initialized: boolean = false;
 
@@ -80,6 +82,11 @@ export class MindsCard implements AfterViewInit {
     if (this.initialized) {
       this.updateData();
     }
+  }
+
+  ngOnInit(): void {
+    // ojm connect to feature flag
+    this.activityV2Feature = true;
   }
 
   ngAfterViewInit() {
@@ -160,11 +167,21 @@ export class MindsCard implements AfterViewInit {
     } else {
       this.componentInstance.entity = this.object;
 
-      (<ActivityComponent>this.componentInstance).displayOptions = {
-        showToolbar: this.flags.hideTabs === false,
-        showComments: false,
-        autoplayVideo: false,
-      };
+      if (this.activityV2Feature) {
+        (<ActivityComponent>this.componentInstance).displayOptions = {
+          sidebarMode: true,
+          isSidebarBoost: true,
+          showToolbar: false,
+          showComments: false,
+          autoplayVideo: false,
+        };
+      } else {
+        (<ActivityComponent>this.componentInstance).displayOptions = {
+          showToolbar: this.flags.hideTabs === false,
+          showComments: false,
+          autoplayVideo: false,
+        };
+      }
     }
 
     this.componentRef.changeDetectorRef.detectChanges();

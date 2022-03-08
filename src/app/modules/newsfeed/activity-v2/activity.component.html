@@ -1,6 +1,9 @@
 <ng-container m-clientMeta>
   <div
-    *ngIf="!service.displayOptions.minimalMode"
+    *ngIf="
+      !service.displayOptions.minimalMode &&
+      !service.displayOptions.isSidebarBoost
+    "
     class="m-activity__leftColumn m-activity__avatar"
   >
     <ng-container *ngIf="entity$ | async as entity">
@@ -38,12 +41,16 @@
       >
         <m-icon
           iconId="chevron_left"
-          [sizeFactor]="30"
+          [sizeFactor]="1.8"
+          [rem]="true"
           (click)="previousBoost.emit()"
         ></m-icon
-        ><m-icon iconId="chevron_right" (click)="nextBoost.emit()"></m-icon>
-        <span class="material-icons">chevron_left</span>
-        <span>❯</span>
+        ><m-icon
+          iconId="chevron_right"
+          [sizeFactor]="1.8"
+          [rem]="true"
+          (click)="nextBoost.emit()"
+        ></m-icon>
       </div>
     </div>
     <m-activityV2__ownerBlock

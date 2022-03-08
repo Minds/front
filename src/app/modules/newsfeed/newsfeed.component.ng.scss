@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+// @import '../../common/layout/layout.scss';
 
 :host {
   .m-newsfeed {
@@ -8,6 +9,13 @@
       }
     }
     &.m-newsfeed--activityV2 {
+      // ojm need to figure out how to use these vars without importing the stylesheet
+      // .m-newsfeed__feed {
+      //   @media screen and (min-width: $layoutMin2ColWidth) and (max-width: $layoutMax2ColWidth) {
+      //     @include borderRight;
+      //   }
+      // }
+
       ::ng-deep m-activity {
         border: none !important;
       }
@@ -23,7 +31,7 @@
       border: none !important;
       border-radius: 0;
       @include m-theme() {
-        border-bottom: 3px solid themed($m-borderColor--primary) !important;
+        border-bottom: 4px solid themed($m-borderColor--primary) !important;
       }
 
       .m-composerBase__container {

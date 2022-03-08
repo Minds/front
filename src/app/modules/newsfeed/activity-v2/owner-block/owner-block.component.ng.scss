@@ -3,6 +3,16 @@
 :host {
   display: block;
 
+  &.m-activity__ownerBlock--sidebarBoost {
+    .m-activityOwnerBlock__body {
+      flex-direction: column;
+      overflow: visible;
+    }
+    .m-activityOwnerBlockPermalink__text {
+      padding: 0;
+    }
+  }
+
   .m-activity__ownerBlock {
     display: flex;
     align-items: center;
@@ -13,7 +23,7 @@
     &.m-activity__ownerBlock--minimalMode {
       padding-left: $spacing4;
       padding-right: $spacing2;
-      .m-activityOwnerBlock__avatar {
+      :ng-deep .m-activityOwnerBlock__avatar {
         img {
           height: 35px;
           width: 35px;
@@ -50,21 +60,24 @@
           color: themed($m-textColor--secondary);
         }
       }
-      .m-activityOwnerBlock__permalink,
       .m-activityOwnerBlock__right {
+        display: none;
+      }
+
+      ::ng-deep m-activityV2__permalink {
         display: none;
       }
     }
   }
 
-  .m-activityOwnerBlock__avatar {
+  ::ng-deep .m-activityOwnerBlock__avatar {
     align-self: center;
     padding-right: $spacing2;
     position: relative;
     img {
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: $spacing10;
+      height: $spacing10;
       object-fit: cover;
     }
   }
@@ -131,8 +144,7 @@
   }
 
   a.m-activityOwnerBlock__username span,
-  .m-activityOwnerBlock__dot,
-  .m-activityOwnerBlockPermalink__text {
+  .m-activityOwnerBlock__dot {
     @include body2Medium;
     @include m-theme() {
       color: themed($m-textColor--secondary);
@@ -153,16 +165,6 @@
     vertical-align: middle;
     @include m-theme() {
       color: themed($m-link);
-    }
-  }
-
-  .m-activityOwnerBlock__permalink {
-    .m-activityOwnerBlockPermalink__text {
-      display: inline;
-      .material-icons {
-        font-size: initial;
-        vertical-align: text-top;
-      }
     }
   }
 

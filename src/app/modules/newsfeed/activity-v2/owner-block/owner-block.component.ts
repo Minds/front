@@ -15,7 +15,6 @@ import {
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import * as moment from 'moment';
 
 @Component({
   selector: 'm-activityV2__ownerBlock',
@@ -52,12 +51,20 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity && !!this.entity.remind_object;
   }
 
+  @HostBinding('class.m-activity__ownerBlock--sidebarBoost')
+  get isSidebarBoost(): boolean {
+    return this.service.displayOptions.isSidebarBoost;
+  }
+
   // Note: currently ownerBlocks are only visible in minimalMode for reminds/quotes
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
 
-  // Show absolute dates for items outside the feed
+  get isModal(): boolean {
+    return this.service.displayOptions.isModal;
+  }
+
   get isFeed(): boolean {
     return this.service.displayOptions.isFeed;
   }
@@ -76,17 +83,6 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
 
   get ownerGuid(): string {
     return this.owner.guid;
-  }
-
-  get showRelativeDate(): boolean {
-    console.log(
-      'ojm showRelativeDate. Feed?',
-      this.service.displayOptions.isFeed,
-      ' isscheduled?',
-      this.isScheduled
-    );
-
-    return this.isFeed && !this.isScheduled;
   }
 
   /**
@@ -113,25 +109,5 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity.containerObj && this.entity.containerObj.type === 'group'
       ? this.entity.containerObj
       : null;
-  }
-
-  /**
-   * determines whether the post is scheduled.
-   * @returns true if post is scheduled.
-   */
-  isScheduled(): boolean {
-    return (
-      this.entity.time_created && this.entity.time_created * 1000 > Date.now()
-    );
-  }
-
-  /**
-   * Converts a date to a human readable datetime, e.g. Jul 16 2021 · 2:48pm
-   * @returns - human readable datetime.
-   */
-  toReadableDate(seconds: string): string {
-    const date = moment(parseInt(seconds) * 1000).format('MMM D YYYY ');
-    const time = moment(parseInt(seconds) * 1000).format('LT');
-    return `${date} · ${time}`;
   }
 }

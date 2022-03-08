@@ -120,6 +120,10 @@
       [maxheight]="isModal ? null : 320"
       [isModal]="isModal"
       [activityV2Feature]="true"
+      [displayAsColumn]="
+        service.displayOptions.minimalMode || service.displayOptions.isModal
+      "
+      [isInBoostRotator]="service.displayOptions.showBoostRotatorButtons"
     >
     </minds-rich-embed>
     <div
@@ -170,9 +174,9 @@
     *ngIf="isImage"
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
-        extraTallImage && !isModal && !service.displayOptions.minimalMode,
+        extraTallImage && service.displayOptions.isFeed,
       'm-activityContent__media--extraWideImage':
-        extraWideImage && !isModal && !service.displayOptions.minimalMode
+        extraWideImage && service.displayOptions.isFeed
     }"
   >
     <ng-container *ngIf="!isModal; else image">
@@ -182,7 +186,9 @@
         (click)="onModalRequested($event)"
       >
         <div
-          *ngIf="extraTallImage || extraWideImage"
+          *ngIf="
+            (extraTallImage || extraWideImage) && service.displayOptions.isFeed
+          "
           class="m-activityContentMedia__expandIcon"
           (click)="onModalRequested($event)"
         >
@@ -191,7 +197,7 @@
         <ng-container [ngTemplateOutlet]="image"></ng-container
       ></a>
     </ng-container>
-    <!-- [style.height]="imageHeight" ojm is imageHeight used in .ts? If not, can remove?-->
+
     <ng-template #image
       ><img
         [src]="imageUrl"
@@ -202,6 +208,7 @@
         [style.object-fit]="
           (service.shouldShowPaywall$ | async) ? 'cover' : undefined
         "
+        [style.height]="service.displayOptions.isModal ? imageHeight : 'auto'"
     /></ng-template>
   </div>
 </ng-container>

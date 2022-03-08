@@ -4,7 +4,13 @@
   display: block;
   width: 100%;
   position: relative;
-  margin-top: $spacing4;
+
+  // > * {
+  //   &:first-child {
+  //     margin-top: $spacing4; // ojm dos this work? used to be in :Host
+  //   }
+  // }
+
   &.m-activityContent--paywalledStatus {
     min-height: 120px;
     padding-top: 50px;
@@ -43,7 +49,7 @@
           width: 30%;
           img {
             height: 80px;
-            border-radius: 3px;
+            border-radius: $borderRadius--activity;
           }
         }
         .meta {
@@ -172,7 +178,7 @@
     }
     img {
       max-height: 500px;
-      border-radius: 3px;
+      border-radius: $borderRadius--activity;
     }
 
     .m-activityContentMedia__expandIcon {
@@ -205,11 +211,10 @@
   }
 
   // VIDEO ******************************************
-
   .m-activityContent__media--video {
     ::ng-deep {
       m-videoPlayer--scrollaware {
-        border-radius: 3px;
+        border-radius: $borderRadius--activity;
         max-height: 500px; //ojm I added this?
       }
       .m-videoPlayer__placeholder {
@@ -234,32 +239,35 @@
     height: 100%;
   }
 
-  // RICH EMBED ******************************************
-  .m-activityContent__media--richEmbed {
-    &.m-activityContent__mediaRichEmbed--minimalMode {
-      ::ng-deep .meta {
-        padding: $spacing5 $spacing4;
-        > * {
-          font-size: 15px;
-        }
-        h2 {
-          @include m-theme() {
-            color: themed($m-textColor--primary) !important;
-          }
-        }
-        .m-blurb {
-          display: none;
-        }
-        .m-url {
-          @include m-theme() {
-            color: themed($m-textColor--secondary) !important;
-          }
+  // RICH EMBED - MINIMAL MODE ************************
+  .m-activityContent__mediaRichEmbed--minimalMode {
+    // ::ng-deep minds-rich-embed {
+
+    .m-rich-embed-src {
+      border: none;
+    }
+    a.meta {
+      padding: $spacing5 $spacing4;
+      > * {
+        font-size: 15px;
+      }
+      h2 {
+        @include m-theme() {
+          color: themed($m-textColor--primary) !important;
         }
       }
+      .m-blurb {
+        display: none;
+      }
+      .m-url {
+        @include m-theme() {
+          color: themed($m-textColor--secondary) !important;
+        }
+      }
+      // }
     }
   }
   // TEXT ******************************************
-
   .m-activityContent__messageWrapper {
     padding: 0 0 $spacing4 0 !important;
 

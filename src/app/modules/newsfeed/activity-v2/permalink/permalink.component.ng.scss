@@ -1,0 +1,32 @@
+@import 'defaults.scss';
+
+:host {
+  &.m-activity__permalink--isModal {
+    .m-activityOwnerBlock__permalink {
+      padding: $spacing5;
+      .m-activityOwnerBlockPermalink__text {
+        padding: 0;
+      }
+    }
+  }
+  .m-activityOwnerBlock__permalink {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .m-activityOwnerBlockPermalink__text {
+      @include body2Medium;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      padding: 0 0 0 $spacing2;
+      display: inline;
+      .material-icons {
+        font-size: initial;
+        vertical-align: text-top;
+      }
+    }
+  }
+}

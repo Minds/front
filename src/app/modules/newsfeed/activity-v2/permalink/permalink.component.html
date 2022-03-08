@@ -1,0 +1,25 @@
+<a
+  [routerLink]="service.canonicalUrl$ | async"
+  class="m-activityOwnerBlock__permalink"
+  ><m-relativeTimeSpanV2
+    class="m-activityOwnerBlockPermalink__text"
+    *ngIf="!isScheduled() && (isFeed || isSidebarBoost); else absoluteDate"
+    [entity]="entity"
+  ></m-relativeTimeSpanV2>
+  <ng-template #absoluteDate>
+    <div class="m-activityOwnerBlockPermalink__text">
+      <i *ngIf="isScheduled()" class="material-icons">schedule</i
+      ><span>{{ toReadableDate(entity.time_created) }}</span>
+    </div>
+  </ng-template>
+  <div
+    class="m-activityOwnerBlockPermalink__text--visibility"
+    *ngIf="
+      service.displayOptions.showVisibilityState &&
+      (service.isUnlisted$ | async)
+    "
+  >
+    <i class="material-icons unlisted">visibility_off</i>
+    <a i18n="@@OWNER_BLOCK__UNLISTED">Unlisted</a>
+  </div>
+</a>

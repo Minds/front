@@ -120,9 +120,16 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isFixedHeight = this.service.displayOptions.fixedHeight;
-    this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
+    this.isFixedHeight =
+      this.service.displayOptions.fixedHeight &&
+      !this.service.displayOptions.isV2;
+
+    this.isFixedHeightContainer =
+      this.service.displayOptions.fixedHeightContainer &&
+      !this.service.displayOptions.isV2;
+
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
+
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;
@@ -132,6 +139,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
+
     this.remindSubscription = this.service.isRemind$.subscribe(isRemind => {
       if (isRemind && this.service.displayOptions.minimalMode) {
         this.service.displayOptions.showOwnerBlock = true;
@@ -141,16 +149,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    // ojm make this dependent on feature flag also
-
-    console.log(
-      'ojm isv2',
-      this.service.displayOptions.isModal,
-      this.service.displayOptions.minimalMode
-    );
-    this.isV2 =
-      !this.service.displayOptions.isModal &&
-      !this.service.displayOptions.minimalMode;
+    this.isV2 = this.service.displayOptions.isV2;
   }
 
   ngOnDestroy() {
@@ -158,23 +157,25 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.calculateHeight());
-    if (this.canRecordAnalytics) {
-      this.elementVisibilityService
-        .setEntity(this.service.entity$.value)
-        .setElementRef(this.el)
-        .onView((entity: ActivityEntity) => {
-          this.newsfeedService.recordView(
-            entity,
-            true,
-            null,
-            this.clientMeta.build({
-              campaign: entity.boosted_guid ? entity.urn : '',
-              position: this.slot,
-            })
-          );
-        });
-      this.elementVisibilityService.checkVisibility();
+    if (!this.isV2) {
+      setTimeout(() => this.calculateHeight());
+      if (this.canRecordAnalytics) {
+        this.elementVisibilityService
+          .setEntity(this.service.entity$.value)
+          .setElementRef(this.el)
+          .onView((entity: ActivityEntity) => {
+            this.newsfeedService.recordView(
+              entity,
+              true,
+              null,
+              this.clientMeta.build({
+                campaign: entity.boosted_guid ? entity.urn : '',
+                position: this.slot,
+              })
+            );
+          });
+        this.elementVisibilityService.checkVisibility();
+      }
     }
   }
 

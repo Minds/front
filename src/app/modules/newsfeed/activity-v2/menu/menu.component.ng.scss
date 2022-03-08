@@ -1,0 +1,10 @@
+@import 'defaults.scss';
+
+:host {
+  position: relative;
+
+  ::ng-deep .m-dropdown__list {
+    top: 0;
+    right: 0;
+  }
+}

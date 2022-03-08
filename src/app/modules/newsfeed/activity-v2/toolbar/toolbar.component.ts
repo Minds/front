@@ -62,8 +62,8 @@ export class ActivityV2ToolbarComponent {
       return;
     }
 
-    this.service.displayOptions.showOnlyCommentsInput = !this.service
-      .displayOptions.showOnlyCommentsInput;
+    this.service.displayOptions.showOnlyCommentsToggle = !this.service
+      .displayOptions.showOnlyCommentsToggle;
   }
 
   async openBoostModal(e: MouseEvent): Promise<void> {

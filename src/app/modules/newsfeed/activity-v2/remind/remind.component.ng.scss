@@ -5,7 +5,7 @@
   margin: auto;
   margin-top: $spacing3;
   padding: $spacing4;
-  border-radius: 3px;
+  border-radius: $borderRadius--activity;
 
   @include m-theme() {
     background: themed($m-bgColor--primary);

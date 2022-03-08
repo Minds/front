@@ -10,11 +10,11 @@
 </div>
 
 <!-- -------------------- -->
-<!-- TOGGLE (everywhere except feeds) -->
+<!-- TOGGLE (modal only) -->
 <!-- -------------------- -->
 <div
   class="m-commentsEntityOutlet__topBar"
-  *ngIf="count > 0 && !activityService.displayOptions.isFeed"
+  *ngIf="count > 0 && activityService.displayOptions.isModal"
 >
   <div class="m-commentsEntityOutlet__header">
     <span class="m-commentsEntityOutlet__title" (click)="toggleComments()"

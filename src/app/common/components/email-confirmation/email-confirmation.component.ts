@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostBinding,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -34,6 +35,9 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
 
   protected userEmitter$: Subscription;
 
+  @HostBinding('class.m-emailConfirmation--activityV2')
+  activityV2Feature: boolean;
+
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
@@ -54,6 +58,9 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
       this.setShouldShow(user);
       this.detectChanges();
     });
+
+    // ojm connect to features
+    this.activityV2Feature = true;
   }
 
   ngOnDestroy(): void {

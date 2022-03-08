@@ -85,7 +85,7 @@
 
     ////////////////////////////////////////////////
 
-    &.m-richEmbed--activityV2--small {
+    &.m-richEmbed--activityV2--row {
       .m-rich-embed-src {
         @media screen and (min-width: $max-mobile + 1) {
           display: flex;
@@ -111,7 +111,7 @@
     }
     ////////////////////////////////////////////////
 
-    &.m-richEmbed--activityV2--large {
+    &.m-richEmbed--activityV2--column {
       .m-rich-embed-src {
         a.meta {
           padding: $spacing3 $spacing4;

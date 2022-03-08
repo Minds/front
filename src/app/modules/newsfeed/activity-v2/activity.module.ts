@@ -36,6 +36,7 @@ import { ActivityV2RelativeTimeSpanComponent } from './owner-block/relative-time
 import { ActivityV2BoostButtonComponent } from './boost-button/boost-button.component';
 import { ActivityV2FlagComponent } from './flag/flag.component';
 import { ActivityV2BadgesComponent } from './badges/badges.component';
+import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import { ActivityV2BadgesComponent } from './badges/badges.component';
     ActivityV2RelativeTimeSpanComponent,
     ActivityV2FlagComponent,
     ActivityV2BadgesComponent,
+    ActivityV2PermalinkComponent,
   ],
   providers: [ActivityV2ModalCreatorService],
   exports: [ActivityV2Component, ActivityV2RemindButtonComponent],

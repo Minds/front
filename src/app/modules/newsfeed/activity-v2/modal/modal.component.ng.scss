@@ -2,8 +2,7 @@
 $modal-padding: 20px;
 
 %desc-text {
-  font-size: 15px;
-  line-height: 22px;
+  @include body2Regular;
   @include m-theme() {
     color: themed($m-textColor--secondary);
   }
@@ -93,7 +92,7 @@ $modal-padding: 20px;
     max-width: 540px; // find a logic for this number
 
     ::ng-deep {
-      m-activity {
+      m-activityV2 {
         height: auto !important;
         margin: $minds-margin * 2 0;
       }
@@ -113,7 +112,7 @@ $modal-padding: 20px;
     }
 
     ::ng-deep {
-      m-activity__content {
+      m-activityV2__content {
         .m-activityContent__messageWrapper {
           padding: 0;
         }
@@ -160,7 +159,7 @@ $modal-padding: 20px;
     }
 
     ::ng-deep {
-      m-activity__content {
+      m-activityV2__content {
         line-height: initial;
 
         .m-activityContent__media--richEmbed {
@@ -198,7 +197,7 @@ $modal-padding: 20px;
 
     // &.isBlog {
     //   ::ng-deep {
-    //     m-activity__content {
+    //     m-activityV2__content {
     //       .meta {
     //         padding: $modal-padding $modal-padding * 3;
 
@@ -292,7 +291,7 @@ $modal-padding: 20px;
     height: auto;
     position: relative;
 
-    ::ng-deep m-activity__content {
+    ::ng-deep m-activityV2__content {
       display: flex;
       align-items: stretch;
       justify-content: flex-start;
@@ -370,7 +369,7 @@ $modal-padding: 20px;
     display: flex;
     flex-direction: column;
 
-    ::ng-deep m-activity__ownerBlock {
+    ::ng-deep m-activityV2__ownerBlock {
       padding: 10px 0 0;
 
       .m-activity__ownerBlock {
@@ -405,7 +404,7 @@ $modal-padding: 20px;
         border-bottom: 1px solid themed($m-borderColor--primary);
       }
 
-      ::ng-deep m-activity__toolbar {
+      ::ng-deep m-activityV2__toolbar {
         padding: 0;
         margin-left: 3px;
         @include m-theme() {
@@ -446,7 +445,7 @@ $modal-padding: 20px;
     }
 
     ::ng-deep {
-      m-activity__content {
+      m-activityV2__content {
         overflow: visible;
 
         box-sizing: border-box;
@@ -565,7 +564,7 @@ $modal-padding: 20px;
     width: 100% !important;
 
     ::ng-deep {
-      m-comments__entityOutlet {
+      m-comments__entityOutletV2 {
         .m-commentsEntityOutlet__expand--hide {
           padding: 0 0 12px 0;
         }
@@ -609,7 +608,7 @@ $modal-padding: 20px;
   // ******************************************************
 
   ::ng-deep {
-    m-activity__content {
+    m-activityV2__content {
       overflow: auto;
       @include vertical-scroll;
 
@@ -643,7 +642,7 @@ $modal-padding: 20px;
       }
 
       .m-activityContent__media--image img {
-        max-height: unset;
+        max-height: unset !important;
       }
 
       .m-activityContent__messageWrapper {
@@ -654,12 +653,12 @@ $modal-padding: 20px;
     }
   }
 
-  m-activity__nsfwConsent {
+  m-activityV2__nsfwConsent {
     position: absolute;
   }
 
   ::ng-deep {
-    m-activity__content {
+    m-activityV2__content {
       .m-activityContent__mediaDescription,
       .m-activityContent__message {
         cursor: default !important;

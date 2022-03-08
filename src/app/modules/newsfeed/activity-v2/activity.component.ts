@@ -102,17 +102,22 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @Output() previousBoost: EventEmitter<any> = new EventEmitter();
   @Output() nextBoost: EventEmitter<any> = new EventEmitter();
 
-  // @HostBinding('class.m-activity--boost') // ojm do I need this?
   isBoost = false;
 
   @HostBinding('class.m-activity--fixedHeight')
   isFixedHeight: boolean;
+
+  @HostBinding('class.m-activity--isSidebarBoost')
+  isSidebarBoost: boolean;
 
   @HostBinding('class.m-activity--fixedHeightContainer')
   isFixedHeightContainer: boolean;
 
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
+
+  @HostBinding('class.m-activity--isFeed')
+  isFeed: boolean;
 
   @HostBinding('style.height')
   heightPx: string;
@@ -143,6 +148,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
     this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
+    this.isFeed = this.service.displayOptions.isFeed;
+    this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
+
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;

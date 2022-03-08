@@ -21,6 +21,7 @@
     padding-top: $spacing6;
     cursor: pointer;
   }
+
   .m-commentsEntityOutlet__topBar {
     display: flex;
     justify-content: space-between;
@@ -71,12 +72,101 @@
     }
   }
 
-  .m-comments__startConversation {
-    display: flex;
-    justify-content: space-around;
-    margin: 40px auto 50px;
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
+  ////////////////////////////////////////////////////////////////////////
+  // ojm used in activityv2
+
+  ::ng-deep m-comments__entityOutletV2 {
+    margin-top: $spacing6;
+    .m-commentsEntityOutlet__expand,
+    .m-commentsEntityOutlet__expand--hide {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .m-commentsEntityOutlet__topBar {
+      margin-left: 0 !important;
     }
   }
+
+  ::ng-deep m-comment {
+    .m-comment__repliesToggle {
+      margin: $spacing1 0 $spacing2;
+      span {
+        @include body2Regular;
+      }
+    }
+    .minds-avatar {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  .m-commentToolbar__buttons {
+    :ng-deep .m-commentToolbarButton {
+      span,
+      i {
+        @include body2Regular;
+      }
+    }
+  }
+  ::ng-deep {
+    m-comment__poster {
+      // .m-commentPoster__wrapper {
+      //ojm
+      // }
+      .m-commentPoster__form {
+        ::ng-deep minds-textarea {
+          .m-placeholder {
+            @include body2Regular;
+          }
+        }
+      }
+    }
+    m-comments__thread {
+      .m-comments__thread {
+        margin: 0; //ojm todo
+      }
+      .m-comments__thread--topLevel {
+        padding-left: 0; // ojm todo
+      }
+    }
+    m-comment {
+      p.m-comment__message.m-mature-message-content {
+        @include body2Regular;
+
+        a {
+          font-weight: inherit;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+  }
+
+  //ojm remove
+
+  // ::ng-deep
+  //   m-comments__tree
+  //   > ::ng-deep
+  //   m-comments__thread
+  //   > .m-comments__thread,
+  // & > ::ng-deep m-comments__entityOutletV2 {
+  //   & > ::ng-deep m-comment__poster .m-commentPoster__wrapper {
+  //     margin: 50px;
+  //   }
+  // }
+
+  /// ojm
+  // &
+  //   > ::ng-deep
+  //   m-comments__entityOutlet
+  //   > ::ng-deep
+  //   m-comments__tree
+  //   > ::ng-deep
+  //   m-comments__thread {
+  //   .m-comments__thread--topLevel {
+  //     padding-left: 0;
+  //   }
 }

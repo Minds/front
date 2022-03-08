@@ -105,7 +105,7 @@ export class ActivityV2ContentComponent
   @ViewChild(ScrollAwareVideoPlayerComponent) videoPlayer;
 
   //ojm changed from 750
-  maxFixedHeightContent: number = 500 * ACTIVITY_FIXED_HEIGHT_RATIO;
+  maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
 
   activityHeight: number;
   remindWidth: number;
