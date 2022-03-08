@@ -26,7 +26,7 @@
     [disabled]="inProgress || disableSubscribe"
   >
     <i class="material-icons">
-      close
+      {{ subscribedIcon }}
     </i>
     <span *ngIf="!iconOnly">
       <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"

@@ -154,7 +154,7 @@
           <ng-content select="[icons]"></ng-content>
           <m-usermenu__v3
             [useAvatar]="true"
-            [showFooterLinks]="true"
+            *ngIf="getCurrentUser()"
           ></m-usermenu__v3>
         </div>
 
