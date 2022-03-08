@@ -89,7 +89,6 @@
     padding: 18px 0 8px 0;
 
     .m-register__alreadyAUser {
-      margin-top: 16px;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }

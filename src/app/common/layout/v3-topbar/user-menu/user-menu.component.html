@@ -54,32 +54,6 @@
         Upgrade
       </a>
     </li>
-
-    <li
-      class="
-        m-dropdownList__item
-        m-userMenuDropdown__item
-        m-userMenuDropdownItem__buyTokens
-      "
-      *ngIf="getCurrentUser()"
-      (click)="closeMenu()"
-    >
-      <a
-        routerLink="/token"
-        i18n="verb|@@COMMON__BUY_TOKENS"
-        data-ref="topnav-usermenu-buytokens"
-        >Buy tokens</a
-      >
-    </li>
-
-    <li
-      class="
-        m-dropdownList__item
-        m-userMenuDropdown__item m-userMenuDropdown__spacer
-      "
-      *ngIf="getCurrentUser()"
-    ></li>
-
     <li
       class="m-dropdownList__item m-userMenuDropdown__item"
       *ngIf="!getCurrentUser()"
@@ -99,18 +73,6 @@
         <span i18n="@@COMMON__ADMIN">Admin</span>
       </a>
     </li>
-
-    <ng-container>
-      <li
-        class="m-dropdownList__item m-userMenuDropdown__item"
-        *ngIf="getCurrentUser()"
-        (click)="toggleTheme()"
-        data-ref="topnav-usermenu-themechange"
-      >
-        <span i18n="@@COMMON__LIGHT_MODE" *ngIf="isDark">Enter Light Mode</span>
-        <span i18n="@@COMMON__DARK_MODE" *ngIf="!isDark">Enter Dark Mode</span>
-      </li>
-    </ng-container>
 
     <li
       class="m-dropdownList__item m-userMenuDropdown__item"
@@ -156,53 +118,6 @@
         data-ref="topnav-usermenu-logout"
       >
         <span i18n="@@COMMON__LOGOUT">Logout</span>
-      </a>
-    </li>
-
-    <li
-      class="
-        m-dropdownList__item
-        m-userMenuDropdown__item m-userMenuDropdown__spacer
-      "
-    ></li>
-
-    <li
-      class="
-        m-dropdownList__item
-        m-userMenuDropdown__item m-userMenuDropdown__footer
-      "
-      *ngIf="showFooterLinks"
-    >
-      <ng-container
-        *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
-      >
-        <a
-          *ngIf="link.routerLink"
-          [routerLink]="link.routerLink"
-          (click)="closeMenu()"
-          [data-ref]="'topnav-usermenu-footer' + link.label"
-        >
-          {{ link.label }}
-        </a>
-        <a
-          *ngIf="link.href"
-          [href]="link.href"
-          target="_blank"
-          (click)="closeMenu()"
-        >
-          {{ link.label }}
-        </a>
-        <span> · </span>
-      </ng-container>
-      <a (click)="toggleFooterLinks()">
-        <ng-container
-          *ngIf="maxFooterLinks === 5; else lessView"
-          i18n="@@COMMON__MORE"
-          >More</ng-container
-        >
-        <ng-template #lessView>
-          <ng-container i18n="@@COMMON__LESS">Less</ng-container>
-        </ng-template>
       </a>
     </li>
   </ul>

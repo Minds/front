@@ -8,6 +8,7 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { DefaultFeedContainerComponent } from './container.component';
 import { DiscoveryDisclaimerModule } from '../discovery/disclaimer/disclaimer.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { ExperimentsModule } from '../experiments/experiments.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
     ActivityModule,
     DiscoveryDisclaimerModule,
     SuggestionsModule,
+    ExperimentsModule,
   ],
   declarations: [DefaultFeedComponent, DefaultFeedContainerComponent],
   exports: [DefaultFeedComponent, DefaultFeedContainerComponent],

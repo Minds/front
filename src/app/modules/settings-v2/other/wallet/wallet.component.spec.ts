@@ -94,18 +94,6 @@ describe('SettingsV2WalletComponent', () => {
     );
   });
 
-  it('submit button should call submit function', () => {
-    spyOn(comp, 'submit');
-    const submitButton = fixture.debugElement.nativeElement.querySelector(
-      '.m-settingsV2Wallet__form m-button'
-    );
-    submitButton.click();
-
-    fixture.whenStable().then(() => {
-      expect(comp.submit).toHaveBeenCalled();
-    });
-  });
-
   it('should have header', () => {
     const submitButton = fixture.debugElement.nativeElement.querySelector(
       '.m-settingsV2__headerLabel'

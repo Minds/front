@@ -5,6 +5,12 @@
     overflow: visible !important;
   }
 
+  input::placeholder {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
   .m-form__row--label {
     @include m-theme() {
       color: themed($m-textColor--secondary);
