@@ -92,11 +92,9 @@ export class PageLayoutService {
   }
 
   reset(): void {
-    setTimeout(() => {
-      this.preventLayoutReset = false;
-      this.isFullWidth$.next(false);
-      this.hasTopbarBorder$.next(true);
-      this.hasTopbarBackground$.next(true);
-    });
+    this.preventLayoutReset = false;
+    this.isFullWidth$.next(false);
+    this.hasTopbarBorder$.next(true);
+    this.hasTopbarBackground$.next(true);
   }
 }
