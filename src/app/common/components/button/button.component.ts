@@ -1,14 +1,13 @@
 import {
-  Component,
-  Input,
-  HostListener,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-  Output,
-  EventEmitter,
-  TemplateRef,
   AfterViewChecked,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { AnchorPosition } from '../../../services/ux/anchor-position';
 import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
@@ -40,7 +39,7 @@ export class ButtonComponent implements AfterViewChecked {
    */
   @Input() flat: boolean = false;
   /**
-   * whether the button should be borderless or not
+   * whether the button should be solid or not
    */
   @Input() solid: boolean = false;
 
