@@ -33,7 +33,7 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() iconOnly: boolean = false;
   @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
-  @Input() solid: boolean = false;
+
   @Input() pulsating: boolean = false;
   /**
    * whether the button should be borderless or not
