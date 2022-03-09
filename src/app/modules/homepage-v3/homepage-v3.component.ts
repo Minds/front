@@ -20,23 +20,27 @@ import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
 @Component({
-  selector: 'm-homepage__v2',
-  templateUrl: 'homepage-v2.component.html',
+  selector: 'm-homepage__v3',
+  templateUrl: 'homepage-v3.component.html',
+  styleUrls: ['homepage-v3.component.ng.scss'],
 })
-export class HomepageV2Component implements OnInit {
+export class HomepageV3Component implements OnInit {
   @ViewChild('registerForm') registerForm: RegisterForm;
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
-  readonly headline = $localize`:@@HOMEPAGE_V2__TAKE_BACK_CONTROL:Take back control of your social media`;
-  readonly description = $localize`:@@HOMEPAGE__V2__SUBHEADER:A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.`;
+  readonly headline = $localize`:@@ELEVATE_THE_GLOBAL_CONVERSATION:Elevate the global conversation`;
+  readonly description = $localize`:@@HOMEPAGE__V3__SUBHEADER:Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.`;
+  readonly blurhash = {
+    blurhash:
+      '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk',
+  };
 
   constructor(
     public client: Client,
     public router: Router,
     public navigation: NavigationService,
     public session: Session,
-    private featuresService: FeaturesService,
     configs: ConfigsService,
     private onboardingService: OnboardingV2Service,
     private navigationService: SidebarNavigationService,
@@ -50,18 +54,21 @@ export class HomepageV2Component implements OnInit {
   }
 
   ngOnInit() {
+    // if (this.pageTitle) {
+    //   this.metaService.setTitle(this.pageTitle);
+    // }
+
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
     }
 
-    this.navigationService.setVisible(false);
-    this.topbarService.toggleMarketingPages(true, false, false);
-    this.topbarService.toggleSearchBar(false);
-
     this.pageLayoutService.useFullWidth();
     this.pageLayoutService.removeTopbarBackground();
     this.pageLayoutService.removeTopbarBorder();
+    this.navigationService.setVisible(false);
+    this.topbarService.toggleMarketingPages(true, false, false);
+    this.topbarService.toggleSearchBar(false);
   }
 
   ngOnDestroy() {

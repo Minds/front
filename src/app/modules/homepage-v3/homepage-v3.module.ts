@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
@@ -13,26 +12,13 @@ import { MindsFormsModule } from '../forms/forms.module';
 
 import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
-import { HomepageV2Module } from '../homepage-v2/homepage.module';
-import { HomepageV3Module } from '../homepage-v3/homepage-v3.module';
-import { HomepageContainerComponent } from './container.component';
-import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
-import { DefaultFeedModule } from '../default-feed/default-feed.module';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: HomepageContainerComponent,
-    data: {
-      preventLayoutReset: true,
-    },
-  },
-];
+import { HomepageV3Component } from './homepage-v3.component';
+import { CaptchaModule } from '../captcha/captcha.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     NgCommonModule,
-    RouterModule.forChild(routes),
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -41,11 +27,11 @@ const routes: Routes = [
     MindsFormsModule,
     MarketingModule,
     ExperimentsModule,
-    DiscoverySharedModule,
-    HomepageV2Module,
-    HomepageV3Module,
-    DefaultFeedModule,
+    CaptchaModule,
+    RouterModule,
+    MarketingModule,
   ],
-  declarations: [HomepageContainerComponent],
+  declarations: [HomepageV3Component],
+  exports: [HomepageV3Component],
 })
-export class HomepageModule {}
+export class HomepageV3Module {}
