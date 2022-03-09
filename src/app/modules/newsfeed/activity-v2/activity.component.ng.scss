@@ -45,7 +45,7 @@
   }
 
   &.m-activity--fixedHeight {
-    height: 750px; // ojm change?
+    height: 650px; // ojm change?
     display: flex;
     flex-direction: row;
 
@@ -91,66 +91,6 @@
       }
     }
   }
-  // COMMENTS ////////////////////////////////////////
-  //ojm remove if working in entityOutletv2 comp
-  // ::ng-deep m-comments__entityOutletV2 {
-  //   margin-top: $spacing6;
-  //   .m-commentsEntityOutlet__expand,
-  //   .m-commentsEntityOutlet__expand--hide {
-  //     padding-left: 0 !important;
-  //     padding-right: 0 !important;
-  //   }
-
-  //   .m-commentsEntityOutlet__topBar {
-  //     margin-left: 0 !important;
-  //   }
-  // }
-
-  // ::ng-deep .m-comment .minds-avatar {
-  //   @include m-theme() {
-  //     background: themed($m-bgColor--primary);
-  //   }
-  // }
-
-  // &
-  //   > ::ng-deep
-  //   m-comments__entityOutletV2
-  //   > ::ng-deep
-  //   m-comments__tree
-  //   > ::ng-deep
-  //   m-comments__thread
-  //   > .m-comments__thread,
-  // & > ::ng-deep m-comments__entityOutletV2 {
-  //   & > ::ng-deep m-comment__poster .m-commentPoster__wrapper {
-  //     margin: 50px;
-  //   }
-  // }
-
-  // /// ojm
-  // &
-  //   > ::ng-deep
-  //   m-comments__entityOutlet
-  //   > ::ng-deep
-  //   m-comments__tree
-  //   > ::ng-deep
-  //   m-comments__thread {
-  //   .m-comments__thread--topLevel {
-  //     padding-left: 0;
-  //   }
-
-  //   m-comment {
-  //     .m-comment__message {
-  //       @include body2Regular;
-
-  //       a {
-  //         font-weight: inherit;
-  //         @include m-theme() {
-  //           color: themed($m-textColor--secondary);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
   // AVATAR /////////////////////////////////////////////
   .m-activity__avatar,

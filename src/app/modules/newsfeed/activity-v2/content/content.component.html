@@ -121,7 +121,9 @@
       [isModal]="isModal"
       [activityV2Feature]="true"
       [displayAsColumn]="
-        service.displayOptions.minimalMode || service.displayOptions.isModal
+        service.displayOptions.minimalMode ||
+        service.displayOptions.isModal ||
+        service.displayOptions.showBoostRotatorButtons
       "
       [isInBoostRotator]="service.displayOptions.showBoostRotatorButtons"
     >
