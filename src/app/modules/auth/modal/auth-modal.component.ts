@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
 import { SiteService } from '../../../common/services/site.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-auth__modal',
@@ -20,7 +21,11 @@ export class AuthModalComponent implements OnInit {
    */
   onDismissIntent: () => void = () => {};
 
-  constructor(public siteService: SiteService) {}
+  public readonly cdnAssetsUrl: string;
+
+  constructor(public siteService: SiteService, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit(): void {}
 

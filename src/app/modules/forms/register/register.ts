@@ -1,18 +1,17 @@
 import {
   Component,
   EventEmitter,
-  ViewChild,
   Input,
-  Output,
   NgZone,
-  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
   AbstractControl,
+  FormBuilder,
+  FormGroup,
   ValidationErrors,
+  Validators,
 } from '@angular/forms';
 
 import { Client } from '../../../services/api';
@@ -21,14 +20,14 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import {
   PopoverComponent,
-  SecurityValidationState,
   SecurityValidationStateValue,
 } from '../popover-validation/popover.component';
-import { FeaturesService } from '../../../services/features.service';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
+
+export type Source = 'auth-modal' | 'other' | null;
 
 @Component({
   selector: 'minds-form-register',
@@ -43,8 +42,10 @@ export class RegisterForm {
   @Input() showPromotions: boolean = true;
   @Input() showLabels: boolean = false;
   @Input() showInlineErrors: boolean = false;
+  @Input() source: Source = null;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
+  @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
@@ -101,6 +102,10 @@ export class RegisterForm {
       },
       { validators: [this.passwordConfirmingValidator] }
     );
+  }
+
+  onShowLoginFormClick() {
+    this.showLoginForm.emit();
   }
 
   showError(field: string) {
