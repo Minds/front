@@ -70,6 +70,7 @@ export class HomepageV3Component implements OnInit {
     this.navigationService.setVisible(false);
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
+    this.setVhVar();
   }
 
   ngOnDestroy() {
@@ -88,6 +89,21 @@ export class HomepageV3Component implements OnInit {
       this.pageLayoutService.removeTopbarBackground();
       this.pageLayoutService.removeTopbarBorder();
     }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.setVhVar();
+  }
+
+  /**
+   * sets the vh variable to use in styles.
+   * this is a workaround to the default vh not respecting OS elements https://stackoverflow.com/a/61474999/5607525
+   */
+  private setVhVar() {
+    const doc = document.documentElement;
+    doc.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
   }
 
   /**
