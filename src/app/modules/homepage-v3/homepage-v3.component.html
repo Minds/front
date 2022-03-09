@@ -4,8 +4,9 @@
   <img
     [src]="cdnAssetsUrl + 'assets/homepage/neural.png'"
     class="m-homepage__v3__neuralBg"
-    [m-blurhash]="blurhash"
+    [m-blurhash]="NEURAL_BACKGROUND_BLURHASH"
     [m-blurhashFullscreen]="true"
+    loading="lazy"
   />
 
   <div class="m-homepage__v3__firstSection__container">
@@ -23,7 +24,7 @@
 
         <m-button
           class="m-homepage__joinButton--blueOutline"
-          (click)="register()"
+          (click)="onRegister()"
           i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
           data-cy="data-minds-homepage-join-button-main"
           color="blue"
@@ -333,7 +334,7 @@
         <div class="m-marketing__actionButtons">
           <m-button
             class="m-homepage__joinButton--blueOutline"
-            (click)="register()"
+            (click)="onRegister()"
             i18n="@@HOMEPAGE_V2__JOIN_MINDS_NOW"
             color="blue"
             solid="true"
