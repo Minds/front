@@ -133,6 +133,15 @@ export class AppPromptService implements OnDestroy {
   }
 
   /**
+   * Dismisses the prompt but doesn't save anything to storage
+   * @returns { AppPromptService } - chain-able.
+   */
+  public dismiss(): AppPromptService {
+    this.state$.next('dismissed');
+    return this;
+  }
+
+  /**
    * Checks whether device is touch screen, then user agent.
    * @returns { boolean } true if platform has app available.
    */

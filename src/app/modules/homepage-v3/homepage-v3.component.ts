@@ -1,3 +1,4 @@
+import { AppPromptService } from './../app-prompt/app-prompt.service';
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
@@ -52,6 +53,7 @@ export class HomepageV3Component implements OnInit {
     private pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
+    private appPromptService: AppPromptService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -71,6 +73,7 @@ export class HomepageV3Component implements OnInit {
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
     this.setVhVar();
+    setTimeout(() => this.appPromptService.dismiss(), 2000);
   }
 
   ngOnDestroy() {
