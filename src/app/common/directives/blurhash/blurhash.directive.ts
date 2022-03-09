@@ -46,8 +46,33 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
 
   canvas: HTMLCanvasElement;
 
+  _blurhash: string;
+
+  /**
+   * the actual hash
+   */
+  get blurhash() {
+    return this._blurhash;
+  }
+
+  /**
+   * @param {ActivityEntity | string} blurhashInput a blurhash string or an entity
+   */
   @Input('m-blurhash')
-  entity: ActivityEntity;
+  set blurhash(blurhashInput) {
+    switch (typeof blurhashInput) {
+      case 'string':
+        this._blurhash = blurhashInput;
+        break;
+      case 'object':
+        this.entity = blurhashInput;
+        this._blurhash =
+          this.entity.blurhash || this.entity.custom_data[0]?.blurhash;
+      default:
+    }
+  }
+
+  entity?: ActivityEntity;
 
   @Input('paywalled')
   paywalled;
@@ -94,13 +119,12 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       return null;
     }
 
-    let [blurhash, width, height] = [
-      this.entity.blurhash || this.entity.custom_data[0]?.blurhash,
+    let [width, height] = [
       elementWidth || this.entity.custom_data[0]?.width,
       elementHeight || this.entity.custom_data[0]?.height,
     ];
 
-    if (!blurhash) {
+    if (!this.blurhash) {
       return null;
     }
 
@@ -113,7 +137,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
     }
 
     try {
-      const pixels = decode(blurhash, this.RESOLUTION, this.RESOLUTION);
+      const pixels = decode(this.blurhash, this.RESOLUTION, this.RESOLUTION);
       this.canvas = document.createElement('canvas');
       const ctx = this.canvas.getContext('2d');
 

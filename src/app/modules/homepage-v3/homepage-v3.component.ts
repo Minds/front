@@ -1,9 +1,12 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   OnDestroy,
   OnInit,
   ViewChild,
   HostListener,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Router } from '@angular/router';
@@ -19,6 +22,9 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
 
+/**
+ * Home page component
+ */
 @Component({
   selector: 'm-homepage__v3',
   templateUrl: 'homepage-v3.component.html',
@@ -31,10 +37,8 @@ export class HomepageV3Component implements OnInit {
   readonly siteUrl: string;
   readonly headline = $localize`:@@ELEVATE_THE_GLOBAL_CONVERSATION:Elevate the global conversation`;
   readonly description = $localize`:@@HOMEPAGE__V3__SUBHEADER:Minds is an open source social network dedicated to Internet freedom. Speak freely, protect your privacy, earn crypto rewards and take back control of your social media.`;
-  readonly blurhash = {
-    blurhash:
-      '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk',
-  };
+  readonly NEURAL_BACKGROUND_BLURHASH =
+    '|03u=zF}U]rWRjt6W;s:Na=G$*F2s.jtR*xFR*s-znM{o~OrofaeWBoJWqPBoeVssUWBjYW=ogoMRibbt7R*xDR,flj?fPX9jFjYofW=oMR*n$o0bbW=n%WBoJWqj[j[ayWBoJW=fko0ayoKa}bHs.R*o0bIbIsmS2j@fk';
 
   constructor(
     public client: Client,
@@ -47,17 +51,14 @@ export class HomepageV3Component implements OnInit {
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
     private authModal: AuthModalService,
-    private authRedirectService: AuthRedirectService
+    private authRedirectService: AuthRedirectService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
   }
 
   ngOnInit() {
-    // if (this.pageTitle) {
-    //   this.metaService.setTitle(this.pageTitle);
-    // }
-
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
@@ -73,10 +74,13 @@ export class HomepageV3Component implements OnInit {
 
   ngOnDestroy() {
     this.navigationService.setVisible(true);
+    this.topbarService.toggleSearchBar(true);
   }
 
   @HostListener('window:scroll')
   onScroll() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     if (window.document.body.scrollTop > 52) {
       this.pageLayoutService.useTopbarBackground();
       this.pageLayoutService.useTopbarBorder();
@@ -86,36 +90,15 @@ export class HomepageV3Component implements OnInit {
     }
   }
 
-  registered() {
-    if (this.onboardingService.shouldShow()) {
-      this.router.navigate(['/onboarding']);
-      return;
-    }
-
-    this.router.navigate(['/' + this.session.getLoggedInUser().username]);
-  }
-
   /**
    * Call to register the user
    * depending on feat flag will route to /register or open auth modal.
    * @returns { void }
    */
-  public async register(): Promise<void> {
-    try {
-      await this.authModal.open();
+  public async onRegister(): Promise<void> {
+    await this.authModal.open();
 
-      const url = this.authRedirectService.getRedirectUrl();
-      this.router.navigate([url]);
-      return;
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
-  }
-
-  isMobile() {
-    return window.innerWidth <= 540;
+    const url = this.authRedirectService.getRedirectUrl();
+    this.router.navigate([url]);
   }
 }
