@@ -35,6 +35,14 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
   @Input() solid: boolean = false;
   @Input() pulsating: boolean = false;
+  /**
+   * whether the button should be borderless or not
+   */
+  @Input() flat: boolean = false;
+  /**
+   * whether the button should be borderless or not
+   */
+  @Input() solid: boolean = false;
 
   /**
    * Handles width for buttons that are not visible onInit

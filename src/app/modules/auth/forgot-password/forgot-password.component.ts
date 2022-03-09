@@ -5,6 +5,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { RegexService } from '../../../common/services/regex.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   moduleId: module.id,
@@ -30,10 +31,12 @@ export class ForgotPasswordComponent {
     public route: ActivatedRoute,
     public session: Session,
     public regex: RegexService,
-    public toaster: FormToastService
+    public toaster: FormToastService,
+    private pageLayout: PageLayoutService
   ) {}
 
   ngOnInit() {
+    this.pageLayout.useFullWidth();
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['code']) {
         this.setCode(params['code']);
