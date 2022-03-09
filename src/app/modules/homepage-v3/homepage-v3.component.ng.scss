@@ -21,7 +21,9 @@
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      background-color: themed($m-bgColor--primaryDarkAlways);
+      @include m-theme() {
+        background-color: themed($m-bgColor--primaryDarkAlways);
+      }
       // min-height: 675px;
     }
 
