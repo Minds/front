@@ -1,13 +1,60 @@
 @import 'defaults.scss';
+@import '../shared.scss';
 
 :host {
-  margin-top: $spacing6;
+  // ******************************************************
+  // ** FIXED HEIGHT **
+  // ******************************************************
+  .m-activity--fixedHeight & {
+    z-index: 1;
+  }
+
+  // ******************************************************
+  // ** SINGLE POST PAGE **
+  // ******************************************************
+
+  &.m-activityToolbar--single {
+    .m-activityToolbar__actions,
+    .m-activityToolbar__metrics {
+      padding-left: $singlePostSpacingLeft;
+      padding-right: $singlePostSpacingRight;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $singlePostSpacingLeft--mobile;
+        padding-right: $singlePostSpacingRight--mobile;
+      }
+    }
+
+    .m-activityToolbar__actions {
+      padding-top: $spacing5;
+      padding-bottom: $spacing7;
+    }
+    .m-activityToolbar__metrics {
+      padding-top: $spacing5;
+      padding-bottom: $spacing5;
+    }
+  }
+  // ******************************************************
+  // ** MODAL **
+  // ******************************************************
+  &.m-activityToolbar--modal {
+    .m-activityToolbar__actions,
+    .m-activityToolbar__metrics {
+      padding-left: $modalScrollableContainerSpacing + $spacing3;
+      padding-right: $modalScrollableContainerSpacing + $spacing3;
+    }
+  }
+
+  // ******************************************************
+  // ** DEFAULT **
+  // ******************************************************
+
   @include m-theme() {
     background-color: themed($m-bgColor--primary);
   }
 
-  .m-activityToolbar__actions,
-  .m-activityToolbar__metrics {
+  .m-activityToolbar__metrics,
+  .m-activityToolbar__actions {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -15,6 +62,11 @@
     text-align: center;
     position: relative;
     width: 100%;
+  }
+
+  .m-activityToolbar__metrics {
+    @include borderTop;
+    @include borderBottom;
   }
 
   .m-activityToolbarMetrics__metric {
@@ -148,9 +200,5 @@
         }
       }
     }
-  }
-
-  .m-activity--fixedHeight & {
-    z-index: 1;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, HostBinding, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
@@ -25,6 +25,16 @@ export class ActivityV2ToolbarComponent {
 
   entity: ActivityEntity;
   allowReminds: boolean = true;
+
+  @HostBinding('class.m-activityToolbar--single')
+  get isSingle(): boolean {
+    return this.service.displayOptions.isSingle;
+  }
+
+  @HostBinding('class.m-activityToolbar--modal')
+  get isModal(): boolean {
+    return this.service.displayOptions.isModal;
+  }
 
   constructor(
     public service: ActivityService,

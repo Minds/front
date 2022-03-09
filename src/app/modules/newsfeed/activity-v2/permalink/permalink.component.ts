@@ -24,7 +24,7 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
     private configs: ConfigsService
   ) {}
 
-  @HostBinding('class.m-activity__permalink--isModal')
+  @HostBinding('class.m-activity__permalink--modal')
   get isModal(): boolean {
     return this.service.displayOptions.isModal;
   }

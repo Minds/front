@@ -125,6 +125,12 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--minimalRemind')
   isMinimalRemind: boolean = false;
 
+  @HostBinding('class.m-activity--modal')
+  isModal: boolean = false;
+
+  @HostBinding('class.m-activity--single')
+  isSingle: boolean = false;
+
   heightSubscription: Subscription;
   remindSubscription: Subscription;
 
@@ -150,6 +156,8 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
     this.isFeed = this.service.displayOptions.isFeed;
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
+    this.isModal = this.service.displayOptions.isModal;
+    this.isSingle = this.service.displayOptions.isSingle;
 
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
@@ -175,7 +183,8 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.calculateHeight());
+    setTimeout(() => this.calculateFixedHeight());
+
     if (this.canRecordAnalytics) {
       this.elementVisibilityService
         .setEntity(this.service.entity$.value)
@@ -197,10 +206,15 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize(): void {
-    this.calculateHeight();
+    this.calculateFixedHeight();
   }
 
-  calculateHeight(): void {
+  /**
+   *
+   * For fixed height activities, height is
+   * determined by clientWidth / ratio
+   */
+  calculateFixedHeight(): void {
     if (!this.service.displayOptions.fixedHeight) return;
     if (this.service.displayOptions.fixedHeightContainer) return;
     const height =

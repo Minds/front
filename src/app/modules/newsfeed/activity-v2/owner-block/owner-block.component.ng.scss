@@ -1,29 +1,17 @@
 @import 'defaults.scss';
+@import '../shared.scss';
 
 :host {
   display: block;
 
-  &.m-activity__ownerBlock--sidebarBoost {
-    .m-activityOwnerBlock__body {
-      flex-direction: column;
-      overflow: visible;
-    }
-    .m-activityOwnerBlockPermalink__text {
-      padding: 0;
-    }
-  }
-
-  .m-activity__ownerBlock {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding-bottom: $spacing1;
-    box-sizing: border-box;
-
-    &.m-activity__ownerBlock--minimalMode {
+  // ******************************************************
+  // ** MINIMAL MODE **
+  // ******************************************************
+  &.m-activity__ownerBlock--minimalMode {
+    &.m-activity__ownerBlock {
       padding-left: $spacing4;
       padding-right: $spacing2;
-      :ng-deep .m-activityOwnerBlock__avatar {
+      ::ng-deep .m-activityOwnerBlock__avatar {
         img {
           height: 35px;
           width: 35px;
@@ -69,16 +57,47 @@
       }
     }
   }
+  // ******************************************************
+  // ** SIDEBAR BOOST **
+  // ******************************************************
 
-  ::ng-deep .m-activityOwnerBlock__avatar {
-    align-self: center;
-    padding-right: $spacing2;
-    position: relative;
-    img {
-      border-radius: 50%;
-      width: $spacing10;
-      height: $spacing10;
-      object-fit: cover;
+  &.m-activity__ownerBlock--sidebarBoost {
+    .m-activityOwnerBlock__body {
+      flex-direction: column;
+      overflow: visible;
+    }
+    .m-activityOwnerBlockPermalink__text {
+      padding: 0;
+    }
+  }
+
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  // ** DEFAULT **
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+
+  .m-activity__ownerBlock {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-bottom: $spacing1;
+    box-sizing: border-box;
+  }
+
+  ::ng-deep {
+    .m-activityOwnerBlock__avatar {
+      align-self: center;
+      padding-right: $spacing2;
+      position: relative;
+      img {
+        border-radius: 50%;
+        width: $avatarWidth;
+        height: $avatarWidth;
+        object-fit: cover;
+      }
     }
   }
 
@@ -165,35 +184,6 @@
     vertical-align: middle;
     @include m-theme() {
       color: themed($m-link);
-    }
-  }
-
-  .m-activity__remindUsers {
-    padding-bottom: $spacing5;
-    > * {
-      vertical-align: middle;
-    }
-
-    i {
-      font-size: 18px;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-    }
-    span,
-    a {
-      @include body2Medium;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-      text-decoration: none;
-    }
-
-    span {
-      margin-left: $spacing2;
-    }
-    a:hover {
-      text-decoration: underline;
     }
   }
 }

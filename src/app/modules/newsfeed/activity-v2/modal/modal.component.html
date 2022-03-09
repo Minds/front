@@ -93,9 +93,7 @@
       <div class="m-activityModal__contentContainer">
         <div class="m-activityModal__contentBody">
           <!-- FLAG -->
-          <m-activityV2__flag
-            class="m-activity__optionalTopRow"
-          ></m-activityV2__flag>
+          <m-activityV2__flag class="m-activity__flagRow"></m-activityV2__flag>
           <!-- OWNER BLOCK -->
           <m-activityV2__ownerBlock>
             <ng-container class="m-activityOwnerBlock__right">
@@ -149,6 +147,7 @@
                     [fixedHeight]="false"
                     [showOnlyPoster]="false"
                     [compact]="true"
+                    [isModal]="true"
                     (onHeightChange)="onCommentsHeightChange($event)"
                   >
                   </m-comments__entityOutletV2>

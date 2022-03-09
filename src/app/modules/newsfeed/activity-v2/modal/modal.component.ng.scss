@@ -376,10 +376,6 @@ $modal-padding: 20px;
         padding: 20px $modal-padding 0;
       }
 
-      .m-activity__remindUsers {
-        padding: 0 $modal-padding 10px;
-      }
-
       m-postmenu--v2 {
         .m-dropdown--v2 {
           z-index: 5;
@@ -399,25 +395,14 @@ $modal-padding: 20px;
       }
     }
     .m-activityModal__toolbarWrapper {
-      padding: $modal-padding;
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-borderColor--primary);
-      }
-
       ::ng-deep m-activityV2__toolbar {
         padding: 0;
-        margin-left: 3px;
         @include m-theme() {
           border-top: none !important;
         }
 
         .m-layout__spacer {
           display: none;
-        }
-
-        .m-activityToolbar__metrics,
-        .m-activityToolbar__actions {
-          padding: 20px 0;
         }
 
         minds-button-comment {

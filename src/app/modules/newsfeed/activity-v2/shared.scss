@@ -1,0 +1,45 @@
+// Store variables here that are shared among a variety of components
+///////////////////////////////////////////
+// AVATAR
+///////////////////////////////////////////
+$avatarWidth: $spacing10;
+///////////////////////////////////////////
+// FEED
+///////////////////////////////////////////
+$feedAvatarSpacingLeft: $spacing8;
+$feedAvatarSpacingRight: $spacing4;
+
+$feedSpacingLeft: $feedAvatarSpacingLeft + $avatarWidth +
+  $feedAvatarSpacingRight;
+$feedSpacingRight: $spacing8;
+
+// MOBILE
+$feedAvatarSpacingLeft--mobile: $spacing4;
+$feedAvatarSpacingRight--mobile: $spacing4;
+
+$feedSpacingLeft--mobile: $feedAvatarSpacingLeft--mobile + $avatarWidth +
+  feedAvatarSpacingRight--mobile;
+$feedSpacingRight--mobile: $spacing4;
+
+///////////////////////////////////////////
+// SINGLE POST PAGE
+///////////////////////////////////////////
+$singlePostAvatarSpacingLeft: $spacing8;
+$singlePostAvatarSpacingRight: $spacing4;
+
+$singlePostSpacingLeft: $singlePostAvatarSpacingLeft + $avatarWidth +
+  $singlePostAvatarSpacingRight;
+$singlePostSpacingRight: $spacing12;
+
+// MOBILE
+$singlePostAvatarSpacingLeft--mobile: $spacing4;
+$singlePostAvatarSpacingRight--mobile: $spacing4;
+
+$singlePostSpacingLeft--mobile: $singlePostAvatarSpacingLeft--mobile +
+  $avatarWidth + $singlePostAvatarSpacingRight--mobile;
+$singlePostSpacingRight--mobile: $spacing4;
+
+///////////////////////////////////////////
+// MODAL
+///////////////////////////////////////////
+$modalScrollableContainerSpacing: $spacing5;

@@ -1,9 +1,6 @@
-<div
-  class="m-activity__ownerBlock m-legible"
-  [ngClass]="{ 'm-activity__ownerBlock--minimalMode': minimalMode }"
->
+<div class="m-activity__ownerBlock m-legible">
   <!-- ---------------------------- -->
-  <!-- MINIMAL MODE / SIDEBAR BOOSTS ONLY  -->
+  <!-- AVATAR: MINIMAL MODE / SIDEBAR BOOSTS / MODALS ONLY  -->
   <div
     class="m-activityOwnerBlock__avatar"
     *ngIf="minimalMode || isSidebarBoost"
@@ -53,7 +50,7 @@
       >·</span
     >
     <m-activityV2__permalink
-      *ngIf="!isModal && !minimalMode"
+      *ngIf="!isModal && !minimalMode && !isSingle"
     ></m-activityV2__permalink>
   </div>
 

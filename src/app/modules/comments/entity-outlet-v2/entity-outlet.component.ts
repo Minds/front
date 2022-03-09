@@ -9,6 +9,7 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  HostBinding,
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -57,6 +58,14 @@ export class CommentsEntityOutletV2Component {
     newHeight: number;
   }> = new EventEmitter();
   optimisticList: Array<any> = [];
+
+  @HostBinding('class.m-comments__entityOutletV2--modal')
+  @Input()
+  isModal: boolean = false;
+
+  @HostBinding('class.m-comments__entityOutletV2--single')
+  @Input()
+  isSingle: boolean = false;
 
   constructor(
     public session: Session,

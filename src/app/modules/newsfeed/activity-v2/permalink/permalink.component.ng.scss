@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
 :host {
-  &.m-activity__permalink--isModal {
+  &.m-activity__permalink--modal {
     .m-activityOwnerBlock__permalink {
       padding: $spacing5;
       .m-activityOwnerBlockPermalink__text {

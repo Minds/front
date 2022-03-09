@@ -51,18 +51,25 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity && !!this.entity.remind_object;
   }
 
+  // Note: currently ownerBlocks are only visible in minimalMode for reminds/quotes
+  @HostBinding('class.m-activity__ownerBlock--minimalMode')
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   @HostBinding('class.m-activity__ownerBlock--sidebarBoost')
   get isSidebarBoost(): boolean {
     return this.service.displayOptions.isSidebarBoost;
   }
 
-  // Note: currently ownerBlocks are only visible in minimalMode for reminds/quotes
-  get minimalMode(): boolean {
-    return this.service.displayOptions.minimalMode;
-  }
-
+  @HostBinding('class.m-activityToolbar--modal')
   get isModal(): boolean {
     return this.service.displayOptions.isModal;
+  }
+
+  @HostBinding('class.m-activityToolbar--single')
+  get isSingle(): boolean {
+    return this.service.displayOptions.isSingle;
   }
 
   get isFeed(): boolean {

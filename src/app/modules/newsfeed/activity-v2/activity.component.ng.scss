@@ -1,51 +1,42 @@
 @import 'defaults.scss';
+@import './shared.scss';
 
 :host {
   display: flex;
+  flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  padding: $spacing4 $spacing8;
   border-radius: 0 !important;
-
-  @media screen and (max-width: $max-mobile) {
-    padding: $spacing4;
-  }
-
   @include m-theme() {
     background: themed($m-bgColor--primary);
   }
 
-  &.m-activity--fixedHeightContainer {
-    height: 100%;
-    width: 100%;
-  }
-
-  &.m-activity--minimalMode {
-    padding: 0;
-    @include border;
-  }
-
-  &.m-activity--minimalRemind {
-    .m-activity__remindUsers {
-      display: none;
-    }
-  }
+  // ******************************************************
+  // ** FEED **
+  // ******************************************************
 
   &.m-activity--isFeed {
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
     }
-  }
 
-  &.m-activity--isSidebarBoost {
-    padding: $spacing5;
-    .m-activity__rightColumn {
-      width: 100%;
+    .activityTop {
+      padding-left: $feedAvatarSpacingLeft;
+      padding-right: $feedAvatarSpacingRight;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $feedAvatarSpacingLeft--mobile;
+        padding-right: $feedAvatarSpacingRight--mobile;
+      }
     }
   }
 
+  // ******************************************************
+  // ** FIXED HEIGHT **
+  // ******************************************************
+
   &.m-activity--fixedHeight {
-    height: 650px; // ojm change?
+    height: 650px; // ojm fixedHeight change?
     display: flex;
     flex-direction: row;
 
@@ -63,9 +54,87 @@
     }
   }
 
+  &.m-activity--fixedHeightContainer {
+    height: 100%;
+    width: 100%;
+  }
+
+  // ******************************************************
+  // ** MINIMAL MODE **
+  // ******************************************************
+
+  &.m-activity--minimalMode {
+    padding: 0;
+    @include border;
+    ::ng-deep .m-activityContent--paywalledStatus {
+      padding-top: 30px;
+    }
+    ::ng-deep .m-videoPlayer__placeholder i {
+      font-size: 70px;
+    }
+  }
+
+  // ******************************************************
+  // ** MODAL **
+  // ******************************************************
+
+  &.m-activity--modal {
+    padding: 0;
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
+    }
+  }
+
+  // ******************************************************
+  // ** SIDEBAR BOOST **
+  // ******************************************************
+
+  &.m-activity--isSidebarBoost {
+    padding: $spacing5;
+    .m-activity__rightColumn {
+      width: 100%;
+    }
+  }
+
+  // ******************************************************
+  // ** SINGLE POST PAGE **
+  // ******************************************************
+
+  &.m-activity--single {
+    padding: 0;
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
+    }
+    .m-activity__top {
+      padding-left: $singlePostAvatarSpacingLeft;
+      padding-right: $singlePostSpacingRight;
+      padding-top: $spacing4;
+      padding-bottom: $spacing4;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $singlePostAvatarSpacingLeft--mobile;
+        padding-right: $singlePostSpacingRight--mobile;
+      }
+    }
+  }
+
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  // ** DEFAULT **
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+
+  .m-activity__top {
+    display: flex;
+    flex-direction: row;
+    padding-top: $spacing4;
+  }
+
   .m-activity__leftColumn,
   ::ng-deep m-activityV2__remind .m-activity__leftColumn {
-    padding-right: $spacing4;
+    padding-right: $feedAvatarSpacingRight;
   }
 
   .m-activity__rightColumn,
@@ -75,7 +144,7 @@
     flex-grow: 1;
   }
 
-  .m-activity__optionalTopRow {
+  .m-activity__flagRow {
     display: flex;
     flex-direction: row;
     padding-bottom: $spacing3;
@@ -92,10 +161,13 @@
     }
   }
 
-  // AVATAR /////////////////////////////////////////////
+  // ******************************************************
+  // ** AVATAR **
+  // ******************************************************
+
   .m-activity__avatar,
   ::ng-deep m-activityV2__remind .m-activity__avatar {
-    padding-right: $spacing4;
+    padding-right: $feedAvatarSpacingRight;
 
     img {
       border-radius: 50%;
@@ -107,15 +179,5 @@
 
   .m-activityLeftColumn__spacer {
     height: $spacing10;
-  }
-
-  // MINIMAL MODE ////////////////////////////////////////
-  .m-activity--minimalMode {
-    ::ng-deep .m-activityContent--paywalledStatus {
-      padding-top: 30px;
-    }
-    ::ng-deep .m-videoPlayer__placeholder i {
-      font-size: 70px;
-    }
   }
 }

@@ -29,9 +29,12 @@ export type ActivityDisplayOptions = {
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
+  isSingle: boolean; // activity is displayed on a single post page
   isFeed: boolean; // is the activity a part of a feed?
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
+  avatarColumn: boolean; // avatar gets dedicated column on left of post
+  permalinkBelowContent: boolean; // don't show permalink in ownerblock
 };
 
 export type ActivityEntity = {
@@ -306,8 +309,11 @@ export class ActivityService {
     bypassMediaModal: false,
     sidebarMode: false,
     isSidebarBoost: false,
+    isSingle: false,
     isFeed: false,
     isV2: false,
+    avatarColumn: true,
+    permalinkBelowContent: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
