@@ -13,6 +13,10 @@
     display: flex;
     width: 100%;
 
+    @media (max-width: $max-mobile) {
+      flex-direction: column;
+    }
+
     .m-onboardingPhone__leftContainer {
       display: flex;
       flex-flow: column nowrap;
@@ -51,7 +55,11 @@
 
       .m-onboardingPhone__numberInput {
         outline: none !important;
-        margin-bottom: 0 !important;
+        margin: 0;
+
+        @media (max-width: $max-mobile) {
+          margin-bottom: $minds-margin * 2;
+        }
 
         @include m-theme() {
           background-color: themed($m-bgColor--primary);
