@@ -197,7 +197,10 @@
     <div class="m-grid m-marketing__wrapper">
       <div
         class="
-            m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-grid__column-7
+            m-grid__column-6--tablet
+            m-grid__column-12--mobile
+            m-grid__order-1--mobile
             m-marketing__body
           "
       >
@@ -239,7 +242,10 @@
       </div>
       <div
         class="
-            m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile
+            m-grid__column-5 
+            m-grid__column-6--tablet
+            m-grid__column-12--mobile
+            m-grid__order-2--mobile
             m-marketing__image
           "
       >
@@ -261,11 +267,23 @@
   >
     <div class="m-grid m-marketing__wrapper">
       <div
-        class="m-grid__column-4 m-grid__column-12--mobile m-marketing__image"
+        class="
+          m-marketing__image
+          m-grid__column-4
+          m-grid__column-12--mobile
+          m-grid__order-2--mobile
+        "
       >
         <img [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
       </div>
-      <div class="m-grid__column-8 m-grid__column-12--mobile m-marketing__body">
+      <div
+        class="
+          m-marketing__body
+          m-grid__column-8
+          m-grid__column-12--mobile
+          m-grid__order-1--mobile
+        "
+      >
         <h3 i18n="@@HOMEPAGE_V3__EARN_CRYPTO__TITLE">
           Earn crypto and rev-share
         </h3>

@@ -32,6 +32,9 @@
       .m-grid__column-#{$i}--mobile {
         grid-column: auto / span $i;
       }
+      .m-grid__order-#{$i}--mobile {
+        order: $i;
+      }
       .m-grid__column__skip-#{$i}--mobile {
         grid-column-start: $i !important;
       }
