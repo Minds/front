@@ -24,6 +24,12 @@
       @include m-theme() {
         background-color: themed($m-bgColor--primaryDarkAlways);
       }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
       // min-height: 675px;
     }
 
