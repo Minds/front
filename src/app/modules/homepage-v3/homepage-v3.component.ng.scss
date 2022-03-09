@@ -54,12 +54,16 @@
         flex-direction: column;
         flex: 1;
         justify-content: center;
-        max-width: max(550px, calc(100vw - 45vh));
+        max-width: 550px;
         box-sizing: border-box;
         align-items: flex-start;
 
         @media screen and (max-width: $max-mobile) {
           align-items: stretch;
+        }
+
+        @media screen and (max-height: 700px) {
+          max-width: 100%;
         }
 
         .m-homepage__v3__title {
