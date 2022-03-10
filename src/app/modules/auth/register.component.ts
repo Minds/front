@@ -129,7 +129,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.metaService.setOgImage('/assets/og-images/default-v3.png');
   }
 
-  async registered() {
+  registered() {
     if (this.redirectTo) {
       this.navigateToRedirection();
     } else {
