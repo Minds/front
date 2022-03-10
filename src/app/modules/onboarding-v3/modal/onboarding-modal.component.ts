@@ -8,6 +8,13 @@ import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-prog
 import { OnboardingV3ChannelComponent } from '../panel/channel/channel.component';
 
 /**
+ * a component that has a saveAsync
+ */
+export interface AwaitablePanelComponent {
+  saveAsync: () => Promise<any>;
+}
+
+/**
  * Onboarding modal component; core function as a connector,
  * and to switch between child panels.
  */
@@ -34,7 +41,7 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   /**
    * Panel with an async save function that can be called before resuming modal dismissal.
    */
-  @ViewChild('setupChannelStep') setupChannelStep: OnboardingV3ChannelComponent;
+  @ViewChild('awaitablePanel') awaitablePanel: AwaitablePanelComponent;
 
   constructor(
     private panel: OnboardingV3PanelService,
@@ -155,10 +162,10 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
     let stepData;
     try {
       if (
-        this.setupChannelStep &&
-        typeof this.setupChannelStep.saveAsync === 'function'
+        this.awaitablePanel &&
+        typeof this.awaitablePanel.saveAsync === 'function'
       ) {
-        stepData = await this.setupChannelStep.saveAsync();
+        stepData = await this.awaitablePanel.saveAsync();
       }
       if (!this.inProgressService.inProgress$.getValue()) {
         this.onSaveIntent(this.currentStep$.getValue(), stepData);

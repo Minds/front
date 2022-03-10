@@ -10,6 +10,7 @@ import { catchError, take } from 'rxjs/operators';
 import { OnboardingV3ModalProgressService } from '../../modal/onboarding-modal-progress.service';
 import { UserAvatarService } from '../../../../common/services/user-avatar.service';
 import { MindsUser } from './../../../../interfaces/entities';
+import { AwaitablePanelComponent } from '../../modal/onboarding-modal.component';
 
 /**
  * Channel editing component for onboarding v3.
@@ -20,7 +21,8 @@ import { MindsUser } from './../../../../interfaces/entities';
   styleUrls: ['./channel.component.ng.scss'],
   providers: [ChannelEditService],
 })
-export class OnboardingV3ChannelComponent implements OnInit, OnDestroy {
+export class OnboardingV3ChannelComponent
+  implements OnInit, OnDestroy, AwaitablePanelComponent {
   private subscriptions: Subscription[] = [];
 
   /**
