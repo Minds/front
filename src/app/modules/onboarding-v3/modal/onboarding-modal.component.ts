@@ -5,7 +5,6 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-progress.service';
-import { OnboardingV3ChannelComponent } from '../panel/channel/channel.component';
 
 /**
  * a component that has a saveAsync

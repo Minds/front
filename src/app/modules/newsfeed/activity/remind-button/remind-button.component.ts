@@ -1,3 +1,4 @@
+import { MindsUser } from './../../../../interfaces/entities';
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ComposerService } from '../../../composer/services/composer.service';
@@ -77,6 +78,7 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   async onRemindClick(e: MouseEvent): Promise<void> {
     if (!this.session.isLoggedIn()) {
+      // FIXME: after user logged in we will not continue the action here
       this.openAuthModal();
       return;
     }
@@ -100,6 +102,7 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   onQuotePostClick(e: MouseEvent): void {
     if (!this.session.isLoggedIn()) {
+      // FIXME: after user logged in we will not continue the action here
       this.openAuthModal();
       return;
     }
@@ -136,9 +139,9 @@ export class ActivityRemindButtonComponent implements OnInit, OnDestroy {
 
   /**
    * Open auth modal to prompt for login or register.
-   * @returns { Promise<void> }
+   * @returns { Promise<MindsUser?> }
    */
-  private async openAuthModal(): Promise<void> {
-    await this.authModal.open({ formDisplay: 'login' });
+  private async openAuthModal(): Promise<MindsUser | undefined> {
+    return this.authModal.open({ formDisplay: 'login' });
   }
 }

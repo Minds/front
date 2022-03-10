@@ -34,7 +34,7 @@ export class AuthModalService {
           modal.close(user);
 
           if (opts.formDisplay === 'register') {
-            this.onboardingV3.open();
+            await this.onboardingV3.open();
           }
         },
       },
