@@ -27,6 +27,7 @@ const wireRoutes: Routes = [
       ogImage: '/assets/og-images/pay-v3.png',
       ogImageWidth: 1200,
       ogImageHeight: 1200,
+      preventLayoutReset: true,
     },
   },
 ];

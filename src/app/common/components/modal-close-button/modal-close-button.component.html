@@ -1,3 +1,9 @@
-<a [class.white]="white" (click)="close()">
+<a
+  [ngClass]="{
+    grey: color === 'grey',
+    white: color === 'white'
+  }"
+  (click)="close()"
+>
   <i class="material-icons">close</i>
 </a>
