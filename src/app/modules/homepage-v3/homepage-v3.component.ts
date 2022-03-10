@@ -22,6 +22,7 @@ import { SidebarNavigationService } from '../../common/layout/sidebar/navigation
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
 
 /**
  * Home page component
@@ -94,9 +95,10 @@ export class HomepageV3Component implements OnInit {
     }
   }
 
-  @HostListener('window:resize')
+  @HostListener('window:deviceorientation')
   onResize() {
     if (!isPlatformBrowser(this.platformId)) return;
+    
     this.setVhVar();
   }
 
@@ -105,6 +107,8 @@ export class HomepageV3Component implements OnInit {
    * this is a workaround to the default vh not respecting OS elements https://stackoverflow.com/a/61474999/5607525
    */
   private setVhVar() {
+    if (!isMobileOrTablet()) return;
+
     const doc = document.documentElement;
     doc.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
   }

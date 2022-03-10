@@ -26,32 +26,34 @@
           i18n-title="@@COMMON__HOME"
           data-ref="topnav-logo"
         >
-          <img
-            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-            class="m-v3Topbar__logo--bulb"
-          />
-          <img
-            *ngIf="
-              isHomePageV3
-                ? !(isDarkTheme$ | async) &&
-                  (pageLayoutService.hasTopbarBackground$ | async)
-                : !(isDarkTheme$ | async)
-            "
-            [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
-            class="m-v3Topbar__logo--full"
-            alt="Minds"
-          />
-          <img
-            *ngIf="
-              isHomePageV3
-                ? (isDarkTheme$ | async) ||
-                  !(pageLayoutService.hasTopbarBackground$ | async)
-                : (isDarkTheme$ | async)
-            "
-            [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
-            class="m-v3Topbar__logo--full"
-            alt="Minds"
-          />
+          <h1>
+            <img
+              [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+              class="m-v3Topbar__logo--bulb"
+            />
+            <img
+              *ngIf="
+                isHomePageV3
+                  ? !(isDarkTheme$ | async) &&
+                    (pageLayoutService.hasTopbarBackground$ | async)
+                  : !(isDarkTheme$ | async)
+              "
+              [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+              class="m-v3Topbar__logo--full"
+              alt="Minds"
+            />
+            <img
+              *ngIf="
+                isHomePageV3
+                  ? (isDarkTheme$ | async) ||
+                    !(pageLayoutService.hasTopbarBackground$ | async)
+                  : (isDarkTheme$ | async)
+              "
+              [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
+              class="m-v3Topbar__logo--full"
+              alt="Minds"
+            />
+          </h1>
         </a>
         <m-environmentFlag></m-environmentFlag>
         <div
