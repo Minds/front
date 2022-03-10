@@ -204,6 +204,9 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    * @returns { string } url for main logo.
    */
   public getMainLogoUrl(): string {
+    if (this.router.url === '/') {
+      return null;
+    }
     return this.session.getLoggedInUser() ? '/newsfeed/subscriptions' : '/';
   }
 
