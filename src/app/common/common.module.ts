@@ -200,6 +200,7 @@ import { ModalCloseButtonComponent } from './components/modal-close-button/modal
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 const routes: Routes = [
   {
@@ -219,6 +220,7 @@ const routes: Routes = [
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
     QRCodeModule,
+    AngularResizeEventModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
@@ -513,6 +515,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    AngularResizeEventModule,
   ],
   providers: [
     SiteService,

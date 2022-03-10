@@ -212,6 +212,12 @@
         }
       }
     }
+
+    ::ng-deep m-channelRecommendation > div {
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
+      }
+    }
   }
   ::ng-deep .m-comments__startConversation {
     display: none !important;

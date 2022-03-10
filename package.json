@@ -61,6 +61,7 @@
     "@types/yargs": "^17.0.2",
     "@walletconnect/web3-provider": "^1.4.1",
     "angular-plotly.js": "^4.0.4",
+    "angular-resize-event": "^3.1.1",
     "angularx-qrcode": "^11.0.0",
     "assert": "^2.0.0",
     "blurhash": "^1.1.4",
