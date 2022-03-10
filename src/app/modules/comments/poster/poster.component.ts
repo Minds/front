@@ -27,11 +27,14 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { IsCommentingService } from './is-commenting.service';
 import { Router } from '@angular/router';
+import isMobile from '../../../helpers/is-mobile';
+import moveCursorToEnd from '../../../helpers/move-cursor-to-end';
 
 @Component({
   selector: 'm-comment__poster',
   templateUrl: 'poster.component.html',
   providers: [AttachmentService],
+  styleUrls: ['poster.component.ng.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentPosterComponent implements OnInit, OnDestroy {
@@ -47,6 +50,9 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   > = new EventEmitter();
   @Output('posted') posted$: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild('message')
+  textArea: Textarea;
+
   menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   content: string = '';
@@ -57,6 +63,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   maxLength: number = 1500;
   loggedInSubscription: Subscription;
   editing: boolean = false;
+  caretOffset: number = 0;
 
   constructor(
     public session: Session,
@@ -71,7 +78,8 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private configs: ConfigsService,
     private authModalService: AuthModalService,
-    private isCommentingService: IsCommentingService
+    private isCommentingService: IsCommentingService,
+    public elRef: ElementRef
   ) {}
 
   ngOnInit() {
@@ -86,6 +94,11 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     if (this.loggedInSubscription) {
       this.loggedInSubscription.unsubscribe();
     }
+  }
+
+  keyup(e: KeyboardEvent) {
+    this.getPostPreview(this.content);
+    this.updateCaretPosition();
   }
 
   /**
@@ -244,6 +257,24 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     this.attachment.preview(message, this.detectChanges.bind(this));
   }
 
+  /**
+   * sets caret position
+   */
+  updateCaretPosition() {
+    const element = this.textArea?.editorControl?.nativeElement;
+    var caretOffset = 0;
+
+    if (element && window.getSelection) {
+      var range = window.getSelection().getRangeAt(0);
+      var preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      caretOffset = preCaretRange.toString().length;
+    }
+
+    this.caretOffset = caretOffset;
+  }
+
   getAvatar(): Observable<string> {
     return this.userAvatar.src$;
   }
@@ -279,8 +310,37 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  onEmoji(emoji) {
+    const preText = this.content.substring(0, this.caretOffset);
+    const postText = this.content.substring(this.caretOffset);
+    this.content = preText + emoji.native + postText;
+    // move caret after emoji
+    this.caretOffset += emoji.native.length;
+  }
+
+  isMobile() {
+    return isMobile();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * focuses the input
+   * @param { boolean } shouldMoveCursorToEnd should move cursor to end
+   * @returns { void }
+   */
+  focus(shouldMoveCursorToEnd: boolean = true) {
+    const el = this.textArea?.editorControl?.nativeElement;
+    if (el) {
+      el.focus({
+        preventScroll: true,
+      });
+      if (shouldMoveCursorToEnd) {
+        moveCursorToEnd(el);
+      }
+    }
   }
 }

@@ -1,78 +1,3 @@
-// Modal wrapper options
-
-.m-modalV2__wrapper {
-  width: 100vw;
-  height: 100vh;
-  max-width: 100%;
-  max-height: 100%;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  // MH: confirm if this is wrong for stackable modals
-  m-stackableModal & {
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-  .m-overlay-modal--backdrop {
-    z-index: 0;
-  }
-
-  .m-overlay-modal {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: static;
-    padding: 0;
-    margin: 0 auto;
-    transform: none !important;
-    overflow: initial;
-    width: auto;
-    height: auto;
-    max-width: initial;
-    max-height: initial;
-    min-height: 100%;
-    background: none !important;
-
-    @media screen and (max-width: $max-mobile) {
-      position: absolute;
-      top: 0;
-    }
-    .m-overlay-modal--close {
-      @include m-theme() {
-        background-color: transparent;
-      }
-    }
-  }
-}
-
-.m-modalV2__inner {
-  position: relative;
-  display: block;
-  width: 100%;
-  max-width: 585px;
-  margin: 20px 0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  max-height: -webkit-fill-available;
-
-  @include m-theme() {
-    background-color: themed($m-bgColor--primary);
-  }
-
-  @media screen and (max-width: $max-mobile) {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 0;
-    margin: 0;
-  }
-}
-
 .m-modalV2__header {
   padding: 40px 40px 0;
   .m-modalV2Header__title {
@@ -88,9 +13,6 @@
 
 .m-modalV2__body {
   padding: 20px 40px;
-  max-height: 420px;
-  overflow-y: scroll;
-  overflow-y: overlay;
 }
 
 .m-modalV2__toolbar {

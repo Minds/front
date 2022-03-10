@@ -62,5 +62,6 @@ interface Window {
   ethereum?: any;
   sale?: boolean | string;
   _inMemoryStorageAdapterDb?: any;
+  MSStream?: any;
 }
 declare var window: Window & typeof globalThis;

@@ -13,7 +13,6 @@ import { ChannelMode } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { DropdownComponent } from '../dropdown/dropdown.component';
-import { componentFactoryName } from '@angular/compiler';
 
 describe('ChannelModeSelector', () => {
   let comp: ChannelModeSelectorComponent;

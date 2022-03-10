@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { REASONS } from '../../../../services/list-options';

@@ -53,11 +53,9 @@ export class ChannelShopBriefComponent implements OnDestroy {
    * @param supportTier
    */
   async onEntryClick(channel: MindsUser, supportTier: SupportTier) {
-    await this.wireModal
-      .present(channel, {
-        supportTier,
-      })
-      .toPromise();
+    await this.wireModal.present(channel, {
+      supportTier,
+    });
     this.supportTiers.refresh();
   }
 }

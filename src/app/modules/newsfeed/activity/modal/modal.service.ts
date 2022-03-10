@@ -6,7 +6,7 @@ import { toggleFullscreen } from '../../../../helpers/fullscreen';
 import { SiteService } from '../../../../common/services/site.service';
 import { Location } from '@angular/common';
 import { AnalyticsService } from '../../../../services/analytics';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Injectable()
 export class ActivityModalService {
@@ -28,7 +28,7 @@ export class ActivityModalService {
   /**
    * Is the modal loading?
    */
-  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   /**
    * Whether the modal stage element is in fullscreen mode
@@ -51,7 +51,7 @@ export class ActivityModalService {
   constructor(
     private site: SiteService,
     private location: Location,
-    private overlayModal: OverlayModalService
+    private modalService: ModalService
   ) {}
 
   /////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ export class ActivityModalService {
   dismiss(): void {
     this.returnToSourceUrl();
     this.activityService.displayOptions.isModal = false;
-    this.overlayModal.dismiss();
+    this.modalService.dismissAll();
   }
 
   ////////////////////////////////////////

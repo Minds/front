@@ -14,25 +14,6 @@ import { ChannelEditService } from './edit.service';
 })
 export class ChannelEditComponent {
   /**
-   * Sets the channel to be edited
-   * @param channel
-   */
-  @Input('channel') set data(channel: MindsUser) {
-    this.service.setChannel(channel);
-  }
-
-  /**
-   * Modal options
-   *
-   * @param onSave
-   * @param onDismissIntent
-   */
-  set opts({ onSave, onDismissIntent }) {
-    this.onSave = onSave || (() => {});
-    this.onDismissIntent = onDismissIntent || (() => {});
-  }
-
-  /**
    * Modal save handler
    */
   onSave: (any) => any = () => {};
@@ -51,6 +32,19 @@ export class ChannelEditComponent {
     public service: ChannelEditService,
     protected features: FeaturesService
   ) {}
+
+  /**
+   * Modal options
+   *
+   * @param onSave
+   * @param onDismissIntent
+   * @param channel
+   */
+  setModalData({ onSave, onDismissIntent, channel }) {
+    this.onSave = onSave || (() => {});
+    this.onDismissIntent = onDismissIntent || (() => {});
+    this.service.setChannel(channel);
+  }
 
   /**
    * Gets Pro settings URL

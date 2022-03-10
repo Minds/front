@@ -22,9 +22,7 @@
     </div>
   </div>
 </m-body>
-<ng-container *mIfFeature="'matrix'">
-  <m-chatIcon *ngIf="session.isLoggedIn()" [floating]="true"></m-chatIcon>
-</ng-container>
+<m-chatIcon *ngIf="session.isLoggedIn()" [floating]="true"></m-chatIcon>
 
 <ng-container *mIfBrowser>
   <m-messenger
@@ -35,9 +33,6 @@
     "
   ></m-messenger>
 </ng-container>
-
-<m-overlay-modal></m-overlay-modal>
-<m-stackableModal></m-stackableModal>
 
 <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
 

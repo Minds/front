@@ -157,7 +157,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
       if (typeof params['filter'] !== 'undefined') {
         if (params['filter'] === 'wire') {
           this.view$.next('activities');
-          this.wireModal.present(this.service.channel$.getValue()).toPromise();
+          this.wireModal.present(this.service.channel$.getValue());
           this.router.navigate([{}]);
         } else {
           this.view$.next(params['filter'] || 'activities');
@@ -258,9 +258,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * Opens search modal
    */
   async openSearchModal(event): Promise<void> {
-    const query = await this.publisherSearchModal
-      .present(this.injector, this.currentChannel)
-      .toPromise();
+    const query = await this.publisherSearchModal.pick(
+      this.injector,
+      this.currentChannel
+    );
 
     if (query) {
       this.service.query$.next(query);

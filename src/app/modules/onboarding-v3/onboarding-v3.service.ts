@@ -3,13 +3,8 @@ import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
-import {
-  StackableModalEvent,
-  StackableModalService,
-  StackableModalState,
-} from '../../services/ux/stackable-modal.service';
-
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
+import { ModalService } from '../../services/ux/modal.service';
 
 /**
  * GET api/v3/onboarding response.
@@ -90,7 +85,7 @@ export class OnboardingV3Service implements OnDestroy {
   constructor(
     private compiler: Compiler,
     private injector: Injector,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private api: ApiService
   ) {}
 
@@ -102,39 +97,31 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
-   * @returns { Promise<any> }
+   * @returns { Promise<string> } the completed step
    */
   public async open(): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
 
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      OnboardingV3ProgressLazyModule
-    );
-    const moduleRef = moduleFactory.create(this.injector);
-
-    const componentFactory = moduleRef.instance.resolveComponent();
-
-    const onSuccess$: Subject<any> = new Subject();
-
-    const evt: StackableModalEvent = await this.stackableModal
-      .present(OnboardingV3ModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
-        dismissOnRouteChange: false,
-        onSaveIntent: (step: OnboardingStepName) => {},
-        onDismissIntent: () => {
-          this.dismiss();
+    const modal = this.modalService.present(OnboardingV3ModalComponent, {
+      data: {
+        onSaveIntent: (step: OnboardingStepName) => {
+          modal.close(step);
         },
-      })
-      .toPromise();
+      },
+      injector: this.injector,
+      lazyModule: OnboardingV3ProgressLazyModule,
+    });
+
+    const onBoardingStepName = await modal.result;
 
     // Modal was closed.
-    if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
+    if (!onBoardingStepName) {
       throw 'DismissedModalException';
     }
 
-    return onSuccess$.toPromise();
+    return onBoardingStepName;
   }
 
   /**
@@ -186,7 +173,7 @@ export class OnboardingV3Service implements OnDestroy {
    */
   public dismiss(): void {
     try {
-      this.stackableModal.dismiss();
+      this.modalService.dismissAll();
     } catch (e) {
       // do nothing
     }

@@ -6,12 +6,13 @@ import {
   ElementRef,
   ChangeDetectorRef,
 } from '@angular/core';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
 import { MindsUser } from '../../../interfaces/entities';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ModalService } from '../../../services/ux/modal.service';
+import noOp from '../../../helpers/no-op';
 
 @Component({
   moduleId: module.id,
@@ -33,15 +34,16 @@ export class BanModalComponent implements AfterViewInit {
 
   next: boolean = false;
 
-  @Input('object') set data(user) {
+  setModalData({ user, onDismiss }) {
     this.user = user;
     this.guid = user ? user.guid : null;
+    this.close = onDismiss || noOp;
   }
 
   constructor(
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private client: Client,
     protected toasterService: FormToastService
   ) {}
@@ -92,9 +94,7 @@ export class BanModalComponent implements AfterViewInit {
     this.subject = item.value;
   }
 
-  close() {
-    this.overlayModal.dismiss();
-  }
+  close() {}
 
   /**
    * Submits the report to the appropiate server endpoint using the current settings
@@ -115,7 +115,7 @@ export class BanModalComponent implements AfterViewInit {
         this.inProgress = false;
         this.user.banned = 'yes';
         this.success = true;
-        this.overlayModal.dismiss({ banned: true });
+        this.close();
       })
       .catch(e => {
         this.inProgress = false;

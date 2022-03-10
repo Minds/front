@@ -12,8 +12,8 @@ import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { YoutubeMigrationSetupModalComponent } from '../setup-modal/setup-modal.component';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-youtubeMigration__unmigratedVideos',
@@ -39,7 +39,7 @@ export class YoutubeMigrationUnmigratedVideosComponent
     protected youtubeService: YoutubeMigrationService,
     protected session: Session,
     protected route: ActivatedRoute,
-    protected overlayModal: OverlayModalService,
+    protected modalService: ModalService,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -139,16 +139,9 @@ export class YoutubeMigrationUnmigratedVideosComponent
   }
 
   openSetupModal(): void {
-    this.overlayModal
-      .create(
-        YoutubeMigrationSetupModalComponent,
-        null,
-        {
-          class: 'm-overlay-modal--medium',
-        },
-        this.injector
-      )
-      .present();
+    this.modalService.present(YoutubeMigrationSetupModalComponent, {
+      injector: this.injector,
+    });
   }
 
   ngOnDestroy() {

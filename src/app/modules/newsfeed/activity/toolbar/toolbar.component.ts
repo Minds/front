@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ActivityService, ActivityEntity } from '../activity.service';
+import { ActivityEntity, ActivityService } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { StackableModalService } from '../../../../services/ux/stackable-modal.service';
 import { BoostModalLazyService } from '../../../boost/modal/boost-modal-lazy.service';
 import { FeaturesService } from '../../../../services/features.service';
 import { InteractionsModalService } from '../../interactions-modal/interactions-modal.service';
 import { InteractionType } from '../../interactions-modal/interactions-modal-data.service';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -28,11 +27,11 @@ export class ActivityToolbarComponent {
     public service: ActivityService,
     public session: Session,
     private router: Router,
-    private overlayModalService: OverlayModalService,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private boostModal: BoostModalLazyService,
     private features: FeaturesService,
-    private interactionsModalService: InteractionsModalService
+    private interactionsModalService: InteractionsModalService,
+    private injector: Injector
   ) {}
 
   ngOnInit() {
@@ -66,14 +65,7 @@ export class ActivityToolbarComponent {
 
   async openBoostModal(e: MouseEvent): Promise<void> {
     try {
-      if (this.features.has('boost-modal-v2')) {
-        await this.boostModal.open(this.entity);
-        return;
-      }
-
-      await this.stackableModal
-        .present(BoostCreatorComponent, this.entity)
-        .toPromise();
+      await this.boostModal.open(this.entity);
     } catch (e) {
       // do nothing.
     }

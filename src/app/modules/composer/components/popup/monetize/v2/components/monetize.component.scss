@@ -34,3 +34,47 @@ m-composer__monetizeV2 {
     }
   }
 }
+
+.m-composer__monetize {
+  label:not(.m-composerPopup__trigger),
+  .m-composerPopup__label {
+    margin: 0 0 10px;
+  }
+
+  .m-composerPopup__field {
+    position: relative;
+    margin: 0 0 40px 0;
+
+    &.m-composerMonetize__typeField {
+      margin: 0 0 20px 0;
+    }
+
+    .m-form__field--radio,
+    .m-form__customInputWrapper__radio {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .m-form__field--select select {
+    width: 100%;
+  }
+
+  .m-composerPopup__inlineFormFieldsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+  }
+
+  .m-form__field--checkbox {
+    display: block;
+  }
+  .m-form__field--text input {
+    min-width: 200px;
+  }
+  .m-form__row--label {
+    font-size: 16px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}

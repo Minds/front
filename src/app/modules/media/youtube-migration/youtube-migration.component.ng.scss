@@ -19,6 +19,13 @@
       color: #ff0000;
       font-size: 42px;
       margin-right: 18px;
+      padding: 0 5px;
+      border-radius: 10px;
+      font-size: 1.5em;
+
+      @include m-theme() {
+        background: themed($m-white-always);
+      }
     }
     > span {
       display: inline-block;

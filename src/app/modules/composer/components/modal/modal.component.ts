@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { isPlatformServer } from '@angular/common';
+import { isIos } from '../../../../helpers/is-mobile-or-tablet';
 
 const noOp = () => {};
 @Injectable()
@@ -35,7 +36,7 @@ export class ModalComponent implements AfterViewInit {
    * @param onPost
    * @param onDismissIntent
    */
-  set opts({ onPost, onDismissIntent }) {
+  setModalData({ onPost, onDismissIntent }) {
     this.onPost = onPost || noOp;
     this.onDismissIntent = onDismissIntent || noOp;
   }
@@ -97,10 +98,21 @@ export class ModalComponent implements AfterViewInit {
   }
 
   setViewportHeight(): void {
-    if (isPlatformServer(this.platformId)) return;
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
 
-    let vh = (window as any).visualViewport.height;
-    document.documentElement.style.setProperty('--mobileVH', `${vh}px`);
+    setTimeout(() => {
+      let vh;
+
+      if (isIos()) {
+        vh = `85vh`;
+        document.documentElement.style.setProperty('--mobileVH', `${vh}`);
+      } else {
+        vh = `${(window as any).visualViewport.height}px`;
+      }
+      document.documentElement.style.setProperty('--mobileVH', `${vh}`);
+    }, 100);
   }
 
   ngOnDestroy(): void {

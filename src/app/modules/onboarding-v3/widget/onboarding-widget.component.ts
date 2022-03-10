@@ -8,11 +8,10 @@ import {
   RELEASED_GROUPS,
 } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
-import { ModalService } from '../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../composer/components/modal/modal.service';
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
-import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 import { EmailResendService } from '../../../common/services/email-resend.service';
 
 /**
@@ -42,19 +41,13 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   constructor(
     private onboarding: OnboardingV3Service,
     private panel: OnboardingV3PanelService,
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector,
     private toast: FormToastService,
     private emailResend: EmailResendService
   ) {}
 
   ngOnInit(): void {
-    // // if should collapse, collapse and return
-    // if (this.shouldCollapse()) {
-    //   this.collapsed = true;
-    //   return;
-    // }
-
     // load onboarding progress from server.
     this.onboarding.load();
 
@@ -120,7 +113,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
                   this.composerModal
                     .setInjector(this.injector)
                     .present()
-                    .toPromise()
                     .then(response => {
                       // if activity posted, manually strike through task.
                       if (response) {
@@ -138,16 +130,11 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
                 default:
                   this.panel.currentStep$.next(step);
                   try {
-                    await this.onboarding.open();
-                  } catch (e) {
-                    if (e === 'DismissedModalException') {
-                      await this.onboarding.load();
-                      this.checkCompletion();
-                      return;
-                    }
-                    console.error(e);
-                  }
-
+                    const completedStep = await this.onboarding.open();
+                    this.onboarding.forceCompletion(completedStep);
+                  } catch (e) {}
+                  await this.onboarding.load();
+                  this.checkCompletion();
                   break;
               }
             })

@@ -7,9 +7,10 @@ import { MockService } from '../../../../../utils/mock';
 import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MonetizationSubjectValue } from '../../../../composer/services/composer.service';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
+import { ModalService } from '../../../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../../../tests/modal-service-mock.spec';
 
 const content$ = new BehaviorSubject<string>('');
 
@@ -32,14 +33,6 @@ const blogsEditServiceMock: any = MockService(BlogsEditService, {
   },
 });
 
-const overlayModalServiceMock: any = MockService(OverlayModalService, {
-  create: {
-    present() {
-      return true;
-    },
-  },
-});
-
 describe('BlogEditorBottomBarComponent', () => {
   let comp: BlogEditorBottomBarComponent;
   let fixture: ComponentFixture<BlogEditorBottomBarComponent>;
@@ -55,7 +48,7 @@ describe('BlogEditorBottomBarComponent', () => {
             provide: FormToastService,
             useValue: MockService(FormToastService),
           },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
         ],
       }).compileComponents();
     })
@@ -133,7 +126,7 @@ describe('BlogEditorBottomBarComponent', () => {
     comp.service.content$.next('123');
 
     await comp.save();
-    expect((comp as any).overlay.create).toHaveBeenCalled();
+    expect((comp as any).modalService.present).toHaveBeenCalled();
   });
 
   it('should have no activeTab initially', async () => {

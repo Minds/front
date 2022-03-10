@@ -193,7 +193,7 @@ m-sidebarMenu {
           object-fit: contain;
         }
         .m-sidebarMenu__userDetails {
-          & > {
+          > {
             padding: 8px 0;
           }
           .m-sidebarMenu__userDetails__name {

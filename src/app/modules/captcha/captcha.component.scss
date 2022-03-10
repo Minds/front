@@ -1,5 +1,7 @@
-m-captcha {
-  display: block;
+@import 'defaults';
+
+:host {
+  width: min-content;
   img {
     margin-bottom: $minds-margin;
   }
@@ -7,9 +9,10 @@ m-captcha {
     @include m-theme() {
       background-color: themed($m-bgColor--primary) !important;
     }
-    &::placeholder {
-      font-weight: 400 !important;
-      font-size: 14px !important;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    font-weight: 300;
+
+    ::placeholder {
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }

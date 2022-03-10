@@ -1,7 +1,7 @@
 m-onboarding {
   display: block;
   padding-top: 30px;
-  margin-top: -51px;
+  margin-top: -75px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
@@ -9,13 +9,9 @@ m-onboarding {
 
   position: relative;
 
-  &.m-onboarding--newNavigation {
+  .m-grid {
     margin-top: -75px;
-
-    .m-grid {
-      margin-top: -75px;
-      padding-top: 75px;
-    }
+    padding-top: 75px;
   }
 
   @media screen and (max-width: $max-mobile) {

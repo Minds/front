@@ -1,31 +1,21 @@
+import { HomepageV3ExperimentService } from './../experiments/sub-services/home-page-v3-experiment.service';
 import { Component, OnInit } from '@angular/core';
 import { MetaService } from '../../common/services/meta.service';
 import { GuestModeExperimentService } from '../experiments/sub-services/guest-mode-experiment.service';
 
 @Component({
   selector: 'm-homepagecontainer',
-  template: `
-    <m-defaultFeed__container
-      *ngIf="isGuestMode; else notGuestMode"
-    ></m-defaultFeed__container>
-    <!-- <m-discovery *ngIf="isGuestMode; else notGuestMode">
-      <m-discovery__trends
-        [showTabs]="false"
-        [showChannels]="false"
-      ></m-discovery__trends>
-    </m-discovery> -->
-    <ng-template #notGuestMode>
-      <m-homepage__v2></m-homepage__v2>
-    </ng-template>
-  `,
+  templateUrl: 'container.component.html',
 })
 export class HomepageContainerComponent implements OnInit {
   constructor(
     private metaService: MetaService,
-    private guestModeExperiment: GuestModeExperimentService
+    private guestModeExperiment: GuestModeExperimentService,
+    private homepageV3Experiment: HomepageV3ExperimentService
   ) {}
 
   isGuestMode: boolean;
+  isHomepageV3: boolean;
 
   ngOnInit(): void {
     this.metaService
@@ -37,5 +27,6 @@ export class HomepageContainerComponent implements OnInit {
       .setOgUrl('/');
 
     this.isGuestMode = this.guestModeExperiment.isActive();
+    this.isHomepageV3 = this.homepageV3Experiment.isActive();
   }
 }

@@ -72,7 +72,6 @@ export class GroupsProfile {
   private updateMarkersSubscription;
 
   private lastWidth: number;
-  readonly hasNewNavigation: boolean;
 
   constructor(
     public session: Session,
@@ -98,7 +97,6 @@ export class GroupsProfile {
     protected publisherSearchModal: PublisherSearchModalService,
     protected groupsSearch: GroupsSearchService
   ) {
-    this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
@@ -512,9 +510,10 @@ export class GroupsProfile {
    * Opens search modal
    */
   async openSearchModal(event): Promise<void> {
-    const query = await this.publisherSearchModal
-      .present(this.injector, this.group)
-      .toPromise();
+    const query = await this.publisherSearchModal.pick(
+      this.injector,
+      this.group
+    );
 
     if (query) {
       this.groupsSearch.query$.next(query);

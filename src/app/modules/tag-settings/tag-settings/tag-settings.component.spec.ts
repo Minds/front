@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockService } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { DiscoveryTagsService } from '../../discovery/tags/tags.service';
 
 import { TagSettingsComponent } from './tag-settings.component';
@@ -10,7 +10,20 @@ describe('TagSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TagSettingsComponent],
+      declarations: [
+        TagSettingsComponent,
+        MockComponent({
+          selector: 'm-loadingSpinner',
+          inputs: ['inProgress'],
+        }),
+        MockComponent({
+          selector: 'm-tagSelector',
+          inputs: ['tags'],
+        }),
+        MockComponent({
+          selector: 'm-hashtags__typeaheadInput',
+        }),
+      ],
       providers: [
         {
           provide: DiscoveryTagsService,

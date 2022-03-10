@@ -31,13 +31,13 @@ import {
 } from '../../../../common/components/file-upload/file-upload.component';
 import { PopupService } from '../popup/popup.service';
 import { NsfwComponent } from '../popup/nsfw/nsfw.component';
-import { MonetizeComponent } from '../popup/monetize/monetize.component';
+import { ComposerMonetizeV2Component } from '../popup/monetize/v2/components/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { isPlatformBrowser } from '@angular/common';
 import { FormToastService } from '../../../../common/services/form-toast.service';
-import { FeaturesService } from '../../../../services/features.service';
 import { AttachmentErrorComponent } from '../popup/attachment-error/attachment-error.component';
+import isMobile from '../../../../helpers/is-mobile';
 
 /**
  * Toolbar component. Interacts directly with the service.
@@ -109,7 +109,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
     protected toaster: FormToastService,
-    protected features: FeaturesService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -347,15 +346,12 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param $event
    */
   async onMonetizeClick($event?: MouseEvent): Promise<void> {
-    if (
-      this.features.has('permaweb') &&
-      this.service.postToPermaweb$.getValue()
-    ) {
+    if (this.service.postToPermaweb$?.getValue()) {
       this.toaster.warn('You cannot monetize permaweb posts');
       return;
     }
     await this.popup
-      .create(MonetizeComponent)
+      .create(ComposerMonetizeV2Component)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
   }
@@ -388,6 +384,27 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   onPost($event: MouseEvent): void {
     this.onPostEmitter.emit($event);
+  }
+
+  /**
+   * Inserts the emoji in the message input at the caret position
+   * @param emoji
+   */
+  onEmoji(emoji: any): void {
+    const message = this.service.message$.getValue();
+    const caretPosition = this.service.selection$.getValue().start;
+    const preText = message.substring(0, caretPosition);
+    const postText = message.substring(caretPosition);
+    this.service.message$.next(preText + emoji.native + postText);
+    // move cursor after the emoji
+    this.service.selection$.next({
+      start: this.service.selection$.getValue().start + emoji.native.length,
+      end: this.service.selection$.getValue().end + emoji.native.length,
+    });
+  }
+
+  isMobile() {
+    return isMobile();
   }
 
   /**

@@ -51,7 +51,10 @@ export class CommentsTreeComponent {
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
     true
   );
-
+  @Output() onHeightChange: EventEmitter<{
+    oldHeight: number;
+    newHeight: number;
+  }> = new EventEmitter();
   @Input() conversation: boolean = false;
   @Input() scrollable: boolean = false;
   @Input() readonly: boolean = false;

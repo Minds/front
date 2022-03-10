@@ -157,28 +157,19 @@ export class ActivityService {
    */
   shouldShowPaywall$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      if (this.featuresService.has('paywall-2020')) {
-        return (
-          !!entity.paywall &&
-          entity.ownerObj.guid !== this.session.getLoggedInUser().guid
-        );
-      }
-      return !!entity.paywall;
+      return (
+        !!entity.paywall &&
+        entity.ownerObj.guid !== this.session.getLoggedInUser().guid
+      );
     })
   );
 
   /**
    * We do not render the contents if nsfw (and no consent)
    */
-  shouldShowContent$: Observable<boolean> = combineLatest(
-    this.entity$,
-    this.shouldShowNsfwConsent$
-  ).pipe(
-    map(([entity, shouldShowNsfwConsent]: [ActivityEntity, boolean]) => {
-      if (this.featuresService.has('paywall-2020')) {
-        return !shouldShowNsfwConsent;
-      }
-      return !shouldShowNsfwConsent && !entity.paywall;
+  shouldShowContent$: Observable<boolean> = this.shouldShowNsfwConsent$.pipe(
+    map((shouldShowNsfwConsent: boolean) => {
+      return !shouldShowNsfwConsent;
     })
   );
 
@@ -187,7 +178,6 @@ export class ActivityService {
    */
   shouldShowPaywallBadge$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
-      // TODO: handle entity.flags.paywall here?
       return !!entity.paywall || entity.paywall_unlocked;
     })
   );

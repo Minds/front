@@ -28,7 +28,7 @@
 
           <div
             class="m-tabs__tab"
-            *mExperiment="'channel-gallery'; variation: 'on'"
+            *mExperiment="'channel-gallery'; variation: true"
           >
             <a
               [routerLink]="['/', username, '']"
@@ -38,7 +38,7 @@
             >
           </div>
 
-          <div class="m-tabs__tab" *mIfFeature="'paywall-2020'">
+          <div class="m-tabs__tab">
             <a
               [routerLink]="['/', username, 'shop']"
               routerLinkActive="m-tabs__tab--selected"

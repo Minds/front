@@ -3,7 +3,6 @@
 :host {
   .m-boostModalAmount__container {
     display: flex;
-    flex-flow: row wrap;
     border-radius: 2px;
 
     &.isFocused {
@@ -24,7 +23,6 @@
 
     .m-boostModalAmount__inputContainer {
       display: flex;
-      flex-flow: column nowrap;
       max-width: 250px;
       position: relative;
 
@@ -59,6 +57,7 @@
       }
 
       input {
+        width: 100%;
         font-size: 22px;
         font-weight: 400;
         background: none;
