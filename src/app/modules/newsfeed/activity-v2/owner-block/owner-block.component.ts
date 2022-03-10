@@ -62,16 +62,6 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     return this.service.displayOptions.isSidebarBoost;
   }
 
-  @HostBinding('class.m-activityToolbar--modal')
-  get isModal(): boolean {
-    return this.service.displayOptions.isModal;
-  }
-
-  @HostBinding('class.m-activityToolbar--single')
-  get isSingle(): boolean {
-    return this.service.displayOptions.isSingle;
-  }
-
   get isFeed(): boolean {
     return this.service.displayOptions.isFeed;
   }

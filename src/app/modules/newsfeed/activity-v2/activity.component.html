@@ -78,12 +78,6 @@
     *ngIf="service.displayOptions.showToolbar"
   ></m-activityV2__toolbar>
 
-  <m-activityV2__minimalMetrics
-    *ngIf="
-      service.displayOptions.minimalMode && service.displayOptions.showMetrics
-    "
-  ></m-activityV2__minimalMetrics>
-
   <ng-container *mIfBrowser>
     <m-comments__entityOutletV2
       *ngIf="service.displayOptions.showComments"
@@ -91,7 +85,6 @@
       [canDelete]="canDelete$ | async"
       [showOnlyToggle]="service.displayOptions.showOnlyCommentsToggle"
       [fixedHeight]="service.displayOptions.fixedHeight"
-      [isSingle]="service.displayOptions.isSingle"
       (onHeightChange)="onCommentsHeightChange($event)"
     >
     </m-comments__entityOutletV2>

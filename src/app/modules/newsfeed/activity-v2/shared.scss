@@ -11,7 +11,7 @@ $feedAvatarSpacingRight: $spacing4;
 
 $feedSpacingLeft: $feedAvatarSpacingLeft + $avatarWidth +
   $feedAvatarSpacingRight;
-$feedSpacingRight: $spacing8;
+$feedSpacingRight: $spacing12;
 
 // MOBILE
 $feedAvatarSpacingLeft--mobile: $spacing4;
@@ -42,4 +42,9 @@ $singlePostSpacingRight--mobile: $spacing4;
 ///////////////////////////////////////////
 // MODAL
 ///////////////////////////////////////////
-$modalScrollableContainerSpacing: $spacing5;
+$modalScrollableContainerSpacing: $spacing4;
+
+///////////////////////////////////////////
+// MINIMAL MODE
+///////////////////////////////////////////
+$minimalModeSpacing: $spacing4;

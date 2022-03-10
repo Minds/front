@@ -29,12 +29,12 @@ export type ActivityDisplayOptions = {
   showMetrics?: boolean; // sub counts
   sidebarMode: boolean; // activity is a sidebar suggestion
   isSidebarBoost: boolean; // activity is a sidebar boost (has owner block, etc.)
-  isSingle: boolean; // activity is displayed on a single post page
   isFeed: boolean; // is the activity a part of a feed?
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
   avatarColumn: boolean; // avatar gets dedicated column on left of post
-  permalinkBelowContent: boolean; // don't show permalink in ownerblock
+  permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock
+  multilineOwnerBlock: boolean; // show @handle on 2nd line
 };
 
 export type ActivityEntity = {
@@ -203,6 +203,19 @@ export class ActivityService {
     })
   );
 
+  /**
+   * Show view counts for owners and admins
+   * ojm
+   */
+  shouldShowViewCount$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return (
+        entity.ownerObj.guid === this.session.getLoggedInUser().guid ||
+        (this.session.isAdmin() && entity.impressions > 0)
+      );
+    })
+  );
+
   /** Only allow downloads of images s */
   canDownload$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
@@ -309,11 +322,11 @@ export class ActivityService {
     bypassMediaModal: false,
     sidebarMode: false,
     isSidebarBoost: false,
-    isSingle: false,
     isFeed: false,
     isV2: false,
     avatarColumn: true,
     permalinkBelowContent: false,
+    multilineOwnerBlock: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

@@ -1,16 +1,5 @@
-<!-- <ng-container *ngIf="(entity$ | async).boosted; else viewsCount"> -->
-<!-- <a routerLink="/settings/account/boosted-content"
-    ><span
-      class="m-activity__flag m-activity__flag--boosted"
-      data-cy="m-activity__boostedFlag"
-    >
-      <i class="material-icons">trending_up</i> <span>Boosted</span>
-    </span></a
-  > ojm check why this wasn't showing up. Did I remove it from v1? -->
-<!-- </ng-container> -->
-
-<!-- <ng-template #viewsCount> -->
-<span class="m-activityMetrics__views" *ngIf="views$ | async as views"
-  >{{ views | abbr }} views</span
->
-<!-- </ng-template> -->
+<ng-container *ngIf="service.shouldShowViewCount$ | async">
+  <span class="m-activityMetrics__views" *ngIf="views$ | async as views"
+    >{{ views | abbr }} { views, plural, =1 {view} other {views}}</span
+  >
+</ng-container>

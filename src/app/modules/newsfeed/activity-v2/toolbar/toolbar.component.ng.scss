@@ -3,17 +3,34 @@
 
 :host {
   // ******************************************************
+  // ** FEED **
+  // ******************************************************
+
+  .m-activityToolbar__actions {
+    padding-left: $feedSpacingLeft;
+    padding-right: $feedSpacingRight;
+    padding-top: $spacing5;
+    padding-bottom: $spacing6;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $feedSpacingLeft--mobile;
+      padding-right: $feedSpacingRight--mobile;
+    }
+  }
+
+  // ******************************************************
   // ** FIXED HEIGHT **
   // ******************************************************
+
   .m-activity--fixedHeight & {
     z-index: 1;
   }
 
   // ******************************************************
-  // ** SINGLE POST PAGE **
+  // ** SINGLE **
   // ******************************************************
 
-  &.m-activityToolbar--single {
+  m-newsfeed--single & {
     .m-activityToolbar__actions,
     .m-activityToolbar__metrics {
       padding-left: $singlePostSpacingLeft;
@@ -34,14 +51,18 @@
       padding-bottom: $spacing5;
     }
   }
+
   // ******************************************************
   // ** MODAL **
   // ******************************************************
-  &.m-activityToolbar--modal {
+
+  m-activityV2__modal & {
     .m-activityToolbar__actions,
     .m-activityToolbar__metrics {
       padding-left: $modalScrollableContainerSpacing + $spacing3;
       padding-right: $modalScrollableContainerSpacing + $spacing3;
+      padding-top: $spacing8;
+      padding-bottom: $spacing8;
     }
   }
 
@@ -90,14 +111,8 @@
   }
 
   .m-activityToolbar__actions {
-    padding-right: $spacing8;
-
-    @media screen and (max-mobile: $max-mobile) {
-      padding-right: $spacing2;
-    }
-
     ::ng-deep > * {
-      margin-right: 22px;
+      margin-right: $spacing5;
 
       > a,
       ::ng-deep .m-activityRemindButton__icon {

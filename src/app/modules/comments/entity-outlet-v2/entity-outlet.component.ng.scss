@@ -3,19 +3,40 @@
 
 :host {
   // ******************************************************
-  // ** SINGLE POST PAGE **
+  // ** FEED **
   // ******************************************************
-  &.m-comments__entityOutletV2--single {
-    padding-left: $singlePostSpacingLeft;
-    padding-right: $singlePostSpacingRight;
+
+  .m-activity--isFeed & {
+    padding-left: $feedSpacingLeft;
+    padding-right: $feedSpacingRight;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $feedAvatarSpacingLeft--mobile;
+      padding-right: $feedAvatarSpacingRight--mobile;
+    }
   }
 
   // ******************************************************
   // ** MODAL **
   // ******************************************************
-  &.m-comments__entityOutletV2--modal {
+
+  m-activityV2__modal & {
     padding-left: $modalScrollableContainerSpacing;
     padding-right: $modalScrollableContainerSpacing;
+  }
+
+  // ******************************************************
+  // ** SINGLE **
+  // ******************************************************
+
+  m-newsfeed--single & {
+    padding-left: $singlePostSpacingLeft;
+    padding-right: $singlePostSpacingRight;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-left: $feedAvatarSpacingLeft--mobile;
+      padding-right: $feedAvatarSpacingRight--mobile;
+    }
   }
 
   // ******************************************************
@@ -26,7 +47,6 @@
   // ******************************************************
   // ******************************************************
   display: block;
-  margin-top: $spacing6;
 
   .m-commentsEntityOutlet__topBar {
     margin-left: 0 !important;

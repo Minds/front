@@ -8,6 +8,7 @@ import {
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
+// ojm delete this component after merging with permalink
 @Component({
   selector: 'm-activityV2__minimalMetrics',
   templateUrl: './minimal-metrics.component.html',

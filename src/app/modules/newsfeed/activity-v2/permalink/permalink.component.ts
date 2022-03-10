@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import {
@@ -7,6 +7,7 @@ import {
   ActivityService,
 } from '../../activity/activity.service';
 import * as moment from 'moment';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-activityV2__permalink',
@@ -18,34 +19,39 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
 
   entity: ActivityEntity;
 
+  showViewCount: boolean = false;
+  views: number;
+
   constructor(
     public service: ActivityService,
     public session: Session,
     private configs: ConfigsService
   ) {}
 
-  @HostBinding('class.m-activity__permalink--modal')
-  get isModal(): boolean {
-    return this.service.displayOptions.isModal;
-  }
-
-  // Show absolute dates for items outside the feed
-  get isFeed(): boolean {
-    return this.service.displayOptions.isFeed;
-  }
-
+  /**
+   * Show absolute dates for items outside the feed
+   */
   get showRelativeDate(): boolean {
-    return this.isFeed && !this.isScheduled;
-  }
-
-  get isSidebarBoost(): boolean {
-    return this.service.displayOptions.isSidebarBoost;
+    return (
+      (this.service.displayOptions.isFeed ||
+        this.service.displayOptions.isSidebarBoost ||
+        this.service.displayOptions.minimalMode) &&
+      !this.isScheduled()
+    );
   }
 
   ngOnInit() {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+
+        this.showViewCount =
+          this.session.isAdmin() ||
+          entity.ownerObj.guid === this.session.getLoggedInUser().guid;
+
+        if (this.showViewCount) {
+          this.views = entity.impressions;
+        }
       }
     );
   }
@@ -73,5 +79,42 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
     const date = moment(parseInt(seconds) * 1000).format('MMM D YYYY ');
     const time = moment(parseInt(seconds) * 1000).format('LT');
     return `${date} · ${time}`;
+  }
+
+  /**
+   * MINIMAL MODE ONLY
+   *
+   * Add spacer where there isn't one already
+   * (e.g. in rich-embeds/media posts that don't have
+   * a title or message)
+   */
+  get addTopSpacing() {
+    if (!this.entity || !this.entity.activity_type) {
+      return false;
+    }
+    const entity =
+      this.entity.activity_type !== 'quote'
+        ? this.entity
+        : this.entity.remind_object;
+
+    if (
+      this.isRichEmbedWithoutText(entity) ||
+      this.isMediaWithoutText(entity)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  isRichEmbedWithoutText(entity: any): boolean {
+    return entity.content_type === 'rich-embed' && !entity.message;
+  }
+
+  isMediaWithoutText(entity: any): boolean {
+    return (
+      (entity.content_type === 'image' || entity.content_type === 'video') &&
+      !entity.message &&
+      !entity.title
+    );
   }
 }

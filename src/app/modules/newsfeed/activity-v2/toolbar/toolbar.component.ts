@@ -26,16 +26,6 @@ export class ActivityV2ToolbarComponent {
   entity: ActivityEntity;
   allowReminds: boolean = true;
 
-  @HostBinding('class.m-activityToolbar--single')
-  get isSingle(): boolean {
-    return this.service.displayOptions.isSingle;
-  }
-
-  @HostBinding('class.m-activityToolbar--modal')
-  get isModal(): boolean {
-    return this.service.displayOptions.isModal;
-  }
-
   constructor(
     public service: ActivityService,
     public session: Session,

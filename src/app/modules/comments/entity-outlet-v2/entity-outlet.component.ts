@@ -59,14 +59,6 @@ export class CommentsEntityOutletV2Component {
   }> = new EventEmitter();
   optimisticList: Array<any> = [];
 
-  @HostBinding('class.m-comments__entityOutletV2--modal')
-  @Input()
-  isModal: boolean = false;
-
-  @HostBinding('class.m-comments__entityOutletV2--single')
-  @Input()
-  isSingle: boolean = false;
-
   constructor(
     public session: Session,
     public client: Client,

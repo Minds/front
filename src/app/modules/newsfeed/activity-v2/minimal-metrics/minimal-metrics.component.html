@@ -5,18 +5,18 @@
     addTopSpacing: addTopSpacing || (service.shouldShowPaywall$ | async)
   }"
 >
-  <span class="m-activityMinimalMetrics__views" *ngIf="views$ | async as views"
-    >{{ views | abbr }} views</span
-  >
-  <ng-container *ngIf="entity.time_created && (views$ | async)">
-    ·
-  </ng-container>
+  <!-- ------------------------------------------ -->
+  <!-- PERMALINK (UNSCHEDULED) -->
+  <!-- ------------------------------------------ -->
   <a *ngIf="!isScheduled()" [href]="canonicalUrl" target="_blank">
     <m-relativeTimeSpanV2
       class="m-activityMinimalMetrics__timestamp"
       [entity]="entity"
     ></m-relativeTimeSpanV2>
   </a>
+  <!-- ------------------------------------------ -->
+  <!-- PERMALINK (SCHEDULED) -->
+  <!-- ------------------------------------------ -->
   <div
     *ngIf="isScheduled()"
     class="m-activityMinimalMetrics__timestamp--scheduled"
@@ -28,4 +28,22 @@
       </span></a
     >
   </div>
+  <!-- ------------------------------------------ -->
+  <!-- VIEW COUNT -->
+  <!-- ------------------------------------------ -->
+  <ng-container
+    *ngIf="
+      entity.time_created &&
+      (views$ | async) &&
+      (service.shouldShowViewCount$ | async)
+    "
+  >
+    ·
+
+    <span
+      class="m-activityMinimalMetrics__views"
+      *ngIf="views$ | async as views"
+      >{{ views | abbr }} { views, plural, =1 {view} other {views}}</span
+    >
+  </ng-container>
 </div>

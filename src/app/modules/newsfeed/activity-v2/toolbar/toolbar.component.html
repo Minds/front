@@ -51,7 +51,7 @@
   >
     <span>{{ entity['thumbs:up:count'] }}</span>
     <span
-      >{ entity['thumbs:up:count'], plural, =1 {Upvote} other {Upvotes}}</span
+      >{ entity['thumbs:up:count'], plural, =1 {upvote} other {upvotes}}</span
     >
   </div>
 
@@ -62,8 +62,8 @@
   >
     <span>{{ entity['thumbs:down:count'] }}</span>
     <span
-      >{ entity['thumbs:down:count'], plural, =1 {Downvote} other
-      {Downvotes}}</span
+      >{ entity['thumbs:down:count'], plural, =1 {downvote} other
+      {downvotes}}</span
     >
   </div>
 
@@ -73,7 +73,7 @@
     (click)="openInteractions('reminds')"
   >
     <span>{{ entity.reminds }}</span>
-    <span>{ entity.reminds, plural, =1 {Remind} other {Reminds}}</span>
+    <span>{ entity.reminds, plural, =1 {remind} other {reminds}}</span>
   </div>
 
   <div
@@ -82,6 +82,6 @@
     (click)="openInteractions('quotes')"
   >
     <span>{{ entity.quotes }}</span>
-    <span>{ entity.quotes, plural, =1 {Quote} other {Quotes}}</span>
+    <span>{ entity.quotes, plural, =1 {quote} other {quotes}}</span>
   </div>
 </div>

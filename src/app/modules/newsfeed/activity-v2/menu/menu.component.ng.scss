@@ -7,4 +7,13 @@
     top: 0;
     right: 0;
   }
+
+  ::ng-deep m-postMenu--v2 {
+    m-newsfeed--single & {
+      position: absolute;
+
+      top: -$spacing1;
+      right: -$spacing6;
+    }
+  }
 }

@@ -1,28 +1,71 @@
 @import 'defaults.scss';
+@import '../shared.scss';
 
 :host {
-  &.m-activity__permalink--modal {
-    .m-activityOwnerBlock__permalink {
-      padding: $spacing5;
-      .m-activityOwnerBlockPermalink__text {
-        padding: 0;
-      }
+  // ******************************************************
+  // ** FEED (inside owner block) **
+  // ******************************************************
+
+  .m-activity--isFeed & {
+    .m-activityPermalink__text {
+      padding-left: $spacing2;
     }
   }
-  .m-activityOwnerBlock__permalink {
+
+  // ******************************************************
+  // ** MINIMAL MODE **
+  // ******************************************************
+
+  .m-activityPermalink--minimalMode {
+    padding: 0 $minimalModeSpacing $minimalModeSpacing;
+    .addTopSpacing {
+      padding-top: $minimalModeSpacing !important;
+    }
+  }
+
+  // ******************************************************
+  // ** MODAL **
+  // ******************************************************
+
+  m-activityV2__modal & {
+    .m-activityPermalink__text {
+      padding-top: $spacing2;
+    }
+  }
+
+  // ******************************************************
+  // ** SINGLE **
+  // ******************************************************
+
+  m-newsfeed--single & {
+    .m-activityPermalink__text {
+      padding-top: $spacing4;
+    }
+  }
+
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  // ** DEFAULT **
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  .m-activityPermalink {
     text-decoration: none;
 
-    &:hover {
-      text-decoration: underline;
-    }
-
-    .m-activityOwnerBlockPermalink__text {
+    .m-activityPermalink__text {
+      display: inline-block;
       @include body2Medium;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
-      padding: 0 0 0 $spacing2;
-      display: inline;
+
+      &:not(.m-activityPermalink__text--views) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
       .material-icons {
         font-size: initial;
         vertical-align: text-top;

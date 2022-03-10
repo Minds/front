@@ -1,25 +1,65 @@
-<a
-  [routerLink]="service.canonicalUrl$ | async"
-  class="m-activityOwnerBlock__permalink"
-  ><m-relativeTimeSpanV2
-    class="m-activityOwnerBlockPermalink__text"
-    *ngIf="!isScheduled() && (isFeed || isSidebarBoost); else absoluteDate"
-    [entity]="entity"
-  ></m-relativeTimeSpanV2>
-  <ng-template #absoluteDate>
-    <div class="m-activityOwnerBlockPermalink__text">
-      <i *ngIf="isScheduled()" class="material-icons">schedule</i
-      ><span>{{ toReadableDate(entity.time_created) }}</span>
-    </div>
-  </ng-template>
-  <div
-    class="m-activityOwnerBlockPermalink__text--visibility"
-    *ngIf="
-      service.displayOptions.showVisibilityState &&
-      (service.isUnlisted$ | async)
-    "
+<ng-template #permalink>
+  <a
+    [routerLink]="service.canonicalUrl$ | async"
+    class="m-activityPermalink m-legible"
   >
-    <i class="material-icons unlisted">visibility_off</i>
-    <a i18n="@@OWNER_BLOCK__UNLISTED">Unlisted</a>
+    <!-- ------------------------------------------ -->
+    <!-- PERMALINK - RELATIVE DATE (UNSCHEDULED) -->
+    <!-- ------------------------------------------ -->
+    <m-relativeTimeSpanV2
+      class="m-activityPermalink__text"
+      *ngIf="!isScheduled() && showRelativeDate; else absoluteDate"
+      [entity]="entity"
+    ></m-relativeTimeSpanV2>
+    <!-- ------------------------------------------ -->
+    <!-- PERMALINK ABSOLUTE DATE (INCL. SCHEDULED) -->
+    <!-- ------------------------------------------ -->
+    <ng-template #absoluteDate>
+      <div class="m-activityPermalink__text">
+        <i *ngIf="isScheduled()" class="material-icons">schedule</i
+        ><span>{{ toReadableDate(entity.time_created) }}</span>
+      </div>
+    </ng-template>
+    <div
+      class="m-activityPermalink__text--visibility"
+      *ngIf="
+        service.displayOptions.showVisibilityState &&
+        (service.isUnlisted$ | async)
+      "
+    >
+      <i class="material-icons unlisted">visibility_off</i>
+      <a i18n="@@OWNER_BLOCK__UNLISTED">Unlisted</a>
+    </div>
+  </a>
+  <!-- ------------------------------------------ -->
+  <!-- VIEW COUNT  -->
+  <!-- ------------------------------------------ -->
+  <div
+    *ngIf="
+      entity.time_created &&
+      views &&
+      showViewCount &&
+      !service.displayOptions.isFeed
+    "
+    class="m-activityPermalink m-legible"
+  >
+    <span
+      class="m-activityPermalink__text m-activityPermalink__text--views"
+      *ngIf="views"
+      >· {{ views | abbr }} { views, plural, =1 {view} other {views}}
+    </span>
   </div>
-</a>
+</ng-template>
+<!-- ------------------------------------------ -->
+<!-- MINIMAL MODE ONLY -->
+<!-- ------------------------------------------ -->
+<ng-container *ngIf="service.displayOptions.minimalMode; else permalink">
+  <div
+    class="m-activityPermalink--minimalMode"
+    [ngClass]="{
+      addTopSpacing: addTopSpacing || (service.shouldShowPaywall$ | async)
+    }"
+  >
+    <ng-container *ngTemplateOutlet="permalink"></ng-container>
+  </div>
+</ng-container>

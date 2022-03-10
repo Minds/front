@@ -401,6 +401,15 @@ export class ActivityV2ContentComponent
     );
   }
 
+  get showPermalink(): boolean {
+    return (
+      !this.hideText &&
+      (this.service.displayOptions.permalinkBelowContent ||
+        (this.service.displayOptions.minimalMode &&
+          this.service.displayOptions.showMetrics))
+    );
+  }
+
   ////////////////////////////////////////////////////////////////////////////
 
   calculateFixedContentHeight(): void {

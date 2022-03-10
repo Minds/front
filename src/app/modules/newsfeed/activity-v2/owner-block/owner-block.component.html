@@ -19,7 +19,6 @@
     </div>
   </div>
   <!-- ---------------------------- -->
-
   <div class="m-activityOwnerBlock__body">
     <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
       <span [title]="displayName">{{ displayName | truncate: 15 }}</span>
@@ -45,13 +44,10 @@
         <span [title]="username">@{{ username }}</span>
       </a>
     </ng-container>
-
-    <span *ngIf="!isSidebarBoost && !isModal" class="m-activityOwnerBlock__dot"
-      >·</span
-    >
-    <m-activityV2__permalink
-      *ngIf="!isModal && !minimalMode && !isSingle"
-    ></m-activityV2__permalink>
+    <ng-container *ngIf="!service.displayOptions.permalinkBelowContent">
+      <span class="m-activityOwnerBlock__dot">·</span>
+      <m-activityV2__permalink></m-activityV2__permalink>
+    </ng-container>
   </div>
 
   <div class="m-activityOwnerBlock__right">

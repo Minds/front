@@ -51,10 +51,6 @@
       .m-activityOwnerBlock__right {
         display: none;
       }
-
-      ::ng-deep m-activityV2__permalink {
-        display: none;
-      }
     }
   }
   // ******************************************************
@@ -83,7 +79,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding-bottom: $spacing1;
+    padding-bottom: $spacing2;
     box-sizing: border-box;
   }
 

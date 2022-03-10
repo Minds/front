@@ -335,6 +335,7 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
       isModal: true,
       fixedHeight: false,
       autoplayVideo: true,
+      permalinkBelowContent: true,
     });
 
     // Prepare pager

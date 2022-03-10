@@ -128,9 +128,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
-  @HostBinding('class.m-activity--single')
-  isSingle: boolean = false;
-
   heightSubscription: Subscription;
   remindSubscription: Subscription;
 
@@ -157,7 +154,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isFeed = this.service.displayOptions.isFeed;
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
-    this.isSingle = this.service.displayOptions.isSingle;
 
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
