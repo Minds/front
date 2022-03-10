@@ -1,12 +1,20 @@
 <div class="m-networkBridgeTxHistoryItem-container">
   <div class="mdl-cell mdl-cell--1-col" *ngIf="isSuccess(item)">
-    <i class="material-icons m-networkBridgeTxHistoryItem-container-img-success"
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-img m-networkBridgeTxHistoryItem-container-img-success"
       >done</i
     >
   </div>
   <div class="mdl-cell mdl-cell--1-col" *ngIf="isPendingAction(item)">
-    <i class="material-icons m-networkBridgeTxHistoryItem-container-img-pending"
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-img m-networkBridgeTxHistoryItem-container-img-pending"
       >hourglass_empty</i
+    >
+  </div>
+  <div class="mdl-cell mdl-cell--1-col" *ngIf="isActionRequired(item)">
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-img m-networkBridgeTxHistoryItem-container-img-action_required"
+      >priority_high</i
     >
   </div>
   <div

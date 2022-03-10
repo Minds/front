@@ -1,38 +1,56 @@
 <div class="m-modalV2__inner">
+  <div class="m-networkSwapTxHistory__close">
+    <i class="material-icons" (click)="onDismissIntent()">close</i>
+  </div>
+
   <!-- MODAL HEADER  -->
-  <div class="m-networkSwapBridge__header">
-    <div class="m-networkSwapBridge__header--close">
-      <i class="material-icons" (click)="onDismissIntent()">close</i>
-    </div>
-    <div class="mdl-grid m-networkSwapBridge__container-row ">
-      <img
-        class="mdl-cell mdl-cell--1-col m-networkSwapBridge__container-row-img"
-        [src]="cdnAssetsUrl + entity.logoPath"
-      />
-      <h1 class="mdl-cell mdl-cell--5-col m-networkSwapBridge__title--swap">
-        Transactions
-      </h1>
-    </div>
+  <div class="m-networkSwapTxHistory__header">
+    <img
+      class="mdl-cell mdl-cell--1-col m-networkSwapTxHistory__container-row-img"
+      [src]="cdnAssetsUrl + entity.logoPath"
+    />
+    <h1 class="mdl-cell mdl-cell--5-col m-networkSwapTxHistory__title--swap">
+      Transactions
+    </h1>
   </div>
 
   <!-- MODAL TABS -->
 
-  <div class="m-tabs__container">
+  <ul class="m-tabs__container">
     <li class="m-tabs__tab">
-      <a [class.m-tabs__tab--selected]="!pending" (click)="pending = !pending">
+      <a
+        [class.m-tabs__tab--selected]="(filterState$ | async) === 'none'"
+        (click)="filterState$.next('none')"
+      >
         All transactions
       </a>
     </li>
     <li class="m-tabs__tab">
-      <a [class.m-tabs__tab--selected]="pending" (click)="pending = !pending">
+      <a
+        [class.m-tabs__tab--selected]="(filterState$ | async) === 'pending'"
+        (click)="filterState$.next('pending')"
+      >
         Pending (1)
       </a>
     </li>
-  </div>
+    <li class="m-tabs__tab">
+      <a
+        [class.m-tabs__tab--selected]="
+          (filterState$ | async) === 'action_required'
+        "
+        (click)="filterState$.next('action_required')"
+      >
+        Action Required (1)
+      </a>
+    </li>
+  </ul>
 
   <!-- m-networkBridgeTxHistoryItem list -->
-  <div class="m-networkSwapBridge__body">
-    <m-networkBridgeTxHistoryItem *ngFor="let item of items" [item]="item">
+  <div class="m-networkSwapTxHistory__body">
+    <m-networkBridgeTxHistoryItem
+      *ngFor="let item of filteredItems$ | async"
+      [item]="item"
+    >
     </m-networkBridgeTxHistoryItem>
   </div>
   <!-- <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner> -->

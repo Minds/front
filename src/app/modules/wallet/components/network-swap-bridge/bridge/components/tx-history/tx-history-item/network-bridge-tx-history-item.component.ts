@@ -13,10 +13,11 @@ export class NetworkBridgeTxHistoryItemComponent implements OnInit {
   ngOnInit(): void {}
 
   isPendingAction(item): boolean {
-    return (
-      item.status === RecordStatus.PENDING ||
-      item.status === RecordStatus.ACTION_REQUIRED
-    );
+    return item.status === RecordStatus.PENDING;
+  }
+
+  isActionRequired(item): boolean {
+    return item.status === RecordStatus.ACTION_REQUIRED;
   }
 
   isSuccess(item): boolean {

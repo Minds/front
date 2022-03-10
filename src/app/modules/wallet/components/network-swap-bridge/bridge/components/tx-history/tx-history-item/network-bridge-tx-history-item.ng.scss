@@ -12,18 +12,22 @@
     padding: 0px 17px;
     margin-bottom: 16px;
 
-    .m-networkBridgeTxHistoryItem-container-img-success {
-      background: #10b981;
+    .m-networkBridgeTxHistoryItem-container-img {
       padding: 8px;
       border-radius: 50%;
       cursor: default;
-    }
 
-    .m-networkBridgeTxHistoryItem-container-img-pending {
-      background: #f59e0b;
-      padding: 8px;
-      border-radius: 50%;
-      cursor: default;
+      &.m-networkBridgeTxHistoryItem-container-img-success {
+        background: #10b981;
+      }
+
+      &.m-networkBridgeTxHistoryItem-container-img-pending {
+        background: #f59e0b;
+      }
+
+      &.m-networkBridgeTxHistoryItem-container-img-action_required {
+        background: rgba(224, 60, 32, 1);
+      }
     }
 
     .m-networkBridgeTxHistoryItem-container-text {

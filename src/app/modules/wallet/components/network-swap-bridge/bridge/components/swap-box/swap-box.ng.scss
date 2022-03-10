@@ -98,6 +98,7 @@
     .m-networkSwapBox__container-row-max {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 16px;
     }
 
     .m-networkSwapBox__container-max {
@@ -110,17 +111,24 @@
       cursor: pointer;
     }
 
-    .m-networkSwapBox__container-swapButton {
-      position: absolute;
-      left: 47%;
-      top: 55%;
-      border-radius: 50%;
-      padding: 8px;
-      @include m-theme() {
-        color: themed($m-bgColor--secondary);
-        background-color: themed($m-textColor--primary);
+    .m-networkSwapBox__swapButton--container {
+      position: relative;
+
+      .m-networkSwapBox__swapButton {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        border-radius: 50%;
+        padding: 8px;
+        cursor: pointer;
+        transform: translate(-50%, -50%);
+        user-select: none;
+
+        @include m-theme() {
+          color: themed($m-bgColor--secondary);
+          background-color: themed($m-textColor--primary);
+        }
       }
-      cursor: pointer;
     }
 
     .m-networkSwapBox__container-transfer-row {

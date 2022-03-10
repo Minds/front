@@ -10,6 +10,23 @@
 
   .m-modalV2__inner {
     padding: 40px;
+    position: relative;
+
+    .m-networkSwapBridge--close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      i {
+        background: #404a4e;
+        padding: 8px;
+        border-radius: 3px;
+        cursor: pointer;
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
 
     @media (min-width: 840px) {
       .mdl-grid {
@@ -34,8 +51,7 @@
         font-size: 24px;
         line-height: 32px;
         font-weight: bold;
-        margin: 0 0 5px 0;
-        margin-top: -20px;
+        margin: 0;
         cursor: pointer;
         @include m-theme() {
           color: themed($m-textColor--primary);
@@ -46,25 +62,10 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 20px;
-        margin-bottom: 39px;
+        margin: 8px 0 40px 0;
         box-sizing: border-box;
         display: flex;
         cursor: pointer;
-      }
-      .m-networkSwapBridge__header--close {
-        display: flex;
-        width: 100%;
-        justify-content: end;
-
-        i {
-          background: #404a4e;
-          padding: 8px;
-          border-radius: 3px;
-          cursor: pointer;
-          @include m-theme() {
-            color: themed($m-white-always);
-          }
-        }
       }
 
       .m-networkSwapBridge__container {

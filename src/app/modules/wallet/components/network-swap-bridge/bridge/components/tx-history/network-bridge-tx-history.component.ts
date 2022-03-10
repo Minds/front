@@ -3,6 +3,36 @@ import { ConfigsService } from '../../../../../../../common/services/configs.ser
 import { AbstractSubscriberComponent } from '../../../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { RecordStatus } from '../../constants/constants.types';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+type RecordStatusText = 'none' | 'action_required' | 'pending';
+
+function mapStatusText(text: RecordStatusText): RecordStatus {
+  if (text === 'action_required') {
+    return RecordStatus.ACTION_REQUIRED;
+  }
+  return RecordStatus.PENDING;
+}
+
+// For Testing purposes
+const txs = [
+  {
+    status: RecordStatus.ACTION_REQUIRED,
+  },
+  {
+    status: RecordStatus.PENDING,
+  },
+  {
+    status: RecordStatus.SUCCESS,
+  },
+  {
+    status: RecordStatus.SUCCESS,
+  },
+  {
+    status: RecordStatus.SUCCESS,
+  },
+];
 
 @Component({
   selector: 'm-networkBridgeTxHistory',
@@ -22,22 +52,20 @@ export class NetworkBridgeTxHistoryModalComponent
   public entity;
 
   // selected tab option
-  public pending = false;
+  public filterState$ = new BehaviorSubject<RecordStatusText>('none');
 
-  items = [
-    {
-      status: RecordStatus.PENDING,
-    },
-    {
-      status: RecordStatus.SUCCESS,
-    },
-    {
-      status: RecordStatus.SUCCESS,
-    },
-    {
-      status: RecordStatus.SUCCESS,
-    },
-  ];
+  public items$ = new BehaviorSubject(txs);
+
+  public filteredItems$ = combineLatest([this.filterState$, this.items$]).pipe(
+    map(state => {
+      const [filter, items] = state;
+      if (filter === 'none') {
+        return items;
+      }
+      const status = mapStatusText(filter);
+      return items.filter(item => item.status === status);
+    })
+  );
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
@@ -57,7 +85,6 @@ export class NetworkBridgeTxHistoryModalComponent
    * Sets modal options.
    * @param { Function } onDismissIntent - set dismiss intent callback.
    * @param { Function } onSaveIntent - set save intent callback.
-   * @param { BoostableEntity } entity - set entity that is the subject of the boost.
    */
   setModalData({ onDismissIntent }) {
     this.onDismissIntent = onDismissIntent || (() => {});

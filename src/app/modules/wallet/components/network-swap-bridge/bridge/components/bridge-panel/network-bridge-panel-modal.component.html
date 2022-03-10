@@ -1,8 +1,9 @@
 <div class="m-modalV2__inner">
+  <div class="m-networkSwapBridge--close">
+    <i class="material-icons" (click)="onDismissIntent()">close</i>
+  </div>
+
   <div class="m-networkSwapBridge__header">
-    <div class="m-networkSwapBridge__header--close">
-      <i class="material-icons" (click)="onDismissIntent()">close</i>
-    </div>
     <h1 class="m-networkSwapBridge__title">Network Bridge</h1>
     <span class="m-networkSwapBridge__subtitle"
       >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis diam massa
@@ -17,6 +18,7 @@
       <img
         class="mdl-cell mdl-cell--1-col"
         [src]="cdnAssetsUrl + network.logoPath"
+        alt="Network Logo"
       />
       <div class="mdl-cell mdl-cell--9-col">
         <div class="mdl-grid">

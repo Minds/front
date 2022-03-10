@@ -109,7 +109,7 @@ export class NetworkBridgePanelModalComponent
     this.inProgress$.next(false);
   }
 
-  navigateToBridge(network) {
+  navigateToBridge(network: Network) {
     this.onDismissIntent();
     this.bridgeSwapService.open(network);
   }
