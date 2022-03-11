@@ -19,6 +19,10 @@
 // fix the weird problem of modals having a 1055 z-index which interfered with stacking ui
 .modal {
   z-index: 1050;
+
+  :focus {
+    outline: none;
+  }
 }
 
 // prevent body scrolling when modal is opened
