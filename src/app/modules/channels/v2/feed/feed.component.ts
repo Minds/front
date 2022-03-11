@@ -155,11 +155,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
           this.prepend(newPost);
         }
       }),
-      this.service.onSubscriptionChanged.subscribe(subscribed => {
-        if (subscribed) {
-          this.shouldShowChannelRecommendation$.next(true);
-        }
-      })
+      this.service.onSubscriptionChanged.subscribe(subscribed =>
+        this.shouldShowChannelRecommendation$.next(subscribed)
+      )
     );
   }
 
@@ -264,12 +262,12 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * Determines whether the channel recommendations should be shown
    * @returns { BehaviorSubject<boolean> }
    */
-  public shouldShowChannelRecommendation() {
+  get channelRecommendationVisible$() {
     if (!this.experiments.hasVariation('channel-recommendations', true)) {
       return of(false);
     }
 
-    if (this.feedService.service.inProgress) {
+    if (this.feedService.service.inProgress.getValue()) {
       return of(false);
     }
 

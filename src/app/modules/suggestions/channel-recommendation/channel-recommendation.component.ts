@@ -72,8 +72,8 @@ export class ChannelRecommendationComponent implements OnInit {
       this.api
         .get('api/v3/recommendations', {
           location: this.location,
-          mostRecentSubscriptionUserGuid: this.channelId,
-          targetUserGuid: this.session.getLoggedInUser()?.guid,
+          mostRecentSubscriptionUserGuid: this.session.getLoggedInUser()?.guid,
+          targetUserGuid: this.channelId,
           limit: 3,
         })
         .toPromise()

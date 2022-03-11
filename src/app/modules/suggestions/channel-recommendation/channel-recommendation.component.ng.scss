@@ -5,6 +5,8 @@
   display: flex;
 
   article {
+    width: 100%;
+    box-sizing: border-box;
     padding: $minds-padding * 4;
 
     header {
