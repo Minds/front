@@ -1,24 +1,25 @@
 <m-concertColors__modal title="Earn Tokens with Minds">
   <div class="m-modalV2__body m-earnModal__body">
     <div class="m-earnModal__left">
+      <m-ngbAutofocus-capture></m-ngbAutofocus-capture>
       <h2>Increase your token earnings</h2>
       <ul>
-        <li (click)="openAddLiquidity()">
+        <li (click)="openAddLiquidity()" tabindex="0">
           <m-icon iconId="add_circle_outline"></m-icon>
           <span>Add liquidity</span>
           <ng-container *ngTemplateOutlet="icon"></ng-container>
         </li>
-        <li (click)="openTransfer()">
+        <li (click)="openTransfer()" tabindex="0">
           <m-icon iconId="swap_horiz"></m-icon>
           <span>Transfer on-chain</span>
           <ng-container *ngTemplateOutlet="icon"></ng-container>
         </li>
-        <li (click)="openCompose()">
+        <li (click)="openCompose()" tabindex="0">
           <m-icon iconId="add_box"></m-icon>
           <span>Create content</span>
           <ng-container *ngTemplateOutlet="icon"></ng-container>
         </li>
-        <li routerLink="settings/other/referrals">
+        <li routerLink="settings/other/referrals" tabindex="0">
           <m-icon iconId="group"></m-icon>
           <span>Refer</span>
           <ng-container *ngTemplateOutlet="icon"></ng-container>

@@ -14,6 +14,7 @@
     (toggledDropdown)="toggledDropdown($event)"
     [showDropdown]="showDropdown"
     [disabled]="disabled"
+    tabindex="0"
   ></m-phoneInput__country>
 
   <input
@@ -30,6 +31,7 @@
     (click)="clickedInput($event)"
     (focusout)="inputFocused = false"
     [disabled]="disabled"
+    ngbAutofocus
     #input
   />
 </div>
