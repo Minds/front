@@ -136,9 +136,8 @@
       class="m-dropdownList__item m-userMenuDropdown__item"
       (click)="closeMenu()"
     >
-      <!--Endpoint handles authentication and redirection-->
       <a
-        href="/api/v3/helpdesk/zendesk"
+        [href]="getHelpdeskRedirectUrl()"
         target="_blank"
         data-ref="topnav-usermenu-help-zendesk"
       >

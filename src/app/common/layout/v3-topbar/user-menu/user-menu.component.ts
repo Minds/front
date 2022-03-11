@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { UserMenuService } from './user-menu.service';
+import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 
 @Component({
   selector: 'm-usermenu__v3',
@@ -50,7 +51,8 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected featuresService: FeaturesService,
-    public service: UserMenuService
+    public service: UserMenuService,
+    private helpdeskRedirectService: HelpdeskRedirectService
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,14 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
 
   isAdmin(): boolean {
     return this.session.isAdmin();
+  }
+
+  /**
+   * Get helpdesk redirect URL from service.
+   * @returns { string } URL to redirect to for helpdesk.
+   */
+  public getHelpdeskRedirectUrl(): string {
+    return this.helpdeskRedirectService.getUrl();
   }
 
   toggleMenu(): void {
