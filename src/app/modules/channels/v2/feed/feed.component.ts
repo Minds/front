@@ -157,6 +157,10 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       }),
       this.service.onSubscriptionChanged.subscribe(subscribed =>
         this.shouldShowChannelRecommendation$.next(subscribed)
+      ),
+      // Subscribe to user entity to reset channel recommendation
+      this.service.channel$.subscribe(() =>
+        this.shouldShowChannelRecommendation$.next(false)
       )
     );
   }
@@ -263,10 +267,6 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    * @returns { BehaviorSubject<boolean> }
    */
   get channelRecommendationVisible$() {
-    if (!this.experiments.hasVariation('channel-recommendations', true)) {
-      return of(false);
-    }
-
     if (this.feedService.service.inProgress.getValue()) {
       return of(false);
     }
