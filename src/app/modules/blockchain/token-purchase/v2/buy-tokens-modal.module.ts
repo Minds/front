@@ -12,6 +12,7 @@ import { OrderReceivedModalService } from './order-received/order-received-modal
 import { OrderReceivedModalComponent } from './order-received/order-received-modal.component';
 import { ModalsModule } from '../../../modals/modals.module';
 import { WalletSharedModule } from '../../../wallet/wallet-shared.module';
+import { TransakGlobalStyleComponent } from './transak-global-style.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,11 @@ import { WalletSharedModule } from '../../../wallet/wallet-shared.module';
     ModalsModule,
     WalletSharedModule,
   ],
-  declarations: [BuyTokensModalComponent, OrderReceivedModalComponent],
+  declarations: [
+    BuyTokensModalComponent,
+    OrderReceivedModalComponent,
+    TransakGlobalStyleComponent,
+  ],
   exports: [BuyTokensModalComponent, OrderReceivedModalComponent],
   providers: [TransakService, OrderReceivedModalService],
 })
