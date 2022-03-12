@@ -55,6 +55,9 @@ import { NetworkBridgeTransferModalComponent } from './components/network-swap-b
 import { NetworkBridgePanelModalComponent } from './components/network-swap-bridge/bridge/components/bridge-panel/network-bridge-panel-modal.component';
 import { NetworkBridgeTxHistoryModalComponent } from './components/network-swap-bridge/bridge/components/tx-history/network-bridge-tx-history.component';
 import { NetworkBridgeTxHistoryItemComponent } from './components/network-swap-bridge/bridge/components/tx-history/tx-history-item/network-bridge-tx-history-item.component';
+import { NetworkBridgeErrorComponent } from './components/network-swap-bridge/bridge/components/error-dialog/error-dialog.component';
+import { NetworkBridgeApprovalComponent } from './components/network-swap-bridge/bridge/components/approval-dialog/approval-dialog.component';
+import { NetworkBridgeBinderDirective } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.directive';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -235,6 +238,9 @@ export const WALLET_ROUTES: Routes = [
     NetworkBridgeSwapBoxComponent,
     NetworkBridgeTxHistoryModalComponent,
     NetworkBridgeTxHistoryItemComponent,
+    NetworkBridgeErrorComponent,
+    NetworkBridgeApprovalComponent,
+    NetworkBridgeBinderDirective,
   ],
   exports: [WalletDashboardComponent],
   providers: [

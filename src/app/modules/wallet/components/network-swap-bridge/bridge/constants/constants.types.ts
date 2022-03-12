@@ -36,3 +36,14 @@ export interface WithdrawRecord extends Record {
   txHash?: string;
   txBlock?: number;
 }
+
+export enum BridgeStep {
+  SWAP,
+  APPROVAL,
+  CONFIRMATION,
+  ERROR,
+}
+
+export interface BridgeComponent {
+  data: any;
+}

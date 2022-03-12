@@ -57,7 +57,7 @@
 
     <!-- Transfer button -->
     <div class="m-networkSwapBox__container-transfer-row">
-      <m-button color="blue" [disabled]="amount < 0.001">
+      <m-button color="blue" [disabled]="amount < 0.001" (click)="navigate()">
         <ng-container i18n="verb|@@M__ACTION__CANCEL">Transfer</ng-container>
       </m-button>
     </div>

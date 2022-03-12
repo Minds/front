@@ -1,6 +1,6 @@
 <div class="m-modalV2__inner">
   <div class="m-networkSwapBridge--close">
-    <i class="material-icons" (click)="onDismissIntent()">close</i>
+    <i class="material-icons" (click)="onSaveIntent()">close</i>
   </div>
   <!-- MODAL HEADER  -->
   <div class="m-networkSwapBridge__header">
@@ -14,7 +14,7 @@
       </h1>
       <div
         class="mdl-cell mdl-cell--5-col m-networkSwapBridge__transactions"
-        *ngIf="entity.showHistoric"
+        *ngIf="entity.showHistoric && !showError && shouldShow()"
       >
         <span (click)="navigateToTxHistory()">Transactions</span>
         <i (click)="navigateToTxHistory()" class="material-icons">history</i>
@@ -23,7 +23,6 @@
     </div>
   </div>
 
-  <!-- MODAL COMPONENTS -->
-  <m-networkSwapBox></m-networkSwapBox>
-  <!-- <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner> -->
+  <!-- All step components get dynamically render here -->
+  <ng-template divBinder></ng-template>
 </div>
