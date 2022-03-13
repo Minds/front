@@ -41,9 +41,34 @@ export enum BridgeStep {
   SWAP,
   APPROVAL,
   CONFIRMATION,
+  PENDING,
   ERROR,
+}
+
+export enum DepositState {
+  APPROVE,
+  CONFIRM,
+  COMPLETE,
+}
+
+export enum WithdrawState {
+  INITIALIZE,
+  WITHDRAW,
+  COMPLETE,
 }
 
 export interface BridgeComponent {
   data: any;
+}
+
+export enum Titles {
+  'Transaction in progress',
+  'Transaction en-route',
+  'Transfer complete',
+}
+
+export enum Descriptions {
+  'Your transfer is currently in progress. We expect that it will ~2 minutes. You can close this window if you wish. We will notify you once the transaction is complete',
+  'Your transfer is currently in progress. We expect that it will ~8 minutes. You can close this window if you wish. We will notify you once the transaction is complete',
+  'Your transfer is now complete. Add summary.',
 }

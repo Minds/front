@@ -18,7 +18,7 @@ export class NetworkBridgeService implements OnDestroy {
   );
 
   public readonly currentStep$ = new BehaviorSubject<BridgeStep | undefined>(
-    BridgeStep.SWAP
+    BridgeStep.PENDING
   );
 
   public readonly currentStepData$ = new BehaviorSubject<any | undefined>(
@@ -42,6 +42,10 @@ export class NetworkBridgeService implements OnDestroy {
       '../components/confirm-dialog/confirm-dialog.component'
     );
 
+    const { NetworkBridgePendingComponent } = await import(
+      '../components/transaction-state/transaction-state.component'
+    );
+
     const { NetworkBridgeErrorComponent } = await import(
       '../components/error-dialog/error-dialog.component'
     );
@@ -54,6 +58,8 @@ export class NetworkBridgeService implements OnDestroy {
         ? NetworkBridgeApprovalComponent
         : step === BridgeStep.CONFIRMATION
         ? NetworkBridgeConfirmationComponent
+        : step === BridgeStep.PENDING
+        ? NetworkBridgePendingComponent
         : NetworkBridgeErrorComponent;
 
     const componentRef = vcr.createComponent(

@@ -28,11 +28,15 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
     });
   }
 
-  navigate() {
+  navigateError() {
     this.networkBridgeService.currentStep$.next(BridgeStep.ERROR);
     this.networkBridgeService.currentStepData$.next({
       title: 'No wallet connected',
       subtitle: 'Connect your MetaMask wallet before continuing',
     });
+  }
+
+  navigate() {
+    this.networkBridgeService.currentStep$.next(BridgeStep.APPROVAL);
   }
 }

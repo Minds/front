@@ -58,6 +58,8 @@ import { NetworkBridgeTxHistoryItemComponent } from './components/network-swap-b
 import { NetworkBridgeErrorComponent } from './components/network-swap-bridge/bridge/components/error-dialog/error-dialog.component';
 import { NetworkBridgeApprovalComponent } from './components/network-swap-bridge/bridge/components/approval-dialog/approval-dialog.component';
 import { NetworkBridgeBinderDirective } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.directive';
+import { NetworkBridgeConfirmationComponent } from './components/network-swap-bridge/bridge/components/confirm-dialog/confirm-dialog.component';
+import { NetworkBridgePendingComponent } from './components/network-swap-bridge/bridge/components/transaction-state/transaction-state.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -241,6 +243,8 @@ export const WALLET_ROUTES: Routes = [
     NetworkBridgeErrorComponent,
     NetworkBridgeApprovalComponent,
     NetworkBridgeBinderDirective,
+    NetworkBridgeConfirmationComponent,
+    NetworkBridgePendingComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [
