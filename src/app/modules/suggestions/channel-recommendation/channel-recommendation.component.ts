@@ -1,4 +1,3 @@
-import { Session } from './../../../services/session';
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
@@ -11,6 +10,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { ResizedEvent } from 'angular-resize-event';
+import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 
 @Component({
   selector: 'm-channelRecommendation',
@@ -65,14 +65,18 @@ export class ChannelRecommendationComponent implements OnInit {
 
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
 
-  constructor(private api: ApiService, private session: Session) {}
+  constructor(
+    private api: ApiService,
+    private recentSubscriptions: RecentSubscriptionsService
+  ) {}
 
   ngOnInit(): void {
     if (this.location) {
       this.api
         .get('api/v3/recommendations', {
           location: this.location,
-          mostRecentSubscriptionUserGuid: this.session.getLoggedInUser()?.guid,
+          mostRecentSubscriptionUserGuid:
+            this.recentSubscriptions.list().join(',') || this.channelId,
           targetUserGuid: this.channelId,
           limit: 3,
         })

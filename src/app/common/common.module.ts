@@ -201,6 +201,8 @@ import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 import { AngularResizeEventModule } from 'angular-resize-event';
+import { SubscriptionService } from './services/subscription.service';
+import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 
 const routes: Routes = [
   {
@@ -567,6 +569,8 @@ const routes: Routes = [
     JsonLdService,
     BoostRecommendationService,
     AuthRedirectService,
+    SubscriptionService,
+    RecentSubscriptionsService,
   ],
 })
 export class CommonModule {}

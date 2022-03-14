@@ -1,10 +1,8 @@
-import { sessionMock } from './../../../../tests/session-mock.spec';
-import { Session } from './../../../services/session';
-import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
-import { ApiService } from '../../../common/api/api.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ApiService } from '../../../common/api/api.service';
+import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
+
 
 describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
@@ -17,10 +15,6 @@ describe('ChannelRecommendationComponent', () => {
         {
           provide: ApiService,
           useValue: apiServiceMock,
-        },
-        {
-          provide: Session,
-          useValue: sessionMock,
         },
       ],
     }).compileComponents();
