@@ -3,7 +3,6 @@ import { ApiService } from '../../../common/api/api.service';
 import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
 
-
 describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
   let fixture: ComponentFixture<ChannelRecommendationComponent>;
