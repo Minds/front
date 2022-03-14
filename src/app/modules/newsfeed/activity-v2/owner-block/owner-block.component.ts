@@ -46,15 +46,23 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
     this.entitySubscription.unsubscribe();
   }
 
-  @HostBinding('class.m-activity__ownerBlock--remind')
-  get isRemindClassBinding(): boolean {
-    return this.entity && !!this.entity.remind_object;
+  get isRemind(): boolean {
+    return (
+      this.entity && this.entity.subtype && this.entity.subtype === 'remind'
+    );
   }
 
   // Note: currently ownerBlocks are only visible in minimalMode for reminds/quotes
   @HostBinding('class.m-activity__ownerBlock--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
+  }
+
+  @HostBinding('class.m-activity__ownerBlock--groupPost')
+  get group(): MindsGroup | null {
+    return this.entity.containerObj && this.entity.containerObj.type === 'group'
+      ? this.entity.containerObj
+      : null;
   }
 
   @HostBinding('class.m-activity__ownerBlock--sidebarBoost')
@@ -100,11 +108,5 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
       '/medium/' +
       iconTime
     );
-  }
-
-  get group(): MindsGroup | null {
-    return this.entity.containerObj && this.entity.containerObj.type === 'group'
-      ? this.entity.containerObj
-      : null;
   }
 }

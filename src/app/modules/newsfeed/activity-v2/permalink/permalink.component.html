@@ -1,7 +1,12 @@
-<ng-template #permalink>
+<div
+  class="m-activity__permalink"
+  [ngClass]="{
+    addTopSpacing: addTopSpacing || (service.shouldShowPaywall$ | async)
+  }"
+>
   <a
     [routerLink]="service.canonicalUrl$ | async"
-    class="m-activityPermalink m-legible"
+    class="m-activityPermalink__wrapper m-activityPermalink__wrapper--link m-legible"
   >
     <!-- ------------------------------------------ -->
     <!-- PERMALINK - RELATIVE DATE (UNSCHEDULED) -->
@@ -20,8 +25,11 @@
         ><span>{{ toReadableDate(entity.time_created) }}</span>
       </div>
     </ng-template>
+    <!-- ------------------------------------------ -->
+    <!-- VISIBILITY -->
+    <!-- ------------------------------------------ -->
     <div
-      class="m-activityPermalink__text--visibility"
+      class="m-activityPermalink__text m-activityPermalink__text--visibility"
       *ngIf="
         service.displayOptions.showVisibilityState &&
         (service.isUnlisted$ | async)
@@ -34,32 +42,8 @@
   <!-- ------------------------------------------ -->
   <!-- VIEW COUNT  -->
   <!-- ------------------------------------------ -->
-  <div
-    *ngIf="
-      entity.time_created &&
-      views &&
-      showViewCount &&
-      !service.displayOptions.isFeed
-    "
-    class="m-activityPermalink m-legible"
-  >
-    <span
-      class="m-activityPermalink__text m-activityPermalink__text--views"
-      *ngIf="views"
-      >· {{ views | abbr }} { views, plural, =1 {view} other {views}}
-    </span>
-  </div>
-</ng-template>
-<!-- ------------------------------------------ -->
-<!-- MINIMAL MODE ONLY -->
-<!-- ------------------------------------------ -->
-<ng-container *ngIf="service.displayOptions.minimalMode; else permalink">
-  <div
-    class="m-activityPermalink--minimalMode"
-    [ngClass]="{
-      addTopSpacing: addTopSpacing || (service.shouldShowPaywall$ | async)
-    }"
-  >
-    <ng-container *ngTemplateOutlet="permalink"></ng-container>
-  </div>
-</ng-container>
+  <m-activityV2__views
+    *ngIf="entity.time_created && !service.displayOptions.isFeed"
+    class="m-activityPermalink__wrapper "
+  ></m-activityV2__views>
+</div>

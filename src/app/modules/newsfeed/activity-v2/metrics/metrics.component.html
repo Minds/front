@@ -1,5 +1,0 @@
-<ng-container *ngIf="service.shouldShowViewCount$ | async">
-  <span class="m-activityMetrics__views" *ngIf="views$ | async as views"
-    >{{ views | abbr }} { views, plural, =1 {view} other {views}}</span
-  >
-</ng-container>

@@ -97,9 +97,7 @@
           <!-- OWNER BLOCK -->
           <m-activityV2__ownerBlock>
             <ng-container class="m-activityOwnerBlock__right">
-              <m-activityV2__metrics
-                *ngIf="session.getLoggedInUser().guid == entity.ownerObj.guid"
-              ></m-activityV2__metrics>
+              <m-activityV2__views></m-activityV2__views>
               <m-activityV2__menu
                 (deleted)="delete()"
                 *ngIf="activityService.isLoggedIn$ | async"

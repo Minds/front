@@ -42,13 +42,13 @@
     flex-direction: row;
 
     ::ng-deep {
-      m-activity__nsfwConsent {
+      m-activityV2__nsfwConsent {
         flex: 1;
         display: flex;
         flex-direction: column;
       }
     }
-    ::ng-deep m-activity__remind {
+    ::ng-deep m-activityV2__quote {
       display: flex;
       flex-direction: row;
       overflow: hidden;
@@ -144,12 +144,12 @@
   }
 
   .m-activity__leftColumn,
-  ::ng-deep m-activityV2__remind .m-activity__leftColumn {
+  ::ng-deep m-activityV2__quote .m-activity__leftColumn {
     padding-right: $feedAvatarSpacingRight;
   }
 
   .m-activity__rightColumn,
-  ::ng-deep m-activityV2__remind .m-activity__rightColumn {
+  ::ng-deep m-activityV2__quote .m-activity__rightColumn {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -177,7 +177,7 @@
   // ******************************************************
 
   .m-activity__avatar,
-  ::ng-deep m-activityV2__remind .m-activity__avatar {
+  ::ng-deep m-activityV2__quote .m-activity__avatar {
     padding-right: $feedAvatarSpacingRight;
 
     img {

@@ -2,6 +2,8 @@
 @import '../shared.scss';
 
 :host {
+  display: inline-block;
+
   // ******************************************************
   // ** FEED (inside owner block) **
   // ******************************************************
@@ -16,10 +18,14 @@
   // ** MINIMAL MODE **
   // ******************************************************
 
-  .m-activityPermalink--minimalMode {
+  &.m-activity__permalink--minimalMode {
     padding: 0 $minimalModeSpacing $minimalModeSpacing;
     .addTopSpacing {
       padding-top: $minimalModeSpacing !important;
+    }
+
+    .m-activityPermalink__text {
+      padding-top: 0;
     }
   }
 
@@ -50,20 +56,22 @@
   // ******************************************************
   // ******************************************************
   // ******************************************************
-  .m-activityPermalink {
+  .m-activityPermalink__wrapper {
     text-decoration: none;
+
+    &.m-activityPermalink__wrapper--link {
+      .m-activityPermalink__text {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
 
     .m-activityPermalink__text {
       display: inline-block;
       @include body2Medium;
       @include m-theme() {
         color: themed($m-textColor--secondary);
-      }
-
-      &:not(.m-activityPermalink__text--views) {
-        &:hover {
-          text-decoration: underline;
-        }
       }
 
       .material-icons {

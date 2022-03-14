@@ -75,11 +75,8 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         : entity.ownerObj.icontime;
 
     this.avatarUrl =
-      this.configs.get('cdn_url') +
-      'icon/' +
-      entity.ownerObj.guid +
-      '/medium/' +
-      iconTime;
+      this.configs.get('cdn_url') + 'icon/' + entity.ownerObj.guid + '/medium/';
+    iconTime;
   }
 
   @Input() set displayOptions(options) {
@@ -122,14 +119,10 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('style.height')
   heightPx: string;
 
-  @HostBinding('class.m-activity--minimalRemind')
-  isMinimalRemind: boolean = false;
-
   @HostBinding('class.m-activity--modal')
   isModal: boolean = false;
 
   heightSubscription: Subscription;
-  remindSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -164,14 +157,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.cd.detectChanges();
       }
     );
-    this.remindSubscription = this.service.isRemind$.subscribe(isRemind => {
-      if (isRemind && this.service.displayOptions.minimalMode) {
-        this.service.displayOptions.showOwnerBlock = true;
-        this.isMinimalRemind = true;
-      } else {
-        this.isMinimalRemind = false;
-      }
-    });
   }
 
   ngOnDestroy() {

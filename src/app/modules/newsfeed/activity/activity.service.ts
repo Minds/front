@@ -32,9 +32,9 @@ export type ActivityDisplayOptions = {
   isFeed: boolean; // is the activity a part of a feed?
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
-  avatarColumn: boolean; // avatar gets dedicated column on left of post
+  avatarColumn: boolean; // avatar gets dedicated column on left of post .ojm remove??
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock
-  multilineOwnerBlock: boolean; // show @handle on 2nd line
+  narrowMode: boolean; // for minimal posts and sidebar boosts .ojm remove?
 };
 
 export type ActivityEntity = {
@@ -326,7 +326,7 @@ export class ActivityService {
     isV2: false,
     avatarColumn: true,
     permalinkBelowContent: false,
-    multilineOwnerBlock: false,
+    narrowMode: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

@@ -1,11 +1,13 @@
 @import 'defaults.scss';
-@import '../../common/layout/layout.scss';
+// @import '../../common/layout/layout.scss';
+
+$layoutMax2ColWidth: '1039px'; //ojm
 
 :host {
   &.m-discovery--activityV2 {
     .m-pageLayout__container {
       @media screen and (max-width: $layoutMax2ColWidth) {
-        padding: 0 !important; // ojm why is this breaking discovery page
+        padding: 0 !important;
       }
     }
     [class*='m-pageLayout__pane'] {
@@ -15,9 +17,9 @@
     }
 
     ::ng-deep {
-      .m-discovery__feedItem {
-        padding: 0 !important;
-      }
+      // .m-discovery__feedItem {
+      //   padding: 0 !important;
+      // }
 
       m-activity {
         &:first-child {

@@ -6,6 +6,7 @@ import {
   Inject,
   PLATFORM_ID,
   Injector,
+  HostBinding,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -73,6 +74,10 @@ export class GroupsProfile {
 
   private lastWidth: number;
   readonly hasNewNavigation: boolean;
+
+  //ojm connect to features
+  @HostBinding('class.m-groupsProfile--activityV2')
+  activityV2Feature: boolean = true;
 
   constructor(
     public session: Session,

@@ -1,5 +1,8 @@
 @import 'defaults.scss';
+@import '../shared.scss';
+
 $modal-padding: 20px;
+$modal-padding: $modalScrollableContainerSpacing; //ojm
 
 %desc-text {
   @include body2Regular;

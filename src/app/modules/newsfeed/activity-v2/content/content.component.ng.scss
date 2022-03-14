@@ -10,89 +10,84 @@
   // ** MINIMAL MODE **
   // ******************************************************
 
-  // MEDIA DESCRIPTION
-  .m-activityContent__mediaDescription {
-    .m-activityContent__descriptionWrapper--minimalMode {
-      padding: $spacing4;
+  &.m-activity__content--minimalMode {
+    // MINIMAL MEDIA DESCRIPTION
+    .m-activityContent__mediaDescription {
+      .m-activityContent__descriptionWrapper {
+        padding: $spacing4;
 
-      .m-activityContent__mediaTitle {
-        @include heading3Bold;
-        margin-bottom: 0px;
+        .m-activityContent__mediaTitle {
+          @include heading3Bold;
+          margin-bottom: 0px;
+        }
       }
     }
-  }
 
-  // MESSAGE
-  .m-activityContent__message {
-    &.m-activityContent__message--minimalMode {
-      &.m-activityContent__message--quote {
+    // MINIMAL MESSAGE
+    .m-activityContent__message {
+      &.m-activityContent__message {
+        // MINIMAL MESSAGE - QUOTE
+        &.m-activityContent__message--quote {
+          .m-activityContent__messageWrapper {
+            font-weight: 400;
+            @include m-theme() {
+              border-bottom: 1px solid themed($m-borderColor--primary);
+            }
+          }
+        }
+
+        // MINIMAL MESSAGE - DEFAULT
         .m-activityContent__messageWrapper {
+          padding: $spacing4 !important;
+        }
+        a {
           font-weight: 400;
-          @include m-theme() {
-            border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+
+        //MINIMAL MESSAGE - STATUS
+        &.m-activityContent__message--isTextOnly {
+          &.m-activityContent__message--short,
+          &.m-activityContent__message--medium {
+            .m-activityContent__messageWrapper {
+              @include body1Regular;
+            }
           }
         }
       }
-
-      .m-activityContent__messageWrapper {
-        padding: $spacing4 !important;
-      }
-      a {
-        font-weight: 400;
-      }
-
-      &.m-activityContent__message--isTextOnly {
-        &.m-activityContent__message--short {
-          @include body1Regular;
-        }
-      }
     }
-  }
 
-  // REMIND
-  .m-activityContent__remind {
-    &.m-activityContent__remind--minimalMode {
+    // MINIMAL quote
+    .m-activityContent__quote {
       padding: 0;
       .m-activityContent__messageWrapper {
         padding-top: 0;
       }
-
-      ::ng-deep m-activityV2__remind {
-        @include m-theme() {
-          border: none;
-        }
-        font-weight: 400;
-        a {
-          font-weight: 400;
-        }
-      }
     }
-  }
 
-  // RICH EMBED
-  .m-activityContent__mediaRichEmbed--minimalMode {
-    ::ng-deep minds-rich-embed {
-      .m-rich-embed-src {
-        border: none !important;
-      }
-      a.meta {
-        padding: $minimalModeSpacing;
+    // MINIMAL RICH EMBED
+    .m-activityContent__mediaRichEmbed {
+      ::ng-deep minds-rich-embed {
+        .m-rich-embed-src {
+          border: none !important;
+        }
+        a.meta {
+          padding: $minimalModeSpacing;
 
-        h2.m-rich-embed--title {
-          @include heading4Regular;
-          @include m-theme() {
-            color: themed($m-textColor--primary) !important;
+          h2.m-rich-embed--title {
+            @include heading4Regular;
+            @include m-theme() {
+              color: themed($m-textColor--primary) !important;
+            }
+            margin: 0;
           }
-          margin: 0;
-        }
-        .m-blurb,
-        .m-url {
-          display: none;
+          .m-blurb,
+          .m-url {
+            display: none;
+          }
         }
       }
     }
   }
-
   // ******************************************************
   // ** FIXED HEIGHT **
   // ******************************************************
@@ -107,7 +102,7 @@
     .m-activityContent__media--video,
     .m-activityContent__media--image,
     .m-activityContent__media--richEmbed,
-    .m-activityContent__remind {
+    .m-activityContent__quote {
       flex-shrink: 1;
       flex-grow: 1;
       display: flex;
@@ -118,7 +113,7 @@
       height: 100%;
     }
 
-    .m-activityContent__remind--hasMessage & {
+    .m-activityContent__quote--hasMessage & {
       ::ng-deep .m-rich-embed-src {
         display: flex;
         flex-direction: row;
@@ -155,14 +150,18 @@
   }
 
   // ******************************************************
-  // ** REMIND **
+  // ** QUOTE **
   // ******************************************************
 
-  .m-activityContent__remind {
+  .m-activityContent__quote {
     overflow: hidden;
 
     padding: 0 !important;
   }
+
+  // ******************************************************
+  // ** REMIND **
+  // ******************************************************
 
   .m-activityContent__remindDeletedNotice {
     padding: 20px;

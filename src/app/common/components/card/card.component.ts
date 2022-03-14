@@ -156,6 +156,9 @@ export class MindsCard implements OnInit, AfterViewInit {
       this.componentInstance.object = this.object;
       this.componentInstance.forceShowSubscribe = this.forceShowSubscribe;
     } else if (this.object.subtype === 'blog') {
+      if (this.activityV2Feature) {
+        //ojm skip this if activity V2;
+      }
       (<BlogCard>this.componentInstance)._blog = this.object;
     } else if (this.object.type === 'comment') {
       const commentComp: CommentComponentV2 = <CommentComponentV2>(
@@ -174,6 +177,8 @@ export class MindsCard implements OnInit, AfterViewInit {
           showToolbar: false,
           showComments: false,
           autoplayVideo: false,
+          narrowMode: true, //ojm?
+          showPostMenu: false,
         };
       } else {
         (<ActivityComponent>this.componentInstance).displayOptions = {

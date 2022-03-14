@@ -22,10 +22,7 @@
     [maxHeightAllowed]="maxDescHeight"
     (click)="onMessageClick($event)"
   >
-    <div
-      class="m-activityContent__descriptionWrapper"
-      [class.m-activityContent__descriptionWrapper--minimalMode]="minimalMode"
-    >
+    <div class="m-activityContent__descriptionWrapper">
       <p
         [innerHtml]="mediaTitle | tags"
         class="m-activityContent__mediaTitle"
@@ -69,7 +66,6 @@
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="shortStatus"
       [class.m-activityContent__message--medium]="mediumStatus"
-      [class.m-activityContent__message--minimalMode]="minimalMode"
       [maxHeightAllowed]="maxHeightAllowed || maxMessageHeight"
       *ngIf="message?.length >= 1"
       (click)="onMessageClick($event)"
@@ -108,11 +104,7 @@
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="!hideMedia">
-  <div
-    class="m-activityContent__media--richEmbed"
-    *ngIf="isRichEmbed"
-    [class.m-activityContent__mediaRichEmbed--minimalMode]="minimalMode"
-  >
+  <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
     <div class="m-activityContent__fixedHeightSpacer"></div>
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
@@ -213,9 +205,26 @@
     /></ng-template>
   </div>
 </ng-container>
-
 <!-- ----------------------------------- -->
-<!-- REMIND -->
+<!-- QUOTE -->
+<!-- ----------------------------------- -->
+<ng-container *ngIf="!hideMedia">
+  <div
+    *ngIf="service.isQuote$ | async"
+    class="m-activityContent__quote"
+    [class.m-activityContent__quote--hasMessage]="!!message"
+  >
+    <m-activityV2__quote
+      [parentService]="service"
+      [entity]="service.entity$ | async"
+      [style.height]="quoteHeight"
+      [style.max-height]="quoteHeight"
+    >
+    </m-activityV2__quote>
+  </div>
+</ng-container>
+<!-- ----------------------------------- -->
+<!-- REMIND DELETED NOTICE -->
 <!-- ----------------------------------- -->
 <div
   class="m-activityContent__remindDeletedNotice"
@@ -227,25 +236,6 @@
     not have permission to view it.</span
   >
 </div>
-
-<ng-container *ngIf="!hideMedia">
-  <div
-    *ngIf="service.isQuote$ | async"
-    class="m-activityContent__remind"
-    [class.m-activityContent__remind--hasMessage]="!!message"
-    [class.m-activityContent__remind--minimalMode]="minimalMode"
-    #remindContainerEl
-  >
-    <m-activityV2__remind
-      [parentService]="service"
-      [entity]="service.entity$ | async"
-      [style.width]="remindWidth"
-      [style.height]="remindHeight"
-      [style.max-height]="remindHeight"
-    >
-    </m-activityV2__remind>
-  </div>
-</ng-container>
 <!-- ----------------------------------- -->
 <!-- PERMALINK -->
 <!-- ----------------------------------- -->
@@ -257,7 +247,6 @@
 <!-- TEMPLATE: TRANSLATION -->
 <!-- ----------------------------------- -->
 <ng-template #translation>
-  <!-- (onTranslateInit)="propagateTranslation($event)" -->
   <ng-container *mIfBrowser>
     <m-translate
       *ngIf="service.displayOptions.showTranslation"
@@ -271,7 +260,6 @@
     ></m-translate>
   </ng-container>
 </ng-template>
-
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: TEASER FADEOUT -->
 <!-- ----------------------------------- -->

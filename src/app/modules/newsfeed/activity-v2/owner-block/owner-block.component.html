@@ -1,6 +1,6 @@
 <div class="m-activity__ownerBlock m-legible">
   <!-- ---------------------------- -->
-  <!-- AVATAR: MINIMAL MODE / SIDEBAR BOOSTS / MODALS ONLY  -->
+  <!-- AVATAR: MINIMAL REMIND / SIDEBAR BOOSTS / MODALS ONLY  -->
   <div
     class="m-activityOwnerBlock__avatar"
     *ngIf="minimalMode || isSidebarBoost"
@@ -12,7 +12,7 @@
     </m-hovercard>
 
     <div
-      *ngIf="minimalMode"
+      *ngIf="minimalMode && (isRemind || service.displayOptions.isQuote)"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
     >
       <i class="material-icons">repeat</i>
@@ -44,21 +44,36 @@
         <span [title]="username">@{{ username }}</span>
       </a>
     </ng-container>
-    <ng-container *ngIf="!service.displayOptions.permalinkBelowContent">
+    <ng-container
+      *ngIf="
+        !service.displayOptions.permalinkBelowContent &&
+        !service.displayOptions.minimalMode
+      "
+    >
       <span class="m-activityOwnerBlock__dot">·</span>
       <m-activityV2__permalink></m-activityV2__permalink>
     </ng-container>
   </div>
 
-  <div class="m-activityOwnerBlock__right">
-    <m-activityV2__metrics
-      *ngIf="session.getLoggedInUser().guid == entity.ownerObj.guid"
-    ></m-activityV2__metrics>
-    <m-activityV2__badges></m-activityV2__badges>
+  <div
+    class="m-activityOwnerBlock__right"
+    *ngIf="!service.displayOptions.minimalMode"
+  >
+    <m-activityV2__badges
+      *ngIf="
+        !service.displayOptions.minimalMode &&
+        !service.displayOptions.isSidebarBoost
+      "
+    ></m-activityV2__badges>
+    <m-activityV2__views
+      *ngIf="!service.displayOptions.isModal"
+    ></m-activityV2__views>
     <m-activityV2__menu
       (deleted)="deleted.emit()"
       *ngIf="
-        service.displayOptions.showPostMenu && (service.isLoggedIn$ | async)
+        service.displayOptions.showPostMenu &&
+        (service.isLoggedIn$ | async) &&
+        !service.displayOptions.minimalMode
       "
     ></m-activityV2__menu>
   </div>

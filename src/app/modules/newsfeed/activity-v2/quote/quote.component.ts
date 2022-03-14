@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
 import {
@@ -7,12 +7,17 @@ import {
 } from '../../activity/activity.service';
 
 @Component({
-  selector: 'm-activityV2__remind',
-  templateUrl: 'remind.component.html',
-  styleUrls: ['remind.component.ng.scss'],
+  selector: 'm-activityV2__quote',
+  templateUrl: 'quote.component.html',
+  styleUrls: ['quote.component.ng.scss'],
   providers: [ActivityService],
 })
-export class ActivityV2RemindComponent {
+export class ActivityV2QuoteComponent {
+  @HostBinding('class.m-activity__remind--minimalMode')
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
+
   @Input('entity') set entity(entity: ActivityEntity) {
     this.service.setEntity(entity.remind_object);
     this.service.isNsfwConsented$.next(true); // Parent entity should have done this
@@ -50,6 +55,16 @@ export class ActivityV2RemindComponent {
   ) {}
 
   ngOnInit() {
-    this.service.displayOptions = this.parentService.displayOptions;
+    const opts = {
+      ...this.parentService.displayOptions,
+      permalinkBelowContent: false,
+      showPostMenu: false,
+      showOwnerBlocK: true,
+      isQuote: true,
+    };
+
+    console.log('ojm remind opts', opts);
+
+    this.service.displayOptions = opts;
   }
 }

@@ -150,14 +150,26 @@
           background: themed($m-bgColor--primary);
         }
       }
-    }
-  }
 
-  .m-commentToolbar__buttons {
-    :ng-deep .m-commentToolbarButton {
-      span,
-      i {
-        @include body2Regular;
+      .m-commentOwnerRow__text {
+        [class*='m-commentOwnerRowItem__'] {
+          @include body2Regular;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-commentToolbar__buttons {
+        :ng-deep .m-commentToolbarButton {
+          span,
+          i {
+            @include body2Regular;
+          }
+        }
+      }
+      .m-comment--compact .minds-body {
+        margin-left: 0;
       }
     }
   }

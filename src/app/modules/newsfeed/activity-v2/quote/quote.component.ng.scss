@@ -1,0 +1,36 @@
+@import 'defaults.scss';
+
+:host {
+  // ******************************************************
+  // ** MINIMAL MODE **
+  // ******************************************************
+
+  &.m-activity__remind--minimalMode {
+    padding: 0;
+    @include m-theme() {
+      border: none;
+    }
+
+    .m-activity__rightColumn {
+      padding-top: $spacing4;
+    }
+  }
+
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  // ** DEFAULT **
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+
+  display: flex;
+  margin: auto;
+  padding: $spacing4;
+  border-radius: $borderRadius--activity;
+  @include border;
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+}

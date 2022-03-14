@@ -108,8 +108,7 @@ export class ActivityV2ContentComponent
   maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
 
   activityHeight: number;
-  remindWidth: number;
-  remindHeight: number;
+  quoteHeight: number;
   videoHeight: string;
 
   imageHeight: string;
@@ -181,7 +180,7 @@ export class ActivityV2ContentComponent
     this.activityHeightSubscription = this.service.height$.subscribe(
       (height: number) => {
         this.activityHeight = height;
-        this.calculateRemindHeight();
+        this.calculateQuoteHeight();
       }
     );
     this.paywallUnlockedSubscription = this.service.paywallUnlockedEmitter.subscribe(
@@ -209,7 +208,6 @@ export class ActivityV2ContentComponent
         this.canonicalUrl = canonicalUrl;
       }
     );
-
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
   }
 
@@ -218,7 +216,7 @@ export class ActivityV2ContentComponent
     timer(0)
       .toPromise()
       .then(() => {
-        this.calculateRemindHeight();
+        this.calculateQuoteHeight();
         this.calculateVideoHeight();
         this.calculateImageDimensions();
       });
@@ -252,6 +250,10 @@ export class ActivityV2ContentComponent
 
   get isRichEmbed(): boolean {
     return !!this.entity.perma_url && !this.isVideo && !this.isImage;
+  }
+
+  get isQuote(): boolean {
+    return this.entity && !!this.entity.remind_object;
   }
 
   get isBlog(): boolean {
@@ -339,6 +341,7 @@ export class ActivityV2ContentComponent
     return this.service.displayOptions.isModal;
   }
 
+  @HostBinding('class.m-activity__content--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
@@ -403,10 +406,9 @@ export class ActivityV2ContentComponent
 
   get showPermalink(): boolean {
     return (
-      !this.hideText &&
-      (this.service.displayOptions.permalinkBelowContent ||
-        (this.service.displayOptions.minimalMode &&
-          this.service.displayOptions.showMetrics))
+      !this.hideText && this.service.displayOptions.permalinkBelowContent
+      // &&
+      // !this.isQuote
     );
   }
 
@@ -439,7 +441,7 @@ export class ActivityV2ContentComponent
   }
 
   @HostListener('window:resize')
-  calculateRemindHeight(): void {
+  calculateQuoteHeight(): void {
     if (!this.service.displayOptions.fixedHeight) return;
     const messageHeight = this.messageEl
       ? this.messageEl.nativeElement.clientHeight
@@ -449,7 +451,7 @@ export class ActivityV2ContentComponent
 
     const maxFixedHeightContent = this.maxFixedHeightContent;
 
-    this.remindHeight = maxFixedHeightContent - messageHeight;
+    this.quoteHeight = maxFixedHeightContent - messageHeight;
   }
 
   /**

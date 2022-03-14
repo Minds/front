@@ -61,13 +61,17 @@
     .m-activityToolbar__metrics {
       padding-left: $modalScrollableContainerSpacing + $spacing3;
       padding-right: $modalScrollableContainerSpacing + $spacing3;
-      padding-top: $spacing8;
-      padding-bottom: $spacing8;
+      padding-top: $spacing4;
+      padding-bottom: $spacing4;
     }
   }
 
   // ******************************************************
+  // ******************************************************
+  // ******************************************************
   // ** DEFAULT **
+  // ******************************************************
+  // ******************************************************
   // ******************************************************
 
   @include m-theme() {
@@ -188,7 +192,6 @@
       border-radius: 0;
       text-transform: unset;
       padding: 0;
-      margin-left: 8px;
       font-size: 15px;
       font-weight: 500;
       letter-spacing: 0.7px;
@@ -196,7 +199,6 @@
       line-height: normal;
 
       m-icon {
-        margin-left: 4px;
         vertical-align: middle;
 
         i {

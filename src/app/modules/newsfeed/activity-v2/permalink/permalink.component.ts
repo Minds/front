@@ -19,14 +19,12 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
 
   entity: ActivityEntity;
 
-  showViewCount: boolean = false;
-  views: number;
+  @HostBinding('class.m-activity__permalink--minimalMode')
+  get minimalMode(): boolean {
+    return this.service.displayOptions.minimalMode;
+  }
 
-  constructor(
-    public service: ActivityService,
-    public session: Session,
-    private configs: ConfigsService
-  ) {}
+  constructor(public service: ActivityService, public session: Session) {}
 
   /**
    * Show absolute dates for items outside the feed
@@ -44,14 +42,6 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
-
-        this.showViewCount =
-          this.session.isAdmin() ||
-          entity.ownerObj.guid === this.session.getLoggedInUser().guid;
-
-        if (this.showViewCount) {
-          this.views = entity.impressions;
-        }
       }
     );
   }
@@ -89,7 +79,11 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
    * a title or message)
    */
   get addTopSpacing() {
-    if (!this.entity || !this.entity.activity_type) {
+    if (
+      !this.entity ||
+      !this.entity.activity_type ||
+      !this.service.displayOptions.minimalMode
+    ) {
       return false;
     }
     const entity =

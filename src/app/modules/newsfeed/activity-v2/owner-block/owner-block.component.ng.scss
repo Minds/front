@@ -8,10 +8,18 @@
   // ** MINIMAL MODE **
   // ******************************************************
   &.m-activity__ownerBlock--minimalMode {
-    &.m-activity__ownerBlock {
-      padding-left: $spacing4;
-      padding-right: $spacing2;
-      ::ng-deep .m-activityOwnerBlock__avatar {
+    &.m-activity__ownerBlock--groupPost {
+      .m-activityOwnerBlock__body {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    padding-left: $spacing4;
+    padding-right: $spacing2;
+
+    .m-activityOwnerBlock__avatar {
+      ::ng-deep m-hovercard {
         img {
           height: 35px;
           width: 35px;
@@ -19,51 +27,62 @@
             border: none;
           }
         }
-        .m-activityOwnerBlock__remindIcon--minimalMode {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          border-radius: 50%;
-          height: 17px;
-          width: 17px;
-          @include m-theme() {
-            background-color: themed($m-bgColor--contrast);
-          }
-          i {
-            font-weight: 700;
-            font-size: 11px;
-            @include m-theme() {
-              color: themed($m-link);
-            }
-          }
-        }
       }
-      .m-activityOwnerBlock__displayName,
-      .m-activityOwnerBlock__groupName {
-        margin-left: $spacing2;
+      .m-activityOwnerBlock__remindIcon--minimalMode {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border-radius: 50%;
+        height: 17px;
+        width: 17px;
         @include m-theme() {
-          color: themed($m-textColor--secondary);
+          background-color: themed($m-bgColor--contrast);
         }
-      }
-      .m-activityOwnerBlock__right {
-        display: none;
+        i {
+          font-weight: 700;
+          font-size: 11px;
+          @include m-theme() {
+            color: themed($m-link);
+          }
+        }
       }
     }
+    .m-activityOwnerBlock__displayName,
+    .m-activityOwnerBlock__groupName {
+      margin-left: $spacing2;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+    .m-activityOwnerBlock__right {
+      display: none;
+    }
   }
+  // ******************************************************
+  // ** REMIND **
+  // ******************************************************
+  // ojm
+  // todo: make displayOption 'isNarrow' to handle sidebar boosts and minimal mode
+  // and also minimal reminds?
+
   // ******************************************************
   // ** SIDEBAR BOOST **
   // ******************************************************
 
-  &.m-activity__ownerBlock--sidebarBoost {
+  m-ads-boost & {
     .m-activityOwnerBlock__body {
       flex-direction: column;
       overflow: visible;
     }
     .m-activityOwnerBlockPermalink__text {
       padding: 0;
+    }
+
+    .m-activityOwnerBlock__dot {
+      display: none;
     }
   }
 
@@ -164,7 +183,10 @@
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
-    padding: 0 0 0 $spacing2;
+  }
+
+  .m-activityOwnerBlock__dot {
+    padding: 0 $spacing2;
   }
 
   .m-activityOwnerBlock__groupName {

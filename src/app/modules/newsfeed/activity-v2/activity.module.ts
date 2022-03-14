@@ -21,15 +21,13 @@ import { ActivityV2MenuComponent } from './menu/menu.component';
 import { PostMenuModule } from '../../../common/components/post-menu/post-menu.module';
 import { WireModule } from '../../wire/wire.module';
 import { ActivityV2NsfwConsentComponent } from './nsfw-consent/nsfw-consent.component';
-import { ActivityV2MetricsComponent } from './metrics/metrics.component';
-import { ActivityV2RemindComponent } from './remind/remind.component';
+import { ActivityV2QuoteComponent } from './quote/quote.component';
 import { ActivityV2PaywallComponent } from './paywall/paywall.component';
 import { CodeHighlightModule } from '../../code-highlight/code-highlight.module';
 import { ActivityV2ModalComponent } from './modal/modal.component';
 import { ActivityV2ModalTitleOverlayComponent } from './modal/title-overlay/title-overlay.component';
 import { ActivityV2ModalPagerComponent } from './modal/pager/pager.component';
 import { ActivityV2ModalCreatorService } from './modal/modal-creator.service';
-import { ActivityV2MinimalMetricsComponent } from './minimal-metrics/minimal-metrics.component';
 import { ActivityV2RemindButtonComponent } from './remind-button/remind-button.component';
 import { ActivityV2ModalQuoteComponent } from './modal/quote/quote.component';
 import { ActivityV2RelativeTimeSpanComponent } from './owner-block/relative-time-span/relative-time-span.component';
@@ -37,6 +35,7 @@ import { ActivityV2BoostButtonComponent } from './boost-button/boost-button.comp
 import { ActivityV2FlagComponent } from './flag/flag.component';
 import { ActivityV2BadgesComponent } from './badges/badges.component';
 import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
+import { ActivityV2ViewsComponent } from './views/views.component';
 
 @NgModule({
   imports: [
@@ -62,13 +61,11 @@ import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
     ActivityV2ToolbarComponent,
     ActivityV2MenuComponent,
     ActivityV2NsfwConsentComponent,
-    ActivityV2MetricsComponent,
-    ActivityV2RemindComponent,
+    ActivityV2QuoteComponent,
     ActivityV2PaywallComponent,
     ActivityV2ModalComponent,
     ActivityV2ModalTitleOverlayComponent,
     ActivityV2ModalPagerComponent,
-    ActivityV2MinimalMetricsComponent,
     ActivityV2RemindButtonComponent,
     ActivityV2BoostButtonComponent,
     ActivityV2ModalQuoteComponent,
@@ -76,6 +73,7 @@ import { ActivityV2PermalinkComponent } from './permalink/permalink.component';
     ActivityV2FlagComponent,
     ActivityV2BadgesComponent,
     ActivityV2PermalinkComponent,
+    ActivityV2ViewsComponent,
   ],
   providers: [ActivityV2ModalCreatorService],
   exports: [ActivityV2Component, ActivityV2RemindButtonComponent],
