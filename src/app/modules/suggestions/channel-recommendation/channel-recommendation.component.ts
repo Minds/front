@@ -75,8 +75,9 @@ export class ChannelRecommendationComponent implements OnInit {
       this.api
         .get('api/v3/recommendations', {
           location: this.location,
+          // mostRecentSubscriptionUserGuid: this.recentSubscriptions.list().join(',') || this.channelId,
           mostRecentSubscriptionUserGuid:
-            this.recentSubscriptions.list().join(',') || this.channelId,
+            this.recentSubscriptions.list()[0] || this.channelId,
           targetUserGuid: this.channelId,
           limit: 3,
         })

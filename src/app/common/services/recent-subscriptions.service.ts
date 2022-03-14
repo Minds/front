@@ -38,7 +38,7 @@ export class RecentSubscriptionsService implements OnInit {
    */
   recordSubscriptionChange(channel: MindsUser) {
     if (channel.subscribed) {
-      this.subscriptions.push({
+      this.subscriptions.unshift({
         channelGuid: channel.guid,
         subscribedAt: Date.now(),
       });
