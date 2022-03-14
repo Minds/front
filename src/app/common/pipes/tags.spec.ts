@@ -1,16 +1,9 @@
 import { TagsPipe } from './tags';
-import { FeaturesService } from '../../services/features.service';
 import { MockService } from '../../utils/mock';
 import { SiteService } from '../services/site.service';
 import { RegexService } from '../services/regex.service';
 
 describe('TagPipe', () => {
-  const featuresServiceMock: any = MockService(FeaturesService, {
-    has: feature => {
-      return true;
-    },
-  });
-
   const siteServiceMock: any = MockService(SiteService, {
     props: {
       isProDomain: { get: () => false },
@@ -23,7 +16,7 @@ describe('TagPipe', () => {
   let pipe;
 
   beforeEach(() => {
-    pipe = new TagsPipe(featuresServiceMock, siteServiceMock, regexService);
+    pipe = new TagsPipe(siteServiceMock, regexService);
   });
 
   it('should transform when # in the middle ', () => {
@@ -169,22 +162,58 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a href="http://minds.com/');
   });
 
+  it('should transform url without protocol', () => {
+    const string = 'textstring www.minds.com';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="//www.minds.com');
+  });
+
+  it('should transform url without protocol or subdomain', () => {
+    const string = 'textstring minds.com';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="//minds.com');
+  });
+
+  it('should NOT detect ellipsis as part of URL', () => {
+    const string = 'textstring minds.com...';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="//minds.com');
+  });
+
+  it('should NOT detect short acronyms as URLs', () => {
+    const string = 'textstring i.e. things';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).not.toContain('<a href');
+  });
+
+  it('should NOT detect long acronyms as URLs', () => {
+    const string = 'textstring A.C.R.O.N.Y.M things';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).not.toContain('<a href');
+  });
+
+  it('should NOT detect forward slash formatted dates as URLs', () => {
+    const string = 'textstring 1/1/2022 things';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).not.toContain('<a href');
+  });
+
+  it('should NOT detect forward slash seperated comparisons as URLs', () => {
+    const string = 'textstring thing1/thing2';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).not.toContain('<a href');
+  });
+
+  it('should NOT the end of a quote as a URL', () => {
+    const string = 'textstring "not a url".';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).not.toContain('<a href');
+  });
+
   it('should transform url with https', () => {
     const string = 'textstring https://minds.com/';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain('<a href="https://minds.com/');
-  });
-
-  it('should transform url with ftp', () => {
-    const string = 'textstring ftp://minds.com/';
-    const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="ftp://minds.com/');
-  });
-
-  it('should transform url with file', () => {
-    const string = 'textstring file://minds.com/';
-    const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="file://minds.com/');
   });
 
   it('should transform url with a hashtag', () => {
@@ -262,7 +291,7 @@ describe('TagPipe', () => {
 
   it('should transform many tags', () => {
     const string = `text http://minds.com/#position@some @name
-    @name1 #hash1#hash2 #hash3 ftp://s.com name@mail.com
+    @name1 #hash1#hash2 #hash3 http://s.com name@mail.com
     `;
     const transformedString = pipe.transform(<any>string);
 
@@ -280,7 +309,7 @@ describe('TagPipe', () => {
     expect(transformedString).toContain(
       '<a href="/discovery/search?f=top&t=all&q=%23hash3'
     );
-    expect(transformedString).toContain('<a href="ftp://s.com"');
+    expect(transformedString).toContain('<a href="http://s.com"');
     expect(transformedString).toContain('<a href="mailto:name@mail.com"');
   });
 
