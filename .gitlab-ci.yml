@@ -345,6 +345,8 @@ review:stop:
   stage: review
   when: manual
   except:
+    refs:
+      - master
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 
