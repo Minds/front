@@ -2,6 +2,7 @@ import { TagsPipe } from './tags';
 import { MockService } from '../../utils/mock';
 import { SiteService } from '../services/site.service';
 import { RegexService } from '../services/regex.service';
+import { TextParserService } from '../services/text-parser.service';
 
 describe('TagPipe', () => {
   const siteServiceMock: any = MockService(SiteService, {
@@ -16,7 +17,7 @@ describe('TagPipe', () => {
   let pipe;
 
   beforeEach(() => {
-    pipe = new TagsPipe(siteServiceMock, regexService);
+    pipe = new TagsPipe(siteServiceMock, new TextParserService(), regexService);
   });
 
   it('should transform when # in the middle ', () => {

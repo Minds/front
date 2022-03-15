@@ -12,6 +12,7 @@ import { map, tap, last } from 'rxjs/operators';
 import { Client, Upload } from './api';
 import { Session } from './session';
 import { ConfigsService } from '../common/services/configs.service';
+import { TextParserService } from '../common/services/text-parser.service';
 
 @Injectable()
 export class AttachmentService {
@@ -40,6 +41,7 @@ export class AttachmentService {
     public clientService: Client,
     public uploadService: Upload,
     private http: HttpClient,
+    public textParser: TextParserService,
     configs: ConfigsService
   ) {
     this.maxVideoFileSize = configs.get('max_video_file_size');
@@ -388,7 +390,7 @@ export class AttachmentService {
    * @returns void.
    */
   preview(content: string, detectChangesFn?: Function): void {
-    let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gi),
+    let match = this.textParser.extractUrls(content),
       url;
 
     if (!match) {
@@ -405,9 +407,11 @@ export class AttachmentService {
       url = match;
     }
 
-    if (!url.length) {
+    if (!url || !url.length) {
       return;
     }
+
+    url = this.textParser.prependHttps(url);
 
     if (url === this.attachment.richUrl) {
       return;

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { SiteService } from '../services/site.service';
 import { RegexService } from '../services/regex.service';
-import * as twitter from 'twitter-text';
+import { TextParserService } from '../services/text-parser.service';
 
 // type of tag.
 export type TagType = 'url' | 'mail' | 'hash' | 'cash' | 'at';
@@ -99,6 +99,7 @@ export class TagsPipe implements PipeTransform {
 
   constructor(
     private siteService: SiteService,
+    private textParser: TextParserService,
     public regexService: RegexService
   ) {}
 
@@ -179,9 +180,7 @@ export class TagsPipe implements PipeTransform {
    * @returns { void }
    */
   private parseUrls(value: string): void {
-    const extractedUrls = twitter.default.extractUrlsWithIndices(value, {
-      extractUrlsWithoutProtocol: true,
-    });
+    const extractedUrls = this.textParser.extractUrlsWithIndices(value);
 
     for (let urlObj of extractedUrls) {
       this.push({
