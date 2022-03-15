@@ -18,6 +18,7 @@ import { ModalService } from '../../../services/ux/modal.service';
 @Component({
   selector: 'minds-groups-settings-button',
   templateUrl: 'groups-settings-button.html',
+  styleUrls: ['./groups-settings-button.ng.scss'],
 })
 export class GroupsSettingsButton {
   group: any = {

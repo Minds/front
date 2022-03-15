@@ -1,0 +1,7 @@
+@import 'defaults.scss';
+
+:host {
+  .minds-dropdown-menu {
+    @include z-index(tooltip);
+  }
+}
