@@ -111,7 +111,7 @@ export class OnboardingV3Service implements OnDestroy {
           if (step) {
             switch (step) {
               case 'SetupChannelStep':
-                // only force complete if the channel had a bio
+                // only force complete if the channel had a bio (possibly make this more robust by applying more filters)
                 if (stepData?.briefdescription) {
                   this.forceCompletion(step);
                   onLoadFinished?.();
@@ -150,10 +150,12 @@ export class OnboardingV3Service implements OnDestroy {
             console.error(e);
             return of(e);
           }),
-          map(progress =>
+          map((progress: OnboardingResponse) =>
             progress.steps.map((progressStep: OnboardingStep) => {
-              if (step === progressStep.id) {
+              if (step === progressStep.id && !progressStep.is_completed) {
                 progressStep.is_completed = true;
+                progress.completed_pct =
+                  progress.completed_pct + 1 / progress.steps.length;
               }
             })
           )
