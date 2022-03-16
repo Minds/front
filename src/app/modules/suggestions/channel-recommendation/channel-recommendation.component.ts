@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   ApiResource,
-  ResourceRef
+  ResourceRef,
 } from './../../../common/api/api-resource.service';
 import { MindsUser } from './../../../interfaces/entities';
 
@@ -40,6 +40,8 @@ export class ChannelRecommendationComponent implements OnInit {
         'api/v3/recommendations',
         {
           cachePolicy: ApiResource.CachePolicy.cacheThenFetch,
+          updatePolicy: ApiResource.UpdatePolicy.replace,
+          cacheStorage: ApiResource.CacheStorage.Memory,
           params: {
             location: this.location,
           },

@@ -234,6 +234,9 @@ export class ApiResource {
    * @returns
    */
   public query<T, P>(
+    // TODO: let this be a name like 'recommendations' so we can have access
+    // to this resource from elsewhere without explicitly defining the url. and let the cache key be
+    // this name rather than the url and query combined
     url: string,
     opts: ApiResourceOptions<P>
   ): ResourceRef<T, P> {
