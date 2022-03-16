@@ -1,5 +1,4 @@
 import { MindsUser } from './../../../interfaces/entities';
-import ApiResource from './tables/ApiResource';
 import UserDB from './user.db';
 
 export class UserStorageService {

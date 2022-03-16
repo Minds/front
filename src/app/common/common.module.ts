@@ -201,6 +201,7 @@ import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 import { ChannelRecommendationComponent } from './components/channel-recommendation/channel-recommendation.component';
+import { ApiResource } from './api/api-resource.service';
 
 const routes: Routes = [
   {
@@ -558,6 +559,7 @@ const routes: Routes = [
     RelatedContentService,
     RegexService,
     ApiService,
+    ApiResource,
     AttachmentApiService,
     ClientMetaService,
     UserMenuService,

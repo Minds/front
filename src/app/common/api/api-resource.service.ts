@@ -1,13 +1,36 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from, Observable, throwError } from 'rxjs';
 import { ApiRequestMethod, ApiResponse, ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { StorageV2 } from '../../services/storage/v2';
+import { StorageV2 } from './../../services/storage/v2';
 
 enum CachePolicy {
+  /**
+   * fetch from remote and cache the result. return cache only
+   * when remote was unavailable
+   */
   fetchAndCache = 'fetchAndCache',
+  /**
+   * completely disregard cache
+   */
   fetchOnly = 'fetchOnly',
+  /**
+   * return cache if available, then fetch and update result
+   */
   cacheThenFetch = 'cacheThenFetch',
+  /**
+   * if cache was available, return it and don't fetch anything else.
+   * if cache wasn't available, fetch and update result
+   */
   cacheOnly = 'cacheOnly',
+}
+
+enum CacheStorage {
+  /** indexedDb user storage */
+  User = 'user',
+  /** in memory storage */
+  Memory = 'memory',
+  /** session storage */
+  Session = 'session',
 }
 
 enum UpdatePolicy {
@@ -15,7 +38,7 @@ enum UpdatePolicy {
   merge,
 }
 
-type ApiResourceOptions = {
+type ApiResourceOptions<P> = {
   /**
    * the request method
    */
@@ -23,7 +46,7 @@ type ApiResourceOptions = {
   /**
    * fetch query params
    */
-  params?: any;
+  params?: P;
   /**
    * the endpoint url
    */
@@ -36,64 +59,82 @@ type ApiResourceOptions = {
    * TODO
    */
   cachePolicy?: CachePolicy;
+  /**
+   * where to store the cache.
+   * the keys of this enum are the attributes of StorageV2 service
+   */
+  cacheStorage?: CacheStorage;
 };
 
-/**
- * TODO
- */
-@Injectable()
-export class ApiResourceService<T> {
-  public loading$ = new BehaviorSubject(false);
-  public error$ = new BehaviorSubject('');
-  public result$: BehaviorSubject<T> = new BehaviorSubject(undefined);
+export class ResourceRef<T, P> {
+  loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  error$: BehaviorSubject<string> = new BehaviorSubject('');
+  data$: BehaviorSubject<T> = new BehaviorSubject(undefined);
 
-  protected api: ApiService;
-  protected storage: StorageV2;
-
-  public load;
-  public call;
-
-  static CachePolicy = CachePolicy;
-  static UpdatePolicy = UpdatePolicy;
-
-  constructor(private _options: ApiResourceOptions = {}) {
-    if (this.options.method === ApiRequestMethod.GET) {
-      this.load = this.fetch;
-    } else {
-      this.call = this.fetch;
-    }
+  constructor(
+    private _api: ApiService,
+    private _storage: StorageV2,
+    private _url: string,
+    private _options: ApiResourceOptions<P>
+  ) {
+    this._fetch();
   }
 
-  public setOptions(opts: ApiResourceOptions) {
+  setOptions(opts: ApiResourceOptions<P>) {
     this._options = opts;
   }
 
-  private get options() {
+  get options() {
     return {
+      url: this._url,
       method: ApiRequestMethod.GET,
       updatePolicy: UpdatePolicy.replace,
       cachePolicy: CachePolicy.cacheThenFetch,
+      cacheStorage: CacheStorage.Memory,
       ...this._options,
     };
   }
 
   /**
+   * refetches the data and replaces the data
+   * @param params
+   * @returns
+   */
+  refetch = (params: P): Promise<T> =>
+    this._fetch(params, { updatePolicy: UpdatePolicy.replace });
+
+  /**
+   * fetches the data again and merges it in the data
+   * @param params
+   * @returns
+   */
+  fetchMore = (params: P): Promise<T> =>
+    this._fetch(params, { updatePolicy: UpdatePolicy.merge });
+
+  /**
    * @param { object } data
    * @returns { T }
    */
-  private async fetch(params: any) {
+  private async _fetch(
+    _params?: P,
+    optionsOverride?: ApiResourceOptions<P>
+  ): Promise<T> {
+    const options = Object.assign({}, this.options, optionsOverride);
+    const params = Object.assign({}, options.params, _params);
+
+    if (!options.url) {
+      throw new Error('url not provided');
+    }
+
     // restore from cache on fetch
     if (
-      this.options.cachePolicy === CachePolicy.cacheOnly ||
-      this.options.cachePolicy === CachePolicy.cacheThenFetch
+      options.cachePolicy === CachePolicy.cacheOnly ||
+      options.cachePolicy === CachePolicy.cacheThenFetch
     ) {
-      const hydratedResult = await this.hydrate(params);
+      const rehydratedResult = await this._rehydrate(params);
 
-      if (
-        this.options.cachePolicy === CachePolicy.cacheOnly &&
-        hydratedResult
-      ) {
-        return null;
+      if (options.cachePolicy === CachePolicy.cacheOnly && rehydratedResult) {
+        return rehydratedResult;
       }
     }
 
@@ -101,19 +142,19 @@ export class ApiResourceService<T> {
     this.error$.next('');
 
     try {
-      const response = await this.api[this.options.method](
-        this.options.url,
-        Object.assign({}, this.options.params, params)
+      const response = await this._api[options.method](
+        options.url,
+        Object.assign({}, options.params, params)
       ).toPromise();
 
-      this.result$.next(this.updateState(response));
+      this.data$.next(this._updateState(response));
 
       // only cache get requests
       if (
-        this.options.method === ApiRequestMethod.GET &&
-        this.options.cachePolicy !== CachePolicy.fetchOnly
+        options.method === ApiRequestMethod.GET &&
+        options.cachePolicy !== CachePolicy.fetchOnly
       ) {
-        this.persist(params);
+        this._persist(params);
       }
     } catch (e) {
       this.error$.next(e);
@@ -122,14 +163,14 @@ export class ApiResourceService<T> {
       this.loading$.next(false);
     }
 
-    return this.result$;
+    return this.data$.getValue();
   }
 
   /**
    * updates the response based on the policy provided
    * TODO
    */
-  private updateState(response: ApiResponse): T {
+  private _updateState(response: ApiResponse): T {
     switch (this.options.updatePolicy) {
       case UpdatePolicy.merge:
       case UpdatePolicy.replace:
@@ -143,10 +184,10 @@ export class ApiResourceService<T> {
    * @param { object } params
    * @returns { Promise }
    */
-  private persist(params) {
-    return this.storage.user.setApiResource(
-      this.cacheKey(params),
-      this.result$.getValue()
+  private _persist(params) {
+    return this._storage[this.options.cacheStorage].setApiResource(
+      this._cacheKey(params),
+      this.data$.getValue()
     );
   }
 
@@ -155,7 +196,7 @@ export class ApiResourceService<T> {
    * @param { object } params
    * @returns { string } cacheKey
    */
-  private cacheKey(params?: any) {
+  private _cacheKey(params?: any) {
     return `${this.options.url}?${JSON.stringify(
       Object.assign({}, this.options.params || {}, params || {})
     )}`;
@@ -166,14 +207,55 @@ export class ApiResourceService<T> {
    * @param { object } params
    * @returns { Promise } result
    */
-  private async hydrate(params?: any) {
-    const resource = await this.storage.user.getApiResource(
-      this.cacheKey(params)
-    );
+  private async _rehydrate(params?: any) {
+    const resource = await this._storage[
+      this.options.cacheStorage
+    ].getApiResource(this._cacheKey(params));
     if (resource) {
-      this.result$.next(resource.data);
+      this.data$.next(resource.data);
     }
 
     return resource?.data;
+  }
+}
+
+@Injectable()
+export class ApiResource {
+  static CachePolicy = CachePolicy;
+  static CacheStorage = CacheStorage;
+  static UpdatePolicy = UpdatePolicy;
+
+  constructor(protected api: ApiService, protected storage: StorageV2) {}
+
+  /**
+   * get data from an endpoint
+   * @param url endpoint url
+   * @param opts options
+   * @returns
+   */
+  public query<T, P>(
+    url: string,
+    opts: ApiResourceOptions<P>
+  ): ResourceRef<T, P> {
+    return new ResourceRef(this.api, this.storage, url, {
+      method: ApiRequestMethod.GET,
+      ...opts,
+    });
+  }
+
+  /**
+   * updates data from an endpoint
+   * @param url endpoint url
+   * @param opts options
+   * @returns
+   */
+  public mutate<T, P>(
+    url: string,
+    opts: ApiResourceOptions<P>
+  ): ResourceRef<T, P> {
+    return new ResourceRef(this.api, this.storage, url, {
+      method: ApiRequestMethod.POST,
+      ...opts,
+    });
   }
 }
