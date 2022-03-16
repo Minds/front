@@ -28,6 +28,7 @@ import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { catchError, take } from 'rxjs/operators';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 /**
  * Channel feed component
@@ -49,8 +50,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   dateRangeEnabled: boolean = false;
 
-  // ojm sync up with feature flag
-  activityV2Feature: boolean = true;
+  activityV2Feature: boolean = false;
 
   @Input('layout') set _layout(layout: string) {
     this.isGrid = layout === 'grid';
@@ -103,6 +103,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private themesService: ThemeService,
     private composerModal: ComposerModalService,
     private injector: Injector,
+    private experiments: ExperimentsService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
@@ -148,6 +149,11 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
           this.prepend(newPost);
         }
       })
+    );
+
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
     );
   }
 

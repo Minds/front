@@ -37,13 +37,7 @@
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
-        border-bottom: 1px solid themed($m-borderColor--primary);
         background-color: themed($m-bgColor--primary);
-      }
-      &:not(.m-wire__lockScreen--minimalMode) {
-        @include m-theme() {
-          border-top: 1px solid themed($m-borderColor--primary);
-        }
       }
 
       .m-wireLockScreen__message {
@@ -93,6 +87,14 @@
     z-index: 2;
     @include m-theme() {
       text-shadow: 0 0 2px rgba(themed($m-black-always), 0.6);
+    }
+  }
+
+  ::ng-deep m-button {
+    .m-button {
+      &.m-button--saving {
+        display: block !important;
+      }
     }
   }
 }

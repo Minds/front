@@ -32,6 +32,7 @@ export class WireLockScreenComponent implements OnInit {
 
   @Input() preview: any;
   @Input() mediaHeight: number | null = null;
+  @Input() mediaWidth: number | null = null;
   @Input() minimalMode: boolean = false;
 
   init: boolean = false;
@@ -72,6 +73,12 @@ export class WireLockScreenComponent implements OnInit {
         this.mediaHeight = 410;
       }
       this.messageTopOffset = `${this.mediaHeight / 2}px`;
+    }
+
+    if (this.mediaWidth) {
+      if (this.mediaWidth === 0) {
+        this.mediaWidth = 500; //ojm check
+      }
     }
 
     if (

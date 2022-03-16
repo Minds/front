@@ -41,7 +41,6 @@ export class RemindPreviewComponent {
   }
 
   loadActivityModule() {
-    // ojm todo - get activityV2 if feature flag
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       ActivityComponent
     );

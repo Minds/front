@@ -1,5 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 import { FeaturesService } from '../../../services/features.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 /**
  * Discovery top feed component.
@@ -14,10 +15,12 @@ import { FeaturesService } from '../../../services/features.service';
   `,
 })
 export class DiscoveryTopComponent {
-  constructor(public featuresService: FeaturesService) {}
-  // ojm connect to feature flag
+  constructor(
+    public featuresService: FeaturesService,
+    private experiments: ExperimentsService
+  ) {}
   @HostBinding('class.m-discovery__top--activityV2')
   get activityV2Feature(): boolean {
-    return true;
+    return this.experiments.hasVariation('front-5229-activities', true);
   }
 }

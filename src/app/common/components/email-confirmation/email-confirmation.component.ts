@@ -13,6 +13,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { Location } from '@angular/common';
 import { FormToastService } from '../../services/form-toast.service';
 import { EmailResendService } from '../../services/email-resend.service';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 
 /**
  * Component that displays an announcement-like banner
@@ -44,6 +45,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     protected location: Location,
     protected toast: FormToastService,
     protected emailResend: EmailResendService,
+    private experiments: ExperimentsService,
     configs: ConfigsService
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
@@ -59,8 +61,10 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
       this.detectChanges();
     });
 
-    // ojm connect to features
-    this.activityV2Feature = true;
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
   }
 
   ngOnDestroy(): void {

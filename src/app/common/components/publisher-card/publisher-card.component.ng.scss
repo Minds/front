@@ -72,6 +72,17 @@
           color: themed($m-textColor--primary);
         }
       }
+
+      a {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 

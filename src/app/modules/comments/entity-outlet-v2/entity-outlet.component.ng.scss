@@ -11,8 +11,8 @@
     padding-right: $feedSpacingRight;
 
     @media screen and (max-width: $max-mobile) {
-      padding-left: $feedAvatarSpacingLeft--mobile;
-      padding-right: $feedAvatarSpacingRight--mobile;
+      padding-left: $feedSpacingLeft--mobile;
+      padding-right: $feedSpacingRight--mobile;
     }
   }
 
@@ -23,6 +23,15 @@
   m-activityV2__modal & {
     padding-left: $modalScrollableContainerSpacing;
     padding-right: $modalScrollableContainerSpacing;
+
+    [class*='m-commentsEntityOutlet__expand'] {
+      display: none;
+    }
+
+    .m-commentsEntityOutlet__topBar {
+      margin-top: $spacing8;
+      margin-left: 0;
+    }
   }
 
   // ******************************************************
@@ -30,6 +39,7 @@
   // ******************************************************
 
   m-newsfeed--single & {
+    padding-top: $spacing6;
     padding-left: $singlePostSpacingLeft;
     padding-right: $singlePostSpacingRight;
 
@@ -85,9 +95,7 @@
 
     span {
       cursor: pointer;
-      font-weight: 400;
-      font-size: 16px;
-
+      @include body1Regular;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
@@ -103,7 +111,7 @@
       }
 
       &.m-commentsEntityOutlet__title {
-        font-size: 20px;
+        @include heading4Medium;
         @include m-theme() {
           color: themed($m-textColor--primary);
         }

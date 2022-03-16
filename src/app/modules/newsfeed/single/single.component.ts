@@ -17,6 +17,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -38,6 +39,7 @@ export class NewsfeedSingleComponent {
   private singleGuidSubscription: Subscription;
 
   private shouldReuseRouteFn; // For comment focusedUrn reloading
+
   activityV2Feature: boolean = false;
 
   constructor(
@@ -52,16 +54,18 @@ export class NewsfeedSingleComponent {
     configs: ConfigsService,
     private headersService: HeadersService,
     private authModalService: AuthModalService,
-    protected jsonLdService: JsonLdService
+    protected jsonLdService: JsonLdService,
+    private experiments: ExperimentsService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.activityV2Feature = true; // ojm connect to feature flag
   }
 
   ngOnInit() {
-    // ojm connect to feature flag
-    this.activityV2Feature = true;
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
 
     this.context.set('activity');
 

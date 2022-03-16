@@ -1,9 +1,6 @@
 @import 'defaults.scss';
 @import '../shared.scss';
 
-$modal-padding: 20px;
-$modal-padding: $modalScrollableContainerSpacing; //ojm
-
 %desc-text {
   @include body2Regular;
   @include m-theme() {
@@ -114,6 +111,7 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
       @extend %disable-scrollbars;
     }
 
+    //ojm move to content scss - status post
     ::ng-deep {
       m-activityV2__content {
         .m-activityContent__messageWrapper {
@@ -161,6 +159,7 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
       background: themed($m-bgColor--secondary);
     }
 
+    // ojm move to content scss
     ::ng-deep {
       m-activityV2__content {
         line-height: initial;
@@ -190,92 +189,15 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
           line-height: 22px;
           text-align: left;
           box-sizing: border-box;
-          padding: $modal-padding $modal-padding * 3;
+          padding: $modalScrollableContainerSpacing
+            $modalScrollableContainerSpacing * 3;
           @include m-theme() {
             background-color: themed($m-bgColor--secondary);
           }
         }
       }
     }
-
-    // &.isBlog {
-    //   ::ng-deep {
-    //     m-activityV2__content {
-    //       .meta {
-    //         padding: $modal-padding $modal-padding * 3;
-
-    //         @include m-theme() {
-    //           background-color: themed($m-bgColor--primary);
-    //         }
-    //         .m-rich-embed--title {
-    //           font-size: 24px;
-    //           font-weight: 800;
-    //           margin-bottom: 15px;
-    //         }
-    //         .m-blurb {
-    //           display: block;
-    //           font-size: 17px;
-    //           line-height: 20px;
-    //           margin-bottom: 0;
-    //           @include m-theme() {
-    //             color: themed($m-textColor--secondary);
-    //           }
-    //         }
-    //         .m-url {
-    //           display: none;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   }
-
-  // NOTE: modal blog view not implemented
-  // .m-activityModal__mediaWrapper--blog {
-  //   line-height: initial;
-  //   overflow-y: auto;
-  //   text-align: left;
-
-  //   @include m-theme() {
-  //     color: themed($m-black);
-  //   }
-
-  //   h1.m-blog--title {
-  //     font-weight: 600;
-  //     font-size: 42px;
-  //     letter-spacing: 1.5px;
-  //     font-family: 'Roboto', Helvetica, sans-serif;
-  //     text-rendering: optimizeLegibility;
-  //     -webkit-font-smoothing: antialiased;
-  //     text-align: left;
-
-  //     @media only screen and (max-width: $min-tablet) {
-  //       font-size: 24px;
-  //     }
-  //   }
-
-  //   p {
-  //     @include m-theme() {
-  //       color: themed($m-black);
-  //     }
-  //   }
-
-  //   .minds-blog-body img {
-  //     @media screen and (max-width: 891px) {
-  //       width: 100vw;
-  //     }
-  //     max-width: initial;
-  //     height: auto;
-  //     width: 80%;
-  //     margin: 0 -100px;
-  //   }
-
-  //   .m-blog--image--caption {
-  //     @include m-theme() {
-  //       color: themed($m-black);
-  //     }
-  //   }
-  // }
 
   .m-activityModal__stage {
     display: flex;
@@ -341,9 +263,9 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
     }
   }
 
-  // ******************************************************
+  // *********************************************
   // ** CONTENT (Right side) **
-  // ******************************************************
+  // *********************************************
 
   .m-activityModal__contentContainer {
     min-width: 350px;
@@ -376,7 +298,7 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
       padding: 10px 0 0;
 
       .m-activity__ownerBlock {
-        padding: 20px $modal-padding 0;
+        padding: 20px $modalScrollableContainerSpacing 0;
       }
 
       m-postmenu--v2 {
@@ -432,13 +354,15 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
       }
     }
 
+    //ojm remove this ::ng-deep stuff
     ::ng-deep {
       m-activityV2__content {
         overflow: visible;
 
         box-sizing: border-box;
         margin-top: 5px;
-        padding: $modal-padding $modal-padding 0;
+        padding: $modalScrollableContainerSpacing
+          $modalScrollableContainerSpacing 0;
 
         .m-read-more--button {
           padding-bottom: 0;
@@ -465,7 +389,7 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
           m-translate {
             > div {
               hr {
-                margin-top: $modal-padding !important;
+                margin-top: $modalScrollableContainerSpacing !important;
                 @include m-theme() {
                   border-top: none;
                 }
@@ -494,50 +418,6 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
           }
         }
       }
-      ::ng-deep m-comment {
-        .m-comment {
-          .minds-avatar {
-            margin-left: 0;
-            @include m-theme() {
-              background-color: transparent;
-            }
-          }
-          .minds-body {
-            max-width: 100%;
-          }
-        }
-        .m-commentToolbar__buttons .m-dropdown--v2 {
-          margin-right: 0;
-        }
-
-        .m-comment__ribbonBtn {
-          @include m-theme() {
-            background-color: rgba(themed($m-bgColor--primary), 0);
-          }
-        }
-      }
-      .m-activityModal__comments {
-        padding: 0 $modal-padding $modal-padding;
-
-        .m-commentsEntityOutlet__topBar {
-          margin-top: 15px;
-          margin-left: 0;
-        }
-        m-comment__tree .m-comments__startConversation {
-          display: none;
-        }
-        .m-comment__attachment {
-          .mdl-card {
-            @include m-theme() {
-              background-color: transparent;
-            }
-          }
-        }
-
-        [class*='m-commentsEntityOutlet__expand'] {
-          display: none;
-        }
-      }
     }
   }
 
@@ -550,27 +430,6 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
     overflow: hidden;
     position: relative;
     width: 100% !important;
-
-    ::ng-deep {
-      m-comments__entityOutletV2 {
-        .m-commentsEntityOutlet__expand--hide {
-          padding: 0 0 12px 0;
-        }
-        .m-comments--start-conversation-label {
-          display: none;
-        }
-        .minds-comment {
-          padding-left: 0 !important;
-          padding-right: 0 !important;
-        }
-        .m-comments-load-more {
-          margin-top: -14px;
-        }
-      }
-      .m-comments__viewMore {
-        margin-top: 0;
-      }
-    }
   }
 
   .m-activityModal__scrollableAreaBody {
@@ -593,64 +452,9 @@ $modal-padding: $modalScrollableContainerSpacing; //ojm
     visibility: hidden;
   }
 
-  // ******************************************************
-
-  ::ng-deep {
-    m-activityV2__content {
-      overflow: auto;
-      @include vertical-scroll;
-
-      .m-rich-embed-has-thumbnail,
-      .m-rich-embed-src {
-        text-align: left;
-      }
-      m-paywallBadge {
-        display: none;
-      }
-      .m-activityContent__media--richEmbed {
-        @include m-theme() {
-          background: themed($m-bgColor--primary);
-        }
-        img {
-          max-height: none;
-          object-fit: contain;
-        }
-      }
-
-      .m-activityContent__media--video,
-      .m-activityContent__media--image {
-        height: 100%;
-        @include m-theme() {
-          background: rgba(themed($m-black), 0);
-        }
-      }
-
-      .m-activityContent__message {
-        flex: 1;
-      }
-
-      .m-activityContent__media--image img {
-        max-height: unset !important;
-      }
-
-      .m-activityContent__messageWrapper {
-        height: 100%;
-        justify-content: center;
-        display: flex;
-      }
-    }
-  }
-
-  m-activityV2__nsfwConsent {
+  // *********************************************
+  //ojm investigate
+  ::ng-deep m-activityV2__nsfwConsent {
     position: absolute;
-  }
-
-  ::ng-deep {
-    m-activityV2__content {
-      .m-activityContent__mediaDescription,
-      .m-activityContent__message {
-        cursor: default !important;
-      }
-    }
   }
 }

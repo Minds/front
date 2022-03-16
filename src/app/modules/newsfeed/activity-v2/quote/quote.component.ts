@@ -63,8 +63,6 @@ export class ActivityV2QuoteComponent {
       isQuote: true,
     };
 
-    console.log('ojm remind opts', opts);
-
     this.service.displayOptions = opts;
   }
 }

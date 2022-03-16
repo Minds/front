@@ -1,4 +1,7 @@
-<div class="m-activityToolbar__actions">
+<div
+  class="m-activityToolbar__actions"
+  [ngClass]="{ 'm-activityToolbar__actions--noMetrics': !showMetrics }"
+>
   <minds-button-thumbs-up
     [object]="entity"
     [iconOnly]="service.displayOptions.showInteractions"

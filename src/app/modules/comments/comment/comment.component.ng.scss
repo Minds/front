@@ -1,6 +1,53 @@
 @import 'defaults.scss';
 
 :host {
+  // ******************************************************
+  // ** MODAL **
+  // ******************************************************
+
+  m-activityV2__modal & {
+    .m-comment {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+
+      .minds-avatar {
+        margin-left: 0;
+        @include m-theme() {
+          background-color: transparent;
+        }
+      }
+      .minds-body {
+        max-width: 100%;
+      }
+    }
+    .m-commentToolbar__buttons {
+      .m-dropdown--v2 {
+        margin-right: 0;
+      }
+    }
+
+    .m-comment__ribbonBtn {
+      @include m-theme() {
+        background-color: rgba(themed($m-bgColor--primary), 0);
+      }
+    }
+
+    .m-comment__attachment {
+      .mdl-card {
+        @include m-theme() {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  // ** DEFAULT **
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
   .m-comment {
     position: relative;
   }

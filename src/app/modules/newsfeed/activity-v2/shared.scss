@@ -1,4 +1,7 @@
 // Store variables here that are shared among a variety of components
+
+// ojm change the names of these variables
+// ojm add documentation
 ///////////////////////////////////////////
 // AVATAR
 ///////////////////////////////////////////
@@ -18,7 +21,7 @@ $feedAvatarSpacingLeft--mobile: $spacing4;
 $feedAvatarSpacingRight--mobile: $spacing4;
 
 $feedSpacingLeft--mobile: $feedAvatarSpacingLeft--mobile + $avatarWidth +
-  feedAvatarSpacingRight--mobile;
+  $feedAvatarSpacingRight--mobile;
 $feedSpacingRight--mobile: $spacing4;
 
 ///////////////////////////////////////////

@@ -7,7 +7,6 @@ import {
   ActivityService,
 } from '../../activity/activity.service';
 import * as moment from 'moment';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-activityV2__permalink',
@@ -15,9 +14,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./permalink.component.ng.scss'],
 })
 export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
-  private entitySubscription: Subscription;
+  private subscriptions: Subscription[];
 
   entity: ActivityEntity;
+
+  isRemind: boolean = false;
+  isQuote: boolean = false;
 
   @HostBinding('class.m-activity__permalink--minimalMode')
   get minimalMode(): boolean {
@@ -39,15 +41,27 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.entitySubscription = this.service.entity$.subscribe(
-      (entity: ActivityEntity) => {
+    this.subscriptions = [
+      this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
-      }
+      }),
+    ];
+    this.subscriptions.push(
+      this.service.isRemind$.subscribe((is: boolean) => {
+        this.isRemind = is;
+      })
+    );
+    this.subscriptions.push(
+      this.service.isQuote$.subscribe((is: boolean) => {
+        this.isQuote = is;
+      })
     );
   }
 
   ngOnDestroy() {
-    this.entitySubscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -93,7 +107,8 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
 
     if (
       this.isRichEmbedWithoutText(entity) ||
-      this.isMediaWithoutText(entity)
+      this.isMediaWithoutText(entity) ||
+      this.isRemindWithMedia(entity)
     ) {
       return true;
     }
@@ -109,6 +124,14 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
       (entity.content_type === 'image' || entity.content_type === 'video') &&
       !entity.message &&
       !entity.title
+    );
+  }
+
+  isRemindWithMedia(entity: any): boolean {
+    return (
+      this.minimalMode &&
+      (this.isQuote || this.isRemind) &&
+      (entity.content_type === 'image' || entity.content_type === 'video')
     );
   }
 }

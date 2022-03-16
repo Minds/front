@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   HostBinding,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -22,9 +23,17 @@ import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
   styleUrls: ['./owner-block.component.ng.scss'],
 })
 export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
-  private entitySubscription: Subscription;
+  private subscriptions: Subscription[];
 
   entity: ActivityEntity;
+
+  /** Is this activity the container of a quoted/reminded post? */
+  isQuote: boolean = false;
+  isRemind: boolean = false;
+
+  /** Is this activity the quoted/reminded post? */
+  @Input() wasQuoted: boolean = false;
+  @Input() wasReminded: boolean = false;
 
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
 
@@ -35,21 +44,27 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.entitySubscription = this.service.entity$.subscribe(
-      (entity: ActivityEntity) => {
+    this.subscriptions = [
+      this.service.entity$.subscribe((entity: ActivityEntity) => {
         this.entity = entity;
-      }
+      }),
+    ];
+    this.subscriptions.push(
+      this.service.isQuote$.subscribe((is: boolean) => {
+        this.isQuote = is;
+      })
+    );
+    this.subscriptions.push(
+      this.service.isRemind$.subscribe((is: boolean) => {
+        this.isRemind = is;
+      })
     );
   }
 
   ngOnDestroy() {
-    this.entitySubscription.unsubscribe();
-  }
-
-  get isRemind(): boolean {
-    return (
-      this.entity && this.entity.subtype && this.entity.subtype === 'remind'
-    );
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   // Note: currently ownerBlocks are only visible in minimalMode for reminds/quotes
@@ -65,7 +80,6 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
       : null;
   }
 
-  @HostBinding('class.m-activity__ownerBlock--sidebarBoost')
   get isSidebarBoost(): boolean {
     return this.service.displayOptions.isSidebarBoost;
   }

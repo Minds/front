@@ -110,8 +110,10 @@ export class ActivityV2ContentComponent
   activityHeight: number;
   quoteHeight: number;
   videoHeight: string;
+  videoWidth: string;
 
   imageHeight: string;
+  imageWidth: string;
   imageAspectRatio: number = 0;
   imageOriginalHeight: number;
 
@@ -161,6 +163,7 @@ export class ActivityV2ContentComponent
           this.calculateVideoHeight();
           this.calculateImageDimensions();
         });
+
         this.isPaywalledStatusPost =
           this.showPaywallBadge && entity.content_type === 'status';
         if (
@@ -256,6 +259,10 @@ export class ActivityV2ContentComponent
     return this.entity && !!this.entity.remind_object;
   }
 
+  get isRemind(): boolean {
+    return this.entity && !!this.entity.remind_object;
+  }
+
   get isBlog(): boolean {
     return this.entity.content_type === 'blog';
   }
@@ -337,6 +344,29 @@ export class ActivityV2ContentComponent
     return null;
   }
 
+  get mediaWidth(): number | null {
+    if (this.isImage) {
+      if (this.imageHeight) {
+        console.log(
+          'ojm get mediaWidth',
+          this.imageHeight,
+          this.imageAspectRatio,
+          (this.imageHeight.slice(0, -2), 10) / this.imageAspectRatio
+        );
+      }
+
+      const imageWidth = this.imageWidth || '410px'; // ojm why 410?
+      return parseInt(imageWidth.slice(0, -2), 10);
+    }
+    if (this.isVideo) {
+      return this.videoWidth ? parseInt(this.videoWidth.slice(0, -2), 10) : 0;
+    }
+    if (this.isRichEmbed) {
+      return 400; // ojm check this. it's wrong now
+    }
+    return null;
+  }
+
   get isModal(): boolean {
     return this.service.displayOptions.isModal;
   }
@@ -346,8 +376,12 @@ export class ActivityV2ContentComponent
     return this.service.displayOptions.minimalMode;
   }
 
-  get isMessageAbovePreview(): boolean {
-    return !(this.minimalMode || (this.isRichEmbed && this.isModal));
+  // Text usually goes above media, except for
+  // minimal mode and rich-embed modals
+  get isTextBelowMedia(): boolean {
+    return (
+      (this.minimalMode && !this.isQuote) || (this.isRichEmbed && this.isModal)
+    );
   }
 
   get maxMessageHeight(): number {
@@ -497,20 +531,39 @@ export class ActivityV2ContentComponent
       this.entity.custom_data[0].height &&
       this.entity.custom_data[0].height !== '0'
     ) {
+      // Get aspect ratio from original dimensions (if available)
       const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
       const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
+
+      console.log(
+        'ojm calcImageDimensions, original H W',
+        originalHeight,
+        originalWidth
+      );
+      console.log(
+        'ojm calcImageDimensions- clientWidth',
+        this.el.nativeElement.clientWidth
+      );
 
       this.imageOriginalHeight = originalHeight;
       this.imageAspectRatio = originalHeight / originalWidth;
 
+      // For modals, keep original dimensions
       if (this.isModal) {
         this.imageHeight =
           originalHeight > 0
             ? `${originalHeight}px`
             : `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
       } else {
+        // For everything else, calculate height from
+        // aspect ratio and clientWidth
         const height =
-          this.el.nativeElement.clientWidth * this.imageAspectRatio;
+          this.el.nativeElement.clientWidth / this.imageAspectRatio;
+
+        console.log(
+          'ojm calcImageDimensions, not modal, clientWidth:',
+          this.el.nativeElement.clientWidth
+        );
 
         this.imageHeight = `${height}px`;
       }
@@ -519,6 +572,7 @@ export class ActivityV2ContentComponent
       if (this.isModal) {
         this.imageHeight = `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
       } else {
+        console.log('ojm calcImageDimensions, no custom dimensions');
         this.imageHeight = null;
       }
     }
@@ -561,6 +615,7 @@ export class ActivityV2ContentComponent
       event.stopPropagation();
     }
 
+    // ojm there is no sidebarMode??
     //if sidebarMode, navigate to canonicalUrl for all content types
     if (this.service.displayOptions.sidebarMode) {
       this.router.navigateByUrl(this.canonicalUrl);

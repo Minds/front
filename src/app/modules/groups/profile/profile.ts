@@ -34,6 +34,7 @@ import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { PublisherSearchModalService } from '../../../common/services/publisher-search-modal.service';
 import { GroupsSearchService } from './feed/search.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -75,9 +76,8 @@ export class GroupsProfile {
   private lastWidth: number;
   readonly hasNewNavigation: boolean;
 
-  //ojm connect to features
   @HostBinding('class.m-groupsProfile--activityV2')
-  activityV2Feature: boolean = true;
+  activityV2Feature: boolean = false;
 
   constructor(
     public session: Session,
@@ -101,7 +101,8 @@ export class GroupsProfile {
     protected toasterService: FormToastService,
     private injector: Injector,
     protected publisherSearchModal: PublisherSearchModalService,
-    protected groupsSearch: GroupsSearchService
+    protected groupsSearch: GroupsSearchService,
+    private experiments: ExperimentsService
   ) {
     this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -111,6 +112,11 @@ export class GroupsProfile {
     this.context.set('activity');
     this.listenForNewMessages();
     this.detectWidth(true);
+
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
 
     const params = this.route.snapshot.queryParamMap;
     if (params.has('query')) {

@@ -13,7 +13,7 @@
     </m-hovercard>
   </div>
   <div class="m-activity__rightColumn">
-    <m-activityV2__ownerBlock></m-activityV2__ownerBlock>
+    <m-activityV2__ownerBlock [wasQuoted]="true"></m-activityV2__ownerBlock>
     <m-activityV2__content
       *ngIf="service.shouldShowContent$ | async"
       [autoplayVideo]="autoplayVideo"

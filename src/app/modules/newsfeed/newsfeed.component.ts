@@ -17,6 +17,7 @@ import { ContextService } from '../../services/context.service';
 import { NewsfeedService } from './services/newsfeed.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
+import { ExperimentsService } from '../experiments/experiments.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -72,7 +73,8 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     public pagesService: PagesService,
     protected storage: Storage,
     protected context: ContextService,
-    protected newsfeedService: NewsfeedService
+    protected newsfeedService: NewsfeedService,
+    private experiments: ExperimentsService
   ) {
     this.newNavigation = true;
     this.urlSubscription = this.route.url.subscribe(() => {
@@ -98,8 +100,10 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
       this.all = Boolean(params.all);
     });
 
-    // ojm connect to feature flag
-    this.activityV2Feature = true;
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
   }
 
   ngOnInit() {

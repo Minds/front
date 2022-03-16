@@ -21,6 +21,7 @@ import { BlogCard } from '../../../modules/blogs/card/card';
 import { CommentComponentV2 } from '../../../modules/comments/comment/comment.component';
 import { ActivityService } from '../../services/activity.service';
 import { ActivityComponent } from '../../../modules/newsfeed/activity/activity.component';
+import { ExperimentsService } from '../../../modules/experiments/experiments.service';
 
 @Component({
   selector: 'minds-card',
@@ -50,7 +51,8 @@ export class MindsCard implements OnInit, AfterViewInit {
 
   constructor(
     private _componentFactoryResolver: ComponentFactoryResolver,
-    private _injector: Injector
+    private _injector: Injector,
+    private experiments: ExperimentsService
   ) {}
 
   @Input('object') set _object(value: any) {
@@ -58,6 +60,8 @@ export class MindsCard implements OnInit, AfterViewInit {
 
     this.object = value ? value : {};
     this.type = `${this.object.type || ''}/${this.object.subtype || ''}`;
+
+    console.log('ojm CARD @input obj', value);
 
     if (this.initialized) {
       if (!this.componentInstance || this.type !== oldType) {
@@ -85,8 +89,10 @@ export class MindsCard implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // ojm connect to feature flag
-    this.activityV2Feature = true;
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
   }
 
   ngAfterViewInit() {
@@ -95,6 +101,12 @@ export class MindsCard implements OnInit, AfterViewInit {
   }
 
   resolveComponentClass(object: any): Type<{}> | null {
+    console.log(
+      'ojm CARD resolveComponentClass type/sub',
+      object.type,
+      object.subtype
+    );
+
     if (!object) {
       return null;
     }
@@ -150,6 +162,8 @@ export class MindsCard implements OnInit, AfterViewInit {
       return;
     }
 
+    console.log('ojm CARD updatedata');
+
     if (this.object.type === 'group') {
       (<GroupsCard>this.componentInstance).group = this.object;
     } else if (this.object.type === 'user') {
@@ -177,7 +191,6 @@ export class MindsCard implements OnInit, AfterViewInit {
           showToolbar: false,
           showComments: false,
           autoplayVideo: false,
-          narrowMode: true, //ojm?
           showPostMenu: false,
         };
       } else {

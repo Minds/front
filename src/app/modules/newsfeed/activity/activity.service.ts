@@ -34,7 +34,6 @@ export type ActivityDisplayOptions = {
   isV2: boolean; // isV2 design
   avatarColumn: boolean; // avatar gets dedicated column on left of post .ojm remove??
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock
-  narrowMode: boolean; // for minimal posts and sidebar boosts .ojm remove?
 };
 
 export type ActivityEntity = {
@@ -269,7 +268,6 @@ export class ActivityService {
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity && entity.subtype && entity.subtype === 'remind';
-      // ojm add this? entity.remind_users && entity.remind_users.length"
     })
   );
 
@@ -326,7 +324,6 @@ export class ActivityService {
     isV2: false,
     avatarColumn: true,
     permalinkBelowContent: false,
-    narrowMode: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();

@@ -4,6 +4,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
 import { FeaturesService } from '../../services/features.service';
+import { ExperimentsService } from '../experiments/experiments.service';
 
 @Component({
   selector: 'm-discovery',
@@ -17,14 +18,14 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-discovery--activityV2')
   get activityV2Feature(): boolean {
-    return true; // ojm todo hook this up to feature flag
+    return this.experiments.hasVariation('front-5229-activities', true);
   }
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private service: DiscoveryService,
-    private featuresService: FeaturesService
+    private experiments: ExperimentsService
   ) {
     /**
      * Determine if on Minds+ page

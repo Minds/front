@@ -12,7 +12,7 @@
     </m-hovercard>
 
     <div
-      *ngIf="minimalMode && (isRemind || service.displayOptions.isQuote)"
+      *ngIf="minimalMode && (isRemind || isQuote)"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
     >
       <i class="material-icons">repeat</i>
@@ -21,9 +21,10 @@
   <!-- ---------------------------- -->
   <div class="m-activityOwnerBlock__body">
     <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
-      <span [title]="displayName">{{ displayName | truncate: 15 }}</span>
+      <span [title]="displayName">{{ displayName | truncate: 20 }}</span>
 
       <m-channel--badges
+        *ngIf=""
         class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
         [user]="owner"
         badges="[ 'admin', 'verified' ]"
@@ -62,7 +63,9 @@
     <m-activityV2__badges
       *ngIf="
         !service.displayOptions.minimalMode &&
-        !service.displayOptions.isSidebarBoost
+        !service.displayOptions.isSidebarBoost &&
+        !wasQuoted &&
+        !wasReminded
       "
     ></m-activityV2__badges>
     <m-activityV2__views
@@ -73,7 +76,9 @@
       *ngIf="
         service.displayOptions.showPostMenu &&
         (service.isLoggedIn$ | async) &&
-        !service.displayOptions.minimalMode
+        !service.displayOptions.minimalMode &&
+        !wasQuoted &&
+        !wasReminded
       "
     ></m-activityV2__menu>
   </div>

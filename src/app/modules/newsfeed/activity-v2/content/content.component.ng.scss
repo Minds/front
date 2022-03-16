@@ -2,95 +2,9 @@
 @import '../shared.scss';
 
 :host {
-  display: block;
-  width: 100%;
-  position: relative;
-
-  // ******************************************************
-  // ** MINIMAL MODE **
-  // ******************************************************
-
-  &.m-activity__content--minimalMode {
-    // MINIMAL MEDIA DESCRIPTION
-    .m-activityContent__mediaDescription {
-      .m-activityContent__descriptionWrapper {
-        padding: $spacing4;
-
-        .m-activityContent__mediaTitle {
-          @include heading3Bold;
-          margin-bottom: 0px;
-        }
-      }
-    }
-
-    // MINIMAL MESSAGE
-    .m-activityContent__message {
-      &.m-activityContent__message {
-        // MINIMAL MESSAGE - QUOTE
-        &.m-activityContent__message--quote {
-          .m-activityContent__messageWrapper {
-            font-weight: 400;
-            @include m-theme() {
-              border-bottom: 1px solid themed($m-borderColor--primary);
-            }
-          }
-        }
-
-        // MINIMAL MESSAGE - DEFAULT
-        .m-activityContent__messageWrapper {
-          padding: $spacing4 !important;
-        }
-        a {
-          font-weight: 400;
-        }
-
-        //MINIMAL MESSAGE - STATUS
-        &.m-activityContent__message--isTextOnly {
-          &.m-activityContent__message--short,
-          &.m-activityContent__message--medium {
-            .m-activityContent__messageWrapper {
-              @include body1Regular;
-            }
-          }
-        }
-      }
-    }
-
-    // MINIMAL quote
-    .m-activityContent__quote {
-      padding: 0;
-      .m-activityContent__messageWrapper {
-        padding-top: 0;
-      }
-    }
-
-    // MINIMAL RICH EMBED
-    .m-activityContent__mediaRichEmbed {
-      ::ng-deep minds-rich-embed {
-        .m-rich-embed-src {
-          border: none !important;
-        }
-        a.meta {
-          padding: $minimalModeSpacing;
-
-          h2.m-rich-embed--title {
-            @include heading4Regular;
-            @include m-theme() {
-              color: themed($m-textColor--primary) !important;
-            }
-            margin: 0;
-          }
-          .m-blurb,
-          .m-url {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-  // ******************************************************
+  // *********************************************
   // ** FIXED HEIGHT **
-  // ******************************************************
+  // *********************************************
 
   &.m-activityContent--fixedHeight {
     flex: 1;
@@ -140,18 +54,170 @@
     }
   }
 
-  // ******************************************************
+  // *********************************************
+  // ** MINIMAL MODE **
+  // *********************************************
+
+  &.m-activity__content--minimalMode {
+    // MINIMAL MEDIA DESCRIPTION
+    .m-activityContent__mediaDescription {
+      .m-activityContent__descriptionWrapper {
+        padding: $spacing4;
+
+        .m-activityContent__mediaTitle {
+          @include heading3Bold;
+          margin-bottom: 0px;
+        }
+      }
+    }
+
+    // MINIMAL MEDIA
+    .m-activityContent__media {
+      img {
+        border-radius: 0;
+      }
+    }
+
+    .m-activityContent__media--image {
+      &.m-activityContent__media--extraTallImage {
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    // MINIMAL MESSAGE
+    .m-activityContent__message {
+      &.m-activityContent__message {
+        // MINIMAL MESSAGE - QUOTE
+        &.m-activityContent__message--quote {
+          .m-activityContent__messageWrapper {
+            font-weight: 400;
+            @include m-theme() {
+              border-bottom: 1px solid themed($m-borderColor--primary);
+            }
+          }
+        }
+
+        // MINIMAL MESSAGE - DEFAULT
+        .m-activityContent__messageWrapper {
+          padding: $spacing4 !important;
+        }
+        a {
+          font-weight: 400;
+        }
+
+        //MINIMAL MESSAGE - STATUS
+        &.m-activityContent__message--isTextOnly {
+          &.m-activityContent__message--short,
+          &.m-activityContent__message--medium {
+            .m-activityContent__messageWrapper {
+              @include body1Regular;
+            }
+          }
+        }
+      }
+    }
+
+    // MINIMAL QUOTE
+    .m-activityContent__quote {
+      padding: 0;
+      .m-activityContent__messageWrapper {
+        padding-top: 0;
+      }
+    }
+
+    // MINIMAL RICH EMBED
+    .m-activityContent__mediaRichEmbed {
+      ::ng-deep minds-rich-embed {
+        .m-rich-embed-src {
+          border: none !important;
+        }
+        a.meta {
+          padding: $minimalModeSpacing;
+
+          h2.m-rich-embed--title {
+            @include heading4Regular;
+            @include m-theme() {
+              color: themed($m-textColor--primary) !important;
+            }
+            margin: 0;
+          }
+          .m-blurb,
+          .m-url {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  // *********************************************
+  // ** MODAL **
+  // *********************************************
+
+  m-activityV2__modal & {
+    overflow: auto;
+    @include vertical-scroll;
+
+    .m-rich-embed-has-thumbnail,
+    .m-rich-embed-src {
+      text-align: left;
+    }
+
+    .m-activityContent__mediaDescription,
+    .m-activityContent__message {
+      cursor: default !important;
+    }
+
+    .m-activityContent__media--richEmbed {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+      }
+      img {
+        max-height: none;
+        object-fit: contain;
+      }
+    }
+
+    .m-activityContent__media--video,
+    .m-activityContent__media--image {
+      height: 100%;
+      @include m-theme() {
+        background: rgba(themed($m-black), 0);
+      }
+    }
+
+    .m-activityContent__message {
+      flex: 1;
+    }
+
+    .m-activityContent__media--image img {
+      max-height: unset !important;
+    }
+
+    .m-activityContent__messageWrapper {
+      height: 100%;
+      justify-content: center;
+      display: flex;
+    }
+    .m-activityContent__media--video--modal {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // *********************************************
   // **PAYWALL **
-  // ******************************************************
+  // *********************************************
 
   &.m-activityContent--paywalledStatus {
     min-height: 120px;
     padding-top: 50px;
   }
 
-  // ******************************************************
+  // *********************************************
   // ** QUOTE **
-  // ******************************************************
+  // *********************************************
 
   .m-activityContent__quote {
     overflow: hidden;
@@ -159,9 +225,9 @@
     padding: 0 !important;
   }
 
-  // ******************************************************
+  // *********************************************
   // ** REMIND **
-  // ******************************************************
+  // *********************************************
 
   .m-activityContent__remindDeletedNotice {
     padding: 20px;
@@ -188,9 +254,31 @@
     }
   }
 
-  // ******************************************************
+  // *********************************************
+  // ** SIDEBAR BOOST **
+  // *********************************************
+
+  m-ads-boost & {
+    .m-activityContent__text {
+      padding: 0 $minimalModeSpacing;
+    }
+
+    .m-activityContent__media {
+      img {
+        border-radius: 0;
+      }
+    }
+
+    .m-activityContent__media--video {
+      ::ng-deep m-videoPlayer--scrollaware {
+        border-radius: 0;
+      }
+    }
+  }
+
+  // *********************************************
   // ** TEASER **
-  // ******************************************************
+  // *********************************************
 
   .m-activityContent__teaserFadeout {
     position: absolute;
@@ -212,9 +300,21 @@
     }
   }
 
-  // ******************************************************
+  // *********************************************
+  // *********************************************
+  // *********************************************
+  // ** DEFAULT **
+  // *********************************************
+  // *********************************************
+  // *********************************************
+
+  display: block;
+  width: 100%;
+  position: relative;
+
+  // *********************************************
   // ** MEDIA **
-  // ******************************************************
+  // *********************************************
 
   .m-activityContent__mediaDescription,
   .m-activityContent__message {
@@ -229,9 +329,9 @@
     }
   }
 
-  // ******************************************************
+  // *********************************************
   // ** IMAGE **
-  // ******************************************************
+  // *********************************************
 
   .m-activityContent__media--image {
     &.m-activityContent__media--extraTallImage,
@@ -295,9 +395,9 @@
     }
   }
 
-  // ******************************************************
+  // *********************************************
   // ** VIDEO **
-  // ******************************************************
+  // *********************************************
   .m-activityContent__media--video {
     ::ng-deep {
       m-videoPlayer--scrollaware {
@@ -321,20 +421,9 @@
     }
   }
 
-  // ******************************************************
-  // ** MODAL **
-  // ******************************************************
-
-  m-activityV2__modal & {
-    .m-activityContent__media--video--modal {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  // ******************************************************
+  // *********************************************
   // ** TEXT **
-  // ******************************************************
+  // *********************************************
 
   .m-activityContent__messageWrapper {
     padding: 0 0 $spacing4 0 !important;
@@ -380,7 +469,7 @@
     a {
       text-decoration: none;
       @include m-theme() {
-        color: themed($m-blue);
+        color: themed($m-link);
       }
 
       &:hover {
@@ -390,6 +479,7 @@
   }
 
   p.m-activityContent__mediaDescriptionText,
+  p.m-activityContent__mediaDescriptionText p,
   .m-activityContent__messageWrapper,
   ::ng-deep m-translate .m-translation-wrapper .message {
     @include body2Regular;
@@ -431,9 +521,9 @@
     }
   }
 
-  // ******************************************************
+  // *********************************************
   // ** TRANSLATIONS **
-  // ******************************************************
+  // *********************************************
 
   ::ng-deep m-translate {
     .m-translate__visible > * {

@@ -22,7 +22,7 @@
   <!-- THRESHOLD/TIER REQUIREMENTS -->
   <!-- ------------------------------ -->
 
-  <div class="m-wireLockScreen__inner">
+  <div class="m-wireLockScreen__inner" [style.width.px]="mediaWidth">
     <h5
       *ngIf="contentType !== 'rich-embed'"
       class="m-wireLockScreen__message"

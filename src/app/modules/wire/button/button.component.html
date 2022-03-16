@@ -8,8 +8,7 @@
     <span>Wire</span>
   </ng-container>
   <ng-template #tipButton>
-    <!-- ojm uncomment below, show Tip if not activityV3Feature -->
-    <!-- <span i18n="@@COMMON__TIP">Tip</span> -->
+    <span *ngIf="!activityV2Feature" i18n="@@COMMON__TIP">Tip</span>
     <i class="material-icons">attach_money</i>
   </ng-template>
 </button>
