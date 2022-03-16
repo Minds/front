@@ -24,6 +24,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { Observable } from 'rxjs';
 import { AuthRedirectService } from '../../services/auth-redirect.service';
 import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { HomepageV3ExperimentService } from './../../../modules/experiments/sub-services/home-page-v3-experiment.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -51,6 +52,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   router$;
 
+  isHomePageV3: boolean;
+
   constructor(
     protected sidebarService: SidebarNavigationService,
     protected themeService: ThemeService,
@@ -65,7 +68,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private authModal: AuthModalService,
     private authRedirectService: AuthRedirectService,
-    private guestModeExperiment: GuestModeExperimentService
+    private guestModeExperiment: GuestModeExperimentService,
+    private homepageV3Experiment: HomepageV3ExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -75,9 +79,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.featuresService.has('notifications-v3')) {
-      this.loadComponent();
-    }
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
@@ -85,18 +86,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   getCurrentUser() {
     return this.session.getLoggedInUser();
-  }
-
-  loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        NotificationsToasterComponent
-      ),
-      viewContainerRef = this.notificationsToasterHost.viewContainerRef;
-
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.componentInstance = this.componentRef.instance;
   }
 
   detectChanges() {
@@ -134,6 +123,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     this.onAuthPages = url === '/login' || url === '/register';
     this.onHomepage =
       (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
+    this.isHomePageV3 = this.onHomepage && this.homepageV3Experiment.isActive();
     this.detectChanges();
   }
 
@@ -214,9 +204,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    * @returns { string } url for main logo.
    */
   public getMainLogoUrl(): string {
-    return this.session.getLoggedInUser()
-      ? '/newsfeed/subscriptions/latest'
-      : '/';
+    return this.session.getLoggedInUser() ? '/newsfeed/subscriptions' : '/';
   }
 
   /**

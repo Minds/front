@@ -3,7 +3,7 @@
     <h3 class="m-composerPopup__title" i18n="@@COMMON__MONETIZE">Monetize</h3>
     <div class="m-tabs__container" *ngIf="!isEditingPlus">
       <ng-container *ngIf="!isGroupPost">
-        <div class="m-tabs__tab" *mIfFeature="'plus-2020'">
+        <div class="m-tabs__tab">
           <a
             [ngClass]="{ 'm-tabs__tab--selected': type === 'plus' }"
             (click)="type = 'plus'"
@@ -12,10 +12,7 @@
           >
         </div>
       </ng-container>
-      <div
-        class="m-tabs__tab"
-        *ngIf="(hasSupportTiers$ | async) || !features.has('plus-2020')"
-      >
+      <div class="m-tabs__tab" *ngIf="hasSupportTiers$ | async">
         <a
           [ngClass]="{ 'm-tabs__tab--selected': type === 'membership' }"
           (click)="type = 'membership'"

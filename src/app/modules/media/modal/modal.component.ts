@@ -114,9 +114,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.clearAsyncEntity();
     this.setEntity(params.entity);
 
-    if (this.features.has('modal-pager')) {
-      this.relatedContent.setBaseEntity(params.entity);
-    }
+    this.relatedContent.setBaseEntity(params.entity);
   }
 
   videoDirectSrc = [];
@@ -218,18 +216,16 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     // -- Initialize Horizontal Feed service context
 
-    if (this.features.has('modal-pager')) {
-      this.modalPager$ = this.relatedContent
-        .onChange()
-        .subscribe(async change => {
-          this.modalPager = {
-            hasNext: await this.relatedContent.hasNext(),
-            hasPrev: await this.relatedContent.hasPrev(),
-          };
-        });
+    this.modalPager$ = this.relatedContent
+      .onChange()
+      .subscribe(async change => {
+        this.modalPager = {
+          hasNext: await this.relatedContent.hasNext(),
+          hasPrev: await this.relatedContent.hasPrev(),
+        };
+      });
 
-      this.relatedContent.setContext('container');
-    }
+    this.relatedContent.setContext('container');
 
     // -- Load entity
 
@@ -716,14 +712,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     switch ($event.key) {
       case 'ArrowLeft':
-        if (this.hasModalPager()) {
-          this.goToPrev();
-        }
+        this.goToPrev();
         break;
       case 'ArrowRight':
-        if (this.hasModalPager()) {
-          this.goToNext();
-        }
+        this.goToNext();
         break;
       case 'Escape':
         if (this.isOpen) {
@@ -788,10 +780,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   }
 
   // * PAGER * --------------------------------------------------------------------------
-
-  hasModalPager() {
-    return this.features.has('modal-pager');
-  }
 
   async goToNext(): Promise<void> {
     if (!this.modalPager.hasNext) {

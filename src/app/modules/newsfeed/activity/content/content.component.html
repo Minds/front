@@ -5,15 +5,12 @@
   [entity]="entity"
   [showTierName]="!minimalMode"
 ></m-paywallBadge>
-<ng-container *mIfFeature="'paywall-2020'">
-  <ng-container *ngIf="!hideMedia">
-    <m-activity__paywall
-      *ngIf="service.shouldShowPaywall$ | async"
-      [mediaHeight]="mediaHeight"
-      class="isPaywall2020"
-    ></m-activity__paywall
-  ></ng-container>
-</ng-container>
+<ng-container *ngIf="!hideMedia">
+  <m-activity__paywall
+    *ngIf="service.shouldShowPaywall$ | async"
+    [mediaHeight]="mediaHeight"
+  ></m-activity__paywall
+></ng-container>
 <!-- ----------------------------------- -->
 <!-- MESSAGE -->
 <!-- ----------------------------------- -->

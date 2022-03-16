@@ -36,10 +36,7 @@ export class AuthModalService {
           onSuccess$.complete(); // Ensures promise can be called below
           modal.close(user);
 
-          if (
-            this.features.has('onboarding-october-2020') &&
-            opts.formDisplay === 'register'
-          ) {
+          if (opts.formDisplay === 'register') {
             try {
               await this.onboardingV3.open();
             } catch (e) {

@@ -76,7 +76,7 @@ describe('DefaultFeedContainerComponent', () => {
 
   it('should redirect to newsfeed if logged in', () => {
     (comp as any).session.isLoggedIn.and.returnValue(true);
-    spyOn((comp as any).router, 'navigate').and.returnValue(true);
+    (comp as any).router.navigate.and.returnValue(true);
 
     comp.ngOnInit(); // manually call lifecycle hook.
 
@@ -85,7 +85,6 @@ describe('DefaultFeedContainerComponent', () => {
 
   it('should NOT redirect to newsfeed if logged out', () => {
     (comp as any).session.isLoggedIn.and.returnValue(false);
-    spyOn((comp as any).router, 'navigate');
 
     comp.ngOnInit(); // manually call lifecycle hook.
 

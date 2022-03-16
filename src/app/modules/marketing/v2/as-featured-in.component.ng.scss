@@ -1,0 +1,60 @@
+@import 'defaults';
+@import '../../../foundation/grid-values';
+
+:host .m-marketing__asFeaturedInV2 {
+  max-width: 1180px !important;
+  margin: 3vh auto;
+  padding: 0 32px;
+
+  .m-marketing__asFeaturedIn--noMargin & {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    &.m-grid {
+      display: block;
+    }
+  }
+
+  .m-marketingAsFeaturedIn__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      text-align: center;
+      margin: 0 0 1vh;
+    }
+  }
+
+  ul {
+    flex-grow: 1;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media screen and (max-width: $m-grid-max-tablet) {
+      justify-content: center;
+    }
+
+    > li {
+      margin: 0 $minds-margin $minds-margin;
+
+      a {
+        padding: $minds-margin;
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}

@@ -218,10 +218,7 @@ export class BlogView implements OnInit, OnDestroy {
   async menuOptionSelected(option: string) {
     switch (option) {
       case 'edit':
-        if (
-          this.featuresService.has('ckeditor5') &&
-          (!this.blog.time_created || Number(this.blog.editor_version) === 2)
-        ) {
+        if (!this.blog.time_created || Number(this.blog.editor_version) === 2) {
           await this.router.navigate(['/blog/v2/edit', this.blog.guid]);
           break;
         }

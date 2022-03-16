@@ -3,6 +3,11 @@
 @import '~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
 @import '../app/common/layout/layout';
 
+html,
+body {
+  font-size: 16px;
+}
+
 body.m-theme__light,
 body .m-theme--wrapper.m-theme--wrapper__light {
   color: rgba(0, 0, 0, 0.87);

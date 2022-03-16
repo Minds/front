@@ -10,7 +10,6 @@ describe('ChannelOnboardingService', () => {
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    featuresServiceMock.mock('ux-2020', false);
     service = new ChannelOnboardingService(
       clientMock,
       sessionMock,
@@ -35,26 +34,6 @@ describe('ChannelOnboardingService', () => {
   it('should be instantiated', () => {
     expect(service).toBeTruthy();
   });
-
-  it('should check progress', fakeAsync(() => {
-    service.checkProgress();
-    jasmine.clock().tick(10);
-
-    expect(clientMock.get).toHaveBeenCalled();
-    const args = clientMock.get.calls.mostRecent().args;
-    expect(args[0]).toBe('api/v2/onboarding/progress');
-  }));
-
-  it("it should return that the modal doesn't need to open if there's a key in the local storage", fakeAsync(async () => {
-    localStorage.setItem('already_onboarded', '1');
-    expect(await service.showModal()).toBeFalsy();
-  }));
-
-  it('it should return that the modal needs to open if you force it', fakeAsync(async () => {
-    localStorage.setItem('already_onboarded', '1');
-
-    expect(await service.showModal(true)).toBeTruthy();
-  }));
 
   it('it should go to the previous slide and emit an event', fakeAsync(async () => {
     service.currentSlide = 1;

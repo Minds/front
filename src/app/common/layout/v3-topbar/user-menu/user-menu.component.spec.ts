@@ -50,9 +50,6 @@ describe('UserMenuV3Component', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    featuresServiceMock.mock('settings-referrals', true);
-    featuresServiceMock.mock('helpdesk-2021', false);
-
     fixture = TestBed.createComponent(UserMenuV3Component);
 
     comp = fixture.componentInstance;
@@ -99,19 +96,5 @@ describe('UserMenuV3Component', () => {
     // expect(
     //   fixture.debugElement.query(By.css('.m-userMenuDropdownItem__upgrade'))
     // ).toBeNull();
-  });
-
-  it('should have a "buy tokens" option that redirects to /token', () => {
-    comp.toggleMenu();
-    expect(
-      fixture.debugElement.query(By.css('.m-userMenuDropdownItem__buyTokens'))
-    ).not.toBeNull();
-
-    const link = fixture.debugElement.query(
-      By.css('.m-userMenuDropdownItem__buyTokens a')
-    );
-    expect(link).not.toBeNull();
-
-    expect(link.nativeElement.getAttribute('routerLink')).toEqual('/token');
   });
 });

@@ -5,24 +5,8 @@
     </div>
   </ng-container>
   <ng-container m-dashboardLayout__body>
-    <ng-container *mIfFeature="'wallet-v3'; else walletV2">
-      <ng-container *ngTemplateOutlet="tabsTemplate"></ng-container>
-      <router-outlet></router-outlet>
-    </ng-container>
-    <ng-template #walletV2>
-      <m-shadowboxLayout>
-        <m-shadowboxHeader__tabs
-          class="m-shadowboxLayout__header"
-          [tabs]="tabs"
-          [activeTabId]="activeCurrencyId"
-          [friendlyVals]="true"
-          (tabChanged)="updateCurrency($event)"
-        ></m-shadowboxHeader__tabs>
-        <div class="m-shadowboxLayout__body">
-          <router-outlet></router-outlet>
-        </div>
-      </m-shadowboxLayout>
-    </ng-template>
+    <ng-container *ngTemplateOutlet="tabsTemplate"></ng-container>
+    <router-outlet></router-outlet>
   </ng-container>
 </m-dashboardLayout>
 

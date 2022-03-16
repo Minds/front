@@ -18,7 +18,7 @@ import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
-import { MockComponent, MockDirective } from '../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../utils/mock';
 import { NewsfeedService } from './services/newsfeed.service';
 import { newsfeedServiceMock } from '../../mocks/modules/newsfeed/services/newsfeed-service.mock';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
@@ -30,6 +30,7 @@ import { pagesServiceMock } from '../../mocks/services/pages-mock.spec';
 import { LiquiditySpotComponent } from '../boost/liquidity-spot/liquidity-spot.component';
 import { ModalService } from '../../services/ux/modal.service';
 import { modalServiceMock } from '../../../tests/modal-service-mock.spec';
+import { ApiService } from '../../common/api/api.service';
 
 describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
@@ -77,7 +78,7 @@ describe('NewsfeedComponent', () => {
             inputs: ['disabled', 'currentHashtag', 'preferred', 'compact'],
             outputs: ['filterChange', 'switchAttempt'],
           }),
-          LiquiditySpotComponent,
+          MockComponent({ selector: 'm-liquiditySpot' }),
           IfFeatureDirective,
           NewsfeedComponent,
         ],
@@ -101,6 +102,7 @@ describe('NewsfeedComponent', () => {
           { provide: NewsfeedService, useValue: newsfeedServiceMock },
           { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: PagesService, useValue: pagesServiceMock },
+          { provide: ApiService, useValue: MockService(ApiService) },
         ],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents(); // compile template and css
@@ -117,12 +119,6 @@ describe('NewsfeedComponent', () => {
     comp = fixture.componentInstance; // NewsfeedComponent test instance
 
     clientMock.response = {};
-    featuresServiceMock.mock('top-feeds', false);
-    featuresServiceMock.mock('suggested-users', false);
-    featuresServiceMock.mock('pro', false);
-    featuresServiceMock.mock('navigation', false);
-    featuresServiceMock.mock('liquidity-spot', false);
-    featuresServiceMock.mock('social-compass', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;

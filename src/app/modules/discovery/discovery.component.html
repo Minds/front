@@ -25,6 +25,11 @@
         <m-discovery__sidebarTags
           *ngIf="!isPlusPage"
         ></m-discovery__sidebarTags>
+        <m-suggestions__sidebar
+          type="user"
+          customTitle="popular_channels"
+          *mExperiment="'channel-recommendations'; variation: false"
+        ></m-suggestions__sidebar>
       </div>
     </div>
   </div>

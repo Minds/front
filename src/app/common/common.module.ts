@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MINDS_PIPES } from './pipes/pipes';
 
 import { TopbarComponent } from './layout/topbar/topbar.component';
-import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
@@ -125,7 +124,6 @@ import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
-import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
 import { Title, Meta } from '@angular/platform-browser';
@@ -228,7 +226,6 @@ const routes: Routes = [
     MINDS_PIPES,
 
     TopbarComponent,
-    SidebarMarkersComponent,
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
@@ -437,8 +434,6 @@ const routes: Routes = [
     CategoriesSelectedComponent,
     TreeComponent,
 
-    SidebarMarkersComponent,
-
     AnnouncementComponent,
     MindsTokenSymbolComponent,
     PhoneInputComponent,
@@ -560,10 +555,6 @@ const routes: Routes = [
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
-    {
-      provide: SidebarMarkersService,
-      useFactory: SidebarMarkersService._,
-    },
     RelatedContentService,
     RegexService,
     ApiService,

@@ -254,7 +254,7 @@
           </div>
           <!-- PAGER ARROWS -->
           <a
-            *ngIf="hasModalPager() && modalPager.hasPrev && pagerVisible"
+            *ngIf="modalPager.hasPrev && pagerVisible"
             class="m-mediaModal__pager m-mediaModal__pager--previous"
             (click)="goToPrev()"
             @mediumFade
@@ -263,7 +263,7 @@
           </a>
 
           <a
-            *ngIf="hasModalPager() && modalPager.hasNext && pagerVisible"
+            *ngIf="modalPager.hasNext && pagerVisible"
             class="m-mediaModal__pager m-mediaModal__pager--next"
             (click)="goToNext()"
             @mediumFade

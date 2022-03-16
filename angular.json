@@ -143,7 +143,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.hmr.ts"
                 }
-              ]
+              ],
+              "deployUrl": "http://localhost:4200/"
             }
           },
           "defaultConfiguration": ""
@@ -156,6 +157,12 @@
           "configurations": {
             "production": {
               "browserTarget": "minds:build:production"
+            },
+            "dev": {
+              "browserTarget": "minds:build:dev",
+              "servePath": "/",
+              "sourceMap": true,
+              "deployUrl": "http://localhost:4200/"
             },
             "hmr": {
               "hmr": true,
@@ -199,13 +206,6 @@
               "includePaths": ["src/stylesheets"]
             },
             "preserveSymlinks": true
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**"]
           }
         },
         "server": {
@@ -334,13 +334,6 @@
           "options": {
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "minds:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**"]
           }
         }
       }

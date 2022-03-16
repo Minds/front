@@ -97,14 +97,13 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
-   * @returns { Promise<any> }
+   * @returns { Promise<string> } the completed step
    */
   public async open(): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
 
-    const onSuccess$: Subject<any> = new Subject();
     const modal = this.modalService.present(OnboardingV3ModalComponent, {
       data: {
         onSaveIntent: (step: OnboardingStepName) => {
@@ -122,7 +121,7 @@ export class OnboardingV3Service implements OnDestroy {
       throw 'DismissedModalException';
     }
 
-    return onSuccess$.toPromise();
+    return onBoardingStepName;
   }
 
   /**

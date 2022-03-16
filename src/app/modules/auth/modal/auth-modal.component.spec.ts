@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AuthModalComponent } from './auth-modal.component';
 import { SiteService } from '../../../common/services/site.service';
 import { MockComponent, MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('AuthModalComponent', () => {
   let component: AuthModalComponent;
@@ -26,6 +27,7 @@ describe('AuthModalComponent', () => {
         ],
         providers: [
           { provide: SiteService, useValue: MockService(SiteService) },
+          { provide: ConfigsService, useValue: MockService(ConfigsService) },
         ],
       }).compileComponents();
     })

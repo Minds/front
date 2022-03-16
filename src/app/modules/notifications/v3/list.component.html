@@ -67,5 +67,4 @@
   *ngIf="list.length === 0 && !(inProgress$ | async)"
 >
   <span *ngIf="(filter$ | async) === ''">You have no notifications</span>
-  <span *ngIf="(filter$ | async) === 'tags'">You have no tags</span>
 </div>

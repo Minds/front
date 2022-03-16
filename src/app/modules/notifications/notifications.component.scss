@@ -128,25 +128,23 @@ minds-notifications {
 }
 
 m-notifications--topbar-toggle {
-  &.m-notificationsTopbarToggle--newNav {
-    .m-notifications--topbar-toggle--icon {
-      font-size: 15px;
+  .m-notifications--topbar-toggle--icon {
+    font-size: 15px;
 
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
 
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
     }
+  }
 
-    .m-notifications--topbar-toggle--icon--active i {
-      margin-right: 6px;
+  .m-notifications--topbar-toggle--icon--active i {
+    margin-right: 6px;
 
-      &::after {
-        @include m-theme() {
-          background-color: themed($m-alert);
-        }
+    &::after {
+      @include m-theme() {
+        background-color: themed($m-alert);
       }
     }
   }
