@@ -9,7 +9,7 @@
       >See more</a
     >
   </header>
-  <ul *ngIf="(recommendations$ | async).length">
+  <ul *ngIf="(recommendations$ | async).length; else loadingOrError">
     <li *ngFor="let channel of recommendations$ | async">
       <section>
         <a
@@ -50,3 +50,10 @@
     </li>
   </ul>
 </article>
+
+<ng-template #loadingOrError>
+  <m-loadingSpinner
+    [inProgress]="channelRecommendations.loading$ | async"
+  ></m-loadingSpinner>
+  <span *ngIf="channelRecommendations.error$">Something went wrong</span>
+</ng-template>

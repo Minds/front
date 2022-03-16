@@ -1,7 +1,11 @@
-import { BehaviorSubject } from 'rxjs';
-import { MindsUser } from '../../../interfaces/entities';
-import { ApiService } from '../../../common/api/api.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import {
+  ApiResource,
+  ResourceRef
+} from './../../../common/api/api-resource.service';
+import { MindsUser } from './../../../interfaces/entities';
 
 @Component({
   selector: 'm-channelRecommendation',
@@ -14,24 +18,36 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   @Input()
   location: string;
-  recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+  channelRecommendations: ResourceRef<
+    {
+      algorithm: string;
+      entities: {
+        entity_guid: string;
+        entity_type: string;
+        entity: MindsUser;
+        confidence_score: number;
+      }[];
+    },
+    any
+  >;
+  recommendations$: Observable<MindsUser[]>;
 
-  constructor(private api: ApiService) {}
+  constructor(public apiResource: ApiResource) {}
 
   ngOnInit(): void {
     if (this.location) {
-      this.api
-        .get('api/v3/recommendations', {
-          location: this.location,
-        })
-        .toPromise()
-        .then(result => {
-          if (result) {
-            this.recommendations$.next(
-              result.entities.map(e => e.entity).slice(0, 3)
-            );
-          }
-        });
+      this.channelRecommendations = this.apiResource.query(
+        'api/v3/recommendations',
+        {
+          cachePolicy: ApiResource.CachePolicy.cacheThenFetch,
+          params: {
+            location: this.location,
+          },
+        }
+      );
+      this.recommendations$ = this.channelRecommendations.data$.pipe(
+        map(result => result?.entities.map(e => e.entity).slice(0, 3) || [])
+      );
     }
   }
 }
