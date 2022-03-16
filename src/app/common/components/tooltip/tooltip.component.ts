@@ -68,9 +68,7 @@ export class TooltipComponent implements AfterViewInit {
   }
 
   setHidden(value: boolean) {
-    if (!value || !this.enabled) {
-      return;
-    }
+    if (!this.enabled) return;
 
     this.hidden = value;
 
