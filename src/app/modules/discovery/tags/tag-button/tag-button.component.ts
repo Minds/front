@@ -30,7 +30,8 @@ export class DiscoveryTagButtonComponent implements OnDestroy {
 
   async addTag(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open({ formDisplay: 'login' });
+      const user = await this.authModal.open({ formDisplay: 'login' });
+      if (!user) return;
     }
 
     this.tag.selected = true;
@@ -48,7 +49,8 @@ export class DiscoveryTagButtonComponent implements OnDestroy {
 
   async removeTag(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open({ formDisplay: 'login' });
+      const user = await this.authModal.open({ formDisplay: 'login' });
+      if (!user) return;
     }
 
     this.tag.selected = false;

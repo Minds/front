@@ -84,17 +84,12 @@ export class JoinBannerComponent implements OnInit {
    * @returns { Promise<void> }
    */
   public async join(): Promise<void> {
-    try {
-      await this.authModal.open();
+    const user = await this.authModal.open();
 
+    if (user) {
       if (this.router.url === '/' || this.router.url === '/about') {
         this.router.navigate([this.authRedirectService.getRedirectUrl()]);
       }
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
     }
   }
 }

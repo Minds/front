@@ -52,7 +52,8 @@ export class SubscribeButton {
     }
 
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return;
     }
 
     this._user.subscribed = true;

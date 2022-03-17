@@ -66,7 +66,8 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
 
   async thumb(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return;
     }
 
     this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
