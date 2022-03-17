@@ -140,11 +140,6 @@ export class GroupsSettingsButton {
    * Displays the delete prompt if deletion is possible
    */
   async deletePrompt() {
-    if ((await this.service.countMembers(this.group.guid)) !== 1) {
-      this.toasterService.error('You cannot delete a group that has members.');
-      return;
-    }
-
     this.openConfirmationModal();
   }
 
@@ -226,9 +221,10 @@ export class GroupsSettingsButton {
   public openConfirmationModal(): void {
     const modal = this.modalService.present(ConfirmV2Component, {
       data: {
-        title: 'Confirm',
+        title: 'Delete Group',
         body:
           'Are you sure you want to delete this? This action cannot be undone.',
+        confirmButtonColor: 'red',
         onConfirm: () => {
           this.delete();
           this.router.navigate(['/']);

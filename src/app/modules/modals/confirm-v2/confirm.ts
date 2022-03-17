@@ -20,7 +20,7 @@ const DEFAULT_BODY = 'Are you sure?';
       </m-button>
       <m-button
         class="m-confirmV2Modal__confirmButton"
-        color="blue"
+        [color]="confirmButtonColor"
         (onAction)="onConfirm()"
       >
         Confirm
@@ -43,6 +43,11 @@ export class ConfirmV2Component {
   public body: string = DEFAULT_BODY;
 
   /**
+   * Colour of confirm button.
+   */
+  public confirmButtonColor: string = 'blue';
+
+  /**
    * Triggered on confirm click
    */
   public onConfirm: () => any = noOp;
@@ -54,14 +59,16 @@ export class ConfirmV2Component {
 
   /**
    * Modal options.
-   * @param { string } title - title of the modal
-   * @param { string } body - text body of the component
+   * @param { string } title - title of the modal.
+   * @param { string } body - text body of the component.
+   * @param { string } confirmButtonColor - color of the confirm button.
    * @param { function } onConfirm - callback on call for confirmation.
    * @param { function } onDismiss - callback on call to dismiss modal.
    */
-  setModalData({ title, body, onConfirm, onDismiss }) {
+  setModalData({ title, body, confirmButtonColor, onConfirm, onDismiss }) {
     this.title = title || DEFAULT_TITLE;
     this.body = body || DEFAULT_BODY;
+    this.confirmButtonColor = confirmButtonColor || 'blue';
     this.onConfirm = onConfirm || noOp;
     this.onDismiss = onDismiss || noOp;
   }
