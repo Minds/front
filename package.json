@@ -97,6 +97,7 @@
     "stream-http": "^3.2.0",
     "textarea-caret": "^3.1.0",
     "tslib": "^2.3.0",
+    "twitter-text": "^3.1.0",
     "url": "^0.11.0",
     "walletlink": "^2.0.2",
     "webtorrent": "^0.103.0",
