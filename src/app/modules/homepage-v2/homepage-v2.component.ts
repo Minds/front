@@ -94,17 +94,10 @@ export class HomepageV2Component implements OnInit {
    * @returns { void }
    */
   public async register(): Promise<void> {
-    try {
-      await this.authModal.open();
-
+    const user = await this.authModal.open();
+    if (user) {
       const url = this.authRedirectService.getRedirectUrl();
       this.router.navigate([url]);
-      return;
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
     }
   }
 

@@ -115,9 +115,11 @@ export class HomepageV3Component implements OnInit {
    * @returns { void }
    */
   public async onRegister(): Promise<void> {
-    await this.authModal.open();
+    const user = await this.authModal.open();
 
-    const url = this.authRedirectService.getRedirectUrl();
-    this.router.navigate([url]);
+    if (user) {
+      const url = this.authRedirectService.getRedirectUrl();
+      this.router.navigate([url]);
+    }
   }
 }

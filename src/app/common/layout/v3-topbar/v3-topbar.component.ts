@@ -165,15 +165,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   async onJoinNowClick() {
-    try {
-      await this.authModal.open();
-      this.doRedirect();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    const user = await this.authModal.open();
+    if (user) this.doRedirect();
   }
 
   /**
@@ -182,15 +175,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   async onLoginClick(): Promise<void> {
-    try {
-      await this.authModal.open({ formDisplay: 'login' });
-      this.doRedirect();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    const user = await this.authModal.open({ formDisplay: 'login' });
+    if (user) this.doRedirect();
   }
 
   doRedirect(): void {

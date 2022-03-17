@@ -46,7 +46,7 @@ export class BlogViewInfinite {
     configs: ConfigsService,
     private metaService: MetaService,
     private headersService: HeadersService,
-    private authModalService: AuthModalService,
+    private authModal: AuthModalService,
     private redirectService: RedirectService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -134,10 +134,10 @@ export class BlogViewInfinite {
   }
 
   async openLoginModal(): Promise<void> {
-    try {
-      await this.authModalService.open();
+    const user = await this.authModal.open();
+    if (user) {
       this.load(true);
-    } catch {
+    } else {
       // Goes to homepage if login aborted
       this.redirectService.redirect('/');
     }
