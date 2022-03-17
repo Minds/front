@@ -64,6 +64,10 @@ type ApiResourceOptions<P> = {
    * the keys of this enum are the attributes of StorageV2 service
    */
   cacheStorage?: CacheStorage;
+  /**
+   * skips auto-calling the endpoint
+   */
+  skip?: boolean;
 };
 
 export class ResourceRef<T, P> {
@@ -77,7 +81,9 @@ export class ResourceRef<T, P> {
     private _url: string,
     private _options: ApiResourceOptions<P>
   ) {
-    this._fetch();
+    if (!this.options.skip && this.options.method === ApiRequestMethod.GET) {
+      this.fetch();
+    }
   }
 
   setOptions(opts: ApiResourceOptions<P>) {
@@ -96,26 +102,12 @@ export class ResourceRef<T, P> {
   }
 
   /**
-   * refetches the data and replaces the data
-   * @param params
-   * @returns
+   * 
+   * @param _params 
+   * @param optionsOverride 
+   * @returns 
    */
-  refetch = (params: P): Promise<T> =>
-    this._fetch(params, { updatePolicy: UpdatePolicy.replace });
-
-  /**
-   * fetches the data again and merges it in the data
-   * @param params
-   * @returns
-   */
-  fetchMore = (params: P): Promise<T> =>
-    this._fetch(params, { updatePolicy: UpdatePolicy.merge });
-
-  /**
-   * @param { object } data
-   * @returns { T }
-   */
-  private async _fetch(
+  protected async fetch(
     _params?: P,
     optionsOverride?: ApiResourceOptions<P>
   ): Promise<T> {
@@ -219,6 +211,33 @@ export class ResourceRef<T, P> {
   }
 }
 
+export class QueryRef<T, P> extends ResourceRef<T, P> {
+  /**
+   * refetches the data and replaces the data
+   * @param params
+   * @returns
+   */
+  refetch = (params: P): Promise<T> =>
+    this.fetch(params, { updatePolicy: UpdatePolicy.replace });
+
+  /**
+   * fetches the data again and merges it in the data
+   * @param params
+   * @returns
+   */
+  fetchMore = (params: P): Promise<T> =>
+    this.fetch(params, { updatePolicy: UpdatePolicy.merge });
+}
+
+export class MutationRef<T, P> extends ResourceRef<T, P> {
+  /**
+   * fetches the data again and merges it in the data
+   * @param params
+   * @returns
+   */
+  call = (params: P): Promise<T> => this.fetch(params);
+}
+
 @Injectable()
 export class ApiResource {
   static CachePolicy = CachePolicy;
@@ -239,8 +258,8 @@ export class ApiResource {
     // this name rather than the url and query combined
     url: string,
     opts: ApiResourceOptions<P>
-  ): ResourceRef<T, P> {
-    return new ResourceRef(this.api, this.storage, url, {
+  ): QueryRef<T, P> {
+    return new QueryRef(this.api, this.storage, url, {
       method: ApiRequestMethod.GET,
       ...opts,
     });
@@ -254,9 +273,9 @@ export class ApiResource {
    */
   public mutate<T, P>(
     url: string,
-    opts: ApiResourceOptions<P>
-  ): ResourceRef<T, P> {
-    return new ResourceRef(this.api, this.storage, url, {
+    opts: ApiResourceOptions<P> = {}
+  ): MutationRef<T, P> {
+    return new MutationRef(this.api, this.storage, url, {
       method: ApiRequestMethod.POST,
       ...opts,
     });
