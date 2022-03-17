@@ -22,6 +22,7 @@ import {
 import { providers } from '@0xsequence/multicall';
 import { JsonRpcProviderMemoize } from './utils/JsonUrlProviderMemoize';
 import { BehaviorSubject } from 'rxjs';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 const MAINNET_RPC_URL =
   'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
@@ -80,13 +81,18 @@ export class PolygonService {
 
   public hasError$ = new BehaviorSubject(false);
 
+  public userConfig;
+
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
     private networkSwitch: NetworkSwitchService,
     private mindsToken: MindsTokenMainnetSignedContractService,
-    private maticService: PolygonMindsTokenContractService
-  ) {}
+    private maticService: PolygonMindsTokenContractService,
+    config: ConfigsService
+  ) {
+    this.userConfig = config.get('user');
+  }
 
   public async initialize() {
     await this.web3Wallet.initializeProvider();
@@ -448,7 +454,9 @@ export class PolygonService {
 
   public async getBalances() {
     const { childToken, rootToken } = this.getTokenContracts();
-    const from = await this.web3Wallet.provider.getSigner().getAddress();
+    const from = this.userConfig.eth_wallet
+      ? this.userConfig.eth_wallet
+      : '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C';
     return {
       root: await rootToken.balanceOf(from),
       child: await childToken.balanceOf(from),

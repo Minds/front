@@ -13,10 +13,11 @@
       <div class="mdl-cell mdl-cell--12-col m-networkSwapBox__container-row">
         <span
           class="m-networkSwapBox__container-box-chain mdl-cell mdl-cell--4-col"
-          >Goerli Chain</span
+        >
+          {{ fromNetwork.networkName }} Chain</span
         >
         <span class="m-networkSwapBox__container-box-subtitle"
-          >Balance: 5,000 Minds</span
+          >Balance: {{ (currentNetworkBalance | number) ?? '0'}} Minds</span
         >
       </div>
       <div
@@ -28,12 +29,17 @@
           formControlName="amount"
           [(ngModel)]="amount"
         />
-        <span class="m-networkSwapBox__container-max">MAX</span>
+        <span class="m-networkSwapBox__container-max" (click)="setMaxAmount()"
+          >MAX</span
+        >
       </div>
     </div>
 
     <div class="m-networkSwapBox__swapButton--container">
-      <span class="material-icons m-networkSwapBox__swapButton">
+      <span
+        class="material-icons m-networkSwapBox__swapButton"
+        (click)="swapNetworks()"
+      >
         swap_vert
       </span>
     </div>
@@ -47,17 +53,17 @@
       <div class="mdl-cell mdl-cell--12-col m-networkSwapBox__container-row">
         <span
           class="m-networkSwapBox__container-box-chain mdl-cell mdl-cell--4-col"
-          >Mumbai Chain</span
+          >{{ receivingNetwork.networkName }} Chain</span
         >
         <span class="m-networkSwapBox__container-box-subtitle"
-          >Balance: 900 Minds</span
+          >Balance: {{ (receivingNetworkBalance | number) ?? '0'}} Minds</span
         >
       </div>
     </div>
 
     <!-- Transfer button -->
     <div class="m-networkSwapBox__container-transfer-row">
-      <m-button color="blue" [disabled]="amount < 0.001" (click)="navigate()">
+      <m-button color="blue" (click)="navigate()" [disabled]="form.invalid">
         <ng-container i18n="verb|@@M__ACTION__CANCEL">Transfer</ng-container>
       </m-button>
     </div>

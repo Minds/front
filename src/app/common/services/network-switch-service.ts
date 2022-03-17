@@ -53,6 +53,8 @@ export interface Network {
   logoPath: NetworkRpcUrl; // path to logo file `assets/...`.
   swappable: boolean; // whether swapping is enabled for the network or not.
   showHistoric?: boolean; // whether the transaction historical option should be displayed
+  rpc_url?: string;
+  isFromNetwork?: boolean; // used for controlling from/to network logic
 }
 
 export const UNKNOWN_NETWORK_LOGO_PATH_DARK = 'assets/ext/unknown-dark.png';
@@ -63,16 +65,36 @@ export const UNKNOWN_NETWORK_LOGO_PATH_LIGHT = 'assets/ext/unknown-light.png';
  */
 @Injectable({ providedIn: 'root' })
 export class NetworkSwitchService implements OnDestroy {
-  // network map.
-  public networks: NetworkMap = {
-    mainnet: {
-      id: '',
+  public networks: NetworkMap = {};
+
+  // provider with the sole responsibility of listening to network changes.
+  private networkChangeProvider: Provider = null;
+
+  // fires on network change
+  public readonly networkChanged$ = new BehaviorSubject<number | null>(null);
+
+  constructor(
+    private toast: FormToastService,
+    private wallet: Web3WalletService,
+    private features: FeaturesService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    config: ConfigsService
+  ) {
+    const blockchainConfig = config.get('blockchain');
+    const skaleConfig = blockchainConfig['skale'];
+    const polygonConfig = blockchainConfig['polygon'];
+
+    // network map.
+    this.networks.mainnet = {
+      id: polygonConfig['mainnet_rpc_provider'].chain_id,
+      rpc_url: polygonConfig['mainnet_rpc_provider'].url,
       siteName: 'Mainnet',
       networkName: 'Mainnet',
       description: 'Main Ethereum Network.',
       logoPath: 'assets/ext/ethereum.png',
       swappable: false,
-    },
+      isFromNetwork: true,
+    };
     // eth testnet
     // goerli: {
     //   id: '0x5',
@@ -91,23 +113,6 @@ export class NetworkSwitchService implements OnDestroy {
     //   logoPath: 'assets/ext/polygon.png',
     //   swappable: false,
     // },
-  };
-
-  // provider with the sole responsibility of listening to network changes.
-  private networkChangeProvider: Provider = null;
-
-  // fires on network change
-  public readonly networkChanged$ = new BehaviorSubject<number | null>(null);
-
-  constructor(
-    private toast: FormToastService,
-    private wallet: Web3WalletService,
-    private features: FeaturesService,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    config: ConfigsService
-  ) {
-    const blockchainConfig = config.get('blockchain');
-    const skaleConfig = blockchainConfig['skale'];
 
     // POLYGON
     if (this.features.has('polygon')) {
@@ -119,7 +124,8 @@ export class NetworkSwitchService implements OnDestroy {
        *   for testnet / non testnet.
        */
       this.networks.polygon = {
-        id: '0x80001',
+        id: polygonConfig['polygon_rpc_provider'].chain_id,
+        rpcUrl: polygonConfig['polygon_rpc_provider'].url,
         siteName: 'Polygon',
         networkName: 'Polygon',
         description:
@@ -127,6 +133,8 @@ export class NetworkSwitchService implements OnDestroy {
         logoPath: 'assets/ext/polygon_white.svg',
         swappable: true,
         showHistoric: true,
+        rpc_url: polygonConfig.url,
+        isFromNetwork: false,
       };
     }
 
@@ -143,6 +151,7 @@ export class NetworkSwitchService implements OnDestroy {
         logoPath: 'assets/ext/skale_white.svg',
         swappable: true,
         showHistoric: false,
+        isFromNetwork: false,
       };
     }
 

@@ -18,18 +18,32 @@ export class NetworkBridgeService implements OnDestroy {
   );
 
   public readonly currentStep$ = new BehaviorSubject<BridgeStep | undefined>(
-    BridgeStep.PENDING
+    BridgeStep.SWAP
   );
 
   public readonly currentStepData$ = new BehaviorSubject<any | undefined>(
     undefined
   );
 
+  public readonly currentNetworkId$ = new BehaviorSubject<any | undefined>(1);
+
   constructor(private cfr: ComponentFactoryResolver) {}
 
   ngOnDestroy() {}
 
   async loadComponent(vcr: ViewContainerRef, step: BridgeStep) {
+    vcr.clear();
+    let component: any = await this.getPanel(step);
+    const componentRef = vcr.createComponent(
+      this.cfr.resolveComponentFactory<BridgeComponent>(component)
+    );
+
+    componentRef.instance.data = this.currentStepData$.value;
+
+    return componentRef;
+  }
+
+  async getPanel(step: number) {
     const { NetworkBridgeSwapBoxComponent } = await import(
       '../components/swap-box/swap-box.component'
     );
@@ -50,24 +64,19 @@ export class NetworkBridgeService implements OnDestroy {
       '../components/error-dialog/error-dialog.component'
     );
 
-    vcr.clear();
-    let component: any =
-      step === BridgeStep.SWAP
-        ? NetworkBridgeSwapBoxComponent
-        : step === BridgeStep.APPROVAL
-        ? NetworkBridgeApprovalComponent
-        : step === BridgeStep.CONFIRMATION
-        ? NetworkBridgeConfirmationComponent
-        : step === BridgeStep.PENDING
-        ? NetworkBridgePendingComponent
-        : NetworkBridgeErrorComponent;
-
-    const componentRef = vcr.createComponent(
-      this.cfr.resolveComponentFactory<BridgeComponent>(component)
-    );
-
-    componentRef.instance.data = this.currentStepData$.value;
-
-    return componentRef;
+    switch (step) {
+      case 0:
+        return NetworkBridgeSwapBoxComponent;
+      case 1:
+        return NetworkBridgeApprovalComponent;
+      case 2:
+        return NetworkBridgeConfirmationComponent;
+      case 3:
+        return NetworkBridgePendingComponent;
+      case 4:
+        return NetworkBridgeErrorComponent;
+      default:
+        return NetworkBridgeErrorComponent;
+    }
   }
 }
