@@ -14,6 +14,10 @@
       padding-left: $feedSpacingLeft--mobile;
       padding-right: $feedSpacingRight--mobile;
     }
+
+    [class*='m-commentsEntityOutlet__expand'] {
+      padding-top: 0;
+    }
   }
 
   // ******************************************************
@@ -29,7 +33,7 @@
     }
 
     .m-commentsEntityOutlet__topBar {
-      margin-top: $spacing8;
+      margin-top: $spacing4;
       margin-left: 0;
     }
   }

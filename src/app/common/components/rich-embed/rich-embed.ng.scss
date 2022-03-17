@@ -1,4 +1,5 @@
 @import 'defaults.scss';
+@import '../../../modules/newsfeed/activity-v2/shared.scss';
 
 :host {
   // ******************************************************
@@ -6,8 +7,25 @@
   // ******************************************************
 
   .m-activity__content--minimalMode & {
-    .m-rich-embed-src {
-      border: none !important;
+    &[class*='m-richEmbed--activityV2'] {
+      .m-rich-embed-src {
+        border: none !important;
+      }
+      a.meta {
+        padding: $minimalModeSpacing;
+
+        h2.m-rich-embed--title {
+          @include heading4Regular;
+          @include m-theme() {
+            color: themed($m-textColor--primary) !important;
+          }
+          margin: 0;
+        }
+        .m-blurb,
+        .m-url {
+          display: none;
+        }
+      }
     }
   }
 

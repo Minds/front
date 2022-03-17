@@ -1,20 +1,20 @@
 @import 'defaults.scss';
-// @import '../../common/layout/layout.scss';
+
+$layoutMax2ColWidth: '1039px';
 
 :host {
   .m-newsfeed {
     &:not(.m-newsfeed--activityV2) {
       ::ng-deep m-activity {
-        margin-bottom: 20px;
+        margin-bottom: $spacing5;
       }
     }
     &.m-newsfeed--activityV2 {
-      // ojm need to figure out how to use these vars without importing the stylesheet
-      // .m-newsfeed__feed {
-      //   @media screen and (min-width: $layoutMin2ColWidth) and (max-width: $layoutMax2ColWidth) {
-      //     @include borderRight;
-      //   }
-      // }
+      .m-newsfeed__feed {
+        @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
+          @include borderRight;
+        }
+      }
 
       ::ng-deep m-activity {
         border: none !important;

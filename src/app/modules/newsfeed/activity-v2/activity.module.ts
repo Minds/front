@@ -29,7 +29,6 @@ import { ActivityV2ModalTitleOverlayComponent } from './modal/title-overlay/titl
 import { ActivityV2ModalPagerComponent } from './modal/pager/pager.component';
 import { ActivityV2ModalCreatorService } from './modal/modal-creator.service';
 import { ActivityV2RemindButtonComponent } from './remind-button/remind-button.component';
-import { ActivityV2ModalQuoteComponent } from './modal/quote/quote.component';
 import { ActivityV2RelativeTimeSpanComponent } from './owner-block/relative-time-span/relative-time-span.component';
 import { ActivityV2BoostButtonComponent } from './boost-button/boost-button.component';
 import { ActivityV2FlagComponent } from './flag/flag.component';
@@ -68,7 +67,6 @@ import { ActivityV2ViewsComponent } from './views/views.component';
     ActivityV2ModalPagerComponent,
     ActivityV2RemindButtonComponent,
     ActivityV2BoostButtonComponent,
-    ActivityV2ModalQuoteComponent,
     ActivityV2RelativeTimeSpanComponent,
     ActivityV2FlagComponent,
     ActivityV2BadgesComponent,

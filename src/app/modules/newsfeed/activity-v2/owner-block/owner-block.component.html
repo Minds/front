@@ -1,6 +1,7 @@
 <div class="m-activity__ownerBlock m-legible">
   <!-- ---------------------------- -->
   <!-- AVATAR: MINIMAL REMIND / SIDEBAR BOOSTS / MODALS ONLY  -->
+  <!-- ---------------------------- -->
   <div
     class="m-activityOwnerBlock__avatar"
     *ngIf="minimalMode || isSidebarBoost"
@@ -20,6 +21,9 @@
   </div>
   <!-- ---------------------------- -->
   <div class="m-activityOwnerBlock__body">
+    <!-- ---------------------------- -->
+    <!-- DISPLAY NAME -->
+    <!-- ---------------------------- -->
     <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
       <span [title]="displayName">{{ displayName | truncate: 20 }}</span>
 
@@ -30,8 +34,10 @@
         badges="[ 'admin', 'verified' ]"
       ></m-channel--badges>
     </a>
+    <!-- ---------------------------- -->
+    <!-- GROUP NAME -->
+    <!-- ---------------------------- -->
     <ng-container *ngIf="group">
-      <!-- Show group name-->
       <a
         [routerLink]="['/groups/profile', group.guid]"
         class="m-activityOwnerBlock__groupName"
@@ -39,12 +45,17 @@
         <span [title]="group.name">({{ group.name }})</span>
       </a>
     </ng-container>
+    <!-- ---------------------------- -->
+    <!-- @USERNAME -->
+    <!-- ---------------------------- -->
     <ng-container *ngIf="!group && !isSidebarBoost">
-      <!-- @username -->
       <a [routerLink]="['/', username]" class="m-activityOwnerBlock__username">
         <span [title]="username">@{{ username }}</span>
       </a>
     </ng-container>
+    <!-- ---------------------------- -->
+    <!-- PERMLINK -->
+    <!-- ---------------------------- -->
     <ng-container
       *ngIf="
         !service.displayOptions.permalinkBelowContent &&
@@ -60,6 +71,9 @@
     class="m-activityOwnerBlock__right"
     *ngIf="!service.displayOptions.minimalMode"
   >
+    <!-- ---------------------------- -->
+    <!-- BADGES -->
+    <!-- ---------------------------- -->
     <m-activityV2__badges
       *ngIf="
         !service.displayOptions.minimalMode &&
@@ -68,9 +82,15 @@
         !wasReminded
       "
     ></m-activityV2__badges>
+    <!-- ---------------------------- -->
+    <!-- VIEWS -->
+    <!-- ---------------------------- -->
     <m-activityV2__views
       *ngIf="!service.displayOptions.isModal"
     ></m-activityV2__views>
+    <!-- ---------------------------- -->
+    <!-- MENU -->
+    <!-- ---------------------------- -->
     <m-activityV2__menu
       (deleted)="deleted.emit()"
       *ngIf="

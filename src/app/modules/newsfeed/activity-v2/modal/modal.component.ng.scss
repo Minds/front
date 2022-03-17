@@ -1,22 +1,6 @@
 @import 'defaults.scss';
 @import '../shared.scss';
 
-%desc-text {
-  @include body2Regular;
-  @include m-theme() {
-    color: themed($m-textColor--secondary);
-  }
-}
-
-%disable-scrollbars {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-  &::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* Chrome/Safari/Webkit */
-  }
-}
-
 :host {
   display: table-cell;
   text-align: center;
@@ -66,8 +50,10 @@
     flex: 1;
     height: 100%;
     min-height: 480px;
-    position: relative;
     text-align: center;
+
+    // New stacking context
+    position: relative;
     z-index: 2;
 
     @include m-theme() {
@@ -83,120 +69,6 @@
 
   .m-activityModal__mediaWrapper {
     overflow: hidden;
-  }
-
-  .m-activityModal__mediaWrapper--quote {
-    overflow-y: scroll;
-    overflow-y: overlay;
-    justify-content: center;
-    max-width: 540px; // find a logic for this number
-
-    ::ng-deep {
-      m-activityV2 {
-        height: auto !important;
-        margin: $minds-margin * 2 0;
-      }
-    }
-
-    @extend %disable-scrollbars;
-  }
-
-  .m-activityModal__mediaWrapper--status {
-    &.m-activityModal__mediaWrapper--statusLong {
-      overflow-y: scroll;
-      overflow-y: overlay;
-      margin: 0 50px !important;
-      vertical-align: top !important;
-
-      @extend %disable-scrollbars;
-    }
-
-    //ojm move to content scss - status post
-    ::ng-deep {
-      m-activityV2__content {
-        .m-activityContent__messageWrapper {
-          padding: 0;
-        }
-
-        .m-activityContent__message--isTextOnly {
-          &.m-activityContent__message--short {
-            margin: 0 50px;
-            span {
-              font-size: 24px;
-            }
-            m-read-more--button {
-              display: none;
-            }
-
-            .m-activityContent__messageWrapper {
-              align-items: center;
-            }
-          }
-          &:not(.m-activityContent__message--short) {
-            line-height: 21px;
-            text-align: left;
-            padding: 9vh 10px;
-            span {
-              @include m-theme() {
-                color: themed($m-textColor--secondary);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .m-activityModal__mediaWrapper--richEmbed,
-  .isBlog {
-    width: 100%;
-    overflow-y: scroll;
-    overflow-y: overlay;
-
-    @extend %disable-scrollbars;
-
-    @include m-theme() {
-      background: themed($m-bgColor--secondary);
-    }
-
-    // ojm move to content scss
-    ::ng-deep {
-      m-activityV2__content {
-        line-height: initial;
-
-        .m-activityContent__media--richEmbed {
-          img {
-            max-height: 400px;
-          }
-        }
-
-        .meta {
-          padding: 15px 25px;
-          @include m-theme() {
-            background-color: themed($m-bgColor--secondary);
-          }
-
-          .m-blurb {
-            display: none;
-          }
-        }
-        .m-rich-embed--title {
-          @include m-theme() {
-            color: themed($m-textColor--primary) !important;
-          }
-        }
-        .m-activityContent__messageWrapper {
-          line-height: 22px;
-          text-align: left;
-          box-sizing: border-box;
-          padding: $modalScrollableContainerSpacing
-            $modalScrollableContainerSpacing * 3;
-          @include m-theme() {
-            background-color: themed($m-bgColor--secondary);
-          }
-        }
-      }
-    }
   }
 
   .m-activityModal__stage {
@@ -215,52 +87,6 @@
     vertical-align: middle;
     height: auto;
     position: relative;
-
-    ::ng-deep m-activityV2__content {
-      display: flex;
-      align-items: stretch;
-      justify-content: flex-start;
-      flex-direction: column;
-
-      &.missingDimensions {
-        .m-activityContent__media--image img {
-          max-height: 520px;
-          min-height: 520px;
-        }
-      }
-
-      .m-activityContent__media--image img {
-        height: 100% !important;
-      }
-
-      ::ng-deep minds-rich-embed {
-        .m-rich-embed {
-          display: flex;
-          flex-direction: column;
-        }
-        .m-rich-embed-src a:first-child {
-          cursor: default;
-        }
-      }
-    }
-
-    ::ng-deep {
-      m-paywallBadge {
-        display: none;
-      }
-    }
-
-    .m-activityModal__media--image,
-    ::ng-deep m-videoPlayer {
-      display: inline-block;
-      max-height: 100%;
-      max-width: 100%;
-      vertical-align: top;
-    }
-
-    .m-activityModal__media--image {
-      object-fit: contain;
-    }
   }
 
   // *********************************************
@@ -276,9 +102,9 @@
     position: relative;
     word-wrap: break-word;
     box-sizing: border-box;
+    @include borderLeft;
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
-      border-left: 1px solid themed($m-borderColor--primary);
     }
 
     > * {
@@ -293,132 +119,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-
-    ::ng-deep m-activityV2__ownerBlock {
-      padding: 10px 0 0;
-
-      .m-activity__ownerBlock {
-        padding: 20px $modalScrollableContainerSpacing 0;
-      }
-
-      m-postmenu--v2 {
-        .m-dropdown--v2 {
-          z-index: 5;
-        }
-      }
-
-      .m-postMenu__button {
-        padding-right: 0;
-        margin-right: -5px;
-      }
-
-      .m-activityOwnerBlock__avatar {
-        img {
-          height: 43px;
-          width: 43px;
-        }
-      }
-    }
-    .m-activityModal__toolbarWrapper {
-      ::ng-deep m-activityV2__toolbar {
-        padding: 0;
-        @include m-theme() {
-          border-top: none !important;
-        }
-
-        .m-layout__spacer {
-          display: none;
-        }
-
-        minds-button-comment {
-          > a > span {
-            padding-right: 0;
-          }
-        }
-
-        .m-tipButton {
-          margin-top: 0;
-
-          i {
-            font-size: 19px !important;
-            margin-top: -1px;
-          }
-          span {
-            display: none;
-          }
-        }
-
-        @include m-theme() {
-          border-top: none;
-        }
-      }
-    }
-
-    //ojm remove this ::ng-deep stuff
-    ::ng-deep {
-      m-activityV2__content {
-        overflow: visible;
-
-        box-sizing: border-box;
-        margin-top: 5px;
-        padding: $modalScrollableContainerSpacing
-          $modalScrollableContainerSpacing 0;
-
-        .m-read-more--button {
-          padding-bottom: 0;
-          span {
-            @include m-theme() {
-              color: themed($m-textColor--secondary) !important;
-            }
-          }
-        }
-
-        .m-activityContent__descriptionWrapper,
-        .m-activityContent__message {
-          padding: 0;
-
-          .m-activityContent__mediaTitle {
-            font-size: 19px;
-          }
-
-          .m-activityContent__mediaDescriptionText,
-          .m-activityContent__messageWrapper > span {
-            @extend %desc-text;
-          }
-
-          m-translate {
-            > div {
-              hr {
-                margin-top: $modalScrollableContainerSpacing !important;
-                @include m-theme() {
-                  border-top: none;
-                }
-              }
-              > * {
-                padding: 10px 0px;
-              }
-            }
-            .m-translate__selectWrapper {
-              padding-top: 20px;
-            }
-
-            .m-translate-select-control {
-              margin-top: 5px;
-            }
-
-            .m-translation-wrapper .message > * {
-              @extend %desc-text;
-            }
-
-            .m-translationLabel__content {
-              @include m-theme() {
-                color: themed($m-textColor--tertiary);
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   .m-activityModal__scrollableAreaContainer {
@@ -439,7 +139,6 @@
     overflow-y: overlay;
     display: flex;
     flex-direction: column;
-    @extend %disable-scrollbars;
   }
 
   .m-activityModal__clearFix:after {
@@ -450,11 +149,5 @@
     height: 0;
     line-height: 0;
     visibility: hidden;
-  }
-
-  // *********************************************
-  //ojm investigate
-  ::ng-deep m-activityV2__nsfwConsent {
-    position: absolute;
   }
 }

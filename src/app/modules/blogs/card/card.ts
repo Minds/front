@@ -32,11 +32,8 @@ export class BlogCard implements OnInit {
 
   ngOnInit(): void {
     this.activityV2Feature = this.experiments.hasVariation(
-      'front-5229-activities'
+      'front-5229-activities',
+      true
     );
-
-    console.log('ojm blog card featureflag', this.activityV2Feature);
-
-    this.activityV2Feature = true;
   }
 }

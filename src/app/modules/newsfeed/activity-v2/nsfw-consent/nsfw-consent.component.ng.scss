@@ -1,17 +1,37 @@
 @import 'defaults.scss';
 
 :host {
-  display: block;
-  width: 100%;
-  position: relative;
-  align-self: center;
-  text-align: center;
+  // *********************************************
+  // ** MINIMAL MODE **
+  // *********************************************
 
   &.m-activityNsfwConsent--minimalMode {
     ::ng-deep .m-activityNsfwConsent__button {
       margin: 38px $spacing4;
     }
   }
+
+  // *********************************************
+  // ** MODAL **
+  // *********************************************
+
+  m-activityV2__modal & {
+    position: absolute;
+  }
+
+  // *********************************************
+  // *********************************************
+  // *********************************************
+  // ** DEFAULT **
+  // *********************************************
+  // *********************************************
+  // *********************************************
+
+  display: block;
+  width: 100%;
+  position: relative;
+  align-self: center;
+  text-align: center;
 
   .m-activityNsfwConsent__icon {
     font-size: 62px;

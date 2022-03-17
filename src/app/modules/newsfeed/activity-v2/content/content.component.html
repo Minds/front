@@ -15,9 +15,8 @@
 <!-- TEXT (WHEN TEXT ON TOP)-->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="!isTextBelowMedia">
-  <ng-container *ngTemplateOutlet="descriptionTemplate"></ng-container>
-  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
-></ng-container>
+  <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- RICH EMBED / BLOG -->
 <!-- ----------------------------------- -->
@@ -37,10 +36,7 @@
       "
     >
     </minds-rich-embed>
-    <div
-      class="m-activityContent__fixedHeightSpacer"
-      *ngIf="!mediaDescription"
-    ></div>
+    <div class="m-activityContent__fixedHeightSpacer" *ngIf="!bodyText"></div>
   </div>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->
@@ -80,8 +76,8 @@
     *ngIf="isImage"
     [ngClass]="{
       'm-activityContent__media--extraTallImage':
-        (extraTallImage && service.displayOptions.isFeed) ||
-        service.displayOptions.minimalMode,
+        extraTallImage &&
+        (service.displayOptions.isFeed || service.displayOptions.minimalMode),
       'm-activityContent__media--extraWideImage':
         extraWideImage && service.displayOptions.isFeed
     }"
@@ -126,7 +122,7 @@
   <div
     *ngIf="service.isQuote$ | async"
     class="m-activityContent__quote"
-    [class.m-activityContent__quote--hasMessage]="!!message"
+    [class.m-activityContent__quote--hasText]="!!text"
   >
     <m-activityV2__quote
       [parentService]="service"
@@ -141,14 +137,13 @@
 <!-- TEXT (WHEN TEXT ON BOTTOM)-->
 <!-- ----------------------------------- -->
 <ng-container *ngIf="isTextBelowMedia">
-  <ng-container *ngTemplateOutlet="descriptionTemplate"></ng-container>
-  <ng-container *ngTemplateOutlet="messageTemplate"></ng-container
-></ng-container>
+  <ng-container *ngTemplateOutlet="textTemplate"></ng-container>
+</ng-container>
 <!-- ----------------------------------- -->
 <!-- REMIND DELETED NOTICE -->
 <!-- ----------------------------------- -->
 <div
-  class="m-activityContent__remindDeletedNotice m-activityContent__text"
+  class="m-activityContent__remindDeletedNotice m-activityContent__textOjm"
   *ngIf="(service.entity$ | async).remind_deleted"
 >
   <i class="material-icons">info</i>
@@ -162,120 +157,71 @@
 <!-- ----------------------------------- -->
 <m-activityV2__permalink
   *ngIf="showPermalink"
-  class="m-activityContent__permalink m-activityContent__text"
+  class="m-activityContent__permalink m-activityContent__textOjm"
 ></m-activityV2__permalink>
 <!-- ----------------------------------- -->
-<!-- TEMPLATE: MESSAGE-->
+<!-- TEMPLATE: TEXT-->
 <!-- ----------------------------------- -->
-<ng-template #messageTemplate
+<ng-template #textTemplate
   ><ng-container *ngIf="!hideText">
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
+    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isStatus"></div>
     <div
-      #messageEl
+      #textEl
       m-read-more
-      class="m-activityContent__message m-activityContent__text"
-      [class.m-activityContent__message--quote]="entity.remind_object"
-      [class.m-activityContent__message--richEmbed]="isRichEmbed"
-      [class.m-activityContent__message--isTextOnly]="isTextOnly"
-      [class.m-activityContent__message--short]="shortStatus"
-      [class.m-activityContent__message--medium]="mediumStatus"
-      [maxHeightAllowed]="maxHeightAllowed || maxMessageHeight"
-      *ngIf="message?.length >= 1"
-      (click)="onMessageClick($event)"
+      class="m-activityContent__textWrapper"
+      [class.m-activityContent__textWrapper--shortStatus]="shortStatus"
+      [class.m-activityContent__textWrapper--mediumStatus]="mediumStatus"
+      [maxHeightAllowed]="maxHeightAllowed || maxTextHeight"
+      *ngIf="bodyText?.length >= 1 || titleText?.length >= 1"
     >
       <div
-        class="m-activityContent__messageWrapper"
+        class="m-activityContentText__innerWrapper"
         [ngClass]="{
           'm-activityContentText--translated':
             service.displayOptions.showTranslation
         }"
       >
-        <span [innerHtml]="message | tags | codeHighlight"></span>
+        <p
+          *ngIf="titleText"
+          [innerHtml]="titleText | tags"
+          class="m-activityContentText__title"
+          [class.m-activityContentText__title--noDescription]="!bodyText"
+        ></p>
+        <p
+          *ngIf="bodyText && !hideBodyText"
+          class="m-activityContentText__body"
+          [innerHtml]="bodyText | tags | codeHighlight"
+        ></p>
         <m-read-more--button
           *ngIf="
-            !(service.shouldShowPaywall$ | async) || isTextOnly;
+            !(service.shouldShowPaywall$ | async) || isStatus;
             else teaserFadeout
           "
           [v2]="true"
           [showOnlyFadeout]="service.displayOptions.sidebarMode"
           [redirectUrl]="getRedirectUrl()"
         ></m-read-more--button>
+        <ng-template #teaserFadeout>
+          <div class="m-activityContent__teaserFadeout" @fader></div
+        ></ng-template>
       </div>
       <!-- ----------------------------------- -->
-      <!-- TRANSLATION (MESSAGE) -->
+      <!-- TRANSLATION  -->
       <!-- ----------------------------------- -->
-      <ng-container *ngTemplateOutlet="translation"></ng-container>
+      <ng-container *mIfBrowser>
+        <m-translate
+          *ngIf="service.displayOptions.showTranslation"
+          [open]="service.displayOptions.showTranslation"
+          [entity]="entity"
+          [translateEvent]="translateEvent"
+          (onTranslate)="onTranslate($event)"
+          (onTranslateError)="onTranslate($event)"
+          [class.m-translate--minimalMode]="isMinimalMode"
+          class="m-activityContent__textOjm"
+          #translate
+        ></m-translate>
+      </ng-container>
     </div>
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
+    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isStatus"></div>
   </ng-container>
 </ng-template>
-
-<!-- ----------------------------------- -->
-<!-- TEMPLATE: TITLE / DESCRIPTION -->
-<!-- ----------------------------------- -->
-<ng-template #descriptionTemplate>
-  <ng-container *ngIf="!hideText">
-    <div
-      #mediaDescriptionEl
-      class="m-activityContent__mediaDescription m-activityContent__text"
-      m-read-more
-      *ngIf="mediaDescription || mediaTitle"
-      [maxHeightAllowed]="maxDescHeight"
-      (click)="onMessageClick($event)"
-    >
-      <div class="m-activityContent__descriptionWrapper">
-        <p
-          [innerHtml]="mediaTitle | tags"
-          class="m-activityContent__mediaTitle"
-          [class.m-activityContent__mediaTitle--noDescription]="
-            !mediaDescription
-          "
-          *ngIf="mediaTitle"
-        ></p>
-        <p
-          *ngIf="mediaDescription && !hideMediaDescription"
-          class="m-activityContent__mediaDescriptionText"
-          [innerHtml]="mediaDescription | tags"
-          [ngClass]="{
-            'm-activityContentText--translated':
-              service.displayOptions.showTranslation
-          }"
-        ></p>
-        <m-read-more--button
-          *ngIf="!(service.shouldShowPaywall$ | async); else teaserFadeout"
-          [v2]="true"
-          [showOnlyFadeout]="minimalMode"
-          [redirectUrl]="getRedirectUrl()"
-        ></m-read-more--button>
-      </div>
-      <!-- ----------------------------------- -->
-      <!-- TRANSLATION (MEDIA POSTS) -->
-      <!-- ----------------------------------- -->
-      <ng-container *ngTemplateOutlet="translation"></ng-container>
-    </div>
-  </ng-container>
-</ng-template>
-<!-- ----------------------------------- -->
-<!-- TEMPLATE: TRANSLATION -->
-<!-- ----------------------------------- -->
-<ng-template #translation>
-  <ng-container *mIfBrowser>
-    <m-translate
-      *ngIf="service.displayOptions.showTranslation"
-      [open]="service.displayOptions.showTranslation"
-      [entity]="entity"
-      [translateEvent]="translateEvent"
-      (onTranslate)="onTranslate($event)"
-      (onTranslateError)="onTranslate($event)"
-      [class.m-translate--minimalMode]="minimalMode"
-      class="m-activityContent__text"
-      #translate
-    ></m-translate>
-  </ng-container>
-</ng-template>
-<!-- ----------------------------------- -->
-<!-- TEMPLATE: TEASER FADEOUT -->
-<!-- ----------------------------------- -->
-<ng-template #teaserFadeout>
-  <div class="m-activityContent__teaserFadeout" @fader></div
-></ng-template>

@@ -38,7 +38,7 @@
     .m-blogCard__title {
       padding: $spacing4;
       a {
-        @include heading4Regular;
+        @include heading4Bold;
         @include m-theme() {
           color: themed($m-textColor--primary);
         }

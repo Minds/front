@@ -38,34 +38,16 @@
             [ngClass]="{
               'm-activityModal__mediaWrapper--image':
                 entity.content_type === 'image',
-              'm-activityModal__mediaWrapper--status':
-                entity.content_type === 'status',
-              'm-activityModal__mediaWrapper--statusShort': shortStatus,
-              'm-activityModal__mediaWrapper--statusLong':
-                entity.content_type === 'status' && !shortStatus,
               'm-activityModal__mediaWrapper--video':
-                entity.content_type === 'video',
-              'm-activityModal__mediaWrapper--richEmbed':
-                entity.content_type === 'rich-embed',
-              isBlog: entity.content_type === 'blog',
-              'm-activityModal__mediaWrapper--quote': isQuote
+                entity.content_type === 'video'
             }"
           >
             <m-activityV2__content
               *ngIf="
-                !isQuote &&
-                (activityService.shouldShowContent$ | async) &&
-                isContentReady
+                (activityService.shouldShowContent$ | async) && isContentReady
               "
-              [hideText]="
-                entity.content_type !== 'status' &&
-                entity.activity_type !== 'rich-embed' &&
-                entity.content_type !== 'rich-embed'
-              "
+              [hideText]="true"
               [showPaywall]="activityService.shouldShowPaywall$ | async"
-              [showPaywallBadge]="
-                activityService.shouldShowPaywallBadge$ | async
-              "
               [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
               [maxHeightAllowed]="modalHeight"
             ></m-activityV2__content>
@@ -92,28 +74,30 @@
       <!-- -------------------------------------------------- -->
       <div class="m-activityModal__contentContainer">
         <div class="m-activityModal__contentBody">
-          <!-- FLAG -->
-          <m-activityV2__flag class="m-activity__flagRow"></m-activityV2__flag>
-          <!-- OWNER BLOCK -->
-          <m-activityV2__ownerBlock>
-            <ng-container class="m-activityOwnerBlock__right">
-              <m-activityV2__views></m-activityV2__views>
-              <m-activityV2__menu
-                (deleted)="delete()"
-                *ngIf="activityService.isLoggedIn$ | async"
-              ></m-activityV2__menu>
-            </ng-container>
-          </m-activityV2__ownerBlock>
           <!-- --------------- -->
           <!-- SCROLLABLE AREA -->
           <!-- --------------- -->
           <div
-            class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter"
+            class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter m-disableScrollbars"
           >
             <div
               class="m-activityModal__scrollableAreaBody m-disableScrollbars"
-              #commentsScroll
+              #scrollableArea
             >
+              <!-- FLAG -->
+              <m-activityV2__flag
+                class="m-activity__flagRow"
+              ></m-activityV2__flag>
+              <!-- OWNER BLOCK -->
+              <m-activityV2__ownerBlock>
+                <ng-container class="m-activityOwnerBlock__right">
+                  <m-activityV2__views></m-activityV2__views>
+                  <m-activityV2__menu
+                    (deleted)="delete()"
+                    *ngIf="activityService.isLoggedIn$ | async"
+                  ></m-activityV2__menu>
+                </ng-container>
+              </m-activityV2__ownerBlock>
               <!-- MESSAGE -->
               <m-activityV2__content
                 *ngIf="

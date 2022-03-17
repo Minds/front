@@ -26,50 +26,54 @@
       }
     }
 
-    .m-activity__minimalMetrics {
-      padding-top: 0 !important;
-      & > span,
-      & > a {
-        font-weight: 300;
-      }
-    }
-
-    .m-activityContent__message {
-      &.m-activityContent__message--isTextOnly {
-        &.m-activityContent__message--short {
-          line-height: 20px;
-          font-size: 16px;
-          font-weight: 400;
+    // Activity V1 minimal mode
+    :not(.m-newsfeed__activitySuggestions--activityV2) {
+      .m-activity__minimalMetrics {
+        padding-top: 0 !important;
+        & > span,
+        & > a {
+          font-weight: 300;
         }
       }
-    }
-  }
 
-  .m-rich-embed--title {
-    font-size: 16px !important;
-  }
-  .m-url {
-    display: none;
-  }
-
-  ::ng-deep m-activity__content {
-    ::ng-deep minds-rich-embed {
-      .meta {
-        padding-top: 16px;
-        padding-bottom: 16px;
+      .m-activityContent__message {
+        &.m-activityContent__message--status {
+          &.m-activityContent__message--shortStatus {
+            line-height: 20px;
+            font-size: 16px;
+            font-weight: 400;
+          }
+        }
       }
-      h2.m-rich-embed--title {
+
+      // ojm partition v2 and move these to respective stylesheets
+
+      .m-rich-embed--title {
         font-size: 16px !important;
       }
       .m-url {
         display: none;
       }
-    }
-  }
 
-  ::ng-deep m-loadingSpinner {
-    @media screen and (max-width: $max-mobile) {
-      display: none;
+      ::ng-deep m-activity__content {
+        ::ng-deep minds-rich-embed {
+          .meta {
+            padding-top: 16px;
+            padding-bottom: 16px;
+          }
+          h2.m-rich-embed--title {
+            font-size: 16px !important;
+          }
+          .m-url {
+            display: none;
+          }
+        }
+      }
+    }
+    ::ng-deep m-loadingSpinner {
+      @media screen and (max-width: $max-mobile) {
+        display: none;
+      }
     }
   }
 }

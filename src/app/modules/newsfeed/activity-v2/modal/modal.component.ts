@@ -79,8 +79,8 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
   isContentReady = false;
   modalHeight: number;
 
-  @ViewChild('commentsScroll')
-  commentsScroll;
+  @ViewChild('scrollableArea')
+  scrollableArea;
 
   constructor(
     @Self() public activityService: ActivityService,
@@ -317,8 +317,8 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
     newHeight: number;
     oldHeight: number;
   }) {
-    if (this.commentsScroll?.nativeElement) {
-      this.commentsScroll.nativeElement.scrollTop += newHeight - oldHeight;
+    if (this.scrollableArea?.nativeElement) {
+      this.scrollableArea.nativeElement.scrollTop += newHeight - oldHeight;
     }
   }
 

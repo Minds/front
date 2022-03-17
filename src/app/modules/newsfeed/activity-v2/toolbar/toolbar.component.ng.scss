@@ -27,6 +27,51 @@
   }
 
   // *********************************************
+  // ** MODAL **
+  // *********************************************
+
+  m-activityV2__modal & {
+    .m-activityToolbar__actions,
+    .m-activityToolbar__metrics {
+      padding-left: $modalScrollableContainerSpacing + $spacing3;
+      padding-right: $modalScrollableContainerSpacing + $spacing3;
+      padding-top: $spacing4;
+      padding-bottom: $spacing4;
+    }
+
+    padding: 0;
+    @include m-theme() {
+      border-top: none !important;
+    }
+
+    .m-layout__spacer {
+      display: none;
+    }
+
+    minds-button-comment {
+      > a > span {
+        padding-right: 0;
+      }
+    }
+
+    .m-tipButton {
+      margin-top: 0;
+
+      i {
+        font-size: 19px !important;
+        margin-top: -1px;
+      }
+      span {
+        display: none;
+      }
+    }
+
+    @include m-theme() {
+      border-top: none;
+    }
+  }
+
+  // *********************************************
   // ** SINGLE **
   // *********************************************
 
@@ -53,20 +98,6 @@
     .m-activityToolbar__metrics {
       padding-top: $spacing5;
       padding-bottom: $spacing5;
-    }
-  }
-
-  // *********************************************
-  // ** MODAL **
-  // *********************************************
-
-  m-activityV2__modal & {
-    .m-activityToolbar__actions,
-    .m-activityToolbar__metrics {
-      padding-left: $modalScrollableContainerSpacing + $spacing3;
-      padding-right: $modalScrollableContainerSpacing + $spacing3;
-      padding-top: $spacing4;
-      padding-bottom: $spacing4;
     }
   }
 
