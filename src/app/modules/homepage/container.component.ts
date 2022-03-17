@@ -19,9 +19,9 @@ export class HomepageContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.metaService
-      .setTitle(`The Leading Alternative Social Network`, true)
+      .setTitle(`Minds: The Alternative Social Network`, false)
       .setDescription(
-        'An open source, community-owned social network dedicated to privacy, free speech, monetization and decentralization. Break free from big censorship, algorithms and surveillance and join the leading, unbiased alternative.'
+        'Elevate the global conversation through Internet freedom. Speak freely, protect your privacy, earn crypto, and take back control of your social media'
       )
       .setCanonicalUrl('/')
       .setOgUrl('/');
