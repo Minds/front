@@ -36,7 +36,7 @@ class BlankComponent {
   @Output() done: EventEmitter<any> = new EventEmitter<any>();
 }
 
-describe('ForgotPasswordComponent', () => {
+xdescribe('ForgotPasswordComponent', () => {
   let comp: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
 

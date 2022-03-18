@@ -1,11 +1,13 @@
+import { take } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { RegexService } from '../../../common/services/regex.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { ApiResource } from './../../../common/api/api-resource.service';
 
 @Component({
   moduleId: module.id,
@@ -13,11 +15,20 @@ import { PageLayoutService } from '../../../common/layout/page-layout.service';
   templateUrl: 'forgot-password.component.html',
 })
 export class ForgotPasswordComponent {
-  inProgress: boolean = false;
   step: number = 1;
   username: string = '';
   code: string = '';
   paramsSubscription: Subscription;
+  forgotPasswordRequest = this.apiResource.mutation(
+    'api/v1/forgotpassword/request'
+  );
+  forgotPasswordReset = this.apiResource.mutation(
+    'api/v1/forgotpassword/reset'
+  );
+  inProgress = combineLatest([
+    this.forgotPasswordRequest.loading$,
+    this.forgotPasswordReset.loading$,
+  ]);
 
   private errorTexts: { [key: string]: string } = {
     'email-detected': 'Enter your username, not your email.',
@@ -26,13 +37,13 @@ export class ForgotPasswordComponent {
   };
 
   constructor(
-    public client: Client,
     public router: Router,
     public route: ActivatedRoute,
     public session: Session,
     public regex: RegexService,
     public toaster: FormToastService,
-    private pageLayout: PageLayoutService
+    private pageLayout: PageLayoutService,
+    private apiResource: ApiResource
   ) {}
 
   ngOnInit() {
@@ -57,13 +68,10 @@ export class ForgotPasswordComponent {
    * @param { { value: string } } username - username object to be checked.
    */
   async request(username: { value: string }): Promise<void> {
-    this.inProgress = true;
-
     const regex: RegExp = this.regex.getRegex('mail');
     regex.lastIndex = 0; // reset state because of global modifier
 
     if (regex.test(username.value)) {
-      this.inProgress = false;
       this.toaster.error(this.errorTexts['email-detected']);
       return;
     }
@@ -75,16 +83,13 @@ export class ForgotPasswordComponent {
     }
 
     try {
-      await this.client.post('api/v1/forgotpassword/request', {
+      await this.forgotPasswordRequest.mutate({
         username: usernameValue,
       });
 
       username.value = '';
-
-      this.inProgress = false;
       this.step = 2;
     } catch (e) {
-      this.inProgress = false;
       if (e.status === 'failed') {
         this.toaster.error(this.errorTexts['default']);
       }
@@ -100,22 +105,19 @@ export class ForgotPasswordComponent {
     this.code = code;
   }
 
-  reset(password) {
-    if (!this.inProgress) {
-      this.inProgress = true;
-      this.client
-        .post('api/v1/forgotpassword/reset', {
+  async reset(password) {
+    if (!(await this.inProgress.pipe(take(1)).toPromise())) {
+      return this.forgotPasswordReset
+        .mutate({
           password: password.value,
           code: this.code,
           username: this.username,
         })
         .then((response: any) => {
-          this.inProgress = false;
           this.session.login(response.user);
           this.router.navigate(['/newsfeed']);
         })
         .catch(e => {
-          this.inProgress = false;
           this.toaster.error(e.message);
         });
     }

@@ -102,21 +102,17 @@ export class ResourceRef<T, P> {
   }
 
   /**
-   * 
-   * @param _params 
-   * @param optionsOverride 
-   * @returns 
+   *
+   * @param _params
+   * @param optionsOverride
+   * @returns
    */
   protected async fetch(
     _params?: P,
     optionsOverride?: ApiResourceOptions<P>
-  ): Promise<T> {
+  ): Promise<ResourceRef<T, P>> {
     const options = Object.assign({}, this.options, optionsOverride);
     const params = Object.assign({}, options.params, _params);
-
-    if (!options.url) {
-      throw new Error('url not provided');
-    }
 
     // restore from cache on fetch
     if (
@@ -155,7 +151,7 @@ export class ResourceRef<T, P> {
       this.loading$.next(false);
     }
 
-    return this.data$.getValue();
+    return this;
   }
 
   /**
@@ -217,7 +213,7 @@ export class QueryRef<T, P> extends ResourceRef<T, P> {
    * @param params
    * @returns
    */
-  refetch = (params: P): Promise<T> =>
+  refetch = (params: P) =>
     this.fetch(params, { updatePolicy: UpdatePolicy.replace });
 
   /**
@@ -225,7 +221,7 @@ export class QueryRef<T, P> extends ResourceRef<T, P> {
    * @param params
    * @returns
    */
-  fetchMore = (params: P): Promise<T> =>
+  fetchMore = (params: P) =>
     this.fetch(params, { updatePolicy: UpdatePolicy.merge });
 }
 
@@ -235,7 +231,7 @@ export class MutationRef<T, P> extends ResourceRef<T, P> {
    * @param params
    * @returns
    */
-  call = (params: P): Promise<T> => this.fetch(params);
+  mutate = (params: P) => this.fetch(params);
 }
 
 @Injectable()
@@ -255,7 +251,7 @@ export class ApiResource {
   public query<T, P>(
     // TODO: let this be a name like 'recommendations' so we can have access
     // to this resource from elsewhere without explicitly defining the url. and let the cache key be
-    // this name rather than the url and query combined
+    // this name rather than the url and query combined. So we can do apiResource.updateCache('recommendations', {...})
     url: string,
     opts: ApiResourceOptions<P>
   ): QueryRef<T, P> {
@@ -271,7 +267,7 @@ export class ApiResource {
    * @param opts options
    * @returns
    */
-  public mutate<T, P>(
+  public mutation<T, P>(
     url: string,
     opts: ApiResourceOptions<P> = {}
   ): MutationRef<T, P> {
