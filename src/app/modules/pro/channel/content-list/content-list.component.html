@@ -8,7 +8,6 @@
 
   <infinite-scroll
     *ngIf="canAutoScroll"
-    distance="25%"
     (load)="loadMore()"
     [moreData]="feedsService.hasMore | async"
     [inProgress]="feedsService.inProgress | async"
