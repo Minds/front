@@ -267,7 +267,7 @@ export class ActivityV2ContentComponent
 
   ngAfterViewInit() {
     // Run after view initialized (as modal uses the same component this doesnt get called)
-    timer(0)
+    timer(1)
       .toPromise()
       .then(() => {
         this.calculateQuoteHeight();
@@ -282,7 +282,7 @@ export class ActivityV2ContentComponent
     }
   }
 
-  // ojm search for all instances of these classes (message/desc) in other components and change
+  // ojm search for all instances of these classes (aka message/mediaDesc) in other components and change
   get titleText(): string {
     return this.isImage || this.isVideo ? this.entity.title : '';
   }
@@ -294,11 +294,12 @@ export class ActivityV2ContentComponent
     }
 
     // Use media message only if different from title
-    if (
-      (this.isImage || this.isVideo) &&
-      this.entity.message !== this.entity.title
-    ) {
-      return this.entity.message;
+    if (this.isImage || this.isVideo) {
+      if (this.entity.message !== this.entity.title) {
+        return this.entity.message;
+      } else {
+        return '';
+      }
     }
 
     // No message if the same as blog title
@@ -358,35 +359,13 @@ export class ActivityV2ContentComponent
     return null;
   }
 
-  get mediaWidth(): number | null {
-    if (this.isImage) {
-      if (this.imageHeight) {
-        console.log(
-          'ojm get mediaWidth',
-          this.imageHeight,
-          this.imageAspectRatio,
-          (this.imageHeight.slice(0, -2), 10) / this.imageAspectRatio
-        );
-      }
-
-      const imageWidth = this.imageWidth || '410px'; // ojm why 410?
-      return parseInt(imageWidth.slice(0, -2), 10);
-    }
-    if (this.isVideo) {
-      return this.videoWidth ? parseInt(this.videoWidth.slice(0, -2), 10) : 0;
-    }
-    if (this.isRichEmbed) {
-      return 400; // ojm check this. it's wrong now
-    }
-    return null;
-  }
-
   get isModal(): boolean {
     return this.service.displayOptions.isModal;
   }
 
   // Text usually goes above media, except for
   // minimal mode and rich-embed modals
+  // ojm note: no rich-embed modals anymore
   get isTextBelowMedia(): boolean {
     return (
       (this.isMinimalMode && !this.isQuote) ||
@@ -534,16 +513,6 @@ export class ActivityV2ContentComponent
       const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
       const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
-      console.log(
-        'ojm calcImageDimensions, original H W',
-        originalHeight,
-        originalWidth
-      );
-      console.log(
-        'ojm calcImageDimensions- clientWidth',
-        this.el.nativeElement.clientWidth
-      );
-
       this.imageOriginalHeight = originalHeight;
       this.imageAspectRatio = originalHeight / originalWidth;
 
@@ -557,21 +526,16 @@ export class ActivityV2ContentComponent
         // For everything else, calculate height from
         // aspect ratio and clientWidth
         const height =
-          this.el.nativeElement.clientWidth / this.imageAspectRatio;
-
-        console.log(
-          'ojm calcImageDimensions, not modal, clientWidth:',
-          this.el.nativeElement.clientWidth
-        );
+          this.imageEl.nativeElement.clientWidth * this.imageAspectRatio;
 
         this.imageHeight = `${height}px`;
       }
     } else {
-      // No custom dimensions data
+      // If no custom dimensions data
       if (this.isModal) {
+        // Size for modal stage
         this.imageHeight = `${ACTIVITY_MODAL_MIN_STAGE_HEIGHT}px`;
       } else {
-        console.log('ojm calcImageDimensions, no custom dimensions');
         this.imageHeight = null;
       }
     }

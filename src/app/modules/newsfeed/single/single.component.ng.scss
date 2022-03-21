@@ -1,6 +1,6 @@
 @import 'defaults.scss';
 
-$padding: $spacing4;
+$layoutMax2ColWidth: '1039px';
 
 :host {
   .m-newsfeed__single--activityV2 {
@@ -10,6 +10,10 @@ $padding: $spacing4;
 
     ::ng-deep m-activityV2 {
       border-top: none !important;
+    }
+
+    @media screen and (max-width: $layoutMax2ColWidth) and (min-width: $max-mobile) {
+      @include borderRight;
     }
   }
 
@@ -27,6 +31,7 @@ $padding: $spacing4;
     display: none;
   }
 
+  // MOBILE
   @media screen and (max-width: $max-mobile) {
     .minds-list {
       padding: 0;
@@ -48,9 +53,9 @@ $padding: $spacing4;
         > * {
           display: block;
 
-          margin-top: $padding;
-          padding-top: $padding;
-          padding-bottom: $padding;
+          margin-top: $spacing4;
+          padding-top: $spacing4;
+          padding-bottom: $spacing4;
 
           @include m-theme() {
             border-top: 8px solid themed($m-borderColor--primary);
@@ -59,7 +64,7 @@ $padding: $spacing4;
 
         .m-sidebarWidget__title {
           @media screen and (max-width: $max-mobile) {
-            padding: $padding;
+            padding: $spacing4;
           }
         }
       }

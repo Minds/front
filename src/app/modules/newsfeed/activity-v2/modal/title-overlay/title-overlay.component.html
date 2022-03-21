@@ -13,19 +13,6 @@
       entity.activity_type !== 'rich-embed' && entity.activity_type !== 'quote'
     "
   >
-    <!-- TITLE -->
-    <!-- <span
-      class="m-activityModal__overlayTitle m-activityModal__overlayTitle--notFullscreen"
-      *ngIf="!(service.isFullscreen$ | async)"
-    >
-      <a
-        [routerLink]="activityService.canonicalUrl$ | async"
-        (click)="$event.stopPropagation()"
-        >{{ title }}</a
-      >
-    </span> -->
-    <!-- PAYWALL BADGE -->
-    <m-paywallBadge [entity]="entity"></m-paywallBadge>
     <!-- FULLSCREEN -->
     <span
       class="m-activityModal__overlayTitle m-activityModal__overlayTitle--fullscreen"

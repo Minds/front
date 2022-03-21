@@ -25,19 +25,6 @@
         ><span>{{ toReadableDate(entity.time_created) }}</span>
       </div>
     </ng-template>
-    <!-- ------------------------------------------ -->
-    <!-- VISIBILITY -->
-    <!-- ------------------------------------------ -->
-    <div
-      class="m-activityPermalink__text m-activityPermalink__text--visibility"
-      *ngIf="
-        service.displayOptions.showVisibilityState &&
-        (service.isUnlisted$ | async)
-      "
-    >
-      <i class="material-icons unlisted">visibility_off</i>
-      <a i18n="@@OWNER_BLOCK__UNLISTED">Unlisted</a>
-    </div>
   </a>
   <!-- ------------------------------------------ -->
   <!-- VIEW COUNT  -->

@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
-import { RelatedContentService } from '../../../../common/services/related-content.service';
 import {
   ActivityEntity,
   ActivityService,

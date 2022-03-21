@@ -8,6 +8,11 @@
   height: 100%;
   z-index: 2;
 
+  &.m-wireLockScreen--activityV2 {
+    // ojm todo?
+    // if no need, remove hostBinding as well
+  }
+
   .m-wire__lockScreen {
     display: flex;
     justify-content: center;
@@ -87,7 +92,7 @@
   ::ng-deep m-button {
     .m-button {
       &.m-button--saving {
-        display: block !important;
+        display: inline-block !important;
       }
     }
   }

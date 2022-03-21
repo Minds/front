@@ -25,9 +25,27 @@
         }
       }
     }
+  }
 
-    // Activity V1 minimal mode
-    :not(.m-newsfeed__activitySuggestions--activityV2) {
+  ::ng-deep m-loadingSpinner {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+
+  &.m-newsfeed__activitySuggestions--activityV2 {
+    ::ng-deep m-sidebarWidget {
+      .m-newsfeedActivitySuggestion__item {
+        @media screen and (max-width: $max-mobile) {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  // Activity V1 minimal mode
+  &:not(.m-newsfeed__activitySuggestions--activityV2) {
+    ::ng-deep m-sidebarWidget {
       .m-activity__minimalMetrics {
         padding-top: 0 !important;
         & > span,
@@ -44,35 +62,6 @@
             font-weight: 400;
           }
         }
-      }
-
-      // ojm partition v2 and move these to respective stylesheets
-
-      .m-rich-embed--title {
-        font-size: 16px !important;
-      }
-      .m-url {
-        display: none;
-      }
-
-      ::ng-deep m-activity__content {
-        ::ng-deep minds-rich-embed {
-          .meta {
-            padding-top: 16px;
-            padding-bottom: 16px;
-          }
-          h2.m-rich-embed--title {
-            font-size: 16px !important;
-          }
-          .m-url {
-            display: none;
-          }
-        }
-      }
-    }
-    ::ng-deep m-loadingSpinner {
-      @media screen and (max-width: $max-mobile) {
-        display: none;
       }
     }
   }

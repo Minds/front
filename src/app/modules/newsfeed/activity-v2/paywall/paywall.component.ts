@@ -13,7 +13,7 @@ import {
 })
 export class ActivityV2PaywallComponent {
   @Input() mediaHeight: number | null = null;
-  @Input() mediaWidth: number | null = null;
+  @Input() hideText: boolean = false;
 
   constructor(public service: ActivityService) {}
 

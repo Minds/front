@@ -340,5 +340,6 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
 
     // Prepare pager
     this.relatedContent.setBaseEntity(params.entity);
+    this.relatedContent.setParent('activityModal');
   }
 }

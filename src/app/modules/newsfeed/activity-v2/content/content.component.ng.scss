@@ -2,9 +2,9 @@
 @import '../shared.scss';
 
 :host {
-  // *********************************************
+  // *********************************
   // ** FIXED HEIGHT **
-  // *********************************************
+  // *********************************
 
   &.m-activityContent--fixedHeight {
     flex: 1;
@@ -55,9 +55,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** MINIMAL MODE **
-  // *********************************************
+  // *********************************
 
   &.m-activity__content--minimalMode {
     // MINIMAL TEXT
@@ -70,19 +70,18 @@
       }
 
       .m-activityContentText__title {
-        @include heading3Bold;
-        margin-bottom: 0px;
+        @include heading4Medium;
+        padding: $spacing4 0;
+        margin-bottom: 0;
       }
 
       .m-activityContentText__body {
         padding: $spacing4 0;
       }
 
-      .m-activityContent__textWrapper--shortStatus,
-      .m-activityContent__textWrapper--mediumStatus {
-        .m-activityContent__textWrapper {
-          @include body1Regular;
-        }
+      .m-activityContentText__body--shortStatus,
+      .m-activityContentText__body--mediumStatus {
+        @include body1Regular;
       }
     }
 
@@ -117,9 +116,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** MODAL **
-  // *********************************************
+  // *********************************
 
   m-activityV2__modal & {
     // Modal media (left side)
@@ -212,18 +211,18 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // **PAYWALL **
-  // *********************************************
+  // *********************************
 
   &.m-activityContent--paywalledStatus {
     min-height: 120px;
     padding-top: 50px;
   }
 
-  // *********************************************
+  // *********************************
   // ** QUOTE **
-  // *********************************************
+  // *********************************
 
   .m-activityContent--quote {
     overflow: hidden;
@@ -231,9 +230,9 @@
     padding: 0 !important;
   }
 
-  // *********************************************
+  // *********************************
   // ** REMIND **
-  // *********************************************
+  // *********************************
 
   .m-activityContent__remindDeletedNotice {
     padding: $spacing5;
@@ -262,9 +261,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** SIDEBAR BOOST **
-  // *********************************************
+  // *********************************
 
   m-ads-boost & {
     .m-activityContent__textWrapper {
@@ -284,9 +283,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** TEASER **
-  // *********************************************
+  // *********************************
 
   .m-activityContent__teaserFadeout {
     position: absolute;
@@ -308,21 +307,21 @@
     }
   }
 
-  // *********************************************
-  // *********************************************
-  // *********************************************
+  // *********************************
+  // *********************************
+  // *********************************
   // ** DEFAULT **
-  // *********************************************
-  // *********************************************
-  // *********************************************
+  // *********************************
+  // *********************************
+  // *********************************
 
   display: block;
   width: 100%;
   position: relative;
 
-  // *********************************************
+  // *********************************
   // ** MEDIA **
-  // *********************************************
+  // *********************************
 
   .m-activityContent__media--video,
   .m-activityContent__media--image,
@@ -332,9 +331,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** MEDIA - IMAGE **
-  // *********************************************
+  // *********************************
 
   .m-activityContent__media--image {
     &.m-activityContent__media--extraTallImage,
@@ -359,10 +358,12 @@
         max-width: 500px;
       }
     }
+
     a {
       height: auto;
       width: auto;
       display: inline-block;
+      position: relative;
     }
     img {
       max-height: 500px;
@@ -398,9 +399,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** MEDIA - VIDEO **
-  // *********************************************
+  // *********************************
 
   .m-activityContent__media--video {
     ::ng-deep {
@@ -425,9 +426,9 @@
     }
   }
 
-  // *********************************************
+  // *********************************
   // ** TEXT **
-  // *********************************************
+  // *********************************
 
   .m-activityContent__textWrapper {
     position: relative;
@@ -437,6 +438,7 @@
       white-space: pre-line;
       word-break: break-word;
       padding: 0 0 $spacing4 0;
+      @include body2Regular;
 
       .m-code-highlight {
         overflow-x: auto;
@@ -449,11 +451,40 @@
     }
   }
 
+  // TITLE
+  .m-activityContentText__title {
+    @include heading4Bold;
+    margin-bottom: 0;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    .m-activityContentText__title--hasDescription {
+      margin-bottom: $spacing2 !important;
+    }
+
+    ::ng-deep a {
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // BODY
   .m-activityContentText__body,
   .m-activityContentText__body p,
   ::ng-deep m-translate .m-translation-wrapper .message {
     margin: 0;
     padding: 0;
+    line-height: inherit;
     @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -465,8 +496,20 @@
       }
     }
 
+    &.m-activityContentText__body--shortStatus,
+    ::ng-deep m-translate .message span {
+      @include heading2Medium;
+    }
+
+    &.m-activityContentText__body--mediumStatus,
+    ::ng-deep m-translate .message span {
+      @include heading4Medium;
+    }
+
     ::ng-deep a {
-      @include body2Regular;
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: 500;
       @include m-theme() {
         color: themed($m-link);
       }
@@ -478,22 +521,14 @@
     }
   }
 
-  .m-activityContentText__title {
-    &:not(.m-activityContentText__title--noDescription) {
-      @include heading4Bold;
-      margin-bottom: $spacing1 !important;
-    }
-
-    ::ng-deep a {
-      font-size: inherit;
-      font-weight: inherit;
-      @include m-theme() {
-        color: themed($m-link);
-      }
-
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
+  // READ MORE
+  &:not(.m-activityContent--status):not(.m-activity__content--minimalMode) {
+    // Make a taller read more area
+    ::ng-deep m-read-more--button {
+      .m-readMoreButton--v2 {
+        padding: $spacing19 $spacing4 $spacing12;
+        display: flex;
+        justify-content: space-around;
       }
     }
   }
@@ -502,33 +537,13 @@
     .m-readMoreButton--v2 > span {
       @include body2Medium;
       letter-spacing: normal;
+      text-transform: capitalize;
     }
   }
 
-  // *********************************************
-  // ** TEXT - STATUS **
-  // *********************************************
-
-  &.m-activityContent--status {
-    word-break: break-word;
-
-    &.m-activityContent__textWrapper--shortStatus {
-      p,
-      ::ng-deep m-translate .message span {
-        @include heading2Medium;
-      }
-    }
-    &.m-activityContent__textWrapper--mediumStatus {
-      p,
-      ::ng-deep m-translate .message span {
-        @include heading4Medium;
-      }
-    }
-  }
-
-  // *********************************************
+  // *********************************
   // ** TRANSLATIONS **
-  // *********************************************
+  // *********************************
 
   ::ng-deep m-translate {
     .m-translate__visible > * {

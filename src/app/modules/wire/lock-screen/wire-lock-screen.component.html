@@ -6,7 +6,7 @@
     isVideo: contentType === 'video',
     'm-wire__lockScreen--minimalMode': minimalMode
   }"
-  [style.maxHeight.px]="mediaHeight"
+  [style.maxHeight.px]="mediaHeight && !activityV2Feature ? mediaHeight : none"
   (click)="$event.stopPropagation(); unlock()"
   *ngIf="entity.wire_threshold && init"
 >
@@ -22,7 +22,7 @@
   <!-- THRESHOLD/TIER REQUIREMENTS -->
   <!-- ------------------------------ -->
 
-  <div class="m-wireLockScreen__inner" [style.width.px]="mediaWidth">
+  <div class="m-wireLockScreen__inner" *ngIf="!hideText">
     <h5
       *ngIf="contentType !== 'rich-embed'"
       class="m-wireLockScreen__message"
