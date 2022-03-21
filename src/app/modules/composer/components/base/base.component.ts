@@ -186,12 +186,8 @@ export class BaseComponent implements AfterViewInit {
       this.popup.close();
     }
 
-    if (this.featuresService.has('ckeditor5')) {
-      this.blogPreloadService.next(message);
-      this.router.navigate(['/blog/v2/edit/new']);
-      return;
-    }
-    this.router.navigate(['/blog/edit/new']);
+    this.blogPreloadService.next(message);
+    this.router.navigate(['/blog/v2/edit/new']);
   }
 
   /**

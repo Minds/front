@@ -142,8 +142,6 @@ describe('NewsfeedSingleComponent', () => {
 
     sessionMock.user.admin = false;
     sessionMock.user.hide_share_buttons = false;
-    featuresServiceMock.mock('sync-feeds', false);
-    featuresServiceMock.mock('navigation', true);
 
     fixture.detectChanges();
 

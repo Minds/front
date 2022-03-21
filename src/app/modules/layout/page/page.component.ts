@@ -44,20 +44,8 @@ export class PageComponent implements OnInit {
       });
     });
 
-    this.session.isLoggedIn(async is => {
-      if (is && !this.site.isProDomain) {
-        if (!this.site.isProDomain) {
-          this.showOnboarding = await this.onboardingService.showModal();
-        }
-      }
-    });
-
     this.onboardingService.onClose.subscribe(() => {
       this.showOnboarding = false;
-    });
-
-    this.onboardingService.onOpen.subscribe(async () => {
-      this.showOnboarding = await this.onboardingService.showModal(true);
     });
 
     this.messengerService.setupLegacyMessengerVisibility();

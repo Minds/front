@@ -25,15 +25,6 @@ export class ChannelActionsBoostComponent {
    * Opens the boost modal
    */
   async onClick(e: MouseEvent): Promise<void> {
-    if (this.features.has('boost-modal-v2')) {
-      await this.boostModal.open(this.service.channel$.getValue());
-      return;
-    }
-
-    this.modalService.present(BoostCreatorComponent, {
-      data: {
-        channel: this.service.channel$.getValue(),
-      },
-    });
+    await this.boostModal.open(this.service.channel$.getValue());
   }
 }

@@ -450,22 +450,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               { path: 'connect', component: YoutubeMigrationConnectComponent },
               {
                 path: 'dashboard',
-                component: YoutubeMigrationDashboardComponent,
-                children: [
-                  { path: '', redirectTo: 'available', pathMatch: 'full' },
-                  {
-                    path: 'available',
-                    component: YoutubeMigrationUnmigratedVideosComponent,
-                  },
-                  {
-                    path: 'transferred',
-                    component: YoutubeMigrationMigratedVideosComponent,
-                  },
-                  {
-                    path: 'config',
-                    component: YoutubeMigrationConfigComponent,
-                  },
-                ],
+                component: YoutubeMigrationConfigComponent,
               },
             ],
           },

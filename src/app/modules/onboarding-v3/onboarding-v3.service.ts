@@ -97,17 +97,34 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
-   * @returns { Promise<any> }
+   * @param { Function } onLoadFinished called when the onboarding api call is finished and we have the results
+   * @returns { Promise<OnboardingStepName> } the completed step
    */
-  public async open(): Promise<any> {
+  public async open(onLoadFinished?: () => void): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
 
-    const onSuccess$: Subject<any> = new Subject();
     const modal = this.modalService.present(OnboardingV3ModalComponent, {
       data: {
-        onSaveIntent: (step: OnboardingStepName) => {
+        onSaveIntent: (step: OnboardingStepName, stepData: any) => {
+          if (step) {
+            switch (step) {
+              case 'SetupChannelStep':
+                // only force complete if the channel had a bio (possibly make this more robust by applying more filters)
+                if (stepData?.briefdescription) {
+                  this.forceCompletion(step);
+                  onLoadFinished?.();
+                }
+                this.load().then(onLoadFinished);
+                break;
+              default:
+                // force complete and get the onboarding progress from api
+                this.forceCompletion(step);
+                onLoadFinished?.();
+                this.load().then(onLoadFinished);
+            }
+          }
           modal.close(step);
         },
       },
@@ -115,14 +132,7 @@ export class OnboardingV3Service implements OnDestroy {
       lazyModule: OnboardingV3ProgressLazyModule,
     });
 
-    const onBoardingStepName = await modal.result;
-
-    // Modal was closed.
-    if (!onBoardingStepName) {
-      throw 'DismissedModalException';
-    }
-
-    return onSuccess$.toPromise();
+    return modal.result;
   }
 
   /**
@@ -140,10 +150,12 @@ export class OnboardingV3Service implements OnDestroy {
             console.error(e);
             return of(e);
           }),
-          map(progress =>
+          map((progress: OnboardingResponse) =>
             progress.steps.map((progressStep: OnboardingStep) => {
-              if (step === progressStep.id) {
+              if (step === progressStep.id && !progressStep.is_completed) {
                 progressStep.is_completed = true;
+                progress.completed_pct =
+                  progress.completed_pct + 1 / progress.steps.length;
               }
             })
           )
@@ -158,14 +170,7 @@ export class OnboardingV3Service implements OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   public async presentHomepageModals(): Promise<void> {
-    try {
-      await this.open();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    await this.open();
   }
 
   /**

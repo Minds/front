@@ -13,8 +13,8 @@
                 class="m-form__customInputWrapper__checkbox"
               >
                 <ng-container
-                  i18n="@@YOUTUBE_MIGRATION__CONFIG__TRANSFER_NEW_VIDEOS"
-                  >Automatically transfer newly added YouTube videos across to
+                  i18n="@@YOUTUBE_MIGRATION__CONFIG__POST_NEW_VIDEOS"
+                  >Automatically post newly added YouTube videos onto
                   Minds</ng-container
                 >
                 <input
@@ -45,16 +45,17 @@
       <ng-container i18n="@@YOUTUBE_MIGRATOR__STATUS">Status: </ng-container>
       <span i18n="@@YOUTUBE_MIGRATOR__CONNECTED">Connected</span>
     </p>
-    <p i18n="@@YOUTUBE_MIGRATOR__SIMPLY_DISCONNECT_YOUTUBE_ACCOUNT">
+    <p i18n="@@YOUTUBE_MIGRATOR__SIMPLY_DISCONNECT_YOUTUBE_ACCOUNT_POST">
       You can simply disconnect your YouTube account from Minds. In doing so,
-      any previously transferred videos will continue to be available on Minds.
+      any previously posted videos will continue to be available on Minds.
     </p>
-    <p>
+    <p *ngIf="!inProgress">
       <a
         (click)="disconnectAccount()"
         i18n="@@YOUTUBE_MIGRATOR__DISCONNECT_YOUTUBE_ACCOUNT"
         >Disconnect YouTube Account</a
       >
     </p>
+    <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
   </div>
 </ng-container>

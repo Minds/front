@@ -95,4 +95,10 @@
       text-shadow: 0 0 2px rgba(themed($m-black-always), 0.6);
     }
   }
+
+  ::ng-deep m-button {
+    .m-button.m-button--saving {
+      display: inline-block !important;
+    }
+  }
 }

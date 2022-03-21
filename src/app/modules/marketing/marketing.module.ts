@@ -15,6 +15,7 @@ import { MarketingFooterComponent } from './footer.component';
 import { MarketingAsFeaturedInComponent } from './as-featured-in.component';
 import { MarketingAsFeaturedInBlockchainComponent } from './as-featured-in-blockchain/as-featured-in-blockchain.component';
 import { LanguageModule } from '../language/language.module';
+import { MarketingAsFeaturedInV2Component } from './v2/as-featured-in.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { LanguageModule } from '../language/language.module';
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
+    MarketingAsFeaturedInV2Component,
     MarketingAsFeaturedInBlockchainComponent,
   ],
   exports: [
@@ -38,6 +40,7 @@ import { LanguageModule } from '../language/language.module';
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
+    MarketingAsFeaturedInV2Component,
     MarketingAsFeaturedInBlockchainComponent,
   ],
 })

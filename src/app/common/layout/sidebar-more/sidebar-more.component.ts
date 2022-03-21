@@ -16,6 +16,7 @@ import { BuyTokensModalService } from '../../../modules/blockchain/token-purchas
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
+import { HelpdeskRedirectService } from '../../services/helpdesk-redirect.service';
 
 @Component({
   selector: 'm-sidebarMore',
@@ -57,7 +58,8 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
     private buyTokensModalService: BuyTokensModalService,
     private earnModalService: EarnModalService,
     private boostModalService: BoostModalLazyService,
-    private sidebarNavigationService: SidebarNavigationService
+    private sidebarNavigationService: SidebarNavigationService,
+    private helpdeskRedirectService: HelpdeskRedirectService
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +76,14 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
 
   isAdmin(): boolean {
     return this.session.isAdmin();
+  }
+
+  /**
+   * Get helpdesk redirect URL from service.
+   * @returns { string } URL to redirect to for helpdesk.
+   */
+  public getHelpdeskRedirectUrl(): string {
+    return this.helpdeskRedirectService.getUrl();
   }
 
   async buyTokens(): Promise<void> {

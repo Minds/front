@@ -11,18 +11,20 @@
 
   .m-modalV2__header {
     position: relative;
-    height: 150px;
-    background-size: cover;
-    background-image: url('../../../../assets/photos/confetti-concert.png');
-    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 
     h2 {
-      position: absolute;
-      bottom: 20px;
       text-transform: capitalize;
+      padding-left: 8px;
       @include m-theme() {
-        color: themed($m-white-always);
+        color: themed($m-textColor--primary);
       }
+    }
+
+    .m-modalV2__headerLogoBulb {
+      height: 40px;
     }
   }
 
@@ -86,10 +88,24 @@
         margin-bottom: 10px;
       }
     }
+
+    m-modalCloseButton {
+      a {
+        @include m-theme() {
+          background-color: rgba(themed($m-borderColor--primary), 0.025);
+          color: themed($m-textColor--primary);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: rgba(themed($m-borderColor--primary), 0.05);
+          }
+        }
+      }
+    }
+
     @media screen and (max-width: $max-mobile) {
       .m-register__actions {
-        flex-direction: column;
-
         m-button {
           margin-top: 10px;
           min-width: unset;

@@ -1,41 +1,67 @@
-import { Pipe, Inject, PipeTransform } from '@angular/core';
-import { FeaturesService } from '../../services/features.service';
+import { Pipe, PipeTransform } from '@angular/core';
 import { SiteService } from '../services/site.service';
 import { RegexService } from '../services/regex.service';
+import { TextParserService } from '../services/text-parser.service';
 
+// type of tag.
+export type TagType = 'url' | 'mail' | 'hash' | 'cash' | 'at';
+
+// object used to store match for a tag.
+export type TagMatch = {
+  type: TagType; // type of tag e.g. url, mail...
+  start: number; // start index.
+  end: number; // end index.
+  match: string[]; // array of match(es).
+};
+
+// helper structure to keep things tidy.
+export type TagHelpers = {
+  [key in TagType]: {
+    rule?: RegExp;
+    replace: Function;
+  };
+};
+
+/**
+ * Tags pipe - pipe to handle the mapping of text to corresponding urls,
+ * hashtags, cashtags, usernames etc.
+ */
 @Pipe({
   name: 'tags',
 })
-
-/**
- * Tags pipe
- */
 export class TagsPipe implements PipeTransform {
   results = [];
 
   /**
    * Tags
    */
-  tags = {
+  private tags: TagHelpers = {
     url: {
-      rule: this.regexService.getRegex('url'),
-      replace: m => {
-        const url = m.match[1];
+      // @deprecated - regex matching superseded by twitter-text lib.
+      // rule: this.regexService.getRegex('url'),
+      replace: (m: TagMatch) => {
+        let url = m.match[0];
+
+        // make sure links with no protocol specified are interpreted as external.
+        if (!url.startsWith('http')) {
+          url = `//${url}`;
+        }
+
         return `<a href="${url}" target="_blank" rel="${this.siteService.getLinkRel(
           url
-        )}">${m.match[1]}</a>`;
+        )}">${m.match[0]}</a>`;
       },
     },
     mail: {
       rule: this.regexService.getRegex('mail'),
-      replace: m => {
+      replace: (m: TagMatch) => {
         const url = m.match[0];
         return `<a href="mailto:${url}" target="_blank">${m.match[0]}</a>`;
       },
     },
     hash: {
       rule: this.regexService.getRegex('hash'),
-      replace: m => {
+      replace: (m: TagMatch) => {
         if (this.siteService.isProDomain) {
           return `${
             m.match[1]
@@ -48,9 +74,9 @@ export class TagsPipe implements PipeTransform {
         }</a>`; // TODO: make these link locally
       },
     },
-    crypto: {
-      rule: this.regexService.getRegex('crypto'),
-      replace: m => {
+    cash: {
+      rule: this.regexService.getRegex('cash'),
+      replace: (m: TagMatch) => {
         if (this.siteService.isProDomain) {
           return `${
             m.match[1]
@@ -65,70 +91,31 @@ export class TagsPipe implements PipeTransform {
     },
     at: {
       rule: this.regexService.getRegex('at'),
-      replace: m => {
+      replace: (m: TagMatch) => {
         return `${m.match[1]}<a class="tag" href="/${m.match[2]}" target="_blank">@${m.match[2]}</a>`;
       },
     },
   };
 
   constructor(
-    private featureService: FeaturesService,
     private siteService: SiteService,
+    private textParser: TextParserService,
     public regexService: RegexService
   ) {}
 
   /**
-   * Push a match to results array
-   * @param match
+   * Pipe transform function - turns text into corresponding tags.
+   * @param { string } value - string to parse for tags.
+   * @returns { string } parsed string.
    */
-  push(match: any) {
-    // ignore match inside others
-    if (
-      this.results.findIndex(
-        m => match.start >= m.start && match.end <= m.end
-      ) !== -1
-    ) {
-      return;
-    }
-    this.results.push(match);
-  }
-
-  /**
-   * Parse tags
-   * @param tag
-   * @param value
-   */
-  parse(tag: string, value: string) {
-    let match;
-    while ((match = this.tags[tag].rule.exec(value)) !== null) {
-      this.push({
-        type: tag,
-        start: match.index,
-        end: match.index + match[0].length,
-        match: match,
-      });
-    }
-  }
-
-  /**
-   * Replace tags
-   * @param str
-   */
-  replace(str) {
-    this.results.forEach(m => {
-      str = str.replace(m.match[0], this.tags[m.type].replace(m, str));
-    });
-
-    return str;
-  }
-
-  transform(value: string): string {
+  public transform(value: string): string {
     this.results = [];
+
     // Order is important. Url and Mail first, then smaller matches (hash and at).
-    this.parse('url', value);
+    this.parseUrls(value);
     this.parse('mail', value);
     this.parse('hash', value);
-    this.parse('crypto', value);
+    this.parse('cash', value);
     this.parse('at', value);
 
     if (this.results.length === 0) {
@@ -150,5 +137,58 @@ export class TagsPipe implements PipeTransform {
       }
     }
     return html.join('');
+  }
+
+  /**
+   * Push a match to results array.
+   * @param { TagMatch } match - match object
+   * @returns { void }
+   */
+  private push(match: TagMatch): void {
+    // ignore match inside others
+    if (
+      this.results.findIndex(
+        m => match.start >= m.start && match.end <= m.end
+      ) !== -1
+    ) {
+      return;
+    }
+    this.results.push(match);
+  }
+
+  /**
+   * Parse a string for a tag type.
+   * @param { TagType } type - type to parse for.
+   * @param { string } value - value to parse.
+   * @returns { void }
+   */
+  private parse(type: TagType, value: string) {
+    let match;
+    while ((match = this.tags[type].rule.exec(value)) !== null) {
+      this.push({
+        type: type,
+        start: match.index,
+        end: match.index + match[0].length,
+        match: match,
+      });
+    }
+  }
+
+  /**
+   * Dedicated function for parsing URLs due to difference in handling.
+   * @param { string } value - value to parse.
+   * @returns { void }
+   */
+  private parseUrls(value: string): void {
+    const extractedUrls = this.textParser.extractUrlsWithIndices(value);
+
+    for (let urlObj of extractedUrls) {
+      this.push({
+        type: 'url',
+        start: urlObj.indices[0],
+        end: urlObj.indices[1],
+        match: [urlObj.url],
+      });
+    }
   }
 }

@@ -67,7 +67,8 @@ export class PostMenuService {
    */
   async subscribe(): Promise<void> {
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return;
     }
 
     this.entityOwner.subscribed = true;

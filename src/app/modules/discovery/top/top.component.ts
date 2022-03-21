@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['top.component.ng.scss'],
   template: `
     <m-discovery__tabs></m-discovery__tabs>
-    <m-defaultFeed></m-defaultFeed>
+    <m-defaultFeed location="discovery-feed"></m-defaultFeed>
   `,
 })
 export class DiscoveryTopComponent {}

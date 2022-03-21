@@ -23,27 +23,14 @@ export class NotificationsFlyoutComponent implements OnDestroy {
 
   @ViewChild('notifications', { static: false }) notificationList: any;
 
-  @HostBinding('class.m-notificationsFlyout--newDesign')
-  newNavigation: boolean = false;
-
-  @HostBinding('class.v3') v3: boolean;
-
   routerSubscription: Subscription = null;
 
-  constructor(
-    private featuresService: FeaturesService,
-    private router: Router
-  ) {
-    this.newNavigation = true;
+  constructor(private router: Router) {
     this.routerSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart && this.visible) {
         this.close(); // close flyout on route change.
       }
     });
-  }
-
-  ngOnInit() {
-    this.v3 = this.featuresService.has('notifications-v3');
   }
 
   ngOnDestroy(): void {

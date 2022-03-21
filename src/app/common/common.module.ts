@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MINDS_PIPES } from './pipes/pipes';
 
 import { TopbarComponent } from './layout/topbar/topbar.component';
-import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
@@ -125,7 +124,6 @@ import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
-import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
 import { Title, Meta } from '@angular/platform-browser';
@@ -200,6 +198,7 @@ import { TagSelectorComponent } from './components/tag-selector/tag-selector.com
 
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
+import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 
 const routes: Routes = [
@@ -226,7 +225,6 @@ const routes: Routes = [
     MINDS_PIPES,
 
     TopbarComponent,
-    SidebarMarkersComponent,
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
@@ -434,8 +432,6 @@ const routes: Routes = [
     CategoriesSelectedComponent,
     TreeComponent,
 
-    SidebarMarkersComponent,
-
     AnnouncementComponent,
     MindsTokenSymbolComponent,
     PhoneInputComponent,
@@ -541,9 +537,12 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService =>
-        new FeaturedContentService(boostedContentService),
-      deps: [FeedsService],
+      useFactory: (
+        boostedContentService: FeedsService,
+        experimentsService: ExperimentsService
+      ): FeaturedContentService =>
+        new FeaturedContentService(boostedContentService, experimentsService),
+      deps: [FeedsService, ExperimentsService],
     },
     {
       provide: RouterHistoryService,
@@ -553,10 +552,6 @@ const routes: Routes = [
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
-    {
-      provide: SidebarMarkersService,
-      useFactory: SidebarMarkersService._,
-    },
     RelatedContentService,
     RegexService,
     ApiService,
