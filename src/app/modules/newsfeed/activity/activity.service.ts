@@ -52,7 +52,6 @@ export type ActivityEntity = {
   perma_url: string;
   time_created: number;
   edited: boolean;
-  modal_source_url?: string;
   ephemeral?: boolean;
   nsfw: Array<number>;
   paywall: boolean;
