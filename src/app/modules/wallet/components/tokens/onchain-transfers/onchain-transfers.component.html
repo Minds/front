@@ -104,7 +104,6 @@
   </table>
 </div>
 <infinite-scroll
-  distance="25%"
   (load)="load()"
   [moreData]="this.pagingToken !== ''"
   [inProgress]="inProgress$ | async"
