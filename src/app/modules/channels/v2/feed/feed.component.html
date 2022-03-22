@@ -254,7 +254,6 @@
   <!-- ----------------------------------------- -->
   <ng-template #infiniteScroll>
     <infinite-scroll
-      distance="25%"
       (load)="feedService.loadNext()"
       [moreData]="feedService.service.hasMore | async"
       [inProgress]="feedService.service.inProgress | async"
