@@ -87,7 +87,7 @@ export class Minds implements OnInit, OnDestroy {
     private experimentsService: ExperimentsService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
     private compassHook: CompassHookService,
-    private pushNotificationService: PushNotificationService,
+    private pushNotificationService: PushNotificationService
   ) {
     this.name = 'Minds';
 
