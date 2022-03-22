@@ -19,7 +19,6 @@
   </li>
 </ul>
 <infinite-scroll
-  distance="25%"
   (load)="loadMore()"
   [moreData]="hasNext && !(inProgress$ | async)"
   [inProgress]="inProgress$ | async"
