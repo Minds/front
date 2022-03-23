@@ -3,10 +3,10 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
-  ViewChild,
   Inject,
+  Input,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, of } from 'rxjs';

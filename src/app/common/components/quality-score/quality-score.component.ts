@@ -39,6 +39,10 @@ export class QualityScoreComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    if (!this.isAdmin()) {
+      return;
+    }
+
     await this.setQualityScoreAsync();
     this.setColor();
     this.formatQualityScore();
