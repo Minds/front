@@ -34,10 +34,11 @@ export class JoinButtonComponent {
    * new/existing users to channels that haven't set up support tiers
    */
   async authorize(): Promise<void> {
-    this.authModal.open().then(() => {
+    const user = await this.authModal.open();
+    if (user) {
       this.subscribe();
       this.join();
-    });
+    }
   }
 
   /**

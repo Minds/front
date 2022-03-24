@@ -221,21 +221,6 @@ export class SidebarNavigationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Opens auth modal.
-   * @returns { Promise<void> }
-   */
-  public async openAuthModal(): Promise<void> {
-    try {
-      await this.authModal.open({ formDisplay: 'login' });
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
-  }
-
-  /**
    * Returns if link should be to discovery homepage
    * @returns { boolean } true if link should be '/'.
    */

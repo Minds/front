@@ -2,7 +2,6 @@ import { AppPromptService } from './../app-prompt/app-prompt.service';
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
-  OnDestroy,
   OnInit,
   ViewChild,
   HostListener,
@@ -14,14 +13,13 @@ import { Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
 import { RegisterForm } from '../forms/register/register';
-import { FeaturesService } from '../../services/features.service';
 import { ConfigsService } from '../../common/services/configs.service';
-import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { AuthModalService } from '../auth/modal/auth-modal.service';
 import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import isMobileOrTablet from '../../../app/helpers/is-mobile-or-tablet';
 
 /**
  * Home page component
@@ -47,7 +45,6 @@ export class HomepageV3Component implements OnInit {
     public navigation: NavigationService,
     public session: Session,
     configs: ConfigsService,
-    private onboardingService: OnboardingV2Service,
     private navigationService: SidebarNavigationService,
     private topbarService: TopbarService,
     private pageLayoutService: PageLayoutService,
@@ -94,9 +91,10 @@ export class HomepageV3Component implements OnInit {
     }
   }
 
-  @HostListener('window:resize')
+  @HostListener('window:deviceorientation')
   onResize() {
     if (!isPlatformBrowser(this.platformId)) return;
+
     this.setVhVar();
   }
 
@@ -105,6 +103,8 @@ export class HomepageV3Component implements OnInit {
    * this is a workaround to the default vh not respecting OS elements https://stackoverflow.com/a/61474999/5607525
    */
   private setVhVar() {
+    if (!isMobileOrTablet()) return;
+
     const doc = document.documentElement;
     doc.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
   }
@@ -115,9 +115,11 @@ export class HomepageV3Component implements OnInit {
    * @returns { void }
    */
   public async onRegister(): Promise<void> {
-    await this.authModal.open();
+    const user = await this.authModal.open();
 
-    const url = this.authRedirectService.getRedirectUrl();
-    this.router.navigate([url]);
+    if (user) {
+      const url = this.authRedirectService.getRedirectUrl();
+      this.router.navigate([url]);
+    }
   }
 }

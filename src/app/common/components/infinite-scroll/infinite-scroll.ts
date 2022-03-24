@@ -50,7 +50,11 @@ export class InfiniteScroll {
   @Input() iconOnly: boolean = false;
 
   @Output('load') loadHandler: EventEmitter<any> = new EventEmitter(true);
-  @Input() distance: any;
+  /**
+   * The distance from the bottom of the scroll within which the loadNext event should fire
+   * either a percentage of the total scroll height '25%' or a fixed number
+   */
+  @Input() distance: string | number = '40%';
   @Input() inProgress: boolean = false;
   @Input() moreData: boolean = true;
   @Input() hideManual: boolean = false;
@@ -85,14 +89,34 @@ export class InfiniteScroll {
             scrollTop = subscription.element.scrollTop;
           }
 
-          if (
-            this.element.offsetTop - this.element.clientHeight - clientHeight <=
-            scrollTop
-          ) {
+          const endOfScroller = scrollTop + clientHeight;
+          const endOfInfiniteScrollComponent =
+            this.element.offsetTop + this.element.clientHeight;
+
+          let threshold = clientHeight;
+          switch (typeof this.distance) {
+            case 'string':
+              if (this.distance.includes('%')) {
+                let percent = Number(this.distance.replace(/%/g, ''));
+                if (!Number.isNaN(percent)) {
+                  threshold = (endOfScroller * percent) / 100;
+                } else {
+                  console.error('[InfiniteScroll] distance invalid');
+                }
+              }
+              break;
+            case 'number':
+              threshold = this.distance;
+              break;
+            default:
+          }
+
+          if (endOfInfiniteScrollComponent - endOfScroller <= threshold) {
             this.loadHandler.next(true);
           }
         }
       }).bind(this),
+      undefined,
       100
     );
   }

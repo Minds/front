@@ -30,11 +30,11 @@ export class HashtagsFromStringService {
   }
 
   /**
-   * Parse cryptotags from a string, stripping away any leading $.
+   * Parse cashtags from a string, stripping away any leading $.
    * @param { string } value - string to be parsed.
    * @returns { string[] } - array of tags without leading $.
    */
-  public parseCryptoTagsFromString(value: string): string[] {
+  public parseCashtagsFromString(value: string): string[] {
     if (!value) {
       return [];
     }
@@ -42,7 +42,7 @@ export class HashtagsFromStringService {
     value = this.stripUrls(value);
 
     return (
-      value.match(this.regex.getRegex('crypto'))?.map(tag => {
+      value.match(this.regex.getRegex('cash'))?.map(tag => {
         tag = tag.trim();
 
         return tag.charAt(0) === '#' ? tag.substr(1) : tag;
