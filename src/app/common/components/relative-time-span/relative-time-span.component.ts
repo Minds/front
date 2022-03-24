@@ -15,8 +15,12 @@ import {
   startWith,
   switchMap,
 } from 'rxjs/operators';
-import { FriendlyDateDiffPipe } from '../../../../../common/pipes/friendlydatediff';
-import { ActivityEntity } from '../../activity.service';
+import { FriendlyDateDiffPipe } from '../../pipes/friendlydatediff';
+
+// component compatible entity.
+export type TimestampedEntity = {
+  time_created: number;
+};
 
 /**
  * Shows relative time ago in a span element e.g. 30s ago
@@ -36,9 +40,9 @@ import { ActivityEntity } from '../../activity.service';
   `,
   providers: [FriendlyDateDiffPipe],
 })
-export class ActivityRelativeTimeSpanComponent {
+export class RelativeTimeSpanComponent {
   // activity entity to get time from.
-  @Input('entity') entity: ActivityEntity;
+  @Input('entity') entity: TimestampedEntity;
 
   // Reference to hosts span element.
   @ViewChild('relativeTimeSpan') relativeTimeSpan: ElementRef;
