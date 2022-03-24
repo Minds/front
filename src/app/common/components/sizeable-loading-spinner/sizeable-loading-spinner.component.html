@@ -1,0 +1,12 @@
+<ng-container>
+  <div class="m-sizeableLoadingSpinner__wrapper" *ngIf="inProgress">
+    <div
+      class="m-sizeableLoadingSpinner__container m-auto"
+      [style.--spinner-width]="spinnerWidth"
+      [style.--spinner-height]="spinnerHeight"
+      @fastFade
+    >
+      <div class="m-sizeableLoadingSpinner__inner"></div>
+    </div>
+  </div>
+</ng-container>

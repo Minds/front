@@ -31,6 +31,11 @@ export class ChannelBadgesComponent {
     'onchain_booster',
   ];
 
+  /**
+   * Responsible to show the html middle dot element before the badges
+   */
+  @Input() showMidDot = false;
+
   isDark: boolean = false;
   themeSubscription: Subscription;
 
