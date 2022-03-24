@@ -1,8 +1,8 @@
 export function blobDownload(body, options, filename) {
   const blob = new Blob([body], options);
-  if (navigator.msSaveBlob) {
+  if ((navigator as any).msSaveBlob) {
     // IE 10+
-    navigator.msSaveBlob(blob, filename);
+    (navigator as any).msSaveBlob(blob, filename);
   } else {
     const link = document.createElement('a');
     // Browsers that support HTML5 download attribute

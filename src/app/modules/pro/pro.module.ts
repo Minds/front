@@ -52,6 +52,7 @@ const routes: Routes = [
           description: 'The ultimate platform for creators and brands',
           ogImage: '/assets/product-pages/pro/pro-1.jpg',
           canonicalUrl: '/pro',
+          preventLayoutReset: true,
         },
       },
       {

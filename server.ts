@@ -235,7 +235,9 @@ function run() {
   const server = app();
 
   server.listen(PORT, () => {
-    console.log(`Node Express server listening on http://localhost:${PORT}`);
+    console.log(
+      `Node Express server listening on http://localhost:${PORT} for the sole benefit of nginx and not your browser! Access on port 8080.`
+    );
   });
 }
 

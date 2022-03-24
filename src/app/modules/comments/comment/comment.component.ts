@@ -527,18 +527,13 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       return;
     }
 
-    if (!this.featuresService.has('media-modal')) {
-      this.router.navigate([pageUrl]);
-      return;
-    } else {
-      if (
-        this.comment.custom_data[0].width === '0' ||
-        this.comment.custom_data[0].height === '0'
-      ) {
-        this.setImageDimensions();
-      }
-      this.openModal();
+    if (
+      this.comment.custom_data[0].width === '0' ||
+      this.comment.custom_data[0].height === '0'
+    ) {
+      this.setImageDimensions();
     }
+    this.openModal();
   }
 
   openModal() {

@@ -15,7 +15,6 @@
   </div>
   <infinite-scroll
     *ngIf="!fewerResultsThanLimit"
-    distance="25%"
     (load)="load()"
     [moreData]="moreData"
     [inProgress]="inProgress"

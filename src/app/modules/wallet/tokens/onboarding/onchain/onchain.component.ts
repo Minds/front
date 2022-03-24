@@ -77,8 +77,8 @@ export class TokenOnChainOnboardingComponent {
         filename = `pk_${address}.csv`,
         blob = new Blob([privateKey], { type: 'text/csv' });
 
-      if (window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveBlob(blob, filename);
+      if ((window.navigator as any).msSaveOrOpenBlob) {
+        (window.navigator as any).msSaveBlob(blob, filename);
       } else {
         const link = window.document.createElement('a'),
           objectUrl = window.URL.createObjectURL(blob);

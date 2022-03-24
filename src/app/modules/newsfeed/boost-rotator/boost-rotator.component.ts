@@ -199,13 +199,19 @@ export class NewsfeedBoostRotatorComponent {
     console.log('ojm boostrotator load');
 
     try {
+      let params = {
+        rating: this.rating,
+        rotator: 1,
+      };
+
+      if (this.experiments.hasVariation('new-user-boosts', true)) {
+        params['show_boosts_after_x'] = 604800; // 1 week
+      }
+
       this.feedsService.clear(); // Fresh each time
       this.feedsService
         .setEndpoint('api/v2/boost/feed')
-        .setParams({
-          rating: this.rating,
-          rotator: 1,
-        })
+        .setParams(params)
         .setLimit(12)
         .setOffset(0)
         .fetch();

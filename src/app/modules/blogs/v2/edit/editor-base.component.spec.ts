@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -21,12 +21,24 @@ const title$ = new BehaviorSubject<string>('');
 
 const banner$ = new BehaviorSubject<string>('');
 
+const error$ = new BehaviorSubject<string>('');
+
 const blogsEditServiceMock: any = MockService(BlogsEditService, {
-  has: ['content$', 'title$', 'nsfw$'],
+  has: ['content$', 'title$', 'nsfw$', 'error$'],
   props: {
     content$: { get: () => content$ },
     title$: { get: () => title$ },
     banner$: { get: () => banner$ },
+    error$: { get: () => error$ },
+  },
+});
+
+const params$ = new BehaviorSubject<string>('');
+
+const activatedRouteMock: any = MockService(ActivatedRoute, {
+  has: ['params'],
+  props: {
+    params: { get: () => params$ },
   },
 });
 
@@ -57,9 +69,10 @@ describe('BlogEditorV2Component', () => {
                 email_confirmed: true,
               };
             },
+            isLoggedIn: () => true,
           }),
         },
-        { provide: ActivatedRoute, useValue: MockService(ActivatedRoute) },
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: DialogService, useValue: MockService(DialogService) },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: Location, useValue: MockService(Location) },

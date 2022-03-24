@@ -212,13 +212,6 @@ export class ActivityModalComponent implements OnInit, OnDestroy {
     this.service.isFullscreen$.next(isFullscreen());
   }
 
-  /////////////////////////////////////////////////////////////////
-  // MODAL DISMISSAL
-  /////////////////////////////////////////////////////////////////
-  clickedModal($event) {
-    $event.stopPropagation();
-  }
-
   ngOnDestroy() {
     if (this.entitySubscription) {
       this.entitySubscription.unsubscribe();

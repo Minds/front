@@ -32,6 +32,10 @@ export class FeedsService implements OnDestroy {
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
+  /**
+   * feed length
+   */
+  feedLength: number;
 
   constructor(
     protected client: Client,
@@ -73,6 +77,8 @@ export class FeedsService implements OnDestroy {
         }
       }),
       tap(feed => {
+        this.feedLength = feed.length;
+
         if (feed.length)
           // We should have skipped but..
           this.inProgress.next(false);

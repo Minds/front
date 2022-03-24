@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  forwardRef,
-  OnChanges,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Client } from '../../services/api';
 
@@ -31,6 +24,7 @@ export class Captcha {
 @Component({
   selector: 'm-captcha',
   templateUrl: 'captcha.component.html',
+  styleUrls: ['captcha.component.scss'],
   providers: [CAPTCHA_VALUE_ACCESSOR],
 })
 export class CaptchaComponent implements ControlValueAccessor, OnInit {

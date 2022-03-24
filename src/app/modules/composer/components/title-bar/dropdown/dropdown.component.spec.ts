@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../../utils/mock';
 import { ComposerTitleBarDropdownComponent } from './dropdown.component';
 import { ComposerService } from '../../../services/composer.service';
-import { FeaturesService } from '../../../../../services/features.service';
 import { Session } from '../../../../../services/session';
 import { PopupService } from '../../popup/popup.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
@@ -45,10 +44,6 @@ describe('Composer Title Bar Dropdown', () => {
           {
             provide: ComposerService,
             useValue: composerServiceMock,
-          },
-          {
-            provide: FeaturesService,
-            useValue: MockService(FeaturesService),
           },
           {
             provide: Session,

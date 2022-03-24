@@ -115,12 +115,4 @@ export class WalletProEarningsCashComponent {
     this.earnings$.next(null);
     this.payouts$.next(null);
   }
-
-  filterSelected(e): void {
-    const option: Option = e.option;
-    this.from = parseInt(option.id);
-
-    this.reset();
-    this.loadTransactions();
-  }
 }

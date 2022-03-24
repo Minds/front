@@ -15,25 +15,19 @@ import { isPlatformBrowser } from '@angular/common';
 
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
-import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-markers/sidebar-markers.component';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
-import { MindsUser } from '../../../interfaces/entities';
-import { FeaturesService } from '../../../services/features.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserMenuService } from '../v3-topbar/user-menu/user-menu.service';
 import { BuyTokensModalService } from '../../../modules/blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { Web3WalletService } from '../../../modules/blockchain/web3-wallet.service';
-import { UniswapModalService } from '../../../modules/blockchain/token-purchase/v2/uniswap/uniswap-modal.service';
 import { EarnModalService } from '../../../modules/blockchain/earn/earn-modal.service';
-import { BoostCreatorComponent } from '../../../modules/boost/creator/creator.component';
 import { BoostModalLazyService } from '../../../modules/boost/modal/boost-modal-lazy.service';
 import { ComposerModalService } from '../../../modules/composer/components/modal/modal.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -41,8 +35,7 @@ import { ThemeService } from '../../services/theme.service';
   templateUrl: 'navigation.component.html',
   styleUrls: ['./navigation.component.ng.scss'],
 })
-export class SidebarNavigationComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class SidebarNavigationComponent implements OnInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
   readonly chatUrl: string;
@@ -53,15 +46,11 @@ export class SidebarNavigationComponent
   user;
 
   componentRef;
-  groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   showLabels: boolean = false;
 
   settingsLink: string = '/settings';
-
-  @HostBinding('class.m-sidebarNavigation--nav2021Feature')
-  nav2021Feature: boolean = false;
 
   @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
@@ -77,8 +66,6 @@ export class SidebarNavigationComponent
 
   routerSubscription: Subscription;
 
-  matrixFeature: boolean = false;
-
   subscriptions: Subscription[] = [];
 
   isDarkTheme: boolean = false;
@@ -90,7 +77,6 @@ export class SidebarNavigationComponent
     protected configs: ConfigsService,
     private _componentFactoryResolver: ComponentFactoryResolver,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private featuresService: FeaturesService,
     private route: ActivatedRoute,
     private router: Router,
     private userMenu: UserMenuService,
@@ -101,7 +87,6 @@ export class SidebarNavigationComponent
     private composerModalService: ComposerModalService,
     private injector: Injector,
     private authModal: AuthModalService,
-    private guestModeExperiment: GuestModeExperimentService,
     private themeService: ThemeService,
     private sidebarNavigationService: SidebarNavigationService
   ) {
@@ -130,10 +115,6 @@ export class SidebarNavigationComponent
       this.onResize();
     }
 
-    this.matrixFeature = this.featuresService.has('matrix');
-
-    this.nav2021Feature = this.featuresService.has('nav-2021');
-
     this.settingsLink = '/settings';
 
     this.subscriptions.push(
@@ -159,12 +140,6 @@ export class SidebarNavigationComponent
     );
   }
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.createGroupsSideBar();
-    }
-  }
-
   ngOnDestroy(): void {
     if (this.groupSelectedSubscription) {
       this.groupSelectedSubscription.unsubscribe();
@@ -179,30 +154,6 @@ export class SidebarNavigationComponent
     this.user = this.session.getLoggedInUser(user => {
       this.user = user;
     });
-  }
-
-  createGroupsSideBar() {
-    if (this.matrixFeature) {
-      return;
-    }
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-        GroupsSidebarMarkersComponent
-      ),
-      viewContainerRef = this.host.viewContainerRef;
-
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.groupsSidebar = this.componentRef.instance;
-    this.groupsSidebar.showLabels = true;
-    this.groupsSidebar.leftSidebar = true;
-    this.groupSelectedSubscription = this.componentRef.instance.onGroupSelected.subscribe(
-      data => {
-        if (data) {
-          this.toggle();
-        }
-      }
-    );
   }
 
   toggle(): void {
@@ -233,12 +184,10 @@ export class SidebarNavigationComponent
   setVisible(value: boolean): void {
     this.hidden = !value;
 
-    if (value) {
-      if (isPlatformBrowser(this.platformId)) {
-        this.createGroupsSideBar();
+    if (!value) {
+      if (this.host && this.host.viewContainerRef) {
+        this.host.viewContainerRef.clear();
       }
-    } else {
-      this.host.viewContainerRef.clear();
     }
   }
 
@@ -269,25 +218,6 @@ export class SidebarNavigationComponent
     if (this.layoutMode !== 'phone') {
       this.sidebarNavigationService.isOpened$.next(false);
     }
-
-    if (this.groupsSidebar) {
-      this.groupsSidebar.showLabels = this.showLabels;
-    }
-  }
-
-  /**
-   * Opens auth modal.
-   * @returns { Promise<void> }
-   */
-  public async openAuthModal(): Promise<void> {
-    try {
-      await this.authModal.open({ formDisplay: 'login' });
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
   }
 
   /**
@@ -295,7 +225,7 @@ export class SidebarNavigationComponent
    * @returns { boolean } true if link should be '/'.
    */
   public shouldBeDiscoveryHomepage(): boolean {
-    return this.guestModeExperiment.isActive() && !this.user; // logged out
+    return !this.user; // logged out
   }
 
   /**

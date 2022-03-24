@@ -16,7 +16,6 @@ import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { NewsfeedService } from './services/newsfeed.service';
 import { PagesService } from '../../common/services/pages.service';
-import { FeaturesService } from '../../services/features.service';
 import { ExperimentsService } from '../experiments/experiments.service';
 
 @Component({
@@ -58,8 +57,6 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   all: boolean;
 
-  newNavigation: boolean = false;
-
   activityV2Feature: boolean = false;
 
   constructor(
@@ -69,14 +66,12 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public featuresService: FeaturesService,
     public pagesService: PagesService,
     protected storage: Storage,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService,
     private experiments: ExperimentsService
   ) {
-    this.newNavigation = true;
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 

@@ -97,10 +97,8 @@
   }
 
   ::ng-deep m-button {
-    .m-button {
-      &.m-button--saving {
-        display: inline-block !important;
-      }
+    .m-button.m-button--saving {
+      display: inline-block !important;
     }
   }
 }

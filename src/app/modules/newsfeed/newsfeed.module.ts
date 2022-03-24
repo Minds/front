@@ -14,7 +14,6 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
-
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
@@ -36,9 +35,13 @@ import { LanguageModule } from '../language/language.module';
 import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
 import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
 import { NewsfeedActivitySuggestionsComponent } from './suggestions/suggestions.component';
-import { MessengerV2Module } from '../messenger-v2/messenger-v2.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { CompassModule } from '../compass/compass.module';
+import { TopHighlightsComponent } from './feeds/top-highlights/top-highlights.component';
+import { FeedTypePopoverComponent } from './feeds/feed-header/feed-type-popover/feed-type-popover.component';
+import { FeedHeaderComponent } from './feeds/feed-header/feed-header.component';
+import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
+import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
 import { ActivityV2Module } from './activity-v2/activity.module';
 
 const routes: Routes = [
@@ -46,7 +49,7 @@ const routes: Routes = [
     path: 'newsfeed',
     component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscriptions/latest', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
       { path: 'suggested', redirectTo: 'subscriptions' },
       { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
@@ -54,8 +57,9 @@ const routes: Routes = [
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       {
         path: 'subscriptions',
-        redirectTo: 'subscriptions/latest',
+        component: NewsfeedSubscribedComponent,
         pathMatch: 'full',
+        canActivate: [FeedAlgorithmRedirectGuard],
       },
       {
         path: 'subscriptions/:algorithm',
@@ -110,7 +114,6 @@ const routes: Routes = [
     LanguageModule,
     OnboardingV3Module,
     LiquiditySpotModule,
-    MessengerV2Module,
     ExperimentsModule,
     CompassModule,
   ],
@@ -126,8 +129,15 @@ const routes: Routes = [
     NewsfeedTilesComponent,
     FeedGridComponent,
     NewsfeedActivitySuggestionsComponent,
+    TopHighlightsComponent,
+    FeedTypePopoverComponent,
+    FeedHeaderComponent,
   ],
-  providers: [NewsfeedService],
+  providers: [
+    NewsfeedService,
+    FeedAlgorithmHistoryService,
+    FeedAlgorithmRedirectGuard,
+  ],
   exports: [
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,

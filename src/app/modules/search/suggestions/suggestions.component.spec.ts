@@ -83,9 +83,6 @@ describe('SearchBarSuggestionsComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    featuresServiceMock.mock('top-feeds', false);
-    featuresServiceMock.mock('navigation', false);
-
     fixture = TestBed.createComponent(SearchBarSuggestionsComponent);
     comp = fixture.componentInstance;
 

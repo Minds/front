@@ -12,7 +12,6 @@ import { ComposerModalService } from '../../composer/components/modal/modal.serv
 import { ComposerService } from '../../composer/services/composer.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { catchError, scan, take, takeWhile, tap } from 'rxjs/operators';
-import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 import { EmailResendService } from '../../../common/services/email-resend.service';
 
 /**
@@ -49,12 +48,6 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // // if should collapse, collapse and return
-    // if (this.shouldCollapse()) {
-    //   this.collapsed = true;
-    //   return;
-    // }
-
     // load onboarding progress from server.
     this.onboarding.load();
 
@@ -96,69 +89,52 @@ export class OnboardingV3WidgetComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   public async onTaskClick(step: OnboardingStepName): Promise<void> {
-    try {
-      this.subscriptions.push(
-        this.progress$
-          .pipe(
-            take(1),
-            catchError((err: any) => {
-              console.error(err);
-              return of(null);
-            }),
-            tap(async (progress: OnboardingResponse) => {
-              switch (step) {
-                case 'VerifyEmailStep':
-                  if (this.isStepComplete(step, progress)) {
-                    this.toast.inform(
-                      'Your email address has already been confirmed.'
-                    );
-                    break;
-                  }
-                  this.resendEmailConfirmation(); // async
+    this.subscriptions.push(
+      this.progress$
+        .pipe(
+          take(1),
+          catchError((err: any) => {
+            console.error(err);
+            return of(null);
+          }),
+          tap(async (progress: OnboardingResponse) => {
+            switch (step) {
+              case 'VerifyEmailStep':
+                if (this.isStepComplete(step, progress)) {
+                  this.toast.inform(
+                    'Your email address has already been confirmed.'
+                  );
                   break;
-                case 'CreatePostStep':
-                  this.composerModal
-                    .setInjector(this.injector)
-                    .present()
-                    .then(response => {
-                      // if activity posted, manually strike through task.
-                      if (response) {
-                        this.onboarding.forceCompletion('CreatePostStep');
-                        this.checkCompletion();
-                      }
-                    });
-                  break;
-                case 'VerifyUniquenessStep':
-                  if (this.isStepComplete(step, progress)) {
-                    this.toast.inform('You have already completed this step');
-                    break;
-                  }
-                // else, default
-                default:
-                  this.panel.currentStep$.next(step);
-                  try {
-                    await this.onboarding.open();
-                  } catch (e) {
-                    if (e === 'DismissedModalException') {
-                      await this.onboarding.load();
+                }
+                this.resendEmailConfirmation(); // async
+                break;
+              case 'CreatePostStep':
+                this.composerModal
+                  .setInjector(this.injector)
+                  .present()
+                  .then(response => {
+                    // if activity posted, manually strike through task.
+                    if (response) {
+                      this.onboarding.forceCompletion('CreatePostStep');
                       this.checkCompletion();
-                      return;
                     }
-                    console.error(e);
-                  }
-
+                  });
+                break;
+              case 'VerifyUniquenessStep':
+                if (this.isStepComplete(step, progress)) {
+                  this.toast.inform('You have already completed this step');
                   break;
-              }
-            })
-          )
-          .subscribe()
-      );
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        this.checkCompletion();
-      }
-      console.error(e);
-    }
+                }
+              // else, default
+              default:
+                this.panel.currentStep$.next(step);
+                await this.onboarding.open(() => this.checkCompletion());
+                break;
+            }
+          })
+        )
+        .subscribe()
+    );
   }
 
   /**

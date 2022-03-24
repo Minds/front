@@ -40,7 +40,6 @@
       ></m-discovery__feedItem> -->
 
       <infinite-scroll
-        distance="25%"
         (load)="loadNext()"
         [moreData]="feedsService.hasMore | async"
         [inProgress]="feedsService.inProgress | async"

@@ -89,7 +89,6 @@
       <!-- ---------------------- -->
     </ng-container>
     <infinite-scroll
-      distance="25%"
       (load)="loadMore()"
       [moreData]="hasMoreData$ | async"
       [inProgress]="inProgress$ | async"

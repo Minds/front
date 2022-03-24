@@ -1,22 +1,19 @@
-import { NgModule, inject, Injector } from '@angular/core';
-import {
-  CommonModule as NgCommonModule,
-  isPlatformServer,
-  Location,
-} from '@angular/common';
-import { RouterModule, Router, Routes, ActivatedRoute } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule as NgCommonModule } from '@angular/common';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
 
 import { TopbarComponent } from './layout/topbar/topbar.component';
-import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
 import { TopbarWalletBalance } from './layout/topbar/topbar-wallet-balance/topbar-wallet-balance.component';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
+import { QualityScoreComponent } from './components/quality-score/quality-score.component';
+import { SizeableLoadingSpinnerComponent } from './components/sizeable-loading-spinner/sizeable-loading-spinner.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { CountryInputComponent } from './components/forms/country-input/country-input.component';
@@ -28,10 +25,8 @@ import { ReadMoreButtonComponent } from './read-more/button.component';
 import { ChannelBadgesComponent } from './components/badges/badges.component';
 import { NSFWSelectorComponent } from './components/nsfw-selector/nsfw-selector.component';
 import {
-  NSFWSelectorService,
   NSFWSelectorConsumerService,
   NSFWSelectorCreatorService,
-  NSFWSelectorEditingService,
 } from './components/nsfw-selector/nsfw-selector.service';
 
 import { Scheduler } from './components/scheduler/scheduler';
@@ -72,10 +67,8 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 import { PhoneInputCountryComponent } from './components/phone-input/country.component';
 import { Session } from '../services/session';
-import { Client, Upload } from '../services/api';
 import { MindsHttpClient } from './api/client.service';
 import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
-import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
 import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
 import { DismissableNoticeComponent } from './components/notice/notice.component';
@@ -89,19 +82,15 @@ import { SortSelectorComponent } from './components/sort-selector/sort-selector.
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
-import { Storage } from '../services/storage';
 import { HttpClient } from '@angular/common/http';
 import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
 import { SwitchComponent } from './components/switch/switch.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
 import { FeedsService } from './services/feeds.service';
-import { EntitiesService } from './services/entities.service';
-import { BlockListService } from './services/block-list.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
-import { ShareModalComponent } from '../modules/modals/share/share';
 import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
@@ -125,10 +114,8 @@ import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
-import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { CookieService } from './services/cookie.service';
-import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { RelatedContentService } from './services/related-content.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
@@ -137,7 +124,6 @@ import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v
 import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
 import { RegexService } from './services/regex.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
-import { RedirectService } from './services/redirect.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
@@ -151,10 +137,9 @@ import { ApiService } from './api/api.service';
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-import { PageLayoutService } from './layout/page-layout.service';
 import {
-  PageLayoutPaneDirective,
   PageLayoutContainerDirective,
+  PageLayoutPaneDirective,
 } from './layout/page-layout.directive';
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
@@ -163,7 +148,6 @@ import { FeedFilterComponent } from './components/feed-filter/feed-filter.compon
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
-import { LanguageModule } from '../modules/language/language.module';
 import { PaywallBadgeComponent } from './components/paywall-badge/paywall-badge.component';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
@@ -200,7 +184,9 @@ import { TagSelectorComponent } from './components/tag-selector/tag-selector.com
 
 import { ModalCloseButtonComponent } from './components/modal-close-button/modal-close-button.component';
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
+import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
+import { RelativeTimeSpanComponent } from './components/relative-time-span/relative-time-span.component';
 
 const routes: Routes = [
   {
@@ -226,7 +212,6 @@ const routes: Routes = [
     MINDS_PIPES,
 
     TopbarComponent,
-    SidebarMarkersComponent,
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
@@ -239,6 +224,8 @@ const routes: Routes = [
     //
 
     TooltipComponent,
+    QualityScoreComponent,
+    SizeableLoadingSpinnerComponent,
     FooterComponent,
     InfiniteScroll,
     HorizontalInfiniteScroll,
@@ -371,6 +358,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    RelativeTimeSpanComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -387,6 +375,8 @@ const routes: Routes = [
     //
 
     TooltipComponent,
+    QualityScoreComponent,
+    SizeableLoadingSpinnerComponent,
     FooterComponent,
     InfiniteScroll,
     HorizontalInfiniteScroll,
@@ -433,8 +423,6 @@ const routes: Routes = [
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,
     TreeComponent,
-
-    SidebarMarkersComponent,
 
     AnnouncementComponent,
     MindsTokenSymbolComponent,
@@ -517,6 +505,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    RelativeTimeSpanComponent,
   ],
   providers: [
     SiteService,
@@ -541,9 +530,12 @@ const routes: Routes = [
     NSFWSelectorConsumerService,
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService =>
-        new FeaturedContentService(boostedContentService),
-      deps: [FeedsService],
+      useFactory: (
+        boostedContentService: FeedsService,
+        experimentsService: ExperimentsService
+      ): FeaturedContentService =>
+        new FeaturedContentService(boostedContentService, experimentsService),
+      deps: [FeedsService, ExperimentsService],
     },
     {
       provide: RouterHistoryService,
@@ -553,10 +545,6 @@ const routes: Routes = [
     MediaProxyService,
     SidebarNavigationService,
     TopbarService,
-    {
-      provide: SidebarMarkersService,
-      useFactory: SidebarMarkersService._,
-    },
     RelatedContentService,
     RegexService,
     ApiService,

@@ -257,7 +257,6 @@
   <!-- ----------------------------------------- -->
   <ng-template #infiniteScroll>
     <infinite-scroll
-      distance="25%"
       (load)="feedService.loadNext()"
       [moreData]="feedService.service.hasMore | async"
       [inProgress]="feedService.service.inProgress | async"
@@ -274,17 +273,9 @@
     <div class="m-pageLayoutPane__inner">
       <m-channelAbout__brief></m-channelAbout__brief>
       <ng-container *mIfBrowser>
-        <ng-container *mIfFeature="'paywall-2020'; else wireRewardsBrief">
-          <m-channelShop__lazy
-            component="m-channelShop__brief"
-          ></m-channelShop__lazy>
-        </ng-container>
-
-        <ng-template #wireRewardsBrief>
-          <m-channelShop__lazy
-            component="m-channelShop__briefWireRewards"
-          ></m-channelShop__lazy>
-        </ng-template>
+        <m-channelShop__lazy
+          component="m-channelShop__brief"
+        ></m-channelShop__lazy>
       </ng-container>
     </div>
   </div>

@@ -133,15 +133,6 @@ export class VideoPlayerService implements OnDestroy {
    * @returns { Observable<boolean> } true if video has no sources and is not failed.
    */
   awaitingTranscode(): Observable<boolean> {
-    if (this.featuresService.has('cloudflare-streams')) {
-      return of(this.status === 'transcoding');
-    }
-
-    // Hide transcode status when some video transcodes are available
-    return this.sources$.pipe(
-      map((sources: VideoSource[]) => {
-        return this.status !== 'failed' && sources.length < 1;
-      })
-    );
+    return of(this.status === 'transcoding');
   }
 }

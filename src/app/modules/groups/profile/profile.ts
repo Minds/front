@@ -74,7 +74,6 @@ export class GroupsProfile {
   private updateMarkersSubscription;
 
   private lastWidth: number;
-  readonly hasNewNavigation: boolean;
 
   @HostBinding('class.m-groupsProfile--activityV2')
   activityV2Feature: boolean = false;
@@ -104,7 +103,6 @@ export class GroupsProfile {
     protected groupsSearch: GroupsSearchService,
     private experiments: ExperimentsService
   ) {
-    this.hasNewNavigation = true;
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
