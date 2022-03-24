@@ -1,0 +1,34 @@
+<m-feedNotice icon="info" (dismissClick)="dismiss()">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM_TITLE"
+    >Build your algorithm</span
+  >
+  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM_BODY">
+    <!-- TODO: Add text -->
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis integer.
+    Consectetur adipiscing elit. Turpis integer.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+  >
+    <ng-container
+      i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM__COMPLETE_QUESTIONNAIRE"
+    >
+      Complete Questionnaire
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick($event)"
+  >
+    <ng-container i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM__LEARN_MORE">
+      Learn more
+    </ng-container>
+  </m-button>
+</m-feedNotice>

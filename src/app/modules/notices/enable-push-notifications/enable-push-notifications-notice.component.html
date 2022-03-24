@@ -1,0 +1,35 @@
+<m-feedNotice icon="info" (dismissClick)="dismiss()">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__TITLE"
+    >Enable Push Notifications</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__BODY"
+  >
+    <!--TODO: Add actual text -->
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis integer.
+    Consectetur adipiscing elit. Turpis integer.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+  >
+    <ng-container i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__ENABLE">
+      Enable
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick($event)"
+  >
+    <ng-container i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__CUSTOMIZE">
+      Customize
+    </ng-container>
+  </m-button>
+</m-feedNotice>

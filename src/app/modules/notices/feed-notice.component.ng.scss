@@ -1,0 +1,134 @@
+@import 'defaults.scss';
+@import 'typography';
+@import 'spacing';
+@import '../../common/layout/layout.scss';
+
+$topbarHeight: 75px;
+
+// TODO: vvvvv REMOVE and plug into activity v2 changes vvvvv
+$avatarWidth: $spacing10;
+$feedAvatarSpacingLeft: $spacing8;
+$feedAvatarSpacingRight: $spacing4;
+$feedSpacingLeft: $feedAvatarSpacingLeft + $avatarWidth +
+  $feedAvatarSpacingRight;
+$feedSpacingRight: $spacing12;
+$feedAvatarSpacingLeft--mobile: $spacing4;
+$feedAvatarSpacingRight--mobile: $spacing4;
+$feedSpacingLeft--mobile: $feedAvatarSpacingLeft--mobile + $avatarWidth +
+  $feedAvatarSpacingRight--mobile;
+$feedSpacingRight--mobile: $spacing4;
+$singlePostAvatarSpacingLeft: $spacing8;
+$singlePostAvatarSpacingRight: $spacing4;
+$singlePostSpacingLeft: $singlePostAvatarSpacingLeft + $avatarWidth +
+  $singlePostAvatarSpacingRight;
+$singlePostSpacingRight: $spacing12;
+$singlePostAvatarSpacingLeft--mobile: $spacing4;
+$singlePostAvatarSpacingRight--mobile: $spacing4;
+$singlePostSpacingLeft--mobile: $singlePostAvatarSpacingLeft--mobile +
+  $avatarWidth + $singlePostAvatarSpacingRight--mobile;
+$singlePostSpacingRight--mobile: $spacing4;
+$modalScrollableContainerSpacing: $spacing4;
+$minimalModeSpacing: $spacing4;
+// TODO: ^^^^^ REMOVE and plug into activity v2 changes ^^^^^
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: $spacing4;
+  padding-left: $feedAvatarSpacingLeft;
+  padding-right: $feedAvatarSpacingRight;
+  margin-bottom: $spacing5;
+  padding-bottom: $spacing7;
+
+  @media screen and (max-width: $layoutMainFullWidth) {
+    padding-left: $feedAvatarSpacingLeft--mobile;
+    padding-right: $feedAvatarSpacingRight--mobile;
+  }
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+    border-top: 1px solid themed($m-borderColor--primary);
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  &.m-feedNotice__container--sticky {
+    position: sticky;
+    top: $topbarHeight;
+    @include z-index(announcement);
+  }
+
+  .m-feedNotice__left {
+    width: $feedSpacingLeft;
+
+    i {
+      margin-top: calc($spacing1 / 2);
+
+      @include unselectable;
+
+      @media screen and (min-width: $layoutMainFullWidth) {
+        padding-left: $spacing3;
+      }
+    }
+  }
+
+  .m-feedNotice__center {
+    width: 100%;
+
+    ::ng-deep .m-feedNotice__title {
+      @include heading3Bold;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    ::ng-deep .m-feedNotice__body {
+      margin-top: $spacing2;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    ::ng-deep .m-feedNotice__buttonPrimary {
+      margin-right: $spacing2;
+    }
+
+    @media screen and (max-width: $layoutMainFullWidth) {
+      ::ng-deep m-button {
+        display: flex;
+        width: 100%;
+
+        & + * {
+          margin-top: $spacing3;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .m-feedNotice__right {
+    min-width: calc($feedSpacingLeft / 3) * 2;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    @media screen and (max-width: $layoutMainFullWidth) {
+      justify-content: flex-end;
+    }
+
+    .m-feedNotice__closeButton {
+      cursor: pointer;
+      margin-top: calc($spacing1 / 2);
+
+      @include unselectable;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

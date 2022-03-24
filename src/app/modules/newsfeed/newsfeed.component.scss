@@ -142,10 +142,13 @@ m-newsfeed {
 
 .m-theme__2020 .m-newsfeed {
   .m-newsfeed__inner {
-    padding: 20px 40px;
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      padding: 20px;
-    }
+    // TODO: DO NOT REMOVE THIS
+    // padding: 20px 40px;
+    // @media screen and (max-width: $layoutMin3ColWidth) {
+    //   padding: 20px;
+    // }
+    // TODO: DO NOT REMOVE THIS
+    padding: 0 !important;
   }
 
   .m-pageLayout__pane--main {
@@ -166,4 +169,9 @@ m-newsfeed {
   m-suggestions__sidebar > m-sidebarWidget {
     margin-bottom: 20px;
   }
+}
+
+// TODO: REMOVE THIS
+.m-newsfeed__inner {
+  padding: 0 !important;
 }
