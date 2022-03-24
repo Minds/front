@@ -1,0 +1,22 @@
+<ng-container *ngIf="isAdmin()">
+  <ul class="m-accountQualityScore__container p-0 m-0">
+    <li class="px-1">
+      &middot;
+    </li>
+    <li class="px-1">
+      <m-sizeableLoadingSpinner
+        [spinnerWidth]="'1rem'"
+        [spinnerHeight]="'1rem'"
+        [inProgress]="inProgress"
+      >
+      </m-sizeableLoadingSpinner>
+      <div
+        class="m-accountQualityScore__badge text-base base-line-height px-1 py-0_25"
+        [style.--score-color]="color"
+        *ngIf="!inProgress"
+      >
+        {{ qualityScore | number: '1.0' }}
+      </div>
+    </li>
+  </ul>
+</ng-container>
