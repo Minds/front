@@ -106,7 +106,7 @@ describe('FeedNoticeService', () => {
     ).toBeFalsy();
   });
 
-  it('should init notices', async () => {
+  it('should check initial notice state', async () => {
     (service as any).fromEmailConfirmation = true;
     sessionMock.user.email_confirmed = true;
 
@@ -124,11 +124,12 @@ describe('FeedNoticeService', () => {
       })
     );
 
-    await (service as any).initNotices();
+    await (service as any).checkNoticeState();
 
     expect(service.notices['verify-email'].completed).toBeTruthy();
     expect(service.notices['build-your-algorithm'].completed).toBeTruthy();
     expect(service.notices['enable-push-notifications'].completed).toBeTruthy();
+    expect(service.updatedState$.getValue()).toBeTruthy();
   });
 
   it('should get a list of all showable notices by position', () => {
@@ -172,6 +173,14 @@ describe('FeedNoticeService', () => {
     expect((service as any).isCompleted('verify-email')).toBeFalsy();
     service.notices['build-your-algorithm'].completed = true;
     expect((service as any).isCompleted('build-your-algorithm')).toBeTruthy();
+  });
+
+  it('should determine whether another notice has been shown already', () => {
+    service.notices['verify-email'].shown = true;
+    expect(service.hasShownANotice()).toBeTruthy();
+
+    service.notices['verify-email'].shown = false;
+    expect(service.hasShownANotice()).toBeFalsy();
   });
 
   it('should determine if user has already verified their email', () => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
@@ -20,6 +20,12 @@ import {
 export class FeedNoticeService extends AbstractSubscriberComponent {
   // whether config identifies email as unconfirmed.
   private readonly fromEmailConfirmation: boolean = false;
+
+  // when state has been updated - subscribed to in outlet
+  // so we can decide what components to show AFTER initial load.
+  public readonly updatedState$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   // Object containing information on all notices, used to sync state.
   // Ordering indicates order of show priority.
@@ -52,7 +58,22 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   ) {
     super();
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
-    this.initNotices();
+  }
+
+  /**
+   * Checks notice state, setting their completed / dismissed attributes.
+   * @returns { Promise<void> } awaitable.
+   */
+  public async checkNoticeState(): Promise<void> {
+    this.notices['verify-email'].completed = !this.requiresEmailConfirmation();
+    this.notices[
+      'build-your-algorithm'
+    ].completed = await this.hasCompletedCompassAnswers();
+    this.notices[
+      'enable-push-notifications'
+    ].completed = await this.hasPushNotificationsEnabled();
+
+    this.updatedState$.next(true);
   }
 
   /**
@@ -75,7 +96,20 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
         return noticeValue.position === position && noticeValue.shown;
       }
     );
+    return shownNoticesForPosition.length > 0;
+  }
 
+  /**
+   * Whether ANY notice has already been shown.
+   * @returns { boolean } - true if any notice has been shown already.
+   */
+  public hasShownANotice(): boolean {
+    const shownNoticesForPosition = Object.entries(this.notices).filter(
+      ([noticeKey, noticeValue]) => {
+        console.log(noticeKey, noticeValue);
+        return noticeValue.shown;
+      }
+    );
     return shownNoticesForPosition.length > 0;
   }
 
@@ -117,20 +151,6 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     position: NoticePosition
   ): boolean {
     return this.notices[notice].position === position;
-  }
-
-  /**
-   * Inits notices, setting their completed / dismissed and other states based on checks.
-   * @returns { Promise<void> } awaitable.
-   */
-  private async initNotices(): Promise<void> {
-    this.notices['verify-email'].completed = !this.requiresEmailConfirmation();
-    this.notices[
-      'build-your-algorithm'
-    ].completed = await this.hasCompletedCompassAnswers();
-    this.notices[
-      'enable-push-notifications'
-    ].completed = await this.hasPushNotificationsEnabled();
   }
 
   /**

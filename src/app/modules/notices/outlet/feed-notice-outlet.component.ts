@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FeedNoticeService } from '../services/feed-notice.service';
 import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
+import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -21,7 +23,10 @@ import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
     ></m-feedNotice--enablePushNotifications>
   `,
 })
-export class FeedNoticeOutletComponent implements OnInit {
+export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
+  // array of subscriptions destroyed if still present in onDestroy.
+  private subscriptions: Subscription[] = [];
+
   // name of currently active notice.
   public activeNotice: NoticeIdentifier = null;
 
@@ -34,7 +39,17 @@ export class FeedNoticeOutletComponent implements OnInit {
   constructor(private service: FeedNoticeService) {}
 
   ngOnInit(): void {
-    this.initNotice();
+    this.initSubscription();
+  }
+
+  ngOnDestroy(): void {
+    if (this.activeNotice) {
+      this.service.setShown(this.activeNotice, false);
+    }
+
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   /**
@@ -42,24 +57,26 @@ export class FeedNoticeOutletComponent implements OnInit {
    * and informs the service that this instance is showing that notice.
    * @returns { void }
    */
-  private initNotice(): void {
-    // if we're not showing multiple and this position already has shown notices.
+  private async initSubscription(): Promise<void> {
+    await this.service.checkNoticeState();
 
-    if (
-      !this.showMultiple &&
-      this.service.hasShownNoticeInPosition(this.position)
-    ) {
-      return;
-    }
+    this.subscriptions.push(
+      this.service.updatedState$.pipe(take(1)).subscribe(val => {
+        // if we're not showing multiple and this position already has shown notices.
+        if (!this.showMultiple && this.service.hasShownANotice()) {
+          return;
+        }
 
-    const notice = this.service.getNextShowableNotice(this.position);
+        const notice = this.service.getNextShowableNotice(this.position);
 
-    if (!notice) {
-      return;
-    }
+        if (!notice) {
+          return;
+        }
 
-    this.activeNotice = notice;
-    this.service.setShown(notice, true);
+        this.activeNotice = notice;
+        this.service.setShown(notice, true);
+      })
+    );
   }
 
   /**
