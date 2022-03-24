@@ -67,10 +67,10 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
-  topFeedExperimentActive: boolean = this.experiments.hasVariation(
-    'top-feed-2',
-    true
-  );
+  topFeedExperimentActive: boolean = true; //this.experiments.hasVariation(
+  //   'top-feed-2',
+  //   true
+  // );
 
   /**
    * Listening for new posts.
