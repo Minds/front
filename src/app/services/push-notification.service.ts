@@ -48,7 +48,7 @@ export class PushNotificationService implements OnInit, OnDestroy {
 
   registerToken(subscription: PushSubscription) {
     this.client.post('api/v3/notifications/push/token', {
-      service: 'web',
+      service: 'webpush',
       token: encodeURIComponent(btoa(JSON.stringify(subscription))),
     });
   }
