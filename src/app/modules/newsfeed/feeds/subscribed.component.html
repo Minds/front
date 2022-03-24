@@ -59,7 +59,7 @@
         *ngFor="let activity$ of feedService.feed | async; let i = index"
       >
         <m-feedNotice__outlet
-          *ngIf="(i > 0 && i % 5 === 0) || i === 3"
+          *ngIf="i > 0 && i % 6 === 0"
           position="inline"
         ></m-feedNotice__outlet>
         <m-featured-content

@@ -61,22 +61,22 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @returns { NoticeIdentifier } - name of the notice to be shown next.
    */
   public getNextShowableNotice(position: NoticePosition): NoticeIdentifier {
-    if (!position) {
-      return this.getNextUncompletedNotice();
-    }
     return this.getShowableNoticesByPosition(position)[0];
   }
 
   /**
-   * Gets the next uncompleted notice name - regardless of it has already been shown.
-   * @returns { NoticeIdentifier } - identifier of next uncompleted notice.
+   * Whether position already has notices that have been shown.
+   * @param { NoticePosition } position- position to check.
+   * @return { boolean } true if position has notices that have been shown.
    */
-  public getNextUncompletedNotice(): NoticeIdentifier {
-    return (Object.keys(this.notices) as NoticeIdentifier[]).filter(
-      (notice: NoticeIdentifier) => {
-        return !this.isCompleted(notice);
+  public hasShownNoticeInPosition(position: NoticePosition): boolean {
+    const shownNoticesForPosition = Object.entries(this.notices).filter(
+      ([noticeKey, noticeValue]) => {
+        return noticeValue.position === position && noticeValue.shown;
       }
-    )[0];
+    );
+
+    return shownNoticesForPosition.length > 0;
   }
 
   /**
@@ -112,7 +112,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @param { NoticePosition } position - the position we're checking the notice should be showable in.
    * @returns { boolean } - true if notice can be shown in the given position.
    */
-  public shouldShowInPosition(
+  private shouldShowInPosition(
     notice: NoticeIdentifier,
     position: NoticePosition
   ): boolean {

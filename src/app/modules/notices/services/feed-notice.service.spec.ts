@@ -47,22 +47,16 @@ describe('FeedNoticeService', () => {
     expect(service.getNextShowableNotice('top')).toBe('build-your-algorithm');
   });
 
-  it('should get next uncompleted notice in first position', () => {
+  it('should determine whether a notice IS already shown in a given position', () => {
     service.notices['verify-email'].shown = true;
     service.notices['verify-email'].completed = false;
     service.notices['verify-email'].dismissed = false;
-    expect(service.getNextUncompletedNotice()).toBe('verify-email');
-  });
+    expect(service.hasShownNoticeInPosition('top')).toBeTruthy();
 
-  it('should get next uncompleted notice when NOT in first position', () => {
-    service.notices['verify-email'].shown = true;
-    service.notices['verify-email'].completed = true;
-    service.notices['verify-email'].dismissed = true;
-
-    service.notices['build-your-algorithm'].shown = true;
-    service.notices['build-your-algorithm'].completed = false;
-    service.notices['build-your-algorithm'].dismissed = false;
-    expect(service.getNextUncompletedNotice()).toBe('build-your-algorithm');
+    service.notices['verify-email'].shown = false;
+    service.notices['verify-email'].completed = false;
+    service.notices['verify-email'].dismissed = false;
+    expect(service.hasShownNoticeInPosition('top')).toBeFalsy();
   });
 
   it('should return if a given notice is shown or not', () => {
@@ -97,14 +91,18 @@ describe('FeedNoticeService', () => {
     service.notices['verify-email'].position = 'top';
     service.notices['build-your-algorithm'].position = 'inline';
 
-    expect(service.shouldShowInPosition('verify-email', 'inline')).toBeFalsy();
-    expect(service.shouldShowInPosition('verify-email', 'top')).toBeTruthy();
+    expect(
+      (service as any).shouldShowInPosition('verify-email', 'inline')
+    ).toBeFalsy();
+    expect(
+      (service as any).shouldShowInPosition('verify-email', 'top')
+    ).toBeTruthy();
 
     expect(
-      service.shouldShowInPosition('build-your-algorithm', 'inline')
+      (service as any).shouldShowInPosition('build-your-algorithm', 'inline')
     ).toBeTruthy();
     expect(
-      service.shouldShowInPosition('build-your-algorithm', 'top')
+      (service as any).shouldShowInPosition('build-your-algorithm', 'top')
     ).toBeFalsy();
   });
 

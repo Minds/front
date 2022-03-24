@@ -47,60 +47,36 @@ describe('FeedNoticeOutletComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should get next uncompleted notice when not showing multiple', () => {
+  it('should get next next notice when not in showMultiple mode if one has not already been shown', () => {
     const notice = 'build-your-algorithm';
 
     (comp as any).showMultiple = false;
-    (comp as any).service.getNextUncompletedNotice.and.returnValue(notice);
-    (comp as any).service.shouldShowInPosition.and.returnValue(true);
+    (comp as any).service.getNextShowableNotice.and.returnValue(notice);
+    (comp as any).service.hasShownNoticeInPosition.and.returnValue(false);
 
     (comp as any).initNotice();
 
-    expect((comp as any).service.getNextUncompletedNotice).toHaveBeenCalled();
-    expect((comp as any).service.shouldShowInPosition(notice, 'top'));
+    expect((comp as any).service.getNextShowableNotice).toHaveBeenCalled();
+    expect((comp as any).service.hasShownNoticeInPosition).toHaveBeenCalled();
     expect((comp as any).activeNotice).toBe(notice);
     expect((comp as any).service.setShown).toHaveBeenCalledWith(notice, true);
   });
 
-  it('should get next showable notice when showing multiple', () => {
+  it('should get next showable notice when one has already shown, in showMultiple mode', () => {
     const notice = 'build-your-algorithm';
     const position = 'top';
 
     (comp as any).position = position;
     (comp as any).showMultiple = true;
     (comp as any).service.getNextShowableNotice.and.returnValue(notice);
-    (comp as any).service.shouldShowInPosition.and.returnValue(true);
 
     (comp as any).initNotice();
 
     expect((comp as any).service.getNextShowableNotice).toHaveBeenCalledWith(
       position
     );
-    expect((comp as any).service.shouldShowInPosition(notice, position));
     expect((comp as any).activeNotice).toBe(notice);
     expect((comp as any).service.setShown).toHaveBeenCalledWith(notice, true);
-  });
-
-  it('should get next showable notice, but not show it if it should not show in this position', () => {
-    const notice = 'build-your-algorithm';
-    const position = 'top';
-
-    (comp as any).position = position;
-    (comp as any).showMultiple = true;
-    (comp as any).service.getNextShowableNotice.and.returnValue(notice);
-    (comp as any).service.shouldShowInPosition.and.returnValue(false);
-
-    (comp as any).initNotice();
-
-    expect((comp as any).service.getNextShowableNotice).toHaveBeenCalledWith(
-      position
-    );
-    expect((comp as any).service.shouldShowInPosition(notice, position));
-    expect((comp as any).activeNotice).toBeNull();
-    expect((comp as any).service.setShown).not.toHaveBeenCalledWith(
-      notice,
-      true
-    );
   });
 
   it('should determine notice is to be shown if it matches the activeNotice and it is not dismissed', () => {

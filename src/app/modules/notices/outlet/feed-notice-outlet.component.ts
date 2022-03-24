@@ -28,8 +28,7 @@ export class FeedNoticeOutletComponent implements OnInit {
   // positioning of component - where should it show 'top' or feed, or 'inline' in the feed.
   @Input() position: NoticePosition = 'top';
 
-  // should show new notices even when service identifies another notice has already been shown.
-  // not designed to show notices linearly - designed to be used in a for loop every x positions of a feed.
+  // should show new notices even when service identifies another notice has already been shown for this position.
   @Input() showMultiple: boolean = false;
 
   constructor(private service: FeedNoticeService) {}
@@ -40,15 +39,22 @@ export class FeedNoticeOutletComponent implements OnInit {
 
   /**
    * Gets next active notice from service, sets it to local state to be shown
-   * and informs the service that this instance is showing that notice already.
+   * and informs the service that this instance is showing that notice.
    * @returns { void }
    */
   private initNotice(): void {
-    const notice = this.showMultiple
-      ? this.service.getNextShowableNotice(this.position)
-      : this.service.getNextUncompletedNotice();
+    // if we're not showing multiple and this position already has shown notices.
 
-    if (!notice || !this.service.shouldShowInPosition(notice, this.position)) {
+    if (
+      !this.showMultiple &&
+      this.service.hasShownNoticeInPosition(this.position)
+    ) {
+      return;
+    }
+
+    const notice = this.service.getNextShowableNotice(this.position);
+
+    if (!notice) {
       return;
     }
 
