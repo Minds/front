@@ -64,11 +64,6 @@
         [showPaywall]="service.shouldShowPaywall$ | async"
         [showPaywallBadge]="service.shouldShowPaywallBadge$ | async"
       ></m-activityV2__content>
-      <ng-container *mIfFeature="'!paywall-2020'">
-        <m-activityV2__paywall
-          *ngIf="service.shouldShowPaywall$ | async"
-        ></m-activityV2__paywall
-      ></ng-container>
       <m-activityV2__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
       </m-activityV2__nsfwConsent>
     </div>

@@ -218,10 +218,6 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.deleted.next(this.service.entity$.value);
   }
 
-  get isPaywall2020(): boolean {
-    return this.featuresService.has('paywall-2020');
-  }
-
   /**
    * Keep scroll position when comments height changes
    */
