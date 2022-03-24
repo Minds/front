@@ -4,14 +4,24 @@
 :host {
   display: inline-block;
 
+  //test
+  m-activityV2__content--minimalMode {
+  }
+
   // *********************************
   // ** MINIMAL MODE **
   // *********************************
 
   &.m-activity__permalink--minimalMode {
-    padding: 0 $minimalModeSpacing $minimalModeSpacing;
-    .addTopSpacing {
-      padding-top: $minimalModeSpacing !important;
+    padding: 0 $activitySpacing--minimalMode $activitySpacing--minimalMode;
+
+    &.m-activity__permalink--isStatusBehindPaywall {
+      position: absolute;
+      bottom: 0;
+    }
+
+    .m-activity__permalink--addTopSpacing {
+      padding-top: $activitySpacing--minimalMode !important;
     }
 
     .m-activityPermalink__text {

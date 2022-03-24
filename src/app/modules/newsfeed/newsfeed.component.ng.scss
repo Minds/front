@@ -1,5 +1,6 @@
 @import 'defaults.scss';
 
+// ojm figure out why there's a gap and it shoudl be 1099
 $layoutMax2ColWidth: '1039px';
 
 :host {
@@ -10,7 +11,7 @@ $layoutMax2ColWidth: '1039px';
       }
     }
     &.m-newsfeed--activityV2 {
-      .m-newsfeed__feed {
+      .m-newsfeed--feed {
         @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
           @include borderRight;
         }

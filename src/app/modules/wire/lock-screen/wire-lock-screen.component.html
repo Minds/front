@@ -6,7 +6,9 @@
     isVideo: contentType === 'video',
     'm-wire__lockScreen--minimalMode': minimalMode
   }"
-  [style.maxHeight.px]="mediaHeight && !activityV2Feature ? mediaHeight : none"
+  [style.maxHeight.px]="
+    mediaHeight && !activityV2Feature ? mediaHeight : 'none'
+  "
   (click)="$event.stopPropagation(); unlock()"
   *ngIf="entity.wire_threshold && init"
 >

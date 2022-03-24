@@ -158,3 +158,10 @@ $borderRadius--activity: 3px;
     border-left: 1px solid themed($m-borderColor--primary);
   }
 }
+
+// Overrides existing themed borders
+@mixin borderNone {
+  @include m-theme() {
+    border: none;
+  }
+}

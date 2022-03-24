@@ -83,8 +83,9 @@ export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
 export const ACTIVITY_CONTENT_PADDING = 16;
 
 // Constants of fixed heights
-// export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600; // ojm how to use this?
-export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 538; // ojm new
+// export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600; // ojm had changed to 538 but put back
+// ojm need to make this into an activityV2 var
+export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 525; // ojm this makes the height 650
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;

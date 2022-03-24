@@ -8,7 +8,11 @@
     <m-hovercard [publisher]="comment.ownerObj" [offset]="[0, 20]">
       <div class="minds-avatar">
         <a [routerLink]="['/', comment.ownerObj.username]">
-          <img [src]="getAvatarSrc() | async" class="m-border" />
+          <img
+            [src]="getAvatarSrc() | async"
+            [ngClass]="{ 'm-border': !activityV2Feature }"
+            class="m-border"
+          />
         </a>
       </div>
     </m-hovercard>
@@ -42,19 +46,30 @@
             class="m-commentOwnerRowItem__name"
             [routerLink]="['/', comment.ownerObj.username]"
             title="{{ comment.ownerObj.name }}"
-            >{{ comment.ownerObj.name }}</a
-          ><span class="m-commentOwnerRow__dot">·</span>
+            >{{ comment.ownerObj.name
+            }}<ng-container *ngIf="activityV2Feature"
+              ><ng-container
+                [ngTemplateOutlet]="badges"
+              ></ng-container></ng-container></a
+          ><span class="m-commentOwnerRow__dot" *ngIf="!activityV2Feature"
+            >·</span
+          >
           <a
+            *ngIf="!activityV2Feature"
             class="m-commentOwnerRowItem__username"
             [routerLink]="['/', comment.ownerObj.username]"
             title="@{{ comment.ownerObj.username }}"
-            >@{{ comment.ownerObj.username
-            }}<m-channel--badges
-              class="m-channel--badges-activity"
-              [user]="comment.ownerObj"
-              badges="[ 'admin', 'verified' ]"
-            ></m-channel--badges
-          ></a>
+            ><ng-container>@{{ comment.ownerObj.username }}</ng-container
+            ><ng-container [ngTemplateOutlet]="badges"></ng-container>
+          </a>
+        </ng-template>
+
+        <ng-template #badges>
+          <m-channel--badges
+            class="m-channel--badges-activity"
+            [user]="comment.ownerObj"
+            badges="[ 'admin', 'verified' ]"
+          ></m-channel--badges>
         </ng-template>
 
         <ng-template #metrics>

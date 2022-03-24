@@ -12,7 +12,7 @@
         border: none !important;
       }
       a.meta {
-        padding: $minimalModeSpacing;
+        padding: $activitySpacing--minimalMode;
 
         h2.m-rich-embed--title {
           @include heading4Regular;

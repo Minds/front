@@ -2,8 +2,23 @@
 
 :host {
   // ******************************************
+  // ** ACTIVITY V2 DEFAULT **
+  // ******************************************
+
+  m-activityV2 & {
+    .m-commentPoster__form {
+      ::ng-deep minds-textarea {
+        .m-placeholder {
+          @include body2Regular;
+        }
+      }
+    }
+  }
+
+  // ******************************************
   // ** MODAL **
   // ******************************************
+
   m-activityV2__modal & {
     .m-comments--start-conversation-label {
       display: none;

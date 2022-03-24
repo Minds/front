@@ -101,11 +101,11 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   isBoost = false;
 
-  @HostBinding('class.m-activity--fixedHeight')
-  isFixedHeight: boolean;
-
   @HostBinding('class.m-activity--isSidebarBoost')
   isSidebarBoost: boolean;
+
+  @HostBinding('class.m-activity--fixedHeight')
+  isFixedHeight: boolean;
 
   @HostBinding('class.m-activity--fixedHeightContainer')
   isFixedHeightContainer: boolean;
@@ -148,6 +148,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
     this.isSidebarBoost = this.service.displayOptions.isSidebarBoost;
     this.isModal = this.service.displayOptions.isModal;
 
+    //ojm not using this for anything
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;
@@ -183,6 +184,16 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         });
       this.elementVisibilityService.checkVisibility();
     }
+  }
+
+  emitNextBoost(): void {
+    console.log('ojm nextboost');
+    this.nextBoost.emit();
+  }
+
+  emitPreviousBoost(): void {
+    console.log('ojm prevboost');
+    this.previousBoost.emit();
   }
 
   @HostListener('window:resize')

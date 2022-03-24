@@ -70,20 +70,12 @@
   .m-commentsEntityOutlet__expand--hide {
     @include body2Medium;
     padding-top: $spacing6;
+    padding-bottom: $spacing2;
     cursor: pointer;
     padding-left: 0 !important;
     padding-right: 0 !important;
-  }
-
-  .m-commentsEntityOutlet__expand {
     @include m-theme() {
       color: themed($m-link);
-    }
-  }
-
-  .m-commentsEntityOutlet__expand--hide {
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
     }
   }
 
@@ -132,75 +124,6 @@
     i {
       @include m-theme() {
         color: themed($m-textColor--secondary);
-      }
-    }
-  }
-
-  ////////////////////////////////////////////////////////////////////////
-  // ojm this was used in activityv2
-
-  ::ng-deep {
-    m-comment {
-      p.m-comment__message.m-mature-message-content {
-        @include body2Regular;
-
-        a {
-          font-weight: inherit;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-      }
-      .m-comment__repliesToggle {
-        margin: $spacing1 0 $spacing2;
-        span {
-          @include body2Regular;
-        }
-      }
-      .minds-avatar {
-        @include m-theme() {
-          background: themed($m-bgColor--primary);
-        }
-      }
-
-      .m-commentOwnerRow__text {
-        [class*='m-commentOwnerRowItem__'] {
-          @include body2Regular;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
-        }
-      }
-
-      .m-commentToolbar__buttons {
-        :ng-deep .m-commentToolbarButton {
-          span,
-          i {
-            @include body2Regular;
-          }
-        }
-      }
-      .m-comment--compact .minds-body {
-        margin-left: 0;
-      }
-    }
-  }
-  ::ng-deep {
-    m-comment__poster {
-      .m-commentPoster__form {
-        ::ng-deep minds-textarea {
-          .m-placeholder {
-            @include body2Regular;
-          }
-        }
-      }
-    }
-    m-comments__thread {
-      .m-comments__thread {
-        margin: 0; //ojm todo
-      }
-      .m-comments__thread--topLevel {
-        padding-left: 0; // ojm todo
       }
     }
   }

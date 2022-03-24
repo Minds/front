@@ -16,18 +16,20 @@
   // *********************************
 
   &.m-activity--isFeed {
-    padding-bottom: $spacing4;
+    &:not(.m-activity--fixedHeight) {
+      padding-bottom: $spacing4;
+    }
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
     }
 
     .m-activity__top {
-      padding-left: $feedAvatarSpacingLeft;
-      padding-right: $feedSpacingRight;
+      padding-left: $activityAvatarSpacingLeft--feed;
+      padding-right: $activitySpacingRight--feed;
 
       @media screen and (max-width: $max-mobile) {
-        padding-left: $feedAvatarSpacingLeft--mobile;
-        padding-right: $feedSpacingRight--mobile;
+        padding-left: $activityAvatarSpacingLeft--feed--mobile;
+        padding-right: $activitySpacingRight--feed--mobile;
       }
     }
   }
@@ -37,9 +39,19 @@
   // *********************************
 
   &.m-activity--fixedHeight {
-    height: 650px; // ojm fixedHeight change?
-    display: flex;
-    // flex-direction: row; // ojm why did i
+    justify-content: space-between;
+
+    .m-activity__flagRow {
+      padding-bottom: 0;
+    }
+
+    .m-activity__top {
+      // flex-grow: 1; ojm put back?
+      height: calc(100% - 128px);
+    }
+    .m-activity__rightColumn {
+      justify-content: space-around;
+    }
 
     ::ng-deep {
       m-activityV2__nsfwConsent {
@@ -48,6 +60,8 @@
         flex-direction: column;
       }
     }
+
+    //ojm investigate fixedHeightContainer
     ::ng-deep m-activityV2__quote {
       display: flex;
       flex-direction: row;
@@ -55,10 +69,12 @@
     }
   }
 
-  &.m-activity--fixedHeightContainer {
-    height: 100%;
-    width: 100%;
-  }
+  //ojm investigate fixedHeightContainer
+  // ojm this is still being used in activity v2 scss
+  // &.m-activity--fixedHeightContainer {
+  //   height: 100%;
+  //   width: 100%;
+  // }
 
   // *********************************
   // ** MINIMAL MODE **
@@ -100,6 +116,12 @@
     @media screen and (max-width: $max-mobile) {
       padding: 0;
     }
+
+    .m-activity__flagRow {
+      padding-top: 16px;
+      padding-left: $activitySpacing--modal;
+      padding-right: $activitySpacing--modal;
+    }
   }
 
   // *********************************
@@ -128,14 +150,14 @@
 
     &:not(.m-activity--minimalMode) {
       .m-activity__top {
-        padding-left: $singlePostAvatarSpacingLeft;
-        padding-right: $singlePostSpacingRight;
+        padding-left: $activityAvatarSpacingLeft--single;
+        padding-right: $activitySpacingRight--single;
         padding-top: $spacing4;
         padding-bottom: $spacing4;
 
         @media screen and (max-width: $max-mobile) {
-          padding-left: $singlePostAvatarSpacingLeft--mobile;
-          padding-right: $singlePostSpacingRight--mobile;
+          padding-left: $activityAvatarSpacingLeft--single--mobile;
+          padding-right: $activitySpacingRight--single--mobile;
         }
       }
     }
@@ -157,7 +179,7 @@
 
   .m-activity__leftColumn,
   ::ng-deep m-activityV2__quote .m-activity__leftColumn {
-    padding-right: $feedAvatarSpacingRight;
+    padding-right: $activityAvatarSpacingRight--feed;
   }
 
   .m-activity__rightColumn,
@@ -190,7 +212,7 @@
 
   .m-activity__avatar,
   ::ng-deep m-activityV2__quote .m-activity__avatar {
-    padding-right: $feedAvatarSpacingRight;
+    padding-right: $activityAvatarSpacingRight--feed;
 
     img {
       border-radius: 50%;

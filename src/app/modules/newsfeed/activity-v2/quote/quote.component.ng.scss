@@ -5,14 +5,22 @@
   // ** MINIMAL MODE **
   // *********************************
 
-  &.m-activity__remind--minimalMode {
+  &.m-activity__quote--minimalMode {
     padding: 0;
-    @include m-theme() {
-      border: none;
-    }
+    border-radius: 0;
+    @include borderNone;
+    @include borderTop;
 
     .m-activity__rightColumn {
       padding-top: $spacing4;
+    }
+
+    ::ng-deep {
+      m-activityv2__ownerblock {
+        .m-activity__ownerBlock {
+          padding-bottom: $spacing4;
+        }
+      }
     }
   }
 

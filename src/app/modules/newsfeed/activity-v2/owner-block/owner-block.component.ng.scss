@@ -36,9 +36,7 @@
         img {
           height: 35px;
           width: 35px;
-          @include m-theme() {
-            border: none;
-          }
+          @include border;
         }
       }
       .m-activityOwnerBlock__remindIcon--minimalMode {
@@ -70,6 +68,10 @@
         color: themed($m-textColor--secondary);
       }
     }
+
+    .m-activityOwnerBlock__username {
+      display: none;
+    }
     .m-activityOwnerBlock__right {
       display: none;
     }
@@ -80,7 +82,7 @@
   // *********************************
   m-activityV2__modal & {
     .m-activity__ownerBlock {
-      padding: 20px $modalScrollableContainerSpacing 0;
+      padding: 20px $activitySpacing--modal 0;
     }
   }
 
@@ -90,7 +92,7 @@
 
   m-ads-boost & {
     .m-activity__ownerBlock {
-      padding: $minimalModeSpacing;
+      padding: $activitySpacing--minimalMode;
     }
     .m-activityOwnerBlock__body {
       display: flex;
@@ -139,8 +141,8 @@
       position: relative;
       img {
         border-radius: 50%;
-        width: $avatarWidth;
-        height: $avatarWidth;
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
         object-fit: cover;
       }
     }

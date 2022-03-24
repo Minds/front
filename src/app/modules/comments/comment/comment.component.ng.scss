@@ -2,6 +2,75 @@
 
 :host {
   // ******************************************
+  // ** ACTIVITY V2 DEFAULT **
+  // ******************************************
+
+  m-activityV2 & {
+    .m-commentOwnerRow__text {
+      flex-direction: row;
+
+      .m-commentOwnerRow__dot {
+        padding: 0 $spacing1;
+      }
+
+      [class*='m-commentOwnerRowItem__'] {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        &.m-commentOwnerRowItem__name {
+          @include body2Medium;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+
+      p.m-comment__message.m-mature-message-content {
+        @include body2Regular;
+
+        a {
+          font-weight: inherit;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
+      .m-commentToolbar__buttons {
+        :ng-deep .m-commentToolbarButton {
+          margin-right: $spacing5;
+          margin-left: 0;
+          span {
+            @include body2Bold;
+          }
+          i {
+            @include body2Regular;
+          }
+        }
+      }
+
+      .m-comment__repliesToggle {
+        margin: $spacing1 0 $spacing2;
+        span {
+          @include body2Regular;
+        }
+      }
+
+      .minds-avatar {
+        @include border;
+        @include m-theme() {
+          background: themed($m-bgColor--primary);
+        }
+      }
+
+      .m-comment--compact .minds-body {
+        margin-left: 0;
+      }
+    }
+  }
+
+  // ******************************************
   // ** MODAL **
   // ******************************************
 

@@ -1,7 +1,9 @@
 <div
   class="m-activity__permalink"
   [ngClass]="{
-    addTopSpacing: addTopSpacing || (service.shouldShowPaywall$ | async)
+    'm-activity__permalink--addTopSpacing':
+      addTopSpacing || (service.shouldShowPaywall$ | async),
+    'm-activity__permalink--statusBehindPaywall': isStatusBehindPaywall
   }"
 >
   <a

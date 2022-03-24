@@ -12,13 +12,16 @@ m-activity {
     border-radius: $m-borderRadius;
   }
 
+  &:not(.m-activity--v2) {
+    .m-activity--fixedHeight {
+      height: 750px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
   &.m-activity--v2 {
     border: none !important;
     border-radius: $m-borderRadius;
-
-    &.m-activity--fixedHeight {
-      flex-direction: row !important;
-    }
   }
 
   @include m-theme() {
@@ -41,12 +44,6 @@ m-activity {
       margin: 10px;
     }
   }
-}
-
-.m-activity--fixedHeight {
-  height: 750px;
-  display: flex;
-  flex-direction: column;
 }
 
 .m-activity--fixedHeightContainer {

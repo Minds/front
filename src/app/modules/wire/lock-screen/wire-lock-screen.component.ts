@@ -48,7 +48,7 @@ export class WireLockScreenComponent implements OnInit {
 
   @HostBinding('class.m-wireLockScreen--activityV2')
   get isActivityV2Feature() {
-    return this.experiments.hasVariation('front-5229-activities');
+    return this.experiments.hasVariation('front-5229-activities', true);
   }
 
   constructor(

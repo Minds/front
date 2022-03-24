@@ -363,6 +363,10 @@ export class ActivityV2ContentComponent
     return this.service.displayOptions.isModal;
   }
 
+  get showTranslation(): boolean {
+    return this.service.displayOptions.showTranslation;
+  }
+
   // Text usually goes above media, except for
   // minimal mode and rich-embed modals
   // ojm note: no rich-embed modals anymore

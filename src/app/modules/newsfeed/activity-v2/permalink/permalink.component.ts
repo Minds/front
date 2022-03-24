@@ -18,8 +18,14 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
 
   entity: ActivityEntity;
 
+  @HostBinding('class.m-activity__permalink--isRemind')
   isRemind: boolean = false;
+
+  @HostBinding('class.m-activity__permalink--isQuote')
   isQuote: boolean = false;
+
+  @HostBinding('class.m-activity__permalink--isStatusBehindPaywall')
+  isStatusBehindPaywall: boolean = false;
 
   @HostBinding('class.m-activity__permalink--minimalMode')
   get minimalMode(): boolean {
@@ -54,6 +60,12 @@ export class ActivityV2PermalinkComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.service.isQuote$.subscribe((is: boolean) => {
         this.isQuote = is;
+      })
+    );
+    this.subscriptions.push(
+      this.service.shouldShowPaywall$.subscribe((shouldShow: boolean) => {
+        this.isStatusBehindPaywall =
+          shouldShow && this.entity.content_type === 'status';
       })
     );
   }

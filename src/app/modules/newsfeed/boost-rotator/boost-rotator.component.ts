@@ -121,6 +121,8 @@ export class NewsfeedBoostRotatorComponent {
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
+
+    console.log('ojm boost rotater constructor');
   }
 
   ngOnInit() {
@@ -155,7 +157,10 @@ export class NewsfeedBoostRotatorComponent {
     this.plus = user.plus;
 
     this.rating = user.boost_rating;
-    this.disabled = user.disabled_boost;
+    // this.disabled = user.disabled_boost;
+
+    // ojm remove important`
+    this.disabled = false;
 
     this.load();
 
@@ -191,6 +196,8 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   load() {
+    console.log('ojm boostrotator load');
+
     try {
       this.feedsService.clear(); // Fresh each time
       this.feedsService
@@ -215,6 +222,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   start() {
+    console.log('ojm boostrotator start');
     if (this.rotator) window.clearInterval(this.rotator);
 
     this.running = true;
@@ -270,6 +278,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   prev() {
+    console.log('ojm boost rotator prevboost');
     if (this.currentPosition <= 0) {
       this.currentPosition = this.boosts.length - 1;
     } else {
@@ -279,6 +288,9 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   async next() {
+    console.log('ojm boost rotator nextboost');
+    console.log('ojm boosts', this.boosts, this.currentPosition);
+
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       try {
         this.load();
@@ -313,7 +325,8 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   onEnableChanged(value) {
-    this.disabled = !value;
+    // ojm uncomment important
+    // this.disabled = !value;
     this.detectChanges();
   }
 

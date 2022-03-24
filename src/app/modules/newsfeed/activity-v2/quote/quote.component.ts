@@ -13,7 +13,7 @@ import {
   providers: [ActivityService],
 })
 export class ActivityV2QuoteComponent {
-  @HostBinding('class.m-activity__remind--minimalMode')
+  @HostBinding('class.m-activity__quote--minimalMode')
   get minimalMode(): boolean {
     return this.service.displayOptions.minimalMode;
   }
