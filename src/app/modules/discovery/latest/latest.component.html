@@ -6,7 +6,6 @@
 ></m-discovery__feedItem>
 
 <infinite-scroll
-  distance="25%"
   (load)="loadNext()"
   [moreData]="hasMore$ | async"
   [inProgress]="inProgress$ | async"
