@@ -7,12 +7,12 @@
   // ******************************************
 
   .m-activity--isFeed & {
-    padding-left: $feedSpacingLeft;
-    padding-right: $feedSpacingRight;
+    padding-left: $activitySpacingLeft--feed;
+    padding-right: $activitySpacingRight--feed;
 
     @media screen and (max-width: $max-mobile) {
-      padding-left: $feedSpacingLeft--mobile;
-      padding-right: $feedSpacingRight--mobile;
+      padding-left: $activitySpacingLeft--feed--mobile;
+      padding-right: $activitySpacingRight--feed--mobile;
     }
 
     [class*='m-commentsEntityOutlet__expand'] {
@@ -25,8 +25,8 @@
   // ******************************************
 
   m-activityV2__modal & {
-    padding-left: $modalScrollableContainerSpacing;
-    padding-right: $modalScrollableContainerSpacing;
+    padding-left: $activitySpacing--modal;
+    padding-right: $activitySpacing--modal;
 
     [class*='m-commentsEntityOutlet__expand'] {
       display: none;
@@ -44,12 +44,12 @@
 
   m-newsfeed--single & {
     padding-top: $spacing6;
-    padding-left: $singlePostSpacingLeft;
-    padding-right: $singlePostSpacingRight;
+    padding-left: $activitySpacingLeft--single;
+    padding-right: $activitySpacingRight--single;
 
     @media screen and (max-width: $max-mobile) {
-      padding-left: $feedAvatarSpacingLeft--mobile;
-      padding-right: $feedAvatarSpacingRight--mobile;
+      padding-left: $activityAvatarSpacingLeft--feed--mobile;
+      padding-right: $activityAvatarSpacingRight--feed--mobile;
     }
   }
 
