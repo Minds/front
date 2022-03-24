@@ -22,6 +22,7 @@
       class="m-feedTypePopper__iconLink"
       [class.m-feedTypePopper__iconLink--active]="type === 'top'"
       (click)="iconClick($event)"
+      data-ref="feed-type-popper-toggle"
     >
       <i class="material-icons">tune</i>
     </a>
@@ -35,6 +36,7 @@
         routerLink="../top"
         class="m-feedTypePopper__item"
         (click)="onChangeType('top')"
+        data-ref="feed-type-popper-top"
       >
         <div class="m-feedTypePopper__desc__container">
           <p
@@ -59,6 +61,7 @@
         routerLink="../latest"
         class="m-feedTypePopper__item"
         (click)="onChangeType('latest')"
+        data-ref="feed-type-popper-latest"
       >
         <div>
           <p

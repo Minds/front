@@ -49,7 +49,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected site: SiteService,
     protected features: FeaturesService,
     protected headersService: HeadersService,
-    protected authModalService: AuthModalService
+    protected authModal: AuthModalService
   ) {}
 
   ngOnInit(): void {
@@ -150,10 +150,10 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   async openLoginModal(): Promise<void> {
-    try {
-      await this.authModalService.open();
+    const user = await this.authModal.open();
+    if (user) {
       this.load();
-    } catch {}
+    }
   }
 
   get isOwner() {

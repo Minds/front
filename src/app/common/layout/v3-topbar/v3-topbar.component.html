@@ -19,40 +19,44 @@
   <div class="m-v3TopbarTop__inner m-pageLayout__container">
     <div class="m-v3Topbar__leftColumn m-pageLayout__pane--left">
       <nav class="m-v3Topbar__nav">
-        <a
-          class="m-v3TopbarNav__item m-v3TopbarNav__item--logo"
-          [routerLink]="getMainLogoUrl()"
-          title="Home"
-          i18n-title="@@COMMON__HOME"
-          data-ref="topnav-logo"
-        >
-          <img
-            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-            class="m-v3Topbar__logo--bulb"
-          />
-          <img
-            *ngIf="
-              isHomePageV3
-                ? !(isDarkTheme$ | async) &&
-                  (pageLayoutService.hasTopbarBackground$ | async)
-                : !(isDarkTheme$ | async)
-            "
-            [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
-            class="m-v3Topbar__logo--full"
-            alt="Minds"
-          />
-          <img
-            *ngIf="
-              isHomePageV3
-                ? (isDarkTheme$ | async) ||
-                  !(pageLayoutService.hasTopbarBackground$ | async)
-                : (isDarkTheme$ | async)
-            "
-            [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
-            class="m-v3Topbar__logo--full"
-            alt="Minds"
-          />
-        </a>
+        <h1>
+          <a
+            class="m-v3TopbarNav__item m-v3TopbarNav__item--logo"
+            [routerLink]="getMainLogoUrl()"
+            title="Home"
+            i18n-title="@@COMMON__HOME"
+            data-ref="topnav-logo"
+            aria-label="Minds"
+          >
+            <img
+              [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+              class="m-v3Topbar__logo--bulb"
+              alt="Minds"
+            />
+            <img
+              *ngIf="
+                isHomePageV3
+                  ? !(isDarkTheme$ | async) &&
+                    (pageLayoutService.hasTopbarBackground$ | async)
+                  : !(isDarkTheme$ | async)
+              "
+              [src]="cdnAssetsUrl + 'assets/logos/logo-light-mode.svg'"
+              class="m-v3Topbar__logo--full"
+              alt="minds"
+            />
+            <img
+              *ngIf="
+                isHomePageV3
+                  ? (isDarkTheme$ | async) ||
+                    !(pageLayoutService.hasTopbarBackground$ | async)
+                  : (isDarkTheme$ | async)
+              "
+              [src]="cdnAssetsUrl + 'assets/logos/logo-dark-mode.svg'"
+              class="m-v3Topbar__logo--full"
+              alt="minds"
+            />
+          </a>
+        </h1>
         <m-environmentFlag></m-environmentFlag>
         <div
           class="m-v3TopbarNav__item m-v3TopbarNav__item--hamburger"

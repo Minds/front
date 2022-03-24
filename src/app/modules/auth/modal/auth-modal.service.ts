@@ -26,26 +26,15 @@ export class AuthModalService {
     }
 
     const { AuthModalModule } = await import('./auth-modal.module');
-    const onSuccess$: Subject<MindsUser> = new Subject();
 
     const modal = this.modalService.present(AuthModalComponent, {
       data: {
         formDisplay: opts.formDisplay,
         onComplete: async (user: MindsUser) => {
-          onSuccess$.next(user);
-          onSuccess$.complete(); // Ensures promise can be called below
           modal.close(user);
 
           if (opts.formDisplay === 'register') {
-            try {
-              await this.onboardingV3.open();
-            } catch (e) {
-              if (e === 'DismissedModalException') {
-                // reload so that widget updates with save.
-                this.onboardingV3.load();
-                return; // modal dismissed, do nothing
-              }
-            }
+            await this.onboardingV3.open();
           }
         },
       },
@@ -54,13 +43,6 @@ export class AuthModalService {
       lazyModule: AuthModalModule,
     });
 
-    const result = await modal.result;
-
-    // Modal was closed before login completed
-    if (!result) {
-      throw 'DismissedModalException';
-    }
-
-    return onSuccess$.toPromise();
+    return modal.result;
   }
 }

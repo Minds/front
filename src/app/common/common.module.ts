@@ -186,6 +186,7 @@ import { ModalCloseButtonComponent } from './components/modal-close-button/modal
 import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
+import { RelativeTimeSpanComponent } from './components/relative-time-span/relative-time-span.component';
 
 const routes: Routes = [
   {
@@ -357,6 +358,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    RelativeTimeSpanComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -503,6 +505,7 @@ const routes: Routes = [
     TagSelectorComponent,
     ModalCloseButtonComponent,
     BlurhashDirective,
+    RelativeTimeSpanComponent,
   ],
   providers: [
     SiteService,

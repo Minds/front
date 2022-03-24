@@ -77,7 +77,7 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
     private userAvatar: UserAvatarService,
     private cd: ChangeDetectorRef,
     private configs: ConfigsService,
-    private authModalService: AuthModalService,
+    private authModal: AuthModalService,
     private isCommentingService: IsCommentingService,
     public elRef: ElementRef
   ) {}
@@ -291,10 +291,10 @@ export class CommentPosterComponent implements OnInit, OnDestroy {
   }
 
   async showLoginModal(): Promise<void> {
-    try {
-      await this.authModalService.open();
+    const user = await this.authModal.open();
+    if (user) {
       this.detectChanges();
-    } catch (e) {}
+    }
   }
 
   /**
