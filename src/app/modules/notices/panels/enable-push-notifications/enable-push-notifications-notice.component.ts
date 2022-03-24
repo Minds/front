@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
-import { ApiService } from '../../../common/api/api.service';
-import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { FormToastService } from '../../../common/services/form-toast.service';
-import { FeedNoticeService } from '../feed-notice.service';
+import { ApiService } from '../../../../common/api/api.service';
+import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
  * Enable push notifications notice.

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { skip } from 'rxjs/operators';
-import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ModalService } from '../../../services/ux/modal.service';
-import { CompassService } from '../../compass/compass.service';
-import { CompassQuestionnaireModalComponent } from '../../compass/questionnaire-modal/questionnaire-modal.component';
-import { FeedNoticeService } from '../feed-notice.service';
+import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { ModalService } from '../../../../services/ux/modal.service';
+import { CompassService } from '../../../compass/compass.service';
+import { CompassQuestionnaireModalComponent } from '../../../compass/questionnaire-modal/questionnaire-modal.component';
+import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
  * Build your algorithm notice.

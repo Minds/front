@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FeedNoticeService } from './feed-notice.service';
-import { NoticePosition, NoticeIdentifier } from './feed-notice.types';
+import { FeedNoticeService } from '../services/feed-notice.service';
+import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
 
 /**
  * Outlet for feed notices - use this component to show a relevant
@@ -29,6 +29,7 @@ export class FeedNoticeOutletComponent implements OnInit {
   @Input() position: NoticePosition = 'top';
 
   // should show new notices even when service identifies another notice has already been shown.
+  // not designed to show notices linearly - designed to be used in a for loop every x positions of a feed.
   @Input() showMultiple: boolean = false;
 
   constructor(private service: FeedNoticeService) {}

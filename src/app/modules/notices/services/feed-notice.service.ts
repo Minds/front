@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
-import { ApiResponse, ApiService } from '../../common/api/api.service';
-import { AbstractSubscriberComponent } from '../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ConfigsService } from '../../common/services/configs.service';
-import { Session } from '../../services/session';
-import { CompassService } from '../compass/compass.service';
-import { NoticePosition, Notices, NoticeIdentifier } from './feed-notice.types';
+import { ApiResponse, ApiService } from '../../../common/api/api.service';
+import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { Session } from '../../../services/session';
+import { CompassService } from '../../compass/compass.service';
+import {
+  NoticePosition,
+  Notices,
+  NoticeIdentifier,
+} from '../feed-notice.types';
 
 /**
  * Determines which feed notices to show, and holds state on
@@ -48,7 +52,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   ) {
     super();
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
-    this.checkActiveNotices();
+    this.initNotices();
   }
 
   /**
@@ -56,9 +60,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @param { NoticePosition } position - position for notice to be shown.
    * @returns { NoticeIdentifier } - name of the notice to be shown next.
    */
-  public getNextShowableNotice(
-    position: NoticePosition = 'top'
-  ): NoticeIdentifier {
+  public getNextShowableNotice(position: NoticePosition): NoticeIdentifier {
     if (!position) {
       return this.getNextUncompletedNotice();
     }
@@ -118,14 +120,14 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Checks active notices, setting their completed states based on checks.
+   * Inits notices, setting their completed / dismissed and other states based on checks.
    * @returns { Promise<void> } awaitable.
    */
-  private async checkActiveNotices(): Promise<void> {
+  private async initNotices(): Promise<void> {
     this.notices['verify-email'].completed = !this.requiresEmailConfirmation();
     this.notices[
       'build-your-algorithm'
-    ].completed = !(await this.requiresCompassAnswers());
+    ].completed = await this.hasCompletedCompassAnswers();
     this.notices[
       'enable-push-notifications'
     ].completed = await this.hasPushNotificationsEnabled();
@@ -183,7 +185,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * Whether compass answers are required.
    * @returns { Promise<boolean> }
    */
-  private async requiresCompassAnswers(): Promise<boolean> {
+  private async hasCompletedCompassAnswers(): Promise<boolean> {
     await this.compass.fetchQuestions();
     return this.compass.answersProvided$.getValue();
   }

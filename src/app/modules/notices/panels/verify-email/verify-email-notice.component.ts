@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EmailResendService } from '../../../common/services/email-resend.service';
+import { EmailResendService } from '../../../../common/services/email-resend.service';
 
 /**
  * Verify email notice - will stick to top of feed.
