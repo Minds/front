@@ -1,15 +1,12 @@
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { configMock } from '../../../../tests/config-mock-service.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { compassServiceMock } from '../../../mocks/modules/compass/compass.service.mock';
+import { apiServiceMock } from '../../../mocks/services/api-mock.spec';
 import { FeedNoticeService } from './feed-notice.service';
 
 describe('FeedNoticeService', () => {
   let service: FeedNoticeService;
-
-  let apiServiceMock = new (function() {
-    this.get = jasmine.createSpy('get').and.returnValue(new Observable(null));
-  })();
 
   beforeEach(() => {
     service = new FeedNoticeService(
@@ -33,6 +30,18 @@ describe('FeedNoticeService', () => {
     service.notices['verify-email'].completed = false;
     service.notices['verify-email'].dismissed = false;
     expect(service.getNextShowableNotice('top')).toBe('verify-email');
+  });
+
+  it('should get second showable notice when first priority but has been dismissed', () => {
+    service.notices['verify-email'].shown = false;
+    service.notices['verify-email'].completed = false;
+    service.notices['verify-email'].dismissed = true;
+
+    service.notices['build-your-algorithm'].shown = false;
+    service.notices['build-your-algorithm'].completed = false;
+    service.notices['build-your-algorithm'].dismissed = false;
+
+    expect(service.getNextShowableNotice('top')).toBe('build-your-algorithm');
   });
 
   it('should get next showable notice when it is NOT first in priority', () => {
@@ -81,9 +90,17 @@ describe('FeedNoticeService', () => {
   });
 
   it('should set dismissed state', () => {
+    (service as any).api.put.and.returnValue(of({ status: 'success' }));
+
     service.setDismissed('verify-email', true);
+    expect((service as any).api.put).toHaveBeenCalledOnceWith(
+      'api/v3/dismissible-notices/verify-email'
+    );
     expect(service.notices['verify-email'].dismissed).toBeTruthy();
     service.setDismissed('verify-email', false);
+    expect((service as any).api.put).toHaveBeenCalledOnceWith(
+      'api/v3/dismissible-notices/verify-email'
+    );
     expect(service.notices['verify-email'].dismissed).toBeFalsy();
   });
 
@@ -233,5 +250,45 @@ describe('FeedNoticeService', () => {
       })
     );
     expect(await (service as any).hasPushNotificationsEnabled()).toBeFalsy();
+  });
+
+  it('should determine a notification has NOT been dismissed when no notifications have been dismissed', () => {
+    const noticeName = 'build-your-algorithm';
+    service.notices[noticeName].dismissed = false;
+    service.notices['verify-email'].dismissed = false;
+    service.notices['enable-push-notifications'].dismissed = false;
+    sessionMock.user['dismissed_notices'] = [];
+
+    expect((service as any).isNoticeDismissed(noticeName)).toBeFalsy();
+  });
+
+  it('should determine whether a notification has already been dismissed BUT dismissal is expired', () => {
+    const noticeName = 'build-your-algorithm';
+    sessionMock.user['dismissed_notices'] = [
+      {
+        id: noticeName,
+        timestamp_ms: 1269542790000, // 2010
+      },
+    ];
+    service.notices[noticeName].dismissed = false;
+    service.notices['verify-email'].dismissed = false;
+    service.notices['enable-push-notifications'].dismissed = false;
+
+    expect((service as any).isNoticeDismissed(noticeName)).toBeFalsy();
+  });
+
+  it('should determine whether a notification has already been dismissed and dismissal has NOT expired', () => {
+    const noticeName = 'build-your-algorithm';
+    sessionMock.user['dismissed_notices'] = [
+      {
+        id: noticeName,
+        timestamp_ms: new Date().getTime(),
+      },
+    ];
+    service.notices[noticeName].dismissed = false;
+    service.notices['verify-email'].dismissed = false;
+    service.notices['enable-push-notifications'].dismissed = false;
+
+    expect((service as any).isNoticeDismissed(noticeName)).toBeTruthy();
   });
 });

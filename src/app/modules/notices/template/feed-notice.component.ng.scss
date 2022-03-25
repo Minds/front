@@ -5,44 +5,18 @@
 
 $topbarHeight: 75px;
 
-// TODO: vvvvv REMOVE and plug into activity v2 changes vvvvv
-$avatarWidth: $spacing10;
-$feedAvatarSpacingLeft: $spacing8;
-$feedAvatarSpacingRight: $spacing4;
-$feedSpacingLeft: $feedAvatarSpacingLeft + $avatarWidth +
-  $feedAvatarSpacingRight;
-$feedSpacingRight: $spacing12;
-$feedAvatarSpacingLeft--mobile: $spacing4;
-$feedAvatarSpacingRight--mobile: $spacing4;
-$feedSpacingLeft--mobile: $feedAvatarSpacingLeft--mobile + $avatarWidth +
-  $feedAvatarSpacingRight--mobile;
-$feedSpacingRight--mobile: $spacing4;
-$singlePostAvatarSpacingLeft: $spacing8;
-$singlePostAvatarSpacingRight: $spacing4;
-$singlePostSpacingLeft: $singlePostAvatarSpacingLeft + $avatarWidth +
-  $singlePostAvatarSpacingRight;
-$singlePostSpacingRight: $spacing12;
-$singlePostAvatarSpacingLeft--mobile: $spacing4;
-$singlePostAvatarSpacingRight--mobile: $spacing4;
-$singlePostSpacingLeft--mobile: $singlePostAvatarSpacingLeft--mobile +
-  $avatarWidth + $singlePostAvatarSpacingRight--mobile;
-$singlePostSpacingRight--mobile: $spacing4;
-$modalScrollableContainerSpacing: $spacing4;
-$minimalModeSpacing: $spacing4;
-// TODO: ^^^^^ REMOVE and plug into activity v2 changes ^^^^^
-
 :host {
   display: flex;
   flex-flow: row nowrap;
   padding: $spacing4;
-  padding-left: $feedAvatarSpacingLeft;
-  padding-right: $feedAvatarSpacingRight;
+  padding-left: $activityAvatarSpacingLeft--feed;
+  padding-right: $activityAvatarSpacingRight--feed;
   margin-bottom: $spacing5;
   padding-bottom: $spacing7;
 
   @media screen and (max-width: $layoutMainFullWidth) {
-    padding-left: $feedAvatarSpacingLeft--mobile;
-    padding-right: $feedAvatarSpacingRight--mobile;
+    padding-left: $activityAvatarSpacingLeft--feed--mobile;
+    padding-right: $activityAvatarSpacingRight--feed--mobile;
   }
 
   @include m-theme() {
@@ -58,7 +32,7 @@ $minimalModeSpacing: $spacing4;
   }
 
   .m-feedNotice__left {
-    width: $feedSpacingLeft;
+    width: $activitySpacingLeft--feed;
 
     i {
       margin-top: calc($spacing1 / 2);
@@ -112,7 +86,7 @@ $minimalModeSpacing: $spacing4;
   }
 
   .m-feedNotice__right {
-    min-width: calc($feedSpacingLeft / 3) * 2;
+    min-width: calc($activitySpacingRight--feed / 3) * 2;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
