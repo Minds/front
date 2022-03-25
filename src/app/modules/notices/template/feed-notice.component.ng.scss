@@ -54,7 +54,7 @@ $minimalModeSpacing: $spacing4;
   &.m-feedNotice__container--sticky {
     position: sticky;
     top: $topbarHeight;
-    @include z-index(announcement);
+    @include z-index(messenger);
   }
 
   .m-feedNotice__left {

@@ -4,7 +4,7 @@
   ::ng-deep .m-tooltip--bubble {
     width: 400px;
     right: -5px;
-    z-index: 45;
+    @include z-index(announcement);
   }
 
   .m-feedTypePopper {
