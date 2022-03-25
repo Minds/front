@@ -39,6 +39,11 @@
   [ngStyle]="{background: 'url(' + blog.thumbnail_src + ') center center / cover'}"
   [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(blog) }"
 ></a>
+<span
+  class="m-mature-thumbnail-overlay"
+  *ngIf="attachment.shouldBeBlurred(blog) && !activityV2Feature"
+  ><i class="material-icons">explicit</i></span
+>
 
 <!-- Title v2 -->
 <ng-container *ngIf="activityV2Feature">

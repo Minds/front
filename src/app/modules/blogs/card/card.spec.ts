@@ -11,6 +11,8 @@ import { AttachmentService } from '../../../services/attachment';
 import { attachmentServiceMock } from '../../../../tests/attachment-service-mock.spec';
 import { ExcerptPipe } from '../../../common/pipes/excerpt';
 import { Component, Input } from '@angular/core';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { MockService } from '../../../utils/mock';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -59,6 +61,10 @@ describe('BlogCard', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: AttachmentService, useValue: attachmentServiceMock },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
+          },
         ],
       }).compileComponents();
     })
