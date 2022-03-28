@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
@@ -12,7 +12,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.ng.scss'],
 })
-export class WireButtonComponent {
+export class WireButtonComponent implements OnInit {
   @Input() object: any;
   @Output('done') doneEmitter: EventEmitter<any> = new EventEmitter();
 
@@ -24,7 +24,9 @@ export class WireButtonComponent {
     public features: FeaturesService,
     private modalService: ModalService,
     private experiments: ExperimentsService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.activityV2Feature = this.experiments.hasVariation(
       'front-5229-activities',
       true

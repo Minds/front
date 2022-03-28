@@ -3,6 +3,8 @@ import { ApiService } from '../../../common/api/api.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { MockService } from '../../../utils/mock';
 
 describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
@@ -15,6 +17,10 @@ describe('ChannelRecommendationComponent', () => {
         {
           provide: ApiService,
           useValue: apiServiceMock,
+        },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
         },
       ],
     }).compileComponents();

@@ -121,8 +121,6 @@ export class NewsfeedBoostRotatorComponent {
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
-
-    console.log('ojm boost rotater constructor');
   }
 
   ngOnInit() {
@@ -196,7 +194,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   load() {
-    console.log('ojm boostrotator load');
+    console.log('ojm boostrotator load', this.activityV2Feature);
 
     try {
       let params = {
