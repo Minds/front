@@ -1,4 +1,3 @@
-import { PushNotificationService } from './services/push-notification.service';
 import {
   ChangeDetectorRef,
   Component,
@@ -87,7 +86,6 @@ export class Minds implements OnInit, OnDestroy {
     private experimentsService: ExperimentsService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
     private compassHook: CompassHookService,
-    private pushNotificationService: PushNotificationService
   ) {
     this.name = 'Minds';
 
@@ -137,8 +135,6 @@ export class Minds implements OnInit, OnDestroy {
       // if (this.sso.isRequired()) {
       //   this.sso.connect();
       // }
-
-      this.pushNotificationService.subscribe();
     } catch (e) {
       console.error('ngOnInit()', e);
     }

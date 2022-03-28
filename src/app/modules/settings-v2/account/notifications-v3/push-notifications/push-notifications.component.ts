@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
 import { BehaviorSubject } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
+import { PushNotificationService } from './../../../../../services/push-notification.service';
 import { NotificationsSettingsV2Service } from '../notifications-settings-v3.service';
 import { PushNotificationGroup } from '../notifications-settings-v3.type';
 
@@ -56,7 +56,10 @@ export class SettingsV2PushNotificationsV3Component
     all: '',
   };
 
-  constructor(private service: NotificationsSettingsV2Service) {
+  constructor(
+    private service: NotificationsSettingsV2Service,
+    public pushNotificationService: PushNotificationService
+  ) {
     super();
   }
 
@@ -118,5 +121,19 @@ export class SettingsV2PushNotificationsV3Component
     return this.toggles.filter(
       option => option.notificationGroup === notificationGroup
     )[0];
+  }
+
+  /**
+   * do we have browser push notification permission
+   */
+  get pushNotificationsEnabled$() {
+    return this.pushNotificationService.enabled$;
+  }
+
+  /**
+   * user wants to enable push notifications
+   */
+  public onEnablePushNotifications() {
+    this.pushNotificationService.requestSubscription();
   }
 }
