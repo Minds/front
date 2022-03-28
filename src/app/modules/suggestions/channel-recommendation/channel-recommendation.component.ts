@@ -1,40 +1,17 @@
-import { BehaviorSubject } from 'rxjs';
-import { MindsUser } from '../../../interfaces/entities';
-import { ApiService } from '../../../common/api/api.service';
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { BehaviorSubject } from 'rxjs';
+import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
+import { MindsUser } from '../../../interfaces/entities';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 
+/**
+ * a component that shows channel recommendations
+ */
 @Component({
   selector: 'm-channelRecommendation',
   templateUrl: './channel-recommendation.component.html',
   styleUrls: ['./channel-recommendation.component.ng.scss'],
-  animations: [
-    trigger('openClose', [
-      // ...
-      state(
-        'closed',
-        style({
-          height: '0px',
-        })
-      ),
-      state(
-        'open',
-        style({
-          height: '200px',
-        })
-      ),
-      transition('* => closed', [animate('1s')]),
-      transition('* => open', [animate('0.5s')]),
-    ]),
-  ],
 })
 export class ChannelRecommendationComponent implements OnInit {
   /**
@@ -61,8 +38,9 @@ export class ChannelRecommendationComponent implements OnInit {
   /**
    * the height of the container, used to animate the mount and unmount of this component
    */
-  _containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
+  containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
 
+  /** a list of recommended channels */
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
 
   constructor(
@@ -96,6 +74,6 @@ export class ChannelRecommendationComponent implements OnInit {
    * when component resizes we set the container height and animate it
    */
   onResized(event: ResizedEvent) {
-    this._containerHeight$.next(event.newRect.height + 64);
+    this.containerHeight$.next(event.newRect.height + 64);
   }
 }

@@ -1,6 +1,6 @@
 <div
   style="transition: all 0.3s; overflow: hidden; flex: 1;"
-  [style.height.px]="_containerHeight$ | async"
+  [style.height.px]="containerHeight$ | async"
   *ngIf="visible"
 >
   <article
