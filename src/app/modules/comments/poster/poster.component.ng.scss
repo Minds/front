@@ -6,6 +6,16 @@
   // ******************************************
 
   m-activityV2 & {
+    .m-commentPoster__avatar {
+      a {
+        img {
+          @include m-theme() {
+            border: none;
+          }
+        }
+      }
+    }
+
     .m-commentPoster__form {
       ::ng-deep minds-textarea {
         .m-placeholder {

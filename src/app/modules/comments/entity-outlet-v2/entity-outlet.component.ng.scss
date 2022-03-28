@@ -18,6 +18,14 @@
     [class*='m-commentsEntityOutlet__expand'] {
       padding-top: 0;
     }
+
+    & > :last-child {
+      padding-bottom: $spacing6;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-bottom: $spacing3;
+      }
+    }
   }
 
   // ******************************************

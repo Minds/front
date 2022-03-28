@@ -10,7 +10,9 @@
 
   .m-activity--isFeed & {
     .m-activity__ownerBlock {
-      width: 105%;
+      @media screen and (min-width: ($max-mobile+1)) {
+        width: 105%;
+      }
     }
   }
   // *********************************
@@ -219,6 +221,9 @@
 
   .m-activityOwnerBlock__username {
     padding-left: $spacing1;
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
   }
 
   .m-activityOwnerBlock__dot {

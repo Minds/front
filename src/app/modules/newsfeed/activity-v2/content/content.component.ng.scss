@@ -69,7 +69,8 @@
       }
 
       .m-activityContentText__title {
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
+        padding: $spacing4 0;
       }
 
       .m-activityContentText__body {

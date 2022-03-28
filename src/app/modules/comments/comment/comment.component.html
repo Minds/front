@@ -17,16 +17,17 @@
       </div>
     </m-hovercard>
   </ng-template>
-  <div *ngIf="!_compact" class="m-comment__avatarWrapper">
+  <div class="m-comment__avatarWrapper">
     <ng-container *ngTemplateOutlet="avatar"></ng-container>
   </div>
 
   <div class="minds-body">
     <!-- --OWNER ROW ----------------------------- -->
     <div class="m-comment__ownerRow">
-      <div *ngIf="_compact" class="m-comment__avatarWrapper--compact">
+      <!-- ojm no need for below because single line now -->
+      <!-- <div *ngIf="_compact" class="m-comment__avatarWrapper--compact">
         <ng-container *ngTemplateOutlet="avatar"></ng-container>
-      </div>
+      </div> -->
       <div class="m-commentOwnerRow__text m-legible">
         <ng-container *ngIf="!_compact">
           <ng-container *ngTemplateOutlet="owner"></ng-container>

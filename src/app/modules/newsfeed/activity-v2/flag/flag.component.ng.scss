@@ -1,6 +1,25 @@
 @import 'defaults';
+@import '../shared.scss';
 
 :host {
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activityV2__modal & {
+    padding-top: $spacing4;
+    padding-left: $activitySpacing--modal;
+    padding-right: $activitySpacing--modal;
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
   [class*='m-activityFlag--'] {
     padding-right: $spacing4;
 

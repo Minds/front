@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { ApiService } from '../../../common/api/api.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-channelRecommendation',
@@ -16,7 +17,15 @@ export class ChannelRecommendationComponent implements OnInit {
   location: string;
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    public experiments: ExperimentsService
+  ) {}
+
+  @HostBinding('class.m-channelRecommendation--activityV2')
+  get activityV2Feature(): boolean {
+    return this.experiments.hasVariation('front-5229-activities', true);
+  }
 
   ngOnInit(): void {
     if (this.location) {

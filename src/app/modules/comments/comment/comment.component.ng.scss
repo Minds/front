@@ -2,10 +2,11 @@
 
 :host {
   // ******************************************
-  // ** ACTIVITY V2 DEFAULT **
+  // ** ACTIVITY V2 **
   // ******************************************
 
-  m-activityV2 & {
+  m-activityV2 &,
+  m-activityV2__modal & {
     .m-commentOwnerRow__text {
       flex-direction: row;
 
@@ -24,87 +25,82 @@
             color: themed($m-textColor--primary);
           }
         }
-      }
 
-      p.m-comment__message.m-mature-message-content {
-        @include body2Regular;
-
-        a {
-          font-weight: inherit;
-          @include m-theme() {
-            color: themed($m-textColor--secondary);
-          }
+        &.m-commentOwnerRowItem__timestamp {
+          padding-left: $spacing1;
         }
       }
+    }
+    p.m-comment__message.m-mature-message-content {
+      @include body2Regular;
 
-      .m-commentToolbar__buttons {
-        :ng-deep .m-commentToolbarButton {
-          margin-right: $spacing5;
-          margin-left: 0;
-          span {
-            @include body2Bold;
-          }
-          i {
-            @include body2Regular;
-          }
+      a {
+        font-weight: inherit;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
         }
       }
+    }
 
-      .m-comment__repliesToggle {
-        margin: $spacing1 0 $spacing2;
+    .m-commentToolbar__buttons {
+      :ng-deep .m-commentToolbarButton {
+        margin-right: $spacing9;
+        margin-left: 0;
         span {
+          @include body2Bold;
+        }
+        i {
           @include body2Regular;
         }
       }
-
-      .minds-avatar {
-        @include border;
-        @include m-theme() {
-          background: themed($m-bgColor--primary);
-        }
-      }
-
-      .m-comment--compact .minds-body {
-        margin-left: 0;
-      }
     }
-  }
 
-  // ******************************************
-  // ** MODAL **
-  // ******************************************
-
-  m-activityV2__modal & {
-    .m-comment {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-
-      .minds-avatar {
-        margin-left: 0;
-        @include m-theme() {
-          background-color: transparent;
-        }
-      }
-      .minds-body {
-        max-width: 100%;
-      }
-    }
-    .m-commentToolbar__buttons {
-      .m-dropdown--v2 {
-        margin-right: 0;
+    .m-comment__repliesToggle {
+      margin: $spacing1 0 $spacing2;
+      span {
+        @include body2Regular;
       }
     }
 
-    .m-comment__ribbonBtn {
+    .minds-avatar {
       @include m-theme() {
-        background-color: rgba(themed($m-bgColor--primary), 0);
+        background: themed($m-bgColor--primary);
+      }
+      img {
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
+        object-fit: cover;
       }
     }
 
-    .m-comment__attachment {
-      .mdl-card {
+    .m-comment--compact {
+      padding-right: $activitySpacing--modal;
+
+      .minds-body {
+        margin-left: 0;
+      }
+
+      .m-commentOwnerRow__text {
+        flex-direction: row;
+      }
+
+      .m-commentToolbar__buttons {
+        .m-dropdown--v2 {
+          margin-right: 0;
+        }
+      }
+
+      .m-comment__ribbonBtn {
         @include m-theme() {
-          background-color: transparent;
+          background-color: rgba(themed($m-bgColor--primary), 0);
+        }
+      }
+
+      .m-comment__attachment {
+        .mdl-card {
+          @include m-theme() {
+            background-color: transparent;
+          }
         }
       }
     }
@@ -117,12 +113,15 @@
   // ******************************************
   // ******************************************
   // ******************************************
+
   .m-comment {
     position: relative;
   }
   .minds-body {
     margin-left: 15px;
   }
+  // COMPACT
+  // (e.g. activity modal)
   .m-comment--compact {
     padding: 5px 30px 20px;
 

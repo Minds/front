@@ -5,7 +5,8 @@
   // ** ACTIVITY V2 DEFAULT **
   // ******************************************
 
-  m-activityV2 & {
+  m-activityV2 &,
+  m-activityV2__modal & {
     .m-comments__thread {
       margin: 0;
     }

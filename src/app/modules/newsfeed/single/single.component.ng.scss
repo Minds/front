@@ -3,19 +3,33 @@
 $layoutMax2ColWidth: '1039px';
 
 :host {
+  // ******************************************
+  // ** ACTIVITY V2 **
+  // ******************************************
+
   .m-newsfeed__single--activityV2 {
     .minds-list {
       padding: 0;
     }
 
     ::ng-deep m-activityV2 {
-      border-top: none !important;
+      &:not(.m-activity--minimalMode) {
+        border-top: none !important;
+      }
     }
 
     @media screen and (max-width: $layoutMax2ColWidth) and (min-width: $max-mobile) {
       @include borderRight;
     }
   }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
 
   .m-newsfeed__single--legacy {
     max-width: 600px;

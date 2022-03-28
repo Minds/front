@@ -1,5 +1,4 @@
 @import 'defaults.scss';
-@import './shared.scss';
 
 :host {
   display: flex;
@@ -16,12 +15,12 @@
   // *********************************
 
   &.m-activity--isFeed {
-    &:not(.m-activity--fixedHeight) {
-      padding-bottom: $spacing4;
-    }
-    @include m-theme() {
-      border-top: 1px solid themed($m-borderColor--primary);
-    }
+    //  ojm mark
+    // &:not(.m-activity--fixedHeight) {
+    // padding-bottom: $spacing4;
+    // }
+
+    @include borderTop;
 
     .m-activity__top {
       padding-left: $activityAvatarSpacingLeft--feed;
@@ -41,16 +40,15 @@
   &.m-activity--fixedHeight {
     justify-content: space-between;
 
-    .m-activity__flagRow {
-      padding-bottom: 0;
-    }
-
     .m-activity__top {
-      // flex-grow: 1; ojm put back?
       height: calc(100% - 128px);
     }
     .m-activity__rightColumn {
       justify-content: space-around;
+    }
+
+    .m-activity__flagRow {
+      padding-bottom: 0;
     }
 
     ::ng-deep {
@@ -100,7 +98,7 @@
     }
 
     ::ng-deep .m-activityContent--paywalledStatus {
-      padding-top: 30px; //ojm
+      padding-top: $spacing7; //ojm
     }
     ::ng-deep .m-videoPlayer__placeholder i {
       font-size: 70px;
@@ -115,12 +113,6 @@
     padding: 0;
     @media screen and (max-width: $max-mobile) {
       padding: 0;
-    }
-
-    .m-activity__flagRow {
-      padding-top: 16px;
-      padding-left: $activitySpacing--modal;
-      padding-right: $activitySpacing--modal;
     }
   }
 
@@ -160,6 +152,18 @@
           padding-right: $activitySpacingRight--single--mobile;
         }
       }
+    }
+
+    .m-activity__leftColumn,
+    ::ng-deep m-activityV2__quote .m-activity__leftColumn {
+      padding-right: $activityAvatarSpacingRight--single;
+    }
+
+    .m-activity__rightColumn,
+    ::ng-deep m-activityV2__quote .m-activity__rightColumn {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
   }
 
@@ -214,11 +218,16 @@
   ::ng-deep m-activityV2__quote .m-activity__avatar {
     padding-right: $activityAvatarSpacingRight--feed;
 
+    @media screen and (max-width: $max-mobile) {
+      padding-right: $activityAvatarSpacingRight--feed--mobile;
+    }
+
     img {
       border-radius: 50%;
       width: 40px;
       height: 40px;
       object-fit: cover;
+      // @include border; // ojm mark
     }
   }
 

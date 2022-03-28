@@ -15,6 +15,8 @@
     @media screen and (max-width: $max-mobile) {
       padding-left: $activitySpacingLeft--feed--mobile;
       padding-right: $activitySpacingRight--feed--mobile;
+      padding-top: $spacing3;
+      padding-bottom: $spacing3;
     }
   }
 
@@ -33,10 +35,7 @@
   m-activityV2__modal & {
     .m-activityToolbar__actions,
     .m-activityToolbar__metrics {
-      padding-left: $activitySpacing--modal + $spacing3;
-      padding-right: $activitySpacing--modal + $spacing3;
-      padding-top: $spacing4;
-      padding-bottom: $spacing4;
+      padding: $spacing4 $activitySpacing--modal;
     }
 
     padding: 0;
@@ -54,15 +53,17 @@
       }
     }
 
-    .m-tipButton {
-      margin-top: 0;
+    ::ng-deep m-wire-button {
+      .m-tipButton {
+        margin-top: 0;
 
-      i {
-        font-size: 19px !important;
-        margin-top: -1px;
-      }
-      span {
-        display: none;
+        i {
+          font-size: 19px !important;
+          margin-top: -1px;
+        }
+        span {
+          display: none;
+        }
       }
     }
 
@@ -221,6 +222,9 @@
           margin-left: 0;
           font-weight: 500;
         }
+      }
+      .m-tipButton {
+        margin-top: 0;
       }
     }
 

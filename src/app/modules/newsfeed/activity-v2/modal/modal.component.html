@@ -87,6 +87,10 @@
               <!-- FLAG -->
               <m-activityV2__flag
                 class="m-activity__flagRow"
+                *ngIf="
+                  entity.boosted ||
+                  (entity.remind_users && entity.remind_users.length)
+                "
               ></m-activityV2__flag>
               <!-- OWNER BLOCK -->
               <m-activityV2__ownerBlock>
