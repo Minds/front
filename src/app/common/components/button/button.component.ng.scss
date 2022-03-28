@@ -92,7 +92,7 @@
           &:not(.m-button--overlay) {
             &:hover {
               @include m-theme() {
-                background-color: rgba(themed($m-link), 0.6);
+                background-color: themed($m-link--hover);
               }
             }
           }
