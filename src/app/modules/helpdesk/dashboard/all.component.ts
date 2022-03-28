@@ -3,6 +3,7 @@ import { isPlatformServer } from '@angular/common';
 import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import { HelpdeskRedirectService } from '../../../common/services/helpdesk-redirect.service';
 
 /**
  * Category returned from api/v2/helpdesk/categories.
@@ -41,13 +42,13 @@ export class AllHelpdeskDashboardComponent implements OnInit {
     public router: Router,
     public client: Client,
     public session: Session,
+    private helpdeskRedirect: HelpdeskRedirectService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async ngOnInit(): Promise<void> {
     if (!isPlatformServer(this.platformId)) {
-      // API handles authentication and redirection.
-      window.location.href = '/api/v3/helpdesk/zendesk';
+      window.location.href = this.helpdeskRedirect.getUrl();
     }
 
     await this.load();

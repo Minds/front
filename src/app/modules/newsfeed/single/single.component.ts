@@ -50,7 +50,7 @@ export class NewsfeedSingleComponent {
     private metaService: MetaService,
     configs: ConfigsService,
     private headersService: HeadersService,
-    private authModalService: AuthModalService,
+    private authModal: AuthModalService,
     protected jsonLdService: JsonLdService
   ) {
     this.siteUrl = configs.get('site_url');
@@ -190,11 +190,11 @@ export class NewsfeedSingleComponent {
   async openLoginModal(): Promise<void> {
     this.error = 'You must be logged in to see this post';
     this.headersService.setCode(401);
-    try {
-      await this.authModalService.open();
+    const user = await this.authModal.open();
+    if (user) {
       this.activity.require_login = false;
       this.error = null;
-    } catch {}
+    }
   }
 
   private updateMeta(): void {

@@ -70,7 +70,7 @@ export class SettingsV2PasswordComponent implements OnInit {
         validators: [
           Validators.required,
           PASSWORD_VALIDATOR,
-          this.passwordSecurityValidator.bind(this),
+          // this.passwordSecurityValidator.bind(this),
         ],
       }),
       confirmNewPassword: new FormControl('', {
@@ -152,13 +152,13 @@ export class SettingsV2PasswordComponent implements OnInit {
    * @param { AbstractControl } control - specifies the form control - unused.
    * @returns { ValidationErrors | null } - returns validation errors in the event the state is failed.
    */
-  private passwordSecurityValidator(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    return this.securityValidationState === SecurityValidationState.FAILED
-      ? { passwordSecurityFailed: true }
-      : null;
-  }
+  // private passwordSecurityValidator(
+  //   control: AbstractControl
+  // ): ValidationErrors | null {
+  //   return this.securityValidationState === SecurityValidationState.FAILED
+  //     ? { passwordSecurityFailed: true }
+  //     : null;
+  // }
 
   onNewPasswordFocus() {
     if (this.newPassword.length > 0) {
@@ -184,7 +184,7 @@ export class SettingsV2PasswordComponent implements OnInit {
   canSubmit(): boolean {
     return (
       this.form.valid &&
-      this.securityValidationState === SecurityValidationState.SUCCESS &&
+      // this.securityValidationState === SecurityValidationState.SUCCESS &&
       !this.passwordIncorrect &&
       !this.inProgress &&
       !this.form.pristine

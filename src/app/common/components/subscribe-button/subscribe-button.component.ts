@@ -89,7 +89,8 @@ export class SubscribeButtonComponent implements OnInit {
     e.stopPropagation();
 
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return;
     }
     this.subscribed = true;
     this.onSubscribed.next();
