@@ -187,9 +187,9 @@ import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 import { RelativeTimeSpanComponent } from './components/relative-time-span/relative-time-span.component';
-import { AngularResizeEventModule } from 'angular-resize-event';
 import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
+import { ResizedDirective } from './directives/resized.directive';
 
 const routes: Routes = [
   {
@@ -209,7 +209,6 @@ const routes: Routes = [
     OwlNativeDateTimeModule,
     NgxPopperjsModule,
     QRCodeModule,
-    AngularResizeEventModule,
     RouterModule.forChild(routes),
   ],
   declarations: [
@@ -363,6 +362,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    ResizedDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -510,7 +510,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
-    AngularResizeEventModule,
+    ResizedDirective,
   ],
   providers: [
     SiteService,

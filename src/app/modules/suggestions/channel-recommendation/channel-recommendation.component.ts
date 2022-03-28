@@ -9,8 +9,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { ResizedEvent } from 'angular-resize-event';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
+import { ResizedEvent } from './../../../common/directives/resized.directive';
 
 @Component({
   selector: 'm-channelRecommendation',

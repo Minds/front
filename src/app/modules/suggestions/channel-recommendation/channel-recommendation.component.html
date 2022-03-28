@@ -4,7 +4,7 @@
   *ngIf="visible"
 >
   <article
-    (resized)="onResized($event)"
+    (mResized)="onResized($event)"
     *ngIf="(recommendations$ | async).length"
   >
     <header>
