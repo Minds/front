@@ -498,6 +498,9 @@ export class BoostModalService implements OnDestroy {
     tokens: number,
     checksum: string
   ): Promise<PayloadPaymentMethod> {
+    if (!this.web3Wallet.checkDeviceIsSupported()) {
+      throw new Error('Currently not supported on this device.');
+    }
     const rate = this.rate$.getValue();
     if (this.web3Wallet.isUnavailable()) {
       throw new Error('No Ethereum wallets available on your browser.');
