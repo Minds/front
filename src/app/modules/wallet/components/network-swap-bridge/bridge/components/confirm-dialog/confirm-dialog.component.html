@@ -2,13 +2,11 @@
   <span class="m-networkConfirmation-title">
     Confirm Transfer
   </span>
-  <span class="m-networkConfirmation-subtitle">
-    100 MINDS
-  </span>
+  <span class="m-networkConfirmation-subtitle"> {{ amount }} MINDS </span>
 
   <div class="mdl-grid m-networkConfirmation-process">
     <div class="mdl-cell m-networkConfirmation-box">
-      Goerli
+      {{ from }}
     </div>
     <div
       class="mdl-cell mdl-cell--1-col m-networkConfirmation-chevron__container"
@@ -18,7 +16,7 @@
       <i class="material-icons m-networkApproval-info">chevron_right</i>
     </div>
     <div class="mdl-cell m-networkConfirmation-box">
-      Mumbai
+      {{ to }}
     </div>
   </div>
 

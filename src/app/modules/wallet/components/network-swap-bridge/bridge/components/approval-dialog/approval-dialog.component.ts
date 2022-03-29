@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ethers } from 'ethers';
+import { PolygonService } from '../../../../tokens/polygon/polygon.service';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 
@@ -8,11 +10,27 @@ import { NetworkBridgeService } from '../../services/network-bridge.service';
   styleUrls: ['./approval-dialog.ng.scss'],
 })
 export class NetworkBridgeApprovalComponent implements OnInit {
-  constructor(private readonly networkBridgeService: NetworkBridgeService) {}
+  amount: string;
+  from: string;
+  to: string;
 
-  ngOnInit(): void {}
+  constructor(
+    private readonly networkBridgeService: NetworkBridgeService,
+    private readonly polygonService: PolygonService
+  ) {}
+
+  ngOnInit(): void {
+    this.amount = this.networkBridgeService.currentStepData$.value.amount;
+    this.from = this.networkBridgeService.currentStepData$.value.from;
+    this.to = this.networkBridgeService.currentStepData$.value.to;
+  }
 
   navigate() {
     this.networkBridgeService.currentStep$.next(BridgeStep.CONFIRMATION);
+  }
+
+  approve() {
+    this.polygonService.approve(ethers.utils.parseUnits(this.amount, 18));
+    this.navigate();
   }
 }

@@ -3,13 +3,14 @@ import {
   OnDestroy,
   ViewContainerRef,
   ComponentFactoryResolver,
-  OnChanges,
-  SimpleChanges,
-  ComponentRef,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '../../../../../../common/services/network-switch-service';
-import { BridgeComponent, BridgeStep } from '../constants/constants.types';
+import {
+  BridgeComponent,
+  BridgeStep,
+  CurrentStepData,
+} from '../constants/constants.types';
 
 @Injectable({ providedIn: 'root' })
 export class NetworkBridgeService implements OnDestroy {
@@ -21,9 +22,9 @@ export class NetworkBridgeService implements OnDestroy {
     BridgeStep.SWAP
   );
 
-  public readonly currentStepData$ = new BehaviorSubject<any | undefined>(
-    undefined
-  );
+  public readonly currentStepData$ = new BehaviorSubject<
+    CurrentStepData | undefined
+  >(undefined);
 
   public readonly currentNetworkId$ = new BehaviorSubject<any | undefined>(1);
 

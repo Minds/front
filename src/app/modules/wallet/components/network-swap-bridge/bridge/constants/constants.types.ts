@@ -37,6 +37,14 @@ export interface WithdrawRecord extends Record {
   txBlock?: number;
 }
 
+export interface CurrentStepData {
+  amount?: string;
+  from?: string;
+  to?: string;
+  title?: string;
+  subtitle?: string;
+}
+
 export enum BridgeStep {
   SWAP,
   APPROVAL,
