@@ -4,6 +4,7 @@ import { SiteService } from './site.service';
 import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from './theme.service';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -29,7 +30,8 @@ export class MetaService {
     private location: Location,
     private configs: ConfigsService,
     @Inject(DOCUMENT) private dom,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private themeService: ThemeService
   ) {
     this.reset();
   }
@@ -282,7 +284,8 @@ export class MetaService {
       .setNsfw(false)
       .setOgSiteName()
       .resetDynamicFavicon()
-      .resetOEmbed();
+      .resetOEmbed()
+      .setThemeColor();
   }
 
   private applyTitle(): void {
@@ -332,6 +335,14 @@ export class MetaService {
     if (link) {
       this.dom.head.removeChild(link);
     }
+    return this;
+  }
+
+  setThemeColor(): MetaService {
+    this.metaService.updateTag({
+      property: 'theme-color',
+      content: this.themeService.isDark$.getValue() ? '#242a30' : '#ffffff',
+    });
     return this;
   }
 }
