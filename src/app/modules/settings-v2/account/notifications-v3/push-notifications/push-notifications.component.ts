@@ -136,4 +136,11 @@ export class SettingsV2PushNotificationsV3Component
   public onEnablePushNotifications() {
     this.pushNotificationService.requestSubscription();
   }
+
+  /**
+   * user wants to disable push notifications
+   */
+  public onDisablePushNotifications() {
+    this.pushNotificationService.cancelSubscription();
+  }
 }

@@ -11,16 +11,26 @@
 </m-settingsV2__header>
 <m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(initializing$ | async)">
-  <ng-container *ngIf="!(pushNotificationsEnabled$ | async); else form">
-    <m-button (onAction)="onEnablePushNotifications()" solid="true" color="blue">
-      <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__ENABLE"
-        >Enable Notifications for this device</span
-      >
-    </m-button>
-  </ng-container>
-</ng-container>
+  <m-button
+    (onAction)="onEnablePushNotifications()"
+    solid="true"
+    color="blue"
+    *ngIf="!(pushNotificationsEnabled$ | async)"
+  >
+    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__ENABLE"
+      >Enable Notifications for this device</span
+    >
+  </m-button>
+  <m-button
+    (onAction)="onDisablePushNotifications()"
+    color="red"
+    *ngIf="pushNotificationsEnabled$ | async"
+  >
+    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__DISABLE"
+      >Disable Notifications for this device</span
+    >
+  </m-button>
 
-<ng-template #form>
   <div
     class="
       m-pushNotifSettings__optionContainer
@@ -35,7 +45,7 @@
       rightValue="on"
     ></m-toggle>
     <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__NOTIFS_ENABLED"
-      >Push notifications enabled</span
+      >All push notifications enabled</span
     >
   </div>
 
@@ -73,4 +83,4 @@
       }}</span>
     </div>
   </div>
-</ng-template>
+</ng-container>

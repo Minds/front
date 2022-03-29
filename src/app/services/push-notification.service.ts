@@ -10,18 +10,20 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class PushNotificationService {
-  private pushSubscription$: BehaviorSubject<PushSubscription> = new BehaviorSubject(undefined);
+  private pushSubscription$: BehaviorSubject<
+    PushSubscription
+  > = new BehaviorSubject(undefined);
 
   constructor(
     private client: Client,
     private swPush: SwPush,
     private config: ConfigsService,
-    private session: Session,
+    private session: Session
   ) {
     this.swPush.messages.subscribe(this.onMessage);
     this.session.userEmitter.subscribe(this.onUserChange);
-    this.swPush.subscription.subscribe(
-      pushSubscription => (this.pushSubscription$.next(pushSubscription))
+    this.swPush.subscription.subscribe(pushSubscription =>
+      this.pushSubscription$.next(pushSubscription)
     );
   }
 
@@ -29,7 +31,7 @@ export class PushNotificationService {
    * has the user provided access to push notifs?
    */
   get enabled$() {
-    return this.pushSubscription$.pipe(map(sub => Boolean(sub)))
+    return this.pushSubscription$.pipe(map(sub => Boolean(sub)));
   }
 
   /**
@@ -54,6 +56,14 @@ export class PushNotificationService {
     } catch (err) {
       console.error('Could not subscribe due to:', err);
     }
+  }
+
+  /**
+   * user wants to disable push notifs
+   * @returns { Promise<boolean> }
+   */
+  async cancelSubscription() {
+    return this.swPush?.unsubscribe();
   }
 
   /**
@@ -116,7 +126,9 @@ export class PushNotificationService {
 
     return this.client.post('api/v3/notifications/push/token', {
       service: 'webpush',
-      token: encodeURIComponent(btoa(JSON.stringify(this.pushSubscription$.getValue()))),
+      token: encodeURIComponent(
+        btoa(JSON.stringify(this.pushSubscription$.getValue()))
+      ),
     });
   }
 }

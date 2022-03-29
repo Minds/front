@@ -8,7 +8,7 @@ export class AuthService {
   constructor(
     protected readonly client: Client,
     protected readonly session: Session,
-    protected readonly pushNotificationService: PushNotificationService,
+    protected readonly pushNotificationService: PushNotificationService
   ) {}
 
   async logout(closeAll: boolean = false): Promise<boolean> {
