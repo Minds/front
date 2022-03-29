@@ -18,6 +18,8 @@ export class ToggleComponent {
 
   @Input('rightValue') rightValue: any;
 
+  @Input('offState') offState: any;
+
   @Input('mModel') mModel: any;
 
   @Input('disabled') @HostBinding('class.disabled') disabled: boolean = false;

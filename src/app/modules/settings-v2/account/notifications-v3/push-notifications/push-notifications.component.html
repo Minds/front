@@ -63,9 +63,10 @@
     *ngFor="let option of getDynamicToggles()"
   >
     <m-toggle
-      [mModel]="option.state"
+      [mModel]="this.getToggle('all').state === 'off' ? 'off' : option.state"
       (mModelChange)="toggle(option.notificationGroup)"
       [disabled]="getToggle('all').state === 'off'"
+      offState="off"
       leftValue="off"
       rightValue="on"
     ></m-toggle>
