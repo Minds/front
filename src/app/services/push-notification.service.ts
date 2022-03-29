@@ -21,7 +21,7 @@ export class PushNotificationService {
     private session: Session
   ) {
     this.swPush.messages.subscribe(this.onMessage);
-    this.session.userEmitter.subscribe(this.onUserChange);
+    this.session.userEmitter.subscribe(user => this.onUserChange(user));
     this.swPush.subscription.subscribe(pushSubscription =>
       this.pushSubscription$.next(pushSubscription)
     );
