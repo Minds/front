@@ -50,9 +50,10 @@ export class PushNotificationService {
     }
 
     try {
-      return this.swPush.requestSubscription({
+      const pushSubscription = await this.swPush.requestSubscription({
         serverPublicKey: this.config.get('vapid_key'),
       });
+      this.registerToken(pushSubscription);
     } catch (err) {
       console.error('Could not subscribe due to:', err);
     }
@@ -95,7 +96,7 @@ export class PushNotificationService {
    */
   private onUserChange(user: any) {
     if (user) {
-      this.registerToken();
+      this.registerToken(this.pushSubscription$.getValue());
     }
   }
 
@@ -111,7 +112,7 @@ export class PushNotificationService {
    * registers push token to server
    * @returns { Promise<unknown> }
    */
-  private registerToken() {
+  private registerToken(pushSubscription: PushSubscription) {
     if (!this.swPush.isEnabled) {
       console.log('Service worker unavailable');
       return null;
@@ -122,13 +123,11 @@ export class PushNotificationService {
       return null;
     }
 
-    if (!this.pushSubscription$.getValue()) return;
+    if (!pushSubscription) return;
 
     return this.client.post('api/v3/notifications/push/token', {
       service: 'webpush',
-      token: encodeURIComponent(
-        btoa(JSON.stringify(this.pushSubscription$.getValue()))
-      ),
+      token: encodeURIComponent(btoa(JSON.stringify(pushSubscription))),
     });
   }
 }
