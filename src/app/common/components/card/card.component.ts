@@ -61,8 +61,6 @@ export class MindsCard implements OnInit, AfterViewInit {
     this.object = value ? value : {};
     this.type = `${this.object.type || ''}/${this.object.subtype || ''}`;
 
-    console.log('ojm CARD @input obj', value);
-
     if (this.initialized) {
       if (!this.componentInstance || this.type !== oldType) {
         setTimeout(() => this.loadComponent(), 0);
@@ -101,12 +99,6 @@ export class MindsCard implements OnInit, AfterViewInit {
   }
 
   resolveComponentClass(object: any): Type<{}> | null {
-    console.log(
-      'ojm CARD resolveComponentClass type/sub',
-      object.type,
-      object.subtype
-    );
-
     if (!object) {
       return null;
     }
@@ -161,8 +153,6 @@ export class MindsCard implements OnInit, AfterViewInit {
     if (!this.componentInstance) {
       return;
     }
-
-    console.log('ojm CARD updatedata');
 
     if (this.object.type === 'group') {
       (<GroupsCard>this.componentInstance).group = this.object;

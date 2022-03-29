@@ -470,20 +470,35 @@ export class RelatedContentService {
     if (response && response.entities && response.entities.length) {
       // For activity modal pager, filter out all except images and vids
       if (this.parent === 'activityModal') {
-        response.entities.filter(
+        for (let e of response.entities) {
+          console.log('ojm type', getActivityContentType(e.entity));
+        }
+        const filteredResponse = response.entities.filter(
           e =>
             e.entity &&
             // Must be an activity
             (e.entity.entity_guid || e.entity.message) &&
-            // Don't return blogs
-            getActivityContentType(e.entity) !== 'rich-embed'
+            // Only images and videos
+            (getActivityContentType(e.entity) === 'image' ||
+              getActivityContentType(e.entity) === 'video')
         );
 
-        if (response.entities.length) {
-          return response.entities;
+        console.log(
+          'ojm relatedContent filtered',
+          endpoint,
+          params,
+          filteredResponse
+        );
+
+        for (let e of filteredResponse) {
+          console.log('ojm type2', getActivityContentType(e.entity));
+        }
+
+        if (filteredResponse.length) {
+          return filteredResponse;
         }
       } else {
-        // Else, don't return reminds or non-activities
+        // Else, don't return quotes, reminds or non-activities
         response.entities.filter(
           e =>
             e.entity &&

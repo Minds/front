@@ -10,6 +10,13 @@
     &[class*='m-richEmbed--activityV2'] {
       .m-rich-embed-src {
         border: none !important;
+
+        a.thumbnail {
+          img {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+          }
+        }
       }
       a.meta {
         padding: $activitySpacing--minimalMode;

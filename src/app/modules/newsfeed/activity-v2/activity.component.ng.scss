@@ -145,7 +145,7 @@
         padding-left: $activityAvatarSpacingLeft--single;
         padding-right: $activitySpacingRight--single;
         padding-top: $spacing4;
-        padding-bottom: $spacing4;
+        padding-bottom: 0;
 
         @media screen and (max-width: $max-mobile) {
           padding-left: $activityAvatarSpacingLeft--single--mobile;

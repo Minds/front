@@ -7,6 +7,9 @@
 
   m-activityV2 &,
   m-activityV2__modal & {
+    .m-comment {
+      padding-right: 0;
+    }
     .m-commentOwnerRow__text {
       flex-direction: row;
 
@@ -58,7 +61,7 @@
     .m-comment__repliesToggle {
       margin: $spacing1 0 $spacing2;
       span {
-        @include body2Regular;
+        @include body2Medium;
       }
     }
 

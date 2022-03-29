@@ -13,7 +13,7 @@
     </m-hovercard>
 
     <div
-      *ngIf="minimalMode && (isRemind || isQuote)"
+      *ngIf="minimalMode && (isRemind || wasQuoted)"
       class="m-activityOwnerBlock__remindIcon--minimalMode"
     >
       <i class="material-icons">repeat</i>

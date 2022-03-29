@@ -239,7 +239,8 @@ export class NewsfeedBoostRotatorComponent {
       }
 
       this.next();
-    }, this.interval * 1000);
+    }, this.interval * 100000);
+    // }, this.interval * 1000);  //ojm put this back
   }
 
   get bounds() {

@@ -35,7 +35,10 @@
   m-activityV2__modal & {
     .m-activityToolbar__actions,
     .m-activityToolbar__metrics {
-      padding: $spacing4 $activitySpacing--modal;
+      padding-left: $activitySpacing--modal + $spacing3;
+      padding-right: $activitySpacing--modal + $spacing3;
+      padding-top: $spacing4;
+      padding-bottom: $spacing4;
     }
 
     padding: 0;
@@ -88,17 +91,14 @@
       }
     }
 
-    .m-activityToolbar__actions {
-      padding-top: $spacing5;
-      padding-bottom: $spacing7;
+    .m-activityToolbar__actions,
+    .m-activityToolbar__metrics {
+      padding-top: $spacing6;
+      padding-bottom: $spacing6;
 
       &.m-activityToolbar__actions--noMetrics {
         padding-bottom: 0;
       }
-    }
-    .m-activityToolbar__metrics {
-      padding-top: $spacing5;
-      padding-bottom: $spacing5;
     }
   }
 
@@ -148,6 +148,10 @@
         color: themed($m-textColor--secondary);
       }
     }
+
+    &:last-child {
+      padding-right: 0;
+    }
   }
 
   .m-activityToolbar__actions {
@@ -186,18 +190,18 @@
       }
     }
 
+    :last-child {
+      margin-right: 0;
+    }
+
     ::ng-deep minds-button-comment {
       cursor: pointer;
       .selected i.material-icons,
       .selected .minds-counter {
         @include m-theme() {
-          color: themed($m-link);
+          color: themed($m-textColor--secondary);
         }
       }
-    }
-
-    :last-child {
-      margin-right: 0;
     }
 
     ::ng-deep m-wire-button {

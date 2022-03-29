@@ -1,6 +1,6 @@
 @import 'defaults.scss';
 
-$layoutMax2ColWidth: '1039px';
+$layoutMax2ColWidth: '1040px';
 
 :host {
   &.m-discovery--activityV2 {
@@ -9,17 +9,13 @@ $layoutMax2ColWidth: '1039px';
         padding: 0 !important;
       }
     }
-    [class*='m-pageLayout__pane'] {
+    .m-pageLayout__pane--main {
       @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
         @include borderRight;
       }
     }
 
     ::ng-deep {
-      // .m-discovery__feedItem {
-      //   padding: 0 !important;
-      // }
-
       m-activity {
         &:first-child {
           m-activityV2 {

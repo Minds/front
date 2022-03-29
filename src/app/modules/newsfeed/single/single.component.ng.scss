@@ -1,6 +1,6 @@
 @import 'defaults.scss';
 
-$layoutMax2ColWidth: '1039px';
+$layoutMax2ColWidth: '1040px';
 
 :host {
   // ******************************************
@@ -18,8 +18,10 @@ $layoutMax2ColWidth: '1039px';
       }
     }
 
-    @media screen and (max-width: $layoutMax2ColWidth) and (min-width: $max-mobile) {
-      @include borderRight;
+    > div:first-child {
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        @include borderRight;
+      }
     }
   }
 

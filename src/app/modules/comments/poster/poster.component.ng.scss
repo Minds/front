@@ -5,7 +5,8 @@
   // ** ACTIVITY V2 DEFAULT **
   // ******************************************
 
-  m-activityV2 & {
+  m-activityV2 &,
+  m-activityV2__modal & {
     .m-commentPoster__avatar {
       a {
         img {
@@ -23,13 +24,11 @@
         }
       }
     }
-  }
 
-  // ******************************************
-  // ** MODAL **
-  // ******************************************
+    .m-commentPoster--nested {
+      padding-left: 0;
+    }
 
-  m-activityV2__modal & {
     .m-comments--start-conversation-label {
       display: none;
     }
