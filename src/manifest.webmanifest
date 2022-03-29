@@ -464,5 +464,21 @@
       "src": "/static/en/assets/icons/ios/1024.png",
       "sizes": "1024x1024"
     }
+  ],
+  "launch_handler": {
+    "route_to": "existing-client",
+    "navigate_existing_client": "never"
+  },
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.minds.mobile",
+      "id": "com.minds.mobile"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/tr/app/minds-com/id961771928"
+    }
   ]
 }
