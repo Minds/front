@@ -1,9 +1,12 @@
 {
   "name": "Minds",
   "short_name": "Minds",
-  "theme_color": "#FED12F",
-  "background_color": "#fafafa",
+  "description": "Elevate the global conversation through Internet freedom. Speak freely, protect your privacy, earn crypto, and take back control of your social media",
+  "theme_color": "#ffffff",
+  "categories": ["social", "news", "magazines"],
+  "background_color": "#ffffff",
   "display": "standalone",
+  "android_package_name": "com.minds.mobile",
   "scope": "./",
   "start_url": "./",
   "icons": [
@@ -329,27 +332,33 @@
     },
     {
       "src": "/static/en/assets/icons/android/android-launchericon-512-512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     },
     {
       "src": "/static/en/assets/icons/android/android-launchericon-192-192.png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "/static/en/assets/icons/android/android-launchericon-144-144.png",
-      "sizes": "144x144"
+      "sizes": "144x144",
+      "purpose": "any maskable"
     },
     {
       "src": "/static/en/assets/icons/android/android-launchericon-96-96.png",
-      "sizes": "96x96"
+      "sizes": "96x96",
+      "purpose": "any maskable"
     },
     {
       "src": "/static/en/assets/icons/android/android-launchericon-72-72.png",
-      "sizes": "72x72"
+      "sizes": "72x72",
+      "purpose": "any maskable"
     },
     {
       "src": "/static/en/assets/icons/android/android-launchericon-48-48.png",
-      "sizes": "48x48"
+      "sizes": "48x48",
+      "purpose": "any maskable"
     },
     {
       "src": "/static/en/assets/icons/ios/16.png",
