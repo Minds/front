@@ -26,7 +26,8 @@ export class FeedNoticeComponent {
   // Icon to be shown.
   @Input() icon: string = 'info';
 
-  // id to append to data-ref attribute so we know which notice has been dismissed.
+  // id to append to data-ref attribute so we can report
+  // to analytics which notice has been dismissed.
   @Input() dataRefId: string = 'unknown';
 
   // Makes notice to stick to the top of the feed.
