@@ -9,6 +9,7 @@
     *ngIf="dismissible"
     class="material-icons m-feedNotice__closeButton"
     (click)="dismissClick.emit(true)"
+    [data-ref]="'feed-notice-dismissed-' + dataRefId"
   >
     close
   </i>

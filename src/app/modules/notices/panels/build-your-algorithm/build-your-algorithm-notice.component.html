@@ -1,4 +1,4 @@
-<m-feedNotice icon="info" (dismissClick)="dismiss()">
+<m-feedNotice icon="info" (dismissClick)="dismiss()" dataRefId="bya">
   <span
     class="m-feedNotice__title"
     i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM_TITLE"
@@ -15,6 +15,7 @@
     solid="true"
     size="small"
     (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-bya-primary-click"
   >
     <ng-container
       i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM__COMPLETE_QUESTIONNAIRE"
@@ -26,6 +27,7 @@
     class="m-feedNotice__buttonSecondary"
     size="small"
     (onAction)="onSecondaryOptionClick($event)"
+    data-ref="feed-notice-bya-secondary-click"
   >
     <ng-container i18n="@@FEED_NOTICE__BUILD_YOUR_ALGORITHM__LEARN_MORE">
       Learn more
