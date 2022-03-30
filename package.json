@@ -67,6 +67,7 @@
     "bn.js": "^5.2.0",
     "bootstrap": "^5.1.3",
     "braintree-web": "3.79.1",
+    "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.5",
     "core-js": "~3.15.2",
     "crypto-browserify": "^3.12.0",
