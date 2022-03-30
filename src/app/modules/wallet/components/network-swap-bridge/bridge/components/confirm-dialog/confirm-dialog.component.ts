@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { PolygonService } from '../../../../tokens/polygon/polygon.service';
-import { BigNumber } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
+import {
+  Network,
+  NetworkSwitchService,
+} from '../../../../../../../common/services/network-switch-service';
 
 @Component({
   selector: 'm-networkConfirmation',
@@ -11,26 +15,41 @@ import { BigNumber } from 'ethers';
 })
 export class NetworkBridgeConfirmationComponent implements OnInit {
   amount: string;
-  to: string;
-  from: string;
+  to: Network;
+  from: Network;
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    private readonly polygonService: PolygonService
+    private readonly polygonService: PolygonService,
+    private readonly networkSwitchService: NetworkSwitchService
   ) {}
 
   ngOnInit(): void {
-    this.amount = this.networkBridgeService.currentStepData$.value.amount;
-    this.from = this.networkBridgeService.currentStepData$.value.from;
-    this.to = this.networkBridgeService.currentStepData$.value.to;
+    if (
+      this.networkBridgeService.currentStep$.value.step !==
+      BridgeStep.CONFIRMATION
+    ) {
+      return;
+    }
+    this.amount = this.networkBridgeService.currentStep$.value.data.amount;
+    this.from = this.networkBridgeService.currentStep$.value.data.from;
+    this.to = this.networkBridgeService.currentStep$.value.data.to;
   }
 
   async transfer() {
-    await this.polygonService.deposit(BigNumber.from(this.amount));
-    this.navigate();
+    const amount = ethers.utils.parseEther(this.amount);
+    let result: boolean;
+    if (this.to.id === this.networkSwitchService.networks.mainnet.id) {
+      result = await this.polygonService.withdraw(amount);
+    } else {
+      result = await this.polygonService.deposit(amount);
+    }
+    if (result) {
+      this.navigate();
+    }
   }
 
   private navigate() {
-    this.networkBridgeService.currentStep$.next(BridgeStep.PENDING);
+    this.networkBridgeService.currentStep$.next({ step: BridgeStep.PENDING });
   }
 }

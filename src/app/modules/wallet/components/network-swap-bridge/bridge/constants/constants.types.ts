@@ -1,3 +1,5 @@
+import { Network } from '../../../../../../common/services/network-switch-service';
+
 export interface InputBalance {
   root: number;
   child: number;
@@ -44,6 +46,27 @@ export interface CurrentStepData {
   title?: string;
   subtitle?: string;
 }
+
+export type CurrentStep =
+  | {
+      step: BridgeStep.SWAP | BridgeStep.PENDING;
+      data?: {};
+    }
+  | {
+      step: BridgeStep.CONFIRMATION | BridgeStep.APPROVAL;
+      data: {
+        amount: string;
+        from: Network;
+        to: Network;
+      };
+    }
+  | {
+      step: BridgeStep.ERROR;
+      data: {
+        title: string;
+        subtitle: string;
+      };
+    };
 
 export enum BridgeStep {
   SWAP,

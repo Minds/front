@@ -48,7 +48,7 @@ export class NetworkBridgeTransferModalComponent
       .pipe(
         takeUntil(this.destroySubject),
         mergeMap(value =>
-          this.networkBridgeService.loadComponent(viewContainerRef, value)
+          this.networkBridgeService.loadComponent(viewContainerRef, value.step)
         )
       )
       .subscribe();
@@ -80,6 +80,8 @@ export class NetworkBridgeTransferModalComponent
   }
 
   shouldShow() {
-    return this.networkBridgeService.currentStep$.value === BridgeStep.SWAP;
+    return (
+      this.networkBridgeService.currentStep$.value.step === BridgeStep.SWAP
+    );
   }
 }

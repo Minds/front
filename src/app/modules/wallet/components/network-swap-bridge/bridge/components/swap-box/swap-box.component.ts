@@ -78,24 +78,34 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
   }
 
   navigateError() {
-    this.networkBridgeService.currentStep$.next(BridgeStep.ERROR);
-    this.networkBridgeService.currentStepData$.next({
-      title: 'No wallet connected',
-      subtitle: 'Connect your MetaMask wallet before continuing',
+    this.networkBridgeService.currentStep$.next({
+      step: BridgeStep.ERROR,
+      data: {
+        title: 'No wallet connected',
+        subtitle: 'Connect your MetaMask wallet before continuing',
+      },
     });
   }
 
   navigate() {
-    this.networkBridgeService.currentStepData$.next({
+    const data = {
       amount: this.amount,
-      from: this.fromNetwork.networkName,
-      to: this.receivingNetwork.networkName,
-    });
+      from: this.fromNetwork,
+      to: this.receivingNetwork,
+    };
+
     if (this.needsApproval()) {
-      this.networkBridgeService.currentStep$.next(BridgeStep.APPROVAL);
-    } else {
-      this.networkBridgeService.currentStep$.next(BridgeStep.CONFIRMATION);
+      this.networkBridgeService.currentStep$.next({
+        step: BridgeStep.APPROVAL,
+        data,
+      });
+      return;
     }
+
+    this.networkBridgeService.currentStep$.next({
+      step: BridgeStep.CONFIRMATION,
+      data,
+    });
   }
 
   /**
@@ -105,7 +115,6 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
   private async initBalance(): Promise<void> {
     try {
       const balances = await this.service.getBalances();
-
       this.balance = {
         root: parseFloat(ethers.utils.formatEther(balances.root)),
         child: parseFloat(ethers.utils.formatEther(balances.child)),

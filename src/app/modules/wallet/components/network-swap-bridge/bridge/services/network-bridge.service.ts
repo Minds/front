@@ -1,15 +1,15 @@
 import {
+  ComponentFactoryResolver,
   Injectable,
   OnDestroy,
   ViewContainerRef,
-  ComponentFactoryResolver,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Network } from '../../../../../../common/services/network-switch-service';
 import {
   BridgeComponent,
   BridgeStep,
-  CurrentStepData,
+  CurrentStep,
 } from '../constants/constants.types';
 
 @Injectable({ providedIn: 'root' })
@@ -18,15 +18,9 @@ export class NetworkBridgeService implements OnDestroy {
     undefined
   );
 
-  public readonly currentStep$ = new BehaviorSubject<BridgeStep | undefined>(
-    BridgeStep.SWAP
-  );
-
-  public readonly currentStepData$ = new BehaviorSubject<
-    CurrentStepData | undefined
-  >(undefined);
-
-  public readonly currentNetworkId$ = new BehaviorSubject<any | undefined>(1);
+  public readonly currentStep$ = new BehaviorSubject<CurrentStep>({
+    step: BridgeStep.SWAP,
+  });
 
   constructor(private cfr: ComponentFactoryResolver) {}
 
@@ -34,17 +28,15 @@ export class NetworkBridgeService implements OnDestroy {
 
   async loadComponent(vcr: ViewContainerRef, step: BridgeStep) {
     vcr.clear();
-    let component: any = await this.getPanel(step);
+    const component: any = await this.getPanel(step);
     const componentRef = vcr.createComponent(
       this.cfr.resolveComponentFactory<BridgeComponent>(component)
     );
-
-    componentRef.instance.data = this.currentStepData$.value;
-
+    componentRef.instance.data = this.currentStep$.value.data;
     return componentRef;
   }
 
-  async getPanel(step: number) {
+  async getPanel(step: BridgeStep) {
     const { NetworkBridgeSwapBoxComponent } = await import(
       '../components/swap-box/swap-box.component'
     );
@@ -66,16 +58,15 @@ export class NetworkBridgeService implements OnDestroy {
     );
 
     switch (step) {
-      case 0:
+      case BridgeStep.SWAP:
         return NetworkBridgeSwapBoxComponent;
-      case 1:
+      case BridgeStep.APPROVAL:
         return NetworkBridgeApprovalComponent;
-      case 2:
+      case BridgeStep.CONFIRMATION:
         return NetworkBridgeConfirmationComponent;
-      case 3:
+      case BridgeStep.PENDING:
         return NetworkBridgePendingComponent;
-      case 4:
-        return NetworkBridgeErrorComponent;
+      case BridgeStep.ERROR:
       default:
         return NetworkBridgeErrorComponent;
     }

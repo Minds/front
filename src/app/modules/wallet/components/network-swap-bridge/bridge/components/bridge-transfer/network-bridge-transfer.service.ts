@@ -19,8 +19,10 @@ export class NetworkBridgeSwapService {
         data: {
           entity: entity,
           onSaveIntent: () => {
-            this.networkBridgeService.currentStep$.next(BridgeStep.SWAP),
-              modal.close();
+            this.networkBridgeService.currentStep$.next({
+              step: BridgeStep.SWAP,
+            });
+            modal.close();
           },
         },
         modalDialogClass: 'modal-content--swap',
