@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  BridgeStep,
   DepositState,
   Descriptions,
   Titles,
@@ -14,9 +15,7 @@ import { NetworkBridgeService } from '../../services/network-bridge.service';
 export class NetworkBridgePendingComponent implements OnInit {
   amount: string;
 
-  constructor(private readonly networkBridgeService: NetworkBridgeService) {
-    this.amount = this.networkBridgeService.currentStepData$.value.amount;
-  }
+  constructor(private readonly networkBridgeService: NetworkBridgeService) {}
 
   proposalState = 0;
 
@@ -29,6 +28,12 @@ export class NetworkBridgePendingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (
+      this.networkBridgeService.currentStep$.value.step !== BridgeStep.PENDING
+    ) {
+      return;
+    }
+    this.amount = this.networkBridgeService.currentStep$.value.data.amount;
     this.states = this.keys();
     this.getTitles();
   }

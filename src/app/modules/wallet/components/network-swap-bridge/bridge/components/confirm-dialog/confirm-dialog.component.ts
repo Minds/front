@@ -18,11 +18,9 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   to: Network;
   from: Network;
 
-  isLoading;
-
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    private readonly polygonService: PolygonService,
+    public polygonService: PolygonService,
     private readonly networkSwitchService: NetworkSwitchService
   ) {}
 
@@ -52,6 +50,12 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   }
 
   private navigate() {
-    this.networkBridgeService.currentStep$.next({ step: BridgeStep.PENDING });
+    const data = {
+      amount: this.amount,
+    };
+    this.networkBridgeService.currentStep$.next({
+      step: BridgeStep.PENDING,
+      data,
+    });
   }
 }

@@ -50,7 +50,9 @@ export interface CurrentStepData {
 export type CurrentStep =
   | {
       step: BridgeStep.SWAP | BridgeStep.PENDING;
-      data?: {};
+      data?: {
+        amount?: string;
+      };
     }
   | {
       step: BridgeStep.CONFIRMATION | BridgeStep.APPROVAL;

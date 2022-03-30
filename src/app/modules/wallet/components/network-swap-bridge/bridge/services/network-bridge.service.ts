@@ -10,6 +10,7 @@ import {
   BridgeComponent,
   BridgeStep,
   CurrentStep,
+  CurrentStepData,
 } from '../constants/constants.types';
 
 @Injectable({ providedIn: 'root' })

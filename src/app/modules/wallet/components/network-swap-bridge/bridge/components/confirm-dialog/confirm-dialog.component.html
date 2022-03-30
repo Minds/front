@@ -25,10 +25,18 @@
   </div>
 
   <div class="m-networkConfirmation-button_container">
-    <m-button color="blue" (click)="transfer()" [disabled]="isLoading">
+    <m-button
+      color="blue"
+      (onAction)="transfer()"
+      [disabled]="polygonService.isLoading$ | async"
+    >
       <ng-container i18n="verb|@@M__ACTION__CANCEL">
-        <m-loadingSpinner [inProgress]="isLoading"></m-loadingSpinner>
-        <span *ngIf="!isLoading"> Confirm Transfer </span>
+        <m-loadingSpinner
+          [inProgress]="polygonService.isLoading$ | async"
+        ></m-loadingSpinner>
+        <span *ngIf="!(polygonService.isLoading$ | async)">
+          Confirm Transfer
+        </span>
       </ng-container>
     </m-button>
   </div>

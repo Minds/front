@@ -217,11 +217,13 @@ export class PolygonService {
       this.toast.warn('You must provide an amount of tokens');
       return;
     }
-    this.isLoading$.next(true);
+
     const posClient = await this.getPOSClientRoot();
 
     const signer = this.web3Wallet.getSigner();
     const userAddress = await signer.getAddress();
+
+    this.isLoading$.next(true);
 
     try {
       const tx = await posClient
@@ -235,7 +237,6 @@ export class PolygonService {
         txBlock: receipt.blockNumber,
         txHash: receipt.transactionHash,
       };
-      console.log('recept', receipt);
       this.addToHistory(record);
       this.isLoading$.next(false);
       console.log(tx);
