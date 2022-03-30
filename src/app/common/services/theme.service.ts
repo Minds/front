@@ -73,11 +73,11 @@ export class ThemeService {
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().theme === 'dark';
     this.isDark$.next(shouldBeDark);
+    this.metaService.setThemeColor(shouldBeDark);
   }
 
   toggleTheme(): void {
     this.isDark$.next(!this.isDark$.value);
-    this.metaService.setThemeColor(this.isDark$.value);
     this.renderTheme();
   }
 

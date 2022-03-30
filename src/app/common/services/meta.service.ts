@@ -4,7 +4,6 @@ import { SiteService } from './site.service';
 import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
 import { DOCUMENT } from '@angular/common';
-import { ThemeService } from './theme.service';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -30,8 +29,7 @@ export class MetaService {
     private location: Location,
     private configs: ConfigsService,
     @Inject(DOCUMENT) private dom,
-    private domSanitizer: DomSanitizer,
-    private themeService: ThemeService
+    private domSanitizer: DomSanitizer
   ) {
     this.reset();
   }
@@ -338,11 +336,9 @@ export class MetaService {
     return this;
   }
 
-  setThemeColor(
-    dark: boolean = this.themeService.isDark$.getValue()
-  ): MetaService {
+  setThemeColor(dark?: boolean): MetaService {
     this.metaService.updateTag({
-      property: 'theme-color',
+      name: 'theme-color',
       content: dark ? '#242a30' : '#ffffff',
     });
     return this;
