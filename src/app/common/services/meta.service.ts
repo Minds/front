@@ -338,10 +338,12 @@ export class MetaService {
     return this;
   }
 
-  setThemeColor(): MetaService {
+  setThemeColor(
+    dark: boolean = this.themeService.isDark$.getValue()
+  ): MetaService {
     this.metaService.updateTag({
       property: 'theme-color',
-      content: this.themeService.isDark$.getValue() ? '#242a30' : '#ffffff',
+      content: dark ? '#242a30' : '#ffffff',
     });
     return this;
   }
