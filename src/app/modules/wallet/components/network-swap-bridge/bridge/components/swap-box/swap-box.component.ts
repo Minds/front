@@ -91,7 +91,7 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
       from: this.fromNetwork.networkName,
       to: this.receivingNetwork.networkName,
     });
-    if (!this.needsApproval()) {
+    if (this.needsApproval()) {
       this.networkBridgeService.currentStep$.next(BridgeStep.APPROVAL);
     } else {
       this.networkBridgeService.currentStep$.next(BridgeStep.CONFIRMATION);

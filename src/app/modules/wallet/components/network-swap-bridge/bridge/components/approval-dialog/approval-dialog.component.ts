@@ -29,8 +29,13 @@ export class NetworkBridgeApprovalComponent implements OnInit {
     this.networkBridgeService.currentStep$.next(BridgeStep.CONFIRMATION);
   }
 
-  approve() {
-    this.polygonService.approve(ethers.utils.parseUnits(this.amount, 18));
+  async approve() {
+    await this.polygonService.approve(ethers.utils.parseUnits(this.amount, 18));
+    this.navigate();
+  }
+
+  async approveMax() {
+    await this.polygonService.approve();
     this.navigate();
   }
 }

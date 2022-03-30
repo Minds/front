@@ -6,6 +6,7 @@ import { PolygonMindsTokenContractService } from './contracts/minds-token-polygo
 import { MindsTokenMainnetSignedContractService } from '../../network-swap-bridge/skale/contracts/minds-token-mainnet-signed-contract.service';
 import { BigNumber, ethers } from 'ethers';
 import {
+  ITransactionWriteResult,
   Log_Event_Signature,
   POSClient,
   setProofApi,
@@ -31,11 +32,14 @@ const POLYGON_RPC_URL = 'https://rpc-endpoints.superfluid.dev/mumbai';
 const FROM_POLYGON_BLOCK = 22642885;
 const FROM_MAINNET_BLOCK = 5946883;
 
-const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
-const MIND_TOKEN_ADDRESS = '0x8bda9f5c33fbcb04ea176ea5bc1f5102e934257f';
-const MIND_CHILD_TOKEN_ADDRESS = '0x22E993D9108DbDe9F32553C3fD0A404aCD2B7150';
+const MAINNET_CHAIN_ID = 5;
+const POLYGON_CHAIN_ID = 80001;
 
+const MIND_TOKEN_ADDRESS = '0x8bda9f5c33fbcb04ea176ea5bc1f5102e934257f'; // Goerli
+const MIND_CHILD_TOKEN_ADDRESS = '0x22E993D9108DbDe9F32553C3fD0A404aCD2B7150'; // Mumbai
 const ERC20_PREDICATE_ADDRESS = '0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34';
+
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 const ERC20_PREDICATE_ABI = [
   'event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)',
 ];
@@ -61,8 +65,6 @@ const ROOT_CHAIN_ABI = [
 use(Web3ClientPlugin);
 setProofApi('https://apis.matic.network/');
 
-const MAINNET_CHAIN_ID = 5;
-const POLYGON_CHAIN_ID = 80001;
 const MAINNET_PROVIDER = new JsonRpcProviderMemoize(
   MAINNET_RPC_URL,
   MAINNET_CHAIN_ID
@@ -197,16 +199,15 @@ export class PolygonService {
    * @returns { Promise<void> }
    */
   public async approve(amount?: BigNumber): Promise<any> {
-    if (amount && amount.isZero()) {
-      this.toast.warn('You must provide an amount of tokens');
-      return;
-    }
-
     const posClient = await this.getPOSClientRoot();
     const erc20Contract = posClient.erc20(MIND_TOKEN_ADDRESS, true);
-    const approveTx = await erc20Contract.approveMax();
-    const receipt = await approveTx.getReceipt();
-    console.log('receipt', receipt);
+    let approveTx: ITransactionWriteResult;
+    if (amount) {
+      approveTx = await erc20Contract.approve(amount.toString());
+    } else {
+      approveTx = await erc20Contract.approveMax();
+    }
+    await approveTx.getReceipt();
   }
 
   /**
@@ -220,31 +221,31 @@ export class PolygonService {
       return;
     }
     this.isLoading$.next(true);
-    const signer = this.web3Wallet.getSigner();
-    const userAddress = await signer.getAddress();
     const posClient = await this.getPOSClientRoot();
 
-    const depositTx = await posClient
-      .erc20(MIND_TOKEN_ADDRESS, true)
-      .deposit(amount.toString(), userAddress)
-      .then(async tx => {
-        const receipt = await tx.getReceipt();
-        const record: DepositRecord = {
-          type: RecordType.DEPOSIT,
-          status: RecordStatus.SUCCESS,
-          amount: amount.toString(),
-          txBlock: receipt.blockNumber,
-          txHash: receipt.transactionHash,
-        };
-        this.addToHistory(record);
+    const signer = this.web3Wallet.getSigner();
+    const userAddress = await signer.getAddress();
+
+    try {
+      const tx = await posClient
+        .erc20(MIND_TOKEN_ADDRESS, true)
+        .deposit(amount.toString(), userAddress);
+      const receipt = await tx.getReceipt();
+      const record: DepositRecord = {
+        type: RecordType.DEPOSIT,
+        status: RecordStatus.SUCCESS,
+        amount: amount.toString(),
+        txBlock: receipt.blockNumber,
+        txHash: receipt.transactionHash,
+      };
+      this.addToHistory(record);
+      this.isLoading$.next(false);
+    } catch (e) {
+      if (e.code === 4001) {
+        this.hasError$.next(true);
         this.isLoading$.next(false);
-      })
-      .catch(e => {
-        if (e.code === 4001) {
-          this.hasError$.next(true);
-          this.isLoading$.next(false);
-        }
-      });
+      }
+    }
   }
 
   private addToHistory(record: HistoryRecord) {
@@ -454,9 +455,7 @@ export class PolygonService {
 
   public async getBalances() {
     const { childToken, rootToken } = this.getTokenContracts();
-    const from = this.userConfig.eth_wallet
-      ? this.userConfig.eth_wallet
-      : '0x6685dd9cb58bA8d27f5e2E9eB54A0Fe301c8F78C';
+    const from = this.userConfig.eth_wallet;
     return {
       root: await rootToken.balanceOf(from),
       child: await childToken.balanceOf(from),
@@ -482,28 +481,34 @@ export class PolygonService {
   }
 
   private async getPOSClientRoot() {
+    await this.web3Wallet.initializeProvider();
     const signer = this.web3Wallet.getSigner();
-    const network = await signer.provider.getNetwork();
-    const provider =
-      network.chainId === MAINNET_CHAIN_ID
-        ? POLYGON_PROVIDER
-        : MAINNET_PROVIDER;
-
     const from = await signer.getAddress();
-
-    return this.getPOSClient(from, signer, provider);
+    await this.checkConnectedNetwork(MAINNET_CHAIN_ID);
+    return this.getPOSClient(from, signer, POLYGON_PROVIDER);
   }
 
   private async getPOSClientChild() {
+    await this.web3Wallet.initializeProvider();
+    const signer = this.web3Wallet.getSigner();
+    const from = await signer.getAddress();
+    await this.checkConnectedNetwork(POLYGON_CHAIN_ID);
+    return this.getPOSClient(from, POLYGON_PROVIDER, signer);
+  }
+
+  private async checkConnectedNetwork(chainId: number) {
     const signer = this.web3Wallet.getSigner();
     const network = await signer.provider.getNetwork();
-    const provider =
-      network.chainId === MAINNET_CHAIN_ID
-        ? POLYGON_PROVIDER
-        : MAINNET_PROVIDER;
-    const from = await signer.getAddress();
-
-    return this.getPOSClient(from, provider, signer);
+    if (network.chainId === chainId) {
+      return;
+    }
+    if (!window.ethereum) {
+      throw new Error('cannot switch network');
+    }
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: `0x${chainId}` }],
+    });
   }
 
   private async getPOSClient(
@@ -511,15 +516,17 @@ export class PolygonService {
     parentProvider: ethers.providers.JsonRpcProvider | ethers.Signer,
     childProvider: ethers.providers.JsonRpcProvider | ethers.Signer
   ) {
-    const posClientChild = new POSClient();
-    await posClientChild.init({
-      log: true,
-      network: 'testnet',
-      version: 'mumbai',
+    // @ts-ignore
+    const isProd = MAINNET_CHAIN_ID === 1;
+    const posClient = new POSClient();
+    await posClient.init({
+      log: !isProd,
+      network: isProd ? 'mainnet' : 'testnet',
+      version: isProd ? 'v1' : 'mumbai',
       parent: { provider: parentProvider, defaultConfig: { from } },
       child: { provider: childProvider, defaultConfig: { from } },
     });
-    return posClientChild;
+    return posClient;
   }
 
   private sortHistory(history: HistoryRecord[]) {

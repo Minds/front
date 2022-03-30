@@ -48,12 +48,11 @@ export interface Network {
   id: NetworkChainId; // chain id (hex).
   networkName: NetworkName; // human readable name for Metamask.
   siteName: NetworkSiteName; // label to be used on-site.
-  rpcUrl?: NetworkDescription; // rpc url. nullable for some networks such as mainnet.
-  description: NetworkLogoPath; // short description to be used on site.
-  logoPath: NetworkRpcUrl; // path to logo file `assets/...`.
+  rpcUrl?: NetworkRpcUrl; // rpc url
+  description: NetworkDescription; // short description to be used on site.
+  logoPath: NetworkLogoPath; // path to logo file `assets/...`.
   swappable: boolean; // whether swapping is enabled for the network or not.
   showHistoric?: boolean; // whether the transaction historical option should be displayed
-  rpc_url?: string;
   isFromNetwork?: boolean; // used for controlling from/to network logic
 }
 
@@ -73,6 +72,13 @@ export class NetworkSwitchService implements OnDestroy {
   // fires on network change
   public readonly networkChanged$ = new BehaviorSubject<number | null>(null);
 
+  ngOnDestroy(): void {
+    if (this.networkChangeProvider) {
+      this.networkChangeProvider.removeAllListeners();
+      this.networkChangeProvider = null;
+    }
+  }
+
   constructor(
     private toast: FormToastService,
     private wallet: Web3WalletService,
@@ -87,7 +93,7 @@ export class NetworkSwitchService implements OnDestroy {
     // network map.
     this.networks.mainnet = {
       id: polygonConfig['mainnet_rpc_provider'].chain_id,
-      rpc_url: polygonConfig['mainnet_rpc_provider'].url,
+      rpcUrl: polygonConfig['mainnet_rpc_provider'].url,
       siteName: 'Mainnet',
       networkName: 'Mainnet',
       description: 'Main Ethereum Network.',
@@ -96,14 +102,14 @@ export class NetworkSwitchService implements OnDestroy {
       isFromNetwork: true,
     };
     // eth testnet
-    // goerli: {
+    // this.networks.goerli = {
     //   id: '0x5',
     //   siteName: 'Polygon',
     //   networkName: 'Goerli',
     //   description: 'Goerli Testnet.',
     //   logoPath: 'assets/ext/ethereum.png',
     //   swappable: true,
-    // },
+    // };
     // // polygon testnet
     // mumbai: {
     //   id: '0x13881',
@@ -133,7 +139,6 @@ export class NetworkSwitchService implements OnDestroy {
         logoPath: 'assets/ext/polygon_white.svg',
         swappable: true,
         showHistoric: true,
-        rpc_url: polygonConfig.url,
         isFromNetwork: false,
       };
     }
@@ -145,7 +150,7 @@ export class NetworkSwitchService implements OnDestroy {
         siteName: 'SKALE',
         // Differs to avoid conflict with other SKALE chains.
         networkName: 'SKALE Minds',
-        rpcUrl: skaleConfig['rpc_url'],
+        rpcUrl: skaleConfig['rpcUrl'],
         description:
           'What is Skale. What’s its value. Why should I use is. Who is it suited for. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at feugiat diam.',
         logoPath: 'assets/ext/skale_white.svg',
@@ -155,20 +160,13 @@ export class NetworkSwitchService implements OnDestroy {
       };
     }
 
-    // Mainnet / Rinkeby
+    // Mainnet / Goerli
     this.networks.mainnet.id =
       blockchainConfig['client_network'] === 1
         ? '0x1' // mainnet
-        : '0x4'; // rinkeby
+        : '0x5'; // rinkeby
 
     this.setupNetworkChangeListener();
-  }
-
-  ngOnDestroy(): void {
-    if (this.networkChangeProvider) {
-      this.networkChangeProvider.removeAllListeners();
-      this.networkChangeProvider = null;
-    }
   }
 
   /**

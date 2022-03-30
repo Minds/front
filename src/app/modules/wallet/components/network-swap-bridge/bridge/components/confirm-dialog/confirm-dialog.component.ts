@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
+import { PolygonService } from '../../../../tokens/polygon/polygon.service';
+import { BigNumber } from 'ethers';
 
 @Component({
   selector: 'm-networkConfirmation',
@@ -12,7 +14,10 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   to: string;
   from: string;
 
-  constructor(private readonly networkBridgeService: NetworkBridgeService) {}
+  constructor(
+    private readonly networkBridgeService: NetworkBridgeService,
+    private readonly polygonService: PolygonService
+  ) {}
 
   ngOnInit(): void {
     this.amount = this.networkBridgeService.currentStepData$.value.amount;
@@ -20,7 +25,12 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
     this.to = this.networkBridgeService.currentStepData$.value.to;
   }
 
-  navigate() {
+  async transfer() {
+    await this.polygonService.deposit(BigNumber.from(this.amount));
+    this.navigate();
+  }
+
+  private navigate() {
     this.networkBridgeService.currentStep$.next(BridgeStep.PENDING);
   }
 }
