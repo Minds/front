@@ -33,11 +33,16 @@
             [routerLink]="feedUrl"
             title="{{ publisher.name }}"
             >{{ publisher.name }}</a
-          ><m-channel--badges
+          >
+          <m-accountQualityScore
+            [targetUser]="publisher"
+          ></m-accountQualityScore>
+          <m-channel--badges
             *ngIf="type === 'user'"
             class="m-channel--badges-activity"
             [user]="publisher"
-            badges="[ 'admin', 'verified', 'plus', 'pro' ]"
+            [badges]="['admin', 'verified', 'plus', 'pro']"
+            [showMidDot]="true"
           ></m-channel--badges>
         </div>
         <div>

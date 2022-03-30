@@ -81,6 +81,10 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   setModalData() {}
 
   async ngOnInit() {
+    if (!this.web3Wallet.checkDeviceIsSupported()) {
+      this.modalService.dismissAll();
+      return;
+    }
     this.phoneVerifiedSubscription = this.phoneVerificationService.phoneVerified$.subscribe(
       verified => {
         this.phoneVerified = verified;
