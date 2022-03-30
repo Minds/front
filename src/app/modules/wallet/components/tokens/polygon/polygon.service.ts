@@ -78,9 +78,7 @@ const POLYGON_PROVIDER = new JsonRpcProviderMemoize(
 export class PolygonService {
   public history$ = new BehaviorSubject<HistoryRecord[]>([]);
   public historyLoading$ = new BehaviorSubject(false);
-
   public isLoading$ = new BehaviorSubject(false);
-
   public hasError$ = new BehaviorSubject(false);
 
   public userConfig;
@@ -189,7 +187,6 @@ export class PolygonService {
       MAINNET_PROVIDER
     );
     const block: BigNumber = await rootChainContract.getLastChildBlock();
-    console.log('block', block);
     return block.toNumber();
   }
 
@@ -242,12 +239,14 @@ export class PolygonService {
       this.addToHistory(record);
       this.isLoading$.next(false);
       console.log(tx);
+      return true;
     } catch (e) {
       if (e.code === 4001) {
         this.hasError$.next(true);
         this.isLoading$.next(false);
       }
     }
+    return false;
   }
 
   private addToHistory(record: HistoryRecord) {
@@ -272,28 +271,29 @@ export class PolygonService {
       false
     );
     this.isLoading$.next(true);
-    const withdrawTx = await erc20ChildToken
-      .withdrawStart(amount.toString())
-      .then(async tx => {
-        const withdrawReceipt = await tx.getReceipt();
+    try {
+      const tx = await erc20ChildToken.withdrawStart(amount.toString());
+      const withdrawReceipt = await tx.getReceipt();
 
-        console.log('withdrawReceipt', withdrawReceipt);
+      console.log('withdrawReceipt', withdrawReceipt);
 
-        const record: WithdrawRecord = {
-          type: RecordType.WITHDRAW,
-          status: RecordStatus.PENDING,
-          amount: amount.toString(),
-          txBurn: withdrawReceipt.transactionHash,
-        };
-        this.addToHistory(record);
+      const record: WithdrawRecord = {
+        type: RecordType.WITHDRAW,
+        status: RecordStatus.PENDING,
+        amount: amount.toString(),
+        txBurn: withdrawReceipt.transactionHash,
+      };
+      this.addToHistory(record);
+      this.isLoading$.next(false);
+      return true;
+    } catch (e) {
+      console.warn('withdraw error', e);
+      if (e.code === 4001) {
+        this.hasError$.next(true);
         this.isLoading$.next(false);
-      })
-      .catch(e => {
-        if (e.code === 4001) {
-          this.hasError$.next(true);
-          this.isLoading$.next(false);
-        }
-      });
+      }
+    }
+    return false;
   }
 
   public async exit(burnTxHash: string) {
@@ -509,8 +509,18 @@ export class PolygonService {
     }
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: `0x${chainId}` }],
+      params: [{ chainId: this.chainIdPrefix(chainId) }],
     });
+  }
+
+  private chainIdPrefix(chainId: number) {
+    let hex = BigNumber.from(chainId)
+      .toHexString()
+      .substr(2);
+    while (hex.startsWith('0')) {
+      hex = hex.substr(1);
+    }
+    return '0x' + hex;
   }
 
   private async getPOSClient(

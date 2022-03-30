@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { PolygonService } from '../../../../tokens/polygon/polygon.service';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
+import { Network } from '../../../../../../../common/services/network-switch-service';
 
 @Component({
   selector: 'm-networkApproval',
@@ -11,8 +12,8 @@ import { NetworkBridgeService } from '../../services/network-bridge.service';
 })
 export class NetworkBridgeApprovalComponent implements OnInit {
   amount: string;
-  from: string;
-  to: string;
+  from: Network;
+  to: Network;
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
@@ -20,13 +21,25 @@ export class NetworkBridgeApprovalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.amount = this.networkBridgeService.currentStepData$.value.amount;
-    this.from = this.networkBridgeService.currentStepData$.value.from;
-    this.to = this.networkBridgeService.currentStepData$.value.to;
+    if (
+      this.networkBridgeService.currentStep$.value.step !== BridgeStep.APPROVAL
+    ) {
+      return;
+    }
+    this.amount = this.networkBridgeService.currentStep$.value.data.amount;
+    this.from = this.networkBridgeService.currentStep$.value.data.from;
+    this.to = this.networkBridgeService.currentStep$.value.data.to;
   }
 
   navigate() {
-    this.networkBridgeService.currentStep$.next(BridgeStep.CONFIRMATION);
+    this.networkBridgeService.currentStep$.next({
+      step: BridgeStep.CONFIRMATION,
+      data: {
+        to: this.to,
+        from: this.from,
+        amount: this.amount,
+      },
+    });
   }
 
   async approve() {
