@@ -18,9 +18,10 @@ export class PhoneVerificationService {
   );
 
   constructor(private modalService: ModalService, private session: Session) {
-    if (this.session.getLoggedInUser().rewards) {
-      this.phoneVerified$.next(true);
-    }
+    this.phoneVerified$.next(true);
+    // if (this.session.getLoggedInUser().rewards) {
+    //   this.phoneVerified$.next(true);
+    // }
   }
 
   async open(): Promise<void> {

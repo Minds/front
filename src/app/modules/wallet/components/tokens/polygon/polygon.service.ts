@@ -238,8 +238,10 @@ export class PolygonService {
         txBlock: receipt.blockNumber,
         txHash: receipt.transactionHash,
       };
+      console.log('recept', receipt);
       this.addToHistory(record);
       this.isLoading$.next(false);
+      console.log(tx);
     } catch (e) {
       if (e.code === 4001) {
         this.hasError$.next(true);

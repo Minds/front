@@ -9,6 +9,10 @@
     justify-content: center;
     padding-top: 20px;
 
+    ::ng-deep .m-loadingSpinner__wrapper {
+      padding: 0px !important;
+    }
+
     .m-networkConfirmation-title {
       line-height: 28px;
       font-size: 18px;

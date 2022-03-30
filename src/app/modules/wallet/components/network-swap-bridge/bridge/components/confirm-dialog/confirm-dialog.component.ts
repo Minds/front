@@ -14,10 +14,14 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   to: string;
   from: string;
 
+  isLoading;
+
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
     private readonly polygonService: PolygonService
-  ) {}
+  ) {
+    this.isLoading = this.polygonService.isLoading$.value;
+  }
 
   ngOnInit(): void {
     this.amount = this.networkBridgeService.currentStepData$.value.amount;
@@ -26,8 +30,11 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   }
 
   async transfer() {
-    await this.polygonService.deposit(BigNumber.from(this.amount));
-    this.navigate();
+    const tx = await this.polygonService
+      .deposit(BigNumber.from(this.amount))
+      .then(res => console.log(res));
+    console.log(tx);
+    // this.navigate();
   }
 
   private navigate() {

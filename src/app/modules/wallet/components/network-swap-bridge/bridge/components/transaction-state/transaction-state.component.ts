@@ -4,6 +4,7 @@ import {
   Descriptions,
   Titles,
 } from '../../constants/constants.types';
+import { NetworkBridgeService } from '../../services/network-bridge.service';
 
 @Component({
   selector: 'm-networkPending',
@@ -11,7 +12,11 @@ import {
   styleUrls: ['./transaction-state.ng.scss'],
 })
 export class NetworkBridgePendingComponent implements OnInit {
-  constructor() {}
+  amount: string;
+
+  constructor(private readonly networkBridgeService: NetworkBridgeService) {
+    this.amount = this.networkBridgeService.currentStepData$.value.amount;
+  }
 
   proposalState = 0;
 

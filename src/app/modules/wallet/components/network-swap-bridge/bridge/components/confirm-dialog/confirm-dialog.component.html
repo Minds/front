@@ -25,10 +25,11 @@
   </div>
 
   <div class="m-networkConfirmation-button_container">
-    <m-button color="blue" (click)="transfer()">
-      <ng-container i18n="verb|@@M__ACTION__CANCEL"
-        >Confirm Transfer</ng-container
-      >
+    <m-button color="blue" (click)="transfer()" [disabled]="isLoading">
+      <ng-container i18n="verb|@@M__ACTION__CANCEL">
+        <m-loadingSpinner [inProgress]="isLoading"></m-loadingSpinner>
+        <span *ngIf="!isLoading"> Confirm Transfer </span>
+      </ng-container>
     </m-button>
   </div>
 </div>
