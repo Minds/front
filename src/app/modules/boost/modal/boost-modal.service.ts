@@ -537,7 +537,7 @@ export class BoostModalService implements OnDestroy {
 
   private handleError(e): Observable<null> {
     console.error(e);
-    this.toast.error(e);
+    this.toast.error(e.error.message ?? 'An unknown error has occurred');
     return of(null);
   }
 
