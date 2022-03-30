@@ -21,7 +21,19 @@
       "updateMode": "lazy",
       "resources": {
         "files": ["/assets/**"],
-        "urls": ["https://cdn*"]
+        "urls": ["https://cdn**"]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "urls": ["https://**/api/v**", "http://localhost:8080/api/**"],
+      "cacheConfig": {
+        "maxSize": 50,
+        "maxAge": "1h",
+        "timeout": "10s",
+        "strategy": "freshness"
       }
     }
   ]
