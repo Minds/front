@@ -125,6 +125,7 @@ export class BoostModalComponent implements OnInit, OnDestroy {
       this.inProgress$.next(false);
       return;
     }
+    this.inProgress$.next(false);
 
     if (
       response &&
