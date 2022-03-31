@@ -15,6 +15,9 @@ export class ModalCloseButtonComponent implements OnInit {
   @Input()
   color: Color = null;
 
+  @Input()
+  autoFocus?: boolean = true;
+
   constructor(private activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {}

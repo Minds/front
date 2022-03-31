@@ -282,7 +282,8 @@ export class MetaService {
       .setNsfw(false)
       .setOgSiteName()
       .resetDynamicFavicon()
-      .resetOEmbed();
+      .resetOEmbed()
+      .setThemeColor();
   }
 
   private applyTitle(): void {
@@ -332,6 +333,14 @@ export class MetaService {
     if (link) {
       this.dom.head.removeChild(link);
     }
+    return this;
+  }
+
+  setThemeColor(dark?: boolean): MetaService {
+    this.metaService.updateTag({
+      name: 'theme-color',
+      content: dark ? '#242a30' : '#ffffff',
+    });
     return this;
   }
 }

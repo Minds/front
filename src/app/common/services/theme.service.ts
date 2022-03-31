@@ -9,6 +9,7 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { MetaService } from './meta.service';
 
 @Injectable()
 export class ThemeService {
@@ -25,7 +26,8 @@ export class ThemeService {
     private client: Client,
     private session: Session,
     @Inject(PLATFORM_ID) private platformId,
-    @Inject(DOCUMENT) private dom
+    @Inject(DOCUMENT) private dom,
+    private metaService: MetaService
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.isDarkSubscription = this.isDark$.subscribe(isDark => {
@@ -71,6 +73,7 @@ export class ThemeService {
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().theme === 'dark';
     this.isDark$.next(shouldBeDark);
+    this.metaService.setThemeColor(shouldBeDark);
   }
 
   toggleTheme(): void {

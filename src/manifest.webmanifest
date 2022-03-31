@@ -8,7 +8,7 @@
   "display": "standalone",
   "android_package_name": "com.minds.mobile",
   "scope": "./",
-  "start_url": "./",
+  "start_url": "/",
   "icons": [
     {
       "src": "/static/en/assets/icons/windows11/SmallTile.scale-100.png",

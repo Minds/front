@@ -173,6 +173,10 @@
             "hmr": {
               "hmr": true,
               "browserTarget": "minds:build:hmr"
+            },
+            "dev": {
+              "hmr": true,
+              "browserTarget": "minds:build:dev"
             }
           }
         },

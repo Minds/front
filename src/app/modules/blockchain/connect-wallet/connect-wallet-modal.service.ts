@@ -7,6 +7,7 @@ import { PhoneVerificationService } from '../../wallet/components/components/pho
 import { WalletV2Service } from '../../wallet/components/wallet-v2.service';
 import { ConnectWalletModalComponent } from './connect-wallet-modal.component';
 import { ModalService } from '../../../services/ux/modal.service';
+import { Web3WalletService } from '../web3-wallet.service';
 
 @Injectable({ providedIn: 'root' })
 export class ConnectWalletModalService {
@@ -19,7 +20,8 @@ export class ConnectWalletModalService {
     private phoneVerificationService: PhoneVerificationService,
     protected toasterService: FormToastService,
     protected api: ApiService,
-    private walletService: WalletV2Service
+    private walletService: WalletV2Service,
+    private web3Wallet: Web3WalletService
   ) {
     if (!this.walletService.wallet.loaded) {
       this.walletService.loadWallet();
@@ -39,6 +41,10 @@ export class ConnectWalletModalService {
   }
 
   async open(): Promise<string> {
+    if (!this.web3Wallet.checkDeviceIsSupported()) {
+      return null;
+    }
+
     const { ConnectWalletModalModule } = await import(
       './connect-wallet-modal.module'
     );

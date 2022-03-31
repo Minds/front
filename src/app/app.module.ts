@@ -68,6 +68,7 @@ import { SharedModule } from './common/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   bootstrap: [Minds],
@@ -123,10 +124,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SharedModule,
     CompassModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
-      enabled: true,
+      enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerImmediately',
+      // or after 5 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:2500',
     }),
     //last due to :username route
     AppRoutingModule,
