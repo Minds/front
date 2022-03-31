@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
-import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, concat, interval } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
 
 /**
  * A service that manges service worker and its update logic
@@ -17,7 +17,11 @@ export class ServiceWorkerService {
   }>(undefined);
   private shouldRefreshOnNavigation = false;
 
-  constructor(private swUpdate: SwUpdate, private router: Router) {}
+  constructor(
+    private swUpdate: SwUpdate,
+    private router: Router,
+    private appRef: ApplicationRef
+  ) {}
 
   /**
    * starts watching for updates and refreshes the page on navigation events
@@ -31,6 +35,7 @@ export class ServiceWorkerService {
     }
     console.log('[ServiceWorker] watching for updates');
 
+    // Listen for router events and refresh the app if we had an available update
     this.router.events
       .pipe(filter(e => e instanceof NavigationStart))
       .subscribe((data: NavigationStart) => {
@@ -38,6 +43,19 @@ export class ServiceWorkerService {
           window.location.pathname = data.url;
         }
       });
+
+    // Allow the app to stabilize first, before starting
+    // polling for updates with `interval()`.
+    const appIsStable$ = this.appRef.isStable.pipe(
+      first(isStable => isStable === true)
+    );
+    const everySixHours$ = interval(6 * 60 * 60 * 1000);
+    const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
+
+    // poll every 6 hours and check for updates
+    everySixHoursOnceAppIsStable$.subscribe(() =>
+      this.swUpdate.checkForUpdate()
+    );
 
     this.swUpdate.versionUpdates.subscribe(event => {
       console.log('[ServiceWorker] Version update', event);
