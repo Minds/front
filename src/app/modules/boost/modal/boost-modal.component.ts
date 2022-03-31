@@ -122,10 +122,10 @@ export class BoostModalComponent implements OnInit, OnDestroy {
     try {
       response = await this.service.submitBoostAsync();
     } catch (e) {
-      this.inProgress$.next(false);
       return;
+    } finally {
+      this.inProgress$.next(false);
     }
-    this.inProgress$.next(false);
 
     if (
       response &&
