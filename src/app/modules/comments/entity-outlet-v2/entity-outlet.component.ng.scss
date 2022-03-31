@@ -20,7 +20,7 @@
     }
 
     & > :last-child {
-      padding-bottom: $spacing6;
+      padding-bottom: $spacing4;
 
       @media screen and (max-width: $max-mobile) {
         padding-bottom: $spacing3;
@@ -76,7 +76,7 @@
 
   .m-commentsEntityOutlet__expand,
   .m-commentsEntityOutlet__expand--hide {
-    @include body2Medium;
+    @include body2Regular;
     padding-top: $spacing6;
     padding-bottom: $spacing2;
     cursor: pointer;

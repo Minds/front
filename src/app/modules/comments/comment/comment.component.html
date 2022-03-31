@@ -24,10 +24,6 @@
   <div class="minds-body">
     <!-- --OWNER ROW ----------------------------- -->
     <div class="m-comment__ownerRow">
-      <!-- ojm no need for below because single line now -->
-      <!-- <div *ngIf="_compact" class="m-comment__avatarWrapper--compact">
-        <ng-container *ngTemplateOutlet="avatar"></ng-container>
-      </div> -->
       <div class="m-commentOwnerRow__text m-legible">
         <ng-container *ngIf="!_compact">
           <ng-container *ngTemplateOutlet="owner"></ng-container>
@@ -79,12 +75,10 @@
             class="m-comment__timestamp m-commentOwnerRowItem__timestamp"
             [entity]="comment"
           ></m-relativeTimeSpan>
-          <ng-container *ngIf="comment.edited">
-            <span class="m-commentOwnerRow__dot">·</span>
-            <span
-              class="m-edited-text m-commentOwnerRowItem__edited"
-              i18n="@@M__COMMON__EDITED"
-              >Edited</span
+          <ng-container *ngIf="comment.edited"
+            ><span class="m-edited-text m-commentOwnerRowItem__edited"
+              >(<ng-container i18n="@@M__COMMON__EDITED">edited</ng-container
+              >)</span
             ></ng-container
           >
           <ng-container

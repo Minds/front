@@ -33,7 +33,10 @@ post content to trigger upgrade modal -->
       *ngTemplateOutlet="paywallTemplate"
       [ngTemplateOutletContext]="{ hideText: 'false' }"
     ></ng-container>
-    <div class="m-activityContent__fixedHeightSpacer"></div>
+    <div
+      *ngIf="isFixedHeight"
+      class="m-activityContent__fixedHeightSpacer"
+    ></div>
     <minds-rich-embed
       (mediaModalRequested)="onModalRequested($event)"
       [src]="entity"
@@ -47,7 +50,10 @@ post content to trigger upgrade modal -->
       "
     >
     </minds-rich-embed>
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="!bodyText"></div>
+    <div
+      class="m-activityContent__fixedHeightSpacer"
+      *ngIf="isFixedHeight && !bodyText"
+    ></div>
   </div>
   <!-- ----------------------------------- -->
   <!-- VIDEO -->
@@ -60,9 +66,11 @@ post content to trigger upgrade modal -->
       'm-activityContent__media--video--modal': isModal
     }"
   >
-    <!-- ojm this paywall here isnt going to work? maybe put in as input flag or ng-content -->
     <div>
-      <div class="m-activityContent__fixedHeightSpacer"></div>
+      <div
+        class="m-activityContent__fixedHeightSpacer"
+        *ngIf="isFixedHeight"
+      ></div>
 
       <m-videoPlayer--scrollaware
         #videoEl
@@ -74,6 +82,7 @@ post content to trigger upgrade modal -->
           !(service.shouldShowPaywall$ | async)
         "
         [style.height]="isModal ? null : videoHeight"
+        [style.width]="isModal ? null : videoWidth"
         [isModal]="isModal"
         [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
       >
@@ -83,7 +92,10 @@ post content to trigger upgrade modal -->
         ></ng-container>
       </m-videoPlayer--scrollaware>
     </div>
-    <div class="m-activityContent__fixedHeightSpacer"></div>
+    <div
+      class="m-activityContent__fixedHeightSpacer"
+      *ngIf="isFixedHeight"
+    ></div>
   </div>
   <!-- ----------------------------------- -->
   <!-- IMAGE -->
@@ -145,7 +157,6 @@ post content to trigger upgrade modal -->
     class="m-activityContent__quote"
     [class.m-activityContent__quote--hasText]="!!text"
   >
-    <!-- ojm keep the paywall here? -->
     <ng-container
       *ngTemplateOutlet="paywallTemplate"
       [ngTemplateOutletContext]="{ hideText: 'false' }"
@@ -169,7 +180,7 @@ post content to trigger upgrade modal -->
 <!-- REMIND DELETED NOTICE -->
 <!-- ----------------------------------- -->
 <div
-  class="m-activityContent__remindDeletedNotice m-activityContent__textOjm"
+  class="m-activityContent__remindDeletedNotice"
   *ngIf="(service.entity$ | async).remind_deleted"
 >
   <i class="material-icons">info</i>
@@ -183,14 +194,17 @@ post content to trigger upgrade modal -->
 <!-- ----------------------------------- -->
 <m-activityV2__permalink
   *ngIf="showPermalink"
-  class="m-activityContent__permalink m-activityContent__textOjm"
+  class="m-activityContent__permalink"
 ></m-activityV2__permalink>
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: TEXT-->
 <!-- ----------------------------------- -->
 <ng-template #textTemplate
   ><ng-container *ngIf="!hideText">
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isStatus"></div>
+    <div
+      class="m-activityContent__fixedHeightSpacer"
+      *ngIf="isFixedHeight && isStatus"
+    ></div>
     <div
       #textEl
       m-read-more
@@ -243,19 +257,20 @@ post content to trigger upgrade modal -->
           (onTranslate)="onTranslate($event)"
           (onTranslateError)="onTranslate($event)"
           [class.m-translate--minimalMode]="isMinimalMode"
-          class="m-activityContent__textOjm"
           #translate
         ></m-translate>
       </ng-container>
     </div>
-    <div class="m-activityContent__fixedHeightSpacer" *ngIf="isStatus"></div>
+    <div
+      class="m-activityContent__fixedHeightSpacer"
+      *ngIf="isFixedHeight && isStatus"
+    ></div>
   </ng-container>
 </ng-template>
 <!-- ----------------------------------- -->
 <!-- TEMPLATE: PAYWALL -->
 <!-- ----------------------------------- -->
 <!-- Hide text only for the paywall that covers the entire size of the content component.  -->
-<!-- ojm remove mediaHeight? [mediaHeight]="mediaHeight"-->
 <ng-template #paywallTemplate let-hide="hideText"
   ><ng-container *ngIf="!hideMedia">
     <m-activityV2__paywall

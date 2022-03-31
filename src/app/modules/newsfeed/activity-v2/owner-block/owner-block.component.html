@@ -28,7 +28,6 @@
       <span [title]="displayName">{{ displayName | truncate: 20 }}</span>
 
       <m-channel--badges
-        *ngIf=""
         class="m-channel--badges-activity m-activityOwnerBlockDisplayName__badges"
         [user]="owner"
         badges="[ 'admin', 'verified' ]"
@@ -64,6 +63,20 @@
     >
       <span class="m-activityOwnerBlock__dot">·</span>
       <m-activityV2__permalink></m-activityV2__permalink>
+    </ng-container>
+    <!-- ---------------------------- -->
+    <!-- EDITED -->
+    <!-- ---------------------------- -->
+    <ng-container
+      *ngIf="
+        (!service.displayOptions.minimalMode &&
+          !service.displayOptions.isSidebarBoost &&
+          service.displayOptions.showEditedTag) ||
+        (service.isEdited$ | async)
+      "
+      ><span class="m-activityOwnerBlock__edited"
+        >(<ng-container i18n="@@M__COMMON__EDITED">edited</ng-container>)</span
+      >
     </ng-container>
   </div>
 

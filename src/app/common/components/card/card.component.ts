@@ -160,9 +160,6 @@ export class MindsCard implements OnInit, AfterViewInit {
       this.componentInstance.object = this.object;
       this.componentInstance.forceShowSubscribe = this.forceShowSubscribe;
     } else if (this.object.subtype === 'blog') {
-      if (this.activityV2Feature) {
-        //ojm skip this if activity V2;
-      }
       (<BlogCard>this.componentInstance)._blog = this.object;
     } else if (this.object.type === 'comment') {
       const commentComp: CommentComponentV2 = <CommentComponentV2>(

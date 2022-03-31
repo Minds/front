@@ -287,10 +287,8 @@ export class ActivityV2ModalComponent implements OnInit, OnDestroy {
 
   get showContentMessageOnRight(): boolean {
     return (
-      (this.entity.content_type === 'image' ||
-        this.entity.content_type === 'video' ||
-        this.entity.content_type === 'quote') &&
-      (this.entity.title || this.entity.message)
+      this.entity.content_type === 'image' ||
+      this.entity.content_type === 'video'
     );
   }
 

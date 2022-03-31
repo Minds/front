@@ -196,27 +196,19 @@
         text-decoration: none;
       }
     }
-
-    ::ng-deep m-channel--badges {
-      padding: 0 0 0 $spacing1;
-      margin-left: 0;
-
-      .m-channel--badges i {
-        font-size: 20px;
-      }
-      @media screen and (max-width: $max-mobile) {
-        /* prevent badges from shown behind right container */
-        overflow: visible !important;
-      }
-    }
   }
 
   a.m-activityOwnerBlock__username span,
-  .m-activityOwnerBlock__dot {
+  .m-activityOwnerBlock__dot,
+  .m-activityOwnerBlock__edited {
     @include body2Medium;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }
+  }
+
+  .m-activityOwnerBlock__edited {
+    padding-left: $spacing1;
   }
 
   .m-activityOwnerBlock__username {
@@ -227,7 +219,7 @@
   }
 
   .m-activityOwnerBlock__dot {
-    padding: 0 $spacing2;
+    padding: 0 $spacing1;
   }
 
   .m-activityOwnerBlock__groupName {

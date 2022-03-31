@@ -15,11 +15,6 @@
   // *********************************
 
   &.m-activity--isFeed {
-    //  ojm mark
-    // &:not(.m-activity--fixedHeight) {
-    // padding-bottom: $spacing4;
-    // }
-
     @include borderTop;
 
     .m-activity__top {
@@ -42,6 +37,7 @@
 
     .m-activity__top {
       height: calc(100% - 128px);
+      padding-top: $spacing2;
     }
     .m-activity__rightColumn {
       justify-content: space-around;
@@ -59,20 +55,12 @@
       }
     }
 
-    //ojm investigate fixedHeightContainer
     ::ng-deep m-activityV2__quote {
       display: flex;
       flex-direction: row;
       overflow: hidden;
     }
   }
-
-  //ojm investigate fixedHeightContainer
-  // ojm this is still being used in activity v2 scss
-  // &.m-activity--fixedHeightContainer {
-  //   height: 100%;
-  //   width: 100%;
-  // }
 
   // *********************************
   // ** MINIMAL MODE **
@@ -98,7 +86,7 @@
     }
 
     ::ng-deep .m-activityContent--paywalledStatus {
-      padding-top: $spacing7; //ojm
+      padding-top: $spacing7;
     }
     ::ng-deep .m-videoPlayer__placeholder i {
       font-size: 70px;
@@ -166,6 +154,18 @@
       flex-grow: 1;
     }
   }
+  // *********************************
+  // ** PRO **
+  // *********************************
+
+  m-pro--channel & {
+    &.m-activity--isFeed {
+      .m-activity__top {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
 
   // *********************************
   // *********************************
@@ -227,7 +227,6 @@
       width: 40px;
       height: 40px;
       object-fit: cover;
-      // @include border; // ojm mark
     }
   }
 

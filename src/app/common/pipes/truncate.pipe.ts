@@ -10,7 +10,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TruncatePipe implements PipeTransform {
   transform(
     value: string,
-    limit = 20, // ojm evaluate this. twitter uses 50
+    limit = 30,
     ellipsis = '...',
     completeWords = false
   ) {

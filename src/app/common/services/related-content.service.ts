@@ -470,9 +470,6 @@ export class RelatedContentService {
     if (response && response.entities && response.entities.length) {
       // For activity modal pager, filter out all except images and vids
       if (this.parent === 'activityModal') {
-        for (let e of response.entities) {
-          console.log('ojm type', getActivityContentType(e.entity));
-        }
         const filteredResponse = response.entities.filter(
           e =>
             e.entity &&
@@ -482,17 +479,6 @@ export class RelatedContentService {
             (getActivityContentType(e.entity) === 'image' ||
               getActivityContentType(e.entity) === 'video')
         );
-
-        console.log(
-          'ojm relatedContent filtered',
-          endpoint,
-          params,
-          filteredResponse
-        );
-
-        for (let e of filteredResponse) {
-          console.log('ojm type2', getActivityContentType(e.entity));
-        }
 
         if (filteredResponse.length) {
           return filteredResponse;

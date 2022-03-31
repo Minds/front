@@ -9,9 +9,6 @@
     padding: 20px;
   }
 
-  &.m-discovery__feedItem--activityV2 {
-    padding: 0;
-  }
   &.m-discovery__feedItem--user {
     padding-bottom: 0;
     @include m-theme() {

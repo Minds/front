@@ -50,10 +50,10 @@ $activityAvatarWidth: $spacing10;
 
 // This is the spacing on either side of the avatar
 // in the left column of activities
-$activityAvatarSpacingLeft--feed: $spacing6;
+$activityAvatarSpacingLeft--feed: $spacing8;
 $activityAvatarSpacingLeft--feed--mobile: $spacing4;
 
-$activityAvatarSpacingRight--feed: $spacing6;
+$activityAvatarSpacingRight--feed: $spacing4;
 $activityAvatarSpacingRight--feed--mobile: $spacing4;
 
 // This is the width of the entire left column
@@ -95,7 +95,6 @@ $activitySpacingRight--single--mobile: $spacing4;
 // Spacing on either side of the components that
 // live in the right column of the activity modal
 $activitySpacing--modal: $spacing4;
-// ojm see this with $spacing6?
 
 ///////////////////////////////////////////
 // MINIMAL MODE

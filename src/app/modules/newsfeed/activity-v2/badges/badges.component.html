@@ -1,15 +1,5 @@
 <ng-container *ngIf="entity$ | async as entity">
   <!------------------------->
-  <!-- EDITED  -------------->
-  <!------------------------->
-  <span
-    *ngIf="service.displayOptions.showEditedTag || (service.isEdited$ | async)"
-    class="m-activityV2__badge m-activityV2__badge--edited"
-    title="Edited"
-  >
-    <m-icon iconId="edit" [sizeFactor]="23"></m-icon>
-  </span>
-  <!------------------------->
   <!-- PINNED  -------------->
   <!------------------------->
   <span

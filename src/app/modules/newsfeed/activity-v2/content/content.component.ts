@@ -18,14 +18,14 @@ import {
   ACTIVITY_COMMENTS_MORE_HEIGHT,
   ACTIVITY_COMMENTS_POSTER_HEIGHT,
   ACTIVITY_CONTENT_PADDING,
-  ACTIVITY_FIXED_HEIGHT_HEIGHT,
+  ACTIVITY_V2_FIXED_HEIGHT_HEIGHT,
   ACTIVITY_FIXED_HEIGHT_RATIO,
   ACTIVITY_OWNERBLOCK_HEIGHT,
   ACTIVITY_TOOLBAR_HEIGHT,
   ACTIVITY_GRID_LAYOUT_MAX_HEIGHT,
   ACTIVITY_SHORT_STATUS_MAX_LENGTH,
   ACTIVITY_MEDIUM_STATUS_MAX_LENGTH,
-  ACTIVITY_CONTENT_MAX_HEIGHT,
+  ACTIVITY_V2_MAX_MEDIA_HEIGHT,
   ActivityEntity,
   ActivityService,
 } from '../../activity/activity.service';
@@ -95,13 +95,11 @@ export class ActivityV2ContentComponent
   @ViewChild('imageEl', { read: ElementRef })
   imageEl: ElementRef;
 
-  // ojm used in calculate remind height ?
   @ViewChild('textEl', { read: ElementRef })
   textEl: ElementRef;
 
   @ViewChild(ScrollAwareVideoPlayerComponent) videoPlayer;
 
-  //ojm changed from 750
   maxFixedHeightContent: number = 300 * ACTIVITY_FIXED_HEIGHT_RATIO;
 
   isRemind: boolean;
@@ -185,6 +183,11 @@ export class ActivityV2ContentComponent
     );
   }
 
+  @HostBinding('class.m-activityContent--textlessMedia')
+  get textlessMedia(): boolean {
+    return !this.titleText && !this.bodyText && (this.isVideo || this.isImage);
+  }
+
   constructor(
     public service: ActivityService,
     private modalService: ModalService,
@@ -209,7 +212,7 @@ export class ActivityV2ContentComponent
 
         this.calculateFixedContentHeight();
         setTimeout(() => {
-          this.calculateVideoHeight();
+          this.calculateVideoDimensions();
           this.calculateImageDimensions();
         });
 
@@ -271,7 +274,7 @@ export class ActivityV2ContentComponent
       .toPromise()
       .then(() => {
         this.calculateQuoteHeight();
-        this.calculateVideoHeight();
+        this.calculateVideoDimensions();
         this.calculateImageDimensions();
       });
   }
@@ -282,7 +285,6 @@ export class ActivityV2ContentComponent
     }
   }
 
-  // ojm search for all instances of these classes (aka message/mediaDesc) in other components and change
   get titleText(): string {
     return this.isImage || this.isVideo ? this.entity.title : '';
   }
@@ -369,7 +371,7 @@ export class ActivityV2ContentComponent
 
   // Text usually goes above media, except for
   // minimal mode and rich-embed modals
-  // ojm note: no rich-embed modals anymore
+  // Note: no rich-embed modals anymore
   get isTextBelowMedia(): boolean {
     return (
       (this.isMinimalMode && !this.isQuote) ||
@@ -440,7 +442,7 @@ export class ActivityV2ContentComponent
       return;
     }
 
-    let contentHeight = this.activityHeight || ACTIVITY_FIXED_HEIGHT_HEIGHT;
+    let contentHeight = this.activityHeight || ACTIVITY_V2_FIXED_HEIGHT_HEIGHT;
     contentHeight = contentHeight - ACTIVITY_CONTENT_PADDING;
     if (this.service.displayOptions.showOwnerBlock) {
       contentHeight = contentHeight - ACTIVITY_OWNERBLOCK_HEIGHT;
@@ -476,22 +478,43 @@ export class ActivityV2ContentComponent
   /**
    * Calculates the video height after the video has loaded in
    */
-  calculateVideoHeight(): void {
+  calculateVideoDimensions(): void {
     if (!this.videoEl) {
       return;
     }
-    let aspectRatio = 16 / 9;
+    let scaledHeight,
+      scaledWidth,
+      aspectRatio = 16 / 9;
+
+    const videoElWidth = this.videoEl.nativeElement.clientWidth;
+
     if (
       this.entity.custom_data &&
       this.entity.custom_data.height &&
       this.entity.custom_data.height !== '0'
     ) {
-      aspectRatio =
-        parseInt(this.entity.custom_data.width, 10) /
-        parseInt(this.entity.custom_data.height, 10);
+      // If we have the original dimensions of the video,
+      // load it with a height of 500px and a proportional width
+      // so we don't have black bars on the side
+      const originalWidth = parseInt(this.entity.custom_data.width, 10);
+      const originalHeight = parseInt(this.entity.custom_data.height, 10);
+
+      aspectRatio = originalWidth / originalHeight;
     }
-    const height = this.videoEl.nativeElement.clientWidth / aspectRatio;
-    this.videoHeight = `${height}px`;
+
+    // see how tall it would be with max width
+    scaledWidth = videoElWidth;
+    scaledHeight = scaledWidth / aspectRatio;
+
+    // if this ends up being taller than max height,
+    // scale it down to fit within max height
+    if (scaledHeight > ACTIVITY_V2_MAX_MEDIA_HEIGHT) {
+      scaledHeight = ACTIVITY_V2_MAX_MEDIA_HEIGHT;
+      scaledWidth = scaledHeight * aspectRatio;
+    }
+
+    this.videoHeight = `${scaledHeight}px`;
+    this.videoWidth = `${scaledWidth}px`;
 
     this.detectChanges();
   }
@@ -546,34 +569,6 @@ export class ActivityV2ContentComponent
 
     this.detectChanges();
   }
-
-  /**
-   * Open the activity in the modal when you click on
-   * its message or description
-   */
-  // onMessageClick(event): void {
-  //   return;
-
-  // ojm remove
-  // if (this.isModal) {
-  //   return;
-  // }
-
-  // /**
-  //  * Don't open modal if click on link, readmore, or translation
-  //  */
-  // if (event.target instanceof HTMLAnchorElement) {
-  //   return;
-  // } else if (
-  //   event.target.classList.contains('m-readMoreButton--v2') ||
-  //   event.target.classList.contains('m-readMoreButtonV2__text') ||
-  //   event.target.closest('m-translate')
-  // ) {
-  //   return;
-  // } else {
-  //   this.onModalRequested(event);
-  // }
-  // }
 
   onModalRequested(event: MouseEvent) {
     if (!this.modalService.canOpenInModal() || this.isModal) {

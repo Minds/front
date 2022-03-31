@@ -1,6 +1,20 @@
 @import 'defaults.scss';
 
 :host {
+  // *********************************
+  // ** ACTIVITY V2 **
+  // *********************************
+  &.m-publisherCard--activityV2 {
+    .m-publisherCard {
+      padding: $spacing4 $spacing5 $spacing6;
+      @include body2Regular;
+
+      .m-publisherCard__desc p {
+        @include body2Regular;
+      }
+    }
+  }
+
   .m-publisherCard {
     padding: 15px 20px 25px 20px;
     border-radius: $m-borderRadius;

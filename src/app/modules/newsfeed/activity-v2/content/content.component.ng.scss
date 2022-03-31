@@ -26,7 +26,6 @@
       height: 100%;
     }
 
-    // ojm what is this?
     .m-activityContent__quote--hasText & {
       ::ng-deep .m-rich-embed-src {
         display: flex;
@@ -162,8 +161,13 @@
     &.m-activityContent--modal--right {
       overflow: visible;
       box-sizing: border-box;
-      margin-top: 5px;
       padding: $activitySpacing--modal $activitySpacing--modal 0;
+
+      // Remove extra padding when there's no text,
+      // so there's not too much above the permalink
+      &.m-activityContent--textlessMedia {
+        padding-top: 0;
+      }
 
       .m-read-more--button {
         padding-bottom: 0;
@@ -177,7 +181,6 @@
       .m-activityContent__textWrapper {
         padding: 0;
 
-        // ojm move or keep?
         ::ng-deep m-translate {
           > div {
             hr {
@@ -233,11 +236,11 @@
 
   .m-activityContent__remindDeletedNotice {
     padding: $spacing5;
-    margin: $spacing5;
     margin-top: $spacing3;
     display: flex;
     align-items: center;
     flex-direction: row;
+    border-radius: $borderRadius--activity;
 
     @include m-theme() {
       background-color: themed($m-bgColor--secondary);
@@ -249,12 +252,12 @@
       vertical-align: middle;
       @include body2Regular;
       @include m-theme() {
-        color: themed($m-textColor--primary);
+        color: themed($m-textColor--secondary);
       }
     }
 
     i {
-      margin-right: $spacing2;
+      margin-right: $spacing4;
     }
   }
 
@@ -325,6 +328,15 @@
   .m-activityContent__media--richEmbed {
     @include m-theme() {
       background: themed($m-bgColor--primary);
+    }
+  }
+
+  &.m-activityContent--textlessMedia {
+    &:not(.m-activity__content--minimalMode) {
+      .m-activityContent__media--video,
+      .m-activityContent__media--image {
+        padding-top: $spacing1;
+      }
     }
   }
 
@@ -404,7 +416,6 @@
     ::ng-deep {
       m-videoPlayer--scrollaware {
         border-radius: $borderRadius--activity;
-        max-height: 500px; //ojm I added this?
       }
       .m-videoPlayer__placeholder {
         padding-top: 56.25%;
@@ -460,6 +471,12 @@
       margin-bottom: $spacing1 !important;
     }
 
+    &.m-activityContentText--translated {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
     ::ng-deep a {
       font-size: inherit;
       font-weight: inherit;
@@ -477,11 +494,10 @@
 
   // BODY
   .m-activityContentText__body,
-  .m-activityContentText__body p,
+  .m-activityContentText__body > *,
   ::ng-deep m-translate .m-translation-wrapper .message {
     margin: 0;
     padding: 0;
-    line-height: inherit;
     @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -517,6 +533,18 @@
       }
     }
   }
+
+  // STATUS POSTS
+  &.m-activityContent--status {
+    .m-activityContent__textWrapper {
+      .m-activityContentText__innerWrapper {
+        padding-bottom: 0;
+        margin-bottom: -4px;
+      }
+    }
+  }
+
+  // TRANSLATED TEXT
 
   // READ MORE
   &:not(.m-activityContent--status):not(.m-activity__content--minimalMode) {

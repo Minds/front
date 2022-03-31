@@ -38,6 +38,14 @@
         }
         m-newsfeed__entity {
           margin-bottom: 0;
+
+          &:first-child {
+            m-activityV2 {
+              @include m-theme() {
+                border-top: none;
+              }
+            }
+          }
         }
       }
     }

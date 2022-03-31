@@ -28,10 +28,6 @@
             color: themed($m-textColor--primary);
           }
         }
-
-        &.m-commentOwnerRowItem__timestamp {
-          padding-left: $spacing1;
-        }
       }
     }
     p.m-comment__message.m-mature-message-content {
@@ -229,6 +225,9 @@
           @include m-theme() {
             color: themed($m-red);
           }
+        }
+        &.m-commentOwnerRowItem__edited {
+          padding-left: $spacing1;
         }
       }
 

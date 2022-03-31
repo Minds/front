@@ -6,6 +6,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { FeaturesService } from '../../../services/features.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 export type ActivityDisplayOptions = {
   autoplayVideo: boolean;
@@ -20,7 +21,7 @@ export type ActivityDisplayOptions = {
   showVisibilityState: boolean;
   showTranslation: boolean;
   fixedHeight: boolean;
-  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator // ojm??
+  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height - i.e. for quote posts in the boost rotator?
   isModal: boolean;
   minimalMode: boolean; // For grid layouts
   bypassMediaModal: boolean; // Go to media page instead
@@ -32,7 +33,6 @@ export type ActivityDisplayOptions = {
   isFeed: boolean; // is the activity a part of a feed?
   showBoostRotatorButtons: boolean;
   isV2: boolean; // isV2 design
-  avatarColumn: boolean; // avatar gets dedicated column on left of post .ojm remove??
   permalinkBelowContent: boolean; // show permalink below content instead of in ownerblock
 };
 
@@ -81,16 +81,14 @@ export const ACTIVITY_TOOLBAR_HEIGHT = 52;
 export const ACTIVITY_COMMENTS_POSTER_HEIGHT = 58;
 export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
 export const ACTIVITY_CONTENT_PADDING = 16;
+export const ACTIVITY_V2_MAX_MEDIA_HEIGHT = 500;
 
 // Constants of fixed heights
-// export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600; // ojm had changed to 538 but put back
-// ojm need to make this into an activityV2 var
-export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 525; // ojm this makes the height 650
+export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
+export const ACTIVITY_V2_FIXED_HEIGHT_HEIGHT = 525;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
-
-export const ACTIVITY_CONTENT_MAX_HEIGHT = 500;
 
 // Constants for grid layout
 export const ACTIVITY_GRID_LAYOUT_MAX_HEIGHT = 200;
@@ -194,7 +192,6 @@ export class ActivityService {
 
   /**
    * Show view counts for owners and admins
-   * ojm
    */
   shouldShowViewCount$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
@@ -312,18 +309,25 @@ export class ActivityService {
     isSidebarBoost: false,
     isFeed: false,
     isV2: false,
-    avatarColumn: true,
     permalinkBelowContent: false,
   };
 
   paywallUnlockedEmitter: EventEmitter<any> = new EventEmitter();
 
+  activityV2Experiment: boolean = false;
+
   constructor(
     private configs: ConfigsService,
     private session: Session,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private experiments: ExperimentsService
   ) {
     this.siteUrl = configs.get('site_url');
+
+    this.activityV2Experiment = experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
   }
 
   /**
@@ -352,12 +356,10 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
 
-    // ojm connect to activity V2 feature flag instead of 'true'
-    if (true) {
+    if (this.activityV2Experiment) {
       this.displayOptions.isV2 = true;
       this.displayOptions.showOnlyCommentsInput = false;
       this.displayOptions.showOnlyCommentsToggle = true;
-      // }
     }
 
     return this;
