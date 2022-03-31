@@ -59,15 +59,12 @@ gulp.task('build.sass', done => {
 // i18n
 
 gulp.task('generate-ngsw-appData', () => {
-  console.log('jsonModify', process.env.CI_COMMIT_REF_NAME);
-  console.log('ENVIRONMENTS', JSON.stringify(process.env, null, 2));
-
   return gulp
     .src(join(__dirname, 'ngsw-config.json'))
     .pipe(
       jsonModify({
         key: 'appData.commit',
-        value: process.env.CI_COMMIT_REF_NAME || 'test',
+        value: `${process.env.CI_COMMIT_REF_NAME}-${process.env.CI_COMMIT_SHORT_SHA}`,
       })
     )
     .pipe(gulp.dest('./'));
