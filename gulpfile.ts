@@ -4,6 +4,7 @@ import * as gulpSass from 'gulp-sass';
 import * as dartSass from 'sass';
 import * as sassGlob from 'gulp-sass-glob';
 import * as template from 'gulp-template';
+import * as jsonModify from 'gulp-json-modify';
 
 import { join } from 'path';
 import { argv } from 'yargs';
@@ -56,6 +57,21 @@ gulp.task('build.sass', done => {
 
 // --------------
 // i18n
+
+gulp.task('generate-ngsw-appData', () => {
+  console.log('jsonModify', process.env.CI_COMMIT_REF_NAME);
+  console.log('ENVIRONMENTS', JSON.stringify(process.env, null, 2));
+
+  return gulp
+    .src(join(__dirname, 'ngsw-config.json'))
+    .pipe(
+      jsonModify({
+        key: 'appData.commit',
+        value: process.env.CI_COMMIT_REF_NAME || 'test',
+      })
+    )
+    .pipe(gulp.dest('./'));
+});
 
 gulp.task(
   'extract.i18n',
