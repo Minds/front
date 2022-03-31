@@ -465,10 +465,6 @@
       "sizes": "1024x1024"
     }
   ],
-  "launch_handler": {
-    "route_to": "existing-client",
-    "navigate_existing_client": "never"
-  },
   "prefer_related_applications": true,
   "related_applications": [
     {

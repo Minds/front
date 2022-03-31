@@ -19,6 +19,10 @@ export class ServiceWorkerService {
 
   constructor(private swUpdate: SwUpdate, private router: Router) {}
 
+  /**
+   * starts watching for updates and refreshes the page on navigation events
+   * @returns { Promise<void> }
+   */
   async watchForUpdates() {
     const enabled = this.swUpdate.isEnabled;
     if (!enabled) {
@@ -36,6 +40,7 @@ export class ServiceWorkerService {
       });
 
     this.swUpdate.versionUpdates.subscribe(event => {
+      console.log('[ServiceWorker] Version update', event);
       switch (event.type) {
         case 'VERSION_DETECTED':
           break;
@@ -46,7 +51,6 @@ export class ServiceWorkerService {
           this.shouldRefreshOnNavigation = true;
           break;
       }
-      console.log('[ServiceWorker] Version update', event);
     });
     this.swUpdate.unrecoverable.subscribe(event => {
       console.log('[ServiceWorker] unrecoverable', event);
