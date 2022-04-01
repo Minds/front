@@ -10,8 +10,10 @@
 
   .m-activity--isFeed & {
     .m-activity__ownerBlock {
-      @media screen and (min-width: ($max-mobile+1)) {
-        width: 105%;
+      width: 105%;
+
+      @media screen and (max-width: ($max-mobile)) {
+        width: 102%;
       }
     }
   }
@@ -71,9 +73,9 @@
       }
     }
 
-    .m-activityOwnerBlock__username {
-      display: none;
-    }
+    // .m-activityOwnerBlock__username {
+    //   display: none;
+    // }
     .m-activityOwnerBlock__right {
       display: none;
     }

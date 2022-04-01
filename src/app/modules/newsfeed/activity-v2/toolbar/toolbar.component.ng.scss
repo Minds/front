@@ -249,6 +249,9 @@
       .m-tipButton {
         margin-top: 0;
       }
+      @media screen and (max-width: $max-mobile) {
+        display: none;
+      }
     }
 
     ::ng-deep m-activityV2__boostButton {
@@ -292,6 +295,9 @@
             border: 0;
           }
         }
+      }
+      @media screen and (max-width: $max-mobile) {
+        display: none;
       }
     }
   }

@@ -12,6 +12,10 @@
       font-size: 20px;
     }
 
+    .m-channel--badges li:last-child {
+      padding-right: 0;
+    }
+
     @media screen and (max-width: $max-mobile) {
       /* prevent badges from shown behind right container */
       overflow: visible !important;
