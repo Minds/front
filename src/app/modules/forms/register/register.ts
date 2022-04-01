@@ -16,7 +16,6 @@ import {
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import {
   PopoverComponent,
@@ -26,6 +25,7 @@ import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
+import { RegexService } from '../../../common/services/regex.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -70,9 +70,9 @@ export class RegisterForm {
     public client: Client,
     fb: FormBuilder,
     public zone: NgZone,
-    private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
-    private usernameValidator: UsernameValidator
+    private usernameValidator: UsernameValidator,
+    regex: RegexService
   ) {
     this.form = fb.group(
       {
@@ -85,7 +85,10 @@ export class RegisterForm {
           ],
           [this.usernameValidator.existingUsernameValidator()],
         ],
-        email: ['', [Validators.required, Validators.email]],
+        email: [
+          '',
+          [Validators.required, Validators.pattern(regex.getRegex('mail'))],
+        ],
         password: [
           '',
           [
