@@ -46,6 +46,12 @@ m-toggle {
       @include m-theme() {
         background: themed($m-blue);
       }
+
+      &:hover {
+        @include m-theme() {
+          background: themed($m-link--hover);
+        }
+      }
     }
 
     &.m-toggle__switch--off {
