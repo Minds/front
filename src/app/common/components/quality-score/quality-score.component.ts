@@ -1,4 +1,10 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Session } from '../../../services/session';
 import { QualityScoreService } from './quality-score.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -35,14 +41,12 @@ export class QualityScoreComponent implements OnInit {
 
   constructor(
     private session: Session,
-    private qualityScoreService: QualityScoreService
+    private qualityScoreService: QualityScoreService,
+    private cd: ChangeDetectorRef
   ) {}
 
-  async ngOnInit() {
-    await this.setQualityScoreAsync();
-    this.setColor();
-    this.formatQualityScore();
-    this.inProgress = false;
+  ngOnInit() {
+    this.loadQualityScoreAsync();
   }
 
   /**
@@ -75,9 +79,21 @@ export class QualityScoreComponent implements OnInit {
    * Updates the quality score property value
    * @private
    */
-  private async setQualityScoreAsync(): Promise<void> {
-    this.qualityScore = await this.qualityScoreService
-      .getUserQualityScore(this.targetUser.guid)
-      .toPromise();
+  private async loadQualityScoreAsync(): Promise<void> {
+    this.inProgress = true;
+    try {
+      this.qualityScore = await this.qualityScoreService
+        .getUserQualityScore(this.targetUser.guid)
+        .toPromise();
+      this.setColor();
+      this.formatQualityScore();
+    } catch (err) {
+      // ?
+    } finally {
+      this.inProgress = false;
+      // Ensure change detection has happened
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

@@ -87,6 +87,9 @@ export class SidebarMoreComponent implements OnInit, OnDestroy {
   }
 
   async buyTokens(): Promise<void> {
+    if (!this.web3WalletService.checkDeviceIsSupported()) {
+      return null;
+    }
     await this.web3WalletService.getCurrentWallet(true);
     await this.buyTokensModalService.open();
   }
