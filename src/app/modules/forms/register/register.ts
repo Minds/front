@@ -25,7 +25,6 @@ import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
-import { RegexService } from '../../../common/services/regex.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
