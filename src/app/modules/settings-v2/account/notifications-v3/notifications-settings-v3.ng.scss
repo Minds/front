@@ -6,6 +6,13 @@
     margin-bottom: 100px; // avoid overlap of mobile bottom bars
   }
 
+  .m-pushNotifSettings__pushNotificationEnablingFailed {
+    margin-top: $minds-margin;
+    @include m-theme() {
+      color: themed($m-alert);
+    }
+  }
+
   .m-pushNotifSettings__optionContainer {
     display: flex;
     flex-flow: column nowrap;

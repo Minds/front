@@ -11,25 +11,33 @@
 </m-settingsV2__header>
 <m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(initializing$ | async)">
-  <m-button
-    (onAction)="onEnablePushNotifications()"
-    solid="true"
-    color="blue"
-    *ngIf="!(pushNotificationsEnabled$ | async)"
-  >
-    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__ENABLE"
-      >Enable Notifications for this device</span
+  <ng-container *ngIf="pushNotificationsSupported$ | async">
+    <m-button
+      (onAction)="onEnablePushNotifications()"
+      solid="true"
+      color="blue"
+      *ngIf="!(pushNotificationsEnabled$ | async)"
     >
-  </m-button>
-  <m-button
-    (onAction)="onDisablePushNotifications()"
-    color="red"
-    *ngIf="pushNotificationsEnabled$ | async"
-  >
-    <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__DISABLE"
-      >Disable Notifications for this device</span
+      <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__ENABLE"
+        >Enable Notifications for this device</span
+      >
+    </m-button>
+    <m-button
+      (onAction)="onDisablePushNotifications()"
+      color="red"
+      *ngIf="pushNotificationsEnabled$ | async"
     >
-  </m-button>
+      <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__DISABLE"
+        >Disable Notifications for this device</span
+      >
+    </m-button>
+    <p
+      class="m-pushNotifSettings__pushNotificationEnablingFailed"
+      *ngIf="notificationEnablingError$"
+    >
+      {{ notificationEnablingError$ | async }}
+    </p>
+  </ng-container>
 
   <div
     class="

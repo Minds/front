@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { PushNotificationService } from './../../../../../services/push-notification.service';
 import { NotificationsSettingsV2Service } from '../notifications-settings-v3.service';
@@ -38,6 +38,8 @@ export class SettingsV2PushNotificationsV3Component
 
   // holds array of toggles
   private toggles: PushNotificationToggleType[] = [];
+
+  private notificationEnablingError$ = new BehaviorSubject('');
 
   // text to accompany option - manually add if adding more opts.
   private subtextMap = {
@@ -131,10 +133,31 @@ export class SettingsV2PushNotificationsV3Component
   }
 
   /**
+   * does the browser support push notifs?
+   */
+  get pushNotificationsSupported$() {
+    return of(this.pushNotificationService.supportsPushNotifications);
+  }
+
+  /**
    * user wants to enable push notifications
    */
-  public onEnablePushNotifications() {
-    this.pushNotificationService.requestSubscription();
+  public async onEnablePushNotifications() {
+    this.notificationEnablingError$.next('');
+    try {
+      await this.pushNotificationService.requestSubscription();
+    } catch (e) {
+      console.error(e);
+      switch (e?.name || e?.message) {
+        case 'NotAllowedError':
+          this.notificationEnablingError$.next('Permission denied');
+          break;
+        case 'timeout':
+        default:
+          this.notificationEnablingError$.next('Something went wrong');
+          break;
+      }
+    }
   }
 
   /**

@@ -6,6 +6,17 @@ import { Client } from './api';
 import { Session } from './session';
 import { map } from 'rxjs/operators';
 
+const runWithTimeout = (fn: () => Promise<any>, timeout: number) => {
+  return Promise.race([
+    fn(),
+    new Promise((_resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('timeout'));
+      }, timeout);
+    }),
+  ]);
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,6 +38,10 @@ export class PushNotificationService {
     );
   }
 
+  get supportsPushNotifications() {
+    return this.swPush.isEnabled;
+  }
+
   /**
    * has the user provided access to push notifs?
    */
@@ -38,25 +53,24 @@ export class PushNotificationService {
    * Subscribes to Web Push Notifications, after requesting and receiving user permission
    * @returns { Promise<void> }
    */
-  async requestSubscription() {
-    if (!this.swPush.isEnabled) {
-      console.log('Service worker unavailable');
-      return null;
-    }
+  requestSubscription() {
+    return runWithTimeout(async () => {
+      debugger;
+      if (!this.swPush.isEnabled) {
+        console.log('Service worker unavailable');
+        return null;
+      }
 
-    if (!this.session.getLoggedInUser()) {
-      console.log('User not logged in');
-      return null;
-    }
+      if (!this.session.getLoggedInUser()) {
+        console.log('User not logged in');
+        return null;
+      }
 
-    try {
       const pushSubscription = await this.swPush.requestSubscription({
         serverPublicKey: this.config.get('vapid_key'),
       });
-      this.registerToken(pushSubscription);
-    } catch (err) {
-      console.error('Could not subscribe due to:', err);
-    }
+      return this.registerToken(pushSubscription);
+    }, 5000);
   }
 
   /**
