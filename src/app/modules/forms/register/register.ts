@@ -186,7 +186,14 @@ export class RegisterForm {
           this.session.logout();
         } else if (e.status === 'error') {
           // two factor?
-          this.errorMessage = e.message;
+          switch (e?.message) {
+            case 'registration:notemail':
+              this.errorMessage = 'Invalid Email';
+              break;
+            default:
+              this.errorMessage = e.message ?? 'An unknown error has occurred';
+          }
+
           this.session.logout();
         } else {
           this.errorMessage = 'Sorry, there was an error. Please try again.';
