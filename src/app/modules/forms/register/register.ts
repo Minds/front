@@ -71,8 +71,7 @@ export class RegisterForm {
     fb: FormBuilder,
     public zone: NgZone,
     private routerHistoryService: RouterHistoryService,
-    private usernameValidator: UsernameValidator,
-    regex: RegexService
+    private usernameValidator: UsernameValidator
   ) {
     this.form = fb.group(
       {
@@ -85,10 +84,7 @@ export class RegisterForm {
           ],
           [this.usernameValidator.existingUsernameValidator()],
         ],
-        email: [
-          '',
-          [Validators.required, Validators.pattern(regex.getRegex('mail'))],
-        ],
+        email: ['', [Validators.required, Validators.email]],
         password: [
           '',
           [
