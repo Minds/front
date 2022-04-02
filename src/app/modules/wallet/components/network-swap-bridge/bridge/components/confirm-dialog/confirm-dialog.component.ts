@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { PolygonService } from '../../../../tokens/polygon/polygon.service';
@@ -7,6 +7,7 @@ import {
   Network,
   NetworkSwitchService,
 } from '../../../../../../../common/services/network-switch-service';
+import { SkaleService } from '../../../skale/skale.service';
 
 @Component({
   selector: 'm-networkConfirmation',
@@ -18,11 +19,19 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   to: Network;
   from: Network;
 
+  public service;
+
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    public polygonService: PolygonService,
-    private readonly networkSwitchService: NetworkSwitchService
-  ) {}
+    private readonly networkSwitchService: NetworkSwitchService,
+    public injector: Injector
+  ) {
+    if (Number(this.networkBridgeService.selectedBridge$.value.id) === 80001) {
+      this.service = <PolygonService>this.injector.get(PolygonService);
+    } else {
+      this.service = <SkaleService>this.injector.get(SkaleService);
+    }
+  }
 
   ngOnInit(): void {
     if (
@@ -40,9 +49,9 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
     const amount = ethers.utils.parseEther(this.amount);
     let result: boolean;
     if (this.to.id === this.networkSwitchService.networks.mainnet.id) {
-      result = await this.polygonService.withdraw(amount);
+      result = await this.service.withdraw(amount);
     } else {
-      result = await this.polygonService.deposit(amount);
+      result = await this.service.deposit(amount);
     }
     if (result) {
       this.navigate();

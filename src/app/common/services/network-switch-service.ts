@@ -101,25 +101,6 @@ export class NetworkSwitchService implements OnDestroy {
       swappable: false,
       isFromNetwork: true,
     };
-    // eth testnet
-    // this.networks.goerli = {
-    //   id: '0x5',
-    //   siteName: 'Polygon',
-    //   networkName: 'Goerli',
-    //   description: 'Goerli Testnet.',
-    //   logoPath: 'assets/ext/ethereum.png',
-    //   swappable: true,
-    // };
-    // // polygon testnet
-    // mumbai: {
-    //   id: '0x13881',
-    //   siteName: 'Mumbai',
-    //   networkName: 'Mumbai',
-    //   description: "Polygon's testnet.",
-    //   logoPath: 'assets/ext/polygon.png',
-    //   swappable: false,
-    // },
-
     // POLYGON
     if (this.features.has('polygon')) {
       /**

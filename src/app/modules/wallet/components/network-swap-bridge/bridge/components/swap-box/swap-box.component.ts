@@ -8,6 +8,9 @@ import { PolygonService } from '../../../../tokens/polygon/polygon.service';
 import { BridgeStep, InputBalance } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { ethers } from 'ethers';
+import { SkaleService } from '../../../skale/skale.service';
+import { Injector } from '@angular/core';
+
 @Component({
   selector: 'm-networkSwapBox',
   templateUrl: 'swap-box.component.html',
@@ -30,6 +33,10 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
 
   public readonly POLYGON_NETWORK: Network;
   public readonly MAINNET_NETWORK: Network;
+  public readonly SKALE_NETWORK: Network;
+
+  // handle injected service
+  public service;
 
   // handle of networks
   fromNetwork: Network;
@@ -53,15 +60,21 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
     private readonly networkSwitchService: NetworkSwitchService,
-    public service: PolygonService
+    private injector: Injector
   ) {
+    if (Number(this.networkBridgeService.selectedBridge$.value.id) === 80001) {
+      this.service = <PolygonService>this.injector.get(PolygonService);
+    } else {
+      this.service = <SkaleService>this.injector.get(SkaleService);
+    }
     this.MAINNET_NETWORK = this.networkSwitchService.networks.mainnet;
     this.POLYGON_NETWORK = this.networkSwitchService.networks.polygon;
+    this.SKALE_NETWORK = this.networkSwitchService.networks.skale;
   }
 
   async ngOnInit(): Promise<void> {
     this.fromNetwork = this.MAINNET_NETWORK;
-    this.receivingNetwork = this.POLYGON_NETWORK;
+    this.receivingNetwork = this.networkBridgeService.selectedBridge$.value;
 
     this.form = new FormGroup({
       amount: new FormControl(''),
@@ -132,13 +145,10 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
    */
   public async swapNetworks() {
     this.amount = '0';
-    if (this.fromNetwork.isFromNetwork) {
-      this.fromNetwork = this.POLYGON_NETWORK;
-      this.receivingNetwork = this.MAINNET_NETWORK;
-    } else {
-      this.fromNetwork = this.MAINNET_NETWORK;
-      this.receivingNetwork = this.POLYGON_NETWORK;
-    }
+    [this.fromNetwork, this.receivingNetwork] = [
+      this.receivingNetwork,
+      this.fromNetwork,
+    ];
   }
 
   /**

@@ -14,7 +14,7 @@
         <span
           class="m-networkSwapBox__container-box-chain mdl-cell mdl-cell--4-col"
         >
-          {{ fromNetwork.networkName }} Chain</span
+          {{ fromNetwork.siteName }} Chain</span
         >
         <span class="m-networkSwapBox__container-box-subtitle"
           >Balance: {{ (currentNetworkBalance | number) ?? '0'}} Minds</span
@@ -53,7 +53,7 @@
       <div class="mdl-cell mdl-cell--12-col m-networkSwapBox__container-row">
         <span
           class="m-networkSwapBox__container-box-chain mdl-cell mdl-cell--4-col"
-          >{{ receivingNetwork.networkName }} Chain</span
+          >{{ receivingNetwork.siteName }} Chain</span
         >
         <span class="m-networkSwapBox__container-box-subtitle"
           >Balance: {{ (receivingNetworkBalance | number) ?? '0'}} Minds</span

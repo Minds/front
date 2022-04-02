@@ -28,13 +28,13 @@
     <m-button
       color="blue"
       (onAction)="transfer()"
-      [disabled]="polygonService.isLoading$ | async"
+      [disabled]="service.isLoading$ | async"
     >
       <ng-container i18n="verb|@@M__ACTION__CANCEL">
         <m-loadingSpinner
-          [inProgress]="polygonService.isLoading$ | async"
+          [inProgress]="service.isLoading$ | async"
         ></m-loadingSpinner>
-        <span *ngIf="!(polygonService.isLoading$ | async)">
+        <span *ngIf="!(service.isLoading$ | async)">
           Confirm Transfer
         </span>
       </ng-container>

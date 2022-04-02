@@ -55,6 +55,14 @@ export class SkaleService {
     );
   }
 
+  // TODO
+  public async getBalances() {
+    return {
+      root: 0,
+      child: 0,
+    };
+  }
+
   /**
    * Gets SKALE token balance.
    * @returns { Promise<number> }

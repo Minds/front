@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
 import { PolygonService } from '../../../../tokens/polygon/polygon.service';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { Network } from '../../../../../../../common/services/network-switch-service';
+import { SkaleService } from '../../../skale/skale.service';
 
 @Component({
   selector: 'm-networkApproval',
@@ -15,10 +16,18 @@ export class NetworkBridgeApprovalComponent implements OnInit {
   from: Network;
   to: Network;
 
+  public service;
+
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    private readonly polygonService: PolygonService
-  ) {}
+    public injector: Injector
+  ) {
+    if (Number(this.networkBridgeService.selectedBridge$.value.id) === 80001) {
+      this.service = <PolygonService>this.injector.get(PolygonService);
+    } else {
+      this.service = <SkaleService>this.injector.get(SkaleService);
+    }
+  }
 
   ngOnInit(): void {
     if (
@@ -43,12 +52,12 @@ export class NetworkBridgeApprovalComponent implements OnInit {
   }
 
   async approve() {
-    await this.polygonService.approve(ethers.utils.parseUnits(this.amount, 18));
+    await this.service.approve(ethers.utils.parseUnits(this.amount, 18));
     this.navigate();
   }
 
   async approveMax() {
-    await this.polygonService.approve();
+    await this.service.approve();
     this.navigate();
   }
 }
