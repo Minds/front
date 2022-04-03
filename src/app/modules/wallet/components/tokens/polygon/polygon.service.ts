@@ -25,54 +25,8 @@ import { JsonRpcProviderMemoize } from './utils/JsonUrlProviderMemoize';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
-const MAINNET_RPC_URL =
-  'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
-const POLYGON_RPC_URL = 'https://rpc-endpoints.superfluid.dev/mumbai';
-
-const FROM_POLYGON_BLOCK = 22642885;
-const FROM_MAINNET_BLOCK = 5946883;
-
-const MAINNET_CHAIN_ID = 5;
-const POLYGON_CHAIN_ID = 80001;
-
-const MIND_TOKEN_ADDRESS = '0x8bda9f5c33fbcb04ea176ea5bc1f5102e934257f'; // Goerli
-const MIND_CHILD_TOKEN_ADDRESS = '0x22E993D9108DbDe9F32553C3fD0A404aCD2B7150'; // Mumbai
-const ERC20_PREDICATE_ADDRESS = '0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34';
-
-const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
-const ERC20_PREDICATE_ABI = [
-  'event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)',
-];
-const ROOT_CHAIN_MANAGER_ABI = [
-  'function depositFor(address user, address rootToken, bytes depositData)',
-  'function exit(bytes inputData)',
-  'function processedExits(bytes32) view returns (bool)',
-  'function tokenToType(address) view returns (bytes32)',
-  'function typeToPredicate(bytes32) view returns (address)',
-];
-
-const ERC20_ABI = [
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-  'function balanceOf(address account) view returns (uint256)',
-  'function allowance(address owner, address spender) view returns (uint256)',
-];
-
-const ROOT_CHAIN_ABI = [
-  'function currentHeaderBlock() view returns (uint256)',
-  'function getLastChildBlock() view returns (uint256)',
-];
-
 use(Web3ClientPlugin);
 setProofApi('https://apis.matic.network/');
-
-const MAINNET_PROVIDER = new JsonRpcProviderMemoize(
-  MAINNET_RPC_URL,
-  MAINNET_CHAIN_ID
-);
-const POLYGON_PROVIDER = new JsonRpcProviderMemoize(
-  POLYGON_RPC_URL,
-  POLYGON_CHAIN_ID
-);
 
 @Injectable({ providedIn: 'root' })
 export class PolygonService {
@@ -83,6 +37,24 @@ export class PolygonService {
 
   public userConfig;
 
+  public constants;
+  public MAINNET_PROVIDER;
+  public POLYGON_PROVIDER;
+
+  public FROM_POLYGON_BLOCK;
+  public FROM_MAINNET_BLOCK;
+  public MAINNET_CHAIN_ID;
+  public MAINNET_RPC_URL;
+  public POLYGON_CHAIN_ID;
+  public MIND_TOKEN_ADDRESS;
+  public MIND_CHILD_TOKEN_ADDRESS;
+  public ERC20_PREDICATE_ADDRESS;
+  public ADDRESS_ZERO;
+  public ERC20_ABI;
+  public ERC20_PREDICATE_ABI;
+  public ROOT_CHAIN_MANAGER_ABI;
+  public ROOT_CHAIN_ABI;
+
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
@@ -92,6 +64,31 @@ export class PolygonService {
     config: ConfigsService
   ) {
     this.userConfig = config.get('user');
+    this.constants = config.get('blockchain').polygon.constants;
+
+    this.FROM_POLYGON_BLOCK = this.constants.FROM_POLYGON_BLOCK;
+    this.FROM_MAINNET_BLOCK = this.constants.FROM_MAINNET_BLOCK;
+    this.MAINNET_CHAIN_ID = this.constants.MAINNET_CHAIN_ID;
+    this.MAINNET_RPC_URL = this.constants.MAINNET_RPC_URL;
+    this.POLYGON_CHAIN_ID = this.constants.POLYGON_CHAIN_ID;
+    this.MIND_TOKEN_ADDRESS = this.constants.MIND_TOKEN_ADDRESS;
+    this.MIND_CHILD_TOKEN_ADDRESS = this.constants.MIND_CHILD_TOKEN_ADDRESS;
+    this.ERC20_PREDICATE_ADDRESS = this.constants.ERC20_PREDICATE_ADDRESS;
+    this.ADDRESS_ZERO = this.constants.ADDRESS_ZERO;
+    this.ERC20_ABI = this.constants.ERC20_ABI;
+    this.ERC20_PREDICATE_ABI = this.constants.ERC20_PREDICATE_ABI;
+    this.ROOT_CHAIN_MANAGER_ABI = this.constants.ROOT_CHAIN_MANAGER_ABI;
+    this.ROOT_CHAIN_ABI = this.constants.ROOT_CHAIN_ABI;
+
+    this.MAINNET_PROVIDER = new JsonRpcProviderMemoize(
+      this.MAINNET_RPC_URL,
+      this.MAINNET_CHAIN_ID
+    );
+
+    this.POLYGON_PROVIDER = new JsonRpcProviderMemoize(
+      this.constants.POLYGON_RPC_URL,
+      this.constants.POLYGON_CHAIN_ID
+    );
   }
 
   public async initialize() {
@@ -183,8 +180,8 @@ export class PolygonService {
     const posClient = await this.getPOSClientRoot();
     const rootChainContract = new ethers.Contract(
       posClient.client.config.rootChain,
-      ROOT_CHAIN_ABI,
-      MAINNET_PROVIDER
+      this.ROOT_CHAIN_ABI,
+      this.MAINNET_PROVIDER
     );
     const block: BigNumber = await rootChainContract.getLastChildBlock();
     return block.toNumber();
@@ -197,7 +194,7 @@ export class PolygonService {
    */
   public async approve(amount?: BigNumber): Promise<any> {
     const posClient = await this.getPOSClientRoot();
-    const erc20Contract = posClient.erc20(MIND_TOKEN_ADDRESS, true);
+    const erc20Contract = posClient.erc20(this.MIND_TOKEN_ADDRESS, true);
     let approveTx: ITransactionWriteResult;
     if (amount) {
       approveTx = await erc20Contract.approve(amount.toString());
@@ -227,7 +224,7 @@ export class PolygonService {
 
     try {
       const tx = await posClient
-        .erc20(MIND_TOKEN_ADDRESS, true)
+        .erc20(this.MIND_TOKEN_ADDRESS, true)
         .deposit(amount.toString(), userAddress);
       const receipt = await tx.getReceipt();
       const record: DepositRecord = {
@@ -268,7 +265,7 @@ export class PolygonService {
     const posClientChild = await this.getPOSClientChild();
 
     const erc20ChildToken = posClientChild.erc20(
-      MIND_CHILD_TOKEN_ADDRESS,
+      this.MIND_CHILD_TOKEN_ADDRESS,
       false
     );
     this.isLoading$.next(true);
@@ -300,7 +297,7 @@ export class PolygonService {
   public async exit(burnTxHash: string) {
     const posClient = await this.getPOSClientRoot();
 
-    const erc20RootToken = posClient.erc20(MIND_TOKEN_ADDRESS, true);
+    const erc20RootToken = posClient.erc20(this.MIND_TOKEN_ADDRESS, true);
     const result = await erc20RootToken.withdrawExitFaster(burnTxHash);
     const txReceipt = await result.getReceipt();
 
@@ -337,17 +334,17 @@ export class PolygonService {
   public async getDepositHistory() {
     const from = await this.web3Wallet.provider.getSigner().getAddress();
     const ERC20PredicateContract = new ethers.Contract(
-      ERC20_PREDICATE_ADDRESS,
-      ERC20_PREDICATE_ABI,
-      MAINNET_PROVIDER
+      this.ERC20_PREDICATE_ADDRESS,
+      this.ERC20_PREDICATE_ABI,
+      this.MAINNET_PROVIDER
     );
     const depositEvents = await ERC20PredicateContract.queryFilter(
       ERC20PredicateContract.filters.LockedERC20(
         from,
         null,
-        MIND_TOKEN_ADDRESS
+        this.MIND_TOKEN_ADDRESS
       ),
-      FROM_MAINNET_BLOCK
+      this.FROM_MAINNET_BLOCK
     );
     return depositEvents.map(
       (event): DepositRecord => {
@@ -367,31 +364,33 @@ export class PolygonService {
 
   public async getWithdrawHistory() {
     const from = await this.web3Wallet.provider.getSigner().getAddress();
-    const multicallProvider = new providers.MulticallProvider(MAINNET_PROVIDER);
+    const multicallProvider = new providers.MulticallProvider(
+      this.MAINNET_PROVIDER
+    );
     const posClient = await this.getPOSClientRoot();
     const lastChildBlock = await this.getLastChildBlock();
     const childTokenContract = new ethers.Contract(
-      MIND_CHILD_TOKEN_ADDRESS,
-      ERC20_ABI,
-      POLYGON_PROVIDER
+      this.MIND_CHILD_TOKEN_ADDRESS,
+      this.ERC20_ABI,
+      this.POLYGON_PROVIDER
     );
     const rootTokenContract = new ethers.Contract(
-      MIND_TOKEN_ADDRESS,
-      ERC20_ABI,
-      MAINNET_PROVIDER
+      this.MIND_TOKEN_ADDRESS,
+      this.ERC20_ABI,
+      this.MAINNET_PROVIDER
     );
     const withdrawalEvents = await childTokenContract.queryFilter(
-      childTokenContract.filters.Transfer(from, ADDRESS_ZERO),
-      FROM_POLYGON_BLOCK
+      childTokenContract.filters.Transfer(from, this.ADDRESS_ZERO),
+      this.FROM_POLYGON_BLOCK
     );
     const exitEvents = await rootTokenContract.queryFilter(
-      rootTokenContract.filters.Transfer(ERC20_PREDICATE_ADDRESS, from),
-      FROM_MAINNET_BLOCK
+      rootTokenContract.filters.Transfer(this.ERC20_PREDICATE_ADDRESS, from),
+      this.FROM_MAINNET_BLOCK
     );
 
     const rootChainManager = new ethers.Contract(
       posClient.client.config.rootChainManager,
-      ROOT_CHAIN_MANAGER_ABI,
+      this.ROOT_CHAIN_MANAGER_ABI,
       multicallProvider
     );
     const records = await Promise.all(
@@ -462,20 +461,20 @@ export class PolygonService {
     return {
       root: await rootToken.balanceOf(from),
       child: await childToken.balanceOf(from),
-      approved: await rootToken.allowance(from, ERC20_PREDICATE_ADDRESS),
+      approved: await rootToken.allowance(from, this.ERC20_PREDICATE_ADDRESS),
     };
   }
 
   private getTokenContracts() {
     const rootToken = new ethers.Contract(
-      MIND_TOKEN_ADDRESS,
-      ERC20_ABI,
-      MAINNET_PROVIDER
+      this.MIND_TOKEN_ADDRESS,
+      this.ERC20_ABI,
+      this.MAINNET_PROVIDER
     );
     const childToken = new ethers.Contract(
-      MIND_CHILD_TOKEN_ADDRESS,
-      ERC20_ABI,
-      POLYGON_PROVIDER
+      this.MIND_CHILD_TOKEN_ADDRESS,
+      this.ERC20_ABI,
+      this.POLYGON_PROVIDER
     );
     return {
       rootToken,
@@ -487,16 +486,16 @@ export class PolygonService {
     await this.web3Wallet.initializeProvider();
     const signer = this.web3Wallet.getSigner();
     const from = await signer.getAddress();
-    await this.checkConnectedNetwork(MAINNET_CHAIN_ID);
-    return this.getPOSClient(from, signer, POLYGON_PROVIDER);
+    await this.checkConnectedNetwork(this.MAINNET_CHAIN_ID);
+    return this.getPOSClient(from, signer, this.POLYGON_PROVIDER);
   }
 
   private async getPOSClientChild() {
     await this.web3Wallet.initializeProvider();
     const signer = this.web3Wallet.getSigner();
     const from = await signer.getAddress();
-    await this.checkConnectedNetwork(POLYGON_CHAIN_ID);
-    return this.getPOSClient(from, POLYGON_PROVIDER, signer);
+    await this.checkConnectedNetwork(this.POLYGON_CHAIN_ID);
+    return this.getPOSClient(from, this.POLYGON_PROVIDER, signer);
   }
 
   private async checkConnectedNetwork(chainId: number) {
@@ -530,7 +529,7 @@ export class PolygonService {
     childProvider: ethers.providers.JsonRpcProvider | ethers.Signer
   ) {
     // @ts-ignore
-    const isProd = MAINNET_CHAIN_ID === 1;
+    const isProd = this.MAINNET_CHAIN_ID === 1;
     const posClient = new POSClient();
     await posClient.init({
       log: !isProd,
