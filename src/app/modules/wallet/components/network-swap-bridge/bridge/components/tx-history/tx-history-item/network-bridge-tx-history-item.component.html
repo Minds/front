@@ -21,19 +21,24 @@
     class="mdl-cell mdl-cell--7-col m-networkBridgeTxHistoryItem-container-text "
   >
     <div>
-      <span class="m-networkBridgeTxHistoryItem-container-text-bold"
-        >Withdraw</span
-      >
+      <span class="m-networkBridgeTxHistoryItem-container-text-bold">{{
+        item.__typename
+      }}</span>
       <span class="m-networkBridgeTxHistoryItem-container-text-light">
-        · 29th Jan 2022
+        · {{ formatDate(item.timestamp) }}
       </span>
     </div>
     <span class="m-networkBridgeTxHistoryItem-container-text-light">
-      Success · From Mumbai to Goerli
+      {{ item.status | titlecase }} ·
+      {{
+        isDeposit(item) ? 'From Mainnet to Polygon' : 'From Polygon to Mainnet'
+      }}
     </span>
   </div>
   <div class="mdl-cell mdl-cell--2-col">
-    <span class="m-networkBridgeTxHistoryItem-container-amount">100 Minds</span>
+    <span class="m-networkBridgeTxHistoryItem-container-amount"
+      >{{ formatAmount(item.amount) }} Minds</span
+    >
   </div>
   <div
     class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"

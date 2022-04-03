@@ -68,6 +68,13 @@ import { SharedModule } from './common/shared.module';
 import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
+import {
+  ApolloModule,
+  APOLLO_NAMED_OPTIONS,
+  APOLLO_OPTIONS,
+} from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 @NgModule({
   bootstrap: [Minds],
@@ -123,6 +130,7 @@ import { CompassModule } from './modules/compass/compass.module';
     SharedModule,
     MessengerV2Module,
     CompassModule,
+    ApolloModule,
 
     //last due to :username route
     AppRoutingModule,
@@ -135,6 +143,28 @@ import { CompassModule } from './modules/compass/compass.module';
       useFactory: configs => () => configs.loadFromRemote(),
       deps: [ConfigsService],
       multi: true,
+    },
+    {
+      provide: APOLLO_NAMED_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          pendingTransactions: {
+            cache: new InMemoryCache(),
+            link: httpLink.create({
+              uri:
+                'https://api.thegraph.com/subgraphs/name/carlosfebres/polygon-pos-bridge-polygon',
+            }),
+          },
+          allTransactions: {
+            cache: new InMemoryCache(),
+            link: httpLink.create({
+              uri:
+                'https://api.thegraph.com/subgraphs/name/carlosfebres/polygon-pos-bridge',
+            }),
+          },
+        };
+      },
+      deps: [HttpLink],
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

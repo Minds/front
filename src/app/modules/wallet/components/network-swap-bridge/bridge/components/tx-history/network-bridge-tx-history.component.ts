@@ -3,8 +3,9 @@ import { ConfigsService } from '../../../../../../../common/services/configs.ser
 import { AbstractSubscriberComponent } from '../../../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { RecordStatus } from '../../constants/constants.types';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Apollo, ApolloBase, gql } from 'apollo-angular';
 
 type RecordStatusText = 'none' | 'action_required' | 'pending';
 
@@ -15,24 +16,24 @@ function mapStatusText(text: RecordStatusText): RecordStatus {
   return RecordStatus.PENDING;
 }
 
-// For Testing purposes
-const txs = [
-  {
-    status: RecordStatus.ACTION_REQUIRED,
-  },
-  {
-    status: RecordStatus.PENDING,
-  },
-  {
-    status: RecordStatus.SUCCESS,
-  },
-  {
-    status: RecordStatus.SUCCESS,
-  },
-  {
-    status: RecordStatus.SUCCESS,
-  },
-];
+const GET_TRANSACTIONS_BY_AUTHOR = gql`
+  query GetTransactionsByAuthor($id: ID!) {
+    wallets(where: { id: $id }) {
+      deposits {
+        id
+        status
+        amount
+        timestamp
+      }
+      withdraws {
+        id
+        status
+        amount
+        timestamp
+      }
+    }
+  }
+`;
 
 @Component({
   selector: 'm-networkBridgeTxHistory',
@@ -51,31 +52,58 @@ export class NetworkBridgeTxHistoryModalComponent
   // selected bridge entity
   public entity;
 
+  public userConfig;
+
+  private apollo: ApolloBase;
+
   // selected tab option
   public filterState$ = new BehaviorSubject<RecordStatusText>('none');
 
-  public items$ = new BehaviorSubject(txs);
+  public items$ = new BehaviorSubject([]);
 
   public filteredItems$ = combineLatest([this.filterState$, this.items$]).pipe(
     map(state => {
       const [filter, items] = state;
+
       if (filter === 'none') {
         return items;
       }
-      const status = mapStatusText(filter);
-      return items.filter(item => item.status === status);
+      // const status = mapStatusText(filter);
+      return items.filter(item => item.status.toLowerCase() === filter);
     })
   );
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private apolloProvider: Apollo
   ) {
     super();
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.userConfig = configs.get('user');
+    this.apollo = this.apolloProvider.use('allTransactions');
   }
+
+  private querySubscription: Subscription;
+
   ngOnInit(): void {
     this.entity = this.networkBridgeService.selectedBridge$.value;
+
+    this.querySubscription = this.apollo
+      .watchQuery({
+        query: GET_TRANSACTIONS_BY_AUTHOR,
+        variables: {
+          id: this.userConfig.eth_wallet.toLowerCase(),
+        },
+        pollInterval: 5000,
+      })
+      .valueChanges.subscribe(({ data }: any) => {
+        const allTx = data.wallets[0].deposits.concat(
+          data.wallets[0].withdraws
+        );
+        allTx.sort((dateA, dateB) => dateB.timestamp - dateA.timestamp);
+        this.items$.next(allTx);
+      });
   }
 
   // Dismiss intent.
@@ -88,5 +116,9 @@ export class NetworkBridgeTxHistoryModalComponent
    */
   setModalData({ onDismissIntent }) {
     this.onDismissIntent = onDismissIntent || (() => {});
+  }
+
+  ngOnDestroy() {
+    this.querySubscription.unsubscribe();
   }
 }

@@ -1,6 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ethers } from 'ethers';
 import { RecordStatus } from '../../../constants/constants.types';
+import * as moment from 'moment';
 
+function mapTextToStatus(statusText) {
+  const auxEnum = Object.keys(RecordStatus).slice(5, 10);
+  const index = auxEnum.indexOf(statusText);
+  return index;
+}
 @Component({
   selector: 'm-networkBridgeTxHistoryItem',
   templateUrl: 'network-bridge-tx-history-item.component.html',
@@ -13,14 +20,26 @@ export class NetworkBridgeTxHistoryItemComponent implements OnInit {
   ngOnInit(): void {}
 
   isPendingAction(item): boolean {
-    return item.status === RecordStatus.PENDING;
+    return mapTextToStatus(item.status) === RecordStatus.PENDING;
   }
 
   isActionRequired(item): boolean {
-    return item.status === RecordStatus.ACTION_REQUIRED;
+    return mapTextToStatus(item.status) === RecordStatus.ACTION_REQUIRED;
   }
 
   isSuccess(item): boolean {
-    return item.status === RecordStatus.SUCCESS;
+    return mapTextToStatus(item.status) === RecordStatus.SUCCESS;
+  }
+
+  formatAmount(amount: number) {
+    return parseFloat(ethers.utils.formatEther(amount));
+  }
+
+  formatDate(timestamp: number) {
+    return moment(timestamp * 1000).format('Do MMM YYYY');
+  }
+
+  isDeposit(item) {
+    return item.__typename === 'Deposit';
   }
 }
