@@ -18,7 +18,11 @@ export class AuthService {
       endpoint += '/all';
     }
 
-    await this.pushNotificationService.unregisterToken();
+    try {
+      await this.pushNotificationService.unregisterToken();
+    } catch (e) {
+      console.error('[AuthService] failed to unregister token');
+    }
     await this.client.delete(endpoint);
     this.session.logout();
 
