@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Observable } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { PushNotificationService } from './../../../../../services/push-notification.service';
 import { NotificationsSettingsV2Service } from '../notifications-settings-v3.service';
@@ -127,22 +127,25 @@ export class SettingsV2PushNotificationsV3Component
 
   /**
    * do we have browser push notification permission
+   * @returns { Observable<boolean> }
    */
-  get pushNotificationsEnabled$() {
+  get pushNotificationsEnabled$(): Observable<boolean> {
     return this.pushNotificationService.enabled$;
   }
 
   /**
    * does the browser support push notifs?
+   * @returns { Observable<boolean> }
    */
-  get pushNotificationsSupported$() {
-    return of(this.pushNotificationService.supportsPushNotifications);
+  get pushNotificationsSupported$(): Observable<boolean> {
+    return this.pushNotificationService.supported$;
   }
 
   /**
    * user wants to enable push notifications
+   * @returns { Promise<void> }
    */
-  public async onEnablePushNotifications() {
+  public async onEnablePushNotifications(): Promise<void> {
     this.notificationEnablingError$.next('');
     try {
       await this.pushNotificationService.requestSubscription();
@@ -162,8 +165,13 @@ export class SettingsV2PushNotificationsV3Component
 
   /**
    * user wants to disable push notifications
+   * @returns { Promise<void> }
    */
-  public onDisablePushNotifications() {
-    this.pushNotificationService.cancelSubscription();
+  public async onDisablePushNotifications(): Promise<void> {
+    try {
+      await this.pushNotificationService.cancelSubscription();
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

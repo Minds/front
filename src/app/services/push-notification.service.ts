@@ -1,26 +1,17 @@
-import { BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { BehaviorSubject, Subscription, Observable, of } from 'rxjs';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { ConfigsService } from '../common/services/configs.service';
 import { Client } from './api';
 import { Session } from './session';
 import { map } from 'rxjs/operators';
 
-const runWithTimeout = (fn: () => Promise<any>, timeout: number) => {
-  return Promise.race([
-    fn(),
-    new Promise((_resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error('timeout'));
-      }, timeout);
-    }),
-  ]);
-};
-
 @Injectable({
   providedIn: 'root',
 })
-export class PushNotificationService {
+export class PushNotificationService implements OnDestroy {
+  private subscriptions: Subscription[] = [];
   private pushSubscription$: BehaviorSubject<
     PushSubscription
   > = new BehaviorSubject(undefined);
@@ -29,23 +20,37 @@ export class PushNotificationService {
     private client: Client,
     private swPush: SwPush,
     private config: ConfigsService,
-    private session: Session
+    private session: Session,
+    @Inject(PLATFORM_ID) private platformId
   ) {
-    this.swPush.messages.subscribe(this.onMessage);
-    this.session.userEmitter.subscribe(user => this.onUserChange(user));
-    this.swPush.subscription.subscribe(pushSubscription =>
-      this.pushSubscription$.next(pushSubscription)
+    if (isPlatformServer(platformId)) return;
+
+    this.subscriptions.push(
+      this.swPush.messages.subscribe(this.onMessage),
+      this.session.userEmitter.subscribe(user => this.onUserChange(user)),
+      this.swPush.subscription.subscribe(pushSubscription =>
+        this.pushSubscription$.next(pushSubscription)
+      )
     );
   }
 
-  get supportsPushNotifications() {
-    return this.swPush.isEnabled;
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
+  }
+
+  /**
+   * does the browser support push notifications?
+   * @returns { Observable<boolean> }
+   */
+  get supported$(): Observable<boolean> {
+    return of(this.swPush.isEnabled);
   }
 
   /**
    * has the user provided access to push notifs?
+   * @returns { Observable<boolean> }
    */
-  get enabled$() {
+  get enabled$(): Observable<boolean> {
     return this.pushSubscription$.pipe(map(sub => Boolean(sub)));
   }
 
@@ -53,31 +58,30 @@ export class PushNotificationService {
    * Subscribes to Web Push Notifications, after requesting and receiving user permission
    * @returns { Promise<void> }
    */
-  requestSubscription() {
+  async requestSubscription(): Promise<void> {
+    if (!this.swPush.isEnabled) {
+      console.log('[PushNotificationService] Service worker unavailable');
+      return null;
+    }
+
+    if (!this.session.getLoggedInUser()) {
+      console.log('[PushNotificationService] User not logged in');
+      return null;
+    }
+
     return runWithTimeout(async () => {
-      debugger;
-      if (!this.swPush.isEnabled) {
-        console.log('Service worker unavailable');
-        return null;
-      }
-
-      if (!this.session.getLoggedInUser()) {
-        console.log('User not logged in');
-        return null;
-      }
-
       const pushSubscription = await this.swPush.requestSubscription({
         serverPublicKey: this.config.get('vapid_key'),
       });
-      return this.registerToken(pushSubscription);
+      await this.registerToken(pushSubscription);
     }, 5000);
   }
 
   /**
    * user wants to disable push notifs
-   * @returns { Promise<boolean> }
+   * @returns { Promise<void> }
    */
-  async cancelSubscription() {
+  async cancelSubscription(): Promise<void> {
     return this.swPush?.unsubscribe();
   }
 
@@ -85,18 +89,21 @@ export class PushNotificationService {
    * unregisters push token from server
    * @returns { Promise<unknown> }
    */
-  async unregisterToken() {
+  async unregisterToken(): Promise<unknown> {
     if (!this.swPush.isEnabled) {
-      console.log('Service worker unavailable');
+      console.log('[PushNotificationService] Service worker unavailable');
       return null;
     }
 
     if (!this.session.getLoggedInUser()) {
-      console.log('User not logged in');
+      console.log('[PushNotificationService] User not logged in');
       return null;
     }
 
-    if (!this.pushSubscription$.getValue()) return;
+    if (!this.pushSubscription$.getValue()) {
+      console.log('[PushNotificationService] no subscription');
+      return null;
+    }
 
     const token = encodeURIComponent(
       btoa(JSON.stringify(this.pushSubscription$.getValue()))
@@ -107,8 +114,9 @@ export class PushNotificationService {
   /**
    * called when user changes
    * @param user
+   * @returns { void }
    */
-  private onUserChange(user: any) {
+  private onUserChange(user: any): void {
     if (user) {
       this.registerToken(this.pushSubscription$.getValue());
     }
@@ -117,27 +125,31 @@ export class PushNotificationService {
   /**
    * called when a new push message is received
    * @param message
+   * @returns { void }
    */
-  private onMessage(message: any) {
-    console.log('MESSAGE RECEIVED', message);
+  private onMessage(message: any): void {
+    console.log('[PushNotificationService] message received', message);
   }
 
   /**
    * registers push token to server
    * @returns { Promise<unknown> }
    */
-  private registerToken(pushSubscription: PushSubscription) {
+  private registerToken(pushSubscription: PushSubscription): Promise<unknown> {
     if (!this.swPush.isEnabled) {
-      console.log('Service worker unavailable');
+      console.log('[PushNotificationService] Service worker unavailable');
       return null;
     }
 
     if (!this.session.getLoggedInUser()) {
-      console.log('User not logged in');
+      console.log('[PushNotificationService] User not logged in');
       return null;
     }
 
-    if (!pushSubscription) return;
+    if (!pushSubscription) {
+      console.log('[PushNotificationService] no subscription');
+      return null;
+    }
 
     return this.client.post('api/v3/notifications/push/token', {
       service: 'webpush',
@@ -145,3 +157,20 @@ export class PushNotificationService {
     });
   }
 }
+
+/**
+ * runs a promise and fails after a timeout
+ * @param fn a function to run
+ * @param timeout in ms
+ * @returns
+ */
+const runWithTimeout = (fn: () => Promise<any>, timeout: number) => {
+  return Promise.race([
+    fn(),
+    new Promise((_resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('timeout'));
+      }, timeout);
+    }),
+  ]);
+};
