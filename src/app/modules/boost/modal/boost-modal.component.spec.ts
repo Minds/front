@@ -64,12 +64,6 @@ describe('BoostModalComponent', () => {
     })
   );
 
-  beforeAll(() => {
-    sessionMock.user = {
-      username: 'testuser',
-    };
-  });
-
   beforeEach(done => {
     fixture = TestBed.createComponent(BoostModalComponent);
     comp = fixture.componentInstance;
