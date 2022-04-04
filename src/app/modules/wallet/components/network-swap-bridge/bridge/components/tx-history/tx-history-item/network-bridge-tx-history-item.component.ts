@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
 import { RecordStatus } from '../../../constants/constants.types';
 import * as moment from 'moment';
+import { PolygonService } from '../../../../../../../../modules/wallet/components/tokens/polygon/polygon.service';
 
 function mapTextToStatus(statusText) {
   const auxEnum = Object.keys(RecordStatus).slice(5, 10);
@@ -16,7 +17,7 @@ function mapTextToStatus(statusText) {
 export class NetworkBridgeTxHistoryItemComponent implements OnInit {
   @Input() item;
 
-  constructor() {}
+  constructor(public readonly polygonService: PolygonService) {}
   ngOnInit(): void {}
 
   isPendingAction(item): boolean {
@@ -41,5 +42,16 @@ export class NetworkBridgeTxHistoryItemComponent implements OnInit {
 
   isDeposit(item) {
     return item.__typename === 'Deposit';
+  }
+
+  getExplorerUrl(record) {
+    if (!record.txHash) {
+      return '';
+    }
+    return `https://goerli.etherscan.io/tx/${record.txHash}`;
+  }
+
+  exit(transaction) {
+    this.polygonService.exit(transaction.txBurn);
   }
 }

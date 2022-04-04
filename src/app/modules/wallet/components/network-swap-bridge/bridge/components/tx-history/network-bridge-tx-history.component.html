@@ -30,7 +30,7 @@
         [class.m-tabs__tab--selected]="(filterState$ | async) === 'pending'"
         (click)="filterState$.next('pending')"
       >
-        Pending (1)
+        Pending ({{ pendingTotal }})
       </a>
     </li>
     <li class="m-tabs__tab">
@@ -40,18 +40,18 @@
         "
         (click)="filterState$.next('action_required')"
       >
-        Action Required (1)
+        Action Required ({{ actionTotal }})
       </a>
     </li>
   </ul>
 
   <!-- m-networkBridgeTxHistoryItem list -->
-  <div class="m-networkSwapTxHistory__body">
+  <div class="m-networkSwapTxHistory__body" *ngIf="!isLoading">
     <m-networkBridgeTxHistoryItem
       *ngFor="let item of filteredItems$ | async"
       [item]="item"
     >
     </m-networkBridgeTxHistoryItem>
   </div>
-  <!-- <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner> -->
+  <m-loadingSpinner [inProgress]="isLoading"></m-loadingSpinner>
 </div>

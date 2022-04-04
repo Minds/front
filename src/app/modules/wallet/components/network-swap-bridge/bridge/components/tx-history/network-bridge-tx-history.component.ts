@@ -24,12 +24,15 @@ const GET_TRANSACTIONS_BY_AUTHOR = gql`
         status
         amount
         timestamp
+        txHash
       }
       withdraws {
         id
         status
         amount
         timestamp
+        txHash
+        txBurn
       }
     }
   }
@@ -56,6 +59,12 @@ export class NetworkBridgeTxHistoryModalComponent
 
   private apollo: ApolloBase;
 
+  public isLoading = false;
+
+  public pendingTotal = 0;
+
+  public actionTotal = 0;
+
   // selected tab option
   public filterState$ = new BehaviorSubject<RecordStatusText>('none');
 
@@ -64,6 +73,13 @@ export class NetworkBridgeTxHistoryModalComponent
   public filteredItems$ = combineLatest([this.filterState$, this.items$]).pipe(
     map(state => {
       const [filter, items] = state;
+
+      this.pendingTotal = items.filter(
+        item => item.status.toLowerCase() === 'pending'
+      ).length;
+      this.actionTotal = items.filter(
+        item => item.status.toLowerCase() === 'action_required'
+      ).length;
 
       if (filter === 'none') {
         return items;
@@ -88,7 +104,7 @@ export class NetworkBridgeTxHistoryModalComponent
 
   ngOnInit(): void {
     this.entity = this.networkBridgeService.selectedBridge$.value;
-
+    this.isLoading = true;
     this.querySubscription = this.apollo
       .watchQuery({
         query: GET_TRANSACTIONS_BY_AUTHOR,
@@ -103,6 +119,7 @@ export class NetworkBridgeTxHistoryModalComponent
         );
         allTx.sort((dateA, dateB) => dateB.timestamp - dateA.timestamp);
         this.items$.next(allTx);
+        this.isLoading = false;
       });
   }
 
