@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
@@ -17,7 +17,7 @@ import {
   templateUrl: './boost-modal.component.html',
   styleUrls: ['./boost-modal.component.ng.scss'],
 })
-export class BoostModalComponent implements OnDestroy {
+export class BoostModalComponent implements OnInit, OnDestroy {
   /**
    * Asset url
    */
@@ -30,6 +30,23 @@ export class BoostModalComponent implements OnDestroy {
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
+
+  ngOnInit(): void {
+    const entity = this.service.entity$.getValue();
+
+    if (!entity) {
+      this.toast.error('An unknown error has occurred.');
+      this.onDismissIntent();
+      return;
+    }
+
+    // if an entity is nsfw, it cannot be boosted - reset and close modal.
+    if (entity['nsfw']?.length > 0 || entity['nsfw_lock']?.length > 0) {
+      this.toast.error('NSFW content cannot be boosted.');
+      this.onDismissIntent();
+      return;
+    }
   }
 
   ngOnDestroy(): void {
@@ -100,9 +117,15 @@ export class BoostModalComponent implements OnDestroy {
    */
   public async submitBoost(): Promise<void> {
     this.inProgress$.next(true);
-    const response = await this.service.submitBoostAsync();
+    let response;
 
-    this.inProgress$.next(false);
+    try {
+      response = await this.service.submitBoostAsync();
+    } catch (e) {
+      return;
+    } finally {
+      this.inProgress$.next(false);
+    }
 
     if (
       response &&
