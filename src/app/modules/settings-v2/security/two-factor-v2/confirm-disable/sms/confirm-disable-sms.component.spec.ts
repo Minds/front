@@ -79,7 +79,7 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
       },
       err => {
         console.error(err);
-        fail('An unknown error occurred in confirm-disable-sms');
+        fail('An error occurred in confirm-disable-sms');
       }
     );
   });
