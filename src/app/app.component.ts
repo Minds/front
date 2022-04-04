@@ -1,4 +1,4 @@
-import { ServiceWorkerService } from './services/service-worker.service';
+import { ServiceWorkerService } from './common/services/service-worker.service';
 import {
   ChangeDetectorRef,
   Component,

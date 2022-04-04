@@ -53,7 +53,7 @@ import { CompassHookService } from '../common/services/compass-hook.service';
 import { CompassService } from '../modules/compass/compass.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from './ux/modal.service';
-import { ServiceWorkerService } from './service-worker.service';
+import { ServiceWorkerService } from '../common/services/service-worker.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
