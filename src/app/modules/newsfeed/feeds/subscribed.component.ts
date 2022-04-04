@@ -126,12 +126,11 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.load();
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['algorithm']) {
         this.changeFeedAlgorithm(params['algorithm']);
       }
+      this.load();
 
       if (params['message']) {
         this.message = params['message'];
@@ -300,7 +299,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   changeFeedAlgorithm(algo: FeedAlgorithm) {
     this.algorithm = algo;
     this.feedAlgorithmHistory.lastAlorithm = algo;
-    this.load();
   }
 
   /**
@@ -315,6 +313,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
     setTimeout(() => {
       this.changeFeedAlgorithm('top');
+      this.load();
     }, 500);
   }
 
