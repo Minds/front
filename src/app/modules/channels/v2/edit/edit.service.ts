@@ -6,6 +6,7 @@ import {
   buildFromV1ChannelProfile,
   buildKeyVal,
 } from '../../social-profiles-meta';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 /**
  * Hold edit component state and interact with the API
@@ -90,7 +91,7 @@ export class ChannelEditService {
    * Constructor
    * @param api
    */
-  constructor(protected api: ApiService) {}
+  constructor(protected api: ApiService, private toast: FormToastService) {}
 
   /**
    * Sets the state based on a channel
@@ -215,6 +216,7 @@ export class ChannelEditService {
 
       return userUpdateResponse.channel;
     } catch (e) {
+      this.toast.error(e.error.message ?? 'An unknown error has occurred.');
       console.warn('Edit Service', e);
       this.inProgress$.next(false);
       return null;
