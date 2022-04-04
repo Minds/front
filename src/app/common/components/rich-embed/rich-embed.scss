@@ -69,6 +69,10 @@ minds-rich-embed {
     padding-bottom: 100%; /* 1:1 */
     height: 0;
 
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+
     > iframe {
       position: absolute;
       top: 0;

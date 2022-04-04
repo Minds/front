@@ -13,6 +13,7 @@ import { MediaProxyService } from '../../../common/services/media-proxy.service'
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { ModalService } from '../../../services/ux/modal.service';
+import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
 
 @Component({
   moduleId: module.id,
@@ -54,7 +55,8 @@ export class MindsRichEmbed {
     private mediaProxy: MediaProxyService,
     private configs: ConfigsService,
     private site: SiteService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private embedLinkWhitelist: EmbedLinkWhitelistService
   ) {}
 
   set _src(value: any) {
@@ -295,6 +297,48 @@ export class MindsRichEmbed {
           html: this.sanitizer
             .bypassSecurityTrustHtml(`<iframe src="//giphy.com/embed/${id}"
           frameBorder="0" class="giphy-embed" allowFullScreen></iframe>`),
+          playable: true,
+        };
+      }
+    }
+
+    // Odysee
+    const odysee: RegExp = this.embedLinkWhitelist.getRegex('odysee');
+
+    if ((matches = odysee.exec(url)) !== null) {
+      if (matches[2]) {
+        this.mediaSource = 'odysee';
+
+        return {
+          id: `video-odysee-${matches[2]}`,
+          className:
+            'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-odysee',
+          html: this.sanitizer.bypassSecurityTrustHtml(
+            '<iframe id="odysee-iframe" width="560" height="315" src="' +
+              matches[0] +
+              '" allowfullscreen></iframe>'
+          ),
+          playable: true,
+        };
+      }
+    }
+
+    // Rumble
+    const rumble: RegExp = this.embedLinkWhitelist.getRegex('rumble');
+
+    if ((matches = rumble.exec(url)) !== null) {
+      if (matches[1]) {
+        this.mediaSource = 'rumble';
+
+        return {
+          id: `video-rumble-${matches[1]}`,
+          className:
+            'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-rumble',
+          html: this.sanitizer.bypassSecurityTrustHtml(
+            '<iframe class="rumble" width="640" height="360" src="' +
+              matches[0] +
+              '?pub=4" frameborder="0" allowfullscreen></iframe>'
+          ),
           playable: true,
         };
       }
