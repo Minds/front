@@ -79,7 +79,7 @@ export class RegisterForm {
           [
             Validators.required,
             Validators.minLength(4),
-            Validators.maxLength(128),
+            Validators.maxLength(50),
           ],
           [this.usernameValidator.existingUsernameValidator()],
         ],
