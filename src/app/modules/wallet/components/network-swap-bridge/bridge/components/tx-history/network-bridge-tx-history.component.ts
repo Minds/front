@@ -274,4 +274,8 @@ export class NetworkBridgeTxHistoryModalComponent
       filter === 'pending' ? RecordStatus.PENDING : RecordStatus.ACTION_REQUIRED
     );
   }
+
+  formatState() {
+    return this.filterState$.value.replace('_', ' ');
+  }
 }
