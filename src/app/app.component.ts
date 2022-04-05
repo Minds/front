@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import { ServiceWorkerService } from './common/services/service-worker.service';
 import {
   ChangeDetectorRef,
@@ -138,7 +139,9 @@ export class Minds implements OnInit, OnDestroy {
       //   this.sso.connect();
       // }
 
-      this.serviceWorkerService.watchForUpdates();
+      if (isPlatformBrowser(this.platformId)) {
+        this.serviceWorkerService.watchForUpdates();
+      }
     } catch (e) {
       console.error('ngOnInit()', e);
     }
