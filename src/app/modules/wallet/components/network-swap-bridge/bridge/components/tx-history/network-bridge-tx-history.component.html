@@ -20,7 +20,7 @@
     <li class="m-tabs__tab">
       <a
         [class.m-tabs__tab--selected]="(filterState$ | async) === 'none'"
-        (click)="filterState$.next('none')"
+        (click)="filterState$.next(null)"
       >
         All transactions
       </a>
@@ -28,7 +28,7 @@
     <li class="m-tabs__tab">
       <a
         [class.m-tabs__tab--selected]="(filterState$ | async) === 'pending'"
-        (click)="filterState$.next('pending')"
+        (click)="setFilter('pending')"
       >
         Pending ({{ pendingTotal }})
       </a>
@@ -38,7 +38,7 @@
         [class.m-tabs__tab--selected]="
           (filterState$ | async) === 'action_required'
         "
-        (click)="filterState$.next('action_required')"
+        (click)="setFilter('action_required')"
       >
         Action Required ({{ actionTotal }})
       </a>

@@ -148,14 +148,14 @@ import { InMemoryCache } from '@apollo/client/core';
       provide: APOLLO_NAMED_OPTIONS,
       useFactory: (httpLink: HttpLink) => {
         return {
-          pendingTransactions: {
+          posBridgePolygon: {
             cache: new InMemoryCache(),
             link: httpLink.create({
               uri:
                 'https://api.thegraph.com/subgraphs/name/carlosfebres/polygon-pos-bridge-polygon',
             }),
           },
-          allTransactions: {
+          posBridgeMainnet: {
             cache: new InMemoryCache(),
             link: httpLink.create({
               uri:

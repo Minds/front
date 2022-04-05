@@ -21,7 +21,6 @@ import {
   WithdrawRecord,
 } from './polygon.types';
 import { providers } from '@0xsequence/multicall';
-import { JsonRpcProviderMemoize } from './utils/JsonUrlProviderMemoize';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
@@ -38,14 +37,15 @@ export class PolygonService {
   public userConfig;
 
   public constants;
-  public MAINNET_PROVIDER;
-  public POLYGON_PROVIDER;
+  public MAINNET_PROVIDER: ethers.providers.JsonRpcProvider;
+  public POLYGON_PROVIDER: ethers.providers.JsonRpcProvider;
 
   public FROM_POLYGON_BLOCK;
   public FROM_MAINNET_BLOCK;
   public MAINNET_CHAIN_ID;
   public MAINNET_RPC_URL;
   public POLYGON_CHAIN_ID;
+  public POLYGON_RPC_URL;
   public MIND_TOKEN_ADDRESS;
   public MIND_CHILD_TOKEN_ADDRESS;
   public ERC20_PREDICATE_ADDRESS;
@@ -71,6 +71,7 @@ export class PolygonService {
     this.MAINNET_CHAIN_ID = this.constants.MAINNET_CHAIN_ID;
     this.MAINNET_RPC_URL = this.constants.MAINNET_RPC_URL;
     this.POLYGON_CHAIN_ID = this.constants.POLYGON_CHAIN_ID;
+    this.POLYGON_RPC_URL = this.constants.POLYGON_RPC_URL;
     this.MIND_TOKEN_ADDRESS = this.constants.MIND_TOKEN_ADDRESS;
     this.MIND_CHILD_TOKEN_ADDRESS = this.constants.MIND_CHILD_TOKEN_ADDRESS;
     this.ERC20_PREDICATE_ADDRESS = this.constants.ERC20_PREDICATE_ADDRESS;
@@ -80,25 +81,19 @@ export class PolygonService {
     this.ROOT_CHAIN_MANAGER_ABI = this.constants.ROOT_CHAIN_MANAGER_ABI;
     this.ROOT_CHAIN_ABI = this.constants.ROOT_CHAIN_ABI;
 
-    this.MAINNET_PROVIDER = new JsonRpcProviderMemoize(
+    this.MAINNET_PROVIDER = new ethers.providers.JsonRpcProvider(
       this.MAINNET_RPC_URL,
       this.MAINNET_CHAIN_ID
     );
 
-    this.POLYGON_PROVIDER = new JsonRpcProviderMemoize(
-      this.constants.POLYGON_RPC_URL,
-      this.constants.POLYGON_CHAIN_ID
+    this.POLYGON_PROVIDER = new ethers.providers.JsonRpcProvider(
+      this.POLYGON_RPC_URL,
+      this.POLYGON_CHAIN_ID
     );
   }
 
   public async initialize() {
-    await this.web3Wallet.initializeProvider();
-    this.web3Wallet.provider$.subscribe(async provider => {
-      const network = await provider.getNetwork();
-      if (network.chainId === 5) {
-        this.getHistory();
-      }
-    });
+    this.getHistory();
   }
 
   /**
@@ -332,7 +327,7 @@ export class PolygonService {
   }
 
   public async getDepositHistory() {
-    const from = await this.web3Wallet.provider.getSigner().getAddress();
+    const from = this.userConfig.eth_wallet;
     const ERC20PredicateContract = new ethers.Contract(
       this.ERC20_PREDICATE_ADDRESS,
       this.ERC20_PREDICATE_ABI,
@@ -363,7 +358,7 @@ export class PolygonService {
   }
 
   public async getWithdrawHistory() {
-    const from = await this.web3Wallet.provider.getSigner().getAddress();
+    const from = this.userConfig.eth_wallet;
     const multicallProvider = new providers.MulticallProvider(
       this.MAINNET_PROVIDER
     );

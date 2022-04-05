@@ -2,29 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
 import { AbstractSubscriberComponent } from '../../../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
-import { RecordStatus } from '../../constants/constants.types';
+import {
+  DepositRecord,
+  Record,
+  RecordStatus,
+  RecordType,
+  WithdrawRecord,
+} from '../../constants/constants.types';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Apollo, ApolloBase, gql } from 'apollo-angular';
 
-type RecordStatusText = 'none' | 'action_required' | 'pending';
-
-function mapStatusText(text: RecordStatusText): RecordStatus {
-  if (text === 'action_required') {
-    return RecordStatus.ACTION_REQUIRED;
-  }
-  return RecordStatus.PENDING;
-}
-
 const GET_TRANSACTIONS_BY_AUTHOR = gql`
   query GetTransactionsByAuthor($id: ID!) {
-    wallets(where: { id: $id }) {
+    wallet(id: $id) {
       deposits {
         id
         status
         amount
         timestamp
         txHash
+        txBlock
       }
       withdraws {
         id
@@ -32,11 +30,62 @@ const GET_TRANSACTIONS_BY_AUTHOR = gql`
         amount
         timestamp
         txHash
-        txBurn
+        txBlock
       }
     }
   }
 `;
+
+const GET_TRANSACTIONS_BY_AUTHOR_AND_BLOCK = gql`
+  query GetTransactionsByAuthorAndBlock($id: ID!) {
+    wallet(id: $id) {
+      deposits {
+        id
+        status
+        amount
+        timestamp
+        txHash
+        txBlock
+      }
+      withdraws {
+        id
+        status
+        amount
+        timestamp
+        txHash
+        txBlock
+      }
+    }
+    headerBlocks(first: 1, orderBy: end, orderDirection: desc) {
+      end
+    }
+  }
+`;
+
+interface TransactionsQueryResult {
+  wallet: {
+    deposits: {
+      id: string;
+      status: string;
+      amount: string;
+      timestamp: string;
+      txHash: string;
+      txBlock: string;
+    }[];
+    withdraws: {
+      id: string;
+      status: string;
+      amount: string;
+      timestamp: string;
+      txHash: string;
+      txBlock: string;
+    }[];
+  };
+}
+
+interface TransactionsQueryResultWithBlock extends TransactionsQueryResult {
+  headerBlocks: { end: string }[];
+}
 
 @Component({
   selector: 'm-networkBridgeTxHistory',
@@ -56,71 +105,152 @@ export class NetworkBridgeTxHistoryModalComponent
   public entity;
 
   public userConfig;
-
-  private apollo: ApolloBase;
-
   public isLoading = false;
-
   public pendingTotal = 0;
-
   public actionTotal = 0;
-
   // selected tab option
-  public filterState$ = new BehaviorSubject<RecordStatusText>('none');
-
-  public items$ = new BehaviorSubject([]);
-
+  public filterState$ = new BehaviorSubject<RecordStatus | null>(null);
+  public items$ = new BehaviorSubject<Record[]>([]);
   public filteredItems$ = combineLatest([this.filterState$, this.items$]).pipe(
     map(state => {
       const [filter, items] = state;
 
-      this.pendingTotal = items.filter(
-        item => item.status.toLowerCase() === 'pending'
-      ).length;
-      this.actionTotal = items.filter(
-        item => item.status.toLowerCase() === 'action_required'
-      ).length;
+      const pending = items.filter(
+        item => item.status === RecordStatus.PENDING
+      );
+      const actionRequired = items.filter(
+        item => item.status === RecordStatus.ACTION_REQUIRED
+      );
 
-      if (filter === 'none') {
-        return items;
+      this.pendingTotal = pending.length;
+      this.actionTotal = actionRequired.length;
+
+      switch (filter) {
+        case RecordStatus.ACTION_REQUIRED:
+          return actionRequired;
+        case RecordStatus.PENDING:
+          return pending;
       }
-      // const status = mapStatusText(filter);
-      return items.filter(item => item.status.toLowerCase() === filter);
+      return items;
     })
   );
+  private posBridgePolygon: ApolloBase;
+  private posBridgeMainnet: ApolloBase;
+  private querySubscription: Subscription;
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    configs: ConfigsService,
+    private configs: ConfigsService,
     private apolloProvider: Apollo
   ) {
     super();
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.userConfig = configs.get('user');
-    this.apollo = this.apolloProvider.use('allTransactions');
+    this.posBridgePolygon = this.apolloProvider.use('posBridgePolygon');
+    this.posBridgeMainnet = this.apolloProvider.use('posBridgeMainnet');
   }
-
-  private querySubscription: Subscription;
 
   ngOnInit(): void {
     this.entity = this.networkBridgeService.selectedBridge$.value;
     this.isLoading = true;
-    this.querySubscription = this.apollo
-      .watchQuery({
-        query: GET_TRANSACTIONS_BY_AUTHOR,
-        variables: {
-          id: this.userConfig.eth_wallet.toLowerCase(),
-        },
-        pollInterval: 5000,
-      })
-      .valueChanges.subscribe(({ data }: any) => {
-        const allTx = data.wallets[0].deposits.concat(
-          data.wallets[0].withdraws
-        );
-        allTx.sort((dateA, dateB) => dateB.timestamp - dateA.timestamp);
-        this.items$.next(allTx);
-        this.isLoading = false;
-      });
+
+    const variables = { id: this.userConfig.eth_wallet.toLowerCase() };
+
+    const mainnetQuerySubscription = this.posBridgeMainnet.watchQuery<
+      TransactionsQueryResultWithBlock
+    >({
+      query: GET_TRANSACTIONS_BY_AUTHOR_AND_BLOCK,
+      variables,
+      pollInterval: 5000,
+    });
+    const polygonQuerySubscription = this.posBridgePolygon.watchQuery<
+      TransactionsQueryResult
+    >({
+      query: GET_TRANSACTIONS_BY_AUTHOR,
+      variables,
+      pollInterval: 5000,
+    });
+
+    this.querySubscription = combineLatest([
+      mainnetQuerySubscription.valueChanges,
+      polygonQuerySubscription.valueChanges,
+    ]).subscribe(data => {
+      const [{ data: mainnet }, { data: polygon }] = data;
+
+      const lastSyncedBlock = mainnet.headerBlocks[0]
+        ? parseInt(mainnet.headerBlocks[0].end)
+        : 0;
+
+      const polygonDeposits = [...polygon.wallet.deposits];
+      const deposits = mainnet.wallet.deposits.map(
+        (deposit): DepositRecord => {
+          const polygonTxIndex = polygonDeposits.findIndex(polygonDeposit => {
+            return polygonDeposit.amount === deposit.amount;
+          });
+          const polygonTx = polygonDeposits[polygonTxIndex];
+          if (polygonTx) {
+            polygonDeposits.splice(polygonTxIndex, 1);
+          }
+
+          const status: RecordStatus = polygonTx
+            ? RecordStatus.SUCCESS
+            : RecordStatus.PENDING;
+
+          return {
+            type: RecordType.DEPOSIT,
+            status,
+            txHash: deposit.txHash,
+            amount: deposit.amount,
+            txBlock: parseInt(deposit.txBlock),
+            timestamp: parseInt(deposit.timestamp),
+            txPolygon: polygonTx?.txHash,
+          };
+        }
+      );
+
+      const mainnetWithdraws = [...mainnet.wallet.withdraws];
+      const withdraws = polygon.wallet.withdraws.map(
+        (withdraw): WithdrawRecord => {
+          const mainnetTxIndex = mainnetWithdraws.findIndex(mainnetWithdraw => {
+            return mainnetWithdraw.amount === withdraw.amount;
+          });
+          const mainnetTx = mainnetWithdraws[mainnetTxIndex];
+          if (mainnetTx) {
+            mainnetWithdraws.splice(mainnetTxIndex, 1);
+          }
+
+          let status: RecordStatus = mainnetTx
+            ? RecordStatus.SUCCESS
+            : RecordStatus.PENDING;
+
+          if (
+            status === RecordStatus.PENDING &&
+            parseInt(withdraw.txBlock) <= lastSyncedBlock
+          ) {
+            status = RecordStatus.ACTION_REQUIRED;
+          }
+
+          return {
+            type: RecordType.WITHDRAW,
+            status,
+            txBurn: withdraw.txHash,
+            amount: withdraw.amount,
+            timestamp: mainnetTx
+              ? parseInt(mainnetTx.timestamp)
+              : parseInt(withdraw.timestamp),
+            txHash: mainnetTx?.txHash,
+            txBlock: mainnetTx && parseInt(mainnetTx.txBlock),
+          };
+        }
+      );
+
+      console.log({ deposits, withdraws });
+
+      const allTx = [...deposits, ...withdraws];
+      allTx.sort((dateA, dateB) => dateB.timestamp - dateA.timestamp);
+      this.items$.next(allTx);
+      this.isLoading = false;
+    });
   }
 
   // Dismiss intent.
@@ -137,5 +267,11 @@ export class NetworkBridgeTxHistoryModalComponent
 
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
+  }
+
+  setFilter(filter: 'action_required' | 'pending') {
+    this.filterState$.next(
+      filter === 'pending' ? RecordStatus.PENDING : RecordStatus.ACTION_REQUIRED
+    );
   }
 }

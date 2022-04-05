@@ -1,39 +1,34 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
-import { RecordStatus } from '../../../constants/constants.types';
+import { Record, RecordStatus } from '../../../constants/constants.types';
 import * as moment from 'moment';
 import { PolygonService } from '../../../../../../../../modules/wallet/components/tokens/polygon/polygon.service';
 
-function mapTextToStatus(statusText) {
-  const auxEnum = Object.keys(RecordStatus).slice(5, 10);
-  const index = auxEnum.indexOf(statusText);
-  return index;
-}
 @Component({
   selector: 'm-networkBridgeTxHistoryItem',
   templateUrl: 'network-bridge-tx-history-item.component.html',
   styleUrls: ['./network-bridge-tx-history-item.ng.scss'],
 })
 export class NetworkBridgeTxHistoryItemComponent implements OnInit {
-  @Input() item;
+  @Input() item: Record;
 
   constructor(public readonly polygonService: PolygonService) {}
   ngOnInit(): void {}
 
-  isPendingAction(item): boolean {
-    return mapTextToStatus(item.status) === RecordStatus.PENDING;
+  isPendingAction(item: Record): boolean {
+    return item.status === RecordStatus.PENDING;
   }
 
   isActionRequired(item): boolean {
-    return mapTextToStatus(item.status) === RecordStatus.ACTION_REQUIRED;
+    return item.status === RecordStatus.ACTION_REQUIRED;
   }
 
   isSuccess(item): boolean {
-    return mapTextToStatus(item.status) === RecordStatus.SUCCESS;
+    return item.status === RecordStatus.SUCCESS;
   }
 
-  formatAmount(amount: number) {
-    return parseFloat(ethers.utils.formatEther(amount));
+  formatAmount(amount: string) {
+    return parseFloat(ethers.utils.formatEther(amount)).toFixed(2);
   }
 
   formatDate(timestamp: number) {

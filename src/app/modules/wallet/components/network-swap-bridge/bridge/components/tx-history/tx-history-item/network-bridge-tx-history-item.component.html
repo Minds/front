@@ -22,7 +22,7 @@
   >
     <div>
       <span class="m-networkBridgeTxHistoryItem-container-text-bold">{{
-        item.__typename
+        isDeposit(item) ? 'Deposit' : 'Withdraw'
       }}</span>
       <span class="m-networkBridgeTxHistoryItem-container-text-light">
         · {{ formatDate(item.timestamp) }}
