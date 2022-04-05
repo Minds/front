@@ -55,8 +55,7 @@ export class ChannelRecommendationComponent implements OnInit {
           location: this.location,
           mostRecentSubscription:
             this.recentSubscriptions.list() || this.channelId,
-          currentChannelUserGuid:
-            this.recentSubscriptions.list()[0] || this.channelId,
+          currentChannelUserGuid: this.channelId,
           limit: 3,
         })
         .toPromise()
