@@ -15,18 +15,18 @@
   >
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
+        <!-- SIDEBAR ------------------------------------->
         <m-onboardingProgressWidget></m-onboardingProgressWidget>
 
         <m-language__sidebarPrompt></m-language__sidebarPrompt>
-        <m-suggestions__sidebar
-          type="user"
-          *mExperiment="'channel-recommendations'; variation: false"
-        ></m-suggestions__sidebar>
 
-        <m-liquiditySpot> </m-liquiditySpot>
         <div class="m-spacer"></div>
 
         <m-discovery__sidebarTags></m-discovery__sidebarTags>
+
+        <div class="m-spacer"></div>
+
+        <m-liquiditySpot></m-liquiditySpot>
 
         <div class="m-spacer"></div>
 
@@ -40,6 +40,14 @@
           "
         ></m-ads-boost>
         <div class="m-spacer"></div>
+
+        <!-- <m-suggestions__sidebar
+          type="user"
+          *mExperiment="'channel-recommendations'; variation: false"
+        ></m-suggestions__sidebar>
+        <div class="m-spacer"></div> -->
+
+        <!------------------------------------------------>
       </div>
     </div>
   </div>

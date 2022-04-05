@@ -3,6 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute, Route } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-discovery',
@@ -16,7 +17,8 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private service: DiscoveryService
+    private service: DiscoveryService,
+    public session: Session
   ) {
     /**
      * Determine if on Minds+ page

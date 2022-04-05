@@ -35,6 +35,7 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
+import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
 
 @NgModule({
   imports: [
@@ -212,6 +213,7 @@ import { DiscoveryTopComponent } from './top/top.component';
     RouterModule,
     NewsfeedModule,
     ContentSettingsModule,
+    LiquiditySpotModule,
   ],
 })
 export class DiscoveryModule {}
