@@ -46,7 +46,6 @@ import { WalletNetworkSwitcherComponent } from './components/network-switcher/ne
 import { WalletSkaleComponent } from './components/network-swap-bridge/skale/skale.component';
 import { WalletSkaleCommunityPoolComponent } from './components/network-swap-bridge/skale/community-pool/community-pool.component';
 import { WalletSkaleTransferBridgeComponent } from './components/network-swap-bridge/skale/transfer-bridge/transfer-bridge.component';
-import { WalletSkaleFaucetComponent } from './components/network-swap-bridge/skale/faucet/faucet.component';
 import { WalletPolygonComponent } from './components/tokens/polygon/polygon.component';
 import { WalletPolygonHistoricComponent } from './components/tokens/polygon/historic/historic.component';
 import { NetworkBridgeSwapBoxComponent } from './components/network-swap-bridge/bridge/components/swap-box/swap-box.component';
@@ -233,7 +232,6 @@ export const WALLET_ROUTES: Routes = [
     WalletPolygonComponent,
     WalletSkaleCommunityPoolComponent,
     WalletSkaleTransferBridgeComponent,
-    WalletSkaleFaucetComponent,
     WalletPolygonBridgeComponent,
     WalletPolygonHistoricComponent,
     NetworkBridgeTransferModalComponent,
