@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client } from './api/client';
-import { PushNotificationService } from './push-notification.service';
+import { PushNotificationService } from '../common/services/push-notification.service';
 import { Session } from './session';
 
 @Injectable()

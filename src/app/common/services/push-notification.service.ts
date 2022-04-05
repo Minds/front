@@ -2,9 +2,9 @@ import { isPlatformServer } from '@angular/common';
 import { BehaviorSubject, Subscription, Observable, of } from 'rxjs';
 import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
-import { ConfigsService } from '../common/services/configs.service';
-import { Client } from './api';
-import { Session } from './session';
+import { ConfigsService } from './configs.service';
+import { Client } from '../../services/api';
+import { Session } from '../../services/session';
 import { map } from 'rxjs/operators';
 
 @Injectable({

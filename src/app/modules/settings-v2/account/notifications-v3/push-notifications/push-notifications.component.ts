@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { PushNotificationService } from './../../../../../services/push-notification.service';
 import { NotificationsSettingsV2Service } from '../notifications-settings-v3.service';
 import { PushNotificationGroup } from '../notifications-settings-v3.type';
+import { PushNotificationService } from './../../../../../common/services/push-notification.service';
 
 // toggle state
 export type ToggleState = 'on' | 'off';
