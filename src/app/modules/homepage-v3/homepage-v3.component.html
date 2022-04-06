@@ -2,6 +2,7 @@
 
 <section>
   <img
+    alt
     [src]="cdnAssetsUrl + 'assets/homepage/neural.png'"
     class="m-homepage__v3__neuralBg"
     [m-blurhash]="NEURAL_BACKGROUND_BLURHASH"
@@ -37,13 +38,19 @@
 
       <div class="m-homepage__v3__appButtons">
         <a [href]="siteUrl + 'mobile'" target="_blank">
-          <img [src]="cdnAssetsUrl + 'assets/homepage/android.png'" />
+          <img
+            alt="Download Android App"
+            [src]="cdnAssetsUrl + 'assets/homepage/android.png'"
+          />
         </a>
         <a
           href="https://itunes.apple.com/app/minds-com/id961771928"
           target="_blank"
         >
-          <img [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'" />
+          <img
+            alt="Download on the App Store"
+            [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'"
+          />
         </a>
       </div>
 
@@ -184,7 +191,10 @@
           "
       >
         <span>
-          <img [src]="cdnAssetsUrl + 'assets/homepage/bridge-the-divide.png'" />
+          <img
+            alt
+            [src]="cdnAssetsUrl + 'assets/homepage/bridge-the-divide.png'"
+          />
         </span>
       </div>
     </div>
@@ -252,6 +262,7 @@
       >
         <span>
           <img
+            alt
             [src]="
               cdnAssetsUrl + 'assets/homepage/make-sense-of-your-world.png'
             "
@@ -275,7 +286,7 @@
           m-grid__order-2--mobile
         "
       >
-        <img [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
+        <img alt [src]="cdnAssetsUrl + 'assets/homepage/earn-crypto.png'" />
       </div>
       <div
         class="
