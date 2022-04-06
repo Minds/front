@@ -16,7 +16,6 @@ import {
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import {
   PopoverComponent,
@@ -73,7 +72,6 @@ export class RegisterForm {
     public client: Client,
     fb: FormBuilder,
     public zone: NgZone,
-    private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator
   ) {
@@ -188,7 +186,14 @@ export class RegisterForm {
           this.session.logout();
         } else if (e.status === 'error') {
           // two factor?
-          this.errorMessage = e.message;
+          switch (e?.message) {
+            case 'registration:notemail':
+              this.errorMessage = 'Invalid Email';
+              break;
+            default:
+              this.errorMessage = e.message ?? 'An unknown error has occurred';
+          }
+
           this.session.logout();
         } else {
           this.errorMessage = 'Sorry, there was an error. Please try again.';
