@@ -26,6 +26,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
 import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -72,6 +73,7 @@ export class RegisterForm {
     public client: Client,
     fb: FormBuilder,
     public zone: NgZone,
+    private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator
   ) {
