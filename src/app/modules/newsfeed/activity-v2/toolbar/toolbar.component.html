@@ -34,7 +34,12 @@
   </ng-container>
 
   <!-- Show boost if own post -->
-  <ng-container *ngIf="session.getLoggedInUser().guid == entity.ownerObj.guid">
+  <ng-container
+    *ngIf="
+      session.getLoggedInUser() &&
+      session.getLoggedInUser().guid == entity.ownerObj.guid
+    "
+  >
     <m-activityV2__boostButton
       [object]="entity"
       (click)="openBoostModal($event)"

@@ -13,10 +13,6 @@ import {
 })
 export class ActivityV2BadgesComponent {
   entity$: Observable<ActivityEntity> = this.service.entity$;
-  subscriptions: Subscription[];
-
-  isBoost;
-  isRemind: boolean = false;
 
   constructor(public service: ActivityService, public session: Session) {}
 

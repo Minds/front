@@ -196,7 +196,8 @@ export class ActivityService {
   shouldShowViewCount$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return (
-        entity.ownerObj.guid === this.session.getLoggedInUser().guid ||
+        (this.session.getLoggedInUser() &&
+          entity.ownerObj.guid === this.session.getLoggedInUser().guid) ||
         (this.session.isAdmin() && entity.impressions > 0)
       );
     })
