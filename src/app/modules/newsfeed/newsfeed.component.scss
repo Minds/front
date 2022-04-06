@@ -44,7 +44,7 @@ m-newsfeed {
     font-weight: 600;
     padding: 0 8px;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 }

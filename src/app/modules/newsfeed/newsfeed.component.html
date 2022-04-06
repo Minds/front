@@ -16,7 +16,15 @@
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
         <!-- SIDEBAR ------------------------------------->
-        <m-onboardingProgressWidget></m-onboardingProgressWidget>
+        <m-discovery__disclaimer
+          *ngIf="!session.isLoggedIn()"
+        ></m-discovery__disclaimer>
+
+        <div class="m-spacer"></div>
+
+        <m-onboardingProgressWidget
+          *ngIf="session.isLoggedIn()"
+        ></m-onboardingProgressWidget>
 
         <m-language__sidebarPrompt></m-language__sidebarPrompt>
 
