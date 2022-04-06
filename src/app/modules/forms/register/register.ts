@@ -26,6 +26,7 @@ import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
+import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -64,6 +65,8 @@ export class RegisterForm {
 
   @ViewChild('popover') popover: PopoverComponent;
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
+  @ViewChild(FriendlyCaptchaComponent)
+  friendlyCaptchaEl: FriendlyCaptchaComponent;
 
   constructor(
     public session: Session,
@@ -172,10 +175,12 @@ export class RegisterForm {
         this.done.next(data.user);
       })
       .catch(e => {
-        console.log(e);
         this.inProgress = false;
 
-        this.captchaEl.refresh();
+        // refresh CAPTCHA.
+        this.isFriendlyCaptchaEnabled()
+          ? this.friendlyCaptchaEl.reset()
+          : this.captchaEl.refresh();
 
         if (e.status === 'failed') {
           // incorrect login details
@@ -229,5 +234,17 @@ export class RegisterForm {
 
   get username() {
     return this.form.get('username');
+  }
+
+  /**
+   * True if FriendlyCAPTCHA feat flag is enabled.
+   * @returns
+   */
+  public isFriendlyCaptchaEnabled(): boolean {
+    console.log(
+      'enabled',
+      this.experiments.hasVariation('friendly-captcha', true)
+    );
+    return this.experiments.hasVariation('friendly-captcha', true);
   }
 }
