@@ -50,7 +50,7 @@ export class ChannelRecommendationComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.location) {
-      this.recentSubscriptions.ngOnInit();
+      this.recentSubscriptions.rehydrate();
 
       this.api
         .get('api/v3/recommendations', {

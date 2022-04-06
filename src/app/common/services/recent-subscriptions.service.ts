@@ -1,6 +1,6 @@
 import { Storage } from '../../services/storage';
 import { MindsUser } from '../../interfaces/entities';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /**
  * how long should the subscriptions persist
@@ -22,14 +22,12 @@ export interface RecentSubscription {
  * a service that remembers what the user has subscribed to in the last n minutes
  */
 @Injectable({ providedIn: 'root' })
-export class RecentSubscriptionsService implements OnInit {
+export class RecentSubscriptionsService {
   static readonly STORAGE_KEY = 'recent-subscriptions';
   private subscriptions: RecentSubscription[] = [];
 
-  constructor(protected storage: Storage) {}
-
-  ngOnInit(): void {
-    this._rehydrate();
+  constructor(protected storage: Storage) {
+    this.rehydrate();
   }
 
   /**
@@ -78,7 +76,7 @@ export class RecentSubscriptionsService implements OnInit {
   /**
    * loads subscriptions from storage if any
    */
-  private _rehydrate() {
+  rehydrate() {
     const persistedData = this.storage.get(
       RecentSubscriptionsService.STORAGE_KEY
     );
