@@ -1,13 +1,20 @@
 import { Injectable, OnDestroy } from '@angular/core';
-
+import {
+  BehaviorSubject,
+  combineLatest,
+  interval,
+  Observable,
+  Subscription,
+} from 'rxjs';
+import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
-
-import { EntitiesService } from './entities.service';
+import { ApiService } from '../api/api.service';
 import { BlockListService } from './block-list.service';
+import { EntitiesService } from './entities.service';
 
-import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
-import { switchMap, map, tap, first } from 'rxjs/operators';
+// FIXME: use 30sec
+const NEW_POST_POLL_INTERVAL = 5000;
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -32,6 +39,16 @@ export class FeedsService implements OnDestroy {
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
+  countInProgress$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  newPostWatcherSubscription: Subscription;
+  /**
+   * TODO
+   */
+  newPostsCount$ = new BehaviorSubject(0);
+  /**
+   * TODO
+   */
+  newPostsLastCountedAt: number = Date.now();
   /**
    * feed length
    */
@@ -39,6 +56,7 @@ export class FeedsService implements OnDestroy {
 
   constructor(
     protected client: Client,
+    protected api: ApiService,
     protected session: Session,
     protected entitiesService: EntitiesService,
     protected blockListService: BlockListService
@@ -105,9 +123,8 @@ export class FeedsService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.blockListSubscription) {
-      this.blockListSubscription.unsubscribe();
-    }
+    this.blockListSubscription?.unsubscribe();
+    this.newPostWatcherSubscription?.unsubscribe();
   }
 
   /**
@@ -242,6 +259,35 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
+   * Counts
+   */
+  count(fromTimestamp?: number): Observable<number> {
+    if (!this.offset.getValue()) {
+      this.countInProgress$.next(true);
+    }
+
+    return this.api
+      .get(this.endpoint, {
+        ...this.params,
+        ...{
+          limit: 150, // Over 12 scrolls
+          as_activities: 0,
+          export_user_counts: 0,
+          from_timestamp: fromTimestamp,
+          count: true,
+        },
+      })
+      .pipe(
+        tap(() => {
+          if (!this.offset.getValue()) {
+            this.countInProgress$.next(false);
+          }
+        })
+      )
+      .pipe(map(response => response.count as number));
+  }
+
+  /**
    * To be called upload loading more data
    */
   loadMore(): FeedsService {
@@ -296,10 +342,33 @@ export class FeedsService implements OnDestroy {
 
   static _(
     client: Client,
+    api: ApiService,
     session: Session,
     entitiesService: EntitiesService,
     blockListService: BlockListService
   ) {
-    return new FeedsService(client, session, entitiesService, blockListService);
+    return new FeedsService(
+      client,
+      api,
+      session,
+      entitiesService,
+      blockListService
+    );
+  }
+
+  /**
+   * TODO
+   */
+  public watchForNewPosts(): void {
+    this.newPostWatcherSubscription?.unsubscribe();
+    this.newPostWatcherSubscription = interval(NEW_POST_POLL_INTERVAL)
+      // only poll when tab is active
+      .pipe(filter(() => document.hasFocus()))
+      .pipe(switchMap(() => this.count(this.newPostsLastCountedAt)))
+      .subscribe(count => {
+        console.log('NEW COUNT: ', count, this.newPostsLastCountedAt);
+        this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
+        this.newPostsLastCountedAt = Date.now();
+      });
   }
 }

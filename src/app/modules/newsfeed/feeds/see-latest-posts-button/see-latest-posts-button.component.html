@@ -1,0 +1,11 @@
+<div [@slideIn]="(newPostsCount$ | async) ? 'shown' : 'hidden'">
+  <m-button
+    class="m-seeLatestPostsButton"
+    size="xsmall"
+    solid="true"
+    color="blue"
+    (onAction)="onClick()"
+    >See {{ newPostsCount$ | async }} Latest Posts</m-button
+  >
+  <p *ngIf="loadingNewPosts$ | async">Loading new posts</p>
+</div>
