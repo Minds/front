@@ -20,15 +20,9 @@
         <!-- SIDEBAR ------------------------------------->
         <m-onboardingProgressWidget></m-onboardingProgressWidget>
 
-        <m-language__sidebarPrompt
-          *ngIf="!isPlusPage"
-        ></m-language__sidebarPrompt>
-
-        <div class="m-spacer"></div>
+        <m-language__sidebarPrompt></m-language__sidebarPrompt>
 
         <m-discovery__sidebarTags></m-discovery__sidebarTags>
-
-        <div class="m-spacer"></div>
 
         <m-liquiditySpot></m-liquiditySpot>
 
@@ -46,11 +40,6 @@
 
         <div class="m-spacer"></div>
 
-        <!-- <m-suggestions__sidebar
-          type="user"
-          customTitle="popular_channels"
-          *mExperiment="'channel-recommendations'; variation: false"
-        ></m-suggestions__sidebar> -->
         <!------------------------------------------------>
       </div>
     </div>

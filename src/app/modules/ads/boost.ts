@@ -18,7 +18,7 @@ import { SettingsV2Service } from '../settings-v2/settings-v2.service';
   inputs: ['handler', 'limit'],
   styleUrls: ['ads.ng.scss'],
   template: `
-    <h3 class="m-newsfeedSidebar__header" *ngIf="boosts.length > 0">
+    <h3 class="m-adsBoost__header" *ngIf="boosts.length > 0">
       <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
