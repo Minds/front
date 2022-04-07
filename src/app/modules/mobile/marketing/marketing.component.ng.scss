@@ -1,6 +1,8 @@
 @import 'defaults.scss';
 
 :host {
+  padding: 0 20px;
+
   .m-aux__hero {
     background-image: url('../../../../assets/product-pages/nodes/nodes-1.jpg');
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.2);

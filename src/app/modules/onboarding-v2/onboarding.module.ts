@@ -11,7 +11,6 @@ import { CommonModule } from '../../common/common.module';
 import { TokenOnboardingModule } from '../wallet/tokens/onboarding/onboarding.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
-import { HomepageV2Module } from '../homepage-v2/homepage.module';
 import { InfoStepComponent } from './steps/info/info.component';
 import { ProgressbarComponent } from './progressbar/progressbar.component';
 import { ChannelListComponent } from './steps/channels/list/list.component';
@@ -75,7 +74,6 @@ const routes: Routes = [
     TokenOnboardingModule,
     MessengerModule,
     SuggestionsModule,
-    HomepageV2Module,
     MindsFormsModule,
     LegacyModule,
     GroupsModule,
