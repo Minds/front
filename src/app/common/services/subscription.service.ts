@@ -13,13 +13,13 @@ export class SubscriptionService {
     private recentSubscriptions: RecentSubscriptionsService
   ) {}
 
-  async isSubscribed(user: MindsUser) {
+  async isSubscribed(user: MindsUser): Promise<boolean> {
     return this.client
       .get(`api/v1/channel/${user.guid}`)
       .then((response: any) => response?.channel?.subscribed);
   }
 
-  async subscribe(user: MindsUser) {
+  async subscribe(user: MindsUser): Promise<any> {
     const response: any = await this.client.post(
       `api/v1/subscribe/${user.guid}`
     );
@@ -34,7 +34,7 @@ export class SubscriptionService {
     return response;
   }
 
-  async unsubscribe(user: MindsUser) {
+  async unsubscribe(user: MindsUser): Promise<any> {
     const response: any = await this.client.delete(
       `api/v1/subscribe/${user.guid}`
     );

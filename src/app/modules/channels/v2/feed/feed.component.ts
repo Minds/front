@@ -264,9 +264,9 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   /**
    * Determines whether the channel recommendations should be shown
-   * @returns { BehaviorSubject<boolean> }
+   * @returns { Observable<boolean> }
    */
-  get channelRecommendationVisible$() {
+  get channelRecommendationVisible$(): Observable<boolean> {
     if (this.feedService.service.inProgress.getValue()) {
       return of(false);
     }

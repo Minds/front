@@ -71,7 +71,7 @@ export class ChannelRecommendationComponent implements OnInit {
   /**
    * when component resizes we set the container height and animate it
    */
-  onResized(event: ResizedEvent) {
+  onResized(event: ResizedEvent): void {
     this.containerHeight$.next(event.newRect.height + 64);
   }
 }

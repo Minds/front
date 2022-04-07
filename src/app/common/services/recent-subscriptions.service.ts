@@ -34,7 +34,7 @@ export class RecentSubscriptionsService {
    * @param { MindsUser } channel
    * adds or removes a subscription to the list and preserves on disk
    */
-  recordSubscriptionChange(channel: MindsUser) {
+  recordSubscriptionChange(channel: MindsUser): void {
     if (channel.subscribed) {
       this.subscriptions.unshift({
         channelGuid: channel.guid,
@@ -66,7 +66,7 @@ export class RecentSubscriptionsService {
   /**
    * saves subscriptions to storage
    */
-  private _persist() {
+  private _persist(): void {
     this.storage.set(
       RecentSubscriptionsService.STORAGE_KEY,
       JSON.stringify(this.subscriptions)
@@ -76,7 +76,7 @@ export class RecentSubscriptionsService {
   /**
    * loads subscriptions from storage if any
    */
-  private _rehydrate() {
+  private _rehydrate(): void {
     const persistedData = this.storage.get(
       RecentSubscriptionsService.STORAGE_KEY
     );
