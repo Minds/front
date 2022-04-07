@@ -199,7 +199,7 @@ export class FeedsService implements OnDestroy {
   /**
    * Fetches the data.
    */
-  fetch(replace: boolean = false): Promise<any> {
+  fetch(refresh: boolean = false): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
@@ -209,6 +209,15 @@ export class FeedsService implements OnDestroy {
     let fromTimestamp = this.pagingToken
       ? this.pagingToken
       : this.fromTimestamp;
+
+    const oldCount = this.newPostsCount$.getValue();
+    const oldTimestamp = this.newPostsLastCountedAt;
+
+    if (refresh) {
+      fromTimestamp = '';
+      this.newPostsLastCountedAt = Date.now();
+      this.newPostsCount$.next(0);
+    }
 
     return this.client
       .get(this.endpoint, {
@@ -226,10 +235,6 @@ export class FeedsService implements OnDestroy {
           return;
         }
 
-        if (!this.offset.getValue()) {
-          this.inProgress.next(false);
-        }
-
         if (!response.entities && response.activity) {
           response.entities = response.activity;
         } else if (!response.entities && response.users) {
@@ -239,7 +244,7 @@ export class FeedsService implements OnDestroy {
         if (response.entities?.length) {
           this.fallbackAt = response['fallback_at'];
           this.fallbackAtIndex.next(null);
-          if (replace) {
+          if (refresh) {
             this.rawFeed.next(response.entities);
           } else {
             this.rawFeed.next(
@@ -255,7 +260,16 @@ export class FeedsService implements OnDestroy {
           this.canFetchMore = false;
         }
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log(e);
+        this.newPostsLastCountedAt = oldTimestamp;
+        this.newPostsCount$.next(oldCount);
+      })
+      .finally(() => {
+        if (!this.offset.getValue()) {
+          this.inProgress.next(false);
+        }
+      });
   }
 
   /**

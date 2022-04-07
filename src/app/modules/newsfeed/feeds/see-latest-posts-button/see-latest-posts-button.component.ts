@@ -83,7 +83,11 @@ export class SeeLatestPostsButtonComponent implements OnInit {
   /**
    *
    */
-  onClick(): void {
-    this.feedService.fetch(true);
+  async onClick(): Promise<void> {
+    await this.feedService.fetch(true);
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0,
+    });
   }
 }
