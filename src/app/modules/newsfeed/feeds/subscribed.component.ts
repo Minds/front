@@ -107,6 +107,12 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.algorithm = storedfeedAlgorithm;
       }
     }
+
+    this.latestFeedService
+      .setEndpoint(`api/v2/feeds/subscribed/activities`)
+      .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
+      .setLimit(12);
+    this.topFeedService.setEndpoint(`api/v3/newsfeed/feed/unseen-top`);
   }
 
   ngOnInit() {
@@ -210,24 +216,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       switch (this.algorithm) {
         case 'top':
           this.topFeedService.clear(true);
-          await this.topFeedService
-            .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-            .setLimit(12)
-            .fetch(true);
+          await this.topFeedService.setLimit(12).fetch(true);
           break;
         case 'latest':
           this.latestFeedService.clear(true);
           this.topFeedService.clear(true);
           this.prepended = [];
           await Promise.all([
-            this.topFeedService
-              .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-              .setLimit(3)
-              .fetch(true),
-            this.latestFeedService
-              .setEndpoint(`api/v2/feeds/subscribed/activities`)
-              .setLimit(12)
-              .fetch(true),
+            this.topFeedService.setLimit(3).fetch(true),
+            this.latestFeedService.fetch(true),
           ]);
           break;
       }

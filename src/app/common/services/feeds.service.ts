@@ -29,6 +29,7 @@ export class FeedsService implements OnDestroy {
   pagingToken: string = '';
   canFetchMore: boolean = true;
   endpoint: string = '';
+  countEndpoint: string = '';
   params: any = { sync: 1 };
   castToActivities: boolean = false;
   exportUserCounts: boolean = false;
@@ -133,6 +134,15 @@ export class FeedsService implements OnDestroy {
    */
   setEndpoint(endpoint: string): FeedsService {
     this.endpoint = endpoint;
+    return this;
+  }
+
+  /**
+   * Sets the count endpoint for this instance.
+   * @param { string } endpoint - the count endpoint for this instance
+   */
+  setCountEndpoint(endpoint: string): FeedsService {
+    this.countEndpoint = endpoint;
     return this;
   }
 
@@ -276,12 +286,16 @@ export class FeedsService implements OnDestroy {
    * Counts
    */
   count(fromTimestamp?: number): Observable<number> {
+    if (!this.countEndpoint) {
+      throw new Error('[FeedsService] countEndpoint missing');
+    }
+
     if (!this.offset.getValue()) {
       this.countInProgress$.next(true);
     }
 
     return this.api
-      .get(this.endpoint, {
+      .get(this.countEndpoint, {
         ...this.params,
         ...{
           limit: 150, // Over 12 scrolls
