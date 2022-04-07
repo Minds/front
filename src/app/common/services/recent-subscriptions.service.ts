@@ -27,7 +27,7 @@ export class RecentSubscriptionsService {
   private subscriptions: RecentSubscription[] = [];
 
   constructor(protected storage: Storage) {
-    this.rehydrate();
+    this._rehydrate();
   }
 
   /**
@@ -76,7 +76,7 @@ export class RecentSubscriptionsService {
   /**
    * loads subscriptions from storage if any
    */
-  rehydrate() {
+  private _rehydrate() {
     const persistedData = this.storage.get(
       RecentSubscriptionsService.STORAGE_KEY
     );
