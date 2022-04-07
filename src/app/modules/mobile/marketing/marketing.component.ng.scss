@@ -1,7 +1,8 @@
 @import 'defaults.scss';
+@import 'spacing.scss';
 
 :host {
-  padding: 0 20px;
+  padding: 0 $spacing5;
 
   .m-aux__hero {
     background-image: url('../../../../assets/product-pages/nodes/nodes-1.jpg');
