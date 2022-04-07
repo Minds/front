@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WidgetInstance } from 'friendly-challenge';
+import { CookieService } from '@mindsorg/ngx-universal';
 
 export type FriendlyCaptchaStartMode = 'auto' | 'focus' | 'none' | undefined;
 
@@ -44,6 +45,8 @@ export class FriendlyCaptchaComponent
   // ViewChild of widget.
   @ViewChild('friendlyWidget') container: ElementRef<HTMLElement>;
 
+  constructor(private cookies: CookieService) {}
+
   /**
    * Init widget after view init
    * @return { void }
@@ -57,6 +60,8 @@ export class FriendlyCaptchaComponent
         this.propagateChange(solution);
       },
     });
+
+    this.handleBypass();
   }
 
   /**
@@ -100,4 +105,17 @@ export class FriendlyCaptchaComponent
    * @returns { void }
    */
   public registerOnTouched(fn: any): void {}
+
+  /**
+   * Handles CAPTCHA bypass if cookie is present.
+   * @returns { boolean } true if CAPTCHA bypass mode is active.
+   * Will be validated server-side.
+   */
+  private handleBypass(): boolean {
+    if (this.cookies.get('captcha_bypass')) {
+      this.propagateChange('friendly_captcha_bypass');
+      return true;
+    }
+    return false;
+  }
 }

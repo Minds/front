@@ -100,7 +100,7 @@ export class RegisterForm {
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
         exclusive_promotions: [true],
-        captcha: [''],
+        captcha: ['', Validators.required],
         previousUrl: this.routerHistoryService.getPreviousUrl(),
       },
       { validators: [this.passwordConfirmingValidator] }
@@ -248,10 +248,6 @@ export class RegisterForm {
    * @returns
    */
   public isFriendlyCaptchaEnabled(): boolean {
-    console.log(
-      'enabled',
-      this.experiments.hasVariation('friendly-captcha', true)
-    );
     return this.experiments.hasVariation('friendly-captcha', true);
   }
 }
