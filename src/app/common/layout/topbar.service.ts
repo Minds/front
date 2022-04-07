@@ -1,9 +1,5 @@
 import { V3TopbarComponent } from './v3-topbar/v3-topbar.component';
-import { FeaturesService } from '../../services/features.service';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 
 type TopbarComponentT = V3TopbarComponent;
 
@@ -11,23 +7,8 @@ type TopbarComponentT = V3TopbarComponent;
 export class TopbarService {
   private container: TopbarComponentT;
 
-  routerSubscription: Subscription;
-
-  constructor(
-    private featuresService: FeaturesService,
-    private router: Router
-  ) {
-    this.routerSubscription = this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(data => {
-        this.toggleVisibility(true);
-        this.toggleSearchBar(true);
-      });
-  }
-
   setContainer(container: TopbarComponentT) {
     this.container = container;
-
     return this;
   }
 

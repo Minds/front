@@ -5,7 +5,13 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { OnboardingStepName } from '../onboarding-v3.service';
 import { OnboardingV3PanelService } from '../panel/onboarding-panel.service';
 import { OnboardingV3ModalProgressService } from '../modal/onboarding-modal-progress.service';
-import { OnboardingV3ChannelComponent } from '../panel/channel/channel.component';
+
+/**
+ * a component that has a saveAsync
+ */
+export interface AwaitablePanelComponent {
+  saveAsync: () => Promise<any>;
+}
 
 /**
  * Onboarding modal component; core function as a connector,
@@ -29,12 +35,12 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   /**
    * Save intent.
    */
-  onSaveIntent: (step: OnboardingStepName) => void = () => {};
+  onSaveIntent: (step: OnboardingStepName, stepData?: any) => void = () => {};
 
   /**
    * Panel with an async save function that can be called before resuming modal dismissal.
    */
-  @ViewChild('awaitablePanel') awaitablePanel: OnboardingV3ChannelComponent;
+  @ViewChild('awaitablePanel') awaitablePanel: AwaitablePanelComponent;
 
   constructor(
     private panel: OnboardingV3PanelService,
@@ -47,10 +53,13 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.subscriptions.push(
       this.panel.forceComplete$.subscribe((step: OnboardingStepName) => {
-        if (this.currentStep$.getValue()) this.onSaveIntent(step);
+        if (this.currentStep$.getValue() && step) this.onSaveIntent(step);
       }),
       this.panel.dismiss$.subscribe(dismiss => {
-        if (this.currentStep$.getValue()) this.onDismissIntent();
+        if (this.currentStep$.getValue() && dismiss) {
+          this.onDismissIntent();
+          this.panel.dismiss$.next(false);
+        }
       })
     );
   }
@@ -65,7 +74,7 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    * Sets modal options.
    * @param onDismissIntent - set dismiss intent callback.
    */
-  set opts({ onDismissIntent, onSaveIntent }) {
+  setModalData({ onDismissIntent, onSaveIntent }) {
     this.onDismissIntent = onDismissIntent || (() => {});
     this.onSaveIntent = onSaveIntent || (() => {});
   }
@@ -149,15 +158,16 @@ export class OnboardingV3ModalComponent implements OnDestroy, OnInit {
    * @returns { Promise<void> } - awaitable.
    */
   public async nextClicked(): Promise<void> {
+    let stepData;
     try {
       if (
         this.awaitablePanel &&
         typeof this.awaitablePanel.saveAsync === 'function'
       ) {
-        await this.awaitablePanel.saveAsync();
+        stepData = await this.awaitablePanel.saveAsync();
       }
       if (!this.inProgressService.inProgress$.getValue()) {
-        this.onSaveIntent(this.currentStep$.getValue());
+        this.onSaveIntent(this.currentStep$.getValue(), stepData);
         this.panel.nextStep();
       }
     } catch (e) {

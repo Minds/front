@@ -1,70 +1,65 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 import { GrowthBook, Experiment } from '@growthbook/growthbook';
 import { ConfigsService } from '../../common/services/configs.service';
 import { AnalyticsService } from '../../services/analytics';
 import { Session } from '../../services/session';
 import { CookieService } from '../../common/services/cookie.service';
-
+import { Storage } from '../../services/storage';
+import * as snowplow from '@snowplow/browser-tracker';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { OverridableAttributes } from './experiments.types';
 export { Experiment } from '@growthbook/growthbook';
 
 @Injectable({ providedIn: 'root' })
-export class ExperimentsService {
+export class ExperimentsService implements OnDestroy {
   growthbook: GrowthBook;
-  experiments: Experiment<unknown>[] = [];
+  routerEventsSubscription: Subscription;
+  loggedInSubscription: Subscription;
 
   constructor(
     private session: Session,
     private configs: ConfigsService,
     private analytics: AnalyticsService,
-    private cookieService: CookieService
-  ) {}
+    private cookieService: CookieService,
+    private storage: Storage,
+    private router: Router
+  ) {
+    this.routerEventsSubscription = this.router.events.subscribe(
+      navigationState => {
+        if (navigationState instanceof NavigationEnd) {
+          this.syncAttributes({
+            route: navigationState.urlAfterRedirects,
+          });
+        }
+      }
+    );
+    this.session.loggedinEmitter.subscribe(isLoggedIn => {
+      this.syncAttributes();
+    });
+  }
 
   /**
    * Initialize Growthbook, only want to do this once
    */
   initGrowthbook(): void {
     if (!this.growthbook) {
-      // ID field required by SDK even though we are forcing.
       const userId = this.getUserId();
 
       this.growthbook = new GrowthBook({
-        user: { id: userId },
+        user: {
+          id: userId,
+        },
         trackingCallback: (experiment, result) => {
-          /**
-           * Tracking is only called if force is not used.
-           */
           this.addToAnalytics(experiment.key, result.variationId);
-          // Note: we don't need to tell the backend, as it's the backend that tells us to run experiments
         },
       });
     }
 
-    const experiments = this.configs.get('experiments');
+    this.growthbook.setFeatures(this.configs.get('growthbook')?.features);
 
-    if (experiments && experiments.length > 0) {
-      for (let experiment of experiments) {
-        const originExperiment = Object.assign(experiment);
-
-        // Remap
-        experiment = {
-          key: experiment.experimentId,
-          variations: experiment.variations,
-        };
-
-        // If logged in, we force the experiment
-        if (this.session.isLoggedIn()) {
-          experiment.force = originExperiment.variationId;
-        }
-
-        this.experiments.push(experiment);
-        this.growthbook.run(experiment);
-
-        if (experiment.force != undefined) {
-          this.addToAnalytics(experiment.key, experiment.force);
-        }
-      }
-    }
+    this.syncAttributes();
   }
 
   /**
@@ -74,33 +69,49 @@ export class ExperimentsService {
    * @returns { string } - variation to display.
    */
   public run(key: string): string {
-    for (let experiment of this.experiments) {
-      if (experiment.key === key) {
-        const { value } = this.growthbook.run(experiment);
-        return String(value);
-      }
-    }
+    const result = this.growthbook.feature(key);
 
-    throw 'Could not find experiment with key ' + key;
+    return result.value;
   }
 
+  /**
+   * Adds and event to snowplow
+   * @param experimentId
+   * @param variationId
+   */
   private addToAnalytics(experimentId: string, variationId: number): void {
-    this.analytics.contexts.push({
-      schema: 'iglu:com.minds/growthbook_context/jsonschema/1-0-1',
-      data: {
-        experiment_id: experimentId,
-        variation_id: variationId,
+    // Have we recently pushed this event? (last 24 hours)
+    const CACHE_KEY = `experiment:${experimentId}`;
+    if (parseInt(this.storage.get(CACHE_KEY)) > Date.now() - 86400000) {
+      return; // Do not emit event
+    } else {
+      this.storage.set(CACHE_KEY, Date.now());
+      console.log('MH: submitting growthbook_experiment: ' + CACHE_KEY);
+    }
+
+    //
+    snowplow.trackSelfDescribingEvent({
+      event: {
+        schema: 'iglu:com.minds/growthbook_experiment/jsonschema/1-0-0',
+        data: {
+          experiment_id: experimentId,
+          variation_id: variationId,
+        },
       },
+      context: this.analytics.getContexts(),
     });
   }
 
   /**
    * Return whether an experiment has a given variation state.
    * @param { string } experimentId - experiment key.
-   * @param { string } variation - variation to check, e.g. 'on' or 'off'.
+   * @param { string|number|boolean } variation - variation to check, e.g. 'on' or 'off'.
    * @returns { boolean } - true if params reflect current variation.
    */
-  public hasVariation(experimentId: string, variation: string = 'on'): boolean {
+  public hasVariation(
+    experimentId: string,
+    variation: string | number | boolean = 'on'
+  ): boolean {
     try {
       return this.run(experimentId) === variation;
     } catch (e) {
@@ -132,5 +143,47 @@ export class ExperimentsService {
     }
 
     return cookieValue;
+  }
+
+  /**
+   * Get the users age in seconds based on how long ago their account was created.
+   * @returns { number } - age in seconds.
+   */
+  private getUserAge(): number {
+    if (this.session.getLoggedInUser()) {
+      return Math.floor(
+        Date.now() / 1000 - this.session.getLoggedInUser().time_created
+      );
+    }
+  }
+
+  /**
+   * Syncs state of growthbook attributes object.
+   * @param { OverridableAttributes } attributeOverrides - override attributes to force them to a specific value.
+   * @returns { void }
+   */
+  private syncAttributes(attributeOverrides: OverridableAttributes = {}): void {
+    let attributes = {
+      ...this.configs.get('growthbook')?.attributes, // config set attributes.
+      ...(this.growthbook.getAttributes() ?? {}), // existing attributes.
+      loggedIn: this.session.isLoggedIn(),
+      route: this.router.url,
+      id: this.getUserId(),
+      ...attributeOverrides, // overrides.
+    };
+
+    delete attributes.userAge;
+    const userAge = this.getUserAge();
+
+    if (userAge) {
+      attributes['userAge'] = userAge;
+    }
+
+    this.growthbook.setAttributes(attributes);
+  }
+
+  ngOnDestroy() {
+    this.routerEventsSubscription?.unsubscribe();
+    this.loggedInSubscription?.unsubscribe();
   }
 }

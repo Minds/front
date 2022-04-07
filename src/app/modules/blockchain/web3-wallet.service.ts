@@ -8,6 +8,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { isPlatformBrowser } from '@angular/common';
+import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
 
 type Address = string;
 
@@ -32,6 +33,9 @@ export class Web3WalletService {
 
   async initializeProvider() {
     if (!this.provider) {
+      if (!this.checkDeviceIsSupported()) {
+        return null;
+      }
       const provider = await this.web3modalService.open();
       this.setProvider(provider);
     }
@@ -318,6 +322,21 @@ export class Web3WalletService {
     } else {
       console.error(e);
     }
+  }
+
+  /**
+   * Whether device device is supported.
+   * Will show a generic toast error if the device is not.
+   * @returns { boolean } - true if device is supported.
+   */
+  public checkDeviceIsSupported(): boolean {
+    if (isMobileOrTablet()) {
+      this.toast.error(
+        'Sorry, this feature is unavailable on mobile. Please use a desktop.'
+      );
+      return false;
+    }
+    return true;
   }
 
   // Service provider

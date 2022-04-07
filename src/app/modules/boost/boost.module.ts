@@ -48,6 +48,7 @@ const boostRoutes: Routes = [
       title: 'Boost',
       description: 'Expand your reach and gain thousands of views',
       ogImage: '/assets/product-pages/boost/boost-1.jpg',
+      preventLayoutReset: true,
     },
   },
 ];

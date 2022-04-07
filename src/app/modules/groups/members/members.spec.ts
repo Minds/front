@@ -18,6 +18,7 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 
 import { GroupsMembersModuleComponent } from './members';
+import { MockComponent } from '../../../utils/mock';
 
 describe('GroupsMembersModuleComponent', () => {
   let fixture: ComponentFixture<GroupsMembersModuleComponent>;
@@ -62,6 +63,10 @@ describe('GroupsMembersModuleComponent', () => {
           MaterialMock,
           MaterialSwitchMock,
           GroupsMembersModuleComponent,
+          MockComponent({
+            selector: 'm-hovercard',
+            inputs: ['publisher'],
+          }),
         ],
         imports: [NgCommonModule, RouterTestingModule],
         providers: [{ provide: Client, useValue: clientMock }],

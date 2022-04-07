@@ -12,7 +12,6 @@ import {
   ACCESS,
 } from '../../../../../services/list-options';
 import { PermawebTermsComponent } from '../../popup/permaweb/permaweb-terms.component';
-import { FeaturesService } from '../../../../../services/features.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Session } from '../../../../../services/session';
 import { take } from 'rxjs/operators';
@@ -47,7 +46,6 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
 
   constructor(
     protected service: ComposerService,
-    protected features: FeaturesService,
     protected toaster: FormToastService,
     protected session: Session,
     protected popup: PopupService
@@ -117,11 +115,7 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
       return;
     }
 
-    if (
-      this.features.has('permaweb') &&
-      this.service.postToPermaweb$.getValue() &&
-      $event !== 2
-    ) {
+    if (this.service.postToPermaweb$?.getValue() && $event !== 2) {
       this.toaster.warn(
         'Cannot set visibility to non-public on permaweb posts.'
       );
@@ -179,7 +173,6 @@ export class ComposerTitleBarDropdownComponent implements OnDestroy {
    */
   public shouldShowPermawebOption(): boolean {
     return (
-      this.features.has('permaweb') &&
       !this.service.isEditing$.getValue() &&
       !this.service.remind$.getValue() &&
       this.canChangeVisibility // true is there is a container_guid

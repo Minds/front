@@ -15,13 +15,13 @@ import { AbbrPipe } from '../../../common/pipes/abbr';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BanModalComponent } from './modal.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { MockService } from '../../../utils/mock';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 describe('BanModalComponent', () => {
   let comp: BanModalComponent;
@@ -44,7 +44,7 @@ describe('BanModalComponent', () => {
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: Client, useValue: clientMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
@@ -65,34 +65,37 @@ describe('BanModalComponent', () => {
     comp = fixture.componentInstance;
 
     //set the user
-    comp.data = {
-      guid: '1',
-      type: 'user',
-      name: 'test',
-      username: 'test',
-      language: 'en',
-      banned: 'no',
-      city: 'Parana',
-      merchant: false,
-      boostProPlus: false,
-      fb: false,
-      mature: 1,
-      monetized: '',
-      signup_method: false,
-      feature_flags: false,
-      programs: [],
-      plus: false,
-      verified: true,
-      disabled_boost: false,
-      wire_rewards: null,
-      chat: true,
-      subscribed: false,
-      subscriber: false,
-      subscribers_count: 73,
-      subscriptions_count: 29,
-      impressions: 14761,
-      boost_rating: '2',
-    };
+    comp.setModalData({
+      user: {
+        guid: '1',
+        type: 'user',
+        name: 'test',
+        username: 'test',
+        language: 'en',
+        banned: 'no',
+        city: 'Parana',
+        merchant: false,
+        boostProPlus: false,
+        fb: false,
+        mature: 1,
+        monetized: '',
+        signup_method: false,
+        feature_flags: false,
+        programs: [],
+        plus: false,
+        verified: true,
+        disabled_boost: false,
+        wire_rewards: null,
+        chat: true,
+        subscribed: false,
+        subscriber: false,
+        subscribers_count: 73,
+        subscriptions_count: 29,
+        impressions: 14761,
+        boost_rating: '2',
+      },
+      onDismiss: () => null,
+    });
     fixture.detectChanges();
 
     if (fixture.isStable()) {

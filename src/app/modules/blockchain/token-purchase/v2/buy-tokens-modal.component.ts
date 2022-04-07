@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { last } from 'rxjs/operators';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
 import { PhoneVerificationService } from '../../../wallet/components/components/phone-verification/phone-verification.service';
@@ -72,4 +71,6 @@ export class BuyTokensModalComponent {
       }
     }
   }
+
+  setModalData() {}
 }

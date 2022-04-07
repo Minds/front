@@ -20,7 +20,6 @@
     </ul>
 
     <infinite-scroll
-      distance="25%"
       (load)="loadNext()"
       [moreData]="nextPagingToken"
       [inProgress]="inProgress$ | async"
@@ -30,3 +29,5 @@
     </infinite-scroll>
   </div>
 </div>
+
+<m-modalCloseButton></m-modalCloseButton>

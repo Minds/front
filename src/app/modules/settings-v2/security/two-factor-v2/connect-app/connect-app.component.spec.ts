@@ -4,7 +4,6 @@ import { take } from 'rxjs/operators';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { Session } from '../../../../../services/session';
-import { StackableModalService } from '../../../../../services/ux/stackable-modal.service';
 import { MockService } from '../../../../../utils/mock';
 import { SettingsTwoFactorConnectAppComponent } from './connect-app.component';
 import {
@@ -13,6 +12,8 @@ import {
 } from '../two-factor-v2.service';
 import { ButtonComponent } from '../../../../../common/components/button/button.component';
 import { FormsModule } from '@angular/forms';
+import { ModalService } from '../../../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../../../tests/modal-service-mock.spec';
 
 xdescribe('SettingsTwoFactorConnectAppComponent', () => {
   let comp: SettingsTwoFactorConnectAppComponent;
@@ -33,8 +34,8 @@ xdescribe('SettingsTwoFactorConnectAppComponent', () => {
             useValue: sessionMock,
           },
           {
-            provide: StackableModalService,
-            useValue: MockService(StackableModalService),
+            provide: ModalService,
+            useValue: modalServiceMock,
           },
           {
             provide: FormToastService,

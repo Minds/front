@@ -22,6 +22,9 @@ import { PageLayoutService } from '../page-layout.service';
 import { FeaturesService } from '../../../services/features.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
 import { Observable } from 'rxjs';
+import { AuthRedirectService } from '../../services/auth-redirect.service';
+import { GuestModeExperimentService } from '../../../modules/experiments/sub-services/guest-mode-experiment.service';
+import { HomepageV3ExperimentService } from './../../../modules/experiments/sub-services/home-page-v3-experiment.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -44,9 +47,12 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   isMobile: boolean = false;
 
-  onAuthPages: boolean = false; // sets to false if we're on login or register pages
+  onAuthPages: boolean = false; // sets to true if we're on login or register pages
+  onHomepage: boolean = false; // sets to true if we're on home or about pages
 
   router$;
+
+  isHomePageV3: boolean;
 
   constructor(
     protected sidebarService: SidebarNavigationService,
@@ -60,7 +66,10 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     public pageLayoutService: PageLayoutService,
     private featuresService: FeaturesService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private authRedirectService: AuthRedirectService,
+    private guestModeExperiment: GuestModeExperimentService,
+    private homepageV3Experiment: HomepageV3ExperimentService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -70,9 +79,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.featuresService.has('notifications-v3')) {
-      this.loadComponent();
-    }
     this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
@@ -80,18 +86,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   getCurrentUser() {
     return this.session.getLoggedInUser();
-  }
-
-  loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        NotificationsToasterComponent
-      ),
-      viewContainerRef = this.notificationsToasterHost.viewContainerRef;
-
-    viewContainerRef.clear();
-
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.componentInstance = this.componentRef.instance;
   }
 
   detectChanges() {
@@ -108,7 +102,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   private listen() {
-    this.setOnAuthPages(this.router.url);
+    this.setPages(this.router.url);
 
     this.router$ = this.router.events.subscribe(
       (navigationEvent: NavigationEnd) => {
@@ -117,7 +111,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.setOnAuthPages(
+          this.setPages(
             navigationEvent.urlAfterRedirects || navigationEvent.url
           );
         }
@@ -125,8 +119,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private setOnAuthPages(url) {
+  private setPages(url) {
     this.onAuthPages = url === '/login' || url === '/register';
+    this.onHomepage =
+      (url === '/' && !this.guestModeExperiment.isActive()) || url === '/about';
+    this.isHomePageV3 = this.onHomepage && this.homepageV3Experiment.isActive();
     this.detectChanges();
   }
 
@@ -168,15 +165,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   }
 
   async onJoinNowClick() {
-    try {
-      await this.authModal.open();
-      this.doRedirect();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    const user = await this.authModal.open();
+    if (user) this.doRedirect();
   }
 
   /**
@@ -185,20 +175,13 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   async onLoginClick(): Promise<void> {
-    try {
-      await this.authModal.open({ formDisplay: 'login' });
-      this.doRedirect();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    const user = await this.authModal.open({ formDisplay: 'login' });
+    if (user) this.doRedirect();
   }
 
   doRedirect(): void {
     if (this.router.url === '/' || this.router.url === '/about') {
-      this.router.navigate(['/newsfeed/subscriptions/latest']);
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
   }
 
@@ -207,9 +190,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
    * @returns { string } url for main logo.
    */
   public getMainLogoUrl(): string {
-    return this.session.getLoggedInUser()
-      ? '/newsfeed/subscriptions/latest'
-      : '/';
+    return this.session.getLoggedInUser() ? '/newsfeed/subscriptions' : '/';
   }
 
   /**

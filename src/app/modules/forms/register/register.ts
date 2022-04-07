@@ -1,30 +1,32 @@
 import {
   Component,
   EventEmitter,
-  ViewChild,
   Input,
-  Output,
   NgZone,
-  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
   AbstractControl,
+  FormBuilder,
+  FormGroup,
   ValidationErrors,
+  Validators,
 } from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { PopoverComponent } from '../popover-validation/popover.component';
-import { FeaturesService } from '../../../services/features.service';
+import {
+  PopoverComponent,
+  SecurityValidationStateValue,
+} from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
+
+export type Source = 'auth-modal' | 'other' | null;
 
 @Component({
   selector: 'minds-form-register',
@@ -39,8 +41,10 @@ export class RegisterForm {
   @Input() showPromotions: boolean = true;
   @Input() showLabels: boolean = false;
   @Input() showInlineErrors: boolean = false;
+  @Input() source: Source = null;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
+  @Output() showLoginForm: EventEmitter<any> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
@@ -48,7 +52,7 @@ export class RegisterForm {
   inProgress: boolean = false;
   captcha: string;
   usernameValidationTimeout: any;
-  passwordFieldValid: boolean = false;
+  securityValidationState: SecurityValidationStateValue = null;
 
   alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
@@ -65,7 +69,6 @@ export class RegisterForm {
     public client: Client,
     fb: FormBuilder,
     public zone: NgZone,
-    private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator
   ) {
@@ -76,12 +79,19 @@ export class RegisterForm {
           [
             Validators.required,
             Validators.minLength(4),
-            Validators.maxLength(128),
+            Validators.maxLength(50),
           ],
           [this.usernameValidator.existingUsernameValidator()],
         ],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, PASSWORD_VALIDATOR]],
+        password: [
+          '',
+          [
+            Validators.required,
+            PASSWORD_VALIDATOR,
+            //this.passwordSecurityValidator.bind(this),
+          ],
+        ],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
         exclusive_promotions: [true],
@@ -90,6 +100,10 @@ export class RegisterForm {
       },
       { validators: [this.passwordConfirmingValidator] }
     );
+  }
+
+  onShowLoginFormClick() {
+    this.showLoginForm.emit();
   }
 
   showError(field: string) {
@@ -107,9 +121,21 @@ export class RegisterForm {
     }
   }
 
-  register(e) {
-    console.log(e);
+  /**
+   * Check if the password security check has failed, return error if it has.
+   * We ignore pending state here because we don't want to trigger form errors when pending.
+   * @param { AbstractControl } control - specifies the form control - unused.
+   * @returns { ValidationErrors | null } - returns validation errors in the event the state is failed.
+   */
+  // private passwordSecurityValidator(
+  //   control: AbstractControl
+  // ): ValidationErrors | null {
+  //   return this.securityValidationState === SecurityValidationState.FAILED
+  //     ? { passwordSecurityFailed: true }
+  //     : null;
+  // }
 
+  register(e) {
     e.preventDefault();
     this.errorMessage = '';
     if (!this.form.value.tos) {
@@ -155,7 +181,14 @@ export class RegisterForm {
           this.session.logout();
         } else if (e.status === 'error') {
           // two factor?
-          this.errorMessage = e.message;
+          switch (e?.message) {
+            case 'registration:notemail':
+              this.errorMessage = 'Invalid Email';
+              break;
+            default:
+              this.errorMessage = e.message ?? 'An unknown error has occurred';
+          }
+
           this.session.logout();
         } else {
           this.errorMessage = 'Sorry, there was an error. Please try again.';
@@ -179,11 +212,25 @@ export class RegisterForm {
     if (!isMobileOrTablet()) {
       this.popover.hide();
     }
+    console.log(this.form);
   }
 
-  onPopoverChange(valid: boolean) {
-    this.passwordFieldValid = !valid;
+  /**
+   * Fired on password validation popover change - emitted around password security checks.
+   * @param { SecurityValidationStateValue } state - state of the password security check.
+   */
+  public onPopoverChange(state: SecurityValidationStateValue): void {
+    this.securityValidationState = state;
+    this.form.get('password').updateValueAndValidity();
   }
+
+  /**
+   * Whether security validation state is successful.
+   * @returns { boolean } true if security validation state is successful.
+   */
+  // public isSecurityValidationStateSuccess(): boolean {
+  //   return this.securityValidationState === SecurityValidationState.SUCCESS;
+  // }
 
   get username() {
     return this.form.get('username');

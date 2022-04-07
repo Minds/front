@@ -25,7 +25,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
-import { ModalService } from '../../../composer/components/modal/modal.service';
+import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { catchError, take } from 'rxjs/operators';
 
@@ -98,7 +98,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
     private session: Session,
     protected cd: ChangeDetectorRef,
     private themesService: ThemeService,
-    private composerModal: ModalService,
+    private composerModal: ComposerModalService,
     private injector: Injector,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
@@ -223,10 +223,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
    */
   public async openComposerModal(): Promise<void> {
     try {
-      await this.composerModal
-        .setInjector(this.injector)
-        .present()
-        .toPromise();
+      await this.composerModal.setInjector(this.injector).present();
     } catch (e) {
       console.error(e);
     }

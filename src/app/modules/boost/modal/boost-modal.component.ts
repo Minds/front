@@ -1,8 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { LazyComponent } from '../../../common/services/modal-lazy-load.service';
 import { Session } from '../../../services/session';
 import {
   BoostModalService,
@@ -11,14 +10,14 @@ import {
 } from './boost-modal.service';
 
 /**
- * Boost modal component. Designed to be lazy loaded in through stackable modal service.
+ * Boost modal component. Designed to be lazy loaded in through modal service.
  */
 @Component({
   selector: 'm-boostModal',
   templateUrl: './boost-modal.component.html',
   styleUrls: ['./boost-modal.component.ng.scss'],
 })
-export class BoostModalComponent implements LazyComponent, OnDestroy {
+export class BoostModalComponent implements OnInit, OnDestroy {
   /**
    * Asset url
    */
@@ -31,6 +30,23 @@ export class BoostModalComponent implements LazyComponent, OnDestroy {
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
+
+  ngOnInit(): void {
+    const entity = this.service.entity$.getValue();
+
+    if (!entity) {
+      this.toast.error('An unknown error has occurred.');
+      this.onDismissIntent();
+      return;
+    }
+
+    // if an entity is nsfw, it cannot be boosted - reset and close modal.
+    if (entity['nsfw']?.length > 0 || entity['nsfw_lock']?.length > 0) {
+      this.toast.error('NSFW content cannot be boosted.');
+      this.onDismissIntent();
+      return;
+    }
   }
 
   ngOnDestroy(): void {
@@ -86,18 +102,6 @@ export class BoostModalComponent implements LazyComponent, OnDestroy {
   onSaveIntent: () => void = () => {};
 
   /**
-   * Sets modal options.
-   * @param { Function } onDismissIntent - set dismiss intent callback.
-   * @param { Function } onSaveIntent - set save intent callback.
-   * @param { BoostableEntity } entity - set entity that is the subject of the boost.
-   */
-  set opts({ onDismissIntent, onSaveIntent, entity }) {
-    this.onDismissIntent = onDismissIntent || (() => {});
-    this.onSaveIntent = onSaveIntent || (() => {});
-    this.service.entity$.next(entity || (() => {}));
-  }
-
-  /**
    * Observable containing CSS object for banner src
    * @returns { { backgroundImage: string } } - css object intended for consumption by an ngStyle.
    */
@@ -113,9 +117,15 @@ export class BoostModalComponent implements LazyComponent, OnDestroy {
    */
   public async submitBoost(): Promise<void> {
     this.inProgress$.next(true);
-    const response = await this.service.submitBoostAsync();
+    let response;
 
-    this.inProgress$.next(false);
+    try {
+      response = await this.service.submitBoostAsync();
+    } catch (e) {
+      return;
+    } finally {
+      this.inProgress$.next(false);
+    }
 
     if (
       response &&
@@ -125,5 +135,17 @@ export class BoostModalComponent implements LazyComponent, OnDestroy {
       this.toast.success('Success! Your boost request is being processed.');
       this.onSaveIntent();
     }
+  }
+
+  /**
+   * Sets modal options.
+   * @param { Function } onDismissIntent - set dismiss intent callback.
+   * @param { Function } onSaveIntent - set save intent callback.
+   * @param { BoostableEntity } entity - set entity that is the subject of the boost.
+   */
+  setModalData({ onDismissIntent, onSaveIntent, entity }) {
+    this.onDismissIntent = onDismissIntent || (() => {});
+    this.onSaveIntent = onSaveIntent || (() => {});
+    this.service.entity$.next(entity || (() => {}));
   }
 }

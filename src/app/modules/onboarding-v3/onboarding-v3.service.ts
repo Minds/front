@@ -3,13 +3,8 @@ import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from '../../common/api/api.service';
 
-import {
-  StackableModalEvent,
-  StackableModalService,
-  StackableModalState,
-} from '../../services/ux/stackable-modal.service';
-
 import { OnboardingV3ModalComponent } from './modal/onboarding-modal.component';
+import { ModalService } from '../../services/ux/modal.service';
 
 /**
  * GET api/v3/onboarding response.
@@ -90,7 +85,7 @@ export class OnboardingV3Service implements OnDestroy {
   constructor(
     private compiler: Compiler,
     private injector: Injector,
-    private stackableModal: StackableModalService,
+    private modalService: ModalService,
     private api: ApiService
   ) {}
 
@@ -102,39 +97,42 @@ export class OnboardingV3Service implements OnDestroy {
 
   /**
    * Lazy load modules and open modal.
-   * @returns { Promise<any> }
+   * @param { Function } onLoadFinished called when the onboarding api call is finished and we have the results
+   * @returns { Promise<OnboardingStepName> } the completed step
    */
-  public async open(): Promise<any> {
+  public async open(onLoadFinished?: () => void): Promise<any> {
     const { OnboardingV3ProgressLazyModule } = await import(
       './onboarding.lazy.module'
     );
 
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      OnboardingV3ProgressLazyModule
-    );
-    const moduleRef = moduleFactory.create(this.injector);
-
-    const componentFactory = moduleRef.instance.resolveComponent();
-
-    const onSuccess$: Subject<any> = new Subject();
-
-    const evt: StackableModalEvent = await this.stackableModal
-      .present(OnboardingV3ModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
-        dismissOnRouteChange: false,
-        onSaveIntent: (step: OnboardingStepName) => {},
-        onDismissIntent: () => {
-          this.dismiss();
+    const modal = this.modalService.present(OnboardingV3ModalComponent, {
+      data: {
+        onSaveIntent: (step: OnboardingStepName, stepData: any) => {
+          if (step) {
+            switch (step) {
+              case 'SetupChannelStep':
+                // only force complete if the channel had a bio (possibly make this more robust by applying more filters)
+                if (stepData?.briefdescription) {
+                  this.forceCompletion(step);
+                  onLoadFinished?.();
+                }
+                this.load().then(onLoadFinished);
+                break;
+              default:
+                // force complete and get the onboarding progress from api
+                this.forceCompletion(step);
+                onLoadFinished?.();
+                this.load().then(onLoadFinished);
+            }
+          }
+          modal.close(step);
         },
-      })
-      .toPromise();
+      },
+      injector: this.injector,
+      lazyModule: OnboardingV3ProgressLazyModule,
+    });
 
-    // Modal was closed.
-    if (evt.state === StackableModalState.Dismissed && !onSuccess$.isStopped) {
-      throw 'DismissedModalException';
-    }
-
-    return onSuccess$.toPromise();
+    return modal.result;
   }
 
   /**
@@ -152,10 +150,12 @@ export class OnboardingV3Service implements OnDestroy {
             console.error(e);
             return of(e);
           }),
-          map(progress =>
+          map((progress: OnboardingResponse) =>
             progress.steps.map((progressStep: OnboardingStep) => {
-              if (step === progressStep.id) {
+              if (step === progressStep.id && !progressStep.is_completed) {
                 progressStep.is_completed = true;
+                progress.completed_pct =
+                  progress.completed_pct + 1 / progress.steps.length;
               }
             })
           )
@@ -170,14 +170,7 @@ export class OnboardingV3Service implements OnDestroy {
    * @returns { Promise<void> } - awaitable.
    */
   public async presentHomepageModals(): Promise<void> {
-    try {
-      await this.open();
-    } catch (e) {
-      if (e === 'DismissedModalException') {
-        return; // modal dismissed, do nothing
-      }
-      console.error(e);
-    }
+    await this.open();
   }
 
   /**
@@ -186,7 +179,7 @@ export class OnboardingV3Service implements OnDestroy {
    */
   public dismiss(): void {
     try {
-      this.stackableModal.dismiss();
+      this.modalService.dismissAll();
     } catch (e) {
       // do nothing
     }

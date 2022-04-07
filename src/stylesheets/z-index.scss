@@ -19,7 +19,9 @@
 
 $z-index: (
   // POPOVER--MODAL: for popovers that should be visible while a modal is open
-    popover--modal: 150,
+    popover--modal: 1060,
+  // FOOTER--BANNER: for any banner that should be visible at the bottom of the page but should not overlap modals
+    footer--banner: 70,
   //
     // **NOTE!** leave numerical space here in case of add'l stacked modals
     //

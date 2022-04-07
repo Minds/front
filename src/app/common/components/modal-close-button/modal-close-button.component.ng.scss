@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  a {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    @include m-theme() {
+      background-color: rgba(themed($m-black), 0.025);
+    }
+
+    outline: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      @include m-theme() {
+        background-color: rgba(themed($m-black), 0.05);
+      }
+    }
+
+    &.white {
+      @include m-theme() {
+        background-color: rgba(themed($m-white-always), 0.025);
+        color: themed($m-white-always);
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        @include m-theme() {
+          background-color: rgba(themed($m-white-always), 0.05);
+        }
+      }
+    }
+
+    &.grey {
+      @include m-theme() {
+        background-color: rgba(themed($m-borderColor--primary), 0.925);
+        color: themed($m-textColor--primary);
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        @include m-theme() {
+          background-color: rgba(themed($m-borderColor--primary), 0.95);
+        }
+      }
+    }
+  }
+}

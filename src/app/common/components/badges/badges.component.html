@@ -1,4 +1,7 @@
 <ul class="m-channel--badges">
+  <li *ngIf="showMidDot">
+    &middot;
+  </li>
   <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
     <m-tooltip
       icon="verified_user"

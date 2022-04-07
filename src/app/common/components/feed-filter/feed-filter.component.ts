@@ -147,9 +147,9 @@ export class FeedFilterComponent implements OnInit {
    * Opens date range modal
    */
   async openDateRangeModal(): Promise<void> {
-    const dateRange: FeedFilterDateRange = await this.dateRangeModal
-      .present(this.injector)
-      .toPromise();
+    const dateRange: FeedFilterDateRange = await this.dateRangeModal.pick(
+      this.injector
+    );
 
     if (dateRange) {
       this.service.dateRange$.next(dateRange);

@@ -59,12 +59,10 @@
 
         <ng-template #metrics>
           <span class="m-commentOwnerRow__dot" *ngIf="!_compact">·</span>
-          <span
+          <m-relativeTimeSpan
             class="m-comment__timestamp m-commentOwnerRowItem__timestamp"
-            [title]="comment.time_created * 1000 | date: 'medium'"
-            *ngIf="commentAge$ | async as commentAge"
-            >{{ commentAge | friendlydatediff }}</span
-          >
+            [entity]="comment"
+          ></m-relativeTimeSpan>
           <ng-container *ngIf="comment.edited">
             <span class="m-commentOwnerRow__dot">·</span>
             <span
@@ -590,6 +588,7 @@
       [canEdit]="canEdit"
       [canDelete]="canDelete"
       [showReplies]="showReplies"
+      (onHeightChange)="onHeightChange.emit($event)"
       *ngIf="comment.can_reply && showReplies"
     >
     </m-comments__thread>

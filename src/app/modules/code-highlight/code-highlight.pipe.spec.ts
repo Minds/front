@@ -1,14 +1,12 @@
 import { CodeHighlightPipe } from './code-highlight.pipe';
 import { CodeHighlightService } from './code-highlight.service';
 import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/code-highlight-service.mock';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 
 describe('CodeHighlightPipe', () => {
   let pipe;
 
   const setup = featureEnabled => {
-    featuresServiceMock.mock('code-highlight', featureEnabled);
-    pipe = new CodeHighlightPipe(codeHighlightServiceMock, featuresServiceMock);
+    pipe = new CodeHighlightPipe(codeHighlightServiceMock);
   };
 
   const createCodeBlockHtmlString = (lang, code) => {
@@ -96,23 +94,6 @@ describe('CodeHighlightPipe', () => {
             'function (bar) {\n  console.log(`${bar}`);\n}\n'
           )
       );
-    });
-  });
-
-  describe('when feature is disabled', () => {
-    beforeEach(() => {
-      setup(false);
-    });
-
-    afterEach(() => {
-      codeHighlightServiceMock.reset();
-    });
-
-    it('should not transform', () => {
-      const string = `\`\`\` console.log(a);\`\`\``;
-      const transformedString = pipe.transform(string);
-
-      expect(transformedString).toBe(string);
     });
   });
 });

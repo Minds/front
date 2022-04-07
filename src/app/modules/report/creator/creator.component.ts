@@ -1,17 +1,10 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
-import { EventEmitter } from '@angular/core';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ModalService } from '../../../services/ux/modal.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   moduleId: module.id,
@@ -39,23 +32,23 @@ export class ReportCreatorComponent implements AfterViewInit {
 
   next: boolean = false;
 
-  @Input('object') set data(object) {
-    this.guid = object ? object.guid : null;
-  }
-
   _opts: any;
-
-  set opts(opts: any) {
-    this._opts = opts;
-  }
 
   constructor(
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private client: Client,
     protected toasterService: FormToastService
   ) {}
+
+  setModalData(opts: {
+    entity: MindsUser;
+    onReported?: (guid: number, reason?: number, subreason?: number) => void;
+  }) {
+    this._opts = opts;
+    this.guid = opts.entity ? opts.entity.guid : null;
+  }
 
   ngAfterViewInit() {
     this._changeDetectorRef.detectChanges();
@@ -115,7 +108,7 @@ export class ReportCreatorComponent implements AfterViewInit {
   //}
 
   close() {
-    this.overlayModal.dismiss();
+    this.modalService.dismissAll();
   }
 
   /**
@@ -147,13 +140,11 @@ export class ReportCreatorComponent implements AfterViewInit {
         this.close();
       }
 
-      if (this._opts && this._opts.onReported) {
-        this._opts.onReported(
-          this.guid,
-          this.subject.value,
-          this.subReason.value
-        );
-      }
+      this._opts?.onReported?.(
+        this.guid,
+        this.subject.value,
+        this.subReason.value
+      );
     } catch (e) {
       this.inProgress = false;
       //this.overlayModal.dismiss();\

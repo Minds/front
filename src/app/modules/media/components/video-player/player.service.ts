@@ -2,8 +2,8 @@ import { FeaturesService } from './../../../../services/features.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { Client } from '../../../../services/api';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { map } from 'rxjs/operators';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 export type VideoSource = {
   id: string;
@@ -63,7 +63,7 @@ export class VideoPlayerService implements OnDestroy {
 
   constructor(
     private client: Client,
-    private overlayModalService: OverlayModalService,
+    private modalService: ModalService,
     private featuresService: FeaturesService
   ) {
     this.setShouldPlayInModal(true);
@@ -100,7 +100,7 @@ export class VideoPlayerService implements OnDestroy {
 
   setShouldPlayInModal(shouldPlayInModal: boolean): VideoPlayerService {
     this.shouldPlayInModal =
-      shouldPlayInModal && this.overlayModalService.canOpenInModal();
+      shouldPlayInModal && this.modalService.canOpenInModal();
     return this;
   }
 
@@ -133,15 +133,6 @@ export class VideoPlayerService implements OnDestroy {
    * @returns { Observable<boolean> } true if video has no sources and is not failed.
    */
   awaitingTranscode(): Observable<boolean> {
-    if (this.featuresService.has('cloudflare-streams')) {
-      return of(this.status === 'transcoding');
-    }
-
-    // Hide transcode status when some video transcodes are available
-    return this.sources$.pipe(
-      map((sources: VideoSource[]) => {
-        return this.status !== 'failed' && sources.length < 1;
-      })
-    );
+    return of(this.status === 'transcoding');
   }
 }

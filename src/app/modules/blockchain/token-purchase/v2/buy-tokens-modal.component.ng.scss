@@ -3,10 +3,6 @@
 :host {
   display: contents;
 
-  ::ng-deep .m-modalV2__inner {
-    max-width: 500px !important;
-  }
-
   .m-buyTokensHeader__title {
     font-size: 26px;
     font-weight: 700;

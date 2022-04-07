@@ -1,3 +1,4 @@
+import { CommentPosterComponent } from './../poster/poster.component';
 import {
   Component,
   EventEmitter,
@@ -25,7 +26,6 @@ import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
@@ -40,6 +40,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
 import { UserAvatarService } from '../../../common/services/user-avatar.service';
 import { ActivityModalCreatorService } from '../../newsfeed/activity/modal/modal-creator.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'm-comment',
@@ -102,9 +103,14 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
 
-  @Input() poster: any;
+  @Input() poster: CommentPosterComponent;
 
   @Output() onReply = new EventEmitter();
+
+  @Output() onHeightChange: EventEmitter<{
+    oldHeight: number;
+    newHeight: number;
+  }> = new EventEmitter();
 
   menuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   posterMenuOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -127,7 +133,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     public attachment: AttachmentService,
     public translationService: TranslationService,
     public userAvatar: UserAvatarService,
-    private overlayModal: OverlayModalService,
+    private modalService: ModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
     private el: ElementRef,
@@ -413,7 +419,11 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   }
 
   showReport() {
-    this.overlayModal.create(ReportCreatorComponent, this.comment).present();
+    this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: this.comment,
+      },
+    });
   }
 
   /**
@@ -425,11 +435,22 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     if (this.level === 2 && this.poster) {
       const targetTag = `@${this.comment.ownerObj.username}`;
 
-      if (this.poster.content.indexOf(targetTag) === -1) {
-        this.poster.content = `${targetTag} ${this.poster.content}`;
-        this.poster.detectChanges();
-      }
+      const posterEl = this.poster?.elRef?.nativeElement;
+      if (posterEl) {
+        // set input content
+        if (this.poster.content.indexOf(targetTag) === -1) {
+          this.poster.content = `${targetTag} ${this.poster.content}`;
+          this.poster.detectChanges();
+        }
+        // scroll poster into view and stick it to the bottom (with 10vh offset)
+        posterEl?.scrollIntoView?.({
+          behavior: 'smooth',
+          block: 'end',
+        });
 
+        // focus the input
+        this.poster?.focus();
+      }
       return;
     }
     this.showReplies = !this.showReplies;
@@ -497,18 +518,13 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
       return;
     }
 
-    if (!this.featuresService.has('media-modal')) {
-      this.router.navigate([pageUrl]);
-      return;
-    } else {
-      if (
-        this.comment.custom_data[0].width === '0' ||
-        this.comment.custom_data[0].height === '0'
-      ) {
-        this.setImageDimensions();
-      }
-      this.openModal();
+    if (
+      this.comment.custom_data[0].width === '0' ||
+      this.comment.custom_data[0].height === '0'
+    ) {
+      this.setImageDimensions();
     }
+    this.openModal();
   }
 
   openModal() {

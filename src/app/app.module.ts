@@ -65,7 +65,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
-import { MessengerV2Module } from './modules/messenger-v2/messenger-v2.module';
 import { AboutModule } from './modules/about/about.module';
 import { CompassModule } from './modules/compass/compass.module';
 
@@ -121,7 +120,6 @@ import { CompassModule } from './modules/compass/compass.module';
     UpgradesModule,
     CodeHighlightModule,
     SharedModule,
-    MessengerV2Module,
     CompassModule,
 
     //last due to :username route

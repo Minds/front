@@ -74,10 +74,8 @@ m-notifications--flyout {
     max-height: calc(95vh - 60px);
     overflow: visible;
 
-    &.m-notificationsFlyout--newNavigation {
-      @include m-theme() {
-        background-color: themed($m-bgColor--primary);
-      }
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
     }
   }
 

@@ -18,7 +18,7 @@ export class UniswapModalComponent {
   public action: UniswapAction;
   public iframeUrl: string;
 
-  @Input('action') set data(action) {
+  setModalData({ action }) {
     this.action = action;
 
     const mindsTokenAddress = this.configService.get('blockchain').token

@@ -22,15 +22,22 @@ import { Observable } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
-import { PopoverComponent } from '../../../forms/popover-validation/popover.component';
+import {
+  PopoverComponent,
+  SecurityValidationState,
+  SecurityValidationStateValue,
+} from '../../../forms/popover-validation/popover.component';
 import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { PASSWORD_VALIDATOR } from '../../../forms/password.validator';
 
 @Component({
   selector: 'm-settingsV2__password',
   templateUrl: './password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./password.component.ng.scss'],
 })
 export class SettingsV2PasswordComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
@@ -43,7 +50,7 @@ export class SettingsV2PasswordComponent implements OnInit {
   user: MindsUser;
   form;
   passwordIncorrect: boolean = false;
-  newPasswordValid: boolean = false;
+  securityValidationState: SecurityValidationStateValue = null;
 
   constructor(
     protected cd: ChangeDetectorRef,
@@ -60,7 +67,11 @@ export class SettingsV2PasswordComponent implements OnInit {
         validators: [Validators.required],
       }),
       newPassword: new FormControl('', {
-        validators: [Validators.required],
+        validators: [
+          Validators.required,
+          PASSWORD_VALIDATOR,
+          // this.passwordSecurityValidator.bind(this),
+        ],
       }),
       confirmNewPassword: new FormControl('', {
         validators: [Validators.required],
@@ -75,14 +86,17 @@ export class SettingsV2PasswordComponent implements OnInit {
         this.detectChanges();
       }
     });
-    this.form.get('newPassword').valueChanges.subscribe(val => {
-      this.popover.show();
-      if (val && val.length > 0) {
-        this.popover.checkRules(val);
-      } else {
-        this.popover.hide();
-      }
-    });
+    this.form
+      .get('newPassword')
+      .valueChanges.pipe(distinctUntilChanged())
+      .subscribe(val => {
+        this.popover.show();
+        if (val && val.length > 0) {
+          this.popover.checkRules(val);
+        } else {
+          this.popover.hide();
+        }
+      });
 
     this.init = true;
     this.detectChanges();
@@ -132,6 +146,20 @@ export class SettingsV2PasswordComponent implements OnInit {
     };
   }
 
+  /**
+   * Check if the password security check has failed, return error if it has.
+   * We ignore pending state here because we don't want to trigger form errors when pending.
+   * @param { AbstractControl } control - specifies the form control - unused.
+   * @returns { ValidationErrors | null } - returns validation errors in the event the state is failed.
+   */
+  // private passwordSecurityValidator(
+  //   control: AbstractControl
+  // ): ValidationErrors | null {
+  //   return this.securityValidationState === SecurityValidationState.FAILED
+  //     ? { passwordSecurityFailed: true }
+  //     : null;
+  // }
+
   onNewPasswordFocus() {
     if (this.newPassword.length > 0) {
       this.popover.show();
@@ -144,15 +172,19 @@ export class SettingsV2PasswordComponent implements OnInit {
     }
   }
 
-  onPopoverChange(valid: boolean) {
-    this.newPasswordValid = valid ? true : false;
-    this.detectChanges();
+  /**
+   * Fired on password validation popover change - emitted around password security checks.
+   * @param { SecurityValidationStateValue } state - state of the password security check.
+   */
+  onPopoverChange(state: SecurityValidationStateValue): void {
+    this.securityValidationState = state;
+    this.form.get('newPassword').updateValueAndValidity();
   }
 
   canSubmit(): boolean {
     return (
       this.form.valid &&
-      this.newPasswordValid &&
+      // this.securityValidationState === SecurityValidationState.SUCCESS &&
       !this.passwordIncorrect &&
       !this.inProgress &&
       !this.form.pristine
@@ -165,6 +197,14 @@ export class SettingsV2PasswordComponent implements OnInit {
     }
 
     return this.dialogService.confirm('Discard changes?');
+  }
+
+  showError(field: string) {
+    return (
+      this.form.get(field).invalid &&
+      this.form.get(field).touched &&
+      this.form.get(field).dirty
+    );
   }
 
   detectChanges() {

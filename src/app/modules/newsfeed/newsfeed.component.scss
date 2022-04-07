@@ -141,13 +141,6 @@ m-newsfeed {
 }
 
 .m-theme__2020 .m-newsfeed {
-  // [class*='m-pageLayout__pane'] {
-  //   padding: 20px 40px;
-  //   @media screen and (max-width: $layoutMin3ColWidth) {
-  //     padding: 20px;
-  //   }
-  // }
-
   .m-newsfeed__inner {
     padding: 20px 40px;
     @media screen and (max-width: $layoutMin3ColWidth) {
@@ -163,7 +156,7 @@ m-newsfeed {
   }
   .m-newsfeed__sidebar {
     max-width: initial;
-    padding: 20px 0px 20px 40px;
+    padding: 20px 0 20px 40px;
   }
 
   m-activity {

@@ -5,7 +5,6 @@ import {
   Injector,
 } from '@angular/core';
 import { AttachmentService } from '../../../services/attachment';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import isMobile from '../../../helpers/is-mobile';
 import { FeaturesService } from '../../../services/features.service';
@@ -22,7 +21,6 @@ export class NewsfeedTilesComponent {
   constructor(
     public attachment: AttachmentService,
     private router: Router,
-    private overlayModalService: OverlayModalService,
     private activityModalCreator: ActivityModalCreatorService,
     private injector: Injector
   ) {}

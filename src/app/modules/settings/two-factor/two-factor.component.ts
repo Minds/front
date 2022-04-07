@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 import { Client } from '../../../services/api';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   moduleId: module.id,
@@ -29,10 +29,7 @@ export class SettingsTwoFactorComponent {
     unknown
   >();
 
-  constructor(
-    public client: Client,
-    private overlayModal: OverlayModalService
-  ) {
+  constructor(public client: Client, private modalService: ModalService) {
     this.load();
   }
 
@@ -109,11 +106,8 @@ export class SettingsTwoFactorComponent {
   }
 
   cancel() {
-    const creator = this.overlayModal.create(
-      ConfirmPasswordModalComponent,
-      {},
-      {
-        class: 'm-overlay-modal--small',
+    const modal = this.modalService.present(ConfirmPasswordModalComponent, {
+      data: {
         onComplete: ({ password }) => {
           this.client.post('api/v1/twofactor/remove', {
             password: password,
@@ -121,9 +115,9 @@ export class SettingsTwoFactorComponent {
           this.telno = null;
           this.error = '';
           this.disabled.emit(true);
+          modal.dismiss();
         },
-      }
-    );
-    creator.present();
+      },
+    });
   }
 }

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BoostConsoleType } from '../console.component';
 
 import { BoostService } from '../../boost.service';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -26,7 +25,6 @@ export class BoostConsoleNetworkListComponent {
 
   constructor(
     public service: BoostService,
-    private overlayModal: OverlayModalService,
     private router: Router,
     private route: ActivatedRoute
   ) {

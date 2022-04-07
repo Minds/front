@@ -9,15 +9,16 @@ import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups.service';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ConfirmV2Component } from '../../modals/confirm-v2/confirm';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Component({
   selector: 'minds-groups-settings-button',
   templateUrl: 'groups-settings-button.html',
+  styleUrls: ['./groups-settings-button.ng.scss'],
 })
 export class GroupsSettingsButton {
   group: any = {
@@ -49,7 +50,7 @@ export class GroupsSettingsButton {
     public client: Client,
     public session: Session,
     private injector: Injector,
-    public overlayService: OverlayModalService,
+    public modalService: ModalService,
     public router: Router,
     protected toasterService: FormToastService
   ) {}
@@ -119,7 +120,11 @@ export class GroupsSettingsButton {
   }
 
   report() {
-    this.overlayService.create(ReportCreatorComponent, this.group).present();
+    return this.modalService.present(ReportCreatorComponent, {
+      data: {
+        entity: this.group,
+      },
+    });
   }
 
   async toggleConversation(enabled: boolean) {
@@ -136,11 +141,6 @@ export class GroupsSettingsButton {
    * Displays the delete prompt if deletion is possible
    */
   async deletePrompt() {
-    if ((await this.service.countMembers(this.group.guid)) !== 1) {
-      this.toasterService.error('You cannot delete a group that has members.');
-      return;
-    }
-
     this.openConfirmationModal();
   }
 
@@ -220,29 +220,19 @@ export class GroupsSettingsButton {
    * @returns { void }
    */
   public openConfirmationModal(): void {
-    let component: Object = ConfirmV2Component;
-
-    this.overlayService
-      .create(
-        component,
-        null,
-        {
-          wrapperClass: 'm-modalV2__wrapper',
-          title: 'Confirm',
-          body:
-            'Are you sure you want to delete this? This action cannot be undone.',
-          onConfirm: () => {
-            this.delete();
-            this.router.navigate(['/']);
-            this.overlayService.dismiss();
-          },
-          onDismiss: () => {
-            this.overlayService.dismiss();
-          },
+    const modal = this.modalService.present(ConfirmV2Component, {
+      data: {
+        title: 'Delete Group',
+        body:
+          'Are you sure you want to delete this? This action cannot be undone.',
+        confirmButtonColor: 'red',
+        onConfirm: () => {
+          this.delete();
+          this.router.navigate(['/']);
+          modal.dismiss();
         },
-        this.injector
-      )
-      .onDidDismiss(() => {})
-      .present();
+      },
+      injector: this.injector,
+    });
   }
 }

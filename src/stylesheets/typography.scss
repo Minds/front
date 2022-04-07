@@ -1,0 +1,142 @@
+// USAGE --------------------
+
+// .m-myComponent {
+//   @include heading2Medium;
+// }
+
+// Format:
+//{heading | body}{size#}{weight}
+
+//- BOLD ---------------------
+@mixin heading1Bold {
+  @include _heading1;
+  @include _fontWeightBold;
+}
+@mixin heading2Bold {
+  @include _heading2;
+  @include _fontWeightBold;
+}
+@mixin heading3Bold {
+  @include _heading3;
+  @include _fontWeightBold;
+}
+@mixin heading4Bold {
+  @include _heading4;
+  @include _fontWeightBold;
+}
+@mixin body1Bold {
+  @include _body1;
+  @include _fontWeightBold;
+}
+@mixin body2Bold {
+  @include _body2;
+  @include _fontWeightBold;
+}
+@mixin body3Bold {
+  @include _body3;
+  @include _fontWeightBold;
+}
+// - MEDIUM ---------------------
+@mixin heading1Medium {
+  @include _heading1;
+  @include _fontWeightMedium;
+}
+@mixin heading2Medium {
+  @include _heading2;
+  @include _fontWeightMedium;
+}
+@mixin heading3Medium {
+  @include _heading3;
+  @include _fontWeightMedium;
+}
+@mixin heading4Medium {
+  @include _heading4;
+  @include _fontWeightMedium;
+}
+@mixin body1Medium {
+  @include _body1;
+  @include _fontWeightMedium;
+}
+@mixin body2Medium {
+  @include _body2;
+  @include _fontWeightMedium;
+}
+@mixin body3Medium {
+  @include _body3;
+  @include _fontWeightMedium;
+}
+//- REGULAR ---------------------
+@mixin heading1Regular {
+  @include _heading1;
+  @include _fontWeightRegular;
+}
+@mixin heading2Regular {
+  @include _heading2;
+  @include _fontWeightRegular;
+}
+@mixin heading3Regular {
+  @include _heading3;
+  @include _fontWeightRegular;
+}
+@mixin heading4Regular {
+  @include _heading4;
+  @include _fontWeightRegular;
+}
+@mixin body1Regular {
+  @include _body1;
+  @include _fontWeightRegular;
+}
+@mixin body2Regular {
+  @include _body2;
+  @include _fontWeightRegular;
+}
+@mixin body3Regular {
+  @include _body3;
+  @include _fontWeightRegular;
+}
+
+//----------------------
+// Internal use only
+//
+// DON'T use these in your
+// component stylesheets
+
+@mixin _fontWeightBold {
+  font-weight: 700;
+}
+@mixin _fontWeightMedium {
+  font-weight: 500;
+}
+@mixin _fontWeightRegular {
+  font-weight: 400;
+}
+//----------------------
+@mixin _heading1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+@mixin _heading2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+@mixin _heading3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+@mixin _heading4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+//----------------------
+@mixin _body1 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+@mixin _body2 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+@mixin _body3 {
+  font-size: 0.8125rem;
+  line-height: 1rem;
+}

@@ -9,11 +9,10 @@ import {
 import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { Subscription } from 'rxjs';
-import { Navigation as NavigationService } from '../../../../services/navigation';
-import { RouterLink } from '@angular/router';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { UserMenuService } from './user-menu.service';
+import { HelpdeskRedirectService } from '../../../services/helpdesk-redirect.service';
 
 @Component({
   selector: 'm-usermenu__v3',
@@ -22,13 +21,16 @@ import { UserMenuService } from './user-menu.service';
 })
 export class UserMenuV3Component implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
-  @Input() showFooterLinks: boolean = false;
 
   isDark: boolean = false;
   themeSubscription: Subscription;
 
   footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
     { label: 'Canary Mode', routerLink: ['/canary'] },
+    {
+      label: 'Referrals',
+      routerLink: ['/settings/other/referrals'],
+    },
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
@@ -46,7 +48,8 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected featuresService: FeaturesService,
-    public service: UserMenuService
+    public service: UserMenuService,
+    private helpdeskRedirectService: HelpdeskRedirectService
   ) {}
 
   ngOnInit(): void {
@@ -55,14 +58,6 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
-
-    if (this.featuresService.has('settings-referrals')) {
-      const referralsLink = {
-        label: 'Referrals',
-        routerLink: ['/settings/other/referrals'],
-      };
-      this.footerLinks.splice(1, 0, referralsLink);
-    }
   }
 
   getCurrentUser(): MindsUser {
@@ -71,6 +66,14 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
 
   isAdmin(): boolean {
     return this.session.isAdmin();
+  }
+
+  /**
+   * Get helpdesk redirect URL from service.
+   * @returns { string } URL to redirect to for helpdesk.
+   */
+  public getHelpdeskRedirectUrl(): string {
+    return this.helpdeskRedirectService.getUrl();
   }
 
   toggleMenu(): void {
@@ -90,15 +93,8 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     this.themeService.toggleUserThemePreference();
   }
 
-  toggleFooterLinks(): void {
-    if (this.maxFooterLinks === 5) {
-      this.maxFooterLinks = Infinity;
-    } else {
-      this.maxFooterLinks = 5;
-    }
-  }
-
   ngOnDestroy(): void {
+    this.closeMenu();
     this.themeSubscription.unsubscribe();
   }
 }

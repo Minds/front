@@ -11,12 +11,13 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
-import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
 import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { AuthRedirectService } from '../../common/services/auth-redirect.service';
+import { OnboardingV3Service } from '../onboarding-v3/onboarding-v3.service';
 
 @Component({
   selector: 'm-register',
@@ -32,12 +33,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   videoError: boolean = false;
   referrer: string;
-
-  @HostBinding('class.m-register--newDesign')
-  newDesign: boolean = true;
-
-  @HostBinding('class.m-register--newNavigation')
-  newNavigation: boolean = true;
 
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
@@ -63,9 +58,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private configs: ConfigsService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
-    private onboardingService: OnboardingV2Service,
     private metaService: MetaService,
-    private pageLayoutService: PageLayoutService
+    private pageLayoutService: PageLayoutService,
+    private authRedirectService: AuthRedirectService,
+    private onboardingV3: OnboardingV3Service
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.cdnUrl = configs.get('cdn_url');
@@ -136,15 +132,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
   registered() {
     if (this.redirectTo) {
       this.navigateToRedirection();
-      return;
+    } else {
+      /**
+       * If a redirect hasn't already been defined,
+       * use the experiment to determine where to go
+       */
+      this.router.navigate([this.authRedirectService.getRedirectUrl()]);
     }
 
-    if (this.featuresService.has('ux-2020')) {
-      if (this.onboardingService.shouldShow()) {
-        this.router.navigate(['/onboarding']);
-        return;
-      }
-    }
+    this.onboardingV3.open();
   }
 
   onSourceError() {

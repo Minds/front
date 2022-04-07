@@ -28,6 +28,7 @@ import {
   AttachmentValidatorService,
 } from './attachment-validator.service';
 import { BoostRecommendationService } from '../../../common/services/boost-recommendation.service';
+import { OnboardingV3Service } from '../../onboarding-v3/onboarding-v3.service';
 
 /**
  * Message value type
@@ -223,7 +224,7 @@ export class ComposerService implements OnDestroy {
   /**
    * Message subject
    */
-  readonly message$: BehaviorSubject<MessageSubjectValue> = new BehaviorSubject<
+  public message$: BehaviorSubject<MessageSubjectValue> = new BehaviorSubject<
     MessageSubjectValue
   >(DEFAULT_MESSAGE_VALUE);
 
@@ -453,6 +454,14 @@ export class ComposerService implements OnDestroy {
   protected payload: any = null;
 
   /**
+   * message input selection range
+   */
+  public selection$: BehaviorSubject<{
+    start: number;
+    end: number;
+  }> = new BehaviorSubject({ start: 0, end: 0 });
+
+  /**
    * Sets up data observable and its subscription
    *
    * @param api
@@ -468,7 +477,8 @@ export class ComposerService implements OnDestroy {
     protected feedsUpdate: FeedsUpdateService,
     private hashtagsFromString: HashtagsFromStringService,
     private attachmentValidator: AttachmentValidatorService,
-    private boostRecommendationService: BoostRecommendationService
+    private boostRecommendationService: BoostRecommendationService,
+    private onboardingService: OnboardingV3Service
   ) {
     // Setup data stream using the latest subject values
     // This should emit whenever any subject changes.
@@ -612,14 +622,14 @@ export class ComposerService implements OnDestroy {
             this.hashtagsFromString.parseHashtagsFromString(values.title)
           );
 
-        const cryptoTags = this.hashtagsFromString
-          .parseCryptoTagsFromString(values.message)
+        const cashTags = this.hashtagsFromString
+          .parseCashtagsFromString(values.message)
           .concat(
-            this.hashtagsFromString.parseCryptoTagsFromString(values.title)
+            this.hashtagsFromString.parseCashtagsFromString(values.title)
           );
 
         // merge into one array.
-        const tags = [...bodyTags, ...values.tags, ...cryptoTags];
+        const tags = [...bodyTags, ...values.tags, ...cashTags];
 
         // get unique tags.
         const uniqueTags = tags.filter(function(item, pos) {
@@ -1077,6 +1087,7 @@ export class ComposerService implements OnDestroy {
       // Provide an update to subscribing feeds.
       if (!editing) {
         this.feedsUpdate.postEmitter.emit(activity);
+        this.onboardingService.forceCompletion('CreatePostStep');
       }
 
       this.reset();

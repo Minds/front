@@ -93,7 +93,8 @@ export class WireLockScreenComponent implements OnInit {
     }
 
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return null;
     }
 
     if (this.inProgress) return;
@@ -145,28 +146,27 @@ export class WireLockScreenComponent implements OnInit {
       return;
     }
 
-    await this.wireModal
-      .present(this.entity, {
-        //default: this.entity.wire_threshold,
-        supportTier: this.entity.wire_threshold.support_tier,
-      })
-      .subscribe(payEvent => {
-        if (payEvent.type === WireEventType.Completed) {
-          // this.wireSubmitted();
-          this.unlock(); // TODO: check onchain wires don't get stuck in a loop?
-        }
-      });
+    const payEvent = await this.wireModal.present(this.entity, {
+      //default: this.entity.wire_threshold,
+      supportTier: this.entity.wire_threshold.support_tier,
+    });
+
+    if (payEvent.type === WireEventType.Completed) {
+      // this.wireSubmitted();
+      this.unlock(); // TODO: check onchain wires don't get stuck in a loop?
+    }
   }
 
   async showUpgradeModal(): Promise<void> {
-    const wireEvent = await this.wireModal
-      .present(await this.wirePaymentHandlers.get('plus'), {
+    const wireEvent = await this.wireModal.present(
+      await this.wirePaymentHandlers.get('plus'),
+      {
         default: {
           type: 'money',
           upgradeType: 'plus',
         },
-      })
-      .toPromise();
+      }
+    );
     if (wireEvent.type === WireEventType.Completed) {
       this.unlock();
     }

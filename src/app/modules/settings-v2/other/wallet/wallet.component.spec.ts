@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
-import { MockService } from '../../../../utils/mock';
+import { MockComponent, MockService } from '../../../../utils/mock';
 import { SettingsV2WalletComponent } from './wallet.component';
 import { SettingsV2WalletService } from './wallet.service';
 
@@ -18,7 +18,15 @@ describe('SettingsV2WalletComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [SettingsV2WalletComponent],
+        declarations: [
+          SettingsV2WalletComponent,
+          MockComponent({
+            selector: 'm-button',
+          }),
+          MockComponent({
+            selector: 'm-formInput__checkbox',
+          }),
+        ],
         providers: [
           { provide: Session, useValue: sessionMock },
           { provide: Router, useValue: routerMock },
@@ -84,18 +92,6 @@ describe('SettingsV2WalletComponent', () => {
     expect((comp as any).toast.success).toHaveBeenCalledWith(
       'Successfully changed wallet privacy settings.'
     );
-  });
-
-  it('submit button should call submit function', () => {
-    spyOn(comp, 'submit');
-    const submitButton = fixture.debugElement.nativeElement.querySelector(
-      '.m-settingsV2Wallet__form m-button'
-    );
-    submitButton.click();
-
-    fixture.whenStable().then(() => {
-      expect(comp.submit).toHaveBeenCalled();
-    });
   });
 
   it('should have header', () => {

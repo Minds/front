@@ -34,10 +34,11 @@ export class JoinButtonComponent {
    * new/existing users to channels that haven't set up support tiers
    */
   async authorize(): Promise<void> {
-    this.authModal.open().then(() => {
+    const user = await this.authModal.open();
+    if (user) {
       this.subscribe();
       this.join();
-    });
+    }
   }
 
   /**
@@ -48,11 +49,9 @@ export class JoinButtonComponent {
     if (this.service.lowestSupportTier$.getValue()) {
       const channel: MindsUser = this.service.currentChannel;
 
-      const wireEvent: WireEvent = await this.wireModal
-        .present(channel, {
-          supportTier: this.service.lowestSupportTier$.getValue(),
-        })
-        .toPromise();
+      const wireEvent: WireEvent = await this.wireModal.present(channel, {
+        supportTier: this.service.lowestSupportTier$.getValue(),
+      });
       if (wireEvent.type === WireEventType.Completed) {
         this.subscribe();
         this.service.userIsMember$.next(true);

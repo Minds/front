@@ -5,12 +5,13 @@ import { clientMock } from '../../../../../../../tests/client-mock.spec';
 import { ButtonComponent } from '../../../../../../common/components/button/button.component';
 import { FormToastService } from '../../../../../../common/services/form-toast.service';
 import { Client } from '../../../../../../services/api';
-import { OverlayModalService } from '../../../../../../services/ux/overlay-modal';
 import { MockService } from '../../../../../../utils/mock';
 import { SettingsTwoFactorComponent } from '../../../../../settings/two-factor/two-factor.component';
 import { SettingsTwoFactorV2Service } from '../../two-factor-v2.service';
 
 import { SettingsTwoFactorDisableSMSComponent } from './confirm-disable-sms.component';
+import { ModalService } from '../../../../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../../../../tests/modal-service-mock.spec';
 
 describe('SettingsTwoFactorDisableSMSComponent', () => {
   let comp: SettingsTwoFactorDisableSMSComponent;
@@ -38,10 +39,7 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
             provide: Client,
             useValue: clientMock,
           },
-          {
-            provide: OverlayModalService,
-            useValue: MockService(OverlayModalService),
-          },
+          { provide: ModalService, useValue: modalServiceMock },
         ],
       }).compileComponents();
     })
@@ -74,8 +72,15 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
 
     expect((comp as any).toast.success).toHaveBeenCalled();
     expect((comp as any).service.reloadSettings).toHaveBeenCalled();
-    (comp as any).service.activePanel$.subscribe(val => {
-      expect(val).toEqual({ panel: 'root', intent: 'disabled-sms' });
-    });
+
+    (comp as any).service.activePanel$.subscribe(
+      val => {
+        expect(val).toEqual({ panel: 'root', intent: 'disabled-sms' });
+      },
+      err => {
+        console.error(err);
+        fail('An error occurred in confirm-disable-sms');
+      }
+    );
   });
 });

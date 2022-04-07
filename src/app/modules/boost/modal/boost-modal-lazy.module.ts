@@ -6,7 +6,6 @@ import {
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../../common/common.module';
 import { BoostModalComponent } from './boost-modal.component';
-import { LazyModule } from '../../../common/services/modal-lazy-load.service';
 import { BoostModalTabsComponent } from './tabs/boost-modal-tabs.component';
 import { BoostModalAmountInputComponent } from './inputs/amount-input/amount-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,7 +38,7 @@ const MODULES = [
   exports: [...COMPONENTS],
   providers: [...PROVIDERS],
 })
-export class BoostModalLazyModule implements LazyModule {
+export class BoostModalLazyModule {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   public resolveComponent(): ComponentFactory<BoostModalComponent> {

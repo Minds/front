@@ -16,10 +16,10 @@ import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { GroupsService } from '../groups.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ModalService } from '../../../services/ux/modal.service';
+import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
 
 let groupConfig = {
   countMembers: Promise.resolve(1),
@@ -72,7 +72,7 @@ describe('GroupsSettingsButton', () => {
           { provide: GroupsService, useValue: groupsServiceMock },
           { provide: Client, useValue: clientMock },
           { provide: Session, useValue: sessionMock },
-          { provide: OverlayModalService, useValue: overlayModalServiceMock },
+          { provide: ModalService, useValue: modalServiceMock },
           {
             provide: FormToastService,
             useValue: MockService(FormToastService),
@@ -203,7 +203,7 @@ describe('GroupsSettingsButton', () => {
     expect(report).not.toBeNull();
 
     report.nativeElement.click();
-    expect(overlayModalServiceMock.present).toHaveBeenCalled();
+    expect(modalServiceMock.present).toHaveBeenCalled();
   });
 
   it('should have an option to delete the group only if the user is a creator', () => {
@@ -223,35 +223,16 @@ describe('GroupsSettingsButton', () => {
     expect(getDeleteGroupItem()).toBeNull();
   });
 
-  xit('should delete the group if there is one member', fakeAsync(() => {
-    const deleteGroup = getDeleteGroupItem();
+  it('should show confirmation modal from group deletion', () => {
+    getDeleteGroupItem().nativeElement.click();
+    expect(modalServiceMock.present).toHaveBeenCalled();
+  });
 
-    deleteGroup.nativeElement.click();
-
-    fixture.detectChanges();
-    jasmine.clock().tick(10);
-
-    const confirmButton = fixture.debugElement.query(
-      By.css('m-modal button.mdl-button')
+  it('it should call to delete a group', () => {
+    (comp as any).service.deleteGroup.and.returnValue(
+      new Promise((resolve, reject) => true)
     );
-    expect(confirmButton.nativeElement.textContent).toContain('Confirm');
-
-    confirmButton.nativeElement.click();
-    fixture.detectChanges();
-    jasmine.clock().tick(10);
-
-    expect(comp.group.deleted).toBeTruthy();
-    expect(groupsServiceMock.deleteGroup).toHaveBeenCalled();
-  }));
-
-  it('should not allow group deletion if there is more than one member', fakeAsync(() => {
-    groupConfig.countMembers = Promise.resolve(2);
-    const deleteGroup = getDeleteGroupItem();
-
-    deleteGroup.nativeElement.click();
-    fixture.detectChanges();
-    jasmine.clock().tick(10);
-
-    expect(groupsServiceMock.countMembers).toHaveBeenCalled();
-  }));
+    comp.delete();
+    expect((comp as any).service.deleteGroup).toHaveBeenCalled();
+  });
 });

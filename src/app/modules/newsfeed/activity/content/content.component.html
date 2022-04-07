@@ -5,15 +5,12 @@
   [entity]="entity"
   [showTierName]="!minimalMode"
 ></m-paywallBadge>
-<ng-container *mIfFeature="'paywall-2020'">
-  <ng-container *ngIf="!hideMedia">
-    <m-activity__paywall
-      *ngIf="service.shouldShowPaywall$ | async"
-      [mediaHeight]="mediaHeight"
-      class="isPaywall2020"
-    ></m-activity__paywall
-  ></ng-container>
-</ng-container>
+<ng-container *ngIf="!hideMedia">
+  <m-activity__paywall
+    *ngIf="service.shouldShowPaywall$ | async"
+    [mediaHeight]="mediaHeight"
+  ></m-activity__paywall
+></ng-container>
 <!-- ----------------------------------- -->
 <!-- MESSAGE -->
 <!-- ----------------------------------- -->
@@ -29,7 +26,7 @@
       [class.m-activityContent__message--isTextOnly]="isTextOnly"
       [class.m-activityContent__message--short]="shortStatus"
       [class.m-activityContent__message--minimalMode]="minimalMode"
-      [maxHeightAllowed]="maxMessageHeight"
+      [maxHeightAllowed]="maxHeightAllowed || maxMessageHeight"
       *ngIf="message?.length >= 1"
       (click)="onMessageClick($event)"
     >
@@ -91,7 +88,10 @@
     class="m-activityContent__media--video"
     #mediaEl
     *ngIf="isVideo"
-    [ngClass]="{ isPaywall: service.shouldShowPaywall$ | async }"
+    [ngClass]="{
+      isPaywall: service.shouldShowPaywall$ | async,
+      'm-activityContent__media--video--modal': isModal
+    }"
   >
     <div class="m-activityContent__fixedHeightSpacer"></div>
 
@@ -103,9 +103,9 @@
         service.displayOptions.autoplayVideo &&
         !(service.shouldShowPaywall$ | async)
       "
-      [style.height]="videoHeight"
+      [style.height]="isModal ? null : videoHeight"
       [isModal]="isModal"
-      [style.overflow]="videoHeight ? 'hidden' : null"
+      [style.overflow]="videoHeight && !isModal ? 'hidden' : null"
     ></m-videoPlayer--scrollaware>
 
     <div class="m-activityContent__fixedHeightSpacer"></div>

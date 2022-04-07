@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BTCComponent } from './btc.component';
+import { ModalService } from '../../../services/ux/modal.service';
 
 @Injectable()
 export class BTCService {
-  constructor(private overlayModal: OverlayModalService) {}
+  constructor(private modalService: ModalService) {}
 
-  showModal(opts) {
-    this.overlayModal.create(BTCComponent, opts).present();
+  showModal(opts: { amount: number; address: string }) {
+    return this.modalService.present(BTCComponent, { data: opts, size: 'sm' });
   }
 }

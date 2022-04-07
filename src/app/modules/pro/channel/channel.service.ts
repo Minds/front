@@ -4,7 +4,6 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { FeedsService } from '../../../common/services/feeds.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionsStorageService } from '../../../services/session-storage.service';
@@ -230,7 +229,7 @@ export class ProChannelService implements OnDestroy {
     return route;
   }
 
-  open(entity, modalServiceContext: OverlayModalService) {
+  open(entity) {
     switch (this.getEntityTaxonomy(entity)) {
       case 'group':
         window.open(
@@ -301,7 +300,7 @@ export class ProChannelService implements OnDestroy {
       return;
     }
 
-    this.wireModal.present(this.currentChannel).subscribe(payEvent => {
+    this.wireModal.present(this.currentChannel).then(payEvent => {
       console.log({ payEvent });
       switch (payEvent.type) {
         case WireEventType.Completed:

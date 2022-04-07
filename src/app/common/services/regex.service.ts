@@ -20,7 +20,7 @@ export class RegexService {
       ].join(''),
       'gim' // Global, Case insensitive, Multiline
     ), //
-    crypto: new RegExp(
+    cash: new RegExp(
       [
         '([^&]|\\b|^)', // Start of string, and word bounday. Not if preceeded by & symbol
         '\\$', //

@@ -7,7 +7,6 @@ import { MockComponent, MockService } from '../../../../../utils/mock';
 import { BlogsEditService } from '../blog-edit.service';
 import { BehaviorSubject } from 'rxjs';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 
 const license$ = new BehaviorSubject<string>('');
 

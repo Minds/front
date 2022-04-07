@@ -111,13 +111,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateCurrency($event) {
-    this.activeCurrencyId = $event.tabId;
-    this.activeViewId = this.views[this.activeCurrencyId][0].id;
-    this.router.navigate(['/wallet', this.activeCurrencyId, this.activeViewId]);
-    this.detectChanges();
-  }
-
   scrollToSettings(currency: string) {
     if (
       this.activeCurrencyId !== currency ||

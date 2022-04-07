@@ -1,50 +1,28 @@
-import { Compiler, Injectable, Injector } from '@angular/core';
-import { Subject } from 'rxjs';
-import {
-  StackableModalEvent,
-  StackableModalService,
-} from '../../../../services/ux/stackable-modal.service';
+import { Injectable, Injector } from '@angular/core';
 import { AuthModalService } from '../../../auth/modal/auth-modal.service';
 import { BuyTokensModalComponent } from './buy-tokens-modal.component';
+import { ModalService } from '../../../../services/ux/modal.service';
 
 @Injectable()
 export class BuyTokensModalService {
   constructor(
-    private stackableModal: StackableModalService,
-    private compiler: Compiler,
+    private modalService: ModalService,
     private injector: Injector,
-    private authModalService: AuthModalService
+    private authModal: AuthModalService
   ) {}
 
   async open(): Promise<any> {
-    await this.authModalService.open();
+    const user = await this.authModal.open();
+    if (user) {
+      const { BuyTokensModalModule } = await import(
+        './buy-tokens-modal.module'
+      );
+      const modal = this.modalService.present(BuyTokensModalComponent, {
+        lazyModule: BuyTokensModalModule,
+        injector: this.injector,
+      });
 
-    const { BuyTokensModalModule } = await import('./buy-tokens-modal.module');
-
-    const moduleFactory = await this.compiler.compileModuleAsync(
-      BuyTokensModalModule
-    );
-    const moduleRef = moduleFactory.create(this.injector);
-
-    const buyTokensComponentFactory = moduleRef.instance.resolveBuyTokensComponent();
-    const orderReceivedComponentFactory = moduleRef.instance.resolveOrderReceivedComponent();
-
-    const onSuccess$: Subject<any> = new Subject();
-
-    const evt: StackableModalEvent = await this.stackableModal
-      .present(BuyTokensModalComponent, null, {
-        wrapperClass: 'm-modalV2__wrapper',
-        onComplete: (result: any) => {
-          onSuccess$.next(result);
-          onSuccess$.complete(); // Ensures promise can be called below
-          this.stackableModal.dismiss();
-        },
-        onDismissIntent: () => {
-          this.stackableModal.dismiss();
-        },
-      })
-      .toPromise();
-
-    return onSuccess$.toPromise();
+      return modal.result;
+    }
   }
 }
