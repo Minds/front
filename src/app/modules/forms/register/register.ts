@@ -165,6 +165,9 @@ export class RegisterForm {
 
     let opts = { ...this.form.value };
 
+    const friendlyCaptchaEnabled = this.isFriendlyCaptchaEnabled();
+    opts['friendly_captcha_enabled'] = friendlyCaptchaEnabled;
+
     this.client
       .post('api/v1/register', opts)
       .then((data: any) => {
@@ -178,7 +181,7 @@ export class RegisterForm {
         this.inProgress = false;
 
         // refresh CAPTCHA.
-        this.isFriendlyCaptchaEnabled()
+        friendlyCaptchaEnabled
           ? this.friendlyCaptchaEl.reset()
           : this.captchaEl.refresh();
 
