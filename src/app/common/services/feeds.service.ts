@@ -385,18 +385,19 @@ export class FeedsService implements OnDestroy {
   }
 
   /**
-   * TODO
+   * watch for new posts by polling the count endpoint
+   * @returns { Function } a function to unsubscribe the subscription
    */
-  public watchForNewPosts(): void {
+  public watchForNewPosts(): () => void {
     this.newPostWatcherSubscription?.unsubscribe();
     this.newPostWatcherSubscription = interval(NEW_POST_POLL_INTERVAL)
       // only poll when tab is active
       .pipe(filter(() => document.hasFocus()))
       .pipe(switchMap(() => this.count(this.newPostsLastCountedAt)))
       .subscribe(count => {
-        console.log('NEW COUNT: ', count, this.newPostsLastCountedAt);
         this.newPostsCount$.next(this.newPostsCount$.getValue() + count);
         this.newPostsLastCountedAt = Date.now();
       });
+    return () => this.newPostWatcherSubscription?.unsubscribe();
   }
 }

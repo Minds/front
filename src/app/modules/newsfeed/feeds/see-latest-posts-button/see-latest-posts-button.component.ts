@@ -1,6 +1,13 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { FeedsService } from './../../../../common/services/feeds.service';
-import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
   transition,
@@ -47,14 +54,19 @@ import {
     ]),
   ],
 })
-export class SeeLatestPostsButtonComponent implements OnInit {
+export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   @Input()
   feedService: FeedsService;
+  private disposeWatcher?: () => void;
 
   constructor(@Inject(PLATFORM_ID) private platformId) {}
 
   ngOnInit(): void {
     this.startPolling();
+  }
+
+  ngOnDestroy(): void {
+    this.disposeWatcher?.();
   }
 
   /**
@@ -63,7 +75,7 @@ export class SeeLatestPostsButtonComponent implements OnInit {
   startPolling(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    this.feedService.watchForNewPosts();
+    this.disposeWatcher = this.feedService.watchForNewPosts();
   }
 
   /**
