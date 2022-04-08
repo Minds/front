@@ -14,7 +14,7 @@ import { BlockListService } from './block-list.service';
 import { EntitiesService } from './entities.service';
 
 // FIXME: use 30sec
-const NEW_POST_POLL_INTERVAL = 2000;
+const NEW_POST_POLL_INTERVAL = 5000;
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -224,6 +224,7 @@ export class FeedsService implements OnDestroy {
     const oldTimestamp = this.newPostsLastCountedAt;
 
     if (refresh) {
+      fromTimestamp = '';
       this.newPostsLastCountedAt = Date.now();
       this.newPostsCount$.next(0);
     }
