@@ -97,4 +97,7 @@
   </ng-container>
 </div>
 
-<m-seeLatestPostsButton [feedService]="feedService"></m-seeLatestPostsButton>
+<m-seeLatestPostsButton
+  *mExperiment="'front-4089-polling'; variation: true"
+  [feedService]="feedService"
+></m-seeLatestPostsButton>
