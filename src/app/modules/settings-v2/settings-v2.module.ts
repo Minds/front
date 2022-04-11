@@ -481,7 +481,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Delete Account',
               description:
-                'Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.',
+                'Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable.',
               id: 'delete-account',
             },
           },
