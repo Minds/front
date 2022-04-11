@@ -33,6 +33,7 @@ import { FeedsUpdateService } from '../../../common/services/feeds-update.servic
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 
 export type FeedAlgorithm = 'top' | 'latest';
 
@@ -78,6 +79,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   private feedsUpdatedSubscription: Subscription;
 
   @ViewChild('composer') private composer: ComposerComponent;
+  @ViewChild('boostRotator')
+  private boostRotator: NewsfeedBoostRotatorComponent;
   @ViewChildren('feedViewChildren', { read: ElementRef })
   feedViewChildren: QueryList<ElementRef>;
 
@@ -361,5 +364,16 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         // show after the 3rd post
         return index === 2;
     }
+  }
+
+  /**
+   * scrolls to under the boost rotator. Used as an alternative to scrollToTop but
+   * keeping scrolling consistency by not avoiding the rotator
+   */
+  scrollToUnderBoostRotator(): void {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: this.boostRotator.nativeElement.offsetTop + this.boostRotator.height,
+    });
   }
 }

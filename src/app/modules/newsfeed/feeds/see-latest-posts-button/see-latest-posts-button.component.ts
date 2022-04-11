@@ -7,6 +7,8 @@ import {
   OnInit,
   PLATFORM_ID,
   OnDestroy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
@@ -57,6 +59,10 @@ import {
 export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   @Input()
   feedService: FeedsService;
+
+  @Output('onClick')
+  onClickEmitter = new EventEmitter();
+
   private disposeWatcher?: () => void;
 
   constructor(@Inject(PLATFORM_ID) private platformId) {}
@@ -96,10 +102,7 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
    *
    */
   async onClick(): Promise<void> {
-    window.scrollTo({
-      behavior: 'smooth',
-      top: 0,
-    });
+    this.onClickEmitter.emit();
     await this.feedService.fetch(true);
   }
 }
