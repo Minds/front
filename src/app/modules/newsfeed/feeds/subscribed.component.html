@@ -97,8 +97,10 @@
   </ng-container>
 </div>
 
-<m-seeLatestPostsButton
-  *mExperiment="'front-4089-polling'; variation: true"
-  [feedService]="feedService"
-  (onClick)="scrollToUnderBoostRotator()"
-></m-seeLatestPostsButton>
+<ng-container *ngIf="algorithm === 'latest'">
+  <m-seeLatestPostsButton
+    *mExperiment="'front-4089-polling'; variation: true"
+    [feedService]="feedService"
+    (onClick)="scrollToUnderBoostRotator()"
+  ></m-seeLatestPostsButton>
+</ng-container>
