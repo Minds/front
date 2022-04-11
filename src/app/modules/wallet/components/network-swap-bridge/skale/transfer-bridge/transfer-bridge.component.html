@@ -1,6 +1,28 @@
 <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
 
 <div
+  *ngIf="canRequestFromFaucet"
+  (click)="onFaucetBannerClick()"
+  class="m-skaleTransferBridge__faucetBanner"
+>
+  <ng-container *ngIf="!faucetInProgress">
+    <ng-container i18n="@@SKALE_FAUCET__CLICK_TO_CLAIM_SKETH"
+      >Your skETH balance is low. Click to request funds.</ng-container
+    >
+    <m-tooltip
+      i18n="@@SKALE_FAUCET__NO_MONETARY_VALUE"
+      icon="info"
+      anchor="right"
+    >
+      skETH has NO MONETARY VALUE and never will. It serves as gas fees for your
+      transactions on the SKALE network. It can be periodically claimed from our
+      faucet to enable you to make transactions.
+    </m-tooltip>
+  </ng-container>
+  <m-loadingSpinner [inProgress]="faucetInProgress"></m-loadingSpinner>
+</div>
+
+<div
   class="m-skaleTransferBridge__tokenBridge"
   [formGroup]="form"
   *ngIf="!inProgress"

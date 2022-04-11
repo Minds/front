@@ -45,13 +45,24 @@
     </li>
   </ul>
 
-  <div class="m-networkSwapTxHistory__body" *ngIf="!isLoading">
+  <!-- m-networkBridgeTxHistoryItem list -->
+  <div
+    class="m-networkSwapTxHistory__body"
+    *ngIf="!isLoading && (filteredItems$ | async).length > 0"
+  >
     <m-networkBridgeTxHistoryItem
       *ngFor="let item of filteredItems$ | async"
       [item]="item"
       (click)="handleActionRequired(item)"
     >
     </m-networkBridgeTxHistoryItem>
+  </div>
+
+  <div
+    class="m-networkSwapTxHistory__body"
+    *ngIf="!isLoading && (filteredItems$ | async).length === 0"
+  >
+    <span> No {{ formatState() }} transactions</span>
   </div>
   <m-loadingSpinner [inProgress]="isLoading"></m-loadingSpinner>
 </div>

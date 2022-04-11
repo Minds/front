@@ -60,9 +60,16 @@
     class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"
     *ngIf="isPendingAction(item)"
   >
-    <i class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color"
-      >chevron_right</i
+    <a
+      *ngIf="getExplorerUrl(item)"
+      [href]="getExplorerUrl(item)"
+      target="_blank"
     >
+      <i
+        class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color"
+        >chevron_right</i
+      >
+    </a>
   </div>
   <div
     class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"

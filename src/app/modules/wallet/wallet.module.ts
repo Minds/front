@@ -46,20 +46,19 @@ import { WalletNetworkSwitcherComponent } from './components/network-switcher/ne
 import { WalletSkaleComponent } from './components/network-swap-bridge/skale/skale.component';
 import { WalletSkaleCommunityPoolComponent } from './components/network-swap-bridge/skale/community-pool/community-pool.component';
 import { WalletSkaleTransferBridgeComponent } from './components/network-swap-bridge/skale/transfer-bridge/transfer-bridge.component';
-import { WalletSkaleFaucetComponent } from './components/network-swap-bridge/skale/faucet/faucet.component';
 import { WalletPolygonComponent } from './components/tokens/polygon/polygon.component';
-import { WalletPolygonBridgeComponent } from './components/tokens/polygon/bridge/bridge.component';
 import { WalletPolygonHistoricComponent } from './components/tokens/polygon/historic/historic.component';
 import { NetworkBridgeSwapBoxComponent } from './components/network-swap-bridge/bridge/components/swap-box/swap-box.component';
 import { NetworkBridgeTransferModalComponent } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.component';
 import { NetworkBridgePanelModalComponent } from './components/network-swap-bridge/bridge/components/bridge-panel/network-bridge-panel-modal.component';
-import { NetworkBridgeTxHistoryModalComponent } from './components/network-swap-bridge/bridge/components/tx-history/network-bridge-tx-history.component';
-import { NetworkBridgeTxHistoryItemComponent } from './components/network-swap-bridge/bridge/components/tx-history/tx-history-item/network-bridge-tx-history-item.component';
 import { NetworkBridgeErrorComponent } from './components/network-swap-bridge/bridge/components/error-dialog/error-dialog.component';
 import { NetworkBridgeApprovalComponent } from './components/network-swap-bridge/bridge/components/approval-dialog/approval-dialog.component';
 import { NetworkBridgeBinderDirective } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.directive';
-import { NetworkBridgeConfirmationComponent } from './components/network-swap-bridge/bridge/components/confirm-dialog/confirm-dialog.component';
 import { NetworkBridgePendingComponent } from './components/network-swap-bridge/bridge/components/transaction-state/transaction-state.component';
+import { NetworkBridgeConfirmationComponent } from './components/network-swap-bridge/bridge/components/confirm-dialog/confirm-dialog.component';
+import { NetworkBridgeTxHistoryModalComponent } from './components/network-swap-bridge/bridge/components/tx-history/network-bridge-tx-history.component';
+import { NetworkBridgeTxHistoryItemComponent } from './components/network-swap-bridge/bridge/components/tx-history/tx-history-item/network-bridge-tx-history-item.component';
+import { WalletPolygonBridgeComponent } from './components/tokens/polygon/bridge/bridge.component';
 import { WithdrawTransactionStateComponent } from './components/network-swap-bridge/bridge/components/withdraw-transaction-state/withdraw-transaction-state.component';
 
 export const WALLET_ROUTES: Routes = [
@@ -234,7 +233,6 @@ export const WALLET_ROUTES: Routes = [
     WalletPolygonComponent,
     WalletSkaleCommunityPoolComponent,
     WalletSkaleTransferBridgeComponent,
-    WalletSkaleFaucetComponent,
     WalletPolygonBridgeComponent,
     WalletPolygonHistoricComponent,
     NetworkBridgeTransferModalComponent,

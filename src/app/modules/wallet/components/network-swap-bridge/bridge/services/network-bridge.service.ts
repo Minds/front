@@ -10,7 +10,6 @@ import {
   BridgeComponent,
   BridgeStep,
   CurrentStep,
-  CurrentStepData,
 } from '../constants/constants.types';
 import { WithdrawTransactionStateComponent } from '../components/withdraw-transaction-state/withdraw-transaction-state.component';
 

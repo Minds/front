@@ -297,6 +297,13 @@ export class NetworkBridgeTxHistoryModalComponent
       step: BridgeStep.ACTION_REQUIRED,
       data: item,
     });
-    this.networkBridgeSwapService.open(this.networkSwitcher.networks.polygon);
+    this.networkBridgeSwapService.open(
+      this.networkSwitcher.networks.polygon,
+      false
+    );
+  }
+
+  formatState() {
+    return this.filterState$.value.replace('_', ' ');
   }
 }

@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   NetworkSwitchService,
   Network,
 } from '../../../../../common/services/network-switch-service';
+import { map } from 'rxjs/operators';
 
 // tabs for different components that can be shown
-export type SkaleBridgeSubTab = 'bridge' | 'skale-bridge' | 'community-pool';
+export type SkaleBridgeSubTab =
+  | 'bridge'
+  | 'skale-bridge'
+  | 'community-pool'
+  | 'faucet';
 
 /**
  * Wrapper for SKALE transfer bridge that allows access to bridge, and depending on network
@@ -22,10 +27,10 @@ export class WalletSkaleComponent {
 
   /**
    * Current active network from service.
-   * @returns { Network } - currently active network from service.
+   * @returns { Observable<Network> } - currently active network from service.
    */
-  get activeNetwork(): Network {
-    return this.networkSwitch.getActiveNetwork();
+  get activeNetwork$(): Observable<Network> {
+    return new BehaviorSubject(this.networkSwitch.getActiveNetwork());
   }
 
   // currently active subtab.
@@ -34,14 +39,17 @@ export class WalletSkaleComponent {
   > = new BehaviorSubject<SkaleBridgeSubTab>('bridge');
 
   /**
-   * Gets all subTabs for a given network.
-   * @returns { SkaleBridgeSubTab[] } all sub-tabs for a given network.
+   * Gets all subTabs$ for a given network.
+   * @returns { Observable<SkaleBridgeSubTab[]> } all sub-tabs for a given network.
    */
-  get subTabs(): SkaleBridgeSubTab[] {
-    const network = this.activeNetwork;
-    return !network?.siteName || network.siteName === 'Mainnet'
-      ? ['bridge', 'community-pool']
-      : ['bridge'];
+  get subTabs$(): Observable<SkaleBridgeSubTab[]> {
+    return this.activeNetwork$.pipe(
+      map((network: Network) => {
+        return network.siteName === 'Mainnet'
+          ? ['bridge', 'community-pool']
+          : ['bridge', 'faucet'];
+      })
+    );
   }
 
   /**

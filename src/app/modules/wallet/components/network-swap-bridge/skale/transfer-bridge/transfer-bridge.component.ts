@@ -37,6 +37,12 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
   // form for input amount
   public form: FormGroup;
 
+  // whether user CAN request funds from faucet.
+  public canRequestFromFaucet: boolean = false;
+
+  // whether faucet request is in progress.
+  public faucetInProgress: boolean = false;
+
   constructor(
     private service: SkaleService,
     private networkSwitch: NetworkSwitchService
@@ -221,6 +227,7 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
    */
   private async updateAllowance(): Promise<void> {
     this.allowance = await this.service.getERC20Allowance();
+    this.setCanRequestFromFaucet();
     this.inProgress = false;
   }
 
@@ -301,5 +308,28 @@ export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberCompon
         this.initBalance();
       })
     );
+  }
+
+  /**
+   * Calls to request from faucet and handles local state changes
+   * to prevent multiple calls.
+   * @returns { Promise<void> }
+   */
+  public async onFaucetBannerClick(): Promise<void> {
+    if (this.faucetInProgress) {
+      return;
+    }
+    this.faucetInProgress = true;
+    await this.service.requestFromFaucet();
+    this.canRequestFromFaucet = false;
+    this.faucetInProgress = false;
+  }
+
+  /**
+   * Sets canRequestFromFaucet to true if the user meets criteria.
+   * @returns { Promise<void> }
+   */
+  public async setCanRequestFromFaucet(): Promise<void> {
+    this.canRequestFromFaucet = await this.service.canRequestFromFaucet();
   }
 }

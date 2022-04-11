@@ -12,10 +12,12 @@ export class NetworkBridgeSwapService {
     private readonly networkBridgeService: NetworkBridgeService
   ) {}
 
-  async open(entity: Network) {
-    this.networkBridgeService.currentStep$.next({
-      step: BridgeStep.SWAP,
-    });
+  async open(entity: Network, reset = true) {
+    if (reset) {
+      this.networkBridgeService.currentStep$.next({
+        step: BridgeStep.SWAP,
+      });
+    }
     const modal = this.modalService.present(
       NetworkBridgeTransferModalComponent,
       {
