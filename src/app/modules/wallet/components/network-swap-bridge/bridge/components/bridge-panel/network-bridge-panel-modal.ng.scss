@@ -1,8 +1,8 @@
 @import 'defaults.scss';
 
 ::ng-deep .modal-content--bridge {
-  min-width: 710px;
-  max-height: 526px;
+  min-height: 526px;
+  max-width: 710px;
 }
 
 :host {

@@ -19,7 +19,7 @@
   <ul class="m-tabs__container">
     <li class="m-tabs__tab">
       <a
-        [class.m-tabs__tab--selected]="(filterState$ | async) === 'none'"
+        [class.m-tabs__tab--selected]="(filterState$ | async) === null"
         (click)="filterState$.next(null)"
       >
         All transactions
@@ -45,11 +45,11 @@
     </li>
   </ul>
 
-  <!-- m-networkBridgeTxHistoryItem list -->
   <div class="m-networkSwapTxHistory__body" *ngIf="!isLoading">
     <m-networkBridgeTxHistoryItem
       *ngFor="let item of filteredItems$ | async"
       [item]="item"
+      (click)="handleActionRequired(item)"
     >
     </m-networkBridgeTxHistoryItem>
   </div>

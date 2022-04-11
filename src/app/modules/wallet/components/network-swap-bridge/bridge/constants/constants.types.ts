@@ -70,6 +70,10 @@ export type CurrentStep =
         title: string;
         subtitle: string;
       };
+    }
+  | {
+      step: BridgeStep.ACTION_REQUIRED;
+      data: WithdrawRecord;
     };
 
 export enum BridgeStep {
@@ -78,6 +82,7 @@ export enum BridgeStep {
   CONFIRMATION,
   PENDING,
   ERROR,
+  ACTION_REQUIRED,
 }
 
 export enum DepositState {

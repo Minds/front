@@ -81,19 +81,6 @@ export class NetworkBridgePanelModalComponent
    * @returns { Promise<void> }
    */
   private async setSelectedToActiveNetwork(): Promise<void> {
-    if (!this.activeNetwork) {
-      try {
-        await this.networkSwitcher.switch(
-          this.networkSwitcher.networks.mainnet.id
-        );
-      } catch (e) {
-        this.toast.error(
-          'An unknown error has occurred, please ensure you are connected to a supported network'
-        );
-        this.onDismissIntent();
-      }
-    }
-
     const swappableSiteNames = this.swappableNetworks.map(
       network => network.siteName
     );

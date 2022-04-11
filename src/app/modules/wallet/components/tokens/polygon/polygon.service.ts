@@ -236,8 +236,8 @@ export class PolygonService {
     } catch (e) {
       if (e.code === 4001) {
         this.hasError$.next(true);
-        this.isLoading$.next(false);
       }
+      this.isLoading$.next(false);
     }
     return false;
   }
@@ -283,8 +283,8 @@ export class PolygonService {
       console.warn('withdraw error', e);
       if (e.code === 4001) {
         this.hasError$.next(true);
-        this.isLoading$.next(false);
       }
+      this.isLoading$.next(false);
     }
     return false;
   }
@@ -308,6 +308,7 @@ export class PolygonService {
       return record;
     });
     this.history$.next(history);
+    return txReceipt;
   }
 
   public async getHistory() {

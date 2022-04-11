@@ -12,6 +12,7 @@ import {
   CurrentStep,
   CurrentStepData,
 } from '../constants/constants.types';
+import { WithdrawTransactionStateComponent } from '../components/withdraw-transaction-state/withdraw-transaction-state.component';
 
 @Injectable({ providedIn: 'root' })
 export class NetworkBridgeService implements OnDestroy {
@@ -67,6 +68,8 @@ export class NetworkBridgeService implements OnDestroy {
         return NetworkBridgeConfirmationComponent;
       case BridgeStep.PENDING:
         return NetworkBridgePendingComponent;
+      case BridgeStep.ACTION_REQUIRED:
+        return WithdrawTransactionStateComponent;
       case BridgeStep.ERROR:
       default:
         return NetworkBridgeErrorComponent;

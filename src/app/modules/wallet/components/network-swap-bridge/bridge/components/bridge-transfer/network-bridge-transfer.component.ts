@@ -25,8 +25,8 @@ export class NetworkBridgeTransferModalComponent
   public cdnAssetsUrl;
 
   constructor(
+    private readonly configs: ConfigsService,
     private readonly networkBridgeService: NetworkBridgeService,
-    configs: ConfigsService,
     private readonly networkBridgeTxHistoryService: NetworkBridgeTxHistoryService
   ) {
     super();

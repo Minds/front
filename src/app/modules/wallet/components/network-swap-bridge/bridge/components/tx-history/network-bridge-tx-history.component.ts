@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
 import { AbstractSubscriberComponent } from '../../../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import {
+  BridgeStep,
   DepositRecord,
+  HistoryRecord,
   Record,
   RecordStatus,
   RecordType,
@@ -12,6 +14,8 @@ import {
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Apollo, ApolloBase, gql } from 'apollo-angular';
+import { NetworkBridgeSwapService } from '../bridge-transfer/network-bridge-transfer.service';
+import { NetworkSwitchService } from '../../../../../../../common/services/network-switch-service';
 
 const GET_TRANSACTIONS_BY_AUTHOR = gql`
   query GetTransactionsByAuthor($id: ID!) {
@@ -98,7 +102,7 @@ interface TransactionsQueryResultWithBlock extends TransactionsQueryResult {
 })
 export class NetworkBridgeTxHistoryModalComponent
   extends AbstractSubscriberComponent
-  implements OnInit {
+  implements OnInit, OnDestroy {
   public cdnAssetsUrl;
 
   // selected bridge entity
@@ -110,7 +114,7 @@ export class NetworkBridgeTxHistoryModalComponent
   public actionTotal = 0;
   // selected tab option
   public filterState$ = new BehaviorSubject<RecordStatus | null>(null);
-  public items$ = new BehaviorSubject<Record[]>([]);
+  public items$ = new BehaviorSubject<HistoryRecord[]>([]);
   public filteredItems$ = combineLatest([this.filterState$, this.items$]).pipe(
     map(state => {
       const [filter, items] = state;
@@ -140,8 +144,10 @@ export class NetworkBridgeTxHistoryModalComponent
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    private configs: ConfigsService,
-    private apolloProvider: Apollo
+    private readonly configs: ConfigsService,
+    private readonly apolloProvider: Apollo,
+    private readonly networkBridgeSwapService: NetworkBridgeSwapService,
+    private readonly networkSwitcher: NetworkSwitchService
   ) {
     super();
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -178,7 +184,7 @@ export class NetworkBridgeTxHistoryModalComponent
       const [{ data: mainnet }, { data: polygon }] = data;
 
       const lastSyncedBlock = mainnet.headerBlocks[0]
-        ? parseInt(mainnet.headerBlocks[0].end)
+        ? parseInt(mainnet.headerBlocks[0].end, 10)
         : 0;
 
       const polygonDeposits = [...polygon.wallet.deposits];
@@ -201,8 +207,8 @@ export class NetworkBridgeTxHistoryModalComponent
             status,
             txHash: deposit.txHash,
             amount: deposit.amount,
-            txBlock: parseInt(deposit.txBlock),
-            timestamp: parseInt(deposit.timestamp),
+            txBlock: parseInt(deposit.txBlock, 10),
+            timestamp: parseInt(deposit.timestamp, 10),
             txPolygon: polygonTx?.txHash,
           };
         }
@@ -225,7 +231,7 @@ export class NetworkBridgeTxHistoryModalComponent
 
           if (
             status === RecordStatus.PENDING &&
-            parseInt(withdraw.txBlock) <= lastSyncedBlock
+            parseInt(withdraw.txBlock, 10) <= lastSyncedBlock
           ) {
             status = RecordStatus.ACTION_REQUIRED;
           }
@@ -236,10 +242,10 @@ export class NetworkBridgeTxHistoryModalComponent
             txBurn: withdraw.txHash,
             amount: withdraw.amount,
             timestamp: mainnetTx
-              ? parseInt(mainnetTx.timestamp)
-              : parseInt(withdraw.timestamp),
+              ? parseInt(mainnetTx.timestamp, 10)
+              : parseInt(withdraw.timestamp, 10),
             txHash: mainnetTx?.txHash,
-            txBlock: mainnetTx && parseInt(mainnetTx.txBlock),
+            txBlock: mainnetTx && parseInt(mainnetTx.txBlock, 10),
           };
         }
       );
@@ -273,5 +279,24 @@ export class NetworkBridgeTxHistoryModalComponent
     this.filterState$.next(
       filter === 'pending' ? RecordStatus.PENDING : RecordStatus.ACTION_REQUIRED
     );
+  }
+
+  isWithdraw(item: Record): item is WithdrawRecord {
+    return item.type === RecordType.WITHDRAW;
+  }
+
+  handleActionRequired(item: HistoryRecord): void {
+    if (
+      !this.isWithdraw(item) ||
+      item.status !== RecordStatus.ACTION_REQUIRED
+    ) {
+      return;
+    }
+    this.onDismissIntent();
+    this.networkBridgeService.currentStep$.next({
+      step: BridgeStep.ACTION_REQUIRED,
+      data: item,
+    });
+    this.networkBridgeSwapService.open(this.networkSwitcher.networks.polygon);
   }
 }

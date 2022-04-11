@@ -1,6 +1,6 @@
-import { NgModule, PLATFORM_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes, RouterOutlet } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 
@@ -60,6 +60,7 @@ import { NetworkBridgeApprovalComponent } from './components/network-swap-bridge
 import { NetworkBridgeBinderDirective } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.directive';
 import { NetworkBridgeConfirmationComponent } from './components/network-swap-bridge/bridge/components/confirm-dialog/confirm-dialog.component';
 import { NetworkBridgePendingComponent } from './components/network-swap-bridge/bridge/components/transaction-state/transaction-state.component';
+import { WithdrawTransactionStateComponent } from './components/network-swap-bridge/bridge/components/withdraw-transaction-state/withdraw-transaction-state.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -245,6 +246,7 @@ export const WALLET_ROUTES: Routes = [
     NetworkBridgeBinderDirective,
     NetworkBridgeConfirmationComponent,
     NetworkBridgePendingComponent,
+    WithdrawTransactionStateComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [

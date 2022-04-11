@@ -4,7 +4,7 @@
   display: contents;
 
   .m-networkSwapBox__container {
-    padding: 25px 90px 100px;
+    padding: 24px 0;
     display: grid;
     justify-content: center;
 
@@ -15,7 +15,7 @@
     .m-networkSwapBox__container-title {
       font-size: 18px;
       line-height: 28px;
-      font-weight: 500px;
+      font-weight: 500;
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
@@ -27,12 +27,10 @@
       min-height: 103px;
       border: 1px solid #404a4e;
       box-sizing: border-box;
-      border-radius: 3px;
       margin-top: 23px;
-      padding: 13px 39px 0px 39px;
+      padding: 13px 39px 0 39px;
       display: inline-table;
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
+      border-radius: 3px 3px 0 0;
       height: 103px;
     }
 
@@ -41,12 +39,10 @@
       max-height: 109px;
       border: 1px solid #404a4e;
       box-sizing: border-box;
-      border-radius: 3px;
       padding: 24px 39px;
       display: inline-table;
-      border-top: 0px;
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
+      border-top: 0;
+      border-radius: 0 0 3px 3px;
       height: 103px;
     }
 
@@ -61,9 +57,8 @@
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
-      padding: 0px;
-      margin: 0px;
-      margin-top: 7px;
+      padding: 0;
+      margin: 7px 0 0;
       cursor: default;
     }
 
@@ -74,7 +69,7 @@
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
-      margin: 0px;
+      margin: 0;
       cursor: default;
     }
 
@@ -92,7 +87,7 @@
     .m-networkSwapBox__container-row {
       display: flex;
       justify-content: space-between;
-      margin-top: 0px;
+      margin-top: 0;
     }
 
     .m-networkSwapBox__container-row-max {

@@ -1,8 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
-import { Record, RecordStatus } from '../../../constants/constants.types';
+import {
+  HistoryRecord,
+  Record,
+  RecordStatus,
+  RecordType,
+  WithdrawRecord,
+} from '../../../constants/constants.types';
 import * as moment from 'moment';
-import { PolygonService } from '../../../../../../../../modules/wallet/components/tokens/polygon/polygon.service';
 
 @Component({
   selector: 'm-networkBridgeTxHistoryItem',
@@ -10,9 +15,11 @@ import { PolygonService } from '../../../../../../../../modules/wallet/component
   styleUrls: ['./network-bridge-tx-history-item.ng.scss'],
 })
 export class NetworkBridgeTxHistoryItemComponent implements OnInit {
-  @Input() item: Record;
+  @Input() item: HistoryRecord;
+  @Input() click = new EventEmitter();
 
-  constructor(public readonly polygonService: PolygonService) {}
+  constructor() {}
+
   ngOnInit(): void {}
 
   isPendingAction(item: Record): boolean {
@@ -35,18 +42,34 @@ export class NetworkBridgeTxHistoryItemComponent implements OnInit {
     return moment(timestamp * 1000).format('Do MMM YYYY');
   }
 
-  isDeposit(item) {
-    return item.__typename === 'Deposit';
+  isWithdraw(item: Record): item is WithdrawRecord {
+    return item.type === RecordType.WITHDRAW;
   }
 
-  getExplorerUrl(record) {
+  getExplorerUrl(record: HistoryRecord) {
     if (!record.txHash) {
       return '';
     }
     return `https://goerli.etherscan.io/tx/${record.txHash}`;
   }
 
-  exit(transaction) {
-    this.polygonService.exit(transaction.txBurn);
+  formatStatus(status: RecordStatus): string {
+    if (status === RecordStatus.ACTION_REQUIRED) {
+      return 'Action Required';
+    }
+    if (status === RecordStatus.PENDING) {
+      return 'Pending';
+    }
+    if (status === RecordStatus.SUCCESS) {
+      return 'Success';
+    }
+    if (status === RecordStatus.ERROR) {
+      return 'Error';
+    }
+    return 'Unknown';
+  }
+
+  handleClick() {
+    this.click.emit();
   }
 }

@@ -26,7 +26,10 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
     private readonly networkSwitchService: NetworkSwitchService,
     public injector: Injector
   ) {
-    if (Number(this.networkBridgeService.selectedBridge$.value.id) === 80001) {
+    if (
+      this.networkBridgeService.selectedBridge$.value.id ===
+      this.networkSwitchService.networks.polygon.id
+    ) {
       this.service = <PolygonService>this.injector.get(PolygonService);
     } else {
       this.service = <SkaleService>this.injector.get(SkaleService);

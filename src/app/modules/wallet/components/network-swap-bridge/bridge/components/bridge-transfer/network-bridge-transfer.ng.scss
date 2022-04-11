@@ -1,9 +1,8 @@
 @import 'defaults.scss';
 
 ::ng-deep .modal-content--swap {
-  min-width: 710px;
-  max-height: 526px;
-  height: 526px;
+  min-height: 526px;
+  max-width: 710px;
 
   .modal-content {
     height: inherit;
