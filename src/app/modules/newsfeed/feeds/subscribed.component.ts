@@ -368,12 +368,24 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
 
   /**
    * scrolls to under the boost rotator. Used as an alternative to scrollToTop but
-   * keeping scrolling consistency by not avoiding the rotator
+   * keeping scrolling consistency by not avoiding the rotator.
    */
   scrollToUnderBoostRotator(): void {
+    if (isPlatformServer(this.platformId)) return;
+
+    if (!this.boostRotator) {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: 0,
+      });
+      return;
+    }
+
     window.scrollTo({
       behavior: 'smooth',
-      top: this.boostRotator.nativeElement.offsetTop + this.boostRotator.height,
+      top:
+        this.boostRotator.nativeElement?.offsetTop + this.boostRotator.height ||
+        0,
     });
   }
 }
