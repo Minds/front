@@ -99,8 +99,21 @@ qa:sandbox:
   parallel: 2
   allow_failure: false
   except:
-    - /^master$/
-    - feat/1732-block-refactor
+    refs:
+      - /^master$/
+      - feat/1732-block-refactor
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
+  <<: *cypress_tests
+
+qa:nightly:
+  parallel: 2
+  allow_failure: true
+  only:
+    refs:
+      - /^master$/
+    variables:
+      - $CI_NIGHTLY_TESTS == "true"
   <<: *cypress_tests
 
 # qa:production:
@@ -110,20 +123,20 @@ qa:sandbox:
 #     - /^master$/
 #   <<: *cypress_tests
 
-qa:manual:
-  stage: qa
-  script:
-    - echo "Manually approved"
-  when: manual
-  only:
-    refs:
-      - master
-      - production
-      - test/gitlab-ci
-  except:
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
-  allow_failure: true
+# qa:manual:
+#   stage: qa
+#   script:
+#     - echo "Manually approved"
+#   when: manual
+#   only:
+#     refs:
+#       - master
+#       - production
+#       - test/gitlab-ci
+#   except:
+#     variables:
+#       - $CI_NIGHTLY_TESTS == "true"
+#   allow_failure: true
 
 ###############
 # Build Stage #
@@ -332,6 +345,8 @@ review:stop:
   stage: review
   when: manual
   except:
+    refs:
+      - master
     variables:
       - $CI_NIGHTLY_TESTS == "true"
 

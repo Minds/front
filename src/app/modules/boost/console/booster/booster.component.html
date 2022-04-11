@@ -72,7 +72,6 @@
   </ng-container>
 
   <infinite-scroll
-    distance="25%"
     (load)="loadNext()"
     [moreData]="feedsService.hasMore | async"
     [inProgress]="inProgress"

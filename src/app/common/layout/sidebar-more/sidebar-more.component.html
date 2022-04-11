@@ -101,9 +101,8 @@
       class="m-dropdownList__item m-sidebarMoreDropdown__item"
       (click)="toggleSidebar()"
     >
-      <!--Endpoint handles authentication and redirection-->
       <a
-        href="/api/v3/helpdesk/zendesk"
+        [href]="getHelpdeskRedirectUrl()"
         target="_blank"
         data-ref="sidebarmore-help-zendesk"
       >

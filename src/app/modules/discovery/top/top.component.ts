@@ -7,9 +7,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'm-discovery__top',
   styleUrls: ['top.component.ng.scss'],
-  template: `
-    <m-discovery__tabs></m-discovery__tabs>
-    <m-defaultFeed></m-defaultFeed>
-  `,
+  templateUrl: './top.component.html',
 })
 export class DiscoveryTopComponent {}

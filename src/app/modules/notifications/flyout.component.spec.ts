@@ -13,8 +13,6 @@ import { NotificationsFlyoutComponent } from './flyout.component';
 
 import { MockComponent, MockDirective } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FeaturesService } from '../../services/features.service';
-import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { NavigationStart, Router } from '@angular/router';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 
@@ -54,10 +52,6 @@ describe('NotificationsFlyoutComponent', () => {
           provide: Client,
           useValue: clientMock,
         },
-        {
-          provide: FeaturesService,
-          useValue: featuresServiceMock,
-        },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -67,9 +61,6 @@ describe('NotificationsFlyoutComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
-
-    featuresServiceMock.mock('navigation', false);
-    featuresServiceMock.mock('notifications-v3', false);
 
     fixture = TestBed.createComponent(NotificationsFlyoutComponent);
     clientMock.response = {};

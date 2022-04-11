@@ -93,7 +93,8 @@ export class WireLockScreenComponent implements OnInit {
     }
 
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return null;
     }
 
     if (this.inProgress) return;

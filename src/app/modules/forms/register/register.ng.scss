@@ -5,6 +5,18 @@
     overflow: visible !important;
   }
 
+  .m-form__row--label {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-form__input--details {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+
   .password-help {
     padding-left: 4px;
   }
@@ -79,11 +91,10 @@
   }
 
   .m-register__formError {
-    margin-top: 20px;
+    margin: 10px 0 10px 0;
   }
 
   .m-register__error {
-    margin-top: 3px;
     text-align: right;
   }
 
@@ -93,6 +104,74 @@
 
   input.m-input--hide-placeholder::placeholder {
     color: transparent;
+  }
+
+  .m-register__divider {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+
+    span:not(.m-register__divider__text) {
+      flex: 1;
+      margin: 0 -40px;
+      @include m-theme() {
+        border-bottom: 2px solid themed($m-borderColor--primary);
+      }
+    }
+    .m-register__divider__text {
+      padding: 0 20px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+
+  .m-register__footer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0 8px 0;
+
+    .m-register__alreadyAUser {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      .m-register__loginToMinds {
+        @include m-theme() {
+          color: themed($m-link);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    .m-register__divider {
+      display: none;
+    }
+
+    .m-register__footer {
+      flex-flow: column-reverse nowrap;
+    }
+
+    .m-register__actions {
+      align-items: flex-start;
+    }
+
+    .m-register__alreadyAUser {
+      margin-top: 16px;
+    }
+
+    ::ng-deep {
+      m-button,
+      button {
+        width: 100%;
+      }
+    }
   }
 
   ::ng-deep .m-registerForm__captcha {

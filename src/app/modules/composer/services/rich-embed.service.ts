@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { of, OperatorFunction } from 'rxjs';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { catchError, debounceTime, map, switchAll, tap } from 'rxjs/operators';
-import { createUrlRegex } from '../../../helpers/url-regex';
+import { TextParserService } from '../../../common/services/text-parser.service';
 
 /**
  * Rich embed structure
@@ -24,14 +24,17 @@ export class RichEmbedService {
    * Constructor
    * @param api
    */
-  constructor(protected api: ApiService) {}
+  constructor(
+    protected api: ApiService,
+    private textParser: TextParserService
+  ) {}
 
   /**
    * Extracts a URL from a body of text
    * @param body
    */
   extract(body: string): string | null {
-    const matches = body.match(createUrlRegex());
+    const matches = this.textParser.extractUrls(body);
     return matches && typeof matches[0] !== 'undefined' ? matches[0] : null;
   }
 
@@ -53,6 +56,8 @@ export class RichEmbedService {
             return of(urlOrRichEmbed);
           }
 
+          urlOrRichEmbed = this.textParser.prependHttps(urlOrRichEmbed);
+
           // Request a preview metadata from engine
           return this.api
             .get('api/v1/newsfeed/preview', {
@@ -63,7 +68,7 @@ export class RichEmbedService {
                 (response: ApiResponse): RichEmbed => {
                   // ... and cast it into a rich embed object
                   const richEmbed: RichEmbed = {
-                    url: urlOrRichEmbed,
+                    url: response.url,
                     entityGuid: null,
                     title: response.meta.title || '',
                     description: response.meta.description || '',

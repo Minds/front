@@ -40,6 +40,11 @@ export class SubscribeButtonComponent implements OnInit {
   // (used for entities that aren't normalised)
   @Input() enableRecheck: boolean = false;
 
+  /**
+   * the icon to show when user is subscribed to this channel
+   */
+  @Input() subscribedIcon = 'close';
+
   constructor(
     public session: Session,
     public client: Client,
@@ -86,7 +91,8 @@ export class SubscribeButtonComponent implements OnInit {
     e.stopPropagation();
 
     if (!this.session.isLoggedIn()) {
-      await this.authModal.open();
+      const user = await this.authModal.open();
+      if (!user) return;
     }
     this.subscribed = true;
     this.onSubscribed.next();

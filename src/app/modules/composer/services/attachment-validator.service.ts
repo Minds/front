@@ -72,7 +72,7 @@ export class AttachmentValidatorService {
           reject('An unknown error has occurred');
         };
 
-        video.src = window.URL.createObjectURL(file);
+        video.src = window.URL.createObjectURL(file as Blob);
       } catch (e) {
         reject(e);
       }

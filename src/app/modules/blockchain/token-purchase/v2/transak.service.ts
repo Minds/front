@@ -50,7 +50,7 @@ export class TransakService {
       walletAddress: address,
       themeColor: '000000',
       hostURL: window.location.origin,
-      widgetHeight: '650px',
+      widgetHeight: '700px',
       widgetWidth: '350px',
     });
 

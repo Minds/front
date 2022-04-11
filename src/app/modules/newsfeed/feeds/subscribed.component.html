@@ -48,6 +48,11 @@
         </ng-container>
       </ng-container>
 
+      <m-channelRecommendation
+        location="newsfeed"
+        *ngIf="shouldShowChannelRecommendation('emptyState')"
+      ></m-channelRecommendation>
+
       <!--actual feed-->
       <ng-container
         *ngFor="let activity$ of feedService.feed | async; let i = index"
@@ -76,10 +81,13 @@
           (deleted)="delete(activity)"
           #feedViewChildren
         ></m-activity>
+        <m-channelRecommendation
+          location="newsfeed"
+          *ngIf="shouldShowChannelRecommendation('feed', i)"
+        ></m-channelRecommendation>
       </ng-container>
 
       <infinite-scroll
-        distance="25%"
         (load)="loadNext()"
         [moreData]="feedService.hasMore | async"
         [inProgress]="feedService.inProgress | async"

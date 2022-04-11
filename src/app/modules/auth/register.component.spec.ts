@@ -56,8 +56,6 @@ describe('RegisterComponent', () => {
     fixture = TestBed.createComponent(RegisterComponent);
 
     comp = fixture.componentInstance;
-    featuresServiceMock.mock('ux-2020', false);
-
     comp.flags.canPlayInlineVideos = true;
 
     fixture.detectChanges();

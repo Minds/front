@@ -1,3 +1,6 @@
+/.angular/cache
+cache
+cache_directory
 # Ignore front end plugins
 #app/src/plugins
 #app/templates/plugins
@@ -44,3 +47,4 @@ cypress/videos
 !.gitkeep
 !/.nvmrc
 !/.husky
+cypress-tests

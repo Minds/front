@@ -3,7 +3,7 @@
 :host {
   .m-twoFactor__recoveryCodeHeader {
     font-size: 20px;
-    weight: 500;
+    font-weight: 500;
 
     @include m-theme() {
       color: themed($m-textColor--primary);

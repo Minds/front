@@ -1,14 +1,13 @@
 import {
-  Component,
-  Input,
-  HostListener,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-  Output,
-  EventEmitter,
-  TemplateRef,
   AfterViewChecked,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { AnchorPosition } from '../../../services/ux/anchor-position';
 import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component';
@@ -34,7 +33,16 @@ export class ButtonComponent implements AfterViewChecked {
   @Input() iconOnly: boolean = false;
   @Input() color: 'blue' | 'grey' | 'red' | 'primary' | 'secondary' = 'grey';
   @Input() size: 'xsmall' | 'small' | 'medium' | 'large' = 'medium';
+
   @Input() pulsating: boolean = false;
+  /**
+   * whether the button should be borderless or not
+   */
+  @Input() flat: boolean = false;
+  /**
+   * whether the button should be borderless or not
+   */
+  @Input() solid: boolean = false;
 
   /**
    * Handles width for buttons that are not visible onInit

@@ -11,7 +11,7 @@ import {
   Injector,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
@@ -20,14 +20,6 @@ import * as moment from 'moment';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
 import { PhoneVerificationService } from '../../components/phone-verification/phone-verification.service';
 import { ConnectWalletModalService } from '../../../../blockchain/connect-wallet/connect-wallet-modal.service';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  shareReplay,
-  skipWhile,
-  switchMap,
-} from 'rxjs/operators';
 import { ApiService } from '../../../../../common/api/api.service';
 import { FeaturesService } from '../../../../../services/features.service';
 

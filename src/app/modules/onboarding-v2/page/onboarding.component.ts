@@ -3,7 +3,6 @@ import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Storage } from '../../../services/storage';
 import { OnboardingV2Service } from '../service/onboarding.service';
-import { SidebarMarkersService } from '../../../common/layout/sidebar/markers.service';
 import { iOSVersion } from '../../../helpers/is-safari';
 import { TopbarService } from '../../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
@@ -23,9 +22,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   @HostBinding('class.m-onboarding__iosFallback')
   iosFallback: boolean = false;
 
-  @HostBinding('class.m-onboarding--newNavigation')
-  newNavigation: boolean = false;
-
   loadingSubscription: Subscription;
   slideChangedSubscription: Subscription;
   closeSubscription: Subscription;
@@ -39,22 +35,16 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private onboardingService: OnboardingV2Service,
     private topbarService: TopbarService,
     private navigationService: SidebarNavigationService,
-    private sidebarMarkersService: SidebarMarkersService,
     private featuresService: FeaturesService,
     private pageLayoutService: PageLayoutService
   ) {
-    this.newNavigation = true;
     this.routerSubscription = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(data => {
         this.topbarService.toggleVisibility(false);
 
-        if (this.newNavigation) {
-          this.navigationService.setVisible(false);
-          this.pageLayoutService.useFullWidth();
-        } else {
-          this.sidebarMarkersService.toggleVisibility(false);
-        }
+        this.navigationService.setVisible(false);
+        this.pageLayoutService.useFullWidth();
       });
   }
 
@@ -117,10 +107,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 
     this.topbarService.toggleVisibility(true);
 
-    if (this.newNavigation) {
-      this.navigationService.setVisible(true);
-    } else {
-      this.sidebarMarkersService.toggleVisibility(true);
-    }
+    this.navigationService.setVisible(true);
   }
 }

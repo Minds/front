@@ -21,6 +21,7 @@ import {
 } from '@angular/core/testing';
 import { ConfigsService } from '../common/services/configs.service';
 import { MockService } from '../utils/mock';
+import { TextParserService } from '../common/services/text-parser.service';
 
 /* tslint:disable */
 
@@ -37,6 +38,7 @@ describe('Service: Attachment Service', () => {
           { provide: Session, useValue: sessionMock },
           { provide: Upload, useValue: uploadMock },
           { provide: Client, useValue: clientMock },
+          { provide: TextParserService, useValue: TextParserService },
           { provide: ConfigsService, useValue: MockService(ConfigsService) },
         ],
       });
@@ -50,6 +52,7 @@ describe('Service: Attachment Service', () => {
         clientMock,
         uploadMock,
         httpMock,
+        new TextParserService(),
         TestBed.inject(ConfigsService)
       );
 
