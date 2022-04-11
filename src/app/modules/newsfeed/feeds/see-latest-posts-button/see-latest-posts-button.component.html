@@ -5,6 +5,7 @@
     solid="true"
     color="blue"
     (onAction)="onClick()"
-    >See {{ newPostsCount$ | async | max: 99 }} Latest Posts</m-button
+    ><i class="material-icons">arrow_upward</i> See
+    {{ newPostsCount$ | async | max: 99 }} latest posts</m-button
   >
 </div>
