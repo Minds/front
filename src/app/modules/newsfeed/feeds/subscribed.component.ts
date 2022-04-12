@@ -384,8 +384,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     window.scrollTo({
       behavior: 'smooth',
       top:
-        this.boostRotator.nativeElement?.offsetTop + this.boostRotator.height ||
-        0,
+        this.boostRotator.rotatorEl.nativeElement?.offsetTop +
+          this.boostRotator.height || 0,
     });
   }
 }

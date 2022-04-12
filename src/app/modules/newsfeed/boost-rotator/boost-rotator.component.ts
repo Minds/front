@@ -90,7 +90,6 @@ export class NewsfeedBoostRotatorComponent {
   disabled: boolean = false;
 
   height: number;
-  nativeElement;
 
   subscriptions: Subscription[] = [];
 
@@ -337,7 +336,6 @@ export class NewsfeedBoostRotatorComponent {
     if (!this.rotatorEl) return;
     this.height =
       this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
-    this.nativeElement = this.rotatorEl.nativeElement;
 
     if (this.height < 500) this.height = 500;
   }
