@@ -251,6 +251,6 @@ export class RegisterForm {
    * @returns
    */
   public isFriendlyCaptchaEnabled(): boolean {
-    return this.experiments.hasVariation('friendly-captcha', true);
+    return this.experiments.hasVariation('engine-2272-captcha', true);
   }
 }
