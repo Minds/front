@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   NgZone,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -10,6 +11,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  NG_ASYNC_VALIDATORS,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -17,14 +19,12 @@ import {
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import {
-  PopoverComponent,
-  SecurityValidationStateValue,
-} from '../popover-validation/popover.component';
+import { PopoverComponent } from '../popover-validation/popover.component';
 import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
+import { PasswordRiskValidator } from '../password-risk.validator';
 
 export type Source = 'auth-modal' | 'other' | null;
 
@@ -33,7 +33,7 @@ export type Source = 'auth-modal' | 'other' | null;
   templateUrl: 'register.html',
   styleUrls: ['./register.ng.scss'],
 })
-export class RegisterForm {
+export class RegisterForm implements OnInit {
   @Input() referrer: string;
   @Input() parentId: string = '';
   @Input() showTitle: boolean = false;
@@ -52,7 +52,8 @@ export class RegisterForm {
   inProgress: boolean = false;
   captcha: string;
   usernameValidationTimeout: any;
-  securityValidationState: SecurityValidationStateValue = null;
+
+  passwordRiskCheckStatus: string;
 
   alphanumericPattern = '^[a-zA-Z0-9_]+$';
 
@@ -67,30 +68,34 @@ export class RegisterForm {
   constructor(
     public session: Session,
     public client: Client,
-    fb: FormBuilder,
+    public fb: FormBuilder,
     public zone: NgZone,
     private routerHistoryService: RouterHistoryService,
-    private usernameValidator: UsernameValidator
-  ) {
-    this.form = fb.group(
+    private usernameValidator: UsernameValidator,
+    private passwordRiskValidator: PasswordRiskValidator
+  ) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group(
       {
         username: [
           '',
+          // sync
           [
             Validators.required,
             Validators.minLength(4),
             Validators.maxLength(50),
           ],
+          // async
           [this.usernameValidator.existingUsernameValidator()],
         ],
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
-          [
-            Validators.required,
-            PASSWORD_VALIDATOR,
-            //this.passwordSecurityValidator.bind(this),
-          ],
+          // sync
+          [Validators.required, PASSWORD_VALIDATOR],
+          // async
+          [this.passwordRiskValidator.riskValidator()],
         ],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
@@ -98,42 +103,24 @@ export class RegisterForm {
         captcha: [''],
         previousUrl: this.routerHistoryService.getPreviousUrl(),
       },
-      { validators: [this.passwordConfirmingValidator] }
+      { validators: [this.passwordsMatchValidator] }
     );
+
+    this.form.get('password').valueChanges.subscribe(str => {
+      this.popover.show();
+    });
+
+    this.form.get('password').statusChanges.subscribe((status: any) => {
+      this.passwordRiskCheckStatus = status;
+    });
   }
 
-  onShowLoginFormClick() {
-    this.showLoginForm.emit();
-  }
-
-  showError(field: string) {
-    return (
-      this.showInlineErrors &&
-      this.form.get(field).invalid &&
-      this.form.get(field).touched &&
-      this.form.get(field).dirty
-    );
-  }
-
-  passwordConfirmingValidator(c: AbstractControl): ValidationErrors | null {
+  // Confirm the two passwords match each other
+  passwordsMatchValidator(c: AbstractControl): ValidationErrors | null {
     if (c.get('password').value !== c.get('password2').value) {
-      return { passwordConfirming: true };
+      return { passwordsMatch: true };
     }
   }
-
-  /**
-   * Check if the password security check has failed, return error if it has.
-   * We ignore pending state here because we don't want to trigger form errors when pending.
-   * @param { AbstractControl } control - specifies the form control - unused.
-   * @returns { ValidationErrors | null } - returns validation errors in the event the state is failed.
-   */
-  // private passwordSecurityValidator(
-  //   control: AbstractControl
-  // ): ValidationErrors | null {
-  //   return this.securityValidationState === SecurityValidationState.FAILED
-  //     ? { passwordSecurityFailed: true }
-  //     : null;
-  // }
 
   register(e) {
     e.preventDefault();
@@ -198,10 +185,6 @@ export class RegisterForm {
       });
   }
 
-  setCaptcha(code) {
-    this.form.patchValue({ captcha: code });
-  }
-
   onPasswordFocus() {
     if (this.form.value.password.length > 0) {
       this.popover.show();
@@ -212,27 +195,30 @@ export class RegisterForm {
     if (!isMobileOrTablet()) {
       this.popover.hide();
     }
-    console.log(this.form);
   }
 
-  /**
-   * Fired on password validation popover change - emitted around password security checks.
-   * @param { SecurityValidationStateValue } state - state of the password security check.
-   */
-  public onPopoverChange(state: SecurityValidationStateValue): void {
-    this.securityValidationState = state;
-    this.form.get('password').updateValueAndValidity();
+  onShowLoginFormClick() {
+    this.showLoginForm.emit();
   }
 
-  /**
-   * Whether security validation state is successful.
-   * @returns { boolean } true if security validation state is successful.
-   */
-  // public isSecurityValidationStateSuccess(): boolean {
-  //   return this.securityValidationState === SecurityValidationState.SUCCESS;
-  // }
+  setCaptcha(code) {
+    this.form.patchValue({ captcha: code });
+  }
+
+  showError(field: string) {
+    return (
+      this.showInlineErrors &&
+      this.form.get(field).invalid &&
+      this.form.get(field).touched &&
+      this.form.get(field).dirty
+    );
+  }
 
   get username() {
+    return this.form.get('username');
+  }
+
+  get password() {
     return this.form.get('username');
   }
 }
