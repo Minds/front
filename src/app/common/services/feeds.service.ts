@@ -40,14 +40,20 @@ export class FeedsService implements OnDestroy {
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
   blockListSubscription: Subscription;
+  /**
+   * whether counting is in progress
+   */
   countInProgress$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  /**
+   * The subscription for the new posts polling interval
+   */
   newPostWatcherSubscription: Subscription;
   /**
-   * TODO
+   * The number indicating how many new posts exist since we last checked at {newPostsLastCountedAt}
    */
-  newPostsCount$ = new BehaviorSubject(0);
+  newPostsCount$: BehaviorSubject<number> = new BehaviorSubject(0);
   /**
-   * TODO
+   * The last time we checked for new posts
    */
   newPostsLastCountedAt: number = Date.now();
   /**
