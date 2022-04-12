@@ -12,6 +12,7 @@ import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { FormToastService } from '../../services/form-toast.service';
+import { MindsUser } from './../../../interfaces/entities';
 
 @Component({
   selector: 'm-subscribeButton',
@@ -28,7 +29,9 @@ export class SubscribeButtonComponent implements OnInit {
 
   subscribed: boolean = false;
   inProgress: boolean = false;
-  @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
+  @Output('subscribed') onSubscribed: EventEmitter<
+    Partial<MindsUser>
+  > = new EventEmitter();
 
   @Input() sized: boolean = false;
   @Input() iconOnly: boolean = false;
@@ -95,7 +98,7 @@ export class SubscribeButtonComponent implements OnInit {
       if (!user) return;
     }
     this.subscribed = true;
-    this.onSubscribed.next();
+    this.onSubscribed.emit(this._user);
 
     this.client
       .post('api/v1/subscribe/' + this._user.guid, {})

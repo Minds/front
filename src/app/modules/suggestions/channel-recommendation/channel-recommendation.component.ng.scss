@@ -49,7 +49,7 @@
       li section {
         display: flex;
         flex-direction: row;
-        margin-bottom: $minds-margin * 2;
+        padding: $minds-margin 0;
 
         .m-channelRecommendation__avatarContainer {
           margin-right: $minds-margin * 2;
