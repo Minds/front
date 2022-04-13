@@ -4,6 +4,11 @@
   ::ng-deep {
     minds-card {
       overflow: visible;
+      border-radius: 0;
+    }
+
+    m-activityV2 {
+      border-top: none !important;
     }
   }
 }

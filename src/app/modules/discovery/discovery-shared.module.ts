@@ -41,6 +41,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { DiscoveryTopComponent } from './top/top.component';
 import { DefaultFeedModule } from '../default-feed/default-feed.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
     FormsModule,
     ReactiveFormsModule,
     LegacyModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     ExperimentsModule,
     DiscoveryDisclaimerModule,
     DefaultFeedModule,

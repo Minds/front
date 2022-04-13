@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  HostBinding,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -20,6 +21,7 @@ import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelis
   selector: 'minds-rich-embed',
   inputs: ['_src: src', '_preview: preview', 'maxheight', 'cropImage'],
   templateUrl: 'rich-embed.html',
+  styleUrls: ['rich-embed.ng.scss'],
 })
 export class MindsRichEmbed {
   type: string = '';
@@ -28,13 +30,18 @@ export class MindsRichEmbed {
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: any = null;
-  @Input() embeddedInline: boolean = false;
   cropImage: boolean = false;
   modalRequestSubscribed: boolean = false;
   @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
   private lastInlineEmbedParsed: string;
   public isPaywalled: boolean = false;
   _isModal: boolean = false;
+
+  @Input() embeddedInline: boolean = false;
+
+  @Input() activityV2Feature: boolean = false;
+
+  @Input() displayAsColumn: boolean = false;
 
   @Input() set isModal(value: boolean) {
     this._isModal = value;
@@ -45,6 +52,20 @@ export class MindsRichEmbed {
       }
       this.detectChanges();
     }
+  }
+
+  @HostBinding('class.m-richEmbed--activityV2--row')
+  get isActivityV2Row(): boolean {
+    return (
+      this.activityV2Feature && !this.isFeaturedSource && !this.displayAsColumn
+    );
+  }
+
+  @HostBinding('class.m-richEmbed--activityV2--column')
+  get isActivityV2Column(): boolean {
+    return (
+      this.activityV2Feature && (this.isFeaturedSource || this.displayAsColumn)
+    );
   }
 
   constructor(
@@ -146,11 +167,7 @@ export class MindsRichEmbed {
   }
 
   action($event) {
-    if (
-      this.modalRequestSubscribed &&
-      (this.mediaSource === 'youtube' || this.mediaSource === 'minds') &&
-      this.modalService.canOpenInModal()
-    ) {
+    if (this.modalRequestSubscribed && this.modalService.canOpenInModal()) {
       $event.preventDefault();
       $event.stopPropagation();
       this.mediaModalRequested.emit();
@@ -346,6 +363,10 @@ export class MindsRichEmbed {
 
     // No match
     return null;
+  }
+
+  get isFeaturedSource(): boolean {
+    return this.mediaSource === 'youtube' || this.mediaSource === 'minds';
   }
 
   hasInlineContentLoaded() {

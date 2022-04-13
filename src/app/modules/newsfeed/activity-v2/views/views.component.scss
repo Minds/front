@@ -1,0 +1,30 @@
+@import 'defaults.scss';
+
+:host {
+  m-sidebarwidget & {
+    // *********************************
+    // ** Sidebar **
+    // *********************************
+
+    display: none;
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+  .m-activity__views {
+    display: inline-block;
+    @include body2Medium;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-activityViews__dot {
+    padding: 0 $spacing1;
+  }
+}

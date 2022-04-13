@@ -17,5 +17,7 @@
 }
 
 m-group-profile-feed__sorted m-activity {
-  margin-bottom: 20px; // TODO: make this a constant
+  &:not(.m-activity--v2) {
+    margin-bottom: 20px; // TODO: make this a constant
+  }
 }

@@ -1,4 +1,36 @@
-m-topHighlights {
+@import 'defaults.scss';
+
+:host {
+  &.m-topHighlights--activityV2 {
+    .m-topHighlights__title {
+      @include borderTop;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-left: $spacing6;
+      padding-right: $spacing6;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $spacing4;
+        padding-right: $spacing4;
+      }
+    }
+
+    ul {
+      li:first-child {
+        ::ng-deep m-activityV2 {
+          @include m-theme() {
+            border-top: none;
+          }
+        }
+      }
+    }
+    .m-topHighlights__showMore__container {
+      .m-topHighlights__showMore__link {
+        padding-right: $spacing6;
+      }
+    }
+  }
+
   ul {
     padding: 0;
     margin: 0;
@@ -15,8 +47,8 @@ m-topHighlights {
   .m-topHighlights__title {
     font-size: 20px;
     font-weight: bold;
-    margin-top: 26px;
-    margin-bottom: 8px;
+    // padding-top: $spacing6;
+    // padding-bottom: $spacing2;
   }
 
   .m-topHighlights__showMore__container {
@@ -26,7 +58,7 @@ m-topHighlights {
     align-items: center;
     margin: $minds-padding 0 $minds-padding * 2;
 
-    m-loadingSpinner {
+    ::ng-deep m-loadingSpinner {
       width: unset;
       margin: unset;
 

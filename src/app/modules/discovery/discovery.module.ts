@@ -35,6 +35,7 @@ import { CardCarouselService } from './card-carousel/card-carousel.service';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ContentSettingsModule } from '../content-settings/content-settings.module';
 import { DiscoveryTopComponent } from './top/top.component';
+import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 
 @NgModule({
   imports: [
@@ -203,7 +204,8 @@ import { DiscoveryTopComponent } from './top/top.component';
     NgCommonModule,
     CommonModule,
     SuggestionsModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     LegacyModule, // For subscribe button
     // GroupsModule,
     DiscoverySharedModule,
