@@ -31,6 +31,19 @@
     </div>
 
     <!-- ----------------------------------------- -->
+    <!-- WIDGET: CHANNEL RECOMMENDATION -->
+    <!-- ----------------------------------------- -->
+    <ng-container *mExperiment="'channel-recommendations'; variation: true">
+      <m-channelRecommendation
+        [title]="channelRecommendationTitle"
+        location="channel"
+        [channelId]="service.guid$ | async"
+        [visible]="channelRecommendationVisible$ | async"
+        *ngIf="!isOwnedChannel"
+      ></m-channelRecommendation>
+    </ng-container>
+
+    <!-- ----------------------------------------- -->
     <!-- SEARCH QUERY DISPLAY -->
     <!-- ----------------------------------------- -->
     <div class="m-channelFeed__searchDisplay" *ngIf="service.query$ | async">

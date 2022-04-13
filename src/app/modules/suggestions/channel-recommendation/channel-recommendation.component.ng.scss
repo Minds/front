@@ -2,18 +2,12 @@
 @import '../../../common/layout/layout.scss';
 
 :host {
+  display: flex;
+
   article {
+    width: 100%;
+    box-sizing: border-box;
     padding: $minds-padding * 4;
-    margin: $minds-margin * 2 $minds-margin * -5;
-
-    @media screen and (max-width: $layoutMin3ColWidth) {
-      margin: $minds-margin * 2 $minds-margin * -2.5;
-    }
-
-    @include m-theme() {
-      border-top: 1px solid themed($m-borderColor--primary);
-      border-bottom: 1px solid themed($m-borderColor--primary);
-    }
 
     header {
       display: flex;

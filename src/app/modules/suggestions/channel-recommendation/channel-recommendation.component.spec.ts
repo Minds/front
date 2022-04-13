@@ -1,8 +1,9 @@
-import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
-import { ApiService } from '../../../common/api/api.service';
+import { RecentSubscriptionsService } from './../../../common/services/recent-subscriptions.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ApiService } from '../../../common/api/api.service';
+import { apiServiceMock } from '../../boost/modal/boost-modal.service.spec';
 import { ChannelRecommendationComponent } from './channel-recommendation.component';
+import { MockService } from '../../../utils/mock';
 
 describe('ChannelRecommendationComponent', () => {
   let component: ChannelRecommendationComponent;
@@ -15,6 +16,10 @@ describe('ChannelRecommendationComponent', () => {
         {
           provide: ApiService,
           useValue: apiServiceMock,
+        },
+        {
+          provide: RecentSubscriptionsService,
+          useValue: MockService(RecentSubscriptionsService),
         },
       ],
     }).compileComponents();
