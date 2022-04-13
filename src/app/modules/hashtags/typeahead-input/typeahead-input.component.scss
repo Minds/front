@@ -12,6 +12,10 @@ m-hashtags__typeaheadInput {
     &:focus {
       outline: none;
     }
+
+    &.m-hashtagsTypeaheadInput__input--disabled:focus {
+      border: 1px solid red !important;
+    }
   }
 
   .m-hashtagsTypeaheadInput__list {
