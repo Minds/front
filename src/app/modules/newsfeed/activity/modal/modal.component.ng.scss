@@ -118,7 +118,7 @@ $modal-padding: 20px;
           padding: 0;
         }
 
-        .m-activityContent__message--isTextOnly {
+        .m-activityContent__message--status {
           &.m-activityContent__message--short {
             margin: 0 50px;
             span {
@@ -298,13 +298,6 @@ $modal-padding: 20px;
       justify-content: flex-start;
       flex-direction: column;
 
-      &.missingDimensions {
-        .m-activityContent__media--image img {
-          max-height: 520px;
-          min-height: 520px;
-        }
-      }
-
       .m-activityContent__media--image img {
         height: 100% !important;
       }
@@ -339,9 +332,9 @@ $modal-padding: 20px;
     }
   }
 
-  // ******************************************************
+  // ******************************************
   // ** CONTENT (Right side) **
-  // ******************************************************
+  // ******************************************
 
   .m-activityModal__contentContainer {
     min-width: 350px;
@@ -606,7 +599,7 @@ $modal-padding: 20px;
     visibility: hidden;
   }
 
-  // ******************************************************
+  // ******************************************
 
   ::ng-deep {
     m-activity__content {

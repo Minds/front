@@ -1,0 +1,69 @@
+@import 'defaults.scss';
+
+:host {
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activityNsfwConsent--minimalMode {
+    ::ng-deep .m-activityNsfwConsent__button {
+      margin: 38px $spacing4;
+    }
+  }
+
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activityV2__modal & {
+    position: absolute;
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  display: block;
+  width: 100%;
+  position: relative;
+  align-self: center;
+  text-align: center;
+
+  .m-activityNsfwConsent__icon {
+    font-size: 62px;
+    margin: 25px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+    padding: 0;
+    margin: 0 0 $minds-margin 0;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  h3 {
+    font-size: 16px;
+    line-height: 20px;
+    padding: 0;
+    margin: 0;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  ::ng-deep .m-activityNsfwConsent__button {
+    display: block;
+    margin: 38px 0 50px 0;
+  }
+}

@@ -13,6 +13,7 @@ import { FriendlyDateDiffPipe } from './friendlydatediff';
 import { AsyncStatePipe } from './async-state.pipe';
 import { FileSizePipe } from './filesize';
 import { DecodeHtmlStringPipe } from './decode-html-string';
+import { TruncatePipe } from './truncate.pipe';
 import { MaxPipe } from './max';
 
 export const MINDS_PIPES = [
@@ -33,5 +34,6 @@ export const MINDS_PIPES = [
   AsyncStatePipe,
   FileSizePipe,
   DecodeHtmlStringPipe,
+  TruncatePipe,
   MaxPipe,
 ];

@@ -1,0 +1,19 @@
+<m-tooltip
+  class="m-boostButton__tooltip"
+  [anchor]="'bottom'"
+  [enabled]="false"
+  [hidden]="!(shouldShowTooltip$ | async)"
+  [showArrow]="true"
+>
+  <button
+    m-tooltip--anchor
+    class="m-btn m-btn--slim m-boostButton"
+    data-cy="data-minds-activity-boost-button"
+  >
+    <m-icon from="md" iconId="trending_up" [sizeFactor]="20"></m-icon>
+  </button>
+
+  <ng-container i18n="@@M__ACTION__BOOST__TOOLTIP"
+    >Use your tokens to get more views</ng-container
+  >
+</m-tooltip>

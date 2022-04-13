@@ -1,5 +1,6 @@
 import { FeedAlgorithm } from './../subscribed.component';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 @Component({
   selector: 'm-feedHeader',
@@ -7,6 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./feed-header.component.ng.scss'],
 })
 export class FeedHeaderComponent {
+  constructor(public experiments: ExperimentsService) {}
+
+  @HostBinding('class.m-feedHeader--activityV2')
+  get activityV2Feature(): boolean {
+    return this.experiments.hasVariation('front-5229-activities', true);
+  }
+
   @Input()
   algorithm: FeedAlgorithm = 'latest';
 }

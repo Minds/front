@@ -6,7 +6,7 @@
   <div class="m-comments-composer m-commentPoster__wrapper">
     <div class="m-commentPoster__avatar">
       <a [routerLink]="['/', session.getLoggedInUser().username]">
-        <img [src]="getAvatar() | async" class="m-border" />
+        <img [src]="getAvatar() | async" />
       </a>
     </div>
 
