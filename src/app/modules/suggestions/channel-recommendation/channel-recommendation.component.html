@@ -20,7 +20,9 @@
     <ul *ngIf="(recommendations$ | async).length">
       <li
         @listAnimation
-        *ngFor="let channel of recommendations$ | async | slice: 0:3"
+        *ngFor="
+          let channel of recommendations$ | async | slice: 0:(listSize$ | async)
+        "
       >
         <section>
           <a

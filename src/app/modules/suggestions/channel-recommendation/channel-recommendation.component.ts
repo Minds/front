@@ -56,6 +56,10 @@ export class ChannelRecommendationComponent implements OnInit {
 
   /** a list of recommended channels */
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+  /**
+   * How many recommendations to show at a time?
+   */
+  listSize$: BehaviorSubject<number> = new BehaviorSubject(3);
 
   constructor(
     private api: ApiService,
@@ -97,6 +101,10 @@ export class ChannelRecommendationComponent implements OnInit {
    * When a recommendation is subscribed, remove it from the list——unless the list length is small
    */
   onSubscribed(user): void {
+    if (this.listSize$.getValue() === 3) {
+      this.listSize$.next(5);
+    }
+
     if (this.recommendations$.getValue().length <= 3) {
       return;
     }
