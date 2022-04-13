@@ -78,10 +78,6 @@ export class DefaultFeedComponent implements OnInit {
       return false;
     }
 
-    if (!this.experiments.hasVariation('channel-recommendations', true)) {
-      return false;
-    }
-
     if (this.feedsService.feedLength <= 3) {
       // if the newsfeed length was less than equal to 3,
       // show the widget after last item
