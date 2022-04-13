@@ -1,0 +1,15 @@
+:host {
+  .m-notificationHistoryCard__wrapper {
+    border: 1px solid #e5e5e5;
+
+    .m-notificationHistoryCard__header {
+      display: flex;
+      flex-flow: row nowrap;
+      align-content: space-between;
+    }
+
+    .m-notificationHistoryCard__sectionDivider {
+      border-top: 1px solid #e5e5e5;
+    }
+  }
+}
