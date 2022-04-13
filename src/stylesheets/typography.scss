@@ -112,31 +112,31 @@
 }
 //----------------------
 @mixin _heading1 {
-  font-size: 1.875rem;
+  font-size: 1.875rem; //30px
   line-height: 2.25rem;
 }
 @mixin _heading2 {
-  font-size: 1.5rem;
+  font-size: 1.5rem; //24px
   line-height: 2rem;
 }
 @mixin _heading3 {
-  font-size: 1.25rem;
+  font-size: 1.25rem; //20px
   line-height: 1.75rem;
 }
 @mixin _heading4 {
-  font-size: 1.125rem;
+  font-size: 1.125rem; //18px
   line-height: 1.75rem;
 }
 //----------------------
 @mixin _body1 {
-  font-size: 1rem;
+  font-size: 1rem; //16px
   line-height: 1.5rem;
 }
 @mixin _body2 {
-  font-size: 0.875rem;
+  font-size: 0.875rem; //14px
   line-height: 1.25rem;
 }
 @mixin _body3 {
-  font-size: 0.8125rem;
+  font-size: 0.8125rem; //13px
   line-height: 1rem;
 }

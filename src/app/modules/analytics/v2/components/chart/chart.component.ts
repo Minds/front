@@ -26,7 +26,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   timespansSubscription: Subscription;
   selectedTimespan;
 
-  // ***********************************************************
+  // ***********************************************
 
   constructor(
     private analyticsService: AnalyticsDashboardService,

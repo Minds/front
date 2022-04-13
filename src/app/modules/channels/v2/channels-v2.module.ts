@@ -1,3 +1,4 @@
+import { SuggestionsModule } from './../../suggestions/suggestions.module';
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -99,6 +100,7 @@ const PROVIDERS = [ChannelEditModalService];
     DiscoverySharedModule,
     ComposerModule,
     ExperimentsModule,
+    SuggestionsModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

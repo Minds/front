@@ -41,5 +41,7 @@ export class ChannelActionsSubscribeComponent {
 
     // Post menu service mutates passed object
     this.service.setChannel({ ...user });
+
+    this.service.onSubscriptionChanged.emit(true);
   }
 }
