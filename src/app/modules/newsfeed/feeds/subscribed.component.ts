@@ -346,13 +346,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    if (this.feedService.inProgress && this.feedService.feedLength === 0) {
+    if (this.feedService.inProgress && !this.feedService.feedLength) {
       return false;
     }
 
     switch (location) {
       case 'emptyState':
-        return this.feedService.feedLength === 0;
+        return !this.feedService.feedLength;
       case 'feed':
       default:
         // if the newsfeed length was less than equal to 3,
