@@ -3,7 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute, Route } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
-import { FeaturesService } from '../../services/features.service';
+import { Session } from '../../services/session';
 import { ExperimentsService } from '../experiments/experiments.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class DiscoveryComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private service: DiscoveryService,
+    public session: Session,
     private experiments: ExperimentsService
   ) {
     /**
