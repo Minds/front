@@ -3,7 +3,7 @@ import { of, OperatorFunction } from 'rxjs';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { catchError, debounceTime, map, switchAll, tap } from 'rxjs/operators';
 import { TextParserService } from '../../../common/services/text-parser.service';
-
+import { EmbedLinkWhitelistService } from '../../../services/embed-link-whitelist.service';
 /**
  * Rich embed structure
  */
@@ -26,7 +26,8 @@ export class RichEmbedService {
    */
   constructor(
     protected api: ApiService,
-    private textParser: TextParserService
+    private textParser: TextParserService,
+    private embedLinkWhitelist: EmbedLinkWhitelistService
   ) {}
 
   /**
@@ -81,6 +82,16 @@ export class RichEmbedService {
                     response.links.thumbnail[0]
                   ) {
                     richEmbed.thumbnail = response.links.thumbnail[0].href;
+                  }
+
+                  const videoHref = response.links?.player[0]['href'] ?? false;
+
+                  // only use if whitelisted.
+                  if (
+                    videoHref &&
+                    this.embedLinkWhitelist.isWhitelisted(videoHref)
+                  ) {
+                    richEmbed.url = videoHref;
                   }
 
                   return richEmbed;

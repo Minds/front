@@ -139,7 +139,7 @@
 
     .m-publisherCardOwnerRow__owner {
       max-width: 100%;
-      width: calc(100% - 185px);
+      width: calc(100% - 195px);
 
       > div {
         display: flex;
@@ -178,7 +178,9 @@
     }
     ::ng-deep {
       m-subscribeButton {
-        flex: auto 0 0;
+        flex: auto 1 0;
+        display: flex;
+        justify-content: flex-end;
         ::ng-deep m-button {
           .m-button i {
             font-size: 16px !important;

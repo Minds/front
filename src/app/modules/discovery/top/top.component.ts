@@ -9,10 +9,7 @@ import { ExperimentsService } from '../../experiments/experiments.service';
 @Component({
   selector: 'm-discovery__top',
   styleUrls: ['top.component.ng.scss'],
-  template: `
-    <m-discovery__tabs></m-discovery__tabs>
-    <m-defaultFeed location="discovery-feed"></m-defaultFeed>
-  `,
+  templateUrl: './top.component.html',
 })
 export class DiscoveryTopComponent {
   constructor(
