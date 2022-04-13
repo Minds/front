@@ -14,7 +14,9 @@ m-hashtags__typeaheadInput {
     }
 
     &.m-hashtagsTypeaheadInput__input--disabled:focus {
-      border: 1px solid red !important;
+      @include m-theme() {
+        border: 1px solid themed($m-red) !important;
+      }
     }
   }
 
