@@ -14,6 +14,42 @@
   .m-channel__feed {
     min-height: 100vh;
 
+    &.m-channel__feed--activityV2 {
+      [class*='m-pageLayout__pane'] {
+        .m-channelFeed__list {
+          padding: 0 0 $spacing7;
+
+          @media screen and (min-width: $max-mobile) and (max-width: $layoutMax2ColWidth) {
+            @include borderRight;
+          }
+        }
+      }
+
+      ::ng-deep {
+        m-composer {
+          margin-bottom: 0;
+          border: none !important;
+          border-radius: 0;
+          .m-composer__trigger {
+            @include m-theme() {
+              border-bottom: 4px solid themed($m-borderColor--primary);
+            }
+          }
+        }
+        m-newsfeed__entity {
+          margin-bottom: 0;
+
+          &:first-child {
+            m-activityV2 {
+              @include m-theme() {
+                border-top: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
     [class*='m-pageLayout__pane'] {
       .m-channelFeed__list,
       .m-channelFeed__grid,
@@ -210,6 +246,12 @@
         m-newsfeed__entity {
           margin-bottom: 0px;
         }
+      }
+    }
+
+    ::ng-deep m-channelRecommendation > div {
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-borderColor--primary);
       }
     }
   }

@@ -34,6 +34,7 @@ import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { LoadingSpinnerComponent } from '../../../common/components/loading-spinner/loading-spinner.component';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'minds-activity',
@@ -108,6 +109,10 @@ describe('NewsfeedSingleComponent', () => {
           {
             provide: AuthModalService,
             useValue: MockService(AuthModalService),
+          },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
           },
         ],
       }).compileComponents();

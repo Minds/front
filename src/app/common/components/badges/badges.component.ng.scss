@@ -1,0 +1,24 @@
+@import 'defaults.scss';
+
+:host {
+  // ******************************************
+  // ** ACTIVITY V2 **
+  // ******************************************
+  m-activityV2 &,
+  m-activityV2__modal & {
+    padding: 0;
+    margin: 0;
+    .m-channel--badges i {
+      font-size: 20px;
+    }
+
+    .m-channel--badges li:last-child {
+      padding-right: 0;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      /* prevent badges from shown behind right container */
+      overflow: visible !important;
+    }
+  }
+}

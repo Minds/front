@@ -1,0 +1,146 @@
+<div
+  class="m-activityModal__wrapper"
+  data-cy="data-minds-activity-modal"
+  *ngIf="entity && entity.content_type"
+>
+  <div class="m-activityModal__theater" (click)="clickedModal($event)">
+    <div class="m-activityModal m-activityModal__clearFix">
+      <!-- -------------------------------------------------- -->
+      <!-- --LEFT SIDE--------------------------------------- -->
+      <!-- -------------------------------------------------- -->
+      <!-- (this is the element that goes into fullscreen) -->
+      <div
+        class="m-activityModal__stageWrapper"
+        (mouseenter)="onMouseEnterStage()"
+        (mouseleave)="onMouseLeaveStage()"
+        (touchend)="showOverlaysOnTablet()"
+        [ngClass]="{
+          'm-activityModal__stageWrapper--status':
+            entity.content_type === 'status'
+        }"
+      >
+        <!-- LOADING PANEL -->
+        <div
+          class="m-activityModal__loadingPanel"
+          *ngIf="
+            (service.loading$ | async) && entity.content_type !== 'rich-embed'
+          "
+        >
+          <m-loadingSpinner
+            [inProgress]="service.loading$ | async"
+          ></m-loadingSpinner>
+        </div>
+
+        <!-- MEDIA STAGE -->
+        <div class="m-activityModal__stage">
+          <div
+            class="m-activityModal__mediaWrapper"
+            [ngClass]="{
+              'm-activityModal__mediaWrapper--image':
+                entity.content_type === 'image',
+              'm-activityModal__mediaWrapper--video':
+                entity.content_type === 'video'
+            }"
+          >
+            <m-activityV2__content
+              *ngIf="
+                (activityService.shouldShowContent$ | async) && isContentReady
+              "
+              [hideText]="true"
+              [showPaywall]="activityService.shouldShowPaywall$ | async"
+              [@slowFade]="(this.service.loading$ | async) ? 'out' : 'in'"
+              [maxHeightAllowed]="modalHeight"
+            ></m-activityV2__content>
+            <m-activityV2__modalQuote
+              *ngIf="isQuote && entity"
+              [entity]="entity.remind_object"
+            ></m-activityV2__modalQuote>
+          </div>
+          <m-activityV2__nsfwConsent
+            *ngIf="activityService.shouldShowNsfwConsent$ | async"
+          >
+          </m-activityV2__nsfwConsent>
+          <!-- OVERLAY (TITLE & FULLSCREEN CTRLS)-->
+          <m-activityV2__modalTitleOverlay></m-activityV2__modalTitleOverlay>
+          <!-- PAGER BUTTONS -->
+          <m-activityV2__modalPager></m-activityV2__modalPager>
+        </div>
+      </div>
+
+      <!-- (END LEFT SIDE)-->
+
+      <!-- -------------------------------------------------- -->
+      <!-- ---RIGHT SIDE------------------------------------- -->
+      <!-- -------------------------------------------------- -->
+      <div class="m-activityModal__contentContainer">
+        <div class="m-activityModal__contentBody">
+          <!-- --------------- -->
+          <!-- SCROLLABLE AREA -->
+          <!-- --------------- -->
+          <div
+            class="m-activityModal__scrollableAreaContainer m-activityModal__contentAfter m-disableScrollbars"
+          >
+            <div
+              class="m-activityModal__scrollableAreaBody m-disableScrollbars"
+              #scrollableArea
+            >
+              <!-- FLAG -->
+              <m-activityV2__flag
+                class="m-activity__flagRow"
+                *ngIf="
+                  entity.boosted ||
+                  (entity.remind_users && entity.remind_users.length)
+                "
+              ></m-activityV2__flag>
+              <!-- OWNER BLOCK -->
+              <m-activityV2__ownerBlock>
+                <ng-container class="m-activityOwnerBlock__right">
+                  <m-activityV2__views></m-activityV2__views>
+                  <m-activityV2__menu
+                    (deleted)="delete()"
+                    *ngIf="activityService.isLoggedIn$ | async"
+                  ></m-activityV2__menu>
+                </ng-container>
+              </m-activityV2__ownerBlock>
+              <!-- MESSAGE -->
+              <m-activityV2__content
+                *ngIf="
+                  (activityService.shouldShowContent$ | async) &&
+                  showContentMessageOnRight
+                "
+                [hideMedia]="true"
+                [showPaywall]="activityService.shouldShowPaywall$ | async"
+                [showPaywallBadge]="
+                  activityService.shouldShowPaywallBadge$ | async
+                "
+              >
+              </m-activityV2__content>
+              <!-- TOOLBAR -->
+              <div class="m-activityModal__toolbarWrapper">
+                <m-activityV2__toolbar
+                  *ngIf="activityService.displayOptions.showToolbar"
+                ></m-activityV2__toolbar>
+              </div>
+              <!-- COMMENTS TREE -->
+              <div class="m-activityModal__comments" *ngIf="entity.guid">
+                <ng-container *mIfBrowser>
+                  <m-comments__entityOutletV2
+                    *ngIf="activityService.displayOptions.showComments"
+                    [entity]="activityService.entity$ | async"
+                    [canDelete]="activityService.canDelete$ | async"
+                    [fixedHeight]="false"
+                    [showOnlyPoster]="false"
+                    [compact]="true"
+                    [isModal]="true"
+                    (onHeightChange)="onCommentsHeightChange($event)"
+                  >
+                  </m-comments__entityOutletV2>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

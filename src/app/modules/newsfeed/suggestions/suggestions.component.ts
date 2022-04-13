@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import {
   RelatedContentPool,
   RelatedContentPools,
@@ -6,6 +6,7 @@ import {
 } from '../../../common/services/related-content.service';
 import getActivityContentType from '../../../helpers/activity-content-type';
 import { Session } from '../../../services/session';
+import { ExperimentsService } from '../../experiments/experiments.service';
 import { ActivityEntity } from '../activity/activity.service';
 
 @Component({
@@ -14,8 +15,11 @@ import { ActivityEntity } from '../activity/activity.service';
   styleUrls: ['./suggestions.component.ng.scss'],
   providers: [RelatedContentService],
 })
-export class NewsfeedActivitySuggestionsComponent {
+export class NewsfeedActivitySuggestionsComponent implements OnInit {
   protected _baseEntity: ActivityEntity;
+
+  @HostBinding('class.m-newsfeed__activitySuggestions--activityV2')
+  activityV2Feature: boolean = false;
   /**
    * The 'base' entity is the activity that will be
    * used to determine which posts to suggest
@@ -35,8 +39,16 @@ export class NewsfeedActivitySuggestionsComponent {
 
   constructor(
     public session: Session,
-    protected relatedContent: RelatedContentService
+    protected relatedContent: RelatedContentService,
+    private experiments: ExperimentsService
   ) {}
+
+  ngOnInit(): void {
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activites',
+      true
+    );
+  }
 
   async onBaseEntityChange(e: ActivityEntity): Promise<void> {
     this.inProgress = true;

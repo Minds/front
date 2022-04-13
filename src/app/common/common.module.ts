@@ -187,6 +187,9 @@ import { BlurhashDirective } from './directives/blurhash/blurhash.directive';
 import { ExperimentsService } from '../modules/experiments/experiments.service';
 import { AuthRedirectService } from './services/auth-redirect.service';
 import { RelativeTimeSpanComponent } from './components/relative-time-span/relative-time-span.component';
+import { SubscriptionService } from './services/subscription.service';
+import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
+import { ResizedDirective } from './directives/resized.directive';
 
 const routes: Routes = [
   {
@@ -359,6 +362,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    ResizedDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -506,6 +510,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    ResizedDirective,
   ],
   providers: [
     SiteService,
@@ -557,6 +562,8 @@ const routes: Routes = [
     JsonLdService,
     BoostRecommendationService,
     AuthRedirectService,
+    SubscriptionService,
+    RecentSubscriptionsService,
   ],
 })
 export class CommonModule {}

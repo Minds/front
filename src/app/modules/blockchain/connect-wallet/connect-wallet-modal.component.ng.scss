@@ -1,4 +1,9 @@
 @import 'defaults.scss';
 
-:host {
+::ng-deep {
+  .-walletlink-extension-dialog-box-bottom-qr-wrapper {
+    img {
+      width: 300px;
+    }
+  }
 }
