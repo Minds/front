@@ -1,4 +1,5 @@
 import { ErrorHandler, Injectable, NgModule } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
@@ -16,6 +17,7 @@ import {
   DiagnosticsService,
   BrowserDiagnosticsService,
 } from './common/services/diagnostics/browser-diagnostics.service';
+import { environment } from './../environments/environment';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -28,7 +30,16 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-  imports: [MindsModule, CookieModule],
+  imports: [
+    MindsModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 2.5 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:2500',
+    }),
+    CookieModule,
+  ],
   bootstrap: [Minds],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },

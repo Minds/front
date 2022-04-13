@@ -1,3 +1,5 @@
+import { isPlatformBrowser } from '@angular/common';
+import { ServiceWorkerService } from './common/services/service-worker.service';
 import {
   ChangeDetectorRef,
   Component,
@@ -85,7 +87,8 @@ export class Minds implements OnInit, OnDestroy {
     private socketsService: SocketsService,
     private experimentsService: ExperimentsService,
     private multiFactorConfirmation: MultiFactorAuthConfirmationService,
-    private compassHook: CompassHookService
+    private compassHook: CompassHookService,
+    private serviceWorkerService: ServiceWorkerService
   ) {
     this.name = 'Minds';
 
@@ -135,6 +138,10 @@ export class Minds implements OnInit, OnDestroy {
       // if (this.sso.isRequired()) {
       //   this.sso.connect();
       // }
+
+      if (isPlatformBrowser(this.platformId)) {
+        this.serviceWorkerService.watchForUpdates();
+      }
     } catch (e) {
       console.error('ngOnInit()', e);
     }
