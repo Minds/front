@@ -32,6 +32,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
     'scrollable',
   ],
   templateUrl: 'list.component.html',
+  styleUrls: ['list.component.ng.scss'],
   providers: [AttachmentService, ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

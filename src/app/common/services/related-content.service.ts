@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ActivityEntity } from '../../modules/newsfeed/activity/activity.service';
 import { Client } from '../../services/api/client';
 import { EntitiesService } from './entities.service';
+import getActivityContentType from '../../helpers/activity-content-type';
 
 /**
  * Specifies how to interpret base entity and which correlation to use
@@ -10,6 +11,13 @@ import { EntitiesService } from './entities.service';
  * Container can be a user or group
  */
 export type RelatedContentContext = 'container';
+
+/**
+ * Specifies the parent component
+ *
+ * Currently only activityModal has an effect
+ */
+export type RelatedContentParent = 'activityModal' | '';
 
 /**
  * Specifies the object returned to consumers
@@ -34,7 +42,7 @@ export interface RelatedContentPool {
 }
 
 /**
- * Horizontal feed pools
+ * Related content pools
  */
 export interface RelatedContentPools {
   prev: RelatedContentPool;
@@ -52,6 +60,7 @@ interface RelatedContentChange {
 
 /**
  * Types of filter for feed, appended to end of v2/feeds/container URL.
+ * 'activities' returns images, videos and blogs
  */
 type FilterType = 'all' | 'videos' | 'activities';
 
@@ -76,6 +85,8 @@ export class RelatedContentService {
 
   protected cursor: number = 0;
 
+  protected parent: RelatedContentParent;
+
   public pools: RelatedContentPools = {
     next: {
       entities: [],
@@ -97,6 +108,14 @@ export class RelatedContentService {
    * Filter the feed by filter type.
    */
   private filter: FilterType = DEFAULT_FILTER_VALUE;
+
+  /**
+   * Sets parent component context
+   * */
+  setParent(parent: RelatedContentParent): RelatedContentService {
+    this.parent = parent;
+    return this;
+  }
 
   /**
    * Sets the current context and resets
@@ -337,7 +356,7 @@ export class RelatedContentService {
         break;
 
       default:
-        throw new Error('Unknown Horizontal Feed context');
+        throw new Error('Unknown related content context');
     }
   }
 
@@ -448,17 +467,34 @@ export class RelatedContentService {
       return response.entities.length ? response.entities : [];
     }
 
-    // else, don't return reminds or non-activities
     if (response && response.entities && response.entities.length) {
-      const responseEntities = response.entities.filter(
-        e =>
-          e.entity &&
-          !e.entity.remind_object &&
-          (e.entity.entity_guid || e.entity.message)
-      );
+      // For activity modal pager, filter out all except images and vids
+      if (this.parent === 'activityModal') {
+        const filteredResponse = response.entities.filter(
+          e =>
+            e.entity &&
+            // Must be an activity
+            (e.entity.entity_guid || e.entity.message) &&
+            // Only images and videos
+            (getActivityContentType(e.entity) === 'image' ||
+              getActivityContentType(e.entity) === 'video')
+        );
 
-      if (response.entities.length) {
-        return response.entities;
+        if (filteredResponse.length) {
+          return filteredResponse;
+        }
+      } else {
+        // Else, don't return quotes, reminds or non-activities
+        response.entities.filter(
+          e =>
+            e.entity &&
+            (e.entity.entity_guid || e.entity.message) &&
+            !e.entity.remind_object
+        );
+
+        if (response.entities.length) {
+          return response.entities;
+        }
       }
     }
 

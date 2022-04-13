@@ -114,7 +114,7 @@ export class SidebarMoreTriggerComponent implements AfterViewInit {
     const popperHeight = this.session.isLoggedIn() ? 396 : 133;
 
     let x = popperHeight / 2 - triggerHeight / 2;
-    // ************************************************
+    // ************************************
     this.popperModifiers.find(x => x.name === 'offset').options.offset = [x, y];
   }
 }

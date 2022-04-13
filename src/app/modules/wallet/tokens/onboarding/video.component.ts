@@ -21,7 +21,7 @@ import { Storage } from '../../../../services/storage';
       <source [src]="src" type="video/mp4" />
     </video>
     <i class="material-icons" (click)="play()" *ngIf="video.paused"
-      >play_circle_outline</i
+      >play_arrow</i
     >
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,71 @@
+// Variables that are shared among a variety of components
+// that relate to activities in different contexts
+
+///////////////////////////////////////////
+// AVATAR
+///////////////////////////////////////////
+
+$activityAvatarWidth: $spacing10;
+
+///////////////////////////////////////////
+// FEED
+///////////////////////////////////////////
+
+// This is the spacing on either side of the avatar
+// in the left column of activities
+$activityAvatarSpacingLeft--feed: $spacing6;
+$activityAvatarSpacingLeft--feed--mobile: $spacing4;
+
+$activityAvatarSpacingRight--feed: $spacing6;
+$activityAvatarSpacingRight--feed--mobile: $spacing4;
+
+// This is the width of the entire left column
+// that contains the avatar.
+//
+// Use it to line up components that go above/below
+// the component with the avatar
+$activitySpacingLeft--feed: $activityAvatarSpacingLeft--feed +
+  $activityAvatarWidth + $activityAvatarSpacingRight--feed;
+$activitySpacingLeft--feed--mobile: $activityAvatarSpacingLeft--feed--mobile +
+  $activityAvatarWidth + $activityAvatarSpacingRight--feed--mobile;
+
+$activitySpacingRight--feed: $spacing12;
+$activitySpacingRight--feed--mobile: $spacing4;
+
+///////////////////////////////////////////
+// SINGLE POST PAGE
+///////////////////////////////////////////
+
+// Same as above but for single post pages
+$activityAvatarSpacingLeft--single: $spacing8;
+$activityAvatarSpacingLeft--single--mobile: $spacing4;
+
+$activityAvatarSpacingRight--single: $spacing4;
+$activityAvatarSpacingRight--single--mobile: $spacing4;
+
+$activitySpacingLeft--single: $activityAvatarSpacingLeft--single +
+  $activityAvatarWidth + $activityAvatarSpacingRight--single;
+$activitySpacingLeft--single--mobile: $activityAvatarSpacingLeft--single--mobile +
+  $activityAvatarWidth + $activityAvatarSpacingRight--single--mobile;
+
+$activitySpacingRight--single: $spacing12;
+$activitySpacingRight--single--mobile: $spacing4;
+
+///////////////////////////////////////////
+// ACTIVITY MODAL
+///////////////////////////////////////////
+
+// Spacing on either side of the components that
+// live in the right column of the activity modal
+$activitySpacing--modal: $spacing4;
+
+///////////////////////////////////////////
+// MINIMAL MODE
+///////////////////////////////////////////
+
+// Spacing on either side of the components that
+// live in suggested posts in the sidebar of
+// single post pages
+$activitySpacing--minimalMode: $spacing4;
+
+///////////////////////////////////////////

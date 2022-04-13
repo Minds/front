@@ -9,6 +9,7 @@ import { CompassService } from '../compass.service';
 import { CompassQuestionnaireBannerComponent } from './questionnaire-banner.component';
 import { ModalService } from '../../../services/ux/modal.service';
 import { modalServiceMock } from '../../../../tests/modal-service-mock.spec';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 describe('CompassQuestionnaireBannerComponent', () => {
   let component: CompassQuestionnaireBannerComponent;
@@ -27,6 +28,10 @@ describe('CompassQuestionnaireBannerComponent', () => {
         { provide: CompassService, useValue: compassServiceMock },
         { provide: Storage, useValue: MockService(Storage) },
         { provide: ModalService, useValue: modalServiceMock },
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
       ],
     }).compileComponents();
   });

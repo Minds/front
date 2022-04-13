@@ -42,6 +42,7 @@ import { FeedTypePopoverComponent } from './feeds/feed-header/feed-type-popover/
 import { FeedHeaderComponent } from './feeds/feed-header/feed-header.component';
 import { FeedAlgorithmHistoryService } from './services/feed-algorithm-history.service';
 import { FeedAlgorithmRedirectGuard } from './guards/feed-algorithm-redirect-guard';
+import { ActivityV2Module } from './activity-v2/activity.module';
 
 const routes: Routes = [
   {
@@ -106,7 +107,8 @@ const routes: Routes = [
     SuggestionsModule,
     NoticesModule,
     SearchModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     ComposerModule,
     DiscoverySharedModule,
     LanguageModule,

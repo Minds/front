@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
@@ -45,8 +46,14 @@ export class ChannelRecommendationComponent implements OnInit {
 
   constructor(
     private api: ApiService,
+    public experiments: ExperimentsService,
     private recentSubscriptions: RecentSubscriptionsService
   ) {}
+
+  @HostBinding('class.m-channelRecommendation--activityV2')
+  get activityV2Feature(): boolean {
+    return this.experiments.hasVariation('front-5229-activities', true);
+  }
 
   ngOnInit(): void {
     if (this.location) {

@@ -1,0 +1,152 @@
+@import 'defaults.scss';
+
+:host {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 100%;
+
+  .m-activityModal {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 3.5rem);
+  }
+
+  .m-activityModal__wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+
+    // new stacking context
+    position: static;
+    z-index: 0;
+
+    text-align: left;
+
+    .m-activityModal__theater {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+
+      @include m-theme() {
+        box-shadow: 0 12px 24px rgba(themed($m-black-always), 0.3);
+      }
+    }
+  }
+
+  .m-activityModal__loadingPanel {
+    height: 100%;
+    display: flex;
+  }
+
+  .m-activityModal__stageWrapper {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    min-height: 480px;
+    text-align: center;
+
+    // New stacking context
+    position: relative;
+    z-index: 2;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      box-shadow: 0 0 8px rgba(themed($m-black-always), 0.15);
+    }
+    &.m-activityModal__stageWrapper--status {
+      @include m-theme() {
+        background-color: themed($m-bgColor--primary);
+      }
+    }
+  }
+
+  .m-activityModal__mediaWrapper {
+    overflow: hidden;
+  }
+
+  .m-activityModal__stage {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    height: 100%;
+    min-height: 402px;
+    position: relative;
+    width: 100%;
+  }
+
+  .m-activityModal__mediaWrapper {
+    display: flex;
+    flex: 1;
+    vertical-align: middle;
+    height: auto;
+    position: relative;
+  }
+
+  // *********************************
+  // ** CONTENT (Right side) **
+  // *********************************
+
+  .m-activityModal__contentContainer {
+    min-width: 350px;
+    width: 30vw;
+    max-width: 500px;
+    height: 100%;
+    max-height: 100%;
+    position: relative;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    @include borderLeft;
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+
+    > * {
+      box-sizing: border-box;
+    }
+  }
+
+  .m-activityModal__contentBody {
+    position: relative;
+    height: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-activityModal__scrollableAreaContainer {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-grow: 1;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100% !important;
+  }
+
+  .m-activityModal__scrollableAreaBody {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+    overflow-y: overlay;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-activityModal__clearFix:after {
+    clear: both;
+    content: '.';
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+  }
+}

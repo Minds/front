@@ -7,7 +7,7 @@
     [hidden]="!boosts.length"
   >
     <div
-      *ngIf="boosts.length > 0"
+      *ngIf="boosts.length > 0 && !activityV2Feature"
       class="m-carousel__overflowScrollButton--left"
       (click)="prev()"
     >
@@ -18,10 +18,12 @@
         @fastFade
         [entity]="entity"
         [displayOptions]="{
+          showBoostRotatorButtons: true,
           showOnlyCommentsInput: false,
           showComments: false,
           fixedHeight: true,
-          fixedHeightContainer: true
+          fixedHeightContainer: true,
+          isFeed: true
         }"
         [attr.data-minds-activity-guid]="entity.guid"
         [slot]="i + 1"
@@ -31,7 +33,7 @@
       ></m-activity>
     </ng-container>
     <div
-      *ngIf="boosts.length > 0"
+      *ngIf="boosts.length > 0 && !activityV2Feature"
       class="m-carousel__overflowScrollButton--right"
       (click)="next()"
     >

@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockService } from '../../../../utils/mock';
+import { ExperimentsService } from '../../../experiments/experiments.service';
 
 import { FeedHeaderComponent } from './feed-header.component';
 
@@ -9,6 +11,12 @@ describe('FeedHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FeedHeaderComponent],
+      providers: [
+        {
+          provide: ExperimentsService,
+          useValue: MockService(ExperimentsService),
+        },
+      ],
     }).compileComponents();
   }));
 

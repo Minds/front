@@ -27,7 +27,7 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { ComposerModalService } from '../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../composer/services/composer.service';
-import { catchError, skip, take } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 import { ExperimentsService } from './../../../experiments/experiments.service';
 
 /**
@@ -50,6 +50,7 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
 
   dateRangeEnabled: boolean = false;
 
+  activityV2Feature: boolean = false;
   /**
    * whether channel recs should be shown. Will get toggled when user
    * subscribed to the channel
@@ -162,6 +163,11 @@ export class ChannelFeedComponent implements OnDestroy, OnInit {
       this.service.channel$.subscribe(() =>
         this.shouldShowChannelRecommendation$.next(false)
       )
+    );
+
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
     );
   }
 

@@ -2,6 +2,7 @@
   <div
     [class.m-pageLayout__container]="!showLegacyActivity"
     [class.m-newsfeed__single--legacy]="showLegacyActivity"
+    [class.m-newsfeed__single--activityV2]="activityV2Feature"
   >
     <m-errorSplash
       class="m-pageLayout__pane--main"
@@ -35,7 +36,8 @@
             showOnlyCommentsInput: false,
             showComments: !fixedHeight,
             showInteractions: true,
-            autoplayVideo: false
+            autoplayVideo: false,
+            permalinkBelowContent: true
           }"
           [slot]="1"
           (deleted)="delete($event)"
