@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { FeedsService } from './../../../../common/services/feeds.service';
 import {
   Component,
@@ -63,7 +63,10 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   @Output('click')
   onClickEmitter = new EventEmitter();
 
-  private disposeWatcher?: () => void;
+  /**
+   * removes the watcher interval
+   */
+  disposeWatcher?: () => void;
 
   constructor(@Inject(PLATFORM_ID) private platformId) {}
 
@@ -76,33 +79,33 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * TODO
-   */
-  startPolling(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    this.disposeWatcher = this.feedService.watchForNewPosts();
-  }
-
-  /**
-   * TODO
+   * new posts count
    */
   get newPostsCount$(): BehaviorSubject<number> {
     return this.feedService.newPostsCount$;
   }
 
   /**
-   * TODO
+   * loading indicator for new posts
    */
   get loadingNewPosts$(): BehaviorSubject<boolean> {
     return this.feedService.countInProgress$;
   }
 
   /**
-   *
+   * called when the see more button is clicked
    */
   async onClick(): Promise<void> {
     this.onClickEmitter.emit();
     await this.feedService.fetch(true);
+  }
+
+  /**
+   * starts watching for new posts
+   */
+  private startPolling(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    this.disposeWatcher = this.feedService.watchForNewPosts();
   }
 }
