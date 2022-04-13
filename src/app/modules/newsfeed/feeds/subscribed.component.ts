@@ -342,10 +342,6 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * @returns { boolean }
    */
   public shouldShowChannelRecommendation(location: string, index?: number) {
-    if (!this.experiments.hasVariation('channel-recommendations', true)) {
-      return false;
-    }
-
     if (this.feedService.inProgress && !this.feedService.feedLength) {
       return false;
     }
