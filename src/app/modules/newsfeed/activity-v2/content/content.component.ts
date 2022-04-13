@@ -23,8 +23,8 @@ import {
   ACTIVITY_OWNERBLOCK_HEIGHT,
   ACTIVITY_TOOLBAR_HEIGHT,
   ACTIVITY_GRID_LAYOUT_MAX_HEIGHT,
-  ACTIVITY_SHORT_STATUS_MAX_LENGTH,
-  ACTIVITY_MEDIUM_STATUS_MAX_LENGTH,
+  ACTIVITY_V2_SHORT_STATUS_MAX_LENGTH,
+  ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH,
   ACTIVITY_V2_MAX_MEDIA_HEIGHT,
   ActivityEntity,
   ActivityService,
@@ -403,15 +403,15 @@ export class ActivityV2ContentComponent
   get shortStatus(): boolean {
     return (
       this.entity.content_type === 'status' &&
-      this.bodyText.length <= ACTIVITY_SHORT_STATUS_MAX_LENGTH
+      this.bodyText.length <= ACTIVITY_V2_SHORT_STATUS_MAX_LENGTH
     );
   }
 
   get mediumStatus(): boolean {
     return (
       this.entity.content_type === 'status' &&
-      this.bodyText.length > ACTIVITY_SHORT_STATUS_MAX_LENGTH &&
-      this.bodyText.length <= ACTIVITY_MEDIUM_STATUS_MAX_LENGTH
+      this.bodyText.length > ACTIVITY_V2_SHORT_STATUS_MAX_LENGTH &&
+      this.bodyText.length <= ACTIVITY_V2_MEDIUM_STATUS_MAX_LENGTH
     );
   }
 

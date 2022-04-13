@@ -4,7 +4,6 @@
     #rotatorEl
     class="m-newsfeed__boostRotator"
     [style.min-height]="height"
-    [style.max-height]="height"
     [hidden]="!boosts.length"
   >
     <div
@@ -30,8 +29,6 @@
         [slot]="i + 1"
         [canRecordAnalytics]="false"
         [style.visibility]="i === currentPosition ? 'visible' : 'hidden'"
-        (nextBoost)="next()"
-        (previousBoost)="previous()"
         *ngIf="shouldRender(i)"
       ></m-activity>
     </ng-container>
