@@ -60,7 +60,7 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
   @Input()
   feedService: FeedsService;
 
-  @Output('onClick')
+  @Output('click')
   onClickEmitter = new EventEmitter();
 
   private disposeWatcher?: () => void;
