@@ -115,7 +115,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       .setEndpoint(`api/v2/feeds/subscribed/activities`)
       .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
       .setLimit(12);
-    this.topFeedService.setEndpoint(`api/v3/newsfeed/feed/unseen-top`);
+    this.topFeedService
+      .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
+      .setLimit(12);
   }
 
   ngOnInit() {
