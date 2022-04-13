@@ -52,7 +52,7 @@
       width: 100%;
       font-weight: 400;
       @include m-theme() {
-        color: themed($m-grey-700);
+        color: themed($m-textColor--secondary);
       }
     }
 

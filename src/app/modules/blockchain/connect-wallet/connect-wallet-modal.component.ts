@@ -46,20 +46,14 @@ export class ConnectWalletModalComponent {
         unix_ts: Math.round(Date.now() / 1000),
       });
 
-      // Non-metamask wallet require hashed byte messages, for some unknown reason
-      const msgHash = ethers.utils.hashMessage(msg);
-      const msgHashBytes = ethers.utils.arrayify(msgHash);
+      const signer = this.web3Wallet.getSigner();
+      const address = await signer.getAddress();
+      const msgHashBytes = ethers.utils.toUtf8Bytes(msg);
 
-      // Non-metamask wallets will only have correct signature if msgHashBytes are used.
-      const msgToSign =
-        this.web3Wallet.getSigner().provider.connection.url === 'metamask'
-          ? msg
-          : msgHashBytes;
-
-      const address = await this.web3Wallet.getSigner().getAddress();
-      const signature = await this.web3Wallet
-        .getSigner()
-        .signMessage(msgToSign);
+      const signature = await signer.provider.send('personal_sign', [
+        ethers.utils.hexlify(msgHashBytes),
+        address.toLowerCase(),
+      ]);
 
       const response = await (<any>this.api.post(
         'api/v3/blockchain/unique-onchain/validate',

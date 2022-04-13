@@ -100,6 +100,11 @@ export class NewsfeedBoostRotatorComponent {
 
   @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
+  @HostBinding('class.m-newsfeedBoostRotator--activityV2')
+  get activityV2Feature(): boolean {
+    return this.experiments.hasVariation('front-5229-activities', true);
+  }
+
   constructor(
     public session: Session,
     public router: Router,
@@ -238,7 +243,6 @@ export class NewsfeedBoostRotatorComponent {
 
   isVisible() {
     if (this.bounds.top > 0) {
-      //console.log('[rotator]: in view', this.rotator);
       if (!this.running) this.start();
     } else {
       console.log('[rotator]: out of view', this.rotator);

@@ -165,6 +165,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-activity--hover: #f8fafd,
   ),
   dark: (
     m-textColor--primary: #ffffff,
@@ -243,6 +244,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-activity--hover: #282f38,
   ),
 );
 
@@ -329,6 +331,7 @@ $m-alert: 'm-alert';
 $m-link: 'm-link';
 $m-link--hover: 'm-link--hover';
 $m-positive: 'm-positive';
+$m-activity--hover: 'm-activity--hover';
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;

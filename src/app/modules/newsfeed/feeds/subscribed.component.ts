@@ -342,13 +342,13 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
    * @returns { boolean }
    */
   public shouldShowChannelRecommendation(location: string, index?: number) {
-    if (this.feedService.inProgress && this.feedService.feedLength === 0) {
+    if (this.feedService.inProgress && !this.feedService.feedLength) {
       return false;
     }
 
     switch (location) {
       case 'emptyState':
-        return this.feedService.feedLength === 0;
+        return !this.feedService.feedLength;
       case 'feed':
       default:
         // if the newsfeed length was less than equal to 3,

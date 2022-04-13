@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
@@ -115,6 +115,11 @@ export class ChannelsV2Service {
    * Amount of public groups the user is member of
    */
   readonly groupCount$: Observable<number>;
+
+  /**
+   * called when user subscribes to this channel
+   */
+  readonly onSubscriptionChanged = new EventEmitter<boolean>();
 
   /**
    * Constructor

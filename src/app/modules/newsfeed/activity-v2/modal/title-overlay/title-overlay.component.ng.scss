@@ -1,0 +1,144 @@
+@import 'defaults.scss';
+
+:host {
+  .m-activityModal__overlayContainer {
+    left: 0;
+    line-height: 1.28;
+    padding: 24px 24px 16px 24px;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    top: 0;
+    min-height: 25px;
+    @include m-theme() {
+      background: linear-gradient(
+        rgba(themed($m-black-always), 0.5),
+        rgba(themed($m-black-always), 0)
+      );
+      color: themed($m-white-always);
+    }
+  }
+
+  .m-activityModal__overlayTitleWrapper {
+    font-size: 21px;
+    letter-spacing: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 60px;
+    margin-top: 3px;
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+
+    .m-activityModal__overlayTitle {
+      text-decoration: none;
+      cursor: pointer;
+
+      > * {
+        &:not(.m-activityModal__overlayTitleSeparator) {
+          padding-right: 8px;
+        }
+      }
+      a {
+        text-decoration: none;
+        font-weight: 400;
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .m-activityModal__overlayTitle--fullscreen {
+      vertical-align: middle;
+
+      img {
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+    }
+
+    .m-activityModal__overlayTitleSeparator {
+      height: 7px;
+      width: 7px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+      @include m-theme() {
+        background-color: themed($m-white-always);
+      }
+    }
+  }
+
+  .m-activityModal__fullscreenButtonWrapper {
+    @include m-theme() {
+      text-shadow: 0 0 2px rgba(themed($m-black-always), 0.9);
+    }
+
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+
+    .m-activityModal__fullscreenButton {
+      float: left;
+      display: block;
+      padding: 0;
+      position: static;
+      right: 0;
+      top: 0;
+      transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+
+      i {
+        opacity: 0.75;
+        transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+
+        &.m-activityModal__fullscreenIcon--enable {
+          font-size: 30px;
+        }
+        &.m-activityModal__fullscreenIcon--disable {
+          font-size: 34px;
+        }
+
+        &:active {
+          &.m-activityModal__fullscreenIcon--enable {
+            transform: scale(1.2, 1.2);
+          }
+          &.m-activityModal__fullscreenIcon--disable {
+            transform: scale(0.83, 0.83);
+          }
+        }
+      }
+
+      &.m-activityModal__fullscreenButton--hovering {
+        i {
+          opacity: 1;
+          &.m-activityModal__fullscreenIcon--enable {
+            transform: scale(1.2, 1.2);
+          }
+          &.m-activityModal__fullscreenIcon--disable {
+            transform: scale(0.83, 0.83);
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep {
+    m-paywallBadge {
+      position: absolute;
+      right: 43px;
+      top: 18px;
+    }
+  }
+}
