@@ -14,15 +14,6 @@
           "/*.js"
         ]
       }
-    },
-    {
-      "name": "assets",
-      "installMode": "lazy",
-      "updateMode": "lazy",
-      "resources": {
-        "files": ["/assets/**"],
-        "urls": ["https://cdn**"]
-      }
     }
   ],
   "dataGroups": [
