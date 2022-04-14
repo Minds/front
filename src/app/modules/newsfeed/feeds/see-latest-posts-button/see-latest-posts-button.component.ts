@@ -1,23 +1,14 @@
-import { BehaviorSubject } from 'rxjs';
-import { FeedsService } from './../../../../common/services/feeds.service';
 import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-  PLATFORM_ID,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+  animate, state, style, transition, trigger
+} from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import {
-  transition,
-  animate,
-  style,
-  trigger,
-  state,
-} from '@angular/animations';
+  Component, EventEmitter, Inject,
+  Input, OnDestroy, OnInit, Output, PLATFORM_ID
+} from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FeedsService } from './../../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-seeLatestPostsButton',
@@ -90,6 +81,18 @@ export class SeeLatestPostsButtonComponent implements OnInit, OnDestroy {
    */
   get loadingNewPosts$(): BehaviorSubject<boolean> {
     return this.feedService.countInProgress$;
+  }
+
+  /**
+   * returns the localized button title
+   */
+  get title$(): Observable<string> {
+    return this.newPostsCount$.pipe(
+      map(count => {
+        return $localize`:@@MINDS__NEWSFEED__SEE_LATEST_TITLE: See
+    ${count > 99 ? '+99' : count}:count: latest posts`;
+      })
+    );
   }
 
   /**
