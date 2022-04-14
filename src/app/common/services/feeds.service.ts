@@ -13,8 +13,7 @@ import { ApiService } from '../api/api.service';
 import { BlockListService } from './block-list.service';
 import { EntitiesService } from './entities.service';
 
-// FIXME: use 30sec
-export const NEW_POST_POLL_INTERVAL = 5000;
+export const NEW_POST_POLL_INTERVAL = 30000;
 
 /**
  * Enables the grabbing of data through observable feeds.
