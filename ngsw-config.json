@@ -14,6 +14,14 @@
           "/*.js"
         ]
       }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "resources": {
+        "files": ["/assets/**"]
+      }
     }
   ],
   "dataGroups": [
