@@ -1,10 +1,20 @@
 import {
-  animate, state, style, transition, trigger
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
 } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
 import {
-  Component, EventEmitter, Inject,
-  Input, OnDestroy, OnInit, Output, PLATFORM_ID
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
