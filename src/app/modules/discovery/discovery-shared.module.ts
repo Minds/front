@@ -41,6 +41,11 @@ import { ExperimentsModule } from '../experiments/experiments.module';
 import { DiscoveryTopComponent } from './top/top.component';
 import { DefaultFeedModule } from '../default-feed/default-feed.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { LiquiditySpotModule } from '../boost/liquidity-spot/liquidity-spot.module';
+import { OnboardingV3Module } from '../onboarding-v3/onboarding.module';
+import { LanguageModule } from '../language/language.module';
+import { AdsModule } from '../ads/ads.module';
+import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 
 @NgModule({
   imports: [
@@ -50,11 +55,16 @@ import { SuggestionsModule } from '../suggestions/suggestions.module';
     FormsModule,
     ReactiveFormsModule,
     LegacyModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     ExperimentsModule,
     DiscoveryDisclaimerModule,
     DefaultFeedModule,
     SuggestionsModule,
+    OnboardingV3Module,
+    LiquiditySpotModule,
+    LanguageModule,
+    AdsModule,
   ],
   declarations: [
     DiscoverySidebarTagsComponent,

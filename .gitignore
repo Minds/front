@@ -47,4 +47,5 @@ cypress/videos
 !.gitkeep
 !/.nvmrc
 !/.husky
+!/.storybook
 cypress-tests

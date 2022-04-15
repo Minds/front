@@ -8,6 +8,18 @@
   height: 100%;
   z-index: 2;
 
+  &.m-wireLockScreen--activityV2 {
+    // Shift button toward center of image posts
+    // when accompanied by top message text
+    .m-wire__lockScreen.isMedia {
+      &:not(.isVideo):not(.isTextOnly):not(.m-wire__lockScreen--minimalMode) {
+        .m-wireLockScreen__inner {
+          margin-top: -$spacing12;
+        }
+      }
+    }
+  }
+
   .m-wire__lockScreen {
     display: flex;
     justify-content: center;
@@ -37,13 +49,7 @@
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
-        border-bottom: 1px solid themed($m-borderColor--primary);
         background-color: themed($m-bgColor--primary);
-      }
-      &:not(.m-wire__lockScreen--minimalMode) {
-        @include m-theme() {
-          border-top: 1px solid themed($m-borderColor--primary);
-        }
       }
 
       .m-wireLockScreen__message {
@@ -52,12 +58,6 @@
         }
       }
     }
-    // &.isMedia {
-    //   .m-wireLockScreen__message {
-    //     position: absolute;
-    //     transform: translateY(-50%);
-    //   }
-    // }
   }
 
   .m-wireLockScreen__overlay {

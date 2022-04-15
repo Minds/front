@@ -31,6 +31,7 @@ import { LiquiditySpotComponent } from '../boost/liquidity-spot/liquidity-spot.c
 import { ModalService } from '../../services/ux/modal.service';
 import { modalServiceMock } from '../../../tests/modal-service-mock.spec';
 import { ApiService } from '../../common/api/api.service';
+import { ExperimentsService } from '../experiments/experiments.service';
 
 describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
@@ -103,6 +104,10 @@ describe('NewsfeedComponent', () => {
           { provide: FeaturesService, useValue: featuresServiceMock },
           { provide: PagesService, useValue: pagesServiceMock },
           { provide: ApiService, useValue: MockService(ApiService) },
+          {
+            provide: ExperimentsService,
+            useValue: MockService(ExperimentsService),
+          },
         ],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents(); // compile template and css

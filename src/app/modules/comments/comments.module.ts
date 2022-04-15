@@ -18,6 +18,7 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.component';
 import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-picker.module';
+import { CommentsEntityOutletV2Component } from './entity-outlet-v2/entity-outlet.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-pi
     CommentsTreeComponent,
     CommentsThreadComponent,
     CommentsEntityOutletComponent,
+    CommentsEntityOutletV2Component,
   ],
   exports: [
     CommentsScrollDirective,
@@ -49,6 +51,7 @@ import { EmojiPickerModule } from '../../common/components/emoji-picker/emoji-pi
     CommentsTreeComponent,
     CommentsThreadComponent,
     CommentsEntityOutletComponent,
+    CommentsEntityOutletV2Component,
   ],
   providers: [CommentsService],
 })
