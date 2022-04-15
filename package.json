@@ -80,7 +80,6 @@
     "express-http-proxy": "^1.6.2",
     "fortmatic": "^2.2.1",
     "global": "^4.4.0",
-    "gulp-json-modify": "^1.0.2",
     "highlight.js": "^11.1.0",
     "hls.js": "^1.0.7",
     "https-browserify": "^1.0.0",
