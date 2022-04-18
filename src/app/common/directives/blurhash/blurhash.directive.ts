@@ -59,7 +59,11 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
    * @param {ActivityEntity | string} blurhashInput a blurhash string or an entity
    */
   @Input('m-blurhash')
-  set blurhash(blurhashInput) {
+  set blurhash(blurhashInput: string | ActivityEntity) {
+    if (!blurhashInput) {
+      return;
+    }
+
     switch (typeof blurhashInput) {
       case 'string':
         this._blurhash = blurhashInput;
@@ -67,7 +71,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       case 'object':
         this.entity = blurhashInput;
         this._blurhash =
-          this.entity.blurhash || this.entity.custom_data[0]?.blurhash;
+          this.entity.blurhash || this.entity.custom_data?.[0]?.blurhash;
       default:
     }
   }
@@ -119,14 +123,14 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       return null;
     }
 
-    let [width, height] = [
-      elementWidth || this.entity.custom_data[0]?.width,
-      elementHeight || this.entity.custom_data[0]?.height,
-    ];
-
     if (!this.blurhash) {
       return null;
     }
+
+    let [width, height] = [
+      elementWidth || this.entity?.custom_data?.[0]?.width,
+      elementHeight || this.entity?.custom_data?.[0]?.height,
+    ];
 
     const aspecRatio = width / height;
     width = elementWidth;
