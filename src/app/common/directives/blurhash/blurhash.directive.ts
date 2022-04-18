@@ -51,7 +51,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   /**
    * the actual hash
    */
-  get blurhash() {
+  get blurhash(): string {
     return this._blurhash;
   }
 
