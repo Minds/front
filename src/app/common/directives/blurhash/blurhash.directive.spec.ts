@@ -7,7 +7,6 @@ import { BlurhashDirective } from './blurhash.directive';
 //
 // [x] blurhash with string
 // [ ] blurhash with actvity
-// [ ] blurhash with activity with normal blurhash
 // [ ] blurhash with activity with custom_data blurhash
 // [x] bluhash fullscreen
 // [ ] bluhash non fullscreen
@@ -15,7 +14,7 @@ import { BlurhashDirective } from './blurhash.directive';
 // [ ] blurhash already loaded
 // [ ] blurhash not loaded
 // [ ] don't draw canvas if already have one
-// [ ] handle empty entities
+// [x] handle empty and corrupted entities
 // [ ] SSR handling
 // [ ] blurhash without dimensions shouldn't render
 
@@ -27,6 +26,39 @@ import { BlurhashDirective } from './blurhash.directive';
       [m-blurhash]="'LEHV6nWB2yk8pyo0adR*.7kCMdnj'"
       [m-blurhashFullscreen]="true"
       class="blurhash-with-string"
+      width="100px"
+      height="100px"
+    />
+
+    <img
+      src="https://fakeimg.pl/300/"
+      [m-blurhash]="null"
+      [m-blurhashFullscreen]="true"
+      class="empty-entity"
+      width="100px"
+      height="100px"
+    />
+    <img
+      src="https://fakeimg.pl/300/"
+      [m-blurhash]="{}"
+      [m-blurhashFullscreen]="true"
+      class="empty-object-entity"
+      width="100px"
+      height="100px"
+    />
+    <img
+      src="https://fakeimg.pl/300/"
+      [m-blurhash]="{ custom_data: null }"
+      [m-blurhashFullscreen]="true"
+      class="empty-custom-data"
+      width="100px"
+      height="100px"
+    />
+    <img
+      src="https://fakeimg.pl/300/"
+      [m-blurhash]="{ custom_data: [{ someFakeData: null }] }"
+      [m-blurhashFullscreen]="true"
+      class="empty-custom-data-children"
       width="100px"
       height="100px"
     />
@@ -57,5 +89,22 @@ describe('BlurhashDirective', () => {
       '.blurhash-with-string + canvas'
     );
     expect(canvas).toBeTruthy();
+  });
+
+  it('should not render anything if entity is corrupted', () => {
+    expect(
+      fixture.nativeElement.querySelector('.empty-entity + canvas')
+    ).toBeFalsy();
+    expect(
+      fixture.nativeElement.querySelector('.empty-object-entity + canvas')
+    ).toBeFalsy();
+    expect(
+      fixture.nativeElement.querySelector('.empty-custom-data + canvas')
+    ).toBeFalsy();
+    expect(
+      fixture.nativeElement.querySelector(
+        '.empty-custom-data-children + canvas'
+      )
+    ).toBeFalsy();
   });
 });

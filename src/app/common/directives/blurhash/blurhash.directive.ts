@@ -171,7 +171,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
         'style',
         `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; ${dimensionsStyle}`
       );
-      this.el.nativeElement.parentElement.append(this.canvas);
+      this.el.nativeElement.after(this.canvas);
     } catch (e) {
       console.error('Blurhash: failed to draw canvas', e);
     }
