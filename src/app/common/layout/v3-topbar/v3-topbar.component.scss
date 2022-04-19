@@ -295,17 +295,6 @@ h1 {
     }
   }
 
-  m-notifications--flyout {
-    right: 0;
-
-    @media screen and (max-width: 480px) {
-      position: fixed;
-      top: 75px;
-      left: 5%;
-      width: 90%;
-    }
-  }
-
   m-user-menu {
     margin: 0 16px;
   }

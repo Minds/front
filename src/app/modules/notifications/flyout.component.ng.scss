@@ -6,6 +6,7 @@
     border: 1px solid themed($m-borderColor--primary);
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
   }
+  position: absolute;
   min-width: 320px;
   max-width: 500px;
   width: 50vw;
@@ -18,7 +19,7 @@
   }
 
   @media screen and (max-width: $max-mobile) {
-    top: 75px;
+    right: -45px;
     width: 85vw;
     min-width: 85vw;
   }
@@ -88,12 +89,23 @@
     padding: 15px;
     box-sizing: border-box;
     z-index: 2;
+    text-align: center;
+
     @include m-theme() {
       border-top: 1px solid themed($m-borderColor--primary);
       background-color: themed($m-bgColor--primary);
     }
     a {
       font-size: 15px;
+      letter-spacing: 0;
+      font-weight: normal;
+
+      text-decoration: none;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
 }
