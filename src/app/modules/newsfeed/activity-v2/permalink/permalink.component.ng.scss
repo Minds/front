@@ -4,10 +4,6 @@
 :host {
   display: inline-block;
 
-  //test
-  m-activityV2__content--minimalMode {
-  }
-
   // *********************************
   // ** MINIMAL MODE **
   // *********************************
@@ -69,7 +65,7 @@
 
     .m-activityPermalink__text {
       display: inline-block;
-      @include body2Medium;
+      @include body2Regular;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }

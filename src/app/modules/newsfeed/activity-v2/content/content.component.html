@@ -222,7 +222,7 @@ post content to trigger upgrade modal -->
             'm-activityContentText--translated': showTranslation
           }"
         ></p>
-        <p
+        <div
           *ngIf="bodyText && !hideBodyText"
           class="m-activityContentText__body"
           [class.m-activityContentText__body--shortStatus]="shortStatus"
@@ -231,7 +231,7 @@ post content to trigger upgrade modal -->
           [ngClass]="{
             'm-activityContentText--translated': showTranslation
           }"
-        ></p>
+        ></div>
         <m-read-more--button
           *ngIf="
             !(service.shouldShowPaywall$ | async) || isStatus;

@@ -73,9 +73,6 @@
       }
     }
 
-    // .m-activityOwnerBlock__username {
-    //   display: none;
-    // }
     .m-activityOwnerBlock__right {
       display: none;
     }
@@ -203,7 +200,7 @@
   a.m-activityOwnerBlock__username span,
   .m-activityOwnerBlock__dot,
   .m-activityOwnerBlock__edited {
-    @include body2Medium;
+    @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

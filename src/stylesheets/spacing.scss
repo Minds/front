@@ -50,7 +50,7 @@ $activityAvatarWidth: $spacing10;
 
 // This is the spacing on either side of the avatar
 // in the left column of activities
-$activityAvatarSpacingLeft--feed: $spacing8;
+$activityAvatarSpacingLeft--feed: $spacing4;
 $activityAvatarSpacingLeft--feed--mobile: $spacing4;
 
 $activityAvatarSpacingRight--feed: $spacing4;
@@ -66,7 +66,7 @@ $activitySpacingLeft--feed: $activityAvatarSpacingLeft--feed +
 $activitySpacingLeft--feed--mobile: $activityAvatarSpacingLeft--feed--mobile +
   $activityAvatarWidth + $activityAvatarSpacingRight--feed--mobile;
 
-$activitySpacingRight--feed: $spacing12;
+$activitySpacingRight--feed: $spacing8;
 $activitySpacingRight--feed--mobile: $spacing4;
 
 ///////////////////////////////////////////
@@ -74,7 +74,7 @@ $activitySpacingRight--feed--mobile: $spacing4;
 ///////////////////////////////////////////
 
 // Same as above but for single post pages
-$activityAvatarSpacingLeft--single: $spacing8;
+$activityAvatarSpacingLeft--single: $spacing4;
 $activityAvatarSpacingLeft--single--mobile: $spacing4;
 
 $activityAvatarSpacingRight--single: $spacing4;
@@ -85,7 +85,7 @@ $activitySpacingLeft--single: $activityAvatarSpacingLeft--single +
 $activitySpacingLeft--single--mobile: $activityAvatarSpacingLeft--single--mobile +
   $activityAvatarWidth + $activityAvatarSpacingRight--single--mobile;
 
-$activitySpacingRight--single: $spacing12;
+$activitySpacingRight--single: $spacing8;
 $activitySpacingRight--single--mobile: $spacing4;
 
 ///////////////////////////////////////////

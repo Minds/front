@@ -190,6 +190,8 @@ export class Translate {
           }
         }
 
+        console.log('ojm translation', this.translation);
+
         this.onTranslate.emit({
           entity: this.entity,
           translation: this.translation,
