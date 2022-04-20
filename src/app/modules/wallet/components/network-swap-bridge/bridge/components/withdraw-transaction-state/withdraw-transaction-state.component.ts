@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
-import { PolygonService } from '../../../../tokens/polygon/polygon.service';
+import { PolygonService } from '../../services/polygon/polygon.service';
 
 @Component({
   selector: 'm-withdrawTransactionState',

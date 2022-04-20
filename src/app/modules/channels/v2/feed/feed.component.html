@@ -1,6 +1,9 @@
 <div
   class="m-pageLayout__container m-channel__feed"
-  [ngClass]="{ 'm-channel__feed--grid': isGrid }"
+  [ngClass]="{
+    'm-channel__feed--grid': isGrid,
+    'm-channel__feed--activityV2': activityV2Feature
+  }"
 >
   <div class="m-channelFeed__body" m-pageLayout__pane="main">
     <!-- ----------------------------------------- -->
@@ -29,6 +32,19 @@
         </ng-container>
       </m-feedFilter>
     </div>
+
+    <!-- ----------------------------------------- -->
+    <!-- WIDGET: CHANNEL RECOMMENDATION -->
+    <!-- ----------------------------------------- -->
+    <ng-container *mExperiment="'minds-2933-channelrecs'; variation: true">
+      <m-channelRecommendation
+        [title]="channelRecommendationTitle"
+        location="channel"
+        [channelId]="service.guid$ | async"
+        [visible]="channelRecommendationVisible$ | async"
+        *ngIf="!isOwnedChannel"
+      ></m-channelRecommendation>
+    </ng-container>
 
     <!-- ----------------------------------------- -->
     <!-- SEARCH QUERY DISPLAY -->

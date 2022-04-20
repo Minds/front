@@ -24,7 +24,7 @@ export interface Record {
   type: RecordType;
   status: RecordStatus;
   amount: string; // in wei
-  timestamp: number;
+  timestamp?: number;
 }
 
 export interface DepositRecord extends Record {
@@ -66,15 +66,17 @@ export type CurrentStep =
     }
   | {
       step: BridgeStep.ERROR;
-      data: {
-        title: string;
-        subtitle: string;
-      };
+      data: ErrorStepData;
     }
   | {
       step: BridgeStep.ACTION_REQUIRED;
       data: WithdrawRecord;
     };
+
+export type ErrorStepData = {
+  title?: string;
+  subtitle?: string;
+};
 
 export enum BridgeStep {
   SWAP,

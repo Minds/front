@@ -53,7 +53,6 @@ export interface Network {
   logoPath: NetworkLogoPath; // path to logo file `assets/...`.
   swappable: boolean; // whether swapping is enabled for the network or not.
   showHistoric?: boolean; // whether the transaction historical option should be displayed
-  isFromNetwork?: boolean; // used for controlling from/to network logic
 }
 
 export const UNKNOWN_NETWORK_LOGO_PATH_DARK = 'assets/ext/unknown-dark.png';
@@ -99,7 +98,6 @@ export class NetworkSwitchService implements OnDestroy {
       description: 'Main Ethereum Network.',
       logoPath: 'assets/ext/ethereum.png',
       swappable: false,
-      isFromNetwork: true,
     };
     // POLYGON
     if (this.features.has('polygon')) {
@@ -120,7 +118,6 @@ export class NetworkSwitchService implements OnDestroy {
         logoPath: 'assets/ext/polygon_white.svg',
         swappable: true,
         showHistoric: true,
-        isFromNetwork: false,
       };
     }
 
@@ -137,7 +134,6 @@ export class NetworkSwitchService implements OnDestroy {
         logoPath: 'assets/ext/skale_white.svg',
         swappable: true,
         showHistoric: false,
-        isFromNetwork: false,
       };
     }
 

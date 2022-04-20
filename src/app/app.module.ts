@@ -132,7 +132,6 @@ import { InMemoryCache } from '@apollo/client/core';
 
     //last due to :username route
     AppRoutingModule,
-    //ChannelContainerModule,
   ],
   providers: [
     MINDS_PROVIDERS,

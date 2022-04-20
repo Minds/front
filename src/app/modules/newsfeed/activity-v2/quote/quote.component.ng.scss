@@ -1,0 +1,44 @@
+@import 'defaults.scss';
+
+:host {
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activity__quote--minimalMode {
+    padding: 0;
+    border-radius: 0;
+    @include borderNone;
+    @include borderTop;
+
+    .m-activity__rightColumn {
+      padding-top: $spacing4;
+    }
+
+    ::ng-deep {
+      m-activityv2__ownerblock {
+        .m-activity__ownerBlock {
+          padding-bottom: $spacing4;
+        }
+      }
+    }
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  display: flex;
+  margin: auto;
+  padding: $spacing4;
+  border-radius: $borderRadius--activity;
+  @include border;
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+}

@@ -41,15 +41,6 @@ export class RemindPreviewComponent {
   }
 
   loadActivityModule() {
-    // const { ActivityModule } = await import('../../../newsfeed/activity/activity.module');
-
-    // const moduleFactory = await this.compiler.compileModuleAsync(
-    //   ActivityModule
-    // );
-    // const moduleRef = moduleFactory.create(this.injector);
-
-    // const componentFactory = moduleRef.instance.resolveComponent();
-
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       ActivityComponent
     );

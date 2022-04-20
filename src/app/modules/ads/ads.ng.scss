@@ -4,6 +4,21 @@
   ::ng-deep {
     minds-card {
       overflow: visible;
+      border-radius: 0;
+    }
+
+    m-activityV2 {
+      border-top: none !important;
+    }
+  }
+
+  .m-adsBoost__header {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0 8px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
     }
   }
 }

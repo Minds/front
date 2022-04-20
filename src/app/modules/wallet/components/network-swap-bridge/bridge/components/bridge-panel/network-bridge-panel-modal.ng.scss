@@ -18,7 +18,9 @@
       right: 16px;
 
       i {
-        background: #404a4e;
+        @include m-theme() {
+          background: themed($m-grey-790);
+        }
         padding: 8px;
         border-radius: 3px;
         cursor: pointer;
@@ -69,7 +71,10 @@
       }
 
       .m-networkSwapBridge__container {
-        border: 1px solid #404a4e;
+        @include m-theme() {
+          border: 1px solid themed($m-grey-790);
+        }
+
         padding: 10px 24px;
         height: 124px;
         box-sizing: border-box;

@@ -249,12 +249,12 @@
       font-style: normal;
       @include m-theme() {
         color: themed($m-textColor--primary);
+        border: 2px solid themed($m-grey-790);
       }
       line-height: 24px;
       text-align: center;
       background-color: inherit;
       border-radius: 50%;
-      border: 2px solid #404a4e;
     }
   }
 }

@@ -12,7 +12,7 @@
   [class.m-v3Topbar__top--noBackground]="
     !(pageLayoutService.hasTopbarBackground$ | async)
   "
-  [class.m-v3Topbar--homepageV3]="isHomePageV3"
+  [class.m-v3Topbar--homepageV3]="onHomepage"
   [class.m-v3Topbar__top--loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
@@ -35,7 +35,7 @@
             />
             <img
               *ngIf="
-                isHomePageV3
+                onHomepage
                   ? !(isDarkTheme$ | async) &&
                     (pageLayoutService.hasTopbarBackground$ | async)
                   : !(isDarkTheme$ | async)
@@ -46,7 +46,7 @@
             />
             <img
               *ngIf="
-                isHomePageV3
+                onHomepage
                   ? (isDarkTheme$ | async) ||
                     !(pageLayoutService.hasTopbarBackground$ | async)
                   : (isDarkTheme$ | async)
@@ -80,75 +80,46 @@
       <div class="m-v3Topbar__rightColumn">
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
           <div
-            class="m-v3TopbarContainer__loginWrapper"
-            [ngClass]="{
-              'm-v3TopbarContainer__loginWrapper--roundButtons': isHomePageV3
-                ? true
-                : !onHomepage
-            }"
+            class="m-v3TopbarContainer__loginWrapper m-v3TopbarContainer__loginWrapper--roundButtons"
           >
-            <ng-container *ngIf="isHomePageV3 ? true : !onHomepage">
-              <m-button
-                class="m-v3TopbarLoginWrapper__login"
-                [ngClass]="
-                  isHomePageV3
-                    ? {
-                        'm-v3TopbarLoginWrapper__login--white': !(
-                          pageLayoutService.hasTopbarBackground$ | async
-                        )
-                      }
-                    : undefined
-                "
-                (onAction)="onLoginClick()"
-                title="Login"
-                i18n-title="@@COMMON__LOGIN"
-                data-ref="topnav-login"
-                size="small"
-                [flat]="isHomePageV3"
-              >
-                Login
-              </m-button>
+            <m-button
+              class="m-v3TopbarLoginWrapper__login"
+              [ngClass]="
+                onHomepage
+                  ? {
+                      'm-v3TopbarLoginWrapper__login--white': !(
+                        pageLayoutService.hasTopbarBackground$ | async
+                      )
+                    }
+                  : undefined
+              "
+              (onAction)="onLoginClick()"
+              title="Login"
+              i18n-title="@@COMMON__LOGIN"
+              data-ref="topnav-login"
+              size="small"
+              [flat]="onHomepage"
+            >
+              Login
+            </m-button>
 
-              <m-button
-                class="m-v3TopbarLoginWrapper__joinMindsNow"
-                (onAction)="onJoinNowClick()"
-                title="Join Minds Now"
-                i18n-title="@@COMMON__JOIN_MINDS_NOW"
-                data-ref="topnav-join-now"
-                color="blue"
-                size="small"
-                [overlay]="
-                  !(pageLayoutService.hasTopbarBackground$ | async) &&
-                  isHomePageV3
-                "
-                [solid]="
-                  isHomePageV3 && pageLayoutService.hasTopbarBackground$ | async
-                "
-              >
-                Join Now
-              </m-button>
-            </ng-container>
-            <ng-container *ngIf="isHomePageV3 ? false : onHomepage">
-              <a
-                class="m-v3TopbarLoginWrapper__login"
-                (click)="onLoginClick()"
-                title="Login"
-                i18n-title="@@COMMON__LOGIN"
-                data-ref="topnav-login"
-              >
-                Login
-              </a>
-              <a
-                class="m-v3TopbarLoginWrapper__joinMindsNow"
-                (click)="onJoinNowClick()"
-                title="Join Minds Now"
-                i18n-title="@@COMMON__JOIN_MINDS_NOW"
-                data-ref="topnav-join-now"
-                color="blue"
-              >
-                Join Now
-              </a>
-            </ng-container>
+            <m-button
+              class="m-v3TopbarLoginWrapper__joinMindsNow"
+              (onAction)="onJoinNowClick()"
+              title="Join Minds Now"
+              i18n-title="@@COMMON__JOIN_MINDS_NOW"
+              data-ref="topnav-join-now"
+              color="blue"
+              size="small"
+              [overlay]="
+                !(pageLayoutService.hasTopbarBackground$ | async) && onHomepage
+              "
+              [solid]="
+                onHomepage && pageLayoutService.hasTopbarBackground$ | async
+              "
+            >
+              Join Now
+            </m-button>
           </div>
         </ng-container>
 

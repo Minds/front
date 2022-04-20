@@ -3,6 +3,19 @@
 
 // check on mobile designs
 :host {
+  &.m-compassQuestionnaire__banner--activityV2 {
+    .m-compassQuestionnaire__banner {
+      margin-right: 0;
+      @include m-theme() {
+        border-right: none;
+      }
+
+      @media screen and (max-width: $layoutMax2ColWidth) {
+        margin-right: 0;
+      }
+    }
+  }
+
   .m-compassQuestionnaire__banner {
     display: flex;
     padding: 20px 40px;

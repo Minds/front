@@ -2,7 +2,9 @@
 
 :host {
   .m-networkBridgeTxHistoryItem-container {
-    border: 1px solid #404a4e;
+    @include m-theme() {
+      border: 1px solid themed($m-grey-790);
+    }
     box-sizing: border-box;
     border-radius: 3px;
     width: 100%;

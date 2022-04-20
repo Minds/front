@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
-import { PolygonService } from '../../../../tokens/polygon/polygon.service';
+import { PolygonService } from '../../services/polygon/polygon.service';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { Network } from '../../../../../../../common/services/network-switch-service';

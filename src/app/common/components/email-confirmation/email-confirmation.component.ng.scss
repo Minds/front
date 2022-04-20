@@ -4,6 +4,12 @@
 $confirmationBackground: #72727c;
 
 :host {
+  &.m-emailConfirmation--activityV2 {
+    .m-emailConfirmation__bannerContainer {
+      border-radius: 0;
+    }
+  }
+
   .m-emailConfirmation__bannerContainer {
     display: flex;
     flex-flow: row wrap;

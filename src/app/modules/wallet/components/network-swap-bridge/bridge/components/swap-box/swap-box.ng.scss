@@ -25,7 +25,9 @@
     .m-networkSwapBox__container-box {
       min-width: 510px;
       min-height: 103px;
-      border: 1px solid #404a4e;
+      @include m-theme() {
+        border: 1px solid themed($m-grey-790);
+      }
       box-sizing: border-box;
       margin-top: 23px;
       padding: 13px 39px 0 39px;
@@ -37,7 +39,9 @@
     .m-networkSwapBox__container-box-bottom {
       min-width: 510px;
       max-height: 109px;
-      border: 1px solid #404a4e;
+      @include m-theme() {
+        border: 1px solid themed($m-grey-790);
+      }
       box-sizing: border-box;
       padding: 24px 39px;
       display: inline-table;

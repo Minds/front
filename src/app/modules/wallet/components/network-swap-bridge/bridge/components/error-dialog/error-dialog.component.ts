@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BridgeComponent } from '../../constants/constants.types';
+import {
+  BridgeComponent,
+  ErrorStepData,
+} from '../../constants/constants.types';
 
 @Component({
   selector: 'm-networkError',
@@ -7,7 +10,7 @@ import { BridgeComponent } from '../../constants/constants.types';
   styleUrls: ['./error-dialog.ng.scss'],
 })
 export class NetworkBridgeErrorComponent implements OnInit, BridgeComponent {
-  @Input() data;
+  @Input() data: ErrorStepData;
 
   constructor() {}
 

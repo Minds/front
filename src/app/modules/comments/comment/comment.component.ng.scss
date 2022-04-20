@@ -1,12 +1,126 @@
 @import 'defaults.scss';
 
 :host {
+  // ******************************************
+  // ** ACTIVITY V2 **
+  // ******************************************
+
+  m-activityV2 &,
+  m-activityV2__modal & {
+    .m-comment {
+      padding-right: 0;
+    }
+    .m-commentOwnerRow__text {
+      flex-direction: row;
+
+      .m-commentOwnerRow__dot {
+        padding: 0 $spacing1;
+      }
+
+      [class*='m-commentOwnerRowItem__'] {
+        @include body2Regular;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        &.m-commentOwnerRowItem__name {
+          @include body2Medium;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+    p.m-comment__message.m-mature-message-content {
+      @include body2Regular;
+
+      a {
+        font-weight: inherit;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+
+    .m-commentToolbar__buttons {
+      :ng-deep .m-commentToolbarButton {
+        margin-right: $spacing9;
+        margin-left: 0;
+        span {
+          @include body2Bold;
+        }
+        i {
+          @include body2Regular;
+        }
+      }
+    }
+
+    .m-comment__repliesToggle {
+      margin: $spacing1 0 $spacing2;
+      span {
+        @include body2Medium;
+      }
+    }
+
+    .minds-avatar {
+      @include m-theme() {
+        background: themed($m-bgColor--primary);
+      }
+      img {
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
+        object-fit: cover;
+      }
+    }
+
+    .m-comment--compact {
+      padding-right: $activitySpacing--modal;
+
+      .minds-body {
+        margin-left: 0;
+      }
+
+      .m-commentOwnerRow__text {
+        flex-direction: row;
+      }
+
+      .m-commentToolbar__buttons {
+        .m-dropdown--v2 {
+          margin-right: 0;
+        }
+      }
+
+      .m-comment__ribbonBtn {
+        @include m-theme() {
+          background-color: rgba(themed($m-bgColor--primary), 0);
+        }
+      }
+
+      .m-comment__attachment {
+        .mdl-card {
+          @include m-theme() {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
+
   .m-comment {
     position: relative;
   }
   .minds-body {
     margin-left: 15px;
   }
+  // COMPACT
+  // (e.g. activity modal)
   .m-comment--compact {
     padding: 5px 30px 20px;
 
@@ -111,6 +225,9 @@
           @include m-theme() {
             color: themed($m-red);
           }
+        }
+        &.m-commentOwnerRowItem__edited {
+          padding-left: $spacing1;
         }
       }
 

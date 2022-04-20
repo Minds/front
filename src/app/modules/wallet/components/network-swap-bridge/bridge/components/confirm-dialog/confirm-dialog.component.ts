@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
-import { PolygonService } from '../../../../tokens/polygon/polygon.service';
+import { PolygonService } from '../../services/polygon/polygon.service';
 import { BigNumber, ethers } from 'ethers';
 import {
   Network,

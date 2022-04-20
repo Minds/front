@@ -23,7 +23,6 @@
       *ngIf="topFeedExperimentActive"
       [algorithm]="algorithm"
     ></m-feedHeader>
-
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngIf="algorithm === 'latest'">
         <ng-container *ngFor="let preActivity of prepended">
@@ -44,6 +43,7 @@
           <m-newsfeed--boost-rotator
             *ngIf="showBoostRotator"
             #feedViewChildren
+            #boostRotator
           ></m-newsfeed--boost-rotator>
         </ng-container>
       </ng-container>
@@ -96,3 +96,13 @@
     </div>
   </ng-container>
 </div>
+
+<ng-container *ngIf="algorithm === 'latest'">
+  <ng-container *mIfBrowser>
+    <m-seeLatestPostsButton
+      *mExperiment="'front-4089-polling'; variation: true"
+      [feedService]="feedService"
+      (click)="scrollToUnderBoostRotator()"
+    ></m-seeLatestPostsButton>
+  </ng-container>
+</ng-container>
