@@ -1,12 +1,15 @@
+import { isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
   Directive,
   ElementRef,
   HostBinding,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { decode } from 'blurhash';
 import { timer } from 'rxjs';
@@ -30,6 +33,10 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('load')
   onLoad() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     if (this.canvas && !this.paywalled) {
       this.removeCanvas();
     }
@@ -85,11 +92,18 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
     return this.el.nativeElement?.src && this.el.nativeElement?.complete;
   }
 
-  constructor(private el: ElementRef) {}
+  constructor(
+    private el: ElementRef<HTMLImageElement>,
+    @Inject(PLATFORM_ID) private platformId
+  ) {}
 
   ngOnInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     if (this.isLoadingComplete && !this.paywalled) {
-      return null;
+      return;
     }
 
     // preventing an ugly case where the canvas appears outside of image container
@@ -99,6 +113,10 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     if (this.isLoadingComplete && !this.paywalled) {
       return null;
     }
