@@ -33,6 +33,7 @@ import { FeedsUpdateService } from '../../../common/services/feeds-update.servic
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { NewsfeedBoostRotatorComponent } from '../boost-rotator/boost-rotator.component';
 
 export type FeedAlgorithm = 'top' | 'latest';
 
@@ -78,6 +79,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   private feedsUpdatedSubscription: Subscription;
 
   @ViewChild('composer') private composer: ComposerComponent;
+  @ViewChild('boostRotator')
+  private boostRotator: NewsfeedBoostRotatorComponent;
   @ViewChildren('feedViewChildren', { read: ElementRef })
   feedViewChildren: QueryList<ElementRef>;
 
@@ -107,6 +110,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         this.algorithm = storedfeedAlgorithm;
       }
     }
+
+    this.latestFeedService
+      .setEndpoint(`api/v2/feeds/subscribed/activities`)
+      .setCountEndpoint('api/v3/newsfeed/subscribed/latest/count')
+      .setLimit(12);
+    this.topFeedService
+      .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
+      .setLimit(12);
   }
 
   ngOnInit() {
@@ -210,24 +221,15 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
       switch (this.algorithm) {
         case 'top':
           this.topFeedService.clear(true);
-          await this.topFeedService
-            .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-            .setLimit(12)
-            .fetch(true);
+          await this.topFeedService.setLimit(12).fetch(true);
           break;
         case 'latest':
           this.latestFeedService.clear(true);
           this.topFeedService.clear(true);
           this.prepended = [];
           await Promise.all([
-            this.topFeedService
-              .setEndpoint(`api/v3/newsfeed/feed/unseen-top`)
-              .setLimit(3)
-              .fetch(true),
-            this.latestFeedService
-              .setEndpoint(`api/v2/feeds/subscribed/activities`)
-              .setLimit(12)
-              .fetch(true),
+            this.topFeedService.setLimit(3).fetch(true),
+            this.latestFeedService.fetch(true),
           ]);
           break;
       }
@@ -360,5 +362,28 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
         // show after the 3rd post
         return index === 2;
     }
+  }
+
+  /**
+   * scrolls to under the boost rotator. Used as an alternative to scrollToTop but
+   * keeping scrolling consistency by not avoiding the rotator.
+   */
+  scrollToUnderBoostRotator(): void {
+    if (isPlatformServer(this.platformId)) return;
+
+    if (!this.boostRotator) {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: 0,
+      });
+      return;
+    }
+
+    window.scrollTo({
+      behavior: 'smooth',
+      top:
+        this.boostRotator.rotatorEl.nativeElement?.offsetTop +
+          this.boostRotator.height || 0,
+    });
   }
 }

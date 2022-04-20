@@ -1,0 +1,16 @@
+:host {
+  > div {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    m-button {
+      pointer-events: auto;
+    }
+  }
+}
