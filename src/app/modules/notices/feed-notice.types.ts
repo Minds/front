@@ -4,10 +4,10 @@ export type NoticeIdentifier =
   | 'build-your-algorithm'
   | 'enable-push-notifications';
 
-// positioning of component - where should it show 'top' or feed, or 'inline' in the feed.
+// Positioning of component - where should it show 'top' or feed, or 'inline' in the feed.
 export type NoticePosition = 'top' | 'inline';
 
-// object to hold notices and their relevant shared state.
+// Object to hold notices and their relevant shared state.
 export type Notices = {
   [key in NoticeIdentifier]: {
     shown: boolean;
@@ -16,3 +16,12 @@ export type Notices = {
     position: NoticePosition;
   };
 };
+
+// Local storage structures.
+export type FeedNoticeStorageItem = {
+  [key in NoticeIdentifier]: {
+    timestamp_ms: number;
+  };
+};
+
+export type FeedNoticeStorageArray = FeedNoticeStorageItem[];

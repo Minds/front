@@ -6,7 +6,7 @@ import { AbstractSubscriberComponent } from '../../../common/components/abstract
 import { ConfigsService } from '../../../common/services/configs.service';
 import { Session } from '../../../services/session';
 import { CompassService } from '../../compass/compass.service';
-import * as moment from 'moment';
+import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 import {
   NoticePosition,
   Notices,
@@ -55,6 +55,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private session: Session,
     private api: ApiService,
     private compass: CompassService,
+    private dismissService: FeedNoticeDismissalService,
     configs: ConfigsService
   ) {
     super();
@@ -143,7 +144,8 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Sets a notice dismissed state and saves state on dismissal via server call.
+   * Sets a notice dismissed state and saves state on dismissal to local storage when true
+   * Allowing false values to be temporary overrides.
    * @param { NoticeIdentifier } notice - name of notice to set dismissed state for.
    * @param { boolean } value - value to set the notice's dismissed state to.
    */
@@ -151,23 +153,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     this.notices[notice].dismissed = value;
 
     if (value) {
-      this.subscriptions.push(
-        this.api
-          .put(`api/v3/dismissible-notices/${notice}`)
-          .pipe(
-            take(1),
-            map((response: ApiResponse) => {
-              if (response.status !== 'success') {
-                throw new Error(response.message);
-              }
-            }),
-            catchError(e => {
-              console.error(e.error.message ?? e);
-              return of(true);
-            })
-          )
-          .subscribe()
-      );
+      this.dismissService.dismissNotice(notice);
     }
   }
 
@@ -273,30 +259,14 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Determine whether notice has been dismissed within last 60 days.
+   * Determine whether notice has been dismissed within service specified time-frame.
    * @param { NoticeIdentifier } notice - identifier of notice to check.
-   * @returns { boolean } true if notice has been dismissed in last 60 days.
+   * @returns { boolean } true if notice has been dismissed within service specified time-frame.
    */
   private isNoticeDismissed(notice: NoticeIdentifier): boolean {
     if (this.notices[notice].dismissed) {
       return true;
     }
-
-    const dismissedNotices =
-      this.session.getLoggedInUser()['dismissed_notices'] ?? [];
-    if (!dismissedNotices.length) {
-      return false;
-    }
-
-    const threshold = moment().subtract(60, 'days');
-
-    return (
-      dismissedNotices.filter(dismissedNotice => {
-        const noticeDate = moment(dismissedNotice['timestamp_ms']);
-        return (
-          dismissedNotice['id'] === notice && noticeDate.isAfter(threshold)
-        );
-      }).length > 0
-    );
+    return this.dismissService.isNoticeDismissed(notice);
   }
 }
