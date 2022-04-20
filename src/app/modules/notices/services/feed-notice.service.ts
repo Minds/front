@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
-import { ApiResponse, ApiService } from '../../../common/api/api.service';
+import { BehaviorSubject } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../common/components/abstract-subscriber/abstract-subscriber.component';
-import { ConfigsService } from '../../../common/services/configs.service';
-import { Session } from '../../../services/session';
 import { CompassService } from '../../compass/compass.service';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
+import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
+import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
 import {
   NoticePosition,
   Notices,
   NoticeIdentifier,
 } from '../feed-notice.types';
-import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 
 /**
  * Determines which feed notices to show, and holds state on
@@ -20,9 +17,6 @@ import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifi
  */
 @Injectable({ providedIn: 'root' })
 export class FeedNoticeService extends AbstractSubscriberComponent {
-  // whether config identifies email as unconfirmed.
-  private readonly fromEmailConfirmation: boolean = false;
-
   // when state has been updated - subscribed to in outlet
   // so we can decide what components to show AFTER initial load.
   public readonly updatedState$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -53,15 +47,12 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   };
 
   constructor(
-    private session: Session,
-    private api: ApiService,
-    private compass: CompassService,
     private dismissService: FeedNoticeDismissalService,
+    private compass: CompassService,
     private notificationSettings: NotificationsSettingsV2Service,
-    configs: ConfigsService
+    private emailConfirmation: EmailConfirmationService
   ) {
     super();
-    this.fromEmailConfirmation = configs.get('from_email_confirmation');
   }
 
   /**
@@ -215,10 +206,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @returns { boolean } true if email confirmation is required.
    */
   private requiresEmailConfirmation(): boolean {
-    const user = this.session.getLoggedInUser();
-    return (
-      !this.fromEmailConfirmation && user && user.email_confirmed === false
-    );
+    return this.emailConfirmation.requiresEmailConfirmation();
   }
 
   /**
@@ -226,8 +214,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @returns { Promise<boolean> }
    */
   private async hasCompletedCompassAnswers(): Promise<boolean> {
-    await this.compass.fetchQuestions();
-    return this.compass.answersProvided$.getValue();
+    return this.compass.hasCompletedCompassAnswers();
   }
 
   /**
