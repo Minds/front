@@ -12,6 +12,7 @@ import {
   Notices,
   NoticeIdentifier,
 } from '../feed-notice.types';
+import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 
 /**
  * Determines which feed notices to show, and holds state on
@@ -56,6 +57,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private api: ApiService,
     private compass: CompassService,
     private dismissService: FeedNoticeDismissalService,
+    private notificationSettings: NotificationsSettingsV2Service,
     configs: ConfigsService
   ) {
     super();
@@ -233,29 +235,7 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
    * @returns { Promise<boolean> } true if user has push notifications enabled.
    */
   private async hasPushNotificationsEnabled(): Promise<boolean> {
-    return this.api
-      .get('/api/v3/notifications/push/settings')
-      .pipe(
-        take(1),
-        map((response: ApiResponse) => {
-          if (response.status === 'success' && response.settings) {
-            const allGroup = response.settings.filter(setting => {
-              return setting['notification_group'] === 'all';
-            })[0];
-            return allGroup.enabled;
-          }
-          throw new Error(
-            response.message ??
-              'An unknown error has occurred getting push notification settings'
-          );
-        }),
-        catchError(e => {
-          // in the event of an error loading, skip showing but log.
-          console.error(e);
-          return of(true);
-        })
-      )
-      .toPromise();
+    return this.notificationSettings.pushNotificationsEnabled$.toPromise();
   }
 
   /**

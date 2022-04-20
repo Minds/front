@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
-import { ApiService } from '../../../../common/api/api.service';
 import { AbstractSubscriberComponent } from '../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { NotificationsSettingsV2Service } from '../../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 
 /**
@@ -17,9 +15,9 @@ import { FeedNoticeService } from '../../services/feed-notice.service';
 export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberComponent {
   constructor(
     private router: Router,
-    private api: ApiService,
     private toast: FormToastService,
-    private feedNotice: FeedNoticeService
+    private feedNotice: FeedNoticeService,
+    private notificationSettings: NotificationsSettingsV2Service
   ) {
     super();
   }
@@ -31,23 +29,14 @@ export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberCo
    */
   public onPrimaryOptionClick($event: MouseEvent): void {
     this.subscriptions.push(
-      this.api
-        .post('api/v3/notifications/push/settings/all', { enabled: true })
-        .pipe(
-          take(1),
-          catchError(e => {
-            console.error(e);
-            return EMPTY;
-          })
-        )
-        .subscribe(response => {
-          if (response.enabled) {
-            this.toast.success('Enabled push notifications');
-            this.dismiss();
-            return;
-          }
-          this.toast.error('Unable to save push notification settings');
-        })
+      this.notificationSettings.togglePush('all', true).subscribe(response => {
+        if (response.enabled) {
+          this.toast.success('Enabled push notifications');
+          this.dismiss();
+          return;
+        }
+        this.toast.error('Unable to save push notification settings');
+      })
     );
   }
 
