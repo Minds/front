@@ -1,3 +1,4 @@
+import { ApiService } from './../common/api/api.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -208,7 +209,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: FeedsService,
     useFactory: FeedsService._,
-    deps: [Client, Session, EntitiesService, BlockListService],
+    deps: [Client, ApiService, Session, EntitiesService, BlockListService],
   },
   {
     provide: InMemoryStorageService,
