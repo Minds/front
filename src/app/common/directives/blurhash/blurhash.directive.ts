@@ -1,12 +1,15 @@
+import { isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
   Directive,
   ElementRef,
   HostBinding,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { decode } from 'blurhash';
 import { timer } from 'rxjs';
@@ -30,6 +33,10 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('load')
   onLoad() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     if (this.canvas && !this.paywalled) {
       this.removeCanvas();
     }
@@ -51,7 +58,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   /**
    * the actual hash
    */
-  get blurhash() {
+  get blurhash(): string {
     return this._blurhash;
   }
 
@@ -59,7 +66,11 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
    * @param {ActivityEntity | string} blurhashInput a blurhash string or an entity
    */
   @Input('m-blurhash')
-  set blurhash(blurhashInput) {
+  set blurhash(blurhashInput: string | ActivityEntity) {
+    if (!blurhashInput) {
+      return;
+    }
+
     switch (typeof blurhashInput) {
       case 'string':
         this._blurhash = blurhashInput;
@@ -67,7 +78,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       case 'object':
         this.entity = blurhashInput;
         this._blurhash =
-          this.entity.blurhash || this.entity.custom_data[0]?.blurhash;
+          this.entity.blurhash || this.entity.custom_data?.[0]?.blurhash;
       default:
     }
   }
@@ -81,11 +92,18 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
     return this.el.nativeElement?.src && this.el.nativeElement?.complete;
   }
 
-  constructor(private el: ElementRef) {}
+  constructor(
+    private el: ElementRef<HTMLImageElement>,
+    @Inject(PLATFORM_ID) private platformId
+  ) {}
 
   ngOnInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     if (this.isLoadingComplete && !this.paywalled) {
-      return null;
+      return;
     }
 
     // preventing an ugly case where the canvas appears outside of image container
@@ -95,6 +113,10 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     if (this.isLoadingComplete && !this.paywalled) {
       return null;
     }
@@ -119,14 +141,14 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
       return null;
     }
 
-    let [width, height] = [
-      elementWidth || this.entity.custom_data[0]?.width,
-      elementHeight || this.entity.custom_data[0]?.height,
-    ];
-
     if (!this.blurhash) {
       return null;
     }
+
+    let [width, height] = [
+      elementWidth || this.entity?.custom_data?.[0]?.width,
+      elementHeight || this.entity?.custom_data?.[0]?.height,
+    ];
 
     const aspecRatio = width / height;
     width = elementWidth;
@@ -167,7 +189,7 @@ export class BlurhashDirective implements OnInit, AfterViewInit, OnDestroy {
         'style',
         `position: absolute; top: 0; left: 0; transition: all 0.3s; transition-timing-function: ease-out; transform-origin: top left; ${dimensionsStyle}`
       );
-      this.el.nativeElement.parentElement.append(this.canvas);
+      this.el.nativeElement.after(this.canvas);
     } catch (e) {
       console.error('Blurhash: failed to draw canvas', e);
     }
