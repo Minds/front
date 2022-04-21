@@ -2852,6 +2852,14 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="LANGUAGE__SIDEBAR__PROMPT__BUTTON__LATEST" datatype="html">
+        <source>Change Language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/language/prompts/sidebar-prompt.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MINDS__CARDS__entity__BOOSTED_LABEL" datatype="html">
         <source>Boosted</source>
         <context-group purpose="location">
