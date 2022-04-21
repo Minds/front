@@ -24,6 +24,9 @@
     }
     .m-activityContent__media--image img {
       height: 100%;
+      width: auto;
+      max-height: 100%;
+      max-width: 100%;
     }
 
     .m-activityContent__quote--hasText & {
@@ -51,13 +54,19 @@
     .m-activityContent__fixedHeightSpacer {
       flex: 1;
     }
+
+    ::ng-deep m-read-more--button {
+      .m-readMoreButton--v2 {
+        padding-top: $spacing14;
+      }
+    }
   }
 
   // *********************************
   // ** MINIMAL MODE **
   // *********************************
 
-  &.m-activity__content--minimalMode {
+  &.m-activityContent--minimalMode {
     // MINIMAL TEXT
     .m-activityContent__textWrapper {
       padding-left: $activitySpacing--minimalMode !important;
@@ -332,7 +341,7 @@
   }
 
   &.m-activityContent--textlessMedia {
-    &:not(.m-activity__content--minimalMode) {
+    &:not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
       .m-activityContent__media--video,
       .m-activityContent__media--image {
         padding-top: $spacing1;
@@ -547,7 +556,7 @@
   // TRANSLATED TEXT
 
   // READ MORE
-  &:not(.m-activityContent--status):not(.m-activity__content--minimalMode) {
+  &:not(.m-activityContent--status):not(.m-activityContent--minimalMode):not(.m-activityContent--fixedHeight) {
     // Make a taller read more area
     ::ng-deep m-read-more--button {
       .m-readMoreButton--v2 {

@@ -23,7 +23,10 @@ import { MindsUser } from '../../../interfaces/entities';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
+import {
+  ACTIVITY_FIXED_HEIGHT_RATIO,
+  ACTIVITY_V2_FIXED_HEIGHT_RATIO,
+} from '../activity/activity.service';
 import {
   trigger,
   transition,
@@ -43,7 +46,7 @@ const BOOST_VIEW_THRESHOLD = 1000;
   moduleId: module.id,
   selector: 'm-newsfeed--boost-rotator',
   host: {
-    '(window:blur)': 'inActive()',
+    '(window:blur)': 'inactive()',
     '(window:focus)': 'active()',
     '(mouseover)': 'mouseOver()',
     '(mouseout)': 'mouseOut()',
@@ -74,19 +77,19 @@ export class NewsfeedBoostRotatorComponent {
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
-  rotator;
-  running: boolean = false;
-  paused: boolean = false;
+  rotator; // The rotation timer
+  running: boolean = false; // True if rotator is rotating
+  paused: boolean = false; // True if user has disabled boost autorotate
   windowFocused: boolean = true;
-  interval: number = 6;
+  interval: number = 6; // Seconds til next rotation
   channel: MindsUser;
+
+  // Determines which boost is visible and which are hidden
   currentPosition: number = 0;
-  lastTs: number = Date.now();
-  minds;
+
   scroll_listener;
 
   rating: number = 2; //default to Safe Mode Off
-  plus: boolean = false;
   disabled: boolean = false;
 
   height: number;
@@ -152,8 +155,6 @@ export class NewsfeedBoostRotatorComponent {
 
     const user = this.session.getLoggedInUser();
 
-    this.plus = user.plus;
-
     this.rating = user.boost_rating;
     this.disabled = user.disabled_boost;
 
@@ -190,6 +191,9 @@ export class NewsfeedBoostRotatorComponent {
     setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
+  /**
+   *
+   */
   load() {
     try {
       let params = {
@@ -220,6 +224,10 @@ export class NewsfeedBoostRotatorComponent {
     return true;
   }
 
+  /**
+   * Every x seconds, go to the next boost
+   * (unless rotator is paused or window is unfocused)
+   */
   start() {
     if (this.rotator) window.clearInterval(this.rotator);
 
@@ -241,6 +249,9 @@ export class NewsfeedBoostRotatorComponent {
     return bounds;
   }
 
+  /**
+   * Only run the rotator when it's visible
+   */
   isVisible() {
     if (this.bounds.top > 0) {
       if (!this.running) this.start();
@@ -259,7 +270,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.bounds.top > 0) this.next(); // Show a new boost when we open our window again
   }
 
-  inActive() {
+  inactive() {
     this.running = false;
     this.windowFocused = false;
     window.clearInterval(this.rotator);
@@ -274,6 +285,12 @@ export class NewsfeedBoostRotatorComponent {
     this.isVisible();
   }
 
+  /**
+   * Go to previous boost.
+   *
+   * If there aren't any previous boosts,
+   * loop back to the last boost
+   */
   prev() {
     if (this.currentPosition <= 0) {
       this.currentPosition = this.boosts.length - 1;
@@ -283,6 +300,12 @@ export class NewsfeedBoostRotatorComponent {
     this.viewsCollector$.next(this.currentPosition);
   }
 
+  /**
+   * Go to next boost
+   *
+   * If we're already at the last boost, load more
+   * and then go to next boost.
+   */
   async next() {
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       try {
@@ -336,10 +359,17 @@ export class NewsfeedBoostRotatorComponent {
     }
   }
 
+  /**
+   * Uses container el to calculate min-height
+   * of boost rotator
+   */
   calculateHeight(): void {
     if (!this.rotatorEl) return;
-    this.height =
-      this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
+
+    const ratio = this.activityV2Feature
+      ? ACTIVITY_V2_FIXED_HEIGHT_RATIO
+      : ACTIVITY_FIXED_HEIGHT_RATIO;
+    this.height = this.rotatorEl.nativeElement.clientWidth / ratio;
 
     if (this.height < 500) this.height = 500;
   }

@@ -107,6 +107,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
+  @Output() previousBoost: EventEmitter<any> = new EventEmitter();
+  @Output() nextBoost: EventEmitter<any> = new EventEmitter();
+
   constructor(
     public service: ActivityService,
     private el: ElementRef,
