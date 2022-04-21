@@ -5,6 +5,8 @@ export type NotificationDetails = {
   message: string;
   link: string;
   timestamp: number;
+  counter: number | null;
+  target: string;
 };
 
 @Component({

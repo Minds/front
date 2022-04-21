@@ -18,6 +18,7 @@ export class AdminPushNotificationsFormComponent {
     ],
     notificationMessage: ['', [Validators.maxLength(150)]],
     notificationLink: [''],
+    notificationTarget: ['all-devices'],
   });
 
   public inProgress: boolean = false;
@@ -39,6 +40,8 @@ export class AdminPushNotificationsFormComponent {
       message: this.pushNotificationsForm.value.notificationMessage,
       link: this.pushNotificationsForm.value.notificationLink,
       timestamp: Date.now(),
+      counter: null,
+      target: 'all-devices',
     };
 
     request
