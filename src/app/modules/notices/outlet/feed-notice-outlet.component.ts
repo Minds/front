@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FeedNoticeService } from '../services/feed-notice.service';
 import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
-import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 /**
@@ -12,15 +11,17 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-feedNotice__outlet',
   template: `
-    <m-feedNotice--verifyEmail
-      *ngIf="shouldShowNotice('verify-email')"
-    ></m-feedNotice--verifyEmail>
-    <m-feedNotice--buildYourAlgorithm
-      *ngIf="shouldShowNotice('build-your-algorithm')"
-    ></m-feedNotice--buildYourAlgorithm>
-    <m-feedNotice--enablePushNotifications
-      *ngIf="shouldShowNotice('enable-push-notifications')"
-    ></m-feedNotice--enablePushNotifications>
+    <ng-container [ngSwitch]="activeNotice">
+      <m-feedNotice--verifyEmail
+        *ngSwitchCase="'verify-email'"
+      ></m-feedNotice--verifyEmail>
+      <m-feedNotice--buildYourAlgorithm
+        *ngSwitchCase="'build-your-algorithm'"
+      ></m-feedNotice--buildYourAlgorithm>
+      <m-feedNotice--enablePushNotifications
+        *ngSwitchCase="'enable-push-notifications'"
+      ></m-feedNotice--enablePushNotifications>
+    </ng-container>
   `,
 })
 export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
@@ -61,7 +62,7 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
     await this.service.checkNoticeState();
 
     this.subscriptions.push(
-      this.service.updatedState$.pipe(take(1)).subscribe(val => {
+      this.service.updatedState$.subscribe(val => {
         // if we're not showing multiple and this position already has shown notices.
         if (!this.showMultiple && this.service.hasShownANotice()) {
           return;
@@ -70,6 +71,7 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
         const notice = this.service.getNextShowableNotice(this.position);
 
         if (!notice) {
+          this.activeNotice = null;
           return;
         }
 
@@ -77,14 +79,5 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
         this.service.setShown(notice, true);
       })
     );
-  }
-
-  /**
-   * Determines whether the active notice, matches the notice name passed in.
-   * @param { NoticeIdentifier } notice - name of the notice to check.
-   * @returns { boolean } - true if notice should be shown.
-   */
-  public shouldShowNotice(notice: NoticeIdentifier): boolean {
-    return this.activeNotice === notice && !this.service.isDismissed(notice);
   }
 }

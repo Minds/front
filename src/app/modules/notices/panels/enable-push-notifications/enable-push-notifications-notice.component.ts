@@ -54,6 +54,6 @@ export class EnablePushNotificationsNoticeComponent extends AbstractSubscriberCo
    * @return { void }
    */
   public dismiss(): void {
-    this.feedNotice.setDismissed('enable-push-notifications', true);
+    this.feedNotice.dismiss('enable-push-notifications');
   }
 }

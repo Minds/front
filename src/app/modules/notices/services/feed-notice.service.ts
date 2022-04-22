@@ -137,17 +137,15 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
   }
 
   /**
-   * Sets a notice dismissed state and saves state on dismissal to local storage when true
-   * Allowing false values to be temporary overrides.
+   * Sets a notice dismissed state and saves state on dismissal to local storage.
    * @param { NoticeIdentifier } notice - name of notice to set dismissed state for.
    * @param { boolean } value - value to set the notice's dismissed state to.
    */
-  public setDismissed(notice: NoticeIdentifier, value: boolean): void {
-    this.notices[notice].dismissed = value;
-
-    if (value) {
-      this.dismissService.dismissNotice(notice);
-    }
+  public dismiss(notice: NoticeIdentifier): void {
+    this.notices[notice].dismissed = true;
+    this.setShown(notice, false);
+    this.dismissService.dismissNotice(notice);
+    this.updatedState$.next(true);
   }
 
   /**

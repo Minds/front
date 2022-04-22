@@ -63,6 +63,6 @@ export class BuildYourAlgorithmNoticeComponent extends AbstractSubscriberCompone
    * @return { void }
    */
   public dismiss(): void {
-    this.feedNotice.setDismissed('build-your-algorithm', true);
+    this.feedNotice.dismiss('build-your-algorithm');
   }
 }

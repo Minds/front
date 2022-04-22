@@ -57,7 +57,7 @@ export class FeedNoticeDismissalService {
     const dismissDate = moment(dismissedNotice['timestamp']);
     const thresholdDate = moment().subtract(this.expirationDays, 'days');
 
-    return dismissDate.isBefore(thresholdDate);
+    return dismissDate.isAfter(thresholdDate);
   }
 
   /**
