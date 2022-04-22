@@ -19,10 +19,7 @@ export class FeedNoticeDismissalService {
   // Amount of days until dismissal is considered expired.
   private readonly expirationDays: number = 60;
 
-  constructor(
-    private objectStorage: ObjectLocalStorageService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor(private objectStorage: ObjectLocalStorageService) {}
 
   /**
    * Set a notice to a dismissed state.
