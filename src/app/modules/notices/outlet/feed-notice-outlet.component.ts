@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FeedNoticeService } from '../services/feed-notice.service';
 import { NoticePosition, NoticeIdentifier } from '../feed-notice.types';
 import { Subscription } from 'rxjs';
@@ -10,6 +16,7 @@ import { Subscription } from 'rxjs';
  */
 @Component({
   selector: 'm-feedNotice__outlet',
+  styleUrls: ['./feed-notice-outlet.component.ng.scss'],
   template: `
     <ng-container [ngSwitch]="activeNotice">
       <m-feedNotice--verifyEmail
@@ -36,6 +43,33 @@ export class FeedNoticeOutletComponent implements OnInit, OnDestroy {
 
   // should show new notices even when service identifies another notice has already been shown for this position.
   @Input() showMultiple: boolean = false;
+
+  /**
+   * If experiment is active, full width class.
+   * @returns { boolean } - true if should be shown as full width.
+   */
+  @HostBinding('class.m-feedNoticeOutlet__container--fullWidth')
+  get isFullWidth(): boolean {
+    return this.service.shouldBeFullWidth();
+  }
+
+  /**
+   * If a notice is visible (helps us get rid of borders when no notice is shown).
+   * @returns { boolean } - true if a notice is visible.
+   */
+  @HostBinding('class.m-feedNoticeOutlet__container--visible')
+  get isVisible(): boolean {
+    return !!this.activeNotice;
+  }
+
+  /**
+   * Whether is in top position.
+   * @returns { boolean } whether notice should be in top position.
+   */
+  @HostBinding('class.m-feedNoticeOutlet__container--topPosition')
+  get isTopPosition(): boolean {
+    return this.position === 'top';
+  }
 
   constructor(private service: FeedNoticeService) {}
 

@@ -5,6 +5,7 @@ import { CompassService } from '../../compass/compass.service';
 import { FeedNoticeDismissalService } from './feed-notice-dismissal.service';
 import { NotificationsSettingsV2Service } from '../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { EmailConfirmationService } from '../../../common/components/email-confirmation/email-confirmation.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 import {
   NoticePosition,
   Notices,
@@ -50,7 +51,8 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     private dismissService: FeedNoticeDismissalService,
     private compass: CompassService,
     private notificationSettings: NotificationsSettingsV2Service,
-    private emailConfirmation: EmailConfirmationService
+    private emailConfirmation: EmailConfirmationService,
+    private experiments: ExperimentsService
   ) {
     super();
   }
@@ -146,6 +148,14 @@ export class FeedNoticeService extends AbstractSubscriberComponent {
     this.setShown(notice, false);
     this.dismissService.dismissNotice(notice);
     this.updatedState$.next(true);
+  }
+
+  /**
+   * Whether full width notices should be shown. (if activity v3 experiment is active).
+   * @returns { boolean } - true if full width notices should be shown.
+   */
+  public shouldBeFullWidth(): boolean {
+    return this.experiments.hasVariation('front-5229-activities', true);
   }
 
   /**

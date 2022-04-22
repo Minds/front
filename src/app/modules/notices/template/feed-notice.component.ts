@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { FeedNoticeService } from '../services/feed-notice.service';
 
 /**
  * Feeds notices component. To use, provide content via ng-content.
@@ -20,6 +21,8 @@ import {
   styleUrls: ['feed-notice.component.ng.scss'],
 })
 export class FeedNoticeComponent {
+  constructor(private service: FeedNoticeService) {}
+
   // Whether component is dismissible or not (shows close button).
   @Input() dismissible: boolean = true;
 
@@ -34,6 +37,15 @@ export class FeedNoticeComponent {
   @HostBinding('class.m-feedNotice__container--sticky')
   @Input()
   stickyTop: boolean;
+
+  /**
+   * If experiment is active, full width class.
+   * @returns { boolean } - true if notice should be full width.
+   */
+  @HostBinding('class.m-feedNotice__container--fullWidth')
+  get isFullWidth(): boolean {
+    return this.service.shouldBeFullWidth();
+  }
 
   // Fired on dismiss click.
   @Output() dismissClick: EventEmitter<boolean> = new EventEmitter<boolean>(
