@@ -83,6 +83,7 @@
         ></m-activity>
         <m-channelRecommendation
           location="newsfeed"
+          [dismissible]="true"
           *ngIf="shouldShowChannelRecommendation('feed', i)"
         ></m-channelRecommendation>
       </ng-container>

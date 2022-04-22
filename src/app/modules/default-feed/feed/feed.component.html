@@ -12,6 +12,7 @@
     ></m-activity>
     <m-channelRecommendation
       [location]="location"
+      [dismissible]="true"
       *ngIf="shouldShowChannelRecommendation(i)"
     ></m-channelRecommendation>
   </ng-container>
