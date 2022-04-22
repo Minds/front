@@ -1,6 +1,13 @@
 <article *ngIf="(topFeedService.feed | async)?.length">
   <header>
     <h3 class="m-topHighlights__title">Highlights</h3>
+
+    <m-dropdownMenuV2
+      [items]="dropDownItems"
+      [anchorPosition]="{ top: '0', right: '0' }"
+    >
+      <m-icon iconId="more_vert"></m-icon>
+    </m-dropdownMenuV2>
   </header>
 
   <section>

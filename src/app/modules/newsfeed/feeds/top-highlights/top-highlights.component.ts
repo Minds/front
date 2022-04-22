@@ -17,6 +17,17 @@ export class TopHighlightsComponent {
   @Output()
   onSeeMore: EventEmitter<void> = new EventEmitter();
 
+  dropDownItems = [
+    {
+      title: $localize`:@@TOP_HIGHLIGHTS__REMOVE_FROM_FEED:Remove from feed`,
+      onPress: null,
+      icon: {
+        id: 'close',
+        from: 'md',
+      },
+    },
+  ];
+
   @HostBinding('class.m-topHighlights--activityV2')
   get activityV2Feature(): boolean {
     return this.experiments.hasVariation('front-5229-activities', true);
