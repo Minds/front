@@ -20,6 +20,24 @@
     }
   }
 
+  .m-activity--guestMode & {
+    // Guest mode doesn't have the boost/tip button
+    .m-activityToolbar__actions {
+      ::ng-deep > * {
+        flex-basis: 25%;
+
+        &:last-child {
+          flex-basis: 25%;
+          flex-grow: 1;
+
+          @media screen and (max-width: $max-mobile) {
+            flex-basis: 25%;
+          }
+        }
+      }
+    }
+  }
+
   // *********************************
   // ** FIXED HEIGHT **
   // *********************************

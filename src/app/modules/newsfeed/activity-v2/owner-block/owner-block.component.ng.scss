@@ -17,6 +17,21 @@
       }
     }
   }
+
+  // *********************************
+  // ** GUEST MODE **
+  // *********************************
+
+  .m-activity--guestMode & {
+    .m-activity__ownerBlock {
+      width: 100% !important;
+
+      @media screen and (max-width: ($max-mobile)) {
+        width: 100% !important;
+      }
+    }
+  }
+
   // *********************************
   // ** MINIMAL MODE **
   // *********************************

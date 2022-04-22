@@ -101,6 +101,9 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   isBoost = false;
 
+  @HostBinding('class.m-activity--guestMode')
+  isGuestMode: boolean;
+
   @HostBinding('class.m-activity--isSidebarBoost')
   isSidebarBoost: boolean;
 
@@ -123,6 +126,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
   isModal: boolean = false;
 
   heightSubscription: Subscription;
+  guestModeSubscription: Subscription;
 
   @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
 
@@ -153,6 +157,14 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (!this.service.displayOptions.fixedHeight) return;
         if (this.service.displayOptions.fixedHeightContainer) return;
         this.heightPx = `${height}px`;
+        this.cd.markForCheck();
+        this.cd.detectChanges();
+      }
+    );
+
+    this.guestModeSubscription = this.service.isLoggedIn$.subscribe(
+      (isLoggedIn: boolean) => {
+        this.isGuestMode = !isLoggedIn;
         this.cd.markForCheck();
         this.cd.detectChanges();
       }
