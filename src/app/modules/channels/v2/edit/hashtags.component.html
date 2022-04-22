@@ -3,7 +3,8 @@
     <m-hashtags__typeaheadInput
       placeholder="Enter tag"
       historyKey="channel-edit"
-      [disabled]="(service.hashtags$ | async)?.length >= 5"
+      [disabled]="isHashtagLimitReached$ | async"
+      (click)="checkHashtagLimit()"
       [maxEntries]="5"
       (onAction)="addHashtagIntent($event)"
       #hashtagsTypeaheadInput
@@ -11,7 +12,7 @@
 
     <button
       class="m-fieldButton-v2"
-      [disabled]="(service.hashtags$ | async)?.length >= 5"
+      [disabled]="isHashtagLimitReached$ | async"
       (click)="hashtagsTypeaheadInput.triggerAction()"
       i18n="@@COMMON__ADD"
       data-cy="data-minds-hashtag-add-button"
