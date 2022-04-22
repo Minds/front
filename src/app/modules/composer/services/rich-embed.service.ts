@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of, OperatorFunction } from 'rxjs';
+import { EMPTY, of, OperatorFunction } from 'rxjs';
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 import { catchError, debounceTime, map, switchAll, tap } from 'rxjs/operators';
 import { TextParserService } from '../../../common/services/text-parser.service';
@@ -84,9 +84,8 @@ export class RichEmbedService {
                     richEmbed.thumbnail = response.links.thumbnail[0].href;
                   }
 
-                  const videoHref = response.links?.player[0]['href'] ?? false;
+                  const videoHref = this.parseVideoHref(response);
 
-                  // only use if whitelisted.
                   if (
                     videoHref &&
                     this.embedLinkWhitelist.isWhitelisted(videoHref)
@@ -97,14 +96,27 @@ export class RichEmbedService {
                   return richEmbed;
                 }
               ),
-
-              // If there's an error, just emit NULL
-              catchError(_ => of(null))
+              catchError(e => {
+                console.error(e);
+                return EMPTY;
+              })
             );
         }),
 
         // Only subscribe to the latest HOO
         switchAll()
       );
+  }
+
+  /**
+   * Will parse video href from an ApiResponse, or return an empty string if one is not present.
+   * @param { ApiResponse } response - api response to parse.
+   * @returns { string } - parsed video href.
+   */
+  private parseVideoHref(response: ApiResponse): string {
+    return Array.isArray(response?.links?.player) &&
+      response.links.player[0]['href']
+      ? response.links.player[0]['href']
+      : '';
   }
 }
