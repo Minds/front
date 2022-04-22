@@ -97,31 +97,4 @@ describe('FeedNoticeOutletComponent', () => {
     expect((comp as any).activeNotice).toBe(notice);
     expect((comp as any).service.setShown).toHaveBeenCalledWith(notice, true);
   }));
-
-  it('should determine notice is to be shown if it matches the activeNotice and it is not dismissed', () => {
-    const notice = 'build-your-algorithm';
-
-    comp.activeNotice = notice;
-    (comp as any).service.isDismissed.and.returnValue(false);
-
-    expect(comp.shouldShowNotice(notice)).toBeTruthy();
-  });
-
-  it('should determine notice is NOT to be shown if it matches the activeNotice and it IS dismissed', () => {
-    const notice = 'build-your-algorithm';
-
-    comp.activeNotice = notice;
-    (comp as any).service.isDismissed.and.returnValue(true);
-
-    expect(comp.shouldShowNotice(notice)).toBeFalsy();
-  });
-
-  it('should determine notice is NOT to be shown if it does NOT match the activeNotice', () => {
-    const notice = 'build-your-algorithm';
-
-    comp.activeNotice = 'enable-push-notifications';
-    (comp as any).service.isDismissed.and.returnValue(false);
-
-    expect(comp.shouldShowNotice(notice)).toBeFalsy();
-  });
 });

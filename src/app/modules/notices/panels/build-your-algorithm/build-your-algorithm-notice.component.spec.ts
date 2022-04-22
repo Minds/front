@@ -82,9 +82,8 @@ describe('BuildYourAlgorithmNoticeComponent', () => {
   it('should dismiss on answers provided', () => {
     answersProvided$.next(true);
     expect((comp as any).modalService.dismissAll).toHaveBeenCalled();
-    expect((comp as any).feedNotice.setDismissed).toHaveBeenCalledWith(
-      'build-your-algorithm',
-      true
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'build-your-algorithm'
     );
   });
 
@@ -102,9 +101,8 @@ describe('BuildYourAlgorithmNoticeComponent', () => {
 
   it('should dismiss notice on dismiss function call', () => {
     comp.dismiss();
-    expect((comp as any).feedNotice.setDismissed).toHaveBeenCalledWith(
-      'build-your-algorithm',
-      true
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'build-your-algorithm'
     );
   });
 });

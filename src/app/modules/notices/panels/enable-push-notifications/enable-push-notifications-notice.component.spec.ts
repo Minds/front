@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { FeedNoticeService } from '../../services/feed-notice.service';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ApiService } from '../../../../common/api/api.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { NotificationsSettingsV2Service } from '../../../settings-v2/account/notifications-v3/notifications-settings-v3.service';
 import { of } from 'rxjs';
 
 describe('EnablePushNotificationsNoticeComponent', () => {
@@ -37,16 +37,16 @@ describe('EnablePushNotificationsNoticeComponent', () => {
             useValue: routerMock,
           },
           {
-            provide: ApiService,
-            useValue: MockService(ApiService),
-          },
-          {
             provide: FormToastService,
             useValue: MockService(FormToastService),
           },
           {
             provide: FeedNoticeService,
             useValue: MockService(FeedNoticeService),
+          },
+          {
+            provide: NotificationsSettingsV2Service,
+            useValue: MockService(NotificationsSettingsV2Service),
           },
         ],
       }).compileComponents();
@@ -72,8 +72,8 @@ describe('EnablePushNotificationsNoticeComponent', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should call API to update settings on primary option click and alert and dismiss on success', () => {
-    (comp as any).api.post.and.returnValue(
+  it('should call to update settings on primary option click and alert and dismiss on success', () => {
+    (comp as any).notificationSettings.togglePush.and.returnValue(
       of({
         enabled: true,
       })
@@ -81,41 +81,30 @@ describe('EnablePushNotificationsNoticeComponent', () => {
 
     comp.onPrimaryOptionClick(null);
 
-    expect((comp as any).api.post).toHaveBeenCalledWith(
-      'api/v3/notifications/push/settings/all',
-      {
-        enabled: true,
-      }
-    );
-
-    expect((comp as any).toast.success).toHaveBeenCalledWith(
-      'Enabled push notifications'
-    );
-    expect((comp as any).feedNotice.setDismissed).toHaveBeenCalledWith(
-      'enable-push-notifications',
+    expect((comp as any).notificationSettings.togglePush).toHaveBeenCalledWith(
+      'all',
       true
+    );
+    expect((comp as any).toast.success).toHaveBeenCalled();
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'enable-push-notifications'
     );
   });
 
-  it('should call API to update settings on primary option click and alert on error', () => {
-    (comp as any).api.post.and.returnValue(
+  it('should call to update settings on primary option click and alert on error', () => {
+    (comp as any).notificationSettings.togglePush.and.returnValue(
       of({
-        status: 'failed',
+        enabled: false,
       })
     );
 
     comp.onPrimaryOptionClick(null);
 
-    expect((comp as any).api.post).toHaveBeenCalledWith(
-      'api/v3/notifications/push/settings/all',
-      {
-        enabled: true,
-      }
+    expect((comp as any).notificationSettings.togglePush).toHaveBeenCalledWith(
+      'all',
+      true
     );
-
-    expect((comp as any).toast.error).toHaveBeenCalledWith(
-      'Unable to save push notification settings'
-    );
+    expect((comp as any).toast.error).toHaveBeenCalled();
   });
 
   it('should navigate to push notification settings on secondary option click', () => {
@@ -127,9 +116,8 @@ describe('EnablePushNotificationsNoticeComponent', () => {
 
   it('should dismiss notice on dismiss function call', () => {
     comp.dismiss();
-    expect((comp as any).feedNotice.setDismissed).toHaveBeenCalledWith(
-      'enable-push-notifications',
-      true
+    expect((comp as any).feedNotice.dismiss).toHaveBeenCalledWith(
+      'enable-push-notifications'
     );
   });
 });
