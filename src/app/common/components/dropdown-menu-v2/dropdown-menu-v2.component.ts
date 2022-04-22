@@ -1,4 +1,4 @@
-import { FastFadeAnimation } from './../../../animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,14 +10,11 @@ import {
   OnDestroy,
   OnInit,
   PLATFORM_ID,
-  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';
 import { IconSource } from '../icon/icon.component';
-import { animate, style, transition, trigger } from '@angular/animations';
 
 export interface AnchorPosition {
   top?: string;
@@ -26,13 +23,13 @@ export interface AnchorPosition {
   left?: string;
 }
 
-export interface DropDownMenuItem {
+export interface DropdownMenuItem {
   title: string;
   onPress: () => void;
   icon?: { id: string; from: IconSource };
 }
 
-const DropDownFadeAnimation = trigger('dropDownFade', [
+const DropdownFadeAnimation = trigger('dropDownFade', [
   transition(':enter', [
     style({ opacity: 0, height: 0 }),
     animate('100ms ease-out', style({ opacity: 1, height: '*' })),
@@ -48,10 +45,10 @@ const DropDownFadeAnimation = trigger('dropDownFade', [
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'dropdown-menu-v2.component.html',
   styleUrls: ['dropdown-menu-v2.component.ng.scss'],
-  animations: [DropDownFadeAnimation],
+  animations: [DropdownFadeAnimation],
 })
 export class DropdownMenuV2Component implements OnInit, OnDestroy {
-  @Input() items: DropDownMenuItem[] = [];
+  @Input() items: DropdownMenuItem[] = [];
 
   @Input() triggerClass: string = '';
 
