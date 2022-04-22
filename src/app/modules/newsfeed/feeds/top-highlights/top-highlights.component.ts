@@ -17,9 +17,9 @@ export class TopHighlightsComponent {
   @Output()
   onSeeMore: EventEmitter<void> = new EventEmitter();
 
-  dropDownItems = [
+  dropdownItems = [
     {
-      title: $localize`:@@TOP_HIGHLIGHTS__REMOVE_FROM_FEED:Remove from feed`,
+      title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
       onPress: null,
       icon: {
         id: 'close',
