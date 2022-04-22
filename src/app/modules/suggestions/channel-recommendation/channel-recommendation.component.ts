@@ -1,9 +1,10 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
-import { ExperimentsService } from '../../experiments/experiments.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { DropdownMenuItem } from './../../../common/components/dropdown-menu-v2/dropdown-menu-v2.component';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 
 /**
@@ -37,12 +38,29 @@ export class ChannelRecommendationComponent implements OnInit {
   @Input()
   title: string = $localize`:@@M_DISCOVERY_CARD_CAROUSEL__SUGGESTED_CHANNELS:Recommended Channels`;
   /**
+   * Whether the widget should have a close button
+   */
+  @Input()
+  dismissible: boolean = false;
+  /**
    * the height of the container, used to animate the mount and unmount of this component
    */
   containerHeight$: BehaviorSubject<number> = new BehaviorSubject(0);
-
   /** a list of recommended channels */
   recommendations$: BehaviorSubject<MindsUser[]> = new BehaviorSubject([]);
+  /**
+   * drop down items
+   */
+  dropdownItems: DropdownMenuItem[] = [
+    {
+      title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
+      onPress: null,
+      icon: {
+        id: 'close',
+        from: 'md',
+      },
+    },
+  ];
 
   constructor(
     private api: ApiService,

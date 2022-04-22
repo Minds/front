@@ -11,11 +11,20 @@
       <h2>
         {{ title }}
       </h2>
-      <a
-        [routerLink]="['/discovery/suggestions/user']"
-        i18n="@@COMMON__SEE_MORE__ACTION"
-        >See more</a
-      >
+      <div>
+        <a
+          [routerLink]="['/discovery/suggestions/user']"
+          i18n="@@COMMON__SEE_MORE__ACTION"
+          >See more</a
+        >
+        <m-dropdownMenuV2
+          [items]="dropdownItems"
+          [anchorPosition]="{ top: '0', right: '0' }"
+          *ngIf="dismissible"
+        >
+          <m-icon iconId="more_vert"></m-icon>
+        </m-dropdownMenuV2>
+      </div>
     </header>
     <ul *ngIf="(recommendations$ | async).length">
       <li *ngFor="let channel of recommendations$ | async">

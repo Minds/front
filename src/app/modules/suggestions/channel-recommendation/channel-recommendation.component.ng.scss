@@ -63,6 +63,7 @@
     header {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
       align-items: center;
       padding-bottom: $minds-padding * 4;
 
@@ -74,14 +75,23 @@
         line-height: inherit;
       }
 
-      a {
-        text-decoration: none;
-        @include m-theme() {
-          color: themed($m-link);
+      div {
+        flex-direction: row;
+        display: flex;
+
+        a {
+          text-decoration: none;
+          @include m-theme() {
+            color: themed($m-link);
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
 
-        &:hover {
-          text-decoration: underline;
+        m-dropdownmenuv2 {
+          margin-left: $spacing4;
         }
       }
     }
