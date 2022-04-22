@@ -400,16 +400,4 @@ describe('EmbeddedVideoComponent', () => {
     component.onControlsHidden();
     expect(component.topVisible).toBe(false);
   }));
-
-  it('should have links with _blank target attributes', () => {
-    const links = fixture.debugElement.queryAll(
-      By.css(`.m-embedded-video__top a`)
-    );
-
-    expect(links).toHaveSize(2);
-
-    for (let link of links) {
-      expect(link.nativeElement.target).toBe('_blank');
-    }
-  });
 });

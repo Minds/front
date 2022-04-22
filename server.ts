@@ -24,6 +24,7 @@ import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 import { SENTRY } from './src/app/common/services/diagnostics/diagnostics.service';
+import * as timeout from 'connect-timeout';
 
 const browserDistFolder = join(process.cwd(), 'dist', 'browser');
 const embedDistFolder = join(process.cwd(), 'dist', 'embed');
@@ -32,6 +33,9 @@ const PORT = process.env.PORT || 4200;
 export function app() {
   // Express server
   const server = express();
+
+  // Timeout
+  server.use(timeout('6s'));
 
   // gzip
   server.use(compression());

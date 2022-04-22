@@ -121,10 +121,8 @@ import { CompassModule } from './modules/compass/compass.module';
     CodeHighlightModule,
     SharedModule,
     CompassModule,
-
     //last due to :username route
     AppRoutingModule,
-    //ChannelContainerModule,
   ],
   providers: [
     MINDS_PROVIDERS,

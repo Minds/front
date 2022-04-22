@@ -1,6 +1,8 @@
 @import 'themes';
 @import '../app/foundation/grid-values';
 @import 'z-index';
+@import 'typography';
+@import 'spacing';
 
 /**
  * Padding, Margins and Offset
@@ -121,4 +123,44 @@ $layout-sidebar-width: 80px;
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+
+// Borders ---------------------------------------------
+$borderRadius--activity: 3px;
+
+@mixin border {
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+@mixin borderTop {
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+@mixin borderRight {
+  @include m-theme() {
+    border-right: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+@mixin borderBottom {
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+@mixin borderLeft {
+  @include m-theme() {
+    border-left: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+// Overrides existing themed borders
+@mixin borderNone {
+  @include m-theme() {
+    border: none;
+  }
 }

@@ -32,8 +32,11 @@ $spacing18: 4.5rem; // 72px
 $spacing19: 4.75rem; // 76px
 $spacing20: 5rem; // 80px
 
-// Variables that are shared among a variety of components
-// that relate to activities in different contexts
+///////////////////////////////////////////
+
+// Store variables here that are shared
+// among a variety of components
+// that relate to feeds and activities
 
 ///////////////////////////////////////////
 // AVATAR
@@ -47,10 +50,10 @@ $activityAvatarWidth: $spacing10;
 
 // This is the spacing on either side of the avatar
 // in the left column of activities
-$activityAvatarSpacingLeft--feed: $spacing6;
+$activityAvatarSpacingLeft--feed: $spacing8;
 $activityAvatarSpacingLeft--feed--mobile: $spacing4;
 
-$activityAvatarSpacingRight--feed: $spacing6;
+$activityAvatarSpacingRight--feed: $spacing4;
 $activityAvatarSpacingRight--feed--mobile: $spacing4;
 
 // This is the width of the entire left column

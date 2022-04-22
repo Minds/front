@@ -15,6 +15,7 @@
     &.m-activity__ownerBlock--minimalMode {
       padding-left: $activity-padding-lr--minimalMode;
       padding-right: $activity-padding-lr--minimalMode * 0.5;
+
       .m-activityOwnerBlock__avatar {
         img {
           height: 35px;

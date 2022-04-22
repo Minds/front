@@ -70,7 +70,10 @@ export class HomepageV3Component implements OnInit {
     this.topbarService.toggleMarketingPages(true, false, false);
     this.topbarService.toggleSearchBar(false);
     this.setVhVar();
-    setTimeout(() => this.appPromptService.dismiss(), 2000);
+
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => this.appPromptService.dismiss(), 2000);
+    }
   }
 
   ngOnDestroy() {

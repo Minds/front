@@ -13,10 +13,33 @@
     font-size: 12px;
     line-height: 12px;
     font-weight: 500;
-    @include m-theme() {
-      color: themed($m-white-always);
-      background-color: themed($m-textColor--secondary);
-      box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
+    &:not(.m-paywallBadge--activityV2) {
+      @include m-theme() {
+        color: themed($m-white-always);
+        background-color: themed($m-textColor--secondary);
+        box-shadow: 0 1px 3px 0 rgba(themed($m-black-always), 0.3);
+      }
+    }
+
+    &.m-paywallBadge--activityV2 {
+      &.iconOnly {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      &.isPlus {
+        @include m-theme() {
+          background-color: none !important;
+          color: themed($m-textColor--primary);
+        }
+      }
+      &.iconOnly {
+        padding: 0;
+        i {
+          margin: 0;
+          @include body2Regular;
+        }
+      }
     }
     &.topRightPosition {
       position: absolute;

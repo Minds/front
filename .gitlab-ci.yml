@@ -123,20 +123,20 @@ qa:nightly:
 #     - /^master$/
 #   <<: *cypress_tests
 
-qa:manual:
-  stage: qa
-  script:
-    - echo "Manually approved"
-  when: manual
-  only:
-    refs:
-      - master
-      - production
-      - test/gitlab-ci
-  except:
-    variables:
-      - $CI_NIGHTLY_TESTS == "true"
-  allow_failure: true
+# qa:manual:
+#   stage: qa
+#   script:
+#     - echo "Manually approved"
+#   when: manual
+#   only:
+#     refs:
+#       - master
+#       - production
+#       - test/gitlab-ci
+#   except:
+#     variables:
+#       - $CI_NIGHTLY_TESTS == "true"
+#   allow_failure: true
 
 ###############
 # Build Stage #
@@ -181,6 +181,7 @@ build:production:bundles:
       - dist/browser
       - dist/server
       - dist/embed
+      - dist/storybook
   only:
     refs:
       - master

@@ -35,6 +35,9 @@ export class BlockchainMarketingLinksService {
    * @returns { Promise<BlockchainMarketingLinksService> }
    */
   public async openBuyTokensModal(): Promise<BlockchainMarketingLinksService> {
+    if (!this.web3WalletService.checkDeviceIsSupported()) {
+      return this;
+    }
     try {
       await this.web3WalletService.getCurrentWallet(true);
       await this.buyTokensModalService.open();

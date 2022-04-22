@@ -54,7 +54,7 @@ export class InfiniteScroll {
    * The distance from the bottom of the scroll within which the loadNext event should fire
    * either a percentage of the total scroll height '25%' or a fixed number
    */
-  @Input() distance: string | number = '40%';
+  @Input() distance: string | number = '25%';
   @Input() inProgress: boolean = false;
   @Input() moreData: boolean = true;
   @Input() hideManual: boolean = false;

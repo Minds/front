@@ -16,7 +16,11 @@
       background-color: rgba(themed($m-black), 0.025);
     }
 
-    &:hover {
+    outline: none;
+
+    &:hover,
+    &:focus,
+    &:active {
       @include m-theme() {
         background-color: rgba(themed($m-black), 0.05);
       }
@@ -28,7 +32,9 @@
         color: themed($m-white-always);
       }
 
-      &:hover {
+      &:hover,
+      &:focus,
+      &:active {
         @include m-theme() {
           background-color: rgba(themed($m-white-always), 0.05);
         }
@@ -41,7 +47,9 @@
         color: themed($m-textColor--primary);
       }
 
-      &:hover {
+      &:hover,
+      &:focus,
+      &:active {
         @include m-theme() {
           background-color: rgba(themed($m-borderColor--primary), 0.95);
         }

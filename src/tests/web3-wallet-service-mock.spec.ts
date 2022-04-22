@@ -7,6 +7,7 @@ export let web3WalletServiceMock = new (function() {
   this.unavailable = false;
   this.locked = false;
   this.isLocalWallet = false;
+  this.deviceIsSupported = true;
 
   this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(() => {
     return this.unavailable;
@@ -35,6 +36,12 @@ export let web3WalletServiceMock = new (function() {
   this.isLocal = jasmine.createSpy('isLocal').and.callFake(async () => {
     return this.isLocalWallet;
   });
+
+  this.checkDeviceIsSupported = jasmine
+    .createSpy('checkDeviceIsSupported')
+    .and.callFake(() => {
+      return this.deviceIsSupported;
+    });
 
   this.getOnChainInterfaceLabel = jasmine
     .createSpy('getOnChainInterfaceLabel')

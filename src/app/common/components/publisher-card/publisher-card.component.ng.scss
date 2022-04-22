@@ -1,6 +1,20 @@
 @import 'defaults.scss';
 
 :host {
+  // *********************************
+  // ** ACTIVITY V2 **
+  // *********************************
+  &.m-publisherCard--activityV2 {
+    .m-publisherCard {
+      padding: $spacing4 $spacing5 $spacing6;
+      @include body2Regular;
+
+      .m-publisherCard__desc p {
+        @include body2Regular;
+      }
+    }
+  }
+
   .m-publisherCard {
     padding: 15px 20px 25px 20px;
     border-radius: $m-borderRadius;
@@ -72,6 +86,17 @@
           color: themed($m-textColor--primary);
         }
       }
+
+      a {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 
@@ -114,7 +139,7 @@
 
     .m-publisherCardOwnerRow__owner {
       max-width: 100%;
-      width: calc(100% - 185px);
+      width: calc(100% - 195px);
 
       > div {
         display: flex;
@@ -153,7 +178,9 @@
     }
     ::ng-deep {
       m-subscribeButton {
-        flex: auto 0 0;
+        flex: auto 1 0;
+        display: flex;
+        justify-content: flex-end;
         ::ng-deep m-button {
           .m-button i {
             font-size: 16px !important;

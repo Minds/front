@@ -72,8 +72,15 @@ describe('SettingsTwoFactorDisableSMSComponent', () => {
 
     expect((comp as any).toast.success).toHaveBeenCalled();
     expect((comp as any).service.reloadSettings).toHaveBeenCalled();
-    (comp as any).service.activePanel$.subscribe(val => {
-      expect(val).toEqual({ panel: 'root', intent: 'disabled-sms' });
-    });
+
+    (comp as any).service.activePanel$.subscribe(
+      val => {
+        expect(val).toEqual({ panel: 'root', intent: 'disabled-sms' });
+      },
+      err => {
+        console.error(err);
+        fail('An error occurred in confirm-disable-sms');
+      }
+    );
   });
 });

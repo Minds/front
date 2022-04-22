@@ -19,7 +19,7 @@
 
 <div
   class="m-group__grid m-pageLayout__container"
-  *ngIf="group && (group['is:member'] || group.membership == 2)"
+  *ngIf="group && (group['is:member'] || group.membership == 2  || session.isAdmin())"
 >
   <!-- Sidebar -->
   <div
@@ -30,7 +30,7 @@
     <m-videochat></m-videochat>
 
     <header
-      *ngIf="group && (group['is:member'] || group.membership == 2)"
+      *ngIf="group && (group['is:member'] || group.membership == 2 || session.isAdmin())"
       [ngClass]="[ 'm-group--' + filter + '-view' ]"
       [class.m-group--view-mode]="!editing"
     >
@@ -165,7 +165,7 @@
 <!-- IF A CLOSED GROUP AND NOT A MEMBER -->
 <div
   class="m-group__splash--closed-group"
-  *ngIf="group && !group['is:member'] && group.membership != 2"
+  *ngIf="group && !group['is:member'] && group.membership != 2 && !session.isAdmin()"
 >
   <minds-banner [object]="group" [top]="group.banner_position"></minds-banner>
 

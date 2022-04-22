@@ -232,10 +232,22 @@ export class ApiService {
     // console.log(output);
     if (queryParams) {
       const queryString = Object.keys(queryParams)
-        .map(
-          key =>
-            `${encodeURIComponent(key)}=${encodeURIComponent(queryParams[key])}`
-        )
+        .map(key => {
+          if (Array.isArray(queryParams[key])) {
+            return queryParams[key]
+              .map(
+                (value, index) =>
+                  `${encodeURIComponent(key)}[${index}]=${encodeURIComponent(
+                    value
+                  )}`
+              )
+              .join('&');
+          }
+
+          return `${encodeURIComponent(key)}=${encodeURIComponent(
+            queryParams[key]
+          )}`;
+        })
         .join('&');
 
       if (queryString) {

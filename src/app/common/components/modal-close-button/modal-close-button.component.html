@@ -4,6 +4,8 @@
     white: color === 'white'
   }"
   (click)="close()"
+  [tabindex]="autoFocus ? 0 : undefined"
+  [attr.ngbAutofocus]="autoFocus"
 >
   <i class="material-icons">close</i>
 </a>

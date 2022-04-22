@@ -223,35 +223,16 @@ describe('GroupsSettingsButton', () => {
     expect(getDeleteGroupItem()).toBeNull();
   });
 
-  xit('should delete the group if there is one member', fakeAsync(() => {
-    const deleteGroup = getDeleteGroupItem();
+  it('should show confirmation modal from group deletion', () => {
+    getDeleteGroupItem().nativeElement.click();
+    expect(modalServiceMock.present).toHaveBeenCalled();
+  });
 
-    deleteGroup.nativeElement.click();
-
-    fixture.detectChanges();
-    jasmine.clock().tick(10);
-
-    const confirmButton = fixture.debugElement.query(
-      By.css('m-modal button.mdl-button')
+  it('it should call to delete a group', () => {
+    (comp as any).service.deleteGroup.and.returnValue(
+      new Promise((resolve, reject) => true)
     );
-    expect(confirmButton.nativeElement.textContent).toContain('Confirm');
-
-    confirmButton.nativeElement.click();
-    fixture.detectChanges();
-    jasmine.clock().tick(10);
-
-    expect(comp.group.deleted).toBeTruthy();
-    expect(groupsServiceMock.deleteGroup).toHaveBeenCalled();
-  }));
-
-  it('should not allow group deletion if there is more than one member', fakeAsync(() => {
-    groupConfig.countMembers = Promise.resolve(2);
-    const deleteGroup = getDeleteGroupItem();
-
-    deleteGroup.nativeElement.click();
-    fixture.detectChanges();
-    jasmine.clock().tick(10);
-
-    expect(groupsServiceMock.countMembers).toHaveBeenCalled();
-  }));
+    comp.delete();
+    expect((comp as any).service.deleteGroup).toHaveBeenCalled();
+  });
 });

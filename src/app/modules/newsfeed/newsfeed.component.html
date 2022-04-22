@@ -1,4 +1,8 @@
-<div class="m-newsfeed m-page m-pageLayout__container" m-pageLayout__container>
+<div
+  class="m-newsfeed m-page m-pageLayout__container"
+  m-pageLayout__container
+  [ngClass]="{ 'm-newsfeed--activityV2': activityV2Feature }"
+>
   <div
     class="m-newsfeed--feed"
     m-pageLayout__pane="main"
@@ -14,18 +18,22 @@
   >
     <div class="m-pageLayoutPane__inner">
       <div class="m-pageLayoutPane__sticky" m-stickySidebar>
-        <m-onboardingProgressWidget></m-onboardingProgressWidget>
+        <!-- SIDEBAR ------------------------------------->
+        <ng-container *ngIf="!session.isLoggedIn()">
+          <m-discovery__disclaimer></m-discovery__disclaimer>
+
+          <div class="m-spacer"></div>
+
+          <m-onboardingProgressWidget></m-onboardingProgressWidget>
+        </ng-container>
 
         <m-language__sidebarPrompt></m-language__sidebarPrompt>
-        <m-suggestions__sidebar
-          type="user"
-          *mExperiment="'channel-recommendations'; variation: false"
-        ></m-suggestions__sidebar>
-
-        <m-liquiditySpot> </m-liquiditySpot>
-        <div class="m-spacer"></div>
 
         <m-discovery__sidebarTags></m-discovery__sidebarTags>
+
+        <div class="m-spacer"></div>
+
+        <m-liquiditySpot></m-liquiditySpot>
 
         <div class="m-spacer"></div>
 
@@ -38,7 +46,10 @@
             )
           "
         ></m-ads-boost>
+
         <div class="m-spacer"></div>
+
+        <!------------------------------------------------>
       </div>
     </div>
   </div>

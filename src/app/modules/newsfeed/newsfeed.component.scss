@@ -44,7 +44,7 @@ m-newsfeed {
     font-weight: 600;
     padding: 0 8px;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 }
@@ -140,30 +140,37 @@ m-newsfeed {
   object-fit: cover;
 }
 
+.m-newsfeed__inner {
+  m-channelRecommendation {
+    margin: $minds-margin * 2 $minds-margin * -5;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      margin: $minds-margin * 2 $minds-margin * -2.5;
+    }
+
+    @include m-theme() {
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+}
+
 .m-theme__2020 .m-newsfeed {
-  .m-newsfeed__inner {
-    // TODO: DO NOT REMOVE THIS
-    // padding: 20px 40px;
-    // @media screen and (max-width: $layoutMin3ColWidth) {
-    //   padding: 20px;
-    // }
-    // TODO: DO NOT REMOVE THIS
-    padding: 0 !important;
+  &:not(.m-newsfeed--activityV2) {
+    .m-newsfeed__inner {
+      padding: 20px 40px;
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        padding: 20px;
+      }
+    }
   }
 
-  .m-pageLayout__pane--main {
-    // padding: 40px;
-  }
   .m-pageLayout__pane--right {
     padding-right: 0;
   }
   .m-newsfeed__sidebar {
     max-width: initial;
     padding: 20px 0 20px 40px;
-  }
-
-  m-activity {
-    margin-bottom: 20px;
   }
 
   m-suggestions__sidebar > m-sidebarWidget {

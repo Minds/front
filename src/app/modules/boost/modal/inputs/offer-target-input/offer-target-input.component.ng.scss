@@ -13,6 +13,7 @@
     @include m-theme() {
       color: themed($m-textColor--primary);
       border: 1px solid themed($m-borderColor--primary);
+      background-color: themed($m-bgColor--primary);
     }
   }
 

@@ -1,22 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute, Route } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { DiscoveryService } from './discovery.service';
 import { Observable, Subscription } from 'rxjs';
+import { Session } from '../../services/session';
+import { ExperimentsService } from '../experiments/experiments.service';
 
 @Component({
   selector: 'm-discovery',
   templateUrl: './discovery.component.html',
+  styleUrls: ['./discovery.component.ng.scss'],
 })
 export class DiscoveryComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
   isPlusPageSubscription: Subscription;
   isPlusPage: boolean = false;
 
+  @HostBinding('class.m-discovery--activityV2')
+  get activityV2Feature(): boolean {
+    return this.experiments.hasVariation('front-5229-activities', true);
+  }
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private service: DiscoveryService
+    private service: DiscoveryService,
+    public session: Session,
+    private experiments: ExperimentsService
   ) {
     /**
      * Determine if on Minds+ page
