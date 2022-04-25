@@ -1,3 +1,8 @@
+import { map } from 'rxjs/operators';
+import {
+  DismissalService,
+  DismissIdentifier,
+} from './../../../common/services/dismissal.service';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
@@ -20,7 +25,7 @@ export class ChannelRecommendationComponent implements OnInit {
    * the location in which this component appears
    */
   @Input()
-  location: string;
+  location: 'newsfeed' | 'discovery-feed' | 'channel';
   /**
    * the channel id for which the recommendations should be contextualized.
    */
@@ -54,7 +59,7 @@ export class ChannelRecommendationComponent implements OnInit {
   dropdownItems: DropdownMenuItem[] = [
     {
       title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
-      onPress: null,
+      onPress: () => this.dismissalService.dismiss(this.widgetId),
       icon: {
         id: 'close',
         from: 'md',
@@ -65,7 +70,8 @@ export class ChannelRecommendationComponent implements OnInit {
   constructor(
     private api: ApiService,
     public experiments: ExperimentsService,
-    private recentSubscriptions: RecentSubscriptionsService
+    private recentSubscriptions: RecentSubscriptionsService,
+    private dismissalService: DismissalService
   ) {}
 
   @HostBinding('class.m-channelRecommendation--activityV2')
@@ -98,5 +104,14 @@ export class ChannelRecommendationComponent implements OnInit {
    */
   onResized(event: ResizedEvent): void {
     this.containerHeight$.next(event.newRect.height + 64);
+  }
+
+  /**
+   * A unique identifier for this component. Used for dismissing this widget. It varies depending on this.location
+   */
+  get widgetId(): DismissIdentifier {
+    return `channel-recommendation:${
+      this.location === 'channel' ? 'channel' : 'feed'
+    }`;
   }
 }

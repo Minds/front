@@ -1,3 +1,4 @@
+import { DismissalService } from './../../../common/services/dismissal.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ExperimentsService } from '../../experiments/experiments.service';
@@ -22,7 +23,8 @@ export class DefaultFeedComponent implements OnInit {
 
   constructor(
     public feedsService: FeedsService,
-    public experiments: ExperimentsService
+    public experiments: ExperimentsService,
+    private dismissalService: DismissalService
   ) {}
 
   public ngOnInit(): void {
@@ -75,6 +77,10 @@ export class DefaultFeedComponent implements OnInit {
    */
   shouldShowChannelRecommendation(index: number) {
     if (!this.location) {
+      return false;
+    }
+
+    if (this.dismissalService.isDismissed('channel-recommendation:feed')) {
       return false;
     }
 

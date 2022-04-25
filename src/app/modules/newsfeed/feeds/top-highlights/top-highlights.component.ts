@@ -1,3 +1,4 @@
+import { DismissalService } from './../../../../common/services/dismissal.service';
 import { TopFeedService } from '../subscribed.component';
 import {
   Component,
@@ -20,7 +21,7 @@ export class TopHighlightsComponent {
   dropdownItems = [
     {
       title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
-      onPress: null,
+      onPress: () => this.dismissalService.dismiss('top-highlights'),
       icon: {
         id: 'close',
         from: 'md',
@@ -35,6 +36,7 @@ export class TopHighlightsComponent {
 
   constructor(
     public topFeedService: TopFeedService,
-    public experiments: ExperimentsService
+    public experiments: ExperimentsService,
+    private dismissalService: DismissalService
   ) {}
 }

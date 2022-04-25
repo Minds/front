@@ -191,6 +191,7 @@ import { RelativeTimeSpanComponent } from './components/relative-time-span/relat
 import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 import { ResizedDirective } from './directives/resized.directive';
+import { DismissalService } from './services/dismissal.service';
 
 const routes: Routes = [
   {
@@ -567,6 +568,7 @@ const routes: Routes = [
     AuthRedirectService,
     SubscriptionService,
     RecentSubscriptionsService,
+    DismissalService,
   ],
 })
 export class CommonModule {}
