@@ -44,13 +44,15 @@
             iconId="chevron_left"
             [sizeFactor]="1.8"
             [rem]="true"
-            (click)="emitPreviousBoost()"
+            (singleClick)="emitPreviousBoost()"
+            mPreventDoubleClick
           ></m-icon
           ><m-icon
             iconId="chevron_right"
             [sizeFactor]="1.8"
             [rem]="true"
-            (click)="emitNextBoost()"
+            (singleClick)="emitNextBoost()"
+            mPreventDoubleClick
           ></m-icon>
         </div>
       </div>

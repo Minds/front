@@ -190,6 +190,7 @@ import { RelativeTimeSpanComponent } from './components/relative-time-span/relat
 import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 import { ResizedDirective } from './directives/resized.directive';
+import { PreventDoubleClickDirective } from './directives/prevent-double-click.directive';
 
 const routes: Routes = [
   {
@@ -363,6 +364,7 @@ const routes: Routes = [
     BlurhashDirective,
     RelativeTimeSpanComponent,
     ResizedDirective,
+    PreventDoubleClickDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -511,6 +513,7 @@ const routes: Routes = [
     BlurhashDirective,
     RelativeTimeSpanComponent,
     ResizedDirective,
+    PreventDoubleClickDirective,
   ],
   providers: [
     SiteService,

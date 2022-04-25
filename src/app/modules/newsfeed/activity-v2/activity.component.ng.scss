@@ -200,9 +200,11 @@
     .m-activity__boostRotatorButtons {
       ::ng-deep m-icon {
         margin-right: $spacing2;
+        @include unselectable;
         i {
           cursor: pointer;
           @include heading2Regular;
+          @include unselectable;
         }
       }
     }

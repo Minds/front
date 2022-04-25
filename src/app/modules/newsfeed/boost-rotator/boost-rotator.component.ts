@@ -191,9 +191,6 @@ export class NewsfeedBoostRotatorComponent {
     setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
-  /**
-   *
-   */
   load() {
     try {
       let params = {
