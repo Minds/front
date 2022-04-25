@@ -4,92 +4,15 @@ import { AbstractSubscriberComponent } from '../../../../../../../common/compone
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import {
   BridgeStep,
-  DepositRecord,
   HistoryRecord,
-  Record,
   RecordStatus,
   RecordType,
-  WithdrawRecord,
 } from '../../constants/constants.types';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Apollo, ApolloBase, gql } from 'apollo-angular';
 import { NetworkBridgeSwapService } from '../bridge-transfer/network-bridge-transfer.service';
 import { NetworkSwitchService } from '../../../../../../../common/services/network-switch-service';
-
-const GET_TRANSACTIONS_BY_AUTHOR = gql`
-  query GetTransactionsByAuthor($id: ID!) {
-    wallet(id: $id) {
-      deposits {
-        id
-        status
-        amount
-        timestamp
-        txHash
-        txBlock
-      }
-      withdraws {
-        id
-        status
-        amount
-        timestamp
-        txHash
-        txBlock
-      }
-    }
-  }
-`;
-
-const GET_TRANSACTIONS_BY_AUTHOR_AND_BLOCK = gql`
-  query GetTransactionsByAuthorAndBlock($id: ID!) {
-    wallet(id: $id) {
-      deposits {
-        id
-        status
-        amount
-        timestamp
-        txHash
-        txBlock
-      }
-      withdraws {
-        id
-        status
-        amount
-        timestamp
-        txHash
-        txBlock
-      }
-    }
-    headerBlocks(first: 1, orderBy: end, orderDirection: desc) {
-      end
-    }
-  }
-`;
-
-interface TransactionsQueryResult {
-  wallet: {
-    deposits: {
-      id: string;
-      status: string;
-      amount: string;
-      timestamp: string;
-      txHash: string;
-      txBlock: string;
-    }[];
-    withdraws: {
-      id: string;
-      status: string;
-      amount: string;
-      timestamp: string;
-      txHash: string;
-      txBlock: string;
-    }[];
-  };
-}
-
-interface TransactionsQueryResultWithBlock extends TransactionsQueryResult {
-  headerBlocks: { end: string }[];
-}
+import { NetworkBridgeTxHistoryService } from './network-bridge-tx-history.service';
 
 @Component({
   selector: 'm-networkBridgeTxHistory',
@@ -106,13 +29,13 @@ export class NetworkBridgeTxHistoryModalComponent
   public cdnAssetsUrl;
 
   // selected bridge entity
-  public entity;
+  public network;
 
   public userConfig;
   public isLoading = false;
   public pendingTotal = 0;
   public actionTotal = 0;
-  // selected tab option
+
   public filterState$ = new BehaviorSubject<RecordStatus | null>(null);
   public items$ = new BehaviorSubject<HistoryRecord[]>([]);
   public filteredItems$ = combineLatest([this.filterState$, this.items$]).pipe(
@@ -138,129 +61,33 @@ export class NetworkBridgeTxHistoryModalComponent
       return items;
     })
   );
-  private posBridgePolygon: ApolloBase;
-  private posBridgeMainnet: ApolloBase;
   private querySubscription: Subscription;
 
   constructor(
-    private readonly networkBridgeService: NetworkBridgeService,
     private readonly configs: ConfigsService,
-    private readonly apolloProvider: Apollo,
+    private readonly networkSwitcher: NetworkSwitchService,
+    private readonly networkBridgeService: NetworkBridgeService,
     private readonly networkBridgeSwapService: NetworkBridgeSwapService,
-    private readonly networkSwitcher: NetworkSwitchService
+    private readonly networkBridgeTxHistoryService: NetworkBridgeTxHistoryService
   ) {
     super();
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.userConfig = configs.get('user');
-    this.posBridgePolygon = this.apolloProvider.use('posBridgePolygon');
-    this.posBridgeMainnet = this.apolloProvider.use('posBridgeMainnet');
   }
 
   ngOnInit(): void {
-    this.entity = this.networkBridgeService.selectedBridge$.value;
+    this.network = this.networkBridgeService.selectedBridge$.value;
     this.isLoading = true;
-
-    const variables = { id: this.userConfig.eth_wallet.toLowerCase() };
-
-    const mainnetQuerySubscription = this.posBridgeMainnet.watchQuery<
-      TransactionsQueryResultWithBlock
-    >({
-      query: GET_TRANSACTIONS_BY_AUTHOR_AND_BLOCK,
-      variables,
-      pollInterval: 5000,
-    });
-    const polygonQuerySubscription = this.posBridgePolygon.watchQuery<
-      TransactionsQueryResult
-    >({
-      query: GET_TRANSACTIONS_BY_AUTHOR,
-      variables,
-      pollInterval: 5000,
-    });
-
-    this.querySubscription = combineLatest([
-      mainnetQuerySubscription.valueChanges,
-      polygonQuerySubscription.valueChanges,
-    ]).subscribe(data => {
-      const [{ data: mainnet }, { data: polygon }] = data;
-
-      const lastSyncedBlock = mainnet.headerBlocks[0]
-        ? parseInt(mainnet.headerBlocks[0].end, 10)
-        : 0;
-
-      const polygonDeposits = [...polygon.wallet.deposits];
-      const deposits = mainnet.wallet.deposits.map(
-        (deposit): DepositRecord => {
-          const polygonTxIndex = polygonDeposits.findIndex(polygonDeposit => {
-            return polygonDeposit.amount === deposit.amount;
-          });
-          const polygonTx = polygonDeposits[polygonTxIndex];
-          if (polygonTx) {
-            polygonDeposits.splice(polygonTxIndex, 1);
-          }
-
-          const status: RecordStatus = polygonTx
-            ? RecordStatus.SUCCESS
-            : RecordStatus.PENDING;
-
-          return {
-            type: RecordType.DEPOSIT,
-            status,
-            txHash: deposit.txHash,
-            amount: deposit.amount,
-            txBlock: parseInt(deposit.txBlock, 10),
-            timestamp: parseInt(deposit.timestamp, 10),
-            txPolygon: polygonTx?.txHash,
-          };
-        }
-      );
-
-      const mainnetWithdraws = [...mainnet.wallet.withdraws];
-      const withdraws = polygon.wallet.withdraws.map(
-        (withdraw): WithdrawRecord => {
-          const mainnetTxIndex = mainnetWithdraws.findIndex(mainnetWithdraw => {
-            return mainnetWithdraw.amount === withdraw.amount;
-          });
-          const mainnetTx = mainnetWithdraws[mainnetTxIndex];
-          if (mainnetTx) {
-            mainnetWithdraws.splice(mainnetTxIndex, 1);
-          }
-
-          let status: RecordStatus = mainnetTx
-            ? RecordStatus.SUCCESS
-            : RecordStatus.PENDING;
-
-          if (
-            status === RecordStatus.PENDING &&
-            parseInt(withdraw.txBlock, 10) <= lastSyncedBlock
-          ) {
-            status = RecordStatus.ACTION_REQUIRED;
-          }
-
-          return {
-            type: RecordType.WITHDRAW,
-            status,
-            txBurn: withdraw.txHash,
-            amount: withdraw.amount,
-            timestamp: mainnetTx
-              ? parseInt(mainnetTx.timestamp, 10)
-              : parseInt(withdraw.timestamp, 10),
-            txHash: mainnetTx?.txHash,
-            txBlock: mainnetTx && parseInt(mainnetTx.txBlock, 10),
-          };
-        }
-      );
-
-      console.log({ deposits, withdraws });
-
-      const allTx = [...deposits, ...withdraws];
-      allTx.sort((dateA, dateB) => dateB.timestamp - dateA.timestamp);
-      this.items$.next(allTx);
-      this.isLoading = false;
-    });
+    this.querySubscription = this.networkBridgeTxHistoryService
+      .getHistory(this.userConfig.eth_wallet)
+      .subscribe(txs => {
+        this.items$.next(txs);
+        this.isLoading = false;
+      });
   }
 
   // Dismiss intent.
-  onDismissIntent: () => void = () => {};
+  onDismissIntent = () => {};
 
   /**
    * Sets modal options.
@@ -281,13 +108,9 @@ export class NetworkBridgeTxHistoryModalComponent
     );
   }
 
-  isWithdraw(item: Record): item is WithdrawRecord {
-    return item.type === RecordType.WITHDRAW;
-  }
-
   handleActionRequired(item: HistoryRecord): void {
     if (
-      !this.isWithdraw(item) ||
+      item.type !== RecordType.WITHDRAW ||
       item.status !== RecordStatus.ACTION_REQUIRED
     ) {
       return;
@@ -304,6 +127,17 @@ export class NetworkBridgeTxHistoryModalComponent
   }
 
   formatState() {
-    return this.filterState$.value.replace('_', ' ');
+    switch (this.filterState$.value) {
+      case RecordStatus.SUCCESS:
+        return 'success';
+      case RecordStatus.PENDING:
+        return 'pending';
+      case RecordStatus.ERROR:
+        return 'error';
+      case RecordStatus.UNKNOWN:
+        return 'unknown';
+      case RecordStatus.ACTION_REQUIRED:
+        return 'action required';
+    }
   }
 }
