@@ -1,13 +1,11 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { BridgeStep } from '../../constants/constants.types';
+import { Component, OnInit } from '@angular/core';
+import { BridgeService, BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
-import { PolygonService } from '../../services/polygon/polygon.service';
-import { BigNumber, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import {
   Network,
   NetworkSwitchService,
 } from '../../../../../../../common/services/network-switch-service';
-import { SkaleService } from '../../../skale/skale.service';
 
 @Component({
   selector: 'm-networkConfirmation',
@@ -19,21 +17,18 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
   to: Network;
   from: Network;
 
-  public service;
+  public loading = false;
+
+  public readonly service: BridgeService;
 
   constructor(
     private readonly networkBridgeService: NetworkBridgeService,
-    private readonly networkSwitchService: NetworkSwitchService,
-    public injector: Injector
+    private readonly networkSwitchService: NetworkSwitchService
   ) {
-    if (
-      this.networkBridgeService.selectedBridge$.value.id ===
-      this.networkSwitchService.networks.polygon.id
-    ) {
-      this.service = <PolygonService>this.injector.get(PolygonService);
-    } else {
-      this.service = <SkaleService>this.injector.get(SkaleService);
-    }
+    this.service = this.networkBridgeService.getBridgeService();
+    this.service
+      .getLoadingState()
+      .subscribe(_loading => (this.loading = _loading));
   }
 
   ngOnInit(): void {
@@ -50,14 +45,15 @@ export class NetworkBridgeConfirmationComponent implements OnInit {
 
   async transfer() {
     const amount = ethers.utils.parseEther(this.amount);
-    let result: boolean;
-    if (this.to.id === this.networkSwitchService.networks.mainnet.id) {
-      result = await this.service.withdraw(amount);
-    } else {
-      result = await this.service.deposit(amount);
-    }
-    if (result) {
+    try {
+      if (this.to.id === this.networkSwitchService.networks.mainnet.id) {
+        await this.service.withdraw(amount);
+      } else {
+        await this.service.deposit(amount);
+      }
       this.navigate();
+    } catch (e) {
+      console.log('transfer error: ', e);
     }
   }
 

@@ -4,12 +4,9 @@ import {
   Network,
   NetworkSwitchService,
 } from '../../../../../../../common/services/network-switch-service';
-import { PolygonService } from '../../services/polygon/polygon.service';
 import { BridgeStep, InputBalance } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { ethers } from 'ethers';
-import { SkaleService } from '../../../skale/skale.service';
-import { Injector } from '@angular/core';
 
 @Component({
   selector: 'm-networkSwapBox',
@@ -28,19 +25,27 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
     root: 0,
     child: 0,
   };
-
-  private allowance = ethers.BigNumber.from(0);
-
   public readonly POLYGON_NETWORK: Network;
   public readonly MAINNET_NETWORK: Network;
   public readonly SKALE_NETWORK: Network;
-
   // handle injected service
   public service;
-
   // handle of networks
   fromNetwork: Network;
   receivingNetwork: Network;
+  // form for input amount
+  public form: FormGroup;
+  private allowance = ethers.BigNumber.from(0);
+
+  constructor(
+    private readonly networkBridgeService: NetworkBridgeService,
+    private readonly networkSwitchService: NetworkSwitchService
+  ) {
+    this.service = this.networkBridgeService.getBridgeService();
+    this.MAINNET_NETWORK = this.networkSwitchService.networks.mainnet;
+    this.POLYGON_NETWORK = this.networkSwitchService.networks.polygon;
+    this.SKALE_NETWORK = this.networkSwitchService.networks.skale;
+  }
 
   get currentNetworkBalance() {
     return this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName
@@ -52,24 +57,6 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
     return this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName
       ? this.balance.child
       : this.balance.root;
-  }
-
-  // form for input amount
-  public form: FormGroup;
-
-  constructor(
-    private readonly networkBridgeService: NetworkBridgeService,
-    private readonly networkSwitchService: NetworkSwitchService,
-    private injector: Injector
-  ) {
-    if (Number(this.networkBridgeService.selectedBridge$.value.id) === 80001) {
-      this.service = <PolygonService>this.injector.get(PolygonService);
-    } else {
-      this.service = <SkaleService>this.injector.get(SkaleService);
-    }
-    this.MAINNET_NETWORK = this.networkSwitchService.networks.mainnet;
-    this.POLYGON_NETWORK = this.networkSwitchService.networks.polygon;
-    this.SKALE_NETWORK = this.networkSwitchService.networks.skale;
   }
 
   async ngOnInit(): Promise<void> {
@@ -122,23 +109,6 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
   }
 
   /**
-   * Inits balances and calls to get allowance.
-   * @returns { Promise<void> }
-   */
-  private async initBalance(): Promise<void> {
-    try {
-      const balances = await this.service.getBalances();
-      this.balance = {
-        root: parseFloat(ethers.utils.formatEther(balances.root)),
-        child: parseFloat(ethers.utils.formatEther(balances.child)),
-      };
-      this.allowance = ethers.BigNumber.from(balances.approved);
-    } catch (err) {
-      console.warn('error fetching balances', err);
-    }
-  }
-
-  /**
    * Swaps input currency fields around by swapping networks
    * and triggering a reload.
    * @returns { void }
@@ -167,5 +137,22 @@ export class NetworkBridgeSwapBoxComponent implements OnInit {
       this.fromNetwork.networkName === this.MAINNET_NETWORK.networkName &&
       ethers.utils.parseEther(this.amount).gt(this.allowance)
     );
+  }
+
+  /**
+   * Inits balances and calls to get allowance.
+   * @returns { Promise<void> }
+   */
+  private async initBalance(): Promise<void> {
+    try {
+      const balances = await this.service.getBalances();
+      this.balance = {
+        root: parseFloat(ethers.utils.formatEther(balances.root)),
+        child: parseFloat(ethers.utils.formatEther(balances.child)),
+      };
+      this.allowance = ethers.BigNumber.from(balances.approved);
+    } catch (err) {
+      console.warn('error fetching balances', err);
+    }
   }
 }

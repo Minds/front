@@ -1,17 +1,24 @@
 import {
   ComponentFactoryResolver,
   Injectable,
+  Injector,
   OnDestroy,
   ViewContainerRef,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Network } from '../../../../../../common/services/network-switch-service';
+import {
+  Network,
+  NetworkSwitchService,
+} from '../../../../../../common/services/network-switch-service';
 import {
   BridgeComponent,
+  BridgeService,
   BridgeStep,
   CurrentStep,
 } from '../constants/constants.types';
 import { WithdrawTransactionStateComponent } from '../components/withdraw-transaction-state/withdraw-transaction-state.component';
+import { PolygonService } from './polygon/polygon.service';
+import { SkaleService } from '../../skale/skale.service';
 
 @Injectable({ providedIn: 'root' })
 export class NetworkBridgeService implements OnDestroy {
@@ -23,7 +30,11 @@ export class NetworkBridgeService implements OnDestroy {
     step: BridgeStep.SWAP,
   });
 
-  constructor(private cfr: ComponentFactoryResolver) {}
+  constructor(
+    private readonly cfr: ComponentFactoryResolver,
+    private readonly networkSwitchService: NetworkSwitchService,
+    public injector: Injector
+  ) {}
 
   ngOnDestroy() {}
 
@@ -72,6 +83,17 @@ export class NetworkBridgeService implements OnDestroy {
       case BridgeStep.ERROR:
       default:
         return NetworkBridgeErrorComponent;
+    }
+  }
+
+  getBridgeService(): BridgeService {
+    if (
+      this.selectedBridge$.value.id ===
+      this.networkSwitchService.networks.polygon.id
+    ) {
+      return this.injector.get(PolygonService);
+    } else {
+      return this.injector.get(SkaleService);
     }
   }
 }

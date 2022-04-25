@@ -1,10 +1,8 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
-import { PolygonService } from '../../services/polygon/polygon.service';
-import { BridgeStep } from '../../constants/constants.types';
+import { BridgeService, BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { Network } from '../../../../../../../common/services/network-switch-service';
-import { SkaleService } from '../../../skale/skale.service';
 
 @Component({
   selector: 'm-networkApproval',
@@ -16,17 +14,10 @@ export class NetworkBridgeApprovalComponent implements OnInit {
   from: Network;
   to: Network;
 
-  public service;
+  public service: BridgeService;
 
-  constructor(
-    private readonly networkBridgeService: NetworkBridgeService,
-    public injector: Injector
-  ) {
-    if (Number(this.networkBridgeService.selectedBridge$.value.id) === 80001) {
-      this.service = <PolygonService>this.injector.get(PolygonService);
-    } else {
-      this.service = <SkaleService>this.injector.get(SkaleService);
-    }
+  constructor(private readonly networkBridgeService: NetworkBridgeService) {
+    this.service = this.networkBridgeService.getBridgeService();
   }
 
   ngOnInit(): void {

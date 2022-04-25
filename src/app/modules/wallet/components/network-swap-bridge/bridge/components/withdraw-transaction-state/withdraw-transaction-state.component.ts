@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
-import { BridgeStep } from '../../constants/constants.types';
+import { BridgeService, BridgeStep } from '../../constants/constants.types';
 import { NetworkBridgeService } from '../../services/network-bridge.service';
 import { PolygonService } from '../../services/polygon/polygon.service';
 
@@ -16,10 +16,11 @@ export class WithdrawTransactionStateComponent implements OnInit {
   proposalState = 0;
   public states;
 
-  constructor(
-    private readonly networkBridgeService: NetworkBridgeService,
-    private readonly polygonService: PolygonService
-  ) {}
+  private service: BridgeService;
+
+  constructor(private readonly networkBridgeService: NetworkBridgeService) {
+    this.service = this.networkBridgeService.getBridgeService();
+  }
 
   ngOnInit(): void {
     if (
@@ -92,8 +93,13 @@ export class WithdrawTransactionStateComponent implements OnInit {
   async handleTransaction() {
     try {
       this.proposalState = 2;
-      const receipt = await this.polygonService.exit(this.txBurn);
-      this.txLink = this.getExplorerLink(receipt.transactionHash);
+      if (this.service instanceof PolygonService) {
+        // The exit function is only for Polygon Bridge
+        const receipt = await this.service.exit(this.txBurn);
+        this.txLink = this.getExplorerLink(receipt.transactionHash);
+      } else {
+        // Implement SKALE exit equivalent function
+      }
       this.changeState();
     } catch (e) {
       this.proposalState = 1;

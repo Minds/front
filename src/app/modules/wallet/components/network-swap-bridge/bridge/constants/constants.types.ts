@@ -1,4 +1,14 @@
 import { Network } from '../../../../../../common/services/network-switch-service';
+import { BigNumber, BigNumberish } from 'ethers';
+import { Observable } from 'rxjs';
+
+export interface BridgeService {
+  approve(amount?: BigNumberish): Promise<void>;
+  withdraw(amount: BigNumber): Promise<void>;
+  deposit(amount: BigNumber): Promise<void>;
+
+  getLoadingState(): Observable<boolean>;
+}
 
 export interface InputBalance {
   root: number;
@@ -73,10 +83,10 @@ export type CurrentStep =
       data: WithdrawRecord;
     };
 
-export type ErrorStepData = {
+export interface ErrorStepData {
   title?: string;
   subtitle?: string;
-};
+}
 
 export enum BridgeStep {
   SWAP,

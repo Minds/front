@@ -25,16 +25,10 @@
   </div>
 
   <div class="m-networkConfirmation-button_container">
-    <m-button
-      color="blue"
-      (onAction)="transfer()"
-      [disabled]="service.isLoading$ | async"
-    >
+    <m-button color="blue" (onAction)="transfer()" [disabled]="loading | async">
       <ng-container i18n="verb|@@M__ACTION__CANCEL">
-        <m-loadingSpinner
-          [inProgress]="service.isLoading$ | async"
-        ></m-loadingSpinner>
-        <span *ngIf="!(service.isLoading$ | async)">
+        <m-loadingSpinner [inProgress]="loading | async"></m-loadingSpinner>
+        <span *ngIf="!(loading | async)">
           Confirm Transfer
         </span>
       </ng-container>

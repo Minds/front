@@ -17,6 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ConfigsService } from '../../../../../../../common/services/configs.service';
 import { PolygonMindsTokenContractService } from './contracts/minds-token-polygon.service';
 import {
+  BridgeService,
   DepositRecord,
   HistoryRecord,
   RecordStatus,
@@ -28,7 +29,7 @@ use(Web3ClientPlugin);
 setProofApi('https://apis.matic.network/');
 
 @Injectable({ providedIn: 'root' })
-export class PolygonService {
+export class PolygonService implements BridgeService {
   public history$ = new BehaviorSubject<HistoryRecord[]>([]);
   public historyLoading$ = new BehaviorSubject(false);
   public isLoading$ = new BehaviorSubject(false);
@@ -94,6 +95,10 @@ export class PolygonService {
 
   public async initialize() {
     this.getHistory();
+  }
+
+  public getLoadingState() {
+    return this.isLoading$;
   }
 
   /**
@@ -187,7 +192,7 @@ export class PolygonService {
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }
    */
-  public async approve(amount?: BigNumber): Promise<any> {
+  public async approve(amount?: BigNumber): Promise<void> {
     const posClient = await this.getPOSClientRoot();
     const erc20Contract = posClient.erc20(this.MIND_TOKEN_ADDRESS, true);
     let approveTx: ITransactionWriteResult;
@@ -204,7 +209,7 @@ export class PolygonService {
    * @param { number } amount - amount of tokens to approve.
    * @returns { Promise<void> }
    */
-  public async deposit(amount: BigNumber): Promise<any> {
+  public async deposit(amount: BigNumber): Promise<void> {
     if (amount.isZero()) {
       this.toast.warn('You must provide an amount of tokens');
       return;
@@ -231,19 +236,13 @@ export class PolygonService {
       };
       this.addToHistory(record);
       this.isLoading$.next(false);
-      console.log(tx);
-      return true;
     } catch (e) {
       if (e.code === 4001) {
         this.hasError$.next(true);
       }
       this.isLoading$.next(false);
+      throw e;
     }
-    return false;
-  }
-
-  private addToHistory(record: HistoryRecord) {
-    this.history$.next(this.sortHistory([record, ...this.history$.getValue()]));
   }
 
   /**
@@ -459,6 +458,10 @@ export class PolygonService {
       child: await childToken.balanceOf(from),
       approved: await rootToken.allowance(from, this.ERC20_PREDICATE_ADDRESS),
     };
+  }
+
+  private addToHistory(record: HistoryRecord) {
+    this.history$.next(this.sortHistory([record, ...this.history$.getValue()]));
   }
 
   private getTokenContracts() {
