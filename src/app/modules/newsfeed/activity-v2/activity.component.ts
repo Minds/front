@@ -173,6 +173,7 @@ export class ActivityV2Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.heightSubscription.unsubscribe();
+    this.guestModeSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {

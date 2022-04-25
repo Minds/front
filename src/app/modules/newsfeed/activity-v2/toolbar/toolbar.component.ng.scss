@@ -1,5 +1,4 @@
 @import 'defaults.scss';
-@import '../shared.scss';
 
 :host {
   // *********************************
@@ -15,8 +14,8 @@
     @media screen and (max-width: $max-mobile) {
       padding-left: $activitySpacingLeft--feed--mobile;
       padding-right: $activitySpacingRight--feed--mobile;
-      padding-top: $spacing3;
-      padding-bottom: $spacing3;
+      padding-top: $spacing4;
+      padding-bottom: $spacing4;
     }
   }
 
@@ -231,6 +230,10 @@
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        flex-grow: 0;
       }
     }
 
