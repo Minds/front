@@ -17,6 +17,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { HeadersService } from '../../../common/services/headers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
 import { JsonLdService } from '../../../common/services/jsonld.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -39,6 +40,8 @@ export class NewsfeedSingleComponent {
 
   private shouldReuseRouteFn; // For comment focusedUrn reloading
 
+  activityV2Feature: boolean = false;
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -51,13 +54,19 @@ export class NewsfeedSingleComponent {
     configs: ConfigsService,
     private headersService: HeadersService,
     private authModal: AuthModalService,
-    protected jsonLdService: JsonLdService
+    protected jsonLdService: JsonLdService,
+    private experiments: ExperimentsService
   ) {
     this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
+
     this.context.set('activity');
 
     this.paramsSubscription = this.route.params.subscribe(params => {

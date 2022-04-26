@@ -17,4 +17,19 @@
       top: 2px;
     }
   }
+
+  // ******************************************
+  // ** ACTIVITY V2 **
+  // ******************************************
+
+  &.m-feedHeader--activityV2 {
+    .m-newsfeed__subscribed__feedType {
+      padding: $spacing6 $activityAvatarSpacingLeft--feed;
+
+      @media screen and (max-width: $max-mobile) {
+        padding: $spacing5 $spacing5 $activityAvatarSpacingLeft--feed--mobile
+          $spacing4;
+      }
+    }
+  }
 }

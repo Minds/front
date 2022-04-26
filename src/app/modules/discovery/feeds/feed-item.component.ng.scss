@@ -1,0 +1,32 @@
+@import 'defaults.scss';
+
+:host {
+  // *********************************
+  // ** ACTIVITY V2 **
+  // *********************************
+
+  .m-discovery__feedItem--activityV2 {
+    padding: 0;
+
+    &.m-discovery__feedItem--group {
+      padding-top: $spacing4;
+      padding-bottom: $spacing6;
+      padding-left: $activityAvatarSpacingLeft--feed;
+      padding-right: $activitySpacingRight--feed;
+
+      @media screen and (max-width: $max-mobile) {
+        padding-left: $activityAvatarSpacingLeft--feed--mobile;
+        padding-right: $activitySpacingRight--feed--mobile;
+      }
+
+      .m-discoveryFeedItem__avatar {
+        width: $activityAvatarWidth;
+        height: $activityAvatarWidth;
+        padding-right: $activityAvatarSpacingRight--feed;
+        @media screen and (max-width: $max-mobile) {
+          padding-right: $activityAvatarSpacingRight--feed--mobile;
+        }
+      }
+    }
+  }
+}

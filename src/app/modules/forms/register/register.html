@@ -38,6 +38,9 @@
   *ngIf="!showFbForm"
 >
   <div class="m-layout__grid">
+    <!-- ------------------------------- -->
+    <!-- USERNAME FIELD -->
+    <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField">
       <div class="m-form__input--details">
         <div class="m-form__row--label">
@@ -92,6 +95,9 @@
       </div>
     </div>
 
+    <!-- ------------------------------- -->
+    <!-- EMAIL FIELD -->
+    <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField">
       <div class="m-form__input--details">
         <div class="m-form__row--label">
@@ -123,6 +129,10 @@
         />
       </div>
     </div>
+
+    <!-- ------------------------------- -->
+    <!-- PASSWORD FIELD -->
+    <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField">
       <div class="m-form__input--details">
         <div class="m-form__row--label">
@@ -148,7 +158,11 @@
           </ng-container>
         </div>
       </div>
-      <m-popover (change)="onPopoverChange($event)" #popover>
+      <m-popover
+        #popover
+        [password]="this.form.get('password').value"
+        [riskCheckStatus]="passwordRiskCheckStatus"
+      >
         <div class="m-form__row--input">
           <input
             type="password"
@@ -160,13 +174,16 @@
             onfocus="this.removeAttribute('readonly');"
             (focus)="onPasswordFocus()"
             (blur)="onPasswordBlur()"
-            (ngModelChange)="popover.show(); popover.checkRules($event)"
             [class.m-input--hide-placeholder]="showLabels"
             data-cy="data-minds-register-password-input-1"
           />
         </div>
       </m-popover>
     </div>
+
+    <!-- ------------------------------- -->
+    <!-- PASSWORD2 FIELD -->
+    <!-- ------------------------------- -->
     <div
       class="m-form__field--text stretchedField m-registerForm__confirmPassword"
     >
@@ -185,10 +202,10 @@
           [style.visibility]="this.form.get('password2').touched && this.form.get('password2').dirty ? 'visible' : 'hidden'"
         >
           <ng-container
-            *ngIf="this.form.errors?.passwordConfirming"
+            *ngIf="this.form.errors?.passwordsMatch"
             i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORDS_MUST_MATCH"
           >
-            Passwords must match
+            Passwords must match.
           </ng-container>
         </div>
       </div>
@@ -204,11 +221,14 @@
           onfocus="this.removeAttribute('readonly');"
           [class.m-input--hide-placeholder]="showLabels"
           data-cy="data-minds-register-password-input-2"
-          [class.ng-invalid]="this.form.errors?.passwordConfirming"
+          [class.ng-invalid]="this.form.errors?.passwordsMatch"
         />
       </div>
     </div>
 
+    <!-- ------------------------------- -->
+    <!-- CAPTCHA FIELD -->
+    <!-- ------------------------------- -->
     <div class="m-form__field--text stretchedField m-registerForm__captcha">
       <div class="m-form__row--input">
         <ng-container *ngIf="!isFriendlyCaptchaEnabled(); else friendlyCaptcha">
@@ -221,6 +241,9 @@
     </div>
   </div>
 
+  <!-- ------------------------------- -->
+  <!-- ERRORS(?) -->
+  <!-- ------------------------------- -->
   <div
     class="m-register__formError"
     [style.visibility]="showInlineErrors && showBigButton && errorMessage ? 'visible' : 'hidden'"
@@ -229,6 +252,9 @@
   </div>
 
   <div class="m-layout__row m-register__actions">
+    <!-- ------------------------------- -->
+    <!-- CHECKBOXES -->
+    <!-- ------------------------------- -->
     <div class="m-register__checkboxes">
       <m-formInput__checkbox formControlName="exclusive_promotions">
         Receive exclusive token rewards and info
@@ -245,13 +271,16 @@
 
     <div class="m-layout__spacer"></div>
 
+    <!-- ------------------------------- -->
+    <!-- FOOTER BUTTONS - NOT AUTH MODAL -->
+    <!-- ------------------------------- -->
     <ng-container *ngIf='this.source != "auth-modal"'>
       <m-button
+        *ngIf="!showBigButton"
+        [disabled]="!this.form.valid"
+        [saving]="inProgress"
         color="blue"
         (onAction)="register($event)"
-        [saving]="inProgress"
-        [disabled]="!this.form.valid"
-        *ngIf="!showBigButton"
       >
         <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
           Signup
@@ -273,6 +302,9 @@
   </div>
 </form>
 
+<!-- ------------------------------- -->
+<!-- FOOTER BUTTONS - AUTH MODAL -->
+<!-- ------------------------------- -->
 <ng-container *ngIf='this.source == "auth-modal"'>
   <div class="m-register__divider">
     <span></span>

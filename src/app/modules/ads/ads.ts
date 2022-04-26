@@ -16,20 +16,8 @@ import { SettingsV2Service } from '../settings-v2/settings-v2.service';
 @Component({
   selector: 'm-ads-boost',
   inputs: ['handler', 'limit'],
+  templateUrl: 'ads.html',
   styleUrls: ['ads.ng.scss'],
-  template: `
-    <h3 class="m-newsfeedSidebar__header" *ngIf="boosts.length > 0">
-      <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
-    </h3>
-    <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
-      <ng-container *ngIf="entity.type && entity.type === 'user'; else notUser">
-        <m-publisherCard [publisher]="entity"></m-publisherCard
-      ></ng-container>
-      <ng-template #notUser>
-        <minds-card [object]="entity" class="mdl-card m-border"></minds-card>
-      </ng-template>
-    </div>
-  `,
   host: {
     class: 'm-ad-block m-ad-block-boosts',
   },

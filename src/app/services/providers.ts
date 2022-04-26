@@ -1,3 +1,4 @@
+import { ApiService } from './../common/api/api.service';
 import { Compiler, NgZone, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -53,6 +54,7 @@ import { CompassHookService } from '../common/services/compass-hook.service';
 import { CompassService } from '../modules/compass/compass.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from './ux/modal.service';
+import { ServiceWorkerService } from '../common/services/service-worker.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -207,7 +209,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: FeedsService,
     useFactory: FeedsService._,
-    deps: [Client, Session, EntitiesService, BlockListService],
+    deps: [Client, ApiService, Session, EntitiesService, BlockListService],
   },
   {
     provide: InMemoryStorageService,
@@ -222,4 +224,5 @@ export const MINDS_PROVIDERS: any[] = [
   AuthService,
   FormToastService,
   MessengerService,
+  ServiceWorkerService,
 ];

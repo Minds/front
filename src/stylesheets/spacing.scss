@@ -21,3 +21,88 @@ $spacing7: 1.75rem; // 28px
 $spacing8: 2rem; // 32px
 $spacing9: 2.25rem; // 36px
 $spacing10: 2.5rem; // 40px
+$spacing11: 2.75rem; // 44px
+$spacing12: 3rem; // 48px
+$spacing13: 3.25rem; // 52px
+$spacing14: 3.5rem; // 56px
+$spacing15: 3.75rem; // 60px
+$spacing16: 4rem; // 64px
+$spacing17: 4.25rem; // 68px
+$spacing18: 4.5rem; // 72px
+$spacing19: 4.75rem; // 76px
+$spacing20: 5rem; // 80px
+
+///////////////////////////////////////////
+
+// Store variables here that are shared
+// among a variety of components
+// that relate to feeds and activities
+
+///////////////////////////////////////////
+// AVATAR
+///////////////////////////////////////////
+
+$activityAvatarWidth: $spacing10;
+
+///////////////////////////////////////////
+// FEED
+///////////////////////////////////////////
+
+// This is the spacing on either side of the avatar
+// in the left column of activities
+$activityAvatarSpacingLeft--feed: $spacing8;
+$activityAvatarSpacingLeft--feed--mobile: $spacing4;
+
+$activityAvatarSpacingRight--feed: $spacing4;
+$activityAvatarSpacingRight--feed--mobile: $spacing4;
+
+// This is the width of the entire left column
+// that contains the avatar.
+//
+// Use it to line up components that go above/below
+// the component with the avatar
+$activitySpacingLeft--feed: $activityAvatarSpacingLeft--feed +
+  $activityAvatarWidth + $activityAvatarSpacingRight--feed;
+$activitySpacingLeft--feed--mobile: $activityAvatarSpacingLeft--feed--mobile +
+  $activityAvatarWidth + $activityAvatarSpacingRight--feed--mobile;
+
+$activitySpacingRight--feed: $spacing12;
+$activitySpacingRight--feed--mobile: $spacing4;
+
+///////////////////////////////////////////
+// SINGLE POST PAGE
+///////////////////////////////////////////
+
+// Same as above but for single post pages
+$activityAvatarSpacingLeft--single: $spacing8;
+$activityAvatarSpacingLeft--single--mobile: $spacing4;
+
+$activityAvatarSpacingRight--single: $spacing4;
+$activityAvatarSpacingRight--single--mobile: $spacing4;
+
+$activitySpacingLeft--single: $activityAvatarSpacingLeft--single +
+  $activityAvatarWidth + $activityAvatarSpacingRight--single;
+$activitySpacingLeft--single--mobile: $activityAvatarSpacingLeft--single--mobile +
+  $activityAvatarWidth + $activityAvatarSpacingRight--single--mobile;
+
+$activitySpacingRight--single: $spacing12;
+$activitySpacingRight--single--mobile: $spacing4;
+
+///////////////////////////////////////////
+// ACTIVITY MODAL
+///////////////////////////////////////////
+
+// Spacing on either side of the components that
+// live in the right column of the activity modal
+$activitySpacing--modal: $spacing4;
+
+///////////////////////////////////////////
+// MINIMAL MODE
+///////////////////////////////////////////
+
+// Spacing on either side of the components that
+// live in suggested posts in the sidebar of
+// single post pages
+$activitySpacing--minimalMode: $spacing4;
+
+///////////////////////////////////////////

@@ -5,4 +5,10 @@
     display: block;
     padding: 20px 40px;
   }
+
+  &.m-discovery__top--activityV2 {
+    m-defaultFeed {
+      padding: 0;
+    }
+  }
 }

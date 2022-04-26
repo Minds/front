@@ -1,0 +1,18 @@
+<div class="m-activityContent__fixedHeightSpacer"></div>
+
+<div class="m-activityNsfwConsent__container">
+  <m-paywallBadge [entity]="entity"></m-paywallBadge>
+  <i class="material-icons m-activityNsfwConsent__icon">lock</i>
+
+  <h2 class="m-activityNsfwConsent__title">NSFW</h2>
+  <h3 class="m-activityNsfwConsent__reasons">{{ reasonsLabel$ | async }}</h3>
+
+  <m-button
+    class="m-activityNsfwConsent__button"
+    (onAction)="onConsentedClick($event)"
+  >
+    I am over 18 years of age
+  </m-button>
+</div>
+
+<div class="m-activityContent__fixedHeightSpacer"></div>

@@ -1,0 +1,596 @@
+@import 'defaults.scss';
+@import '../shared.scss';
+
+:host {
+  // *********************************
+  // ** FIXED HEIGHT **
+  // *********************************
+
+  &.m-activityContent--fixedHeight {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+
+    .m-activityContent__media--video,
+    .m-activityContent__media--image,
+    .m-activityContent__media--richEmbed,
+    .m-activityContent__quote {
+      flex-shrink: 1;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .m-activityContent__media--image img {
+      height: 100%;
+    }
+
+    .m-activityContent__quote--hasText & {
+      ::ng-deep .m-rich-embed-src {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: $spacing10 * 2;
+        padding: $spacing3;
+        position: relative;
+
+        .thumbnail {
+          width: 30%;
+          img {
+            height: 80px;
+            border-radius: $borderRadius--activity;
+          }
+        }
+        .meta {
+          flex: 1;
+        }
+      }
+    }
+
+    .m-activityContent__fixedHeightSpacer {
+      flex: 1;
+    }
+  }
+
+  // *********************************
+  // ** MINIMAL MODE **
+  // *********************************
+
+  &.m-activity__content--minimalMode {
+    // MINIMAL TEXT
+    .m-activityContent__textWrapper {
+      padding-left: $activitySpacing--minimalMode !important;
+      padding-right: $activitySpacing--minimalMode !important;
+
+      .m-activityContentText__innerWrapper {
+        padding: 0;
+      }
+
+      .m-activityContentText__title {
+        margin-bottom: 0 !important;
+        padding: $spacing4 0;
+      }
+
+      .m-activityContentText__body {
+        padding: $spacing4 0;
+      }
+
+      .m-activityContentText__body--shortStatus,
+      .m-activityContentText__body--mediumStatus {
+        @include body1Regular;
+      }
+    }
+
+    &.m-activityContent--quote {
+      padding: 0;
+      .m-activityContent__textWrapper {
+        @include borderBottom;
+        .m-activityContentText__innerWrapper {
+          padding: 0;
+        }
+      }
+    }
+
+    // MINIMAL MEDIA
+    .m-activityContent__media {
+      img {
+        border-radius: 0;
+      }
+    }
+
+    .m-activityContent__media--video {
+      ::ng-deep m-videoPlayer--scrollaware {
+        border-radius: 0;
+      }
+    }
+
+    .m-activityContent__media--image {
+      &.m-activityContent__media--extraTallImage {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  // *********************************
+  // ** MODAL **
+  // *********************************
+
+  m-activityV2__modal & {
+    // Modal media (left side)
+    &.m-activityContent--modal--left {
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+      flex-direction: column;
+      overflow: auto;
+      @include vertical-scroll;
+
+      .m-activityContent__media--image {
+        object-fit: contain;
+        img {
+          max-height: unset !important;
+          height: 100% !important;
+        }
+      }
+
+      .m-activityContent__media--image,
+      .m-activityContent__media--video {
+        height: 100%;
+        @include m-theme() {
+          background: rgba(themed($m-black), 0);
+        }
+      }
+
+      .m-activityModal__media--image,
+      ::ng-deep m-videoPlayer {
+        display: inline-block;
+        max-height: 100%;
+        max-width: 100%;
+        vertical-align: top;
+      }
+
+      .m-activityContent__media--video--modal {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    // Modal scrollable container (right side)
+    &.m-activityContent--modal--right {
+      overflow: visible;
+      box-sizing: border-box;
+      padding: $activitySpacing--modal $activitySpacing--modal 0;
+
+      // Remove extra padding when there's no text,
+      // so there's not too much above the permalink
+      &.m-activityContent--textlessMedia {
+        padding-top: 0;
+      }
+
+      .m-read-more--button {
+        padding-bottom: 0;
+        span {
+          @include m-theme() {
+            color: themed($m-textColor--secondary) !important;
+          }
+        }
+      }
+
+      .m-activityContent__textWrapper {
+        padding: 0;
+
+        ::ng-deep m-translate {
+          > div {
+            hr {
+              margin-top: $activitySpacing--modal !important;
+              @include m-theme() {
+                border-top: none;
+              }
+            }
+            > * {
+              padding: 10px 0px;
+            }
+          }
+          .m-translate__selectWrapper {
+            padding-top: $spacing5;
+          }
+
+          .m-translate-select-control {
+            margin-top: 5px;
+          }
+
+          .m-translationLabel__content {
+            @include m-theme() {
+              color: themed($m-textColor--tertiary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // *********************************
+  // **PAYWALL **
+  // *********************************
+
+  &.m-activityContent--paywalledStatus {
+    min-height: 120px;
+    padding-top: 50px;
+  }
+
+  // *********************************
+  // ** QUOTE **
+  // *********************************
+
+  .m-activityContent--quote {
+    overflow: hidden;
+
+    padding: 0 !important;
+  }
+
+  // *********************************
+  // ** REMIND **
+  // *********************************
+
+  .m-activityContent__remindDeletedNotice {
+    padding: $spacing5;
+    margin-top: $spacing3;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: $borderRadius--activity;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-color: themed($m-borderColor--primary);
+    }
+
+    i,
+    span {
+      vertical-align: middle;
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    i {
+      margin-right: $spacing4;
+    }
+  }
+
+  // *********************************
+  // ** SIDEBAR BOOST **
+  // *********************************
+
+  m-ads-boost & {
+    .m-activityContent__textWrapper {
+      padding: 0 $activitySpacing--minimalMode;
+    }
+
+    .m-activityContent__media {
+      img {
+        border-radius: 0;
+      }
+    }
+
+    .m-activityContent__media--video {
+      ::ng-deep m-videoPlayer--scrollaware {
+        border-radius: 0;
+      }
+    }
+  }
+
+  // *********************************
+  // ** TEASER **
+  // *********************************
+
+  .m-activityContent__teaserFadeout {
+    position: absolute;
+    top: $spacing10;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(100% - 60px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+    @include m-theme() {
+      background: linear-gradient(
+        to bottom,
+        rgba(themed($m-bgColor--primary), 0) 0%,
+        rgba(themed($m-bgColor--primary), 0.3) 14%,
+        rgba(themed($m-bgColor--primary), 0.8) 44%,
+        rgba(themed($m-bgColor--primary), 1) 80%
+      );
+    }
+  }
+
+  // *********************************
+  // *********************************
+  // *********************************
+  // ** DEFAULT **
+  // *********************************
+  // *********************************
+  // *********************************
+
+  display: block;
+  width: 100%;
+  position: relative;
+
+  // *********************************
+  // ** MEDIA **
+  // *********************************
+
+  .m-activityContent__media--video,
+  .m-activityContent__media--image,
+  .m-activityContent__media--richEmbed {
+    @include m-theme() {
+      background: themed($m-bgColor--primary);
+    }
+  }
+
+  &.m-activityContent--textlessMedia {
+    &:not(.m-activity__content--minimalMode) {
+      .m-activityContent__media--video,
+      .m-activityContent__media--image {
+        padding-top: $spacing1;
+      }
+    }
+  }
+
+  // *********************************
+  // ** MEDIA - IMAGE **
+  // *********************************
+
+  .m-activityContent__media--image {
+    &.m-activityContent__media--extraTallImage,
+    &.m-activityContent__media--extraWideImage {
+      a {
+        position: relative;
+      }
+      img {
+        object-fit: cover;
+      }
+    }
+
+    &.m-activityContent__media--extraTallImage {
+      img {
+        max-height: 500px;
+        width: 166px;
+      }
+    }
+    &.m-activityContent__media--extraWideImage {
+      img {
+        height: 166px;
+        max-width: 500px;
+      }
+    }
+
+    a {
+      height: auto;
+      width: auto;
+      display: inline-block;
+      position: relative;
+    }
+    img {
+      max-height: 500px;
+      border-radius: $borderRadius--activity;
+    }
+
+    .m-activityContentMedia__expandIcon {
+      position: absolute;
+      top: $spacing2;
+      right: $spacing2;
+      border-radius: 50%;
+      height: $spacing8;
+      width: $spacing8;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include m-theme() {
+        background: rgba(themed($m-black-always), 0.5);
+      }
+
+      ::ng-deep m-icon i {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+
+      &:hover,
+      ::ng-deep m-icon i {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  // *********************************
+  // ** MEDIA - VIDEO **
+  // *********************************
+
+  .m-activityContent__media--video {
+    ::ng-deep {
+      m-videoPlayer--scrollaware {
+        border-radius: $borderRadius--activity;
+      }
+      .m-videoPlayer__placeholder {
+        padding-top: 56.25%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      &.isPaywall {
+        .m-videoPlayer__placeholder {
+          .minds-video-play-icon {
+            @media screen and (max-width: $max-mobile) {
+              font-size: 70px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // *********************************
+  // ** TEXT **
+  // *********************************
+
+  .m-activityContent__textWrapper {
+    position: relative;
+    margin: 0;
+
+    .m-activityContentText__innerWrapper {
+      white-space: pre-line;
+      word-break: break-word;
+      padding: 0 0 $spacing4 0;
+      @include body2Regular;
+
+      .m-code-highlight {
+        overflow-x: auto;
+        font-size: 16px;
+
+        pre {
+          overflow-x: auto;
+        }
+      }
+    }
+  }
+
+  // TITLE
+  .m-activityContentText__title {
+    @include body2Medium;
+    margin-bottom: 0;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &.m-activityContentText__title--hasDescription {
+      margin-bottom: $spacing1 !important;
+    }
+
+    &.m-activityContentText--translated {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    ::ng-deep a {
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // BODY
+  .m-activityContentText__body,
+  .m-activityContentText__body > *,
+  ::ng-deep m-translate .m-translation-wrapper .message {
+    margin: 0;
+    padding: 0;
+    @include body2Regular;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &.m-activityContentText--translated {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    &.m-activityContentText__body--shortStatus,
+    ::ng-deep m-translate .message span {
+      @include heading2Medium;
+    }
+
+    &.m-activityContentText__body--mediumStatus,
+    ::ng-deep m-translate .message span {
+      @include heading4Medium;
+    }
+
+    ::ng-deep a {
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: 500;
+      @include m-theme() {
+        color: themed($m-link);
+      }
+
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // STATUS POSTS
+  &.m-activityContent--status {
+    .m-activityContent__textWrapper {
+      .m-activityContentText__innerWrapper {
+        padding-bottom: 0;
+        margin-bottom: -4px;
+      }
+    }
+  }
+
+  // TRANSLATED TEXT
+
+  // READ MORE
+  &:not(.m-activityContent--status):not(.m-activity__content--minimalMode) {
+    // Make a taller read more area
+    ::ng-deep m-read-more--button {
+      .m-readMoreButton--v2 {
+        padding: $spacing19 $spacing4 $spacing12;
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+
+  ::ng-deep m-read-more--button {
+    .m-readMoreButton--v2 > span {
+      @include body2Medium;
+      letter-spacing: normal;
+      text-transform: capitalize;
+    }
+  }
+
+  // *********************************
+  // ** TRANSLATIONS **
+  // *********************************
+
+  ::ng-deep m-translate {
+    .m-translate__visible > * {
+      padding: $spacing3 0;
+    }
+
+    hr {
+      display: none;
+    }
+    .m-translation-wrapper {
+      padding-bottom: 0;
+      .message {
+        a {
+          font-weight: 400;
+          font-size: inherit;
+        }
+      }
+    }
+
+    .m-translate__selectWrapper {
+      padding-top: $spacing3;
+      padding-bottom: 11px;
+    }
+  }
+}

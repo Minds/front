@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { CompassQuestionnaireModalComponent } from '../questionnaire-modal/questionnaire-modal.component';
 import { CompassService } from '../compass.service';
 import { ModalService } from '../../../services/ux/modal.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 export const SOCIAL_COMPASS_DISMISSED_KEY: string =
   'social-compass-banner-dismissed';
@@ -19,11 +20,15 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
   answersProvided: boolean = true;
   dismissed: boolean = false;
 
+  @HostBinding('class.m-compassQuestionnaire__banner--activityV2')
+  activityV2Feature: boolean = false;
+
   constructor(
     private session: Session,
     private compassService: CompassService,
     private storage: Storage,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private experiments: ExperimentsService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +47,11 @@ export class CompassQuestionnaireBannerComponent implements OnInit, OnDestroy {
 
     this.dismissed =
       JSON.parse(this.storage.get(SOCIAL_COMPASS_DISMISSED_KEY)) || false;
+
+    this.activityV2Feature = this.experiments.hasVariation(
+      'front-5229-activities',
+      true
+    );
   }
 
   ngOnDestroy(): void {

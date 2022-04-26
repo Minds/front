@@ -1,3 +1,46 @@
+@import 'defaults.scss';
+
 :host {
+  // ******************************************
+  // ** ACTIVITY V2 DEFAULT **
+  // ******************************************
+
+  m-activityV2 &,
+  m-activityV2__modal & {
+    .m-commentPoster__avatar {
+      a {
+        img {
+          @include m-theme() {
+            border: none;
+          }
+        }
+      }
+    }
+
+    .m-commentPoster__form {
+      ::ng-deep minds-textarea {
+        .m-placeholder {
+          @include body2Regular;
+        }
+      }
+    }
+
+    .m-commentPoster--nested {
+      padding-left: 0;
+    }
+
+    .m-comments--start-conversation-label {
+      display: none;
+    }
+  }
+
+  // ******************************************
+  // ******************************************
+  // ******************************************
+  // ** DEFAULT **
+  // ******************************************
+  // ******************************************
+  // ******************************************
+
   scroll-margin: 10vh;
 }

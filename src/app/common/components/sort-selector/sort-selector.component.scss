@@ -27,7 +27,7 @@ m-sort-selector {
 
   .m-dropdown--list--item--disabled {
     @include m-theme() {
-      color: themed($m-grey-300);
+      color: themed($m-textColor--tertiary);
     }
   }
 
