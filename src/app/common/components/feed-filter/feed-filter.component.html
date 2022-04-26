@@ -38,8 +38,7 @@
 <ng-template #typeMenu>
   <ul>
     <li
-      *ngFor="let typeEntry of types; let first = first"
-      [class.m-dropdownMenu__item--first]="first"
+      *ngFor="let typeEntry of types"
       (click)="typeChangeEmitter.emit(typeEntry.value)"
     >
       <span
@@ -58,8 +57,7 @@
 <ng-template #dateRangeMenu>
   <ul>
     <li
-      *ngFor="let dateRangeEntry of dateRangeTypes; let first = first"
-      [class.m-dropdownMenu__item--first]="first"
+      *ngFor="let dateRangeEntry of dateRangeTypes"
       (click)="onDateRangeChange(dateRangeEntry.value)"
     >
       <span

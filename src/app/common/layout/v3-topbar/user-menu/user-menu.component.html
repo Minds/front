@@ -17,7 +17,7 @@
   </ng-template>
 
   <ul
-    class="m-dropdown__list m-userMenu__dropdown mdl-shadow--3dp"
+    class="m-dropdown__list m-userMenu__dropdown"
     [class.m-userMenu__dropdown--loggedOut]="!getCurrentUser()"
     [hidden]="!(service.isOpen$ | async)"
   >

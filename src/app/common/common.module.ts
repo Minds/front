@@ -190,6 +190,7 @@ import { RelativeTimeSpanComponent } from './components/relative-time-span/relat
 import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 import { ResizedDirective } from './directives/resized.directive';
+import { DropdownMenuItemComponent } from './components/dropdown-menu-item/dropdown-menu-item.component';
 
 const routes: Routes = [
   {
@@ -363,6 +364,7 @@ const routes: Routes = [
     BlurhashDirective,
     RelativeTimeSpanComponent,
     ResizedDirective,
+    DropdownMenuItemComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -511,6 +513,7 @@ const routes: Routes = [
     BlurhashDirective,
     RelativeTimeSpanComponent,
     ResizedDirective,
+    DropdownMenuItemComponent,
   ],
   providers: [
     SiteService,
