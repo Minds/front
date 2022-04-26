@@ -9,7 +9,7 @@ import { ApiService } from '../../../common/api/api.service';
 import { RecentSubscriptionsService } from '../../../common/services/recent-subscriptions.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { ExperimentsService } from '../../experiments/experiments.service';
-import { DropdownMenuItem } from './../../../common/components/dropdown-menu-v2/dropdown-menu-v2.component';
+import { DropdownMenuOption } from './../../../common/components/dropdown-menu-v2/dropdown-menu-v2.component';
 import { ResizedEvent } from './../../../common/directives/resized.directive';
 
 /**
@@ -56,7 +56,7 @@ export class ChannelRecommendationComponent implements OnInit {
   /**
    * drop down items
    */
-  dropdownItems: DropdownMenuItem[] = [
+  dropdownOptions: DropdownMenuOption[] = [
     {
       title: $localize`:@@COMMON__REMOVE_FROM_FEED:Remove from feed`,
       onPress: () => this.dismissalService.dismiss(this.widgetId),

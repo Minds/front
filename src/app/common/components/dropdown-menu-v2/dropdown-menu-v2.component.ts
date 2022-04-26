@@ -23,7 +23,7 @@ export interface AnchorPosition {
   left?: string;
 }
 
-export interface DropdownMenuItem {
+export interface DropdownMenuOption {
   title: string;
   onPress: () => void;
   icon?: { id: string; from: IconSource };
@@ -48,7 +48,7 @@ const DropdownFadeAnimation = trigger('dropDownFade', [
   animations: [DropdownFadeAnimation],
 })
 export class DropdownMenuV2Component implements OnInit, OnDestroy {
-  @Input() items: DropdownMenuItem[] = [];
+  @Input() items: DropdownMenuOption[] = [];
 
   @Input() triggerClass: string = '';
 
