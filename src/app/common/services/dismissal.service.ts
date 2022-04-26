@@ -1,7 +1,8 @@
 import { isPlatformServer } from '@angular/common';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+import { AbstractSubscriberComponent } from '../components/abstract-subscriber/abstract-subscriber.component';
 
 const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -21,11 +22,12 @@ type DismissItem = {
 @Injectable({
   providedIn: 'root',
 })
-export class DismissalService {
+export class DismissalService extends AbstractSubscriberComponent {
   static STORAGE_KEY = 'dismissal-service:dismisses';
   private dismisses$: BehaviorSubject<DismissItem[]> = new BehaviorSubject([]);
 
   constructor(@Inject(PLATFORM_ID) platformId: string) {
+    super();
     if (!isPlatformServer(platformId)) {
       this._rehydrateAndPersist();
     }
@@ -67,7 +69,6 @@ export class DismissalService {
       ...this.dismisses$.getValue(),
       { id, expiry: Date.now() + duration },
     ]);
-    this._persist();
   }
 
   /**
@@ -79,12 +80,12 @@ export class DismissalService {
         DismissalService.STORAGE_KEY
       );
       if (dismissesStringified) {
-        const dismisses = JSON.parse(dismissesStringified).filter(
-          item => item.expiry <= Date.now()
-        ) as DismissItem[];
+        const dismisses = JSON.parse(dismissesStringified)
+          // discard expired dismisses
+          .filter(item => item.expiry >= Date.now()) as DismissItem[];
         this.dismisses$.next(dismisses);
-        this._persist();
       }
+      this.subscriptions.push(this._persist());
     } catch (e) {
       console.error(
         '[DismissalService] something went wrong while rehydrating',
@@ -94,19 +95,21 @@ export class DismissalService {
   }
 
   /**
-   * Persists state by writing to localstorage
+   * Watches the dismisses$ and persists its state by writing to localstorage
    */
-  private _persist(): void {
-    try {
-      localStorage.setItem(
-        DismissalService.STORAGE_KEY,
-        JSON.stringify(this.dismisses$.getValue())
-      );
-    } catch (e) {
-      console.error(
-        '[DismissalService] something went wrong while rehydrating',
-        e
-      );
-    }
+  private _persist(): Subscription {
+    return this.dismisses$.pipe(debounceTime(500)).subscribe(dismisses => {
+      try {
+        localStorage.setItem(
+          DismissalService.STORAGE_KEY,
+          JSON.stringify(dismisses)
+        );
+      } catch (e) {
+        console.error(
+          '[DismissalService] something went wrong while rehydrating',
+          e
+        );
+      }
+    });
   }
 }
