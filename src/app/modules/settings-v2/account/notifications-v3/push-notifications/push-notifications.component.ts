@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AbstractSubscriberComponent } from '../../../../../common/components/abstract-subscriber/abstract-subscriber.component';
 import { NotificationsSettingsV2Service } from '../notifications-settings-v3.service';
 import { PushNotificationGroup } from '../notifications-settings-v3.type';
+import { PushNotificationService } from './../../../../../common/services/push-notification.service';
 
 // toggle state
 export type ToggleState = 'on' | 'off';
@@ -39,6 +39,8 @@ export class SettingsV2PushNotificationsV3Component
   // holds array of toggles
   private toggles: PushNotificationToggleType[] = [];
 
+  private notificationEnablingError$ = new BehaviorSubject('');
+
   // text to accompany option - manually add if adding more opts.
   private subtextMap = {
     votes: 'Get notified when your post or comment is upvoted.',
@@ -56,7 +58,10 @@ export class SettingsV2PushNotificationsV3Component
     all: '',
   };
 
-  constructor(private service: NotificationsSettingsV2Service) {
+  constructor(
+    private service: NotificationsSettingsV2Service,
+    public pushNotificationService: PushNotificationService
+  ) {
     super();
   }
 
@@ -118,5 +123,55 @@ export class SettingsV2PushNotificationsV3Component
     return this.toggles.filter(
       option => option.notificationGroup === notificationGroup
     )[0];
+  }
+
+  /**
+   * do we have browser push notification permission
+   * @returns { Observable<boolean> }
+   */
+  get pushNotificationsEnabled$(): Observable<boolean> {
+    return this.pushNotificationService.enabled$;
+  }
+
+  /**
+   * does the browser support push notifs?
+   * @returns { Observable<boolean> }
+   */
+  get pushNotificationsSupported$(): Observable<boolean> {
+    return this.pushNotificationService.supported$;
+  }
+
+  /**
+   * user wants to enable push notifications
+   * @returns { Promise<void> }
+   */
+  public async onEnablePushNotifications(): Promise<void> {
+    this.notificationEnablingError$.next('');
+    try {
+      await this.pushNotificationService.requestSubscription();
+    } catch (e) {
+      console.error(e);
+      switch (e?.name || e?.message) {
+        case 'NotAllowedError':
+          this.notificationEnablingError$.next('Permission denied');
+          break;
+        case 'timeout':
+        default:
+          this.notificationEnablingError$.next('Something went wrong');
+          break;
+      }
+    }
+  }
+
+  /**
+   * user wants to disable push notifications
+   * @returns { Promise<void> }
+   */
+  public async onDisablePushNotifications(): Promise<void> {
+    try {
+      await this.pushNotificationService.cancelSubscription();
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

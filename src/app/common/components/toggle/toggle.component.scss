@@ -7,17 +7,6 @@ m-toggle {
   cursor: pointer;
   user-select: none;
 
-  &.disabled {
-    .m-toggle__switch {
-      .m-toggle__switch--left,
-      .m-toggle__switch--right {
-        @include m-theme() {
-          background: themed($m-grey-800);
-        }
-      }
-    }
-  }
-
   .m-toggle__track {
     display: inline-block;
     position: absolute;
@@ -30,7 +19,7 @@ m-toggle {
     border-radius: 6px;
 
     @include m-theme() {
-      background: themed($m-grey-100);
+      background: themed($m-textColor--secondary);
     }
   }
 
@@ -38,12 +27,12 @@ m-toggle {
     display: inline-block;
     position: absolute;
     top: 0;
-    left: 50%;
+    left: 0;
     width: 19px;
     height: 19px;
     z-index: 2;
-    transform: translateX(-50%);
     border-radius: 50%;
+    transition: all 0.3s;
 
     @include m-theme() {
       background: themed($m-grey-100);
@@ -57,16 +46,31 @@ m-toggle {
       @include m-theme() {
         background: themed($m-blue);
       }
+
+      &:hover {
+        @include m-theme() {
+          background: themed($m-link--hover);
+        }
+      }
     }
 
-    &.m-toggle__switch--left {
-      left: 0;
-      right: auto;
+    &.m-toggle__switch--off {
+      @include m-theme() {
+        background: themed($m-textColor--tertiary) !important;
+      }
     }
 
     &.m-toggle__switch--right {
-      right: 0;
-      left: auto;
+      transform: translateX(50%);
+    }
+  }
+
+  &.disabled {
+    .m-toggle__switch {
+      @include m-theme() {
+        background: themed($m-textColor--tertiary);
+        color: themed($m-borderColor--secondary);
+      }
     }
   }
 }
