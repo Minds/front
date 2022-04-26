@@ -99,6 +99,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       false
     );
 
+    this.metaService.setCanonicalUrl('/register');
+
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
