@@ -6,11 +6,39 @@
     class="m-settingsV2__desc"
     i18n="@@SETTINGS_NOTIFICATIONS_PUSH__DESCRIPTION"
   >
-    Control which mobile push notifications you receive, and when.
+    Control which push notifications you receive, and when.
   </div>
 </m-settingsV2__header>
 <m-loadingSpinner [inProgress]="initializing$ | async"></m-loadingSpinner>
 <ng-container *ngIf="!(initializing$ | async)">
+  <ng-container *ngIf="pushNotificationsSupported$ | async">
+    <m-button
+      (onAction)="onEnablePushNotifications()"
+      solid="true"
+      color="blue"
+      *ngIf="!(pushNotificationsEnabled$ | async)"
+    >
+      <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__ENABLE"
+        >Enable Notifications for this device</span
+      >
+    </m-button>
+    <m-button
+      (onAction)="onDisablePushNotifications()"
+      color="red"
+      *ngIf="pushNotificationsEnabled$ | async"
+    >
+      <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__DISABLE"
+        >Disable Notifications for this device</span
+      >
+    </m-button>
+    <p
+      class="m-pushNotifSettings__pushNotificationEnablingFailed"
+      *ngIf="notificationEnablingError$"
+    >
+      {{ notificationEnablingError$ | async }}
+    </p>
+  </ng-container>
+
   <div
     class="
       m-pushNotifSettings__optionContainer
@@ -23,9 +51,10 @@
       (mModelChange)="toggle('all')"
       leftValue="off"
       rightValue="on"
+      offState="off"
     ></m-toggle>
     <span i18n="@@SETTINGS_NOTIFICATIONS_PUSH__NOTIFS_ENABLED"
-      >Push notifications enabled</span
+      >All push notifications enabled</span
     >
   </div>
 
@@ -43,9 +72,10 @@
     *ngFor="let option of getDynamicToggles()"
   >
     <m-toggle
-      [mModel]="option.state"
+      [mModel]="this.getToggle('all').state === 'off' ? 'off' : option.state"
       (mModelChange)="toggle(option.notificationGroup)"
       [disabled]="getToggle('all').state === 'off'"
+      offState="off"
       leftValue="off"
       rightValue="on"
     ></m-toggle>

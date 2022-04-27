@@ -11,7 +11,7 @@ const chartPalette = {
   themeMaps: [
     {
       id: 'm-bgColor--primary',
-      themeMap: ['#ffffff', '#242a30'],
+      themeMap: ['#ffffff', '#1F252C'],
     },
     {
       id: 'm-borderColor--primary',
