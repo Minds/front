@@ -112,9 +112,6 @@ export class ExperimentsService implements OnDestroy {
     experimentId: string,
     variation: string | number | boolean = 'on'
   ): boolean {
-    if (experimentId === 'front-5229-activities') {
-      return true;
-    }
     try {
       return this.run(experimentId) === variation;
     } catch (e) {
