@@ -3,11 +3,11 @@
   *ngIf="label"
   [ngClass]="{
     'm-dropdownMenu__item--hasIcon': icon,
+    'm-dropdownMenu__item--persistant': persistant,
+    'm-dropdownMenu__item--selected': persistant && selected,
     'm-dropdownMenu__item--red': red,
     'm-dropdownMenu__item--disabled': disabled,
-    'm-dropdownMenu__item--hasSubmenu': submenu,
-    'm-dropdownMenu__item--persistant': persistant,
-    'm-dropdownMenu__item--selected': persistant && selected
+    'm-dropdownMenu__item--hasSubmenu': submenu
   }"
 >
   <m-icon

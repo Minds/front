@@ -10,15 +10,10 @@ export class DropdownMenuItemComponent implements OnInit {
   @Input() label: string;
 
   // Translation string for the displayed text
-  @Input() i18n: string;
+  @Input() i18n?: string;
 
   // Material icon to be displayed left of the label
-  @Input() icon: string;
-
-  // If clicking on the item opens another nested menu,
-  // include its template here.
-  // An arrow will be displayed on the right side of the item.
-  @Input() submenu: TemplateRef<any>;
+  @Input() icon?: string;
 
   // TRUE if the item is part of a menu of filters or some other
   // selectable trait that persists after the item is clicked
@@ -28,18 +23,23 @@ export class DropdownMenuItemComponent implements OnInit {
   // ...
   // FALSE if the item is an ephemeral action
   // e.g. 'leave group' or 'remind post'
-  @Input() persistant: boolean = false;
+  @Input() persistant?: boolean = false;
 
   // True if a 'persistant' item is selected.
   // A checkmark will be displayed on the left of the label.
-  @Input() selected: boolean = false;
+  @Input() selected?: boolean = false;
 
   // If the item is destructive, make the text/icon red
-  @Input() red: boolean = false;
+  @Input() red?: boolean = false;
 
   // If the item cannot be selected, the text will be lighter
   // and the cursor won't be a pointer
-  @Input() disabled: boolean = false;
+  @Input() disabled?: boolean = false;
+
+  // If clicking on the item opens another nested menu,
+  // include its template here.
+  // An arrow will be displayed on the right side of the item.
+  @Input() submenu?: TemplateRef<any>;
 
   // ojm todo: isLink?
 

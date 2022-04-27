@@ -88,6 +88,16 @@
                 "name": "Basic",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/common/components/publisher-card/publisher-card.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -175,6 +185,16 @@
                 "deprecationMessage": "",
                 "type": "Story<DropdownMenuComponent>",
                 "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<DropdownMenuItemComponent>",
+                "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -387,6 +407,28 @@
                     "defaultValue": "(\n  args: DropdownMenuComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
                 }
             ],
+            "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<DropdownMenuItemComponent>",
+                    "defaultValue": "(\n  args: DropdownMenuItemComponent\n) => ({\n  props: args,\n  template: `\n  <m-dropdownMenu\n    [menu]=\"actionsDropdown\"\n    [anchorPosition]=\"anchorPosition\"\n  >\n    Click to open\n  </m-dropdownMenu>\n\n  <ng-template #actionsDropdown>\n    <ul>\n        <li>\n          <span class=\"m-dropdownMenu__item\">First Item</span>\n        </li>\n        <li>\n        <span class=\"m-dropdownMenu__item\">Second Item</span>\n      </li>\n    </ul>\n  </ng-template>\n  `,\n})"
+                }
+            ],
             "src/app/common/components/publisher-card/publisher-card.stories.ts": [
                 {
                     "name": "Basic",
@@ -448,7 +490,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 20,
+        "count": 18,
         "status": "low",
         "files": [
             {
@@ -577,6 +619,26 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "WarningDisabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/common/components/dropdown-menu-item/dropdown-menu-item.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
