@@ -16,6 +16,7 @@ export let sessionMock = new (function() {
     name: 'test',
     show_boosts: true,
     hide_share_buttons: false,
+    dismissed_notices: [],
   };
   this.loggedIn = true;
   this.isAdmin = () => {
