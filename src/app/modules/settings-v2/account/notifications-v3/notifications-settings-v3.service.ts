@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, take, throttleTime } from 'rxjs/operators';
+import { catchError, map, take, throttleTime } from 'rxjs/operators';
 import { ApiResponse, ApiService } from '../../../../common/api/api.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import {
@@ -25,6 +25,27 @@ export class NotificationsSettingsV2Service {
       take(1),
       catchError(e => this.handleError(e)),
       throttleTime(1000)
+    );
+  }
+
+  /**
+   * Gets whether ALL push notifications are enabled.
+   * @returns { Observable<boolean> } - true if all push notifications are enabled.
+   */
+  get pushNotificationsEnabled$(): Observable<boolean> {
+    return this.pushSettings$.pipe(
+      map((response: ApiResponse) => {
+        if (response.status === 'success' && response.settings) {
+          const allGroup = response.settings.filter(setting => {
+            return setting['notification_group'] === 'all';
+          })[0];
+          return allGroup.enabled;
+        }
+        throw new Error(
+          response.message ??
+            'An unknown error has occurred getting push notification settings'
+        );
+      })
     );
   }
 
