@@ -20,7 +20,7 @@ m-dropdownMenu {
   .m-dropdownMenu__menu {
     display: none;
 
-    &:not(.m-dropdownMenu__menu) {
+    &:not(.m-dropdownMenu__menu--containsSubmenu) {
       overflow: hidden;
     }
 
@@ -56,55 +56,55 @@ m-dropdownMenu {
         background: themed($m-bgColor--primary);
       }
 
-      > li {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
+      // > li {
+      // display: flex;
+      // align-items: center;
+      // justify-content: flex-start;
 
-        white-space: nowrap;
+      // white-space: nowrap;
 
-        @include body2Medium;
-        cursor: pointer;
-        background: transparent;
+      // @include body2Medium;
+      // cursor: pointer;
+      // background: transparent;
 
-        @include m-theme() {
-          color: themed($m-textColor--primary);
+      // @include m-theme() {
+      //   color: themed($m-textColor--primary);
 
-          &:hover,
-          &:active {
-            background: themed($m-borderColor--primary);
-          }
+      //   &:hover,
+      //   &:active {
+      //     background: themed($m-borderColor--primary);
+      //   }
 
-          transition: 150ms background ease-in-out;
-        }
+      // transition: 150ms background ease-in-out;
+      // }
 
-        > * {
-          flex: 1;
-          margin: 0;
-          padding: $spacing3 $spacing4;
+      // > * {
+      //   flex: 1;
+      //   margin: 0;
+      //   padding: $spacing3 $spacing4;
 
-          // ojm except icons should have no spacing right
-          &:m-icon {
-            padding-right: 0;
-          }
-        }
+      //   // ojm except icons should have no spacing right
+      //   &:m-icon {
+      //     padding-right: 0;
+      //   }
+      // }
 
-        .m-dropdownMenu__item {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+      // .m-dropdownMenu__item {
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: space-between;
 
-          m-icon + span,
-          span + m-icon {
-            margin-left: $spacing3;
-            //ojm this is unlikely
-          }
+      //   m-icon + span,
+      //   span + m-icon {
+      //     margin-left: $spacing3;
+      //     //ojm this is unlikely
+      //   }
 
-          span {
-            flex: 1;
-          }
-        }
-      }
+      //   span {
+      //     flex: 1;
+      //   }
+      // }
+      // }
     }
   }
 

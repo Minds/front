@@ -1,4 +1,92 @@
 @import 'defaults.scss';
 
 :host {
+  li.m-dropdownMenu__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+    cursor: pointer;
+
+    background: transparent;
+    transition: 150ms background ease-in-out;
+
+    &:hover,
+    &:active {
+      @include m-theme() {
+        background: themed($m-borderColor--primary);
+      }
+    }
+
+    //-----------------------------------
+    > * {
+      margin: 0;
+      padding: $spacing3 $spacing4;
+    }
+
+    //-----------------------------------
+    [class*='m-dropdownMenuItem__text'] {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    //-----------------------------------
+    [class*='m-dropdownMenuItem__text--label'] {
+      flex: 1;
+      @include body2Medium;
+    }
+
+    //-----------------------------------
+    [class*='m-dropdownMenuItem__text--icon'] {
+    }
+
+    [class*='m-dropdownMenuItem__text--icon--left'] {
+      padding-right: 0;
+    }
+    //-----------------------------------
+    &.m-dropdownMenu__item--hasIcon {
+      [class*='m-dropdownMenuItem__text--label'] {
+        padding-left: $spacing3;
+      }
+    }
+
+    //-----------------------------------
+    &.m-dropdownMenu__item--hasSubmenu {
+    }
+    //-----------------------------------
+    &.m-dropdownMenu__item--persistant {
+      &.m-dropdownMenu__item--selected {
+      }
+
+      &:not(.m-dropdownMenu__item--selected) {
+        [class*='m-dropdownMenuItem__text'] {
+          margin-left: 2.125rem;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+
+    //-----------------------------------
+    &.m-dropdownMenu__item--red {
+      [class*='m-dropdownMenuItem__text'] {
+        @include m-theme() {
+          color: themed($m-alert);
+        }
+      }
+    }
+
+    //-----------------------------------
+    &.m-dropdownMenu__item--disabled {
+      cursor: default;
+
+      [class*='m-dropdownMenuItem__text'] {
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+  }
 }

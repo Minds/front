@@ -1,1 +1,39 @@
-<li class="m-dropdownMenu__item"></li>
+<li
+  class="m-dropdownMenu__item"
+  *ngIf="label"
+  [ngClass]="{
+    'm-dropdownMenu__item--hasIcon': icon,
+    'm-dropdownMenu__item--red': red,
+    'm-dropdownMenu__item--disabled': disabled,
+    'm-dropdownMenu__item--hasSubmenu': submenu,
+    'm-dropdownMenu__item--persistant': persistant,
+    'm-dropdownMenu__item--selected': persistant && selected
+  }"
+>
+  <m-icon
+    *ngIf="persistant && selected"
+    class="m-dropdownMenuItem__text--icon--left"
+    iconId="check"
+    sizeFactor="1.125"
+    rem="true"
+  ></m-icon>
+  <m-icon
+    *ngIf="icon"
+    class="m-dropdownMenuItem__text--icon--left"
+    [iconId]="icon"
+    sizeFactor="1.125"
+    rem="true"
+  ></m-icon>
+  <span class="m-dropdownMenuItem__text--label" [i18n]="i18n ? i18n : null">{{
+    label
+  }}</span>
+  <ng-container *ngIf="submenu">
+    <m-icon
+      iconId="chevron_right"
+      class="m-dropdownMenuItem__text--icon m-dropdownMenuItem__text--icon--right"
+      sizeFactor="1.125"
+      rem="true"
+    ></m-icon>
+    <ng-container *ngTemplateOutlet="submenu"></ng-container>
+  </ng-container>
+</li>

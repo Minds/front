@@ -36,43 +36,21 @@
 </div>
 
 <ng-template #typeMenu>
-  <ul>
-    <li
-      *ngFor="let typeEntry of types"
-      (click)="typeChangeEmitter.emit(typeEntry.value)"
-    >
-      <span
-        class="m-dropdownMenu__item"
-        [ngClass]="{
-          'm-dropdownMenu__item--selected': type === typeEntry.value
-        }"
-      >
-        <m-icon *ngIf="type === typeEntry.value" iconId="check"></m-icon>
-        <span>{{ typeEntry.label }}</span>
-      </span>
-    </li>
-  </ul>
+  <m-dropdownMenu__item
+    *ngFor="let typeEntry of types"
+    (click)="typeChangeEmitter.emit(typeEntry.value)"
+    [label]="typeEntry.label"
+    persistant="true"
+    [selected]="type === typeEntry.value"
+  ></m-dropdownMenu__item>
 </ng-template>
 
 <ng-template #dateRangeMenu>
-  <ul>
-    <li
-      *ngFor="let dateRangeEntry of dateRangeTypes"
-      (click)="onDateRangeChange(dateRangeEntry.value)"
-    >
-      <span
-        class="m-dropdownMenu__item"
-        [ngClass]="{
-          'm-dropdownMenu__item--selected':
-            dateRangeType === dateRangeEntry.value
-        }"
-      >
-        <m-icon
-          *ngIf="dateRangeType === dateRangeEntry.value"
-          iconId="check"
-        ></m-icon>
-        <span>{{ dateRangeEntry.menuLabel }}</span>
-      </span>
-    </li>
-  </ul>
+  <m-dropdownMenu__item
+    *ngFor="let dateRangeEntry of dateRangeTypes"
+    (click)="onDateRangeChange(dateRangeEntry.value)"
+    [label]="dateRangeEntry.menuLabel"
+    persistant="true"
+    [selected]="dateRangeType === dateRangeEntry.value"
+  ></m-dropdownMenu__item>
 </ng-template>
