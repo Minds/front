@@ -339,7 +339,7 @@ export class MetaService {
   setThemeColor(dark?: boolean): MetaService {
     this.metaService.updateTag({
       name: 'theme-color',
-      content: dark ? '#242a30' : '#ffffff',
+      content: dark ? '#1F252C' : '#ffffff',
     });
     return this;
   }

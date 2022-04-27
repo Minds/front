@@ -1,33 +1,21 @@
-import { NgModule, PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LegacyModule } from '../legacy/legacy.module';
-
 import { CommonModule } from '../../common/common.module';
-import { NoticesSidebarComponent } from './sidebar.component';
-import { NoticesService } from './notices.service';
+import { FeedNoticeComponent } from './template/feed-notice.component';
+import { BuildYourAlgorithmNoticeComponent } from './panels/build-your-algorithm/build-your-algorithm-notice.component';
+import { VerifyEmailNoticeComponent } from './panels/verify-email/verify-email-notice.component';
+import { FeedNoticeOutletComponent } from './outlet/feed-notice-outlet.component';
+import { EnablePushNotificationsNoticeComponent } from './panels/enable-push-notifications/enable-push-notifications-notice.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NgCommonModule,
-    RouterModule,
-    LegacyModule,
-    FormsModule,
-    ReactiveFormsModule,
+  imports: [CommonModule, NgCommonModule],
+  declarations: [
+    FeedNoticeComponent,
+    FeedNoticeOutletComponent,
+    BuildYourAlgorithmNoticeComponent,
+    VerifyEmailNoticeComponent,
+    EnablePushNotificationsNoticeComponent,
   ],
-  declarations: [NoticesSidebarComponent],
-  exports: [NoticesSidebarComponent],
-  providers: [
-    {
-      provide: NoticesService,
-      useFactory: (_http, platformId) => {
-        return new NoticesService(_http, platformId);
-      },
-      deps: [HttpClient, PLATFORM_ID],
-    },
-  ],
+  exports: [FeedNoticeOutletComponent],
 })
 export class NoticesModule {}
