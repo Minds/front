@@ -4,7 +4,7 @@
   <!-- ---------------------------- -->
   <div
     class="m-activityOwnerBlock__avatar"
-    *ngIf="minimalMode || isSidebarBoost"
+    *ngIf="minimalMode || isSidebarBoost || isModal"
   >
     <m-hovercard [publisher]="owner" [offset]="[0, 15]">
       <a [routerLink]="['/', username]">
