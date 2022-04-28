@@ -190,6 +190,7 @@ import { RelativeTimeSpanComponent } from './components/relative-time-span/relat
 import { SubscriptionService } from './services/subscription.service';
 import { RecentSubscriptionsService } from './services/recent-subscriptions.service';
 import { ResizedDirective } from './directives/resized.directive';
+import { SeeLatestPostsButtonComponent } from './components/see-latest-posts-button/see-latest-posts-button.component';
 
 const routes: Routes = [
   {
@@ -362,6 +363,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    SeeLatestPostsButtonComponent,
     ResizedDirective,
   ],
   exports: [
@@ -510,6 +512,7 @@ const routes: Routes = [
     ModalCloseButtonComponent,
     BlurhashDirective,
     RelativeTimeSpanComponent,
+    SeeLatestPostsButtonComponent,
     ResizedDirective,
   ],
   providers: [

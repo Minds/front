@@ -298,7 +298,11 @@ export class FeedsService implements OnDestroy {
 
     return this.api
       .get(this.countEndpoint, {
-        from_timestamp: fromTimestamp,
+        ...this.params,
+        ...{
+          limit: 100,
+          from_timestamp: fromTimestamp,
+        },
       })
       .pipe(tap(() => this.countInProgress$.next(false)))
       .pipe(map(response => response?.count));
