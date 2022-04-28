@@ -71,9 +71,12 @@ describe('FeedsService', () => {
     service.setCountEndpoint('fakeEndpoint');
     const count = service.count();
     expect(await count.pipe(take(1)).toPromise()).toEqual(2);
-    expect(apiMock.get).toHaveBeenCalledWith('fakeEndpoint', {
-      from_timestamp: undefined,
-    });
+    expect(apiMock.get).toHaveBeenCalledWith(
+      'fakeEndpoint',
+      jasmine.objectContaining({
+        from_timestamp: undefined,
+      })
+    );
   });
 
   it('should deny if no countEndpoint was given', () => {
