@@ -68,13 +68,15 @@ describe('FeedsService', () => {
   }));
 
   it('should count right', async () => {
+    const fakeNow = 1651150130962;
+    spyOn(Date, 'now').and.returnValue(fakeNow);
     service.setCountEndpoint('fakeEndpoint');
     const count = service.count();
     expect(await count.pipe(take(1)).toPromise()).toEqual(2);
     expect(apiMock.get).toHaveBeenCalledWith(
       'fakeEndpoint',
       jasmine.objectContaining({
-        from_timestamp: undefined,
+        from_timestamp: fakeNow,
       })
     );
   });

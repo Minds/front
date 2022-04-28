@@ -293,7 +293,7 @@ export class FeedsService implements OnDestroy {
   /**
    * Counts posts created from a timestamp on
    */
-  count(fromTimestamp?: number): Observable<number> {
+  count(fromTimestamp: number = Date.now()): Observable<number> {
     if (!this.countEndpoint) {
       throw new Error('[FeedsService] countEndpoint missing');
     }
