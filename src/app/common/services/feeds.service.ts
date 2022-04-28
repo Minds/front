@@ -54,7 +54,7 @@ export class FeedsService implements OnDestroy {
   /**
    * The last time we checked for new posts
    */
-  newPostsLastCheckedAt: number = Date.now();
+  newPostsLastCheckedAt: number;
   /**
    * feed length
    */
@@ -234,6 +234,10 @@ export class FeedsService implements OnDestroy {
       this.newPostsCount$.next(0);
     }
 
+    if (!this.newPostsLastCheckedAt) {
+      this.newPostsLastCheckedAt = Date.now();
+    }
+
     return this.client
       .get(this.endpoint, {
         ...this.params,
@@ -353,6 +357,8 @@ export class FeedsService implements OnDestroy {
     this.fallbackAtIndex.next(null);
     this.offset.next(0);
     this.pagingToken = '';
+    this.newPostsLastCheckedAt = null;
+    this.newPostsCount$.next(0);
     if (clearFeed) {
       this.rawFeed.next([]);
     }

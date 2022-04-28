@@ -35,7 +35,7 @@ import { FeedsService } from '../../services/feeds.service';
       state(
         'hidden',
         style({
-          transform: 'translateY(-100px)',
+          transform: 'translateY(-150px)',
         })
       ),
       transition('* => shown', [
@@ -50,7 +50,7 @@ import { FeedsService } from '../../services/feeds.service';
         animate(
           '450ms ease',
           style({
-            transform: 'translateY(-100px)',
+            transform: 'translateY(-150px)',
           })
         ),
       ]),
