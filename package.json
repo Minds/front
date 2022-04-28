@@ -79,6 +79,7 @@
     "ethers": "^5.4.4",
     "express-http-proxy": "^1.6.2",
     "fortmatic": "^2.2.1",
+    "friendly-challenge": "^0.9.1",
     "global": "^4.4.0",
     "highlight.js": "^11.1.0",
     "hls.js": "^1.0.7",
