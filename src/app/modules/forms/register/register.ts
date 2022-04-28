@@ -24,6 +24,8 @@ import { CaptchaComponent } from '../../captcha/captcha.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { PASSWORD_VALIDATOR } from '../password.validator';
 import { UsernameValidator } from '../username.validator';
+import { FriendlyCaptchaComponent } from '../../captcha/friendly-catpcha/friendly-captcha.component';
+import { ExperimentsService } from '../../experiments/experiments.service';
 import { PasswordRiskValidator } from '../password-risk.validator';
 
 export type Source = 'auth-modal' | 'other' | null;
@@ -64,12 +66,15 @@ export class RegisterForm implements OnInit {
 
   @ViewChild('popover') popover: PopoverComponent;
   @ViewChild(CaptchaComponent) captchaEl: CaptchaComponent;
+  @ViewChild(FriendlyCaptchaComponent)
+  friendlyCaptchaEl: FriendlyCaptchaComponent;
 
   constructor(
     public session: Session,
     public client: Client,
     public fb: FormBuilder,
     public zone: NgZone,
+    private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService,
     private usernameValidator: UsernameValidator,
     private passwordRiskValidator: PasswordRiskValidator
@@ -100,7 +105,7 @@ export class RegisterForm implements OnInit {
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
         exclusive_promotions: [true],
-        captcha: [''],
+        captcha: ['', Validators.required],
         previousUrl: this.routerHistoryService.getPreviousUrl(),
       },
       { validators: [this.passwordsMatchValidator] }
@@ -147,6 +152,9 @@ export class RegisterForm implements OnInit {
 
     let opts = { ...this.form.value };
 
+    const friendlyCaptchaEnabled = this.isFriendlyCaptchaEnabled();
+    opts['friendly_captcha_enabled'] = friendlyCaptchaEnabled;
+
     this.client
       .post('api/v1/register', opts)
       .then((data: any) => {
@@ -157,10 +165,12 @@ export class RegisterForm implements OnInit {
         this.done.next(data.user);
       })
       .catch(e => {
-        console.log(e);
         this.inProgress = false;
 
-        this.captchaEl.refresh();
+        // refresh CAPTCHA.
+        friendlyCaptchaEnabled
+          ? this.friendlyCaptchaEl.reset()
+          : this.captchaEl.refresh();
 
         if (e.status === 'failed') {
           // incorrect login details
@@ -212,6 +222,13 @@ export class RegisterForm implements OnInit {
       this.form.get(field).touched &&
       this.form.get(field).dirty
     );
+  }
+
+  /**
+   * True if FriendlyCAPTCHA feat flag is enabled.
+   */
+  public isFriendlyCaptchaEnabled(): boolean {
+    return this.experiments.hasVariation('engine-2272-captcha', true);
   }
 
   get username() {
