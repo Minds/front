@@ -117,6 +117,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isV2 = this.service.displayOptions.isV2;
+
     this.isFixedHeight =
       this.service.displayOptions.fixedHeight &&
       !this.service.displayOptions.isV2;
@@ -145,8 +147,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isMinimalRemind = false;
       }
     });
-
-    this.isV2 = this.service.displayOptions.isV2;
   }
 
   ngOnDestroy() {
