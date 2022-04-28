@@ -24,6 +24,7 @@ import {
   ServerDiagnosticsService,
 } from './common/services/diagnostics/server-diagnostics.service';
 import { SENTRY } from './common/services/diagnostics/diagnostics.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 PlotlyModule.plotlyjs = {
   react: () => {},
@@ -73,7 +74,15 @@ export const SERVER_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [MindsModule, ServerModule, ServerTransferStateModule, PlotlyModule],
+  imports: [
+    MindsModule,
+    ServerModule,
+    ServerTransferStateModule,
+    PlotlyModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: false,
+    }),
+  ],
   providers: SERVER_PROVIDERS,
   bootstrap: [Minds],
 })

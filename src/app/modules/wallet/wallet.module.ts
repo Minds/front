@@ -1,6 +1,6 @@
-import { NgModule, PLATFORM_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes, RouterOutlet } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 
@@ -43,10 +43,20 @@ import { WalletTokensDropdownMenu } from './components/tokens/dropdown-menu/drop
 import { WalletSharedModule } from './wallet-shared.module';
 import { WalletOnchainTransfersSummaryComponent } from './components/tokens/onchain-transfers/onchain-transfers.component';
 import { WalletNetworkSwitcherComponent } from './components/network-switcher/network-switcher.component';
-import { NetworkSwapBridgeModalComponent } from './components/network-swap-bridge/network-swap-bridge-modal.component';
 import { WalletSkaleComponent } from './components/network-swap-bridge/skale/skale.component';
 import { WalletSkaleCommunityPoolComponent } from './components/network-swap-bridge/skale/community-pool/community-pool.component';
 import { WalletSkaleTransferBridgeComponent } from './components/network-swap-bridge/skale/transfer-bridge/transfer-bridge.component';
+import { NetworkBridgeSwapBoxComponent } from './components/network-swap-bridge/bridge/components/swap-box/swap-box.component';
+import { NetworkBridgeTransferModalComponent } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.component';
+import { NetworkBridgePanelModalComponent } from './components/network-swap-bridge/bridge/components/bridge-panel/network-bridge-panel-modal.component';
+import { NetworkBridgeErrorComponent } from './components/network-swap-bridge/bridge/components/error-dialog/error-dialog.component';
+import { NetworkBridgeApprovalComponent } from './components/network-swap-bridge/bridge/components/approval-dialog/approval-dialog.component';
+import { NetworkBridgeBinderDirective } from './components/network-swap-bridge/bridge/components/bridge-transfer/network-bridge-transfer.directive';
+import { NetworkBridgePendingComponent } from './components/network-swap-bridge/bridge/components/transaction-state/transaction-state.component';
+import { NetworkBridgeConfirmationComponent } from './components/network-swap-bridge/bridge/components/confirm-dialog/confirm-dialog.component';
+import { NetworkBridgeTxHistoryModalComponent } from './components/network-swap-bridge/bridge/components/tx-history/network-bridge-tx-history.component';
+import { NetworkBridgeTxHistoryItemComponent } from './components/network-swap-bridge/bridge/components/tx-history/tx-history-item/network-bridge-tx-history-item.component';
+import { WithdrawTransactionStateComponent } from './components/network-swap-bridge/bridge/components/withdraw-transaction-state/withdraw-transaction-state.component';
 
 export const WALLET_ROUTES: Routes = [
   { path: 'canary', redirectTo: '..', pathMatch: 'full' },
@@ -215,10 +225,20 @@ export const WALLET_ROUTES: Routes = [
     WalletEarningsComponent,
     WalletTokensDropdownMenu,
     WalletNetworkSwitcherComponent,
-    NetworkSwapBridgeModalComponent,
+    NetworkBridgePanelModalComponent,
     WalletSkaleComponent,
     WalletSkaleCommunityPoolComponent,
     WalletSkaleTransferBridgeComponent,
+    NetworkBridgeTransferModalComponent,
+    NetworkBridgeSwapBoxComponent,
+    NetworkBridgeTxHistoryModalComponent,
+    NetworkBridgeTxHistoryItemComponent,
+    NetworkBridgeErrorComponent,
+    NetworkBridgeApprovalComponent,
+    NetworkBridgeBinderDirective,
+    NetworkBridgeConfirmationComponent,
+    NetworkBridgePendingComponent,
+    WithdrawTransactionStateComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [

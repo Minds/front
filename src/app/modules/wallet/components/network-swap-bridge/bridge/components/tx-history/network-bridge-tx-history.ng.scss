@@ -1,0 +1,78 @@
+@import 'defaults.scss';
+
+::ng-deep .modal-content--history {
+  min-height: 526px;
+  max-width: 710px;
+
+  .modal-content {
+    height: inherit;
+  }
+
+  .m-tabs__tab--selected {
+    @include m-theme() {
+      border-bottom: 5px solid themed($blue-bright) !important;
+    }
+  }
+}
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    padding: 0 !important;
+    position: relative;
+
+    .m-networkSwapTxHistory__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      i {
+        padding: 8px;
+        border-radius: 3px;
+        cursor: pointer;
+        @include m-theme() {
+          color: themed($m-white-always);
+          background: themed($m-grey-790);
+        }
+      }
+    }
+
+    .m-tabs__container {
+      padding-top: 0 !important;
+
+      @media (min-width: 480px) and (max-width: 839px) {
+        padding-left: 40px !important;
+      }
+    }
+
+    .m-networkSwapTxHistory__header {
+      display: flex;
+      flex-direction: row;
+      margin: 32px 0 24px 0;
+      padding: 0 40px;
+
+      .m-networkSwapTxHistory__title--swap {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+        margin-top: 0px;
+        margin-left: 10px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+
+    .m-networkSwapTxHistory__body {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 40px;
+      overflow: scroll;
+      height: 350px;
+    }
+  }
+}

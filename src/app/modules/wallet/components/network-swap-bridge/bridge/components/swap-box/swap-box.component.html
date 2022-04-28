@@ -1,0 +1,71 @@
+<div class="m-networkSwapBox__container">
+  <div class="mdl-grid">
+    <span class="m-networkSwapBox__container-title">New Transfer</span>
+  </div>
+
+  <div [formGroup]="form">
+    <!-- FROM box -->
+    <div class="mdl-grid m-networkSwapBox__container-box">
+      <span
+        class="m-networkSwapBox__container-box-subtitle mdl-cell mdl-cell--12-col "
+        >From</span
+      >
+      <div class="mdl-cell mdl-cell--12-col m-networkSwapBox__container-row">
+        <span
+          class="m-networkSwapBox__container-box-chain mdl-cell mdl-cell--4-col"
+        >
+          {{ fromNetwork.siteName }} Chain</span
+        >
+        <span class="m-networkSwapBox__container-box-subtitle"
+          >Balance: {{ (currentNetworkBalance | number) ?? '0'}} Minds</span
+        >
+      </div>
+      <div
+        class="mdl-cell mdl-cell--12-col  m-networkSwapBox__container-row-max"
+      >
+        <input
+          type="text"
+          class="m-networkSwapBox__container-box-input mdl-cell mdl-cell--12-col "
+          formControlName="amount"
+          [(ngModel)]="amount"
+        />
+        <span class="m-networkSwapBox__container-max" (click)="setMaxAmount()"
+          >MAX</span
+        >
+      </div>
+    </div>
+
+    <div class="m-networkSwapBox__swapButton--container">
+      <span
+        class="material-icons m-networkSwapBox__swapButton"
+        (click)="swapNetworks()"
+      >
+        swap_vert
+      </span>
+    </div>
+
+    <!-- TO box -->
+    <div class="mdl-grid m-networkSwapBox__container-box-bottom">
+      <span
+        class="m-networkSwapBox__container-box-subtitle mdl-cell mdl-cell--12-col "
+        >To</span
+      >
+      <div class="mdl-cell mdl-cell--12-col m-networkSwapBox__container-row">
+        <span
+          class="m-networkSwapBox__container-box-chain mdl-cell mdl-cell--4-col"
+          >{{ receivingNetwork.siteName }} Chain</span
+        >
+        <span class="m-networkSwapBox__container-box-subtitle"
+          >Balance: {{ (receivingNetworkBalance | number) ?? '0'}} Minds</span
+        >
+      </div>
+    </div>
+
+    <!-- Transfer button -->
+    <div class="m-networkSwapBox__container-transfer-row">
+      <m-button color="blue" (click)="navigate()" [disabled]="form.invalid">
+        <ng-container i18n="verb|@@M__ACTION__CANCEL">Transfer</ng-container>
+      </m-button>
+    </div>
+  </div>
+</div>

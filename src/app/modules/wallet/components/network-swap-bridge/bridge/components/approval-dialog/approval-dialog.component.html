@@ -1,0 +1,23 @@
+<div class="m-networkApproval-container">
+  <span class="m-networkApproval__title">
+    Approve Transfer
+  </span>
+  <span class="m-networkApproval-subtitle"> {{ amount }} MINDS </span>
+  <i class="material-icons m-networkApproval-priority">priority_high</i>
+  <span class="m-networkApproval-content">
+    You currently don’t have authorization to transfer the above amount. To
+    continue you need to approve the transfer. Alternativley you may approve
+    max, so you may skip this step in the future.
+  </span>
+  <m-button color="blue" (click)="approve()">
+    <ng-container i18n="verb|@@M__ACTION__CANCEL"
+      >Approve {{ amount }} MINDS</ng-container
+    >
+  </m-button>
+  <div class="mdl-grid m-networkApproval-footer" (click)="approveMax()">
+    <span class="m-networkApproval-approve">
+      Approve Max
+    </span>
+    <i class="material-icons m-networkApproval-info">info_outline</i>
+  </div>
+</div>

@@ -24,9 +24,16 @@ export class IconComponent {
   @Input() iconId: string;
 
   /**
-   * Sizing factor
+   * Sizing factor.
+   * For rem, use '1.25' for when you want 1.25rem
+   * (aka 25% larger than root element font size)
    */
   @Input() sizeFactor: number = 35;
+
+  /**
+   * Use rem instead of em
+   */
+  @Input() rem: boolean = false;
 
   /**
    * URL for CDN assets
@@ -46,18 +53,24 @@ export class IconComponent {
    * Gets the CSS size for the icon type
    */
   get sizeCss() {
-    const size = 1 + this.sizeFactor / 100;
+    let size;
+    if (this.rem) {
+      size = `${this.sizeFactor}rem`;
+    } else {
+      const multiplier = 1 + this.sizeFactor / 100;
+      size = `${multiplier}em`;
+    }
 
     switch (this.from) {
       case 'md':
       case 'ion':
-        return { fontSize: `${size}em` };
+        return { fontSize: size };
       case 'text':
-        return { fontSize: `${size}em` }; // Ratio might differ in the future
+        return { fontSize: size }; // Ratio might differ in the future
       case 'assets-file':
         return {
-          width: `${size}em`,
-          height: `${size}em`,
+          width: size,
+          height: size,
         };
     }
 

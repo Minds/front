@@ -15,10 +15,7 @@ import {
 @Component({
   selector: 'm-wallet__skaleCommunityPool',
   templateUrl: 'community-pool.component.html',
-  styleUrls: [
-    './community-pool.component.ng.scss',
-    '../../network-swap-bridge-common.ng.scss',
-  ],
+  styleUrls: ['./community-pool.component.ng.scss'],
 })
 export class WalletSkaleCommunityPoolComponent {
   // amount we are transacting.

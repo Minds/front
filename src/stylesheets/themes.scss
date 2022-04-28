@@ -39,6 +39,7 @@ $grey-990: #161616;
 $grey-950: #222;
 $grey-900: #333;
 $grey-800: #444;
+$grey-790: #404a4e;
 $grey-700: #555;
 $grey-600: #666;
 $grey-500: #777;
@@ -95,8 +96,8 @@ $themes: (
     m-textColor--secondaryInverted: #b8c1ca,
     m-textColor--tertiary: #9b9b9b,
     m-bgColor--primary: #ffffff,
-    m-bgColor--primaryInverted: #242a30,
-    m-bgColor--primaryDarkAlways: #242a30,
+    m-bgColor--primaryInverted: #1f252c,
+    m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #e7edf3,
     m-bgColor--secondary: #f6f7f7,
     m-bgColor--secondaryAlt: #e6ebed,
@@ -116,6 +117,7 @@ $themes: (
       m-grey-950: $grey-950,
     m-grey-900: $grey-900,
     m-grey-800: $grey-800,
+    m-grey-790: $grey-790,
     m-grey-700: $grey-700,
     m-grey-600: $grey-600,
     m-grey-500: $grey-500,
@@ -165,6 +167,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-activity--hover: #f8fafd,
   ),
   dark: (
     m-textColor--primary: #ffffff,
@@ -172,9 +175,9 @@ $themes: (
     m-textColor--secondary: #b8c1ca,
     m-textColor--secondaryInverted: #72727c,
     m-textColor--tertiary: #797b82,
-    m-bgColor--primary: #242a30,
+    m-bgColor--primary: #1f252c,
     m-bgColor--primaryInverted: #ffffff,
-    m-bgColor--primaryDarkAlways: #242a30,
+    m-bgColor--primaryDarkAlways: #1f252c,
     m-bgColor--primaryAlt: #1e242a,
     m-bgColor--secondary: #1a2025,
     m-bgColor--secondaryAlt: #232b31,
@@ -194,6 +197,7 @@ $themes: (
       m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
     m-grey-800: lighten($grey-200, $percent),
+    m-grey-790: lighten($grey-790, $percent),
     m-grey-700: lighten($grey-300, $percent),
     m-grey-600: lighten($grey-400, $percent),
     m-grey-500: lighten($grey-500, $percent),
@@ -243,6 +247,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-activity--hover: #282f38,
   ),
 );
 
@@ -252,6 +257,7 @@ $themes: (
 $m-grey-950: 'm-grey-950';
 $m-grey-900: 'm-grey-900';
 $m-grey-800: 'm-grey-800';
+$m-grey-790: 'm-grey-790';
 $m-grey-700: 'm-grey-700';
 $m-grey-600: 'm-grey-600';
 $m-grey: 'm-grey';
@@ -329,6 +335,7 @@ $m-alert: 'm-alert';
 $m-link: 'm-link';
 $m-link--hover: 'm-link--hover';
 $m-positive: 'm-positive';
+$m-activity--hover: 'm-activity--hover';
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;

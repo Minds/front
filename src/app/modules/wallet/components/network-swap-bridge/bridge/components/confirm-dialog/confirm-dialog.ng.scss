@@ -1,0 +1,101 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkConfirmation-container {
+    height: 90%;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
+    padding-top: 20px;
+
+    ::ng-deep .m-loadingSpinner__wrapper {
+      padding: 0px !important;
+    }
+
+    .m-networkConfirmation-title {
+      line-height: 28px;
+      font-size: 18px;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      cursor: default;
+    }
+
+    .m-networkConfirmation-subtitle {
+      line-height: 36px;
+      font-size: 30px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      margin-top: 8px;
+      cursor: default;
+    }
+
+    .m-networkConfirmation-box {
+      width: 181px;
+      height: 53px;
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: default;
+      text-transform: uppercase;
+      line-height: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        background: themed($m-blue);
+      }
+    }
+
+    .m-networkConfirmation-chevron__container {
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      padding-right: 30px;
+      box-sizing: border-box;
+      cursor: default;
+    }
+
+    .m-networkConfirmation-process {
+      justify-content: center;
+      margin-top: 44px;
+    }
+
+    .m-networkConfirmation-footer {
+      justify-content: center;
+      margin-top: 30px;
+      border-top: 1px solid;
+      width: 75%;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--primary);
+      }
+
+      span {
+        font-weight: 500;
+        line-height: 20px;
+        font-size: 14px;
+        margin-top: 20px;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      cursor: default;
+    }
+
+    .m-networkConfirmation-button_container {
+      justify-content: flex-end;
+      display: flex;
+      margin-top: 40px;
+    }
+  }
+}

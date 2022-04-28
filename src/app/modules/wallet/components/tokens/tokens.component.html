@@ -1,4 +1,14 @@
 <div class="m-walletDashboardBalance__wrapper">
+  <ng-container *mIfFeature="'!wallet-v3'">
+    <m-walletTokenOnboarding
+      *ngIf="!tokenOnboardingComplete"
+      [hasAddress]="hasOnchainAddress"
+      [phoneVerified]="phoneVerified"
+      [dashboardView]="dashboardView"
+      (onboardingComplete)="onTokenOnboardingCompleted()"
+    ></m-walletTokenOnboarding>
+  </ng-container>
+
   <m-walletBalance--tokens></m-walletBalance--tokens>
 </div>
 

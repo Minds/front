@@ -1,0 +1,93 @@
+<div class="m-networkPending-container">
+  <div class="mdl-grid m-networkPending-title__container">
+    <span class="m-networkPending-title">
+      Transfer amount
+    </span>
+    <span class="m-networkPending-subtitle"> {{ amount }} MINDS </span>
+  </div>
+
+  <div class="m-networkPending-wrapper">
+    <div class="m-networkPending-stepper">
+      <div
+        id="step1"
+        class="m-networkPending_stepper-item m-networkPending_step-complete m-networkPending_step-last-complete"
+      >
+        <i class="m-networkPending_stepper-circle">
+          <i class="material-icons m-networkPending-approve">done</i>
+        </i>
+        <span class="m-networkPending_stepper-label">{{
+          states[0] | titlecase
+        }}</span>
+      </div>
+
+      <div class="m-networkPending_stepper-connector" aria-hidden="true">
+        <hr />
+      </div>
+
+      <div
+        id="step2"
+        class="m-networkPending_stepper-item m-networkPending_step-current"
+      >
+        <i class="m-networkPending_stepper-circle" *ngIf="proposalState === 0">
+          &nbsp;</i
+        >
+        <i
+          class="m-networkPending_stepper-circle"
+          *ngIf="proposalState === 1 || proposalState === 2"
+        >
+          <i class="material-icons m-networkPending-approve">done</i>
+        </i>
+        <span class="m-networkPending_stepper-label">{{
+          states[1] | titlecase
+        }}</span>
+      </div>
+
+      <div class="m-networkPending_stepper-connector" aria-hidden="true">
+        <hr />
+      </div>
+
+      <div
+        id="step3"
+        class="m-networkPending_stepper-item m-networkPending_step-last-complete"
+      >
+        <i
+          class="m-networkPending_stepper-circle"
+          *ngIf="proposalState === 0 || proposalState === 1"
+          >&nbsp;</i
+        >
+        <i class="m-networkPending_stepper-circle" *ngIf="proposalState === 2">
+          <i class="material-icons m-networkPending-approve">done</i>
+        </i>
+        <span class="m-networkPending_stepper-label">{{
+          states[2] | titlecase
+        }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-networkPending-loader">
+    <m-loadingSpinner
+      [inProgress]="true"
+      *ngIf="proposalState === 0"
+    ></m-loadingSpinner>
+  </div>
+  <i
+    class="material-icons m-networkPending-priority"
+    *ngIf="proposalState === 2"
+    >check_circle</i
+  >
+  <i
+    class="material-icons m-networkPending-priority"
+    *ngIf="proposalState === 1"
+    >compare_arrows</i
+  >
+
+  <span class="m-networkPending-state">{{ getTitles() }} </span>
+  <span class="m-networkPending-content" (click)="changeState()">
+    {{ getDescription() }}
+  </span>
+
+  <span class="m-networkPending-link" *ngIf="proposalState !== 0"
+    >View transaction
+  </span>
+</div>

@@ -2,6 +2,19 @@
 @import '../../../common/layout/layout';
 
 :host {
+  &.m-newsfeedBoostRotator--activityV2 {
+    .m-newsfeed__boostRotator {
+      margin: 0;
+
+      ::ng-deep {
+        m-activity {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
   [class*='m-carousel__overflowScrollButton--'] {
     display: block !important;
     opacity: 1;

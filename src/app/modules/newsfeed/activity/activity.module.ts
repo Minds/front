@@ -33,6 +33,7 @@ import { ActivityMinimalMetricsComponent } from './minimal-metrics/minimal-metri
 import { ActivityRemindButtonComponent } from './remind-button/remind-button.component';
 import { ActivityModalQuoteComponent } from './modal/quote/quote.component';
 import { ActivityBoostButtonComponent } from './boost-button/boost-button.component';
+import { ActivityV2Module } from '../activity-v2/activity.module';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { ActivityBoostButtonComponent } from './boost-button/boost-button.compon
     PostMenuModule,
     WireModule,
     CodeHighlightModule,
+    ActivityV2Module,
   ],
   declarations: [
     ActivityComponent,

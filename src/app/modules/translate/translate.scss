@@ -2,13 +2,13 @@ m-translate {
   &.m-translate--minimalMode {
     .m-translate__hasNav2020 {
       > * {
-        padding: 10px $activity-padding-lr--minimalMode;
+        padding: 10px spacing4;
       }
     }
   }
   .m-translate__hasNav2020 {
     > * {
-      padding: 10px $activity-padding-lr;
+      padding: 10px $spacing5;
       > * {
         padding: 0;
         margin-left: 0px;
@@ -68,20 +68,21 @@ m-translate {
       align-items: center;
     }
     .m-translationLabel__content {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 16px;
+      @include body3Regular;
       word-break: normal;
-      padding: 10px 0;
+      padding: $spacing3 0;
 
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
       a {
-        text-decoration: underline;
-        font-weight: 400;
+        text-decoration: none;
         @include m-theme() {
           color: themed($m-textColor--secondary);
+        }
+
+        &:hover {
+          text-decoration: underline;
         }
       }
     }

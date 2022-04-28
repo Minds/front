@@ -1,0 +1,37 @@
+<div class="m-networkConfirmation-container">
+  <span class="m-networkConfirmation-title">
+    Confirm Transfer
+  </span>
+  <span class="m-networkConfirmation-subtitle"> {{ amount }} MINDS </span>
+
+  <div class="mdl-grid m-networkConfirmation-process">
+    <div class="mdl-cell m-networkConfirmation-box">
+      {{ from.networkName }}
+    </div>
+    <div
+      class="mdl-cell mdl-cell--1-col m-networkConfirmation-chevron__container"
+    >
+      <i class="material-icons m-networkApproval-info">chevron_right</i>
+      <i class="material-icons m-networkApproval-info">chevron_right</i>
+      <i class="material-icons m-networkApproval-info">chevron_right</i>
+    </div>
+    <div class="mdl-cell m-networkConfirmation-box">
+      {{ to.networkName }}
+    </div>
+  </div>
+
+  <div class="mdl-grid m-networkConfirmation-footer">
+    <span>Estimated transaction fee ~$0.40 - Transfer time ~8 mins</span>
+  </div>
+
+  <div class="m-networkConfirmation-button_container">
+    <m-button color="blue" (onAction)="transfer()" [disabled]="loading | async">
+      <ng-container i18n="verb|@@M__ACTION__CANCEL">
+        <m-loadingSpinner [inProgress]="loading | async"></m-loadingSpinner>
+        <span *ngIf="!(loading | async)">
+          Confirm Transfer
+        </span>
+      </ng-container>
+    </m-button>
+  </div>
+</div>

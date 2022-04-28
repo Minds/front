@@ -38,6 +38,7 @@ import { ProRedirectComponent } from './redirect.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { JoinButtonComponent } from './channel/join-button/join-button.component';
 import { ProChannelSplashComponent } from './channel/splash/splash.component';
+import { ActivityV2Module } from '../newsfeed/activity-v2/activity.module';
 
 const routes: Routes = [
   {
@@ -150,7 +151,8 @@ export const PRO_DOMAIN_ROUTES = [
     VideoModule,
     AuthModule,
     ModalsModule,
-    ActivityModule,
+    ActivityModule, // delete during ActivityV2 cleanup
+    ActivityV2Module,
     MarketingModule,
   ],
   providers: [ProService],

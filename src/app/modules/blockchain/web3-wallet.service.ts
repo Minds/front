@@ -1,5 +1,5 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish, Contract, utils, Wallet } from 'ethers';
 import { Web3ModalService } from '@mindsorg/web3modal-angular';
 import asyncSleep from '../../helpers/async-sleep';
@@ -8,6 +8,7 @@ import { ConfigsService } from '../../common/services/configs.service';
 import { defaultAbiCoder, Interface } from 'ethers/lib/utils';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { isPlatformBrowser } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 import isMobileOrTablet from '../../helpers/is-mobile-or-tablet';
 
 type Address = string;
@@ -16,10 +17,11 @@ type Address = string;
 export class Web3WalletService {
   public config; // TODO add types
   public provider: Web3Provider | null = null;
-  protected unavailable: boolean = false;
-  protected local: boolean = false;
-  protected _ready: Promise<any>;
-  protected _web3LoadAttempt: number = 0;
+
+  public provider$ = new BehaviorSubject<Web3Provider>(null);
+
+  protected unavailable = false;
+  protected local = false;
 
   constructor(
     protected transactionOverlay: TransactionOverlayService,
@@ -71,6 +73,7 @@ export class Web3WalletService {
 
   setProvider(provider: ExternalProvider) {
     this.provider = new Web3Provider(provider);
+    this.provider$.next(this.provider);
   }
 
   async getWallets() {
@@ -115,6 +118,8 @@ export class Web3WalletService {
     return !(await this.getCurrentWallet());
   }
 
+  // Network
+
   async unlock() {
     if (await this.isLocked()) {
       try {
@@ -127,7 +132,7 @@ export class Web3WalletService {
     return !(await this.isLocked());
   }
 
-  // Network
+  // Bootstrap
 
   async isSameNetwork() {
     const provider = this.provider;
@@ -138,20 +143,18 @@ export class Web3WalletService {
       chainId = network.chainId;
     }
 
-    return (chainId || 1) == this.config.client_network;
+    return (chainId || 1) === this.config.client_network;
   }
-
-  // Bootstrap
 
   setUp() {
     this.config = this.configs.get('blockchain');
   }
 
+  // Contract Methods
+
   isUnavailable() {
     return this.unavailable;
   }
-
-  // Contract Methods
 
   async sendSignedContractMethodWithValue(
     contract: Contract,
@@ -196,6 +199,8 @@ export class Web3WalletService {
     return txHash;
   }
 
+  // Normal Transactions
+
   async sendSignedContractMethod(
     contract: any,
     method: string,
@@ -210,8 +215,6 @@ export class Web3WalletService {
       message
     );
   }
-
-  // Normal Transactions
 
   async sendTransaction(
     originalTxObject: any,

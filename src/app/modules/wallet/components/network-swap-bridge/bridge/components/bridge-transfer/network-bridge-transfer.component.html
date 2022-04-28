@@ -1,0 +1,28 @@
+<div class="m-modalV2__inner">
+  <div class="m-networkSwapBridge--close">
+    <i class="material-icons" (click)="onSaveIntent()">close</i>
+  </div>
+  <!-- MODAL HEADER  -->
+  <div class="m-networkSwapBridge__header">
+    <div class="mdl-grid m-networkSwapBridge__container-row ">
+      <img
+        class="mdl-cell mdl-cell--1-col m-networkSwapBridge__container-row-img"
+        [src]="cdnAssetsUrl + entity.logoPath"
+      />
+      <h1 class="mdl-cell mdl-cell--5-col m-networkSwapBridge__title--swap">
+        Network Bridge
+      </h1>
+      <div
+        class="mdl-cell mdl-cell--5-col m-networkSwapBridge__transactions"
+        *ngIf="entity.showHistoric && !showError && shouldShow()"
+      >
+        <span (click)="navigateToTxHistory()">Transactions</span>
+        <i (click)="navigateToTxHistory()" class="material-icons">history</i>
+        <img [src]="cdnAssetsUrl + 'assets/ext/ellipse.svg'" alt="ellipse" />
+      </div>
+    </div>
+  </div>
+
+  <!-- All step components get dynamically render here -->
+  <ng-template divBinder></ng-template>
+</div>

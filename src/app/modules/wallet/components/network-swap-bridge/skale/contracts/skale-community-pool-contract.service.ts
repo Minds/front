@@ -27,15 +27,17 @@ export class SkaleCommunityPoolContractService extends AbstractSkaleMindsContrac
   ) {
     super(web3Wallet, config, networkSwitch);
 
-    this.skaleCommunityPoolAbi = this.skaleConfig[
-      'skale_contracts_mainnet'
-    ].community_pool_abi;
+    if (this.skaleConfig) {
+      this.skaleCommunityPoolAbi = this.skaleConfig[
+        'skale_contracts_mainnet'
+      ].community_pool_abi;
 
-    this.skaleCommunityPoolAddress = this.skaleConfig[
-      'skale_contracts_mainnet'
-    ].community_pool_address;
+      this.skaleCommunityPoolAddress = this.skaleConfig[
+        'skale_contracts_mainnet'
+      ].community_pool_address;
 
-    this.skaleChainName = this.skaleConfig['chain_name'];
+      this.skaleChainName = this.skaleConfig['chain_name'];
+    }
   }
 
   /**

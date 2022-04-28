@@ -1,0 +1,83 @@
+<div class="m-networkBridgeTxHistoryItem-container">
+  <div class="mdl-cell mdl-cell--1-col" *ngIf="isSuccess(item)">
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-img m-networkBridgeTxHistoryItem-container-img-success"
+      >done</i
+    >
+  </div>
+  <div class="mdl-cell mdl-cell--1-col" *ngIf="isPendingAction(item)">
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-img m-networkBridgeTxHistoryItem-container-img-pending"
+      >hourglass_empty</i
+    >
+  </div>
+  <div class="mdl-cell mdl-cell--1-col" *ngIf="isActionRequired(item)">
+    <i
+      class="material-icons m-networkBridgeTxHistoryItem-container-img m-networkBridgeTxHistoryItem-container-img-action_required"
+      >priority_high</i
+    >
+  </div>
+  <div
+    class="mdl-cell mdl-cell--6-col m-networkBridgeTxHistoryItem-container-text "
+  >
+    <div>
+      <span class="m-networkBridgeTxHistoryItem-container-text-bold">{{
+        isWithdraw(item) ? 'Withdraw' : 'Deposit'
+      }}</span>
+      <span class="m-networkBridgeTxHistoryItem-container-text-light">
+        · {{ formatDate(item.timestamp) }}
+      </span>
+    </div>
+    <span class="m-networkBridgeTxHistoryItem-container-text-light">
+      {{ formatStatus(item.status) | titlecase }} ·
+      {{
+        isWithdraw(item) ? 'From Polygon to Mainnet' : 'From Mainnet to Polygon'
+      }}
+    </span>
+  </div>
+  <div class="mdl-cell mdl-cell--3-col">
+    <span class="m-networkBridgeTxHistoryItem-container-amount"
+      >{{ formatAmount(item.amount) }} Minds</span
+    >
+  </div>
+  <div
+    class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"
+    *ngIf="isSuccess(item)"
+  >
+    <a
+      *ngIf="getExplorerUrl(item)"
+      [href]="getExplorerUrl(item)"
+      target="_blank"
+    >
+      <i
+        (click)="getExplorerUrl(item)"
+        class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color "
+        >call_made</i
+      >
+    </a>
+  </div>
+  <div
+    class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"
+    *ngIf="isPendingAction(item)"
+  >
+    <a
+      *ngIf="getExplorerUrl(item)"
+      [href]="getExplorerUrl(item)"
+      target="_blank"
+    >
+      <i
+        class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color"
+        >chevron_right</i
+      >
+    </a>
+  </div>
+  <div
+    class="mdl-cell mdl-cell--2-col m-networkBridgeTxHistoryItem-container-arrow"
+    (click)="handleClick()"
+    *ngIf="isActionRequired(item)"
+  >
+    <i class="material-icons m-networkBridgeTxHistoryItem-container-arrow-color"
+      >chevron_right</i
+    >
+  </div>
+</div>

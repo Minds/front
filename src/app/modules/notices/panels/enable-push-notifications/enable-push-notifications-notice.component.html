@@ -1,0 +1,37 @@
+<m-feedNotice icon="info" (dismissClick)="dismiss()" dataRefId="enable-push">
+  <span
+    class="m-feedNotice__title"
+    i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__TITLE"
+    >Enable Push Notifications</span
+  >
+  <p
+    class="m-feedNotice__body"
+    i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__BODY"
+  >
+    Get alerted when someone replies to you, or likes, reminds, or subscribes to
+    your content. Customize your settings to decide which notifications you
+    want.
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-enable-push-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__ENABLE">
+      Enable
+    </ng-container>
+  </m-button>
+  <m-button
+    class="m-feedNotice__buttonSecondary"
+    size="small"
+    (onAction)="onSecondaryOptionClick($event)"
+    data-ref="feed-notice-enable-push-secondary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__ENABLE_PUSH_NOTIFICATIONS__CUSTOMIZE">
+      Customize
+    </ng-container>
+  </m-button>
+</m-feedNotice>

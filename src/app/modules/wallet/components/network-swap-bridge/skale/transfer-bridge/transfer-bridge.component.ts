@@ -19,10 +19,7 @@ import { NetworkSwitchService } from '../../../../../../common/services/network-
 @Component({
   selector: 'm-wallet__skaleTransferBridge',
   templateUrl: 'transfer-bridge.component.html',
-  styleUrls: [
-    './transfer-bridge.component.ng.scss',
-    '../../network-swap-bridge-common.ng.scss',
-  ],
+  styleUrls: ['./transfer-bridge.component.ng.scss'],
 })
 export class WalletSkaleTransferBridgeComponent extends AbstractSubscriberComponent {
   // loading in progress

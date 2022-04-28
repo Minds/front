@@ -17,6 +17,7 @@ import getActivityContentType from '../../../helpers/activity-content-type';
 import { WireEventType } from '../v2/wire-v2.service';
 import { WirePaymentHandlersService } from '../wire-payment-handlers.service';
 import { AuthModalService } from '../../auth/modal/auth-modal.service';
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 export type PaywallType = 'plus' | 'tier' | 'custom';
 @Component({
@@ -33,6 +34,7 @@ export class WireLockScreenComponent implements OnInit {
   @Input() preview: any;
   @Input() mediaHeight: number | null = null;
   @Input() minimalMode: boolean = false;
+  @Input() hideText: boolean = false;
 
   init: boolean = false;
   showSubmittedInfo: boolean = false;
@@ -40,10 +42,14 @@ export class WireLockScreenComponent implements OnInit {
   contentType: string;
   hasTeaser: boolean = false;
   tierName: string | null;
-  messageTopOffset: string = '50px';
   isCustom: boolean = false;
 
   readonly plusSupportTierUrn: string;
+
+  @HostBinding('class.m-wireLockScreen--activityV2')
+  get isActivityV2Feature() {
+    return this.experiments.hasVariation('front-5229-activities', true);
+  }
 
   constructor(
     public session: Session,
@@ -53,7 +59,8 @@ export class WireLockScreenComponent implements OnInit {
     private signupModal: SignupModalService,
     private configs: ConfigsService,
     private wirePaymentHandlers: WirePaymentHandlersService,
-    private authModal: AuthModalService
+    private authModal: AuthModalService,
+    private experiments: ExperimentsService
   ) {
     this.plusSupportTierUrn = configs.get('plus')['support_tier_urn'];
   }
@@ -71,7 +78,6 @@ export class WireLockScreenComponent implements OnInit {
       if (this.mediaHeight === 0) {
         this.mediaHeight = 410;
       }
-      this.messageTopOffset = `${this.mediaHeight / 2}px`;
     }
 
     if (

@@ -9,9 +9,12 @@ import { SkaleCommunityPoolContractService } from './contracts/skale-community-p
 import { MindsTokenMainnetSignedContractService } from './contracts/minds-token-mainnet-signed-contract.service';
 import { SkaleFaucetService } from './services/faucet.service';
 import { SkaleCommunityPoolExitService } from './community-pool/community-pool-exit.service';
+import { BridgeService } from '../bridge/constants/constants.types';
+import { BigNumber, BigNumberish } from 'ethers';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class SkaleService {
+export class SkaleService implements BridgeService {
   constructor(
     private toast: FormToastService,
     private web3Wallet: Web3WalletService,
@@ -57,6 +60,14 @@ export class SkaleService {
     return this.networkSwitch.isOnNetwork(
       this.networkSwitch.networks.mainnet.id
     );
+  }
+
+  // TODO
+  public async getBalances() {
+    return {
+      root: 0,
+      child: 0,
+    };
   }
 
   /**
@@ -137,8 +148,8 @@ export class SkaleService {
    * @param { number } amount - amount of tokens to deposit.
    * @returns { Promise<void> }
    */
-  public async deposit(amount: number): Promise<unknown> {
-    return this.depositBox.deposit(amount);
+  public async deposit(amount: BigNumberish): Promise<void> {
+    await this.depositBox.deposit(BigNumber.from(amount).toNumber());
   }
 
   /**
@@ -146,7 +157,7 @@ export class SkaleService {
    * @param { number } amount
    * @returns { Promise<void> }
    */
-  public async withdraw(amount: number): Promise<unknown> {
+  public async withdraw(amount: BigNumberish): Promise<void> {
     const walletAddress = await this.web3Wallet.getCurrentWallet();
 
     if (!walletAddress) {
@@ -161,7 +172,7 @@ export class SkaleService {
       return;
     }
 
-    return this.tokenManager.withdraw(amount);
+    await this.tokenManager.withdraw(BigNumber.from(amount).toNumber());
   }
 
   /**
@@ -198,5 +209,9 @@ export class SkaleService {
    */
   public async getCommunityPoolBalance(): Promise<number> {
     return this.communityPool.getBalance();
+  }
+
+  getLoadingState(): Observable<boolean> {
+    return of(false);
   }
 }

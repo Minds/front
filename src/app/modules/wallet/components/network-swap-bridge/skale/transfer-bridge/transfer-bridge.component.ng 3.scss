@@ -1,0 +1,59 @@
+@import 'defaults.scss';
+
+:host {
+  .m-skaleTransferBridge__faucetBanner {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 2px;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+
+    background: #72727c; // fixed bg color to override theme.
+
+    &:hover {
+      background: #43434d;
+    }
+
+    m-tooltip {
+      ::ng-deep i {
+        font-size: 20px;
+        padding-left: 5px;
+      }
+    }
+
+    m-loadingSpinner {
+      ::ng-deep .m-loadingSpinner__wrapper {
+        padding: unset;
+      }
+    }
+  }
+  .m-skaleTransferBridge__tokenBridge {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .m-skaleTransferBridge__swapButtonContainer {
+      display: flex;
+      justify-content: center;
+
+      .m-skaleTransferBridge__swapButton {
+        height: 30px;
+        margin: 20px;
+        cursor: pointer;
+        font-size: 30px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+}

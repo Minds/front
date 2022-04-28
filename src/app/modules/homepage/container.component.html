@@ -1,13 +1,7 @@
 <m-defaultFeed__container
   *ngIf="isGuestMode; else notGuestMode"
 ></m-defaultFeed__container>
-<!-- <m-discovery *ngIf="isGuestMode; else notGuestMode">
-  <m-discovery__trends
-    [showTabs]="false"
-    [showChannels]="false"
-  ></m-discovery__trends>
-</m-discovery> -->
+
 <ng-template #notGuestMode>
-  <m-homepage__v3 *ngIf="isHomepageV3"></m-homepage__v3>
-  <m-homepage__v2 *ngIf="!isHomepageV3"></m-homepage__v2>
+  <m-homepage__v3></m-homepage__v3>
 </ng-template>

@@ -1,0 +1,68 @@
+<div class="m-modalV2__inner">
+  <div class="m-networkSwapTxHistory__close">
+    <i class="material-icons" (click)="onDismissIntent()">close</i>
+  </div>
+
+  <!-- MODAL HEADER  -->
+  <div class="m-networkSwapTxHistory__header">
+    <img
+      class="mdl-cell mdl-cell--1-col m-networkSwapTxHistory__container-row-img"
+      [src]="cdnAssetsUrl + network.logoPath"
+    />
+    <h1 class="mdl-cell mdl-cell--5-col m-networkSwapTxHistory__title--swap">
+      Transactions
+    </h1>
+  </div>
+
+  <!-- MODAL TABS -->
+
+  <ul class="m-tabs__container">
+    <li class="m-tabs__tab">
+      <a
+        [class.m-tabs__tab--selected]="(filterState$ | async) === null"
+        (click)="filterState$.next(null)"
+      >
+        All transactions
+      </a>
+    </li>
+    <li class="m-tabs__tab">
+      <a
+        [class.m-tabs__tab--selected]="(filterState$ | async) === 'pending'"
+        (click)="setFilter('pending')"
+      >
+        Pending ({{ pendingTotal }})
+      </a>
+    </li>
+    <li class="m-tabs__tab">
+      <a
+        [class.m-tabs__tab--selected]="
+          (filterState$ | async) === 'action_required'
+        "
+        (click)="setFilter('action_required')"
+      >
+        Action Required ({{ actionTotal }})
+      </a>
+    </li>
+  </ul>
+
+  <!-- m-networkBridgeTxHistoryItem list -->
+  <div
+    class="m-networkSwapTxHistory__body"
+    *ngIf="!isLoading && (filteredItems$ | async).length > 0"
+  >
+    <m-networkBridgeTxHistoryItem
+      *ngFor="let item of filteredItems$ | async"
+      [item]="item"
+      (click)="handleActionRequired(item)"
+    >
+    </m-networkBridgeTxHistoryItem>
+  </div>
+
+  <div
+    class="m-networkSwapTxHistory__body"
+    *ngIf="!isLoading && (filteredItems$ | async).length === 0"
+  >
+    <span> No {{ formatState() }} transactions</span>
+  </div>
+  <m-loadingSpinner [inProgress]="isLoading"></m-loadingSpinner>
+</div>

@@ -6,6 +6,13 @@
     margin-bottom: 100px; // avoid overlap of mobile bottom bars
   }
 
+  .m-pushNotifSettings__pushNotificationEnablingFailed {
+    margin-top: $minds-margin;
+    @include m-theme() {
+      color: themed($m-alert);
+    }
+  }
+
   .m-pushNotifSettings__optionContainer {
     display: flex;
     flex-flow: column nowrap;
@@ -19,20 +26,6 @@
       margin-right: 20px;
       align-self: center;
       min-width: 27px;
-
-      &.disabled {
-        ::ng-deep .m-toggle__switch {
-          @include m-theme() {
-            background: themed($m-borderColor--primary);
-            color: themed($m-borderColor--secondary);
-          }
-        }
-      }
-      ::ng-deep .m-toggle__track {
-        @include m-theme() {
-          background: themed($m-textColor--primary);
-        }
-      }
     }
     .m-pushNotifSettings__optionContainerButtonRow {
       display: flex;

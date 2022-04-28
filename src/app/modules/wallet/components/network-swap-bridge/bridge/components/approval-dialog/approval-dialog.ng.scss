@@ -1,0 +1,100 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkApproval-container {
+    height: 90%;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 20px;
+
+    .m-networkApproval__title {
+      line-height: 28px;
+      font-size: 18px;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      cursor: default;
+    }
+
+    .m-networkApproval-subtitle {
+      line-height: 36px;
+      font-size: 30px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      margin-top: 8px;
+      cursor: default;
+    }
+
+    .m-networkApproval-content {
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      margin-top: 14px;
+      cursor: default;
+    }
+
+    m-button {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      margin-top: 30px;
+
+      ::ng-deep button {
+        div {
+          font-size: 16px !important;
+        }
+      }
+    }
+
+    .m-networkApproval-priority {
+      font-size: 72px;
+      display: flex;
+      justify-content: center;
+      margin-top: 34px;
+      cursor: default;
+    }
+
+    .m-networkApproval-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 13px;
+      cursor: pointer;
+    }
+
+    .m-networkApproval-approve {
+      display: flex;
+      justify-content: center;
+      line-height: 24px;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-networkApproval-info {
+      font-size: 17px;
+      margin-left: 9px;
+    }
+  }
+}

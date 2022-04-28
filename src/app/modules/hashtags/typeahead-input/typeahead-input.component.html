@@ -3,8 +3,10 @@
     type="text"
     class="m-hashtagsTypeaheadInput__input"
     [id]="inputId"
-    [disabled]="disabled"
     [ngModel]="tag"
+    [ngClass]="{
+      'm-hashtagsTypeaheadInput__input--disabled': disabled
+    }"
     (ngModelChange)="setTag($event)"
     [placeholder]="placeholder"
     (keydown.enter)="triggerAction(true)"

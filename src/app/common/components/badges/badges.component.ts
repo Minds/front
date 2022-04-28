@@ -19,6 +19,7 @@ export interface SocialProfileMeta {
   moduleId: module.id,
   selector: 'm-channel--badges',
   templateUrl: 'badges.component.html',
+  styleUrls: ['badges.component.ng.scss'],
 })
 export class ChannelBadgesComponent {
   @Input() user;

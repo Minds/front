@@ -1,6 +1,28 @@
 @import 'defaults.scss';
 
 :host {
+  &.m-groupsProfile--activityV2 {
+    .m-group__feeds {
+      margin: 0;
+      padding: 0;
+    }
+
+    ::ng-deep m-group-profile-feed__sorted {
+      ::ng-deep m-composer {
+        margin-bottom: 0;
+        margin-top: $spacing4;
+        border: none !important;
+        border-radius: 0;
+        .m-composer__trigger {
+          @include m-theme() {
+            border-bottom: 4px solid themed($m-borderColor--primary);
+            border-top: 1px solid themed($m-borderColor--primary);
+          }
+        }
+      }
+    }
+  }
+
   .m-groupInfo__rightIcons {
     display: flex;
     align-items: center;

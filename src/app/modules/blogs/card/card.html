@@ -1,49 +1,96 @@
+<!-- Owner block v2 -->
+<ng-container *ngIf="activityV2Feature">
+  <div
+    class="m-blogCard__OwnerBlock"
+    *ngIf="blog.ownerObj && blog.ownerObj.username"
+  >
+    <div class="m-blogCardOwnerBlock__avatar">
+      <m-hovercard [publisher]="blog.ownerObj" [offset]="[0, 15]">
+        <a [routerLink]="['/', blog.ownerObj.username]">
+          <img
+            src="/icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+            class="m-border"
+          />
+        </a>
+      </m-hovercard>
+    </div>
+    <div class="m-blogCardOwnerBlock__body">
+      <a
+        class="m-blogCardOwnerBlock__displayName"
+        [routerLink]="['/', blog.ownerObj.username]"
+      >
+        <span [title]="blog.ownerObj.name"
+          >{{ blog.ownerObj.name | truncate: 20 }}</span
+        >
+      </a>
+      <a
+        class="m-blogCardOwnerBlock__permalink"
+        [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
+        >{{ blog.time_created * 1000 | date:'mediumDate' }}</a
+      >
+    </div>
+  </div>
+</ng-container>
+
+<!-- Preview image / link -->
 <a
   [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
-  class="mdl-card__title minds-blog-thumbnail"
-  style="height:180px; margin-bottom:80px; background-size:cover;"
+  class="mdl-card__title minds-blog-thumbnail m-blogCard__thumbnail"
   [ngStyle]="{background: 'url(' + blog.thumbnail_src + ') center center / cover'}"
   [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(blog) }"
 ></a>
 <span
   class="m-mature-thumbnail-overlay"
-  *ngIf="attachment.shouldBeBlurred(blog)"
+  *ngIf="attachment.shouldBeBlurred(blog) && !activityV2Feature"
   ><i class="material-icons">explicit</i></span
 >
 
-<!-- Owner block -->
-<div
-  class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block m-title-block-fixed m-title-block-with-actions"
-  *ngIf="blog.ownerObj && blog.ownerObj.username"
->
-  <a
-    [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
-    class="mdl-color-text--blue-grey-700"
-  >
-    <strong>{{ blog.title | excerpt: 140 }}</strong>
-  </a>
-
-  <div class="m-inline-owner-block">
+<!-- Title v2 -->
+<ng-container *ngIf="activityV2Feature">
+  <div class="m-blogCard__title">
     <a
-      [routerLink]="['/', blog.ownerObj.username]"
-      class="mdl-color-text--blue-grey-300"
-    >
-      <img
-        src="/icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
-        class="mdl-shadow--2dp"
-      />
-      {{blog.ownerObj.username}}
+      [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
+      >{{ blog.title | excerpt: 140 }}
     </a>
-    <span>{{ blog.time_created * 1000 | date:'mediumDate' }}</span>
-    <span
-      *ngIf="blog.ownerObj && blog.owner_guid == session.getLoggedInUser().guid && !blog.published"
-      i18n="@@BLOGS__DRAFT_LABEL"
-      >Draft</span
-    >
   </div>
-</div>
+</ng-container>
 
-<div class="mdl-card__supporting-text m-action-tabs m-action-tabs-fixed">
-  <minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
-  <minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
-</div>
+<!-- Owner block v1 -->
+<ng-container *ngIf="!activityV2Feature">
+  <div
+    class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block m-title-block-fixed m-title-block-with-actions"
+    *ngIf="blog.ownerObj && blog.ownerObj.username"
+  >
+    <a
+      [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"
+      class="mdl-color-text--blue-grey-700"
+    >
+      <strong>{{ blog.title | excerpt: 140 }}</strong>
+    </a>
+
+    <div class="m-inline-owner-block">
+      <a
+        [routerLink]="['/', blog.ownerObj.username]"
+        class="mdl-color-text--blue-grey-300"
+      >
+        <img
+          src="/icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+          class="mdl-shadow--2dp"
+        />
+        {{blog.ownerObj.username}}
+      </a>
+      <span>{{ blog.time_created * 1000 | date:'mediumDate' }}</span>
+      <span
+        *ngIf="blog.ownerObj && blog.owner_guid == session.getLoggedInUser().guid && !blog.published"
+        i18n="@@BLOGS__DRAFT_LABEL"
+        >Draft</span
+      >
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="mdl-card__supporting-text m-action-tabs m-action-tabs-fixed">
+    <minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
+    <minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
+  </div>
+</ng-container>

@@ -1,0 +1,159 @@
+@import 'defaults.scss';
+
+::ng-deep .modal-content--bridge {
+  min-height: 526px;
+  max-width: 710px;
+}
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    padding: 40px;
+    position: relative;
+
+    .m-networkSwapBridge--close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      i {
+        @include m-theme() {
+          background: themed($m-grey-790);
+        }
+        padding: 8px;
+        border-radius: 3px;
+        cursor: pointer;
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
+
+    @media (min-width: 840px) {
+      .mdl-grid {
+        padding: 0px;
+      }
+    }
+
+    @media (min-width: 480px) and (max-width: 839px) {
+      .mdl-cell--9-col {
+        width: calc(70% - 16px);
+      }
+      .m-networkSwapBridge__header {
+        .m-networkSwapBridge__container {
+          padding: 4px 24px !important;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .m-networkSwapBridge__header {
+      .m-networkSwapBridge__title {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        margin: 0;
+        cursor: pointer;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-networkSwapBridge__subtitle {
+        color: #aeb0b8;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        margin: 8px 0 40px 0;
+        box-sizing: border-box;
+        display: flex;
+        cursor: pointer;
+      }
+
+      .m-networkSwapBridge__container {
+        @include m-theme() {
+          border: 1px solid themed($m-grey-790);
+        }
+
+        padding: 10px 24px;
+        height: 124px;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+        border-radius: 3px;
+        align-items: center;
+        cursor: pointer;
+
+        img {
+          width: 52px;
+          height: 50px;
+          margin-right: 20px;
+          background-color: #242a30;
+          border-radius: 4px;
+          padding: 1.5px;
+        }
+
+        .m-networkSwapBridge__container--title {
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 28px;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+        .m-networkSwapBridge__container--subtitle {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 20px;
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+        .m-networkSwapBridge__container--arrow {
+          margin-left: 24px;
+
+          i {
+            cursor: pointer;
+          }
+        }
+      }
+      .m-networkSwapBridge__tabs {
+        display: flex;
+        flex-flow: row nowrap;
+        margin: 24px 0 8px 0;
+
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-borderColor--primary);
+        }
+
+        .m-networkSwapBridge__tab {
+          background: none;
+          color: inherit;
+          border: none;
+          padding: 0;
+          font: inherit;
+          outline: inherit;
+          margin-right: 20px;
+          font-weight: 700;
+          font-size: 16px;
+          border-bottom: 5px solid transparent; // alignment with selected option.
+          padding-bottom: 5px;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+
+          // active TODO: ngClass
+          &.m-networkSwapBridge__tab--active {
+            @include m-theme() {
+              border-bottom: 5px solid themed($m-blue-dark);
+              color: themed($m-textColor--primary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-networkSwapBridge__body {
+  }
+}

@@ -1,0 +1,43 @@
+<div class="m-modalV2__inner">
+  <div class="m-networkSwapBridge--close">
+    <i class="material-icons" (click)="onDismissIntent()">close</i>
+  </div>
+
+  <div class="m-networkSwapBridge__header">
+    <h1 class="m-networkSwapBridge__title">Network Bridge</h1>
+    <span class="m-networkSwapBridge__subtitle"
+      >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis diam massa
+      ultrices id nunc, pellentesque tortor.</span
+    >
+
+    <div
+      (click)="navigateToBridge(network)"
+      class="mdl-grid m-networkSwapBridge__container"
+      *ngFor="let network of swappableNetworks"
+    >
+      <img
+        class="mdl-cell mdl-cell--1-col"
+        [src]="cdnAssetsUrl + network.logoPath"
+        alt="Network Logo"
+      />
+      <div class="mdl-cell mdl-cell--9-col">
+        <div class="mdl-grid">
+          <span class="m-networkSwapBridge__container--title">{{
+            network.siteName
+          }}</span>
+          <span class="m-networkSwapBridge__container--subtitle">
+            {{ network.description }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="mdl-cell mdl-cell--1-col m-networkSwapBridge__container--arrow"
+      >
+        <i class="material-icons m-walletTransactionsTable__icon--arrow"
+          >arrow_forward</i
+        >
+      </div>
+    </div>
+  </div>
+  <m-loadingSpinner [inProgress]="inProgress$ | async"></m-loadingSpinner>
+</div>

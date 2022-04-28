@@ -1,0 +1,142 @@
+@import 'defaults.scss';
+
+::ng-deep .modal-content--swap {
+  min-height: 526px;
+  max-width: 710px;
+
+  .modal-content {
+    height: inherit;
+  }
+}
+
+:host {
+  display: contents;
+
+  .m-modalV2__inner {
+    padding: 40px;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+
+    .m-networkSwapBridge--close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      i {
+        @include m-theme() {
+          background: themed($m-grey-790);
+        }
+        padding: 8px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
+    }
+
+    @media (min-width: 840px) {
+      .mdl-grid {
+        padding: 0px;
+      }
+    }
+
+    @media (min-width: 480px) and (max-width: 839px) {
+      .mdl-cell--9-col {
+        width: calc(70% - 16px);
+      }
+      .m-networkSwapBridge__header {
+        .m-networkSwapBridge__container {
+          padding: 4px 24px !important;
+        }
+      }
+    }
+
+    .m-networkSwapBridge__header {
+      .m-networkSwapBridge__title {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        margin: 0;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-networkSwapBridge__title--swap {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+        margin-top: 0px;
+        margin-left: 10px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-networkSwapBridge__subtitle {
+        color: #aeb0b8;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 39px;
+        box-sizing: border-box;
+        display: flex;
+      }
+      .m-networkSwapBridge__container-row {
+        align-items: center;
+
+        @media (min-width: 480px) and (max-width: 839px) {
+          margin-top: -33px !important;
+        }
+
+        .m-networkSwapBridge__container-row-img {
+          @include m-theme() {
+            margin-bottom: 15px;
+            width: 43px !important;
+            background-color: themed($m-bgColor--primary);
+            border-radius: 4px;
+            padding: 1.5px;
+          }
+        }
+      }
+      .m-networkSwapBridge__transactions {
+        justify-content: flex-end;
+        display: flex;
+        align-items: center;
+        padding-right: 20px;
+
+        @media (min-width: 480px) and (max-width: 839px) {
+          padding-right: 0px !important;
+        }
+
+        span {
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 500;
+          margin-right: 13px;
+          cursor: pointer;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        i {
+          cursor: pointer;
+        }
+
+        img {
+          position: absolute;
+          margin-top: -12px;
+        }
+
+        @media (min-width: 480px) and (max-width: 839px) {
+          width: calc(12.5% - 16px) !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+@import 'defaults.scss';
+@import 'typography';
+@import 'spacing';
+@import '../../../common/layout/layout.scss';
+
+$topbarHeight: 75px;
+
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: $spacing4;
+  padding-left: $activityAvatarSpacingLeft--feed;
+  padding-right: $activityAvatarSpacingRight--feed;
+  padding-bottom: $spacing7;
+
+  @media screen and (max-width: $layoutMainFullWidth) {
+    padding-left: $activityAvatarSpacingLeft--feed--mobile;
+    padding-right: $activityAvatarSpacingRight--feed--mobile;
+  }
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+
+  &.m-feedNotice__container--sticky {
+    position: sticky;
+    top: $topbarHeight;
+    @include z-index(messenger);
+  }
+
+  &:not(.m-feedNotice__container--fullWidth) {
+    @include m-theme() {
+      padding-left: $spacing6;
+    }
+
+    @media screen and (max-width: $layoutMainFullWidth) {
+      .m-feedNotice__left i {
+        padding-left: 0 !important;
+      }
+    }
+
+    .m-feedNotice__right {
+      min-width: calc($activitySpacingRight--feed / 3);
+    }
+  }
+
+  .m-feedNotice__left {
+    width: $spacing16;
+
+    i {
+      margin-top: calc($spacing1 / 2);
+      padding-left: $spacing2;
+
+      @include unselectable;
+    }
+  }
+
+  .m-feedNotice__center {
+    width: 100%;
+
+    ::ng-deep .m-feedNotice__title {
+      @include heading3Bold;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    ::ng-deep .m-feedNotice__body {
+      margin-top: $spacing2;
+
+      @include body2Regular;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    ::ng-deep .m-feedNotice__buttonPrimary {
+      margin-right: $spacing2;
+    }
+
+    @media screen and (max-width: $layoutMainFullWidth) {
+      ::ng-deep m-button {
+        display: flex;
+        width: 100%;
+
+        & + * {
+          margin-top: $spacing3;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .m-feedNotice__right {
+    min-width: $activitySpacingRight--feed;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    @media screen and (max-width: $layoutMainFullWidth) {
+      justify-content: flex-end;
+    }
+
+    .m-feedNotice__closeButton {
+      cursor: pointer;
+      margin-top: calc($spacing1 / 2);
+
+      @include unselectable;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

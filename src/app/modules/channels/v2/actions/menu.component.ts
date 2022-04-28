@@ -94,6 +94,8 @@ export class ChannelActionsMenuComponent extends AbstractSubscriberComponent
 
     // Post menu service mutates passed object
     this.service.setChannel({ ...channel });
+
+    this.service.onSubscriptionChanged.emit(false);
   }
 
   /**

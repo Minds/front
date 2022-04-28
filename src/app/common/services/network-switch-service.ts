@@ -28,21 +28,32 @@ export interface NetworkMap {
 }
 
 export type NetworkChainId = string;
-export type NetworkName = 'Mainnet' | 'SKALE Minds' | 'Polygon';
-export type NetworkSiteName = 'Mainnet' | 'SKALE' | 'Polygon';
+export type NetworkName =
+  | 'Mainnet'
+  | 'SKALE Minds'
+  | 'Polygon'
+  | 'Goerli'
+  | 'Mumbai';
+export type NetworkSiteName =
+  | 'Mainnet'
+  | 'SKALE'
+  | 'Polygon'
+  | 'Goerli'
+  | 'Mumbai';
 export type NetworkDescription = string;
 export type NetworkLogoPath = string;
 export type NetworkRpcUrl = string;
 
-export type Network = {
+export interface Network {
   id: NetworkChainId; // chain id (hex).
   networkName: NetworkName; // human readable name for Metamask.
   siteName: NetworkSiteName; // label to be used on-site.
-  rpcUrl?: NetworkDescription; // rpc url. nullable for some networks such as mainnet.
-  description: NetworkLogoPath; // short description to be used on site.
-  logoPath: NetworkRpcUrl; // path to logo file `assets/...`.
+  rpcUrl?: NetworkRpcUrl; // rpc url
+  description: NetworkDescription; // short description to be used on site.
+  logoPath: NetworkLogoPath; // path to logo file `assets/...`.
   swappable: boolean; // whether swapping is enabled for the network or not.
-};
+  showHistoric?: boolean; // whether the transaction historical option should be displayed
+}
 
 export const UNKNOWN_NETWORK_LOGO_PATH_DARK = 'assets/ext/unknown-dark.png';
 export const UNKNOWN_NETWORK_LOGO_PATH_LIGHT = 'assets/ext/unknown-light.png';
@@ -52,25 +63,20 @@ export const UNKNOWN_NETWORK_LOGO_PATH_LIGHT = 'assets/ext/unknown-light.png';
  */
 @Injectable({ providedIn: 'root' })
 export class NetworkSwitchService implements OnDestroy {
-  // network map.
-  public networks: NetworkMap = {
-    mainnet: {
-      id: '',
-      siteName: 'Mainnet',
-      networkName: 'Mainnet',
-      description: 'Main Ethereum Network.',
-      logoPath: 'assets/ext/ethereum.png',
-      swappable: false,
-    },
-  };
+  public networks: NetworkMap = {};
 
   // provider with the sole responsibility of listening to network changes.
   private networkChangeProvider: Provider = null;
 
   // fires on network change
-  public readonly networkChanged$: BehaviorSubject<any> = new BehaviorSubject<
-    any
-  >(true);
+  public readonly networkChanged$ = new BehaviorSubject<number | null>(null);
+
+  ngOnDestroy(): void {
+    if (this.networkChangeProvider) {
+      this.networkChangeProvider.removeAllListeners();
+      this.networkChangeProvider = null;
+    }
+  }
 
   constructor(
     private toast: FormToastService,
@@ -81,21 +87,19 @@ export class NetworkSwitchService implements OnDestroy {
   ) {
     const blockchainConfig = config.get('blockchain');
     const skaleConfig = blockchainConfig['skale'];
+    const polygonConfig = blockchainConfig['polygon'];
 
-    // SKALE
-    if (this.features.has('skale') && skaleConfig) {
-      this.networks.skale = {
-        id: skaleConfig['chain_id_hex'],
-        siteName: 'SKALE',
-        // Differs to avoid conflict with other SKALE chains.
-        networkName: 'SKALE Minds',
-        rpcUrl: skaleConfig['rpc_url'],
-        description: 'Lightning fast side-chain.',
-        logoPath: 'assets/ext/skale.png',
-        swappable: true,
-      };
-    }
-
+    // network map.
+    this.networks.mainnet = {
+      id: polygonConfig['mainnet_rpc_provider'].chain_id,
+      rpcUrl: polygonConfig['mainnet_rpc_provider'].url,
+      siteName: 'Mainnet',
+      networkName: 'Mainnet',
+      description: 'Main Ethereum Network.',
+      logoPath: 'assets/ext/ethereum.png',
+      swappable: false,
+    };
+    // POLYGON
     if (this.features.has('polygon')) {
       /**
        * TODO:
@@ -105,29 +109,41 @@ export class NetworkSwitchService implements OnDestroy {
        *   for testnet / non testnet.
        */
       this.networks.polygon = {
-        id: '0x89',
+        id: polygonConfig['polygon_rpc_provider'].chain_id,
+        rpcUrl: polygonConfig['polygon_rpc_provider'].url,
         siteName: 'Polygon',
         networkName: 'Polygon',
-        description: "ETH's Internet of Blockchains.",
-        logoPath: 'assets/ext/polygon.png',
+        description:
+          'Polygon combines the best of Ethereum and sovereign blockchains into a full-fledged multi-chain system. Typical fee ~ 1% - Transfer ~ 8 mins',
+        logoPath: 'assets/ext/polygon_white.svg',
         swappable: true,
+        showHistoric: true,
       };
     }
 
-    // Mainnet / Rinkeby
+    // SKALE
+    if (this.features.has('skale') && skaleConfig) {
+      this.networks.skale = {
+        id: skaleConfig['chain_id_hex'],
+        siteName: 'SKALE',
+        // Differs to avoid conflict with other SKALE chains.
+        networkName: 'SKALE Minds',
+        rpcUrl: skaleConfig['rpcUrl'],
+        description:
+          'What is Skale. What’s its value. Why should I use is. Who is it suited for. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at feugiat diam.',
+        logoPath: 'assets/ext/skale_white.svg',
+        swappable: true,
+        showHistoric: false,
+      };
+    }
+
+    // Mainnet / Goerli
     this.networks.mainnet.id =
       blockchainConfig['client_network'] === 1
         ? '0x1' // mainnet
-        : '0x4'; // rinkeby
+        : '0x5'; // rinkeby
 
     this.setupNetworkChangeListener();
-  }
-
-  ngOnDestroy(): void {
-    if (this.networkChangeProvider) {
-      this.networkChangeProvider.removeAllListeners();
-      this.networkChangeProvider = null;
-    }
   }
 
   /**
@@ -161,9 +177,12 @@ export class NetworkSwitchService implements OnDestroy {
       const rpcUrl = networkData.rpcUrl ?? false;
       const networkName = networkData.networkName ?? false;
 
+      console.log(switchError);
+      console.log(networkName);
       // network has not yet been added to MetaMask and we have params to add it.
       if (switchError.code === 4902 && rpcUrl && networkName) {
         try {
+          console.log(chainId);
           const params: AddEthereumChainParameter = {
             chainId: chainId,
             chainName: networkName,
@@ -187,7 +206,7 @@ export class NetworkSwitchService implements OnDestroy {
    */
   public getNetworkDataById(id: NetworkChainId): Network {
     const networksArray = Object.entries(this.networks);
-    for (let network of networksArray) {
+    for (const network of networksArray) {
       if (network[1].id === id) {
         return network[1];
       }
@@ -210,7 +229,7 @@ export class NetworkSwitchService implements OnDestroy {
   public getSwappableNetworks(): Network[] {
     const enabledNetworks = Object.entries(this.networks);
     const swappableNetworks = [];
-    for (let chain of enabledNetworks) {
+    for (const chain of enabledNetworks) {
       if (chain[1].swappable) {
         swappableNetworks.push(chain[1]);
       }
@@ -234,21 +253,20 @@ export class NetworkSwitchService implements OnDestroy {
    * @returns { void }
    */
   private setupNetworkChangeListener(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && window.ethereum) {
       this.networkChangeProvider = new ethers.providers.Web3Provider(
         window.ethereum,
         'any'
       );
-      this.networkChangeProvider.on(
-        'network',
-        async (newNetwork, oldNetwork) => {
-          // console.log("Network changed from", oldNetwork, "to", newNetwork);
-          if (oldNetwork) {
-            await this.wallet.reinitializeProvider();
-            this.networkChanged$.next(newNetwork);
-          }
+      this.networkChangeProvider.getNetwork().then(network => {
+        this.networkChanged$.next(network.chainId);
+      });
+      window.ethereum.on('networkChanged', async chain => {
+        this.networkChanged$.next(ethers.BigNumber.from(chain).toNumber());
+        if (this.networkChanged$.value) {
+          await this.wallet.reinitializeProvider();
         }
-      );
+      });
     }
   }
 }

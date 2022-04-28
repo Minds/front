@@ -8,12 +8,11 @@ import { MindsUser } from '../../../interfaces/entities';
 import { BehaviorSubject } from 'rxjs';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
-import { ConfigsService } from '../../services/configs.service';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
 import { FormToastService } from '../../services/form-toast.service';
 import { AuthModalService } from '../../../modules/auth/modal/auth-modal.service';
-import { FeaturesService } from '../../../services/features.service';
 import { ModalService } from '../../../services/ux/modal.service';
+import { SubscriptionService } from '../../services/subscription.service';
 
 @Injectable()
 export class PostMenuService {
@@ -41,9 +40,8 @@ export class PostMenuService {
     protected activityService: ActivityService,
     private dialogService: DialogService,
     protected formToastService: FormToastService,
-    private features: FeaturesService,
-    private configs: ConfigsService,
-    public embedService: EmbedServiceV2
+    public embedService: EmbedServiceV2,
+    public subscriptionService: SubscriptionService
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -73,13 +71,7 @@ export class PostMenuService {
 
     this.entityOwner.subscribed = true;
     try {
-      const response: any = await this.client.post(
-        'api/v1/subscribe/' + this.entityOwner.guid,
-        {}
-      );
-      if (response && response.error) {
-        throw 'error';
-      }
+      await this.subscriptionService.subscribe(this.entityOwner as MindsUser);
       this.entityOwner.subscribed = true;
     } catch (e) {
       this.entityOwner.subscribed = false;
@@ -96,7 +88,7 @@ export class PostMenuService {
     this.entityOwner.subscribed = false;
 
     try {
-      await this.client.delete('api/v1/subscribe/' + this.entityOwner.guid, {});
+      await this.subscriptionService.unsubscribe(this.entityOwner as MindsUser);
       this.entityOwner.subscribed = false;
     } catch (e) {
       this.entityOwner.subscribed = true;

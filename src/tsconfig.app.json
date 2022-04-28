@@ -4,7 +4,9 @@
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
     "module": "es2020",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "sourceMap": false
   },
   "files": [
@@ -19,6 +21,7 @@
     "app/mocks",
     "app/utils/mock.ts",
     "**/*.spec.ts",
-    "**/testing/*"
+    "**/testing/*",
+    "**/*.stories.*"
   ]
 }

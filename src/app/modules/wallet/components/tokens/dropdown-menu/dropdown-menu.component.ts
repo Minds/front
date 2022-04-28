@@ -5,7 +5,7 @@ import { first, last, map } from 'rxjs/operators';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { BuyTokensModalService } from '../../../../blockchain/token-purchase/v2/buy-tokens-modal.service';
 import { OnchainTransferModalService } from '../../components/onchain-transfer/onchain-transfer.service';
-import { NetworkSwapBridgeService } from '../../network-swap-bridge/network-swap-bridge-modal.service';
+import { NetworkBridgePanelModalService } from '../../network-swap-bridge/bridge/components/bridge-panel/network-bridge-panel-modal.service';
 import { WalletV2Service } from '../../wallet-v2.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class WalletTokensDropdownMenu {
     private toasterService: FormToastService,
     private onchainTransferModal: OnchainTransferModalService,
     private injector: Injector,
-    private networkSwapBridge: NetworkSwapBridgeService
+    private networkSwapBridge: NetworkBridgePanelModalService
   ) {}
 
   /**

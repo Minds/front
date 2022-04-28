@@ -1,0 +1,260 @@
+@import 'defaults.scss';
+
+:host {
+  .m-networkPending-container {
+    height: 90%;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
+    padding-top: 20px;
+
+    ::ng-deep .m-loadingSpinner__inner {
+      border-top: 4px solid !important;
+      height: 51px;
+      width: 51px;
+    }
+
+    .m-networkPending-title__container {
+      justify-content: center;
+      margin-bottom: 17px;
+    }
+
+    .m-networkPending-title {
+      line-height: 28px;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      cursor: default;
+    }
+
+    .m-networkPending-subtitle {
+      line-height: 28px;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      cursor: default;
+      margin-left: 8px;
+    }
+
+    .m-networkPending-priority {
+      font-size: 72px;
+      display: flex;
+      justify-content: center;
+      cursor: default;
+      margin-top: -8px;
+    }
+
+    .m-networkPending-content {
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      margin-top: 18px;
+      cursor: default;
+      padding-left: 15%;
+      padding-right: 15%;
+    }
+
+    .m-networkPending-state {
+      display: flex;
+      justify-content: center;
+      line-height: 24px;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      cursor: default;
+    }
+
+    .m-networkPending-loader {
+      display: flex;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .m-networkPending-link {
+      display: flex;
+      justify-content: center;
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      justify-content: center;
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+      cursor: pointer;
+      margin-top: 24px;
+    }
+
+    $circleSize: 24px;
+    // circle and label wrapper
+    $stepperItemWidth: $circleSize + 60px;
+    $connectorPullIn: 1.3em;
+
+    .m-networkPending-wrapper {
+      width: 90%;
+      padding: 0 50px;
+      box-sizing: border-box;
+      height: 60px;
+      margin-left: 7%;
+    }
+
+    .m-networkPending-stepper {
+      display: table;
+      width: 100%;
+      position: relative;
+      box-sizing: border-box;
+
+      .m-networkPending_stepper-item,
+      .m-networkPending_stepper-connector {
+        display: table-cell;
+      }
+      .m-networkPending_stepper-item {
+        width: 64px;
+        text-align: center;
+
+        &.m-networkPending_step-complete {
+          .m-networkPending_stepper-circle {
+            @include m-theme() {
+              background-color: themed($m-white-always);
+              border-color: themed($m-white-always);
+            }
+
+            .m-networkPending-approve {
+              font-size: 15px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-sizing: border-box;
+              margin-top: 4px;
+              color: #1f252c;
+              cursor: default;
+            }
+          }
+        }
+        &.m-networkPending_step-pending {
+          .m-networkPending_stepper-circle {
+            @include m-theme() {
+              background-color: themed($m-blue);
+              border-color: themed($m-blue);
+            }
+
+            .m-networkPending-approve {
+              font-size: 15px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-sizing: border-box;
+              margin-top: 4px;
+              color: #fff;
+              cursor: default;
+            }
+          }
+        }
+        &.m-networkPending_step-current {
+          .m-networkPending_stepper-circle {
+            @include m-theme() {
+              background-color: themed($m-blue);
+              border-color: themed($m-blue);
+            }
+
+            .m-networkPending-approve {
+              font-size: 15px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-sizing: border-box;
+              margin-top: 4px;
+              color: #1f252c;
+              cursor: default;
+            }
+          }
+        }
+        &.m-networkPending_step-last-complete {
+          .m-networkPending_stepper-label {
+            margin-top: 8px;
+            width: 100%;
+            display: inline-block;
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 500;
+          }
+        }
+
+        .m-networkPending_stepper-label {
+          margin-top: 8px;
+          display: none;
+          position: absolute;
+          top: $circleSize + 5px;
+          left: 0;
+          text-align: center;
+          @include m-theme() {
+            color: themed($m-textColor--primary);
+          }
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 500;
+        }
+      }
+      .m-networkPending_stepper-connector {
+        hr {
+          height: 1px;
+          margin: 0 -#{$connectorPullIn};
+          transform: translateY(-0.3em);
+          @include m-theme() {
+            color: themed($m-borderColor--primary);
+            background-color: themed($m-borderColor--primary);
+          }
+          border: none;
+        }
+      }
+
+      @media (min-width: 600px) {
+        .m-networkPending_stepper-item {
+          position: relative;
+
+          .m-networkPending_stepper-label {
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    .m-networkPending_stepper-circle {
+      width: $circleSize;
+      height: $circleSize;
+      display: inline-block;
+      font-weight: bold;
+      font-style: normal;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 2px solid themed($m-grey-790);
+      }
+      line-height: 24px;
+      text-align: center;
+      background-color: inherit;
+      border-radius: 50%;
+    }
+  }
+}

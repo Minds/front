@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { EmailConfirmationComponent } from './email-confirmation.component';
 import { FormToastService } from '../../services/form-toast.service';
+import { ConfigsService } from '../../services/configs.service';
+import { Session } from '../../../services/session';
 
 /**
- * API implementation service for Email Confirmation component
- * @see EmailConfirmationComponent
+ * Service handling the sending of new confirmation emails and whether a user
+ * requires email confirmation at all.
  */
 @Injectable({ providedIn: 'root' })
 export class EmailConfirmationService {
+  // whether config identifies email as unconfirmed.
+  private readonly fromEmailConfirmation: boolean = false;
+
   constructor(
     protected client: Client,
-    private toasterService: FormToastService
-  ) {}
+    private toasterService: FormToastService,
+    private session: Session,
+    configs: ConfigsService
+  ) {
+    this.fromEmailConfirmation = configs.get('from_email_confirmation');
+  }
 
   show() {
     this.toasterService.error('You must confirm your email address.');
@@ -28,5 +36,16 @@ export class EmailConfirmationService {
     )) as any;
 
     return Boolean(response && response.sent);
+  }
+
+  /**
+   * Whether logged-in user requires email confirmation.
+   * @returns { boolean } true if email confirmation is required.
+   */
+  public requiresEmailConfirmation(): boolean {
+    const user = this.session.getLoggedInUser();
+    return (
+      !this.fromEmailConfirmation && user && user.email_confirmed === false
+    );
   }
 }
