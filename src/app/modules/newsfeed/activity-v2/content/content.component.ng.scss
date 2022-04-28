@@ -1,5 +1,4 @@
 @import 'defaults.scss';
-@import '../shared.scss';
 
 :host {
   // *********************************
@@ -578,12 +577,16 @@
     hr {
       display: none;
     }
+
     .m-translation-wrapper {
       padding-bottom: 0;
       .message {
         a {
-          font-weight: 400;
+          font-weight: 500;
           font-size: inherit;
+        }
+        span {
+          white-space: break-spaces;
         }
       }
     }

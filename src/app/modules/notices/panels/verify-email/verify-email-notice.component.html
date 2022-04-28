@@ -1,0 +1,21 @@
+<m-feedNotice icon="warning" [dismissible]="false" [stickyTop]="true">
+  <span class="m-feedNotice__title" i18n="FEED_NOTICE__VERIFY_EMAIL__TITLE"
+    >Verify your email address</span
+  >
+  <p class="m-feedNotice__body" i18n="@@FEED_NOTICE__VERIFY_EMAIL__BODY">
+    Before getting down to business on Minds, can we please ask that you verify
+    your email address. (P.S. Check your spam folder 📥)
+  </p>
+  <m-button
+    class="m-feedNotice__buttonPrimary"
+    color="blue"
+    solid="true"
+    size="small"
+    (onAction)="onPrimaryOptionClick($event)"
+    data-ref="feed-notice-verify-email-primary-click"
+  >
+    <ng-container i18n="@@FEED_NOTICE__VERIFY_EMAIL__RESEND_EMAIL">
+      Re-send email
+    </ng-container>
+  </m-button>
+</m-feedNotice>

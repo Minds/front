@@ -55,6 +55,7 @@ import { CompassService } from '../modules/compass/compass.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from './ux/modal.service';
 import { ServiceWorkerService } from '../common/services/service-worker.service';
+import { PushNotificationService } from '../common/services/push-notification.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -225,4 +226,5 @@ export const MINDS_PROVIDERS: any[] = [
   FormToastService,
   MessengerService,
   ServiceWorkerService,
+  PushNotificationService,
 ];

@@ -80,6 +80,10 @@ export class ActivityV2OwnerBlockComponent implements OnInit, OnDestroy {
       : null;
   }
 
+  get isModal(): boolean {
+    return this.service.displayOptions.isModal;
+  }
+
   get isSidebarBoost(): boolean {
     return this.service.displayOptions.isSidebarBoost;
   }
