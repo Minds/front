@@ -53,6 +53,18 @@
           ></m-channel__socialLinks>
         </div>
       </div>
+
+      <div
+        *ngIf="channel?.did"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div class="m-channelAboutField__label" i18n="@@CHANNEL_ABOUT__DID">
+          DID
+        </div>
+        <div class="m-channelAboutField__content">
+          {{ channel.did }}
+        </div>
+      </div>
     </div>
 
     <div class="m-channelAbout__narrowExtraInfo">

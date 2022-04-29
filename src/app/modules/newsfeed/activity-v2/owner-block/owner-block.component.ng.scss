@@ -1,5 +1,4 @@
 @import 'defaults.scss';
-@import '../shared.scss';
 
 :host {
   display: block;
@@ -10,13 +9,20 @@
 
   .m-activity--isFeed & {
     .m-activity__ownerBlock {
-      width: 105%;
-
-      @media screen and (max-width: ($max-mobile)) {
-        width: 102%;
-      }
+      width: 103%;
     }
   }
+
+  // *********************************
+  // ** GUEST MODE **
+  // *********************************
+
+  .m-activity--guestMode & {
+    .m-activity__ownerBlock {
+      width: 100% !important;
+    }
+  }
+
   // *********************************
   // ** MINIMAL MODE **
   // *********************************
@@ -73,9 +79,6 @@
       }
     }
 
-    // .m-activityOwnerBlock__username {
-    //   display: none;
-    // }
     .m-activityOwnerBlock__right {
       display: none;
     }
@@ -203,7 +206,7 @@
   a.m-activityOwnerBlock__username span,
   .m-activityOwnerBlock__dot,
   .m-activityOwnerBlock__edited {
-    @include body2Medium;
+    @include body2Regular;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

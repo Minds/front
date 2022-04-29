@@ -1,5 +1,4 @@
 <div class="m-newsfeed__inner">
-  <m-emailConfirmation></m-emailConfirmation>
   <ng-container [m-clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
     <div
       class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
@@ -19,13 +18,19 @@
       ></m-composer>
     </ng-container>
 
+    <m-feedNotice__outlet position="top"></m-feedNotice__outlet>
+
     <m-feedHeader
       *ngIf="topFeedExperimentActive"
       [algorithm]="algorithm"
     ></m-feedHeader>
     <div class="minds-list" m-hotkeyScroll [anchors]="feedViewChildren">
       <ng-container *ngIf="algorithm === 'latest'">
-        <ng-container *ngFor="let preActivity of prepended">
+        <ng-container *ngFor="let preActivity of prepended; let i = index">
+          <m-feedNotice__outlet
+            *ngIf="i > 0 && i % 6 === 0"
+            position="inline"
+          ></m-feedNotice__outlet>
           <m-activity
             [entity]="preActivity"
             [displayOptions]="{
@@ -57,6 +62,10 @@
       <ng-container
         *ngFor="let activity$ of feedService.feed | async; let i = index"
       >
+        <m-feedNotice__outlet
+          *ngIf="i > 0 && i % 6 === 0"
+          position="inline"
+        ></m-feedNotice__outlet>
         <m-featured-content
           *ngIf="(i > 0 && i % 5 === 0) || i === 3"
           [slot]="i + 1"

@@ -28,7 +28,9 @@ export class SubscribeButtonComponent implements OnInit {
 
   subscribed: boolean = false;
   inProgress: boolean = false;
-  @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
+  @Output('subscribed') onSubscribed: EventEmitter<
+    Partial<MindsUser>
+  > = new EventEmitter();
 
   @Input() sized: boolean = false;
   @Input() iconOnly: boolean = false;
@@ -93,7 +95,7 @@ export class SubscribeButtonComponent implements OnInit {
       if (!user) return;
     }
     this.subscribed = true;
-    this.onSubscribed.next();
+    this.onSubscribed.emit(this._user);
 
     try {
       await this.subscriptionService.subscribe(this._user as MindsUser);
