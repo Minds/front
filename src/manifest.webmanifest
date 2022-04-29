@@ -11,20 +11,24 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/static/en/assets/logos/logo.png",
+      "src": "https://cdn.minds.com/static/en/assets/logos/logo.png",
+      "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/static/en/assets/logos/logo-large.png",
+      "src": "https://cdn.minds.com/static/en/assets/logos/logo-large.png",
+      "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "/static/en/assets/logos/logo-maskable.png",
+      "src": "https://cdn.minds.com/static/en/assets/logos/logo-maskable.png",
+      "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "/static/en/assets/logos/logo-maskable-large.png",
+      "src": "https://cdn.minds.com/static/en/assets/logos/logo-maskable-large.png",
+      "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
     }
