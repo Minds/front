@@ -37,14 +37,14 @@ describe('GroupsSettingsButton', () => {
 
   function getMenuItem(i: number): DebugElement {
     return fixture.debugElement.query(
-      By.css(`.minds-dropdown-menu .mdl-menu__item:nth-child(${i})`)
+      By.css(`.m-dropdown__list .m-dropdownList__item:nth-child(${i})`)
     );
   }
 
   function getDeleteGroupItem(): DebugElement | null {
     return fixture.debugElement.query(
       By.css(
-        `.minds-dropdown-menu .mdl-menu__item.m-groups-settings-dropdown__item--deleteGroup`
+        `.m-dropdown__list .m-dropdownList__item.m-groups-settings-dropdown__item--deleteGroup`
       )
     );
   }
@@ -112,12 +112,12 @@ describe('GroupsSettingsButton', () => {
     expect(button.nativeElement.textContent).toContain('settings');
 
     expect(
-      fixture.debugElement.query(By.css('.minds-dropdown-menu'))
+      fixture.debugElement.query(By.css('.m-dropdown--v2'))
     ).not.toBeNull();
   });
 
   it('should have button that lets you toggle the menu', () => {
-    const menu = fixture.debugElement.query(By.css('.minds-dropdown-menu'));
+    const menu = fixture.debugElement.query(By.css('.m-dropdown--v2'));
     expect(menu.nativeElement.hidden).toBeTruthy();
 
     getButton().nativeElement.click();
@@ -196,9 +196,7 @@ describe('GroupsSettingsButton', () => {
 
   it('should have an option to report', () => {
     const report = fixture.debugElement.query(
-      By.css(
-        `.minds-dropdown-menu .mdl-menu__item.m-groups-settings-dropdown__item--report`
-      )
+      By.css(`.m-dropdown__list .m-groups-settings-dropdown__item--report`)
     );
     expect(report).not.toBeNull();
 
