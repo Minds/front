@@ -160,11 +160,4 @@ describe('RegisterComponent', () => {
       false
     );
   });
-
-  it('should call to set canonical url correctly', () => {
-    comp.ngOnInit();
-    expect((comp as any).metaService.setCanonicalUrl).toHaveBeenCalledWith(
-      '/register'
-    );
-  });
 });
